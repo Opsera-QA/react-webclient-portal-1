@@ -356,4 +356,55 @@ export const kpiSonarProjectLanguagesFilterMetadata = {
   },
 };
 
+export const kpiServiceNowPrioritiesFilterMetadata = {
+  type: "Service Now Priority",
+  fields: [
+    {
+      label: "Type",
+      id: "type",
+    },
+    {
+      label: "Service Now Priority",
+      id: "value",
+    },
+  ],
+  newObjectFields: {
+    value: [],
+  },
+};
+
+export const kpiServiceNowToolsFilterMetadata = {
+  type: "Service Now Tools",
+  fields: [
+    {
+      label: "Type",
+      id: "type",
+    },
+    {
+      label: "Service Now Tool",
+      id: "value",
+    },
+  ],
+  newObjectFields: {
+    value: [],
+  },
+};
+
+export const kpiServiceNowAssignmentGroupsFilterMetadata = {
+  type: "Service Now Assignment Group",
+  fields: [
+    {
+      label: "Type",
+      id: "type",
+    },
+    {
+      label: "Service Now Assignment Group",
+      id: "value",
+    },
+  ],
+  newObjectFields: {
+    value: [],
+  },
+};
+
 export default kpiConfigurationMetadata;

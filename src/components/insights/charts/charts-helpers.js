@@ -77,11 +77,13 @@ export function getJiraIssueTypeFromKpiConfiguration(kpiConfiguration) {
 
 export function getJiraIssueComponentsFromKpiConfiguration(kpiConfiguration) {
   if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-components")]?.value &&
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-components")]
+      ?.value &&
     kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-components")]?.value
       .length > 0
   ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-components")].value;
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-components")]
+      .value;
   }
   return null;
 }
@@ -92,17 +94,17 @@ export function getJiraIssueLabelsFromKpiConfiguration(kpiConfiguration) {
     kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-labels")]?.value
       .length > 0
   ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-labels")].value;
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-labels")]
+      .value;
   }
   return null;
 }
 
 export function getJiraIssueStatusFromKpiConfiguration(kpiConfiguration) {
   if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-status")]
-      ?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-status")]
-      ?.value.length > 0
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-status")]?.value &&
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-status")]?.value
+      .length > 0
   ) {
     return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-status")]
       .value;
@@ -220,6 +222,44 @@ export function getSonarProjectLanguagesFromKpiConfiguration(kpiConfiguration) {
   ) {
     return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sonar-project-languages")]
       .value;
+  }
+  return null;
+}
+
+export function getServiceNowPrioritiesFromKpiConfiguration(kpiConfiguration) {
+  if (
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-priorities")]
+      ?.value &&
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-priorities")]?.value
+      .length > 0
+  ) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-priorities")]
+      .value;
+  }
+  return null;
+}
+
+export function getServiceNowToolsFromKpiConfiguration(kpiConfiguration) {
+  if (
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-tools")]?.value &&
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-tools")]?.value
+      .length > 0
+  ) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-tools")].value;
+  }
+  return null;
+}
+
+export function getServiceNowAssignmentGroupsFromKpiConfiguration(kpiConfiguration) {
+  if (
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-assignment-groups")]
+      ?.value &&
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-assignment-groups")]
+      ?.value.length > 0
+  ) {
+    return kpiConfiguration.filters[
+      kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-assignment-groups")
+    ].value;
   }
   return null;
 }

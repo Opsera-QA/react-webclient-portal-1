@@ -23,6 +23,9 @@ import {
   kpiProjectFilterMetadata,
   kpiSeleniumTestSuitesFilterMetadata,
   kpiSonarProjectLanguagesFilterMetadata,
+  kpiServiceNowPrioritiesFilterMetadata,
+  kpiServiceNowToolsFilterMetadata,
+  kpiServiceNowAssignmentGroupsFilterMetadata,
 } from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import Model from "core/data_model/model";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
@@ -37,6 +40,9 @@ import SeleniumTestSuitesMultiSelectInput from "components/common/list_of_values
 import modelHelpers from "components/common/model/modelHelpers";
 import SonarProjectLanguagesMultiSelectInput from "components/common/list_of_values_input/insights/charts/sonar/SonarProjectLanguagesMultiSelectInput";
 import SonarProjectsMultiSelectInput from "components/common/list_of_values_input/insights/charts/sonar/SonarProjectsMultiSelectInput";
+import ServiceNowPrioritiesMultiSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowPrioritiesMultiSelectInput";
+import ServiceNowToolsSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowToolsSelectInput";
+import ServiceNowAssignmentGroupSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowGroupsSelectInput";
 
 function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -60,17 +66,17 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-type", kpiJiraIssueTypeFilterMetadata)
   );
   const [kpiJiraIssueComponentsFilter, setKpiJiraIssueComponentsFilter] = useState(
-    modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-components", kpiJiraIssueComponentsFilterMetadata)
+    modelHelpers.getDashboardFilterModel(
+      kpiConfiguration,
+      "jira-issue-components",
+      kpiJiraIssueComponentsFilterMetadata
+    )
   );
   const [kpiJiraIssueLabelsFilter, setKpiJiraIssueLabelsFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-labels", kpiJiraIssueLabelsFilterMetadata)
   );
   const [kpiJiraIssueStatusFilter, setKpiJiraIssueStatusFilter] = useState(
-    modelHelpers.getDashboardFilterModel(
-      kpiConfiguration,
-      "jira-issue-status",
-      kpiJiraIssueStatusFilterMetadata
-    )
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-status", kpiJiraIssueStatusFilterMetadata)
   );
   const [kpiJiraIssueStartStatusFilter, setKpiJiraIssueStartStatusFilter] = useState(
     modelHelpers.getDashboardFilterModel(
@@ -112,6 +118,23 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       kpiConfiguration,
       "sonar-project-languages",
       kpiSonarProjectLanguagesFilterMetadata
+    )
+  );
+  const [kpiServiceNowPrioritiesFilter, setKpiServiceNowPrioritiesFilter] = useState(
+    modelHelpers.getDashboardFilterModel(
+      kpiConfiguration,
+      "servicenow-priorities",
+      kpiServiceNowPrioritiesFilterMetadata
+    )
+  );
+  const [kpiServiceNowToolsFilter, setKpiServiceNowToolsFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "servicenow-tools", kpiServiceNowToolsFilterMetadata)
+  );
+  const [kpiServiceNowAssignmentGroupsFilter, setKpiServiceNowAssignmentGroupsFilter] = useState(
+    modelHelpers.getDashboardFilterModel(
+      kpiConfiguration,
+      "servicenow-assignment-groups",
+      kpiServiceNowAssignmentGroupsFilterMetadata
     )
   );
 
@@ -423,6 +446,50 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
             />
           </div>
         );
+      case "servicenow-priorities":
+        return (
+          <div>
+            <ServiceNowPrioritiesMultiSelectInput
+              placeholderText={"Select Priority"}
+              type={"kpi_filter"}
+              fieldName={"value"}
+              valueField={"value"}
+              textField={"text"}
+              setDataObject={setKpiServiceNowPrioritiesFilter}
+              dataObject={kpiServiceNowPrioritiesFilter}
+            />
+          </div>
+        );
+      case "servicenow-tools":
+        return (
+          <div>
+            <ServiceNowToolsSelectInput
+              placeholderText={"Select Tools"}
+              type={"kpi_filter"}
+              fieldName={"value"}
+              valueField={"_id"}
+              textField={"name"}
+              setDataObject={setKpiServiceNowToolsFilter}
+              dataObject={kpiServiceNowToolsFilter}
+            />
+          </div>
+        );
+      case "servicenow-assignment-groups":
+        return (
+          <div>
+            <ServiceNowAssignmentGroupSelectInput
+              visible={true}
+              placeholderText={"Select Assignment Group"}
+              type={"kpi_filter"}
+              fieldName={"value"}
+              valueField={"sys_id"}
+              textField={"name"}
+              setDataObject={setKpiServiceNowAssignmentGroupsFilter}
+              dataObject={kpiServiceNowAssignmentGroupsFilter}
+              serviceNowId={kpiServiceNowToolsFilter.data.value}
+            />
+          </div>
+        );
     }
   };
 
@@ -589,6 +656,33 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sonar-project-languages")
       ].value = kpiSonarProjectLanguagesFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-priorities")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-priorities")
+      ].value = kpiServiceNowPrioritiesFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-tools")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-tools")
+      ].value = kpiServiceNowToolsFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-assignment-groups")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-assignment-groups")
+      ].value = kpiServiceNowAssignmentGroupsFilter.getData("value");
     }
 
     setKpiSettings({ ...newKpiSettings });
