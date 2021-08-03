@@ -6,7 +6,7 @@ import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
-import PipelineDetails from "components/insights/summary/pipeline_details/PipelineDetails";
+import InsightsSynopsisDetails from "components/insights/summary/pipeline_details/InsightsSynopsisDetails";
 import DashboardFiltersInput from "components/insights/dashboards/DashboardFiltersInput";
 import DashboardFilterOrganizationInput from "components/insights/dashboards/DashboardFilterOrganizationInput";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
@@ -19,7 +19,7 @@ import { format, addDays } from "date-fns";
 import { DateRangePicker } from "react-date-range";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 
-function InsightsSummary() {
+function InsightsSynopsis() {
   const {getUserRecord, setAccessRoles} = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
@@ -48,7 +48,7 @@ function InsightsSummary() {
       cancelTokenSource.cancel();
     }
     let newDataObject = new Model({...dashboardMetadata.newObjectFields}, dashboardMetadata, true);
-    newDataObject.setData("filters", []); 
+    newDataObject.setData("filters", []);
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
 
@@ -142,14 +142,14 @@ function InsightsSummary() {
   };
 
   const validate = (startDate,endDate)=>{
-      let sDate = startDate ? new Date(startDate).toISOString() : undefined;
-      let eDate = endDate ? new Date(endDate).toISOString() : undefined;
-      let newDashboardFilterTagsModel = dashboardFilterTagsModel;
-      newDashboardFilterTagsModel.setData( "date" , { startDate: sDate , endDate: eDate, key: "selection" } );
-      setDashboardFilterTagsModel({...newDashboardFilterTagsModel});
-  
-      let newDataModel = modelHelpers.setDashboardFilterModelField(dashboardData, "date", { startDate: sDate , endDate: eDate, key: "selection" });
-      loadData(newDataModel);
+    let sDate = startDate ? new Date(startDate).toISOString() : undefined;
+    let eDate = endDate ? new Date(endDate).toISOString() : undefined;
+    let newDashboardFilterTagsModel = dashboardFilterTagsModel;
+    newDashboardFilterTagsModel.setData( "date" , { startDate: sDate , endDate: eDate, key: "selection" } );
+    setDashboardFilterTagsModel({...newDashboardFilterTagsModel});
+
+    let newDataModel = modelHelpers.setDashboardFilterModelField(dashboardData, "date", { startDate: sDate , endDate: eDate, key: "selection" });
+    loadData(newDataModel);
   };
 
   const clearCalendar = () => {
@@ -215,38 +215,37 @@ function InsightsSummary() {
     );
   };
 
-  const getInsightsSummaryView = () => {
-      return (
-        <div>
-        <ActionBarContainer>      
-        <div className="d-flex">
-          <DashboardFiltersInput
-            dataObject={dashboardFilterTagsModel}
-            setDataObject={setDashboardFilterTagsModel}
-            loadData={loadData}
-            className={"mx-2"}
-            dashboardData={dashboardData}
-          />
-          <DashboardFilterOrganizationInput
-            className={"mx-2"}
-            dataObject={dashboardFilterTagsModel}
-            setDataObject={setDashboardFilterTagsModel}
-            dashboardData={dashboardData}
-            fieldName={"organizations"}
-            loadData={loadData}
-          />
-          {/* <p>this is a test</p> */}
-          <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
-            <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
-            {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
-          </Button>
-          {getDateRangeButton()}
-          {/* <DateRangeInput dataObject={dashboardFilterTagsModel} setDataObject={setDashboardFilterTagsModel} fieldName={"date"} />  */}
-        </div>
+  const getSynopsisActionBar = () => {
+    return (
+      <div>
+        <ActionBarContainer>
+          <div className="d-flex">
+            <DashboardFiltersInput
+              dataObject={dashboardFilterTagsModel}
+              setDataObject={setDashboardFilterTagsModel}
+              loadData={loadData}
+              className={"mx-2"}
+              dashboardData={dashboardData}
+            />
+            <DashboardFilterOrganizationInput
+              className={"mx-2"}
+              dataObject={dashboardFilterTagsModel}
+              setDataObject={setDashboardFilterTagsModel}
+              dashboardData={dashboardData}
+              fieldName={"organizations"}
+              loadData={loadData}
+            />
+            {/* <p>this is a test</p> */}
+            <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
+              <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
+              {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
+            </Button>
+            {getDateRangeButton()}
+            {/* <DateRangeInput dataObject={dashboardFilterTagsModel} setDataObject={setDashboardFilterTagsModel} fieldName={"date"} />  */}
+          </div>
         </ActionBarContainer>
-        <PipelineDetails dashboardData={dashboardData} setDashboardData={setDashboardData}/>
-        </div>
-      );
+      </div>
+    );
   };
 
   if (!accessRoleData) {
@@ -255,7 +254,7 @@ function InsightsSummary() {
 
   return (
     <ScreenContainer
-      navigationTabContainer={<InsightsSubNavigationBar currentTab={"synopsis"} />}
+      navigationTabContainer={<InsightsSubNavigationBar currentTab={"synopsis"}/>}
       pageDescription={`
         Opsera provides users with access to a vast repository of logging and analytics. Access all available
         logging, reports and configurations around the Opsera Analytics Platform or search your currently
@@ -263,11 +262,12 @@ function InsightsSummary() {
       `}
       breadcrumbDestination={"insightsSummary"}
     >
-      {getInsightsSummaryView()}
+      {getSynopsisActionBar()}
+      <InsightsSynopsisDetails dashboardData={dashboardData} setDashboardData={setDashboardData}/>
     </ScreenContainer>
   );
 
 }
 
 
-export default InsightsSummary;
+export default InsightsSynopsis;
