@@ -71,7 +71,7 @@ const xunitPipelineStepConfigurationMetadata = {
       id: "workspaceDeleteFlag",
     }
   ],
-  newModelBase: {
+  newObjectFields: {
     jobType: "",
     toolConfigId: "",
     jenkinsUrl: "",

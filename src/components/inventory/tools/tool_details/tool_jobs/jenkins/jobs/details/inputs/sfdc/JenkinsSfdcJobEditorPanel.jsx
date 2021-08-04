@@ -16,7 +16,7 @@ function JenkinsSfdcJobEditorPanel({ jenkinsJobConfiguration, model, setModel, a
   }, [jenkinsJobConfiguration]);
 
   const unpackJobConfiguration = () => {
-    const parsedModel = modelHelpers.parseObjectIntoModelBase(jenkinsJobConfiguration, JenkinsSfdcJobMetadata);
+    const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, JenkinsSfdcJobMetadata);
     setModel({...parsedModel});
   };
 

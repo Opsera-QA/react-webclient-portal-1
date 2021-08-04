@@ -22,7 +22,7 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await getRepositories();
+      await getGitBranches();
     }
     catch (error) {
       console.error(error);
@@ -33,11 +33,10 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
     }
   };
 
-  const getRepositories = async () => {
+  const getGitBranches = async () => {
     const response  = await GitActionsHelper.searchBranches(service, gitToolId, repoId, workspace, getAccessToken);
     let branchesResponse = response?.data?.data;
 
-    //to set data in parent component
     if (Array.isArray(branchesResponse)) {
       setBranches(branchesResponse);
       if (setBranchList != null) {
@@ -56,21 +55,19 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
     }
   };
   return (
-    <div>
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        setDataFunction={setDataFunction}
-        selectOptions={branches}
-        busy={isLoading}
-        placeholderText={getNoBranchesMessage()}
-        clearDataFunction={clearDataFunction}
-        valueField="name"
-        textField="name"
-        disabled={disabled || isLoading || branches.length === 0}
-      />
-    </div>
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      setDataFunction={setDataFunction}
+      selectOptions={branches}
+      busy={isLoading}
+      placeholderText={getNoBranchesMessage()}
+      clearDataFunction={clearDataFunction}
+      valueField="name"
+      textField="name"
+      disabled={disabled || isLoading || branches.length === 0}
+    />
   );
 }
 

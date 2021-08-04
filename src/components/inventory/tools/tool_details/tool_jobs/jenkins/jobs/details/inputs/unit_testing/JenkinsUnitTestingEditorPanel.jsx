@@ -17,7 +17,7 @@ function JenkinsUnitTestingEditorPanel({ jenkinsJobConfiguration, model, setMode
   }, [jenkinsJobConfiguration]);
 
   const unpackJobConfiguration = () => {
-    const parsedModel = modelHelpers.parseObjectIntoModelBase(jenkinsJobConfiguration, JenkinsUnitTestJobMetadata);
+    const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, JenkinsUnitTestJobMetadata);
     setModel({...parsedModel});
   };
 

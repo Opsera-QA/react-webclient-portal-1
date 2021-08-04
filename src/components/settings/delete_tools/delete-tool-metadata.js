@@ -12,7 +12,7 @@ const DeleteToolMetadata = {
         isRequired: true,
       },
     ],
-    newModelBase: {
+  newObjectFields: {
         applicationId: "",
         toolsList: []
     },

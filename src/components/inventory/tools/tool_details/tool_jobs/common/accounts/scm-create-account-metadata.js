@@ -152,7 +152,7 @@ const scmCreateAccountMetadata = {
         id: "twoFactorAuthentication",
       },
     ],
-    newModelBase: {
+    newObjectFields: {
       toolId: "",
       service: "",
       workspaceName: "",

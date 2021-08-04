@@ -34,7 +34,7 @@ const jenkinsCreateAccountMetadata = {
       id: "gitCredential"
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     credentialsId: "",
     credentialsDescription: "",
     toolId: "",

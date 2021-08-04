@@ -67,7 +67,7 @@ const twistlockPipelineStepConfigurationMetadata = {
       // isRequired: true
     }
   ],
-  newModelBase: {
+  newObjectFields: {
     jobType: "", //hardcoded, every step wil have a hardcoded jobType is what i know needs to check with Todd.
     toolConfigId: "",
     jenkinsUrl: "",

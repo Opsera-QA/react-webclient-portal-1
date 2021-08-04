@@ -71,7 +71,7 @@ const junitPipelineStepConfigurationMetadata = {
       id: "workspaceDeleteFlag",
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     jobType: "",
     toolConfigId: "",
     jenkinsUrl: "",

@@ -78,7 +78,7 @@ const dockerPushStepFormMetadata = {
         fieldText: "The name must start and end with a letter and can only contain lowercase letters, numbers, hyphens, underscores, and forward slashes."
       }
     ],
-    newModelBase: {
+  newObjectFields: {
       type: "",
       jobType: "", //hardcoded, every step wil have a hardcoded jobType is what i know needs to check with Todd.
       toolConfigId: "",

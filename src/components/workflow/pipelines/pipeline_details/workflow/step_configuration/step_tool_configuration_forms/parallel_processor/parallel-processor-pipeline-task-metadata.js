@@ -42,7 +42,7 @@ const parallelProcessorPipelineTaskMetadata = {
       id: "api_response.apiResponse.message.runResponse"
     }
   ],
-  newModelBase: {
+  newObjectFields: {
   }
 };
 

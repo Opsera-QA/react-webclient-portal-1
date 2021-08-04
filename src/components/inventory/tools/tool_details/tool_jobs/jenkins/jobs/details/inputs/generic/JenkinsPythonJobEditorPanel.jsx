@@ -13,7 +13,7 @@ function JenkinsGenericJobEditorPanel({ jenkinsJobConfiguration, model, setModel
   }, [jenkinsJobConfiguration]);
 
   const unpackJobConfiguration = () => {
-    const parsedModel = modelHelpers.parseObjectIntoModelBase(jenkinsJobConfiguration, JenkinsGenericJobMetadata);
+    const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, JenkinsGenericJobMetadata);
     setModel({...parsedModel});
   };
 

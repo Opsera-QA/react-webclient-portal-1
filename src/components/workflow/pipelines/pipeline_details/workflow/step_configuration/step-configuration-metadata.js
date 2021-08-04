@@ -23,7 +23,7 @@ const stepConfigurationMetadata = {
       id: "tags"
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     name: "",
     type: "",
     tool_identifier: "",

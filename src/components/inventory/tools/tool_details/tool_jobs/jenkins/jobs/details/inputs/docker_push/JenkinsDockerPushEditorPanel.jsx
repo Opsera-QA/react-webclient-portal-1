@@ -15,7 +15,7 @@ function JenkinsDockerPushEditorPanel({ jenkinsJobConfiguration, model, setModel
   }, [jenkinsJobConfiguration]);
 
   const unpackJobConfiguration = () => {
-    const parsedModel = modelHelpers.parseObjectIntoModelBase(jenkinsJobConfiguration, JenkinsDockerPushJobMetadata);
+    const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, JenkinsDockerPushJobMetadata);
     setModel({...parsedModel});
   };
 

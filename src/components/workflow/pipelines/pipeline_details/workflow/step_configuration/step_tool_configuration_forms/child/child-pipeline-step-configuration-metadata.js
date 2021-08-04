@@ -7,7 +7,7 @@ const childPipelineStepConfigurationMetadata = {
       isRequired: true
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     pipelineId: "",
   }
 };

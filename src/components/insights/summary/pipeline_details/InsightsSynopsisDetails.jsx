@@ -29,7 +29,7 @@ import ServiceNowMeanTimeToAcknowledgeBarChart from "components/insights/charts/
 import ServiceNowMTBFDataBlock from "./ServiceNowMTBFDataBlock";
 import ServiceNowMeanTimeBetweenFailuresBarChart from "components/insights/charts/servicenow/bar_chart/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresBarChart";
 
-function PipelineDetails({ dashboardData }) {
+function InsightsSynopsisDetails({ dashboardData }) {
   const [selectedDataBlock, setSelectedDataBlock] = useState("");
   const [selectedDataBlockTableData, setSelectedDataBlockTableData] = useState([]);
 
@@ -258,7 +258,7 @@ function PipelineDetails({ dashboardData }) {
   );
 }
 
-PipelineDetails.propTypes = {
+InsightsSynopsisDetails.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -266,4 +266,4 @@ PipelineDetails.propTypes = {
   setKpis: PropTypes.func,
 };
 
-export default PipelineDetails;
+export default InsightsSynopsisDetails;

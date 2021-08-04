@@ -96,7 +96,7 @@ function NameValueInputBase({dataObject, setDataObject, fieldName, disabledField
 
   const getPropertyRow = (property, index) => {
     return (
-      <div className="d-flex my-2 justify-content-between" key={index}>
+      <div className="d-flex py-2 justify-content-between" key={index}>
         <Col sm={11}>
           <Row>
             <Col sm={6} className={"pl-1 pr-0"}>
@@ -142,7 +142,11 @@ function NameValueInputBase({dataObject, setDataObject, fieldName, disabledField
     return (
       <div className="flex-fill">
         {properties.map((property, index) => {
-          return getPropertyRow(property, index);
+          return (
+            <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
+              {getPropertyRow(property, index)}
+            </div>
+          );
         })}
       </div>
     );
@@ -221,10 +225,10 @@ function NameValueInputBase({dataObject, setDataObject, fieldName, disabledField
         type={type}
         addAllowed={lastPropertyComplete() || (allowIncompleteItems === true && lastPropertyEdited())}
       >
-        <div>
+        <div className={"filter-bg-white"}>
           {getHeaderBar()}
         </div>
-        <div className="properties-body-alt">
+        <div>
           {getFieldBody()}
         </div>
         {getIncompletePropertyMessage()}

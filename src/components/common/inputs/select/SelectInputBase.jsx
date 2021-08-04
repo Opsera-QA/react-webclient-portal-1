@@ -42,7 +42,6 @@ function SelectInputBase(
 
   const getClearDataFunction = () => {
     if (dataObject?.getData(field?.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
-      console.log("returning clear data function");
       return clearValue;
     }
   };

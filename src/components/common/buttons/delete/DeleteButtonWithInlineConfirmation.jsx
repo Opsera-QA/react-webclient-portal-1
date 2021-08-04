@@ -1,16 +1,14 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
 import {faTrash} from "@fortawesome/pro-light-svg-icons";
-import {cannotBeUndone} from "components/common/tooltip/popover-text";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import IconBase from "components/common/icons/IconBase";
 import DeleteConfirmationPanel from "components/common/panels/general/delete/DeleteConfirmationPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import InfoText from "components/common/inputs/info_text/InfoText";
+import DeleteButton from "components/common/buttons/delete/DeleteButton";
 
 function DeleteButtonWithInlineConfirmation({deleteRecord,  dataObject, disabled, size, icon, className}) {
   const toastContext = useContext(DialogToastContext);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const isMounted = useRef(false);
   const [showDeleteConfirmationPanel, setShowDeleteConfirmationPanel] = useState(false);
 
@@ -23,40 +21,60 @@ function DeleteButtonWithInlineConfirmation({deleteRecord,  dataObject, disabled
   }, []);
 
   const handleDelete = async () => {
-    setIsDeleting(true);
-    let response = await deleteRecord();
+    try {
+      let response = await deleteRecord();
 
-    if (response) {
-      toastContext.showDeleteSuccessResultDialog(dataObject.getType());
-      setShowDeleteConfirmationPanel(false);
+      if (response) {
+        toastContext.showDeleteSuccessResultDialog(dataObject.getType());
+        setShowDeleteConfirmationPanel(false);
+      }
     }
-
-    if (isMounted?.current === true) {
-      setIsDeleting(false);
+    catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        setErrorMessage(`Error deleting ${dataObject?.getType()}. Please check console log for more details`);
+      }
     }
   };
 
-  if (showDeleteConfirmationPanel) {
+  const handleClose = () => {
+    if (isMounted?.current === true) {
+      setShowDeleteConfirmationPanel(false);
+      setErrorMessage("");
+    }
+  };
+
+  const getBody = () => {
+    if (showDeleteConfirmationPanel) {
+      return (
+        <DeleteConfirmationPanel
+          dataObject={dataObject}
+          handleDelete={handleDelete}
+          handleClose={handleClose}
+          showDeleteConfirmationPanel={showDeleteConfirmationPanel}
+        />
+      );
+    }
+
     return (
-      <DeleteConfirmationPanel
+      <DeleteButton
+        deleteRecord={() => setShowDeleteConfirmationPanel(true)}
         dataObject={dataObject}
-        handleDelete={handleDelete}
-        setShowDeleteConfirmationPanel={setShowDeleteConfirmationPanel}
-        showDeleteConfirmationPanel={showDeleteConfirmationPanel}
+        size={size}
+        disabled={disabled}
+        icon={icon}
       />
     );
+  };
+
+  if (dataObject == null || dataObject?.isNew()) {
+    return null;
   }
 
   return (
     <div className={className}>
-      <TooltipWrapper innerText={cannotBeUndone}>
-        <Button size={size} variant="danger" disabled={isDeleting || disabled} onClick={() => setShowDeleteConfirmationPanel(true)}>
-          <span>
-            <IconBase icon={icon} isLoading={isDeleting} className="mr-2" fixedWidth />
-            {isDeleting ? `Deleting ${dataObject.getType()}` : `Delete ${dataObject.getType()}`}
-          </span>
-        </Button>
-      </TooltipWrapper>
+      <div>{getBody()}</div>
+      <InfoText errorMessage={errorMessage} />
     </div>
   );
 }

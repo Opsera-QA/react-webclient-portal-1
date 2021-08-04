@@ -24,6 +24,7 @@ const roleTypes = [
   {text: "Guest", value: "guest"},
 ];
 
+// TODO: Create RoleAccessInputRow that holds the actual inputs to clean this up.
 function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }) {
   const {getUserRecord, getAccessToken, setAccessRoles, isSassUser} = useContext(AuthContext);
   const [userList, setUserList] = useState([]);
@@ -364,7 +365,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
 
   const getPropertyRow = (role, index) => {
     return (
-      <div className="d-flex my-2" key={index}>
+      <div className="d-flex py-2" key={index}>
         <Col sm={11}>
           <Row>
             <Col sm={4} className={"pr-1"}>
@@ -388,8 +389,8 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
   const getFieldBody = () => {
     if (!roles || roles.length === 0) {
       return (
-        <div className="text-center">
-          <div className="text-muted no-data-message">No access roles have been added yet.</div>
+        <div className="roles-input">
+          <div className="text-center text-muted no-data-message">No access roles have been added yet.</div>
         </div>
       );
     }
@@ -397,7 +398,11 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
     return (
       <div className="flex-fill">
         {roles.map((property, index) => {
-          return getPropertyRow(property, index);
+          return (
+            <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
+              {getPropertyRow(property, index)}
+            </div>
+          );
         })}
       </div>
     );
@@ -405,7 +410,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
 
   const getHeaderBar = () => {
     return (
-      <div className="d-flex mt-1">
+      <div className="d-flex py-1">
         <Col sm={11}>
           <Row>
             <Col sm={4}>
@@ -458,10 +463,12 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
         helpComponent={getHelpComponent()}
       >
         <div>
-          {getHeaderBar()}
-        </div>
-        <div className="properties-body-alt">
-          {getFieldBody()}
+          <div className={"filter-bg-white"}>
+            {getHeaderBar()}
+          </div>
+          <div className="rules-input">
+            {getFieldBody()}
+          </div>
         </div>
         {getIncompleteRoleMessage()}
       </PropertyInputContainer>

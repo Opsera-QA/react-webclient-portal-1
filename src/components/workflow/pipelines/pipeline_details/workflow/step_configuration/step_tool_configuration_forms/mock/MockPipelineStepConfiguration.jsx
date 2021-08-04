@@ -28,7 +28,7 @@ function MockPipelineStepConfiguration({ stepTool, parentCallback, closeEditorPa
       setMockPipelineStepConfigurationDataDto(new Model(configuration, mockPipelineStepConfigurationMetadata, false));
     } else {
       setMockPipelineStepConfigurationDataDto(
-        new Model({ ...mockPipelineStepConfigurationMetadata.newModelBase }, mockPipelineStepConfigurationMetadata, false)
+        new Model({ ...mockPipelineStepConfigurationMetadata.newObjectFields }, mockPipelineStepConfigurationMetadata, false)
       );
     }
     // TODO: If threshold is needed, uncomment

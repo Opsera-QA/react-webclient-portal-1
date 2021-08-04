@@ -79,7 +79,7 @@ function DeleteTools() {
     }
     setAccessRoleData(userRoleAccess);
     setDeleteToolDto(
-      new Model({ ...DeleteToolMetadata.newModelBase }, DeleteToolMetadata, true)
+      new Model({ ...DeleteToolMetadata.newObjectFields }, DeleteToolMetadata, true)
     );
  };
 

@@ -142,7 +142,7 @@ toolsActions.getRoleLimitedToolById = async (id, getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-toolsActions.getRoleLimitedToolByIdV2 = async (id, getAccessToken, cancelTokenSource) => {
+toolsActions.getRoleLimitedToolByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/registry/configs/${id}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };

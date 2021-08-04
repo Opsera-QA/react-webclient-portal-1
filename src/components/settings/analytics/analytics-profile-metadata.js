@@ -41,7 +41,7 @@ const AnalyticsProfileMetadata = {
       id: "ldapOwnerEmail",
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     active: false,
     enabledToolsOn: "",
     defaultPersona: "",

@@ -50,7 +50,7 @@ function AnalyticsProfileSettings() {
         setAnalyticsProfileData(new Model(fetchedSettings, AnalyticsProfileMetadata, false));
       } else
         setAnalyticsProfileData(
-          new Model({ ...AnalyticsProfileMetadata.newModelBase }, AnalyticsProfileMetadata, true)
+          new Model({ ...AnalyticsProfileMetadata.newObjectFields }, AnalyticsProfileMetadata, true)
         );
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);

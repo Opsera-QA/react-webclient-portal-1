@@ -10,7 +10,7 @@ function JenkinsJobsPanel({ toolData, setToolData, loadData, isLoading }) {
   const [jenkinsJobModel, setJenkinsJobModel] = useState(undefined);
 
   const selectedJobRow = (rowData) => {
-    const parsedModel = modelHelpers.parseObjectIntoModelBase(rowData?.original, JenkinsJobMetadata);
+    const parsedModel = modelHelpers.parseObjectIntoModel(rowData?.original, JenkinsJobMetadata);
     const jobTypes = parsedModel?.getData("type");
     const jobType = Array.isArray(jobTypes) && jobTypes.length > 0 ? jobTypes[0] : "BUILD";
     parsedModel?.setData("jobType", typeof jobType === "string" ? jobType : "BUILD");

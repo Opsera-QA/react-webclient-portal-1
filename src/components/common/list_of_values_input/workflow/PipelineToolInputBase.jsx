@@ -8,8 +8,9 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 import axios from "axios";
+import pipelineHelpers from "components/workflow/pipelineHelpers";
 
-function PipelineToolInputBase({ toolType, toolFriendlyName, placeholderText, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, configurationRequired, className}) {
+function PipelineToolInputBase({ toolType, toolFriendlyName, placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
@@ -71,8 +72,8 @@ function PipelineToolInputBase({ toolType, toolFriendlyName, placeholderText, vi
   };
 
   const getDetailViewToolUrl = () => {
-    if (dataObject.getData(fieldName) !== "") {
-      return (`/inventory/tools/details/${dataObject?.getData(fieldName)}`);
+    if (model.getData(fieldName) !== "") {
+      return (`/inventory/tools/details/${model?.getData(fieldName)}`);
     }
   };
 
@@ -99,8 +100,8 @@ function PipelineToolInputBase({ toolType, toolFriendlyName, placeholderText, vi
       <SelectInputBase
         className={className}
         fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
+        dataObject={model}
+        setDataObject={setModel}
         setDataFunction={setDataFunction}
         selectOptions={tools}
         busy={isLoading}
@@ -110,6 +111,9 @@ function PipelineToolInputBase({ toolType, toolFriendlyName, placeholderText, vi
         clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading}
         detailViewLink={getDetailViewToolUrl()}
+        infoOverlay={pipelineHelpers.getRegistryPopover(
+          tools[tools.findIndex((tool) => tool?._id === model?.getData(fieldName))]
+        )}
         linkTooltipText={`View Or Edit this Tool's Registry settings`}
       />
       {getErrorMessage()}
@@ -122,8 +126,8 @@ PipelineToolInputBase.propTypes = {
   toolFriendlyName: PropTypes.string,
   placeholderText: PropTypes.string,
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,

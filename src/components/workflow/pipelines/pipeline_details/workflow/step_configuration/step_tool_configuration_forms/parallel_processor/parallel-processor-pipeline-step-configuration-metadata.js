@@ -9,7 +9,7 @@ const parallelProcessorPipelineStepConfigurationMetadata = {
       formText: "Please select up to 5 Pipelines."
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     pipelines: [],
   }
 };
