@@ -1,6 +1,5 @@
 import React, {useMemo} from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table/CustomTable";
 import {
   getTableTextColumn,
   getStaticInfoColumn, getRoleAccessLevelColumn
@@ -14,7 +13,7 @@ function ConsolidatedUserReportTaskAccessTable({ data, isLoading, paginationMode
   const fields = gitTasksMetadata.fields;
 
   const onRowSelect = (grid, row) => {
-    history.push(`/git/details/${row?._id}`);
+    history.push(`/task/details/${row?._id}`);
   };
 
   const columns = useMemo(
