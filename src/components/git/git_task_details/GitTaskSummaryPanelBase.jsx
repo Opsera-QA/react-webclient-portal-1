@@ -72,6 +72,9 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
             </Col>
           ))}
         <Col md={12} className={"pt-1"}>
+          <TextFieldBase dataObject={gitTasksData} fieldName={"description"} />
+        </Col>
+        <Col md={12} className={"pt-1"}>
           <TagsInlineInputBase
             type={"task"}
             dataObject={gitTasksData}
@@ -79,9 +82,6 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
             saveData={updateRecord}
             disabled={!actionAllowed("edit_settings")}
           />
-        </Col>
-        <Col md={12} className={"pt-1"}>
-          <TextFieldBase dataObject={gitTasksData} fieldName={"description"} />
         </Col>
         <Col lg={12}>
           <GitTaskRoleAccessInput

@@ -6,7 +6,7 @@ const toolCategoryMetadata = {
     return `/admin/tools/types/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `Tool Category Details [${record?.getData("name")}]`;
+    return `Tool Category Details [${record?.getOriginalValue("name")}]`;
   },
   fields: [
     {

@@ -6,7 +6,7 @@ const kpiMetaData = {
     return `/admin/kpis/${record.getData("_id")}`;
   },
   detailViewTitle: function(record) {
-    return `KPI Configuration Details [${record?.getData("name")}]`;
+    return `KPI Configuration Details [${record?.getOriginalValue("name")}]`;
   },
   fields: [
     {

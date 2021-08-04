@@ -23,11 +23,9 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import AwsEcsClusterCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsEcsClusterCreationTaskHelpDocumentation";
-  import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
-  import GitTaskTypeSelectInput from "components/common/list_of_values_input/git_tasks/GitTaskTypeSelectInput";
 
 function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }) {
-  const { getAccessToken, isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
+  const { getAccessToken, featureFlagHideItemInProd } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [gitTasksDataDto, setGitTasksDataDto] = useState(undefined);
   const [gitTasksConfigurationDataDto, setGitTasksConfigurationDataDto] = useState(undefined);
@@ -128,16 +126,6 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
     }
   };
 
-  const getDynamicFields = () => {
-    if (gitTasksDataDto?.isNew() && !isSassUser()) {
-      return (
-        <Col lg={12} className="mb-4">
-          <RoleAccessInput dataObject={gitTasksDataDto} setDataObject={setGitTasksDataDto} fieldName={"roles"}/>
-        </Col>
-      );
-    }
-  };
-
   const getBody = () => {
     return (
       <>
@@ -146,24 +134,16 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
           <Col lg={6}>
             <TextInputBase setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto} fieldName={"name"}/>
           </Col>
-          <Col lg={6}>
-          <GitTaskTypeSelectInput
-            setGitTasksConfigurationDataDto={setGitTasksConfigurationDataDto}
-            dataObject={gitTasksDataDto}
-            setDataObject={setGitTasksDataDto}
-          />
-          </Col>
           {/* <Col lg={6}>
           <ActivityToggleInput dataObject={gitTasksDataDto} setDataObject={setGitTasksDataDto} fieldName={"active"}/>
         </Col> */}
-          <Col lg={12}>
-            <TagManager type={"task"} setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}/>
-          </Col>
-          <Col lg={12}>
+          <Col lg={6}>
             <TextInputBase setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}
                            fieldName={"description"}/>
           </Col>
-          {getDynamicFields()}
+          <Col lg={12}>
+            <TagManager type={"task"} setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}/>
+          </Col>
         </Row>
         <GitTasksConfigurationPanel
           gitTasksConfigurationData={gitTasksConfigurationDataDto}
@@ -207,7 +187,6 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
         createRecord={createGitTask}
         updateRecord={updateGitTask}
         setRecordDto={setGitTasksDataDto}
-        showBooleanToggle={true}
         // extraButtons={getExtraButtons()}
         lenient={true}
         disable={

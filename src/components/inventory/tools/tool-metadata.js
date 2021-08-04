@@ -8,7 +8,7 @@ const toolMetadata = {
     return `/inventory/tools/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `Tool Details [${record?.name}]`;
+    return `Tool Details [${record?.getOriginalValue("name")}]`;
   },
   fields: [
     {
