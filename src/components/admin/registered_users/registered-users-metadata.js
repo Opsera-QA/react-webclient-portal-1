@@ -5,7 +5,7 @@ const registeredUsersMetadata = {
     return `/admin/tools/identifiers/details/${record.getData("_id")}`;
   },
   detailViewTitle: function(record) {
-    return `Registered User Details [${record.getData("email")}]`;
+    return `Registered User Details [${record.getOriginalValue("email")}]`;
   },
   fields: [
     {

@@ -6,7 +6,7 @@ const jiraProjectMetadata = {
     return `/admin/organizations/details/${record.getData("name")}`;
   },
   detailViewTitle: function (record) {
-    return `Jira Project Details [${record.getData("name")}]`;
+    return `Jira Project Details [${record.getOriginalValue("name")}]`;
   },
   fields: [
     {

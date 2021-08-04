@@ -8,7 +8,7 @@ const dashboardMetadata = {
     return `/insights/dashboards/${record?.getData("_id")}/viewer`;
   },
   detailViewTitle: function (record) {
-    return ` ${capitalizeFirstLetter(record?.getData("name"))}`;
+    return ` ${capitalizeFirstLetter(record?.getOriginalValue("name"))}`;
   },
   fields: [
     {

@@ -9,7 +9,7 @@ const tagEditorMetadata = {
     return `/settings/tags/${record.getData("_id")}`;
   },
   detailViewTitle: function(record) {
-    return `Tag Details [${capitalizeFirstLetter(record?.getData("type"))}: ${capitalizeFirstLetter(record?.getData("value"))}]`;
+    return `Tag Details [${capitalizeFirstLetter(record?.getOriginalValue("type"))}: ${capitalizeFirstLetter(record?.getOriginalValue("value"))}]`;
   },
   fields: [
     {

@@ -5,7 +5,7 @@ export const accessTokenMetadata = {
   //   return `/user/accessTokens/details/${record.getData("_id")}`;
   // },
   detailViewTitle: function (record) {
-    return `Access Token Details [${record.getData("name")}]`;
+    return `Access Token Details [${record?.getOriginalValue("name")}]`;
   },
   fields: [
     {
