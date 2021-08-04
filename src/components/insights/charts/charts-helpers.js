@@ -20,11 +20,11 @@ export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
 }
 
 export function getUseKpiTagsFromKpiConfiguration(kpiConfiguration) {
-  if (kpiConfiguration.settings && kpiConfiguration.settings.useKpiTags === true) 
+  if (kpiConfiguration?.settings?.useKpiTags === true) 
   {
     return true;
   }
-  if (kpiConfiguration.settings && kpiConfiguration.settings.useKpiTags === false) 
+  if (kpiConfiguration?.settings?.useKpiTags === false) 
   {
     return false;
   }

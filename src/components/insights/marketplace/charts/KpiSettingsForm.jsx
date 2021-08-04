@@ -254,7 +254,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
               dataObject={kpiTagsFilter}
               disabled={!tagFilterEnabled.includes(kpiSettings.getData("kpi_identifier"))}
             />
-              <Row>
+            <Row>
               <Col md={6}>
               <BooleanToggleInput fieldName={"useKpiTags"} dataObject={kpiConfigSettings} setDataObject={setKpiConfigSettings}/>
               </Col>
