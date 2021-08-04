@@ -450,7 +450,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
         return (
           <div>
             <ServiceNowPrioritiesMultiSelectInput
-              placeholderText={"Select Priority"}
+              placeholderText={"Select Priorities"}
               type={"kpi_filter"}
               fieldName={"value"}
               valueField={"value"}
