@@ -55,7 +55,7 @@ function JenkinsShellScriptEditorPanel({ jenkinsJobConfiguration, model, setMode
       <Col lg={6}>
         <JenkinsJobsShellScriptBuildTypeSelectInput
           model={model}
-          setDataObject={setModel}
+          setModel={setModel}
           fieldName="buildType"
         />
       </Col>
