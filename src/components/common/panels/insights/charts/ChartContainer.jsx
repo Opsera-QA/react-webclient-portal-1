@@ -14,7 +14,22 @@ import GenericChartSettingsHelpDocumentation
   from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
 import {AuthContext} from "contexts/AuthContext";
 
-function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, index, chart, isLoading, error, loadChart, setKpis, tableChart, chartHelpComponent, settingsHelpComponent }) {
+function ChartContainer(
+  {
+    kpiConfiguration,
+    setKpiConfiguration,
+    dashboardData,
+    index,
+    chart,
+    isLoading,
+    error,
+    loadChart,
+    setKpis,
+    tableChart,
+    chartHelpComponent,
+    settingsHelpComponent,
+    showSettingsToggle,
+  }) {
   const [view, setView] = useState("chart");
   const [helpIsShown, setHelpIsShown] = useState(false);
   const { featureFlagHideItemInProd } = useContext(AuthContext);
@@ -51,6 +66,20 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
     );
   };
 
+  // TODO: This is a workaround, but I want to come up with a better solution
+  const getSettingsToggle = () => {
+    if (showSettingsToggle !== false) {
+      return (
+        <ToggleSettingsIcon
+          className={"ml-2"}
+          visible={!helpIsShown}
+          activeTab={view}
+          setActiveTab={setView}
+        />
+      );
+    }
+  };
+
   const getTitleBar = () => {
     if (isLoading) {
       return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Chart</span>);
@@ -64,7 +93,7 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
             Error Loading Chart!
           </span>
           <div>
-            <ToggleSettingsIcon activeTab={view} setActiveTab={setView}/>
+            {getSettingsToggle()}
           </div>
         </div>
       );
@@ -78,7 +107,7 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
         </div>
         <div className={"d-flex"}>
           {getHelpToggle()}
-          <ToggleSettingsIcon className={"ml-2"} visible={!helpIsShown} activeTab={view} setActiveTab={setView}/>
+          {getSettingsToggle()}
         </div>
       </div>
     );
@@ -186,7 +215,8 @@ ChartContainer.propTypes = {
   loadChart: PropTypes.func,
   tableChart: PropTypes.bool,
   chartHelpComponent: PropTypes.func,
-  settingsHelpComponent: PropTypes.func
+  settingsHelpComponent: PropTypes.func,
+  showSettingsToggle: PropTypes.bool,
 };
 
 export default ChartContainer;
