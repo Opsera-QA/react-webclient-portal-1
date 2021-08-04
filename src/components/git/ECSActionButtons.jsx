@@ -164,11 +164,9 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
   };
 
   const handleCancelRunTask = async (automatic) => {
-    setIsCanceling(true);
-    let gitTaskDataCopy = gitTasksData;
-    gitTaskDataCopy.setData("status", "stopped");
-    await gitTaskActions.updateGitTaskV2(getAccessToken, axios.CancelToken.source(), gitTaskDataCopy);
-    await gitTaskActions.logClusterCancellation(getAccessToken, axios.CancelToken.source(), gitTaskDataCopy);
+    setIsCanceling(true);    
+    await gitTaskActions.stopTask(getAccessToken, cancelTokenSource, gitTasksData);
+    await gitTaskActions.logClusterCancellation(getAccessToken, axios.CancelToken.source(), gitTasksData);
     setTaskFinished(true);
     isMounted.current = false;
     if (automatic) {
