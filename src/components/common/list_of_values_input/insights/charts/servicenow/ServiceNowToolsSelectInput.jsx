@@ -12,8 +12,9 @@ function ServiceNowToolsSelectInput({
   fieldName,
   dataObject,
   setDataObject,
-  setDataFunction,
   disabled,
+  groupsDataObject,
+  groupsSetDataObject,
 }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -66,6 +67,24 @@ function ServiceNowToolsSelectInput({
     }
   };
 
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newModel = { ...dataObject };
+    newModel.setData(fieldName, selectedOption?._id);
+    // newModel.setData("", "");
+    setDataObject({ ...newModel });
+  };
+
+  const clearDataFunction = () => {
+    let newModel = { ...dataObject };
+    // newModel.setData(fieldName, "");
+    newModel.setData("value", "");
+    setDataObject({ ...newModel });
+
+    let newGroupsModel = { ...groupsDataObject };
+    newGroupsModel.setData("value", "");
+    groupsSetDataObject({ ...newGroupsModel });
+  };
+
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -73,12 +92,12 @@ function ServiceNowToolsSelectInput({
       setDataObject={setDataObject}
       selectOptions={tools}
       setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
       busy={isLoading}
       valueField={valueField}
       textField={textField}
       placeholderText={placeholderText}
       disabled={disabled}
-      onChange={(newValue) => console.log("newValue", newValue)}
     />
   );
 }
@@ -89,10 +108,11 @@ ServiceNowToolsSelectInput.propTypes = {
   valueField: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   placeholderText: PropTypes.string,
+  groupsDataObject: PropTypes.func,
+  groupsSetDataObject: PropTypes.func,
 };
 
 ServiceNowToolsSelectInput.defaultProps = {
