@@ -73,7 +73,6 @@ modelHelpers.setDashboardFilterModelField = (kpiConfiguration, type, newValue) =
 
 modelHelpers.getDashboardSettingsModel= (kpiConfiguration, metaData) => {
   let dashboardSettings = kpiConfiguration.settings;
-  console.log(dashboardSettings);
   if (dashboardSettings) {
     return new Model(dashboardSettings, metaData, true);
   }
