@@ -40,9 +40,7 @@ function GitTaskRunButton({gitTasksData, setGitTasksData, disable, className, lo
   const handleCancelRunTask = async () => {
     setIsCanceling(true);
     // TODO: call cancel job api to jenkins integrator
-    let newGitTasksData = gitTasksData;
-      newGitTasksData.setData("status", "stopped");
-    await gitTaskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newGitTasksData);
+    await gitTaskActions.stopTask(getAccessToken, cancelTokenSource, gitTasksData);
     toastContext.showInformationToast("Task has been stopped", 10);
     setIsCanceling(false);
     history.push(`/task`);
