@@ -155,6 +155,7 @@ function ServiceNowMeanTimeBetweenFailuresBarChart({
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        showSettingsToggle={false}
       />
       <ModalLogs
         header="Mean Time Between Failures"

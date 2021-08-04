@@ -206,6 +206,7 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        showSettingsToggle={false}
       />
       <ModalLogs
         header="Mean Time to Acknowledge"
