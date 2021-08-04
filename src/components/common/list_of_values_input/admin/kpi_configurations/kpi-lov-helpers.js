@@ -34,8 +34,8 @@ kpiLovHelpers.filters = [
   { id: { type: "selenium-test-suites", value: [] }, label: "Selenium Test Suites" },
   { id: { type: "sonar-project-languages", value: [] }, label: "Sonar Project Languages" },
   { id: { type: "servicenow-priorities", value: [] }, label: "Service Now Priorities" },
-  { id: { type: "servicenow-tools", value: [] }, label: "Service Now Tool" },
-  { id: { type: "servicenow-assignment-groups", value: [] }, label: "Service Now Assignment Groups" },
+  { id: { type: "servicenow-tools", value: "" }, label: "Service Now Tool" },
+  { id: { type: "servicenow-assignment-groups", value: "" }, label: "Service Now Assignment Groups" },
 ];
 
 kpiLovHelpers.getFilterById = (id) => {

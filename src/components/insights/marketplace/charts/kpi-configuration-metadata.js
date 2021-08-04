@@ -386,7 +386,7 @@ export const kpiServiceNowToolsFilterMetadata = {
     },
   ],
   newObjectFields: {
-    value: [],
+    value: "",
   },
 };
 
@@ -403,7 +403,7 @@ export const kpiServiceNowAssignmentGroupsFilterMetadata = {
     },
   ],
   newObjectFields: {
-    value: [],
+    value: "",
   },
 };
 
