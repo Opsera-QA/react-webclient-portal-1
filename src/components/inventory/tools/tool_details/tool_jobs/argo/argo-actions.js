@@ -27,27 +27,13 @@ argoActions.deleteArgoApplicationV2 = async (getAccessToken, cancelTokenSource, 
 };
 
 argoActions.getArgoClustersV2 = async (getAccessToken, cancelTokenSource, toolId) => {
-  const apiUrl = `/tools/argo/clusters`;
-  let postBody = {
-    params: {
-      tool: "argo",
-      toolId: toolId,
-    },
-  };
-
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  const apiUrl = `/tools/${toolId}/argo/v2/clusters`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 argoActions.getArgoProjectsV2 = async (getAccessToken, cancelTokenSource, toolId) => {
-  const apiUrl = `/tools/argo/projects`;
-  let postBody = {
-    params: {
-      tool: "argo",
-      toolId: toolId,
-    },
-  };
-
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  const apiUrl = `/tools/${toolId}/argo/v2/projects`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 argoActions.getArgoApplicationsV2 = async (getAccessToken, cancelTokenSource, toolId) => {

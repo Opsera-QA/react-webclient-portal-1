@@ -45,7 +45,7 @@ function ArgoProjectsSelectInput({ argoToolId, visible, fieldName, dataObject, s
     catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
-        toastContext.showErrorDialog("Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry.");
+        toastContext.showErrorDialog(error);
       }
     }
     finally {
