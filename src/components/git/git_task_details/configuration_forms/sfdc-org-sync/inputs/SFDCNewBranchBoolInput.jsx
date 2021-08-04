@@ -5,16 +5,15 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 function SFDCNewBranchBoolInput({dataObject, setDataObject, disabled}) {
   const setNewBranch = (fieldName, value) => {
     let newDataObject = {...dataObject};
-    newDataObject.setData("newBranch", value);
+    newDataObject.setData("isNewBranch", value);
     if(!value){
-        newDataObject.setData("hasUpstreamBranch", false);
         newDataObject.setData("upstreamBranch", "");
     }
     setDataObject({...newDataObject});
   };
   return (
       <BooleanToggleInput
-        fieldName={"newBranch"}
+        fieldName={"isNewBranch"}
         dataObject={dataObject}
         setDataFunction={setNewBranch}
         setDataObject={setDataObject}
