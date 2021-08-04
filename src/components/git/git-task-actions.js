@@ -17,6 +17,14 @@ gitTasksActions.updateGitTaskV2 = async (getAccessToken, cancelTokenSource, gitT
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+gitTasksActions.stopTask = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {
+  const postBody = {
+    ...gitTasksDataDto.getPersistData()
+  };
+  const apiUrl = `/tools/git/${gitTasksDataDto.getData("_id")}/stop`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 gitTasksActions.createGitTaskV2 = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {
   const postBody = {
     ...gitTasksDataDto.getPersistData()
