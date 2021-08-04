@@ -18,7 +18,7 @@ export let taskTypes = [
   { name: "Create AWS ECS Service", value: "ecs_service_creation" },
 ];
 // TODO: Remove the disabled items from here when done
-function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction, placeholderText }) {
+function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled,setGitTasksConfigurationDataDto, placeholderText }) {
   const { featureFlagHideItemInProd } = useContext(AuthContext);
   const envIsProd = featureFlagHideItemInProd();
 
@@ -96,6 +96,14 @@ function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled
     } else return [];
   };
 
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newDataObject = dataObject;
+    newDataObject.setData("type", selectedOption.value);
+    newDataObject.setData("configuration", {});
+    setGitTasksConfigurationDataDto(undefined);
+    setDataObject({...newDataObject});
+  };
+
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -119,6 +127,7 @@ GitTaskTypeSelectInput.propTypes = {
   placeholderText: PropTypes.string,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
+  setGitTasksConfigurationDataDto: PropTypes.func,
 };
 
 GitTaskTypeSelectInput.defaultProps = {
