@@ -86,8 +86,6 @@ function ServiceNowAssignmentGroupSelectInput({
     }
   };
 
-  console.log("groups: " + JSON.stringify(dataObject.getData(fieldName)));
-
   return (
     <SelectInputBase
       fieldName={fieldName}
