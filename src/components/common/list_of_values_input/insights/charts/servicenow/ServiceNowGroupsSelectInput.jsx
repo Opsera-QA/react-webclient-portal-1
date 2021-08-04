@@ -14,7 +14,7 @@ function ServiceNowAssignmentGroupSelectInput({
   setDataObject,
   setDataFunction,
   disabled,
-  serviceNowId,
+  serviceNowToolId,
 }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -33,8 +33,8 @@ function ServiceNowAssignmentGroupSelectInput({
     isMounted.current = true;
 
     setGroups([]);
-    if (serviceNowId) {
-      loadGroups(serviceNowId, source).catch((error) => {
+    if (serviceNowToolId !== "" && serviceNowToolId != null) {
+      loadGroups(serviceNowToolId, source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
@@ -45,7 +45,7 @@ function ServiceNowAssignmentGroupSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [serviceNowId]);
+  }, [serviceNowToolId]);
 
   const loadGroups = async (serviceNowId, cancelSource = cancelTokenSource) => {
     try {
@@ -77,11 +77,11 @@ function ServiceNowAssignmentGroupSelectInput({
       return "Loading Assignment Groups";
     }
 
-    if (serviceNowId === "") {
+    if (serviceNowToolId === "") {
       return "A ServiceNow Tool must be selected before selecting a Assignment Group";
     }
 
-    if (!isLoading && serviceNowId !== "" && groups.length === 0) {
+    if (!isLoading && serviceNowToolId !== "" && groups.length === 0) {
       return "No Assignment Groups found for selected ServiceNow account.";
     }
   };
@@ -97,7 +97,7 @@ function ServiceNowAssignmentGroupSelectInput({
       valueField={valueField}
       textField={textField}
       placeholderText={getPlaceholderText()}
-      disabled={disabled || isLoading || serviceNowId === "" || groups.length === 0}
+      disabled={disabled || isLoading || serviceNowToolId === "" || groups.length === 0}
     />
   );
 }
@@ -112,7 +112,7 @@ ServiceNowAssignmentGroupSelectInput.propTypes = {
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   placeholderText: PropTypes.string,
-  serviceNowId: PropTypes.string,
+  serviceNowToolId: PropTypes.string,
 };
 
 ServiceNowAssignmentGroupSelectInput.defaultProps = {

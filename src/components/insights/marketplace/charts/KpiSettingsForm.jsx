@@ -488,7 +488,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
               textField={"name"}
               setDataObject={setKpiServiceNowAssignmentGroupsFilter}
               dataObject={kpiServiceNowAssignmentGroupsFilter}
-              serviceNowId={kpiServiceNowToolsFilter.data.value}
+              serviceNowToolId={kpiServiceNowToolsFilter.getData("value")}
             />
           </div>
         );
