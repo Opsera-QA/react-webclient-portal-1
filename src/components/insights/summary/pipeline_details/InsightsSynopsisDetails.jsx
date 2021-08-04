@@ -38,6 +38,7 @@ function InsightsSynopsisDetails({ dashboardData }) {
     setSelectedDataBlockTableData([]);
   }, [dashboardData]);
 
+  // TODO: Why are the selection items inconsistent? they should all be lowercase and separated by underscores.
   const getDynamicPanel = () => {
     switch (selectedDataBlock) {
       case "pipelines_by_project":
