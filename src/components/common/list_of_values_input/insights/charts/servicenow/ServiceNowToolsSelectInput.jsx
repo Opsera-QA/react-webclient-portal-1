@@ -13,6 +13,8 @@ function ServiceNowToolsSelectInput({
   dataObject,
   setDataObject,
   disabled,
+  groupsDataObject,
+  groupsSetDataObject,
 }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -66,19 +68,21 @@ function ServiceNowToolsSelectInput({
   };
 
   const setDataFunction = (fieldName, selectedOption) => {
-    let newModel = {...dataObject};
+    let newModel = { ...dataObject };
     newModel.setData(fieldName, selectedOption?._id);
-    // TODO: Harsha, you need to set the fieldName for the group input here.
     // newModel.setData("", "");
-    setDataObject({...newModel});
+    setDataObject({ ...newModel });
   };
 
   const clearDataFunction = () => {
-    let newModel = {...dataObject};
-    newModel.setData(fieldName, "");
-    // TODO: Harsha, you need to set the fieldName for the group input here.
-    // newModel.setData("", "");
-    setDataObject({...newModel});
+    let newModel = { ...dataObject };
+    // newModel.setData(fieldName, "");
+    newModel.setData("value", "");
+    setDataObject({ ...newModel });
+
+    let newGroupsModel = { ...groupsDataObject };
+    newGroupsModel.setData("value", "");
+    groupsSetDataObject({ ...newGroupsModel });
   };
 
   return (
@@ -107,6 +111,8 @@ ServiceNowToolsSelectInput.propTypes = {
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   placeholderText: PropTypes.string,
+  groupsDataObject: PropTypes.func,
+  groupsSetDataObject: PropTypes.func,
 };
 
 ServiceNowToolsSelectInput.defaultProps = {
