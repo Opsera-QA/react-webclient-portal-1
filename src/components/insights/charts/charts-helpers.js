@@ -19,6 +19,30 @@ export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
   };
 }
 
+export function getUseKpiTagsFromKpiConfiguration(kpiConfiguration) {
+  if (kpiConfiguration.settings && kpiConfiguration.settings.useKpiTags === true) 
+  {
+    return true;
+  }
+  if (kpiConfiguration.settings && kpiConfiguration.settings.useKpiTags === false) 
+  {
+    return false;
+  }
+  return true;
+}
+
+export function getUseDashboardTagsFromKpiConfiguration(kpiConfiguration) {
+  if (kpiConfiguration?.settings?.useDashboardTags === true) 
+  {
+    return true;
+  }
+  if (kpiConfiguration?.settings?.useDashboardTags === false) 
+  {
+    return false;
+  }
+  return true;
+}
+
 export function getTagsFromKpiConfiguration(kpiConfiguration) {
   if (
     kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "tags")]?.value &&

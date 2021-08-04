@@ -33,6 +33,24 @@ const kpiConfigurationMetadata = {
   ],
 };
 
+export const kpiSettingsMetadata = {
+  type: "KPI Settings",
+  fields: [
+    {
+      label: "Use KPI Tags",
+      id: "useKpiTags",
+    },
+    {
+      label: "Use Dashboard Tags",
+      id: "useDashboardTags",
+    },
+  ],
+  newObjectFields: {
+    useKpiTags: true,
+    useDashboardTags: true
+  },
+};
+
 export const kpiDateFilterMetadata = {
   type: "Date Filter",
   fields: [
