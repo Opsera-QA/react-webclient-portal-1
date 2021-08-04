@@ -17,18 +17,12 @@ import {AuthContext} from "contexts/AuthContext";
 function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, index, chart, isLoading, error, loadChart, setKpis, tableChart, chartHelpComponent, settingsHelpComponent }) {
   const [view, setView] = useState("chart");
   const [helpIsShown, setHelpIsShown] = useState(false);
-  const { featureFlagHideItemInProd } = useContext(AuthContext);
 
   const closeHelpPanel = () => {
     setHelpIsShown(false);
   };
 
   const getHelpToggle = () => {
-    // TODO: Remove feature flag after verification
-    if (featureFlagHideItemInProd()) {
-      return null;
-    }
-
     if ((view !== "chart" || chartHelpComponent) && !helpIsShown) {
       return (
         <ActionBarToggleHelpButton
