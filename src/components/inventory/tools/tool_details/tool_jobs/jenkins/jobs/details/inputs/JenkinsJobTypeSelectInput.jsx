@@ -65,10 +65,14 @@ function JenkinsJobTypeSelectInput({ fieldName, model, setModel, setConfiguratio
   const setDataFunction = (fieldName, valueObject) => {
     const value = valueObject?.value;
     model.setData("type", [value]);
-    model.setData(fieldName, value);
     setConfigurationModel(undefined);
     model.setData("configuration", {});
     setModel({...model});
+  };
+
+  const getCurrentValue = () => {
+    const typeArray = model?.getArrayData("type");
+    return Array.isArray(typeArray) && typeArray.length > 0 ? typeArray[0] : "";
   };
 
   return (
@@ -78,6 +82,7 @@ function JenkinsJobTypeSelectInput({ fieldName, model, setModel, setConfiguratio
       setDataObject={setModel}
       setDataFunction={setDataFunction}
       selectOptions={JENKINS_JOB_TYPES}
+      getCurrentValue={getCurrentValue}
       valueField="value"
       textField="label"
       disabled={disabled}
