@@ -28,6 +28,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
   dashboardData,
   index,
   setKpis,
+  showSettingsToggle,
 }) {
   const { getAccessToken } = useContext(AuthContext);
   // const toastContext = useContext(DialogToastContext);
@@ -147,7 +148,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
-        showSettingsToggle={false}
+        showSettingsToggle={showSettingsToggle}
       />
       <ModalLogs
         header="Mean Time to Resolution"
@@ -170,6 +171,7 @@ ServiceNowMeanTimeToResolutionBarChart.propTypes = {
   bars: PropTypes.any,
   xScale: PropTypes.any,
   yScale: PropTypes.any,
+  showSettingsToggle:PropTypes.bool,
 };
 
 export default ServiceNowMeanTimeToResolutionBarChart;

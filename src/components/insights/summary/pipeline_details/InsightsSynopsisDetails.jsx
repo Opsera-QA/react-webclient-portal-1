@@ -101,6 +101,7 @@ function InsightsSynopsisDetails({ dashboardData }) {
           <ServiceNowMeanTimeToResolutionBarChart
             dashboardData={dashboardData}
             kpiConfiguration={{ kpi_name: "Service Now Mean Time to Resolution", filters: [] }}
+            showSettingsToggle={false}
           />
         );
       case "serviceNowMTTA":
@@ -108,6 +109,7 @@ function InsightsSynopsisDetails({ dashboardData }) {
           <ServiceNowMeanTimeToAcknowledgeBarChart
             dashboardData={dashboardData}
             kpiConfiguration={{ kpi_name: "Service Now Mean Time to Acknowledgement", filters: [] }}
+            showSettingsToggle={false}
           />
         );
       case "serviceNowMTBF":
@@ -115,6 +117,7 @@ function InsightsSynopsisDetails({ dashboardData }) {
           <ServiceNowMeanTimeBetweenFailuresBarChart
             dashboardData={dashboardData}
             kpiConfiguration={{ kpi_name: "Service Now Mean Time Between Failures", filters: [] }}
+            showSettingsToggle={false}
           />
         );
       default:
