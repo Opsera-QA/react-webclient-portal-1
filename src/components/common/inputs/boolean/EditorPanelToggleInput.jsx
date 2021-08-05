@@ -1,9 +1,6 @@
-import React, { useState } from "react";
+import React  from "react";
 import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
-import InputContainer from "components/common/inputs/InputContainer";
-import InfoText from "components/common/inputs/info_text/InfoText";
-import Row from "react-bootstrap/Row";
 
 function EditorPanelToggleInput({ fieldName, dataObject, setDataObject, disabled, enabledText, disabledText }) {
   const validateAndSetData = (value) => {
@@ -13,23 +10,19 @@ function EditorPanelToggleInput({ fieldName, dataObject, setDataObject, disabled
   };
 
   return (
-    <div className={"mt-2"}>
-      <Row className={"mx-0 d-flex"}>
-        <div className={"d-flex ml-auto mr-4"}>
-          <Form.Check
-            type="switch"
-            id={fieldName}
-            checked={!!dataObject?.getData(fieldName)}
-            label={<span> </span>}
-            disabled={disabled}
-            onChange={() => {
-              validateAndSetData(!dataObject.getData(fieldName));
-            }}
-          />
-          <div style={{marginTop: "1px"}}>{dataObject?.getData(fieldName) === true ? enabledText : disabledText}</div>
-        </div>
-      </Row>
-    </div>
+    <span className={"d-flex"}>
+      <Form.Check
+        type="switch"
+        id={fieldName}
+        checked={!!dataObject?.getData(fieldName)}
+        label={<span> </span>}
+        disabled={disabled}
+        onChange={() => {
+          validateAndSetData(!dataObject.getData(fieldName));
+        }}
+      />
+      <span style={{marginTop: "1px"}}>{dataObject?.getData(fieldName) === true ? enabledText : disabledText}</span>
+    </span>
   );
 }
 
