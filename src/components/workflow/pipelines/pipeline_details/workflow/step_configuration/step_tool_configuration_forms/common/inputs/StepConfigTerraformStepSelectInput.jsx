@@ -67,9 +67,17 @@ function StepConfigTerraformStepSelectInput({
   const setTerraformDetails = (fieldName, selectedOption) => {
     let newDataObject = { ...dataObject };
     newDataObject.setData(fieldName, selectedOption._id);
-    let tempCustomParamsObject = selectedOption?.tool?.configuration?.customParameters && Array.isArray(selectedOption?.tool?.configuration?.customParameters) ? selectedOption?.tool?.configuration?.customParameters : [];
-    let currentCustomParamsObject = newDataObject?.getData("customParameters");
-    newDataObject.setData("customParameters", [...tempCustomParamsObject, ...currentCustomParamsObject]);
+    let tempCustomParamsObject = selectedOption?.tool?.configuration?.customParameters && Array.isArray(selectedOption?.tool?.configuration?.customParameters) ? selectedOption?.tool?.configuration?.customParameters : []; 
+    
+    let currentCustomParamsObject = newDataObject?.getData("customParameters");    
+    let filteredCustomParamsObject = [];
+    for (let item in currentCustomParamsObject) {
+      if (!currentCustomParamsObject[item]?.outputKey) {
+        filteredCustomParamsObject.push(currentCustomParamsObject[item]);
+      }
+    }
+
+    newDataObject.setData("customParameters", [...tempCustomParamsObject, ...filteredCustomParamsObject]);
     setDataObject({ ...newDataObject });
   };
 
