@@ -1,5 +1,5 @@
 const JenkinsShellScriptJobMetadata = {
-    type: "Jenkins Unit Test Job",
+    type: "Jenkins Shell Script Job",
     fields: [
       {
         label: "Shell Script",
@@ -13,7 +13,7 @@ const JenkinsShellScriptJobMetadata = {
     ],
     newObjectFields: {
       buildType: "",
-      agentLabels: "generic-linux",
+      agentLabels: "",
     },
   };
   
