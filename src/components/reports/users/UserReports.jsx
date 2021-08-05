@@ -4,9 +4,9 @@ import Row from "react-bootstrap/Row";
 import {AuthContext} from "contexts/AuthContext";
 
 function UserReports() {
-  const { isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
+  const { isSassUser } = useContext(AuthContext);
 
-  if (featureFlagHideItemInProd() || isSassUser() !== false) {
+  if (isSassUser() !== false) {
     return null;
   }
 
