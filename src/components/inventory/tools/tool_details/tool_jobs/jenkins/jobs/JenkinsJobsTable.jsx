@@ -32,7 +32,8 @@ export const getJobTypeColumn = (field, className) => {
     Header: "Type",
     accessor: "type",
     Cell: function formatCell(row) {
-      return row.value[0];
+      const valueArray = row?.value;
+      return Array.isArray(valueArray) && valueArray.length > 0 ? valueArray[0] : "";
     },
     className: className
   };
