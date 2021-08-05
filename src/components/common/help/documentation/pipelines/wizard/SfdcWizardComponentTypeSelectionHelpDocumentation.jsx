@@ -24,7 +24,7 @@ function SfdcWizardComponentTypeSelectionHelpDocumentation({closeHelpPanel}) {
           managed package has the namespace prefixed to the component API name. Provide the NamespacePrefix to retrieve
           components that are part of managed package.
         </li>
-        <li><b>Included Component Types</b> -
+        <li><b>Included Component Types</b>:
           <ul>
             <li><b>All</b> - Includes both Managed and Custom Component Types.</li>
             <li><b>Managed</b> - Managed Components include a Namespace Prefix. They include a collection of components
