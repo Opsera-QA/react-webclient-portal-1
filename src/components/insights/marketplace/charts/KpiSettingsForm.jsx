@@ -1,9 +1,12 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
+import { Row, Col } from "react-bootstrap";
 import DateRangeInput from "components/common/inputs/date/DateRangeInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import kpiConfigurationMetadata from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import {
+  kpiSettingsMetadata,
   kpiDateFilterMetadata,
   kpiTagsFilterMetadata,
   kpiJenkinsResultFilterMetadata,
@@ -47,6 +50,7 @@ import ServiceNowAssignmentGroupSelectInput from "components/common/list_of_valu
 function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [kpiSettings, setKpiSettings] = useState(new Model(kpiConfiguration, kpiConfigurationMetadata, false));
+  const [kpiConfigSettings, setKpiConfigSettings] = useState(modelHelpers.getDashboardSettingsModel(kpiConfiguration, kpiSettingsMetadata));
   const [kpiDateFilter, setKpiDateFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "date", kpiDateFilterMetadata)
   );
@@ -250,6 +254,14 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
               dataObject={kpiTagsFilter}
               disabled={!tagFilterEnabled.includes(kpiSettings.getData("kpi_identifier"))}
             />
+            <Row>
+              <Col md={6}>
+              <BooleanToggleInput fieldName={"useKpiTags"} dataObject={kpiConfigSettings} setDataObject={setKpiConfigSettings}/>
+              </Col>
+              <Col md={6}>
+              <BooleanToggleInput fieldName={"useDashboardTags"} dataObject={kpiConfigSettings} setDataObject={setKpiConfigSettings}/>
+              </Col>
+            </Row>
           </div>
         );
       case "jenkins-result":
@@ -497,6 +509,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
 
   const saveKpiSettings = async () => {
     let newKpiSettings = kpiSettings;
+    newKpiSettings.setData("settings", kpiConfigSettings.data);
     if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "date")]) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "date")
