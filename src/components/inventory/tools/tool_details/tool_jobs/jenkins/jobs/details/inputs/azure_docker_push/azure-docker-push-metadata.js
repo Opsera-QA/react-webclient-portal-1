@@ -1,21 +1,20 @@
-const JenkinsSfdcJobMetadata = {
+const AzureDockerPushJobMetadata = {
   type: "Jenkins SFDC Job",
   fields: [
     {
       label: "Build Step",
-      id: "jobType",
+      id: "buildType",
       isRequired: true,
     },
     {
       label: "Agent Label",
       id: "agentLabels",
-      formText: "Currently, the only supported Agent Label is Ubuntu Agent",
     },
   ],
   newObjectFields: {
-    jobType: "",
+    buildType: "docker",
     agentLabels: "generic-linux",
   },
 };
 
-export default JenkinsSfdcJobMetadata;
+export default AzureDockerPushJobMetadata;

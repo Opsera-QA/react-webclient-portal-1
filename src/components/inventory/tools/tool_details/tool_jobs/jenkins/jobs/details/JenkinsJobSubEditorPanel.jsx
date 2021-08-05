@@ -16,9 +16,10 @@ import JenkinsJobsBuildMetadata
 import axios from "axios";
 import JenkinsShellScriptJobMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/shell_script/jenkins-shell-script-metadata";
-import Col from "react-bootstrap/Col";
 import JenkinsGenericJobEditorPanel
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/generic/JenkinsPythonJobEditorPanel";
+import AzureDockerPushJobEditorPanel
+  from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/azure_docker_push/AzureDockerPushJobEditorPanel";
 
 export const getMetadataForJenkinsJobType = (jenkinsJobType) => {
   switch (jenkinsJobType) {
@@ -113,6 +114,15 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
             type="ARTIFACTORY_DOCKER_PUSH"
+            autoScalingEnabled={autoScalingEnabled}
+          />
+        );
+      case "AZURE_DOCKER_PUSH":
+        return (
+          <AzureDockerPushJobEditorPanel
+            model={jenkinsJobConfigurationModel}
+            setModel={setJenkinsJobConfigurationModel}
+            jenkinsJobConfiguration={jenkinsJobConfiguration}
             autoScalingEnabled={autoScalingEnabled}
           />
         );

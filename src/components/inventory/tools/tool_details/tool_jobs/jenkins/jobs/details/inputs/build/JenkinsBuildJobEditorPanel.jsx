@@ -19,7 +19,7 @@ function JenkinsBuildJobEditorPanel({ jenkinsJobConfiguration, model, setModel, 
   }, [jenkinsJobConfiguration]);
 
   const unpackJobConfiguration = () => {
-    const parsedModel = modelHelpers.parseObjectIntoModelBase(jenkinsJobConfiguration, JenkinsJobsBuildMetadata);
+    const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, JenkinsJobsBuildMetadata);
     setModel({...parsedModel});
   };
 

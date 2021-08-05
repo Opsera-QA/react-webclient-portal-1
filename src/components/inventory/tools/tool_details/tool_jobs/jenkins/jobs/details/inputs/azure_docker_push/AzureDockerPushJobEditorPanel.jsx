@@ -3,20 +3,19 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import modelHelpers from "components/common/model/modelHelpers";
-import JenkinsSfdcJobMetadata
-  from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/sfdc/jenkins-sfdc-build-metadata";
 import JenkinsJobsGenericAgentTypeSelectInput
   from "components/common/list_of_values_input/tools/jenkins/jobs/JenkinsJobsGenericAgentTypeSelectInput";
-import JenkinsJobsSfdcTypeSelectInput
-  from "components/common/list_of_values_input/tools/jenkins/jobs/sfdc/JenkinsJobsSfdcTypeSelectInput";
+import AzureDockerPushJobMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/azure_docker_push/azure-docker-push-metadata";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
-function JenkinsSfdcJobEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled }) {
+function AzureDockerPushJobEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled }) {
   useEffect(() => {
     unpackJobConfiguration();
   }, [jenkinsJobConfiguration]);
 
   const unpackJobConfiguration = () => {
-    const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, JenkinsSfdcJobMetadata);
+    const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, AzureDockerPushJobMetadata);
     setModel({...parsedModel});
   };
 
@@ -40,10 +39,11 @@ function JenkinsSfdcJobEditorPanel({ jenkinsJobConfiguration, model, setModel, a
   return (
     <Row>
       <Col lg={6}>
-        <JenkinsJobsSfdcTypeSelectInput 
-          model={model} 
-          setModel={setModel} 
-          fieldName="jobType" 
+        <TextInputBase
+          dataObject={model}
+          setDataObject={setModel}
+          fieldName={"buildType"}
+          disabled={true}
         />
       </Col>
       {getAutoScalingField()}
@@ -51,11 +51,11 @@ function JenkinsSfdcJobEditorPanel({ jenkinsJobConfiguration, model, setModel, a
   );
 }
 
-JenkinsSfdcJobEditorPanel.propTypes = {
+AzureDockerPushJobEditorPanel.propTypes = {
   jenkinsJobConfiguration: PropTypes.object,
   model: PropTypes.object,
   setModel: PropTypes.func,
   autoScalingEnabled: PropTypes.bool,
 };
 
-export default JenkinsSfdcJobEditorPanel;
+export default AzureDockerPushJobEditorPanel;

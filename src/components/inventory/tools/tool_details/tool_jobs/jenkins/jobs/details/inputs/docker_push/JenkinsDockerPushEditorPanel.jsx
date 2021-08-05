@@ -4,10 +4,10 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
-import JenkinsShellScriptJobMetadata
-  from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/shell_script/jenkins-shell-script-metadata";
 import JenkinsJobsGenericAgentTypeSelectInput
   from "components/common/list_of_values_input/tools/jenkins/jobs/JenkinsJobsGenericAgentTypeSelectInput";
+import JenkinsDockerPushJobMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/docker_push/jenkins-docker-push-metadata";
 
 function JenkinsDockerPushEditorPanel({ jenkinsJobConfiguration, model, setModel, type, autoScalingEnabled }) {
   useEffect(() => {
@@ -15,7 +15,7 @@ function JenkinsDockerPushEditorPanel({ jenkinsJobConfiguration, model, setModel
   }, [jenkinsJobConfiguration]);
 
   const unpackJobConfiguration = () => {
-    const parsedModel = modelHelpers.parseObjectIntoModelBase(jenkinsJobConfiguration, JenkinsShellScriptJobMetadata);
+    const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, JenkinsDockerPushJobMetadata);
     setModel({...parsedModel});
   };
 

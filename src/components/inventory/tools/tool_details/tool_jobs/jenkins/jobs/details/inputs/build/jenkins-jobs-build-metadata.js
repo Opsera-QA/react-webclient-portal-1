@@ -28,11 +28,10 @@ const JenkinsBuildJobMetadata = {
     },
   ],
   newObjectFields: {
-    commandLineArgs:"",
-    jobType:"",
-    mavenTask:"",
-    buildType:"",
-    gradleTask:"",
+    commandLineArgs: "",
+    mavenTask: "",
+    buildType: "",
+    gradleTask: "",
     agentLabels: "",
   },
 };
