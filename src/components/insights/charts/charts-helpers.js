@@ -20,27 +20,11 @@ export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
 }
 
 export function getUseKpiTagsFromKpiConfiguration(kpiConfiguration) {
-  if (kpiConfiguration?.settings?.useKpiTags === true) 
-  {
-    return true;
-  }
-  if (kpiConfiguration?.settings?.useKpiTags === false) 
-  {
-    return false;
-  }
-  return true;
+  return kpiConfiguration?.settings?.useKpiTags !== false;
 }
 
 export function getUseDashboardTagsFromKpiConfiguration(kpiConfiguration) {
-  if (kpiConfiguration?.settings?.useDashboardTags === true) 
-  {
-    return true;
-  }
-  if (kpiConfiguration?.settings?.useDashboardTags === false) 
-  {
-    return false;
-  }
-  return true;
+  return kpiConfiguration?.settings?.useDashboardTags !== false;
 }
 
 export function getTagsFromKpiConfiguration(kpiConfiguration) {
