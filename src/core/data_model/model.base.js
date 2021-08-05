@@ -167,7 +167,7 @@ export class ModelBase {
     }
   };
 
-  getArrayData = (fieldName) => {
+  getArrayData = (fieldName, index) => {
     let currentValue = this.getData(fieldName);
 
     if (currentValue == null) {
@@ -178,6 +178,10 @@ export class ModelBase {
       console.error(`Value was not saved as array. Returning in array.`);
       console.error(`Value: ${JSON.stringify(currentValue)}`);
       return [currentValue];
+    }
+
+    if (typeof index === "number") {
+      return currentValue.length >= index + 1 ? currentValue[index] : null;
     }
 
     return currentValue;
