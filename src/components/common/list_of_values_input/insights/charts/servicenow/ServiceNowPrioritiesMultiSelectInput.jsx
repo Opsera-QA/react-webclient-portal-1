@@ -60,7 +60,7 @@ function ServiceNowPrioritiesMultiSelectInput({
     return (
       <div className="form-text text-muted p-2">
         <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
-        No Priorities/Severities available.
+        No Priorities available.
       </div>
     );
   }
