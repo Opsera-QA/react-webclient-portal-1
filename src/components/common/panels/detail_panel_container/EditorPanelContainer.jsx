@@ -54,14 +54,16 @@ function EditorPanelContainer(
   };
 
   const getHelpToggle = () => {
-    return (
-      <ActionBarToggleHelpButton
-        toggleHelp={() => setHelpIsShown(true)}
-        helpIsShown={helpIsShown}
-        visible={getHelpComponent() != null}
-        className={"ml-2"}
-      />
-    );
+    if (getHelpComponent) {
+      return (
+        <ActionBarToggleHelpButton
+          toggleHelp={() => setHelpIsShown(true)}
+          helpIsShown={helpIsShown}
+          visible={getHelpComponent() != null}
+          className={"ml-2"}
+        />
+      );
+    }
   };
 
   const getBooleanToggle = () => {
