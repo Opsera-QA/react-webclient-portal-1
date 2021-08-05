@@ -23,6 +23,7 @@ import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import Modal from "../../../../../../../common/modal/modal";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 import JenkinsJobTypeArtifactoryDockerPush from "../job-type-artifactory-docker-push";
+import JenkinsJobTypeAzureDockerPush from "../job-type-azure-docker-push";
 
 // TODO: Remove after prod verification for a few weeks
 function JenkinsJobEditorPanelV1({ toolData, jobData, loadData, handleClose }) {
@@ -138,6 +139,9 @@ function JenkinsJobEditorPanelV1({ toolData, jobData, loadData, handleClose }) {
       break;
     case "NUNIT_UNIT_TESTING":
       updateJenkinsForm({ ...JenkinsJobTypeNUnitUnitTesting });
+      break;
+    case "AZURE_DOCKER_PUSH":
+      updateJenkinsForm({ ...JenkinsJobTypeAzureDockerPush });
       break;
     }
     setFormType(type);
