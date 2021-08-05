@@ -15,11 +15,6 @@ function MetricContainer({ isLoading, children, title, chartHelpComponent }) {
   };
 
   const getHelpToggle = () => {
-    // TODO: Remove feature flag after verification
-    if (featureFlagHideItemInProd()) {
-      return null;
-    }
-
     if (chartHelpComponent && !helpIsShown) {
       return (
         <ActionBarToggleHelpButton
