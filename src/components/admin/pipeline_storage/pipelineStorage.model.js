@@ -19,7 +19,7 @@ export class PipelineStorageModel extends ModelBase {
   };
 
   getDetailViewTitle = () => {
-    return `Pipeline Storage Details [${this.getData("_id")}]`;
+    return `Pipeline Storage Details [${this.getOriginalValue("_id")}]`;
   };
 
   getManagementScreenLink = () => {

@@ -6,7 +6,7 @@ const toolIdentifierMetadata = {
     return `/admin/tools/identifiers/details/${record.getData("_id")}`;
   },
   detailViewTitle: function(record) {
-    return `Tool Identifier Details [${record?.getData("name")}]`;
+    return `Tool Identifier Details [${record?.getOriginalValue("name")}]`;
   },
   fields: [
     {

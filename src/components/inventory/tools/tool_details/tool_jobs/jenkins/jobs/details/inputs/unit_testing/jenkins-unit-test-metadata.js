@@ -21,7 +21,7 @@ const JenkinsUnitTestJobMetadata = {
       },
     ],
     newObjectFields: {
-      jobType: "",
+      buildType: "",
       gradleTask:"",
       mavenTask:"",
       agentLabels: "generic-linux",

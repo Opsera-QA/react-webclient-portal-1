@@ -45,7 +45,6 @@ const JenkinsJobMetadata = {
     description: "",
     type: ["BUILD"],
     configuration: {},
-    jobType: "BUILD",
     active: true
   },
 };

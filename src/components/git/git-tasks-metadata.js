@@ -6,7 +6,7 @@ const gitTasksMetadata = {
     return `/task/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `Task Details [${record.getData("name")}]`;
+    return `Task Details [${record.getOriginalValue("name")}]`;
   },
   fields: [
     {

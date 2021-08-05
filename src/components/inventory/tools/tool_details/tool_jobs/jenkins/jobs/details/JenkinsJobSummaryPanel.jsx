@@ -10,7 +10,7 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 
 function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobTypeData, setActiveTab, handleClose }) {
   const getDynamicJobTypeSummaryPanel = () => {
-    switch (jenkinsJobData?.getData("jobType")) {
+    switch (jenkinsJobData?.getArrayData("type", 0)) {
       case "BUILD":
         return <JenkinsBuildJobSummaryPanel dataObject={jenkinsJobTypeData} />;
       case "UNIT TESTING":

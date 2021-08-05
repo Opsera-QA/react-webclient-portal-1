@@ -462,7 +462,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
         return (
           <div>
             <ServiceNowPrioritiesMultiSelectInput
-              placeholderText={"Select Priority"}
+              placeholderText={"Select Priorities"}
               type={"kpi_filter"}
               fieldName={"value"}
               valueField={"value"}
@@ -500,7 +500,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
               textField={"name"}
               setDataObject={setKpiServiceNowAssignmentGroupsFilter}
               dataObject={kpiServiceNowAssignmentGroupsFilter}
-              serviceNowId={kpiServiceNowToolsFilter.data.value}
+              serviceNowToolId={kpiServiceNowToolsFilter.getData("value")}
             />
           </div>
         );

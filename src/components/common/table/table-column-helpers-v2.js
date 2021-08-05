@@ -327,7 +327,7 @@ export const getTableBooleanIconColumn = (field, className, width = 60) => {
     id: getColumnId(field),
     align: "center",
     width: width,
-    template: function (text, row, col) {
+    template: function (text) {
       const iconCss = text === true ? "fa-check-circle green" : "fa-times-circle red";
       return (
         `<i class="fal ${iconCss} cell-icon vertical-align-item"></i>`

@@ -6,6 +6,7 @@ import JenkinsGenericJobMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/generic/jenkins-generic-job-metadata";
 import JenkinsJobsGenericAgentTypeSelectInput
   from "components/common/list_of_values_input/tools/jenkins/jobs/JenkinsJobsGenericAgentTypeSelectInput";
+import Row from "react-bootstrap/Row";
 
 function JenkinsGenericJobEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled }) {
   useEffect(() => {
@@ -22,12 +23,14 @@ function JenkinsGenericJobEditorPanel({ jenkinsJobConfiguration, model, setModel
   }
 
   return (
-    <Col lg={6}>
-      <JenkinsJobsGenericAgentTypeSelectInput
-        model={model}
-        setModel={setModel}
-      />
-    </Col>
+    <Row>
+      <Col lg={6}>
+        <JenkinsJobsGenericAgentTypeSelectInput
+          model={model}
+          setModel={setModel}
+        />
+      </Col>
+    </Row>
   );
 }
 

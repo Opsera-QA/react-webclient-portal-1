@@ -375,14 +375,14 @@ export const kpiSonarProjectLanguagesFilterMetadata = {
 };
 
 export const kpiServiceNowPrioritiesFilterMetadata = {
-  type: "Service Now Priority",
+  type: "Service Now Priorities",
   fields: [
     {
       label: "Type",
       id: "type",
     },
     {
-      label: "Service Now Priority",
+      label: "Service Now Priorities",
       id: "value",
     },
   ],
@@ -404,7 +404,7 @@ export const kpiServiceNowToolsFilterMetadata = {
     },
   ],
   newObjectFields: {
-    value: [],
+    value: "",
   },
 };
 
@@ -421,7 +421,7 @@ export const kpiServiceNowAssignmentGroupsFilterMetadata = {
     },
   ],
   newObjectFields: {
-    value: [],
+    value: "",
   },
 };
 

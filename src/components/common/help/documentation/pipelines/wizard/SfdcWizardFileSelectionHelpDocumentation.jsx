@@ -52,7 +52,7 @@ function SfdcWizardFileSelectionHelpDocumentation({closeHelpPanel}) {
         <div className={"ml-3"}>
           <div>If <b>Include Rules</b> are selected:</div>
           <div className={"ml-2"}>
-            <div>The initial results are generated based on the specified <b>Include Rules</b></div>
+            <div>The initial results are generated based on the specified <b>Include Rules</b>.</div>
             <div>This list is then filtered by any preceding <b>Exclude Rules</b> (if specified). <b>Exclude
               Rules</b> take precedence over any <b>Include Rule</b>.
             </div>
