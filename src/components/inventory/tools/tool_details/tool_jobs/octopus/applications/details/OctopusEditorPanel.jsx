@@ -32,6 +32,7 @@ import axios from "axios";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import pipelineActions from "components/workflow/pipeline-actions";
+import OctopusFeedEditorForm from "./sub_forms/OctopusFeedEditorForm";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -482,64 +483,69 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
           </Row>
         )}
         {octopusApplicationDataDto && type && type === "feed" && !isLoading && (
-          <Row>
-            <Col lg={12}>
-              <TextInputBase
-                setDataObject={setOctopusApplicationDataDto}
-                dataObject={octopusApplicationDataDto}
-                fieldName={"name"}
-                disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
-              />
-            </Col>
-            <Col lg={12}>
-              <SpaceNameSelectInput
-                fieldName={"spaceName"}
-                dataObject={octopusApplicationDataDto}
-                setDataObject={setOctopusApplicationDataDto}
-                disabled={appID ? true : false}
-                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
-              />
-            </Col>
-            <Col lg={12}>
-              <NexusSelectInput
-                fieldName={"nexusToolId"}
-                dataObject={octopusApplicationDataDto}
-                setDataObject={setOctopusApplicationDataDto}
-                disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
-                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
-              />
-            </Col>
-            <Col lg={12}>
-              <NexusRepoSelectInput
-                fieldName={"nexusRepository"}
-                dataObject={octopusApplicationDataDto}
-                setDataObject={setOctopusApplicationDataDto}
-                disabled={
-                  (octopusApplicationDataDto &&
-                    octopusApplicationDataDto.getData("nexusToolId") &&
-                    octopusApplicationDataDto.getData("nexusToolId").length === 0) ||
-                  (appID && !octopusApplicationDataDto.getData("id"))
-                    ? true
-                    : false
-                }
-                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("nexusToolId") : ""}
-              />
-            </Col>
-            <Col lg={12}>
-              <FeedTypeSelectInput
-                fieldName={"feedType"}
-                dataObject={octopusApplicationDataDto}
-                setDataObject={setOctopusApplicationDataDto}
-                disabled={
-                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) ||
-                  (appID && !octopusApplicationDataDto.getData("id"))
-                    ? true
-                    : false
-                }
-                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
-              />
-            </Col>
-          </Row>
+          // <Row>
+          //   <Col lg={12}>
+          //     <TextInputBase
+          //       setDataObject={setOctopusApplicationDataDto}
+          //       dataObject={octopusApplicationDataDto}
+          //       fieldName={"name"}
+          //       disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
+          //     />
+          //   </Col>
+          //   <Col lg={12}>
+          //     <SpaceNameSelectInput
+          //       fieldName={"spaceName"}
+          //       dataObject={octopusApplicationDataDto}
+          //       setDataObject={setOctopusApplicationDataDto}
+          //       disabled={appID ? true : false}
+          //       tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
+          //     />
+          //   </Col>
+          //   <Col lg={12}>
+          //     <NexusSelectInput
+          //       fieldName={"nexusToolId"}
+          //       dataObject={octopusApplicationDataDto}
+          //       setDataObject={setOctopusApplicationDataDto}
+          //       disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
+          //       tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
+          //     />
+          //   </Col>
+          //   <Col lg={12}>
+          //     <NexusRepoSelectInput
+          //       fieldName={"nexusRepository"}
+          //       dataObject={octopusApplicationDataDto}
+          //       setDataObject={setOctopusApplicationDataDto}
+          //       disabled={
+          //         (octopusApplicationDataDto &&
+          //           octopusApplicationDataDto.getData("nexusToolId") &&
+          //           octopusApplicationDataDto.getData("nexusToolId").length === 0) ||
+          //         (appID && !octopusApplicationDataDto.getData("id"))
+          //           ? true
+          //           : false
+          //       }
+          //       tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("nexusToolId") : ""}
+          //     />
+          //   </Col>
+          //   <Col lg={12}>
+          //     <FeedTypeSelectInput
+          //       fieldName={"feedType"}
+          //       dataObject={octopusApplicationDataDto}
+          //       setDataObject={setOctopusApplicationDataDto}
+          //       disabled={
+          //         (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) ||
+          //         (appID && !octopusApplicationDataDto.getData("id"))
+          //           ? true
+          //           : false
+          //       }
+          //       tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
+          //     />
+          //   </Col>
+          // </Row>
+          <OctopusFeedEditorForm 
+            dataObject={octopusApplicationDataDto}
+            setDataObject={setOctopusApplicationDataDto}
+            appID={appID}
+          />
         )}
         {octopusApplicationDataDto && type && type === "tomcat" && !isLoading && (
           <Row>
