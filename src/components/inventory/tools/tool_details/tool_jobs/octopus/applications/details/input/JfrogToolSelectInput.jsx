@@ -16,7 +16,7 @@ const JfrogToolSelectInput = ({ dataObject, setDataObject, fieldName, disabled }
 
   return (
      <PipelineToolInput
-       toolType={"jfrog_artifactory_docker"}
+       toolType={"jfrog_artifactory_maven"}
        toolFriendlyName={"JFrog"}
        fieldName={fieldName}
        placeholderText={"Select JFrog Tool"}
