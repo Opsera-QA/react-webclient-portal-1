@@ -310,7 +310,7 @@ function CommandLineStepConfiguration({
   useEffect(() => {
     if (jobsList && jobsList.length > 0 && formData.toolJobId && formData.toolJobId.length > 0 &&  !jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]) {
      let toast = getErrorDialog(
-        "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Reigstry.",
+        "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Registry.",
         setShowToast,
         "detailPanelTop"
       );
