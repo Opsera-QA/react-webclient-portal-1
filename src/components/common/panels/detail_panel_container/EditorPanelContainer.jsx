@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -6,6 +6,7 @@ import PersistAndCloseButtonContainer from "components/common/buttons/saving/con
 import {Form} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import EditorPanelToggleInput from "components/common/inputs/boolean/EditorPanelToggleInput";
+import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 
 function EditorPanelContainer(
   {
@@ -23,8 +24,10 @@ function EditorPanelContainer(
     extraButtons,
     showBooleanToggle,
     enabledText,
-    disabledText
+    disabledText,
+    getHelpComponent,
   }) {
+  const [helpIsShown, setHelpIsShown] = useState(false);
 
   const getRequiredFieldsMessage = () => {
     if (showRequiredFieldsMessage) {
@@ -50,6 +53,19 @@ function EditorPanelContainer(
     }
   };
 
+  const getHelpToggle = () => {
+    if (getHelpComponent) {
+      return (
+        <ActionBarToggleHelpButton
+          toggleHelp={() => setHelpIsShown(true)}
+          helpIsShown={helpIsShown}
+          visible={getHelpComponent() != null}
+          className={"ml-2"}
+        />
+      );
+    }
+  };
+
   const getBooleanToggle = () => {
     if (showBooleanToggle === true) {
       return (
@@ -67,9 +83,27 @@ function EditorPanelContainer(
     return (<LoadingDialog size="sm"/>);
   }
 
+  if (helpIsShown) {
+    const helpComponent = getHelpComponent(setHelpIsShown);
+
+    if (helpComponent != null) {
+      return (
+        <div className={"p-2"}>
+          {helpComponent}
+        </div>
+      );
+    }
+  }
+
   return (
     <div className="h-100">
-      {getBooleanToggle()}
+      <div className={"mt-2 d-flex justify-content-between"} style={{paddingRight: "20px"}}>
+        <div />
+        <div className={"d-flex"}>
+          {getBooleanToggle()}
+          {getHelpToggle()}
+        </div>
+      </div>
       <div className={showBooleanToggle === true ? "mx-2 px-3 pb-3" : "mx-2 p-3"}>
         <div>{children}</div>
         <div>
@@ -97,7 +131,8 @@ EditorPanelContainer.propTypes = {
   extraButtons: PropTypes.any,
   showBooleanToggle: PropTypes.bool,
   enabledText: PropTypes.string,
-  disabledText: PropTypes.string
+  disabledText: PropTypes.string,
+  getHelpComponent: PropTypes.func,
 };
 
 EditorPanelContainer.defaultProps = {
