@@ -19,6 +19,8 @@ import {
   getProjectFromKpiConfiguration,
   getSeleniumTestSuitesFromKpiConfiguration,
   getSonarProjectLanguagesFromKpiConfiguration,
+  getServiceNowPrioritiesFromKpiConfiguration,
+  getServiceNowAssignmentGroupsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 
 const chartsActions = {};
@@ -83,26 +85,28 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   pipelineName,
   currentDate
 ) => {
-  const apiUrl = "/analytics/metrics";
-  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
-  const tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  const jenkinsResult = getJenkinsResultFromKpiConfiguration(kpiConfiguration);
-  const jenkinsJobUrl = getJenkinsJobUrlFromKpiConfiguration(kpiConfiguration);
-  const jenkinsBuildNumber = getJenkinsBuildNumberFromKpiConfiguration(kpiConfiguration);
-  const jiraIssueType = getJiraIssueTypeFromKpiConfiguration(kpiConfiguration);
-  const jiraIssueComponents = getJiraIssueComponentsFromKpiConfiguration(kpiConfiguration);
-  const jiraIssueLabels = getJiraIssueLabelsFromKpiConfiguration(kpiConfiguration);
-  const jiraIssueStatus = getJiraIssueStatusFromKpiConfiguration(kpiConfiguration);
-  const jiraIssueStartStatus = getJiraIssueStartStatusFromKpiConfiguration(kpiConfiguration);
-  const jiraIssueDoneStatus = getJiraIssueDoneStatusFromKpiConfiguration(kpiConfiguration);
-  const sonarProjectKey = getSonarProjectKeyFromKpiConfiguration(kpiConfiguration);
-  const domain = getDomainFromKpiConfiguration(kpiConfiguration);
-  const application = getApplicationFromKpiConfiguration(kpiConfiguration);
-  const sprint = getSprintFromKpiConfiguration(kpiConfiguration);
-  const release = getReleaseFromKpiConfiguration(kpiConfiguration);
-  const project = getProjectFromKpiConfiguration(kpiConfiguration);
-  const seleniumTestSuites = getSeleniumTestSuitesFromKpiConfiguration(kpiConfiguration);
-  const sonarProjectLanguages = getSonarProjectLanguagesFromKpiConfiguration(kpiConfiguration);
+  const apiUrl = "/analytics/metrics",
+    date = getDateObjectFromKpiConfiguration(kpiConfiguration),
+    tags = getTagsFromKpiConfiguration(kpiConfiguration),
+    jenkinsResult = getJenkinsResultFromKpiConfiguration(kpiConfiguration),
+    jenkinsJobUrl = getJenkinsJobUrlFromKpiConfiguration(kpiConfiguration),
+    jenkinsBuildNumber = getJenkinsBuildNumberFromKpiConfiguration(kpiConfiguration),
+    jiraIssueType = getJiraIssueTypeFromKpiConfiguration(kpiConfiguration),
+    jiraIssueComponents = getJiraIssueComponentsFromKpiConfiguration(kpiConfiguration),
+    jiraIssueLabels = getJiraIssueLabelsFromKpiConfiguration(kpiConfiguration),
+    jiraIssueStatus = getJiraIssueStatusFromKpiConfiguration(kpiConfiguration),
+    jiraIssueStartStatus = getJiraIssueStartStatusFromKpiConfiguration(kpiConfiguration),
+    jiraIssueDoneStatus = getJiraIssueDoneStatusFromKpiConfiguration(kpiConfiguration),
+    sonarProjectKey = getSonarProjectKeyFromKpiConfiguration(kpiConfiguration),
+    domain = getDomainFromKpiConfiguration(kpiConfiguration),
+    application = getApplicationFromKpiConfiguration(kpiConfiguration),
+    sprint = getSprintFromKpiConfiguration(kpiConfiguration),
+    release = getReleaseFromKpiConfiguration(kpiConfiguration),
+    project = getProjectFromKpiConfiguration(kpiConfiguration),
+    seleniumTestSuites = getSeleniumTestSuitesFromKpiConfiguration(kpiConfiguration),
+    sonarProjectLanguages = getSonarProjectLanguagesFromKpiConfiguration(kpiConfiguration),
+    serviceNowPriorities = getServiceNowPrioritiesFromKpiConfiguration(kpiConfiguration),
+    serviceNowAssignmentGroups = getServiceNowAssignmentGroupsFromKpiConfiguration(kpiConfiguration);
 
   const postBody = {
     request: request,
@@ -132,6 +136,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     pipelineName: pipelineName,
     currentDate: currentDate,
     sonarProjectLanguages: sonarProjectLanguages,
+    serviceNowPriorities: serviceNowPriorities,
+    serviceNowAssignmentGroups: serviceNowAssignmentGroups,
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
