@@ -104,7 +104,6 @@ function DeploymentFrequencyDataBlock({ dashboardData, toggleDynamicPanel, selec
   };
 
   const onDataBlockSelect = () => {
-    console.log(metrics[0].data);
     toggleDynamicPanel("deployment_frequency", metrics[0]?.data);
   };
 
