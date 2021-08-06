@@ -4,8 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { axiosApiService } from "../../api/apiService";
 import { useHistory } from "react-router-dom";
-import ErrorDialog from "../common/status_notifications/error";
-import InformationDialog from "../common/status_notifications/info";
 import { faArrowLeft } from "@fortawesome/pro-solid-svg-icons";
 import { AuthContext } from "../../contexts/AuthContext";
 import "@okta/okta-signin-widget/dist/css/okta-sign-in.min.css";
@@ -64,7 +62,11 @@ const LoginForm = ({ authClient }) => {
             let tokens = res.tokens;
             authClient.tokenManager.setTokens(tokens);
             setLoading(false);
-            history.push("/");
+            //history.push("/");
+
+            if (history.location.pathname === "/logout") {
+              history.push("/");
+            }
           })
           .catch(function(err) {
             console.log("Error on getWithoutPrompt, trying fallback", err);
@@ -389,7 +391,6 @@ const LoginForm = ({ authClient }) => {
     );
   }
 };
-
 
 const WelcomeMessage = () => {
   return (
