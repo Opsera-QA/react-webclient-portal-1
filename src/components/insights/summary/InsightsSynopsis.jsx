@@ -13,6 +13,12 @@ import dashboardMetadata from "components/insights/dashboards/dashboard-metadata
 import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
+import DateRangeInput from "components/common/inputs/date/DateRangeInput";
+import { Button, Popover, Overlay } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendar } from "@fortawesome/pro-light-svg-icons";
+import { format, addDays } from "date-fns";
+import { DateRangePicker } from "react-date-range";
 
 function InsightsSynopsis() {
   const {getUserRecord, setAccessRoles} = useContext(AuthContext);
@@ -23,6 +29,20 @@ function InsightsSynopsis() {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [dashboardData, setDashboardData] = useState(undefined);
   const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(modelHelpers.getDashboardFilterModel(dashboardData, "tags", dashboardFiltersMetadata));
+  const [date, setDate] = useState([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 7),
+      key: "selection",
+    },
+  ]);
+  const [calendar, setCalendar] = useState(false);
+  const [target, setTarget] = useState(null);
+  const [sDate, setSDate] = useState("");
+  const [eDate, setEDate] = useState("");
+  const [calenderActivation, setCalenderActivation] = useState(false);
+  const node = useRef();
+  const ref = useRef(null);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -72,6 +92,130 @@ function InsightsSynopsis() {
     }
   };
 
+  const toggleCalendar = (event) => {
+    setCalenderActivation(true);
+    setCalendar(!calendar);
+    setTarget(event.target);
+    if (date[0].startDate && date[0].endDate) {
+      let startDate = format(new Date(date[0].startDate), "MM/dd/yyyy");
+      if (date[0].endDate === 0) {
+        setEDate(startDate);
+      } else {
+        let endDate = format(new Date(date[0].endDate), "MM/dd/yyyy");
+        setEDate(endDate);
+      }
+
+      setSDate(startDate);
+    }
+  };
+
+  const closeCalender = () => {
+    setCalendar(false);
+
+    if (date[0].startDate && date[0].endDate) {
+      let startDate = format(new Date(date[0].startDate), "MM/dd/yyyy");
+      setSDate(startDate);
+
+      if (date[0].endDate === 0) {
+        setEDate(startDate);
+      } else {
+        let endDate = format(new Date(date[0].endDate), "MM/dd/yyyy");
+        setEDate(endDate);
+      }
+    }
+  };
+
+  const dateChange = (item) => {
+    setDate([item.selection]);
+
+    if (item.selection) {
+      let startDate = format(item.selection.startDate, "MM/dd/yyyy");
+      setSDate(startDate);
+
+      if (item.selection.endDate === 0) {
+        setEDate(startDate);
+      } else {
+        let endDate = format(item.selection.endDate, "MM/dd/yyyy");
+        setEDate(endDate);
+        validate(startDate,endDate);
+      }
+    }
+  };
+
+  const validate = (startDate,endDate)=>{
+      let sDate = startDate ? new Date(startDate).toISOString() : undefined;
+      let eDate = endDate ? new Date(endDate).toISOString() : undefined;
+      let newDashboardFilterTagsModel = dashboardFilterTagsModel;
+      newDashboardFilterTagsModel.setData( "date" , { startDate: sDate , endDate: eDate, key: "selection" } );
+      setDashboardFilterTagsModel({...newDashboardFilterTagsModel});
+  
+      let newDataModel = modelHelpers.setDashboardFilterModelField(dashboardData, "date", { startDate: sDate , endDate: eDate, key: "selection" });
+      loadData(newDataModel);
+  };
+
+  const clearCalendar = () => {
+    setDate([
+      {
+        startDate: undefined,
+        endDate: undefined,
+        key: "selection",
+      },
+    ]);
+    setSDate(undefined);
+    setEDate(undefined);
+    validate();
+  };
+
+  const getDateRangeButton = () => {
+    return (
+      <Overlay
+        show={calendar}
+        target={target}
+        placement="bottom"
+        container={ref.current}
+        containerPadding={20}
+      >
+        <Popover className="max-content-width">
+          <Popover.Title>
+            <div style={{ display: "flex" }}>
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                type="button"
+                style={{ marginRight: "auto" }}
+                onClick={clearCalendar}
+              >
+                Clear
+              </Button>
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                type="button"
+                style={{ marginLeft: "auto" }}
+                onClick={closeCalender}
+              >
+                X
+              </Button>
+            </div>
+          </Popover.Title>
+          <Popover.Content ref={node}>
+            <DateRangePicker
+              startDatePlaceholder="Start Date"
+              endDatePlaceholder="End Date"
+              onChange={dateChange}
+              showSelectionPreview={true}
+              moveRangeOnFirstSelection={false}
+              months={1}
+              ranges={date}
+              direction="horizontal"
+            />
+            {/* <DateRangeInput dataObject={dashboardFilterTagsModel} setDataObject={setDashboardFilterTagsModel} fieldName={"date"} /> */}
+          </Popover.Content>
+        </Popover>
+      </Overlay>
+    );
+  };
+
   const getSynopsisActionBarContainer = () => {
       return (
         <ActionBarContainer>
@@ -91,6 +235,13 @@ function InsightsSynopsis() {
               fieldName={"organizations"}
               loadData={loadData}
             />
+            {/* <p>this is a test</p> */}
+            <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
+              <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
+              {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
+            </Button>
+            {getDateRangeButton()}
+            {/* <DateRangeInput dataObject={dashboardFilterTagsModel} setDataObject={setDashboardFilterTagsModel} fieldName={"date"} />  */}
           </div>
         </ActionBarContainer>
       );

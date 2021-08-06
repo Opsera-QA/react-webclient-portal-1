@@ -50,12 +50,23 @@ function AvgBuildDuration({ dashboardData, toggleDynamicPanel, selectedDataBlock
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dateRange = dashboardData?.data?.filters[
+        dashboardData?.data?.filters.findIndex(
+          (obj) => obj.type === "date"
+        )
+      ]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken, 
         cancelSource, 
         "opseraBuildDuration", 
         null, 
-        dashboardTags
+        dashboardTags,
+        null,
+        null,
+        null,
+        null,
+        null,
+        dateRange
       );
       let dataObject = response?.data?.data[0]?.opseraBuildDuration?.data || [];
 
