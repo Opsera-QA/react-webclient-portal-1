@@ -90,11 +90,15 @@ function InsightsSynopsisDetails({ dashboardData }) {
             tableTitle="Average Deployment Duration (Mins)"
           />
         );
+      case "Average_Build_Duration": {
+        return <InsightsPipelineDetailsDurationTable data={selectedDataBlockTableData} tableTitle="Average Build Duration (Mins)" />;
+      }
       case "serviceNowMTTR":
         return (
           <ServiceNowMeanTimeToResolutionBarChart
             dashboardData={dashboardData}
             kpiConfiguration={{ kpi_name: "Service Now Mean Time to Resolution", filters: [] }}
+            showSettingsToggle={false}
           />
         );
       case "serviceNowMTTA":
@@ -102,6 +106,7 @@ function InsightsSynopsisDetails({ dashboardData }) {
           <ServiceNowMeanTimeToAcknowledgeBarChart
             dashboardData={dashboardData}
             kpiConfiguration={{ kpi_name: "Service Now Mean Time to Acknowledgement", filters: [] }}
+            showSettingsToggle={false}
           />
         );
       case "serviceNowMTBF":
@@ -109,6 +114,7 @@ function InsightsSynopsisDetails({ dashboardData }) {
           <ServiceNowMeanTimeBetweenFailuresBarChart
             dashboardData={dashboardData}
             kpiConfiguration={{ kpi_name: "Service Now Mean Time Between Failures", filters: [] }}
+            showSettingsToggle={false}
           />
         );
       default:
@@ -133,19 +139,19 @@ function InsightsSynopsisDetails({ dashboardData }) {
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
         <PipelinesPassedWithQualityAndSecurity
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
         <TotalPipelinesPassedDeployment
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
       </DataBlockWrapper>
     );
@@ -158,35 +164,35 @@ function InsightsSynopsisDetails({ dashboardData }) {
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
         <PipelinesFailedSecurity
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
         <PipelinesFailedDeployment
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
       </DataBlockWrapper>
     );
   };
-  // const getValueStream = () => {
-  //   return (
-  //     <DataBlockWrapper padding={0}>
-  //       <JiraLeadTimeDataBlock
-  //         dashboardData={dashboardData}
-  //         toggleDynamicPanel={toggleDynamicPanel}
-  //         selectedDataBlock={selectedDataBlock}
-  //         style={{maxWidth:"33%"}}
-  //       />
-  //     </DataBlockWrapper>
-  //   );
-  // };
+  const getValueStream = () => {
+    return (
+      <DataBlockWrapper padding={0}>
+        <JiraLeadTimeDataBlock
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{width:"33%"}}
+        />
+      </DataBlockWrapper>
+    );
+  };
   const getAverageBlocks = () => {
     return (
       <DataBlockWrapper padding={0}>
@@ -194,19 +200,19 @@ function InsightsSynopsisDetails({ dashboardData }) {
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
         <AvgBuildDuration
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
         <AvgApprovalTimeDataBlock
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
           disable={true}
         />
       </DataBlockWrapper>
@@ -220,19 +226,19 @@ function InsightsSynopsisDetails({ dashboardData }) {
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
         <ServiceNowMTTADataBlock
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
         <ServiceNowMTBFDataBlock
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
       </DataBlockWrapper>
     );
@@ -243,9 +249,9 @@ function InsightsSynopsisDetails({ dashboardData }) {
       <div className={"d-flex flex-wrap justify-content-around w-100"}>
         <MetricContainer title="Pipelines: Success Score">{getPipelinesSuccess()}</MetricContainer>
         <MetricContainer title="Pipelines: Failure Score">{getPipelinesFailure()}</MetricContainer>
-        {/* <MetricContainer title="Value Stream">
+        <MetricContainer title="Value Stream">
           {getValueStream()}
-        </MetricContainer> */}
+        </MetricContainer>
         <MetricContainer title="Pipeline: Duration Average">{getAverageBlocks()}</MetricContainer>
         {/* <MetricContainer title="Incidents">{getIncidents()}</MetricContainer> */}
       </div>

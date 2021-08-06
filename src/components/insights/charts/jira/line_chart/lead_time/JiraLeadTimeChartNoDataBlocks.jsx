@@ -158,6 +158,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        showSettingsToggle={false}
       />
       <ModalLogs header="Lead Time" size="lg" jsonMessage={modalData} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
     </>
