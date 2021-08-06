@@ -247,14 +247,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       case "tags":
         return (
           <div>
-            <TagManager
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiTagsFilter}
-              dataObject={kpiTagsFilter}
-              disabled={!tagFilterEnabled.includes(kpiSettings.getData("kpi_identifier"))}
-            />
-            <Row>
+             <Row>
               <Col md={6}>
               <BooleanToggleInput fieldName={"useKpiTags"} dataObject={kpiConfigSettings} setDataObject={setKpiConfigSettings}/>
               </Col>
@@ -262,6 +255,13 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
               <BooleanToggleInput fieldName={"useDashboardTags"} dataObject={kpiConfigSettings} setDataObject={setKpiConfigSettings}/>
               </Col>
             </Row>
+            <TagManager
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiTagsFilter}
+              dataObject={kpiTagsFilter}
+              disabled={!tagFilterEnabled.includes(kpiSettings.getData("kpi_identifier")) || !kpiConfigSettings.getData("useKpiTags")}
+            />
           </div>
         );
       case "jenkins-result":
@@ -735,6 +735,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
         ))}
       </EditorPanelContainer>
       <ActionBarDeleteButton2
+        className={"p-2 m-1"}
         relocationPath={`/insights/dashboards/${dashboardData.getData("_id")}`}
         dataObject={kpiSettings}
         handleDelete={deleteKpi}

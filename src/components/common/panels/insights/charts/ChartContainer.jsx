@@ -175,8 +175,9 @@ function ChartContainer(
 
   const getTagBadges = () => {
     const tags = kpiConfiguration?.filters[kpiConfiguration?.filters?.findIndex((obj) => obj.type === "tags")]?.value;
+    const useKpiTags = kpiConfiguration?.settings?.useKpiTags !== false;
 
-    if (Array.isArray(tags) && tags.length > 0) {
+    if (Array.isArray(tags) && tags.length > 0 && useKpiTags) {
       return (
         <CustomBadgeContainer>
           {tags.map((item, index) => {
