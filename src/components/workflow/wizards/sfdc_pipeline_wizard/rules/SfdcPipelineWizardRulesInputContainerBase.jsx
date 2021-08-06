@@ -1,20 +1,16 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {faFilter, faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
+import {faFilter} from "@fortawesome/pro-light-svg-icons";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import PipelineWizardRuleInput from "components/workflow/wizards/sfdc_pipeline_wizard/rules/PipelineWizardRuleInput";
 import sfdcRuleMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/rules/sfdc-rule-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import PipelineWizardRuleInputHelpDocumentation
-  from "components/common/help/documentation/pipelines/wizard/PipelineWizardRuleInputHelpDocumentation";
-import ToggleHelpIcon from "components/common/icons/help/ToggleHelpIcon";
 import IconBase from "components/common/icons/IconBase";
 
 // TODO: On final refactor of SFDC Wizard, utilize model/set models here
 function SfdcPipelineWizardRulesInputContainerBase({pipelineWizardModel, setPipelineWizardModel, fieldName, modifiedFiles, isGitTab, isLoading, filePullCompleted, fetchAttribute}) {
   const [errorMessage, setErrorMessage] = useState("");
-  const [showHelp, setShowHelp] = useState(false);
   const [rules, setRules] = useState([]);
   const isMounted = useRef(false);
 
@@ -130,23 +126,6 @@ function SfdcPipelineWizardRulesInputContainerBase({pipelineWizardModel, setPipe
     );
   };
 
-  const getHelp = () => {
-    if (showHelp) {
-     return (
-       <div className={"mt-3"}>
-         <PropertyInputContainer
-           titleIcon={faQuestionCircle}
-           titleText={"File Selection Rule Filter Help Documentation"}
-         >
-           <div className={"p-3"}>
-             <PipelineWizardRuleInputHelpDocumentation />
-           </div>
-         </PropertyInputContainer>
-       </div>
-     );
-    }
-  };
-
   const getBody = () => {
     if (!filePullCompleted) {
       return (
@@ -169,19 +148,15 @@ function SfdcPipelineWizardRulesInputContainerBase({pipelineWizardModel, setPipe
   };
 
   return (
-    <>
-      <PropertyInputContainer
-        titleIcon={faFilter}
-        field={null}
-        isLoading={!filePullCompleted || isLoading}
-        titleText={"File Selection Rule Filter"}
-        errorMessage={errorMessage}
-        toggleButton={<ToggleHelpIcon toggleHelp={() => setShowHelp(!showHelp)} className={"my-auto"} />}
-      >
-        {getBody()}
-      </PropertyInputContainer>
-      {getHelp()}
-    </>
+    <PropertyInputContainer
+      titleIcon={faFilter}
+      field={null}
+      isLoading={!filePullCompleted || isLoading}
+      titleText={"File Selection Rule Filter"}
+      errorMessage={errorMessage}
+    >
+      {getBody()}
+    </PropertyInputContainer>
   );
 }
 
