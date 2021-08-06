@@ -80,6 +80,10 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
       }
+
+      if (!dataObject) {
+        setMetrics([]);
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
