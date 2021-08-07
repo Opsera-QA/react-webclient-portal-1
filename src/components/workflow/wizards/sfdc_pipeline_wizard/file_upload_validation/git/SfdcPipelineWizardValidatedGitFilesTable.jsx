@@ -53,7 +53,7 @@ const SfdcPipelineWizardValidatedGitFilesTable = ({ pipelineWizardModel, setPipe
   const loadData = async (newFilterModel = originFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await sfdcPolling(cancelSource, newFilterModel);
+      await validatedFilePolling(cancelSource, newFilterModel);
     }
     catch (error) {
       toastContext.showInlineErrorMessage("Error pulling Validated Git Files. Check logs for more details.");
@@ -66,21 +66,21 @@ const SfdcPipelineWizardValidatedGitFilesTable = ({ pipelineWizardModel, setPipe
     }
   };
 
-  const sfdcPolling = async (cancelSource = cancelTokenSource, newFilterModel = originFilterModel, count = 1) => {
+  const validatedFilePolling = async (cancelSource = cancelTokenSource, newFilterModel = originFilterModel, count = 1) => {
     if (isMounted?.current !== true) {
       return;
     }
 
-    const sfdcCommitList = await getModifiedFiles(cancelSource, newFilterModel);
+    const sfdcCommitList = await getValidatedFiles(cancelSource, newFilterModel);
 
     if (!Array.isArray(sfdcCommitList) && count <= 5) {
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
-      return await sfdcPolling(cancelSource, newFilterModel, count + 1);
+      return await validatedFilePolling(cancelSource, newFilterModel, count + 1);
     }
   };
 
-  const getModifiedFiles = async (cancelSource = cancelTokenSource, newFilterDto = originFilterModel) => {
-    const response = await sfdcPipelineActions.getSfdcFilesV2(getAccessToken, cancelSource, pipelineWizardModel, newFilterDto);
+  const getValidatedFiles = async (cancelSource = cancelTokenSource, newFilterDto = originFilterModel) => {
+    const response = await sfdcPipelineActions.getSelectedFileList(getAccessToken, cancelSource, pipelineWizardModel, newFilterDto);
     const data = response?.data;
     const files = data?.data;
 
@@ -109,7 +109,7 @@ const SfdcPipelineWizardValidatedGitFilesTable = ({ pipelineWizardModel, setPipe
       isLoading={isLoading}
       paginationModel={originFilterModel}
       setPaginationModel={setOriginFilterModel}
-      title={"SFDC Files"}
+      title={"Validated Files"}
       pipelineWizardModel={pipelineWizardModel}
       filePullCompleted={filePullCompleted}
     />

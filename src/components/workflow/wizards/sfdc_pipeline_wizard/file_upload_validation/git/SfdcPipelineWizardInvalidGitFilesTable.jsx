@@ -46,15 +46,15 @@ const SfdcPipelineWizardInvalidGitFilesTable = ({ pipelineWizardModel}) => {
       isMounted.current = false;
       stopPolling();
     };
-  }, [JSON.stringify(pipelineWizardModel.getData("sfdcModifiedRuleList"))]);
+  }, []);
 
   const loadData = async (newFilterModel = destinationFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await destSfdcPolling(cancelSource, newFilterModel);
+      await invalidFilePolling(cancelSource, newFilterModel);
     }
     catch (error) {
-      toastContext.showInlineErrorMessage("Error pulling SFDC Files. Check logs for more details.");
+      toastContext.showInlineErrorMessage("Error pulling Invalid Git Files. Check logs for more details.");
       console.error(error);
     }
     finally {
@@ -70,21 +70,21 @@ const SfdcPipelineWizardInvalidGitFilesTable = ({ pipelineWizardModel}) => {
     }
   };
 
-  const destSfdcPolling = async (cancelSource = cancelTokenSource, newFilterModel = destinationFilterModel, count = 1) => {
+  const invalidFilePolling = async (cancelSource = cancelTokenSource, newFilterModel = destinationFilterModel, count = 1) => {
     if (isMounted?.current !== true) {
       return;
     }
 
-    const destSfdcList = await getModifiedDestinationFiles(cancelSource, newFilterModel);
+    const destSfdcList = await getInvalidFiles(cancelSource, newFilterModel);
 
     if (!Array.isArray(destSfdcList) && count <= 5 && filePullCompleted === false) {
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
-      return await destSfdcPolling(cancelSource, newFilterModel, count + 1);
+      return await invalidFilePolling(cancelSource, newFilterModel, count + 1);
     }
   };
 
-  const getModifiedDestinationFiles = async (cancelSource = cancelTokenSource, newFilterModel = destinationFilterModel) => {
-    const destSfdcResponse = await sfdcPipelineActions.getOrganizationDestinationFilesV2(getAccessToken, cancelSource, pipelineWizardModel, newFilterModel, false);
+  const getInvalidFiles = async (cancelSource = cancelTokenSource, newFilterModel = destinationFilterModel) => {
+    const destSfdcResponse = await sfdcPipelineActions.getInvalidFileList(getAccessToken, cancelSource, pipelineWizardModel, newFilterModel);
     const data = destSfdcResponse?.data;
     const fileList = destSfdcResponse?.data?.data;
 
