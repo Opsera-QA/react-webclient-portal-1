@@ -16,6 +16,7 @@ import TotalPipelinesPassedDeployment from "components/insights/summary/pipeline
 import AvgDeploymentDuration from "components/insights/summary/pipeline_details/AvgDeploymentDuration";
 import AvgBuildDuration from "components/insights/summary/pipeline_details/AvgBuildDuration";
 import AvgApprovalTimeDataBlock from "components/insights/summary/pipeline_details/AvgApprovalTime";
+import DeploymentFrequencyDataBlock from "components/insights/summary/pipeline_details/DeploymentFrequencyDataBlock";
 
 // JIRA
 import JiraLeadTimeChartNoDataBlocks from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks";
@@ -75,6 +76,10 @@ function InsightsSynopsisDetails({ dashboardData }) {
             data={selectedDataBlockTableData}
             tableTitle="Successful Pipelines (Deployments)"
           />
+        );
+      case "deployment_frequency":
+        return (
+          <InsightsPipelineDetailsTable data={selectedDataBlockTableData} tableTitle="Deployment Frequency" />
         );
       case "jiraLeadTime":
         return (
@@ -142,19 +147,19 @@ function InsightsSynopsisDetails({ dashboardData }) {
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
         <PipelinesPassedWithQualityAndSecurity
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
         <TotalPipelinesPassedDeployment
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
       </DataBlockWrapper>
     );
@@ -167,19 +172,19 @@ function InsightsSynopsisDetails({ dashboardData }) {
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
         <PipelinesFailedSecurity
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
         <PipelinesFailedDeployment
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
       </DataBlockWrapper>
     );
@@ -191,7 +196,13 @@ function InsightsSynopsisDetails({ dashboardData }) {
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
+        />
+        <DeploymentFrequencyDataBlock
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{ width: "33%" }}
         />
       </DataBlockWrapper>
     );
@@ -203,19 +214,19 @@ function InsightsSynopsisDetails({ dashboardData }) {
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
         <AvgBuildDuration
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
         <AvgApprovalTimeDataBlock
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
           disable={true}
         />
       </DataBlockWrapper>
@@ -229,19 +240,19 @@ function InsightsSynopsisDetails({ dashboardData }) {
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
         <ServiceNowMTTADataBlock
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
         <ServiceNowMTBFDataBlock
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
+          style={{ width: "33%" }}
         />
       </DataBlockWrapper>
     );
