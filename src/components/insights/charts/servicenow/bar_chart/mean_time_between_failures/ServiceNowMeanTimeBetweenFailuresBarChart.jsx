@@ -29,6 +29,7 @@ function ServiceNowMeanTimeBetweenFailuresBarChart({
   dashboardData,
   index,
   setKpis,
+  showSettingsToggle,
 }) {
   const { getAccessToken } = useContext(AuthContext);
   // const toastContext = useContext(DialogToastContext);
@@ -159,6 +160,7 @@ function ServiceNowMeanTimeBetweenFailuresBarChart({
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        showSettingsToggle={showSettingsToggle}
       />
       <ModalLogs
         header="Mean Time Between Failures"
@@ -181,6 +183,7 @@ ServiceNowMeanTimeBetweenFailuresBarChart.propTypes = {
   bars: PropTypes.any,
   xScale: PropTypes.any,
   yScale: PropTypes.any,
+  showSettingsToggle: PropTypes.bool,
 };
 
 export default ServiceNowMeanTimeBetweenFailuresBarChart;
