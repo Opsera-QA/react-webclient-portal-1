@@ -14,8 +14,6 @@ import SfdcPipelineWizardSubmitFileTypeButton
 import CustomTable from "components/common/table/CustomTable";
 import CancelButton from "components/common/buttons/CancelButton";
 import XmlFieldBase from "components/common/fields/code/XmlFieldBase";
-import PageLink from "components/common/links/PageLink";
-import {faExternalLink} from "@fortawesome/pro-light-svg-icons";
 import ExternalPageLink from "components/common/links/ExternalPageLink";
 
 function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) {
