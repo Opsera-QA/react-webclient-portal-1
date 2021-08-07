@@ -63,6 +63,11 @@ function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel, selectedDat
             (obj) => obj.type === "organizations"
           )
         ]?.value;
+      let dateRange = dashboardData?.data?.filters[
+        dashboardData?.data?.filters.findIndex(
+          (obj) => obj.type === "date"
+        )
+      ]?.value;
 
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
@@ -72,7 +77,10 @@ function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel, selectedDat
         dashboardTags,
         filterDto,
         null,
-        dashboardOrgs
+        dashboardOrgs,
+        null,
+        null,
+        dateRange
       );
       let dataObject = response?.data
         ? response?.data?.data[0]

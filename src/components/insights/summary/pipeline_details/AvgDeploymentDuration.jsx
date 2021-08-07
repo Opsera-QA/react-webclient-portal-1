@@ -49,13 +49,23 @@ function AvgDeploymentDuration({ dashboardData, toggleDynamicPanel, selectedData
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dateRange = dashboardData?.data?.filters[
+        dashboardData?.data?.filters.findIndex(
+          (obj) => obj.type === "date"
+        )
+      ]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "opseraRecentCDStatus",
         null,
         dashboardTags,
-        filterDto
+        filterDto,
+        null,
+        null,
+        null,
+        null,
+        dateRange
       );
       let dataObject = response?.data?.data[0]?.opseraRecentCDStatus?.data;
 

@@ -44,6 +44,11 @@ function ServiceNowMTBFDataBlock({ dashboardData, toggleDynamicPanel, selectedDa
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
+        let dateRange = dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "date"
+          )
+        ]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -52,7 +57,10 @@ function ServiceNowMTBFDataBlock({ dashboardData, toggleDynamicPanel, selectedDa
         dashboardTags,
         null,
         null,
-        dashboardOrgs
+        dashboardOrgs,
+        null,
+        null,
+        dateRange
       );
       let dataObject = response?.data?.data[0]?.serviceNowMTBF?.data[0];
 

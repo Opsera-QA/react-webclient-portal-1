@@ -83,7 +83,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   projectTags,
   dashboardOrgs,
   pipelineName,
-  currentDate
+  currentDate,
+  dateRange
 ) => {
   const apiUrl = "/analytics/metrics",
     date = getDateObjectFromKpiConfiguration(kpiConfiguration),
@@ -135,6 +136,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     dashboardOrgs: dashboardOrgs,
     pipelineName: pipelineName,
     currentDate: currentDate,
+    dateRange: dateRange,
     sonarProjectLanguages: sonarProjectLanguages,
     serviceNowPriorities: serviceNowPriorities,
     serviceNowAssignmentGroups: serviceNowAssignmentGroups,
