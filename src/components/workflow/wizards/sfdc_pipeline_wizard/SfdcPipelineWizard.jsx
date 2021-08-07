@@ -29,6 +29,8 @@ import SfdcWizardFileSelectionHelpDocumentation
   from "components/common/help/documentation/pipelines/wizard/SfdcWizardFileSelectionHelpDocumentation";
 import SfdcWizardXmlViewerHelpDocumentation
   from "components/common/help/documentation/pipelines/wizard/SfdcWizardXmlViewerHelpDocumentation";
+import SfdcPipelineWizardValidatedFileViewer
+  from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/SfdcPipelineWizardValidatedFileViewer";
 
 export const PIPELINE_WIZARD_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
@@ -39,6 +41,7 @@ export const PIPELINE_WIZARD_SCREENS = {
   PROFILE_COMPONENT_SELECTOR: "PROFILE_COMPONENT_SELECTOR",
   XML_VIEWER: "XML_VIEWER",
   UNIT_TEST_SELECTOR: "UNIT_TEST_SELECTOR",
+  VALIDATED_FILE_VIEWER: "VALIDATED_FILE_VIEWER",
 };
 
 const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose, refreshPipelineActivityData, gitTaskData }) => {
@@ -129,6 +132,15 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
       case PIPELINE_WIZARD_SCREENS.PROFILE_COMPONENT_SELECTOR:
         return (
           <SfdcPipelineWizardProfileComponentSelector
+            pipelineWizardModel={pipelineWizardModel}
+            setPipelineWizardModel={setPipelineWizardModel}
+            handleClose={handleClose}
+            setPipelineWizardScreen={setPipelineWizardScreen}
+          />
+        );
+      case PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER:
+        return (
+          <SfdcPipelineWizardValidatedFileViewer
             pipelineWizardModel={pipelineWizardModel}
             setPipelineWizardModel={setPipelineWizardModel}
             handleClose={handleClose}

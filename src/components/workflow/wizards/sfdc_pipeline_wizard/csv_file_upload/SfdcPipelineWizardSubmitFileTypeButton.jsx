@@ -39,6 +39,12 @@ function SfdcPipelineWizardSubmitFileTypeButton({pipelineWizardModel, setPipelin
           : PIPELINE_WIZARD_SCREENS.XML_VIEWER
       );
     } else {
+      // TODO: Wire up, remove modified files check when both sides are complete
+      // if (pipelineWizardModel.getData("modifiedFilesOrigin") === "git") {
+      //   setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER);
+      //   return;
+      // }
+      // TODO: Remove this when both sides are complete;
       await generateXml();
     }
   };
@@ -57,8 +63,6 @@ function SfdcPipelineWizardSubmitFileTypeButton({pipelineWizardModel, setPipelin
         }
         await sfdcPipelineActions.setCsvFileComponentsV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
         return await callbackFunc();
-        // TODO: Wire this up
-        // return await validateFiles();
       }
     } catch (error) {
       console.error(error);
@@ -66,20 +70,6 @@ function SfdcPipelineWizardSubmitFileTypeButton({pipelineWizardModel, setPipelin
     }
     finally {
       setIsSaving(false);
-    }
-  };
-
-  const validateFiles = async () => {
-    if (pipelineWizardModel?.getData("modifiedFilesOrigin") === "git") {
-      const response = await sfdcPipelineActions.validateGitCsvFiles(getAccessToken, cancelTokenSource, pipelineWizardModel);
-      console.log("git response: " + JSON.stringify(response));
-
-    }
-    else {
-      // TODO: Wire up validation when available
-      // const response = await sfdcPipelineActions.validateSfdcCsvFiles(getAccessToken, cancelTokenSource, pipelineWizardModel);
-      // console.log("response: " + JSON.stringify(response));
-      return await callbackFunc();
     }
   };
 

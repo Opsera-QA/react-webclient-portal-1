@@ -39,6 +39,20 @@ sfdcPipelineActions.getSfdcFilesV2 = async (getAccessToken, cancelTokenSource, p
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+sfdcPipelineActions.getSelectedFileList = async (getAccessToken, cancelTokenSource, pipelineWizardModel, newFilterDto) => {
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/get_selected_file_list`;
+  const urlParams = {
+    params: {
+      page: newFilterDto ? newFilterDto.getData("currentPage") : 1,
+      size: newFilterDto ? newFilterDto.getData("pageSize") : 3000,
+      search: newFilterDto ? newFilterDto.getData("search") : "",
+      componentFilter: newFilterDto ? newFilterDto.getData("componentFilter") : "",
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 sfdcPipelineActions.setSfdcFileListV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const postBody = {
     rules: pipelineWizardModel.getData("sfdcModifiedRuleList")
@@ -355,9 +369,18 @@ sfdcPipelineActions.validateGitCsvFiles = async (getAccessToken, cancelTokenSour
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-sfdcPipelineActions.getInvalidFileList = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+sfdcPipelineActions.getInvalidFileList = async (getAccessToken, cancelTokenSource, pipelineWizardModel, filterModel) => {
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/get_invalid_file_list`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  const urlParams = {
+    params: {
+      page: filterModel ? filterModel.getData("currentPage") : 1,
+      size: filterModel ? filterModel.getData("pageSize") : 3000,
+      search: filterModel ? filterModel.getData("search") : "",
+      componentFilter: filterModel ? filterModel.getData("componentFilter") : "",
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 export default sfdcPipelineActions;
