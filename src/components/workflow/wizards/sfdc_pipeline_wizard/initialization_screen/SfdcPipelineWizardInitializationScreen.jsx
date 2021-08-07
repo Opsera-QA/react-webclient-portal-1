@@ -323,7 +323,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     );
   };
 
-  const getFileDeploymentBody = () => {
+  const getFileUploadBody = () => {
     return (
       <div>
         <SfdcPipelineWizardFileUploadComponent
@@ -341,7 +341,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       case "manual":
         return getBody();
       case "automatic":
-        return getFileDeploymentBody();
+        return getFileUploadBody();
     }
   };
 

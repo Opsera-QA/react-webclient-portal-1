@@ -159,11 +159,6 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
   };
 
   const getHelpComponent = () => {
-    // TODO: Remove feature flag after verification
-    if (featureFlagHideItemInProd()) {
-      return null;
-    }
-
     switch (pipelineWizardScreen) {
       case PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
         return (
