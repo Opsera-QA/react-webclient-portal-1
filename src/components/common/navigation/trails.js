@@ -252,8 +252,8 @@ const breadcrumbs = {
     parent: "accountSettings",
     name: "customerSystemStatus",
     path: paths.customerSystemStatus,
-    title: "Customer System Status",
-    linkText: "Customer System Status",
+    title: "Platform Status",
+    linkText: "Platform Status",
     icon: faHeartbeat
   },
 
