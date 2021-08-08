@@ -115,6 +115,10 @@ const sfdcPipelineWizardMetadata = {
       label: "RollBack",
       id: "isRollBack",
     },
+    {
+      label: "Run Count",
+      id: "run_count",
+    },
   ],
   newObjectFields: {
     includedComponentTypes: "all",
@@ -127,6 +131,7 @@ const sfdcPipelineWizardMetadata = {
     recordId: "",
     namespacePrefix: "",
     pipelineId: "",
+    runCount: 1,
     stepId: "",
     sfdcToolId: "",
     isOrgToOrg: false,

@@ -28,6 +28,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   const [isLoading, setIsLoading] = useState(false);
   const [creatingNewRecord, setCreatingNewRecord] = useState(false);
   const [existingRecord, setExistingRecord] = useState(undefined);
+  const {featureFlagHideItemInProd, featureFlagHideItemInTest} = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -112,6 +113,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
 
     const stepId = steps[stepArrayIndex]?._id;
     const pipelineId = pipeline?._id;
+    const runCount = pipeline?.workflow?.run_count;
     const sfdcToolId = steps[stepArrayIndex]?.tool?.configuration?.sfdcToolId;
     const gitToolId = steps[stepArrayIndex]?.tool?.configuration?.gitToolId;
     const sfdcDestToolId = steps[stepArrayIndex]?.tool?.configuration?.sfdcDestToolId;
@@ -125,6 +127,10 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
 
     if (stepId == null || sfdcToolId == null) {
       setError("Could not find SFDC Jenkins step needed to run the Pipeline Wizard. Please edit the workflow and add the SFDC Ant Job setting in order to run this pipeline.");
+    }
+
+    if (runCount != null) {
+      newPipelineWizardModel.setData("run_count", (runCount + 1));
     }
 
     newPipelineWizardModel.setData("sfdcToolId", sfdcToolId);
@@ -303,6 +309,23 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     setActiveTab(tabSelection);
   };
 
+  const getDynamicTab = () => {
+    if (featureFlagHideItemInProd() || featureFlagHideItemInTest()) {
+      return null;
+    }
+
+    return (
+      <CustomTab
+        activeTab={activeTab}
+        tabText={"Use Past Run's XML"}
+        handleTabClick={handleTabClick}
+        tabName={"past_run"}
+        toolTipText={"Deploy using a past pipeline run's Package XML"}
+        icon={faSync}
+      />
+    );
+  };
+
   const getTabContainer = () => {
     if (pipelineWizardModel?.getData("isProfiles") === true) {
       return null;
@@ -323,14 +346,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
               toolTipText={"Use SFDC Component Selection Deployment"}
               icon={faSalesforce}
             />
-            {/*<CustomTab*/}
-            {/*  activeTab={activeTab}*/}
-            {/*  tabText={"Use Past Run's XML"}*/}
-            {/*  handleTabClick={handleTabClick}*/}
-            {/*  tabName={"past_run"}*/}
-            {/*  toolTipText={"Deploy using a past pipeline run's Package XML"}*/}
-            {/*  icon={faSync}*/}
-            {/*/>*/}
+            {/*{getDynamicTab()}*/}
             <CustomTab
               activeTab={activeTab}
               tabText={"XML/File Upload Process"}
