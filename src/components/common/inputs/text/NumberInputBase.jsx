@@ -23,6 +23,15 @@ function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, place
     setDataObject({...newDataObject});
   };
 
+  const updateValue = (newValue) => {
+    if (setDataFunction) {
+      setDataFunction(field?.id, newValue);
+    }
+    else {
+      validateAndSetData(newValue);
+    }
+  };
+
   if (field == null) {
     return null;
   }
@@ -35,7 +44,7 @@ function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, place
         disabled={disabled}
         value={dataObject.getData(fieldName)}
         className="max-content-width"
-        onChange={setDataFunction ? (newValue) => setDataFunction(field?.id, newValue) : (newValue) => validateAndSetData(newValue)}
+        onChange={(newValue) => updateValue(newValue)}
         min={typeof minimum === "number" ? minimum : field?.minNumber}
         max={typeof minimum === "number" ? maximum : field?.maxNumber}
         format={ formatType && formatTypes[formatType] != null ? formatTypes[formatType] : undefined}

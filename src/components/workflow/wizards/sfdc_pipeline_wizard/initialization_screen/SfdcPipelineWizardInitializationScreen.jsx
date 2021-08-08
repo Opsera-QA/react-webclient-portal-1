@@ -17,6 +17,8 @@ import CustomTab from "components/common/tabs/CustomTab";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import SfdcPipelineWizardFileUploadComponent
   from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardFileUploadComponent";
+import SfdcPipelineWizardPastRunComponent
+  from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardPastRunComponent";
 
 const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, pipeline, gitTaskData, setError }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -313,10 +315,30 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
         </div>
         <div className={"mt-2"}>
           <CustomTabContainer>
-            <CustomTab activeTab={activeTab} tabText={"Manual Pipeline Wizard Run"} handleTabClick={handleTabClick} tabName={"manual"}
-                       toolTipText={"Use SFDC Component Selection Deployment"} icon={faSalesforce}  />
-            <CustomTab activeTab={activeTab} tabText={"XML/File Upload Process"} handleTabClick={handleTabClick} tabName={"automatic"}
-                       toolTipText={"Deploy using XML or an Excel file"} icon={faFileCode}  />
+            <CustomTab
+              activeTab={activeTab}
+              tabText={"Manual Pipeline Wizard Run"}
+              handleTabClick={handleTabClick}
+              tabName={"manual"}
+              toolTipText={"Use SFDC Component Selection Deployment"}
+              icon={faSalesforce}
+            />
+            {/*<CustomTab*/}
+            {/*  activeTab={activeTab}*/}
+            {/*  tabText={"Use Past Run's XML"}*/}
+            {/*  handleTabClick={handleTabClick}*/}
+            {/*  tabName={"past_run"}*/}
+            {/*  toolTipText={"Deploy using a past pipeline run's Package XML"}*/}
+            {/*  icon={faSync}*/}
+            {/*/>*/}
+            <CustomTab
+              activeTab={activeTab}
+              tabText={"XML/File Upload Process"}
+              handleTabClick={handleTabClick}
+              tabName={"automatic"}
+              toolTipText={"Deploy using XML or an Excel file"}
+              icon={faFileCode}
+            />
           </CustomTabContainer>
         </div>
       </div>
@@ -336,10 +358,23 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     );
   };
 
+  const getPastRunBody = () => {
+    return (
+      <SfdcPipelineWizardPastRunComponent
+        pipelineWizardModel={pipelineWizardModel}
+        setPipelineWizardScreen={setPipelineWizardScreen}
+        setPipelineWizardModel={setPipelineWizardModel}
+        handleClose={handleClose}
+      />
+    );
+  };
+
   const getView = () => {
     switch (activeTab) {
       case "manual":
         return getBody();
+      case "past_run":
+        return getPastRunBody();
       case "automatic":
         return getFileUploadBody();
     }

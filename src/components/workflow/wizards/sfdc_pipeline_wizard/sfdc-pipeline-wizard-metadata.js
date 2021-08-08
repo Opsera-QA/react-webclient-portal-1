@@ -100,6 +100,10 @@ const sfdcPipelineWizardMetadata = {
       id: "fromFileUpload",
     },
     {
+      label: "Past Pipeline Run",
+      id: "selectedRunNumber",
+    },
+    {
       label: "XML File Content",
       id: "xmlFileContent",
     },
@@ -133,6 +137,7 @@ const sfdcPipelineWizardMetadata = {
     xml: "",
     destructiveXml: "",
     xmlFileContent: "",
+    selectedRunNumber: "",
     csvFileContent: [],
     fromGitTasks: false, // TODO: Remove if irrelevant
     fromFileUpload: false,
