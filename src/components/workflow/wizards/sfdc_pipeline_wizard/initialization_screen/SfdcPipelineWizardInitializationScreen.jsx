@@ -131,6 +131,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
 
     if (runCount != null) {
       newPipelineWizardModel.setData("run_count", (runCount + 1));
+      newPipelineWizardModel.setData("selectedRunNumber", runCount);
     }
 
     newPipelineWizardModel.setData("sfdcToolId", sfdcToolId);
@@ -310,7 +311,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   };
 
   const getDynamicTab = () => {
-    if (featureFlagHideItemInProd() || featureFlagHideItemInTest()) {
+    if (featureFlagHideItemInProd() || featureFlagHideItemInTest() || pipelineWizardModel?.getData("run_count") === 1 || pipelineWizardModel?.getData("fromGitTasks") === true) {
       return null;
     }
 
