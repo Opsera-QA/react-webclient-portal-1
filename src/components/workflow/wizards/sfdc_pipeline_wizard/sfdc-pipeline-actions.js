@@ -278,6 +278,23 @@ sfdcPipelineActions.findExistingRecordV2 = async (getAccessToken, cancelTokenSou
     gitToolId: pipelineWizardModel.getData("gitToolId"),
     sfdcToolId: pipelineWizardModel.getData("sfdcToolId"),
     sfdcDestToolId: pipelineWizardModel.getData("sfdcDestToolId"),
+    runCount: pipelineWizardModel.getData("run_count"),
+  };
+
+  const apiUrl = `/pipelines/sfdc/wizard/find_existing_record`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+sfdcPipelineActions.getPipelineStorageRecords = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const postBody = {
+    dataType: pipelineWizardModel.getData("fromGitTasks") === true ? "sync-sfdc-repo" : "sfdc-packageXml",
+    pipelineId: pipelineWizardModel.getData("pipelineId"),
+    stepId: pipelineWizardModel.getData("stepId"),
+    gitTaskId: pipelineWizardModel.getData("fromGitTasks") === true ? pipelineWizardModel.getData("gitTaskId") : false,
+    gitToolId: pipelineWizardModel.getData("gitToolId"),
+    sfdcToolId: pipelineWizardModel.getData("sfdcToolId"),
+    sfdcDestToolId: pipelineWizardModel.getData("sfdcDestToolId"),
+    runCount: pipelineWizardModel.getData("run_count"),
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/find_existing_record`;
@@ -296,7 +313,8 @@ sfdcPipelineActions.createNewRecordV2 = async (getAccessToken, cancelTokenSource
     sfdcDestToolId: pipelineWizardModel.getData("sfdcDestToolId"),
     isOrgToOrg: pipelineWizardModel.getData("isOrgToOrg") === true,
     isProfiles: pipelineWizardModel.getData("isProfiles") === true,
-    fromGitTasks: pipelineWizardModel.getData("fromGitTasks") === true
+    fromGitTasks: pipelineWizardModel.getData("fromGitTasks") === true,
+    runCount: pipelineWizardModel.getData("run_count"),
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/create_new_record`;
