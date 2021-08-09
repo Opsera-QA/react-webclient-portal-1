@@ -62,12 +62,12 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
           <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"} visible={!envIsProd}/>
           <BreadcrumbPageLink breadcrumbDestination={"dataMappingManagement"}/>
+          <BreadcrumbPageLink breadcrumbDestination={"deleteTools"} />
           <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"} visible={!isSassUser()} />
           <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"} visible={!isSassUser()}/>
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"deleteTools"} />
+          <BreadcrumbPageLink breadcrumbDestination={"userManagement"} visible={!isSassUser() && !envIsProd && !envIsTest}/>
         </>
       );
     }
@@ -80,13 +80,12 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
           <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"} visible={!envIsProd}/>
           <BreadcrumbPageLink breadcrumbDestination={"dataMappingManagement"}/>
+          <BreadcrumbPageLink breadcrumbDestination={"deleteTools"} />
           <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"} visible={!isSassUser()}/>
-          <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"} visible={!isSassUser()}/>
           <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"} visible={!isSassUser() || !envIsProd}/>
-          {/*<BreadcrumbPageLink breadcrumbDestination={"userManagement"} visible={!isSassUser() || (!envIsProd && !envIsTest)}/>*/}
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"deleteTools"} />
+          <BreadcrumbPageLink breadcrumbDestination={"userManagement"} visible={!isSassUser() && !envIsProd && !envIsTest}/>
         </>
       );
     }

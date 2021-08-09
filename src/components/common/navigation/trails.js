@@ -301,6 +301,24 @@ const breadcrumbs = {
     icon: faUser
   },
 
+  // Users Administration
+  userManagement: {
+    parent: "accountSettings",
+    name: "userManagement",
+    path: paths.userManagement,
+    title: "User Management",
+    linkText: "Users",
+    icon: faUser
+  },
+  userManagementDetailView: {
+    parent: "userManagement",
+    name: "userManagementDetailView",
+    path: paths.userManagementDetailView,
+    title: "User Details",
+    linkText: "User Details",
+    icon: faUser
+  },
+
   // LDAP Groups Administration
   ldapGroupManagement: {
     parent: "accountSettings",

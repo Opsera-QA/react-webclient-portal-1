@@ -1,12 +1,13 @@
 import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import {usersMetadata} from "components/settings/users/users-metadata";
-import {getTableTextColumn} from "components/common/table/table-column-helpers";
+import {getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import NewLdapUserModal from "components/settings/ldap_users/NewLdapUserModal";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faSitemap} from "@fortawesome/pro-light-svg-icons";
+import VanityTable from "components/common/table/VanityTable";
+import {getField} from "components/common/metadata/metadata-helpers";
 
 function UsersTable({ userData, orgDomain, isLoading, authorizedActions, loadData }) {
   const [showCreateUserModal, setShowCreateUserModal] = useState(false);
@@ -15,21 +16,21 @@ function UsersTable({ userData, orgDomain, isLoading, authorizedActions, loadDat
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "name";})),
-      getTableTextColumn(fields.find(field => { return field.id === "preferredName";})),
-      getTableTextColumn(fields.find(field => { return field.id === "firstName";})),
-      getTableTextColumn(fields.find(field => { return field.id === "lastName";})),
-      getTableTextColumn(fields.find(field => { return field.id === "emailAddress";})),
-      getTableTextColumn(fields.find(field => { return field.id === "title";})),
-      getTableTextColumn(fields.find(field => { return field.id === "departmentName";})),
-      getTableTextColumn(fields.find(field => { return field.id === "division";})),
-      getTableTextColumn(fields.find(field => { return field.id === "region";})),
+      getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "preferredName")),
+      getTableTextColumn(getField(fields, "firstName")),
+      getTableTextColumn(getField(fields, "lastName")),
+      getTableTextColumn(getField(fields, "emailAddress")),
+      getTableTextColumn(getField(fields, "title")),
+      getTableTextColumn(getField(fields, "departmentName")),
+      getTableTextColumn(getField(fields, "division")),
+      getTableTextColumn(getField(fields, "region")),
     ],
     [fields]
   );
 
-  const onRowSelect = (rowData, type) => {
-    history.push(`/settings/${orgDomain}/users/details/${rowData.original.emailAddress}`);
+  const onRowSelect = (grid, row) => {
+    history.push(`/settings/user-management/${row?.emailAddress}/details`);
   };
 
   const createUser = () => {
@@ -38,10 +39,9 @@ function UsersTable({ userData, orgDomain, isLoading, authorizedActions, loadDat
 
   const getUsersTable = () => {
     return (
-      <CustomTable
-        className={"no-table-border"}
+      <VanityTable
         isLoading={isLoading}
-        onRowSelect={onRowSelect}
+        // onRowSelect={onRowSelect}
         data={userData}
         columns={columns}
       />
@@ -56,6 +56,7 @@ function UsersTable({ userData, orgDomain, isLoading, authorizedActions, loadDat
         isLoading={isLoading}
         body={getUsersTable()}
         titleIcon={faSitemap}
+        showBorder={false}
         title={"Users"}
         type={"User"}
       />
