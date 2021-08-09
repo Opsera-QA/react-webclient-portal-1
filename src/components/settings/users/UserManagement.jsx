@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import {AuthContext} from "contexts/AuthContext";
-import {useHistory, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import UsersTable from "components/settings/users/UsersTable";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
@@ -9,12 +9,11 @@ import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 function UserManagement() {
-  const history = useHistory();
   const {orgDomain} = useParams();
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [userList, setUserList] = useState([]);
+  const [users, setUsers] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const [authorizedActions, setAuthorizedActions] = useState([]);
   const isMounted = useRef(false);
@@ -63,7 +62,7 @@ function UserManagement() {
     try {
       let organizationResponse = await accountsActions.getOrganizationAccountByDomainV2(getAccessToken, cancelSource, ldapDomain);
       if (isMounted?.current === true && organizationResponse?.data?.users) {
-        setUserList(organizationResponse?.data?.users);
+        setUsers(organizationResponse?.data?.users);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -75,7 +74,7 @@ function UserManagement() {
 
   const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
-    const {ldap, groups} = user;
+    const {ldap} = user;
     const userRoleAccess = await setAccessRoles(user);
 
     if (isMounted.current === true && userRoleAccess) {
@@ -83,31 +82,31 @@ function UserManagement() {
 
       let authorizedActions = await accountsActions.getAllowedUserActions(userRoleAccess, ldap.organization, undefined, getUserRecord, getAccessToken);
       setAuthorizedActions(authorizedActions);
-
-      if (userRoleAccess?.OpseraAdministrator) {
-        if (orgDomain != null) {
-          await getUsersByDomain(orgDomain, cancelSource);
-        }
-        else {
-          history.push(`/settings/${ldap.domain}/users/`);
-        }
-      } else if (ldap?.organization != null && authorizedActions?.includes("get_users")) {
-        history.push(`/settings/${ldap.domain}/users/`);
-      }
+      await getUsersByDomain(ldap?.domain, cancelSource);
     }
   };
 
+  // TODO: Wire up slimmer data pull, if possible
+  // const getLdapUsers = async (ldapDomain, cancelSource = cancelTokenSource) => {
+  //   const response = await accountsActions.getAccountUsersV2(getAccessToken, cancelSource);
+  //   const users = response?.data;
+  //
+  //   if (isMounted?.current === true && Array.isArray(users) && users.length > 0) {
+  //     setUsers(users);
+  //   }
+  // };
+
   return (
     <ScreenContainer
-      breadcrumbDestination={"ldapUserManagement"}
+      breadcrumbDestination={"userManagement"}
       isLoading={!accessRoleData}
-      roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
+      roleRequirement={ROLE_LEVELS.POWER_USERS}
       accessRoleData={accessRoleData}
     >
       <UsersTable
         orgDomain={orgDomain}
         isLoading={isLoading}
-        userData={userList}
+        userData={users}
         loadData={loadData}
         authorizedActions={authorizedActions}
       />

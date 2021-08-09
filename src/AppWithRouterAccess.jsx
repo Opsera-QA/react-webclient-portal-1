@@ -122,6 +122,8 @@ import UserReportsScreen from "components/reports/users/UserReportsScreen";
 import GitTasksView from "components/git/GitTasksView";
 import TaskAllActivityPanel from "components/git/git_task_details/activity_logs/TaskAllActivityPanel";
 import LoginForm from "./components/login/LoginForm";
+import UserManagement from "components/settings/users/UserManagement";
+import UserDetailView from "components/settings/users/details/UserDetailView";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -453,6 +455,9 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/settings/:orgDomain?/users/" exact component={LdapUserManagement} />
                 <SecureRoute path="/settings/:orgDomain/users/details/:userEmail" exact
                              component={LdapUserDetailView} />
+                {/*<SecureRoute path="/settings/user-management/" exact component={UserManagement} />*/}
+                {/*<SecureRoute path="/settings/user-management/:userEmail/details" exact*/}
+                {/*             component={UserDetailView} />*/}
                 <SecureRoute path="/settings/tags" exact component={TagEditor} />
                 <SecureRoute path="/settings/tags/:id" exact component={TagDetailView} />
                 <SecureRoute path="/settings/customer-system-status" exact component={CustomerSystemStatus} />
