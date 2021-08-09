@@ -4,7 +4,7 @@ import {
   axiosApiGetCall,
   axiosApiPatchCall,
   axiosApiPostCall,
-  axiosApiPutCall
+  axiosApiPutCall, axiosCustomTokenApiPostCall
 } from "api/apiServiceV2";
 
 const baseActions = {};
@@ -30,6 +30,10 @@ baseActions.customTokenApiPostCall = async (customToken, apiUrl, postBody) => {
   return axiosApiService(customToken).post(apiUrl, postBody)
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
+};
+
+baseActions.customTokenApiPostCallV2 = async (cancelTokenSource, customToken, apiUrl, postBody) => {
+  return await axiosCustomTokenApiPostCall(customToken, cancelTokenSource, apiUrl, postBody);
 };
 
 baseActions.apiPostCall = async (getAccessToken, apiUrl, postBody = {}) => {
