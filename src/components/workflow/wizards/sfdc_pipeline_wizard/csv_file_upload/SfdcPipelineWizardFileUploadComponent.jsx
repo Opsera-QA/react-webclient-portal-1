@@ -4,17 +4,19 @@ import ErrorDialog from "components/common/status_notifications/error";
 import {csvStringToObj} from "components/common/helpers/string-helpers";
 import './fileupload.css';
 import {Button} from 'react-bootstrap';
-import { getLimitedTableTextColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
+import { getTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import { getField } from "components/common/metadata/metadata-helpers";
 import SfdcPipelineWizardUploadComponentTypesRadioInput from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardUploadComponentTypesRadioInput";
 import PipelineWizardFileUploadMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/pipeline-wizard-file-upload-metadata.js";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import SfdcPipelineWizardSubmitFileTypeButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardSubmitFileTypeButton";
-import CustomTable from "components/common/table/CustomTable";
 import CancelButton from "components/common/buttons/CancelButton";
 import XmlFieldBase from "components/common/fields/code/XmlFieldBase";
 import ExternalPageLink from "components/common/links/ExternalPageLink";
+import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
+import FilterContainer from "components/common/table/FilterContainer";
+import VanityTable from "components/common/table/VanityTable";
 
 function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) {
     const fields = PipelineWizardFileUploadMetadata.fields;
@@ -234,20 +236,32 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     () => [
       getTableTextColumn(getField(fields, "commitAction")),
       getTableTextColumn(getField(fields, "componentType")),
-      getLimitedTableTextColumn(getField(fields, "componentName"), 80),
+      getTableTextColumn(getField(fields, "componentName")),
     ],
     [fields]
   );
+
+  const getTable = () => {
+    return (
+      <VanityTable
+        tableHeight={"250px"}
+        className={"no-table-border"}
+        columns={columns}
+        data={pipelineWizardModel.getData("csvFileContent")}
+      />
+    );
+  };
 
   const getCsvView = () => {
     if (pipelineWizardModel.getData("csvFileContent") && pipelineWizardModel.getData("csvFileContent").length > 0) {
       return (
         <>
-          <div style={{height: "300px", maxHeight: "500px", width: "800px", overflowY: "auto", margin: "auto"}}>
-            <CustomTable
-              className={"no-table-border"}
-              columns={columns}
-              data={pipelineWizardModel.getData("csvFileContent")}
+          <div>
+            <FilterContainer
+              title={"CSV File Content"}
+              titleIcon={faSalesforce}
+              body={getTable()}
+              showBorder={false}
             />
           </div>
           {buttonContainer()}
