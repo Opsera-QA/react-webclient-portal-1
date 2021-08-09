@@ -254,6 +254,10 @@ const octopusStepFormMetadata = {
         label: "Start Application Pool",
         id: "startApplicationPool",
       },
+      {
+        label: "YAML Source",
+        id: "yamlSource",
+      },
     ],
   newObjectFields:
       {
@@ -312,6 +316,7 @@ const octopusStepFormMetadata = {
         applicationPoolIdentityUsername: "",
         applicationPoolIdentityPassword : {},
         startApplicationPool : false,
+        yamlSource: "",
       }
   };
   

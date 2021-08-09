@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function OctopusScriptTypeSelectInput({dataObject, setDataObject, isLoading, disabled, tool_prop}) {
+function OctopusScriptTypeSelectInput({dataObject, setDataObject, isLoading, disabled, tool_prop, fieldName}) {
 
   const ACTION_LIST = [
     {
@@ -24,14 +24,14 @@ function OctopusScriptTypeSelectInput({dataObject, setDataObject, isLoading, dis
     newDataObject.setData("scriptFileName", "");
     newDataObject.setData("scriptParameters", "");
     newDataObject.setData("scriptId", "");
-    newDataObject.setData("scriptSource", value.value);
+    newDataObject.setData(fieldName, value.value);
     setDataObject({...newDataObject});
   };
 
   return (
 
     <SelectInputBase
-      fieldName={"scriptSource"}
+      fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
       setDataFunction={setDataFunction}
@@ -51,7 +51,12 @@ OctopusScriptTypeSelectInput.propTypes = {
   disabled: PropTypes.bool,
   isLoading: PropTypes.bool,
   className: PropTypes.string,
-  tool_prop: PropTypes.string
+  tool_prop: PropTypes.string,
+  fieldName: PropTypes.string
+};
+
+OctopusScriptTypeSelectInput.defaultProps = {
+  fieldName: "scriptSource"
 };
 
 export default OctopusScriptTypeSelectInput;

@@ -10,6 +10,10 @@ const FEED_TOOLS = [
   {
     id: "jfrog",
     name: "JFrog"
+  },
+  {
+    id: "azure_account",
+    name: "Azure"
   }
 ];
 

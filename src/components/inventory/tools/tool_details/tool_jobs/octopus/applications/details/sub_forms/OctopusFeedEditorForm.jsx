@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
 import SpaceNameSelectInput from "../input/SpaceNameSelectInput";
@@ -9,8 +9,16 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import FeedToolTypeSelectInput from "../input/FeedToolTypeSelectInput";
 import JfrogToolSelectInput from "../input/JfrogToolSelectInput";
 import JfrogRepoSelectInput from "../input/JfrogRepoSelectInput";
+import AzureToolConfigIdSelectInput from "../input/AzureToolConfigIdSelectInput";
+import AzureCredentialIdSelectInput from "../input/AzureCredentialIdSelectInput";
+import AzureClusterSelectInput from "../input/AzureClusterSelectInput";
+import AzureResourceGroupSelectInput from "../input/AzureResourceGroupSelectInput";
+import AzureRegistrySelectInput from "../input/AzureRegistrySelectInput";
 
 const OctopusFeedEditorForm = ({ dataObject, setDataObject, appID }) => {
+  const [azureConfig,setAzureConfig]=useState(null);
+  const [applicationData, setApplicationData]=useState(null);
+
   return (
     <Row>
       <Col lg={12}>
@@ -115,7 +123,43 @@ const OctopusFeedEditorForm = ({ dataObject, setDataObject, appID }) => {
             />
           </Col>
         </>
-      )}            
+      )}
+      {dataObject && dataObject.getData("toolType") && dataObject.getData("toolType") === "azure_account" && (
+        <>
+          <Col lg={12}>
+            <AzureToolConfigIdSelectInput
+              dataObject={dataObject}
+              setDataObject={setDataObject}
+              setAzureConfig={setAzureConfig}
+            />
+          </Col>
+          <Col lg={12}>
+            <AzureCredentialIdSelectInput
+              dataObject={dataObject}
+              setDataObject={setDataObject}
+              azureConfig={azureConfig}
+              setApplicationData={setApplicationData}
+            />
+          </Col>
+          <Col lg={12}>
+            <AzureRegistrySelectInput
+              dataObject={dataObject}
+              setDataObject={setDataObject}
+              azureToolConfigId={dataObject.getData("azureToolId")}
+              azureApplication={dataObject.getData("azureCredentialId")}
+              azureConfig={azureConfig}
+              applicationData={applicationData}
+            />
+          </Col>
+          <Col lg={12}>
+            <TextInputBase
+              dataObject={dataObject}
+              setDataObject={setDataObject}
+              fieldName={"azureRegistryPath"}
+            />
+          </Col>
+        </>
+      )}
     </Row>
   );
 };

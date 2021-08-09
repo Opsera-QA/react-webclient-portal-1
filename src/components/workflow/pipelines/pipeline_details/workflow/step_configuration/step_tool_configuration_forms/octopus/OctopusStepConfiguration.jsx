@@ -30,6 +30,8 @@ import OctopusDeployToTomcatDetailsView from "./sub-forms/OctopusDeployToTomcatD
 import OctopusDeployToIisView from "./sub-forms/OctopusDeployToIisView";
 import OctopusDeployToJavaArchiveView from "./sub-forms/OctopusDeployToJavaArchiveView";
 import OctopusProjectNameInput from "./input/OctopusProjectNameInput";
+import OctopusKubernetesScriptView from "./sub-forms/OctopusKubernetesScriptView";
+import KubernetesToggleInput from "./input/KubernetesToggleInput";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, callbackSaveToVault, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -322,12 +324,50 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
           {octopusStepConfigurationDto &&
             octopusStepConfigurationDto.getData("octopusPlatformType") &&
             octopusStepConfigurationDto.getData("octopusPlatformType") === "Kubernetes" && (
-              <TextInputBase
+              <>
+                <OctopusScriptTypeSelectInput
+                  dataObject={octopusStepConfigurationDto}
+                  fieldName={"yamlSource"}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  tool_prop={"Script"}
+                />
+                <OctopusKubernetesScriptView
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  disabled={
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("yamlSource")
+                      ? octopusStepConfigurationDto.getData("yamlSource").length === 0
+                      : true
+                  }
+                  tool_prop={"Script"}
+                />
+                <OctopusFeedSelectInput
+                  fieldName={"octopusFeedId"}
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  disabled={
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+                      ? octopusStepConfigurationDto.getData("spaceName").length === 0
+                      : true
+                  }
+                  tool_prop={
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+                      ? octopusStepConfigurationDto.getData("spaceName")
+                      : ""
+                  }
+                />
+                <KubernetesToggleInput
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  fieldName={"isRollback"}
+                />
+                <TextInputBase
                 setDataObject={setOctopusStepConfigurationDataDto}
                 dataObject={octopusStepConfigurationDto}
                 fieldName={"namespace"}
                 disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
               />
+              </>
             )}
           {octopusStepConfigurationDto &&
             octopusStepConfigurationDto.getData("octopusPlatformType") &&

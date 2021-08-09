@@ -86,4 +86,49 @@ octopusActions.validateIisConfig = async (toolDataDto, getAccessToken, cancelTok
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+octopusActions.getAzureClusters = async (getAccessToken, cancelTokenSource, config ,applicationData) => {
+  const cfg = config?.configuration;
+  const owner = config?.owner;
+  const postBody ={
+    "owner": owner,
+    "clientId": applicationData?.clientId?.vaultKey,
+    "clientSecret": applicationData?.clientSecret?.vaultKey,
+    "tenantId": cfg?.tenantId?.vaultKey,
+    "subscriptionId": cfg?.subscriptionId?.vaultKey,
+    "resource": applicationData?.resource
+  };
+  const apiURL = `tools/azure/management/clusterNames`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
+};
+
+octopusActions.getAzureResourceGroups = async (getAccessToken, cancelTokenSource, config ,applicationData) => {
+  const cfg = config?.configuration;
+  const owner = config?.owner;
+  const postBody ={
+    "owner": owner,
+    "clientId": applicationData?.clientId?.vaultKey,
+    "clientSecret": applicationData?.clientSecret?.vaultKey,
+    "tenantId": cfg?.tenantId?.vaultKey,
+    "subscriptionId": cfg?.subscriptionId?.vaultKey,
+    "resource": applicationData?.resource
+  };
+  const apiURL = `tools/azure/management/resourceGroups`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
+};
+
+octopusActions.getAzureRegistries = async (getAccessToken, cancelTokenSource, config ,applicationData) => {
+  const cfg = config?.configuration;
+  const owner = config?.owner;
+  const postBody ={
+    "owner": owner,
+    "clientId": applicationData?.clientId?.vaultKey,
+    "clientSecret": applicationData?.clientSecret?.vaultKey,
+    "tenantId": cfg?.tenantId?.vaultKey,
+    "subscriptionId": cfg?.subscriptionId?.vaultKey,
+    "resource": applicationData?.resource
+  };
+  const apiURL = `tools/azure/acr/registryList`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
+};
+
 export default octopusActions;
