@@ -98,12 +98,12 @@ function ChangeFailRateDataBlock({ dashboardData, toggleDynamicPanel, selectedDa
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("average_approval_time", metrics[0]?.data);
+    toggleDynamicPanel("change_fail_rate", metrics[0]?.data);
   };
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "average_approval_time" ? "selected-data-block" : undefined} style={style}>
+      <div className={selectedDataBlock === "change_fail_rate" ? "selected-data-block" : undefined} style={style}>
         <InsightsSynopsisDataBlock
           title={
             !isLoading && metrics[0]?.count[0] ? (
