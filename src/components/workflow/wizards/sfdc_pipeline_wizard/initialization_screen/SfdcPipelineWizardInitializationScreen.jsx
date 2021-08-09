@@ -347,7 +347,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
               toolTipText={"Use SFDC Component Selection Deployment"}
               icon={faSalesforce}
             />
-            {/*{getDynamicTab()}*/}
+            {getDynamicTab()}
             <CustomTab
               activeTab={activeTab}
               tabText={"XML/File Upload Process"}
