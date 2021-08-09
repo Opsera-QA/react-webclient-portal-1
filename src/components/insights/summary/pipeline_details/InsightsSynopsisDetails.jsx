@@ -17,6 +17,7 @@ import AvgDeploymentDuration from "components/insights/summary/pipeline_details/
 import AvgBuildDuration from "components/insights/summary/pipeline_details/AvgBuildDuration";
 import AvgApprovalTimeDataBlock from "components/insights/summary/pipeline_details/AvgApprovalTime";
 import DeploymentFrequencyDataBlock from "components/insights/summary/pipeline_details/DeploymentFrequencyDataBlock";
+import ChangeFailRateDataBlock from "components/insights/summary/pipeline_details/ChangeFailRateDataBlock";
 
 // JIRA
 import JiraLeadTimeChartNoDataBlocks from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks";
@@ -203,6 +204,13 @@ function InsightsSynopsisDetails({ dashboardData }) {
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
           style={{ width: "33%" }}
+        />
+        <ChangeFailRateDataBlock
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{ width: "33%" }}
+          disable={true}
         />
       </DataBlockWrapper>
     );
