@@ -1,16 +1,17 @@
-import React, {useMemo, useState} from "react";
+import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import {usersMetadata} from "components/settings/users/users-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers-v2";
-import NewLdapUserModal from "components/settings/ldap_users/NewLdapUserModal";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faSitemap} from "@fortawesome/pro-light-svg-icons";
 import VanityTable from "components/common/table/VanityTable";
 import {getField} from "components/common/metadata/metadata-helpers";
+import NewUserOverlay from "components/settings/users/NewUserOverlay";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
-function UsersTable({ userData, orgDomain, isLoading, authorizedActions, loadData }) {
-  const [showCreateUserModal, setShowCreateUserModal] = useState(false);
+function UsersTable({ userData, orgDomain, isLoading, authorizedActions, loadData, isMounted }) {
+  const toastContext = useContext(DialogToastContext);
   const fields = usersMetadata.fields;
   const history = useHistory();
 
@@ -34,7 +35,7 @@ function UsersTable({ userData, orgDomain, isLoading, authorizedActions, loadDat
   };
 
   const createUser = () => {
-    setShowCreateUserModal(true);
+    toastContext.showOverlayPanel(<NewUserOverlay loadData={loadData} isMounted={isMounted} />);
   };
 
   const getUsersTable = () => {
@@ -49,25 +50,16 @@ function UsersTable({ userData, orgDomain, isLoading, authorizedActions, loadDat
   };
 
   return (
-    <div className="px-2 pb-2">
-      <FilterContainer
-        loadData={loadData}
-        addRecordFunction={authorizedActions?.includes("create_user") ? createUser : null}
-        isLoading={isLoading}
-        body={getUsersTable()}
-        titleIcon={faSitemap}
-        showBorder={false}
-        title={"Users"}
-        type={"User"}
-      />
-      <NewLdapUserModal
-        authorizedActions={authorizedActions}
-        showModal={showCreateUserModal}
-        setShowModal={setShowCreateUserModal}
-        loadData={loadData}
-        orgDomain={orgDomain}
-      />
-    </div>
+    <FilterContainer
+      loadData={loadData}
+      addRecordFunction={authorizedActions?.includes("create_user") ? createUser : null}
+      isLoading={isLoading}
+      body={getUsersTable()}
+      titleIcon={faSitemap}
+      showBorder={false}
+      title={"Users"}
+      type={"User"}
+    />
   );
 }
 
@@ -76,7 +68,8 @@ UsersTable.propTypes = {
   orgDomain: PropTypes.string,
   authorizedActions: PropTypes.array,
   loadData: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  isMounted: PropTypes.object,
 };
 
 export default UsersTable;

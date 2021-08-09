@@ -255,6 +255,11 @@ accountsActions.getAccountUsersV2 = async (getAccessToken, cancelTokenSource) =>
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+accountsActions.getPendingUsersV2 = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/users/pending-users`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 accountsActions.getUserDetailViewLink = async (getUserRecord) => {
   const user = await getUserRecord();
   const {ldap} = user;
