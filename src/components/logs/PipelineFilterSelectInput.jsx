@@ -65,9 +65,7 @@ function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange,
       let formattedItems = [];
       for (const item in items) {
         let array = [];
-        console.log("item: " + item);
         const pipeline = items[item];
-        console.log("pipeline: " + JSON.stringify(pipeline));
         const plan = pipeline?.workflow?.plan;
 
         if (plan) {
