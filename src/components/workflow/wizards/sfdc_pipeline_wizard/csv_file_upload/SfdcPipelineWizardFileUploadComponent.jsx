@@ -17,17 +17,19 @@ import ExternalPageLink from "components/common/links/ExternalPageLink";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import VanityTable from "components/common/table/VanityTable";
+import _ from "lodash";
 
 function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) {
-    const fields = PipelineWizardFileUploadMetadata.fields;
-    const fileInputRef = useRef();
-    const [selectedFiles, setSelectedFiles] = useState([]);
-    const [validFiles, setValidFiles] = useState([]);
-    const [unsupportedFiles, setUnsupportedFiles] = useState([]);
-    const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-    const [save, setSave] = useState(false);
-    const [isXml, setIsXml] = useState(false);
+  const fields = PipelineWizardFileUploadMetadata.fields;
+  const fileInputRef = useRef();
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [validFiles, setValidFiles] = useState([]);
+  const [unsupportedFiles, setUnsupportedFiles] = useState([]);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [save, setSave] = useState(false);
+  const [isXml, setIsXml] = useState(false);
+  const [csvData, setCsvData] = useState([]);
 
   useEffect(() => {
     resetStoredFileContents();
@@ -47,6 +49,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     let newDataObject = {...pipelineWizardModel};
     newDataObject.setData("xmlFileContent", "");
     newDataObject.setData("csvFileContent", []);
+    setCsvData([]);
     setPipelineWizardModel({...newDataObject});
   };
 
@@ -146,6 +149,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     let newDataObject = {...pipelineWizardModel};
     newDataObject.setData("xmlFileContent", obj);
     newDataObject.setData("csvFileContent", []);
+    setCsvData([]);
     setPipelineWizardModel({...newDataObject});
     setSave(false);
   };
@@ -182,6 +186,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     let newDataObject = {...pipelineWizardModel};
     newDataObject.setData("xmlFileContent", "");
     newDataObject.setData("csvFileContent", obj);
+    setCsvData(_.cloneDeep(obj));
     setPipelineWizardModel({...newDataObject});
     setSave(false);
   };
@@ -247,7 +252,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
         tableHeight={"250px"}
         className={"no-table-border"}
         columns={columns}
-        data={pipelineWizardModel.getData("csvFileContent")}
+        data={csvData}
       />
     );
   };
