@@ -31,7 +31,7 @@ function UserPipelineOwnershipReport({ pipelineList, isLoading, paginationModel,
     [],
   );
 
-  const onRowSelect = (row) => {
+  const onRowSelect = (grid, row) => {
     history.push(`/workflow/details/${row?._id}/summary`);
   };
 
