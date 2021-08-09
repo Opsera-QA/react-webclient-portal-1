@@ -4,28 +4,30 @@ import ErrorDialog from "components/common/status_notifications/error";
 import {csvStringToObj} from "components/common/helpers/string-helpers";
 import './fileupload.css';
 import {Button} from 'react-bootstrap';
-import { getLimitedTableTextColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
+import { getTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import { getField } from "components/common/metadata/metadata-helpers";
 import SfdcPipelineWizardUploadComponentTypesRadioInput from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardUploadComponentTypesRadioInput";
 import PipelineWizardFileUploadMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/pipeline-wizard-file-upload-metadata.js";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import SfdcPipelineWizardSubmitFileTypeButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardSubmitFileTypeButton";
-import CustomTable from "components/common/table/CustomTable";
 import CancelButton from "components/common/buttons/CancelButton";
 import XmlFieldBase from "components/common/fields/code/XmlFieldBase";
 import ExternalPageLink from "components/common/links/ExternalPageLink";
+import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
+import FilterContainer from "components/common/table/FilterContainer";
+import VanityTable from "components/common/table/VanityTable";
 
 function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) {
-    const fields = PipelineWizardFileUploadMetadata.fields;
-    const fileInputRef = useRef();
-    const [selectedFiles, setSelectedFiles] = useState([]);
-    const [validFiles, setValidFiles] = useState([]);
-    const [unsupportedFiles, setUnsupportedFiles] = useState([]);
-    const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-    const [save, setSave] = useState(false);
-    const [isXml, setIsXml] = useState(false);
+  const fields = PipelineWizardFileUploadMetadata.fields;
+  const fileInputRef = useRef();
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [validFiles, setValidFiles] = useState([]);
+  const [unsupportedFiles, setUnsupportedFiles] = useState([]);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [save, setSave] = useState(false);
+  const [isXml, setIsXml] = useState(false);
 
   useEffect(() => {
     resetStoredFileContents();
@@ -156,7 +158,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     let validationKeys = ["commitAction", "componentType", "componentName"];
 
     let validKeys = validationKeys.every((val) => csvKeys.includes(val));
-   
+
     if (!validKeys) {
       // setError("Invalid CSV Provided!");
       let files = selectedFiles;
@@ -169,12 +171,12 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     let validOperations = ["","added", "modified", "removed", "renamed"];
     let isValidOpserations = csvobj.every((val) => validOperations.includes(val.commitAction?.toLowerCase()) );
     if(!isValidOpserations) {
-       let files = selectedFiles;
-       files[0]['invalid'] = true;
-       setUnsupportedFiles(files);
-       setErrorMessage('Invalid Action provided!');
-       setSave(false);
-       return;
+      let files = selectedFiles;
+      files[0]['invalid'] = true;
+      setUnsupportedFiles(files);
+      setErrorMessage('Invalid Action provided!');
+      setSave(false);
+      return;
     }
     // setCsvContent(obj);
     let newDataObject = {...pipelineWizardModel};
@@ -216,7 +218,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
       );
     }
   };
-  
+
   const buttonContainer = () => {
     return (
       <SaveButtonContainer>
@@ -234,20 +236,32 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     () => [
       getTableTextColumn(getField(fields, "commitAction")),
       getTableTextColumn(getField(fields, "componentType")),
-      getLimitedTableTextColumn(getField(fields, "componentName"), 80),
+      getTableTextColumn(getField(fields, "componentName")),
     ],
     [fields]
   );
+
+  const getTable = () => {
+    return (
+      <VanityTable
+        tableHeight={"250px"}
+        className={"no-table-border"}
+        columns={columns}
+        data={pipelineWizardModel.getData("csvFileContent")}
+      />
+    );
+  };
 
   const getCsvView = () => {
     if (pipelineWizardModel.getData("csvFileContent") && pipelineWizardModel.getData("csvFileContent").length > 0) {
       return (
         <>
-          <div style={{height: "300px", maxHeight: "500px", width: "800px", overflowY: "auto", margin: "auto"}}>
-            <CustomTable
-              className={"no-table-border"}
-              columns={columns}
-              data={pipelineWizardModel.getData("csvFileContent")}
+          <div>
+            <FilterContainer
+              title={"CSV File Content"}
+              titleIcon={faSalesforce}
+              body={getTable()}
+              showBorder={false}
             />
           </div>
           {buttonContainer()}
@@ -289,14 +303,14 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
       return (
         <div>
           {validFiles.map((data, i) =>
-              <div className="d-flex my-2" key={i}>
-                <div className={"badge badge-opsera mr-2 d-flex"}><div className={"h-100 file-type-badge"}>{fileType(data?.name)}</div></div>
-                <div className={`file-name ${data.invalid ? 'file-error' : ''}`}>{data.name}</div>
-                <div className="file-size ml-2">({fileSize(data.size)})</div>
-                {data.invalid && <span className='file-error-message'>({errorMessage})</span>}
-                <div className="ml-3 danger-red pointer fa fa-trash my-auto" onClick={() => removeFile()} />
-              </div>
-            )}
+            <div className="d-flex my-2" key={i}>
+              <div className={"badge badge-opsera mr-2 d-flex"}><div className={"h-100 file-type-badge"}>{fileType(data?.name)}</div></div>
+              <div className={`file-name ${data.invalid ? 'file-error' : ''}`}>{data.name}</div>
+              <div className="file-size ml-2">({fileSize(data.size)})</div>
+              {data.invalid && <span className='file-error-message'>({errorMessage})</span>}
+              <div className="ml-3 danger-red pointer fa fa-trash my-auto" onClick={() => removeFile()} />
+            </div>
+          )}
         </div>
       );
     }
