@@ -1,13 +1,13 @@
 import React, { useMemo }  from 'react';
 import PropTypes from "prop-types";
 import {
-  getTableDateTimeColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers-v2";
 import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-table-constants";
 import FilterContainer from "components/common/table/FilterContainer";
 import { faCode } from "@fortawesome/free-solid-svg-icons";
 import VanityTable from "components/common/table/VanityTable";
+import {getField} from "components/common/metadata/metadata-helpers";
 
 const SfdcPipelineWizardGitFilesValidationTableBase = ({ pipelineWizardModel, loadData, data, isLoading, paginationModel, setPaginationModel, title, filePullCompleted }) => {
   const fields = sfdcTableConstants.fields;
@@ -16,8 +16,9 @@ const SfdcPipelineWizardGitFilesValidationTableBase = ({ pipelineWizardModel, lo
 
   const columns = useMemo(
     () => [
-      {...getTableTextColumn(fields.find(field => { return field.id === "componentName";})), class: "force-text-wrap"},
-      getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime";})),
+      getTableTextColumn(getField(fields, "commitAction")),
+      getTableTextColumn(getField(fields, "componentType")),
+      getTableTextColumn(getField(fields, "componentName")),
     ],
     [],
   );
@@ -25,7 +26,6 @@ const SfdcPipelineWizardGitFilesValidationTableBase = ({ pipelineWizardModel, lo
   const getFilesTable = () => {
     return (
       <VanityTable
-        className={"table-no-border" + (data?.length > 0 ? " opacity-half" : " ") }
         columns={columns}
         data={data}
         isLoading={isLoading}

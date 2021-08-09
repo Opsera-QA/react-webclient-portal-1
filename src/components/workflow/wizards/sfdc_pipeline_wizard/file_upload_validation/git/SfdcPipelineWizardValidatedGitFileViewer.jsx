@@ -70,11 +70,9 @@ const SfdcPipelineWizardValidatedGitFileViewer = ({ pipelineWizardModel, setPipe
   };
 
   const toggleFileValidation = async (cancelSource = cancelTokenSource) => {
-    const response = await sfdcPipelineActions.validateGitCsvFiles(getAccessToken, cancelSource, pipelineWizardModel);
-    console.log("git response: " + JSON.stringify(response));
+    await sfdcPipelineActions.validateGitCsvFiles(getAccessToken, cancelSource, pipelineWizardModel);
   };
 
-  // TODO:
   const getBody = () => {
     if (isLoading) {
       return <LoadingDialog size={"sm"} message={"Requesting Files"} />;
