@@ -60,13 +60,16 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
   };
 
   const loadPipelines = async (cancelSource = cancelTokenSource, searchTerm) => {
-    const response = await pipelineActions.getAllPipelinesV3(getAccessToken, cancelSource, searchTerm);
+    const fields = [
+      "name",
+      "_id",
+      "owner",
+      "roles",
+      "workflow.run_count"
+    ];
+    const response = await pipelineActions.getPipelinesV3(getAccessToken, cancelSource, undefined, searchTerm, "all", fields);
+    const pipelines = response?.data?.data;
 
-    if (response === undefined) {
-      return true;
-    }
-
-    const pipelines = response?.data?.response;
     if (Array.isArray(pipelines) && pipelines.length > 0) {
 
       let parsedArray = [];

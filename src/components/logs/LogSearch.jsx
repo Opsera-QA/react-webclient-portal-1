@@ -396,7 +396,12 @@ function LogSearch({tools, sideBySide}) {
   const getDynamicFields = () => {
     if (filterType === "opsera-pipeline") {
       return (
-          <PipelineFilterSelectInput opseraPipelineSelectChange={opseraPipelineSelectChange} pipelineFilter={pipelineFilter} setStepFilter={setStepFilter} stepFilter={stepFilter} />
+        <PipelineFilterSelectInput
+          opseraPipelineSelectChange={opseraPipelineSelectChange}
+          pipelineFilter={pipelineFilter}
+          setStepFilter={setStepFilter}
+          stepFilter={stepFilter}
+        />
       );
     }
 

@@ -113,14 +113,25 @@ pipelineActions.getAllPipelinesV2 = async (getAccessToken, cancelTokenSource) =>
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-pipelineActions.getAllPipelinesV3 = async (getAccessToken, cancelTokenSource, searchTerm) => {
+pipelineActions.getPipelinesV3 = async (getAccessToken, cancelTokenSource, pipelineFilterModel, searchTerm, type, fields, active = true) => {
+  const apiUrl = `/pipelines/v2`;
+  const sortOption = pipelineFilterModel?.getData("sortOption");
+
   const urlParams = {
     params: {
-      search: searchTerm,
+      sort: sortOption ? sortOption.value : undefined,
+      order: sortOption ? sortOption.order : undefined,
+      size: pipelineFilterModel?.getData("pageSize"),
+      page: pipelineFilterModel?.getData("currentPage"),
+      type: type !== 'all' && type !== null ? type : undefined,
+      search: searchTerm ? searchTerm : pipelineFilterModel?.getFilterValue("search"),
+      owner: pipelineFilterModel?.getFilterValue("owner"),
+      tag: pipelineFilterModel?.getFilterValue("tag"),
+      active: active,
+      fields: fields
     },
   };
-  
-  let apiUrl = `/pipelines`;
+
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
