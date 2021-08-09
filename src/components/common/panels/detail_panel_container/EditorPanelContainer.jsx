@@ -24,6 +24,7 @@ function EditorPanelContainer(
     enabledText,
     disabledText,
     getHelpComponent,
+    booleanToggleDisabled,
   }) {
   const [helpIsShown, setHelpIsShown] = useState(false);
 
@@ -72,6 +73,7 @@ function EditorPanelContainer(
           dataObject={recordDto}
           disabledText={disabledText}
           enabledText={enabledText}
+          disabled={booleanToggleDisabled}
         />
       );
     }
@@ -131,6 +133,7 @@ EditorPanelContainer.propTypes = {
   enabledText: PropTypes.string,
   disabledText: PropTypes.string,
   getHelpComponent: PropTypes.func,
+  booleanToggleDisabled: PropTypes.bool,
 };
 
 EditorPanelContainer.defaultProps = {
