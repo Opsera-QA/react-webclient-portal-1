@@ -21,6 +21,8 @@ import {
   getSonarProjectLanguagesFromKpiConfiguration,
   getServiceNowPrioritiesFromKpiConfiguration,
   getServiceNowAssignmentGroupsFromKpiConfiguration,
+  getUseKpiTagsFromKpiConfiguration,
+  getUseDashboardTagsFromKpiConfiguration
 } from "components/insights/charts/charts-helpers";
 
 const chartsActions = {};
@@ -88,7 +90,6 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
 ) => {
   const apiUrl = "/analytics/metrics",
     date = getDateObjectFromKpiConfiguration(kpiConfiguration),
-    tags = getTagsFromKpiConfiguration(kpiConfiguration),
     jenkinsResult = getJenkinsResultFromKpiConfiguration(kpiConfiguration),
     jenkinsJobUrl = getJenkinsJobUrlFromKpiConfiguration(kpiConfiguration),
     jenkinsBuildNumber = getJenkinsBuildNumberFromKpiConfiguration(kpiConfiguration),
@@ -108,6 +109,13 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     sonarProjectLanguages = getSonarProjectLanguagesFromKpiConfiguration(kpiConfiguration),
     serviceNowPriorities = getServiceNowPrioritiesFromKpiConfiguration(kpiConfiguration),
     serviceNowAssignmentGroups = getServiceNowAssignmentGroupsFromKpiConfiguration(kpiConfiguration);
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {tags = null;}
+  if (!useDashboardTags) {dashboardTags = null;}
 
   const postBody = {
     request: request,
