@@ -32,6 +32,10 @@ import OctopusDeployToJavaArchiveView from "./sub-forms/OctopusDeployToJavaArchi
 import OctopusProjectNameInput from "./input/OctopusProjectNameInput";
 import OctopusKubernetesScriptView from "./sub-forms/OctopusKubernetesScriptView";
 import KubernetesToggleInput from "./input/KubernetesToggleInput";
+import AzureToolConfigIdSelectInput
+  from "../../../../../../../inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/AzureToolConfigIdSelectInput";
+import AzureCredentialIdSelectInput from "./input/AzureCredentialIdSelectInput";
+import AzureToolSelectInput from "./input/AzureToolSelectInput";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, callbackSaveToVault, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -43,6 +47,8 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
   const [octopusSearching, isOctopusSearching] = useState(false);
   const [octopusList, setOctopusList] = useState([]);
   const [listOfSteps, setListOfSteps] = useState([]);
+  const [azureConfig,setAzureConfig]=useState(null);
+  const [applicationData, setApplicationData]=useState(null);
 
   useEffect(() => {
     loadFormData(stepTool);
@@ -360,6 +366,17 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
                   dataObject={octopusStepConfigurationDto}
                   setDataObject={setOctopusStepConfigurationDataDto}
                   fieldName={"isRollback"}
+                />
+                <AzureToolSelectInput
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  setAzureConfig={setAzureConfig}
+                />
+                <AzureCredentialIdSelectInput
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  azureConfig={azureConfig}
+                  setApplicationData={setApplicationData}
                 />
                 <TextInputBase
                 setDataObject={setOctopusStepConfigurationDataDto}

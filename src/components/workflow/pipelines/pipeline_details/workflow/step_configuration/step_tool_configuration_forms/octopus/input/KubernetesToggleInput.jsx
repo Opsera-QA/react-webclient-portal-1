@@ -11,6 +11,8 @@ function KubernetesToggleInput({dataObject, setDataObject, fieldName, disabled})
     let sourceScriptFlag = !dataObject.getData("isRollback");
     newDataObject.setData("isRollback", sourceScriptFlag);
     newDataObject.setData("octopusVersion", undefined);
+    newDataObject.setData("azureToolId", "");
+    newDataObject.setData("azureCredentialId", "");
     setDataObject({...newDataObject});
   };
 

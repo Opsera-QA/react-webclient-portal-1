@@ -99,13 +99,13 @@ function AzureToolConfigIdSelectInput({ fieldName, dataObject, setDataObject, di
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     } finally {
-        setIsSearching(false);
+      setIsSearching(false);
     }
   };
-  
+
   const handleChange=(fieldName,selectedOption)=>{
     setAzureConfig(list.find(el=>el.id == selectedOption.id));
-    let newDataObject = {...dataObject};    
+    let newDataObject = {...dataObject};
     newDataObject.setData(fieldName, selectedOption.id);
     newDataObject.setData("azureCredentialId","");
     setDataObject({...newDataObject});
@@ -115,11 +115,15 @@ function AzureToolConfigIdSelectInput({ fieldName, dataObject, setDataObject, di
     let newDataObject = {...dataObject};
     newDataObject.setData(fieldName, "");
 
-    setAzureConfig(null);  
+    setAzureConfig(null);
     setDataObject({...newDataObject});
   };
 
-  
+  if ((dataObject?.getData("yamlSource") && dataObject?.getData("yamlSource") === "inline") ||
+    (!dataObject?.getData("yamlSource") || (dataObject?.getData("yamlSource") && dataObject?.getData("yamlSource").length === 0)) ||
+    (!dataObject?.getData("isRollback"))) {
+    return null;
+  }
 
   return (
     <div>
@@ -156,7 +160,7 @@ AzureToolConfigIdSelectInput.defaultProps = {
   valueField: "id",
   textField: "name",
   fieldName: "azureToolId",
-  
+
 };
 
 export default AzureToolConfigIdSelectInput;

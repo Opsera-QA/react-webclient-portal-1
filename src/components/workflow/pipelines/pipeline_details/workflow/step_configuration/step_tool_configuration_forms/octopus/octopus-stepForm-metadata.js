@@ -258,6 +258,14 @@ const octopusStepFormMetadata = {
         label: "YAML Source",
         id: "yamlSource",
       },
+      {
+        label: "Azure Tool",
+        id: "azureToolId",
+      },
+      {
+        label: "Azure Credentials",
+        id: "azureCredentialId",
+      },
     ],
   newObjectFields:
       {
@@ -317,6 +325,8 @@ const octopusStepFormMetadata = {
         applicationPoolIdentityPassword : {},
         startApplicationPool : false,
         yamlSource: "",
+        azureToolId: "",
+        azureCredentialId: ""
       }
   };
   

@@ -25,6 +25,12 @@ function AzureCredentialIdSelectInput({ fieldName, dataObject, setDataObject , a
     setDataObject({...newDataObject});
   };
 
+  if ((dataObject?.getData("yamlSource") && dataObject?.getData("yamlSource") === "inline") ||
+    (!dataObject?.getData("yamlSource") || (dataObject?.getData("yamlSource") && dataObject?.getData("yamlSource").length === 0)) ||
+    (!dataObject?.getData("isRollback"))) {
+    return null;
+  }
+
   return (
       <SelectInputBase
         fieldName={fieldName}
