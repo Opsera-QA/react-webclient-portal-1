@@ -10,7 +10,7 @@ import BuildDetailsMetadata from "components/insights/summary/build-details-meta
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function PipelineDetails({ dashboardData, toggleDynamicPanel, selectedDataBlock , style }) {
+function TotalpipelinesFailed({ dashboardData, toggleDynamicPanel, selectedDataBlock , style }) {
   const fields = BuildDetailsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -71,7 +71,7 @@ function PipelineDetails({ dashboardData, toggleDynamicPanel, selectedDataBlock 
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "summaryPipelinesSuccessfulDeployment",
+        "failedPipelineExecutions",
         null,
         dashboardTags,
         filterDto,
@@ -123,10 +123,10 @@ function PipelineDetails({ dashboardData, toggleDynamicPanel, selectedDataBlock 
               />
             )
           }
-          subTitle="Successful Pipelines (Deployments)"
-          toolTipText="Successful Pipelines (Deployments)"
+          subTitle="Failed Pipeline Executions"
+          toolTipText="Failed Pipeline Executions"
           clickAction={() => onDataBlockSelect()}
-          statusColor="success"
+          statusColor="danger"
         />
       </div>
     );
@@ -135,11 +135,11 @@ function PipelineDetails({ dashboardData, toggleDynamicPanel, selectedDataBlock 
   return getChartBody();
 }
 
-PipelineDetails.propTypes = {
+TotalpipelinesFailed.propTypes = {
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
   selectedDataBlock: PropTypes.string,
   style: PropTypes.object
 };
 
-export default PipelineDetails;
+export default TotalpipelinesFailed;

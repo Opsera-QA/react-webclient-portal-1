@@ -5,14 +5,14 @@ import MetricContainer from "components/common/panels/insights/charts/MetricCont
 
 // Opsera Pipeline
 import TotalPipelinesExecuted from "components/insights/summary/TotalPipelinesExecuted";
-import PipelinesPassedWithQualityAndSecurity from "components/insights/summary/pipeline_details/PipelinesPassedWithQualityAndSecurity";
+import PipelinesSuccessfulExecutions from "components/insights/summary/pipeline_details/PipelinesSuccessfulExecutions";
 import PipelinesFailedSecurity from "components/insights/summary/pipeline_details/PipelinesFailedSecurity";
 import PipelinesFailedQuality from "components/insights/summary/pipeline_details/PipelinesFailedQuality";
 import PipelinesFailedDeployment from "components/insights/summary/pipeline_details/PipelinesFailedDeployment";
 import InsightsPipelineDetailsTable from "components/insights/summary/pipeline_details/InsightsPipelineDetailsTable";
 import InsightsPipelineDetailsDurationTable from "components/insights/summary/pipeline_details/InsightsPipelineDetailsDurationTable";
 import PipelinesByProjectTable from "components/insights/summary/PipelinesByProjectTable";
-import TotalPipelinesPassedDeployment from "components/insights/summary/pipeline_details/TotalPipelinesPassedDeployment";
+import TotalPipelinesFailed from "components/insights/summary/pipeline_details/TotalpipelinesFailed";
 import AvgDeploymentDuration from "components/insights/summary/pipeline_details/AvgDeploymentDuration";
 import AvgBuildDuration from "components/insights/summary/pipeline_details/AvgBuildDuration";
 import AvgApprovalTimeDataBlock from "components/insights/summary/pipeline_details/AvgApprovalTime";
@@ -149,13 +149,13 @@ function InsightsSynopsisDetails({ dashboardData }) {
           selectedDataBlock={selectedDataBlock}
           style={{ width: "33%" }}
         />
-        <PipelinesPassedWithQualityAndSecurity
+        <PipelinesSuccessfulExecutions
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
           style={{ width: "33%" }}
         />
-        <TotalPipelinesPassedDeployment
+        <TotalPipelinesFailed
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
@@ -261,7 +261,7 @@ function InsightsSynopsisDetails({ dashboardData }) {
   return (
     <>
       <div className={"d-flex flex-wrap justify-content-around w-100"}>
-        <MetricContainer title="Pipelines: Success Score">{getPipelinesSuccess()}</MetricContainer>
+        <MetricContainer title="Pipelines : Overview">{getPipelinesSuccess()}</MetricContainer>
         <MetricContainer title="Pipelines: Failure Score">{getPipelinesFailure()}</MetricContainer>
         <MetricContainer title="Value Stream">{getValueStream()}</MetricContainer>
         <MetricContainer title="Pipeline: Duration Average">{getAverageBlocks()}</MetricContainer>
