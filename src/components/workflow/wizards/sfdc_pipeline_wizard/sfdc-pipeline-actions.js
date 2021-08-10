@@ -377,12 +377,12 @@ sfdcPipelineActions.setCsvFileComponentsV2 = async (getAccessToken, cancelTokenS
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-sfdcPipelineActions.validateSfdcCsvFiles = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+sfdcPipelineActions.toggleSfdcCsvFilesValidation = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/toggle_sfdc_csv_upload_validation`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-sfdcPipelineActions.validateGitCsvFiles = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+sfdcPipelineActions.toggleGitCsvFilesValidation = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/toggle_git_csv_upload_validation`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };

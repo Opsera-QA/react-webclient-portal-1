@@ -77,7 +77,7 @@ function SfdcPipelineWizardSubmitSfdcFilesButton({pipelineWizardModel, setPipeli
 
   const getLabel = () => {
     if (isSaving) {
-      return ("Saving Filtered SFDC File List");
+      return (`Saving ${filteredFileCount} SFDC Files`);
     }
 
     return (`Proceed with ${filteredFileCount} Files`);

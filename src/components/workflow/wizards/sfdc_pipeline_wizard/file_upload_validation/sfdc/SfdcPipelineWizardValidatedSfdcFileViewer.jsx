@@ -20,8 +20,14 @@ import SfdcPipelineWizardInvalidGitFilesTable
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/git/SfdcPipelineWizardInvalidGitFilesTable";
 import SfdcPipelineWizardSubmitGitFilesButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardSubmitGitFilesButton";
+import SfdcPipelineWizardValidatedSfdcFilesTable
+  from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/sfdc/SfdcPipelineWizardValidatedSfdcFilesTable";
+import SfdcPipelineWizardInvalidSfdcFilesTable
+  from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/sfdc/SfdcPipelineWizardInvalidSfdcFilesTable";
+import SfdcPipelineWizardSubmitSfdcFilesButton
+  from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSubmitSfdcFilesButton";
 
-const SfdcPipelineWizardValidatedGitFileViewer = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {
+const SfdcPipelineWizardValidatedSfdcFileViewer = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
@@ -70,7 +76,7 @@ const SfdcPipelineWizardValidatedGitFileViewer = ({ pipelineWizardModel, setPipe
   };
 
   const toggleFileValidation = async (cancelSource = cancelTokenSource) => {
-    await sfdcPipelineActions.toggleGitCsvFilesValidation(getAccessToken, cancelSource, pipelineWizardModel);
+    await sfdcPipelineActions.toggleSfdcCsvFilesValidation(getAccessToken, cancelSource, pipelineWizardModel);
   };
 
   const getBody = () => {
@@ -86,7 +92,7 @@ const SfdcPipelineWizardValidatedGitFileViewer = ({ pipelineWizardModel, setPipe
         />
         <Row className="mt-2 d-flex" style={{minWidth: "1400px"}}>
           <Col xs={6} className={"pr-1"} style={{minWidth: "675px"}}>
-            <SfdcPipelineWizardValidatedGitFilesTable
+            <SfdcPipelineWizardValidatedSfdcFilesTable
               pipelineWizardModel={pipelineWizardModel}
               setFilteredFileCount={setFilteredFileCount}
               setPipelineWizardModel={setPipelineWizardModel}
@@ -95,7 +101,7 @@ const SfdcPipelineWizardValidatedGitFileViewer = ({ pipelineWizardModel, setPipe
             />
           </Col>
           <Col xs={6} className={"pl-1"} style={{minWidth: "675px"}}>
-            <SfdcPipelineWizardInvalidGitFilesTable pipelineWizardModel={pipelineWizardModel} />
+            <SfdcPipelineWizardInvalidSfdcFilesTable pipelineWizardModel={pipelineWizardModel} />
           </Col>
         </Row>
       </>
@@ -109,7 +115,7 @@ const SfdcPipelineWizardValidatedGitFileViewer = ({ pipelineWizardModel, setPipe
         <Button variant="secondary" size="sm" className="mr-2" onClick={() => {setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);}}>
           <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>Back
         </Button>
-        <SfdcPipelineWizardSubmitGitFilesButton
+        <SfdcPipelineWizardSubmitSfdcFilesButton
           setPipelineWizardScreen={setPipelineWizardScreen}
           pipelineWizardModel={pipelineWizardModel}
           filteredFileCount={filteredFileCount}
@@ -121,11 +127,11 @@ const SfdcPipelineWizardValidatedGitFileViewer = ({ pipelineWizardModel, setPipe
   );
 };
 
-SfdcPipelineWizardValidatedGitFileViewer.propTypes = {
+SfdcPipelineWizardValidatedSfdcFileViewer.propTypes = {
   pipelineWizardModel: PropTypes.object,
   setPipelineWizardModel: PropTypes.func,
   setPipelineWizardScreen: PropTypes.func,
   handleClose: PropTypes.func,
 };
 
-export default SfdcPipelineWizardValidatedGitFileViewer;
+export default SfdcPipelineWizardValidatedSfdcFileViewer;

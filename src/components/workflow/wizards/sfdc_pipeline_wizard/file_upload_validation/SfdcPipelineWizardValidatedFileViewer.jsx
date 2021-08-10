@@ -2,19 +2,21 @@ import React from 'react';
 import PropTypes from "prop-types";
 import SfdcPipelineWizardValidatedGitFileViewer
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/git/SfdcPipelineWizardValidatedGitFileViewer";
+import SfdcPipelineWizardValidatedSfdcFileViewer
+  from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/sfdc/SfdcPipelineWizardValidatedSfdcFileViewer";
 
 const SfdcPipelineWizardValidatedFileViewer = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {
   const getView = () => {
-    // if (pipelineWizardModel.getData("modifiedFilesOrigin") === "sfdc") {
-    //   return (
-    //     <SfdcPipelineWizardSfdcFileSelector
-    //       pipelineWizardModel={pipelineWizardModel}
-    //       setPipelineWizardModel={setPipelineWizardModel}
-    //       setPipelineWizardScreen={setPipelineWizardScreen}
-    //       handleClose={handleClose}
-    //     />
-    //   );
-    // }
+    if (pipelineWizardModel.getData("modifiedFilesOrigin") === "sfdc") {
+      return (
+        <SfdcPipelineWizardValidatedSfdcFileViewer
+          pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardModel={setPipelineWizardModel}
+          setPipelineWizardScreen={setPipelineWizardScreen}
+          handleClose={handleClose}
+        />
+      );
+    }
 
     if (pipelineWizardModel.getData("modifiedFilesOrigin") === "git") {
       return (

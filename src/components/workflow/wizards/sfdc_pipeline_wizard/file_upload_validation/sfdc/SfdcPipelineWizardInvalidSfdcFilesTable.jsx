@@ -11,7 +11,7 @@ import {parseError} from "components/common/helpers/error-helpers";
 import SfdcPipelineWizardFileValidationTableBase
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/SfdcPipelineWizardFileValidationTableBase";
 
-const SfdcPipelineWizardInvalidGitFilesTable = ({ pipelineWizardModel}) => {
+const SfdcPipelineWizardInvalidSfdcFilesTable = ({ pipelineWizardModel}) => {
   const {getAccessToken} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [destinationFiles, setDestinationFiles] = useState([]);
@@ -121,8 +121,8 @@ const SfdcPipelineWizardInvalidGitFilesTable = ({ pipelineWizardModel}) => {
   );
 };
 
-SfdcPipelineWizardInvalidGitFilesTable.propTypes = {
+SfdcPipelineWizardInvalidSfdcFilesTable.propTypes = {
   pipelineWizardModel: PropTypes.object,
 };
 
-export default SfdcPipelineWizardInvalidGitFilesTable;
+export default SfdcPipelineWizardInvalidSfdcFilesTable;
