@@ -159,14 +159,14 @@ pipelineHelpers.getRegistryPopover = (data) => {
     return (
       <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
         <Popover.Title as="h3">
-          Tool and Account Details{" "}
-          <FontAwesomeIcon icon={faTimes} className="fa-pull-right pointer" onClick={() => document.body.click()}/>
+          Tool and Account Details
+          <FontAwesomeIcon icon={faTimes} className="ml-2 fa-pull-right pointer" onClick={() => document.body.click()}/>
         </Popover.Title>
 
         <Popover.Content>
           <div className="text-muted mb-2">
             Configuration details for this item are listed below. Tool and account specific settings are stored in the
-            <Link to="/inventory/tools">Tool Registry</Link>. To add a new entry to a dropdown or update settings,
+            <span> <Link to="/inventory/tools">Tool Registry</Link></span>. To add a new entry to a dropdown or update settings,
             make those changes there.
           </div>
           {data.configuration && (
