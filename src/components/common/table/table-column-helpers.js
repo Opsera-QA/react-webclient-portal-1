@@ -373,10 +373,19 @@ export const getPipelineActivityStatusColumn = (field, className) => {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     Cell: function parseStatus(row) {
+      if (row?.value == null || row?.value === "") {
+        return (
+          <div className="d-flex flex-nowrap">
+            <div><FontAwesomeIcon icon={faCircle} className="cell-icon yellow my-auto" fixedWidth/></div>
+            <div className="ml-1">Unknown</div>
+          </div>
+        );
+      }
+
       return (
         <div className="d-flex flex-nowrap">
           <div>{getPipelineStatusIcon(row)}</div>
-          <div className="ml-1">{row.value}</div>
+          <div className="ml-1">{capitalizeFirstLetter(row.value)}</div>
         </div>
       );
     },
@@ -388,23 +397,23 @@ export const getPipelineStatusIcon = (row) => {
   switch (row.value) {
     case "failure":
     case "failed":
-      return (<FontAwesomeIcon icon={faTimesCircle} className="cell-icon red vertical-align-item" fixedWidth />);
+      return (<FontAwesomeIcon icon={faTimesCircle} className="cell-icon red my-auto" fixedWidth />);
     case "error":
-      return (<FontAwesomeIcon icon={faExclamationCircle} className="cell-icon red vertical-align-item" fixedWidth />);
+      return (<FontAwesomeIcon icon={faExclamationCircle} className="cell-icon red my-auto" fixedWidth />);
     case "unknown":
-      return (<FontAwesomeIcon icon={faCircle} className="cell-icon yellow vertical-align-item" fixedWidth/>);
+      return (<FontAwesomeIcon icon={faCircle} className="cell-icon yellow my-auto" fixedWidth/>);
     case "rejected":
-      return (<FontAwesomeIcon icon={faStopCircle} className="cell-icon red vertical-align-item" fixedWidth/>);
+      return (<FontAwesomeIcon icon={faStopCircle} className="cell-icon red my-auto" fixedWidth/>);
     case "running":
     case "processing event":
-      return (<FontAwesomeIcon icon={faPlayCircle} className="cell-icon green vertical-align-item" fixedWidth/>);
+      return (<FontAwesomeIcon icon={faPlayCircle} className="cell-icon green my-auto" fixedWidth/>);
     case "queued":
-      return (<FontAwesomeIcon icon={faPauseCircle} className="cell-icon green vertical-align-item" fixedWidth/>);
+      return (<FontAwesomeIcon icon={faPauseCircle} className="cell-icon green my-auto" fixedWidth/>);
     case "stopped":
     case "halted":
-      return (<FontAwesomeIcon icon={faOctagon} className="cell-icon red vertical-align-item" fixedWidth/>);
+      return (<FontAwesomeIcon icon={faOctagon} className="cell-icon red my-auto" fixedWidth/>);
     default:
-      return (<FontAwesomeIcon icon={faCheckCircle} className="cell-icon green vertical-align-item" fixedWidth/>);
+      return (<FontAwesomeIcon icon={faCheckCircle} className="cell-icon green my-auto" fixedWidth/>);
   }
 };
 
