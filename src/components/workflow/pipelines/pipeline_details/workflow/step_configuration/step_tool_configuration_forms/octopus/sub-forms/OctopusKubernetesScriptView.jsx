@@ -11,12 +11,12 @@ function OctopusKubernetesScriptView({dataObject, setDataObject, isLoading, disa
     return null;
   }
 
-  if (!dataObject?.getData("yamlSource") || dataObject?.getData("yamlSource") && dataObject?.getData("yamlSource").length === 0) {
+  if (!dataObject?.getData("scriptSource") || dataObject?.getData("scriptSource") && dataObject?.getData("scriptSource").length === 0) {
     return null;
   }
 
   const getPackageFields = () => {
-    if (dataObject?.getData("yamlSource") === "package") {
+    if (dataObject?.getData("scriptSource") === "package") {
       return (
         <>
           <TextInputBase
@@ -30,7 +30,7 @@ function OctopusKubernetesScriptView({dataObject, setDataObject, isLoading, disa
   };
 
   const getInlineFields = () => {
-    if (dataObject?.getData("yamlSource") === "inline") {
+    if (dataObject?.getData("scriptSource") === "inline") {
       return (
         <>
           <ScriptLibrarySelectInput

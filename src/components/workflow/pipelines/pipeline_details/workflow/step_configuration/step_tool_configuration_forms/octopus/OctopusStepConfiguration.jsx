@@ -31,11 +31,10 @@ import OctopusDeployToIisView from "./sub-forms/OctopusDeployToIisView";
 import OctopusDeployToJavaArchiveView from "./sub-forms/OctopusDeployToJavaArchiveView";
 import OctopusProjectNameInput from "./input/OctopusProjectNameInput";
 import OctopusKubernetesScriptView from "./sub-forms/OctopusKubernetesScriptView";
-import KubernetesToggleInput from "./input/KubernetesToggleInput";
-import AzureToolConfigIdSelectInput
-  from "../../../../../../../inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/AzureToolConfigIdSelectInput";
 import AzureCredentialIdSelectInput from "./input/AzureCredentialIdSelectInput";
 import AzureToolSelectInput from "./input/AzureToolSelectInput";
+import AcrPushStepSelectInput from "./input/AcrPushStepSelectInput";
+import AzureRepoTagsSelectInput from "./input/AzureRepoTagsSelectInput";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, callbackSaveToVault, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -333,7 +332,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
               <>
                 <OctopusScriptTypeSelectInput
                   dataObject={octopusStepConfigurationDto}
-                  fieldName={"yamlSource"}
+                  fieldName={"scriptSource"}
                   setDataObject={setOctopusStepConfigurationDataDto}
                   tool_prop={"Script"}
                 />
@@ -341,8 +340,8 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
                   dataObject={octopusStepConfigurationDto}
                   setDataObject={setOctopusStepConfigurationDataDto}
                   disabled={
-                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("yamlSource")
-                      ? octopusStepConfigurationDto.getData("yamlSource").length === 0
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("scriptSource")
+                      ? octopusStepConfigurationDto.getData("scriptSource").length === 0
                       : true
                   }
                   tool_prop={"Script"}
@@ -362,7 +361,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
                       : ""
                   }
                 />
-                <KubernetesToggleInput
+                <RollbackToggleInput
                   dataObject={octopusStepConfigurationDto}
                   setDataObject={setOctopusStepConfigurationDataDto}
                   fieldName={"isRollback"}
@@ -377,6 +376,19 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
                   setDataObject={setOctopusStepConfigurationDataDto}
                   azureConfig={azureConfig}
                   setApplicationData={setApplicationData}
+                />
+                <AcrPushStepSelectInput
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  plan={plan}
+                  stepId={stepId}
+                />
+                <AzureRepoTagsSelectInput
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  azureConfig={azureConfig}
+                  applicationData={applicationData}
+                  acrLoginUrl={octopusStepConfigurationDto?.getData("acrLoginUrl")}
                 />
                 <TextInputBase
                 setDataObject={setOctopusStepConfigurationDataDto}

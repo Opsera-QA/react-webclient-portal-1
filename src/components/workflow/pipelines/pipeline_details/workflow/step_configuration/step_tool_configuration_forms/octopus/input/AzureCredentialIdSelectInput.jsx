@@ -9,6 +9,14 @@ function AzureCredentialIdSelectInput({ fieldName, dataObject, setDataObject , a
     if(azureConfig && azureConfig.applications && azureConfig.applications.length >0) {
       setApplicationsList(azureConfig.applications);
     }
+    if (dataObject?.getData("azureCredentialId").length > 0) {
+      if (applicationsList && applicationsList.length > 0) {
+        let credential = applicationsList.find(el => el._id === dataObject?.getData("azureCredentialId"));
+        if (credential && Object.keys(credential).length > 0) {
+          setApplicationData(credential?.configuration);
+        }
+      }
+    }
   },[azureConfig]);
 
   const handleChange = (fieldName, selectedOption) => {    
@@ -25,9 +33,7 @@ function AzureCredentialIdSelectInput({ fieldName, dataObject, setDataObject , a
     setDataObject({...newDataObject});
   };
 
-  if ((dataObject?.getData("yamlSource") && dataObject?.getData("yamlSource") === "inline") ||
-    (!dataObject?.getData("yamlSource") || (dataObject?.getData("yamlSource") && dataObject?.getData("yamlSource").length === 0)) ||
-    (!dataObject?.getData("isRollback"))) {
+  if (!dataObject?.getData("isRollback")) {
     return null;
   }
 

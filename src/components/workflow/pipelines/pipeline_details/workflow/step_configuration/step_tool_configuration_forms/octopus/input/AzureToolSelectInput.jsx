@@ -93,6 +93,9 @@ function AzureToolConfigIdSelectInput({ fieldName, dataObject, setDataObject, di
       const filteredList = results ? results.filter((el) => el.configuration !== undefined) : [];
       if (filteredList) {
         setList(filteredList);
+        if (dataObject?.getData("azureToolId").length > 0) {
+          setAzureConfig(filteredList.find(el=>el.id === dataObject?.getData("azureToolId")));
+        }
       }
     } catch (error) {
       setPlaceholder("No Azure Tool Found");
@@ -119,11 +122,10 @@ function AzureToolConfigIdSelectInput({ fieldName, dataObject, setDataObject, di
     setDataObject({...newDataObject});
   };
 
-  if ((dataObject?.getData("yamlSource") && dataObject?.getData("yamlSource") === "inline") ||
-    (!dataObject?.getData("yamlSource") || (dataObject?.getData("yamlSource") && dataObject?.getData("yamlSource").length === 0)) ||
-    (!dataObject?.getData("isRollback"))) {
+  if (!dataObject?.getData("isRollback")) {
     return null;
   }
+
 
   return (
     <div>

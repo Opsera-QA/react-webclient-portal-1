@@ -266,6 +266,21 @@ const octopusStepFormMetadata = {
         label: "Azure Credentials",
         id: "azureCredentialId",
       },
+      {
+        label: "Artifact Step",
+        id: "acrPushStepId",
+        // isRequired: true
+      },
+      {
+        label: "ACR Login URL",
+        id: "acrLoginUrl",
+        // isRequired: true
+      },
+      {
+        label: "Azure Repo",
+        id: "azureRepoName",
+        // isRequired: true
+      },
     ],
   newObjectFields:
       {
@@ -326,7 +341,10 @@ const octopusStepFormMetadata = {
         startApplicationPool : false,
         yamlSource: "",
         azureToolId: "",
-        azureCredentialId: ""
+        azureCredentialId: "",
+        acrPushStepId: "",
+        azureRepoName: "",
+        acrLoginUrl: ""
       }
   };
   

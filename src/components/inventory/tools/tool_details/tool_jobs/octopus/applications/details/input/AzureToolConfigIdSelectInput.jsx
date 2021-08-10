@@ -107,10 +107,13 @@ function AzureToolConfigIdSelectInput({ fieldName, dataObject, setDataObject, di
   };
   
   const handleChange=(fieldName,selectedOption)=>{
+    setAzureConfig(null);
     setAzureConfig(list.find(el=>el.id == selectedOption.id));
     let newDataObject = {...dataObject};    
     newDataObject.setData(fieldName, selectedOption.id);
     newDataObject.setData("azureCredentialId","");
+    newDataObject.setData("clusterName","");
+    newDataObject.setData("resourceGroupName","");
     setDataObject({...newDataObject});
   };
 
