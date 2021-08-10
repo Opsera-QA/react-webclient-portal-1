@@ -5,10 +5,9 @@ const argoApplicationsMetadata = {
       label: "Name",
       id: "applicationName",
       isRequired: true,
-      // lowercase: true,
-      // spacesAllowed: false,
-      // regexDefinitionName: "alphabetic",
-      // formText: "Application Name can only be lowercase letters with no spaces.",
+      lowercase: true,
+      spacesAllowed: false,
+      formText: "Application Name cannot contain spaces.",
       maxLength: 63
     },
     {
