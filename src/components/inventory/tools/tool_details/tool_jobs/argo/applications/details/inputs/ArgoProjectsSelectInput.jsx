@@ -45,7 +45,7 @@ function ArgoProjectsSelectInput({ argoToolId, visible, fieldName, dataObject, s
     catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
-        toastContext.showErrorDialog(error);
+        toastContext.showInlineErrorMessage(error);
       }
     }
     finally {
