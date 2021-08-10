@@ -82,7 +82,7 @@ const SfdcPipelineWizardValidatedGitFileViewer = ({ pipelineWizardModel, setPipe
       <>
         <InlineWarning
           className={"ml-2"}
-          warningMessage={"Warning: Use of the component or keyword search filter in the tables below will not alter the final file list."}
+          warningMessage={"Warning: Use of the keyword search filter in the tables below will not alter the final file list."}
         />
         <Row className="mt-2 d-flex" style={{minWidth: "1400px"}}>
           <Col xs={6} className={"pr-1"} style={{minWidth: "675px"}}>

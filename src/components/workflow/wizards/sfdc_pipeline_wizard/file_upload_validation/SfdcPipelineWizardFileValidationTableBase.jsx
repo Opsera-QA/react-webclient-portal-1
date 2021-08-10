@@ -14,7 +14,7 @@ import {getField} from "components/common/metadata/metadata-helpers";
 const SfdcPipelineWizardFileValidationTableBase = ({ pipelineWizardModel, loadData, data, isLoading, paginationModel, setPaginationModel, title, filePullCompleted }) => {
   const fields = sfdcTableConstants.fields;
   const noDataFilesPulledMessage = "The file validation has been completed. There is no data for the selected criteria.";
-  const noDataFilesNotPulledMessage = "The Validated Files list has not been received from the service yet. Please click the table's refresh button to resume polling for the files.";
+  const noDataFilesNotPulledMessage = "The file validation has not been been completed by the service yet. Please click the table's refresh button to resume polling for the files.";
 
   const columns = useMemo(
     () => [
