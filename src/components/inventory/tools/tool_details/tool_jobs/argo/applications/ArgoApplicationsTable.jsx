@@ -1,79 +1,64 @@
-import React, { useMemo, useState } from "react";
+import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table/CustomTable";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "react-bootstrap";
-import { getTableBooleanIconColumn, getTableTextColumn } from "../../../../../../common/table/table-column-helpers";
 import argoApplicationsMetadata from "../argo-application-metadata";
-import ExistingArgoApplicationModal from "./ArgoApplicationModal";
+import {getField} from "components/common/metadata/metadata-helpers";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faBrowser} from "@fortawesome/pro-light-svg-icons";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import ArgoApplicationOverlay
+  from "components/inventory/tools/tool_details/tool_jobs/argo/applications/ArgoApplicationOverlay";
+import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
+import VanityTable from "components/common/table/VanityTable";
 
-function ArgoApplicationsTable({ toolData, loadData, selectedRow, isLoading }) {
+function ArgoApplicationsTable({ toolData, argoApplications, loadData, onRowSelect, isLoading }) {
+  const toastContext = useContext(DialogToastContext);
   let fields = argoApplicationsMetadata.fields;
-  let data = [];
-  if (toolData.getData("actions")) {
-    toolData.getData("actions").forEach(function (item) {
-      data.push(item.configuration);
-    });
-  }
-  const [showCreateArgoApplicationModal, setShowCreateArgoApplicationModal] = useState(false);
 
   const createArgoApplication = () => {
-    setShowCreateArgoApplicationModal(true);
+    toastContext.showOverlayPanel(<ArgoApplicationOverlay toolData={toolData} loadData={loadData} />);
   };
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(
-        fields.find((field) => {
-          return field.id === "applicationName";
-        })
-      ),
-      getTableTextColumn(
-        fields.find((field) => {
-          return field.id === "cluster";
-        })
-      ),
-      getTableTextColumn(
-        fields.find((field) => {
-          return field.id === "gitPath";
-        })
-      ),
-      getTableBooleanIconColumn(
-        fields.find((field) => {
-          return field.id === "active";
-        })
-      ),
+      getTableTextColumn(getField(fields, "applicationName")),
+      getTableTextColumn(getField(fields, "cluster")),
+      getTableTextColumn(getField(fields, "gitPath")),
+      getTableBooleanIconColumn(getField(fields, "active"))
     ],
     []
   );
 
-  return (
-    <>
-      {toolData && toolData.data.configuration && (
-        <div className="my-1 text-right">
-          <Button variant="primary" size="sm" onClick={() => createArgoApplication()}>
-            <FontAwesomeIcon icon={faPlus} className="mr-1" /> Create Argo Application
-          </Button>
-          <br />
-        </div>
-      )}
-      <CustomTable columns={columns} data={data} onRowSelect={selectedRow} isLoading={isLoading}></CustomTable>
-      <ExistingArgoApplicationModal
-        toolData={toolData}
-        loadData={loadData}
-        setShowModal={setShowCreateArgoApplicationModal}
-        showModal={showCreateArgoApplicationModal}
+  const getTable = () => {
+    return (
+      <VanityTable
+        columns={columns}
+        data={argoApplications}
+        onRowSelect={onRowSelect}
+        isLoading={isLoading}
       />
-    </>
+    );
+  };
+
+  return (
+    <FilterContainer
+      loadData={loadData}
+      isLoading={isLoading}
+      title={"Argo Applications"}
+      type={"Argo Application"}
+      titleIcon={faBrowser}
+      addRecordFunction={toolData?.data?.configuration ? createArgoApplication : undefined}
+      body={getTable()}
+      showBorder={false}
+    />
   );
 }
 
 ArgoApplicationsTable.propTypes = {
   toolData: PropTypes.object,
   loadData: PropTypes.func,
-  selectedRow: PropTypes.func,
+  onRowSelect: PropTypes.func,
   isLoading: PropTypes.bool,
+  argoApplications: PropTypes.array
 };
 
 export default ArgoApplicationsTable;

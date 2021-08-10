@@ -32,7 +32,13 @@ function ArgoApplicationOverlay({ loadData, toolData, argoDataObject, applicatio
   }, [argoDataObject]);
 
   const initializeModel = () => {
-    setArgoApplicationData(modelHelpers.parseObjectIntoModel(argoDataObject, argoApplicationsMetadata));
+    let parsedModel = modelHelpers.parseObjectIntoModel(argoDataObject, argoApplicationsMetadata);
+
+    if (parsedModel?.isNew()) {
+      parsedModel.setData("toolId", toolData?.getData("_id"));
+    }
+
+    setArgoApplicationData({...parsedModel});
   };
 
   const closePanel = () => {

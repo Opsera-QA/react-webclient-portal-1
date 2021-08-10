@@ -1,13 +1,15 @@
-
-// TODO: Shrey, this might need to be completely different or there might need to be multiple sets of metadata.
-// If you need help wiring anything up, please message me.
 const argoApplicationsMetadata = {
   type: "Argo Application",
   fields: [
     {
       label: "Name",
       id: "applicationName",
-      isRequired: true
+      isRequired: true,
+      // lowercase: true,
+      // spacesAllowed: false,
+      // regexDefinitionName: "alphabetic",
+      // formText: "Application Name can only be lowercase letters with no spaces.",
+      maxLength: 63
     },
     {
       label: "Cluster",
@@ -17,12 +19,15 @@ const argoApplicationsMetadata = {
     {
       label: "Git Path",
       id: "gitPath",
-      isRequired: true
+      isRequired: true,
+      regexDefinitionName: "pathField",
+      maxLength: 256
     },
     {
       label: "Git URL",
       id: "gitUrl",
-      isRequired: true
+      isRequired: true,
+      maxLength: 256,
     },
     {
       label: "Namespace",
@@ -37,11 +42,6 @@ const argoApplicationsMetadata = {
       isRequired: true
     },
     {
-      label: "toolId",
-      id: "toolId",
-      isRequired: true
-    },
-    {
       label: "Active",
       id: "active",
     },
@@ -52,15 +52,15 @@ const argoApplicationsMetadata = {
       maxLength: 28,
       regexDefinitionName: "generalText",
     }
-],
+  ],
   newObjectFields: {
-    applicationName : "",
-    cluster : "",
-    gitPath : "",
-    gitUrl : "",
-    namespace : "",
-    projectName : "",
-    toolId : "",
+    _id: "",
+    applicationName: "",
+    cluster: "",
+    gitPath: "",
+    gitUrl: "",
+    namespace: "",
+    projectName: "",
     branchName: "",
     active: true,
   }
