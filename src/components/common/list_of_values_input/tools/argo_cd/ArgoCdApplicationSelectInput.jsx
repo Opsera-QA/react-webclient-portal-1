@@ -7,9 +7,9 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import {Link} from "react-router-dom";
-import ArgoCDStepActions
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/argocd-step-actions";
 import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
+import {Popover} from "react-bootstrap";
+import {faTimes} from "@fortawesome/free-solid-svg-icons";
 
 function ArgoCdApplicationSelectInput({className, fieldName, model, setModel, disabled, argoToolId, setDataFunction}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -93,6 +93,32 @@ function ArgoCdApplicationSelectInput({className, fieldName, model, setModel, di
     }
   };
 
+  const getInfoOverlay = () => {
+    if (Array.isArray(argoApplications) && argoApplications.length > 0 && model?.getData(fieldName)?.length > 0) {
+      const argoApplication = argoApplications.find((application) => application.name === model?.getData(fieldName));
+      console.log("current value: " + JSON.stringify(model?.getData(fieldName)));
+
+      console.log("argoApplication: " + JSON.stringify(argoApplication));
+      if (argoApplication) {
+        return (
+          <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+            <Popover.Title as="h3">
+              Argo Application Details
+              <FontAwesomeIcon icon={faTimes} className="fa-pull-right pointer" onClick={() => document.body.click()}/>
+            </Popover.Title>
+
+            <Popover.Content>
+              <div className="text-muted mb-2">
+                Configuration details for this application are listed below.
+              </div>
+              Test
+            </Popover.Content>
+          </Popover>
+        );
+      }
+    }
+  };
+
   return (
     <>
       <SelectInputBase
@@ -105,6 +131,7 @@ function ArgoCdApplicationSelectInput({className, fieldName, model, setModel, di
         textField={"name"}
         valueField={"name"}
         busy={isLoading}
+        // infoOverlay={getInfoOverlay()}
         className={className}
         selectOptions={argoApplications}
         errorMessage={errorMessage}

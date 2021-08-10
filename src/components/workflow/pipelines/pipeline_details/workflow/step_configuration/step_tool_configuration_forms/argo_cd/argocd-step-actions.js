@@ -1,4 +1,5 @@
 import { axiosApiService } from "../../../../../../../../api/apiService";
+import baseActions from "utils/actionsBase";
 
 const ArgoCDStepActions = {};
 
@@ -20,19 +21,14 @@ ArgoCDStepActions.searchArgoAppsList = async (id, getAccessToken) => {
   return res;
 };
 
-ArgoCDStepActions.searchArgoList = async (service, getAccessToken) => {
-    const accessToken = await getAccessToken();
-    const apiUrl = "/registry/properties/" + service;
-    const res = await axiosApiService(accessToken)
-      .get(apiUrl)
-      .then((result) => {
-        return result;
-      })
-      .catch((error) => {
-        throw error;
-      });
-    return res;
+ArgoCDStepActions.getArgoApplicationsV2 = async (getAccessToken, cancelTokenSource, argoToolId) => {
+  const apiUrl = "/tools/argo/applications";
+  const postBody = {
+    tool: "argo",
+    id: argoToolId,
   };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
 
   ArgoCDStepActions.searchRepositories = async (service, gitAccountId, getAccessToken) => {
     const accessToken = await getAccessToken();
