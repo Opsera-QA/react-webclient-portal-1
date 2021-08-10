@@ -83,7 +83,7 @@ function ScriptLibrarySelectInput({ fieldName, dataObject, setDataObject, disabl
     if (dataObject.getData(fieldName) !== "") {
       return (
         <div className="text-muted d-flex pointer" onClick={() => {toggleScriptOverlay();}}>
-            <span><FontAwesomeIcon icon={faFileCode} className="pr-1" />View this Script</span>
+          <span><FontAwesomeIcon icon={faFileCode} className="pr-1" />View this Script</span>
         </div>
       );
     }
@@ -138,7 +138,6 @@ ScriptLibrarySelectInput.propTypes = {
 ScriptLibrarySelectInput.defaultProps = {
   valueField: "_id",
   textField: "name",
-  fields: ["name", "type"]
 };
 
 export default ScriptLibrarySelectInput;
