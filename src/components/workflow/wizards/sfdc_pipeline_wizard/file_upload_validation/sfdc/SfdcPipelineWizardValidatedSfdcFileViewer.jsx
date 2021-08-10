@@ -14,12 +14,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
-import SfdcPipelineWizardValidatedGitFilesTable
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/git/SfdcPipelineWizardValidatedGitFilesTable";
-import SfdcPipelineWizardInvalidGitFilesTable
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/git/SfdcPipelineWizardInvalidGitFilesTable";
-import SfdcPipelineWizardSubmitGitFilesButton
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardSubmitGitFilesButton";
 import SfdcPipelineWizardValidatedSfdcFilesTable
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/sfdc/SfdcPipelineWizardValidatedSfdcFilesTable";
 import SfdcPipelineWizardInvalidSfdcFilesTable
@@ -88,7 +82,7 @@ const SfdcPipelineWizardValidatedSfdcFileViewer = ({ pipelineWizardModel, setPip
       <>
         <InlineWarning
           className={"ml-2"}
-          warningMessage={"Warning: Use of the component or keyword search filter in the tables below will not alter the final file list."}
+          warningMessage={"Warning: Use of the keyword search filter in the tables below will not alter the final file list."}
         />
         <Row className="mt-2 d-flex" style={{minWidth: "1400px"}}>
           <Col xs={6} className={"pr-1"} style={{minWidth: "675px"}}>
