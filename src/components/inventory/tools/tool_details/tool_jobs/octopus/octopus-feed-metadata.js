@@ -53,23 +53,7 @@ const OctopusFeedMetadata = {
     {
       label: "ID",
       id: "id"
-    },
-    {
-      label: "Azure Tool",
-      id: "azureToolId"
-    },
-    {
-      label: "Azure Credential",
-      id: "azureCredentialId"
-    },
-    {
-      label: "Registry Name",
-      id: "azureRegistryName"
-    },
-    {
-      label: "Registry Path",
-      id: "azureRegistryPath"
-    },
+    }
   ],
   newObjectFields: {
     _id: "",
@@ -83,11 +67,7 @@ const OctopusFeedMetadata = {
     nexusRepository: "",
     id: "",
     active: true,
-    toolType: "",
-    azureToolId: "",
-    azureCredentialId: "",
-    azureRegistryName: "",
-    azureRegistryPath: ""
+    toolType: ""
   }
 };
 

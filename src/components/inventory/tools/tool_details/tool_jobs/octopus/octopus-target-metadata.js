@@ -194,7 +194,7 @@ fieldsIis: [
   {
     label: "Namespace",
     id: "namespace"
-  },
+  }
 ],
   newObjectFields: {
     _id: "",

@@ -93,6 +93,9 @@ function AzureToolConfigIdSelectInput({ fieldName, dataObject, setDataObject, di
       const filteredList = results ? results.filter((el) => el.configuration !== undefined) : [];
       if (filteredList) {
         setList(filteredList);
+        if (dataObject?.getData("azureToolId").length > 0) {
+          setAzureConfig(filteredList.find(el=>el.id === dataObject?.getData("azureToolId")));
+        }
       }
     } catch (error) {
       setPlaceholder("No Azure Tool Found");
