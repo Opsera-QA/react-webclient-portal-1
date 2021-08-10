@@ -124,42 +124,6 @@ const OctopusFeedEditorForm = ({ dataObject, setDataObject, appID }) => {
           </Col>
         </>
       )}
-      {dataObject && dataObject.getData("toolType") && dataObject.getData("toolType") === "azure_account" && (
-        <>
-          <Col lg={12}>
-            <AzureToolConfigIdSelectInput
-              dataObject={dataObject}
-              setDataObject={setDataObject}
-              setAzureConfig={setAzureConfig}
-            />
-          </Col>
-          <Col lg={12}>
-            <AzureCredentialIdSelectInput
-              dataObject={dataObject}
-              setDataObject={setDataObject}
-              azureConfig={azureConfig}
-              setApplicationData={setApplicationData}
-            />
-          </Col>
-          <Col lg={12}>
-            <AzureRegistrySelectInput
-              dataObject={dataObject}
-              setDataObject={setDataObject}
-              azureToolConfigId={dataObject.getData("azureToolId")}
-              azureApplication={dataObject.getData("azureCredentialId")}
-              azureConfig={azureConfig}
-              applicationData={applicationData}
-            />
-          </Col>
-          <Col lg={12}>
-            <TextInputBase
-              dataObject={dataObject}
-              setDataObject={setDataObject}
-              fieldName={"azureRegistryPath"}
-            />
-          </Col>
-        </>
-      )}
     </Row>
   );
 };
