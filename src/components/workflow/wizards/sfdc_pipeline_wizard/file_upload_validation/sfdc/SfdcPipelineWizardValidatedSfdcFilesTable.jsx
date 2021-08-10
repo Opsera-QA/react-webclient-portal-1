@@ -10,7 +10,7 @@ import {AuthContext} from "contexts/AuthContext";
 import SfdcPipelineWizardFileValidationTableBase
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/SfdcPipelineWizardFileValidationTableBase";
 
-const SfdcPipelineWizardValidatedGitFilesTable = ({ pipelineWizardModel, setPipelineWizardModel, setFilteredFileCount, filePullCompleted, setFilePullCompleted  }) => {
+const SfdcPipelineWizardValidatedSfdcFilesTable = ({ pipelineWizardModel, setPipelineWizardModel, setFilteredFileCount, filePullCompleted, setFilePullCompleted  }) => {
   const {getAccessToken} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [originFilterModel, setOriginFilterModel] = useState(new Model({ ...sfdcComponentFilterMetadata.newObjectFields }, sfdcComponentFilterMetadata, false));
@@ -116,7 +116,7 @@ const SfdcPipelineWizardValidatedGitFilesTable = ({ pipelineWizardModel, setPipe
   );
 };
 
-SfdcPipelineWizardValidatedGitFilesTable.propTypes = {
+SfdcPipelineWizardValidatedSfdcFilesTable.propTypes = {
   pipelineWizardModel: PropTypes.object,
   setPipelineWizardModel: PropTypes.func,
   setFilteredFileCount: PropTypes.func,
@@ -124,4 +124,4 @@ SfdcPipelineWizardValidatedGitFilesTable.propTypes = {
   filePullCompleted: PropTypes.bool,
 };
 
-export default SfdcPipelineWizardValidatedGitFilesTable;
+export default SfdcPipelineWizardValidatedSfdcFilesTable;

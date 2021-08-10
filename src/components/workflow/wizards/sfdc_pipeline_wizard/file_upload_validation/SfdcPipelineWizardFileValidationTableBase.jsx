@@ -9,10 +9,12 @@ import { faCode } from "@fortawesome/free-solid-svg-icons";
 import VanityTable from "components/common/table/VanityTable";
 import {getField} from "components/common/metadata/metadata-helpers";
 
-const SfdcPipelineWizardGitFilesValidationTableBase = ({ pipelineWizardModel, loadData, data, isLoading, paginationModel, setPaginationModel, title, filePullCompleted }) => {
+// TODO: If we need to show different fields based on type,
+//  just copy this into each individual directory (sfdc, git, org to org) and wire up the relevant fields
+const SfdcPipelineWizardFileValidationTableBase = ({ pipelineWizardModel, loadData, data, isLoading, paginationModel, setPaginationModel, title, filePullCompleted }) => {
   const fields = sfdcTableConstants.fields;
   const noDataFilesPulledMessage = "The file validation has been completed. There is no data for the selected criteria.";
-  const noDataFilesNotPulledMessage = "The Git Files list has not been received from SFDC yet. Please click the table's refresh button to resume polling for the files.";
+  const noDataFilesNotPulledMessage = "The Validated Files list has not been received from the service yet. Please click the table's refresh button to resume polling for the files.";
 
   const columns = useMemo(
     () => [
@@ -52,7 +54,7 @@ const SfdcPipelineWizardGitFilesValidationTableBase = ({ pipelineWizardModel, lo
   );
 };
 
-SfdcPipelineWizardGitFilesValidationTableBase.propTypes = {
+SfdcPipelineWizardFileValidationTableBase.propTypes = {
   isLoading: PropTypes.bool,
   data: PropTypes.arrayOf(PropTypes.object),
   loadData: PropTypes.func,
@@ -65,4 +67,4 @@ SfdcPipelineWizardGitFilesValidationTableBase.propTypes = {
   setFileUploadFlag: PropTypes.func
 };
 
-export default SfdcPipelineWizardGitFilesValidationTableBase;
+export default SfdcPipelineWizardFileValidationTableBase;

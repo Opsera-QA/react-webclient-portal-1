@@ -84,7 +84,7 @@ function SfdcPipelineWizardSubmitGitFilesButton({pipelineWizardModel, setPipelin
 
   const getLabel = () => {
     if (isSaving) {
-      return ("Saving Filtered Git File List");
+      return (`Saving ${filteredFileCount} Git Files`);
     }
 
     return (`Proceed with ${filteredFileCount} Files`);
