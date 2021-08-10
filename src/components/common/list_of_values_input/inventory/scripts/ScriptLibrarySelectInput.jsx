@@ -9,8 +9,9 @@ import axios from "axios";
 import scriptsActions from "components/inventory/scripts/scripts-actions";
 import ScriptOverlay from "components/common/list_of_values_input/inventory/scripts/ScriptOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import {getScriptLanguageDisplayText} from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
 
-function ScriptLibrarySelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, className, fields, setDataFunction}) {
+function ScriptLibrarySelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, className, fields, setDataFunction, language}) {
   let toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [scripts, setScripts] = useState([]);
@@ -63,7 +64,13 @@ function ScriptLibrarySelectInput({ fieldName, dataObject, setDataObject, disabl
     const scriptList = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(scriptList)) {
-      setScripts(scriptList);
+      if (typeof language === "string" && language.length > 0) {
+        const filteredScripts = scriptList.filter((script) => script.type === language);
+        setScripts(filteredScripts);
+      }
+      else {
+        setScripts(scriptList);
+      }
     }
   };
 
@@ -76,20 +83,20 @@ function ScriptLibrarySelectInput({ fieldName, dataObject, setDataObject, disabl
     if (dataObject.getData(fieldName) !== "") {
       return (
         <div className="text-muted d-flex pointer" onClick={() => {toggleScriptOverlay();}}>
-            <span><FontAwesomeIcon icon={faFileCode} className="pr-1" />View this Script</span>
+          <span><FontAwesomeIcon icon={faFileCode} className="pr-1" />View this Script</span>
         </div>
       );
     }
   };
 
   if (!isLoading && (scripts == null || scripts.length === 0)) {
+    const dynamicText = language ? `${getScriptLanguageDisplayText(language)} ` : "";
     return (
       <div className="form-text text-muted p-2">
         <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
-        No scripts have been registered.
+        No {dynamicText}scripts have been registered.
         Please go to
-        <Link to="/inventory/scripts"> Tool Registry</Link> and add an entry for this repository in order to
-        proceed.
+        <Link to="/inventory/scripts"> Scripts Library</Link> and add an entry in order to proceed.
       </div>
     );
   }
@@ -124,13 +131,13 @@ ScriptLibrarySelectInput.propTypes = {
   valueField: PropTypes.string,
   className: PropTypes.string,
   fields: PropTypes.array,
-  setDataFunction: PropTypes.func
+  setDataFunction: PropTypes.func,
+  language: PropTypes.string,
 };
 
 ScriptLibrarySelectInput.defaultProps = {
   valueField: "_id",
   textField: "name",
-  fields: ["name", "_id"]
 };
 
 export default ScriptLibrarySelectInput;
