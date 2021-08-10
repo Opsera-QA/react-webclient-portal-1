@@ -168,8 +168,10 @@ function ChartContainer(
 
   const getTagBadges = () => {
     const tags = kpiConfiguration?.filters[kpiConfiguration?.filters?.findIndex((obj) => obj.type === "tags")]?.value;
+    const useKpiTags = kpiConfiguration?.settings?.useKpiTags !== false;
+    const useDashboardTags = kpiConfiguration?.settings?.useDashboardTags !== false;
 
-    if (Array.isArray(tags) && tags.length > 0) {
+    if (Array.isArray(tags) && tags.length > 0 && useKpiTags) {
       return (
         <CustomBadgeContainer>
           {tags.map((item, index) => {
@@ -180,6 +182,10 @@ function ChartContainer(
           })}
         </CustomBadgeContainer>
       );
+    }
+    
+    if (useDashboardTags) {
+      return <div className={"m-1 p-2"}>Dashboard Tags Applied</div>;
     }
   };
 

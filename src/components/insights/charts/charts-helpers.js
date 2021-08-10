@@ -19,6 +19,14 @@ export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
   };
 }
 
+export function getUseKpiTagsFromKpiConfiguration(kpiConfiguration) {
+  return kpiConfiguration?.settings?.useKpiTags !== false;
+}
+
+export function getUseDashboardTagsFromKpiConfiguration(kpiConfiguration) {
+  return kpiConfiguration?.settings?.useDashboardTags !== false;
+}
+
 export function getTagsFromKpiConfiguration(kpiConfiguration) {
   if (
     kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "tags")]?.value &&
