@@ -39,13 +39,7 @@ function SfdcPipelineWizardSubmitFileTypeButton({pipelineWizardModel, setPipelin
           : PIPELINE_WIZARD_SCREENS.XML_VIEWER
       );
     } else {
-      // TODO: Wire up, remove modified files check when both sides are complete
-      // if (pipelineWizardModel.getData("modifiedFilesOrigin") === "git") {
-      //   setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER);
-      //   return;
-      // }
-      // TODO: Remove this when both sides are complete;
-      await generateXml();
+      setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER);
     }
   };
 
