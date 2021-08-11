@@ -139,6 +139,9 @@ import terrascanStepFormMetadata from "./step_tool_configuration_forms/terrascan
 import AzureDevopsPipelineStepConfigurationSummary
   from "./step_tool_configuration_forms/azure_devops/AzureDevopsPipelineStepConfigurationSummary";
 import azureDevopsStepFormMetadata from "./step_tool_configuration_forms/azure_devops/azureDevops-stepForm-metadata";
+import AzureAcrPushPipelineStepConfigurationSummary
+  from "./step_tool_configuration_forms/azure_acr_push/AzureAcrPushPipelineStepConfigurationSummary";
+import azureAcrPushStepFormMetadata from "./step_tool_configuration_forms/azure_acr_push/azureAcrPush-stepForm-metadata";
 import KafkaConnectPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/kafka_connect/KafkaConnectPipelineStepConfigurationSummaryPanel";
 import kafkaConnectStepFormMetadata from "./step_tool_configuration_forms/kafka_connect/kafkaConnect-stepForm-metadata";
@@ -148,6 +151,7 @@ import awsECSDeployStepFormMetadata
   from "./step_tool_configuration_forms/aws_ecs_deploy/awsECSDeploy-stepForm-metadata";
 import coverityStepFormMetadata from "./step_tool_configuration_forms/coverity/coverity-stepForm-metadata";
 import CoverityPipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/coverity/CoverityPipelineStepConfigurationSummaryPanel";
+
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -416,6 +420,13 @@ function PipelineStepConfigurationSummary({
           <AzureDevopsPipelineStepConfigurationSummary
             pipelineData={pipelineData}
             azureDevopsPipelineDataObject={getModelWrappedObject(azureDevopsStepFormMetadata)}
+          />
+        );
+      case "azure_acr_push":
+        return (
+          <AzureAcrPushPipelineStepConfigurationSummary
+            pipelineData={pipelineData}
+            azureAcrPushPipelineDataObject={getModelWrappedObject(azureAcrPushStepFormMetadata)}
           />
         );
       case "kafka_connect":
