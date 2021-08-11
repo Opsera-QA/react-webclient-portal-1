@@ -136,7 +136,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
 
     if (validateDepVariables && validateCondVariables) {
       await createDeploymentEnvironments();
-      parentCallback(item);
+      await parentCallback(item);
       await createOctopusProject();
     }
   };
@@ -145,7 +145,8 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
     await octopusActions
       .createOctopusProject({ pipelineId: pipelineId, stepId: stepId, variableSet: octopusStepConfigurationDto.getData("specifyDepVariables") ?  octopusStepConfigurationDto.getData("deploymentVariables") : [] }, getAccessToken)
       .then(async (response) => {
-        return response;
+        closeEditorPanel();
+        return response;        
       })
       .catch(function (error) {
         console.log(error);
