@@ -11,8 +11,6 @@ import JfrogToolSelectInput from "../input/JfrogToolSelectInput";
 import JfrogRepoSelectInput from "../input/JfrogRepoSelectInput";
 
 const OctopusFeedEditorForm = ({ dataObject, setDataObject, appID }) => {
-  const [azureConfig,setAzureConfig]=useState(null);
-  const [applicationData, setApplicationData]=useState(null);
 
   return (
     <Row>
