@@ -67,7 +67,7 @@ const OctopusFeedMetadata = {
     nexusRepository: "",
     id: "",
     active: true,
-    toolType: "",
+    toolType: ""
   }
 };
 
