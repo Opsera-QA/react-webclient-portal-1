@@ -48,7 +48,7 @@ function OctopusFeedSelectInput({ fieldName, dataObject, setDataObject, disabled
     }
   };
 
-  if (dataObject?.getData("scriptSource") && dataObject?.getData("scriptSource") === "inline" ) {
+  if (dataObject?.getData("scriptSource") && dataObject?.getData("scriptSource") === "inline") {
     return null;
   }
 
