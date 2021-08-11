@@ -89,10 +89,6 @@ const OctopusTargetMetadata = {
       id: "azureToolId"
     },
     {
-      label: "Azure Credential",
-      id: "azureCredentialId"
-    },
-    {
       label: "Namespace",
       id: "namespace"
     },
@@ -192,10 +188,6 @@ fieldsIis: [
     id: "azureToolId"
   },
   {
-    label: "Azure Credential",
-    id: "azureCredentialId"
-  },
-  {
     label: "Namespace",
     id: "namespace"
   }
@@ -224,7 +216,6 @@ fieldsIis: [
     healthStatus: "",
     azureToolId: "",
     namespace: "",
-    azureCredentialId: "",
     resource: "https://management.azure.com",
   }
 };
