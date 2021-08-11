@@ -5,16 +5,17 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import octopusActions from "../../../octopus-actions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSync } from "@fortawesome/pro-light-svg-icons";
 
 function AzureAcrPushClusterNameSelectInput({
-                                              fieldName,
-                                              dataObject,
-                                              setDataObject,
-                                              azureToolConfigId,
-                                              azureConfig,
-                                              azureApplication,
-                                              applicationData,
-                                            }) {
+  fieldName,
+  dataObject,
+  setDataObject,
+  azureToolConfigId,
+  azureConfig,
+  resource,
+}) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [azureClusterList, setAzureClusterList] = useState([]);
@@ -30,17 +31,12 @@ function AzureAcrPushClusterNameSelectInput({
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setAzureClusterList([]);
-    // if (isValidToolConfig() && isValidApplication() && azureConfig && applicationData) {
-    if (isValidToolConfig() && azureConfig && dataObject.getData("resource")) {
+    if (isValidToolConfig() && azureConfig && resource) {
       loadData(source).catch((error) => {
         throw error;
       });
     }
-  }, [azureToolConfigId, azureApplication, azureConfig, applicationData, dataObject.getData("resource")]);
-
-  const isValidApplication = () => {
-    return azureApplication && azureApplication != "" && azureApplication !== null;
-  };
+  }, [azureToolConfigId, azureConfig]);
 
   const isValidToolConfig = () => {
     return azureToolConfigId && azureToolConfigId != "" && azureToolConfigId !== null;
@@ -61,13 +57,7 @@ function AzureAcrPushClusterNameSelectInput({
   };
 
   const loadAzureRegistries = async (cancelSource = cancelTokenSource) => {
-    const response = await octopusActions.getAzureClusters(
-      getAccessToken,
-      cancelSource,
-      azureConfig,
-      // applicationData,
-      dataObject.getData("resource"),
-    );
+    const response = await octopusActions.getAzureClusters(getAccessToken, cancelSource, azureConfig, resource);
 
     const result = response?.data?.data;
     if (Array.isArray(result) && result.length > 0) {
@@ -82,32 +72,48 @@ function AzureAcrPushClusterNameSelectInput({
   };
 
   const setAzureCluster = (fieldName, value) => {
-    let newDataObject = {...dataObject};
+    let newDataObject = { ...dataObject };
     newDataObject.setData(fieldName, value);
-    setDataObject({...newDataObject});
+    setDataObject({ ...newDataObject });
   };
 
   const clearDataFunction = (fieldName, value) => {
-    let newDataObject = {...dataObject};
+    let newDataObject = { ...dataObject };
     newDataObject.setData(fieldName, "");
-    setDataObject({...newDataObject});
+    setDataObject({ ...newDataObject });
+  };
+
+  const getInfoText = () => {
+    if (dataObject.getData("resource").length > 0) {
+      return (
+        <small>
+          <FontAwesomeIcon icon={faSync} className="pr-1" />
+          Click here to fetch Azure Clusters
+        </small>
+      );
+    }
   };
 
   return (
-    <SelectInputBase
-      fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
-      clearDataFunction={clearDataFunction}
-      setDataFunction={setAzureCluster}
-      selectOptions={azureClusterList}
-      busy={isLoading}
-      valueField={"id"}
-      textField={"name"}
-      disabled={isLoading}
-      placeholder={placeholder}
-      errorMessage={errorMessage}
-    />
+    <>
+      <SelectInputBase
+        fieldName={fieldName}
+        dataObject={dataObject}
+        setDataObject={setDataObject}
+        clearDataFunction={clearDataFunction}
+        setDataFunction={setAzureCluster}
+        selectOptions={azureClusterList}
+        busy={isLoading}
+        valueField={"id"}
+        textField={"name"}
+        disabled={isLoading}
+        placeholder={placeholder}
+        errorMessage={errorMessage}
+      />
+      <div onClick={() => loadData()} className="text-muted ml-3 dropdown-data-fetch">
+        {getInfoText()}
+      </div>
+    </>
   );
 }
 
@@ -116,9 +122,8 @@ AzureAcrPushClusterNameSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   azureToolConfigId: PropTypes.string,
-  azureApplication: PropTypes.string,
   azureConfig: PropTypes.object,
-  applicationData: PropTypes.object,
+  resource: PropTypes.string,
 };
 
 AzureAcrPushClusterNameSelectInput.defaultProps = {

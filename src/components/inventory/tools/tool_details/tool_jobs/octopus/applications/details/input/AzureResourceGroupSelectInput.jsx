@@ -5,16 +5,17 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import octopusActions from "../../../octopus-actions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSync } from "@fortawesome/pro-light-svg-icons";
 
 function AzureAcrPushResourceGroupSelectInput({
-                                              fieldName,
-                                              dataObject,
-                                              setDataObject,
-                                              azureToolConfigId,
-                                              azureConfig,
-                                              azureApplication,
-                                              applicationData,
-                                            }) {
+  fieldName,
+  dataObject,
+  setDataObject,
+  azureToolConfigId,
+  azureConfig,
+  resource,
+}) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [azureResourceGroupList, setAzureResourceGroupList] = useState([]);
@@ -30,17 +31,12 @@ function AzureAcrPushResourceGroupSelectInput({
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setAzureResourceGroupList([]);
-    // if (isValidToolConfig() && isValidApplication() && azureConfig && applicationData) {
-    if (isValidToolConfig() && azureConfig && dataObject.getData("resource")) {
+    if (isValidToolConfig() && azureConfig && resource) {
       loadData(source).catch((error) => {
         throw error;
       });
     }
-  }, [azureToolConfigId, azureApplication, azureConfig, applicationData, dataObject.getData("resource")]);
-
-  const isValidApplication = () => {
-    return azureApplication && azureApplication != "" && azureApplication !== null;
-  };
+  }, [azureToolConfigId, azureConfig, resource]);
 
   const isValidToolConfig = () => {
     return azureToolConfigId && azureToolConfigId != "" && azureToolConfigId !== null;
@@ -61,13 +57,7 @@ function AzureAcrPushResourceGroupSelectInput({
   };
 
   const loadAzureRegistries = async (cancelSource = cancelTokenSource) => {
-    const response = await octopusActions.getAzureResourceGroups(
-      getAccessToken,
-      cancelSource,
-      azureConfig,
-      // applicationData,
-      dataObject.getData("resource"),
-    );
+    const response = await octopusActions.getAzureResourceGroups(getAccessToken, cancelSource, azureConfig, resource);
 
     const result = response?.data?.data;
     if (Array.isArray(result) && result.length > 0) {
@@ -81,19 +71,35 @@ function AzureAcrPushResourceGroupSelectInput({
     }
   };
 
+  const getInfoText = () => {
+    if (dataObject.getData("resource").length > 0) {
+      return (
+        <small>
+          <FontAwesomeIcon icon={faSync} className="pr-1" />
+          Click here to fetch Azure Resource Groups
+        </small>
+      );
+    }
+  };
+
   return (
-    <SelectInputBase
-      fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
-      selectOptions={azureResourceGroupList}
-      busy={isLoading}
-      valueField={"name"}
-      textField={"name"}
-      disabled={isLoading}
-      placeholder={placeholder}
-      errorMessage={errorMessage}
-    />
+    <>
+      <SelectInputBase
+        fieldName={fieldName}
+        dataObject={dataObject}
+        setDataObject={setDataObject}
+        selectOptions={azureResourceGroupList}
+        busy={isLoading}
+        valueField={"name"}
+        textField={"name"}
+        disabled={isLoading}
+        placeholder={placeholder}
+        errorMessage={errorMessage}
+      />
+      <div onClick={() => loadData()} className="text-muted ml-3 dropdown-data-fetch">
+        {getInfoText()}
+      </div>
+    </>
   );
 }
 
@@ -102,9 +108,8 @@ AzureAcrPushResourceGroupSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   azureToolConfigId: PropTypes.string,
-  azureApplication: PropTypes.string,
   azureConfig: PropTypes.object,
-  applicationData: PropTypes.object,
+  resource: PropTypes.string,
 };
 
 AzureAcrPushResourceGroupSelectInput.defaultProps = {

@@ -34,7 +34,6 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import pipelineActions from "components/workflow/pipeline-actions";
 import OctopusFeedEditorForm from "./sub_forms/OctopusFeedEditorForm";
 import AzureToolConfigIdSelectInput from "./input/AzureToolConfigIdSelectInput";
-import AzureCredentialIdSelectInput from "./input/AzureCredentialIdSelectInput";
 import AzureClusterSelectInput from "./input/AzureClusterSelectInput";
 import AzureResourceGroupSelectInput from "./input/AzureResourceGroupSelectInput";
 
@@ -413,14 +412,6 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                     setAzureConfig={setAzureConfig}
                   />
                 </Col>
-                {/* <Col lg={12}>
-                  <AzureCredentialIdSelectInput
-                    dataObject={octopusApplicationDataDto}
-                    setDataObject={setOctopusApplicationDataDto}
-                    azureConfig={azureConfig}
-                    setApplicationData={setApplicationData}
-                  />
-                </Col> */}
                 <Col lg={12}>
                   <TextInputBase
                     dataObject={octopusApplicationDataDto}
@@ -432,29 +423,20 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                   <AzureClusterSelectInput
                     dataObject={octopusApplicationDataDto}
                     setDataObject={setOctopusApplicationDataDto}
-                    azureToolConfigId={octopusApplicationDataDto.getData("azureToolId")}
-                    azureApplication={octopusApplicationDataDto.getData("azureCredentialId")}
+                    azureToolConfigId={octopusApplicationDataDto?.getData("azureToolId")}
                     azureConfig={azureConfig}
-                    applicationData={applicationData}
+                    resource={octopusApplicationData?.getData("resource")}
                   />
                 </Col>
                 <Col lg={12}>
                   <AzureResourceGroupSelectInput
                     dataObject={octopusApplicationDataDto}
                     setDataObject={setOctopusApplicationDataDto}
-                    azureToolConfigId={octopusApplicationDataDto.getData("azureToolId")}
-                    azureApplication={octopusApplicationDataDto.getData("azureCredentialId")}
+                    azureToolConfigId={octopusApplicationDataDto?.getData("azureToolId")}
                     azureConfig={azureConfig}
-                    applicationData={applicationData}
+                    resource={octopusApplicationData?.getData("resource")}
                   />
                 </Col>
-                {/* <Col lg={12}>
-                  <TextInputBase
-                    dataObject={octopusApplicationDataDto}
-                    setDataObject={setOctopusApplicationDataDto}
-                    fieldName={"namespace"}
-                  />
-                </Col> */}
               </>
             )}
             {octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType") === "TentaclePassive" && (

@@ -9,11 +9,6 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import FeedToolTypeSelectInput from "../input/FeedToolTypeSelectInput";
 import JfrogToolSelectInput from "../input/JfrogToolSelectInput";
 import JfrogRepoSelectInput from "../input/JfrogRepoSelectInput";
-import AzureToolConfigIdSelectInput from "../input/AzureToolConfigIdSelectInput";
-import AzureCredentialIdSelectInput from "../input/AzureCredentialIdSelectInput";
-import AzureClusterSelectInput from "../input/AzureClusterSelectInput";
-import AzureResourceGroupSelectInput from "../input/AzureResourceGroupSelectInput";
-import AzureRegistrySelectInput from "../input/AzureRegistrySelectInput";
 
 const OctopusFeedEditorForm = ({ dataObject, setDataObject, appID }) => {
   const [azureConfig,setAzureConfig]=useState(null);
