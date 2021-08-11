@@ -267,7 +267,7 @@ const octopusStepFormMetadata = {
         id: "azureCredentialId",
       },
       {
-        label: "Artifact Step",
+        label: "ACR Push Step",
         id: "acrPushStepId",
         // isRequired: true
       },

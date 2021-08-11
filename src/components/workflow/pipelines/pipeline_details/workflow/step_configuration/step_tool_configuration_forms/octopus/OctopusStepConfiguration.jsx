@@ -30,11 +30,7 @@ import OctopusDeployToTomcatDetailsView from "./sub-forms/OctopusDeployToTomcatD
 import OctopusDeployToIisView from "./sub-forms/OctopusDeployToIisView";
 import OctopusDeployToJavaArchiveView from "./sub-forms/OctopusDeployToJavaArchiveView";
 import OctopusProjectNameInput from "./input/OctopusProjectNameInput";
-import OctopusKubernetesScriptView from "./sub-forms/OctopusKubernetesScriptView";
-import AzureCredentialIdSelectInput from "./input/AzureCredentialIdSelectInput";
-import AzureToolSelectInput from "./input/AzureToolSelectInput";
-import AcrPushStepSelectInput from "./input/AcrPushStepSelectInput";
-import AzureRepoTagsSelectInput from "./input/AzureRepoTagsSelectInput";
+import OctopusKubernetesPlatform from "./sub-forms/OctopusKubernetesPlatform";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, callbackSaveToVault, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -46,8 +42,6 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
   const [octopusSearching, isOctopusSearching] = useState(false);
   const [octopusList, setOctopusList] = useState([]);
   const [listOfSteps, setListOfSteps] = useState([]);
-  const [azureConfig,setAzureConfig]=useState(null);
-  const [applicationData, setApplicationData]=useState(null);
 
   useEffect(() => {
     loadFormData(stepTool);
@@ -329,74 +323,13 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
           {octopusStepConfigurationDto &&
             octopusStepConfigurationDto.getData("octopusPlatformType") &&
             octopusStepConfigurationDto.getData("octopusPlatformType") === "Kubernetes" && (
-              <>
-                <OctopusScriptTypeSelectInput
-                  dataObject={octopusStepConfigurationDto}
-                  fieldName={"scriptSource"}
-                  setDataObject={setOctopusStepConfigurationDataDto}
-                  tool_prop={"Script"}
-                />
-                <OctopusKubernetesScriptView
-                  dataObject={octopusStepConfigurationDto}
-                  setDataObject={setOctopusStepConfigurationDataDto}
-                  disabled={
-                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("scriptSource")
-                      ? octopusStepConfigurationDto.getData("scriptSource").length === 0
-                      : true
-                  }
-                  tool_prop={"Script"}
-                />
-                <OctopusFeedSelectInput
-                  fieldName={"octopusFeedId"}
-                  dataObject={octopusStepConfigurationDto}
-                  setDataObject={setOctopusStepConfigurationDataDto}
-                  disabled={
-                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
-                      ? octopusStepConfigurationDto.getData("spaceName").length === 0
-                      : true
-                  }
-                  tool_prop={
-                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
-                      ? octopusStepConfigurationDto.getData("spaceName")
-                      : ""
-                  }
-                />
-                <RollbackToggleInput
-                  dataObject={octopusStepConfigurationDto}
-                  setDataObject={setOctopusStepConfigurationDataDto}
-                  fieldName={"isRollback"}
-                />
-                <AzureToolSelectInput
-                  dataObject={octopusStepConfigurationDto}
-                  setDataObject={setOctopusStepConfigurationDataDto}
-                  setAzureConfig={setAzureConfig}
-                />
-                <AzureCredentialIdSelectInput
-                  dataObject={octopusStepConfigurationDto}
-                  setDataObject={setOctopusStepConfigurationDataDto}
-                  azureConfig={azureConfig}
-                  setApplicationData={setApplicationData}
-                />
-                <AcrPushStepSelectInput
-                  dataObject={octopusStepConfigurationDto}
-                  setDataObject={setOctopusStepConfigurationDataDto}
-                  plan={plan}
-                  stepId={stepId}
-                />
-                <AzureRepoTagsSelectInput
-                  dataObject={octopusStepConfigurationDto}
-                  setDataObject={setOctopusStepConfigurationDataDto}
-                  azureConfig={azureConfig}
-                  applicationData={applicationData}
-                  acrLoginUrl={octopusStepConfigurationDto?.getData("acrLoginUrl")}
-                />
-                <TextInputBase
-                setDataObject={setOctopusStepConfigurationDataDto}
+              <OctopusKubernetesPlatform
                 dataObject={octopusStepConfigurationDto}
-                fieldName={"namespace"}
-                disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
+                setDataObject={setOctopusStepConfigurationDataDto}
+                isLoading={isLoading}
+                plan={plan}
+                stepId={stepId}
               />
-              </>
             )}
           {octopusStepConfigurationDto &&
             octopusStepConfigurationDto.getData("octopusPlatformType") &&

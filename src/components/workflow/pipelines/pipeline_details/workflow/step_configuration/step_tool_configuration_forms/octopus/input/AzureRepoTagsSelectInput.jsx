@@ -12,7 +12,7 @@ function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject ,disa
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholderText, setPlaceholderText] = useState("Select option");
+  const [placeholderText, setPlaceholderText] = useState("Select Repository Tags");
   const [repoTags,setRepoTags] = useState([]);
 
 
@@ -42,7 +42,8 @@ function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject ,disa
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      if(dataObject?.getData("acrLoginUrl").length > 0){
+      setRepoTags([]);
+      if(dataObject?.getData("acrLoginUrl")?.length > 0){
         await fetchAzureRepositoryTags(cancelSource);
       }
     }
@@ -66,12 +67,20 @@ function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject ,disa
     if (Array.isArray(result) && result.length > 0) {
       setErrorMessage("");
       setRepoTags(result);
+      setPlaceholderText("Select Repository Tags");
     }
 
     if (result?.length === 0){
-      setPlaceholderText("No projects found with this configuration");
+      setPlaceholderText("No tags found with this configuration");
       setErrorMessage("No Azure Projects have been found associated with this Azure Tool Registry Account");
     }
+  };
+
+  const clearDataFunction=()=>{
+    let newDataObject = {...dataObject};
+    newDataObject.setData("octopusVersion", "");
+    setPlaceholderText("Select Repository Tags");
+    setDataObject({...newDataObject});
   };
 
   if (!dataObject?.getData("isRollback")) {
@@ -84,6 +93,8 @@ function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject ,disa
       fieldName={"octopusVersion"}
       dataObject={dataObject}
       setDataObject={setDataObject}
+      clearDataFunction={clearDataFunction}
+      placeholderText={placeholderText}
       selectOptions={repoTags}
       textField={"name"}
       valueField={"name"}

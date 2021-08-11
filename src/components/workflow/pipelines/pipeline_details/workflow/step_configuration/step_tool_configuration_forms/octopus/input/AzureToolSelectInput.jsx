@@ -107,17 +107,26 @@ function AzureToolConfigIdSelectInput({ fieldName, dataObject, setDataObject, di
   };
 
   const handleChange=(fieldName,selectedOption)=>{
+    setAzureConfig(null);
     setAzureConfig(list.find(el=>el.id == selectedOption.id));
     let newDataObject = {...dataObject};
     newDataObject.setData(fieldName, selectedOption.id);
     newDataObject.setData("azureCredentialId","");
+    newDataObject.setData("octopusVersion", "");
+    newDataObject.setData("acrPushStepId", "");
+    newDataObject.setData("azureRepoName", "");
+    newDataObject.setData("acrLoginUrl", "");
     setDataObject({...newDataObject});
   };
 
   const clearDataFunction=()=>{
     let newDataObject = {...dataObject};
     newDataObject.setData(fieldName, "");
-
+    newDataObject.setData("azureCredentialId","");
+    newDataObject.setData("octopusVersion", "");
+    newDataObject.setData("acrPushStepId", "");
+    newDataObject.setData("azureRepoName", "");
+    newDataObject.setData("acrLoginUrl", "");
     setAzureConfig(null);
     setDataObject({...newDataObject});
   };

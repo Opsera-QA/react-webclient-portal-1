@@ -3,19 +3,10 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function AcrPushSelectInput({
-                                          fieldName,
-                                          dataObject,
-                                          setDataObject,
-                                          disabled,
-                                          textField,
-                                          valueField,
-                                          plan,
-                                          stepId,
-                                        }) {
+function AcrPushSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, plan, stepId }) {
   const toastContext = useContext(DialogToastContext);
-  const [dockerList, setDockerList] = useState([]);
-  const [isDockerSearching, setIsDockerSearching] = useState(false);
+  const [acrList, setAcrList] = useState([]);
+  const [isAcrSearching, setIsAcrSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [placeholder, setPlaceholder] = useState("Select ACR Push Step");
 
@@ -26,7 +17,7 @@ function AcrPushSelectInput({
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await fetchDockerStepDetails();
+      await fetchAcrStepDetails();
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     } finally {
@@ -34,23 +25,23 @@ function AcrPushSelectInput({
     }
   };
 
-  const fetchDockerStepDetails = async () => {
-    setIsDockerSearching(true);
+  const fetchAcrStepDetails = async () => {
+    setIsAcrSearching(true);
     try {
       if (plan && stepId) {
-
         let pipelineSteps = formatStepOptions(plan, stepId);
 
-        let dockerSteps = pipelineSteps.filter((step) => step.tool.tool_identifier.toLowerCase() === "azure_acr_push");
-        if (dockerSteps.length === 0) {
+        let acrSteps = pipelineSteps.filter((step) => step.tool.tool_identifier.toLowerCase() === "azure_acr_push");
+        if (acrSteps.length === 0) {
           let newDataObject = { ...dataObject };
           newDataObject.setData("acrPushStepId", "");
           newDataObject.setData("acrLoginUrl", "");
           newDataObject.setData("azureRepoName", "");
+          newDataObject.setData("octopusVersion", "");
           setDataObject({ ...newDataObject });
         }
-        setDockerList(dockerSteps);
-        if (dockerSteps.length === 0) {
+        setAcrList(acrSteps);
+        if (acrSteps.length === 0) {
           setPlaceholder("No ACR Push Steps Configured");
         }
       }
@@ -59,7 +50,7 @@ function AcrPushSelectInput({
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     } finally {
-      setIsDockerSearching(false);
+      setIsAcrSearching(false);
     }
   };
 
@@ -72,16 +63,27 @@ function AcrPushSelectInput({
 
   const setDataFunction = (fieldName, value) => {
     let newDataObject = { ...dataObject };
+    newDataObject.setData("acrLoginUrl", "");
+    newDataObject.setData("azureRepoName", "");
+    newDataObject.setData("octopusVersion", "");
     newDataObject.setData("acrPushStepId", value._id);
     newDataObject.setData("acrLoginUrl", value?.tool?.configuration?.acrLoginUrl);
     newDataObject.setData("azureRepoName", value?.tool?.configuration?.azureRepoName);
     setDataObject({ ...newDataObject });
   };
 
+  const clearDataFunction=()=>{
+    let newDataObject = {...dataObject};
+    newDataObject.setData("acrLoginUrl", "");
+    newDataObject.setData("azureRepoName", "");
+    newDataObject.setData("octopusVersion", "");
+    newDataObject.setData("acrPushStepId","");
+    setDataObject({...newDataObject});
+  };
+
   if (!dataObject?.getData("isRollback")) {
     return null;
   }
-
 
   return (
     <SelectInputBase
@@ -90,12 +92,13 @@ function AcrPushSelectInput({
       className={"mb-3"}
       setDataObject={setDataObject}
       setDataFunction={setDataFunction}
-      selectOptions={dockerList ? dockerList : []}
-      busy={isDockerSearching}
+      clearDataFunction={clearDataFunction}
+      selectOptions={acrList ? acrList : []}
+      busy={isAcrSearching}
       valueField={valueField}
       textField={textField}
       placeholderText={placeholder}
-      disabled={disabled || isLoading || (!isLoading && (dockerList == null || dockerList.length === 0))}
+      disabled={disabled || isLoading || (!isLoading && (acrList == null || acrList.length === 0))}
     />
   );
 }
