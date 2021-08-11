@@ -32,7 +32,6 @@ import axios from "axios";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import pipelineActions from "components/workflow/pipeline-actions";
-import OctopusFeedEditorForm from "./sub_forms/OctopusFeedEditorForm";
 import AzureToolConfigIdSelectInput from "./input/AzureToolConfigIdSelectInput";
 import AzureClusterSelectInput from "./input/AzureClusterSelectInput";
 import AzureResourceGroupSelectInput from "./input/AzureResourceGroupSelectInput";
