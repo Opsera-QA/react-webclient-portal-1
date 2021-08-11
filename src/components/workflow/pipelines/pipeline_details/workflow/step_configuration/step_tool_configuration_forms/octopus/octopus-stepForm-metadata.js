@@ -255,26 +255,8 @@ const octopusStepFormMetadata = {
         id: "startApplicationPool",
       },
       {
-        label: "YAML Source",
-        id: "yamlSource",
-      },
-      {
         label: "Azure Tool",
         id: "azureToolId",
-      },
-      {
-        label: "Azure Credentials",
-        id: "azureCredentialId",
-      },
-      {
-        label: "ACR Push Step",
-        id: "acrPushStepId",
-        // isRequired: true
-      },
-      {
-        label: "ACR Login URL",
-        id: "acrLoginUrl",
-        // isRequired: true
       },
       {
         label: "Azure Repo",
@@ -339,12 +321,7 @@ const octopusStepFormMetadata = {
         applicationPoolIdentityUsername: "",
         applicationPoolIdentityPassword : {},
         startApplicationPool : false,
-        yamlSource: "",
-        azureToolId: "",
-        azureCredentialId: "",
-        acrPushStepId: "",
-        azureRepoName: "",
-        acrLoginUrl: ""
+        azureToolId: ""
       }
   };
   

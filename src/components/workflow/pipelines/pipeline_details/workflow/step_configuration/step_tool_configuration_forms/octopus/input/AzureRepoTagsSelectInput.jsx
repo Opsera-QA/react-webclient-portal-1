@@ -5,8 +5,9 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import octopusActions from "../octopus-step-actions";
+import PipelineActions from "../../../../../../../pipeline-actions";
 
-function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject ,disabled,azureConfig, applicationData,acrLoginUrl}) {
+function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject ,disabled, plan, stepId}) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -14,6 +15,8 @@ function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject ,disa
   const [isLoading, setIsLoading] = useState(false);
   const [placeholderText, setPlaceholderText] = useState("Select Repository Tags");
   const [repoTags,setRepoTags] = useState([]);
+  const [list, setList] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
 
 
   useEffect(() => {
@@ -37,15 +40,19 @@ function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject ,disa
       source.cancel();
       isMounted.current = false;
     };
-  }, [acrLoginUrl]);
+  }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       setRepoTags([]);
-      if(dataObject?.getData("acrLoginUrl")?.length > 0){
-        await fetchAzureRepositoryTags(cancelSource);
-      }
+      let pipelineSteps = formatStepOptions(plan, stepId);
+      let acrStep = pipelineSteps.filter((step) => step._id === dataObject.getData("ecrPushStepId"));
+      let acrConfig = acrStep[0]?.tool?.configuration;
+      await fetchAzureDetails(cancelSource);
+      let azureToolList = list.filter((tool) => tool.id === acrConfig?.azureToolConfigId);
+      let azureTool = azureToolList?.length > 0 ? azureToolList[0] : [];
+      await fetchAzureRepositoryTags(cancelSource, acrConfig, azureTool);
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -59,9 +66,45 @@ function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject ,disa
     }
   };
 
-  const fetchAzureRepositoryTags = async (cancelSource = cancelTokenSource) => {
+  const fetchAzureDetails = async (cancelSource) => {
+    setIsSearching(true);
+    try {
+      let results = await PipelineActions.getToolsListV2(getAccessToken, cancelSource, "azure_account");
+      if (results?.data) {
+        let respObj = [];
+        let arrOfObj = results.data;
+        arrOfObj.map((item) => {
+          respObj.push({
+            name: item.name,
+            id: item._id,
+            configuration: item.configuration,
+            owner:item.owner,
+            applications:item.applications
+          });
+        });
+        results = respObj;
+      }
+      const filteredList = results ? results.filter((el) => el.configuration !== undefined) : [];
+      if (filteredList) {
+        setList(filteredList);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSearching(false);
+    }
+  };
 
-    const response = await octopusActions.getAzureRepoTags(getAccessToken, cancelSource, dataObject,azureConfig, applicationData);
+  const formatStepOptions = (plan, stepId) => {
+    return plan.slice(
+      0,
+      plan.findIndex((element) => element._id === stepId)
+    );
+  };
+
+  const fetchAzureRepositoryTags = async (cancelSource = cancelTokenSource, acrStep, azureTool) => {
+
+    const response = await octopusActions.getAzureRepoTags(getAccessToken, cancelSource, dataObject, acrStep, azureTool);
     const result = response?.data?.data;
 
     if (Array.isArray(result) && result.length > 0) {
@@ -108,9 +151,8 @@ AzureAcrPushRepositoryTagsSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
-  azureConfig: PropTypes.object,
-  applicationData: PropTypes.object,
-  acrLoginUrl: PropTypes.string
+  plan: PropTypes.array,
+  stepId: PropTypes.string,
 };
 
 AzureAcrPushRepositoryTagsSelectInput.defaultProps = {

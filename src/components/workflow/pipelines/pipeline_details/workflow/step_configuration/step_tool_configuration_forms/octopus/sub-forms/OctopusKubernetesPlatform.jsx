@@ -4,15 +4,10 @@ import OctopusScriptTypeSelectInput from "../input/OctopusScriptTypeSelectInput"
 import OctopusKubernetesScriptView from "./OctopusKubernetesScriptView";
 import OctopusFeedSelectInput from "../input/OctopusFeedSelectInput";
 import RollbackToggleInput from "../input/RollbackToggleInput";
-import AzureToolSelectInput from "../input/AzureToolSelectInput";
-import AzureCredentialIdSelectInput from "../input/AzureCredentialIdSelectInput";
-import AcrPushStepSelectInput from "../input/AcrPushStepSelectInput";
 import AzureRepoTagsSelectInput from "../input/AzureRepoTagsSelectInput";
 import TextInputBase from "../../../../../../../../common/inputs/text/TextInputBase";
 
 function OctopusKubernetesPlatform({ dataObject, setDataObject, isLoading, plan, stepId }) {
-  const [azureConfig, setAzureConfig] = useState(null);
-  const [applicationData, setApplicationData] = useState(null);
 
   return (
     <>
@@ -39,20 +34,11 @@ function OctopusKubernetesPlatform({ dataObject, setDataObject, isLoading, plan,
           tool_prop={dataObject && dataObject.getData("spaceName") ? dataObject.getData("spaceName") : ""}
         />
         <RollbackToggleInput dataObject={dataObject} setDataObject={setDataObject} fieldName={"isRollback"} />
-        <AzureToolSelectInput dataObject={dataObject} setDataObject={setDataObject} setAzureConfig={setAzureConfig} />
-        <AzureCredentialIdSelectInput
-          dataObject={dataObject}
-          setDataObject={setDataObject}
-          azureConfig={azureConfig}
-          setApplicationData={setApplicationData}
-        />
-        <AcrPushStepSelectInput dataObject={dataObject} setDataObject={setDataObject} plan={plan} stepId={stepId} />
         <AzureRepoTagsSelectInput
           dataObject={dataObject}
           setDataObject={setDataObject}
-          azureConfig={azureConfig}
-          applicationData={applicationData}
-          acrLoginUrl={dataObject?.getData("acrPushStepId")}
+          plan={plan}
+          stepId={stepId}
         />
         <TextInputBase
           setDataObject={setDataObject}

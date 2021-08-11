@@ -194,14 +194,15 @@ OctopusStepActions.getCerts = async (id, spaceId, environmentId, getAccessToken,
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-OctopusStepActions.getAzureRepoTags = async (getAccessToken, cancelSource, dataObject, config,  applicationData) => {
-  const owner = config?.owner;
-  const url = dataObject.getData('acrLoginUrl');
-  const repositoryName = dataObject.getData('azureRepoName');
+OctopusStepActions.getAzureRepoTags = async (getAccessToken, cancelSource, dataObject, acrStep, azureTool) => {
+  console.log(azureTool);
+  const owner = azureTool?.owner;
+  const url = acrStep?.acrLoginUrl;
+  const repositoryName = acrStep?.azureRepoName;
   const postBody = {
     "owner": owner,
-    "clientId": applicationData?.clientId?.vaultKey,
-    "clientSecret": applicationData?.clientSecret?.vaultKey,
+    "clientId": azureTool.configuration?.applicationId?.vaultKey,
+    "clientSecret": azureTool.configuration?.applicationPassword?.vaultKey,
     "acrLoginUrl": url,
     "repositoryName": repositoryName
   } ;

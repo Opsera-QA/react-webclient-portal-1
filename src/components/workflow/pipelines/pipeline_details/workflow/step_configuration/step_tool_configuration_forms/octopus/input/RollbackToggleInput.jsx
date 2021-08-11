@@ -11,11 +11,6 @@ function RollbackToggleInput({dataObject, setDataObject, fieldName, disabled}) {
     let sourceScriptFlag = !dataObject.getData("isRollback");
     newDataObject.setData("isRollback", sourceScriptFlag);
     newDataObject.setData("octopusVersion", undefined);
-    newDataObject.setData("azureToolId", undefined);
-    newDataObject.setData("azureCredentialId", undefined);
-    newDataObject.setData("acrPushStepId", undefined);
-    newDataObject.setData("azureRepoName", undefined);
-    newDataObject.setData("acrLoginUrl", undefined);
     setDataObject({...newDataObject});
   };
 
