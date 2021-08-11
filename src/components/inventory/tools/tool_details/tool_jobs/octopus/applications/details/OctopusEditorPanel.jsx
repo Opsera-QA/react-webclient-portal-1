@@ -413,12 +413,19 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                     setAzureConfig={setAzureConfig}
                   />
                 </Col>
-                <Col lg={12}>
+                {/* <Col lg={12}>
                   <AzureCredentialIdSelectInput
                     dataObject={octopusApplicationDataDto}
                     setDataObject={setOctopusApplicationDataDto}
                     azureConfig={azureConfig}
                     setApplicationData={setApplicationData}
+                  />
+                </Col> */}
+                <Col lg={12}>
+                  <TextInputBase
+                    dataObject={octopusApplicationDataDto}
+                    setDataObject={setOctopusApplicationDataDto}
+                    fieldName={"resource"}
                   />
                 </Col>
                 <Col lg={12}>
@@ -441,13 +448,13 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                     applicationData={applicationData}
                   />
                 </Col>
-                <Col lg={12}>
+                {/* <Col lg={12}>
                   <TextInputBase
                     dataObject={octopusApplicationDataDto}
                     setDataObject={setOctopusApplicationDataDto}
                     fieldName={"namespace"}
                   />
-                </Col>
+                </Col> */}
               </>
             )}
             {octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType") === "TentaclePassive" && (

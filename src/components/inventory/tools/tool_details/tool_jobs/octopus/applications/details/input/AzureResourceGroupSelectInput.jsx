@@ -30,12 +30,13 @@ function AzureAcrPushResourceGroupSelectInput({
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setAzureResourceGroupList([]);
-    if (isValidToolConfig() && isValidApplication() && azureConfig && applicationData) {
+    // if (isValidToolConfig() && isValidApplication() && azureConfig && applicationData) {
+    if (isValidToolConfig() && azureConfig && dataObject.getData("resource")) {
       loadData(source).catch((error) => {
         throw error;
       });
     }
-  }, [azureToolConfigId, azureApplication, azureConfig, applicationData]);
+  }, [azureToolConfigId, azureApplication, azureConfig, applicationData, dataObject.getData("resource")]);
 
   const isValidApplication = () => {
     return azureApplication && azureApplication != "" && azureApplication !== null;
@@ -64,7 +65,8 @@ function AzureAcrPushResourceGroupSelectInput({
       getAccessToken,
       cancelSource,
       azureConfig,
-      applicationData
+      // applicationData,
+      dataObject.getData("resource"),
     );
 
     const result = response?.data?.data;

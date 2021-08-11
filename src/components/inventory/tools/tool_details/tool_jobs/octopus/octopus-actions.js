@@ -86,31 +86,35 @@ octopusActions.validateIisConfig = async (toolDataDto, getAccessToken, cancelTok
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-octopusActions.getAzureClusters = async (getAccessToken, cancelTokenSource, config ,applicationData) => {
+octopusActions.getAzureClusters = async (getAccessToken, cancelTokenSource, config, resource) => {
   const cfg = config?.configuration;
   const owner = config?.owner;
   const postBody ={
     "owner": owner,
-    "clientId": applicationData?.clientId?.vaultKey,
-    "clientSecret": applicationData?.clientSecret?.vaultKey,
+    // "clientId": applicationData?.clientId?.vaultKey,
+    // "clientSecret": applicationData?.clientSecret?.vaultKey,
+    "clientId": cfg?.applicationId?.vaultKey,
+    "clientSecret": cfg?.applicationPassword?.vaultKey,
     "tenantId": cfg?.tenantId?.vaultKey,
     "subscriptionId": cfg?.subscriptionId?.vaultKey,
-    "resource": applicationData?.resource
+    "resource": resource
   };
   const apiURL = `tools/azure/management/clusterNames`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
 };
 
-octopusActions.getAzureResourceGroups = async (getAccessToken, cancelTokenSource, config ,applicationData) => {
+octopusActions.getAzureResourceGroups = async (getAccessToken, cancelTokenSource, config, resource) => {
   const cfg = config?.configuration;
   const owner = config?.owner;
   const postBody ={
     "owner": owner,
-    "clientId": applicationData?.clientId?.vaultKey,
-    "clientSecret": applicationData?.clientSecret?.vaultKey,
+    // "clientId": applicationData?.clientId?.vaultKey,
+    // "clientSecret": applicationData?.clientSecret?.vaultKey,
+    "clientId": cfg?.applicationId?.vaultKey,
+    "clientSecret": cfg?.applicationPassword?.vaultKey,
     "tenantId": cfg?.tenantId?.vaultKey,
     "subscriptionId": cfg?.subscriptionId?.vaultKey,
-    "resource": applicationData?.resource
+    "resource": resource
   };
   const apiURL = `tools/azure/management/resourceGroups`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);

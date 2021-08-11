@@ -95,6 +95,10 @@ const OctopusTargetMetadata = {
     {
       label: "Namespace",
       id: "namespace"
+    },
+    {
+      label: "Resource",
+      id: "resource"
     }
 ],
 fieldsIis: [
@@ -220,7 +224,8 @@ fieldsIis: [
     healthStatus: "",
     azureToolId: "",
     namespace: "",
-    azureCredentialId: ""
+    azureCredentialId: "",
+    resource: "https://management.azure.com",
   }
 };
 
