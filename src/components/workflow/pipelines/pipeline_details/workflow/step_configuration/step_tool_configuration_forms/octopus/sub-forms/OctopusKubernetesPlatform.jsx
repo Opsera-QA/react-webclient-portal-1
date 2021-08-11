@@ -39,6 +39,7 @@ function OctopusKubernetesPlatform({ dataObject, setDataObject, isLoading, plan,
           setDataObject={setDataObject}
           plan={plan}
           stepId={stepId}
+          ecrStepId={dataObject?.getData("ecrPushStepId")}
         />
         <TextInputBase
           setDataObject={setDataObject}

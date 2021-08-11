@@ -7,17 +7,16 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import octopusActions from "../octopus-step-actions";
 import PipelineActions from "../../../../../../../pipeline-actions";
 
-function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject ,disabled, plan, stepId}) {
+function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject, disabled, plan, stepId, ecrStepId }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [placeholderText, setPlaceholderText] = useState("Select Repository Tags");
-  const [repoTags,setRepoTags] = useState([]);
+  const [repoTags, setRepoTags] = useState([]);
   const [list, setList] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -42,26 +41,55 @@ function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject ,disa
     };
   }, []);
 
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    setErrorMessage("");
+    dataObject.setData("octopusVersion", "");
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [ecrStepId]);
+
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       setRepoTags([]);
       let pipelineSteps = formatStepOptions(plan, stepId);
       let acrStep = pipelineSteps.filter((step) => step._id === dataObject.getData("ecrPushStepId"));
-      let acrConfig = acrStep[0]?.tool?.configuration;
+      let acrConfig = acrStep?.length > 0 ? acrStep[0]?.tool?.configuration : [];
       await fetchAzureDetails(cancelSource);
       let azureToolList = list.filter((tool) => tool.id === acrConfig?.azureToolConfigId);
       let azureTool = azureToolList?.length > 0 ? azureToolList[0] : [];
+
+      // if (acrStep?.length === 0 || azureToolList?.length === 0) {
+      //   setPlaceholderText("Could not pull Azure Repository Tags");
+      //   setErrorMessage(`An Error Occurred Pulling Repository Tags: Check ACR Push Step Configuration`);
+      //   return;
+      // }
+
       await fetchAzureRepositoryTags(cancelSource, acrConfig, azureTool);
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         setPlaceholderText("Could not pull Azure Repository Tags");
         setErrorMessage(`An Error Occurred Pulling Repository Tags: ${error}`);
         console.error(error);
       }
-    }
-    finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -78,8 +106,8 @@ function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject ,disa
             name: item.name,
             id: item._id,
             configuration: item.configuration,
-            owner:item.owner,
-            applications:item.applications
+            owner: item.owner,
+            applications: item.applications,
           });
         });
         results = respObj;
@@ -103,8 +131,13 @@ function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject ,disa
   };
 
   const fetchAzureRepositoryTags = async (cancelSource = cancelTokenSource, acrStep, azureTool) => {
-
-    const response = await octopusActions.getAzureRepoTags(getAccessToken, cancelSource, dataObject, acrStep, azureTool);
+    const response = await octopusActions.getAzureRepoTags(
+      getAccessToken,
+      cancelSource,
+      dataObject,
+      acrStep,
+      azureTool
+    );
     const result = response?.data?.data;
 
     if (Array.isArray(result) && result.length > 0) {
@@ -113,36 +146,27 @@ function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject ,disa
       setPlaceholderText("Select Repository Tags");
     }
 
-    if (result?.length === 0){
+    if (result?.length === 0) {
       setPlaceholderText("No tags found with this configuration");
       setErrorMessage("No Azure Projects have been found associated with this Azure Tool Registry Account");
     }
-  };
-
-  const clearDataFunction=()=>{
-    let newDataObject = {...dataObject};
-    newDataObject.setData("octopusVersion", "");
-    setPlaceholderText("Select Repository Tags");
-    setDataObject({...newDataObject});
   };
 
   if (!dataObject?.getData("isRollback")) {
     return null;
   }
 
-
   return (
     <SelectInputBase
       fieldName={"octopusVersion"}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      clearDataFunction={clearDataFunction}
       placeholderText={placeholderText}
       selectOptions={repoTags}
       textField={"name"}
       valueField={"name"}
       busy={isLoading}
-      disabled={disabled || isLoading || (repoTags == null || repoTags.length === 0)}
+      disabled={disabled || isLoading || repoTags == null || repoTags.length === 0}
     />
   );
 }
@@ -153,10 +177,11 @@ AzureAcrPushRepositoryTagsSelectInput.propTypes = {
   disabled: PropTypes.bool,
   plan: PropTypes.array,
   stepId: PropTypes.string,
+  ecrStepId: PropTypes.string
 };
 
 AzureAcrPushRepositoryTagsSelectInput.defaultProps = {
-  disabled:false
+  disabled: false,
 };
 
 export default AzureAcrPushRepositoryTagsSelectInput;
