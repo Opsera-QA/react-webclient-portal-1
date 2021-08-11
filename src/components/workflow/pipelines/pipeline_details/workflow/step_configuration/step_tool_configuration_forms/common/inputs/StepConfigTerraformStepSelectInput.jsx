@@ -6,7 +6,6 @@ import _ from "lodash";
 import { Button, OverlayTrigger, Popover } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle, faSync } from "@fortawesome/pro-light-svg-icons";
-
 function StepConfigTerraformStepSelectInput({
   fieldName,
   dataObject,
@@ -24,18 +23,15 @@ function StepConfigTerraformStepSelectInput({
 
   useEffect(() => {
     loadData();
-
   }, []);
 
   const loadData = async () => {
     try {
       setIsLoading(true);
       await fetchCommandLineTerraformDetails();
-    }
-    catch (error) {
+    } catch (error) {
       toastContext.showLoadingErrorDialog(error);
-    }
-    finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -61,19 +57,27 @@ function StepConfigTerraformStepSelectInput({
     }
   };
 
-const formatStepOptions = (plan, stepId) => {
-  return plan.slice(
-    0,
-    plan.findIndex((element) => element._id === stepId)
-  );
-};
+  const formatStepOptions = (plan, stepId) => {
+    return plan.slice(
+      0,
+      plan.findIndex((element) => element._id === stepId)
+    );
+  };
 
   const setTerraformDetails = (fieldName, selectedOption) => {
     let newDataObject = { ...dataObject };
     newDataObject.setData(fieldName, selectedOption._id);
-    let tempCustomParamsObject = selectedOption?.tool?.configuration?.customParameters && Array.isArray(selectedOption?.tool?.configuration?.customParameters) ? selectedOption?.tool?.configuration?.customParameters : [];
-    let currentCustomParamsObject = newDataObject?.getData("customParameters");
-    newDataObject.setData("customParameters", [...tempCustomParamsObject, ...currentCustomParamsObject]);
+    let tempCustomParamsObject = selectedOption?.tool?.configuration?.customParameters && Array.isArray(selectedOption?.tool?.configuration?.customParameters) ? selectedOption?.tool?.configuration?.customParameters : []; 
+    
+    let currentCustomParamsObject = newDataObject?.getData("customParameters");    
+    let filteredCustomParamsObject = [];
+    for (let item in currentCustomParamsObject) {
+      if (!currentCustomParamsObject[item]?.outputKey) {
+        filteredCustomParamsObject.push(currentCustomParamsObject[item]);
+      }
+    }
+
+    newDataObject.setData("customParameters", [...tempCustomParamsObject, ...filteredCustomParamsObject]);
     setDataObject({ ...newDataObject });
   };
 
@@ -123,14 +127,14 @@ StepConfigTerraformStepSelectInput.propTypes = {
   textField: PropTypes.string,
   valueField: PropTypes.string,
   tool_prop: PropTypes.string,
-  plan : PropTypes.array,
-  stepId : PropTypes.string
+  plan: PropTypes.array,
+  stepId: PropTypes.string,
 };
 
 StepConfigTerraformStepSelectInput.defaultProps = {
   valueField: "_id",
   textField: "name",
-  fieldName: "terraformStepId"
+  fieldName: "terraformStepId",
 };
 
 export default StepConfigTerraformStepSelectInput;
