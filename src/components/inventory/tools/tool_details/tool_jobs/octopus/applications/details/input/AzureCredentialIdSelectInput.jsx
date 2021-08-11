@@ -31,6 +31,8 @@ function AzureCredentialIdSelectInput({ fieldName, dataObject, setDataObject , a
   const clearDataFunction=()=>{
     let newDataObject = {...dataObject};
     newDataObject.setData(fieldName, "");
+    newDataObject.setData("clusterName", "");
+    newDataObject.setData("resourceGroupName", "");
     setApplicationData(null);  
     setDataObject({...newDataObject});
   };
