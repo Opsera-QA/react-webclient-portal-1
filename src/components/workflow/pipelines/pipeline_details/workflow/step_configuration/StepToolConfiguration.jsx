@@ -54,6 +54,7 @@ import KafkaConnectStepConfiguration from "./step_tool_configuration_forms/kafka
 import AwsEcsDeployStepConfiguration
   from "./step_tool_configuration_forms/aws_ecs_deploy/AwsEcsDeployStepConfiguration";
 import CoverityStepConfiguration from "./step_tool_configuration_forms/coverity/CoverityStepConfiguration";
+import AzureAcrPushStepConfiguration from "./step_tool_configuration_forms/azure_acr_push/AzureAcrPushStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -882,6 +883,18 @@ function StepToolConfiguration({
               closeEditorPanel={closeEditorPanel}
             />
           );
+        case "azure_acr_push":
+          return(<AzureAcrPushStepConfiguration
+              pipelineId={pipeline._id}
+              plan={pipeline.workflow.plan}
+              stepId={stepId}
+              stepTool={stepTool}
+              parentCallback={callbackFunction}
+              callbackSaveToVault={saveToVault}
+              createJob={createJob}
+              setToast={setToast}
+              setShowToast={setShowToast}
+            />);
     }
   };
 

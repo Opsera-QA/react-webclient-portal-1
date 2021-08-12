@@ -30,6 +30,7 @@ import OctopusDeployToTomcatDetailsView from "./sub-forms/OctopusDeployToTomcatD
 import OctopusDeployToIisView from "./sub-forms/OctopusDeployToIisView";
 import OctopusDeployToJavaArchiveView from "./sub-forms/OctopusDeployToJavaArchiveView";
 import OctopusProjectNameInput from "./input/OctopusProjectNameInput";
+import OctopusKubernetesPlatform from "./sub-forms/OctopusKubernetesPlatform";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, callbackSaveToVault, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -322,11 +323,12 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
           {octopusStepConfigurationDto &&
             octopusStepConfigurationDto.getData("octopusPlatformType") &&
             octopusStepConfigurationDto.getData("octopusPlatformType") === "Kubernetes" && (
-              <TextInputBase
-                setDataObject={setOctopusStepConfigurationDataDto}
+              <OctopusKubernetesPlatform
                 dataObject={octopusStepConfigurationDto}
-                fieldName={"namespace"}
-                disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
+                setDataObject={setOctopusStepConfigurationDataDto}
+                isLoading={isLoading}
+                plan={plan}
+                stepId={stepId}
               />
             )}
           {octopusStepConfigurationDto &&

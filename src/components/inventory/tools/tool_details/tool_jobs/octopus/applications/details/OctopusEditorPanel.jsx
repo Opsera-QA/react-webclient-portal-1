@@ -32,6 +32,9 @@ import axios from "axios";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import pipelineActions from "components/workflow/pipeline-actions";
+import AzureToolConfigIdSelectInput from "./input/AzureToolConfigIdSelectInput";
+import AzureClusterSelectInput from "./input/AzureClusterSelectInput";
+import AzureResourceGroupSelectInput from "./input/AzureResourceGroupSelectInput";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -43,6 +46,8 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
   const [isValidatingConfig, setIsValidatingConfig] = useState(false);
+  const [azureConfig,setAzureConfig]=useState(null);
+  const [applicationData, setApplicationData]=useState(null);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -397,6 +402,38 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                         ? octopusApplicationDataDto.getData("accountId")
                         : ""
                     }
+                  />
+                </Col>
+                <Col lg={12}>
+                  <AzureToolConfigIdSelectInput
+                    dataObject={octopusApplicationDataDto}
+                    setDataObject={setOctopusApplicationDataDto}
+                    setAzureConfig={setAzureConfig}
+                  />
+                </Col>
+                <Col lg={12}>
+                  <TextInputBase
+                    dataObject={octopusApplicationDataDto}
+                    setDataObject={setOctopusApplicationDataDto}
+                    fieldName={"resource"}
+                  />
+                </Col>
+                <Col lg={12}>
+                  <AzureClusterSelectInput
+                    dataObject={octopusApplicationDataDto}
+                    setDataObject={setOctopusApplicationDataDto}
+                    azureToolConfigId={octopusApplicationDataDto?.getData("azureToolId")}
+                    azureConfig={azureConfig}
+                    resource={octopusApplicationData?.getData("resource")}
+                  />
+                </Col>
+                <Col lg={12}>
+                  <AzureResourceGroupSelectInput
+                    dataObject={octopusApplicationDataDto}
+                    setDataObject={setOctopusApplicationDataDto}
+                    azureToolConfigId={octopusApplicationDataDto?.getData("azureToolId")}
+                    azureConfig={azureConfig}
+                    resource={octopusApplicationData?.getData("resource")}
                   />
                 </Col>
               </>
