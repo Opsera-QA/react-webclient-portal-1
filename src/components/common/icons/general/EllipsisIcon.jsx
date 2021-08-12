@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faEllipsisH} from "@fortawesome/pro-light-svg-icons";
 import {OverlayTrigger} from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
 import Popover from "react-bootstrap/Popover";
+import {faEllipsisHAlt} from "@fortawesome/pro-light-svg-icons";
 
 function EllipsisIcon({ overlay, className, size, placement, maxWidth }) {
   const getPopover = () => {
@@ -22,7 +22,7 @@ function EllipsisIcon({ overlay, className, size, placement, maxWidth }) {
     <OverlayTrigger trigger={"click"} rootClose placement={placement} overlay={getPopover()}>
       <span className={className}>
         <IconBase
-          icon={faEllipsisH}
+          icon={faEllipsisHAlt}
           className={"pointer"}
           iconSize={size}
           onClick={() => document.body.click()}
@@ -43,6 +43,7 @@ EllipsisIcon.propTypes = {
 EllipsisIcon.defaultProps = {
   placement: "left",
   maxWidth: "1500px",
+  size: "lg"
 };
 
 export default React.memo(EllipsisIcon);

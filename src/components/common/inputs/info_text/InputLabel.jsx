@@ -42,7 +42,7 @@ function InputLabel(
           />
           <EllipsisIcon
             overlay={infoOverlay}
-            className={"ml-1 mt-auto"}
+            className={"ml-1 view-details-icon"}
           />
           <ClearDataIcon
             requireConfirmation={requireClearDataConfirmation}

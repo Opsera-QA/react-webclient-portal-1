@@ -118,7 +118,7 @@ function ArgoCdApplicationSelectInput({className, fieldName, model, setModel, di
         className={className}
         selectOptions={argoApplications}
         errorMessage={errorMessage}
-        linkTooltipText={`Load Tool Registry`}
+        linkTooltipText={`View Or Create New Argo Applications`}
         linkIcon={faTools}
         detailViewLink={`/inventory/tools/details/${argoToolId}/applications`}
       />

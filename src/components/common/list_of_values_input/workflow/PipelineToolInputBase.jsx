@@ -111,7 +111,14 @@ function PipelineToolInputBase({ toolType, toolFriendlyName, placeholderText, vi
         clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading}
         detailViewLink={getDetailViewToolUrl()}
-        infoOverlay={<RegistryToolInfoOverlay toolData={(tool) => tool?._id === model?.getData(fieldName)}  />}
+        infoOverlay={
+          <RegistryToolInfoOverlay
+            tools={tools}
+            toolData={tools?.find((tool) => tool?._id === model?.getData(fieldName))}
+            loadData={loadData}
+            isLoading={isLoading}
+          />
+        }
         linkTooltipText={`Load Tool Registry`}
         linkIcon={faTools}
       />
