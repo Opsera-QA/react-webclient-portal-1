@@ -14,7 +14,7 @@ const JenkinsSfdcJobMetadata = {
   ],
   newObjectFields: {
     jobType: "",
-    agentLabels: "generic-linux",
+    agentLabels: "",
   },
 };
 

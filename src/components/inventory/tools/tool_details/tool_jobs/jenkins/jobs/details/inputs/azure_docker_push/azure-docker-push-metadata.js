@@ -13,7 +13,7 @@ const AzureDockerPushJobMetadata = {
   ],
   newObjectFields: {
     buildType: "docker",
-    agentLabels: "generic-linux",
+    agentLabels: "",
   },
 };
 

@@ -14,7 +14,7 @@ const JenkinsShellScriptJobMetadata = {
     ],
     newObjectFields: {
       buildType: "",
-      agentLabels: "generic-linux",
+      agentLabels: "",
     },
   };
   

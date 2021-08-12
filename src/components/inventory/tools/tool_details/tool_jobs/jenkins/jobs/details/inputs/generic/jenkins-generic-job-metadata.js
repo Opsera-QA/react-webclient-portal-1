@@ -8,7 +8,7 @@ const JenkinsGenericJobMetadata = {
     },
   ],
   newObjectFields: {
-    agentLabels: "generic-linux",
+    agentLabels: "",
   },
 };
 
