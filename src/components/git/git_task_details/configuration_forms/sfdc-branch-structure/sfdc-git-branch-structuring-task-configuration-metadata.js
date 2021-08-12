@@ -36,7 +36,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       id: "service",
       isRequired: true,
       maxLength: 10,
-      isLowercase: true,
+      lowercase: true,
     },    
     {
       label: "Account",
