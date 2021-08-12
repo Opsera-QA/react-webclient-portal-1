@@ -20,9 +20,9 @@ regexDefinitions.nameField = {
 };
 
 regexDefinitions.generalTextWithSpacesSlash = {
-  regex: /^[A-Za-z0-9'\/\-_.: ]*$/,
-  formText: "Letters, numbers, spaces, slash, dashes, apostrophes, colons, underscores, and periods are allowed",
-  errorFormText: "Only letters, numbers, spaces, slash, dashes, apostrophes, colons, underscores, and periods are allowed",
+  regex: /^[A-Za-z0-9'\\/\-_.: ]*$/,
+  formText: "Letters, numbers, spaces, slashes, dashes, apostrophes, colons, underscores, and periods are allowed",
+  errorFormText: "Only letters, numbers, spaces, slashes, dashes, apostrophes, colons, underscores, and periods are allowed",
 };
 
 regexDefinitions.expandedTextAndSymbolsWithSpaces = {
