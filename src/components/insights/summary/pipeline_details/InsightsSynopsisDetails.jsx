@@ -16,6 +16,7 @@ import TotalPipelinesPassedDeployment from "components/insights/summary/pipeline
 import AvgDeploymentDuration from "components/insights/summary/pipeline_details/AvgDeploymentDuration";
 import AvgBuildDuration from "components/insights/summary/pipeline_details/AvgBuildDuration";
 import AvgApprovalTimeDataBlock from "components/insights/summary/pipeline_details/AvgApprovalTime";
+import DeploymentFrequencyDataBlock from "components/insights/summary/pipeline_details/DeploymentFrequencyDataBlock";
 
 // JIRA
 import JiraLeadTimeChartNoDataBlocks from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks";
@@ -76,6 +77,10 @@ function InsightsSynopsisDetails({ dashboardData }) {
             data={selectedDataBlockTableData}
             tableTitle="Successful Pipelines (Deployments)"
           />
+        );
+      case "deployment_frequency":
+        return (
+          <InsightsPipelineDetailsTable data={selectedDataBlockTableData} tableTitle="Deployment Frequency" />
         );
       case "jiraLeadTime":
         return (
@@ -190,6 +195,12 @@ function InsightsSynopsisDetails({ dashboardData }) {
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
           style={{width:"33%"}}
+        />
+        <DeploymentFrequencyDataBlock
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{ width: "33%" }}
         />
         <ChangeFailRateDataBlock
           dashboardData={dashboardData}
