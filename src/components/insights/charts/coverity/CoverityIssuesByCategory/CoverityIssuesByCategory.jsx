@@ -7,7 +7,13 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowCircleDown, faArrowCircleUp, faMinusCircle, faPauseCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowCircleDown,
+  faArrowCircleUp,
+  faMinusCircle,
+  faPauseCircle,
+  faMinus,
+} from "@fortawesome/free-solid-svg-icons";
 // import Model from "../../../../../core/data_model/model";
 // import DeploymentFrequencyInsightsTableMetadata from "./deployment-frequency-actionable-metadata.js";
 // import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
@@ -59,6 +65,11 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
       let dataObject = response?.data ? response?.data?.data[0]?.overallCoverityIssuesTrend?.data : [];
 
       if (isMounted?.current === true && dataObject) {
+        dataObject[0]?.docs?.sort((a, b) =>
+          a.currentTotalIssues < b.currentTotalIssues ? 1 : b.currentTotalIssues < a.currentTotalIssues ? -1 : 0
+        );
+        dataObject[0]?.docs?.slice(0, 2);
+
         setMetrics(dataObject);
       }
     } catch (error) {
@@ -136,7 +147,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 <div className="icon-box fa-pull-right">
                   <FontAwesomeIcon
                     icon={getIcon(metrics[0].overallLowTrend)}
-                    className="fa-pull-right pointer ml-0"
+                    className="fa-pull-right ml-0"
                     size={"lg"}
                     onClick={() => document.body.click()}
                     color={getIconColor(metrics[0].overallMediumTrend)}
@@ -155,7 +166,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 <div className="icon-box fa-pull-right">
                   <FontAwesomeIcon
                     icon={getIcon(metrics[0].overallMediumTrend)}
-                    className="fa-pull-right pointer ml-0"
+                    className="fa-pull-right ml-0"
                     size={"lg"}
                     onClick={() => document.body.click()}
                     color={getIconColor(metrics[0].overallMediumTrend)}
@@ -173,7 +184,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 <div className="icon-box fa-pull-right">
                   <FontAwesomeIcon
                     icon={getIcon(metrics[0].overallHighTrend)}
-                    className="fa-pull-right pointer ml-0"
+                    className="fa-pull-right ml-0"
                     size={"lg"}
                     onClick={() => document.body.click()}
                     color={getIconColor(metrics[0].overallMediumTrend)}
@@ -183,6 +194,57 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 <div className="w-100 text-muted mb-1">High</div>
               </div>
             </Col>
+          </Row>
+          <Row>
+            <div className="p-4">
+              <div>Top 3 Projects with Highest number of Issues & their Trend: </div>
+              <br></br>
+              {(() => {
+                if (metrics[0]?.docs?.length && metrics[0]?.docs[0]) {
+                  return (
+                    <div>
+                      <FontAwesomeIcon
+                        // icon={faMinus}
+                        icon={getIcon(metrics[0]?.docs[0]?.projectTotalIssuesTrend)}
+                        color={getIconColor(metrics[0]?.docs[0]?.projectTotalIssuesTrend)}
+                        title={getIconTitle(metrics[0]?.docs[0]?.projectTotalIssuesTrend)}
+                      />{" "}
+                      {metrics[0]?.docs[0]?.coverityStreamName}
+                    </div>
+                  );
+                }
+              })()}
+              {(() => {
+                if (metrics[0]?.docs?.length && metrics[0]?.docs[1]) {
+                  return (
+                    <div>
+                      <FontAwesomeIcon
+                        // icon={faMinus}
+                        icon={getIcon(metrics[0]?.docs[0]?.projectTotalIssuesTrend)}
+                        color={getIconColor(metrics[0]?.docs[0]?.projectTotalIssuesTrend)}
+                        title={getIconTitle(metrics[0]?.docs[0]?.projectTotalIssuesTrend)}
+                      />{" "}
+                      {metrics[0]?.docs[1]?.coverityStreamName}
+                    </div>
+                  );
+                }
+              })()}
+              {(() => {
+                if (metrics[0]?.docs?.length && metrics[0]?.docs[2]) {
+                  return (
+                    <div>
+                      <FontAwesomeIcon
+                        // icon={faMinus}
+                        icon={getIcon(metrics[0]?.docs[0]?.projectTotalIssuesTrend)}
+                        color={getIconColor(metrics[0]?.docs[0]?.projectTotalIssuesTrend)}
+                        title={getIconTitle(metrics[0]?.docs[0]?.projectTotalIssuesTrend)}
+                      />{" "}
+                      {metrics[0]?.docs[2]?.coverityStreamName}
+                    </div>
+                  );
+                }
+              })()}
+            </div>
           </Row>
         </Container>
       </div>
