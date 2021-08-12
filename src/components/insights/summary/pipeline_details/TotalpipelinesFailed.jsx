@@ -104,12 +104,12 @@ function TotalpipelinesFailed({ dashboardData, toggleDynamicPanel, selectedDataB
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("successful_pipelines_deployment", metrics[0]?.data);
+    toggleDynamicPanel("failed_pipeline_executions", metrics[0]?.data);
   };
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "successful_pipelines_deployment" ? "selected-data-block" : undefined} style={style}>
+      <div className={selectedDataBlock === "failed_pipeline_executions" ? "selected-data-block" : undefined} style={style}>
         <InsightsSynopsisDataBlock
           title={
             !isLoading && metrics[0]?.count[0] ? (

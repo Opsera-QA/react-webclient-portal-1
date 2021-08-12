@@ -56,7 +56,7 @@ function InsightsSynopsisDetails({ dashboardData }) {
         return (
           <InsightsPipelineDetailsTable
             data={selectedDataBlockTableData}
-            tableTitle="Successful Pipelines (Security and Quality)"
+            tableTitle="Successful Pipeline Executions"
           />
         );
       case "security_failed":
@@ -71,11 +71,11 @@ function InsightsSynopsisDetails({ dashboardData }) {
         return (
           <InsightsPipelineDetailsTable data={selectedDataBlockTableData} tableTitle="Failed Pipelines (Deployments)" />
         );
-      case "successful_pipelines_deployment":
+      case "failed_pipeline_executions":
         return (
           <InsightsPipelineDetailsTable
             data={selectedDataBlockTableData}
-            tableTitle="Successful Pipelines (Deployments)"
+            tableTitle="Failed Pipeline Executions"
           />
         );
       case "deployment_frequency":
