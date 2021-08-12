@@ -10,7 +10,7 @@ import BuildDetailsMetadata from "components/insights/summary/build-details-meta
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function PipelineDetails({ dashboardData, toggleDynamicPanel, selectedDataBlock , style }) {
+function PipelinesSuccessfulExecutions({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const fields = BuildDetailsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -71,7 +71,7 @@ function PipelineDetails({ dashboardData, toggleDynamicPanel, selectedDataBlock 
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "summaryPipelinesSuccessfulDeployment",
+        "pipelinesSuccessfulExecutions",
         null,
         dashboardTags,
         filterDto,
@@ -104,12 +104,12 @@ function PipelineDetails({ dashboardData, toggleDynamicPanel, selectedDataBlock 
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("successful_pipelines_deployment", metrics[0]?.data);
+    toggleDynamicPanel("successful_pipelines", metrics[0]?.data);
   };
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "successful_pipelines_deployment" ? "selected-data-block" : undefined} style={style}>
+      <div className={selectedDataBlock === "successful_pipelines" ? "selected-data-block" : undefined} style={style}>
         <InsightsSynopsisDataBlock
           title={
             !isLoading && metrics[0]?.count[0] ? (
@@ -123,8 +123,8 @@ function PipelineDetails({ dashboardData, toggleDynamicPanel, selectedDataBlock 
               />
             )
           }
-          subTitle="Successful Pipelines (Deployments)"
-          toolTipText="Successful Pipelines (Deployments)"
+          subTitle="Successful Pipeline Executions"
+          toolTipText="Successful Pipeline Executions"
           clickAction={() => onDataBlockSelect()}
           statusColor="success"
         />
@@ -135,11 +135,11 @@ function PipelineDetails({ dashboardData, toggleDynamicPanel, selectedDataBlock 
   return getChartBody();
 }
 
-PipelineDetails.propTypes = {
+PipelinesSuccessfulExecutions.propTypes = {
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
   selectedDataBlock: PropTypes.string,
   style: PropTypes.object
 };
 
-export default PipelineDetails;
+export default PipelinesSuccessfulExecutions;
