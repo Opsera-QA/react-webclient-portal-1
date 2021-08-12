@@ -15,7 +15,8 @@ function InputLabel(
     infoOverlay,
     className,
     extraActionButtons,
-    showLabel
+    showLabel,
+    linkIcon,
   }) {
   const getFormattedLabel = () => {
     return (
@@ -35,12 +36,13 @@ function InputLabel(
           <DetailViewLinkIcon
             openInNewWindow={true}
             linkTooltipText={linkTooltipText}
-            className={"ml-2"}
+            className={"ml-1 view-details-icon"}
             pageLink={detailViewLink}
+            icon={linkIcon}
           />
           <EllipsisIcon
             overlay={infoOverlay}
-            className={"ml-2"}
+            className={"ml-1 mt-auto"}
           />
           <ClearDataIcon
             requireConfirmation={requireClearDataConfirmation}
@@ -65,7 +67,8 @@ InputLabel.propTypes = {
   clearDataFunction: PropTypes.func,
   requireClearDataConfirmation: PropTypes.bool,
   clearDataDetails: PropTypes.any,
-  extraActionButtons: PropTypes.any
+  extraActionButtons: PropTypes.any,
+  linkIcon: PropTypes.object,
 };
 
 export default InputLabel;

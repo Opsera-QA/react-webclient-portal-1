@@ -295,6 +295,7 @@
 
 .clear-value-badge {
     font-weight: normal;
+    height: 18px;
 }
 
 .badge-primary[href]:hover, .badge-primary[href]:focus {
