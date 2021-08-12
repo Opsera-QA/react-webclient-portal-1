@@ -24,7 +24,7 @@ const JenkinsUnitTestJobMetadata = {
       buildType: "",
       gradleTask:"",
       mavenTask:"",
-      agentLabels: "generic-linux",
+      agentLabels: "",
     },
   };
   
