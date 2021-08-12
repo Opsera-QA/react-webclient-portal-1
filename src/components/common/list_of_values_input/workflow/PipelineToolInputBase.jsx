@@ -8,7 +8,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 import axios from "axios";
-import pipelineHelpers from "components/workflow/pipelineHelpers";
+import RegistryToolInfoOverlay from "components/common/list_of_values_input/tools/RegistryToolInfoOverlay";
 
 function PipelineToolInputBase({ toolType, toolFriendlyName, placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className}) {
   const toastContext = useContext(DialogToastContext);
@@ -111,9 +111,7 @@ function PipelineToolInputBase({ toolType, toolFriendlyName, placeholderText, vi
         clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading}
         detailViewLink={getDetailViewToolUrl()}
-        infoOverlay={pipelineHelpers.getRegistryPopover(
-          tools[tools.findIndex((tool) => tool?._id === model?.getData(fieldName))]
-        )}
+        infoOverlay={<RegistryToolInfoOverlay toolData={(tool) => tool?._id === model?.getData(fieldName)}  />}
         linkTooltipText={`Load Tool Registry`}
         linkIcon={faTools}
       />

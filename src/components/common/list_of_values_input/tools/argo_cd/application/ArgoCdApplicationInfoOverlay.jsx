@@ -5,8 +5,6 @@ import ArgoApplicationsTable
   from "components/inventory/tools/tool_details/tool_jobs/argo/applications/ArgoApplicationsTable";
 import argoApplicationsMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/argo-application-metadata";
 import Model from "core/data_model/model";
-import ArgoApplicationSummaryPanel
-  from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/ArgoApplicationSummaryPanel";
 
 function ArgoCdApplicationInfoOverlay({argoApplications, selectedArgoApplicationName}) {
   const getBody = () => {
@@ -20,7 +18,7 @@ function ArgoCdApplicationInfoOverlay({argoApplications, selectedArgoApplication
             <div className={"mb-2"}>
               Selection of this application identifies which application details are being used.
             </div>
-            <ArgoApplicationSummaryPanel argoApplicationData={model} />
+            {/*<ArgoApplicationSummaryPanel argoApplicationData={model} />*/}
           </div>
         );
       }
