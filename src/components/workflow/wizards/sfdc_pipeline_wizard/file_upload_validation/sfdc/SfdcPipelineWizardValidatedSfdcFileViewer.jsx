@@ -70,7 +70,12 @@ const SfdcPipelineWizardValidatedSfdcFileViewer = ({ pipelineWizardModel, setPip
   };
 
   const toggleFileValidation = async (cancelSource = cancelTokenSource) => {
-    await sfdcPipelineActions.toggleSfdcCsvFilesValidation(getAccessToken, cancelSource, pipelineWizardModel);
+    if (pipelineWizardModel?.getData("isXml") === true) {
+      await sfdcPipelineActions.toggleSfdcXmlFilesValidation(getAccessToken, cancelSource, pipelineWizardModel);
+    }
+    else if (pipelineWizardModel?.getData("isCsv") === true) {
+      await sfdcPipelineActions.toggleSfdcCsvFilesValidation(getAccessToken, cancelSource, pipelineWizardModel);
+    }
   };
 
   const getBody = () => {
