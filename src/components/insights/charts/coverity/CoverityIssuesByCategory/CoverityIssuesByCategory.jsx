@@ -133,13 +133,15 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 <div className="box-metric">
                   <div>{metrics[0].currentTotalLow}</div>
                 </div>
-                <FontAwesomeIcon
-                  icon={getIcon(metrics[0].overallLowTrend)}
-                  className="fa-pull-right pointer pr-1"
-                  onClick={() => document.body.click()}
-                  color={getIconColor(metrics[0].overallMediumTrend)}
-                  title={getIconTitle(metrics[0].overallMediumTrend)}
-                />
+                <div className="icon-box fa-pull-right">
+                  <FontAwesomeIcon
+                    icon={getIcon(metrics[0].overallLowTrend)}
+                    className="fa-pull-right pointer pr-1"
+                    onClick={() => document.body.click()}
+                    color={getIconColor(metrics[0].overallMediumTrend)}
+                    title={getIconTitle(metrics[0].overallMediumTrend)}
+                  />
+                </div>
                 <div className="w-100 text-muted mb-1">Low</div>
               </div>
             </Col>
@@ -148,13 +150,16 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 <div className="box-metric">
                   <div>{metrics[0].currentTotalMedium}</div>
                 </div>
-                <FontAwesomeIcon
-                  icon={getIcon(metrics[0].overallMediumTrend)}
-                  className="fa-pull-right pointer pr-1"
-                  onClick={() => document.body.click()}
-                  color={getIconColor(metrics[0].overallMediumTrend)}
-                  title={getIconTitle(metrics[0].overallMediumTrend)}
-                />
+
+                <div className="icon-box fa-pull-right">
+                  <FontAwesomeIcon
+                    icon={getIcon(metrics[0].overallMediumTrend)}
+                    className="fa-pull-right pointer pr-1"
+                    onClick={() => document.body.click()}
+                    color={getIconColor(metrics[0].overallMediumTrend)}
+                    title={getIconTitle(metrics[0].overallMediumTrend)}
+                  />
+                </div>
                 <div className="w-100 text-muted mb-1">Medium</div>
               </div>
             </Col>
@@ -163,13 +168,15 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 <div className="box-metric">
                   <div>{metrics[0].currentTotalHigh}</div>
                 </div>
-                <FontAwesomeIcon
-                  icon={getIcon(metrics[0].overallHighTrend)}
-                  className="fa-pull-right pointer pr-1"
-                  onClick={() => document.body.click()}
-                  color={getIconColor(metrics[0].overallMediumTrend)}
-                  title={getIconTitle(metrics[0].overallMediumTrend)}
-                />
+                <div className="icon-box fa-pull-right">
+                  <FontAwesomeIcon
+                    icon={getIcon(metrics[0].overallHighTrend)}
+                    className="fa-pull-right pointer pr-1"
+                    onClick={() => document.body.click()}
+                    color={getIconColor(metrics[0].overallMediumTrend)}
+                    title={getIconTitle(metrics[0].overallMediumTrend)}
+                  />
+                </div>
                 <div className="w-100 text-muted mb-1">High</div>
               </div>
             </Col>
