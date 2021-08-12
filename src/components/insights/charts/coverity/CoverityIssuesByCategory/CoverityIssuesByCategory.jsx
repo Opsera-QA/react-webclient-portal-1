@@ -136,7 +136,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 <div className="icon-box fa-pull-right">
                   <FontAwesomeIcon
                     icon={getIcon(metrics[0].overallLowTrend)}
-                    className="fa-pull-right pointer pr-1"
+                    className="fa-pull-right pointer ml-0"
                     onClick={() => document.body.click()}
                     color={getIconColor(metrics[0].overallMediumTrend)}
                     title={getIconTitle(metrics[0].overallMediumTrend)}
@@ -154,7 +154,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 <div className="icon-box fa-pull-right">
                   <FontAwesomeIcon
                     icon={getIcon(metrics[0].overallMediumTrend)}
-                    className="fa-pull-right pointer pr-1"
+                    className="fa-pull-right pointer ml-0"
                     onClick={() => document.body.click()}
                     color={getIconColor(metrics[0].overallMediumTrend)}
                     title={getIconTitle(metrics[0].overallMediumTrend)}
@@ -171,7 +171,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 <div className="icon-box fa-pull-right">
                   <FontAwesomeIcon
                     icon={getIcon(metrics[0].overallHighTrend)}
-                    className="fa-pull-right pointer pr-1"
+                    className="fa-pull-right pointer ml-0"
                     onClick={() => document.body.click()}
                     color={getIconColor(metrics[0].overallMediumTrend)}
                     title={getIconTitle(metrics[0].overallMediumTrend)}
