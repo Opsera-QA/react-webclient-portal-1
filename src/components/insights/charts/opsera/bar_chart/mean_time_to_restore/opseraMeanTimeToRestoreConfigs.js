@@ -1,5 +1,5 @@
 export default (getColor, maxValue) => ({
-  keys: ["Mean Time to Restore"],
+  keys: ["mttr"],
   indexBy: "_id",
   colorBy: "id",
   minValue: 0,
