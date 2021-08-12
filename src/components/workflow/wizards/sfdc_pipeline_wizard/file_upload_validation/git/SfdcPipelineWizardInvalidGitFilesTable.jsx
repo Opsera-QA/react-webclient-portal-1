@@ -7,15 +7,14 @@ import axios from "axios";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import {parseError} from "components/common/helpers/error-helpers";
 import SfdcPipelineWizardFileValidationTableBase
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/SfdcPipelineWizardFileValidationTableBase";
 
 const SfdcPipelineWizardInvalidGitFilesTable = ({ pipelineWizardModel}) => {
   const {getAccessToken} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [destinationFiles, setDestinationFiles] = useState([]);
-  const [destinationFilterModel, setDestinationFilterModel] = useState(new Model({ ...sfdcComponentFilterMetadata.newObjectFields }, sfdcComponentFilterMetadata, false));
+  const [invalidFiles, setInvalidFiles] = useState([]);
+  const [invalidFilterModel, setInvalidFilterModel] = useState(new Model({ ...sfdcComponentFilterMetadata.newObjectFields }, sfdcComponentFilterMetadata, false));
   const [isLoading, setIsLoading] = useState(false);
   const [filePullCompleted, setFilePullCompleted] = useState(false);
   const isMounted = useRef(false);
@@ -31,10 +30,10 @@ const SfdcPipelineWizardInvalidGitFilesTable = ({ pipelineWizardModel}) => {
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    setDestinationFiles([]);
+    setInvalidFiles([]);
 
     const newDestinationFilterModel = new Model({ ...sfdcComponentFilterMetadata.newObjectFields }, sfdcComponentFilterMetadata, false);
-    setDestinationFilterModel({...newDestinationFilterModel});
+    setInvalidFilterModel({...newDestinationFilterModel});
     loadData(newDestinationFilterModel, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -48,7 +47,7 @@ const SfdcPipelineWizardInvalidGitFilesTable = ({ pipelineWizardModel}) => {
     };
   }, []);
 
-  const loadData = async (newFilterModel = destinationFilterModel, cancelSource = cancelTokenSource) => {
+  const loadData = async (newFilterModel = invalidFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       await invalidFilePolling(cancelSource, newFilterModel);
@@ -70,39 +69,33 @@ const SfdcPipelineWizardInvalidGitFilesTable = ({ pipelineWizardModel}) => {
     }
   };
 
-  const invalidFilePolling = async (cancelSource = cancelTokenSource, newFilterModel = destinationFilterModel, count = 1) => {
+  const invalidFilePolling = async (cancelSource = cancelTokenSource, newFilterModel = invalidFilterModel, count = 1) => {
     if (isMounted?.current !== true) {
       return;
     }
 
-    const destSfdcList = await getInvalidFiles(cancelSource, newFilterModel);
+    const invalidFileList = await getInvalidFiles(cancelSource, newFilterModel);
 
-    if (!Array.isArray(destSfdcList) && count <= 5 && filePullCompleted === false) {
+    if (!Array.isArray(invalidFileList) && count <= 5 && filePullCompleted === false) {
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
       return await invalidFilePolling(cancelSource, newFilterModel, count + 1);
     }
   };
 
-  const getInvalidFiles = async (cancelSource = cancelTokenSource, newFilterModel = destinationFilterModel) => {
-    const destSfdcResponse = await sfdcPipelineActions.getInvalidFileList(getAccessToken, cancelSource, pipelineWizardModel, newFilterModel);
-    const data = destSfdcResponse?.data;
-    const fileList = destSfdcResponse?.data?.data;
+  const getInvalidFiles = async (cancelSource = cancelTokenSource, newFilterModel = invalidFilterModel) => {
+    const response = await sfdcPipelineActions.getInvalidFileList(getAccessToken, cancelSource, pipelineWizardModel, newFilterModel);
+    const data = response?.data;
+    const fileList = response?.data?.data;
+    console.log("fileList: " + JSON.stringify(fileList));
 
-    if (isMounted?.current === true && data) {
-      if (data.error) {
-        const parsedError = parseError(data?.error);
-        toastContext.showInlineErrorMessage(`Service Error Fetching Destination File List From SFDC: ${parsedError}`);
-      }
-
-      if (Array.isArray(fileList)) {
-        let newDestSfdcFilterDto = newFilterModel;
-        newDestSfdcFilterDto.setData("totalCount", data.count);
-        newDestSfdcFilterDto.setData("activeFilters", newDestSfdcFilterDto.getActiveFilters());
-        setDestinationFilterModel({...newDestSfdcFilterDto});
-        setDestinationFiles(fileList);
-        setIsLoading(false);
-        setFilePullCompleted(true);
-      }
+    if (isMounted?.current === true && Array.isArray(fileList)) {
+      let newDestSfdcFilterDto = newFilterModel;
+      newDestSfdcFilterDto.setData("totalCount", data.count);
+      newDestSfdcFilterDto.setData("activeFilters", newDestSfdcFilterDto.getActiveFilters());
+      setInvalidFilterModel({...newDestSfdcFilterDto});
+      setInvalidFiles(fileList);
+      setIsLoading(false);
+      setFilePullCompleted(true);
     }
 
     return fileList;
@@ -110,11 +103,12 @@ const SfdcPipelineWizardInvalidGitFilesTable = ({ pipelineWizardModel}) => {
 
   return (
     <SfdcPipelineWizardFileValidationTableBase
-      data={destinationFiles}
+      data={invalidFiles}
       loadData={loadData}
       isLoading={isLoading}
-      paginationModel={destinationFilterModel}
-      setPaginationModel={setDestinationFilterModel}
+      paginationModel={invalidFilterModel}
+      setPaginationModel={setInvalidFilterModel}
+      filePullCompleted={filePullCompleted}
       title={"Invalid Files"}
       pipelineWizardModel={pipelineWizardModel}
     />

@@ -20,9 +20,9 @@ regexDefinitions.nameField = {
 };
 
 regexDefinitions.generalTextWithSpacesSlash = {
-  regex: /^[A-Za-z0-9'\/\-_.: ]*$/,
-  formText: "Letters, numbers, spaces, slash, dashes, apostrophes, colons, underscores, and periods are allowed",
-  errorFormText: "Only letters, numbers, spaces, slash, dashes, apostrophes, colons, underscores, and periods are allowed",
+  regex: /^[A-Za-z0-9'\\/\-_.: ]*$/,
+  formText: "Letters, numbers, spaces, slashes, dashes, apostrophes, colons, underscores, and periods are allowed",
+  errorFormText: "Only letters, numbers, spaces, slashes, dashes, apostrophes, colons, underscores, and periods are allowed",
 };
 
 regexDefinitions.expandedTextAndSymbolsWithSpaces = {
@@ -125,6 +125,18 @@ regexDefinitions.octopusFileList = {
   regex: /^[A-Za-z0-9-_.*\n]*$/,
   formText: "Letters, numbers, dashes, underscores, asterisk, periods and new lines are allowed",
   errorFormText: "Only letters, numbers, dashes, underscores, asterisk, periods and new lines are allowed",
+};
+
+regexDefinitions.customParameterValueRegex = {
+  regex: /^[a-zA-Z0-9-+|!.$@&:_; [\]\\/]*$/,
+  formText: "Value can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : ; |",
+  errorFormText: "Value can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : ; |",
+};
+
+regexDefinitions.customParameterNameRegex = {
+  regex: /^opsera-[a-z0-9-_.]*$/,
+  formText: "Name must begin with \"opsera-\" and can contain lowercase letters, numbers, dashes, and periods",
+  errorFormText: "Name must begin with \"opsera-\" and can contain lowercase letters, numbers, dashes, and periods",
 };
 
 export default regexDefinitions;

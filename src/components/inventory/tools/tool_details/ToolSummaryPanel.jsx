@@ -16,10 +16,14 @@ function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessR
   }, [JSON.stringify(customerAccessRules)]);
 
   const authorizedAction = (action, dataObject) => {
-    const owner = dataObject.owner;
-    const objectRoles = dataObject.roles;
+    const owner = dataObject?.owner;
+    const objectRoles = dataObject?.roles;
     return workflowAuthorizedActions.toolRegistryItems(customerAccessRules, action, owner, objectRoles);
   };
+
+  if (toolData == null) {
+    return null;
+  }
 
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab} editingAllowed={authorizedAction("edit_tool_settings", toolData?.data)}>

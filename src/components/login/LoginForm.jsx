@@ -10,11 +10,12 @@ import "@okta/okta-signin-widget/dist/css/okta-sign-in.min.css";
 import { useOktaAuth } from "@okta/okta-react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import RegisterAccountButton from "components/login/RegisterAccountButton";
+import userActions from "../user/user-actions";
 
 const OktaSignIn = require("@okta/okta-signin-widget");
 
 const LoginForm = ({ authClient }) => {
-  const { featureFlagHideItemInProd } = useContext(AuthContext);
+  const { generateJwtServiceTokenWithValue } = useContext(AuthContext);
   const { oktaAuth } = useOktaAuth();
   const history = useHistory();
   const [username, setUsername] = useState("");
@@ -24,6 +25,11 @@ const LoginForm = ({ authClient }) => {
   const [loading, setLoading] = useState(false);
   const [viewType, setViewType] = useState("domain"); //login, reset or domain
   const [loginType, setLoginType] = useState("standard"); //stardard: Opsera Okta Login, federated: Opsera Signing Widget
+  const [federatedIdpEnabled, setFederatedIdpEnabled] = useState(false);
+
+  const [ldapOrgName, setLdapOrgName] = useState("");
+  const [federatedIdpIdentifier, setFederatedIdpIdentifier] = useState("");
+
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -109,6 +115,7 @@ const LoginForm = ({ authClient }) => {
   //https://github.com/okta/okta-signin-widget#idp-discovery
   const federatedOktaLogin = (idp) => {
     setLoginType("federated");
+    console.log("idp: ", federatedIdpIdentifier);
 
     const signIn = new OktaSignIn({
       baseUrl: process.env.REACT_APP_OKTA_BASEURL,
@@ -120,7 +127,9 @@ const LoginForm = ({ authClient }) => {
       },
       clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
       idps: [
-        { type: "GOOGLE", id: "0oaw3fhtfuCrJ31dK0h7" }, //IDP of our GSuite as opposed to pure google
+        //{ type: "GOOGLE", id: "0oa1njfc0lFlSp0mM4x7" }, //IDP of our GSuite as opposed to pure google
+        { text: "Opsera Demo", id: "0oa44bjfqlK7gTwnz4x7" }, //IDP of our DEV Okta Federated for use via PROD for testing
+        { text: ldapOrgName, id: federatedIdpIdentifier }, //IDP of LDAP object
       ],
       idpDisplay: "SECONDARY",
       idpDiscovery: {
@@ -130,6 +139,8 @@ const LoginForm = ({ authClient }) => {
         idpDiscovery: true,
       },
     });
+
+    signIn.remove(); //ensure any prior existing instances are removed frist (throws errors otherwise)
 
     signIn.showSignInToGetTokens({
       // Assumes there is an empty element on the page with an id of 'osw-container'
@@ -188,16 +199,35 @@ const LoginForm = ({ authClient }) => {
   const handleDomainLookupSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setFederatedIdpEnabled(false);
     const apiUrl = "/users/active-account";
     const params = { "email": lookupAccountEmail, "hostname": window.location.hostname };
     try {
       const response = await axiosApiService().post(apiUrl, params); //this lookup is currently FF in Node
       toastContext.removeAllBanners();
 
-      const {loginAllowed, validHost} = response.data;
+      const {loginAllowed, validHost, accountType} = response.data;
 
       //valid account so allow it to continue login
       if (loginAllowed && validHost) {
+
+        /*START NEW FEDERATION CODE*/
+        if (accountType === "ldap-organization") {
+          const token = await generateJwtServiceTokenWithValue({ id: "orgRegistrationForm" });
+          const domain = lookupAccountEmail.split("@")[1];
+
+          if (domain && token) {
+            const accountResponse = await userActions.getAccountInformation(domain, token);
+            const { localAuth, accountName, idpIdentifier } = accountResponse.data;
+            if (localAuth && idpIdentifier) {
+              setFederatedIdpEnabled(localAuth === "FALSE");
+              setLdapOrgName(accountName);
+              setFederatedIdpIdentifier(idpIdentifier);
+            }
+          }
+        }
+        /* END NEW CODE */
+
         setUsername(lookupAccountEmail);
         setViewType("login");
         return;
@@ -286,7 +316,7 @@ const LoginForm = ({ authClient }) => {
                                 setViewType("reset");
                               }}>Forgot Password</Button>
 
-                      {featureFlagHideItemInProd() ?
+                      {!federatedIdpEnabled ?
                         <></>
                         :
                         <Button variant="link" size="sm"
