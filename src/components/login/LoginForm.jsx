@@ -206,22 +206,24 @@ const LoginForm = ({ authClient }) => {
       const response = await axiosApiService().post(apiUrl, params); //this lookup is currently FF in Node
       toastContext.removeAllBanners();
 
-      const {loginAllowed, validHost} = response.data;
+      const {loginAllowed, validHost, accountType} = response.data;
 
       //valid account so allow it to continue login
       if (loginAllowed && validHost) {
 
-        /*START NEW CODE*/
-        const token = await generateJwtServiceTokenWithValue({ id: "orgRegistrationForm" });
-        const domain = lookupAccountEmail.split("@")[1];
+        /*START NEW FEDERATION CODE*/
+        if (accountType === "ldap-organization") {
+          const token = await generateJwtServiceTokenWithValue({ id: "orgRegistrationForm" });
+          const domain = lookupAccountEmail.split("@")[1];
 
-        if (domain && token) {
-          const accountResponse = await userActions.getAccountInformation(domain, token);
-          const { localAuth, accountName, idpIdentifier } = accountResponse.data;
-          if (localAuth && idpIdentifier) {
-            setFederatedIdpEnabled(localAuth === "FALSE");
-            setLdapOrgName(accountName);
-            setFederatedIdpIdentifier(idpIdentifier);
+          if (domain && token) {
+            const accountResponse = await userActions.getAccountInformation(domain, token);
+            const { localAuth, accountName, idpIdentifier } = accountResponse.data;
+            if (localAuth && idpIdentifier) {
+              setFederatedIdpEnabled(localAuth === "FALSE");
+              setLdapOrgName(accountName);
+              setFederatedIdpIdentifier(idpIdentifier);
+            }
           }
         }
         /* END NEW CODE */
