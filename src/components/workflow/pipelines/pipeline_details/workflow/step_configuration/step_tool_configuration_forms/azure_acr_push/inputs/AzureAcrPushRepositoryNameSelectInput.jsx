@@ -93,6 +93,8 @@ function AzureAcrPushRepositoryNameSelectInput({ dataObject, setDataObject ,disa
       textField={"name"}
       valueField={"name"}
       busy={isLoading}
+      errorMessage={errorMessage}
+      placeholderText={placeholderText}
       disabled={disabled || isLoading || (repoList == null || repoList.length === 0)}
     />
   );

@@ -22,6 +22,10 @@ const SAMPLE_DATA = [
 ];
 
 function OctopusDeploymentVariables({ fieldName, dataObject, setDataObject }) {
+  if (!dataObject?.getData("specifyDepVariables")) {
+    return null;
+  }
+
   return (
     <>
       <OverlayTrigger

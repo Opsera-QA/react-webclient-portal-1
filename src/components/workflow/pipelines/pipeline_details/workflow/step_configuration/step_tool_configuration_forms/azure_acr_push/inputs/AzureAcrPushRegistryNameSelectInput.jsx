@@ -53,8 +53,8 @@ function AzureAcrPushRegistryNameSelectInput({
       setIsLoading(true);
       await loadAzureRegistries(cancelSource);
     } catch (error) {
-      setPlaceholderText("There was an error pulling Azure Registry!");
-      setErrorMessage("No Registry available.");
+      setPlaceholderText("There was an error pulling Azure Registries");
+      setErrorMessage("There was an error pulling Azure Registries.");
       toastContext.showErrorDialog(error);
       console.error(error);
     } finally {
