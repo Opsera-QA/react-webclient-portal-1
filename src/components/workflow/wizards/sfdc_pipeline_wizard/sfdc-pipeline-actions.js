@@ -359,7 +359,7 @@ sfdcPipelineActions.getPackageXmlV2 = async (getAccessToken, cancelTokenSource, 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-sfdcPipelineActions.setXmlFilecomponentsV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+sfdcPipelineActions.setXmlFileComponentsV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const postBody = {
     packageXml: pipelineWizardModel?.getData("xmlFileContent")
   };

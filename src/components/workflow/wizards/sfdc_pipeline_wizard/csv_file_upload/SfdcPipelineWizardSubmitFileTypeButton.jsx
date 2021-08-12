@@ -40,7 +40,7 @@ function SfdcPipelineWizardSubmitFileTypeButton({pipelineWizardModel, setPipelin
       }
       else {
         if(isXml) {
-          await sfdcPipelineActions.setXmlFilecomponentsV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+          await sfdcPipelineActions.setXmlFileComponentsV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
           setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER);
         }
         else {
@@ -55,21 +55,6 @@ function SfdcPipelineWizardSubmitFileTypeButton({pipelineWizardModel, setPipelin
     finally {
       setIsSaving(false);
     }
-  };
-
-  const generateXml = async () => {
-    if (pipelineWizardModel.getData("fromGitTasks") === true) {
-      await sfdcPipelineActions.generateGitTaskXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
-    }
-    else {
-      await sfdcPipelineActions.generateSfdcPackageXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
-    }
-
-    setPipelineWizardScreen(
-      pipelineWizardModel.getData("unitTestSteps").length > 0
-        ? PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR
-        : PIPELINE_WIZARD_SCREENS.XML_VIEWER
-    );
   };
 
   if (pipelineWizardModel == null) {

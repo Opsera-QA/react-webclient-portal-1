@@ -39,7 +39,10 @@ function SfdcPipelineWizardSubmitSfdcFilesButton({pipelineWizardModel, setPipeli
         await setSfdcProfileFilesList();
       }
       else {
-        await sfdcPipelineActions.setSfdcFileListV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+        if (pipelineWizardModel.getData("fromFileUpload") !== true) {
+          await sfdcPipelineActions.setSfdcFileListV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+        }
+
         await generateXml();
       }
     } catch (error) {
