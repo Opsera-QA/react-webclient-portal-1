@@ -10,7 +10,7 @@ import BuildDetailsMetadata from "components/insights/summary/build-details-meta
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function PipelineFailedQuality({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
+function PipelineFailedQualityAndSecurity({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const fields = BuildDetailsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -73,7 +73,7 @@ function PipelineFailedQuality({ dashboardData, toggleDynamicPanel, selectedData
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "summaryPipelinesFailedQuality",
+        "summaryPipelinesFailedQuality&Security",
         null,
         dashboardTags,
         filterDto,
@@ -106,12 +106,12 @@ function PipelineFailedQuality({ dashboardData, toggleDynamicPanel, selectedData
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("quality_failed", metrics[0]?.data);
+    toggleDynamicPanel("quality_security_failed", metrics[0]?.data);
   };
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "quality_failed" ? "selected-data-block" : undefined} style={style}>
+      <div className={selectedDataBlock === "quality_security_failed" ? "selected-data-block" : undefined} style={style}>
         <InsightsSynopsisDataBlock
           title={
             !isLoading && metrics[0]?.count[0] ? (
@@ -125,8 +125,8 @@ function PipelineFailedQuality({ dashboardData, toggleDynamicPanel, selectedData
               />
             )
           }
-          subTitle="Failed Pipelines (Quality)"
-          toolTipText="Failed Pipelines (Quality)"
+          subTitle="Failed Pipelines (Quality & Security)"
+          toolTipText="Failed Pipelines (Quality & Security)"
           clickAction={() => onDataBlockSelect()}
           statusColor="danger"
         />
@@ -137,11 +137,11 @@ function PipelineFailedQuality({ dashboardData, toggleDynamicPanel, selectedData
   return getChartBody();
 }
 
-PipelineFailedQuality.propTypes = {
+PipelineFailedQualityAndSecurity.propTypes = {
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
   selectedDataBlock: PropTypes.string,
   style: PropTypes.object
 };
 
-export default PipelineFailedQuality;
+export default PipelineFailedQualityAndSecurity;
