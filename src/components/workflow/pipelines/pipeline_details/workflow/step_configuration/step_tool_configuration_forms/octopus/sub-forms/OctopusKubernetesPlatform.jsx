@@ -6,7 +6,8 @@ import OctopusFeedSelectInput from "../input/OctopusFeedSelectInput";
 import RollbackToggleInput from "../input/RollbackToggleInput";
 import AzureRepoTagsSelectInput from "../input/AzureRepoTagsSelectInput";
 import TextInputBase from "../../../../../../../../common/inputs/text/TextInputBase";
-
+import OctopusSpecifyDepVarsToggle from "../input/OctopusSpecifyDepVarsToggle";
+import OctopusDeploymentVariables from "../input/OctopusDeploymentVariables";
 function OctopusKubernetesPlatform({ dataObject, setDataObject, isLoading, plan, stepId }) {
 
   return (
@@ -46,6 +47,18 @@ function OctopusKubernetesPlatform({ dataObject, setDataObject, isLoading, plan,
           fieldName={"namespace"}
           disabled={dataObject && dataObject.getData("spaceName").length === 0}
         />
+        <OctopusSpecifyDepVarsToggle
+          dataObject={dataObject}
+          setDataObject={setDataObject}
+          fieldName={"specifyDepVariables"}
+        />
+        {dataObject && dataObject.getData("specifyDepVariables") && (
+          <OctopusDeploymentVariables
+            fieldName={"deploymentVariables"}
+            dataObject={dataObject}
+            setDataObject={setDataObject}
+          />        
+        )}
       </>
     </>
   );
