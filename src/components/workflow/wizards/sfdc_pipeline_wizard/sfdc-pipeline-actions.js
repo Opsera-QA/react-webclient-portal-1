@@ -359,7 +359,7 @@ sfdcPipelineActions.getPackageXmlV2 = async (getAccessToken, cancelTokenSource, 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-sfdcPipelineActions.setXmlFilecomponentsV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+sfdcPipelineActions.setXmlFileComponentsV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const postBody = {
     packageXml: pipelineWizardModel?.getData("xmlFileContent")
   };
@@ -382,8 +382,18 @@ sfdcPipelineActions.toggleSfdcCsvFilesValidation = async (getAccessToken, cancel
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+sfdcPipelineActions.toggleSfdcXmlFilesValidation = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/toggle_sfdc_xml_upload_validation`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 sfdcPipelineActions.toggleGitCsvFilesValidation = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/toggle_git_csv_upload_validation`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+sfdcPipelineActions.toggleGitXmlFilesValidation = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/toggle_git_xml_upload_validation`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

@@ -1,14 +1,14 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
+import {faExclamationCircle, faTools} from "@fortawesome/pro-light-svg-icons";
 import {Link} from "react-router-dom";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 import axios from "axios";
-import pipelineHelpers from "components/workflow/pipelineHelpers";
+import RegistryToolInfoOverlay from "components/common/list_of_values_input/tools/RegistryToolInfoOverlay";
 
 function PipelineToolInputBase({ toolType, toolFriendlyName, placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className}) {
   const toastContext = useContext(DialogToastContext);
@@ -111,10 +111,9 @@ function PipelineToolInputBase({ toolType, toolFriendlyName, placeholderText, vi
         clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading}
         detailViewLink={getDetailViewToolUrl()}
-        infoOverlay={pipelineHelpers.getRegistryPopover(
-          tools[tools.findIndex((tool) => tool?._id === model?.getData(fieldName))]
-        )}
-        linkTooltipText={`View Or Edit this Tool's Registry settings`}
+        infoOverlay={<RegistryToolInfoOverlay toolData={(tool) => tool?._id === model?.getData(fieldName)}  />}
+        linkTooltipText={`Load Tool Registry`}
+        linkIcon={faTools}
       />
       {getErrorMessage()}
     </>

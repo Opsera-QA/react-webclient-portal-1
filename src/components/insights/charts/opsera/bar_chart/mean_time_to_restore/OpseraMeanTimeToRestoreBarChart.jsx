@@ -81,7 +81,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
     }
     const getMaxValue = (data) => {
       let countsMax = Math.max.apply(Math,data.map(function(o){return o.count;}));
-      let mttrMax = Math.max.apply(Math,data.map(function(o){return o["Mean Time to Restore"];}));
+      let mttrMax = Math.max.apply(Math,data.map(function(o){return o.mttr;}));
       let max = Math.ceil(Math.max(countsMax, mttrMax));
       return max;
     };
@@ -91,7 +91,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
         const lineColor = accentColor;
         const lineGenerator = line()
           .x(d => xScale(d.data.data._id))
-          .y(d => yScale(d.data.data["Mean Time to Restore"]));
+          .y(d => yScale(d.data.data.mttr));
         return (
           <Fragment>
           <path
@@ -105,7 +105,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
             return <circle
               key={bar.key}
               cx={xScale(bar.data.data._id)}
-              cy={yScale(bar.data.data["Mean Time to Restore"])}
+              cy={yScale(bar.data.data.mttr)}
               r={4}
               fill={lineColor}
               stroke={lineColor}

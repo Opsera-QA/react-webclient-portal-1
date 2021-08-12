@@ -28,7 +28,6 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [save, setSave] = useState(false);
-  const [isXml, setIsXml] = useState(false);
   const [csvData, setCsvData] = useState([]);
 
   useEffect(() => {
@@ -49,6 +48,8 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     let newDataObject = {...pipelineWizardModel};
     newDataObject.setData("xmlFileContent", "");
     newDataObject.setData("csvFileContent", []);
+    newDataObject.setData("isXml", false);
+    newDataObject.setData("isCsv", false);
     setCsvData([]);
     setPipelineWizardModel({...newDataObject});
   };
@@ -90,7 +91,8 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
 
   const handleFiles = (files) => {
     setError(false);
-    setIsXml(false);
+
+
     resetStoredFileContents();
     setSelectedFiles([]);
     setErrorMessage('');
@@ -110,9 +112,11 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
   };
 
   const validateFile = (file) => {
-    if(file.type === "text/xml") {
-      setIsXml(true);
-    }
+    let newDataObject = {...pipelineWizardModel};
+    newDataObject.setData("isXml", file?.type === "text/xml");
+    newDataObject.setData("isCsv", file?.type !== "text/xml");
+    setPipelineWizardModel({...newDataObject});
+
     const validSize = 500000; // 500KB
     if (file.size > validSize) {
       return false;
@@ -140,16 +144,22 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     resetStoredFileContents();
     setSelectedFiles([]);
     setErrorMessage('');
-    setIsXml(false);
     setUnsupportedFiles([]);
+
+    let newDataObject = {...pipelineWizardModel};
+    newDataObject.setData("isXml", false);
+    newDataObject.setData("isCsv", false);
+    setPipelineWizardModel({...newDataObject});
   };
 
   const validateXMLObj = (obj) => {
     setSave(true);
+    setCsvData([]);
     let newDataObject = {...pipelineWizardModel};
     newDataObject.setData("xmlFileContent", obj);
     newDataObject.setData("csvFileContent", []);
-    setCsvData([]);
+    newDataObject.setData("isXml", true);
+    newDataObject.setData("isCsv", false);
     setPipelineWizardModel({...newDataObject});
     setSave(false);
   };
@@ -186,6 +196,8 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     let newDataObject = {...pipelineWizardModel};
     newDataObject.setData("xmlFileContent", "");
     newDataObject.setData("csvFileContent", obj);
+    newDataObject.setData("isXml", false);
+    newDataObject.setData("isCsv", true);
     setCsvData(_.cloneDeep(obj));
     setPipelineWizardModel({...newDataObject});
     setSave(false);
@@ -199,7 +211,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     reader.onload = async (evt) => {
       /* Parse data */
       const dataString = evt.target.result;
-      if(isXml) {
+      if(file?.type === "text/xml") {
         validateXMLObj(dataString);
         return;
       }
@@ -230,7 +242,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
         <SfdcPipelineWizardSubmitFileTypeButton
           pipelineWizardModel={pipelineWizardModel}
           setPipelineWizardScreen={setPipelineWizardScreen}
-          isXml={isXml}
+          isXml={pipelineWizardModel?.getData("isXml")}
         />
         <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
       </SaveButtonContainer>

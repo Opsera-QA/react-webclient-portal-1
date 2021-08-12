@@ -9,7 +9,7 @@ import ArgoCdGitYamlToolSelectInput
   from "components/common/list_of_values_input/workflow/pipelines/argo_cd/ArgoCdGitYamlToolSelectInput";
 import ArgoCdPipelineToolSelectInput from "components/common/list_of_values_input/tools/argo_cd/ArgoCdPipelineToolSelectInput";
 import ArgoCdApplicationSelectInput
-  from "components/common/list_of_values_input/tools/argo_cd/ArgoCdApplicationSelectInput";
+  from "components/common/list_of_values_input/tools/argo_cd/application/ArgoCdApplicationSelectInput";
 import PipelineStepSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineStepSelectInput";
 import ArgoCDStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/argocd-stepForm-metadata";

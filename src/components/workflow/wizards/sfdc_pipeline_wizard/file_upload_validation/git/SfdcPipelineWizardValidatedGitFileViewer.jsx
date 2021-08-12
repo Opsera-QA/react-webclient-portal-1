@@ -70,7 +70,12 @@ const SfdcPipelineWizardValidatedGitFileViewer = ({ pipelineWizardModel, setPipe
   };
 
   const toggleFileValidation = async (cancelSource = cancelTokenSource) => {
-    await sfdcPipelineActions.toggleGitCsvFilesValidation(getAccessToken, cancelSource, pipelineWizardModel);
+    if (pipelineWizardModel?.getData("isXml") === true) {
+      await sfdcPipelineActions.toggleGitXmlFilesValidation(getAccessToken, cancelSource, pipelineWizardModel);
+    }
+    else if (pipelineWizardModel?.getData("isCsv") === true) {
+      await sfdcPipelineActions.toggleGitCsvFilesValidation(getAccessToken, cancelSource, pipelineWizardModel);
+    }
   };
 
   const getBody = () => {
@@ -111,6 +116,7 @@ const SfdcPipelineWizardValidatedGitFileViewer = ({ pipelineWizardModel, setPipe
         </Button>
         <SfdcPipelineWizardSubmitGitFilesButton
           setPipelineWizardScreen={setPipelineWizardScreen}
+          setPipelineWizardModel={setPipelineWizardModel}
           pipelineWizardModel={pipelineWizardModel}
           filteredFileCount={filteredFileCount}
           isLoading={isLoading}
