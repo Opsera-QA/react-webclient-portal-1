@@ -57,6 +57,7 @@ function OctopusPlatformTypeSelectInput({ fieldName, dataObject, setDataObject, 
       newDataObject.setData("octopusDeploymentType", "");
       newDataObject.setData("octopusVersion", "");
       newDataObject.setData("packageId", "");
+      newDataObject.setData("scriptSource", "");
       setDataObject({ ...newDataObject });
       return;
     }

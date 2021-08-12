@@ -254,6 +254,15 @@ const octopusStepFormMetadata = {
         label: "Start Application Pool",
         id: "startApplicationPool",
       },
+      {
+        label: "Azure Tool",
+        id: "azureToolId",
+      },
+      {
+        label: "Azure Repo",
+        id: "azureRepoName",
+        // isRequired: true
+      },
     ],
   newObjectFields:
       {
@@ -312,6 +321,7 @@ const octopusStepFormMetadata = {
         applicationPoolIdentityUsername: "",
         applicationPoolIdentityPassword : {},
         startApplicationPool : false,
+        azureToolId: ""
       }
   };
   

@@ -7,7 +7,8 @@ export const SCRIPT_LIBRARY_LANGUAGES = [
   {value: "powershell", text: "Powershell", mode: "powershell"},
   {value: "c_sharp", text: "C#", mode: "csharp"},
   {value: "f_sharp", text: "F#", mode: "fsharp"},
-  {value: "python", text: "Python", mode: "python"}
+  {value: "python", text: "Python", mode: "python"},
+  {value: "yaml", text: "YAML", mode: "yaml"}
 ];
 
 export const getScriptLanguageDisplayText = (value) => {

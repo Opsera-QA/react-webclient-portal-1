@@ -84,6 +84,18 @@ const OctopusTargetMetadata = {
       label: "Health Status",
       id: "healthStatus"
     },
+    {
+      label: "Azure Tool",
+      id: "azureToolId"
+    },
+    {
+      label: "Namespace",
+      id: "namespace"
+    },
+    {
+      label: "Resource",
+      id: "resource"
+    }
 ],
 fieldsIis: [
   {
@@ -171,6 +183,14 @@ fieldsIis: [
     id: "healthStatus",
     isRequired: true
   },
+  {
+    label: "Azure Tool",
+    id: "azureToolId"
+  },
+  {
+    label: "Namespace",
+    id: "namespace"
+  }
 ],
   newObjectFields: {
     _id: "",
@@ -193,7 +213,10 @@ fieldsIis: [
     thumbprint: "",
     hostName: "",
     port: "10933",
-    healthStatus: ""
+    healthStatus: "",
+    azureToolId: "",
+    namespace: "",
+    resource: "https://management.azure.com",
   }
 };
 
