@@ -36,7 +36,7 @@ const sfdcGitTaskConfigurationMetadata = {
       id: "service",
       isRequired: true,
       maxLength: 10,
-      isLowercase: true,
+      lowercase: true,
       regexDefinitionName: "alphabetic",
     },    
     {
