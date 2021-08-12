@@ -48,6 +48,10 @@ function OctopusFeedSelectInput({ fieldName, dataObject, setDataObject, disabled
     }
   };
 
+  if (dataObject?.getData("octopusPlatformType") && dataObject?.getData("octopusPlatformType") === "Kubernetes") {
+    return null;
+  }
+
   if (dataObject?.getData("scriptSource") && dataObject?.getData("scriptSource") === "inline") {
     return null;
   }
