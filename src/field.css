@@ -137,6 +137,12 @@
 
 /* Ensure dropdown does not get cut off. */
 
+/* Input Icon Styling */
+.view-details-icon {
+    margin-top: 2px;
+}
+/* End Input Icon Styling */
+
 /*TODO: This can probably be applied everywhere, but I don't want to break anything so in next release test all modals and change to
    .modal instead of .modal-overflow
 */

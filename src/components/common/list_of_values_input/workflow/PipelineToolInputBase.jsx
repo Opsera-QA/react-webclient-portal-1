@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
+import {faExclamationCircle, faTools} from "@fortawesome/pro-light-svg-icons";
 import {Link} from "react-router-dom";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -114,7 +114,8 @@ function PipelineToolInputBase({ toolType, toolFriendlyName, placeholderText, vi
         infoOverlay={pipelineHelpers.getRegistryPopover(
           tools[tools.findIndex((tool) => tool?._id === model?.getData(fieldName))]
         )}
-        linkTooltipText={`View Or Edit this Tool's Registry settings`}
+        linkTooltipText={`Load Tool Registry`}
+        linkIcon={faTools}
       />
       {getErrorMessage()}
     </>

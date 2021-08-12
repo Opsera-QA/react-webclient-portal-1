@@ -1,36 +1,45 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Popover} from "react-bootstrap";
-import PopoverTitle from "react-bootstrap/PopoverTitle";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
 
-function InfoOverlayContainer({ title, body }) {
-  const getPopoverTitle = () => {
-    if (title) {
-      return (
-        <PopoverTitle as="h3" className="popover-title">
-          <div className={"d-flex justify-content-between"}>
-            <div>{title}</div>
-            <div><FontAwesomeIcon icon={faTimes} className="pointer" onClick={() => { document.body.click();}} /></div>
-          </div>
-        </PopoverTitle>
-      );
-    }
-  };
-
+export const getInfoOverlay = (title, children) => {
   return (
-    <Popover id="popover-basic" >
-      {getPopoverTitle()}
+    <>
+      {getPopoverTitle(title)}
       <Popover.Content>
-        {body}
+        <div>
+          {children}
+        </div>
       </Popover.Content>
-    </Popover>
+    </>
   );
+};
+
+export const getPopoverTitle = (title) => {
+  if (title) {
+    return (
+      <Popover.Title as="h3" className="popover-title">
+        <div className={"d-flex justify-content-between"}>
+          <div>
+            {title}
+          </div>
+          <div>
+            <FontAwesomeIcon icon={faTimes} className="pointer" onClick={() => {document.body.click();}}/>
+          </div>
+        </div>
+      </Popover.Title>
+    );
+  }
+};
+
+function InfoOverlayContainer({ title, children, maxWidth }) {
+  return (getInfoOverlay(title, children, maxWidth));
 }
 
 InfoOverlayContainer.propTypes = {
-  body: PropTypes.any,
+  children: PropTypes.any,
   title: PropTypes.any,
 };
 

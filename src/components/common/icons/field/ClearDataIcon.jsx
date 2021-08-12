@@ -26,7 +26,7 @@ function ClearDataIcon({ clearValueFunction, furtherDetails, requireConfirmation
       <TooltipWrapper innerText={"Clear this Value"}>
         <span className={className}>
           <span onClick={() => handleClearData()} className="my-auto badge badge-danger clear-value-badge pointer">
-            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>Clear Value
+            <span className={"my-auto"}><FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>Clear Value</span>
           </span>
         </span>
       </TooltipWrapper>

@@ -30,7 +30,6 @@ function DetailViewLinkIcon({ pageLink, openInNewWindow, handleClose, className,
       <span className={className} onClick={() => {handleLink();}}>
         <IconBase
           icon={icon}
-          fixedWidth
           iconSize={size}
           className={"pointer"}
         />
