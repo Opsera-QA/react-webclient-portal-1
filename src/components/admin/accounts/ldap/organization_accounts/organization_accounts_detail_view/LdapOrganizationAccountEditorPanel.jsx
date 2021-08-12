@@ -167,7 +167,6 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
         </Col>
         <Col lg={12}>
           <BooleanToggleInput
-            disabled={true}
             fieldName={"localAuth"}
             dataObject={ldapOrganizationAccountDataDto}
             setDataObject={setLdapOrganizationAccountDataDto}
@@ -175,7 +174,6 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
         </Col>
         <Col lg={12}>
           <BooleanToggleInput
-            disabled={true}
             fieldName={"samlEnabled"}
             dataObject={ldapOrganizationAccountDataDto}
             setDataObject={setLdapOrganizationAccountDataDto}
@@ -183,7 +181,6 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
         </Col>
         <Col lg={12}>
           <BooleanToggleInput
-            disabled={true}
             fieldName={"oAuthEnabled"}
             dataObject={ldapOrganizationAccountDataDto}
             setDataObject={setLdapOrganizationAccountDataDto}/>
