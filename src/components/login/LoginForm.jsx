@@ -26,6 +26,10 @@ const LoginForm = ({ authClient }) => {
   const [viewType, setViewType] = useState("domain"); //login, reset or domain
   const [loginType, setLoginType] = useState("standard"); //stardard: Opsera Okta Login, federated: Opsera Signing Widget
   const [federatedIdpEnabled, setFederatedIdpEnabled] = useState(false);
+
+  const [ldapOrgName, setLdapOrgName] = useState("");
+  const [federatedIdpIdentifier, setFederatedIdpIdentifier] = useState("");
+
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -111,6 +115,7 @@ const LoginForm = ({ authClient }) => {
   //https://github.com/okta/okta-signin-widget#idp-discovery
   const federatedOktaLogin = (idp) => {
     setLoginType("federated");
+    console.log("idp: ", federatedIdpIdentifier);
 
     const signIn = new OktaSignIn({
       baseUrl: process.env.REACT_APP_OKTA_BASEURL,
@@ -122,9 +127,9 @@ const LoginForm = ({ authClient }) => {
       },
       clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
       idps: [
-        { type: "GOOGLE", id: "0oa1njfc0lFlSp0mM4x7" }, //IDP of our GSuite as opposed to pure google
-        { type: "OpseraApp", id: "0oa44bjfqlK7gTwnz4x7" }, //IDP of our DEV Okta Federated for use via PROD for testing
-        { type: "Workday", id: "0oa44ls9ypmowwAUG4x7" }, //IDP of workday
+        //{ type: "GOOGLE", id: "0oa1njfc0lFlSp0mM4x7" }, //IDP of our GSuite as opposed to pure google
+        { text: "Opsera Demo", id: "0oa44bjfqlK7gTwnz4x7" }, //IDP of our DEV Okta Federated for use via PROD for testing
+        { text: ldapOrgName, id: federatedIdpIdentifier }, //IDP of LDAP object
       ],
       idpDisplay: "SECONDARY",
       idpDiscovery: {
@@ -205,25 +210,21 @@ const LoginForm = ({ authClient }) => {
 
       //valid account so allow it to continue login
       if (loginAllowed && validHost) {
+
         /*START NEW CODE*/
-        //if user is LDAP, lookup that data:
         const token = await generateJwtServiceTokenWithValue({ id: "orgRegistrationForm" });
-        //console.log('Domain?: ', lookupAccountEmail.split("@")[1]);
         const domain = lookupAccountEmail.split("@")[1];
 
         if (domain && token) {
-
           const accountResponse = await userActions.getAccountInformation(domain, token);
-          //console.log("accountResponse: ", accountResponse.data);
-          const { localAuth } = accountResponse.data;
-          setFederatedIdpEnabled(localAuth !== "TRUE");
-
+          const { localAuth, accountName, idpIdentifier } = accountResponse.data;
+          if (localAuth && idpIdentifier) {
+            setFederatedIdpEnabled(localAuth === "FALSE");
+            setLdapOrgName(accountName);
+            setFederatedIdpIdentifier(idpIdentifier);
+          }
         }
-
-
         /* END NEW CODE */
-
-
 
         setUsername(lookupAccountEmail);
         setViewType("login");
