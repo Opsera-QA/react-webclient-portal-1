@@ -6,8 +6,8 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowCircleDown, faArrowCircleUp, faMinusCircle, faPauseCircle } from "@fortawesome/free-solid-svg-icons";
 // import Model from "../../../../../core/data_model/model";
 // import DeploymentFrequencyInsightsTableMetadata from "./deployment-frequency-actionable-metadata.js";
 // import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
@@ -78,6 +78,52 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
       return null;
     }
 
+    const getIcon = (severity) => {
+      let status = typeof severity === "string" ? severity.toLowerCase() : severity;
+
+      switch (status) {
+        case "red":
+          return faArrowCircleUp;
+        case "neutral":
+          return faPauseCircle;
+        case "green":
+          return faArrowCircleDown;
+        case "-":
+          return faMinusCircle;
+        default:
+          break;
+      }
+    };
+
+    const getIconColor = (severity) => {
+      switch (severity) {
+        case "Red":
+          return "red";
+        case "Green":
+          return "green";
+        case "Neutral":
+        case "-":
+          return "black";
+        default:
+          break;
+      }
+    };
+
+    const getIconTitle = (severity) => {
+      switch (severity) {
+        case "Red":
+          return "Risk";
+        case "Green":
+          return "Success";
+        case "Neutral":
+          return "Same as Earlier";
+        case "-":
+          return "No Trend";
+        default:
+          break;
+      }
+    };
+
     return (
       <div className="new-chart mb-3" style={{ height: "300px" }}>
         <Container>
@@ -87,6 +133,13 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 <div className="box-metric">
                   <div>{metrics[0].currentTotalLow}</div>
                 </div>
+                <FontAwesomeIcon
+                  icon={getIcon(metrics[0].overallLowTrend)}
+                  className="fa-pull-right pointer pr-1"
+                  onClick={() => document.body.click()}
+                  color={getIconColor(metrics[0].overallMediumTrend)}
+                  title={getIconTitle(metrics[0].overallMediumTrend)}
+                />
                 <div className="w-100 text-muted mb-1">Low</div>
               </div>
             </Col>
@@ -95,13 +148,13 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 <div className="box-metric">
                   <div>{metrics[0].currentTotalMedium}</div>
                 </div>
-                {/* <OverlayTrigger trigger="click" rootClose placement="top" overlay={infoPopover(metrics[0].max)}>
-                  <FontAwesomeIcon
-                    icon={faEllipsisH}
-                    className="fa-pull-right pointer pr-1"
-                    onClick={() => document.body.click()}
-                  />
-                </OverlayTrigger> */}
+                <FontAwesomeIcon
+                  icon={getIcon(metrics[0].overallMediumTrend)}
+                  className="fa-pull-right pointer pr-1"
+                  onClick={() => document.body.click()}
+                  color={getIconColor(metrics[0].overallMediumTrend)}
+                  title={getIconTitle(metrics[0].overallMediumTrend)}
+                />
                 <div className="w-100 text-muted mb-1">Medium</div>
               </div>
             </Col>
@@ -110,13 +163,13 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 <div className="box-metric">
                   <div>{metrics[0].currentTotalHigh}</div>
                 </div>
-                {/* <OverlayTrigger trigger="click" rootClose placement="top" overlay={infoPopover(metrics[0].min)}>
-                  <FontAwesomeIcon
-                    icon={faEllipsisH}
-                    className="fa-pull-right pointer pr-1"
-                    onClick={() => document.body.click()}
-                  />
-                </OverlayTrigger> */}
+                <FontAwesomeIcon
+                  icon={getIcon(metrics[0].overallHighTrend)}
+                  className="fa-pull-right pointer pr-1"
+                  onClick={() => document.body.click()}
+                  color={getIconColor(metrics[0].overallMediumTrend)}
+                  title={getIconTitle(metrics[0].overallMediumTrend)}
+                />
                 <div className="w-100 text-muted mb-1">High</div>
               </div>
             </Col>
