@@ -20,6 +20,7 @@ import AvgApprovalTimeDataBlock from "components/insights/summary/pipeline_detai
 // JIRA
 import JiraLeadTimeChartNoDataBlocks from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks";
 import JiraLeadTimeDataBlock from "./JiraLeadTimeDataBlock";
+import ChangeFailRateDataBlock from "components/insights/summary/pipeline_details/ChangeFailRateDataBlock";
 
 // Service Now
 import ServiceNowMTTRDataBlock from "./ServiceNowMTTRDataBlock";
@@ -189,6 +190,13 @@ function InsightsSynopsisDetails({ dashboardData }) {
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
           style={{width:"33%"}}
+        />
+        <ChangeFailRateDataBlock
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{ width: "33%" }}
+          disable={true}
         />
       </DataBlockWrapper>
     );
