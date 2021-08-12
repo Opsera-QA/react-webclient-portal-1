@@ -35,18 +35,18 @@ function OctopusKubernetesPlatform({ dataObject, setDataObject, isLoading, plan,
           disabled={dataObject && dataObject.getData("spaceName") ? dataObject.getData("spaceName").length === 0 : true}
           tool_prop={dataObject && dataObject.getData("spaceName") ? dataObject.getData("spaceName") : ""}
         />
+        <TextInputBase
+          setDataObject={setDataObject}
+          dataObject={dataObject}
+          fieldName={"namespace"}
+          disabled={dataObject && dataObject.getData("spaceName").length === 0}
+        />
         <RollbackToggleInput dataObject={dataObject} setDataObject={setDataObject} fieldName={"isRollback"} />
         <AzureRepoTagsSelectInput
           dataObject={dataObject}
           setDataObject={setDataObject}
           plan={plan}
           stepId={stepId}
-        />
-        <TextInputBase
-          setDataObject={setDataObject}
-          dataObject={dataObject}
-          fieldName={"namespace"}
-          disabled={dataObject && dataObject.getData("spaceName").length === 0}
         />
         <OctopusSpecifyDepVarsToggle
           dataObject={dataObject}
