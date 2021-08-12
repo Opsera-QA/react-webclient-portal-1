@@ -54,11 +54,13 @@ export const ldapOrganizationAccountMetaData = {
     {
       label: "IdP Vendor",
       id: "idpVendor",
+      formText: "Currently only support Okta"
     },
     {
       label: "Custom Tenant Login Domain",
       id: "idpBaseUrl",
       regexDefinitionName: "domainNameField",
+      formText: "Used to restrict user login to domain.  Value must match what is defined in tenant config (REACT_APP_OPSERA_TENANT) or be null for no enforcement."
     },
     {
       label: "IdP Return Attributes",
@@ -67,18 +69,22 @@ export const ldapOrganizationAccountMetaData = {
     {
       label: "Is Multiple IdP?",
       id: "isMultipleIDP",
+      formText: "Not implemented yet"
     },
     {
-      label: "Local Auth?",
+      label: "Local Authentication Provider (Opsera Okta)",
       id: "localAuth",
+      formText: "Indicates if the customer is using federated authentication or Opsera Okta (local)"
     },
     {
       label: "Saml Enabled?",
       id: "samlEnabled",
+      formText: "Not implemented yet"
     },
     {
       label: "oAuth Enabled?",
       id: "oAuthEnabled",
+      formText: "Not implemented yet"
     },
     {
       label: "Config Entry Type",
@@ -88,14 +94,15 @@ export const ldapOrganizationAccountMetaData = {
       label: "IdP Identifier",
       id: "entityID",
       isRequired: true,
-      maxLength: 50
+      maxLength: 50,
+      formText: "Maps to the Okta configured Identity Provider ID in Opsera Okta"
     }
   ],
   newObjectFields: {
     org: "",
     name: "",
     localAuth: true,
-    samlEnabled: true,
+    samlEnabled: false,
     oAuthEnabled: true,
     idpPostURL: "https://testurl.com",
     idpVendor: "OKTA",
