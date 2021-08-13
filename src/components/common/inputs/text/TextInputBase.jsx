@@ -7,7 +7,8 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 function TextInputBase(
   {
     fieldName, dataObject, setDataObject, disabled, type,
-    showLabel, inputClasses, linkTooltipText, detailViewLink, infoOverlay
+    showLabel, inputClasses, linkTooltipText, detailViewLink, infoOverlay,
+    setDataFunction,
   }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -22,6 +23,16 @@ function TextInputBase(
     setErrorMessage(newDataObject.getFieldError(fieldName));
     setDataObject({...newDataObject});
   };
+
+  const updateValue = (newValue) => {
+    if (setDataFunction) {
+      setDataFunction(fieldName, newValue);
+    }
+    else {
+      validateAndSetData(newValue);
+    }
+  };
+
 
   const getInputClasses = () => {
     let classes = `form-control`;
@@ -50,7 +61,7 @@ function TextInputBase(
         type={type}
         disabled={disabled}
         value={dataObject.getData(fieldName)}
-        onChange={(event) => validateAndSetData(event.target.value)}
+        onChange={(event) => updateValue(event.target.value)}
         className={getInputClasses()}
       />
       <InfoText field={field} errorMessage={errorMessage}/>
@@ -69,7 +80,8 @@ TextInputBase.propTypes = {
   showLabel: PropTypes.bool,
   linkTooltipText: PropTypes.string,
   detailViewLink: PropTypes.string,
-  infoOverlay: PropTypes.any
+  infoOverlay: PropTypes.any,
+  setDataFunction: PropTypes.func,
 };
 
 export default TextInputBase;
