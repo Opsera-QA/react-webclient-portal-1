@@ -93,6 +93,7 @@ const sfdcGitTaskConfigurationMetadata = {
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
     {
+      label: "SFDC Account",
       id: "sfdcToolId",
       isRequired: true,
       maxLength: 24,

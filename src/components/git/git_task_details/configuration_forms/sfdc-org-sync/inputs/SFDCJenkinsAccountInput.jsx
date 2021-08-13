@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import JenkinsAccountInput from "components/common/list_of_values_input/tools/jenkins/JenkinsAccountInput";
 
-function SfdcJenkinsAccountInput({dataObject, setDataObject, disabled}) {
+function SfdcJenkinsAccountInput({dataObject, setDataObject, gitTasksDataDto, disabled}) {
   const setJenkinsAccount = (fieldName, selectedOption) => {
 
     let newDataObject = {...dataObject};
@@ -10,6 +10,7 @@ function SfdcJenkinsAccountInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("gitToolId", selectedOption.toolId);
     newDataObject.setData("type", selectedOption.service);
     newDataObject.setData("service", selectedOption.service);
+    gitTasksDataDto.setData("tool_identifier", selectedOption.service);
     newDataObject.setData("gitUserName", selectedOption.gitUserName);
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
@@ -23,6 +24,7 @@ function SfdcJenkinsAccountInput({dataObject, setDataObject, disabled}) {
     let newDataObject = {...dataObject};
     newDataObject.setData("gitCredential", "");
     newDataObject.setData("gitToolId", "");
+    gitTasksDataDto.setData("tool_identifier", "");
     newDataObject.setData("type", "");
     newDataObject.setData("service", "");
     newDataObject.setData("gitUserName", "");
@@ -52,6 +54,7 @@ SfdcJenkinsAccountInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
+  gitTasksDataDto: PropTypes.object,
 };
 
 export default SfdcJenkinsAccountInput;
