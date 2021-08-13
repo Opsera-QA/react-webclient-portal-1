@@ -1,20 +1,20 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useMemo, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
-import {
-  getEditableTextColumn, getTableBooleanIconColumn,
-  getTableTextColumn
-} from "components/common/table/column_definitions/model-table-column-definitions";
 import VanityTable from "components/common/table/VanityTable";
 import FilterContainer from "components/common/table/FilterContainer";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
+import {parseRoleDefinitionsIntoTableRows} from "components/common/helpers/role-helpers";
+import roleDefinitionMetadata from "components/common/fields/access/table/role-definition-metadata";
+import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 
-function RoleAccessTableBase({ roleAccessDefinitions, roleAccessMetadata, loadData, isLoading }) {
+function RoleAccessTableBase({ roleAccessDefinitions, loadData, isLoading }) {
   const { getAccessRoleData } = useContext(AuthContext);
-  const [columns, setColumns] = useState([]);
+  const fields = roleDefinitionMetadata?.fields;
   const [userRoleAccess, setUserRoleAccess] = useState(undefined);
+  const [accessRoles, setAccessRoles] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -27,8 +27,9 @@ function RoleAccessTableBase({ roleAccessDefinitions, roleAccessMetadata, loadDa
     setCancelTokenSource(source);
     isMounted.current = true;
 
+
     if (roleAccessDefinitions) {
-      loadAccessRoleData().catch((error) => {
+      loadAccessRoleData(roleAccessDefinitions).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
@@ -41,41 +42,35 @@ function RoleAccessTableBase({ roleAccessDefinitions, roleAccessMetadata, loadDa
     };
   }, [roleAccessDefinitions]);
 
-  const loadAccessRoleData = async () => {
+  const loadAccessRoleData = async (roleAccessDefinitions) => {
     const accessRoleData = await getAccessRoleData();
 
     if (accessRoleData) {
       setUserRoleAccess(accessRoleData);
+      setAccessRoles([...parseRoleDefinitionsIntoTableRows(roleAccessDefinitions, accessRoleData)]);
     }
   };
 
-  useEffect(() => {
-    setColumns([]);
-    loadColumnMetadata(roleAccessMetadata);
-  }, [JSON.stringify(roleAccessMetadata)]);
+  const columns = useMemo(
+    () => [
+      getTableTextColumn(getField(fields, "description")),
+      getTableBooleanIconColumn(getField(fields, "administrator"), undefined, 100),
+      getTableBooleanIconColumn(getField(fields, "owner")),
+      getTableBooleanIconColumn(getField(fields, "manager"), undefined, 75),
+      getTableBooleanIconColumn(getField(fields, "power_user"), undefined, 90),
+      getTableBooleanIconColumn(getField(fields, "user"), undefined, 100),
+      getTableBooleanIconColumn(getField(fields, "no_access_rules"), undefined, 100),
+    ],
+    []
+  );
 
-  const loadColumnMetadata = (newActivityMetadata) => {
-    if (roleAccessMetadata?.fields) {
-      const fields = newActivityMetadata.fields;
-
-      setColumns(
-        [
-          getTableTextColumn(getField(fields, "name"), "no-wrap-inline", 350),
-          getEditableTextColumn(getField(fields, "value")),
-          getTableBooleanIconColumn(getField(fields, "vaultEnabled"), undefined, 150),
-        ]
-      );
-    }
-  };
-
-  const getParameterTable = () => {
+  const getRoleDefinitionTable = () => {
     return (
       <VanityTable
-        data={roleAccessDefinitions}
+        data={accessRoles}
         columns={columns}
-        isLoading={isLoading || roleAccessMetadata == null}
+        isLoading={isLoading}
         loadData={loadData}
-        tableHeight={"calc(25vh)"}
       />
     );
   };
@@ -84,11 +79,12 @@ function RoleAccessTableBase({ roleAccessDefinitions, roleAccessMetadata, loadDa
     <FilterContainer
       loadData={loadData}
       isLoading={isLoading}
-      body={getParameterTable()}
-      metadata={roleAccessMetadata}
+      body={getRoleDefinitionTable()}
+      metadata={roleDefinitionMetadata}
       titleIcon={faHandshake}
       title={"Role Access"}
       className={"px-2 pb-2"}
+      showBorder={false}
     />
   );
 }
