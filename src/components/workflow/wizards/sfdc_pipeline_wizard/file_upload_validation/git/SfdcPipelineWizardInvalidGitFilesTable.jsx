@@ -53,7 +53,7 @@ const SfdcPipelineWizardInvalidGitFilesTable = ({ pipelineWizardModel}) => {
       await invalidFilePolling(cancelSource, newFilterModel);
     }
     catch (error) {
-      toastContext.showInlineErrorMessage("Error pulling Invalid Files. Check logs for more details.");
+      toastContext.showInlineErrorMessage("Error pulling Invalid Git Files. Check logs for more details.");
       console.error(error);
     }
     finally {

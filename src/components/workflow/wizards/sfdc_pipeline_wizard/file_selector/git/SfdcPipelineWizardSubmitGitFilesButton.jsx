@@ -43,7 +43,9 @@ function SfdcPipelineWizardSubmitGitFilesButton({pipelineWizardModel, setPipelin
         await saveSelectedProfileFilesList();
       }
       else {
-        await sfdcPipelineActions.setGitFileListV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+        if (pipelineWizardModel.getData("fromFileUpload") !== true) {
+          await sfdcPipelineActions.setGitFileListV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+        }
         await generateXML();
       }
     } catch (error) {
