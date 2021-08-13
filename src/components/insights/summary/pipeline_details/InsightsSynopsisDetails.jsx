@@ -6,7 +6,7 @@ import MetricContainer from "components/common/panels/insights/charts/MetricCont
 // Opsera Pipeline
 import TotalPipelinesExecuted from "components/insights/summary/TotalPipelinesExecuted";
 import PipelinesSuccessfulExecutions from "components/insights/summary/pipeline_details/PipelinesSuccessfulExecutions";
-import PipelinesFailedSecurity from "components/insights/summary/pipeline_details/PipelinesFailedSecurity";
+import StoppedPipelines from "components/insights/summary/pipeline_details/StoppedPipelinesDataBlock";
 import PipelineFailedQualityAndSecurity from "components/insights/summary/pipeline_details/PipelineFailedQualityAndSecurity";
 import PipelinesFailedDeployment from "components/insights/summary/pipeline_details/PipelinesFailedDeployment";
 import InsightsPipelineDetailsTable from "components/insights/summary/pipeline_details/InsightsPipelineDetailsTable";
@@ -59,9 +59,9 @@ function InsightsSynopsisDetails({ dashboardData }) {
             tableTitle="Successful Pipeline Executions"
           />
         );
-      case "security_failed":
+      case "Stopped_Pipelines":
         return (
-          <InsightsPipelineDetailsTable data={selectedDataBlockTableData} tableTitle="Failed Pipelines (Security)" />
+          <InsightsPipelineDetailsTable data={selectedDataBlockTableData} tableTitle="Stopped Pipelines" />
         );
       case "quality_security_failed":
         return (
@@ -181,7 +181,7 @@ function InsightsSynopsisDetails({ dashboardData }) {
           selectedDataBlock={selectedDataBlock}
           style={{ width: "33%" }}
         />
-        <PipelinesFailedSecurity
+        <StoppedPipelines
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}

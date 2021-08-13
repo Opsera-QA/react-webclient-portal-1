@@ -10,7 +10,7 @@ import BuildDetailsMetadata from "components/insights/summary/build-details-meta
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function PipelineFailedSecurity({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
+function StoppedPipelines({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const fields = BuildDetailsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -73,7 +73,7 @@ function PipelineFailedSecurity({ dashboardData, toggleDynamicPanel, selectedDat
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "summaryPipelinesFailedSecurity",
+        "summaryStoppedPipelines",
         null,
         dashboardTags,
         filterDto,
@@ -106,12 +106,12 @@ function PipelineFailedSecurity({ dashboardData, toggleDynamicPanel, selectedDat
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("security_failed", metrics[0]?.data);
+    toggleDynamicPanel("Stopped_Pipelines", metrics[0]?.data);
   };
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "security_failed" ? "selected-data-block" : undefined} style={style}>
+      <div className={selectedDataBlock === "Stopped_Pipelines" ? "selected-data-block" : undefined} style={style}>
         <InsightsSynopsisDataBlock
           title={
             !isLoading && metrics[0]?.count[0] ? (
@@ -125,8 +125,8 @@ function PipelineFailedSecurity({ dashboardData, toggleDynamicPanel, selectedDat
               />
             )
           }
-          subTitle="Failed Pipelines (Security)"
-          toolTipText="Failed Pipelines (Security)"
+          subTitle="Stopped Pipelines"
+          toolTipText="Stopped Pipelines"
           clickAction={() => onDataBlockSelect()}
           statusColor="danger"
         />
@@ -137,11 +137,11 @@ function PipelineFailedSecurity({ dashboardData, toggleDynamicPanel, selectedDat
   return getChartBody();
 }
 
-PipelineFailedSecurity.propTypes = {
+StoppedPipelines.propTypes = {
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
   selectedDataBlock: PropTypes.string,
   style: PropTypes.object
 };
 
-export default PipelineFailedSecurity;
+export default StoppedPipelines;
