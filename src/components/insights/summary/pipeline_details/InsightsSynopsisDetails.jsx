@@ -186,6 +186,7 @@ function InsightsSynopsisDetails({ dashboardData }) {
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
           style={{ width: "33%" }}
+          disable={true}
         />
       </DataBlockWrapper>
     );
