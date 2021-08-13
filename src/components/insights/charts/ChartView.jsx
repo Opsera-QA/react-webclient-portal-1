@@ -136,6 +136,9 @@ import ServiceNowMeanTimeToResolutionBarChart from "./servicenow/bar_chart/mean_
 import ServiceNowMeanTimeToAcknowledgeBarChart from "./servicenow/bar_chart/mean_time_to_acknowledge/ServiceNowMeanTimeToAcknowledgeBarChart";
 import ServiceNowMeanTimeBetweenFailuresBarChart from "./servicenow/bar_chart/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresBarChart";
 
+// Coverity KPIs
+import CoverityIssuesByCategory from "./coverity/CoverityIssuesByCategory/CoverityIssuesByCategory";
+
 import {
   getDateObjectFromKpiConfiguration,
   getTagsFromKpiConfiguration,
@@ -1380,6 +1383,19 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col md={12} className="p-2">
             <DefectRemovalEfficiencyPieChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      // Coverity
+      case "coverity-issues-by-category-trend":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <CoverityIssuesByCategory
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
