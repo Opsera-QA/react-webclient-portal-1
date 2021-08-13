@@ -11,6 +11,7 @@ import RunGitTaskButton from "components/common/buttons/git/RunGitTaskButton";
 import SFDCGitBranchInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitBranchInput";
 import SFDCNewBranchBoolInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCNewBranchBoolInput";
 import SfdcGitUpstreamBranchInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SfdcGitUpstreamBranchInput";
+import SFDCGitBranchTextInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitBranchTextInput";
 import sfdcGitTaskConfigurationMetadata from "components/git/git_task_details/configuration_forms/sfdc-org-sync/sfdc-git-task-configuration-metadata";
 import ec2ClusterCreationTaskConfigurationMetadata from "components/git/git_task_details/configuration_forms/ecs-cluster-creation/ecs-creation-git-task-configuration";
 import sfdxCertGenTaskConfigurationMetadata from "components/git/git_task_details/configuration_forms/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
@@ -20,7 +21,6 @@ import ec2ServiceCreationTaskConfigurationMetadata from "components/git/git_task
 import {AuthContext} from "contexts/AuthContext";
 import workflowAuthorizedActions
 from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, loadData }) {
   const [dataObj, setDataObj] = useState(undefined);
   const [canEdit, setCanEdit] = useState(false);
@@ -93,9 +93,11 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
               {dataObj?.getData("isNewBranch") && 
                 <>
                   <Col lg={12}>
-                    <TextInputBase fieldName={"gitBranch"}
-                    dataObject={dataObj} setDataObject={setDataObj} visible={dataObj?.getData("isNewBranch")} />
-                  </Col>
+                    <SFDCGitBranchTextInput
+                      fieldName={"gitBranch"}
+                      dataObject={dataObj} setDataObject={setDataObj} visible={dataObj?.getData("isNewBranch")}
+                    />
+                   </Col>
                   <Col lg={12}>
                     <SfdcGitUpstreamBranchInput dataObject={dataObj} setDataObject={setDataObj} />
                   </Col>
