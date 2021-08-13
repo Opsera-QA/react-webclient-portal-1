@@ -32,7 +32,7 @@ const azureApplicationsMetadata = {
     credentialName: "",
     clientId: "",
     clientSecret: "",
-    resource: "",
+    resource: "https://management.azure.com",
     active: true,
   }
 };
