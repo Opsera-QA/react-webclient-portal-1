@@ -105,6 +105,17 @@ const sfdcGitTaskConfigurationMetadata = {
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
+    {
+      label: "Create a new branch?",
+      id: "isNewBranch",
+      formText: "Creates a new branch and synch the changes.",
+    },
+    {
+      label: "Upstream Branch",
+      id: "upstreamBranch",
+      regexDefinitionName: "generalTextWithSpacesSlash",
+      maxLength: 50
+    },
   ],
   newObjectFields:
     {
@@ -132,6 +143,8 @@ const sfdcGitTaskConfigurationMetadata = {
     sfdcToolId: "",
     sfdcToolName: "",
     accountUsername: "",
+    isNewBranch: false,
+    upstreamBranch: ""
     }
 };
 

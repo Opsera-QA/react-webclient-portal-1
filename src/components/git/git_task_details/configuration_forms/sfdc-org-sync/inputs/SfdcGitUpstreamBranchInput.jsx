@@ -2,27 +2,22 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 
-function SfdcGitBranchInput({dataObject, setDataObject, disabled}) {
+function SfdcGitUpstreamBranchInput({dataObject, setDataObject, disabled}) {
   const setBranch = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
-    // newDataObject.setData("branch", selectedOption);
-    newDataObject.setData("gitBranch", selectedOption);
-    newDataObject.setData("defaultBranch", selectedOption);
-    newDataObject.setData("branch", selectedOption);
+    newDataObject.setData("upstreamBranch", selectedOption);
     setDataObject({...newDataObject});
   };
 
   const clearData = () => {
     let newDataObject = {...dataObject};
-    newDataObject.setData("gitBranch", "");
-    newDataObject.setData("defaultBranch", "");
-    newDataObject.setData("branch", "");
+    newDataObject.setData("upstreamBranch", "");    
     setDataObject({...newDataObject});
   };
 
   return (
      <GitBranchInput
-       fieldName={"gitBranch"}
+       fieldName={"upstreamBranch"}
        service={dataObject.getData("service")}
        gitToolId={dataObject.getData("gitToolId")}
        workspace={dataObject.getData("workspace")}
@@ -36,10 +31,10 @@ function SfdcGitBranchInput({dataObject, setDataObject, disabled}) {
   );
 }
 
-SfdcGitBranchInput.propTypes = {
+SfdcGitUpstreamBranchInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default SfdcGitBranchInput;
+export default SfdcGitUpstreamBranchInput;
