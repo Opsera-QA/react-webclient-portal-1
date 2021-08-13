@@ -395,7 +395,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
       <div>
         <ExternalPageLink
           linkText={"Please click here to view detailed Help Documentation for the File Upload process."}
-          link={`https://opsera.atlassian.net/l/c/Pbsm94Ch`}
+          link={`https://opsera.atlassian.net/l/c/6eQ9BMAw`}
         />
       </div>
       {getHelpText()}
