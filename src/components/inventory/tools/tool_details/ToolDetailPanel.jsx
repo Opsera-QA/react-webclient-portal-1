@@ -80,7 +80,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
           </>
         );
       case "argo":
-      case "azure_account":
+      case "azure":
       case "octopus":
         return (
           <>
