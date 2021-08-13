@@ -154,6 +154,52 @@ export const getUserRoleLevel = (accessRoleData, objectRoles, dataObject) => {
   }
 };
 
+export const roleAllowed = (accessRoles, roleLevel) => {
+  if (!Array.isArray(accessRoles) || accessRoles.length === 0) {
+    return false;
+  }
+
+  return accessRoles.includes(roleLevel) || accessRoles.includes(ACCESS_ROLES.NO_ACCESS_RULES);
+};
+
+export const parseRoleDefinitionsIntoTableRows =  (roleDefinitions) => {
+  let accessRoleRows = [];
+
+  if (roleDefinitions == null) {
+    return [];
+  }
+
+  try {
+    const roleDefinitionKeys = Object.keys(roleDefinitions);
+
+    if (Array.isArray(roleDefinitionKeys) && roleDefinitionKeys.length > 0) {
+      roleDefinitionKeys.forEach((roleDefinitionKey) => {
+        const roleDefinition = roleDefinitions[roleDefinitionKey];
+        const accessRoles = roleDefinition.allowedRoles;
+
+        const tableRow = {
+          id: roleDefinition.id,
+          description: roleDefinition.description,
+          administrator: roleAllowed(accessRoles, ACCESS_ROLES.ADMINISTRATOR),
+          owner: roleAllowed(accessRoles, ACCESS_ROLES.OWNER),
+          manager: roleAllowed(accessRoles, ACCESS_ROLES.MANAGER),
+          power_user: roleAllowed(accessRoles, ACCESS_ROLES.POWER_USER),
+          user: roleAllowed(accessRoles, ACCESS_ROLES.USER),
+          no_access_rules: roleAllowed(accessRoles, ACCESS_ROLES.NO_ACCESS_RULES),
+        };
+        console.log("tableRow: " + JSON.stringify(tableRow));
+
+        accessRoleRows.push(tableRow);
+      });
+    }
+  }
+  catch (error) {
+    console.error(`Could not parse Role Definitions: ${error}`);
+  }
+
+  return accessRoleRows;
+};
+
 export const getAllowedRoles = (actionName, roleDefinitions) => {
   const roleDefinition = roleDefinitions[actionName];
   return roleDefinition?.allowedRoles;
