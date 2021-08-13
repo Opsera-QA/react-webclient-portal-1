@@ -11,19 +11,19 @@ export const ldapOrganizationAccountMetaData = {
     {
       label: "LDAP Organization ID",
       id: "org",
-      fieldText: "This field is populated by the Opsera Customer Record drop down",
+      formText: "This field is populated by the Opsera Customer Record drop down",
       isRequired: true
     },
     {
       label: "Account Owner",
       id: "orgOwner",
-      fieldText: "This field is populated by the Opsera Customer Record drop down",
+      formText: "This field is populated by the Opsera Customer Record drop down",
       isRequired: true
     },
     {
       label: "Account Owner Email",
       id: "orgOwnerEmail",
-      fieldText: "This field is populated by the Opsera Customer Record drop down",
+      formText: "This field is populated by the Opsera Customer Record drop down",
       isRequired: true
     },
     {
@@ -33,11 +33,12 @@ export const ldapOrganizationAccountMetaData = {
     {
       label: "Administrator",
       id: "administrator",
-      fieldText: "This user is created based on the Opsera Customer Record selected.",
+      formText: "This user is created based on the Opsera Customer Record selected.",
     },
     {
       label: "Common Account Name",
       id: "accountName",
+      formText: "Maps to the organizationName in ssoUsers and is visible in the UI.  Recommended to match the company name."
     },
     {
       label: "LDAP Org Account ID",
