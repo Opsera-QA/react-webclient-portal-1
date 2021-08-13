@@ -2,23 +2,35 @@ import React from "react";
 import PropTypes from "prop-types";
 import JenkinsAccountInput from "components/common/list_of_values_input/tools/jenkins/JenkinsAccountInput";
 
-function SFDCJenkinsAccountInput({dataObject, setDataObject, disabled, gitTasksDataDto }) {
+function SfdcJenkinsAccountInput({dataObject, setDataObject, disabled}) {
   const setJenkinsAccount = (fieldName, selectedOption) => {
+
     let newDataObject = {...dataObject};
     newDataObject.setData("gitCredential", selectedOption.gitCredential);
     newDataObject.setData("gitToolId", selectedOption.toolId);
+    newDataObject.setData("type", selectedOption.service);
     newDataObject.setData("service", selectedOption.service);
-    // save the tool identifier to the parent obj
-    gitTasksDataDto.setData("tool_identifier", selectedOption.service);
+    newDataObject.setData("gitUserName", selectedOption.gitUserName);
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");
-    newDataObject.setData("projectId", "");
     newDataObject.setData("gitBranch", "");
-    newDataObject.setData("defaultBranch", "");
-    newDataObject.setData("sourceBranch", "");
     newDataObject.setData("workspace", "");
-    newDataObject.setData("workspaceName", "");
+    setDataObject({...newDataObject});
+  };
+
+  const clearData = () => {
+    let newDataObject = {...dataObject};
+    newDataObject.setData("gitCredential", "");
+    newDataObject.setData("gitToolId", "");
+    newDataObject.setData("type", "");
+    newDataObject.setData("service", "");
+    newDataObject.setData("gitUserName", "");
+    newDataObject.setData("gitUrl", "");
+    newDataObject.setData("sshUrl", "");
+    newDataObject.setData("repository", "");
+    newDataObject.setData("gitBranch", "");
+    newDataObject.setData("workspace", "");
     setDataObject({...newDataObject});
   };
 
@@ -31,15 +43,15 @@ function SFDCJenkinsAccountInput({dataObject, setDataObject, disabled, gitTasksD
        setDataObject={setDataObject}
        setDataFunction={setJenkinsAccount}
        disabled={disabled}
+       clearDataFunction={clearData}
      />
   );
 }
 
-SFDCJenkinsAccountInput.propTypes = {
+SfdcJenkinsAccountInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
-  gitTasksDataDto: PropTypes.object,
 };
 
-export default SFDCJenkinsAccountInput;
+export default SfdcJenkinsAccountInput;
