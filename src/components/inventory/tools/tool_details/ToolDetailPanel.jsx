@@ -94,6 +94,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
           </>
         );
       case "azure_account":
+      case "azure":
       case "octopus":
         return (
           <>
