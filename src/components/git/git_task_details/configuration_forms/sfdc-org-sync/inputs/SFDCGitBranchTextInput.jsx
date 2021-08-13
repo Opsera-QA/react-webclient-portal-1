@@ -4,7 +4,6 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function SFDCGitBranchTextInput({dataObject, setDataObject, disabled, visible}) {
   const setBranch = (fieldName, selectedOption) => {
-    console.log(selectedOption);
     let newDataObject = {...dataObject};
     newDataObject.setData("gitBranch", selectedOption);
     newDataObject.setData("defaultBranch", selectedOption);
