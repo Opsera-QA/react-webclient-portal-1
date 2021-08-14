@@ -35,7 +35,6 @@ function ChartSummaryPanelWrapper({
 }) {
   console.log("ChartSummaryPanelWrapper");
   const getStepConfigurationSummary = () => {
-    console.log("kpiIdentifier", kpiIdentifier);
     switch (kpiIdentifier) {
       case "bitbucket-rejected-merge-requests":
         return <BitbucketRejectedMergeRequestsSummaryPanel chartModel={chartModel} setActiveTab={setActiveTab} />;
