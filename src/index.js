@@ -10,6 +10,7 @@ import "./theme.css";
 import "./container.css";
 import "./field.css";
 import "./container.css";
+import "./analytics.css";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 
