@@ -195,6 +195,7 @@ function AnchoreIntegratorStepConfiguration({ stepTool, plan, stepId, parentCall
           createRecord={callbackFunction}
           updateRecord={callbackFunction}
           lenient={true}
+          className="mr-2"
         />
         <CloseButton isLoading={isLoading} closeEditorCallback={closeEditorPanel} />
       </Row>
