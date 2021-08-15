@@ -8,26 +8,25 @@
     line-height: 1.2;
     display: inline-block;
     vertical-align: middle;
+    min-width: 120px;
 }
 
 .data-block-container {
-    min-width: 120px;
-    word-wrap: break-word;
-    background-color: #fff;
+    background: white;
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
 }
 
-.data-block-container {
-    background: white;
-    /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); */
+.data-block-container:hover {
+    box-shadow: 0 2px 2px 0 rgba(46,41,60,0.2);
     transition: 0.3s;
-    border: 0px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0rem;
-    padding-top: 20px;
 }
 
+.data-block-title {
+    background-color: #46415C;
+    color: white;
+}
 
 
 

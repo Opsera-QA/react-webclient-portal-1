@@ -26,7 +26,7 @@ function DataBlockBase({ title, subtitle, className}) {
   return (
     <div className={className}>
       <div className={"p-3 text-center"}>
-        <div className="box-metric">
+        <div className="data-block">
           {getTitle()}
         </div>
         <div className="w-100 text-muted mb-1">
