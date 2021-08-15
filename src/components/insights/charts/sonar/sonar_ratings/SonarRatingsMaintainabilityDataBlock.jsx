@@ -6,8 +6,8 @@ import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import MetricLetterGrade, {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGrade";
 import DataBlockBase from "components/common/metrics/data_blocks/DataBlockBase";
-import HorizontalDataBlockContainer from "components/common/metrics/data_blocks/HorizontalDataBlockContainer";
-import LegendDataBlock from "components/common/metrics/data_blocks/LegendDataBlock";
+import HorizontalDataBlockContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlockContainer";
+import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 
 //TODO: Charts should have some sort of name that says they're a chart like SonarRatingsChart for clarity and easy of global search
 function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration, maintainabilityRating, technicalDebtRatio }) {
@@ -74,7 +74,7 @@ function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration,
 
   return (
     <HorizontalDataBlockContainer
-      title={"Maintainability"}
+      title={"Sonar Ratings: Maintainability"}
       onClick={() => onRowSelect()}
       leftDataBlock={getLeftDataBlock()}
       middleDataBlock={getMiddleDataBlock()}

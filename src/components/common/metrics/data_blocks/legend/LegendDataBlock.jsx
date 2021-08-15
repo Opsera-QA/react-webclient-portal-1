@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import LegendDataBlockBase from "components/common/metrics/data_blocks/LegendDataBlockBase";
+import LegendDataBlockBase from "components/common/metrics/data_blocks/legend/LegendDataBlockBase";
 
 function LegendDataBlock({ firstItem, secondItem, thirdItem}) {
   const getFirstRow = () => {

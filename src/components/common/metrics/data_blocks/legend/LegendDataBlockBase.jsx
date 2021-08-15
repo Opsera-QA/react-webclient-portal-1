@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 function LegendDataBlockBase({ legend, className}) {
   return (
     <div className={className}>
-      <div className={"p-3 text-center my-auto h-100"}>
-        <div className="">
+      <div className={"p-3 h-100 d-flex"}>
+        <div className="my-auto">
           {legend}
         </div>
       </div>
