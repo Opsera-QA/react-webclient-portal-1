@@ -3,13 +3,12 @@ import PropTypes from "prop-types";
 import DataBlockBase from "components/common/metrics/data_blocks/DataBlockBase";
 import MetricScore from "components/common/metrics/score/MetricScore";
 
-function ScoreDataBlock({ score, subtitle, tooltipText, className}) {
+function ScoreDataBlock({ score, subtitle, className}) {
   return (
     <DataBlockBase
       className={className}
       title={<MetricScore score={score} />}
       subtitle={subtitle}
-      tooltipText={tooltipText}
     />
   );
 }
@@ -17,8 +16,6 @@ function ScoreDataBlock({ score, subtitle, tooltipText, className}) {
 ScoreDataBlock.propTypes = {
   score: PropTypes.number,
   subtitle: PropTypes.any,
-  tooltipText: PropTypes.string,
-  clickAction: PropTypes.func,
   className: PropTypes.string
 };
 

@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
-import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
+import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import MetricLetterGrade, {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGrade";
 import DataBlockBase from "components/common/metrics/data_blocks/DataBlockBase";
