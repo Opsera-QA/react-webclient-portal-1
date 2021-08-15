@@ -14,7 +14,7 @@ import SonarRatingsChartHelpDocumentation
   from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
 import MetricLetterGrade, {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGrade";
 import SonarRatingsMaintainabilityDataBlock
-  from "components/insights/charts/sonar/sonar_ratings/SonarRatingsMaintainabilityDataBlock";
+  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsMaintainabilityDataBlock";
 
 //TODO: Charts should have some sort of name that says they're a chart like SonarRatingsChart for clarity and easy of global search
 function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -116,7 +116,7 @@ function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, in
           <div className="w-100 text-muted mb-1">Security</div>
         </div>
         {/*DATA BLOCK 2*/}
-       <div className="metric-box p-3 text-center">
+        <div className="metric-box p-3 text-center">
           <div className="box-metric">
             <div  className="pointer" onClick={() => onRowSelect("vulnerabilities")}>{sonarRatingsMetric.vulnerabilities}</div>
           </div>
@@ -151,11 +151,11 @@ function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, in
     return (
       <Col className={""}>
         <div className="metric-box p-3 text-center">
-        <div className="box-metric pointer" onClick={() => onRowSelect("bugs")}>
-          <MetricLetterGrade letterGrade={getSonarReliabilityGrade(sonarRatingsMetric?.reliability_rating)} />
+          <div className="box-metric pointer" onClick={() => onRowSelect("bugs")}>
+            <MetricLetterGrade letterGrade={getSonarReliabilityGrade(sonarRatingsMetric?.reliability_rating)} />
+          </div>
+          <div className="w-100 text-muted mb-1">Reliability</div>
         </div>
-        <div className="w-100 text-muted mb-1">Reliability</div>
-      </div>
         {/*DATA BLOCK 2*/}
         <div className="metric-box p-3 text-center">
           <div className="box-metric">
@@ -193,11 +193,11 @@ function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, in
     return (
       <Col>
         <div className="metric-box p-3 text-center">
-        <div className="box-metric pointer" onClick={() => onRowSelect("debt-ratio")}>
-          <MetricLetterGrade letterGrade={getSonarMaintainabilityGrade(sonarRatingsMetric?.maintainability_rating)} />
+          <div className="box-metric pointer" onClick={() => onRowSelect("debt-ratio")}>
+            <MetricLetterGrade letterGrade={getSonarMaintainabilityGrade(sonarRatingsMetric?.maintainability_rating)} />
+          </div>
+          <div className="w-100 text-muted mb-1">Maintainability</div>
         </div>
-        <div className="w-100 text-muted mb-1">Maintainability</div>
-      </div>
         {/*DATA BLOCK 2*/}
         <div className="metric-box p-3 text-center">
           <div className="box-metric">
@@ -215,22 +215,23 @@ function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, in
     }
 
     return (
-      // <div className="new-chart mb-3" style={{height: "300px"}}>
-      //   <Container>
-      //     <Row className="p-3">
-      //       {getVulnerabilityDataBlock()}
-      //       {getReliabilityDataBlock()}
-      // {getMaintainabilityDataBlock()}
-          // </Row>
-        // </Container>
-      // </div>
+      <div style={{height: "300px"}}>
+        {/*  <Container>*/}
+        {/*    <Row className="p-3">*/}
+        {/*      {getVulnerabilityDataBlock()}*/}
+        {/*      {getReliabilityDataBlock()}*/}
+        {/*{getMaintainabilityDataBlock()}*/}
+        {/* </Row>*/}
+        {/* </Container>*/}
 
-      <SonarRatingsMaintainabilityDataBlock
-        dashboardData={dashboardData}
-        kpiConfiguration={kpiConfiguration}
-        maintainabilityRating={sonarRatingsMetric?.maintainability_rating}
-        technicalDebtRatio={sonarRatingsMetric.technical_debt_ratio}
-      />
+        <SonarRatingsMaintainabilityDataBlock
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+          maintainabilityRating={sonarRatingsMetric?.maintainability_rating}
+          technicalDebtRatio={sonarRatingsMetric.technical_debt_ratio}
+        />
+
+      </div>
     );
   };
 
