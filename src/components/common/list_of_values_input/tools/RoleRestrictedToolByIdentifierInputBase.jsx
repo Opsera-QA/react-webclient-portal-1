@@ -9,8 +9,9 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import RegistryToolInfoOverlay from "components/common/list_of_values_input/tools/RegistryToolInfoOverlay";
 import toolsActions from "components/inventory/tools/tools-actions";
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
-function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className}) {
+function RoleRestrictedToolByIdentifierInputBase({ toolType, toolFriendlyName, placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
@@ -29,17 +30,19 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
 
 
     setTools([]);
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (toolType !== "") {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [toolType]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -55,7 +58,7 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
   };
 
   const loadTools = async (cancelSource = cancelTokenSource) => {
-    const response = await toolsActions.getRoleLimitedTools(getAccessToken, cancelSource);
+    const response = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, cancelSource, toolType);
     const tools = response?.data?.data;
 
     if (Array.isArray(tools)) {
@@ -76,11 +79,11 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
   };
 
   const getErrorMessage = () => {
-    if (!isLoading && (!Array.isArray(tools) || tools.length === 0)) {
+    if (!isLoading && (!Array.isArray(tools) || tools.length === 0) && toolFriendlyName && toolType) {
       return (
         <div className="form-text text-muted p-2">
           <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
-          No {configurationRequired ? "configured " : ""}tools have been registered.
+          No {configurationRequired ? "configured " : ""}tools have been registered for <span className="upper-case-first">{toolFriendlyName}</span>.
           Please go to
           <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to
           proceed.
@@ -91,10 +94,10 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
 
   const getEllipsisTooltipText = () => {
     if (model?.getData(fieldName) != null && model?.getData(fieldName) !== "") {
-      return (`View selected tool's details`);
+      return (`View selected ${capitalizeFirstLetter(toolFriendlyName)} tool's details`);
     }
 
-    return (`View tools`);
+    return (`View ${capitalizeFirstLetter(toolFriendlyName)} tools`);
   };
 
   if (visible === false) {
@@ -135,7 +138,9 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
   );
 }
 
-RoleRestrictedToolInputBase.propTypes = {
+RoleRestrictedToolByIdentifierInputBase.propTypes = {
+  toolType: PropTypes.string,
+  toolFriendlyName: PropTypes.string,
   placeholderText: PropTypes.string,
   fieldName: PropTypes.string,
   model: PropTypes.object,
@@ -148,4 +153,4 @@ RoleRestrictedToolInputBase.propTypes = {
   className: PropTypes.string,
 };
 
-export default RoleRestrictedToolInputBase;
+export default RoleRestrictedToolByIdentifierInputBase;
