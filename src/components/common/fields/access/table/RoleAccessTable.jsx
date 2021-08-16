@@ -54,12 +54,12 @@ function RoleAccessTableBase({ roleAccessDefinitions, loadData, isLoading }) {
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "description")),
-      getTableBooleanIconColumn(getField(fields, "administrator"), undefined, 100),
+      getTableBooleanIconColumn(getField(fields, "administrator"), undefined, 130),
       getTableBooleanIconColumn(getField(fields, "owner")),
       getTableBooleanIconColumn(getField(fields, "manager"), undefined, 75),
       getTableBooleanIconColumn(getField(fields, "power_user"), undefined, 90),
-      getTableBooleanIconColumn(getField(fields, "user"), undefined, 100),
-      getTableBooleanIconColumn(getField(fields, "no_access_rules"), undefined, 100),
+      getTableBooleanIconColumn(getField(fields, "user"), undefined, 45),
+      getTableBooleanIconColumn(getField(fields, "no_access_rules"), undefined, 165),
     ],
     []
   );
