@@ -1,22 +1,16 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
-import { Container, Row, Col, Popover, OverlayTrigger } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import ModalLogs from "components/common/modal/modalLogs";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowCircleDown,
-  faArrowCircleUp,
-  faMinusCircle,
-  faPauseCircle,
-  faMinus,
-} from "@fortawesome/free-solid-svg-icons";
-// import Model from "../../../../../core/data_model/model";
-// import DeploymentFrequencyInsightsTableMetadata from "./deployment-frequency-actionable-metadata.js";
-// import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
+import { faArrowCircleDown, faArrowCircleUp, faMinusCircle, faPauseCircle } from "@fortawesome/free-solid-svg-icons";
+import Model from "../../../../../core/data_model/model";
+import CoverityIssuesByCategoryActionableMetadata from "./coverity-issues-by-category-actionable-metadata.js";
+import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 
 function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -84,6 +78,22 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
     }
   };
 
+  const onRowSelect = (stat) => {
+    const chartModel = new Model(
+      { ...CoverityIssuesByCategoryActionableMetadata.newObjectFields },
+      CoverityIssuesByCategoryActionableMetadata,
+      false
+    );
+    toastContext.showOverlayPanel(
+      <ChartDetailsOverlay
+        dashboardData={dashboardData}
+        kpiConfiguration={kpiConfiguration}
+        chartModel={chartModel}
+        kpiIdentifier={"coverity-issues" + "-" + stat}
+      />
+    );
+  };
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
@@ -141,7 +151,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
           <Row className="p-1">
             <Col>
               <div className="metric-box p-3 text-center">
-                <div className="box-metric">
+                <div className="box-metric pointer" onClick={() => onRowSelect("low")}>
                   <div>{metrics[0].currentTotalLow}</div>
                 </div>
                 <div className="icon-box fa-pull-right">
@@ -159,7 +169,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
             </Col>
             <Col>
               <div className="metric-box p-3 text-center">
-                <div className="box-metric">
+                <div className="box-metric pointer" onClick={() => onRowSelect("medium")}>
                   <div>{metrics[0].currentTotalMedium}</div>
                 </div>
 
@@ -178,7 +188,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
             </Col>
             <Col>
               <div className="metric-box p-3 text-center">
-                <div className="box-metric">
+                <div className="box-metric pointer" onClick={() => onRowSelect("high")}>
                   <div>{metrics[0].currentTotalHigh}</div>
                 </div>
                 <div className="icon-box fa-pull-right">
