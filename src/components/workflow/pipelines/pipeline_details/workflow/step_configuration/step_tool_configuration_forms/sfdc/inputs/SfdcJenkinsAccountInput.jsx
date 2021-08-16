@@ -9,7 +9,6 @@ function SfdcJenkinsAccountInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("gitCredential", selectedOption.gitCredential);
     newDataObject.setData("gitToolId", selectedOption.toolId);
     newDataObject.setData("type", selectedOption.service);
-    gitTasksDataDto.setData("tool_identifier", service);
     newDataObject.setData("service", selectedOption.service);
     newDataObject.setData("gitUserName", selectedOption.gitUserName);
     newDataObject.setData("gitUrl", "");
