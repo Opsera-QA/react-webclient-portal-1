@@ -9,7 +9,7 @@ import {faTools} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 
 // TODO: Rework to use Summary panel for both the main tool view and also the configuration based off tool identifier like in the registry
-function RegistryToolInfoOverlay({tools, toolData, loadData, isLoading}) {
+function RegistryToolInfoOverlay({tools, toolData, loadData, isLoading, selectedToolId}) {
   const getBody = () => {
     if (toolData) {
       return (
@@ -18,9 +18,20 @@ function RegistryToolInfoOverlay({tools, toolData, loadData, isLoading}) {
             Configuration details for this item are listed below. Tool and account specific settings are stored in the
             <span> <Link to="/inventory/tools">Tool Registry</Link></span>.
             <div>To add a new entry to a dropdown or update settings, make those changes there.</div>
+            <div><Link to={`/inventory/tools/details/${selectedToolId}`}>Click Here to view the selected Tool&apos;s details</Link></div>
           </div>
           <ToolInfoContainer toolData={toolData} />
         </>
+      );
+    }
+
+    if (selectedToolId != null && selectedToolId !== "") {
+      return (
+        <div className="text-muted mb-2">
+          The selected Tool was not found when pulling available tools. Its Access Rules may have changed or it may have been deleted.
+          <span> <Link to="/inventory/tools">Tool Registry</Link></span>.
+          <div>To add a new entry to a dropdown or update settings, make those changes there.</div>
+        </div>
       );
     }
 
@@ -55,6 +66,7 @@ RegistryToolInfoOverlay.propTypes = {
   tools: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
+  selectedToolId: PropTypes.string,
 };
 
 export default RegistryToolInfoOverlay;
