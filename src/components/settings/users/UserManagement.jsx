@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import {AuthContext} from "contexts/AuthContext";
-import {useParams} from "react-router-dom";
 import UsersTable from "components/settings/users/UsersTable";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
@@ -11,16 +10,17 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faUserHardHat, faUsers} from "@fortawesome/pro-light-svg-icons";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
+import PendingUsersTable from "components/settings/users/PendingUsersTable";
 
 function UserManagement() {
-  const {orgDomain} = useParams();
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState([]);
-  const [accountUsers, setAccountUsers] = useState([]);
+  const [pendingUsers, setPendingUsers] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const [authorizedActions, setAuthorizedActions] = useState([]);
+  const [ldapDomain, setLdapDomain] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [activeTab, setActiveTab] = useState("users");
@@ -44,7 +44,7 @@ function UserManagement() {
       source.cancel();
       isMounted.current = false;
     };
-  }, [orgDomain]);
+  }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -83,24 +83,31 @@ function UserManagement() {
     const {ldap} = user;
     const userRoleAccess = await setAccessRoles(user);
 
-    if (isMounted.current === true && userRoleAccess) {
+    if (isMounted.current === true && userRoleAccess && ldap?.domain) {
+      setLdapDomain(ldap?.domain);
       setAccessRoleData(userRoleAccess);
 
       let authorizedActions = await accountsActions.getAllowedUserActions(userRoleAccess, ldap.organization, undefined, getUserRecord, getAccessToken);
       setAuthorizedActions(authorizedActions);
       // await getUsersByDomain(ldap?.domain, cancelSource);
-      await getPendingUsers(cancelSource);
+      await getPendingUsers(cancelSource, ldap?.domain, ldap?.account);
     }
   };
 
   const getBody = () => {
     if (activeTab === "pending") {
-      return "test";
+      return (
+        <PendingUsersTable
+          loadData={loadData}
+          isLoading={isLoading}
+          pendingUserData={pendingUsers}
+        />
+      );
     }
 
     return (
       <UsersTable
-        orgDomain={orgDomain}
+        orgDomain={ldapDomain}
         isLoading={isLoading}
         userData={users}
         loadData={loadData}
@@ -111,14 +118,12 @@ function UserManagement() {
   };
 
   // TODO: Wire up slimmer data pull, if possible
-  const getPendingUsers = async (cancelSource = cancelTokenSource) => {
-    const response = await accountsActions.getPendingUsersV2(getAccessToken, cancelSource);
-    const users = response?.data;
+  const getPendingUsers = async (cancelSource = cancelTokenSource, ldapDomain, ldapAccount) => {
+    const response = await accountsActions.getPendingUsersV2(getAccessToken, cancelSource, ldapDomain, ldapAccount);
+    const users = response?.data?.data;
 
-    console.log("users: " + JSON.stringify(users[0]));
-
-    if (isMounted?.current === true && Array.isArray(users) && users.length > 0) {
-      setAccountUsers(users);
+    if (isMounted?.current === true && Array.isArray(users)) {
+      setPendingUsers(users);
     }
   };
 

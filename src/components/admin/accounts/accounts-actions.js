@@ -233,6 +233,16 @@ accountsActions.createUser = async (orgDomain, ldapUserDataDto, getAccessToken) 
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
+accountsActions.createUserV2 = async (getAccessToken, cancelTokenSource, orgDomain, ldapUserModel) => {
+  const postData = {
+    ...ldapUserModel.getPersistData()
+  };
+  const apiUrl = `/users/account/user/create?domain=${orgDomain}`;
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
+};
+
+
 accountsActions.getUsers = async (getAccessToken, cancelTokenSource) => {
   const urlParams = {
     params: {
@@ -255,9 +265,16 @@ accountsActions.getAccountUsersV2 = async (getAccessToken, cancelTokenSource) =>
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-accountsActions.getPendingUsersV2 = async (getAccessToken, cancelTokenSource) => {
+accountsActions.getPendingUsersV2 = async (getAccessToken, cancelTokenSource, organizationDomain, organizationAccount) => {
   const apiUrl = `/users/pending-users`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  const urlParams = {
+    params: {
+      domain: organizationDomain,
+      account: organizationAccount,
+    },
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 accountsActions.getUserDetailViewLink = async (getUserRecord) => {
@@ -326,12 +343,22 @@ accountsActions.getUser = async (userId, getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+// TODO: Remove after all references are updated to V2
 accountsActions.isEmailAvailable = async (email, getAccessToken) => {
   const postBody = {
     email: email
   };
   const apiUrl = "/users/account/is-email-available";
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+accountsActions.isEmailAvailableV2 = async (getAccessToken, cancelTokenSource, email) => {
+  const apiUrl = "/users/account/is-email-available";
+  const postBody = {
+    email: email
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 accountsActions.getUserRegistrations = async (getAccessToken) => {
