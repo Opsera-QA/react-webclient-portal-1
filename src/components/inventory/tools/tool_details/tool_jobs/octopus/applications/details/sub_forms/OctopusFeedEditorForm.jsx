@@ -56,7 +56,7 @@ const OctopusFeedEditorForm = ({ dataObject, setDataObject, appID }) => {
           }
         />
       </Col>
-      {dataObject && dataObject.getData("toolType") && dataObject.getData("toolType") === "nexus" && (
+      {dataObject && dataObject.getData("toolType") && dataObject.getData("toolType").toLowerCase() === "nexus" && (
         <>
           <Col lg={12}>
             <NexusSelectInput
@@ -87,7 +87,7 @@ const OctopusFeedEditorForm = ({ dataObject, setDataObject, appID }) => {
           </Col>
         </>  
       )}
-      {dataObject && dataObject.getData("toolType") && dataObject.getData("toolType") === "jfrog" && (
+      {dataObject && dataObject.getData("toolType") && dataObject.getData("toolType").toLowerCase() === "jfrog" && (
         <>
           <Col lg={12}>
             <JfrogToolSelectInput
