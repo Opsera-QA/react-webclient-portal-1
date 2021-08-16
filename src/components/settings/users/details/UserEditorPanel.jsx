@@ -7,15 +7,15 @@ import EditorPanelContainer from "../../../common/panels/detail_panel_container/
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
-import WarningDialog from "components/common/status_notifications/WarningDialog";
 import axios from "axios";
 import userActions from "components/user/user-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function UserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authorizedActions, handleClose }) {
+function UserEditorPanel({ ldapUserData, orgDomain, handleClose, accountRegistrationData }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [userModel, setUserModel] = useState(undefined);
+  const [accountRegistrationModel, setAccountRegistrationModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -44,6 +44,7 @@ function UserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authorizedA
   const loadData = async () => {
     setIsLoading(true);
     setUserModel(ldapUserData);
+    setAccountRegistrationModel(accountRegistrationData);
     setIsLoading(false);
   };
 
@@ -60,15 +61,11 @@ function UserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authorizedA
   };
 
   const updateLdapUser = async () => {
-    return await accountsActions.updateUser(orgDomain, userModel, getAccessToken);
+    return await accountsActions.updateUserV2(getAccessToken, cancelTokenSource, orgDomain, userModel);
   };
 
-  if (isLoading || userModel == null) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
-  if (!authorizedActions.includes("update_user")) {
-    return <WarningDialog warningMessage={"You do not have the required permissions to update this user"} />;
+  if (isLoading || orgDomain == null || userModel == null) {
+    return (<LoadingDialog size={"sm"} message={"Loading User Creation Form"} />);
   }
 
   return (
@@ -97,13 +94,13 @@ function UserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authorizedA
           <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"preferredName"} />
         </Col>
         <Col lg={6}>
-          <TextInputBase disabled={!setUserModel?.isNew()} setDataObject={setUserModel} dataObject={userModel} fieldName={"emailAddress"} />
+          <TextInputBase disabled={!userModel?.isNew()} setDataObject={setUserModel} dataObject={userModel} fieldName={"emailAddress"} />
         </Col>
         <Col lg={6}>
           <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"division"}/>
         </Col>
         <Col lg={6}>
-          <TextInputBase setDataObject={setUserModel} dataObject={setUserModel} fieldName={"site"}/>
+          <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"site"}/>
         </Col>
         {/*TODO: Add group membership multiselect input*/}
         {/*<Col lg={6}>*/}
@@ -115,12 +112,10 @@ function UserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authorizedA
 }
 
 UserEditorPanel.propTypes = {
-  showButton: PropTypes.bool,
   orgDomain: PropTypes.string,
   ldapUserData: PropTypes.object,
-  setLdapUserData: PropTypes.func,
+  accountRegistrationData: PropTypes.object,
   handleClose: PropTypes.func,
-  authorizedActions: PropTypes.array
 };
 
 export default UserEditorPanel;

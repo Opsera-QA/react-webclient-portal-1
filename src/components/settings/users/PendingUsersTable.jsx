@@ -27,6 +27,7 @@ function PendingUsersTable({ pendingUserData, isLoading, loadData }) {
         isLoading={isLoading}
         data={pendingUserData}
         columns={columns}
+        noDataMessage={"There are no pending users."}
       />
     );
   };

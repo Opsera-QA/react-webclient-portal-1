@@ -35,7 +35,13 @@ function UsersTable({ userData, isLoading, authorizedActions, loadData, isMounte
   };
 
   const createUser = () => {
-    toastContext.showOverlayPanel(<NewUserOverlay loadData={loadData} isMounted={isMounted} />);
+    toastContext.showOverlayPanel(
+      <NewUserOverlay
+        loadData={loadData}
+        isMounted={isMounted}
+        authorizedActions={authorizedActions}
+      />
+    );
   };
 
   const getUsersTable = () => {

@@ -62,6 +62,10 @@ export const ldapUsersMetaData = {
       label: "Region",
       id: "region",
     },
+    {
+      label: "Active",
+      id: "active",
+    },
   ],
   newObjectFields: {
     name: "",
@@ -74,5 +78,6 @@ export const ldapUsersMetaData = {
     teams: [],
     division: "",
     site: "",
+    active: true,
   }
 };
