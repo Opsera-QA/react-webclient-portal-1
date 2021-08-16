@@ -19,6 +19,7 @@ import branchToBranchGitTaskConfigurationMetadata from "components/git/git_task_
 import sfdcGitBranchTaskConfigurationMetadata from "components/git/git_task_details/configuration_forms/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
 import ec2ServiceCreationTaskConfigurationMetadata from "components/git/git_task_details/configuration_forms/ecs-service-creation/ecs-service-creation-git-task-configuration";
 import {AuthContext} from "contexts/AuthContext";
+import SFDCGitBranchTextInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitBranchTextInput";
 import workflowAuthorizedActions
 from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
@@ -94,9 +95,11 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
               {dataObj?.getData("isNewBranch") && 
                 <>
                   <Col lg={12}>
-                    <TextInputBase fieldName={"gitBranch"}
-                    dataObject={dataObj} setDataObject={setDataObj} visible={dataObj?.getData("isNewBranch")} />
-                  </Col>
+                    <SFDCGitBranchTextInput
+                        fieldName={"gitBranch"}
+                        dataObject={dataObj} setDataObject={setDataObj} visible={dataObj?.getData("isNewBranch")}
+                      />
+                   </Col>
                   {/* <Col lg={12}>
                     <SFDCHasUpstreamBoolInput dataObject={dataObj} setDataObject={setDataObj} />
                   </Col> */}
