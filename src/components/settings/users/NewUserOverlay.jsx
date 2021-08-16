@@ -9,13 +9,17 @@ import UserEditorPanel from "components/settings/users/details/UserEditorPanel";
 import userActions from "components/user/user-actions";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
+import LoadingDialog from "components/common/status_notifications/loading";
+import accountRegistrationMetadata from "components/user/account_registration/account-registration-metadata";
 
-function NewUserOverlay({ isMounted, loadData, authorizedActions, orgDomain } ) {
-  const { generateJwtServiceTokenWithValue } = useContext(AuthContext);
+function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
+  const { generateJwtServiceTokenWithValue, getUserRecord } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [ldapUserData, setLdapUserData] = useState(undefined);
+  const [accountRegistrationData, setAccountRegistrationData] = useState(undefined);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [invalidHost, setInvalidHost] = useState(false);
+  const [domain, setDomain] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -37,10 +41,12 @@ function NewUserOverlay({ isMounted, loadData, authorizedActions, orgDomain } ) 
   }, []);
 
   const initializeData = async (cancelSource = cancelTokenSource) => {
+    const user = await getUserRecord();
+    const orgDomain = user?.ldap?.domain;
+    setDomain(orgDomain);
     const token = await generateJwtServiceTokenWithValue({ id: "orgRegistrationForm" });
     const accountResponse = await userActions.getAccountInformationV2(cancelSource, orgDomain, token);
-    const newUserModel = new Model({...ldapUsersMetaData.newObjectFields}, ldapUsersMetaData, true);
-
+    const newAccountModel = (new Model(accountRegistrationMetadata.newObjectFields, accountRegistrationMetadata, true));
 
     if (accountResponse?.data) {
       if (accountResponse.data.idpBaseUrl && window.location.hostname.toLowerCase() !== accountResponse.data.idpBaseUrl.toLowerCase()) {
@@ -48,13 +54,15 @@ function NewUserOverlay({ isMounted, loadData, authorizedActions, orgDomain } ) 
         toastContext.showSystemErrorBanner("Warning!  You are attempting to create an account on the wrong Opsera Portal tenant.  Please check with your account owner or contact Opsera to get the proper URL register accounts.");
       }
 
-      newUserModel.setData("company", accountResponse.data?.orgName);
-      newUserModel.setData("ldapOrgAccount", accountResponse.data?.name);
-      newUserModel.setData("ldapOrgDomain", accountResponse.data?.orgDomain);
-      newUserModel.setData("organizationName", accountResponse?.data?.accountName);
-      newUserModel.setData("orgAccount", accountResponse?.data?.name);
+      newAccountModel.setData("company", accountResponse.data?.orgName);
+      newAccountModel.setData("ldapOrgAccount", accountResponse.data?.name);
+      newAccountModel.setData("ldapOrgDomain", accountResponse.data?.orgDomain);
+      newAccountModel.setData("organizationName", accountResponse?.data?.accountName);
+      newAccountModel.setData("orgAccount", accountResponse?.data?.name);
     }
 
+    setAccountRegistrationData({...newAccountModel});
+    const newUserModel = new Model({...ldapUsersMetaData.newObjectFields}, ldapUsersMetaData, true);
     setLdapUserData({...newUserModel});
   };
 
@@ -67,15 +75,26 @@ function NewUserOverlay({ isMounted, loadData, authorizedActions, orgDomain } ) 
     toastContext.clearOverlayPanel();
   };
 
-  return (
-    <CreateCenterPanel titleIcon={faUser} closePanel={handleClose} objectType={"User"} loadData={loadData} >
+  const getBody = () => {
+    if (ldapUserData == null || accountRegistrationData == null) {
+      return (<LoadingDialog size={"sm"} message={"Loading User Creation Form"} />);
+    }
+
+    return (
       <UserEditorPanel
-        orgDomain={orgDomain}
+        orgDomain={domain}
         authorizedActions={authorizedActions}
         setLdapUserData={setLdapUserData}
         ldapUserData={ldapUserData}
+        accountRegistrationData={accountRegistrationData}
         handleClose={handleClose}
       />
+    );
+  };
+
+  return (
+    <CreateCenterPanel titleIcon={faUser} closePanel={handleClose} objectType={"User"} loadData={loadData}>
+      {getBody()}
     </CreateCenterPanel>
   );
 }

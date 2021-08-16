@@ -89,7 +89,7 @@ function UserManagement() {
 
       let authorizedActions = await accountsActions.getAllowedUserActions(userRoleAccess, ldap.organization, undefined, getUserRecord, getAccessToken);
       setAuthorizedActions(authorizedActions);
-      // await getUsersByDomain(ldap?.domain, cancelSource);
+      await getUsersByDomain(ldap?.domain, cancelSource);
       await getPendingUsers(cancelSource, ldap?.domain, ldap?.account);
     }
   };
@@ -117,7 +117,6 @@ function UserManagement() {
     );
   };
 
-  // TODO: Wire up slimmer data pull, if possible
   const getPendingUsers = async (cancelSource = cancelTokenSource, ldapDomain, ldapAccount) => {
     const response = await accountsActions.getPendingUsersV2(getAccessToken, cancelSource, ldapDomain, ldapAccount);
     const users = response?.data?.data;

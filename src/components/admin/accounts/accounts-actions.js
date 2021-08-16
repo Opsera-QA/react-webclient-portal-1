@@ -225,6 +225,19 @@ accountsActions.updateUser = async (orgDomain, ldapUserDataDto, getAccessToken) 
   return await baseActions.apiPutCall(getAccessToken, apiUrl, postBody);
 };
 
+// TODO: Remove when V2 is wired up everywhere
+accountsActions.updateUserV2 = async (getAccessToken, cancelTokenSource, orgDomain, ldapUserModel) => {
+  const apiUrl = "/users/account/user/update";
+  const postBody = {
+    domain: orgDomain,
+    user: {
+      ...ldapUserModel.getPersistData()
+    }
+  };
+
+  return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 accountsActions.createUser = async (orgDomain, ldapUserDataDto, getAccessToken) => {
   let postData = {
       ...ldapUserDataDto.getPersistData()
