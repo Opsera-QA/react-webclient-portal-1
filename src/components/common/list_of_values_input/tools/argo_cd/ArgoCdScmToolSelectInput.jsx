@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineToolInputBase from "components/common/list_of_values_input/workflow/PipelineToolInputBase";
+import RoleRestrictedToolInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolInputBase";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
 function ArgoCdScmToolSelectInput({className, fieldName, model, setModel, disabled, gitYamlTool}) {
@@ -11,7 +11,7 @@ function ArgoCdScmToolSelectInput({className, fieldName, model, setModel, disabl
   };
 
   return (
-    <PipelineToolInputBase
+    <RoleRestrictedToolInputBase
       toolType={gitYamlTool}
       toolFriendlyName={capitalizeFirstLetter(gitYamlTool)}
       fieldName={fieldName}

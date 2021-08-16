@@ -147,6 +147,11 @@ toolsActions.getRoleLimitedToolByIdV2 = async (getAccessToken, cancelTokenSource
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+toolsActions.getRoleLimitedToolsByIdentifier = async (getAccessToken, cancelTokenSource, toolIdentifier) => {
+  const apiUrl = `/registry/configs/${toolIdentifier}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 // TODO: Remove when all references are updated to V2
 toolsActions.getToolLovs = async (getAccessToken) => {
   const apiUrl = `/registry/configs/summary`;
