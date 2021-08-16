@@ -9,6 +9,7 @@ import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 import axios from "axios";
 import RegistryToolInfoOverlay from "components/common/list_of_values_input/tools/RegistryToolInfoOverlay";
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
 function PipelineToolInputBase({ toolType, toolFriendlyName, placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className}) {
   const toastContext = useContext(DialogToastContext);
@@ -72,7 +73,7 @@ function PipelineToolInputBase({ toolType, toolFriendlyName, placeholderText, vi
   };
 
   const getDetailViewToolUrl = () => {
-    if (model.getData(fieldName) !== "") {
+    if (model?.getData(fieldName) != null && model?.getData(fieldName) !== "") {
       return (`/inventory/tools/details/${model?.getData(fieldName)}`);
     }
   };
@@ -89,6 +90,14 @@ function PipelineToolInputBase({ toolType, toolFriendlyName, placeholderText, vi
         </div>
       );
     }
+  };
+
+  const getEllipsisTooltipText = () => {
+    if (model?.getData(fieldName) != null && model?.getData(fieldName) !== "") {
+      return (`View selected ${capitalizeFirstLetter(toolFriendlyName)} tool's details`);
+    }
+
+    return (`View ${capitalizeFirstLetter(toolFriendlyName)} tools`);
   };
 
   if (visible === false) {
@@ -111,8 +120,10 @@ function PipelineToolInputBase({ toolType, toolFriendlyName, placeholderText, vi
         clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading}
         detailViewLink={getDetailViewToolUrl()}
+        ellipsisTooltipText={getEllipsisTooltipText()}
         infoOverlay={
           <RegistryToolInfoOverlay
+            selectedToolId={model?.getData(fieldName)}
             tools={tools}
             toolData={tools?.find((tool) => tool?._id === model?.getData(fieldName))}
             loadData={loadData}

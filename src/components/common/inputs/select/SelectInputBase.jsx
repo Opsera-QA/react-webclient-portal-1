@@ -13,6 +13,7 @@ function SelectInputBase(
     showClearValueButton, errorMessage, getCurrentValue,
     showLabel, className, onSearch, requireClearDataConfirmation,
     clearDataDetails, linkTooltipText, detailViewLink, infoOverlay, linkIcon,
+    ellipsisTooltipText,
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
@@ -70,6 +71,7 @@ function SelectInputBase(
         clearDataDetails={clearDataDetails}
         infoOverlay={infoOverlay}
         linkIcon={linkIcon}
+        ellipsisTooltipText={ellipsisTooltipText}
       />
       <DropdownList
         data={selectOptions}
@@ -123,6 +125,7 @@ SelectInputBase.propTypes = {
   detailViewLink: PropTypes.string,
   infoOverlay: PropTypes.any,
   linkIcon: PropTypes.object,
+  ellipsisTooltipText: PropTypes.string,
 };
 
 SelectInputBase.defaultProps = {

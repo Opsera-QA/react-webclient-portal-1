@@ -17,6 +17,7 @@ function InputLabel(
     extraActionButtons,
     showLabel,
     linkIcon,
+    ellipsisTooltipText,
   }) {
   const getFormattedLabel = () => {
     return (
@@ -42,6 +43,7 @@ function InputLabel(
           />
           <EllipsisIcon
             overlay={infoOverlay}
+            tooltipText={ellipsisTooltipText}
             className={"ml-1 view-details-icon"}
           />
           <ClearDataIcon
@@ -69,6 +71,7 @@ InputLabel.propTypes = {
   clearDataDetails: PropTypes.any,
   extraActionButtons: PropTypes.any,
   linkIcon: PropTypes.object,
+  ellipsisTooltipText: PropTypes.string,
 };
 
 export default InputLabel;

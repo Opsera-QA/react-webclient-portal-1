@@ -8,7 +8,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faTools} from "@fortawesome/pro-light-svg-icons";
 import {Link} from "react-router-dom";
 import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
-import ArgoCdApplicationInfoOverlay, {getArgoCdApplicationInfoOverlay} from "components/common/list_of_values_input/tools/argo_cd/application/ArgoCdApplicationInfoOverlay";
+import ArgoCdApplicationInfoOverlay from "components/common/list_of_values_input/tools/argo_cd/application/ArgoCdApplicationInfoOverlay";
 
 function ArgoCdApplicationSelectInput({className, fieldName, model, setModel, disabled, argoToolId, setDataFunction}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -102,6 +102,12 @@ function ArgoCdApplicationSelectInput({className, fieldName, model, setModel, di
     );
   };
 
+  const getArgoDetailViewLink = () => {
+    if (argoToolId != null && argoToolId !== "") {
+      return (`/inventory/tools/details/${argoToolId}/applications`);
+    }
+  };
+
   return (
     <>
       <SelectInputBase
@@ -120,7 +126,7 @@ function ArgoCdApplicationSelectInput({className, fieldName, model, setModel, di
         errorMessage={errorMessage}
         linkTooltipText={`View Or Create New Argo Applications`}
         linkIcon={faTools}
-        detailViewLink={`/inventory/tools/details/${argoToolId}/applications`}
+        detailViewLink={getArgoDetailViewLink()}
       />
       {getErrorMessage()}
     </>
