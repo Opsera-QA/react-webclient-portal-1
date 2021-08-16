@@ -6,12 +6,12 @@ import {Link} from "react-router-dom";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import pipelineActions from "components/workflow/pipeline-actions";
 import axios from "axios";
 import RegistryToolInfoOverlay from "components/common/list_of_values_input/tools/RegistryToolInfoOverlay";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import toolsActions from "components/inventory/tools/tools-actions";
 
-function PipelineToolInputBase({ toolType, toolFriendlyName, placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className}) {
+function RoleRestrictedToolInputBase({ toolType, toolFriendlyName, placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
@@ -58,8 +58,8 @@ function PipelineToolInputBase({ toolType, toolFriendlyName, placeholderText, vi
   };
 
   const loadTools = async (cancelSource = cancelTokenSource) => {
-    const response = await pipelineActions.getToolsListV2(getAccessToken, cancelSource, toolType);
-    const tools = response?.data;
+    const response = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, cancelSource, toolType);
+    const tools = response?.data?.data;
 
     if (Array.isArray(tools)) {
       if (configurationRequired) {
@@ -138,7 +138,7 @@ function PipelineToolInputBase({ toolType, toolFriendlyName, placeholderText, vi
   );
 }
 
-PipelineToolInputBase.propTypes = {
+RoleRestrictedToolInputBase.propTypes = {
   toolType: PropTypes.string,
   toolFriendlyName: PropTypes.string,
   placeholderText: PropTypes.string,
@@ -153,4 +153,4 @@ PipelineToolInputBase.propTypes = {
   className: PropTypes.string,
 };
 
-export default PipelineToolInputBase;
+export default RoleRestrictedToolInputBase;
