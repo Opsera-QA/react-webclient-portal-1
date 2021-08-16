@@ -9,9 +9,12 @@ import accountsActions from "components/admin/accounts/accounts-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import axios from "axios";
+import userActions from "components/user/user-actions";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function UserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authorizedActions, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [userModel, setUserModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
@@ -46,13 +49,14 @@ function UserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authorizedA
 
   const createLdapUser = async () => {
     const email = userModel?.getData("emailAddress");
-    const emailIsAvailable = await accountsActions.isEmailAvailable(email, getAccessToken);
+    const emailIsAvailable = await accountsActions.isEmailAvailableV2(getAccessToken, cancelTokenSource, email);
 
     if (emailIsAvailable?.data === false) {
       throw `User with email ${email} already exists. Please try another email address.`;
     }
 
-    return await accountsActions.createUser(orgDomain, userModel, getAccessToken);
+    await userActions.createOpseraAccount(userModel);
+    return await accountsActions.createUserV2(getAccessToken, cancelTokenSource, orgDomain, userModel);
   };
 
   const updateLdapUser = async () => {

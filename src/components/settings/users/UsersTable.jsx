@@ -4,13 +4,13 @@ import { useHistory } from "react-router-dom";
 import {usersMetadata} from "components/settings/users/users-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faSitemap} from "@fortawesome/pro-light-svg-icons";
+import {faUsers} from "@fortawesome/pro-light-svg-icons";
 import VanityTable from "components/common/table/VanityTable";
 import {getField} from "components/common/metadata/metadata-helpers";
 import NewUserOverlay from "components/settings/users/NewUserOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function UsersTable({ userData, orgDomain, isLoading, authorizedActions, loadData, isMounted }) {
+function UsersTable({ userData, isLoading, authorizedActions, loadData, isMounted }) {
   const toastContext = useContext(DialogToastContext);
   const fields = usersMetadata.fields;
   const history = useHistory();
@@ -55,7 +55,7 @@ function UsersTable({ userData, orgDomain, isLoading, authorizedActions, loadDat
       addRecordFunction={authorizedActions?.includes("create_user") ? createUser : null}
       isLoading={isLoading}
       body={getUsersTable()}
-      titleIcon={faSitemap}
+      titleIcon={faUsers}
       showBorder={false}
       title={"Users"}
       type={"User"}
