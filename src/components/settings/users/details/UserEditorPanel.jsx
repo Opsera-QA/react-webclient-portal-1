@@ -10,12 +10,15 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
 import userActions from "components/user/user-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
+import Model from "core/data_model/model";
+import {ldapUsersMetaData} from "components/settings/ldap_users/ldap-users-metadata";
+import {ssoUserMetadata} from "components/settings/users/sso-user-metadata";
 
-function UserEditorPanel({ ldapUserData, orgDomain, handleClose, accountRegistrationData }) {
+function UserEditorPanel({ userData, orgDomain, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [userModel, setUserModel] = useState(undefined);
-  const [accountRegistrationModel, setAccountRegistrationModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -43,12 +46,36 @@ function UserEditorPanel({ ldapUserData, orgDomain, handleClose, accountRegistra
 
   const loadData = async () => {
     setIsLoading(true);
-    setUserModel(ldapUserData);
-    setAccountRegistrationModel(accountRegistrationData);
+    setUserModel(userData);
     setIsLoading(false);
   };
 
-  const createLdapUser = async () => {
+  const handleUserCreation = async () => {
+    try {
+      const isEmailTaken = await checkIfEmailExists();
+
+      if (isEmailTaken === false) {
+        const userResponse = await createLdapUser();
+        console.log("userResponse: " + JSON.stringify(userResponse));
+
+
+        const ssoUserResponse = await createSsoUser();
+        console.log("ssoUserResponse: " + JSON.stringify(ssoUserResponse));
+        // TODO: Check response;
+        // TODO: Check response;
+        // const groupAssignmentResponse = await assignUserToSelectedGroups();
+        // TODO: Check response;
+
+        //TODO: Only keep this in if it's necessary
+        // const syncLdapResponse = await syncLdap();
+      }
+    }
+    catch (error) {
+      return error;
+    }
+  };
+
+  const checkIfEmailExists = async () => {
     const email = userModel?.getData("emailAddress");
     const emailIsAvailable = await accountsActions.isEmailAvailableV2(getAccessToken, cancelTokenSource, email);
 
@@ -56,8 +83,58 @@ function UserEditorPanel({ ldapUserData, orgDomain, handleClose, accountRegistra
       throw `User with email ${email} already exists. Please try another email address.`;
     }
 
-    await userActions.createOpseraAccount(userModel);
-    return await accountsActions.createUserV2(getAccessToken, cancelTokenSource, orgDomain, userModel);
+    return false;
+  };
+
+  const createLdapUser = async () => {
+    const newLdapUserData = {
+      preferredName: userModel?.getData("preferredName"),
+      name: `${userModel?.getData("firstName")} ${userModel?.getData("lastName")}`,
+      firstName: userModel?.getData("firstName"),
+      lastName: userModel?.getData("lastName"),
+      emailAddress: userModel?.getData("emailAddress"),
+      division: userModel?.getData("division"),
+      site: userModel?.getData("site"),
+      teams: userModel?.getData("teams"),
+      title: userModel?.getData("title"),
+    };
+
+    console.log("newLdapUserData: " + JSON.stringify(newLdapUserData));
+    const newLdapUser = new Model({...newLdapUserData}, ldapUsersMetaData, false);
+
+    return await accountsActions.createUserV2(getAccessToken, cancelTokenSource, orgDomain, newLdapUser);
+  };
+
+  const createSsoUser = async () => {
+    const newSsoUserData = {
+      preferredName: userModel?.getData("preferredName"),
+      name: `${userModel?.getData("firstName")} ${userModel?.getData("lastName")}`,
+      firstName: userModel?.getData("firstName"),
+      lastName: userModel?.getData("lastName"),
+      email: userModel?.getData("emailAddress"),
+      division: userModel?.getData("division"),
+      site: userModel?.getData("site"),
+      teams: userModel?.getData("teams"),
+      title: userModel?.getData("title"),
+      company: userModel?.getData("company"),
+      ldapOrgAccount: userModel?.getData("ldapOrgAccount"),
+      ldapOrgDomain: userModel?.getData("ldapOrgDomain"),
+      organizationName: userModel?.getData("organizationName"),
+      orgAccount: userModel?.getData("orgAccount"),
+      cloudProvider: userModel?.getData("cloudProvider"),
+      cloudProviderRegion: userModel?.getData("cloudProviderRegion"),
+    };
+
+    const newSsoUser = new Model({...newSsoUserData}, ssoUserMetadata, false);
+    return await userActions.createOpseraAccount(newSsoUser);
+  };
+
+  // const assignUserToSelectedGroups = async () => {
+  //
+  // };
+
+  const syncLdap = async (userId) => {
+    return await RegisteredUserActions.syncLdap(userId, getAccessToken);
   };
 
   const updateLdapUser = async () => {
@@ -71,7 +148,7 @@ function UserEditorPanel({ ldapUserData, orgDomain, handleClose, accountRegistra
   return (
     <EditorPanelContainer
       handleClose={handleClose}
-      createRecord={createLdapUser}
+      createRecord={handleUserCreation}
       updateRecord={updateLdapUser}
       setRecordDto={setUserModel}
       recordDto={userModel}
@@ -102,6 +179,7 @@ function UserEditorPanel({ ldapUserData, orgDomain, handleClose, accountRegistra
         <Col lg={6}>
           <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"site"}/>
         </Col>
+        {/*TODO: Add LocalAuth disabled switch */}
         {/*TODO: Add group membership multiselect input*/}
         {/*<Col lg={6}>*/}
         {/*  <TextInputBase disabled={true} setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"teams"} />*/}
@@ -113,8 +191,7 @@ function UserEditorPanel({ ldapUserData, orgDomain, handleClose, accountRegistra
 
 UserEditorPanel.propTypes = {
   orgDomain: PropTypes.string,
-  ldapUserData: PropTypes.object,
-  accountRegistrationData: PropTypes.object,
+  userData: PropTypes.object,
   handleClose: PropTypes.func,
 };
 
