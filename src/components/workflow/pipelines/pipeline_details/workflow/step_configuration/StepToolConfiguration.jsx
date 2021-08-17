@@ -601,15 +601,10 @@ function StepToolConfiguration({
       case "argo":
         return (
           <ArgoCdStepConfiguration
-            pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}
             stepTool={stepTool}
             parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
-            setToast={setToast}
-            setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
           />
         );
