@@ -26,7 +26,7 @@ import DockerPushStepConfiguration from "./step_tool_configuration_forms/docker_
 import AnchoreScanStepConfiguration from "./step_tool_configuration_forms/anchore_scan/AnchoreScanStepConfiguration";
 import SFDCStepConfiguration from "./step_tool_configuration_forms/sfdc/SFDCStepConfiguration";
 import NexusStepConfiguration from "./step_tool_configuration_forms/nexus/NexusStepConfiguration";
-import ArgoCDStepConfiguration from "./step_tool_configuration_forms/argo_cd/ArgoCDStepConfiguration";
+import ArgoCdStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/ArgoCdStepConfiguration";
 import TerraformStepConfiguration from "./step_tool_configuration_forms/terraform/TerraformStepConfiguration";
 import OctopusStepConfiguration from "./step_tool_configuration_forms/octopus/OctopusStepConfiguration";
 import EBSStepConfiguration from "./step_tool_configuration_forms/ebs/EBSStepConfiguration";
@@ -588,7 +588,7 @@ function StepToolConfiguration({
         );
       case "argo":
         return (
-          <ArgoCDStepConfiguration
+          <ArgoCdStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}

@@ -16,9 +16,9 @@ function RegistryToolInfoOverlay({tools, toolData, loadData, isLoading, selected
         <>
           <div className="text-muted mb-2">
             Configuration details for this item are listed below. Tool and account specific settings are stored in the
-            <span> <Link to="/inventory/tools">Tool Registry</Link></span>.
+            <span> <Link to="/inventory/tools" target="_blank" rel="noopener noreferrer">Tool Registry</Link></span>.
             <div>To add a new entry to a dropdown or update settings, make those changes there.</div>
-            <div><Link to={`/inventory/tools/details/${selectedToolId}`}>Click Here to view the selected Tool&apos;s details</Link></div>
+            <div><Link to={`/inventory/tools/details/${selectedToolId}`} target="_blank" rel="noopener noreferrer">Click here to view the selected Tool&apos;s details</Link></div>
           </div>
           <ToolInfoContainer toolData={toolData} />
         </>
@@ -29,7 +29,7 @@ function RegistryToolInfoOverlay({tools, toolData, loadData, isLoading, selected
       return (
         <div className="text-muted mb-2">
           The selected Tool was not found when pulling available tools. Its Access Rules may have changed or it may have been deleted.
-          <span> <Link to="/inventory/tools">Tool Registry</Link></span>.
+          <span> <Link to="/inventory/tools" target="_blank" rel="noopener noreferrer">Tool Registry</Link></span>.
           <div>To add a new entry to a dropdown or update settings, make those changes there.</div>
         </div>
       );
@@ -39,7 +39,7 @@ function RegistryToolInfoOverlay({tools, toolData, loadData, isLoading, selected
       <div>
         <div className={"text-muted mb-2"}>
           Please select any Tool to get the details. Tool specific settings are stored in the
-          <span> <Link to="/inventory/tools">Tool Registry</Link></span>.
+          <span> <Link to="/inventory/tools" target="_blank" rel="noopener noreferrer">Tool Registry</Link></span>.
           <div>To add a new entry to a dropdown or update settings, make those changes there.</div>
         </div>
         <FilterContainer
