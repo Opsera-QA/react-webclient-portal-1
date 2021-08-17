@@ -25,6 +25,9 @@ import ec2ServiceCreationTaskConfigurationMetadata
 import AwsLambdaTaskTypeSummaryCard from "./configuration_forms/aws-lambda-creation/AwsLambdaSummaryPanel";
 import awsLambdaFunctionTaskConfigurationMetadata
   from "./configuration_forms/aws-lambda-creation/aws-lambda-metadata";
+import AzureClusterSummaryPanel from "./configuration_forms/azure-cluster-creation/AzureClusterSummaryPanel";
+import azureAksClusterTaskConfigurationMetadata
+  from "./configuration_forms/azure-cluster-creation/azure-cluster-metadata";
 
 
 function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
@@ -99,6 +102,13 @@ function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, load
         return (
           <AwsLambdaTaskTypeSummaryCard
             gitTaskConfigurationData={wrapGitTaskType(awsLambdaFunctionTaskConfigurationMetadata)}
+            gitTasksData={gitTasksData}
+          />
+        );
+      case "azure_cluster_creation":
+        return (
+          <AzureClusterSummaryPanel
+            gitTaskConfigurationData={wrapGitTaskType(azureAksClusterTaskConfigurationMetadata)}
             gitTasksData={gitTasksData}
           />
         );

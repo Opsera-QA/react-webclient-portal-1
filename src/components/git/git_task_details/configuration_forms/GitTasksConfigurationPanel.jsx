@@ -8,6 +8,7 @@ import SFDXCertGenTaskTypeConfigurationPanel from "./sfdx-cert-gen/SFDXCertGenTa
 import ECSCreationTaskConfigurationPanel from "./ecs-cluster-creation/ECSCreationTaskConfigurationPanel";
 import ECSServiceCreationTaskConfigurationPanel from "./ecs-service-creation/ECSServiceCreationTaskConfigurationPanel";
 import AwsLambdaConfigurationPanel from "./aws-lambda-creation/AwsLambdaConfigurationPanel";
+import AzureClusterConfigurationPanel from "./azure-cluster-creation/AzureClusterConfigurationPanel";
 
 function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   const getConfigurationPanel = () => {
@@ -67,6 +68,14 @@ function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTa
             setGitTasksConfigurationData={setGitTasksConfigurationData}
             gitTasksConfigurationData={gitTasksConfigurationData}
           />
+        );
+      case "azure_cluster_creation":
+        return (
+          <AzureClusterConfigurationPanel
+            gitTasksConfigurationData={gitTasksConfigurationData}
+            setGitTasksConfigurationData={setGitTasksConfigurationData}
+            gitTasksDataDto={gitTasksDataDto}
+            />
         );
       case "":
       default:
