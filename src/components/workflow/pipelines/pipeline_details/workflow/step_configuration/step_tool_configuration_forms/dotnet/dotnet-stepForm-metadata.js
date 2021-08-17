@@ -150,7 +150,15 @@ const dotnetStepFormMetadata = {
     {
       label: "Command Line Arguments",
       id: "commandLineArgs"
-    }
+    },
+    {
+      label: "Opsera Script Library",
+      id: "scriptId"
+    },
+    {
+      label: "Commands",
+      id: "commands"
+    },
   ],
   newObjectFields: {
 
@@ -189,7 +197,9 @@ const dotnetStepFormMetadata = {
     outputFileName: "",
     solutionFilePath: "",
     solutionFileName: "",
-    commandLineArgs: ""
+    commandLineArgs: "",
+    scriptId: "",
+    commands: "",
   }
 };
 
