@@ -58,7 +58,7 @@ function CoverityMediumIssuesSummaryPanel({ dashboardData, kpiConfiguration, set
 
   const onRowSelect = (rowData) => {
     toastContext.showOverlayPanel(
-      <BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.run_count} />
+      <BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount} />
     );
   };
 
