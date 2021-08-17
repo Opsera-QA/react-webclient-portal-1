@@ -20,7 +20,7 @@ import {
   getMissingRequiredFieldsErrorDialog,
   getServiceUnavailableDialog,
 } from "../../../../../../../common/toasts/toasts";
-import SFDCConfiguration from "./sub_forms/SFDCConfiguration";
+import SFDCConfiguration from "./jenkins_step_config_sub_forms/SFDCConfiguration";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import pipelineActions from "components/workflow/pipeline-actions";
 import JSONInput from "react-json-editor-ajrm";
@@ -291,7 +291,7 @@ function JenkinsStepConfiguration({
   useEffect(() => {
     if (jobsList && jobsList.length > 0 && formData.toolJobId && formData.toolJobId.length > 0 && !jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]) {
      let toast = getErrorDialog(
-        "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Reigstry.",
+        "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Registry.",
         setShowToast,
         "detailPanelTop"
       );
@@ -465,7 +465,7 @@ function JenkinsStepConfiguration({
       //   return;
       // }
 
-      if(formData.buildType === "python") {
+      if(formData.buildType === "python" || formData.buildType === "gradle" || formData.buildType === "maven") {
         handlePythonScriptDetails();
       }
 
@@ -1469,7 +1469,7 @@ function JenkinsStepConfiguration({
                   <Form.Group controlId="dockerName">
                     <Form.Label>Docker Name*</Form.Label>
                     <Form.Control
-                      maxLength="50"
+                      maxLength="256"
                       type="text"
                       placeholder=""
                       value={formData.dockerName || ""}
@@ -1489,14 +1489,14 @@ function JenkinsStepConfiguration({
                       Please provide a valid docker name.
                       </Form.Control.Feedback> : 
                      <Form.Text className="text-muted">
-                       Accepts aplhanumeric, lowercase without spaces. only - . (dot) and _ are allowed
+                       Accepts lowercase alphanumeric characters, periods, dashes, and underscores without spaces.
                       </Form.Text>
                     }
                   </Form.Group>
                   <Form.Group controlId="dockerTag">
                     <Form.Label>Docker Tag*</Form.Label>
                     <Form.Control
-                      maxLength="50"
+                      maxLength="256"
                       type="text"
                       placeholder=""
                       value={formData.dockerTagName || ""}
@@ -1516,7 +1516,7 @@ function JenkinsStepConfiguration({
                       Please provide a valid docker tag.
                       </Form.Control.Feedback> : 
                      <Form.Text className="text-muted">
-                       Accepts aplhanumeric, lowercase without spaces. only - . (dot) and _ are allowed
+                       Accepts lowercase alphanumeric characters, periods, dashes, and underscores without spaces.
                       </Form.Text>
                     }
                       
@@ -1524,7 +1524,7 @@ function JenkinsStepConfiguration({
                   <Form.Group controlId="dockerPath">
                     <Form.Label>Docker File Path</Form.Label>
                     <Form.Control
-                      maxLength="50"
+                      maxLength="256"
                       type="text"
                       placeholder=""
                       value={formData.dockerPath || ""}
@@ -1636,7 +1636,7 @@ function JenkinsStepConfiguration({
                   )}                   */}
                   </>
                 )}                
-                {(formData.buildType === "python") && (
+                {(formData.buildType === "python" || formData.buildType === "gradle" || formData.buildType === "maven") && (
                   <>
                     <BooleanToggleInput 
                       dataObject={pythonScriptData} 
@@ -1645,8 +1645,13 @@ function JenkinsStepConfiguration({
                     />
                     { pythonScriptData.getData("customScript") ? (
                       <>
-                        <StepConfigUseTerraformOutput dataObject={pythonScriptData} setDataObject={setPythonScriptData} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>
-                        {getTerraformSelect()}
+                        {formData.buildType === "python" && 
+                          <>
+                            <StepConfigUseTerraformOutput dataObject={pythonScriptData} setDataObject={setPythonScriptData} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>       
+                            {getTerraformSelect()}              
+                          </> 
+                        }
+                        
                         <ParameterSelectListInputBase
                           titleIcon={faHandshake}
                           dataObject={pythonScriptData}
@@ -1657,8 +1662,8 @@ function JenkinsStepConfiguration({
                           regexValidationRequired={false}
                           titleText={"Parameter Selection"}
                           plan={plan}
-                          tool_prop={pythonScriptData?.getData("terraformStepId") && pythonScriptData?.getData("terraformStepId").length > 0 ?
-                            pythonScriptData?.getData("terraformStepId") : ""}
+                          // tool_prop={pythonScriptData?.getData("terraformStepId") && pythonScriptData?.getData("terraformStepId").length > 0 ?
+                          //   pythonScriptData?.getData("terraformStepId") : ""}
                         />
                         <TextAreaInput 
                           dataObject={pythonScriptData}                         
@@ -1667,11 +1672,15 @@ function JenkinsStepConfiguration({
                         />
                       </>
                     ) : (
-                      <PythonFilesInput 
-                        setDataObject={setPythonScriptData} 
-                        dataObject={pythonScriptData}
-                        fieldName={"inputDetails"}
-                      />
+                      <>
+                        {formData.buildType === "python" && 
+                          <PythonFilesInput 
+                            setDataObject={setPythonScriptData} 
+                            dataObject={pythonScriptData}
+                            fieldName={"inputDetails"}
+                          />
+                        }
+                      </>
                     ) }                    
                   </>                  
                 )}
@@ -1682,7 +1691,7 @@ function JenkinsStepConfiguration({
                    <Form.Group controlId="inputFilePath">
                       <Form.Label>Script File Path</Form.Label>
                       <Form.Control
-                        maxLength="50"
+                        maxLength="256"
                         type="text"
                         placeholder=""
                         value={formData.inputFilePath || ""}
@@ -1695,7 +1704,7 @@ function JenkinsStepConfiguration({
                     <Form.Group controlId="inputFileName">
                       <Form.Label>Script File Name</Form.Label>
                       <Form.Control
-                        maxLength="50"
+                        maxLength="256"
                         type="text"
                         placeholder=""
                         value={formData.inputFileName || ""}
@@ -1709,7 +1718,7 @@ function JenkinsStepConfiguration({
                     <Form.Group controlId="outputPath">
                       <Form.Label>Output File Path</Form.Label>
                       <Form.Control
-                        maxLength="50"
+                        maxLength="256"
                         type="text"
                         placeholder=""
                         value={formData.outputPath || ""}
@@ -1722,7 +1731,7 @@ function JenkinsStepConfiguration({
                     <Form.Group controlId="outputFileName">
                       <Form.Label>Output File Name</Form.Label>
                       <Form.Control
-                        maxLength="50"
+                        maxLength="256"
                         type="text"
                         placeholder=""
                         value={formData.outputFileName || ""}
