@@ -156,7 +156,6 @@ function JenkinsStepConfiguration({
   const [deleteDockerSecrets, setDeleteDockerSecrets] = useState(false);  
   const [dataObject, setDataObject] = useState(undefined);
   const [pythonScriptData, setPythonScriptData] = useState(undefined);
-  const [buildScriptData, setBuildScriptData] = useState(undefined);
 
   let step = {};
 
