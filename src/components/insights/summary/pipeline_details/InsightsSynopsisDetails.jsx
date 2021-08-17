@@ -18,6 +18,7 @@ import AvgBuildDuration from "components/insights/summary/pipeline_details/AvgBu
 import AvgApprovalTimeDataBlock from "components/insights/summary/pipeline_details/AvgApprovalTime";
 import DeploymentFrequencyDataBlock from "components/insights/summary/pipeline_details/DeploymentFrequencyDataBlock";
 import ChangeFailRateDataBlock from "components/insights/summary/pipeline_details/ChangeFailRateDataBlock";
+import PipelinesOverviewDocumentation from "components/common/help/documentation/insights/Synopsis/PipelinesOverview";
 
 // JIRA
 import JiraLeadTimeChartNoDataBlocks from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks";
@@ -269,7 +270,7 @@ function InsightsSynopsisDetails({ dashboardData }) {
   return (
     <>
       <div className={"d-flex flex-wrap justify-content-around w-100"}>
-        <MetricContainer title="Pipelines : Overview">{getPipelinesSuccess()}</MetricContainer>
+        <MetricContainer chartHelpComponent={(closeHelpPanel) => <PipelinesOverviewDocumentation closeHelpPanel={closeHelpPanel} />} title="Pipelines : Overview">{getPipelinesSuccess()}</MetricContainer>
         <MetricContainer title="Pipelines: Failure Score">{getPipelinesFailure()}</MetricContainer>
         <MetricContainer title="Value Stream">{getValueStream()}</MetricContainer>
         <MetricContainer title="Pipeline: Duration Average">{getAverageBlocks()}</MetricContainer>
