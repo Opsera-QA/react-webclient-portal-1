@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import {ldapUsersMetaData} from "components/settings/ldap_users/ldap-users-metadata";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import {faUser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -10,13 +9,12 @@ import userActions from "components/user/user-actions";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
-import accountRegistrationMetadata from "components/user/account_registration/account-registration-metadata";
+import {usersMetadata} from "components/settings/users/users-metadata";
 
 function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
   const { generateJwtServiceTokenWithValue, getUserRecord } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [ldapUserData, setLdapUserData] = useState(undefined);
-  const [accountRegistrationData, setAccountRegistrationData] = useState(undefined);
+  const [userData, setUserData] = useState(undefined);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [invalidHost, setInvalidHost] = useState(false);
   const [domain, setDomain] = useState(undefined);
@@ -46,7 +44,7 @@ function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
     setDomain(orgDomain);
     const token = await generateJwtServiceTokenWithValue({ id: "orgRegistrationForm" });
     const accountResponse = await userActions.getAccountInformationV2(cancelSource, orgDomain, token);
-    const newAccountModel = (new Model(accountRegistrationMetadata.newObjectFields, accountRegistrationMetadata, true));
+    const newUserModel = (new Model(usersMetadata.newObjectFields, usersMetadata, true));
 
     if (accountResponse?.data) {
       if (accountResponse.data.idpBaseUrl && window.location.hostname.toLowerCase() !== accountResponse.data.idpBaseUrl.toLowerCase()) {
@@ -54,16 +52,14 @@ function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
         toastContext.showSystemErrorBanner("Warning!  You are attempting to create an account on the wrong Opsera Portal tenant.  Please check with your account owner or contact Opsera to get the proper URL register accounts.");
       }
 
-      newAccountModel.setData("company", accountResponse.data?.orgName);
-      newAccountModel.setData("ldapOrgAccount", accountResponse.data?.name);
-      newAccountModel.setData("ldapOrgDomain", accountResponse.data?.orgDomain);
-      newAccountModel.setData("organizationName", accountResponse?.data?.accountName);
-      newAccountModel.setData("orgAccount", accountResponse?.data?.name);
+      newUserModel.setData("company", accountResponse.data?.orgName);
+      newUserModel.setData("ldapOrgAccount", accountResponse.data?.name);
+      newUserModel.setData("ldapOrgDomain", accountResponse.data?.orgDomain);
+      newUserModel.setData("organizationName", accountResponse?.data?.accountName);
+      newUserModel.setData("orgAccount", accountResponse?.data?.name);
     }
 
-    setAccountRegistrationData({...newAccountModel});
-    const newUserModel = new Model({...ldapUsersMetaData.newObjectFields}, ldapUsersMetaData, true);
-    setLdapUserData({...newUserModel});
+    setUserData({...newUserModel});
   };
 
   const handleClose = () => {
@@ -76,17 +72,14 @@ function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
   };
 
   const getBody = () => {
-    if (ldapUserData == null || accountRegistrationData == null) {
+    if (userData == null) {
       return (<LoadingDialog size={"sm"} message={"Loading User Creation Form"} />);
     }
 
     return (
       <UserEditorPanel
         orgDomain={domain}
-        authorizedActions={authorizedActions}
-        setLdapUserData={setLdapUserData}
-        ldapUserData={ldapUserData}
-        accountRegistrationData={accountRegistrationData}
+        userData={userData}
         handleClose={handleClose}
       />
     );

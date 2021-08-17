@@ -11,11 +11,12 @@ export const usersMetadata = {
     {
       label: "Full User Name",
       id: "name",
-      isRequired: true
     },
     {
       label: "Preferred Name",
       id: "preferredName",
+      maxLength: 125,
+      regexDefinitionName: "generalTextWithSpaces",
     },
     {
       label: "First Name",
@@ -37,6 +38,8 @@ export const usersMetadata = {
     {
       label: "Division",
       id: "division",
+      maxLength: 50,
+      regexDefinitionName: "generalTextWithSpaces",
     },
     {
       label: "Teams",
@@ -53,14 +56,16 @@ export const usersMetadata = {
     {
       label: "Site",
       id: "site",
-    },
-    {
-      label: "LDAP Users",
-      id: "users",
+      maxLength: 50,
+      regexDefinitionName: "generalTextWithSpaces",
     },
     {
       label: "Region",
       id: "region",
+    },
+    {
+      label: "Groups",
+      id: "groups",
     },
   ],
   newObjectFields: {
@@ -74,5 +79,8 @@ export const usersMetadata = {
     teams: [],
     division: "",
     site: "",
+    groups: [],
+    cloudProvider: "EKS",
+    cloudProviderRegion: "us-east-2",
   }
 };
