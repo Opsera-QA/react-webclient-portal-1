@@ -11,7 +11,8 @@ const blueprintMetadata = {
     },
     {
       label: "Pipeline ID",
-      id: "pipelineId"
+      id: "pipelineId",
+      formText: "Pipelines with no runs are visible in the dropdown but disabled.",
     },
   ],
   newObjectFields: {

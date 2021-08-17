@@ -67,6 +67,11 @@ export const usersMetadata = {
       label: "Groups",
       id: "groups",
     },
+    {
+      label: "Local Authentication Provider (Opsera Okta)",
+      id: "localAuth",
+      formText: "Indicates if the customer is using federated authentication or Opsera Okta (local)"
+    },
   ],
   newObjectFields: {
     name: "",
@@ -82,5 +87,6 @@ export const usersMetadata = {
     groups: [],
     cloudProvider: "EKS",
     cloudProviderRegion: "us-east-2",
+    localAuth: "FALSE",
   }
 };
