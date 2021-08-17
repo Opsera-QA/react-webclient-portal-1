@@ -12,18 +12,19 @@ function ArgoCdPipelineToolSelectInput({className, fieldName, model, setModel, d
   };
 
   return (
-     <RoleRestrictedToolByIdentifierInputBase
-       toolType={"argo"}
-       toolFriendlyName={"Argo CD"}
-       fieldName={fieldName}
-       placeholderText={"Select Argo CD Tool"}
-       configurationRequired={true}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-       className={className}
-     />
+    <RoleRestrictedToolByIdentifierInputBase
+      toolType={"argo"}
+      toolFriendlyName={"Argo CD"}
+      fieldName={fieldName}
+      placeholderText={"Select Argo CD Tool"}
+      configurationRequired={true}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+      className={className}
+      fields={["_id", "configuration", "name"]}
+    />
   );
 }
 
