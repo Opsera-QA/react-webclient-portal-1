@@ -147,14 +147,26 @@ toolsActions.getRoleLimitedToolByIdV2 = async (getAccessToken, cancelTokenSource
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-toolsActions.getRoleLimitedTools = async (getAccessToken, cancelTokenSource) => {
+toolsActions.getRoleLimitedTools = async (getAccessToken, cancelTokenSource, fields) => {
   const apiUrl = `/registry/configs/tools/`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  const urlParams = {
+    params: {
+      fields: fields,
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-toolsActions.getRoleLimitedToolsByIdentifier = async (getAccessToken, cancelTokenSource, toolIdentifier) => {
+toolsActions.getRoleLimitedToolsByIdentifier = async (getAccessToken, cancelTokenSource, toolIdentifier, fields) => {
   const apiUrl = `/registry/configs/tools/${toolIdentifier}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  const urlParams = {
+    params: {
+      fields: fields,
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 // TODO: Remove when all references are updated to V2
@@ -176,7 +188,7 @@ toolsActions.getToolNameById = async (getAccessToken, cancelTokenSource, toolId)
 toolsActions.getToolLogs = async (getAccessToken, cancelTokenSource, toolId, toolLogFilterModel, fields) => {
   const apiUrl = `/registry/tools/${toolId}/logs/v2`;
 
-  let urlParams = {
+  const urlParams = {
     params: {
       page: toolLogFilterModel?.getData("currentPage"),
       size: toolLogFilterModel?.getData("pageSize"),

@@ -10,7 +10,7 @@ import axios from "axios";
 import RegistryToolInfoOverlay from "components/common/list_of_values_input/tools/RegistryToolInfoOverlay";
 import toolsActions from "components/inventory/tools/tools-actions";
 
-function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className}) {
+function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className, fields}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
@@ -55,7 +55,7 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
   };
 
   const loadTools = async (cancelSource = cancelTokenSource) => {
-    const response = await toolsActions.getRoleLimitedTools(getAccessToken, cancelSource);
+    const response = await toolsActions.getRoleLimitedTools(getAccessToken, cancelSource, fields);
     const tools = response?.data?.data;
 
     if (Array.isArray(tools)) {
@@ -146,6 +146,7 @@ RoleRestrictedToolInputBase.propTypes = {
   configurationRequired: PropTypes.bool,
   clearDataFunction: PropTypes.func,
   className: PropTypes.string,
+  fields: PropTypes.array,
 };
 
 export default RoleRestrictedToolInputBase;

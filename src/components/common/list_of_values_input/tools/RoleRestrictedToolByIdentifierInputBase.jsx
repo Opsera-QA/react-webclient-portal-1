@@ -11,7 +11,7 @@ import RegistryToolInfoOverlay from "components/common/list_of_values_input/tool
 import toolsActions from "components/inventory/tools/tools-actions";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
-function RoleRestrictedToolByIdentifierInputBase({ toolType, toolFriendlyName, placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className}) {
+function RoleRestrictedToolByIdentifierInputBase({ toolType, toolFriendlyName, placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className, fields}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
@@ -58,7 +58,7 @@ function RoleRestrictedToolByIdentifierInputBase({ toolType, toolFriendlyName, p
   };
 
   const loadTools = async (cancelSource = cancelTokenSource) => {
-    const response = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, cancelSource, toolType);
+    const response = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, cancelSource, toolType, fields);
     const tools = response?.data?.data;
 
     if (Array.isArray(tools)) {
@@ -151,6 +151,7 @@ RoleRestrictedToolByIdentifierInputBase.propTypes = {
   configurationRequired: PropTypes.bool,
   clearDataFunction: PropTypes.func,
   className: PropTypes.string,
+  fields: PropTypes.array,
 };
 
 export default RoleRestrictedToolByIdentifierInputBase;
