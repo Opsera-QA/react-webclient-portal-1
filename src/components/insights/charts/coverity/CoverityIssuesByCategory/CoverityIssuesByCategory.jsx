@@ -159,8 +159,8 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                     className="fa-pull-right ml-0"
                     size={"lg"}
                     onClick={() => document.body.click()}
-                    color={getIconColor(metrics[0].overallMediumTrend)}
-                    title={getIconTitle(metrics[0].overallMediumTrend)}
+                    color={getIconColor(metrics[0].overallLowTrend)}
+                    title={getIconTitle(metrics[0].overallLowTrend)}
                   />
                 </div>
                 <div className="w-100 text-muted mb-1">Low</div>
@@ -196,8 +196,8 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                     className="fa-pull-right ml-0"
                     size={"lg"}
                     onClick={() => document.body.click()}
-                    color={getIconColor(metrics[0].overallMediumTrend)}
-                    title={getIconTitle(metrics[0].overallMediumTrend)}
+                    color={getIconColor(metrics[0].overallHighTrend)}
+                    title={getIconTitle(metrics[0].overallHighTrend)}
                   />
                 </div>
                 <div className="w-100 text-muted mb-1">High</div>
@@ -229,9 +229,9 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                     <div>
                       <FontAwesomeIcon
                         // icon={faMinus}
-                        icon={getIcon(metrics[0]?.docs[0]?.projectTotalIssuesTrend)}
-                        color={getIconColor(metrics[0]?.docs[0]?.projectTotalIssuesTrend)}
-                        title={getIconTitle(metrics[0]?.docs[0]?.projectTotalIssuesTrend)}
+                        icon={getIcon(metrics[0]?.docs[1]?.projectTotalIssuesTrend)}
+                        color={getIconColor(metrics[0]?.docs[1]?.projectTotalIssuesTrend)}
+                        title={getIconTitle(metrics[0]?.docs[1]?.projectTotalIssuesTrend)}
                       />{" "}
                       {metrics[0]?.docs[1]?.coverityStreamName}
                     </div>
@@ -244,9 +244,9 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                     <div>
                       <FontAwesomeIcon
                         // icon={faMinus}
-                        icon={getIcon(metrics[0]?.docs[0]?.projectTotalIssuesTrend)}
-                        color={getIconColor(metrics[0]?.docs[0]?.projectTotalIssuesTrend)}
-                        title={getIconTitle(metrics[0]?.docs[0]?.projectTotalIssuesTrend)}
+                        icon={getIcon(metrics[0]?.docs[2]?.projectTotalIssuesTrend)}
+                        color={getIconColor(metrics[0]?.docs[2]?.projectTotalIssuesTrend)}
+                        title={getIconTitle(metrics[0]?.docs[2]?.projectTotalIssuesTrend)}
                       />{" "}
                       {metrics[0]?.docs[2]?.coverityStreamName}
                     </div>
