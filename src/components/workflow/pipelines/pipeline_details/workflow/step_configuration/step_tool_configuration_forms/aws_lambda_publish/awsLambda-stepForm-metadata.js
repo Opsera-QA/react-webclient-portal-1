@@ -14,7 +14,8 @@ const awsLambdaStepFormMetadata = {
     {
       label: "AWS Tool",
       id: "awsToolConfigId",
-      isRequired: true
+      isRequired: true,
+      formText: "The selected tool must match the tool selected during Lambda task creation."
     }
   ],
   newObjectFields: {
