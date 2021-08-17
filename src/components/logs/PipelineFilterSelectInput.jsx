@@ -63,6 +63,7 @@ function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange,
 
     if (Array.isArray(items) && items.length > 0) {
       let formattedItems = [];
+      items.sort((pipeline) => pipeline?.workflow?.run_count === 0 ? 1 : -1);
       for (const item in items) {
         let array = [];
         const pipeline = items[item];

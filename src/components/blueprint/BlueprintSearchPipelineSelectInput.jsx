@@ -72,14 +72,9 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
 
     if (Array.isArray(pipelines) && pipelines.length > 0) {
 
-      let parsedArray = [];
       let disabledArray = [];
 
       pipelines.forEach((pipeline) => {
-        if (pipeline?.workflow?.run_count > 0) {
-          parsedArray.push(pipeline);
-        }
-
         if (pipeline?.workflow?.run_count === 0) {
           disabledArray.push(pipeline);
         }
@@ -91,6 +86,8 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
           setDataObject({...newDataObject});
         }
       });
+
+      pipelines.sort((pipeline) => pipeline?.workflow?.run_count === 0 ? 1 : -1);
 
       if (currentPipeline && !pipelines.some(pipeline => pipeline._id === currentPipeline?._id)) {pipelines.push(currentPipeline);}
       setDisabledPipelines(disabledArray);
