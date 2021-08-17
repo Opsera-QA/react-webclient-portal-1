@@ -14,6 +14,7 @@ import RegisteredUserActions from "components/admin/registered_users/registered-
 import Model from "core/data_model/model";
 import {ldapUsersMetaData} from "components/settings/ldap_users/ldap-users-metadata";
 import {ssoUserMetadata} from "components/settings/users/sso-user-metadata";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function UserEditorPanel({ userData, orgDomain, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -178,6 +179,9 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
         </Col>
         <Col lg={6}>
           <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"site"}/>
+        </Col>
+        <Col lg={6}>
+          <BooleanToggleInput disabled={true} setDataObject={setUserModel} dataObject={userModel} fieldName={"localAuth"}/>
         </Col>
         {/*TODO: Add LocalAuth disabled switch */}
         {/*TODO: Add group membership multiselect input*/}

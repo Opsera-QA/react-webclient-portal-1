@@ -57,6 +57,7 @@ function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
       newUserModel.setData("ldapOrgDomain", accountResponse.data?.orgDomain);
       newUserModel.setData("organizationName", accountResponse?.data?.accountName);
       newUserModel.setData("orgAccount", accountResponse?.data?.name);
+      newUserModel.setData("localAuth", accountResponse?.data?.localAuth === "TRUE");
     }
 
     setUserData({...newUserModel});

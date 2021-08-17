@@ -118,6 +118,9 @@ function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange,
           placeholder={"Select Pipeline Name"}
           onChange={opseraPipelineSelectChange}
         />
+      <small className="text-muted form-text">
+        <div>Pipelines with no runs are visible in the dropdown but disabled.</div>
+      </small>
       </Col>
       <Col className="custom-select-input my-2">
       <label><span>Step</span></label>
