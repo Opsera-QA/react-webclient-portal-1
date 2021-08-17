@@ -23,6 +23,7 @@ function ArgoCdPipelineToolSelectInput({className, fieldName, model, setModel, d
        setDataFunction={setDataFunction}
        disabled={disabled}
        className={className}
+       fields={["_id", "configuration", "name"]}
      />
   );
 }
