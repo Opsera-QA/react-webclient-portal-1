@@ -155,6 +155,11 @@ const dotnetStepFormMetadata = {
       label: "Opsera Script Library",
       id: "scriptId"
     },
+    {
+      label: "Parameters",
+      id: "customParameters",
+      maxItems: 15,
+    },
   ],
   newObjectFields: {
 
@@ -195,6 +200,7 @@ const dotnetStepFormMetadata = {
     solutionFileName: "",
     commandLineArgs: "",
     scriptId: "",
+    customParameters: [],
   }
 };
 
