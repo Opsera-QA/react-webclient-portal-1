@@ -2,36 +2,35 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReactJson from "react-json-view";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import BitbucketRejectedMergeRequestsSummaryPanel
-  from "components/insights/charts/bitbucket/table/bitbucket-rejected-merge-requests/BitbucketRejectedMergeRequestsSummaryPanel";
+import BitbucketRejectedMergeRequestsSummaryPanel from "components/insights/charts/bitbucket/table/bitbucket-rejected-merge-requests/BitbucketRejectedMergeRequestsSummaryPanel";
 import SFDCPipelinesSummaryPanel from "components/insights/charts/sfdc/SFDCPipelinesOverlayPanel";
 import OpseraMeanTimeToRestoreSummaryPanel from "../opsera/bar_chart/mean_time_to_restore/OpseraMeanTimeToRestoreSummaryPanel";
-import OpseraDeploymentFreqStatsSuccessSummaryPanel
-  from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsSuccessSummaryPanel";
-import OpseraDeploymentFreqStatsFailureSummaryPanel
-  from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsFailureSummaryPanel";
+import OpseraDeploymentFreqStatsSuccessSummaryPanel from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsSuccessSummaryPanel";
+import OpseraDeploymentFreqStatsFailureSummaryPanel from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsFailureSummaryPanel";
 import PipelineByStatusSuccessfulTable from "../opsera/bar_chart/pipeline_by_status/PipelineByStatusSuccessfulTable";
 import PipelineByStatusFailedTable from "../opsera/bar_chart/pipeline_by_status/PipelineByStatusFailedTable";
 import SonarRatingsBugsSummaryPanel from "../sonar/sonar_ratings/SonarRatingsBugsSummaryPanel";
 import SonarRatingsVulnerabilitiesSummaryPanel from "../sonar/sonar_ratings/SonarRatingsVulnerabilitiesSummaryPanel";
 import SonarRatingsDebtRatioSummaryPanel from "../sonar/sonar_ratings/SonarRatingsDebtRatioSummaryPanel";
 
-
-function ChartSummaryPanelWrapper({ dashboardData, kpiConfiguration, chartModel, kpiIdentifier, pipelineName, currentDate, setActiveTab }) {
+function ChartSummaryPanelWrapper({
+  dashboardData,
+  kpiConfiguration,
+  chartModel,
+  kpiIdentifier,
+  pipelineName,
+  currentDate,
+  setActiveTab,
+}) {
   const getStepConfigurationSummary = () => {
     switch (kpiIdentifier) {
       case "bitbucket-rejected-merge-requests":
-        return (
-          <BitbucketRejectedMergeRequestsSummaryPanel
-            chartModel={chartModel}
-            setActiveTab={setActiveTab}
-          />
-        );
+        return <BitbucketRejectedMergeRequestsSummaryPanel chartModel={chartModel} setActiveTab={setActiveTab} />;
       case "sfdc-backups-successful":
         return (
           <SFDCPipelinesSummaryPanel
             result={"pipelinesSFDCBackupsSuccess"}
-            dashboardData={dashboardData} 
+            dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             chartModel={chartModel}
             setActiveTab={setActiveTab}
@@ -41,7 +40,7 @@ function ChartSummaryPanelWrapper({ dashboardData, kpiConfiguration, chartModel,
         return (
           <SFDCPipelinesSummaryPanel
             result={"pipelinesSFDCBackupsFailure"}
-            dashboardData={dashboardData} 
+            dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             chartModel={chartModel}
             setActiveTab={setActiveTab}
@@ -51,7 +50,7 @@ function ChartSummaryPanelWrapper({ dashboardData, kpiConfiguration, chartModel,
         return (
           <SFDCPipelinesSummaryPanel
             result={"pipelinesSFDCRollbacksSuccess"}
-            dashboardData={dashboardData} 
+            dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             chartModel={chartModel}
             setActiveTab={setActiveTab}
@@ -61,7 +60,7 @@ function ChartSummaryPanelWrapper({ dashboardData, kpiConfiguration, chartModel,
         return (
           <SFDCPipelinesSummaryPanel
             result={"pipelinesSFDCRollbacksFailure"}
-            dashboardData={dashboardData} 
+            dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             chartModel={chartModel}
             setActiveTab={setActiveTab}
@@ -71,7 +70,7 @@ function ChartSummaryPanelWrapper({ dashboardData, kpiConfiguration, chartModel,
         return (
           <SFDCPipelinesSummaryPanel
             result={"pipelinesSFDCProfileMigrationsSuccess"}
-            dashboardData={dashboardData} 
+            dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             chartModel={chartModel}
             setActiveTab={setActiveTab}
@@ -82,7 +81,7 @@ function ChartSummaryPanelWrapper({ dashboardData, kpiConfiguration, chartModel,
         return (
           <SFDCPipelinesSummaryPanel
             result={"pipelinesSFDCProfileMigrationsFailure"}
-            dashboardData={dashboardData} 
+            dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             chartModel={chartModel}
             setActiveTab={setActiveTab}
@@ -93,7 +92,7 @@ function ChartSummaryPanelWrapper({ dashboardData, kpiConfiguration, chartModel,
         return (
           <SFDCPipelinesSummaryPanel
             result={"pipelinesSFDCUnitTestingSuccess"}
-            dashboardData={dashboardData} 
+            dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             chartModel={chartModel}
             setActiveTab={setActiveTab}
@@ -103,7 +102,7 @@ function ChartSummaryPanelWrapper({ dashboardData, kpiConfiguration, chartModel,
         return (
           <SFDCPipelinesSummaryPanel
             result={"pipelinesSFDCUnitTestingFailure"}
-            dashboardData={dashboardData} 
+            dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             chartModel={chartModel}
             setActiveTab={setActiveTab}
@@ -120,19 +119,9 @@ function ChartSummaryPanelWrapper({ dashboardData, kpiConfiguration, chartModel,
           />
         );
       case "opsera-deployment-frequency-stats-successful":
-        return (
-          <OpseraDeploymentFreqStatsSuccessSummaryPanel
-            chartModel={chartModel}
-            setActiveTab={setActiveTab}
-          />
-        );
+        return <OpseraDeploymentFreqStatsSuccessSummaryPanel chartModel={chartModel} setActiveTab={setActiveTab} />;
       case "opsera-deployment-frequency-stats-failed":
-        return (
-          <OpseraDeploymentFreqStatsFailureSummaryPanel
-            chartModel={chartModel}
-            setActiveTab={setActiveTab}
-          />
-        );
+        return <OpseraDeploymentFreqStatsFailureSummaryPanel chartModel={chartModel} setActiveTab={setActiveTab} />;
       case "status-by-pipeline-successful":
         return (
           <PipelineByStatusSuccessfulTable
@@ -186,17 +175,18 @@ function ChartSummaryPanelWrapper({ dashboardData, kpiConfiguration, chartModel,
       default:
         return (
           <SummaryPanelContainer>
-            <ReactJson src={chartModel?.getPersistData()} enableClipboard={false} displayDataTypes={false} collapsed={false}/>
+            <ReactJson
+              src={chartModel?.getPersistData()}
+              enableClipboard={false}
+              displayDataTypes={false}
+              collapsed={false}
+            />
           </SummaryPanelContainer>
         );
     }
   };
 
-  return (
-    <div>
-      {getStepConfigurationSummary()}
-    </div>
-  );
+  return <div>{getStepConfigurationSummary()}</div>;
 }
 
 ChartSummaryPanelWrapper.propTypes = {
@@ -206,7 +196,7 @@ ChartSummaryPanelWrapper.propTypes = {
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object,
   pipelineName: PropTypes.string,
-  currentDate: PropTypes.string
+  currentDate: PropTypes.string,
 };
 
 export default ChartSummaryPanelWrapper;
