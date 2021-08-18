@@ -9,6 +9,7 @@ import azureAksClusterTaskConfigurationMetadata from "./azure-cluster-metadata";
 import AzureToolSelectInput from "./inputs/AzureToolSelectInput";
 import AzureCredentialIdSelectInput from "./inputs/AzureCredentialIdSelectInput";
 import AzureRegionSelectInput from "./inputs/AzureRegionSelectInput";
+import AzureMachineTypeSelectInput from "./inputs/AzureMachineTypeSelectInput";
 
 function AzureClusterConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   const [azureConfig, setAzureConfig] = useState(null);
@@ -55,6 +56,17 @@ function AzureClusterConfigurationPanel({ gitTasksDataDto, gitTasksConfiguration
           azureApplication={gitTasksConfigurationData?.getData("azureCredentialId")}
           azureConfig={azureConfig}
           applicationData={applicationData}
+        />
+      </Col>
+      <Col lg={12}>
+        <AzureMachineTypeSelectInput
+          dataObject={gitTasksConfigurationData}
+          setDataObject={setGitTasksConfigurationData}
+          azureToolConfigId={gitTasksConfigurationData?.getData("azureToolConfigId")}
+          azureApplication={gitTasksConfigurationData?.getData("azureCredentialId")}
+          azureConfig={azureConfig}
+          applicationData={applicationData}
+          region={gitTasksConfigurationData?.getData("region")}
         />
       </Col>
       <Col lg={12}>

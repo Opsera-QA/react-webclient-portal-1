@@ -108,7 +108,10 @@ function AzureToolSelectInput({ fieldName, dataObject, setDataObject, disabled, 
   
   const handleChange=(fieldName,selectedOption)=>{
     setAzureConfig(list.find(el=>el.id == selectedOption.id));
-    let newDataObject = {...dataObject};    
+    let newDataObject = {...dataObject};
+    newDataObject.setData("azureCredentialId", "");
+    newDataObject.setData("region", "");
+    newDataObject.setData("machine_type", "");
     newDataObject.setData(fieldName, selectedOption.id);
     setDataObject({...newDataObject});
   };
@@ -117,6 +120,8 @@ function AzureToolSelectInput({ fieldName, dataObject, setDataObject, disabled, 
     let newDataObject = {...dataObject};
     newDataObject.setData(fieldName, "");
     newDataObject.setData("azureCredentialId", "");
+    newDataObject.setData("region", "");
+    newDataObject.setData("machine_type", "");
     setAzureConfig(null);  
     setDataObject({...newDataObject});
   };

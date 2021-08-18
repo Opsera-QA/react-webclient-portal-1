@@ -35,7 +35,7 @@ const azureAksClusterTaskConfigurationMetadata = {
     {
       label: "Machine Type",
       id: "machine_type",
-      // isRequired: true
+      isRequired: true
     },
     {
       label: "VPC CIDR Block",

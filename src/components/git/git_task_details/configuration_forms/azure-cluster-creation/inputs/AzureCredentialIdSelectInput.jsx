@@ -23,6 +23,8 @@ function AzureCredentialIdSelectInput({ fieldName, dataObject, setDataObject , a
   const handleChange = (fieldName, selectedOption) => {    
     let newDataObject = {...dataObject};
     newDataObject.setData(fieldName, selectedOption._id);
+    newDataObject.setData("region", "");
+    newDataObject.setData("machine_type", "");
     setApplicationData(selectedOption?.configuration);  
     setDataObject({...newDataObject});
   };
@@ -30,6 +32,8 @@ function AzureCredentialIdSelectInput({ fieldName, dataObject, setDataObject , a
   const clearDataFunction=()=>{
     let newDataObject = {...dataObject};
     newDataObject.setData(fieldName, "");
+    newDataObject.setData("region", "");
+    newDataObject.setData("machine_type", "");
     setApplicationData(null);  
     setDataObject({...newDataObject});
   };
