@@ -37,7 +37,7 @@ function AnsibleToolConfiguration({ toolData }) {
       recordDto={ansibleConfigurationDto}
       persistRecord={saveAnsibleToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"Ansible"}
+      // toolConnectionCheckName={"Ansible"}
     >
       <Row>
         <Col sm={12}>
