@@ -9,16 +9,17 @@ import DetailScreenContainer from "components/common/panels/detail_view_containe
 import LdapUserDetailPanel from "components/settings/ldap_users/users_detail_view/LdapUserDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
+import {ssoUserMetadata} from "components/settings/users/sso-user-metadata";
 import axios from "axios";
+import SsoUserDetailPanel from "components/settings/users/sso_user_details/SsoUserDetailPanel";
 
-function UserDetailView() {
-  const {userEmail, orgDomain} = useParams();
+function SsoUserDetailView() {
+  const {userId} = useParams();
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [ldapUserData, setLdapUserData] = useState(undefined);
+  const [ssoUserData, setSsoUserData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [authorizedActions, setAuthorizedActions] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -56,36 +57,30 @@ function UserDetailView() {
     }
   };
 
-
   const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      let {ldap} = user;
+      const organizationDomain = user?.ldap?.domain;
 
-      if (userRoleAccess.OpseraAdministrator || ldap.domain === orgDomain)
-      {
-        let authorizedActions = await accountsActions.getAllowedUserActions(userRoleAccess, ldap.organization, userEmail, getUserRecord, getAccessToken);
-        setAuthorizedActions(authorizedActions);
-
-        if (authorizedActions.includes("get_user_details")) {
-          await getLdapUser(cancelSource, userEmail);
-        }
+      if (organizationDomain) {
+        await getSsoUser(cancelSource, organizationDomain);
       }
     }
   };
 
-  const getLdapUser = async (cancelSource = cancelTokenSource, userEmail) => {
-    const response = await accountsActions.getUserByEmailV2(getAccessToken, cancelSource, userEmail);
+  const getSsoUser = async (cancelSource = cancelTokenSource, organizationDomain) => {
+    const response = await accountsActions.getPendingUserByIdV2(getAccessToken, cancelSource, organizationDomain, userId);
+    const user = response?.data?.user;
 
-    if (response?.data != null) {
-      setLdapUserData(new Model(response.data, ldapUsersMetaData, false));
+    if (user != null) {
+      setSsoUserData(new Model(user, ssoUserMetadata, false));
     }
   };
 
   const getActionBar = () => {
-    if (ldapUserData != null) {
+    if (ssoUserData != null) {
       return (
         <ActionBarContainer>
           <div>
@@ -100,23 +95,16 @@ function UserDetailView() {
 
   return (
     <DetailScreenContainer
-      breadcrumbDestination={(accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator) ? "ldapUserDetailView" : "ldapUserDetailViewLimited"}
-      metadata={ldapUsersMetaData}
-      accessDenied={!authorizedActions?.includes("get_user_details")}
-      dataObject={ldapUserData}
+      breadcrumbDestination={"pendingUserDetailView"}
+      metadata={ssoUserMetadata}
+      dataObject={ssoUserData}
       isLoading={isLoading}
       actionBar={getActionBar()}
       detailPanel={
-        <LdapUserDetailPanel
-          hideSettings={true}
-          setLdapUserData={setLdapUserData}
-          orgDomain={orgDomain}
-          ldapUserData={ldapUserData}
-          authorizedActions={authorizedActions}
-        />
+        <SsoUserDetailPanel hideSettings={true} ssoUserData={ssoUserData} />
       }
     />
   );
 }
 
-export default UserDetailView;
+export default SsoUserDetailView;
