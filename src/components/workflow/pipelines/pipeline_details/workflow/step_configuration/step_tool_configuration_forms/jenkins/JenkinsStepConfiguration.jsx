@@ -465,7 +465,7 @@ function JenkinsStepConfiguration({
       //   return;
       // }
 
-      if(formData.buildType === "python") {
+      if(formData.buildType === "python" || formData.buildType === "gradle" || formData.buildType === "maven") {
         handlePythonScriptDetails();
       }
 
@@ -1636,7 +1636,7 @@ function JenkinsStepConfiguration({
                   )}                   */}
                   </>
                 )}                
-                {(formData.buildType === "python") && (
+                {(formData.buildType === "python" || formData.buildType === "gradle" || formData.buildType === "maven") && (
                   <>
                     <BooleanToggleInput 
                       dataObject={pythonScriptData} 
@@ -1645,8 +1645,13 @@ function JenkinsStepConfiguration({
                     />
                     { pythonScriptData.getData("customScript") ? (
                       <>
-                        <StepConfigUseTerraformOutput dataObject={pythonScriptData} setDataObject={setPythonScriptData} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>
-                        {getTerraformSelect()}
+                        {formData.buildType === "python" && 
+                          <>
+                            <StepConfigUseTerraformOutput dataObject={pythonScriptData} setDataObject={setPythonScriptData} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>       
+                            {getTerraformSelect()}              
+                          </> 
+                        }
+                        
                         <ParameterSelectListInputBase
                           titleIcon={faHandshake}
                           dataObject={pythonScriptData}
@@ -1657,8 +1662,8 @@ function JenkinsStepConfiguration({
                           regexValidationRequired={false}
                           titleText={"Parameter Selection"}
                           plan={plan}
-                          tool_prop={pythonScriptData?.getData("terraformStepId") && pythonScriptData?.getData("terraformStepId").length > 0 ?
-                            pythonScriptData?.getData("terraformStepId") : ""}
+                          // tool_prop={pythonScriptData?.getData("terraformStepId") && pythonScriptData?.getData("terraformStepId").length > 0 ?
+                          //   pythonScriptData?.getData("terraformStepId") : ""}
                         />
                         <TextAreaInput 
                           dataObject={pythonScriptData}                         
@@ -1667,11 +1672,15 @@ function JenkinsStepConfiguration({
                         />
                       </>
                     ) : (
-                      <PythonFilesInput 
-                        setDataObject={setPythonScriptData} 
-                        dataObject={pythonScriptData}
-                        fieldName={"inputDetails"}
-                      />
+                      <>
+                        {formData.buildType === "python" && 
+                          <PythonFilesInput 
+                            setDataObject={setPythonScriptData} 
+                            dataObject={pythonScriptData}
+                            fieldName={"inputDetails"}
+                          />
+                        }
+                      </>
                     ) }                    
                   </>                  
                 )}
