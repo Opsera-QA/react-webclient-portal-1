@@ -2,7 +2,7 @@ const ansibleConnectionMetadata = {
   type: "Ansible Tool Configuration",
   fields: [
     {
-      label: "Server Url",
+      label: "Server URL",
       id: "url",
       isRequired: true
     },
