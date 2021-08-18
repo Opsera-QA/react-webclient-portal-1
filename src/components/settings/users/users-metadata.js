@@ -88,5 +88,6 @@ export const usersMetadata = {
     cloudProvider: "EKS",
     cloudProviderRegion: "us-east-2",
     localAuth: "FALSE",
+    active: true,
   }
 };
