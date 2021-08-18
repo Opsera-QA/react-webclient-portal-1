@@ -1,7 +1,6 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import {faWandMagic} from "@fortawesome/pro-light-svg-icons";
-import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ConfirmResumePipeline from "components/workflow/wizards/ConfirmResumePipeline";
 import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
@@ -15,17 +14,6 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, p
     toastContext.clearOverlayPanel();
   };
 
-  const getWarningMessage = () => {
-    if (pipelineOrientation === "middle") {
-      return (
-        <div className="warning-text pl-4 mt-1">
-          Warning! This pipeline is in a failed or incomplete state and is no longer running.  If you proceed, this will clear
-          the current state of the pipeline and begin a brand new run.
-        </div>
-      );
-    }
-  };
-
   const getBody = () => {
     if (pipelineType !== "sfdc" && pipelineOrientation === "middle") {
       return (<ConfirmResumePipeline pipelineId={pipelineId} handlePipelineWizardRequest={handlePipelineWizardRequest} />);
@@ -33,16 +21,14 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, p
 
     if (pipelineType === "sfdc") {
       return (
-      <div>
-        {getWarningMessage()}
         <SfdcPipelineWizard
           pipelineId={pipelineId}
           pipeline={pipeline}
           handlePipelineWizardRequest={handlePipelineWizardRequest}
           handleClose={handleClose}
           refreshPipelineActivityData={refreshPipelineActivityData}
+          pipelineOrientation={pipelineOrientation}
         />
-      </div>
       );
     }
   };

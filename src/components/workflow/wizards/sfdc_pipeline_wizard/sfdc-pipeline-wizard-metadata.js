@@ -119,6 +119,14 @@ const sfdcPipelineWizardMetadata = {
       label: "Run Count",
       id: "run_count",
     },
+    {
+      label: "Git Branch",
+      id: "gitBranch",
+    },
+    {
+      label: "SFDC Account Name",
+      id: "accountUsername",
+    },
   ],
   newObjectFields: {
     includedComponentTypes: "all",
@@ -146,7 +154,9 @@ const sfdcPipelineWizardMetadata = {
     csvFileContent: [],
     fromGitTasks: false, // TODO: Remove if irrelevant
     fromFileUpload: false,
-    isRollBack: false
+    isRollBack: false,
+    gitBranch: "",
+    accountUsername: "",
   }
 };
 

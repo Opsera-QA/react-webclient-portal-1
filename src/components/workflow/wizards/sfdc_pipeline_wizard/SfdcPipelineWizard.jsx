@@ -31,6 +31,9 @@ import SfdcWizardXmlViewerHelpDocumentation
   from "components/common/help/documentation/pipelines/wizard/SfdcWizardXmlViewerHelpDocumentation";
 import SfdcPipelineWizardValidatedFileViewer
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/SfdcPipelineWizardValidatedFileViewer";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export const PIPELINE_WIZARD_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
@@ -44,7 +47,7 @@ export const PIPELINE_WIZARD_SCREENS = {
   VALIDATED_FILE_VIEWER: "VALIDATED_FILE_VIEWER",
 };
 
-const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose, refreshPipelineActivityData, gitTaskData }) => {
+const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose, refreshPipelineActivityData, gitTaskData, pipelineOrientation }) => {
   const [error, setError] = useState("");
   const [pipelineWizardScreen, setPipelineWizardScreen] = useState(PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);
   const [pipelineWizardModel, setPipelineWizardModel] = useState(undefined);
@@ -210,6 +213,30 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
     }
   };
 
+  const getFields = () => {
+    return (
+      <Row>
+        <Col sm={6}>
+          <TextFieldBase dataObject={pipelineWizardModel} fieldName={"accountUsername"} />
+        </Col>
+        <Col sm={6}>
+          <TextFieldBase dataObject={pipelineWizardModel} fieldName={"gitBranch"} />
+        </Col>
+      </Row>
+    );
+  };
+
+  const getWarningMessage = () => {
+    if (pipelineOrientation === "middle") {
+      return (
+        <div className="warning-text p-0">
+          Warning! This pipeline is in a failed or incomplete state and is no longer running.  If you proceed, this will clear
+          the current state of the pipeline and begin a brand new run.
+        </div>
+      );
+    }
+  };
+
   if (pipelineWizardModel == null) {
     return (
       <LoadingDialog message={"Initializing SFDC Pipeline Wizard"} size={"sm"} />
@@ -226,14 +253,17 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
 
   return (
     <OverlayPanelBodyContainer
-      className={"m-3"}
       helpComponent={getHelpComponent()}
       helpIsShown={helpIsShown}
       setHelpIsShown={setHelpIsShown}
       hideCloseButton={true}
+      leftSideItems={getWarningMessage()}
       isLoading={pipelineWizardModel?.getData("recordId")?.length === ""}
     >
-      {getBody()}
+      {/*{getFields()}*/}
+      <div className={"m-3"}>
+        {getBody()}
+      </div>
     </OverlayPanelBodyContainer>
   );
 };
@@ -245,6 +275,7 @@ SfdcPipelineWizard.propTypes = {
   handleClose: PropTypes.func,
   refreshPipelineActivityData: PropTypes.func,
   gitTaskData: PropTypes.object,
+  pipelineOrientation: PropTypes.string,
 };
 
 export default SfdcPipelineWizard;
