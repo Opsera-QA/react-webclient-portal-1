@@ -50,7 +50,9 @@ import ServiceNowAssignmentGroupSelectInput from "components/common/list_of_valu
 function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [kpiSettings, setKpiSettings] = useState(new Model(kpiConfiguration, kpiConfigurationMetadata, false));
-  const [kpiConfigSettings, setKpiConfigSettings] = useState(modelHelpers.getDashboardSettingsModel(kpiConfiguration, kpiSettingsMetadata));
+  const [kpiConfigSettings, setKpiConfigSettings] = useState(
+    modelHelpers.getDashboardSettingsModel(kpiConfiguration, kpiSettingsMetadata)
+  );
   const [kpiDateFilter, setKpiDateFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "date", kpiDateFilterMetadata)
   );
@@ -234,6 +236,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "sonar-codesmells-metric-scorecard",
     "sonar-vulnerabilities-metric-scorecard",
     "sonar-reliability-remediation-agg-by-time",
+    "coverity-issues-by-category-trend",
   ];
 
   const getKpiFilters = (filter) => {
@@ -247,12 +250,20 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       case "tags":
         return (
           <div>
-             <Row>
+            <Row>
               <Col md={6}>
-              <BooleanToggleInput fieldName={"useKpiTags"} dataObject={kpiConfigSettings} setDataObject={setKpiConfigSettings}/>
+                <BooleanToggleInput
+                  fieldName={"useKpiTags"}
+                  dataObject={kpiConfigSettings}
+                  setDataObject={setKpiConfigSettings}
+                />
               </Col>
               <Col md={6}>
-              <BooleanToggleInput fieldName={"useDashboardTags"} dataObject={kpiConfigSettings} setDataObject={setKpiConfigSettings}/>
+                <BooleanToggleInput
+                  fieldName={"useDashboardTags"}
+                  dataObject={kpiConfigSettings}
+                  setDataObject={setKpiConfigSettings}
+                />
               </Col>
             </Row>
             <TagManager
@@ -260,7 +271,10 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
               fieldName={"value"}
               setDataObject={setKpiTagsFilter}
               dataObject={kpiTagsFilter}
-              disabled={!tagFilterEnabled.includes(kpiSettings.getData("kpi_identifier")) || !kpiConfigSettings.getData("useKpiTags")}
+              disabled={
+                !tagFilterEnabled.includes(kpiSettings.getData("kpi_identifier")) ||
+                !kpiConfigSettings.getData("useKpiTags")
+              }
             />
           </div>
         );

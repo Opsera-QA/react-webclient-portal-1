@@ -2,16 +2,27 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReactJson from "react-json-view";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+
+// Bitbucket
 import BitbucketRejectedMergeRequestsSummaryPanel from "components/insights/charts/bitbucket/table/bitbucket-rejected-merge-requests/BitbucketRejectedMergeRequestsSummaryPanel";
+
+// Opsera pipeline
 import SFDCPipelinesSummaryPanel from "components/insights/charts/sfdc/SFDCPipelinesOverlayPanel";
 import OpseraMeanTimeToRestoreSummaryPanel from "../opsera/bar_chart/mean_time_to_restore/OpseraMeanTimeToRestoreSummaryPanel";
 import OpseraDeploymentFreqStatsSuccessSummaryPanel from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsSuccessSummaryPanel";
 import OpseraDeploymentFreqStatsFailureSummaryPanel from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsFailureSummaryPanel";
 import PipelineByStatusSuccessfulTable from "../opsera/bar_chart/pipeline_by_status/PipelineByStatusSuccessfulTable";
 import PipelineByStatusFailedTable from "../opsera/bar_chart/pipeline_by_status/PipelineByStatusFailedTable";
+
+// Sonar
 import SonarRatingsBugsSummaryPanel from "../sonar/sonar_ratings/SonarRatingsBugsSummaryPanel";
 import SonarRatingsVulnerabilitiesSummaryPanel from "../sonar/sonar_ratings/SonarRatingsVulnerabilitiesSummaryPanel";
 import SonarRatingsDebtRatioSummaryPanel from "../sonar/sonar_ratings/SonarRatingsDebtRatioSummaryPanel";
+
+// Coverity
+import CoverityHighIssuesSummaryPanel from "../coverity/CoverityIssuesByCategory/CoverityHighIssuesSummaryPanel";
+import CoverityMediumIssuesSummaryPanel from "../coverity/CoverityIssuesByCategory/CoverityMediumIssuesSummaryPanel";
+import CoverityLowIssuesSummaryPanel from "../coverity/CoverityIssuesByCategory/CoverityLowIssuesSummaryPanel";
 
 function ChartSummaryPanelWrapper({
   dashboardData,
@@ -165,6 +176,37 @@ function ChartSummaryPanelWrapper({
       case "sonar-ratings-debt-ratio":
         return (
           <SonarRatingsDebtRatioSummaryPanel
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+            pipelineName={pipelineName}
+          />
+        );
+      // Coverity
+      case "coverity-issues-high":
+        return (
+          <CoverityHighIssuesSummaryPanel
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+            pipelineName={pipelineName}
+          />
+        );
+      case "coverity-issues-medium":
+        return (
+          <CoverityMediumIssuesSummaryPanel
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+            pipelineName={pipelineName}
+          />
+        );
+      case "coverity-issues-low":
+        return (
+          <CoverityLowIssuesSummaryPanel
             dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             chartModel={chartModel}
