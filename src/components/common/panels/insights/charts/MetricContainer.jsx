@@ -8,7 +8,6 @@ import {AuthContext} from "contexts/AuthContext";
 
 function MetricContainer({ isLoading, children, title, chartHelpComponent }) {
   const [helpIsShown, setHelpIsShown] = useState(false);
-  const { featureFlagHideItemInProd } = useContext(AuthContext);
 
   const closeHelpPanel = () => {
     setHelpIsShown(false);
