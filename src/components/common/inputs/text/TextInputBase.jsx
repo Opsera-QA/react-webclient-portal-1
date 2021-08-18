@@ -26,7 +26,11 @@ function TextInputBase(
 
   const updateValue = (newValue) => {
     if (setDataFunction) {
-      setDataFunction(fieldName, newValue);
+      const newDataObject = setDataFunction(fieldName, newValue);
+
+      if (newDataObject) {
+        setErrorMessage(newDataObject?.getFieldError(fieldName));
+      }
     }
     else {
       validateAndSetData(newValue);
