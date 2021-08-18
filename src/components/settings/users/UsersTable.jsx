@@ -31,7 +31,7 @@ function UsersTable({ userData, isLoading, authorizedActions, loadData, isMounte
   );
 
   const onRowSelect = (grid, row) => {
-    history.push(`/settings/user-management/${row?.emailAddress}/details`);
+    history.push(`/settings/user-management/active/${row?.emailAddress}/details`);
   };
 
   const createUser = () => {
@@ -48,7 +48,7 @@ function UsersTable({ userData, isLoading, authorizedActions, loadData, isMounte
     return (
       <VanityTable
         isLoading={isLoading}
-        // onRowSelect={onRowSelect}
+        onRowSelect={onRowSelect}
         data={userData}
         columns={columns}
       />

@@ -4,7 +4,8 @@ import {
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
   faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey,
-  faHexagon, faListAlt, faEye, faFileArchive, faUserChart, faRadar, faServer, faHandshake, faFileCode, faTasks
+  faHexagon, faListAlt, faEye, faFileArchive, faUserChart, faRadar, faServer, faHandshake, faFileCode, faTasks,
+  faUserHardHat,
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -301,7 +302,7 @@ const breadcrumbs = {
     icon: faUser
   },
 
-  // Users Administration
+  // User Management
   userManagement: {
     parent: "accountSettings",
     name: "userManagement",
@@ -310,13 +311,21 @@ const breadcrumbs = {
     linkText: "Users",
     icon: faUser
   },
-  userManagementDetailView: {
+  activeUserDetailView: {
     parent: "userManagement",
-    name: "userManagementDetailView",
-    path: paths.userManagementDetailView,
+    name: "activeUserDetailView",
+    path: paths.activeUserDetailView,
     title: "User Details",
     linkText: "User Details",
     icon: faUser
+  },
+  pendingUserDetailView: {
+    parent: "userManagement",
+    name: "pendingUserDetailView",
+    path: paths.pendingUserDetailView,
+    title: "Pending User Details",
+    linkText: "Pending User Details",
+    icon: faUserHardHat
   },
 
   // LDAP Groups Administration

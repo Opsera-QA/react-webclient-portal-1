@@ -6,9 +6,11 @@ import {faUserHardHat} from "@fortawesome/pro-light-svg-icons";
 import VanityTable from "components/common/table/VanityTable";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {ssoUserMetadata} from "components/settings/users/sso-user-metadata";
+import {useHistory} from "react-router-dom";
 
 function PendingUsersTable({ pendingUserData, isLoading, loadData }) {
   const fields = ssoUserMetadata.fields;
+  const history = useHistory();
 
   const columns = useMemo(
     () => [
@@ -27,9 +29,14 @@ function PendingUsersTable({ pendingUserData, isLoading, loadData }) {
         isLoading={isLoading}
         data={pendingUserData}
         columns={columns}
+        onRowSelect={onRowSelect}
         noDataMessage={"There are no pending users."}
       />
     );
+  };
+
+  const onRowSelect = (grid, row) => {
+    history.push(`/settings/user-management/pending/${row?._id}/details`);
   };
 
   return (

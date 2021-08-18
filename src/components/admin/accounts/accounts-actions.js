@@ -351,6 +351,17 @@ accountsActions.getUserByEmailV2 = async (getAccessToken, cancelTokenSource, ema
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+accountsActions.getPendingUserByIdV2 = async (getAccessToken, cancelTokenSource, organizationDomain, id) => {
+  const apiUrl = `/users/pending-users/${id}`;
+  const urlParams = {
+    params: {
+      domain: organizationDomain,
+    },
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 accountsActions.getUser = async (userId, getAccessToken) => {
   const apiUrl = `/users/${userId}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);

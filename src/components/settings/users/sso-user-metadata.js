@@ -1,6 +1,9 @@
 export const ssoUserMetadata = {
   idProperty: "name",
   type: "User",
+  detailViewTitle: function (record) {
+    return `${record?.getOriginalValue("firstName")} ${record?.getOriginalValue("lastName")} Pending User Details`;
+  },
   fields: [
     {
       label: "First Name",
