@@ -1,6 +1,11 @@
 // TODO: Ensure this is up to date with Node
 const regexDefinitions = {};
 
+regexDefinitions.portField = {
+  regex:/^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/,
+  errorFormText: "Only numbers allowed and should not be greater than 65,535"
+};
+
 regexDefinitions.generalText = {
   regex: /^[A-Za-z0-9-_.:]*$/,
   formText: "Letters, numbers, dashes, colons, underscores, and periods are allowed",
