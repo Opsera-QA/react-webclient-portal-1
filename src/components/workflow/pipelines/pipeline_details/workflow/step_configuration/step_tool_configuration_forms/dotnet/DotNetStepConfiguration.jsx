@@ -23,7 +23,8 @@ import DotNetBitbucketWorkspaceInput
 import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
 import ScriptLibrarySelectInput
   from "components/common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
-
+import ParameterSelectListInputBase
+  from "components/common/list_of_values_input/parameters/ParameterSelectListInputBase";
 function DotNetStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
   const [jobType, setJobType] = useState("");
@@ -102,6 +103,15 @@ function DotNetStepConfiguration({ pipelineId, stepTool, stepId, createJob, clos
         dataObject={dotNetStepConfigurationDto}                         
         setDataObject={setDotNetStepConfigurationDataDto}
         fieldName={"commandLineArgs"} 
+      />
+      <ParameterSelectListInputBase
+        dataObject={dotNetStepConfigurationDto}
+        setDataObject={setDotNetStepConfigurationDataDto}
+        fieldName={"customParameters"}
+        allowIncompleteItems={true}
+        type={"Parameter"}
+        regexValidationRequired={false}
+        titleText={"Parameter Selection"}
       />
       <ScriptLibrarySelectInput
         fieldName={"scriptId"}
