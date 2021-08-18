@@ -9,6 +9,7 @@ function SFDCGitBranchTextInput({dataObject, setDataObject, disabled, visible}) 
     newDataObject.setData("defaultBranch", selectedOption);
     newDataObject.setData("branch", selectedOption);
     setDataObject({...newDataObject});
+    return newDataObject;
   };
 
   return (
@@ -19,7 +20,7 @@ function SFDCGitBranchTextInput({dataObject, setDataObject, disabled, visible}) 
        setDataObject={setDataObject}
        disabled={disabled}
        visible={visible}
-       />
+    />
   );
 }
 

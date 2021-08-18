@@ -90,7 +90,7 @@ const sfdcGitTaskConfigurationMetadata = {
       id: "gitBranch",
       isRequired: true,
       maxLength: 255,
-      regexDefinitionName: "generalTextWithSpacesSlash",
+      regexDefinitionName: "gitBranchName",
     },
     {
       label: "SFDC Account",
