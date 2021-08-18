@@ -148,8 +148,12 @@ const dotnetStepFormMetadata = {
       id: "solutionFileName",
     },
     {
-      label: "Command Line Arguments",
+      label: "Command Line Arguments (Job Level)",
       id: "commandLineArgs"
+    },
+    {
+      label: "Command Line Arguments",
+      id: "commandLineArguments"
     },
     {
       label: "Opsera Script Library",
@@ -200,6 +204,7 @@ const dotnetStepFormMetadata = {
     solutionFileName: "",
     commandLineArgs: "",
     scriptId: "",
+    commandLineArguments: "",
     customParameters: [],
   }
 };

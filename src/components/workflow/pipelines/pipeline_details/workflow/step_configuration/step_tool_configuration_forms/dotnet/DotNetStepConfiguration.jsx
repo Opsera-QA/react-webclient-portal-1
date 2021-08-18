@@ -102,7 +102,7 @@ function DotNetStepConfiguration({ pipelineId, stepTool, stepId, createJob, clos
       <TextAreaInput 
         dataObject={dotNetStepConfigurationDto}                         
         setDataObject={setDotNetStepConfigurationDataDto}
-        fieldName={"commandLineArgs"} 
+        fieldName={"commandLineArguments"} 
       />
       <ParameterSelectListInputBase
         dataObject={dotNetStepConfigurationDto}
