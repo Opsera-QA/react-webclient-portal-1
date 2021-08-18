@@ -48,7 +48,7 @@ function UsersTable({ userData, isLoading, authorizedActions, loadData, isMounte
     return (
       <VanityTable
         isLoading={isLoading}
-        onRowSelect={onRowSelect}
+        // onRowSelect={onRowSelect}
         data={userData}
         columns={columns}
       />
