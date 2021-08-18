@@ -80,6 +80,9 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     const sfdcToolId = gitTaskData.getData("configuration")?.sfdcToolId;
     const gitToolId = gitTaskData.getData("configuration")?.gitToolId;
     const sfdcDestToolId = gitTaskData.getData("configuration")?.sfdcDestToolId;
+    const accountUsername = gitTaskData.getData("configuration")?.accountUsername;
+    const gitBranch = gitTaskData.getData("configuration")?.gitBranch;
+
 
     if (gitTaskId == null || gitTaskId === "") {
       setError("Could not find Git Task");
@@ -89,6 +92,8 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       setError("No SFDC Tool is associated with this Git Task");
     }
 
+    newPipelineWizardModel.setData("accountUsername", accountUsername);
+    newPipelineWizardModel.setData("gitBranch", gitBranch);
     newPipelineWizardModel.setData("fromGitTasks", true);
     newPipelineWizardModel.setData("sfdcDestToolId", sfdcDestToolId);
     newPipelineWizardModel.setData("gitTaskId", gitTaskId);
@@ -114,8 +119,10 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     const stepId = steps[stepArrayIndex]?._id;
     const pipelineId = pipeline?._id;
     const runCount = pipeline?.workflow?.run_count;
+    const accountUsername = steps[stepArrayIndex]?.tool?.configuration?.accountUsername;
     const sfdcToolId = steps[stepArrayIndex]?.tool?.configuration?.sfdcToolId;
     const gitToolId = steps[stepArrayIndex]?.tool?.configuration?.gitToolId;
+    const gitBranch = steps[stepArrayIndex]?.tool?.configuration?.gitBranch;
     const sfdcDestToolId = steps[stepArrayIndex]?.tool?.configuration?.sfdcDestToolId;
     const isOrgToOrg = steps[stepArrayIndex]?.tool?.configuration?.isOrgToOrg === true;
     const jobType = steps[stepArrayIndex]?.tool?.job_type;
@@ -134,6 +141,8 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       newPipelineWizardModel.setData("selectedRunNumber", runCount);
     }
 
+    newPipelineWizardModel.setData("accountUsername", accountUsername);
+    newPipelineWizardModel.setData("gitBranch", gitBranch);
     newPipelineWizardModel.setData("sfdcToolId", sfdcToolId);
     newPipelineWizardModel.setData("sfdcDestToolId", sfdcDestToolId);
     newPipelineWizardModel.setData("gitToolId", gitToolId);

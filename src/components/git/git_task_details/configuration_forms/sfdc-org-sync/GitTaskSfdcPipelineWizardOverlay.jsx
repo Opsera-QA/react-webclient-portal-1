@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
-import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
 import {useHistory} from "react-router-dom";
@@ -41,15 +40,13 @@ function GitTaskSfdcPipelineWizardOverlay({ gitTasksData }) {
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
-      titleText={`SFDC Git Task Configuration`}
+      titleText={`SalesForce Git Task Configuration`}
       titleIcon={faFileInvoice}
       showToasts={true}
       isLoading={isLoading}
       showCloseButton={false}
     >
-      <div className={"p-3"}>
-        <SfdcPipelineWizard gitTaskData={gitTasksData} handleClose={closePanel} closePanel={closePanel} />
-      </div>
+      <SfdcPipelineWizard gitTaskData={gitTasksData} handleClose={closePanel} closePanel={closePanel} />
     </FullScreenCenterOverlayContainer>
   );
 }
