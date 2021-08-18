@@ -15,14 +15,19 @@ import Model from "core/data_model/model";
 import {ldapUsersMetaData} from "components/settings/ldap_users/ldap-users-metadata";
 import {ssoUserMetadata} from "components/settings/users/sso-user-metadata";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import LdapGroupMultiSelectInput
+  from "components/common/list_of_values_input/settings/groups/LdapGroupMultiSelectInput";
+import ActiveLogTerminal from "components/common/logging/ActiveLogTerminal";
 
 function UserEditorPanel({ userData, orgDomain, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [userModel, setUserModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [logs, setLogs] = useState([]);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -53,26 +58,49 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
 
   const handleUserCreation = async () => {
     try {
+      setIsSaving(true);
+      let newLogs = addLog([], "Beginning the user creation process...");
+      newLogs = addLog(newLogs, `Checking if email address [${userModel?.getData("emailAddress")}] is available`);
       const isEmailTaken = await checkIfEmailExists();
 
-      if (isEmailTaken === false) {
-        const userResponse = await createLdapUser();
-        console.log("userResponse: " + JSON.stringify(userResponse));
-
-
-        const ssoUserResponse = await createSsoUser();
-        console.log("ssoUserResponse: " + JSON.stringify(ssoUserResponse));
-        // TODO: Check response;
-        // TODO: Check response;
-        // const groupAssignmentResponse = await assignUserToSelectedGroups();
-        // TODO: Check response;
-
-        //TODO: Only keep this in if it's necessary
-        // const syncLdapResponse = await syncLdap();
+      if (isEmailTaken === true) {
+        newLogs = addLog(newLogs, `Email address [${userModel?.getData("emailAddress")}] is already taken!`);
+        throw `User with email ${userModel?.getData("emailAddress")} already exists. Please try another email address.`;
       }
+
+      newLogs = addLog(newLogs, `Email address [${userModel?.getData("emailAddress")}] is available.`);
+      newLogs = addLog(newLogs, `Adding user [${userModel?.getData("emailAddress")}] to Organization ${userModel?.getData("organizationName")}.`);
+      const userResponse = await createLdapUser();
+
+
+      if (userResponse?.status !== 200) {
+        addLog(newLogs, `Error adding user to Organization`);
+        throw "Error adding user to Organization";
+      }
+
+      newLogs = addLog(newLogs, `User [${userModel?.getData("emailAddress")}] successfully added to Organization ${userModel?.getData("organizationName")}.`);
+      newLogs = addLog(newLogs, `Adding user [${userModel?.getData("emailAddress")}] to Opsera Platform.`);
+      const ssoUserResponse = await createSsoUser();
+
+      if (ssoUserResponse?.data?.status !== 200) {
+        addLog(newLogs, `Error adding user to Opsera Platform`);
+        throw "User was successfully added to Organization but could not be added to Opsera Platform.";
+      }
+
+      newLogs = addLog(newLogs, `User [${userModel?.getData("emailAddress")}] successfully added to Opsera Platform.`);
+      const groups = userModel.getArrayData("groups");
+
+      if (Array.isArray(groups) && groups.length > 0) {
+        newLogs = addLog(newLogs, `Adding user [${userModel?.getData("emailAddress")}] to Groups [${JSON.stringify(groups)}].`);
+        await assignUserToSelectedGroups(newLogs, groups);
+      }
+
+      return "Success";
     }
-    catch (error) {
-      return error;
+    finally {
+      if (isMounted?.current === true) {
+        setIsSaving(false);
+      }
     }
   };
 
@@ -80,11 +108,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
     const email = userModel?.getData("emailAddress");
     const emailIsAvailable = await accountsActions.isEmailAvailableV2(getAccessToken, cancelTokenSource, email);
 
-    if (emailIsAvailable?.data === false) {
-      throw `User with email ${email} already exists. Please try another email address.`;
-    }
-
-    return false;
+    return emailIsAvailable?.data === false;
   };
 
   const createLdapUser = async () => {
@@ -99,8 +123,6 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
       teams: userModel?.getData("teams"),
       title: userModel?.getData("title"),
     };
-
-    console.log("newLdapUserData: " + JSON.stringify(newLdapUserData));
     const newLdapUser = new Model({...newLdapUserData}, ldapUsersMetaData, false);
 
     return await accountsActions.createUserV2(getAccessToken, cancelTokenSource, orgDomain, newLdapUser);
@@ -125,21 +147,75 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
       cloudProvider: userModel?.getData("cloudProvider"),
       cloudProviderRegion: userModel?.getData("cloudProviderRegion"),
     };
-
     const newSsoUser = new Model({...newSsoUserData}, ssoUserMetadata, false);
+
     return await userActions.createOpseraAccount(newSsoUser);
   };
 
-  // const assignUserToSelectedGroups = async () => {
-  //
-  // };
+  const assignUserToSelectedGroups = async (newLogs, groups) => {
+    const userEmail = userModel?.getData("emailAddress");
 
+    for (let i = 0; i < groups.length; i++) {
+      const group = groups[i];
+      const groupResponse = await accountsActions.getGroupV2(getAccessToken, cancelTokenSource, orgDomain, group);
+      const existingGroup = groupResponse?.data;
+      const members = existingGroup?.members;
+
+      newLogs = addLog(newLogs, `Adding user [${userModel?.getData("emailAddress")}] to Group [${group}].`);
+
+      if (existingGroup && Array.isArray(members)) {
+        let emailList = members.reduce((acc, item) => {
+          acc.push(item.emailAddress);
+          return acc;
+        }, []);
+
+        if (Array.isArray(emailList) && !emailList.includes[userEmail]) {
+          emailList.push(userEmail);
+          const response = await accountsActions.syncMembershipV2(getAccessToken, cancelTokenSource, orgDomain, group, emailList);
+
+          if (response?.status === 200) {
+            newLogs = addLog(newLogs, `User [${userModel?.getData("emailAddress")}] successfully added to Group [${group}].`);
+          }
+          else {
+            newLogs = addLog(newLogs, `Error adding User [${userModel?.getData("emailAddress")}] to Group [${group}].`);
+          }
+        }
+      }
+    }
+  };
+
+  // TODO: Wire up if necessary
   const syncLdap = async (userId) => {
     return await RegisteredUserActions.syncLdap(userId, getAccessToken);
   };
 
   const updateLdapUser = async () => {
     return await accountsActions.updateUserV2(getAccessToken, cancelTokenSource, orgDomain, userModel);
+  };
+
+  const getLogs = () => {
+    if (isSaving && logs.length > 0) {
+      return (
+        <Col lg={12}>
+          <ActiveLogTerminal logs={logs} handleClose={closeLogs} />
+        </Col>
+      );
+    }
+  };
+
+  const addLog = (currentLogs, newLog) => {
+    if (isMounted?.current === true) {
+      const newLogs = [...currentLogs];
+      newLogs.push(`${newLog}\n`);
+      setLogs([...newLogs]);
+      return newLogs;
+    }
+  };
+
+  const closeLogs = () => {
+    if (isMounted?.current === true) {
+      setLogs([]);
+    }
   };
 
   if (isLoading || orgDomain == null || userModel == null) {
@@ -157,6 +233,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
       booleanToggleDisabled={true}
       enabledText={"Active"}
       disabledText={"Inactive"}
+      disable={isSaving === true}
     >
       <Row>
         <Col lg={4}>
@@ -181,13 +258,12 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
           <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"site"}/>
         </Col>
         <Col lg={6}>
+          <LdapGroupMultiSelectInput setModel={setUserModel} model={userModel} fieldName={"groups"}/>
+        </Col>
+        <Col lg={6}>
           <BooleanToggleInput disabled={true} setDataObject={setUserModel} dataObject={userModel} fieldName={"localAuth"}/>
         </Col>
-        {/*TODO: Add LocalAuth disabled switch */}
-        {/*TODO: Add group membership multiselect input*/}
-        {/*<Col lg={6}>*/}
-        {/*  <TextInputBase disabled={true} setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"teams"} />*/}
-        {/*</Col>*/}
+        {getLogs()}
       </Row>
     </EditorPanelContainer>
   );

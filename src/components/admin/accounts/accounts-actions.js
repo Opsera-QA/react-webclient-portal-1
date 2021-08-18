@@ -542,4 +542,15 @@ accountsActions.syncMembership = async (orgDomain, groupName, emailList, getAcce
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
+accountsActions.syncMembershipV2 = async (getAccessToken, cancelTokenSource, orgDomain, groupName, emailList) => {
+  const apiUrl = "/users/account/group/sync-membership";
+  const postData = {
+    domain: orgDomain,
+    groupName: groupName,
+    emails: emailList,
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
+};
+
 export default accountsActions;
