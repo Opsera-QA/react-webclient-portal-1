@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, {useState, useEffect, useContext, useRef, useCallback} from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
@@ -18,6 +18,7 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import LdapGroupMultiSelectInput
   from "components/common/list_of_values_input/settings/groups/LdapGroupMultiSelectInput";
 import InlineActiveLogTerminalBase from "components/common/logging/InlineActiveLogTerminalBase";
+import {parseError} from "components/common/helpers/error-helpers";
 
 function UserEditorPanel({ userData, orgDomain, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -59,42 +60,63 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
   const handleUserCreation = async () => {
     try {
       setIsSaving(true);
-      let newLogs = addLog([], "Beginning the user creation process...");
-      newLogs = addLog(newLogs, `Checking if email address [${userModel?.getData("emailAddress")}] is available`);
+      eraseLogs();
+      addLog("Beginning the user creation process...");
+      addLog(`Checking if email address [${userModel?.getData("emailAddress")}] is available`);
       const isEmailTaken = await checkIfEmailExists();
 
       if (isEmailTaken === true) {
-        newLogs = addLog(newLogs, `Email address [${userModel?.getData("emailAddress")}] is already taken!`);
+        addLog(`Email address [${userModel?.getData("emailAddress")}] is already taken!`);
         throw `User with email ${userModel?.getData("emailAddress")} already exists. Please try another email address.`;
       }
 
-      newLogs = addLog(newLogs, `Email address [${userModel?.getData("emailAddress")}] is available.`);
-      newLogs = addLog(newLogs, `Adding user [${userModel?.getData("emailAddress")}] to Organization ${userModel?.getData("organizationName")}.`);
-      const userResponse = await createLdapUser();
+      addLog(`Email address [${userModel?.getData("emailAddress")}] is available.`);
 
+      try {
+        addLog(`Adding user [${userModel?.getData("emailAddress")}] to Organization ${userModel?.getData("organizationName")}.`);
+        const userResponse = await createLdapUser();
 
-      if (userResponse?.status !== 200) {
-        addLog(newLogs, `Error adding user to Organization`);
-        throw "Error adding user to Organization";
+        if (userResponse?.status !== 200) {
+          throw userResponse;
+        }
+      }
+      catch (error) {
+        const errorLog = `Error adding user [${userModel?.getData("emailAddress")}] to Organization ${userModel?.getData("organizationName")}: ${parseError(error)}.  Please check browser logs for more details.`;
+        addLog(errorLog);
+        console.error(error);
+        throw errorLog;
       }
 
-      newLogs = addLog(newLogs, `User [${userModel?.getData("emailAddress")}] successfully added to Organization ${userModel?.getData("organizationName")}.`);
-      newLogs = addLog(newLogs, `Adding user [${userModel?.getData("emailAddress")}] to Opsera Platform.`);
-      const ssoUserResponse = await createSsoUser();
+      addLog(`User [${userModel?.getData("emailAddress")}] successfully added to Organization ${userModel?.getData("organizationName")}.`);
 
-      if (ssoUserResponse?.data?.status !== 200) {
-        addLog(newLogs, `Error adding user to Opsera Platform`);
-        throw "User was successfully added to Organization but could not be added to Opsera Platform.";
+      try {
+        addLog(`Adding user [${userModel?.getData("emailAddress")}] to Opsera Platform.`);
+        const ssoUserResponse = await createSsoUser();
+
+        if (ssoUserResponse?.data?.status !== 200) {
+          throw ssoUserResponse;
+        }
+      }
+      catch (error) {
+        const errorLog = `Error adding user [${userModel?.getData("emailAddress")}] to Organization ${userModel?.getData("organizationName")}: ${parseError(error)}. Please check browser logs for more details.`;
+        addLog(errorLog);
+        console.error(error);
+        throw errorLog;
       }
 
-      newLogs = addLog(newLogs, `User [${userModel?.getData("emailAddress")}] successfully added to Opsera Platform.`);
+      addLog(`User [${userModel?.getData("emailAddress")}] successfully added to Opsera Platform.`);
       const groups = userModel.getArrayData("groups");
 
       if (Array.isArray(groups) && groups.length > 0) {
-        newLogs = addLog(newLogs, `Adding user [${userModel?.getData("emailAddress")}] to Groups [${JSON.stringify(groups)}].`);
-        await assignUserToSelectedGroups(newLogs, groups);
+        addLog(`Adding user [${userModel?.getData("emailAddress")}] to Groups [${JSON.stringify(groups)}].`);
+        await assignUserToSelectedGroups(groups);
       }
 
+      addLog(`The User creation process for [${userModel?.getData("emailAddress")}] has completed.`);
+      toastContext.showSystemInformationBanner(`
+        An invitation email has been sent to the user [${userModel?.getData("emailAddress")}] for completing registration. 
+        The user will have 7 days to finalize registration before the invitation expires.
+      `);
       return "Success";
     }
     finally {
@@ -152,7 +174,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
     return await userActions.createOpseraAccount(newSsoUser);
   };
 
-  const assignUserToSelectedGroups = async (newLogs, groups) => {
+  const assignUserToSelectedGroups = async (groups) => {
     const userEmail = userModel?.getData("emailAddress");
 
     for (let i = 0; i < groups.length; i++) {
@@ -161,7 +183,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
       const existingGroup = groupResponse?.data;
       const members = existingGroup?.members;
 
-      newLogs = addLog(newLogs, `Adding user [${userModel?.getData("emailAddress")}] to Group [${group}].`);
+      addLog(`Adding user [${userModel?.getData("emailAddress")}] to Group [${group}].`);
 
       if (existingGroup && Array.isArray(members)) {
         let emailList = members.reduce((acc, item) => {
@@ -171,13 +193,20 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
 
         if (Array.isArray(emailList) && !emailList.includes[userEmail]) {
           emailList.push(userEmail);
-          const response = await accountsActions.syncMembershipV2(getAccessToken, cancelTokenSource, orgDomain, group, emailList);
 
-          if (response?.status === 200) {
-            newLogs = addLog(newLogs, `User [${userModel?.getData("emailAddress")}] successfully added to Group [${group}].`);
+          try {
+            const response = await accountsActions.syncMembershipV2(getAccessToken, cancelTokenSource, orgDomain, group, emailList);
+
+            if (response?.status === 200) {
+              addLog(`User [${userModel?.getData("emailAddress")}] successfully added to Group [${group}].`);
+            }
+            else {
+              throw response;
+            }
           }
-          else {
-            newLogs = addLog(newLogs, `Error adding User [${userModel?.getData("emailAddress")}] to Group [${group}].`);
+          catch (error) {
+            console.error(error);
+            addLog(`Error adding User [${userModel?.getData("emailAddress")}] to Group [${group}]: ${parseError(error)}. Please check browser logs for more details`);
           }
         }
       }
@@ -193,18 +222,19 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
     return await accountsActions.updateUserV2(getAccessToken, cancelTokenSource, orgDomain, userModel);
   };
 
-  const addLog = (currentLogs, newLog) => {
-    if (isMounted?.current === true) {
-      const newLogs = [...currentLogs];
-      newLogs.push(`${newLog}\n`);
-      setLogs([...newLogs]);
-      return newLogs;
-    }
-  };
+  const addLog = useCallback((newLog) => {
+    setLogs(existingLogs => [...existingLogs, `${newLog}\n`]);
+    }, [setLogs]
+  );
+
+  const eraseLogs = useCallback(() => {
+    setLogs([]);
+    }, [setLogs]
+  );
 
   const closeLogs = () => {
     if (isMounted?.current === true) {
-      setLogs([]);
+      logs.current = [];
     }
   };
 
@@ -229,28 +259,28 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
         <Col sm={6}>
           <Row>
             <Col lg={6}>
-              <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"title"}/>
+              <TextInputBase disabled={isSaving === true} setDataObject={setUserModel} dataObject={userModel} fieldName={"title"}/>
             </Col>
             <Col lg={6}>
-              <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"preferredName"} />
+              <TextInputBase disabled={isSaving === true} setDataObject={setUserModel} dataObject={userModel} fieldName={"preferredName"} />
             </Col>
             <Col lg={6}>
-              <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"firstName"}/>
+              <TextInputBase disabled={isSaving === true} setDataObject={setUserModel} dataObject={userModel} fieldName={"firstName"}/>
             </Col>
             <Col lg={6}>
-              <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"lastName"}/>
+              <TextInputBase disabled={isSaving === true} setDataObject={setUserModel} dataObject={userModel} fieldName={"lastName"}/>
             </Col>
             <Col lg={12}>
-              <TextInputBase disabled={!userModel?.isNew()} setDataObject={setUserModel} dataObject={userModel} fieldName={"emailAddress"} />
+              <TextInputBase disabled={!userModel?.isNew() || isSaving === true} setDataObject={setUserModel} dataObject={userModel} fieldName={"emailAddress"} />
             </Col>
             <Col lg={12}>
-              <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"division"}/>
+              <TextInputBase disabled={isSaving === true} setDataObject={setUserModel} dataObject={userModel} fieldName={"division"}/>
             </Col>
             <Col lg={12}>
-              <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"site"}/>
+              <TextInputBase disabled={isSaving === true} setDataObject={setUserModel} dataObject={userModel} fieldName={"site"}/>
             </Col>
             <Col lg={12}>
-              <LdapGroupMultiSelectInput setModel={setUserModel} model={userModel} fieldName={"groups"}/>
+              <LdapGroupMultiSelectInput disabled={isSaving === true} setModel={setUserModel} model={userModel} fieldName={"groups"}/>
             </Col>
             <Col lg={12}>
               <BooleanToggleInput disabled={true} setDataObject={setUserModel} dataObject={userModel} fieldName={"localAuth"}/>
