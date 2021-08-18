@@ -29,7 +29,7 @@ import KafkaConnectToolConfiguration from "./tool_jobs/kafka_connect/KafkaConnec
 import CoverityToolConfiguration from "./tool_jobs/coverity/CoverityToolConfiguration";
 import TwistlockToolConfiguration from "./tool_jobs/twistlock/TwistlockToolConfiguration";
 import AzureV2ToolConfiguration from "./tool_jobs/azureV2/AzureV2ToolConfiguration";
-
+import AnsibleToolConfiguration from "./tool_jobs/ansible/AnsibleToolConfiguration";
 function ToolConfigurationPanel({ toolData }) {
   const getConfiguration = () => {
     if (toolData == null) {
@@ -90,6 +90,8 @@ function ToolConfigurationPanel({ toolData }) {
         return <TwistlockToolConfiguration toolData={toolData} />;
       case "azure":
         return <AzureV2ToolConfiguration toolData={toolData} />;
+      case "ansible":
+        return <AnsibleToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
     }
