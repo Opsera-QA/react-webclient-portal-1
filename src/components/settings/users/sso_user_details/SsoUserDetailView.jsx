@@ -75,7 +75,6 @@ function SsoUserDetailView() {
     const user = response?.data?.user;
 
     if (user != null) {
-      console.log("user: " + JSON.stringify(user));
       setSsoUserData(new Model(user, ssoUserMetadata, false));
     }
   };

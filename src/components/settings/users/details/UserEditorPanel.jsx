@@ -17,7 +17,7 @@ import {ssoUserMetadata} from "components/settings/users/sso-user-metadata";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import LdapGroupMultiSelectInput
   from "components/common/list_of_values_input/settings/groups/LdapGroupMultiSelectInput";
-import ActiveLogTerminal from "components/common/logging/ActiveLogTerminal";
+import InlineActiveLogTerminalBase from "components/common/logging/InlineActiveLogTerminalBase";
 
 function UserEditorPanel({ userData, orgDomain, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -193,16 +193,6 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
     return await accountsActions.updateUserV2(getAccessToken, cancelTokenSource, orgDomain, userModel);
   };
 
-  const getLogs = () => {
-    if (isSaving && logs.length > 0) {
-      return (
-        <Col lg={12}>
-          <ActiveLogTerminal logs={logs} handleClose={closeLogs} />
-        </Col>
-      );
-    }
-  };
-
   const addLog = (currentLogs, newLog) => {
     if (isMounted?.current === true) {
       const newLogs = [...currentLogs];
@@ -236,34 +226,49 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
       disable={isSaving === true}
     >
       <Row>
-        <Col lg={4}>
-          <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"title"}/>
+        <Col sm={6}>
+          <Row>
+            <Col lg={6}>
+              <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"title"}/>
+            </Col>
+            <Col lg={6}>
+              <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"preferredName"} />
+            </Col>
+            <Col lg={6}>
+              <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"firstName"}/>
+            </Col>
+            <Col lg={6}>
+              <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"lastName"}/>
+            </Col>
+            <Col lg={12}>
+              <TextInputBase disabled={!userModel?.isNew()} setDataObject={setUserModel} dataObject={userModel} fieldName={"emailAddress"} />
+            </Col>
+            <Col lg={12}>
+              <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"division"}/>
+            </Col>
+            <Col lg={12}>
+              <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"site"}/>
+            </Col>
+            <Col lg={12}>
+              <LdapGroupMultiSelectInput setModel={setUserModel} model={userModel} fieldName={"groups"}/>
+            </Col>
+            <Col lg={12}>
+              <BooleanToggleInput disabled={true} setDataObject={setUserModel} dataObject={userModel} fieldName={"localAuth"}/>
+            </Col>
+          </Row>
         </Col>
-        <Col lg={4}>
-          <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"firstName"}/>
+        <Col sm={6}>
+          <Row>
+            <Col lg={12}>
+              <InlineActiveLogTerminalBase
+                logs={logs}
+                handleClose={closeLogs}
+                title={"User Creation Log"}
+                noDataMessage={"Once the User creation process begins, logs will appear here."}
+              />
+            </Col>
+          </Row>
         </Col>
-        <Col lg={4}>
-          <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"lastName"}/>
-        </Col>
-        <Col lg={6}>
-          <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"preferredName"} />
-        </Col>
-        <Col lg={6}>
-          <TextInputBase disabled={!userModel?.isNew()} setDataObject={setUserModel} dataObject={userModel} fieldName={"emailAddress"} />
-        </Col>
-        <Col lg={6}>
-          <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"division"}/>
-        </Col>
-        <Col lg={6}>
-          <TextInputBase setDataObject={setUserModel} dataObject={userModel} fieldName={"site"}/>
-        </Col>
-        <Col lg={6}>
-          <LdapGroupMultiSelectInput setModel={setUserModel} model={userModel} fieldName={"groups"}/>
-        </Col>
-        <Col lg={6}>
-          <BooleanToggleInput disabled={true} setDataObject={setUserModel} dataObject={userModel} fieldName={"localAuth"}/>
-        </Col>
-        {getLogs()}
       </Row>
     </EditorPanelContainer>
   );

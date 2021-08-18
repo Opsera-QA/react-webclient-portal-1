@@ -7,6 +7,7 @@ import VanityTable from "components/common/table/VanityTable";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {ssoUserMetadata} from "components/settings/users/sso-user-metadata";
 import {useHistory} from "react-router-dom";
+import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
 function PendingUsersTable({ pendingUserData, isLoading, loadData }) {
   const fields = ssoUserMetadata.fields;
@@ -40,14 +41,23 @@ function PendingUsersTable({ pendingUserData, isLoading, loadData }) {
   };
 
   return (
-    <FilterContainer
-      loadData={loadData}
-      isLoading={isLoading}
-      body={getUsersTable()}
-      titleIcon={faUserHardHat}
-      showBorder={false}
-      title={"Pending Users"}
-    />
+    <div>
+      <InlineWarning
+        className={"mx-2"}
+        warningMessage={`
+        These users have started registration but have not logged into the platform yet.
+        Until they complete a successful login, they will not be available for user management or group association.
+        `}
+      />
+      <FilterContainer
+        loadData={loadData}
+        isLoading={isLoading}
+        body={getUsersTable()}
+        titleIcon={faUserHardHat}
+        showBorder={false}
+        title={"Pending Users"}
+      />
+    </div>
   );
 }
 
