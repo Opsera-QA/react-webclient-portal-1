@@ -1,10 +1,9 @@
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import {faSpinner, faTh} from "@fortawesome/pro-light-svg-icons";
 import "components/analytics/charts/charts.css";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
-import {AuthContext} from "contexts/AuthContext";
 
 function MetricContainer({ isLoading, children, title, chartHelpComponent }) {
   const [helpIsShown, setHelpIsShown] = useState(false);
@@ -14,11 +13,6 @@ function MetricContainer({ isLoading, children, title, chartHelpComponent }) {
   };
 
   const getHelpToggle = () => {
-    // TODO: Remove feature flag after verification
-    if (featureFlagHideItemInProd()) {
-      return null;
-    }
-
     if (chartHelpComponent && !helpIsShown) {
       return (
         <ActionBarToggleHelpButton
