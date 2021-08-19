@@ -67,7 +67,7 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"} visible={!isSassUser()}/>
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"userManagement"} visible={!isSassUser() && !envIsProd && !envIsTest}/>
+          <BreadcrumbPageLink breadcrumbDestination={"userManagement"} visible={!isSassUser()}/>
         </>
       );
     }
