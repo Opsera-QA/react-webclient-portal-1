@@ -624,15 +624,10 @@ function StepToolConfiguration({
       case "anchore-integrator":
         return (
           <AnchoreIntegratorStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
+            plan={pipeline?.workflow?.plan}
             stepId={stepId}
             stepTool={stepTool}
             parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
-            setToast={setToast}
-            setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
           />
         );

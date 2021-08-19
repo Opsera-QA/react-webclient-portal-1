@@ -220,7 +220,7 @@ pipelineHelpers.formatStepOptions = (plan, stepId) => {
     0,
     plan.findIndex((element) => element._id === stepId),
   );
-  console.log(STEP_OPTIONS);
+  // console.log(STEP_OPTIONS);
   return STEP_OPTIONS;
 };
 

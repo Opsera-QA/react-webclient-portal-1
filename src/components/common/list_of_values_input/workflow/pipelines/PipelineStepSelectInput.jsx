@@ -51,7 +51,7 @@ PipelineStepSelectInput.propTypes = {
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   stepId: PropTypes.string,
-  plan: PropTypes.object,
+  plan: PropTypes.any,
 };
 
 export default PipelineStepSelectInput;
