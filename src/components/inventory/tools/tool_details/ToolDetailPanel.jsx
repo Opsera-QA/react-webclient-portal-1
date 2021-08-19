@@ -32,6 +32,7 @@ import workflowAuthorizedActions
 import ToolAttributeEditorPanel from "components/inventory/tools/tool_details/ToolAttributeEditorPanel";
 import ToggleTab from "components/common/tabs/detail_view/ToggleTab";
 import ToolVaultPanel from "./ToolVaultPanel";
+import ToolRepositoriesPanel from "./ToolRepositoriesPanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
@@ -109,6 +110,12 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
             <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"}/>
           </>
         );
+      case "jfrog_artifactory_maven":
+        return (
+          <>
+            <CustomTab icon={faTable} tabName={"repositories"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Repositories"}/>
+          </>
+        );
       default: return <></>;
     }
   };
@@ -168,6 +175,8 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         return <ToolPipelinesPanel toolData={toolData} />;
       case "vault":
         return <ToolVaultPanel toolData={toolData} setToolData={setToolData} />;
+      case "repositories":
+        return <ToolRepositoriesPanel toolData={toolData} setToolData={setToolData} />;
       default:
         return null;
     }
