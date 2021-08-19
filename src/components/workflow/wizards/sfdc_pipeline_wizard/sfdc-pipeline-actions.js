@@ -1,5 +1,7 @@
 import baseActions from "utils/actionsBase";
 import {axiosApiService} from "api/apiService";
+import pipelineActivityActions
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-actions";
 
 const sfdcPipelineActions = {};
 
@@ -410,5 +412,66 @@ sfdcPipelineActions.getInvalidFileList = async (getAccessToken, cancelTokenSourc
 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
+
+sfdcPipelineActions.getPackageXmlFromRun = async (getAccessToken, cancelTokenSource, pipelineId, stepId, runNumber) => {
+  const response = await pipelineActivityActions.getPipelineActivityLogsByRunNumber(getAccessToken, cancelTokenSource, pipelineId, stepId, runNumber, "package creation", "console output");
+  const logs = response?.data?.data;
+
+  if (Array.isArray(logs) && logs.length > 0) {
+    return parsePackageXml(logs[0]);
+  }
+
+  return null;
+};
+
+const parsePackageXml = (log) => {
+  const re = new RegExp(/==== PACKAGE.XML =====((?!==== END PACKAGE.XML =====)[\s\S])*==== END PACKAGE.XML =====/);
+  const consoleLog = log?.api_response?.jenkinsConsoleLog ? log?.api_response?.jenkinsConsoleLog : log?.api_response?.jenkins_console_log;
+
+  console.log("consoleLog: " + JSON.stringify(consoleLog));
+
+  if (consoleLog == null) {
+    return null;
+  }
+
+  const matches = re.exec(consoleLog);
+
+  if (matches.length > 0) {
+    let xml = matches[0];
+    let splitArray = xml.length > 0 ? xml.split("\n") : [];
+    if (splitArray.length > 0) {
+      splitArray.splice(0, 1);
+      splitArray.pop();
+    }
+    let returnXML = splitArray.length > 0 ? splitArray.join("\n") : [];
+    return _xmlFormattingHelper(returnXML);
+  }
+
+  return false;
+};
+
+
+// TODO: Is this required or does the XMLFormatter work instead?
+const _xmlFormattingHelper = async (data) => {
+  try {
+    let returnVal = "";
+    let indentVal = "";
+    data.split(/>\s*</).forEach(function (line) {
+      if (line.match(/^\/\w/)) {
+        indentVal = indentVal.substring("  ".length);
+      }
+      returnVal += indentVal + "<" + line + ">\r\n";
+      if (line.match(/^<?\w[^>]*[^\/]$/)) {
+        indentVal += "  ";
+      }
+    });
+    returnVal = returnVal.substring(1, returnVal.length - 3);
+    return returnVal;
+  } catch (error) {
+    return data;
+  }
+};
+
+
 
 export default sfdcPipelineActions;
