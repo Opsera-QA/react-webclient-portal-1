@@ -124,7 +124,7 @@ function AccountRegistration() {
     const email = registrationDataDto?.getData("email");
     const validEmail = validateEmail(email);
 
-    if (validEmail === true && registrationDataDto?.getData("orgDomain") !== email.substring(email.lastIndexOf("@") + 1)) {
+    if (validEmail === true && registrationDataDto?.getData("ldapOrgDomain") !== email.substring(email.lastIndexOf("@") + 1)) {
       return (
         <div className="warning-text pl-4 mt-1">
           Warning, you are about to register an account with an email outside of your organization’s domain.
