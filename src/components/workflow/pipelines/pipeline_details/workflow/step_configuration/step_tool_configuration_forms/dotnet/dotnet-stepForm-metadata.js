@@ -148,9 +148,22 @@ const dotnetStepFormMetadata = {
       id: "solutionFileName",
     },
     {
-      label: "Command Line Arguments",
+      label: "Command Line Arguments (Job Level)",
       id: "commandLineArgs"
-    }
+    },
+    {
+      label: "Command Line Arguments",
+      id: "commandLineArguments"
+    },
+    {
+      label: "Opsera Script Library",
+      id: "scriptId"
+    },
+    {
+      label: "Parameters",
+      id: "customParameters",
+      maxItems: 15,
+    },
   ],
   newObjectFields: {
 
@@ -184,12 +197,15 @@ const dotnetStepFormMetadata = {
 
     agentLabels: "",
     workspaceName: "",
-    workspaceDeleteFlag: "",
+    workspaceDeleteFlag: false,
     outputPath: "",
     outputFileName: "",
     solutionFilePath: "",
     solutionFileName: "",
-    commandLineArgs: ""
+    commandLineArgs: "",
+    scriptId: "",
+    commandLineArguments: "",
+    customParameters: [],
   }
 };
 
