@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import blueprintsActions from "components/blueprint/blueprints-actions";
 import {AuthContext} from "contexts/AuthContext";
 import {parseError} from "components/common/helpers/error-helpers";
 import StandaloneXmlField from "components/common/fields/code/StandaloneXmlField";
+import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 
-function StandalonePackageXmlField({runNumber, pipelineId, className, setXmlFunction}) {
+function StandalonePackageXmlField({pipelineWizardModel, runNumber, className, setXmlFunction}) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -25,8 +25,8 @@ function StandalonePackageXmlField({runNumber, pipelineId, className, setXmlFunc
 
     setXml("");
     setErrorMessage("");
-    if (runNumber > 0 && pipelineId !== "" && pipelineId != null) {
-      loadData(pipelineId, runNumber).catch((error) => {
+    if (runNumber != null && runNumber > 0) {
+      loadData(source, runNumber).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
@@ -37,12 +37,12 @@ function StandalonePackageXmlField({runNumber, pipelineId, className, setXmlFunc
       source.cancel();
       isMounted.current = false;
     };
-  }, [runNumber, pipelineId]);
+  }, [runNumber]);
 
-  const loadData = async (newPipelineId, newRunNumber) => {
+  const loadData = async (cancelSource = cancelTokenSource,  newRunNumber) => {
     try {
       setIsLoading(true);
-      await pullXmlFromRun(newPipelineId, newRunNumber);
+      await pullXmlFromRun(cancelSource, newRunNumber);
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -57,9 +57,11 @@ function StandalonePackageXmlField({runNumber, pipelineId, className, setXmlFunc
     }
   };
 
-  const pullXmlFromRun = async (newPipelineId, newRunNumber) => {
-    const response = await blueprintsActions.getBlueprintSearchResultsManual(getAccessToken, cancelTokenSource, newPipelineId, newRunNumber);
-    const packageXml = response?.data?.reports?.xml?.xml;
+  const pullXmlFromRun = async (cancelSource = cancelTokenSource, newRunNumber) => {
+    const pipelineId = pipelineWizardModel?.getData("pipelineId");
+    const stepId = pipelineWizardModel?.getData("stepId");
+
+    const packageXml = await sfdcPipelineActions.getPackageXmlFromRun(getAccessToken, cancelSource, pipelineId, stepId, newRunNumber);
 
     if (isMounted?.current === true) {
       if (packageXml != null && packageXml !== "") {
@@ -88,7 +90,7 @@ function StandalonePackageXmlField({runNumber, pipelineId, className, setXmlFunc
 
 StandalonePackageXmlField.propTypes = {
   runNumber: PropTypes.number,
-  pipelineId: PropTypes.string,
+  pipelineWizardModel: PropTypes.object,
   className: PropTypes.string,
   setXmlFunction: PropTypes.func,
 };

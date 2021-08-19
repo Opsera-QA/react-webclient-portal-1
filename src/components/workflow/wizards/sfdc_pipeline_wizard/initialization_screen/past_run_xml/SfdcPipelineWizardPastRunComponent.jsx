@@ -48,7 +48,7 @@ function SfdcPipelineWizardPastRunComponent({ pipelineWizardModel, setPipelineWi
       <>
         <StandalonePackageXmlField
           runNumber={pipelineWizardModel?.getData("selectedRunNumber")}
-          pipelineId={pipelineWizardModel?.getData("pipelineId")}
+          pipelineWizardModel={pipelineWizardModel}
           setXmlFunction={validateXml}
         />
         {buttonContainer()}

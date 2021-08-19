@@ -49,6 +49,20 @@ pipelineActivityActions.getPipelineActivityLogsV3 = async (getAccessToken, cance
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+pipelineActivityActions.getPipelineActivityLogsByRunNumber = async (getAccessToken, cancelTokenSource, pipelineId, stepId, runNumber, stepName, action) => {
+  const apiUrl = `/pipelines/${pipelineId}/activity/v2/run/${runNumber}`;
+  const urlParams = {
+    params: {
+      fields: ["run_count", "pipeline_id", "step_id", "step_name", "action", "api_response", "status", "createdAt"],
+      stepName: stepName,
+      action: action,
+      stepId: stepId,
+    },
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 pipelineActivityActions.getPipelineActivityLogTree = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterDto) => {
   const search = pipelineActivityFilterDto?.getData("search");
   const urlParams = {
