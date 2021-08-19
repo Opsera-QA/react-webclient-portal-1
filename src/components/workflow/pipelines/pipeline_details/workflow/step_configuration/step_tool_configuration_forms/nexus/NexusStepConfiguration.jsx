@@ -32,17 +32,7 @@ function NexusStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdito
 
     if (plan && stepId) {
       let pipelineSteps = formatStepOptions(plan, stepId);
-      let groupedSteps = _.groupBy(pipelineSteps, "tool.tool_identifier");
-      let jenkinsSteps =
-        Object.keys(groupedSteps).length > 0
-          ? (groupedSteps.jenkins  || groupedSteps["command-line"])
-            ? ( (groupedSteps.jenkins  && groupedSteps["command-line"]) ?  [...groupedSteps.jenkins, ...groupedSteps["command-line"]] : groupedSteps.jenkins ? groupedSteps.jenkins : groupedSteps["command-line"] ? groupedSteps["command-line"] 
-            : [{ _id: "", name: "Please configure a jenkins build step", isDisabled: "yes" }]
-             )
-            : [{ _id: "", name: "Please configure a jenkins build step", isDisabled: "yes" }]
-          : [{ _id: "", name: "Please configure a jenkins build step", isDisabled: "yes" }];
-      
-      setListOfSteps(jenkinsSteps);
+      setListOfSteps(pipelineSteps);
     }
     setIsLoading(false);
   };
