@@ -17,7 +17,7 @@ import {
   faLifeRing,
   faCogs,
   faChartNetwork,
-  faCaretSquareUp, faAnalytics, faEnvelope, faCodeBranch,
+  faCaretSquareUp, faAnalytics, faEnvelope, faTasks,
 } from "@fortawesome/pro-light-svg-icons";
 import "./sidebar.css";
 
@@ -106,7 +106,7 @@ function FreeTrialNav({ accessRole, featureFlagHideItemInProd, featureFlagHideIt
             className="menu-text">Pipelines</span></NavLink>
 
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards">
+          <NavLink className="nav-link" activeClassName="chosen" to="/insights">
             <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
             className="menu-text">Insights</span></NavLink>
 
@@ -126,7 +126,7 @@ function FreeTrialNav({ accessRole, featureFlagHideItemInProd, featureFlagHideIt
 
           {accessRole.OpseraAdministrator && <>
             <div className="mt-4 mb-2 sub-header">Administration</div>
-            <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
+            <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
               <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
               className="menu-text">Tool Registry</span></NavLink>
 
@@ -169,13 +169,13 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards">
+          <NavLink className="nav-link" activeClassName="chosen" to="/insights">
             <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
             className="menu-text">Insights</span></NavLink>
 
           {/*<div className="d-flex flex-row">
             <div>
-              <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards"
+              <NavLink className="nav-link" activeClassName="chosen" to="/insights"
                        onClick={() => setInsights(true)}>
                 <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
                 className="menu-text">Insights</span>
@@ -190,7 +190,7 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
           </div>
 
           {insights && <>
-            <NavLink className="nav-link no-wrap" activeClassName="chosen" exact to="/insights/dashboards">
+            <NavLink className="nav-link no-wrap" activeClassName="chosen" exact to="/insights">
               <span className="menu-text-sub">My Dashboards</span>
             </NavLink>
 
@@ -203,7 +203,7 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
           </>}*/}
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
-          <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
+          <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
@@ -220,13 +220,13 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
             <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
             className="menu-text">Notifications</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/git">
-            <FontAwesomeIcon size="lg" icon={faCodeBranch} fixedWidth/> <span
-            className="menu-text">Git</span></NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/task">
+            <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
+            className="menu-text">Tasks</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/update">
-            <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
-            className="menu-text">Updates</span></NavLink>
+          {/*<NavLink className="nav-link" activeClassName="chosen" to="/update">*/}
+          {/*  <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span*/}
+          {/*  className="menu-text">Updates</span></NavLink>*/}
           <NavLink className="nav-link" activeClassName="chosen" to="/settings">
             <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span
             className="menu-text">Settings</span></NavLink>
@@ -265,13 +265,13 @@ function SaasUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideIte
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards">
+          <NavLink className="nav-link" activeClassName="chosen" to="/insights">
             <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
             className="menu-text">Insights</span></NavLink>
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
+          <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
@@ -288,13 +288,13 @@ function SaasUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideIte
             <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
             className="menu-text">Notifications</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/git">
-            <FontAwesomeIcon size="lg" icon={faCodeBranch} fixedWidth/> <span
-            className="menu-text">Git</span></NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/task">
+            <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
+            className="menu-text">Tasks</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/update">
-            <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
-            className="menu-text">Updates</span></NavLink>
+          {/*<NavLink className="nav-link" activeClassName="chosen" to="/update">*/}
+          {/*  <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span*/}
+          {/*  className="menu-text">Updates</span></NavLink>*/}
           <NavLink className="nav-link" activeClassName="chosen" to="/settings">
             <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span
             className="menu-text">Settings</span></NavLink>
@@ -330,13 +330,13 @@ function AccountAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards">
+          <NavLink className="nav-link" activeClassName="chosen" to="/insights">
             <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
             className="menu-text">Insights</span></NavLink>
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
+          <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
@@ -353,13 +353,13 @@ function AccountAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
             className="menu-text">Notifications</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/git">
-            <FontAwesomeIcon size="lg" icon={faCodeBranch} fixedWidth/> <span
-            className="menu-text">Git</span></NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/task">
+            <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
+            className="menu-text">Tasks</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/update">
-            <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
-            className="menu-text">Updates</span></NavLink>
+          {/*<NavLink className="nav-link" activeClassName="chosen" to="/update">*/}
+          {/*  <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span*/}
+          {/*  className="menu-text">Updates</span></NavLink>*/}
           <NavLink className="nav-link" activeClassName="chosen" to="/settings">
             <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span
             className="menu-text">Settings</span></NavLink>
@@ -394,13 +394,13 @@ function AccountPowerUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards">
+          <NavLink className="nav-link" activeClassName="chosen" to="/insights">
             <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
             className="menu-text">Insights</span></NavLink>
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
+          <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
@@ -417,13 +417,13 @@ function AccountPowerUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
             className="menu-text">Notifications</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/git">
-            <FontAwesomeIcon size="lg" icon={faCodeBranch} fixedWidth/> <span
-            className="menu-text">Git</span></NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/task">
+            <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
+            className="menu-text">Tasks</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/update">
-            <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
-            className="menu-text">Updates</span></NavLink>
+          {/*<NavLink className="nav-link" activeClassName="chosen" to="/update">*/}
+          {/*  <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span*/}
+          {/*  className="menu-text">Updates</span></NavLink>*/}
           <NavLink className="nav-link" activeClassName="chosen" to="/settings">
             <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span
             className="menu-text">Settings</span></NavLink>
@@ -459,13 +459,13 @@ function DefaultUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHide
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards">
+          <NavLink className="nav-link" activeClassName="chosen" to="/insights">
             <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
             className="menu-text">Insights</span></NavLink>
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
+          <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
@@ -474,17 +474,17 @@ function DefaultUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHide
             <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
             className="menu-text">Blueprints</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/reports">
-            <FontAwesomeIcon size="lg" icon={faAnalytics} fixedWidth/> <span
-            className="menu-text">Reports</span></NavLink>
+          {/*<NavLink className="nav-link" activeClassName="chosen" to="/reports">*/}
+          {/*  <FontAwesomeIcon size="lg" icon={faAnalytics} fixedWidth/> <span*/}
+          {/*  className="menu-text">Reports</span></NavLink>*/}
 
           <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
             <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
             className="menu-text">Notifications</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/git">
-            <FontAwesomeIcon size="lg" icon={faCodeBranch} fixedWidth/> <span
-            className="menu-text">Git</span></NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/task">
+            <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
+            className="menu-text">Tasks</span></NavLink>
 
 
         </div>

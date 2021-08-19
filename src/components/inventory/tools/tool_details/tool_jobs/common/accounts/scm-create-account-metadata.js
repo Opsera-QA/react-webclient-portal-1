@@ -1,8 +1,6 @@
-import regexHelpers from "utils/regexHelpers";
-
 const scmCreateAccountMetadata = {
     type: "Account Credential",
-    fields: [      
+    fields: [
       {
         label: "Tool",
         id: "toolId",
@@ -17,14 +15,14 @@ const scmCreateAccountMetadata = {
         label: "Workspace/Project",
         id: "workspaceName",
         maxLength: 255,
-        regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+        regexDefinitionName: "generalTextWithSpaces",
       },
       {
         label: "Repository",
         id: "repository",
         isRequired: true,
         maxLength: 255,
-        regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+        regexDefinitionName: "generalTextWithSpaces",
       },
       {
         label: "Account Name",
@@ -71,20 +69,14 @@ const scmCreateAccountMetadata = {
         label: "Workspace/Project",
         id: "workspaceName",
         maxLength: 255,
-        regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+        regexDefinitionName: "generalTextWithSpaces",
       },
       {
         label: "Repository",
         id: "repository",
         isRequired: true,
         maxLength: 255,
-        regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
-      },
-      {
-        label: "Username",
-        id: "accountUsername",
-        isRequired: true,
-        maxLength: 100
+        regexDefinitionName: "generalTextWithSpaces",
       },
       {
         label: "Password",
@@ -106,7 +98,61 @@ const scmCreateAccountMetadata = {
         id: "twoFactorAuthentication",
       },
     ],
-    newModelBase: {
+    fieldsToken: [
+      {
+        label: "Tool",
+        id: "toolId",
+        isRequired: true
+      },
+      {
+        label: "Platform",
+        id: "service",
+        isRequired: true
+      },
+      {
+        label: "Workspace/Project",
+        id: "workspaceName",
+        maxLength: 255,
+        regexDefinitionName: "generalTextWithSpaces",
+      },
+      {
+        label: "Repository",
+        id: "repository",
+        isRequired: true,
+        maxLength: 255,
+        regexDefinitionName: "generalTextWithSpaces",
+      },
+      {
+        label: "Account Name",
+        id: "reviewerName",
+        isRequired: true,
+        maxLength: 100
+      },
+      {
+        label: "Account Type",
+        id: "accountType",
+        isRequired: true,        
+      },
+      {
+        label: "Personal Access Token",
+        id: "accountPassword",
+        isRequired: true,
+        maxLength: 256
+      },
+      {
+        label: "Private Key",
+        id: "secretPrivateKey",
+      },
+      {
+        label: "Access Key",
+        id: "secretAccessTokenKey",
+      },
+      {
+        label: "Enable Two-Factor Authentication",
+        id: "twoFactorAuthentication",
+      },
+    ],
+    newObjectFields: {
       toolId: "",
       service: "",
       workspaceName: "",

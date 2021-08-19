@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import {faCogs, faTag, faExclamationCircle, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {faTag, faExclamationCircle, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import "components/analytics/charts/charts.css";
 import KpiSettingsForm from "components/insights/marketplace/charts/KpiSettingsForm";
 import {getChartIconFromKpiConfiguration} from "components/insights/charts/charts-helpers";
@@ -9,40 +9,122 @@ import InfoDialog from "components/common/status_notifications/info";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";
 import CustomBadge from "components/common/badges/CustomBadge";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
+import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
+import GenericChartSettingsHelpDocumentation
+  from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
+import {AuthContext} from "contexts/AuthContext";
 
-function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, index, chart, isLoading, error, loadChart, setKpis, tableChart }) {
+function ChartContainer(
+  {
+    kpiConfiguration,
+    setKpiConfiguration,
+    dashboardData,
+    index,
+    chart,
+    isLoading,
+    error,
+    loadChart,
+    setKpis,
+    tableChart,
+    chartHelpComponent,
+    settingsHelpComponent,
+    showSettingsToggle,
+  }) {
   const [view, setView] = useState("chart");
-  // const changeView = () => {
-  //   setView(view === "chart" ? "settings" : "chart");
-  // }
+  const [helpIsShown, setHelpIsShown] = useState(false);
+  const { featureFlagHideItemInProd } = useContext(AuthContext);
+
+  const closeHelpPanel = () => {
+    setHelpIsShown(false);
+  };
+
+  const getHelpToggle = () => {
+    // TODO: Remove feature flag after verification
+    if (featureFlagHideItemInProd()) {
+      return null;
+    }
+
+    if ((view !== "chart" || chartHelpComponent) && !helpIsShown) {
+      return (
+        <ActionBarToggleHelpButton
+          helpIsShown={helpIsShown}
+          toggleHelp={() => setHelpIsShown(!helpIsShown)}
+          visible={!helpIsShown}
+          size={"1x"}
+        />
+      );
+    }
+  };
+
+  const getSettingsHelpComponent = () => {
+    if (settingsHelpComponent) {
+      settingsHelpComponent(closeHelpPanel);
+    }
+
+    return (
+      <GenericChartSettingsHelpDocumentation closeHelpPanel={closeHelpPanel} />
+    );
+  };
+
+  // TODO: This is a workaround, but I want to come up with a better solution
+  const getSettingsToggle = () => {
+    if (showSettingsToggle !== false) {
+      return (
+        <ToggleSettingsIcon
+          className={"ml-2"}
+          visible={!helpIsShown}
+          activeTab={view}
+          setActiveTab={setView}
+        />
+      );
+    }
+  };
 
   const getTitleBar = () => {
     if (isLoading) {
       return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Chart</span>);
     }
-    else if (error) {
-      return (<span><FontAwesomeIcon icon={faExclamationCircle} spin fixedWidth className="mr-1"/>Error Loading Chart!</span>);
-    }
-    else {
+
+    if (error) {
       return (
         <div className="d-flex justify-content-between">
-          <div><FontAwesomeIcon icon={getChartIconFromKpiConfiguration(kpiConfiguration)} fixedWidth className="mr-1"/>{kpiConfiguration?.kpi_name}</div>
-          <div><ToggleSettingsIcon activeTab={view} setActiveTab={setView}/></div>
+          <span>
+            <FontAwesomeIcon icon={faExclamationCircle} spin fixedWidth className="mr-1"/>
+            Error Loading Chart!
+          </span>
+          <div>
+            {getSettingsToggle()}
+          </div>
         </div>
       );
     }
+
+    return (
+      <div className="d-flex justify-content-between">
+        <div>
+          <FontAwesomeIcon icon={getChartIconFromKpiConfiguration(kpiConfiguration)} fixedWidth className="mr-1"/>
+          {kpiConfiguration?.kpi_name}
+        </div>
+        <div className={"d-flex"}>
+          {getHelpToggle()}
+          {getSettingsToggle()}
+        </div>
+      </div>
+    );
   };
 
   // TODO: Make ErrorChartContainer
   const getChartBody = () => {
-    if (error) {
-      return (
-        <span>There was an error loading this chart: {error.message}. Please check logs for more details.</span>
-      );
-    }
-
     if (view === "settings") {
-      return(
+      if (helpIsShown) {
+        return (
+          <div className={"m-2"}>
+            {getSettingsHelpComponent()}
+          </div>
+        );
+      }
+
+      return (
         <KpiSettingsForm
           kpiConfiguration={kpiConfiguration}
           setKpiConfiguration={setKpiConfiguration}
@@ -52,6 +134,20 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
           setKpis={setKpis}
           setView={setView}
         />
+      );
+    }
+
+    if (error) {
+      return (
+        <span>There was an error loading this chart: {error.message}. Please check logs for more details.</span>
+      );
+    }
+
+    if (helpIsShown) {
+      return (
+        <div className={"m-2"}>
+          {chartHelpComponent(closeHelpPanel)}
+        </div>
       );
     }
 
@@ -71,7 +167,7 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
     }
 
     return (
-      <div>
+      <div className={tableChart === true ? "shaded-panel" : "new-chart m-2 shaded-panel"}>
         {chart}
       </div>
     );
@@ -79,8 +175,10 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
 
   const getTagBadges = () => {
     const tags = kpiConfiguration?.filters[kpiConfiguration?.filters?.findIndex((obj) => obj.type === "tags")]?.value;
+    const useKpiTags = kpiConfiguration?.settings?.useKpiTags !== false;
+    const useDashboardTags = kpiConfiguration?.settings?.useDashboardTags !== false;
 
-    if (Array.isArray(tags) && tags.length > 0) {
+    if (Array.isArray(tags) && tags.length > 0 && useKpiTags) {
       return (
         <CustomBadgeContainer>
           {tags.map((item, index) => {
@@ -92,6 +190,7 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
         </CustomBadgeContainer>
       );
     }
+    if (useDashboardTags) {return <div className={"m-1 p-2"}>Dashboard Tags Applied</div>;}
   };
 
   return (
@@ -99,14 +198,13 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
       <div className="px-2 content-block-header-inverse title-text-header-2">
         {getTitleBar()}
       </div>
-      <div className={tableChart === true ? "shaded-panel" : "new-chart m-2 shaded-panel"}>
+      <div>
         {getChartBody()}
       </div>
       {getTagBadges()}
     </div>
   );
 }
-
 
 ChartContainer.propTypes = {
   chart: PropTypes.object,
@@ -118,7 +216,10 @@ ChartContainer.propTypes = {
   setKpiConfiguration: PropTypes.func,
   setKpis: PropTypes.func,
   loadChart: PropTypes.func,
-  tableChart: PropTypes.bool
+  tableChart: PropTypes.bool,
+  chartHelpComponent: PropTypes.func,
+  settingsHelpComponent: PropTypes.func,
+  showSettingsToggle: PropTypes.bool,
 };
 
 export default ChartContainer;

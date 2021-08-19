@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import PropTypes from "prop-types";
 import dotNetStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/dotnet-stepForm-metadata";
@@ -20,7 +21,10 @@ import DotNetGitBranchInput
 import DotNetBitbucketWorkspaceInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetBitbucketWorkspaceInput";
 import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
-
+import ScriptLibrarySelectInput
+  from "components/common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
+import ParameterSelectListInputBase
+  from "components/common/list_of_values_input/parameters/ParameterSelectListInputBase";
 function DotNetStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
   const [jobType, setJobType] = useState("");
@@ -95,6 +99,27 @@ function DotNetStepConfiguration({ pipelineId, stepTool, stepId, createJob, clos
       <DotNetGitRepositoryInput dataObject={dotNetStepConfigurationDto} setDataObject={setDotNetStepConfigurationDataDto} />
       <DotNetGitBranchInput  dataObject={dotNetStepConfigurationDto} setDataObject={setDotNetStepConfigurationDataDto} />
       <WorkspaceDeleteToggleInput dataObject={dotNetStepConfigurationDto} setDataObject={setDotNetStepConfigurationDataDto} fieldName={"workspaceDeleteFlag"} />
+      <TextAreaInput 
+        dataObject={dotNetStepConfigurationDto}                         
+        setDataObject={setDotNetStepConfigurationDataDto}
+        fieldName={"commandLineArguments"} 
+      />
+      <ParameterSelectListInputBase
+        dataObject={dotNetStepConfigurationDto}
+        setDataObject={setDotNetStepConfigurationDataDto}
+        fieldName={"customParameters"}
+        allowIncompleteItems={true}
+        type={"Parameter"}
+        regexValidationRequired={false}
+        titleText={"Parameter Selection"}
+      />
+      <ScriptLibrarySelectInput
+        fieldName={"scriptId"}
+        dataObject={dotNetStepConfigurationDto}
+        setDataObject={setDotNetStepConfigurationDataDto}
+        busy={isLoading}
+        disabled={isLoading}
+      />
       <TextInputBase setDataObject={setDotNetStepConfigurationDataDto} dataObject={dotNetStepConfigurationDto} fieldName={"outputPath"} />
       <TextInputBase setDataObject={setDotNetStepConfigurationDataDto} dataObject={dotNetStepConfigurationDto} fieldName={"outputFileName"} />
       <TextInputBase setDataObject={setDotNetStepConfigurationDataDto} dataObject={dotNetStepConfigurationDto} fieldName={"solutionFilePath"} />

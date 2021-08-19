@@ -30,6 +30,10 @@
     z-index: 2000;
 }
 
+.input-button {
+    height: calc(1.5em + .75rem + 2px);
+}
+
 .btn {
     border-radius: .1rem;
 }
@@ -284,8 +288,14 @@
     background-color: #1578dc;
 }
 
+.badge-opsera {
+    color: #fff;
+    background-color: #352F54;
+}
+
 .clear-value-badge {
     font-weight: normal;
+    height: 18px;
 }
 
 .badge-primary[href]:hover, .badge-primary[href]:focus {
@@ -400,6 +410,19 @@ a.text-primary:hover, a.text-primary:focus {
     font-size: .8em;
 }
 
+.filter-title-bar {
+    border: 1px solid #e4e4e4;
+}
+
+.dhx_grid-less-width {
+    width: 0;
+}
+
+.custom-table .dhx_grid-filter__label {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
 .custom-table-filter .btn {
     font-size: 1em;
 }
@@ -416,8 +439,30 @@ a.text-primary:hover, a.text-primary:focus {
     overflow-y: auto;
 }
 
+.table-tree {
+    height: 500px;
+    border: 1px solid #dfdfdf;
+    border-right: 0;
+    background: #fff;
+    width: 25%;
+}
+
+.table-tree-with-paginator {
+    height: 454px;
+    border-bottom: 1px solid #dfdfdf;
+}
+
+.tree-table {
+    width: 75%;
+}
+
+/*Don't show pointer unless onclick handler is wired up to new table'*/
+.hide-grid-pointer .dhx_grid-cell [role=button] {
+    cursor: default;
+}
+
 .custom-table th {
-    background-color: #fff; /*#2588ec;*/
+    background-color: #f7f7f7; /*#2588ec;*/
     border-bottom: 1px solid #E6E5E3; /*#3598fc;*/
     color: #3D3B36;
     line-height: 2.4em;
@@ -440,7 +485,9 @@ a.text-primary:hover, a.text-primary:focus {
 .custom-table .table-row {
     margin-bottom: 2em;
     line-height: 2em;
-    /* border-bottom: 1px solid #E6E5E3; */
+}
+
+.custom-table .table-row, .primary-background {
     color: #3D3B36;
     background-color: #fff;
 }
@@ -476,6 +523,9 @@ a.text-primary:hover, a.text-primary:focus {
 
 .custom-table .top-pagination {
     background-color: #E6E5E3;
+    border: 1px solid #e4e4e4;
+    border-bottom: none;
+    border-top: none;
 }
 
 .custom-table .status-icon {
@@ -488,7 +538,12 @@ a.text-primary:hover, a.text-primary:focus {
   background: rgba(230, 229, 227, .5);
 }
 
-.custom-table > tbody > tr:nth-child(even) {
+.title-bar-selection-row {
+    background: rgba(230, 229, 227, .3);
+    height: 33px;
+}
+
+.custom-table > tbody > tr:nth-child(even), .alt-background {
   background: rgba(230, 229, 227, .5); /* Same color as #E6E5E3, only slightly more transparent */
 }
 
@@ -815,7 +870,7 @@ a.nav-link {
 
 .new-user-header {
     padding: .3em 1em;
-    background-color: #46415C;
+    background-color: #46415C !important;
     border-color: #46415C;
     color: #fff;
     margin-top: 0;
@@ -1049,6 +1104,11 @@ div.data-blocks-body {
   height: 100%;
 }
 
+.selected-data-block {
+    border-bottom: 2px solid #CF940C !important;
+    border-radius: 5px;
+}
+
 div.data-blocks-status {
   content: "";
   width: 10px;
@@ -1253,6 +1313,10 @@ div.data-blocks-ellipses {
     min-width: 600px; /* Max Width of the popover */
 }
 
+#popover-basic {
+    z-index: 2000;
+}
+
 .filter-bar {
     background-color: #E8E8E8;
 }
@@ -1314,8 +1378,15 @@ div.data-blocks-ellipses {
 
 /* Filter Container Styling */
 .filter-container {
+}
+
+.filter-container-body, .table-border {
     border: 1px solid #E6E5E3;
     border-collapse: collapse;
+}
+
+.filter-container-no-border {
+    border: 0;
 }
 
 .filter-container .content-block-header {
@@ -1521,9 +1592,48 @@ div.data-blocks-ellipses {
     margin: 10px auto auto;
 }
 
-/* TODO: Remove and change to w-100 if no custom styling is needed*/
 .full-width-center-overlay {
-    width: 100%;
+    margin: 10px;
+    /* full-height - button panel height */
+    height: calc(100% - 63px);
+}
+
+.full-screen-center-overlay {
+    /* full-height of container - button panel height */
+    height: calc(100vh - 100px);
+}
+
+.full-screen-overlay-panel-body {
+    overflow-y: auto;
+    /* full-height - (10px x 2 top + bottom margins - button panel height) */
+    height: calc(100vh - 20px - 70px);
+    max-height: calc(100vh - 20px - 70px);
+}
+
+.full-screen-overlay-panel-body-with-buttons {
+    overflow-y: auto;
+    /* full-height - (10px x 2 top + bottom margins - title height - button panel height) */
+    height: calc(100vh - 20px - 48px - 63px);
+    max-height: calc(100vh - 20px - 48px - 63px);
+}
+
+.full-screen-overlay-tab-panel-body-with-buttons {
+    overflow-y: hidden;
+    height: calc(100vh - 20px - 48px - 63px - 45px);
+    max-height: calc(100vh - 20px - 48px - 63px - 45px);
+    border-bottom: 1px solid #dee2e6;
+}
+
+.full-screen-overlay-tab-panel-inner-body-with-buttons {
+    overflow-y: auto;
+    height: calc(100vh - 20px - 48px - 63px - 85px);
+    max-height: calc(100vh - 20px - 48px - 63px - 85px);
+}
+
+.overlay-margin {
+    /* height is 100% - 10px x2 top and bottom margins */
+    height: calc(100% - 20px);
+    margin: 10px;
 }
 
 .center-overlay-shadow-background {
@@ -1534,14 +1644,39 @@ div.data-blocks-ellipses {
 .overlay-panel {
     position: fixed;
     overflow-x: hidden;
-    overflow-y: auto;
     z-index: 1500;
-    height: 100%;
-    max-height: 100%;
+
+    /* full-height - (10px x 2 top + bottom margins) */
+    height: calc(100% - 20px);
+    max-height: calc(100% - 20px);
 }
 
-.overlay-panel .overlay-panel-body {
-    min-height: 100% !important;
+.overlay-panel-body {
+    overflow-y: auto;
+    /* full-height - (10px x 2 top + bottom margins - title height) */
+    min-height: 500px;
+    height: calc(100% - 48px);
+    max-height: calc(100% - 48px);
 }
 
 /* End Overlay Panel styling */
+
+/* Loading Input Icon Styling */
+.loading-input-wrapper {
+    display:inline-block;
+    position: relative;
+}
+
+.loading-input-wrapper:after {
+    font-family: 'FontAwesome';
+    content: '\f110';
+    position: absolute;
+    right: 6px;
+    top: 7px;
+    -webkit-animation: fa-spin 2s infinite linear;
+    animation: fa-spin 2s infinite linear;
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.5;
+}
+/* End Loading Input Icon Styling */

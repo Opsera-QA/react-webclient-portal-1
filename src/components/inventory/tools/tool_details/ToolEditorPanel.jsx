@@ -5,26 +5,20 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import toolsActions from "components/inventory/tools/tools-actions";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import ToolClassificationSelectInput
-  from "components/common/list_of_values_input/inventory/ToolClassificationSelectInput";
-import RegistryToolIdentifierSelectInput
-  from "components/inventory/tools/tool_details/input/RegistryToolIdentifierSelectInput";
+import ToolClassificationSelectInput from "components/common/list_of_values_input/inventory/ToolClassificationSelectInput";
+import RegistryToolIdentifierSelectInput from "components/inventory/tools/tool_details/input/RegistryToolIdentifierSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
-import RegistryToolLocationInput from "components/inventory/tools/tool_details/input/RegistryToolLocationInput";
-import RegistryToolApplicationsInput from "components/inventory/tools/tool_details/input/RegistryToolApplicationsInput";
-import RegistryToolOrganizationInput from "components/inventory/tools/tool_details/input/RegistryToolOrganizationInput";
-import RegistryToolContactInput from "components/inventory/tools/tool_details/input/RegistryToolContactInput";
 import TagManager from "components/common/inputs/tags/TagManager";
+import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import axios from "axios";
 
 function ToolEditorPanel({ toolData, handleClose }) {
-  const { getAccessToken } = useContext(AuthContext);
+  const { getAccessToken, isSassUser } = useContext(AuthContext);
   const [toolDataDto, setToolDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
+  
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -61,24 +55,14 @@ function ToolEditorPanel({ toolData, handleClose }) {
   };
 
   const getDynamicFields = () => {
-    if (toolData?.isNew()) {
+    if (toolData?.isNew() && !isSassUser()) {
       return (
-        <>
-          <Col lg={6}>
-            <RegistryToolOrganizationInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
-          </Col>
-          <Col lg={6}>
-            <RegistryToolLocationInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
-          </Col>
-          <Col lg={6}>
-            <RegistryToolContactInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
-          </Col>
-          <Col lg={6}>
-            <RegistryToolApplicationsInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
-          </Col>
-        </>
+        <Col lg={12} className="mb-4">
+          <RoleAccessInput dataObject={toolDataDto} setDataObject={setToolDataDto} fieldName={"roles"}/>
+        </Col>
       );
     }
+    return null;
   };
 
   return (
@@ -88,6 +72,7 @@ function ToolEditorPanel({ toolData, handleClose }) {
       updateRecord={updateTool}
       setRecordDto={setToolDataDto}
       isLoading={isLoading}
+      showBooleanToggle={true}
       handleClose={handleClose}
     >
       <Row>
@@ -95,24 +80,22 @@ function ToolEditorPanel({ toolData, handleClose }) {
           <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"name"}/>
         </Col>
         <Col lg={6}>
-          <RegistryToolIdentifierSelectInput dataObject={toolDataDto} setDataObject={setToolDataDto} />
+          <RegistryToolIdentifierSelectInput dataObject={toolDataDto} setDataObject={setToolDataDto}/>
         </Col>
-        <Col lg={12}>
+       
+        <Col lg={6}>
+          <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"costCenter"}/>
+        </Col>
+        <Col lg={6}>
+          <TagManager type={"tool"} setDataObject={setToolDataDto} dataObject={toolDataDto}/>
+        </Col>
+        <Col lg={6}>
+          <ToolClassificationSelectInput setDataObject={setToolDataDto} dataObject={toolDataDto}/>
+        </Col>
+        <Col lg={12} className="mb-2">
           <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"description"}/>
         </Col>
-        <Col lg={6}>
-          <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"costCenter"} />
-        </Col>
-        <Col lg={6}>
-          <TagManager type={"tool"} setDataObject={setToolDataDto} dataObject={toolDataDto} />
-        </Col>
-        <Col lg={6}>
-          <ToolClassificationSelectInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
-        </Col>
         {getDynamicFields()}
-        <Col lg={6}>
-          <ActivityToggleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"active"}/>
-        </Col>
       </Row>
     </EditorPanelContainer>
   );
@@ -125,5 +108,3 @@ ToolEditorPanel.propTypes = {
 };
 
 export default ToolEditorPanel;
-
-

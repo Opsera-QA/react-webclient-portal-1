@@ -11,6 +11,7 @@ import StepToolConfiguration from "./step_configuration/StepToolConfiguration";
 import StepConfiguration from "./step_configuration/StepConfiguration";
 import StepNotificationConfiguration from "./step_configuration/step_notification_configuration/StepNotificationConfiguration";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 
 
 const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPlan }) => {
@@ -62,20 +63,14 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
 
   const getTitleBar = (title) => {
     return (
-      <div className="pt-2 px-2 content-block-header">
-        <Row>
-          <Col sm={10}><h5>{title}</h5></Col>
-          <Col sm={2} className="text-right" style={{ bottom: "5px" }}>
-            <FontAwesomeIcon
-              icon={faTimes}
-              className="mr-1"
-              size={"2x"}
-              style={{ cursor: "pointer", verticalAlign: "middle" }}
-              onClick={() => {
-                handleCloseClick();
-              }}/>
-          </Col>
-        </Row>
+      <div className="px-2 my-auto content-block-header">
+        <h5 className={"py-2 d-flex justify-content-between mb-0"}>
+          <div className={"my-auto"}>{title}</div>
+          <div className={"d-flex"}>
+            <StepToolHelpIcon type={editItem?.type} tool={editItem?.tool_name?.toLowerCase()} />
+            <FontAwesomeIcon icon={faTimes} size={"lg"} style={{ cursor: "pointer"}} onClick={() => {handleCloseClick();}}/>
+          </div>
+        </h5>
       </div>
     );
   };

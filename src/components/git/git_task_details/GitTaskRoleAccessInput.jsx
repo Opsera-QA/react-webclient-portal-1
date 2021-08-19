@@ -7,10 +7,10 @@ import axios from "axios";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import GitRoleAccessHelpDocumentation
-  from "components/common/help/documentation/git_tasks/GitRoleAccessHelpDocumentation";
+  from "components/common/help/documentation/tasks/GitRoleAccessHelpDocumentation";
 
 function GitTaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled, visible}) {
-  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
+  const { getAccessToken, getAccessRoleData, isSassUser } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [canEditRoles, setCanEditRoles] = useState(undefined);
@@ -62,7 +62,7 @@ function GitTaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled,
     );
   };
 
-  if (canEditRoles == null) {
+  if (canEditRoles == null || isSassUser()) {
     return null;
   }
 

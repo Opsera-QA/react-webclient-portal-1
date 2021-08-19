@@ -1,14 +1,12 @@
-import regexHelpers from "utils/regexHelpers";
-
 const gitTasksMetadata = {
   idProperty: "_id",
-  type: "Git Task",
+  type: "Task",
   activeField: "active",
   detailView: function(record) {
-    return `/git/details/${record.getData("_id")}`;
+    return `/task/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `Git Task Details [${record.getData("name")}]`;
+    return `Task Details [${record.getOriginalValue("name")}]`;
   },
   fields: [
     {
@@ -20,30 +18,34 @@ const gitTasksMetadata = {
       id: "name",
       isRequired: true,
       maxLength: 25,
-      regexValidator: regexHelpers.regexTypes.limitedTextWithSpaces
+      regexDefinitionName: "limitedTextWithSpaces",
     },
     {
       label: "Description",
       id: "description",
       maxLength: 255,
-      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
+      regexDefinitionName: "expandedTextAndSymbolsWithSpaces"
     },
     {
       label: "Owner",
       id: "owner_name",
     },
     {
+      label: "Role Access Level",
+      id: "role_access_level",
+    },
+    {
       label: "Type",
       id: "type",
       isRequired: true,
       maxLength: 50,
-      regexValidator: regexHelpers.regexTypes.generalText
+      regexDefinitionName: "generalText",
     },
     {
       label: "Tool",
       id: "tool_identifier",
       maxLength: 10,
-      regexValidator: regexHelpers.regexTypes.generalText
+      regexDefinitionName: "generalText",
     },
     {
       label: "Active",
@@ -65,7 +67,7 @@ const gitTasksMetadata = {
       label: "LDAP Account",
       id: "account",
       maxLength: 50,
-      regexValidator: regexHelpers.regexTypes.generalText
+      regexDefinitionName: "generalText",
     },
     {
       label: "Created",
@@ -75,6 +77,10 @@ const gitTasksMetadata = {
       label: "Access Rules",
       id: "roles",
     },
+    {
+      label: "Jenkins List",
+      id: "jenkinsIds",
+    }, 
   ],
   newObjectFields: {
     name: "",
@@ -87,6 +93,7 @@ const gitTasksMetadata = {
     tags: [],
     roles: [],
     account: "",
+    jenkinsIds: []
   }
 };
 

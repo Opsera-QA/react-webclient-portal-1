@@ -1,6 +1,6 @@
 const gitTasksFilterMetadata = {
   idProperty: "_id",
-  type: "Git Task",
+  type: "Task",
   fields: [
     {
       label: "Status",
@@ -21,6 +21,10 @@ const gitTasksFilterMetadata = {
     {
       label: "Sort Option",
       id: "sortOption",
+    },
+    {
+      label: "Owner",
+      id: "owner",
     },
     {
       label: "Tag",
@@ -48,6 +52,10 @@ const gitTasksFilterMetadata = {
 
     if (filterDto.getData("tag") != null) {
       activeFilters.push({filterId: "tag", ...filterDto.getData("tag")});
+    }
+
+    if (filterDto.getData("owner") != null) {
+      activeFilters.push({filterId: "owner", text: `Owner: ${filterDto.getFilterText("owner")}`});
     }
 
     if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {

@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const notificationsMetadata = {
   idProperty: "_id",
   type: "Notification Policy",
@@ -8,7 +6,7 @@ const notificationsMetadata = {
     return `/notifications/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `Notification Details [${record.getData("name")}]`;
+    return `Notification Details [${record.getOriginalValue("name")}]`;
   },
   fields: [
     {
@@ -20,13 +18,13 @@ const notificationsMetadata = {
       id: "name",
       isRequired: true,
       maxLength: 50,
-      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
+      regexDefinitionName: "expandedTextAndSymbolsWithSpaces"
     },
     {
       label: "Description",
       id: "description",
       maxLength: 1000,
-      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
+      regexDefinitionName: "expandedTextAndSymbolsWithSpaces"
     },
     {
       label: "Owner",

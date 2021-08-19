@@ -7,6 +7,6 @@ export default (getColor, MeanLineLayer, RollingMeanLineLayer) => ({
           },
   xFormat: "time:%Y-%m-%d",
   yScale: { type: "linear", min: 0, max: "auto", stacked: false },
-  colors: getColor,
-  layers: ["grid", "axes", MeanLineLayer, RollingMeanLineLayer, "nodes", "markers", "mesh", "legends"],       
+  colors: "#5B5851",
+  layers: ["grid", "axes", MeanLineLayer, RollingMeanLineLayer, "nodes", "markers", "mesh", "legends"],
 });

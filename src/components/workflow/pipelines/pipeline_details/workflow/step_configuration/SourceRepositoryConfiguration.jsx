@@ -628,8 +628,9 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
                       onChange={() => setFormData({ ...formData, trigger_active: !formData.trigger_active })}/>
           <Form.Text className="text-muted">To enable webhook event based pipeline runs from your repository, either configure
             the account above to register it automatically or use the URL below (and optional security key) to configure
-            your repository manually.  If a non-master branch is selected above, then ONLY events from that branch can trigger
-            this pipeline, if no branch is specified then only master branch events will work.</Form.Text>
+            your repository manually.  If a specific repository and branch are selected above through account registration,
+            then ONLY events from that branch can trigger this pipeline, if no repository and branch are specified then
+            any commit events will trigger the pipeline.</Form.Text>
         </Form.Group>}
 
         {formData.trigger_active === true &&

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { faBracketsCurly, faDiceD20, faHexagon, faMicrochip, faUser } from "@fortawesome/pro-light-svg-icons";
+import { faBracketsCurly, faDraftingCompass, faHexagon, faMicrochip, faUser } from "@fortawesome/pro-light-svg-icons";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
@@ -12,6 +12,7 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
+import CatalogHelpDocumentation from "../../common/help/documentation/pipelines/catalog/CatalogHelpDocumentation";
 
 const unpackTab = (tab) => {
   if (tab != null) {
@@ -70,7 +71,7 @@ function Pipelines() {
   const getPageDescription = () => {
     switch (activeTab) {
     case "catalog":
-      return "Create a new Pipeline from this catalog of templates. Select a template to get started.";
+      return "To begin building your pipeline, choose one of the pipeline templates provided in the Marketplace or Private Catalogs. ";
     case "all":
     case "owner":
     case "sdlc":
@@ -98,7 +99,7 @@ function Pipelines() {
     return (
       <CustomTabContainer>
         <CustomTab activeTab={activeTab} tabText={"All Pipelines"} handleTabClick={handleTabClick} tabName={"all"}
-                   toolTipText={"All Pipelines"} icon={faDiceD20}/>
+                   toolTipText={"All Pipelines"} icon={faDraftingCompass}/>
         <CustomTab activeTab={activeTab} tabText={"My Pipelines"} handleTabClick={handleTabClick} tabName={"owner"}
                    toolTipText={"My Pipelines"} icon={faUser}/>
         <CustomTab activeTab={activeTab} tabText={"Software Development"} handleTabClick={handleTabClick}
@@ -114,10 +115,10 @@ function Pipelines() {
   const getNavigationTabContainer = () => {
     return (
       <NavigationTabContainer>
-        <NavigationTab activeTab={activeTab} tabText={"Catalog"} handleTabClick={handleTabClick} tabName={"catalog"}
-                       toolTipText={"Template Catalog"} icon={faHexagon}/>
         <NavigationTab activeTab={activeTab !== "catalog" ? "all" : activeTab} tabText={"Pipelines"}
-                       handleTabClick={handleTabClick} tabName={"all"} toolTipText={"Pipelines"} icon={faDiceD20}/>
+                       handleTabClick={handleTabClick} tabName={"all"} toolTipText={"Pipelines"} icon={faDraftingCompass}/>
+        <NavigationTab activeTab={activeTab} tabText={"Catalog"} handleTabClick={handleTabClick} tabName={"catalog"}
+                       toolTipText={"Catalog"} icon={faHexagon}/>
       </NavigationTabContainer>
     );
   };
@@ -128,6 +129,7 @@ function Pipelines() {
       navigationTabContainer={getNavigationTabContainer()}
       pageDescription={getPageDescription()}
       hasTabContainer={activeTab !== "catalog"}
+      helpComponent={activeTab !== "catalog" ? undefined : <CatalogHelpDocumentation/>}
     >
       {getCurrentView()}
     </ScreenContainer>

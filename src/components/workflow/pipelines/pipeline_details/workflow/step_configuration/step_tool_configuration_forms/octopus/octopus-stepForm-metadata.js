@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const octopusStepFormMetadata = {
     type: "Octopus API Configuration",
     idProperty: "_id",
@@ -26,7 +24,9 @@ const octopusStepFormMetadata = {
       {
         label: "Project Name",
         id: "projectName",
-        isRequired: true
+        isRequired: true,
+        regexDefinitionName: "generalText",
+        maxLength: 100
       },
       {
         label: "Environment Name",
@@ -50,7 +50,9 @@ const octopusStepFormMetadata = {
       {
         label: "Project Description",
         id: "projectDescription",
-        isRequired: true
+        isRequired: true,
+        regexDefinitionName: "generalText",
+        maxLength: 100
       },
       {
         label: "Environment Name ID",
@@ -60,11 +62,13 @@ const octopusStepFormMetadata = {
       {
         label: "Namespace",
         id: "namespace",
+        regexDefinitionName: "generalText",
+        maxLength: 100
       },
       {
         label: "Artifact Step",
         id: "ecrPushStepId",
-        isRequired: true
+        // isRequired: true
       },
       {
         label: "Deployment ID",
@@ -100,11 +104,15 @@ const octopusStepFormMetadata = {
       },
       {
         label: "XML Configuration Transformed Variable Value",
-        id: "xmlConfigTransformVariableValue"
+        id: "xmlConfigTransformVariableValue",
+        regexDefinitionName: "pathField",
+        maxLength: 100
       },
       {
         label: "Structured Configuration Variables Path",
-        id: "structuredConfigVariablesPath"
+        id: "structuredConfigVariablesPath",
+        regexDefinitionName: "pathField",
+        maxLength: 100
       },
       {
         label: "Deployment Variables",
@@ -117,11 +125,146 @@ const octopusStepFormMetadata = {
       {
         label: "Physical Path",
         id: "octopusPhysicalPath",
-        regexValidator: regexHelpers.regexTypes.pathField,
+        regexDefinitionName: "pathField",
         maxLength: 100
-      }
+      },
+      {
+        label: "Website Name",
+        id: "webSiteName"
+      },
+      {
+        label: "Application Pool Name",
+        id: "applicationPoolName"
+      },
+      {
+        label: "Protocol",
+        id: "protocol"
+      },
+      {
+        label: "Binding Port",
+        id: "port",
+        regexDefinitionName: "numericalField",
+        maxLength: 50
+      },
+      {
+        label: "Deployment Lifecycle",
+        id: "lifecycleId",
+        isRequired: true
+      },
+      {
+        label: "Bindings",
+        id: "bindings",
+        maxItems: 15,
+      },
+      {
+        label: "Script Type",
+        id: "scriptSource"
+      },
+      {
+        label: "Script File Name",
+        id: "scriptFileName"
+      },
+      {
+        label: "Script Parameters",
+        id: "scriptParameters"
+      },
+      {
+        label: "Opsera Script Library",
+        id: "scriptId"
+      },
+      {
+        label: "Context Path",
+        id: "contextPath"
+      },
+      {
+        label: "Custom Deployment Scripts",
+        id: "customDeploymentScriptsEnabled"
+      },
+      {
+        label: "Pre-Deployment Script",
+        id: "preDeploymentScriptId"
+      },
+      {
+        label: "Deployment Script",
+        id: "deploymentScriptId"
+      },
+      {
+        label: "Post-Deployment Script",
+        id: "postDeploymentScriptId"
+      },
+      {        
+        id: "tomcatManagerDetails"
+      },
+      {
+        label: "Tomcat Manager",
+        id: "tomcatManagerId"
+      },      
+      {
+        label: "Deploy the Extracted Package",
+        id: "deployExtractedPackage"
+      },
+      {
+        label: "Deployed Package File Name",
+        id: "deployedPackageFileName",
+        regexDefinitionName: "genericFileName",
+        maxLength: 64
+      },
+      {
+        label: "Use Custom Deployment Directory",
+        id: "useCustomDeploymentDirectory"
+      },
+      {
+        label: "Deployment Directory",
+        id: "deploymentDirectory",
+        regexDefinitionName: "pathField",
+        maxLength: 100
+      },
+      {
+        label: "Purge",
+        id: "purge"
+      },
+      {
+        label: "Files Excluded from Purge",
+        id: "excludeFromPurge",
+        regexDefinitionName: "octopusFileList",
+        formText: "A newline-separated list of file or directory names, relative to the installation directory"
+      },
+      {
+        label: "IIS Authentication",
+        id: "iisAuthentication",
+      },
+      {
+        label: ".Net CLR Version",
+        id: "dotNetClrVersion",
+      },
+      {
+        label: "IIS Authentication Type",
+        id: "applicationPoolIdentityType",
+      },
+      {
+        label: "Application Pool Identity Username",
+        id: "applicationPoolIdentityUsername",
+        maxLength: 50
+      },
+      {
+        label: "Application Pool Identity Password",
+        id: "applicationPoolIdentityPassword",
+      },
+      {
+        label: "Start Application Pool",
+        id: "startApplicationPool",
+      },
+      {
+        label: "Azure Tool",
+        id: "azureToolId",
+      },
+      {
+        label: "Azure Repo",
+        id: "azureRepoName",
+        // isRequired: true
+      },
     ],
-    newModelBase:
+  newObjectFields:
       {
         isFullBackup: false,
         toolURL: "",
@@ -148,7 +291,37 @@ const octopusStepFormMetadata = {
         octopusPhysicalPath: "",
         deploymentVariables: [],
         xmlConfigTransformVariableValue: "",
-        structuredConfigVariablesPath: ""
+        structuredConfigVariablesPath: "",
+        webSiteName: "",
+        applicationPoolName: "",
+        protocol: "HTTP",
+        port: "80",
+        lifecycleId: "",
+        bindings: "",
+        scriptSource: "",
+        scriptParameters: "",
+        scriptFileName: "",
+        scriptId: "",
+        contextPath: "",
+        customDeploymentScriptsEnabled: false,
+        preDeploymentScriptId: "",
+        deploymentScriptId: "",
+        postDeploymentScriptId: "",
+        tomcatManagerDetails: {},
+        tomcatManagerId: "",
+        deployExtractedPackage: false,
+        deployedPackageFileName: "",
+        useCustomDeploymentDirectory: false,
+        deploymentDirectory: "",
+        purge: false,
+        excludeFromPurge: "",
+        iisAuthentication: [],
+        dotNetClrVersion: "",
+        applicationPoolIdentityType: "",
+        applicationPoolIdentityUsername: "",
+        applicationPoolIdentityPassword : {},
+        startApplicationPool : false,
+        azureToolId: ""
       }
   };
   

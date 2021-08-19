@@ -59,13 +59,13 @@ const firstPassYieldMetadata = {
     },
   ],
   newObjectFields: {
-    domain: "",
-    application: "",
+    domain: [],
+    application: [],
     pipeline_id: "",
     from: new Date(),
     to: new Date(),
-    sprint: "",
-    release: "",
+    sprint: [],
+    release: [],
     total_test_cases: 0,
     test_cases_passed: 0,
     test_cases_failed: 0

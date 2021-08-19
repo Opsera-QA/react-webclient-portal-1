@@ -6,27 +6,33 @@ import Row from "react-bootstrap/Row";
 import {Button} from "react-bootstrap";
 import {faPlus} from "@fortawesome/pro-light-svg-icons";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
+import IconBase from "components/common/icons/IconBase";
 
-function PropertyInputContainer({ children, titleIcon, titleText, field, errorMessage, addProperty, type, addAllowed, helpComponent }) {
+function PropertyInputContainer({ children, isLoading, titleIcon, titleText, field, errorMessage, addProperty, type, addAllowed, helpComponent, toggleButton }) {
   const getTitleBar = () => {
     return (
       <div className="px-2 pt-2 d-flex justify-content-between">
-        <div><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-2"/>{titleText}</div>
-        <LaunchHelpIcon helpComponent={helpComponent} />
+        <div><IconBase isLoading={isLoading} icon={titleIcon} className="mr-2"/>{titleText}</div>
+        <div>
+          <LaunchHelpIcon helpComponent={helpComponent} className={"pt-2 pr-2"} />
+          <div>{toggleButton}</div>
+        </div>
       </div>
     );
   };
 
   const getAddPropertyButton = () => {
-    return (
-      <Row>
-        <div className="ml-auto mt-2 mr-3 d-flex">
-          <Button variant="secondary" disabled={!addAllowed} onClick={() => addProperty()} size="sm">
-            <span className="text-white"><FontAwesomeIcon className="text-white mr-2" icon={faPlus} fixedWidth />Add {type}</span>
-          </Button>
-        </div>
-      </Row>
-    );
+    if (addProperty) {
+      return (
+        <Row>
+          <div className="ml-auto mt-2 mr-3 d-flex">
+            <Button variant="secondary" disabled={!addAllowed} onClick={() => addProperty()} size="sm">
+              <span className="text-white"><FontAwesomeIcon className="text-white mr-2" icon={faPlus} fixedWidth />Add {type}</span>
+            </Button>
+          </div>
+        </Row>
+      );
+    }
   };
 
   return (
@@ -52,7 +58,9 @@ PropertyInputContainer.propTypes = {
   type: PropTypes.string,
   addProperty: PropTypes.func,
   addAllowed: PropTypes.bool,
-  helpComponent: PropTypes.any
+  helpComponent: PropTypes.any,
+  toggleButton: PropTypes.object,
+  isLoading: PropTypes.bool
 };
 
 export default PropertyInputContainer;

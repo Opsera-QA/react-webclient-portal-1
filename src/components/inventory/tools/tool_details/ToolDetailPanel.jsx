@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import PropTypes from "prop-types";
 import ToolJobsPanel from "./ToolJobsPanel";
-import ToolLogsPanel from "./ToolLogsPanel";
+import ToolLogsPanel from "components/inventory/tools/tool_details/logs/ToolLogsPanel";
 import ToolEditorPanel from "./ToolEditorPanel";
 import ToolConfigurationPanel from "./ToolConfigurationPanel";
 import ToolAccountsPanel from "./ToolAccountsPanel";
@@ -17,7 +17,7 @@ import {
   faUsers,
   faBrowser,
   faTags,
-  faDiceD20, faProjectDiagram
+  faDraftingCompass, faProjectDiagram, faKey,
 } from "@fortawesome/pro-light-svg-icons";
 import ToolApplicationsPanel from "./ToolAppliationsPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
@@ -29,8 +29,10 @@ import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTa
 import { AuthContext } from "contexts/AuthContext";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
-import AttributeEditorPanel from "components/inventory/tools/tool_details/AttributeEditorPanel";
+import ToolAttributeEditorPanel from "components/inventory/tools/tool_details/ToolAttributeEditorPanel";
 import ToggleTab from "components/common/tabs/detail_view/ToggleTab";
+import ToolVaultPanel from "./ToolVaultPanel";
+import ToolRepositoriesPanel from "./ToolRepositoriesPanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
@@ -71,14 +73,15 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const getDynamicTabs = () => {
     switch (toolData?.getData("tool_identifier")) {
       case "jenkins":
-      return (
-        <>
-          <CustomTab icon={faAbacus} tabName={"jobs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Jobs"} disabled={!authorizedAction("edit_tool_job_tabs", toolData?.data)}/>
-          <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"} disabled={!authorizedAction("edit_tool_account_tabs", toolData?.data)}/>
-          <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"}/>
-        </>
-      );
+        return (
+          <>
+            <CustomTab icon={faAbacus} tabName={"jobs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Jobs"} disabled={!authorizedAction("edit_tool_job_tabs", toolData?.data)}/>
+            <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"} disabled={!authorizedAction("edit_tool_account_tabs", toolData?.data)}/>
+            <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"}/>
+          </>
+        );
       case "argo":
+      case "azure":
       case "octopus":
         return (
           <>
@@ -86,13 +89,13 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
             <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"}/>
           </>
         );
-      // case "gitlab":
-      // case "github":
+      case "gitlab":
+      case "github":
       case "bitbucket":
         return (
           <>
-          {/*<CustomTab icon={faTags} tabName={"tagging"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tagging"}/>*/}
-          <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"} disabled={!authorizedAction("edit_tool_account_tabs", toolData?.data)}/>
+            {/*<CustomTab icon={faTags} tabName={"tagging"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tagging"}/>*/}
+            <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"} disabled={!authorizedAction("edit_tool_account_tabs", toolData?.data)}/>
           </>
         );
       case "jira":
@@ -100,12 +103,32 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
           <>
             <CustomTab icon={faProjectDiagram} tabName={"projects"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Projects"} disabled={!authorizedAction("edit_tool_projects_tabs", toolData?.data)}/>
           </>
-          );
+        );
       case "sfdc-configurator":
         return (
           <>
             <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"}/>
           </>
+        );
+      case "jfrog_artifactory_maven":
+        return (
+          <>
+            <CustomTab icon={faTable} tabName={"repositories"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Repositories"}/>
+          </>
+        );
+      default: return <></>;
+    }
+  };
+
+  const getVaultTab = () => {
+    switch (toolData?.getData("tool_identifier")) {
+      case "jenkins":
+      case "gitlab":
+      case "github":
+      case "sonar":
+      case "kafka_connect":
+        return (
+            <CustomTab icon={faKey} tabName={"vault"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Vault"} disabled={!authorizedAction("vault", toolData?.data)}/>
         );
       default: return <></>;
     }
@@ -116,9 +139,10 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       <CustomTabContainer>
         <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <ToggleTab icon={faList} tabName={"attributes"} settingsTabName={"attribute_settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Attributes"}/>
-        <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
+        {getVaultTab()}
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"} disabled={!authorizedAction("edit_tool_connection", toolData?.data)}/>
         {getDynamicTabs()}
+        <CustomTab icon={faDraftingCompass} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
       </CustomTabContainer>
     );
   };
@@ -132,11 +156,11 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case "attributes":
         return <ToolAttributesPanel toolData={toolData} setActiveTab={setActiveTab} customerAccessRules={customerAccessRules} />;
       case "attribute_settings":
-        return <AttributeEditorPanel toolData={toolData} setToolData={setToolData} loadData={loadData} handleClose={toggleAttributesPanel} />;
+        return <ToolAttributeEditorPanel toolData={toolData} setToolData={setToolData} loadData={loadData} handleClose={toggleAttributesPanel} />;
       case "configuration":
         return <ToolConfigurationPanel toolData={toolData} loadData={loadData}/>;
       case "jobs":
-        return <ToolJobsPanel toolData={toolData} loadData={loadData} isLoading={isLoading}/>;
+        return <ToolJobsPanel toolData={toolData}  setToolData={setToolData} loadData={loadData} isLoading={isLoading}/>;
       case "applications":
         return <ToolApplicationsPanel toolData={toolData} loadData={loadData} isLoading={isLoading}/>;
       case "accounts":
@@ -149,6 +173,10 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         return <ToolProjectsPanel toolData={toolData} isLoading={isLoading} loadData={loadData} />;
       case "pipelines":
         return <ToolPipelinesPanel toolData={toolData} />;
+      case "vault":
+        return <ToolVaultPanel toolData={toolData} setToolData={setToolData} />;
+      case "repositories":
+        return <ToolRepositoriesPanel toolData={toolData} setToolData={setToolData} />;
       default:
         return null;
     }

@@ -12,6 +12,7 @@ import RequiredFieldsMessage from "components/common/fields/editor/RequiredField
 import accountRegistrationMetadata from "components/user/account_registration/account-registration-metadata";
 import { AuthContext } from "contexts/AuthContext";
 import TempTextInput from "components/common/inputs/text/TempTextInput";
+import {validateEmail} from "utils/helpers";
 
 function AccountRegistration() {
   const { domain } = useParams();
@@ -50,7 +51,7 @@ function AccountRegistration() {
         newAccountDto.setData("company", accountResponse.data?.orgName);
         newAccountDto.setData("ldapOrgAccount", accountResponse.data?.name);
         newAccountDto.setData("ldapOrgDomain", accountResponse.data?.orgDomain);
-        newAccountDto.setData("organizationName", accountResponse?.data?.description);
+        newAccountDto.setData("organizationName", accountResponse?.data?.accountName);
         newAccountDto.setData("orgAccount", accountResponse?.data?.name);
       }
 
@@ -119,6 +120,19 @@ function AccountRegistration() {
     );
   }
 
+  const getWarning = () => {
+    const email = registrationDataDto?.getData("email");
+    const validEmail = validateEmail(email);
+
+    if (validEmail === true && registrationDataDto?.getData("ldapOrgDomain") !== email.substring(email.lastIndexOf("@") + 1)) {
+      return (
+        <div className="warning-text pl-4 mt-1">
+          Warning, you are about to register an account with an email outside of your organization’s domain.
+        </div>
+      );
+    }
+  };
+
   if (isLoading || registrationDataDto == null) {
     return <LoadingDialog />;
   }
@@ -152,6 +166,7 @@ function AccountRegistration() {
                                setDataObject={setRegistrationDataDto} />
               </Col>
             </Row>
+            {getWarning()}
             <Row>
               <div className="ml-auto m-3 px-3">
                 <RegisterButton createAccount={createAccount} recordDto={registrationDataDto} disable={invalidHost} />

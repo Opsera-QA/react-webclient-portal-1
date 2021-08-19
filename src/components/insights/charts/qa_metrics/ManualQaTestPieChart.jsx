@@ -8,8 +8,8 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import {
-  defaultConfig, getColorByData,getColor, assignStandardColors,
-  shortenPieChartLegend, mainColor,
+  defaultConfig, getColorByData, getColor, assignStandardColors,
+  shortenPieChartLegend, mainColor, getColorById,
 } from "../charts-views";
 import ChartTooltip from "../ChartTooltip";
 import { Col, Container, Row } from "react-bootstrap";
@@ -49,10 +49,10 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "qaKPIMetricsData", kpiConfiguration, dashboardTags);
-      let dataObject = response?.data ? response?.data?.data[0]?.qaKPIMetricsData?.data : [];
-      assignStandardColors(dataObject[0]?.data[0]?.pairs);
-      shortenPieChartLegend(dataObject[0]?.data[0]?.pairs);
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "manualTestData", kpiConfiguration, dashboardTags);
+      let dataObject = response?.data ? response?.data?.data[0]?.manualTestData?.data : [];
+      assignStandardColors(dataObject[0]?.pairs);
+      shortenPieChartLegend(dataObject[0]?.pairs);
 
 
       if (isMounted?.current === true && dataObject) {
@@ -73,7 +73,7 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
   };
 
   const getChartBody = () => {
-    if (!Array.isArray(metrics[0]?.data[0]?.pairs) || metrics[0]?.data[0]?.pairs.length === 0) {
+    if (!Array.isArray(metrics[0]?.pairs) || metrics[0]?.pairs.length === 0) {
       return null;
     }
 
@@ -84,46 +84,30 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
           <Row className="p-1">
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div>{metrics[0]?.data[0]?.totalTests}</div>
+                <div>{metrics[0]?.totalTests}</div>
               </div>
               <div className="w-100 text-muted mb-1">Total Number of Tests Available</div>
             </div></Col>
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                { metrics[1]?.data[0]?.firstPassYield ?
-                <div className="green">{metrics[1]?.data[0]?.firstPassYield+ "%"}</div>
-                  : <div>{"N/A"}</div>}
-              </div>
-              <div className="w-100 text-muted mb-1">First Pass Yield</div>
-            </div></Col>
           </Row>
           <Row className="p-1">
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div>{metrics[0]?.data[0]?.totalExecuted}</div>
+                <div>{metrics[0]?.totalExecuted}</div>
               </div>
               <div className="w-100 text-muted mb-1">Total Number of Tests executed</div>
             </div></Col>
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                { metrics[2]?.data[0]?.cumulativeDefects ?
-                <div>{metrics[2]?.data[0]?.cumulativeDefects+ "%"}</div>
-                : <div>{"N/A"}</div>}
-              </div>
-              <div className="w-100 text-muted mb-1">Cumulative Open Defects</div>
-            </div></Col>
           </Row>
           <Row className="p-1">
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div className="green">{metrics[0]?.data[0]?.passRate+ "%"}</div>
+                <div className="green">{metrics[0]?.passRate+ "%"}</div>
               </div>
               <div className="w-100 text-muted mb-1">Pass Rate</div>
             </div></Col>
           </Row>
         </Container>
         <ResponsivePie
-          data={metrics[0]?.data[0]?.pairs}
+          data={metrics[0]?.pairs}
           {...defaultConfig()}
           {...config(getColorByData)}
           onClick={() => setShowModal(true)}

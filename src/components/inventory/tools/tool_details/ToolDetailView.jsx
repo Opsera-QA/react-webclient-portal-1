@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
 import ToolDetailPanel from "./ToolDetailPanel";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -11,13 +11,28 @@ import ActionBarDeleteToolButton from "components/common/actions/buttons/tool/Ac
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import toolsActions from "components/inventory/tools/tools-actions";
 import ActionBarTransferToolButton from "components/common/actions/buttons/tool/ActionBarTransferToolButton";
+import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 
 function ToolDetailView() {
   const { id, tab } = useParams();
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [toolData, setToolData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
+  const [customerAccessRules, setCustomerAccessRules] = useState({});
+
+  useEffect(() => {
+    initComponent().catch(error => {
+      throw { error };
+    });
+  }, []);
+
+  const initComponent = async () => {
+    const userRecord = await getUserRecord(); //RBAC Logic
+    const rules = await setAccessRoles(userRecord);
+    setCustomerAccessRules(rules);
+  };
+
 
   useEffect(() => {
     getTool();
@@ -57,12 +72,13 @@ function ToolDetailView() {
 
   return (
     <DetailScreenContainer
+      navigationTabContainer={<InventorySubNavigationBar currentTab={"toolViewer"} />}
       breadcrumbDestination={"toolDetailView"}
       metadata={toolMetadata}
       dataObject={toolData}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      detailPanel={<ToolDetailPanel toolData={toolData} isLoading={isLoading} tab={tab} setToolData={setToolData} loadData={getTool}/>}
+      detailPanel={<ToolDetailPanel toolData={toolData}  isLoading={isLoading} tab={tab} setToolData={setToolData} loadData={getTool}/>}
     />
   );
 }

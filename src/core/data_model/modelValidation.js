@@ -1,4 +1,5 @@
-import {isAlphaNumeric, isDomain, isOpseraPassword, isWebsite, matchesRegex, validateEmail} from "../../utils/helpers";
+import {isAlphaNumeric, isDomain, isOpseraPassword, isWebsite, matchesRegex, validateEmail, hasSpaces} from "utils/helpers";
+import regexDefinitions from "utils/regexDefinitions";
 
 // TODO: We need to rework this
 export const validateData = (data) => {
@@ -7,8 +8,8 @@ export const validateData = (data) => {
   for (const field of data.getFields()) {
     let fieldErrors = validateField(data, field);
 
-    if (fieldErrors) {
-      errors.push(fieldErrors);
+    if (Array.isArray(fieldErrors) && fieldErrors.length > 0) {
+      errors.push(...fieldErrors);
     }
   }
   if (errors.length < 1) {
@@ -39,7 +40,7 @@ export const fieldValidation = (value, data, field) => {
   }
 
   if (field.isRequired === true) {
-    if (!requiredValidator(value))
+    if (!requiredValidator(value) && value !== 0)
     {
       errorMessages.push(field.label + " is required.");
     }
@@ -49,6 +50,12 @@ export const fieldValidation = (value, data, field) => {
     if (!validateEmail(value))
     {
       errorMessages.push("The email address given is not valid.");
+    }
+  }
+
+  if (field.spacesAllowed === false) {
+    if (hasSpaces(value)) {
+      errorMessages.push(field.label + " is not allowed to contain spaces.");
     }
   }
 
@@ -83,6 +90,35 @@ export const fieldValidation = (value, data, field) => {
   if (field.regexValidator != null && value !== "" && !matchesRegex(field.regexValidator, value))
   {
     errorMessages.push("Does not meet field requirements.");
+  }
+
+  if (field.regexValidatorV2 != null && value !== "" && !matchesRegex(field.regexValidatorV2, value))
+  {
+    errorMessages.push(field.regexErrorText);
+  }
+
+  if (field.regexDefinitionName != null && value !== "")
+  {
+    const definitionName = field.regexDefinitionName;
+    const regexDefinition = regexDefinitions[definitionName];
+    const regex = regexDefinition?.regex;
+    const errorFormText = regexDefinition?.errorFormText;
+
+    if (regexDefinition == null) {
+      console.error(`Regex Definition [${field.regexDefinitionName}] not found!`);
+    }
+    else if (regex == null) {
+      console.error(`No Regex Assigned To Definition [${field.regexDefinitionName}]!`);
+    }
+    else if (!matchesRegex(regex, value)) {
+      if (errorFormText == null) {
+        console.error(`No Regex Error Form Text Assigned To Definition [${field.regexDefinitionName}]! Returning default error.`);
+        errorMessages.push("Does not meet field requirements.");
+      }
+      else {
+        errorMessages.push(`${field.label} validation error! ${errorFormText}`);
+      }
+    }
   }
 
   if (field.maxItems != null && value.length > field.maxItems)

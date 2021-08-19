@@ -12,13 +12,35 @@ export const ROLE_LEVELS = {
 };
 
 export const ACCESS_ROLES = {
+  OPSERA_ADMINISTRATOR: "opsera_administrator",
   ADMINISTRATOR: "administrator",
+  SAAS_USER: "saas_user",
+  POWER_USER: "power_user",
   OWNER: "owner",
   SECOPS: "secops",
   MANAGER: "manager",
   USER: "user",
   UNAUTHORIZED: "unauthorized",
   NO_ACCESS_RULES: "no_access_rules",
+  NO_ROLES_ASSIGNED: "no_roles_assigned",
+  FREE_TRIAL_USER: "free_trial_user",
+  READ_ONLY: "read_only",
+};
+
+export const ACCESS_ROLES_FORMATTED_LABELS = {
+  opsera_administrator: "Opsera Administrator",
+  administrator: "Administrator",
+  saas_user: "User",
+  power_user: "Power User",
+  owner: "Owner",
+  secops: "Secops",
+  manager: "Manager",
+  user: "User",
+  unauthorized: "UNAUTHORIZED",
+  no_access_rules: "No Access Rules On Item",
+  no_roles_assigned: "No Role Assigned to User",
+  free_trial_user: "User",
+  read_only: "Read Only Access",
 };
 
 export const meetsRequirements = (requirement, accessRoleData) => {
@@ -109,6 +131,8 @@ export const getUserRoleLevel = (accessRoleData, objectRoles, dataObject) => {
   const prefix = "Your access role for this page is: ";
 
   switch (roleLevel) {
+    case ACCESS_ROLES.OPSERA_ADMINISTRATOR:
+      return prefix + "Opsera Administrator";
     case ACCESS_ROLES.ADMINISTRATOR:
       return prefix + "Administrator";
     case ACCESS_ROLES.OWNER:
@@ -119,6 +143,8 @@ export const getUserRoleLevel = (accessRoleData, objectRoles, dataObject) => {
       return prefix + "Manager";
     case ACCESS_ROLES.USER:
       return prefix + "User";
+    case ACCESS_ROLES.READ_ONLY:
+      return prefix + "Guest";
     case ACCESS_ROLES.UNAUTHORIZED:
       return "You are unauthorized to view this page.";
     case ACCESS_ROLES.NO_ACCESS_RULES:
@@ -126,6 +152,57 @@ export const getUserRoleLevel = (accessRoleData, objectRoles, dataObject) => {
     default:
       return "UNKNOWN ROLE LEVEL";
   }
+};
+
+export const roleAllowed = (accessRoles, roleLevel) => {
+  if (!Array.isArray(accessRoles) || accessRoles.length === 0) {
+    return false;
+  }
+
+  return accessRoles.includes(roleLevel) || accessRoles.includes(ACCESS_ROLES.NO_ACCESS_RULES);
+};
+
+export const parseRoleDefinitionsIntoTableRows =  (roleDefinitions) => {
+  let accessRoleRows = [];
+
+  if (roleDefinitions == null) {
+    return [];
+  }
+
+  try {
+    const roleDefinitionKeys = Object.keys(roleDefinitions);
+
+    if (Array.isArray(roleDefinitionKeys) && roleDefinitionKeys.length > 0) {
+      roleDefinitionKeys.forEach((roleDefinitionKey) => {
+        const roleDefinition = roleDefinitions[roleDefinitionKey];
+        const accessRoles = roleDefinition.allowedRoles;
+
+        const tableRow = {
+          id: roleDefinition.id,
+          description: roleDefinition.description,
+          administrator: roleAllowed(accessRoles, ACCESS_ROLES.ADMINISTRATOR),
+          owner: roleAllowed(accessRoles, ACCESS_ROLES.OWNER),
+          manager: roleAllowed(accessRoles, ACCESS_ROLES.MANAGER),
+          power_user: roleAllowed(accessRoles, ACCESS_ROLES.POWER_USER),
+          user: roleAllowed(accessRoles, ACCESS_ROLES.USER),
+          no_access_rules: roleAllowed(accessRoles, ACCESS_ROLES.NO_ACCESS_RULES),
+        };
+        console.log("tableRow: " + JSON.stringify(tableRow));
+
+        accessRoleRows.push(tableRow);
+      });
+    }
+  }
+  catch (error) {
+    console.error(`Could not parse Role Definitions: ${error}`);
+  }
+
+  return accessRoleRows;
+};
+
+export const getAllowedRoles = (actionName, roleDefinitions) => {
+  const roleDefinition = roleDefinitions[actionName];
+  return roleDefinition?.allowedRoles;
 };
 
 export const isAnLdapUser = (user, accessRole) => {

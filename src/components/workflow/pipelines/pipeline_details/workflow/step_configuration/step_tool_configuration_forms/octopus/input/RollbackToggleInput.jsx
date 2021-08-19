@@ -14,6 +14,11 @@ function RollbackToggleInput({dataObject, setDataObject, fieldName, disabled}) {
     setDataObject({...newDataObject});
   };
 
+  if (dataObject?.getData("octopusPlatformType") && dataObject?.getData("octopusPlatformType") === "Script" &&
+    dataObject?.getData("scriptSource") && dataObject?.getData("scriptSource") === "inline") {
+    return null;
+  }
+
   return (
     <>
     <InputContainer>

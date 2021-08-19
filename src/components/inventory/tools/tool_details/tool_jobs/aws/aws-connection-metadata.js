@@ -23,7 +23,8 @@ const awsConnectionMetadata = {
     {
       label: "AWS Account ID",
       id: "awsAccountId",
-      maxLength: 150,
+      regexDefinitionName: "numericalField",
+      maxLength: 12,
       isRequired: true
     },
   ],

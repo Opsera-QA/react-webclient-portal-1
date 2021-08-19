@@ -26,6 +26,7 @@ function FilterContainer(
     className,
     metadata,
     exportButton,
+    showBorder,
 
     // TODO: Remove after filters are used everywhere
     type
@@ -37,11 +38,11 @@ function FilterContainer(
           <NewRecordButton
             className={"mr-2 my-auto text-nowrap"}
             addRecordFunction={addRecordFunction}
-            type={filterDto?.getType() || type}
+            type={filterDto?.getType() || type || metadata?.type}
             isLoading={isLoading}
             variant={"success"}
           />
-          <span className="d-none d-lg-inline">{inlineFilters}</span>
+          <span className="d-none d-xl-inline">{inlineFilters}</span>
           <InlineSearchFilter
             isLoading={isLoading}
             supportSearch={supportSearch}
@@ -84,7 +85,7 @@ function FilterContainer(
           </div>
           <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} />
         </div>
-        <div>
+        <div className={showBorder !== false ? "filter-container-body" : ""}>
           {body}
         </div>
       </div>
@@ -100,7 +101,6 @@ FilterContainer.propTypes = {
   supportSearch: PropTypes.bool,
   titleIcon: PropTypes.object,
   title:PropTypes.string,
-  children: PropTypes.any,
   body: PropTypes.object,
   loadData: PropTypes.func,
   addRecordFunction: PropTypes.func,
@@ -109,9 +109,9 @@ FilterContainer.propTypes = {
   saveCookies: PropTypes.func,
   type: PropTypes.string,
   className: PropTypes.string,
-  stackFilters: PropTypes.bool,
   metadata: PropTypes.object,
-  exportButton: PropTypes.object
+  exportButton: PropTypes.object,
+  showBorder: PropTypes.bool
 };
 
 export default FilterContainer;

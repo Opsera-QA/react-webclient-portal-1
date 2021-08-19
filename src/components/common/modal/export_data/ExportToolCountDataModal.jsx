@@ -4,7 +4,7 @@ import ExportDataModalBase from "components/common/modal/export_data/ExportDataM
 import jsPDF from "jspdf";
 
 // TODO: Should we be just sending in data and formatting in here?
-function ExportReportsDataModal({ showModal, closeModal, formattedData, rawData, isLoading}) {
+function ExportToolCountDataModal({ showModal, closeModal, formattedData, rawData, isLoading}) {
   const getRawData = () => {
     return new Blob([rawData], {type : 'text/plain'});
   };
@@ -46,7 +46,7 @@ function ExportReportsDataModal({ showModal, closeModal, formattedData, rawData,
   );
 }
 
-ExportReportsDataModal.propTypes = {
+ExportToolCountDataModal.propTypes = {
   showModal: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
   dataToExport: PropTypes.any,
@@ -56,6 +56,6 @@ ExportReportsDataModal.propTypes = {
   exportFrom: PropTypes.any,
 };
 
-export default ExportReportsDataModal;
+export default ExportToolCountDataModal;
 
 

@@ -1,5 +1,5 @@
 import baseActions from "utils/actionsBase";
-import {axiosApiService} from "api/apiService";
+import { axiosApiService } from "api/apiService";
 
 const analyticsActions = {};
 
@@ -38,11 +38,12 @@ analyticsActions.getAnalyticsToolsV2 = async (getAccessToken, cancelTokenSource)
     "gitlab",
     "metricbeat",
     "cypress",
-    "anchore"
+    "anchore",
+    "selenium",
   ];
 
   const urlParams = {
-    index: INDICES
+    index: INDICES,
   };
 
   const apiUrl = `/analytics/index`;
@@ -64,6 +65,18 @@ analyticsActions.fetchProfileV2 = async (getAccessToken, cancelTokenSource) => {
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+analyticsActions.getDropdownFilterOptions = async (getAccessToken, cancelTokenSource, type) => {
+  const apiUrl = "/analytics/data-entry/filters";
+  const postBody = {
+    params: {
+      type: type
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+
 analyticsActions.createProfile = async (getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/analytics/profile/create";
@@ -78,7 +91,17 @@ analyticsActions.createProfile = async (getAccessToken) => {
   return response;
 };
 
-analyticsActions.searchLogsV2 = async (getAccessToken, cancelTokenSource, searchTerm, startDate, endDate, filterType, customFilters, currentPage, pageSize) => {
+analyticsActions.searchLogsV2 = async (
+  getAccessToken,
+  cancelTokenSource,
+  searchTerm,
+  startDate,
+  endDate,
+  filterType,
+  customFilters,
+  currentPage,
+  pageSize
+) => {
   const urlParams = {
     search: searchTerm,
     date: startDate !== 0 && endDate === 0 ? startDate : undefined,
@@ -95,7 +118,6 @@ analyticsActions.searchLogsV2 = async (getAccessToken, cancelTokenSource, search
 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
-
 
 analyticsActions.updateProfile = async (getAccessToken, postBody) => {
   const accessToken = await getAccessToken();

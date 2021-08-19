@@ -14,6 +14,7 @@ import gitTasksActions from "components/git/git-task-actions";
 import gitTasksMetadata from "components/git/git-tasks-metadata";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+import TasksSubNavigationBar from "components/git/TasksSubNavigationBar";
 
 function GitTaskDetailView() {
   const location = useLocation();
@@ -69,12 +70,15 @@ function GitTaskDetailView() {
   const getGitTaskData = async (cancelSource = cancelTokenSource) => {
     const response = await gitTasksActions.getGitTaskByIdV2(getAccessToken, cancelSource, id);
     const gitTask = response?.data?.data[0];
-
+    let action = "delete_task";
     if (isMounted.current === true && gitTask != null) {
       setGitTasksData(new Model(gitTask, gitTasksMetadata, false));
+      if (gitTask.type === "sfdc-cert-gen") {
+        action = "delete_admin_task";
+      }
       const customerAccessRules = await getAccessRoleData();
       setAccessRoleData(customerAccessRules);
-      setCanDelete(workflowAuthorizedActions.gitItems(customerAccessRules, "delete-task", gitTask.owner, gitTask.roles));
+      setCanDelete(workflowAuthorizedActions.gitItems(customerAccessRules, action, gitTask.owner, gitTask.roles));
     }
   };
 
@@ -86,10 +90,10 @@ function GitTaskDetailView() {
     return (
       <ActionBarContainer>
         <div>
-          <ActionBarBackButton path={"/git"} />
+          <ActionBarBackButton path={"/task"} />
         </div>
         <div>
-          {canDelete && <ActionBarDeleteButton2 relocationPath={"/git/"} handleDelete={deleteGitTask} dataObject={gitTasksData} />}
+          {canDelete && <ActionBarDeleteButton2 relocationPath={"/task/"} handleDelete={deleteGitTask} dataObject={gitTasksData} />}
         </div>
       </ActionBarContainer>
     );
@@ -102,6 +106,7 @@ function GitTaskDetailView() {
       dataObject={gitTasksData}
       isLoading={isLoading}
       accessRoleData={accessRoleData}
+      navigationTabContainer={<TasksSubNavigationBar currentTab={"taskViewer"} />}
       objectRoles={gitTasksData?.getData("roles")}
       actionBar={getActionBar()}
       detailPanel={

@@ -1,8 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSave, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {faSave} from "@fortawesome/pro-light-svg-icons";
 import {
   persistNewRecord,
   persistNewRecordAndAddAnother,
@@ -11,8 +10,9 @@ import {
 } from "./saving-helpers";
 import {useHistory} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import IconBase from "components/common/icons/IconBase";
 
-function CreateButton({recordDto, createRecord, disable, showSuccessToasts, lenient, setRecordDto, addAnotherOption, handleClose, size, icon, className}) {
+function CreateButton({recordDto, createRecord, disable, showSuccessToasts, lenient, setRecordDto, addAnotherOption, handleClose, size, icon, className, showTypeOnLabel, customLabel}) {
   const [isSaving, setIsSaving] = useState(false);
   const [addAnother, setAddAnother] = useState(false);
   const history = useHistory();
@@ -50,16 +50,24 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
 
   const getLabel = () => {
     if (isSaving) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Saving</span>);
+      return ("Saving");
     }
 
-    return (<span><FontAwesomeIcon icon={icon} fixedWidth className="mr-2"/>{`Create ${recordDto.getType()}`}</span>);
+    if (customLabel) {
+      return (customLabel);
+    }
+
+    if (showTypeOnLabel) {
+      return (`Create ${recordDto.getType()}`);
+    }
+
+    return ("Create");
   };
 
   const getAddAnotherCheckbox = () => {
     if (addAnotherOption) {
       return (
-        <div className="d-flex ml-2 mb-1">
+        <div className="d-flex mr-3 mt-auto">
           <div><span className="text-muted mr-2">Add Another</span></div>
           <div><input className="mt-1" type="checkbox" checked={addAnother} onChange={() => setAddAnother(!addAnother)} /></div>
         </div>
@@ -69,11 +77,13 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
 
   return (
     <div className={className}>
-      {getAddAnotherCheckbox()}
-      {/*TODO: Make sure button is not clickable until form is valid*/}
-      <Button size={size} variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
-        {getLabel()}
-      </Button>
+      <div className={"d-flex"}>
+        {getAddAnotherCheckbox()}
+        {/*TODO: Make sure button is not clickable until form is valid*/}
+        <Button size={size} variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
+          <span><IconBase isLoading={isSaving} icon={icon} fixedWidth className="mr-2"/>{getLabel()}</span>
+        </Button>
+      </div>
     </div>
   );
 }
@@ -89,7 +99,9 @@ CreateButton.propTypes = {
   addAnotherOption: PropTypes.bool,
   size: PropTypes.string,
   icon: PropTypes.object,
-  className: PropTypes.string
+  className: PropTypes.string,
+  customLabel: PropTypes.string,
+  showTypeOnLabel: PropTypes.bool
 };
 
 CreateButton.defaultProps = {

@@ -1,26 +1,33 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DropdownList from "react-widgets/lib/DropdownList";
+import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 
 function PageSize({ paginationDto, setPaginationDto, loadData, isLoading, pageSizeList}) {
-  const updatePageSize = (pageSize) => {
+  const updatePageSize = (fieldName, pageSize) => {
     paginationDto.setData("currentPage", 1);
     paginationDto.setData("pageSize", pageSize);
     setPaginationDto({...paginationDto});
     loadData(paginationDto);
   };
 
+  const formatText = (item) => {
+    return item + " results per page";
+  };
+
   return (
-    <div className="page-size">
-      <DropdownList
-        data={pageSizeList}
-        disabled={isLoading || paginationDto?.getData("totalCount") == null}
-        valueField='value'
-        textField={item => item + " results per page"}
-        defaultValue={paginationDto.getData("pageSize")}
-        onChange={updatePageSize}
-      />
-    </div>
+    <FilterSelectInputBase
+      selectOptions={pageSizeList}
+      inline={true}
+      showLabel={false}
+      dataObject={paginationDto}
+      setDataObject={setPaginationDto}
+      fieldName={"pageSize"}
+      valueField='value'
+      textField={formatText}
+      disabled={isLoading || paginationDto?.getData("totalCount") == null}
+      placeholder={"Sort Page"}
+      setDataFunction={updatePageSize}
+    />
   );
 }
 

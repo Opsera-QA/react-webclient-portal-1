@@ -1,11 +1,11 @@
 export const analyticsDataMetadata = {
   idProperty: "name",
-  type: "Analytics Data Entry",
+  type: "Entry",
   detailView: function (record) {
     return `/settings/analytics-data-entries/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `Analytics Data Entry [${record.getData("kpi_identifier")}]`;
+    return `Analytics Data Entry [${record.getOriginalValue("kpi_identifier")}]`;
   },
   fields: [
     {
@@ -27,6 +27,22 @@ export const analyticsDataMetadata = {
     {
       label: "Account",
       id: "account",
+    },
+    {
+      label: "Domain Name",
+      id: "data.domain",
+    },
+    {
+      label: "Application Name",
+      id: "data.application",
+    },
+    {
+      label: "From",
+      id: "data.from",
+    },
+    {
+      label: "To",
+      id: "data.to",
     },
     {
       label: "Status",

@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import {Button, InputGroup} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch, faSpinner} from "@fortawesome/pro-light-svg-icons";
-import regexHelpers from "utils/regexHelpers";
 import Model from "core/data_model/model";
 import {useHistory} from "react-router-dom";
+import regexDefinitions from "utils/regexDefinitions";
 
 function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, fieldName, supportSearch, className, isLoading, metadata}) {
   let history = useHistory();
@@ -14,15 +14,21 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
   const validateAndSetData = (value) => {
     let newFilterDto = {...filterDto};
     newFilterDto.setData(fieldName, value);
-    setFilterDto({...newFilterDto});
+
+    // TODO: Setting state on filter model should only be handled in the load data function and this should be removed.
+    //  Leaving here for now to prevent unintended side effects
+    if (setFilterDto) {
+      setFilterDto({...newFilterDto});
+    }
   };
 
   const handleSearch = async () => {
     try {
       let newFilterDto = {...filterDto};
       const searchString = newFilterDto.getData(fieldName);
+      const mongoIdRegex = regexDefinitions.mongoId?.regex;
 
-      if (metadata?.detailView != null && searchString.match(regexHelpers.regexTypes.mongoId)) {
+      if (metadata?.detailView != null && searchString.match(mongoIdRegex)) {
         const model = new Model({_id: searchString}, metadata, true);
         const link = model.getDetailViewLink();
 
@@ -34,7 +40,13 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
 
       setIsSearching(true);
       newFilterDto.setData("currentPage", 1);
-      setFilterDto({...newFilterDto});
+
+      // TODO: Setting state on filter model should only be handled in the load data function and this should be removed.
+      //  Leaving here for now to prevent unintended side effects
+      if (setFilterDto) {
+        setFilterDto({...newFilterDto});
+      }
+
       await loadData(newFilterDto);
     }
     finally {
@@ -56,7 +68,7 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
     }
   };
 
-  if (supportSearch !== true) {
+  if (supportSearch !== true || filterDto == null) {
     return null;
   }
 
@@ -64,15 +76,15 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
     <div className={className}>
       <InputGroup size="sm" className={"flex-nowrap"}>
         <input
-          disabled={disabled || isLoading || filterDto == null}
+          disabled={disabled || isLoading}
           placeholder="Search"
           value={filterDto?.getData(fieldName) || ""}
-          className="inline-search-filter inline-filter-input"
+          className="text-input inline-search-filter inline-filter-input"
           onKeyPress={(event) => handleKeyPress(event)}
           onChange={e => validateAndSetData(e.target.value)}
         />
         <InputGroup.Append>
-          <Button className="inline-filter-input filter-bg-white" disabled={isLoading || disabled || filterDto == null} variant="outline-primary" onClick={handleSearch}>
+          <Button className="inline-filter-input filter-bg-white" disabled={isLoading || disabled} variant="outline-primary" onClick={handleSearch}>
             {getSearchIcon()}
           </Button>
         </InputGroup.Append>
@@ -95,7 +107,6 @@ InlineSearchFilter.propTypes = {
 
 InlineSearchFilter.defaultProps = {
   fieldName: "search",
-  className: "inline-search-input-group"
 };
 
 export default InlineSearchFilter;

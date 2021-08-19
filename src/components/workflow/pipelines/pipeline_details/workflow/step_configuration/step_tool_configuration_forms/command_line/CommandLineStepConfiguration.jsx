@@ -27,8 +27,14 @@ import CommandLineSourceScriptToggleInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineSourceScriptToggleInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
+import StepConfigTerraformStepSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/inputs/StepConfigTerraformStepSelectInput";
+import { faHandshake } from "@fortawesome/pro-light-svg-icons";
+import ParameterSelectListInputBase
+  from "../../../../../../../common/list_of_values_input/parameters/ParameterSelectListInputBase";
+import StepConfigUseTerraformOutput from "../common/inputs/StepConfigUseTerraformOutput";
 
-function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel }) {
+
+function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan }) {
   const [isLoading, setIsLoading] = useState(false);
   const [jobType, setJobType] = useState("");
   const [commandLineStepConfigurationDto, setCommandLineStepConfigurationDataDto] = useState(undefined);
@@ -73,6 +79,14 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
       );
     }
     return (<TextAreaInput dataObject={commandLineStepConfigurationDto} fieldName={"commands"} setDataObject={setCommandLineStepConfigurationDataDto}/>);
+  };
+
+  const getTerraformSelect = () => {
+    if (commandLineStepConfigurationDto?.getData("useTerraformOutput")) {
+      return (
+        <StepConfigTerraformStepSelectInput setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} plan={plan} stepId={stepId} />
+      );
+    }
   };
 
   const handleCreateAndSave = async () => {
@@ -125,6 +139,21 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
         setDataObject={setCommandLineStepConfigurationDataDto}
       /> */}
       <CommandLineSourceScriptToggleInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"sourceScript"}/>
+      <StepConfigUseTerraformOutput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>
+      {getTerraformSelect()}
+      <ParameterSelectListInputBase
+        titleIcon={faHandshake}
+        dataObject={commandLineStepConfigurationDto}
+        setDataObject={setCommandLineStepConfigurationDataDto}
+        fieldName={"customParameters"}
+        allowIncompleteItems={true}
+        type={"Parameter"}
+        regexValidationRequired={false}
+        titleText={"Parameter Selection"}
+        plan={plan}
+        tool_prop={commandLineStepConfigurationDto?.getData("terraformStepId") && commandLineStepConfigurationDto?.getData("terraformStepId").length > 0 ?
+          commandLineStepConfigurationDto?.getData("terraformStepId") : ""}
+      />
       {getDynamicFields()}
       <CommandLineDependencyTypeInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
       <TextInputBase setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} fieldName={"outputPath"} />
@@ -139,7 +168,8 @@ CommandLineStepConfiguration.propTypes = {
   stepId: PropTypes.string,
   createJob: PropTypes.func,
   stepTool: PropTypes.object,
-  closeEditorPanel: PropTypes.func
+  closeEditorPanel: PropTypes.func,
+  plan: PropTypes.array
 };
 
 export default CommandLineStepConfiguration;

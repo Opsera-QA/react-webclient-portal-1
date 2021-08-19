@@ -21,7 +21,7 @@ pipelineActions.getWorkflowTemplatesV2 = async (getAccessToken, cancelTokenSourc
     },
   };
 
-  let apiUrl = `/pipelines/workflows`;
+  let apiUrl = `/pipelines/workflows/v2`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
@@ -48,6 +48,22 @@ pipelineActions.getPipelinesV2 = async (getAccessToken, cancelTokenSource, pipel
   };
 
   let apiUrl = `/pipelines`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+pipelineActions.getPipelinesAccessByEmailV2 = async (getAccessToken, cancelTokenSource, pipelineFilterDto, email) => {
+  const apiUrl = `/pipelines/user/${email}`;
+  const sortOption = pipelineFilterDto?.getData("sortOption");
+  const urlParams = {
+    params: {
+      sort: sortOption?.value,
+      size: pipelineFilterDto?.getData("pageSize"),
+      page: pipelineFilterDto?.getData("currentPage"),
+      search: pipelineFilterDto?.getFilterValue("search"),
+      fields: ["name", "roles", "owner"]
+    },
+  };
+
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
@@ -84,9 +100,38 @@ pipelineActions.getAllPipelines = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
+// TODO: Refactor
 pipelineActions.getAllPipelinesV2 = async (getAccessToken, cancelTokenSource) => {
+  const urlParams = {
+    params: {
+      size: 10000,
+    },
+  };
+
   let apiUrl = `/pipelines`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+pipelineActions.getPipelinesV3 = async (getAccessToken, cancelTokenSource, pipelineFilterModel, searchTerm, type, fields, active = true) => {
+  const apiUrl = `/pipelines/v2`;
+  const sortOption = pipelineFilterModel?.getData("sortOption");
+
+  const urlParams = {
+    params: {
+      sort: sortOption ? sortOption.value : undefined,
+      order: sortOption ? sortOption.order : undefined,
+      size: pipelineFilterModel?.getData("pageSize"),
+      page: pipelineFilterModel?.getData("currentPage"),
+      type: type !== 'all' && type !== null ? type : undefined,
+      search: searchTerm ? searchTerm : pipelineFilterModel?.getFilterValue("search"),
+      owner: pipelineFilterModel?.getFilterValue("owner"),
+      tag: pipelineFilterModel?.getFilterValue("tag"),
+      active: active,
+      fields: fields
+    },
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 // TODO: Remove when all references are updated
@@ -104,6 +149,16 @@ pipelineActions.run = async (pipelineId, postBody, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/${pipelineId}/run/`;
   const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
+//new-start which first resets the pipeline and then triggers a fresh run all in a single API call
+pipelineActions.newStart = async (pipelineId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/${pipelineId}/new-start/`;
+  const response = await axiosApiService(accessToken).get(apiUrl)
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
   return response;
@@ -213,6 +268,11 @@ pipelineActions.saveToolRegistryRecordToVault = async (postBody, getAccessToken)
   return response;
 };
 
+pipelineActions.saveToolRegistryRecordToVaultV2 = async (getAccessToken, cancelTokenSource, postBody) => {
+  const apiUrl = "/vault/tool/";   
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 pipelineActions.createJob = async (toolId, postBody, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/registry/action/${toolId}/createjob`;   
@@ -320,6 +380,7 @@ pipelineActions.getToolsList = async (service, getAccessToken) => {
   return response;
 };
 
+// TODO: Replace this with toolsActions.getRoleLimitedToolsByIdentifier
 pipelineActions.getToolsListV2 = async (getAccessToken, cancelTokenSource, service) => {
   const apiUrl = `/registry/properties/${service}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
@@ -361,6 +422,16 @@ pipelineActions.searchWorkSpaces = async (service, gitAccountId, getAccessToken)
   return response;
 };
 
+pipelineActions.searchWorkspacesV2 = async (getAccessToken, cancelTokenSource, service, gitAccountId) => {
+  const apiUrl = `/tools/properties`;
+  const postBody = {
+    tool: service,
+    metric: "getWorkSpaces",
+    gitAccountId: gitAccountId,
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 // TODO: We should be handling not getting data inside the places that call this route instead
 //  We can always have a function in a helper that does the parsing of data automatically and call that instead
 pipelineActions.searchRepositories = async (service, gitAccountId, workspaces, getAccessToken) => {
@@ -384,6 +455,17 @@ pipelineActions.searchRepositories = async (service, gitAccountId, workspaces, g
     })
     .catch(error => {throw { error };});
   return response;
+};
+
+pipelineActions.searchRepositoriesV2 = async (getAccessToken, cancelTokenSource, service, gitAccountId, workspaces) => {
+  const apiUrl = `/tools/properties`;
+  const postBody = {
+    tool: service,
+    metric: "getRepositories",
+    gitAccountId: gitAccountId,
+    workspaces: workspaces,
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 // TODO: in case we  want to reuse this route, we should probably construct the array inside wherever uses it instead
@@ -447,6 +529,24 @@ pipelineActions.deleteJenkinsJob = async (deleteObj, getAccessToken) => {
   console.log(deleteObj);
   let apiUrl = `/pipelines/deletejob`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, deleteObj);
+};
+
+pipelineActions.createCoverityJob = async (toolId, postBody, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/registry/action/${toolId}/createCoverityJob`;
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
+pipelineActions.createTwistlockJob = async (toolId, postBody, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/registry/action/${toolId}/createTwistlockJob`;
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
 };
 
 export default pipelineActions;

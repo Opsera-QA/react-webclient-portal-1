@@ -1,18 +1,20 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Form, Alert } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import ErrorDialog from "components/common/status_notifications/error";
-//import LoadingDialog from "../common/loading";
 import DropdownList from "react-widgets/lib/DropdownList";
 import PlatformToolsTable from "./platformToolsTable.jsx";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import LoadingDialog from "components/common/status_notifications/loading";
+import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 
+// TODO: Refactor
 function PlatformInventory () {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  
   const [key, setKey] = useState({});
   const [renderForm, setRenderForm] = useState(false);
 
@@ -62,9 +64,16 @@ function PlatformInventory () {
     setKey(selectedOption);
   };
 
-  if (error) {
-    return (<ErrorDialog error={error} />);
-  } else {
+  const getBody = () => {
+    if (error) {
+      return (<ErrorDialog error={error} />);
+    }
+
+    if (isLoading) {
+      return (<LoadingDialog message={"Loading Platform Applications"} size={"sm"} />);
+    }
+
+
     return (
       <div className="h-50 p-2">
         {!isLoading && data && data.length === 0 ?
@@ -81,7 +90,7 @@ function PlatformInventory () {
             {renderForm ?
               <DropdownList
                 className="application-select"
-                data={data} 
+                data={data}
                 valueField='name'
                 busy={isLoading}
                 textField='name'
@@ -91,7 +100,7 @@ function PlatformInventory () {
         }
 
         <div>
-          {key && Object.keys(key).length > 0 ? 
+          {key && Object.keys(key).length > 0 ?
             <>
               {Object.keys(key.tools).length > 0
                 ? <PlatformToolsTable data={key.tools} isLoading={isLoading} />
@@ -101,7 +110,18 @@ function PlatformInventory () {
         </div>
       </div>
     );
-  }
+  };
+
+  return (
+    <ScreenContainer
+      navigationTabContainer={<InventorySubNavigationBar currentTab={"platform"} />}
+      breadcrumbDestination={"platform"}
+    >
+      {getBody()}
+    </ScreenContainer>
+  );
 }
+
+PlatformInventory.propTypes = {};
 
 export default PlatformInventory;

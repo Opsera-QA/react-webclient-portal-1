@@ -35,15 +35,15 @@ function ToolCountTable({ data, isLoading, loadData }) {
   };
 
   return (
-      <FilterContainer
-        loadData={loadData}
-        isLoading={isLoading}
-        body={getToolCountsTable()}
-        titleIcon={faTally}
-        title={"Tool Counts"}
-        className={"px-2 pb-2"}
-        exportButton={<ExportToolCountButton className={"ml-2"} isLoading={isLoading} toolData={data} />}
-      />
+    <FilterContainer
+      loadData={loadData}
+      isLoading={isLoading}
+      body={getToolCountsTable()}
+      titleIcon={faTally}
+      title={"Tool Counts"}
+      className={"px-2 pb-2"}
+      exportButton={<ExportToolCountButton className={"ml-2"} isLoading={isLoading} toolData={data} />}
+    />
   );
 }
 

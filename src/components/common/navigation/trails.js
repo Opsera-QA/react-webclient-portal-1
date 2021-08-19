@@ -4,7 +4,8 @@ import {
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
   faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey,
-  faHexagon, faListAlt, faEye, faCodeBranch, faUserChart, faRadar
+  faHexagon, faListAlt, faEye, faFileArchive, faUserChart, faRadar, faServer, faHandshake, faFileCode, faTasks,
+  faUserHardHat,
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -33,6 +34,30 @@ const breadcrumbs = {
     linkText: "Tool Project Details",
     title: "Tool Project Details",
     icon: faProjectDiagram
+  },
+  platform: {
+    parent: undefined,
+    name: "platform",
+    path: paths.toolRegistry,
+    linkText: "Platform",
+    title: "Platform",
+    icon: faServer
+  },
+  customParameters: {
+    parent: undefined,
+    name: "customParameters",
+    path: paths.toolRegistry,
+    linkText: "Parameters",
+    title: "Parameters",
+    icon: faHandshake
+  },
+  scripts: {
+    parent: undefined,
+    name: "scripts",
+    path: paths.toolRegistry,
+    linkText: "Scripts",
+    title: "Scripts",
+    icon: faFileCode
   },
 
   // Administration
@@ -127,14 +152,24 @@ const breadcrumbs = {
     linkText: "Template Details",
     icon: faStream
   },
-  deleteTools: {
+
+  pipelineStorageManagement: {
     parent: "admin",
-    name: "deleteTools",
-    path: paths.deleteTools,
-    title: "Delete Tools",
-    linkText: "Delete Tools",
-    icon: faTimes
+    name: "pipelineStorageManagement",
+    path: paths.pipelineStorageManagement,
+    title: "Pipeline Storage Management",
+    linkText: "Pipeline Storage Management",
+    icon: faFileArchive
   },
+  pipelineStorageDetailView: {
+    parent: "pipelineStorageManagement",
+    name: "pipelineStorageDetailView",
+    path: paths.pipelineStorageDetailView,
+    title: "Pipeline Storage Record Details",
+    linkText: "Pipeline Storage Record Details",
+    icon: faFileArchive
+  },
+
 
   toolManagement: {
     parent: "admin",
@@ -218,8 +253,8 @@ const breadcrumbs = {
     parent: "accountSettings",
     name: "customerSystemStatus",
     path: paths.customerSystemStatus,
-    title: "Customer System Status",
-    linkText: "Customer System Status",
+    title: "Platform Status",
+    linkText: "Platform Status",
     icon: faHeartbeat
   },
 
@@ -265,6 +300,32 @@ const breadcrumbs = {
     title: "My User Details",
     linkText: "My User Details",
     icon: faUser
+  },
+
+  // User Management
+  userManagement: {
+    parent: "accountSettings",
+    name: "userManagement",
+    path: paths.userManagement,
+    title: "User Management",
+    linkText: "Users",
+    icon: faUser
+  },
+  activeUserDetailView: {
+    parent: "userManagement",
+    name: "activeUserDetailView",
+    path: paths.activeUserDetailView,
+    title: "User Details",
+    linkText: "User Details",
+    icon: faUser
+  },
+  pendingUserDetailView: {
+    parent: "userManagement",
+    name: "pendingUserDetailView",
+    path: paths.pendingUserDetailView,
+    title: "Pending User Details",
+    linkText: "Pending User Details",
+    icon: faUserHardHat
   },
 
   // LDAP Groups Administration
@@ -383,6 +444,15 @@ const breadcrumbs = {
     icon: faUserPlus
   },
 
+  deleteTools: {
+    parent: "admin",
+    name: "deleteTools",
+    path: paths.deleteTools,
+    title: "Delete Tools",
+    linkText: "Delete Tools",
+    icon: faTimes
+  },
+
   //Pipelines
   pipelines: {
     parent: undefined,
@@ -396,8 +466,8 @@ const breadcrumbs = {
     parent: "pipelines",
     name: "catalog",
     path: paths.pipelines,
-    title: "Pipeline Catalog Library",
-    linkText: "Pipeline Catalog Library",
+    title: "Catalog",
+    linkText: "Catalog",
     icon: faHexagon
   },
   pipelineDetailView: {
@@ -527,6 +597,55 @@ const breadcrumbs = {
     icon: faTags
   },
 
+  userReports: {
+    parent: "reports",
+    name: "userReports",
+    path: paths.userReports,
+    title: "User Reports",
+    linkText: "User Reports",
+    icon: faUser
+  },
+  groupMembershipReport: {
+    parent: "userReports",
+    name: "groupMembershipReport",
+    path: paths.groupMembershipReport,
+    title: "Group Membership",
+    linkText: "Group Membership",
+    icon: faUsers
+  },
+  pipelineOwnershipReport: {
+    parent: "userReports",
+    name: "pipelineOwnershipReport",
+    path: paths.pipelineOwnershipReport,
+    title: "Pipeline Ownership",
+    linkText: "Pipeline Ownership",
+    icon: faDraftingCompass
+  },
+  toolOwnershipReport: {
+    parent: "userReports",
+    name: "toolOwnershipReport",
+    path: paths.toolOwnershipReport,
+    title: "Tool Ownership",
+    linkText: "Tool Ownership",
+    icon: faTools
+  },
+  taskOwnershipReport: {
+    parent: "userReports",
+    name: "taskOwnershipReport",
+    path: paths.taskOwnershipReport,
+    title: "Task Ownership",
+    linkText: "Task Ownership",
+    icon: faTasks
+  },
+  consolidatedUserReport: {
+    parent: "userReports",
+    name: "consolidatedUserReport",
+    path: paths.consolidatedUserReport,
+    title: "User Report",
+    linkText: "User Report",
+    icon: faUser
+  },
+
   pipelineReports: {
     parent: "reports",
     name: "pipelineReports",
@@ -593,17 +712,17 @@ const breadcrumbs = {
     parent: undefined,
     name: "gitTasksManagement",
     path: paths.gitTasks,
-    title: "Git Task Management",
-    linkText: "Git Task Management",
-    icon: faCodeBranch
+    title: "Opsera Task Management",
+    linkText: "Opsera Task Management",
+    icon: faTasks
   },
   gitTasksDetailView: {
     parent: "gitTasksManagement",
     name: "gitTasksDetailView",
     path: paths.gitTasksDetailView,
-    title: "Git Task Details",
-    linkText: "Git Task Details",
-    icon: faCodeBranch
+    title: "Task Details",
+    linkText: "Task Details",
+    icon: faTasks
   },
 
   //General

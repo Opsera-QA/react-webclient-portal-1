@@ -12,9 +12,9 @@ function PipelineCatalogCardView({ data, catalogFilterModel, setCatalogFilterMod
     }
 
     return (
-      <Row className="mx-0">
+      <Row className="mx-0" >
         {data.map((template, idx) => (
-          <Col lg={6} xs={12} key={idx} className={"p-2"}>
+          <Col xl={6} lg={12} key={idx} className="p-2">
             <PipelineTemplateCatalogItem
               template={template}
               accessRoleData={accessRoleData}

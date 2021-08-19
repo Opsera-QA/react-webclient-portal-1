@@ -1,39 +1,46 @@
-import React, { useContext, useState, useEffect } from "react";
-import { AuthContext } from "contexts/AuthContext";
-import { axiosApiService } from "api/apiService";
-import PipelineActivityLogTable from "./pipeline_activity/PipelineActivityLogTable";
+import React, {useContext, useEffect, useRef, useState} from "react";
+import {AuthContext} from "contexts/AuthContext";
+import {axiosApiService} from "api/apiService";
+import PipelineActivityLogTable
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTable";
 import LoadingDialog from "components/common/status_notifications/loading";
-import ErrorDialog from "components/common/status_notifications/error";
 import InfoDialog from "components/common/status_notifications/info";
 import "../../workflows.css";
-import { useParams } from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import PipelineWorkflowView from "./workflow/PipelineWorkflowView";
 import PipelineSummaryPanel from "./PipelineSummaryPanel";
 import PipelineHelpers from "../../pipelineHelpers";
-import { useHistory } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
+  faBracketsCurly, faDiceD20,
   faDraftingCompass,
-  faDiceD20,
+  faHexagon,
+  faLayerGroup,
   faMicrochip,
-  faBracketsCurly,
-  faSpinner, faHexagon, faGripVertical, faLayerGroup,
 } from "@fortawesome/pro-light-svg-icons";
-import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
+import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import Model from "../../../../core/data_model/model";
-import pipelineActivityActions from "./pipeline_activity/pipeline-activity-actions";
-import pipelineActivityFilterMetadata from "./pipeline_activity/pipeline-activity-filter-metadata";
+import pipelineActivityActions
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-actions";
+import pipelineActivityFilterMetadata
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-filter-metadata";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
+import axios from "axios";
+import pipelineActivityHelpers
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-helpers";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 const refreshInterval = 8000;
 
+// TODO: Find way to refresh logs inside the log components rather than leaving all the methods in here
+//  we could instead pass refresh trigger down. 
 function PipelineDetailView() {
   const { tab, id } = useParams();
-  const [error, setErrors] = useState();
+  const toastContext = useContext(DialogToastContext);
   const [data, setData] = useState({});
   const [pipeline, setPipeline] = useState({});
-  const [activityData, setActivityData] = useState({});
+  const [activityData, setActivityData] = useState([]);
   //const [stepStatus, setStepStatus] = useState({});
   const [loading, setLoading] = useState(false);
   const [softLoading, setSoftLoading] = useState(false);
@@ -45,6 +52,8 @@ function PipelineDetailView() {
   const [refreshCount, setRefreshCount] = useState(0);
   const [pipelineActivityFilterDto, setPipelineActivityFilterDto] = useState(new Model(pipelineActivityFilterMetadata.newObjectFields, pipelineActivityFilterMetadata, false));
   const history = useHistory();
+  const [pipelineActivityMetadata, setPipelineActivityMetadata] = useState(undefined);
+  const [pipelineActivityTreeData, setPipelineActivityTreeData] = useState([]);
 
   const [refreshTimer, setRefreshTimer] = useState(null);
   let staleRefreshCount = 1;
@@ -53,10 +62,53 @@ function PipelineDetailView() {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
   const [customerAccessRules, setCustomerAccessRules] = useState({});
 
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [currentLogTreePage, setCurrentLogTreePage] = useState(0);
+
   useEffect(() => {
     //console.log("Effect  1");
-    initComponent();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    initComponent(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
+
+  useEffect(() => {
+    setActivityData([]);
+
+    if (tab === "summary") {
+      getActivityLogs().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
+  }, [tab]);
+
+  useEffect(() => {
+    if (tab === "summary") {
+      pullLogData().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
+  }, [currentLogTreePage]);
 
   const handleTabClick = (tabSelection) => async e => {
     e.preventDefault();
@@ -89,7 +141,7 @@ function PipelineDetailView() {
   }, [JSON.stringify(pipeline.workflow), refreshCount]);
 
 
-  const initComponent = async () => {
+  const initComponent = async (cancelSource = cancelTokenSource) => {
     setLoading(true);
 
     const userRecord = await getUserRecord(); //RBAC Logic
@@ -100,12 +152,12 @@ function PipelineDetailView() {
       setActiveTab(tab);
     }
 
-    await fetchData();
+    await fetchData(cancelSource);
     setLoading(false);
-    await getActivityLogs();
+    await getActivityLogs(undefined, false, cancelSource);
   };
 
-  async function fetchData() {
+  const fetchData = async (cancelSource = cancelTokenSource) => {
     console.log("Top level fetch data");
     setRefreshCount(refreshCount => refreshCount + 1);
     setSoftLoading(true);
@@ -130,15 +182,15 @@ function PipelineDetailView() {
           }
         }
       } else {
-        setErrors("Pipeline not found");
+        toastContext.showLoadingErrorDialog("Pipeline not found");
       }
-    } catch (err) {
-      console.error(err.message);
-      setErrors(err.message);
+    } catch (error) {
+      console.error(error.message);
+      toastContext.showLoadingErrorDialog(error);
     } finally {
       setSoftLoading(false);
     }
-  }
+  };
 
   const evaluatePipelineStatus = (pipeline) => {
     console.log("evaluating pipeline status function");
@@ -171,11 +223,11 @@ function PipelineDetailView() {
       return;
     }
     const { workflow } = pipeline;
-    let status = workflow.last_step !== undefined && workflow.last_step.hasOwnProperty("status") ? workflow.last_step.status : false;
-    return status;
+    return workflow.last_step !== undefined && workflow.last_step.hasOwnProperty("status") ? workflow.last_step.status : false;
   };
 
-  const getActivityLogs = async (filterDto = pipelineActivityFilterDto, silentLoading = false) => {
+  // TODO: Find way to put refresh inside table itself
+  const getActivityLogs = async (filterDto = pipelineActivityFilterDto, silentLoading = false, cancelSource = cancelTokenSource) => {
     if (activeTab !== "summary" || logsIsLoading) {
       return;
     }
@@ -185,16 +237,63 @@ function PipelineDetailView() {
         setLogsIsLoading(true);
       }
 
-      const response = await pipelineActivityActions.getPipelineActivityLogs(pipelineActivityFilterDto, pipeline?.workflow?.run_count || "0", id, getAccessToken);
-      setActivityData(response.data);
-      const newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", response.data?.count);
-      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-      setPipelineActivityFilterDto(() => newFilterDto);
-    } catch (err) {
-      setErrors(err.message);
-      console.log(err.message);
+      // TODO: if search term applies ignore run count and reconstruct tree?
+      const treeResponse = await pipelineActivityActions.getPipelineActivityLogTree(getAccessToken, cancelSource, id, filterDto);
+      const pipelineTree = pipelineActivityHelpers.constructTree(treeResponse?.data?.data);
+      setPipelineActivityTreeData([...pipelineTree]);
+
+      if (Array.isArray(pipelineTree) && pipelineTree.length > 0) {
+        await pullLogData(pipelineTree, filterDto, cancelSource);
+      }
+    } catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+      console.log(error.message);
     } finally {
+      setLogsIsLoading(false);
+    }
+  };
+
+  const pullLogData = async (pipelineTree = pipelineActivityTreeData, filterDto = pipelineActivityFilterDto, cancelSource = cancelTokenSource, silentLoading = false) => {
+
+    try {
+      // create run count query based on tree -- tree is 0 index based
+      const startIndex = 20 * currentLogTreePage;
+      let runCountArray = [];
+      let otherLogsQuery = false;
+
+      if (!silentLoading) {
+        setLogsIsLoading(true);
+      }
+
+      for (let i = startIndex; i < startIndex + 20 && i < pipelineTree.length; i++) {
+        let runCount = pipelineTree[i].runNumber;
+
+        if (runCount === "other_logs_query") {
+          otherLogsQuery = true;
+        }
+        else if (runCount) {
+          runCountArray.push(runCount);
+        }
+      }
+
+      const response = await pipelineActivityActions.getPipelineActivityLogsV3(getAccessToken, cancelSource, id, runCountArray, filterDto, otherLogsQuery);
+      const pipelineActivityData = response?.data?.data;
+
+      if (Array.isArray(pipelineActivityData)) {
+        setActivityData([...pipelineActivityData]);
+        setPipelineActivityMetadata(response?.data?.metadata);
+
+        // TODO: Remove pagination.
+        const newFilterDto = filterDto;
+        newFilterDto.setData("totalCount", data?.count);
+        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+        setPipelineActivityFilterDto({...newFilterDto});
+      }
+    } catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+      console.log(error.message);
+    }
+    finally {
       setLogsIsLoading(false);
     }
   };
@@ -218,7 +317,7 @@ function PipelineDetailView() {
     case "ai-ml":
       return faMicrochip;
     default:
-      return faDiceD20;
+      return faDraftingCompass;
     }
   };
 
@@ -238,7 +337,7 @@ function PipelineDetailView() {
           </li>
           <li className="nav-item">
             <a className={"nav-link " + (activeTab === "model" ? "active" : "")} href="#"
-               onClick={handleTabClick("model")}><FontAwesomeIcon icon={faDraftingCompass}
+               onClick={handleTabClick("model")}><FontAwesomeIcon icon={faDiceD20}
                                                                   className="mr-2"/>Workflow</a>
           </li>
           {/*<li className="nav-item">*/}
@@ -251,7 +350,7 @@ function PipelineDetailView() {
   };
 
   const getCurrentView = () => {
-    if (loading && !error) {
+    if (loading) {
       return (<LoadingDialog size="md" message={"Loading pipeline..."}/>);
     }
 
@@ -294,11 +393,14 @@ function PipelineDetailView() {
         <div className="max-content-width-1875">
           <PipelineActivityLogTable
             pipeline={pipeline}
+            pipelineLogData={activityData}
             isLoading={logsIsLoading}
-            loadData={getActivityLogs}
+            loadData={pullLogData}
             pipelineActivityFilterDto={pipelineActivityFilterDto}
             setPipelineActivityFilterDto={setPipelineActivityFilterDto}
-            data={activityData.pipelineData}
+            pipelineActivityMetadata={pipelineActivityMetadata}
+            pipelineActivityTreeData={pipelineActivityTreeData}
+            setCurrentLogTreePage={setCurrentLogTreePage}
           />
         </div>
       </div>
@@ -324,20 +426,15 @@ function PipelineDetailView() {
   const getNavigationTabContainer = () => {
     return (
       <NavigationTabContainer>
+        <NavigationTab activeTab={activeTab} tabText={"Pipelines"}
+                       handleTabClick={handleTabClick} tabName={"pipelines"} toolTipText={"Pipelines"} icon={faDraftingCompass}/>
         <NavigationTab activeTab={activeTab} tabText={"Catalog"} handleTabClick={handleTabClick}
                        tabName={"catalog"} toolTipText={"Template Catalog"} icon={faHexagon}/>
-        <NavigationTab activeTab={activeTab} tabText={"Pipelines"}
-                       handleTabClick={handleTabClick} tabName={"pipelines"} toolTipText={"Pipelines"} icon={faDiceD20}/>
         <NavigationTab activeTab={"viewer"} tabText={"Pipeline Viewer"}
                        handleTabClick={handleTabClick} tabName={"viewer"} toolTipText={"Pipeline Viewer"} icon={faLayerGroup}/>
       </NavigationTabContainer>
     );
   };
-
-  // TODO: Create pipeline summary error container
-  if (error && !loading) {
-    return (<ErrorDialog error={error} align={"top"} setError={setErrors}/>);
-  }
 
   if (!loading && (data.length === 0 || data.pipeline == null)) {
     return (<InfoDialog
@@ -349,7 +446,6 @@ function PipelineDetailView() {
     <div>
       {getNavigationTabContainer()}
       <div className="h4 mt-2 mb-4">{getPipelineTitle()}</div>
-
       {getNavigationTabs()}
       {getCurrentView()}
     </div>

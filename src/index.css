@@ -94,6 +94,13 @@ body {
     min-height: 100vh;
 }
 
+.main-text {
+    font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
 a, .link-text {
     color: #383060; /*#1578dc;*/
     text-decoration: none;
@@ -519,7 +526,6 @@ a:hover, .active, .link-text:hover {
 
 
 .bordered-content-block {
-    border-radius: 5px;
     border: 1px solid #d2d2d2;
 }
 
@@ -802,4 +808,19 @@ a:hover, .active, .link-text:hover {
 .scale-120-container {
     transform: scaleY(1.2);
     transform-origin: top;
+}
+
+.dropdown-data-fetch:hover {
+    text-decoration: underline;
+}
+
+.dropdown-data-fetch {
+    color: blue;
+    cursor: pointer;
+}
+
+.stepForm-data-display {
+    background-color: #FFF;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    z-index: 3000;
 }

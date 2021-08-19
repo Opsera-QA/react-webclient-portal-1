@@ -58,6 +58,10 @@ function WebAppNameSelectInput({ fieldName, dataObject, setDataObject, disabled,
     }
   };
 
+  if (dataObject?.getData("communicationStyle").length === 0 || dataObject?.getData("communicationStyle") !== "AzureWebApp") {
+    return null;
+  }
+
   return (
     <div>
       <SelectInputBase

@@ -1,19 +1,17 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {useHistory, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import axios from "axios";
-import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
-import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faAnalytics, faChartNetwork, faChartArea, faUserChart, faRadar} from "@fortawesome/pro-light-svg-icons";
+import {faChartArea, faUserChart} from "@fortawesome/pro-light-svg-icons";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import "./marketplace.css";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import MarketplaceCharts from "components/insights/marketplace/charts/MarketplaceCharts";
 import MarketplaceDashboardCatalog from "components/insights/marketplace/dashboards/MarketplaceDashboardCatalog";
+import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 
 function Marketplace () {
-  const history = useHistory();
   const { dashboardId } = useParams();
   const isMounted = useRef(false);
   const [activeTab, setActiveTab] = useState("charts");
@@ -41,43 +39,6 @@ function Marketplace () {
       isMounted.current = false;
     };
   }, []);
-
-  const handleNavTabClick = (tabSelection) => async e => {
-    e.preventDefault();
-
-    if (tabSelection === "analytics") {
-      history.push(`/analytics`);
-      return;
-    }
-
-    if (tabSelection === "marketplace") {
-      history.push(`/insights/marketplace`);
-      return;
-    }
-
-    if (tabSelection === "dashboards") {
-      history.push(`/insights/dashboards`);
-      return;
-    }
-
-    if (tabSelection === "synopsis") {
-      history.push(`/insights/synopsis`);
-      return;
-    }
-
-    setActiveTab(tabSelection);
-  };
-
-  const getNavigationTabContainer = () => {
-    return (
-      <NavigationTabContainer>
-        <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleNavTabClick} activeTab={"marketplace"} tabText={"Dashboards"} />
-        <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleNavTabClick} activeTab={"marketplace"} tabText={"Marketplace"} />
-        <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={"marketplace"} tabText={"Analytics"} />
-        <NavigationTab icon={faRadar} tabName={"synopsis"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Synopsis"} />
-      </NavigationTabContainer>
-    );
-  };
 
   const getTabContainer = () => {
     return (
@@ -118,7 +79,7 @@ function Marketplace () {
 
   return (
     <ScreenContainer
-      navigationTabContainer={getNavigationTabContainer()}
+      navigationTabContainer={<InsightsSubNavigationBar currentTab={"marketplace"} />}
       breadcrumbDestination={"marketplace"}
       pageDescription={getPageDescription()}
     >

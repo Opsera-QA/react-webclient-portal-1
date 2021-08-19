@@ -1,9 +1,11 @@
-export default (getColor, maxValue, MeanLineLayer) => ({
-  keys: ["Count"],
+export default (getColor, maxValue) => ({
+  keys: ["mttr"],
   indexBy: "_id",
   colorBy: "id",
   minValue: 0,
-  maxValue,
-  layers: ["grid", "axes", "bars", MeanLineLayer, "markers", "mesh", "legends"],
-  colors: getColor
+  layers: ["grid", "axes", "bars", "markers", "mesh", "legends"],
+  colors: getColor,
+  enableLabel: true,
+  labelTextColor: "white",
+  label: d => `#${d.data.count}`
 });

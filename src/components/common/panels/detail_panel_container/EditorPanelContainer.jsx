@@ -1,12 +1,35 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PersistAndCloseButtonContainer from "components/common/buttons/saving/containers/PersistAndCloseButtonContainer";
+import {Form} from "react-bootstrap";
+import Row from "react-bootstrap/Row";
+import EditorPanelToggleInput from "components/common/inputs/boolean/EditorPanelToggleInput";
+import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 
-function EditorPanelContainer({ children, isLoading, showRequiredFieldsMessage, createRecord, updateRecord, recordDto, setRecordDto, handleClose, lenient, disable, addAnotherOption, extraButtons }) {
+function EditorPanelContainer(
+  {
+    children,
+    isLoading,
+    showRequiredFieldsMessage,
+    createRecord,
+    updateRecord,
+    recordDto,
+    setRecordDto,
+    handleClose,
+    lenient,
+    disable,
+    addAnotherOption,
+    extraButtons,
+    showBooleanToggle,
+    enabledText,
+    disabledText,
+    getHelpComponent,
+    booleanToggleDisabled,
+  }) {
+  const [helpIsShown, setHelpIsShown] = useState(false);
 
-  // TODO: Remove check. Editor panels should always have the message. If not an editor panel, use summary or detail or make a new panel.
   const getRequiredFieldsMessage = () => {
     if (showRequiredFieldsMessage) {
       return (<RequiredFieldsMessage />);
@@ -31,16 +54,64 @@ function EditorPanelContainer({ children, isLoading, showRequiredFieldsMessage, 
     }
   };
 
+  const getHelpToggle = () => {
+    if (getHelpComponent) {
+      return (
+        <ActionBarToggleHelpButton
+          toggleHelp={() => setHelpIsShown(true)}
+          helpIsShown={helpIsShown}
+          visible={getHelpComponent() != null}
+          className={"ml-2"}
+        />
+      );
+    }
+  };
+
+  const getBooleanToggle = () => {
+    if (showBooleanToggle === true) {
+      return (
+        <EditorPanelToggleInput
+          setDataObject={setRecordDto}
+          dataObject={recordDto}
+          disabledText={disabledText}
+          enabledText={enabledText}
+          disabled={booleanToggleDisabled}
+        />
+      );
+    }
+  };
+
   if (isLoading) {
     return (<LoadingDialog size="sm"/>);
   }
 
+  if (helpIsShown) {
+    const helpComponent = getHelpComponent(setHelpIsShown);
+
+    if (helpComponent != null) {
+      return (
+        <div className={"p-2"}>
+          {helpComponent}
+        </div>
+      );
+    }
+  }
+
   return (
-    <div className="p-3 h-100">
-      <div>{children}</div>
-      <div>
-        <div>{getPersistButtonContainer()}</div>
-        <div>{getRequiredFieldsMessage()}</div>
+    <div className="h-100">
+      <div className={"mt-2 d-flex justify-content-between"} style={{paddingRight: "20px"}}>
+        <div />
+        <div className={"d-flex"}>
+          {getBooleanToggle()}
+          {getHelpToggle()}
+        </div>
+      </div>
+      <div className={showBooleanToggle === true ? "mx-2 px-3 pb-3" : "mx-2 p-3"}>
+        <div>{children}</div>
+        <div>
+          <div>{getPersistButtonContainer()}</div>
+          <div>{getRequiredFieldsMessage()}</div>
+        </div>
       </div>
     </div>
   );
@@ -60,11 +131,18 @@ EditorPanelContainer.propTypes = {
   disable: PropTypes.bool,
   addAnotherOption: PropTypes.bool,
   extraButtons: PropTypes.any,
+  showBooleanToggle: PropTypes.bool,
+  enabledText: PropTypes.string,
+  disabledText: PropTypes.string,
+  getHelpComponent: PropTypes.func,
+  booleanToggleDisabled: PropTypes.bool,
 };
 
 EditorPanelContainer.defaultProps = {
   showRequiredFieldsMessage: true,
-  addAnotherOption: true
+  addAnotherOption: true,
+  enabledText: "Enabled",
+  disabledText: "Disabled"
 };
 
 export default EditorPanelContainer;

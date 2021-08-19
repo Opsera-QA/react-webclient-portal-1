@@ -15,7 +15,7 @@ const stepConfigurationMetadata = {
       label: "Tool",
       id: "tool_identifier",
       isRequired: true,
-      formText: "Tool cannot be changed after being set. The step would need to be deleted and recreated to change the tool.",
+      formText: "Tool cannot be changed after this form is saved. To change tool, delete the step and create a new one.",
       maxLength: 50
     },
     {
@@ -23,7 +23,7 @@ const stepConfigurationMetadata = {
       id: "tags"
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     name: "",
     type: "",
     tool_identifier: "",

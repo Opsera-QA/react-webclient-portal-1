@@ -5,7 +5,7 @@ export const ldapUsersMetaData = {
   //   return `/admin/organizations/details/${record.getData("name")}`;
   // },
   detailViewTitle: function (record) {
-    return `User Details [${record.getData("name")}]`;
+    return `User Details [${record?.getOriginalValue("name")}]`;
   },
   fields: [
     {
@@ -62,6 +62,10 @@ export const ldapUsersMetaData = {
       label: "Region",
       id: "region",
     },
+    {
+      label: "Active",
+      id: "active",
+    },
   ],
   newObjectFields: {
     name: "",
@@ -74,5 +78,6 @@ export const ldapUsersMetaData = {
     teams: [],
     division: "",
     site: "",
+    active: true,
   }
 };

@@ -1,6 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
-// TODO: Move to server, pull with data
 export const accessTokenMetadata = {
   idProperty: "_id",
   type: "Access Token",
@@ -8,7 +5,7 @@ export const accessTokenMetadata = {
   //   return `/user/accessTokens/details/${record.getData("_id")}`;
   // },
   detailViewTitle: function (record) {
-    return `Access Token Details [${record.getData("name")}]`;
+    return `Access Token Details [${record?.getOriginalValue("name")}]`;
   },
   fields: [
     {
@@ -16,7 +13,7 @@ export const accessTokenMetadata = {
       id: "name",
       isRequired: true,
       maxLength: 50,
-      regexValidator: regexHelpers.regexTypes["generalTextWithSpaces"],
+      regexDefinitionName: "generalTextWithSpaces",
     },
     {
       label: "Expires After",

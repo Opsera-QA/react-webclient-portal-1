@@ -8,7 +8,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 
 function AccountSettings() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const { getUserRecord, setAccessRoles, featureFlagHideItemInProd, featureFlagHideItemInTest } = useContext(AuthContext);
+  const { getUserRecord, setAccessRoles, featureFlagHideItemInProd, featureFlagHideItemInTest, isSassUser } = useContext(AuthContext);
   const envIsProd = featureFlagHideItemInProd();
   const envIsTest = featureFlagHideItemInTest();
   const toastContext = useContext(DialogToastContext);
@@ -62,11 +62,12 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
           <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"} visible={!envIsProd}/>
           <BreadcrumbPageLink breadcrumbDestination={"dataMappingManagement"}/>
+          <BreadcrumbPageLink breadcrumbDestination={"deleteTools"} />
           <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>
-          {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"} />}
-          {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"}/>}
+          <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"} visible={!isSassUser()}/>
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
+          <BreadcrumbPageLink breadcrumbDestination={"userManagement"} visible={!isSassUser()}/>
         </>
       );
     }
@@ -79,11 +80,12 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
           <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"} visible={!envIsProd}/>
           <BreadcrumbPageLink breadcrumbDestination={"dataMappingManagement"}/>
-          {accessRoleData.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>}
-          {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"}/>}
-          {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"}/>}
+          <BreadcrumbPageLink breadcrumbDestination={"deleteTools"} />
+          <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"} visible={!isSassUser()}/>
+          <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"} visible={!isSassUser() || !envIsProd}/>
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
+          <BreadcrumbPageLink breadcrumbDestination={"userManagement"} visible={!isSassUser() && !envIsProd}/>
         </>
       );
     }

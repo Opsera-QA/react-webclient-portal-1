@@ -10,7 +10,7 @@ function ActionBarPublishPipelineButton({handlePublishClick, itemId}) {
   };
 
   return (
-    <ActionBarButton action={publish} icon={faShareAll} popoverText={`Publish this Pipeline to the shared Catalog`} />
+    <ActionBarButton action={publish} icon={faShareAll} popoverText={`Publish this pipeline template to your organization's private catalog`} />
   );
 }
 

@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import toolsActions from "components/inventory/tools/tools-actions";
+import GitActionsHelper
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
+function ScmAccountReviewerInput({dataObject, setDataObject, disabled, existingReviewers}) {    
 
-function ScmAccountReviewerInput({dataObject, setDataObject, disabled}) {
-
-    const { getAccessToken, getUserRecord } = useContext(AuthContext);
+    const { getAccessToken } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
     const [reviewers, setReviewers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -24,9 +24,11 @@ function ScmAccountReviewerInput({dataObject, setDataObject, disabled}) {
             setIsLoading(true);
             await getReviewers();
         }
-        catch (error) {
-            console.error(error);
-            toastContext.showServiceUnavailableDialog();
+        catch (error) {            
+            if(error.error.response.status !== 500){
+                console.error(error);
+                toastContext.showInlineErrorMessage(error);
+            }            
         }
         finally {
             setIsLoading(false);
@@ -35,20 +37,20 @@ function ScmAccountReviewerInput({dataObject, setDataObject, disabled}) {
 
     const getReviewers = async () => {
 
-        const user = await getUserRecord();
+        const response  = await GitActionsHelper
+                                .getReviewers(
+                                    dataObject.getData("service"), 
+                                    dataObject.getData("toolId"),                                    
+                                    dataObject.getData("repoId"), 
+                                    dataObject.getData("workspace"),
+                                    getAccessToken
+                                );
 
-        const postBody = {
-            "customerId": user._id,
-            "gitToolId": dataObject.getData("toolId"),
-            "repository": dataObject.getData("repository"),
-            "workspace": dataObject.getData("workspace")
-        };        
-        
-        const response  = await toolsActions.getScmReviewers(getAccessToken, postBody);
-    
-        if (Array.isArray(response.data.message.reviewers)) {
-            setReviewers(response.data.message.reviewers);
-        }   
+        if(response.data.status === 200 && Array.isArray(response.data.data.reviewers)){
+            let filteredReviewers = existingReviewers.filter(er => er.repoId === dataObject.getData("repoId")).map(er => er.reviewerId);            
+            // setReviewers(response.data.data.reviewers);
+            setReviewers(response.data.data.reviewers.filter(r => !filteredReviewers.includes(r.value)));
+        }        
     };
 
     const setReviewerName = (fieldName, selectedOption) => {   
@@ -69,7 +71,7 @@ function ScmAccountReviewerInput({dataObject, setDataObject, disabled}) {
 
     const getNoReviewersMessage = () => {
         if (!isLoading && (reviewers == null || reviewers.length === 0) && dataObject.getData("repository")) {
-          return ("User information is missing or unavailable!");
+          return ("No Reviewers found for the given details!");
         }
     };
 
@@ -94,6 +96,7 @@ ScmAccountReviewerInput.propTypes = {
     dataObject: PropTypes.object,
     setDataObject: PropTypes.func,
     disabled: PropTypes.bool,
+    existingReviewers: PropTypes.array,
   };
   
   export default ScmAccountReviewerInput;

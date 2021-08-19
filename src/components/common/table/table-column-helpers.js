@@ -8,11 +8,15 @@ import {
   faSpinner,
   faStop,
   faStopCircle,
-  faTimesCircle, faTrash, faPlay, faTag
+  faTimesCircle, faTrash, faPlay, faTag, faExclamationCircle
 } from "@fortawesome/pro-light-svg-icons";
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import WarningIcon from "../../common/icons/table/WarningIcon";
 import FailIcon from "../../common/icons/table/FailIcon";
+import ArrowCircleDown from "../../common/icons/table/ArrowCircleDown";
+import ArrowCircleUp from "../../common/icons/table/ArrowCircleUp";
+import MinusCircle from "../../common/icons/table/MinusCircle";
+import PauseCircle from "../../common/icons/table/PauseCircle";
 import React from "react";
 import Model from "core/data_model/model";
 import PipelineTypesField from "components/common/form_fields/pipelines/PipelineTypesField";
@@ -27,8 +31,7 @@ import {capitalizeFirstLetter, truncateString} from "components/common/helpers/s
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
-import FieldLabel from "components/common/fields/FieldLabel";
-import FieldContainer from "components/common/fields/FieldContainer";
+import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
 
 const getTableHeader = (field) => {
   return field ? field.label : "";
@@ -58,6 +61,13 @@ export const getTableTextColumn = (field, className) => {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     class: className ? className : undefined
+  };
+};
+
+export const getOwnerNameField = (headerText = "Owner Name") => {
+  return {
+    Header: headerText,
+    accessor: "owner_name",
   };
 };
 
@@ -363,10 +373,19 @@ export const getPipelineActivityStatusColumn = (field, className) => {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     Cell: function parseStatus(row) {
+      if (row?.value == null || row?.value === "") {
+        return (
+          <div className="d-flex flex-nowrap">
+            <div><FontAwesomeIcon icon={faCircle} className="cell-icon yellow my-auto" fixedWidth/></div>
+            <div className="ml-1">Unknown</div>
+          </div>
+        );
+      }
+
       return (
         <div className="d-flex flex-nowrap">
           <div>{getPipelineStatusIcon(row)}</div>
-          <div className="ml-1">{row.value}</div>
+          <div className="ml-1">{capitalizeFirstLetter(row.value)}</div>
         </div>
       );
     },
@@ -378,21 +397,23 @@ export const getPipelineStatusIcon = (row) => {
   switch (row.value) {
     case "failure":
     case "failed":
-      return (<FontAwesomeIcon icon={faTimesCircle} className="cell-icon red vertical-align-item" fixedWidth />);
+      return (<FontAwesomeIcon icon={faTimesCircle} className="cell-icon red my-auto" fixedWidth />);
+    case "error":
+      return (<FontAwesomeIcon icon={faExclamationCircle} className="cell-icon red my-auto" fixedWidth />);
     case "unknown":
-      return (<FontAwesomeIcon icon={faCircle} className="cell-icon yellow vertical-align-item" fixedWidth/>);
+      return (<FontAwesomeIcon icon={faCircle} className="cell-icon yellow my-auto" fixedWidth/>);
     case "rejected":
-      return (<FontAwesomeIcon icon={faStopCircle} className="cell-icon red vertical-align-item" fixedWidth/>);
+      return (<FontAwesomeIcon icon={faStopCircle} className="cell-icon red my-auto" fixedWidth/>);
     case "running":
     case "processing event":
-      return (<FontAwesomeIcon icon={faPlayCircle} className="cell-icon green vertical-align-item" fixedWidth/>);
+      return (<FontAwesomeIcon icon={faPlayCircle} className="cell-icon green my-auto" fixedWidth/>);
     case "queued":
-      return (<FontAwesomeIcon icon={faPauseCircle} className="cell-icon green vertical-align-item" fixedWidth/>);
+      return (<FontAwesomeIcon icon={faPauseCircle} className="cell-icon green my-auto" fixedWidth/>);
     case "stopped":
     case "halted":
-      return (<FontAwesomeIcon icon={faOctagon} className="cell-icon red vertical-align-item" fixedWidth/>);
+      return (<FontAwesomeIcon icon={faOctagon} className="cell-icon red my-auto" fixedWidth/>);
     default:
-      return (<FontAwesomeIcon icon={faCheckCircle} className="cell-icon green vertical-align-item" fixedWidth/>);
+      return (<FontAwesomeIcon icon={faCheckCircle} className="cell-icon green my-auto" fixedWidth/>);
   }
 };
 
@@ -401,6 +422,8 @@ export const getAssociatedPipelineStatusIcon = (pipelineStatus) => {
     case "failure":
     case "failed":
       return (<FontAwesomeIcon icon={faTimesCircle} className="red" fixedWidth />);
+    case "error":
+      return (<FontAwesomeIcon icon={faExclamationCircle} className="red" fixedWidth />);
     case "unknown":
       return (<FontAwesomeIcon icon={faCircle} className="yellow" fixedWidth/>);
     case "rejected":
@@ -446,6 +469,14 @@ export const getTablePipelineStatusColumn = (field, className) => {
                             icon={faTimesCircle} statusText={"Failed"} tableColumn={true}/>
           </div>
         );
+        case "error":
+          return (
+            <div className="red">
+              <PipelineStatus className="red"
+                              innerText={"An error has occurred in this pipeline.  See activity logs for details."}
+                              icon={faExclamationCircle} statusText={"Failed"} tableColumn={true}/>
+            </div>
+          );
       case "running":
         return (
           <div className="green">
@@ -502,6 +533,29 @@ export const getChartPipelineStatusColumn = (field, className) => {
   };
 };
 
+export const getChartTrendStatusColumn = (field, className) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: function parseStatus(row) {
+      let status = typeof row?.value === "string" ? row.value.toLowerCase() : status;
+      switch (status) {
+        case "red":
+          return (<ArrowCircleUp />);
+        case "neutral":
+          return (<PauseCircle/>);
+        case "green":
+        return (<ArrowCircleDown/>);
+        case "-":
+          return (<MinusCircle/>);
+        default:
+          return status;
+      }
+    },
+    class: className ? className :  undefined
+  };
+};
+
 export const getTableFavoriteColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
@@ -547,6 +601,18 @@ export const getGitTaskTableRunButtonColumn = (accessor = "row", headerText, var
   };
 };
 
+export const getDeletePlatformToolTableButtonColumn = (accessor = "row", headerText, variant, buttonText, buttonFunction, className) => {
+  return {
+    Header: headerText,
+    accessor: accessor,
+    Cell: function getDeleteButton(row) {
+      return <Button size={"sm"} variant={variant} disabled={row?.data[row?.row?.index].toolStatus !== "ACTIVE"} onClick={() => {buttonFunction(row?.data[row?.row?.index]);}} >
+                {buttonText}
+            </Button>;
+    },
+    class: className ? className :  "no-wrap-inline py-1"
+  };
+};
 export const getTableBooleanIconColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
@@ -555,6 +621,19 @@ export const getTableBooleanIconColumn = (field, className) => {
       return row.value ? <div><FontAwesomeIcon icon={faCheckCircle} className="green ml-2" /></div> :  <div><FontAwesomeIcon icon={faTimesCircle} className="red ml-2" /></div>;
     },
     class: className ? className : "text-left"
+  };
+};
+
+export const getGitTasksStatusColumn = (field, className) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: function parseStatus(row) {
+      return (        
+        <div>{getPipelineStatusIcon(row)}</div>        
+      );
+    },
+    class: className ? className : undefined
   };
 };
 
@@ -587,6 +666,34 @@ export const getCountColumnWithoutField = (header, accessor, className) => {
     accessor: accessor,
     Cell: function getCount(row) {
       return row.value.length;
+    },
+    class: className ? className :  "no-wrap-inline"
+  };
+};
+
+export const getRoleAccessLevelColumn = (field, className) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: function getRoleAccessLevel(row) {
+      const roles = row?.data[row?.row?.index]?.roles;
+      const text = row?.value;
+
+      if (text == null) {
+        return `${ACCESS_ROLES_FORMATTED_LABELS.no_roles_assigned}`;
+      }
+
+      const accessLevel = ACCESS_ROLES_FORMATTED_LABELS[text];
+
+      if (accessLevel) {
+        return `${accessLevel}`;
+      }
+
+      if (!Array.isArray(roles) || roles.length === 0) {
+        return `${ACCESS_ROLES_FORMATTED_LABELS.no_access_rules}`;
+      }
+
+      return "ROLE ACCESS LEVEL UNKNOWN";
     },
     class: className ? className :  "no-wrap-inline"
   };
@@ -626,5 +733,27 @@ export const getCheckBoxColumn = (handleChange) => {
         }}
       />;
     },
+  };
+};
+
+export const getStaticIconColumn = (icon, accessor = "row", className) => {
+  return {
+    Header: "",
+    accessor: accessor,
+    Cell: function StaticIcon(){
+      return <FontAwesomeIcon icon={icon} />;
+    },
+    class: className ? className : undefined
+  };
+};
+
+export const getStaticInfoColumn = (icon, accessor = "row", className) => {
+  return {
+    Header: "",
+    accessor: accessor,
+    Cell: function StaticIcon(){
+      return <FontAwesomeIcon icon={faSearchPlus} />;
+    },
+    class: className ? className : undefined
   };
 };

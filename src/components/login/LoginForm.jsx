@@ -4,17 +4,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { axiosApiService } from "../../api/apiService";
 import { useHistory } from "react-router-dom";
-import ErrorDialog from "../common/status_notifications/error";
-import InformationDialog from "../common/status_notifications/info";
 import { faArrowLeft } from "@fortawesome/pro-solid-svg-icons";
 import { AuthContext } from "../../contexts/AuthContext";
 import "@okta/okta-signin-widget/dist/css/okta-sign-in.min.css";
 import { useOktaAuth } from "@okta/okta-react";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import RegisterAccountButton from "components/login/RegisterAccountButton";
+import userActions from "../user/user-actions";
 
 const OktaSignIn = require("@okta/okta-signin-widget");
 
 const LoginForm = ({ authClient }) => {
-  const { featureFlagHideItemInProd } = useContext(AuthContext);
+  const { generateJwtServiceTokenWithValue } = useContext(AuthContext);
   const { oktaAuth } = useOktaAuth();
   const history = useHistory();
   const [username, setUsername] = useState("");
@@ -22,12 +23,17 @@ const LoginForm = ({ authClient }) => {
   const [resetEmailAddress, setResetEmailAddress] = useState("");
   const [lookupAccountEmail, setLookupAccountEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(false);
-  const [message, setMessage] = useState(false);
   const [viewType, setViewType] = useState("domain"); //login, reset or domain
   const [loginType, setLoginType] = useState("standard"); //stardard: Opsera Okta Login, federated: Opsera Signing Widget
+  const [federatedIdpEnabled, setFederatedIdpEnabled] = useState(false);
+  const [oktaSignInWidget, setOktaSignInWidget] = useState(undefined);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
+    if (viewType === "domain" && oktaSignInWidget) {
+      oktaSignInWidget.remove();
+    }
+
     if (viewType !== "login") {
       setUsername("");
     }
@@ -43,8 +49,7 @@ const LoginForm = ({ authClient }) => {
 
     authClient.signInWithCredentials({ username, password })
       .then(res => {
-        setErrorMessage(false);
-        setMessage(false);
+        toastContext.removeAllBanners();
         const sessionToken = res.sessionToken;
 
         const tokenOptions = {
@@ -64,7 +69,11 @@ const LoginForm = ({ authClient }) => {
             let tokens = res.tokens;
             authClient.tokenManager.setTokens(tokens);
             setLoading(false);
-            history.push("/");
+            //history.push("/");
+
+            if (history.location.pathname === "/logout") {
+              history.push("/");
+            }
           })
           .catch(function(err) {
             console.log("Error on getWithoutPrompt, trying fallback", err);
@@ -74,9 +83,10 @@ const LoginForm = ({ authClient }) => {
             setLoading(false);
           });
       })
-      .catch(err => {
-        console.log("Found an error", err);
-        setErrorMessage(err.message);
+      .catch(error => {
+        toastContext.removeAllBanners();
+        console.log("Found an error", error);
+        toastContext.showErrorDialog(error);
         setLoading(false);
       });
   };
@@ -104,8 +114,10 @@ const LoginForm = ({ authClient }) => {
 
   //uses Okta Login widet for federated login.
   //https://github.com/okta/okta-signin-widget#idp-discovery
-  const federatedOktaLogin = (idp) => {
+  const federatedOktaLogin = (ldapOrgName, federatedIdpIdentifier, lookupAccountEmail) => {
     setLoginType("federated");
+    console.log("Org Name: ", ldapOrgName);
+    console.log("IdP ID: ", federatedIdpIdentifier);
 
     const signIn = new OktaSignIn({
       baseUrl: process.env.REACT_APP_OKTA_BASEURL,
@@ -117,16 +129,31 @@ const LoginForm = ({ authClient }) => {
       },
       clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
       idps: [
-        { type: "GOOGLE", id: "0oaw3fhtfuCrJ31dK0h7" }, //IDP of our GSuite as opposed to pure google
+        { text: ldapOrgName, id: federatedIdpIdentifier }, //IDP of LDAP object
+        //{ text: "Opsera DEV DEMO", id: "0oa10wlxrgdHnKvOJ0h8" }, //IDP of our PROD Okta Federated for use via DEV/LOCALHOST for developerment
+        //{ text: "Opsera Inc", id: "0oa44bjfqlK7gTwnz4x7" }, //IDP of our DEV Okta Federated for use via PROD for Smoke Testing
+        //{ type: "GOOGLE", id: "0oa1njfc0lFlSp0mM4x7" }, //IDP of our GSuite as opposed to pure google
       ],
-      idpDisplay: "SECONDARY",
+      idpDisplay: "PRIMARY",
       idpDiscovery: {
         requestContext: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
       },
       features: {
         idpDiscovery: true,
       },
+      logoText: ldapOrgName + " Sign in",
+      logo: '/img/logos/opsera_bird_infinity_171_126.png',
+      language: 'en',
+      username: lookupAccountEmail,
+      i18n: {
+        en: {
+          'primaryauth.title': ldapOrgName + " Sign in",
+          'primaryauth.username.placeholder': "Opsera Managed Username",
+        }
+      },
     });
+    setOktaSignInWidget(signIn); //store it in state so access outside of function scope
+    signIn.remove(); //ensure any prior existing instances are removed frist (throws errors otherwise)
 
     signIn.showSignInToGetTokens({
       // Assumes there is an empty element on the page with an id of 'osw-container'
@@ -135,10 +162,12 @@ const LoginForm = ({ authClient }) => {
       // Store tokens
       authClient.tokenManager.setTokens(tokens);
       signIn.remove();
+
       history.push("/");
-    }).catch(function(err) {
-      console.log("Found an error", err);
-      setErrorMessage(err.message);
+    }).catch(function(error) {
+      toastContext.removeAllBanners();
+      console.log("Found an error", error);
+      toastContext.showErrorDialog(error);
     });
   };
 
@@ -168,15 +197,15 @@ const LoginForm = ({ authClient }) => {
       .then(response => {
         console.log("response: ", response);
         setLoading(false);
-        setErrorMessage(false);
-        setMessage(response.data.message);
+        toastContext.removeAllBanners();
+        toastContext.showSystemInformationBanner(response.data.message);
         setViewType("login");
       })
-      .catch(err => {
-        console.log(err.response);
+      .catch(error => {
+        toastContext.removeAllBanners();
+        console.log(error.response.data.message);
         setLoading(false);
-        setErrorMessage(err.response.data.message);
-        setMessage(false);
+        toastContext.showErrorDialog(error.response.data.message);
       });
   };
 
@@ -184,33 +213,57 @@ const LoginForm = ({ authClient }) => {
   const handleDomainLookupSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setFederatedIdpEnabled(false);
+    toastContext.removeAllBanners();
+
     const apiUrl = "/users/active-account";
     const params = { "email": lookupAccountEmail, "hostname": window.location.hostname };
     try {
       const response = await axiosApiService().post(apiUrl, params); //this lookup is currently FF in Node
-      setMessage(false);
-      setErrorMessage(false);
+      toastContext.removeAllBanners();
 
-      const {loginAllowed, validHost} = response.data;
+      const {loginAllowed, validHost, accountType} = response.data;
 
       //valid account so allow it to continue login
       if (loginAllowed && validHost) {
+
+        /*START NEW FEDERATION CODE*/
+        if (accountType === "ldap-organization") {
+          const token = await generateJwtServiceTokenWithValue({ id: "orgRegistrationForm" });
+          const domain = lookupAccountEmail.split("@")[1];
+
+          if (domain && token) {
+            const accountResponse = await userActions.getAccountInformation(domain, token);
+            const { localAuth, accountName, idpIdentifier } = accountResponse.data;
+            if (localAuth && localAuth === "FALSE" && idpIdentifier) {
+              setFederatedIdpEnabled(localAuth === "FALSE");
+              setUsername(lookupAccountEmail);
+              setViewType("federated-login");
+              federatedOktaLogin(accountName, idpIdentifier, lookupAccountEmail);
+              return;
+            }
+          }
+        }
+        /* END FEDERATION CODE */
+
+        //SET LOCAL AUTH
         setUsername(lookupAccountEmail);
         setViewType("login");
         return;
       }
 
       if (!validHost) {
-        setErrorMessage("Warning!  You are attempting to log into the wrong Opsera Portal tenant.  Please check with your account owner or contact Opsera to get the proper URL to access your platform.");
+        toastContext.showErrorDialog("Warning!  You are attempting to log into the wrong Opsera Portal tenant.  Please check with your account owner or contact Opsera to get the proper URL to access your platform.");
         return;
       }
 
       //loginAllowed === false: account isn't ready for login (check customer DB settings)
-      setMessage("Congratulations, your account set up is in progress and it should be available shortly. Please check back soon or contact us for assistance!");
-    } catch (err) {
-      console.log(err);
-      setErrorMessage(err);
-      setMessage(false);
+      toastContext.showSystemInformationBanner("Congratulations, your account set up is in progress and it should be available shortly. Please check back soon or contact us for assistance!");
+
+    } catch (error) {
+      toastContext.removeAllBanners();
+      console.log(error);
+      toastContext.showErrorDialog(error);
     } finally {
       setLoading(false);
     }
@@ -233,15 +286,9 @@ const LoginForm = ({ authClient }) => {
               </div>
 
               <div id="osw-container">
-                {loginType !== "federated" && <>
                   <div className="h4 auth-header">
                     Sign in
                   </div>
-
-                  {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage} />}
-
-                  {message &&
-                  <InformationDialog message={message} alignment="top" setInformationMessage={setMessage} />}
 
                   <form onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -279,25 +326,15 @@ const LoginForm = ({ authClient }) => {
                               type="submit"
                               disabled={!username || !password}>
                         {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth />}
-                        Log In</Button>
+                        Sign in</Button>
                     </div>
                     <div className="text-center">
                       <Button variant="link" size="sm"
                               onClick={() => {
                                 setViewType("reset");
                               }}>Forgot Password</Button>
-
-                      {featureFlagHideItemInProd() ?
-                        <></>
-                        :
-                        <Button variant="link" size="sm"
-                                onClick={() => {
-                                  federatedOktaLogin();
-                                }}>Federated Login</Button>
-                      }
                     </div>
                   </form>
-                </>}
               </div>
 
             </div>
@@ -305,6 +342,37 @@ const LoginForm = ({ authClient }) => {
         </Col>
       </Row>
 
+    );
+  }
+
+  if (viewType === "federated-login") {
+    return (
+      <Row className="mt-4">
+        <Col md={5} className="p-4"><WelcomeMessage /></Col>
+        <Col>
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="auth-box-w">
+
+              <div id="osw-container">
+
+              </div>
+
+              <div className="buttons-w text-center">
+                <Button variant="outline-secondary"
+                        className="mb-3 mr-1" style={{ width: "46%" }}
+                        type="button"
+                        onClick={() => {
+                          setViewType("domain");
+                        }}>
+                  <FontAwesomeIcon icon={faArrowLeft} className="mr-1" size="sm" fixedWidth />
+                  Back
+                </Button>
+              </div>
+
+            </div>
+          </div>
+        </Col>
+      </Row>
     );
   }
 
@@ -322,10 +390,6 @@ const LoginForm = ({ authClient }) => {
           <h4 className="auth-header">
             Reset Password
           </h4>
-
-          {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage} />}
-
-          {message && <InformationDialog message={message} alignment="top" setInformationMessage={setMessage} />}
 
           <form onSubmit={handleResetPasswordSubmit}>
             <div className="form-group">
@@ -361,18 +425,6 @@ const LoginForm = ({ authClient }) => {
         <Col>
           <div className="d-flex align-items-center justify-content-center">
             <div className="auth-box-w">
-
-              {message &&
-              <div className="info-block mt-2 mx-2 p-2">
-                <div className="float-right mx-1">
-                  <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-                    setMessage(false);
-                  }} />
-                </div>
-                {message}
-              </div>
-              }
-
               <div className="logo-w">
                 <img alt="Opsera"
                      src="/img/logos/opsera_bird_infinity_171_126.png"
@@ -383,8 +435,6 @@ const LoginForm = ({ authClient }) => {
               <h4 className="auth-header">
                 Sign in
               </h4>
-
-              {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage} />}
 
               <form onSubmit={handleDomainLookupSubmit}>
                 <div className="form-group">
@@ -398,7 +448,7 @@ const LoginForm = ({ authClient }) => {
 
                 <div className="buttons-w">
                   <Button variant="warning" className="w-100 mb-3" type="submit"
-                          disabled={!lookupAccountEmail || errorMessage}>
+                          disabled={!lookupAccountEmail}>
                     {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth />}
                     Next</Button>
                 </div>
@@ -411,18 +461,7 @@ const LoginForm = ({ authClient }) => {
   }
 };
 
-
 const WelcomeMessage = () => {
-  const history = useHistory();
-  const gotoSignUp = () => {
-    //if free trial, go that form, otherwise use normal
-    if (process.env.REACT_APP_STACK === "free-trial") {
-      history.push("/trial/registration");
-    } else {
-      history.push("/signup");
-    }
-  };
-
   return (
     <div className="ml-4">
       <h2 className="mb-3 bd-text-purple-bright">Welcome to Opsera!</h2>
@@ -438,9 +477,7 @@ const WelcomeMessage = () => {
       </div>
 
       <div className="row mx-n2 mt-4">
-        <div className="col-md px-2">
-          <Button variant="warning" className="btn-lg w-100 mb-3" onClick={gotoSignUp}>Register an Account</Button>
-        </div>
+        <RegisterAccountButton />
         {/*<div className="col-md px-2">
         <Button variant="outline-success" className="btn-lg w-100 mb-3" onClick={login}>Log In</Button>
       </div>*/}

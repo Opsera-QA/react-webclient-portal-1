@@ -6,7 +6,7 @@ import {AuthContext} from "contexts/AuthContext";
 import GitActionsHelper
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
 
-function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
+function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled,setBranchList}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [branches, setBranches] = useState([]);
@@ -22,7 +22,7 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await getRepositories();
+      await getGitBranches();
     }
     catch (error) {
       console.error(error);
@@ -33,12 +33,15 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
     }
   };
 
-  const getRepositories = async () => {
+  const getGitBranches = async () => {
     const response  = await GitActionsHelper.searchBranches(service, gitToolId, repoId, workspace, getAccessToken);
     let branchesResponse = response?.data?.data;
 
     if (Array.isArray(branchesResponse)) {
       setBranches(branchesResponse);
+      if (setBranchList != null) {
+        setBranchList(branchesResponse); 
+      }
     }
   };
 
@@ -51,23 +54,20 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
       return ("No Branches Found!");
     }
   };
-
   return (
-    <div>
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        setDataFunction={setDataFunction}
-        selectOptions={branches}
-        busy={isLoading}
-        placeholderText={getNoBranchesMessage()}
-        clearDataFunction={clearDataFunction}
-        valueField="name"
-        textField="name"
-        disabled={disabled || isLoading || branches.length === 0}
-      />
-    </div>
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      setDataFunction={setDataFunction}
+      selectOptions={branches}
+      busy={isLoading}
+      placeholderText={getNoBranchesMessage()}
+      clearDataFunction={clearDataFunction}
+      valueField="name"
+      textField="name"
+      disabled={disabled || isLoading || branches.length === 0}
+    />
   );
 }
 
@@ -82,11 +82,13 @@ GitBranchInput.propTypes = {
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
-  clearDataFunction: PropTypes.func
+  clearDataFunction: PropTypes.func,
+  setBranchList:PropTypes.func
 };
 
 GitBranchInput.defaultProps = {
   visible: true,
+  setBranchList:null,
 };
 
 export default GitBranchInput;

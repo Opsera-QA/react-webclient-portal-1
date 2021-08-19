@@ -148,6 +148,15 @@ const AuthContextProvider = (props) => {
       return await setAccessRoles(user);
     };
 
+    const isSassUser = () => {
+      if (userData == null) {
+        return false;
+      }
+      
+      const { ldap, groups } = userData;
+      return ldap.type === "sass-user" || groups.includes("NonLDAPEndUser");
+    };
+
     return (
       <AuthContext.Provider value={{
         logoutUserContext: logoutUserContext,
@@ -162,6 +171,7 @@ const AuthContextProvider = (props) => {
         getIsAuthenticated: getIsAuthenticated,
         generateJwtServiceTokenWithValue: generateJwtServiceTokenWithValue,
         getAccessRoleData: getAccessRoleData,
+        isSassUser: isSassUser,
       }}>
         {props.children}
       </AuthContext.Provider>

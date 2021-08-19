@@ -40,8 +40,48 @@ export function isOpseraPassword(password) {
   return re.test(String(password));
 }
 
+export function hasSpaces(value) {
+  const re = new RegExp("\\s+");
+  return re.test(String(value));
+}
+
+export function parseDate(dateString, defaultValue) {
+  try {
+    if (dateString == null || dateString === "") {
+      return defaultValue;
+    }
+
+    const parsedDate = Date.parse(dateString);
+
+    if (parsedDate) {
+      return parsedDate;
+    }
+
+    return defaultValue;
+  }
+  catch (error) {
+    return defaultValue;
+  }
+}
+
 export function matchesRegex(regex, value) {
-  return regex.test(String(value));
+  let meetsRegex = false;
+
+  try {
+    if (typeof regex === "string") {
+      meetsRegex = eval(regex)?.test(String(value));
+    }
+    else {
+      meetsRegex = regex.test(String(value));
+    }
+  }
+  catch (error) {
+    console.error("Regex Validation Error: ", error);
+    // TODO: Should we return false if regex error occurs?
+    return true;
+  }
+
+  return meetsRegex;
 }
 
 export function handleError(error) {
@@ -62,6 +102,38 @@ export function handleError(error) {
   console.log(errMessage);
   return errMessage;
 }
+
+export const processError = (error) => {
+  if (!error || error.length === 0) {
+    return "Unknown error reported.  Please check console log.";
+  }
+  console.error(error); //log all errors to console
+
+  if (typeof error === "string") {
+    return error;
+  }
+
+  if (typeof error === "object") {
+    if (error.error) {
+      if (error.error.message) {
+        return error.error.message;
+      }
+      return JSON.stringify(error.error);
+    }
+
+    if (error.response) {
+      let messageBody = `Status ${error.response.status}: `;
+      messageBody += error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data);
+      return messageBody;
+    }
+
+    if (error.message) {
+      return error.message;
+    }
+
+    return JSON.stringify(error);
+  }
+};
 
 export function renderTooltip(props) {
   const { message } = props;

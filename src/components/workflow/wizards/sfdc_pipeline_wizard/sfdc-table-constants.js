@@ -1,37 +1,39 @@
-
+// TODO: Use regular metadata
 const sfdcTableConstants = {};
 
-sfdcTableConstants.initialState = {
-  pageIndex: 0
-};
-  
 sfdcTableConstants.fields = [
-    {
-        label: "Component", 
-        id: "componentType"
-    },
-    {
-        label: "File", 
-        id: "committedFile"
-    },
-    {
-        label: "Commit Time", 
-        id: "committedTime"
-    },
-    {
-        label: "Committed By", 
-        id: "committedBy"
-    },
-    {
-        label: "Commit Action", 
-        id: "commitAction"
-    },
-    {
-        label: "SFDC Component Id", 
-        id: "committedFileId"
-    }
+  {
+    label: "Component",
+    id: "componentType"
+  },
+  {
+    label: "Component Name",
+    id: "componentName"
+  },
+  {
+    label: "File",
+    id: "committedFile"
+  },
+  {
+    label: "Commit Time",
+    id: "committedTime"
+  },
+  {
+    label: "Committed By",
+    id: "committedBy"
+  },
+  {
+    label: "Commit Action",
+    id: "commitAction"
+  },
+  {
+    label: "SFDC Component Id",
+    id: "committedFileId"
+  },
+  {
+    label: "Commit Id",
+    id: "commitID"
+  }
 ];
-
-sfdcTableConstants.noDataMessage = "Modified Files Data not available for selected Criteria";
 
 export default sfdcTableConstants;

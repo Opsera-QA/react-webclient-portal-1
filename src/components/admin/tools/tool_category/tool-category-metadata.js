@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const toolCategoryMetadata = {
   idProperty: "_id",
   type: "Tool Category",
@@ -8,7 +6,7 @@ const toolCategoryMetadata = {
     return `/admin/tools/types/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `Tool Category Details [${record?.getData("name")}]`;
+    return `Tool Category Details [${record?.getOriginalValue("name")}]`;
   },
   fields: [
     {
@@ -16,13 +14,13 @@ const toolCategoryMetadata = {
       id: "name",
       isRequired: true,
       maxLength: 50,
-      regexValidator: regexHelpers.regexTypes.limitedTextWithSpaces
+      regexDefinitionName: "limitedTextWithSpaces",
     },
     {
       label: "Description",
       id: "description",
       maxLength: 1000,
-      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
+      regexDefinitionName: "expandedTextAndSymbolsWithSpaces"
     },
     {
       label: "ID",

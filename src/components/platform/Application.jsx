@@ -17,7 +17,7 @@ import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import ContainerScan from "./ContainerScan";
 import LoadingDialog from "../common/status_notifications/loading";
-import regexHelpers from "utils/regexHelpers";
+import regexDefinitions from "utils/regexDefinitions";
 
 function Application(props) {
   const { data, saving, gotoInventory, token, user, reset, setAppDetails, appid, setState, isEKS } = useContext(NewAppContext);
@@ -35,7 +35,6 @@ function Application(props) {
   const [appNameError, setAppNameError] = useState(null);
 
   const getApiData = async () => {
-    console.log("user: ", user);
     const urlParams = { userid: user.userId };
     const apiCall = new ApiService("/applications", urlParams, token);
     apiCall.get()
@@ -77,9 +76,9 @@ function Application(props) {
   };
 
   const handleAppNameChange = ({ target: { name, value } }) => {
-    // const regex = RegExp('^[A-Za-z0-9-]*$');
-    const regex = RegExp(regexHelpers.regexTypes.domainField);
-    const trimmedValue = value.trim();
+    const domainFieldRegex = regexDefinitions.domainField.regex;
+    const regex = RegExp(domainFieldRegex);
+    const trimmedValue = value.trim().toLowerCase();
     setAppName(trimmedValue);
     if (trimmedValue.length > 20) {
       setAppNameError("Application Names must be less than 20 characters.");
@@ -148,13 +147,13 @@ function Application(props) {
   };
 
   const saveTools = async () => {
-    console.log(`saving tools for user ${JSON.stringify(user._id)}`);
+    // console.log(`saving tools for user ${JSON.stringify(user._id)}`);
     let postBody = {
       id: appid,
       tools: data,
       uid: user.userId //specifically uses the legacy ssousers.userId value
     };
-    console.log("POSTBODY", postBody);
+    // console.log("POSTBODY", postBody);
     new ApiService(
       "/applications/create/tools",
       null,
@@ -195,7 +194,11 @@ function Application(props) {
     // });
   };
 
-  const cancelTools = () => {
+  const cancelTools = (e) => {
+    if(Object.keys(data).length === 0) {
+      // console.log("no selection made");
+      handleTabClick(e);
+    }
     setState({ 
       ...data,
       data: {}
@@ -320,7 +323,9 @@ function Application(props) {
                 <ContainerScan app={applicationDetails.data} tools={applicationDetails.tools} isEKS ={isEKS} />            
               </CardColumns>
               <div className="text-right">
-                <Button variant="outline-primary" onClick={cancelTools} disabled={Object.keys(data).length === 0} className="m-2">
+                <Button variant="outline-primary" onClick={cancelTools} 
+                  // disabled={Object.keys(data).length === 0}
+                 className="m-2">
                 Cancel
                 </Button>
                 <Button variant="primary" onClick={saveTools} disabled={Object.keys(data).length === 0}>

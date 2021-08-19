@@ -1,7 +1,9 @@
-import {ACCESS_ROLES} from "components/common/helpers/role-helpers";
+import {ACCESS_ROLES, ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import * as roleHelpers from "components/common/helpers/role-helpers";
 
 const workflowAuthorizedActions = {};
 
+// TODO: This should be broken up into separate files once the standard is complete
 /***
  * Example syntax to use in component:
  *
@@ -71,9 +73,7 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, o
     case "view_step_configuration":
     case "view_pipeline_configuration":
     case "edit_step_details":
-    case "duplicate_pipeline_btn":
     case "view_template_pipeline_btn":
-    case "publish_pipeline_btn":
     case "stop_pipeline_btn":
     case "approve_step_btn":
     case "edit_access_roles":
@@ -89,7 +89,7 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, o
     }
   }
 
-  if (customerAccessRules.PowerUser || userObjectRole === "manager") {
+  if (userObjectRole === "manager") {
     switch (action) {
     case "view_step_configuration":
     case "edit_step_details":
@@ -104,6 +104,22 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, o
       return true;
     default:
       return false; //all other options are disabled
+    }
+  }
+
+  if (customerAccessRules.PowerUser) {
+    switch (action) {
+      case "view_step_configuration":
+      case "edit_step_details":
+      case "stop_pipeline_btn":
+      case "edit_access_roles":
+      case "approve_step_btn":
+      case "start_pipeline_btn":
+      case "reset_pipeline_btn":
+      case "edit_step_notification":
+        return true;
+      default:
+        return false; //all other options are disabled
     }
   }
 
@@ -228,6 +244,61 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
   }
 };
 
+
+/**
+ * TODO: This should be moved to roleHelpers. Leaving here for now until the other use cases are updated to follow this format.
+ * Handles all authorization of actions for customParameters.  It factors in the overall user roles and the individual object (parameter)
+ * access roles. It will be customized based on roleDefinitions passed in.
+ *
+ * @param customerAccessRules
+ * @param action
+ * @param roleDefinitions
+ * @param owner
+ * @param objectRoles
+ * @returns {boolean}
+ *
+ *
+ */
+workflowAuthorizedActions.isActionAllowed = (customerAccessRules, action, owner, objectRoles, roleDefinitions) => {
+  if (customerAccessRules == null || roleDefinitions == null) {
+    return false;
+  }
+
+  let roleAllowed = false;
+  const allowedRoles = roleHelpers.getAllowedRoles(action, roleDefinitions);
+
+  if (!Array.isArray(allowedRoles) || allowedRoles.length === 0) {
+    return false;
+  }
+
+  if (allowedRoles.includes(ACCESS_ROLES.NO_ACCESS_RULES)) {
+    return true;
+  }
+
+  if (customerAccessRules.OpseraAdministrator) {
+    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.OPSERA_ADMINISTRATOR);
+  }
+
+  if (customerAccessRules.Administrator) {
+    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.ADMINISTRATOR);
+  }
+
+  if (customerAccessRules.SassPowerUser) {
+    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.SAAS_USER);
+  }
+
+  if (process.env.REACT_APP_STACK === "free-trial") {
+    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.FREE_TRIAL_USER);
+  }
+
+  if (owner && customerAccessRules.UserId === owner) {
+    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.OWNER);
+  }
+
+  const userObjectRole = calculateUserObjectRole(customerAccessRules.Email, customerAccessRules.Groups, objectRoles);
+  return roleAllowed || allowedRoles.includes(userObjectRole);
+};
+
 /**
  * Handles all authorization of actions in git tasks.  It factors in the overall user roles and the individual object (pipeline)
  * access roles.
@@ -266,7 +337,14 @@ workflowAuthorizedActions.gitItems = (customerAccessRules, action, owner, object
 
   //if no objectRole data passed, then allow actions
   if (objectRoles && objectRoles.length === 0) {
-    return true;
+    switch (action) {
+      case "delete_admin_task":
+      case "create_cert_task":
+      case "sfdc_cert_gen":
+        return false;
+      default:
+        return true;
+    }
   }
 
   const userObjectRole = calculateUserObjectRole(customerAccessRules.Email, customerAccessRules.Groups, objectRoles);
@@ -293,6 +371,9 @@ workflowAuthorizedActions.gitItems = (customerAccessRules, action, owner, object
       case "edit_access_roles":
       case "create_task":
       case "run_task":
+      case "sfdc_cert_gen":
+      case "create_cert_task":
+      case "delete_admin_task":
         return true;
       default:
         return false; //all other options are disabled
@@ -391,8 +472,20 @@ workflowAuthorizedActions.calculateRoleLevel = (customerAccessRules, objectRoles
     return ACCESS_ROLES.OWNER;
   }
 
-  if (customerAccessRules.OpseraAdministrator || customerAccessRules.Administrator) {
+  if (customerAccessRules.OpseraAdministrator) {
+    return ACCESS_ROLES.OPSERA_ADMINISTRATOR;
+  }
+
+  if (customerAccessRules.Administrator) {
     return ACCESS_ROLES.ADMINISTRATOR;
+  }
+
+  if (customerAccessRules.SassPowerUser) {
+    return ACCESS_ROLES.SAAS_USER;
+  }
+
+  if (process.env.REACT_APP_STACK === "free-trial") {
+    return ACCESS_ROLES.FREE_TRIAL_USER;
   }
 
   //filter out only user records (groups null)
@@ -440,7 +533,7 @@ workflowAuthorizedActions.calculateRoleLevel = (customerAccessRules, objectRoles
     return userGroupsRole[0];
   }
 
-  return ACCESS_ROLES.UNAUTHORIZED;
+  return ACCESS_ROLES.READ_ONLY;
 };
 
 export default workflowAuthorizedActions;

@@ -21,12 +21,14 @@ paths.systemManagement = paths.admin + "/manage-systems";
 paths.templateManagement = paths.admin + "/templates";
 paths.templateDetailView = paths.templateManagement + "/details/";
 
+paths.pipelineStorageManagement = paths.admin + "/pipeline-storage";
+paths.pipelineStorageDetailView = paths.pipelineStorageManagement + "/details/";
+
 paths.siteNotificationManagement = paths.admin + "/site-notifications/table";
 paths.siteNotificationManager = paths.admin + "/site-notifications";
 paths.siteNotificationDetailView = paths.siteNotificationManagement + "/details/";
 
 paths.toolManagement = paths.admin + "/tools";
-paths.deleteTools = paths.admin + "/delete/";
 paths.toolCategoryDetailView = paths.toolManagement + "/types/details/";
 paths.toolIdentifierDetailView = paths.toolManagement + "/identifiers/details/";
 
@@ -64,9 +66,13 @@ paths.insightsSummary = "insights/summary";
 paths.accountSettings = "settings";
 paths.ldapUserManagement = paths.accountSettings + "/users";
 paths.ldapUserDetailView = paths.ldapUserManagement;
+paths.userManagement = paths.accountSettings + "/user-management";
+paths.activeUserDetailView = paths.userManagement;
+paths.pendingUserDetailView = paths.userManagement;
 paths.ldapGroupManagement = paths.accountSettings + "/groups";
 paths.ldapGroupDetailView = paths.ldapUserManagement;
 paths.tagManagement = paths.accountSettings + "/tags";
+paths.deleteTools = paths.accountSettings + "/delete/";
 paths.tagDetailView = paths.tagManagement + "/details/";
 paths.organizationManagement = paths.accountSettings + "/organizations";
 paths.organizationDetailView = paths.organizationManagement + "/details/";
@@ -88,6 +94,12 @@ paths.tagReports = paths.reports + "/tags";
 paths.tagsUsedInPipelineReport = paths.tagReports + "/tags-used-in-pipeline";
 paths.tagsUsedInToolsReport = paths.tagReports + "/tags-used-in-tools";
 paths.tagsUsedInDashboardsReport = paths.tagReports + "/tags-used-in-dashboards";
+paths.userReports = paths.reports + "/users";
+paths.groupMembershipReport = paths.userReports + "/group-membership";
+paths.pipelineOwnershipReport = paths.userReports + "/pipeline-ownership";
+paths.toolOwnershipReport = paths.userReports + "/tool-ownership";
+paths.taskOwnershipReport = paths.userReports + "/task-ownership";
+paths.consolidatedUserReport = paths.userReports + "/user-report";
 paths.pipelineReports = paths.reports + "/pipelines";
 
 //Inventory (Tool Registry) paths
@@ -99,7 +111,7 @@ paths.notificationManagement = "notifications";
 paths.notificationDetailView = paths.notificationDetailView + "/details";
 
 //GIT Tasks
-paths.gitTasks = "git";
+paths.gitTasks = "task";
 paths.gitTasksDetailView = paths.gitTasksDetailView + "/details";
 
 export default paths;

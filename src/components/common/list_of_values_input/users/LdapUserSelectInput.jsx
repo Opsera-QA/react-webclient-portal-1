@@ -1,34 +1,50 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import axios from "axios";
 
-function LdapUserSelectInput({ dataObject, setDataObject, fieldName, valueField, textField, showClearValueButton, setDataFunction }) {
-  const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
+function LdapUserSelectInput({ model, setModel, fieldName, valueField, textField, showClearValueButton, setDataFunction, className }) {
+  const { getAccessToken, getUserRecord, setAccessRoles, isSassUser } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [user, setUser] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
-
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
-  const loadData = async () => {
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       const user = await getUserRecord();
       const {ldap} = user;
-      setUser(user);
       const userRoleAccess = await setAccessRoles(user);
-      setAccessRoleData(userRoleAccess);
 
-      if (userRoleAccess && userRoleAccess?.Type !== "sass-user" && ldap.domain != null)
-      {
-        await getUsers();
+      if (userRoleAccess && userRoleAccess?.Type !== "sass-user" && ldap.domain != null) {
+        await getUsers(cancelSource);
       }
     }
     catch (error) {
@@ -39,22 +55,23 @@ function LdapUserSelectInput({ dataObject, setDataObject, fieldName, valueField,
     }
   };
 
-  const getUsers = async () => {
-    let response = await accountsActions.getAccountUsers(getAccessToken);
-    let userOptions = [];
-    const parsedUsers = response?.data;
+  const getUsers = async (cancelSource = cancelTokenSource) => {
+    let response = await accountsActions.getAccountUsersV2(getAccessToken, cancelSource);
+    const users = response?.data;
 
-    if (Array.isArray(parsedUsers) && parsedUsers.length > 0) {
-      parsedUsers.map((user) => {
-        userOptions.push({text: `${user.firstName} ${user.lastName} (${user.email})`, value:`${user._id}`, user: user});
+    if (Array.isArray(users)) {
+      let formattedUsers = [];
+
+      users.map((user) => {
+        formattedUsers.push({text: `${user.firstName} ${user.lastName} (${user.email})`, value:`${user._id}`, user: user});
       });
-    }
 
-    setUsers(userOptions);
+      setUsers(formattedUsers);
+    }
   };
 
   const getCurrentValue = () => {
-    const currentValue = dataObject?.getData(fieldName);
+    const currentValue = model?.getData(fieldName);
 
     if (typeof currentValue === 'object' && currentValue !== null) {
       if (currentValue._id) {
@@ -65,7 +82,7 @@ function LdapUserSelectInput({ dataObject, setDataObject, fieldName, valueField,
     return currentValue;
   };
 
-  if (user == null || user.ldap?.domain == null || accessRoleData == null || accessRoleData?.Type === "sass-user") {
+  if (isSassUser() === true) {
     return null;
   }
 
@@ -75,25 +92,27 @@ function LdapUserSelectInput({ dataObject, setDataObject, fieldName, valueField,
       busy={isLoading}
       placeholderText={"Select User"}
       valueField={valueField}
+      className={className}
       textField={textField}
       showClearValueButton={showClearValueButton}
-      setDataObject={setDataObject}
+      setDataObject={setModel}
       setDataFunction={setDataFunction}
       getCurrentValue={getCurrentValue}
-      dataObject={dataObject}
+      dataObject={model}
       selectOptions={users}
     />
   );
 }
 
 LdapUserSelectInput.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   fieldName: PropTypes.string,
   valueField: PropTypes.string,
   showClearValueButton: PropTypes.bool,
   textField: PropTypes.string,
-  setDataFunction: PropTypes.func
+  setDataFunction: PropTypes.func,
+  className: PropTypes.string
 };
 
 LdapUserSelectInput.defaultProps = {

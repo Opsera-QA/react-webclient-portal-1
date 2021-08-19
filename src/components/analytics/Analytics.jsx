@@ -1,11 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "../../contexts/AuthContext";
-import { axiosApiService } from "../../api/apiService";
 import ErrorDialog from "../common/status_notifications/error";
-// import LoadingDialog from "../common/status_notifications/loading";
-import ConfigurationsForm from "./configurationsForm";
-import {useHistory} from "react-router-dom";
 import { ListGroup, Tooltip, OverlayTrigger, Col, Row } from "react-bootstrap";
 import SummaryChartsView from "./views/pipeline/buildView_developer";
 import ReliabilityMetricsCharts from "./views/reliability/ReliabilityMetricsView";
@@ -24,21 +19,16 @@ import JMeterErrorsLineChart from "./charts/JmeterErrorsLineChart";
 import JMeterThroughputLineChart from "./charts/JmeterThroughputLineChart";
 import JMeterResponseTimeLineChart from "./charts/JmeterResponseTimeLineChart";
 import JMeterResultsTable from "./metrics/jmeterResultsTable";
-// import GitlabPlanCodeView from "./views/GitlabPlanCodeView";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faCheckCircle, faQuestion } from "@fortawesome/free-solid-svg-icons";
-import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar } from "@fortawesome/pro-light-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
-// import GitlabMergeRequestsView from "./views/GitlabMergeRequestsView";
-// import GitlabMergeRequestTimeTakenBarChart from "./charts/GitlabMergeRequestTimeTakenBarChart";
 import SourceCodeView from "./views/SourceCode/SourceCodeView_developer";
-import LoadingView from "../common/status_notifications/loading";
 import OperationsView from "./views/opserations_analytics/operationsViewAnalytics_developer";
 import AnalyticsProfileSettings from "../settings/analytics/activateAnalyticsCard";
-import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
-import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faAnalytics, faChartNetwork, faChartArea, faRadar} from "@fortawesome/pro-light-svg-icons";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
+import {AuthContext} from "contexts/AuthContext";
+import {axiosApiService} from "api/apiService";
 
 const INDICES = [
   "jenkins",
@@ -53,7 +43,8 @@ const INDICES = [
   "gitlab",
   "cypress",
   "metricbeat",
-  "anchore"
+  "anchore",
+  "selenium"
 ];
 
 const DATELABELS = [
@@ -101,9 +92,9 @@ const DATELABELS = [
   },
 ];
 
+// TODO: We should refactor this to follow current standards
 function Analytics() {
   const contextType = useContext(AuthContext);
-  const history = useHistory();
   const [error, setErrors] = useState();
   const [settingsData, setSettingsData] = useState({});
   const [index, setIndex] = useState([]);
@@ -112,7 +103,6 @@ function Analytics() {
   const [selection, setSelection] = useState("pipeline");
   const [profile, setProfile] = useState({});
   const [label, setLabel] = useState("Last 3 Months");
-  const [activeTab, setActiveTab] = useState("analytics");
   const [date, setDate] = useState({
     start: "now-90d",
     end: "now",
@@ -273,43 +263,6 @@ function Analytics() {
     }
   };
 
-  const handleNavTabClick = (tabSelection) => async e => {
-    e.preventDefault();
-
-    if (tabSelection === "analytics") {
-      history.push(`/analytics`);
-      return;
-    }
-
-    if (tabSelection === "marketplace") {
-      history.push(`/insights/marketplace`);
-      return;
-    }
-
-    if (tabSelection === "dashboards") {
-      history.push(`/insights/dashboards`);
-      return;
-    }
-
-    if (tabSelection === "synopsis") {
-      history.push(`/insights/synopsis`);
-      return;
-    }
-
-    setActiveTab(tabSelection);
-  };
-
-  const getNavigationTabContainer = () => {
-    return (
-      <NavigationTabContainer>
-        <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Dashboards"} />
-        <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Marketplace"} />
-        <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Analytics"} />
-        <NavigationTab icon={faRadar} tabName={"synopsis"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Synopsis"} />
-      </NavigationTabContainer>
-    );
-  };
-
   const getBody = () => {
     return (
       <>
@@ -400,7 +353,7 @@ function Analytics() {
 
   return (
     <ScreenContainer
-      navigationTabContainer={getNavigationTabContainer()}
+      navigationTabContainer={<InsightsSubNavigationBar currentTab={"analytics"} />}
       breadcrumbDestination={"analytics"}
       isLoading={loadingProfile}
       pageDescription={`

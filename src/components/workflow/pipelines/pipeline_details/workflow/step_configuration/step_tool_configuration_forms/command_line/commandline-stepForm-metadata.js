@@ -151,8 +151,20 @@ const commandLineStepFormMetadata = {
     {
       label: "Auto-Scaling Enabled?",
       id: "autoScaleEnable"
+    },
+    {
+      label: "Terraform Step",
+      id: "terraformStepId"
+    },
+    {
+      label: "Parameters",
+      id: "customParameters",
+      maxItems: 15,
+    },
+    {
+      label: "Use Terraform Output",
+      id: "useTerraformOutput"
     }
-      
   ],
   fieldsAlt: [
     {
@@ -306,9 +318,22 @@ const commandLineStepFormMetadata = {
     {
       label: "Auto-Scaling Enabled?",
       id: "autoScaleEnable"
+    },
+    {
+      label: "Terraform Step",
+      id: "terraformStepId"
+    },
+    {
+      label: "Parameters",
+      id: "customParameters",
+      maxItems: 15,
+    },
+    {
+      label: "Use Terraform Output",
+      id: "useTerraformOutput"
     }
   ],
-  newModelBase: {
+  newObjectFields: {
 
     type: "",
 
@@ -348,6 +373,9 @@ const commandLineStepFormMetadata = {
     inputPath: "",
     inputFileName: "",
     commands: "",
+    terraformStepId: "",
+    customParameters: [],
+    useTerraformOutput : false
   }
 };
 

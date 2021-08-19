@@ -4,12 +4,12 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCogs} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function ToggleSettingsIcon({ activeTab, setActiveTab, className }) {
+function ToggleSettingsIcon({ activeTab, setActiveTab, className, visible }) {
   const toggleSettings = () => {
     setActiveTab("settings");
   };
 
-  if (!setActiveTab || activeTab === "settings") {
+  if (!setActiveTab || activeTab === "settings" || visible === false) {
     return null;
   }
 
@@ -30,7 +30,8 @@ function ToggleSettingsIcon({ activeTab, setActiveTab, className }) {
 ToggleSettingsIcon.propTypes = {
   setActiveTab: PropTypes.func,
   activeTab: PropTypes.string,
-  className: PropTypes.string
+  className: PropTypes.string,
+  visible: PropTypes.bool
 };
 
 export default ToggleSettingsIcon;

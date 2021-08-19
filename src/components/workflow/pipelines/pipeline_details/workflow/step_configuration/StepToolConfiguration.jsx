@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import PipelineActions from "../../../../pipeline-actions";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
-import JenkinsConfiguration from "./step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
 import JUnitStepConfiguration from "./step_tool_configuration_forms/junit/JUnitStepConfiguration";
 import XUnitStepConfiguration from "./step_tool_configuration_forms/xunit/XUnitStepConfiguration";
 import SonarStepConfiguration from "./step_tool_configuration_forms/sonar/SonarStepConfiguration";
@@ -26,7 +25,7 @@ import DockerPushStepConfiguration from "./step_tool_configuration_forms/docker_
 import AnchoreScanStepConfiguration from "./step_tool_configuration_forms/anchore_scan/AnchoreScanStepConfiguration";
 import SFDCStepConfiguration from "./step_tool_configuration_forms/sfdc/SFDCStepConfiguration";
 import NexusStepConfiguration from "./step_tool_configuration_forms/nexus/NexusStepConfiguration";
-import ArgoCDStepConfiguration from "./step_tool_configuration_forms/argo_cd/ArgoCDStepConfiguration";
+import ArgoCdStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/ArgoCdStepConfiguration";
 import TerraformStepConfiguration from "./step_tool_configuration_forms/terraform/TerraformStepConfiguration";
 import OctopusStepConfiguration from "./step_tool_configuration_forms/octopus/OctopusStepConfiguration";
 import EBSStepConfiguration from "./step_tool_configuration_forms/ebs/EBSStepConfiguration";
@@ -45,6 +44,23 @@ import pipelineActions from "../../../../pipeline-actions";
 import NUnitStepConfiguration from "./step_tool_configuration_forms/nunit/NUnitStepConfiguration";
 import JFrogDockerStepConfiguration
   from "./step_tool_configuration_forms/jfrog_artifactory_docker/JFrogDockerStepConfiguration";
+import JFrogMavenStepConfiguration 
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_maven/JFrogMavenStepConfiguration";
+import TerrascanStepConfiguration from "./step_tool_configuration_forms/terrascan/TerrascanStepConfiguration";
+import AzureDevopsToolConfiguration
+  from "../../../../../inventory/tools/tool_details/tool_jobs/azure-devops/AzureDevopsToolConfiguration";
+import AzureDevopsStepConfiguration
+  from "./step_tool_configuration_forms/azure_devops/AzureDevopsStepToolConfiguration";
+// import JenkinsStepConfiguration
+//   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
+import KafkaConnectStepConfiguration from "./step_tool_configuration_forms/kafka_connect/KafkaConnectStepConfiguration";
+import JenkinsStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration-old";
+import AwsEcsDeployStepConfiguration
+  from "./step_tool_configuration_forms/aws_ecs_deploy/AwsEcsDeployStepConfiguration";
+import AwsLambdaDeployStepConfiguration
+  from "./step_tool_configuration_forms/aws_lambda_publish/AwsLambdaDeployStepConfiguration";
+import CoverityStepConfiguration from "./step_tool_configuration_forms/coverity/CoverityStepConfiguration";
+import AzureAcrPushStepConfiguration from "./step_tool_configuration_forms/azure_acr_push/AzureAcrPushStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -180,7 +196,140 @@ function StepToolConfiguration({
     }
   };
 
-  const getToolsList = async (service) => {
+  const createCoverityJob = async (
+    toolId,
+    toolConfiguration,
+    stepId,
+    createJobPostBody
+  ) => {
+    const { workflow } = pipeline;
+
+    try {
+      const stepIndex = workflow.plan.findIndex((x) => x._id === stepId);
+
+      workflow.plan[stepIndex].tool.configuration =
+        toolConfiguration.configuration;
+      workflow.plan[stepIndex].tool.threshold = toolConfiguration.threshold;
+      workflow.plan[stepIndex].tool.job_type = toolConfiguration.job_type;
+
+      await PipelineActions.updatePipeline(
+        pipeline._id,
+        { workflow: workflow },
+        getAccessToken
+      );
+
+
+      // TODO: replace code below with this once all the different job types are registered in the new Node service
+      //const createJobResponse = await pipelineActions.processStepJob(pipeline._id, stepId);
+
+      const createJobResponse = await PipelineActions.createCoverityJob(
+        toolId,
+        createJobPostBody,
+        getAccessToken,
+      );
+
+      if (createJobResponse && createJobResponse.data.status === 200) {
+        const { message } = createJobResponse.data;
+
+        if (
+          message &&
+          typeof message.jobName === "string" &&
+          message.jobName.length > 0
+        ) {
+          workflow.plan[stepIndex].tool.configuration.jobName = message.jobName;
+
+          await PipelineActions.updatePipeline(
+            pipeline._id,
+            { workflow: workflow },
+            getAccessToken
+          );
+        }
+
+        await reloadParentPipeline();
+
+        closeEditorPanel();
+      } else {
+
+        const errorMsg = `Service Unavailable. Error reported by services creating the job for toolId: ${toolId}.  Please see browser logs for details.`;
+        console.error(createJobResponse.data);
+        toastContext.showCreateFailureResultDialog(errorMsg);
+      }
+    } catch (error) {
+
+      const errorMsg = `Error Creating and Saving Job Configuration for toolId: ${toolId} on $pipeline: ${pipeline._id}.  Please see browser logs for details.`;
+      console.error(error);
+      toastContext.showCreateFailureResultDialog(errorMsg);
+    }
+  };
+
+  const createTwistlockJob = async (
+    toolId,
+    toolConfiguration,
+    stepId,
+    createJobPostBody
+  ) => {
+    const { workflow } = pipeline;
+
+    try {
+      const stepIndex = workflow.plan.findIndex((x) => x._id === stepId);
+
+      workflow.plan[stepIndex].tool.configuration =
+        toolConfiguration.configuration;
+      workflow.plan[stepIndex].tool.threshold = toolConfiguration.threshold;
+      workflow.plan[stepIndex].tool.job_type = toolConfiguration.job_type;
+
+      await PipelineActions.updatePipeline(
+        pipeline._id,
+        { workflow: workflow },
+        getAccessToken
+      );
+
+
+      // TODO: replace code below with this once all the different job types are registered in the new Node service
+      //const createJobResponse = await pipelineActions.processStepJob(pipeline._id, stepId);
+
+      const createJobResponse = await PipelineActions.createTwistlockJob(
+        toolId,
+        createJobPostBody,
+        getAccessToken,
+      );
+
+      if (createJobResponse && createJobResponse.data.status === 200) {
+        const { message } = createJobResponse.data;
+
+        if (
+          message &&
+          typeof message.jobName === "string" &&
+          message.jobName.length > 0
+        ) {
+          workflow.plan[stepIndex].tool.configuration.jobName = message.jobName;
+
+          await PipelineActions.updatePipeline(
+            pipeline._id,
+            { workflow: workflow },
+            getAccessToken
+          );
+        }
+
+        await reloadParentPipeline();
+
+        closeEditorPanel();
+      } else {
+
+        const errorMsg = `Service Unavailable. Error reported by services creating the job for toolId: ${toolId}.  Please see browser logs for details.`;
+        console.error(createJobResponse.data);
+        toastContext.showCreateFailureResultDialog(errorMsg);
+      }
+    } catch (error) {
+
+      const errorMsg = `Error Creating and Saving Job Configuration for toolId: ${toolId} on $pipeline: ${pipeline._id}.  Please see browser logs for details.`;
+      console.error(error);
+      toastContext.showCreateFailureResultDialog(errorMsg);
+    }
+  };
+
+
+    const getToolsList = async (service) => {
     try {
       return await pipelineActions.getToolsList(service, getAccessToken);
     } catch (error) {
@@ -196,7 +345,7 @@ function StepToolConfiguration({
     switch (toolName) {
       case "jenkins":
         return (
-          <JenkinsConfiguration
+          <JenkinsStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}
@@ -210,6 +359,14 @@ function StepToolConfiguration({
             setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
           />
+          // <JenkinsStepConfiguration
+          //   stepTool={stepTool}
+          //   plan={pipeline?.workflow?.plan}
+          //   stepId={stepId}            
+          //   closeEditorPanel={closeEditorPanel}
+          //   createJob={createJob}
+          //   pipelineId={pipeline._id}
+          // />
         );
       case "junit":
         return (
@@ -322,7 +479,7 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            createJob={createJob}
+            createJob={createTwistlockJob}
             setToast={setToast}
             setShowToast={setShowToast}
           />
@@ -445,16 +602,11 @@ function StepToolConfiguration({
         );
       case "argo":
         return (
-          <ArgoCDStepConfiguration
-            pipelineId={pipeline._id}
+          <ArgoCdStepConfiguration
             plan={pipeline.workflow.plan}
             stepId={stepId}
             stepTool={stepTool}
             parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
-            setToast={setToast}
-            setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
           />
         );
@@ -474,15 +626,10 @@ function StepToolConfiguration({
       case "anchore-integrator":
         return (
           <AnchoreIntegratorStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
+            plan={pipeline?.workflow?.plan}
             stepId={stepId}
             stepTool={stepTool}
             parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
-            setToast={setToast}
-            setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
           />
         );
@@ -509,6 +656,8 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
+            closeEditorPanel={closeEditorPanel}
+            createJob={createJob}
             getToolsList={getToolsList}
             setToast={setToast}
             setShowToast={setShowToast}
@@ -658,6 +807,130 @@ function StepToolConfiguration({
             closeEditorPanel={closeEditorPanel}
             />
         );
+      case "jfrog_artifactory_maven":
+        return (
+          <JFrogMavenStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+            />
+        );
+      case "terrascan":
+        return (
+          <TerrascanStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "azure-devops":
+        return (
+          <AzureDevopsStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "kafka_connect":
+        return (
+          <KafkaConnectStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "aws_ecs_deploy":
+        return (
+          <AwsEcsDeployStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "aws_lambda":
+        return (
+          <AwsLambdaDeployStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+        case "coverity":
+          return (
+            <CoverityStepConfiguration 
+              pipelineId={pipeline._id}
+              plan={pipeline.workflow.plan}
+              stepId={stepId}
+              stepTool={stepTool}
+              parentCallback={callbackFunction}
+              callbackSaveToVault={saveToVault}
+              getToolsList={getToolsList}
+              createJob={createCoverityJob}
+              setToast={setToast}
+              setShowToast={setShowToast}
+              closeEditorPanel={closeEditorPanel}
+            />
+          );
+        case "azure_acr_push":
+          return(<AzureAcrPushStepConfiguration
+              pipelineId={pipeline._id}
+              plan={pipeline.workflow.plan}
+              stepId={stepId}
+              stepTool={stepTool}
+              parentCallback={callbackFunction}
+              callbackSaveToVault={saveToVault}
+              createJob={createJob}
+              setToast={setToast}
+              setShowToast={setShowToast}
+            />);
     }
   };
 

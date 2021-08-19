@@ -11,6 +11,10 @@ import { faUserCircle } from "@fortawesome/pro-light-svg-icons";
 
 import { renderTooltip } from "utils/helpers";
 
+const EXTERNAL_LINKS = {
+  KNOWLEDGE_BASE: `https://opsera.atlassian.net/l/c/pXJjJAej`
+};
+
 function HeaderNavBar({ hideAuthComponents, userData }) {
   const { setAccessRoles, getAccessToken, featureFlagHideItemInProd, loginUserContext, logoutUserContext } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -111,13 +115,13 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
             {!accessRoleData && <Button variant="outline-success" onClick={login}>Login</Button>}
             {accessRoleData &&
             <NavDropdown title={fullName} id="basic-nav-dropdown" alignRight>
-              <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/kIA5" target="_blank"
+              <NavDropdown.Item href={EXTERNAL_LINKS.KNOWLEDGE_BASE} target="_blank"
                                 className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
               <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/AQBYAw" target="_blank"
                                 className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>
               <NavDropdown.Divider/>
               <NavDropdown.Item href="https://opsera.io/" target="_blank" className="nav-drop-down-item"
-                                id="about-opsera">OpsERA.io</NavDropdown.Item>
+                                id="about-opsera">Opsera.io</NavDropdown.Item>
               <NavDropdown.Item href="" onClick={logout} className="nav-drop-down-item"
                                 id="logout-button">Logout</NavDropdown.Item>
             </NavDropdown>}
@@ -149,18 +153,18 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
 
             <NavDropdown title={fullName} id="basic-nav-dropdown" className="top-nav-dropdown" alignRight>
               <Link to="/user/profile" id="profile-button" className="dropdown-item nav-drop-down-item">Profile</Link>
-              {isLdapUser && <Link to="/user/myUserRecord" id="profile-button" className="dropdown-item nav-drop-down-item">User Settings</Link>}
+              {/*{isLdapUser && <Link to="/user/myUserRecord" id="profile-button" className="dropdown-item nav-drop-down-item">User Settings</Link>}*/}
 
               <NavDropdown.Divider/>
 
-              <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/kIA5" target="_blank"
+              <NavDropdown.Item href={EXTERNAL_LINKS.KNOWLEDGE_BASE} target="_blank"
                                 className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
               <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/AQBYAw" target="_blank"
                                 className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>
               <NavDropdown.Divider/>
 
               <NavDropdown.Item href="https://opsera.io/" target="_blank" className="nav-drop-down-item"
-                                id="about-opsera">OpsERA.io</NavDropdown.Item>
+                                id="about-opsera">Opsera.io</NavDropdown.Item>
               <NavDropdown.Item href="" onClick={logout} className="nav-drop-down-item"
                                 id="logout-button">Logout</NavDropdown.Item>
             </NavDropdown>

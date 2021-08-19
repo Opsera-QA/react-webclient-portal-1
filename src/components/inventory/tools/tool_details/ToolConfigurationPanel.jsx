@@ -23,13 +23,19 @@ import GitlabToolConfiguration from "components/inventory/tools/tool_details/too
 import AzureToolConfiguration from "./tool_jobs/azure/AzureToolConfiguration";
 import JFrogToolConfiguration from "./tool_jobs/jfrog_artifactory/JFrogToolConfiguration";
 import ServiceNowToolConfiguration from  "./tool_jobs/service_now/ServiceNowToolConfiguration";
-
+import AzureDevopsToolConfiguration from "./tool_jobs/azure-devops/AzureDevopsToolConfiguration";
+import HashicorpVaultToolConfiguration from "./tool_jobs/hashicorp_vault/HashicorpVaultToolConfiguration";
+import KafkaConnectToolConfiguration from "./tool_jobs/kafka_connect/KafkaConnectToolConfiguration";
+import CoverityToolConfiguration from "./tool_jobs/coverity/CoverityToolConfiguration";
+import TwistlockToolConfiguration from "./tool_jobs/twistlock/TwistlockToolConfiguration";
+import AzureV2ToolConfiguration from "./tool_jobs/azureV2/AzureV2ToolConfiguration";
+import AnsibleToolConfiguration from "./tool_jobs/ansible/AnsibleToolConfiguration";
 function ToolConfigurationPanel({ toolData }) {
   const getConfiguration = () => {
     if (toolData == null) {
       return <></>;
     }
-
+    
     switch (toolData.getData("tool_identifier")) {
       case "jenkins":
         return <JenkinsToolConfiguration toolData={toolData} />;
@@ -72,6 +78,20 @@ function ToolConfigurationPanel({ toolData }) {
         return <JFrogToolConfiguration toolData={toolData} />;
       case "servicenow":
         return <ServiceNowToolConfiguration toolData={toolData} /> ;
+      case "azure-devops":
+        return <AzureDevopsToolConfiguration toolData={toolData} />;
+      case "hashicorp_vault":
+        return <HashicorpVaultToolConfiguration toolData={toolData} />;
+      case "kafka_connect":
+        return <KafkaConnectToolConfiguration toolData={toolData} />;
+      case "coverity":
+        return <CoverityToolConfiguration toolData={toolData} />;
+      case "twistlock":
+        return <TwistlockToolConfiguration toolData={toolData} />;
+      case "azure":
+        return <AzureV2ToolConfiguration toolData={toolData} />;
+      case "ansible":
+        return <AnsibleToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
     }

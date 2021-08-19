@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DropdownList from "react-widgets/lib/DropdownList";
-import WarningDialog from "components/common/status_notifications/WarningDialog";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 
 function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, setDataFunction, valueField, textField, filter, placeholderText, busy, className, inline, disabled}) {
@@ -13,21 +12,14 @@ function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, 
     setDataObject({...newDataObject});
   };
 
-  const getInputLabel = () => {
-    if (!inline) {
-      return (
-        <InputLabel field={field} className={inline ? "mt-1 mr-2" : undefined}/>
-      );
-    }
-  };
-
   if (field == null) {
-    return <WarningDialog warningMessage={"No field was found for this filter"} />;
+    console.error(`No Field was Found for ${fieldName}. Please add to the metadata if you would like it to be shown.`);
+    return null;
   }
 
   return (
     <div className={className}>
-      {getInputLabel()}
+      <InputLabel showLabel={!inline} field={field} className={inline ? "mt-1 mr-2" : undefined}/>
       <DropdownList
         data={selectOptions}
         valueField={valueField}
@@ -52,7 +44,7 @@ FilterSelectInputBase.propTypes = {
   selectOptions: PropTypes.array.isRequired,
   groupBy: PropTypes.string,
   valueField: PropTypes.string,
-  textField: PropTypes.string,
+  textField: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   filter: PropTypes.string,
   placeholderText: PropTypes.string,
   setDataFunction: PropTypes.func,

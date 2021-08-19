@@ -1,14 +1,18 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import { Multiselect } from 'react-widgets';
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTimes} from "@fortawesome/pro-light-svg-icons";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
-function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, disabled, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, showClearValueButton, clearDataFunction, className, showLabel}) {
+function MultiSelectInputBase(
+  {
+    fieldName, dataObject, setDataObject, groupBy,
+    disabled, selectOptions, valueField, textField,
+    placeholderText, setDataFunction, busy, showClearValueButton,
+    clearDataFunction, className, showLabel, requireClearDataConfirmation,
+    clearDataDetails, linkTooltipText, detailViewLink, infoOverlay
+  }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
 
@@ -43,15 +47,9 @@ function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, d
     }
   };
 
-  const getClearDataIcon = () => {
+  const getClearDataFunction = () => {
     if (dataObject.getData(field.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
-      return (
-        <TooltipWrapper innerText={"Clear this Value"}>
-          <span onClick={() => clearValue()} className="my-auto badge badge-danger clear-value-badge pointer">
-            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>Clear Value
-          </span>
-        </TooltipWrapper>
-      );
+      return (clearValue);
     }
   };
 
@@ -77,7 +75,16 @@ function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, d
 
   return (
     <InputContainer className={className ? className : undefined}>
-      <InputLabel field={field} inputPopover={getClearDataIcon()} showLabel={showLabel} />
+      <InputLabel
+        showLabel={showLabel}
+        field={field}
+        clearDataFunction={getClearDataFunction()}
+        requireClearDataConfirmation={requireClearDataConfirmation}
+        linkTooltipText={linkTooltipText}
+        detailViewLink={detailViewLink}
+        clearDataDetails={clearDataDetails}
+        infoOverlay={infoOverlay}
+      />
       <div className={"custom-multiselect-input"}>
         <Multiselect
           data={selectOptions}
@@ -119,7 +126,12 @@ MultiSelectInputBase.propTypes = {
     PropTypes.array
   ]),
   className: PropTypes.string,
-  showLabel: PropTypes.bool
+  requireClearDataConfirmation: PropTypes.bool,
+  showLabel: PropTypes.bool,
+  clearDataDetails: PropTypes.any,
+  linkTooltipText: PropTypes.string,
+  detailViewLink: PropTypes.string,
+  infoOverlay: PropTypes.any
 };
 
 MultiSelectInputBase.defaultProps = {

@@ -4,11 +4,11 @@ import RoleAccessEditorHelpOverlayContainer from "components/common/help/input/r
 function ToolRegistryRoleAccessHelpDocumentation() {
   return (
     <RoleAccessEditorHelpOverlayContainer>
-      <div><b>Access Rule Legend</b></div>
-      <div><b>Everyone</b> has edit access, if no access rules are set.</div>
-      <div><b>Owners</b> and <b>Administrators</b> have full access.</div>
-      <div><b>Managers</b> can edit settings.</div>
-      <div><b>Guests</b> and <b>Guests</b> have read only access.</div>
+      <div><b>Owners</b> and <b>Administrators</b> have full editing capabilities.</div>
+      <div><b>Managers</b> and <b>SecOps</b> roles can view or edit tool.</div>
+      <div><b>Guests</b> have read-only access.</div>
+      <div><b>Users</b> can only use resource.</div>
+      <div>If no Access Rules are applied, <b>all</b> users can view or edit the tool.</div>
     </RoleAccessEditorHelpOverlayContainer>
   );
 }

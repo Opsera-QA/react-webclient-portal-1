@@ -1,8 +1,11 @@
-import React from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import LdapUserSelectInput from "components/common/list_of_values_input/users/LdapUserSelectInput";
+import {AuthContext} from "contexts/AuthContext";
 
 function OrganizationLeaderLdapUserSelectInput({ dataObject, setDataObject, fieldName}) {
+  const { isSassUser } = useContext(AuthContext);
+
   const handleLdapUserChange = (fieldName, selectedOption) => {
     let newDataObject = dataObject;
     let leader = {};
@@ -13,10 +16,14 @@ function OrganizationLeaderLdapUserSelectInput({ dataObject, setDataObject, fiel
     setDataObject({...newDataObject});
   };
 
+  if (isSassUser() === true) {
+    return null;
+  }
+
   return (
     <LdapUserSelectInput
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      model={dataObject}
+      setModel={setDataObject}
       setDataFunction={handleLdapUserChange}
       fieldName={fieldName}
     />

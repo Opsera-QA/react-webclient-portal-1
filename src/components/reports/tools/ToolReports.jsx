@@ -7,7 +7,7 @@ function ToolReports() {
     <Row className="ml-3">
       <BreadcrumbPageLink breadcrumbDestination={"toolsUsedInPipelineReport"}/>
       <BreadcrumbPageLink breadcrumbDestination={"toolCountsReport"}/>
-      <BreadcrumbPageLink breadcrumbDestination={"detailedToolReport"}/>
+      {/* <BreadcrumbPageLink breadcrumbDestination={"detailedToolReport"}/> */}
     </Row>
   );
 }

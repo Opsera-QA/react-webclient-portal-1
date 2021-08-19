@@ -15,6 +15,10 @@ const dashboardTemplateFilterMetadata = {
       id: "sort",
     },
     {
+      label: "Sort Option",
+      id: "sortOption",
+    },
+    {
       label: "Source",
       id: "source",
     },

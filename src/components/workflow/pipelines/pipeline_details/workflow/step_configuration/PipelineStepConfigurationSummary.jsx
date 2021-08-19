@@ -25,8 +25,8 @@ import ApprovalGatePipelineStepConfigurationSummaryPanel
 import SpinnakerPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/spinnaker/SpinnakerPipelineStepConfigurationSummaryPanel";
 import spinnakerStepFormMetadata from "./step_tool_configuration_forms/spinnaker/spinnaker-stepForm-metadata";
-import ArgoCDPipelineStepConfigurationSummaryPanel
-  from "./step_tool_configuration_forms/argo_cd/ArgoCDPipelineStepConfigurationSummaryPanel";
+import ArgoCdPipelineStepConfigurationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/ArgoCdPipelineStepConfigurationSummaryPanel";
 import ArgoCDStepFormMetadata from "./step_tool_configuration_forms/argo_cd/argocd-stepForm-metadata";
 import OctopusPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/octopus/OctopusPipelineStepConfigurationSummaryPanel";
@@ -102,9 +102,8 @@ import SeleniumPipelineStepConfigurationSummaryPanel
 import seleniumPipelineStepConfigurationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/selenium/seleniumPipelineStepConfigurationMetadata";
 import TwistlockPipelineStepConfigurationSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/TwistlockPipelineStepConfigurationSummaryPanel";
-import twistlockPipelineStepConfigurationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/twistlockPipelineStepConfigurationMetadata";
+  from "./step_tool_configuration_forms/twistlock/TwistlockPipelineStepConfigurationSummaryPanel";
+import twistlockPipelineStepFormMetadata from "./step_tool_configuration_forms/twistlock/twistlock-stepForm-metadata";  
 import S3PipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/s3/S3PipelineStepConfigurationSummaryPanel";
 import s3PipelineStepConfigurationMetadata
@@ -119,8 +118,8 @@ import cypressPipelineStepConfigurationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/cypressPipelineStepConfigurationMetadata";
 import DockerPushPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/DockerPushPipelineStepConfigurationSummaryPanel";
-import dockerPushPipelineStepConfigurationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/dockerPushPipelineStepConfigurationMetadata";
+import dockerPushStepFormMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/dockerpush-stepForm-metadata";
 import SfdcPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/SfdcPipelineStepConfigurationSummaryPanel";
 import sfdcPipelineStepConfigurationMetadata
@@ -134,6 +133,28 @@ import nunitStepFormMetadata from "./step_tool_configuration_forms/nunit/nunit-s
 import JFrogDockerPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/jfrog_artifactory_docker/JFrogDockerPipelineStepConfigurationSummaryPanel";
 import jfrogStepFormMetadata from "./step_tool_configuration_forms/jfrog_artifactory_docker/jfrog-stepForm-metadata";
+import TerrascanPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/terrascan/TerrascanPipelineStepConfigurationSummaryPanel";
+import terrascanStepFormMetadata from "./step_tool_configuration_forms/terrascan/terrascan-stepForm-metadata";
+import AzureDevopsPipelineStepConfigurationSummary
+  from "./step_tool_configuration_forms/azure_devops/AzureDevopsPipelineStepConfigurationSummary";
+import azureDevopsStepFormMetadata from "./step_tool_configuration_forms/azure_devops/azureDevops-stepForm-metadata";
+import AzureAcrPushPipelineStepConfigurationSummary
+  from "./step_tool_configuration_forms/azure_acr_push/AzureAcrPushPipelineStepConfigurationSummary";
+import azureAcrPushStepFormMetadata from "./step_tool_configuration_forms/azure_acr_push/azureAcrPush-stepForm-metadata";
+import KafkaConnectPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/kafka_connect/KafkaConnectPipelineStepConfigurationSummaryPanel";
+import kafkaConnectStepFormMetadata from "./step_tool_configuration_forms/kafka_connect/kafkaConnect-stepForm-metadata";
+import AwsEcsDeployPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/aws_ecs_deploy/AwsEcsSDeployPipelineStepConfigurationSummary";
+import awsECSDeployStepFormMetadata
+  from "./step_tool_configuration_forms/aws_ecs_deploy/awsECSDeploy-stepForm-metadata";
+import AwsLambdaPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/aws_lambda_publish/AwsLambdaPipelineStepConfigurationSummary";
+import awsLambdaStepFormMetadata from "./step_tool_configuration_forms/aws_lambda_publish/awsLambda-stepForm-metadata";
+import coverityStepFormMetadata from "./step_tool_configuration_forms/coverity/coverity-stepForm-metadata";
+import CoverityPipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/coverity/CoverityPipelineStepConfigurationSummaryPanel";
+
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -168,7 +189,7 @@ function PipelineStepConfigurationSummary({
         );
       case "argo":
         return (
-          <ArgoCDPipelineStepConfigurationSummaryPanel
+          <ArgoCdPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             argoCdPipelineDataObject={getModelWrappedObject(ArgoCDStepFormMetadata)}
           />
@@ -345,7 +366,7 @@ function PipelineStepConfigurationSummary({
         return (
           <TwistlockPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            twistlockDataObject={getModelWrappedObject(twistlockPipelineStepConfigurationMetadata)}
+            twistlockDataObject={getModelWrappedObject(twistlockPipelineStepFormMetadata)}
           />
         );
       case "s3":
@@ -373,7 +394,7 @@ function PipelineStepConfigurationSummary({
         return (
           <DockerPushPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            dockerPushDataObject={getModelWrappedObject(dockerPushPipelineStepConfigurationMetadata)}
+            dockerPushDataObject={getModelWrappedObject(dockerPushStepFormMetadata)}
           />
         );
       case "sfdc-configurator":
@@ -389,6 +410,55 @@ function PipelineStepConfigurationSummary({
             pipelineData={pipelineData}
             jFrogPipelineDataObject={getModelWrappedObject(jfrogStepFormMetadata)}
           />
+        );
+      case "terrascan":
+        return (
+          <TerrascanPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            terrascanLinePipelineDataObject={getModelWrappedObject(terrascanStepFormMetadata)}
+            />
+        );
+      case "azure-devops":
+        return (
+          <AzureDevopsPipelineStepConfigurationSummary
+            pipelineData={pipelineData}
+            azureDevopsPipelineDataObject={getModelWrappedObject(azureDevopsStepFormMetadata)}
+          />
+        );
+      case "azure_acr_push":
+        return (
+          <AzureAcrPushPipelineStepConfigurationSummary
+            pipelineData={pipelineData}
+            azureAcrPushPipelineDataObject={getModelWrappedObject(azureAcrPushStepFormMetadata)}
+          />
+        );
+      case "kafka_connect":
+        return (
+          <KafkaConnectPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            kafkaConnectPipelineDataObject={getModelWrappedObject(kafkaConnectStepFormMetadata)}
+          />
+        );
+      case "aws_ecs_deploy":
+        return (
+          <AwsEcsDeployPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            awsECSDeployPipelineDataObject={getModelWrappedObject(awsECSDeployStepFormMetadata)}
+          />
+        );
+      case "aws_lambda":
+        return (
+          <AwsLambdaPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            awsECSDeployPipelineDataObject={getModelWrappedObject(awsLambdaStepFormMetadata)}
+          />
+        );
+      case "coverity":
+          return (
+            <CoverityPipelineStepConfigurationSummaryPanel
+              pipelineData={pipelineData}
+              coverityPipelineDataObject={getModelWrappedObject(coverityStepFormMetadata)}
+            />
         );
       default:
         return (

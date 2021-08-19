@@ -6,6 +6,10 @@ import QaManualTestConfigurationPanel
   from "components/settings/analytics_data_entry/detail_view/configuration_panels/qa_manual_test/QaManualTestConfigurationPanel";
 import FirstPassYieldConfiguration from "./first_pass_yield/FirstPassYieldConfiguration";
 import CumulativeOpenDefectsConfiguration from "./cumulative_open_defects/CumulativeOpenDefectsConfiguration";
+import AutomationPercentageConfiguration from "./automation_percentage/AutomationPercentageConfiguration";
+import AdoptionPercentageConfiguration from "./adoption_percentage/AdoptionPercentageConfiguration";
+import AutomatedTestResultsConfigPanel from "./automated_test_results/AutomatedTestResultsConfigPanel";
+import DefectRemovalEfficiencyConfigurationPanel from "./defect_removal_efficiency/DefectRemovalEfficiencyConfigurationPanel";
 
 function AnalyticsDataEntryKpiConfigurationPanel({ analyticsDataEntryModel, setAnalyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
   const getConfigurationPanel = () => {
@@ -30,6 +34,38 @@ function AnalyticsDataEntryKpiConfigurationPanel({ analyticsDataEntryModel, setA
       case "cumulative-open-defects":
         return (
           <CumulativeOpenDefectsConfiguration
+            analyticsDataEntryModel={analyticsDataEntryModel}
+            setKpiConfigurationData={setKpiConfigurationData}
+            kpiConfigurationData={kpiConfigurationData}
+          />
+        );
+      case "automation-percentage":
+        return (
+          <AutomationPercentageConfiguration
+            analyticsDataEntryModel={analyticsDataEntryModel}
+            setKpiConfigurationData={setKpiConfigurationData}
+            kpiConfigurationData={kpiConfigurationData}
+          />
+        );
+      case "adoption-percentage":
+        return (
+          <AdoptionPercentageConfiguration
+            analyticsDataEntryModel={analyticsDataEntryModel}
+            setKpiConfigurationData={setKpiConfigurationData}
+            kpiConfigurationData={kpiConfigurationData}
+          />
+        );
+      case "automated-test-results":
+        return (
+          <AutomatedTestResultsConfigPanel
+            analyticsDataEntryModel={analyticsDataEntryModel}
+            setKpiConfigurationData={setKpiConfigurationData}
+            kpiConfigurationData={kpiConfigurationData}
+          />
+        );
+      case "defect-removal-efficiency":
+        return (
+          <DefectRemovalEfficiencyConfigurationPanel 
             analyticsDataEntryModel={analyticsDataEntryModel}
             setKpiConfigurationData={setKpiConfigurationData}
             kpiConfigurationData={kpiConfigurationData}

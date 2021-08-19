@@ -14,8 +14,9 @@ import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
 import {getSingularOrPluralString} from "components/common/helpers/string-helpers";
+import ToolsUsedInPipelineTable from "components/reports/tools/pipelines/ToolsUsedInPipelineTable";
 
-function ToolUsedInPipelinesField({ dataObject }) {
+function ToolUsedInPipelinesField({ dataObject, showTable }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [pipelines, setPipelines] = useState([]);
@@ -89,6 +90,15 @@ function ToolUsedInPipelinesField({ dataObject }) {
     );
   };
 
+  const getDisplay = () => {
+    if (showTable) {
+      return (
+        <ToolsUsedInPipelineTable data={pipelines} loadData={loadData} isLoading={isLoading} isMounted={isMounted}/>
+        );
+    }
+
+    return (getPipelineCards());
+  };
 
   if (isLoading) {
     return <LoadingDialog message={"Loading Pipelines"} size={"sm"} />;
@@ -108,19 +118,20 @@ function ToolUsedInPipelinesField({ dataObject }) {
       </div>
     );
   }
-
+console.log(pipelines);
   return (
     <div>
       <div className="form-text text-muted mb-2">
         <span>This tool is used in {pipelines.length} {getSingularOrPluralString(pipelines?.length, "pipeline","pipelines")}</span>
       </div>
-      {getPipelineCards()}
+      {getDisplay()}
     </div>
   );
 }
 
 ToolUsedInPipelinesField.propTypes = {
   dataObject: PropTypes.object,
+  showTable: PropTypes.bool
 };
 
 export default ToolUsedInPipelinesField;

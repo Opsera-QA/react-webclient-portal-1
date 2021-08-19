@@ -1,32 +1,34 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DropdownList from "react-widgets/lib/DropdownList";
 import {createPageSortOptions} from "components/common/filters/filterHelpers";
+import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 
 function PageSort({ paginationDto, setPaginationDto, loadData, isLoading}) {
-  const updateSortOption = (sortOption) => {
+  const updateSortOption = (fieldName, sortOption) => {
     paginationDto.setData("currentPage", 1);
     paginationDto.setData("sortOption", sortOption);
     setPaginationDto({...paginationDto});
     loadData(paginationDto);
   };
 
-  if (paginationDto?.getMetaData()?.sortOptions == null) {
-   return null;
+  if (paginationDto?.getFieldById("sortOption") == null || paginationDto?.getMetaData()?.sortOptions == null) {
+    return null;
   }
 
   return (
-    <div className="page-sort">
-      <DropdownList
-        data={createPageSortOptions(paginationDto?.getMetaData()["sortOptions"], "Sort", "text")}
-        valueField={"key"}
-        textField={"text"}
-        disabled={isLoading || paginationDto?.getData("totalCount") == null}
-        value={paginationDto?.getData("sortOption")}
-        placeholder={"Sort Page"}
-        onChange={sortOption => updateSortOption(sortOption)}
-      />
-    </div>
+    <FilterSelectInputBase
+      dataObject={paginationDto}
+      setDataObject={setPaginationDto}
+      fieldName={"sortOption"}
+      showLabel={false}
+      inline={true}
+      selectOptions={createPageSortOptions(paginationDto?.getMetaData()["sortOptions"], "Sort", "text")}
+      valueField={"key"}
+      textField={"text"}
+      disabled={isLoading || paginationDto?.getData("totalCount") == null}
+      placeholder={"Sort Page"}
+      setDataFunction={updateSortOption}
+    />
   );
 }
 

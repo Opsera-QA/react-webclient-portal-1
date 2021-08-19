@@ -5,7 +5,7 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import axios from "axios";
 import PipelineCatalog from "components/workflow/catalog/PipelineCatalog";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
-import CustomTab from "components/common/tabs/CustomTab";
+import PipelineCatalogCustomTab from "components/workflow/catalog/PipelineCatalogCustomTab";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 
 function PipelineCatalogLibrary() {
@@ -87,8 +87,7 @@ function PipelineCatalogLibrary() {
           <>
             <div className={"p-2"}>
               {`
-                Opsera provides pipeline templates for various functions and domains.
-                Listed below are the publicly available pipeline templates from Opsera.
+                These are publicly available pipeline templates provided by Opsera. All users have access to them.
               `}
             </div>
             <PipelineCatalog source={undefined} activeTemplates={activeTemplates} />
@@ -99,9 +98,7 @@ function PipelineCatalogLibrary() {
           <>
             <div className={"p-2"}>
               {`
-                Your organization has a private repository of pipeline catalog templates.
-                Users can share their pipelines, publishing their framework to this catalog so that others can use it.
-                These items are only visible to you and your overall organization.
+                This is your organization’s private catalog of pipeline templates. These are accessible to you and your organization only. To share a pipeline template with your organization, publish it to this catalog in Pipeline Summary.
               `}
             </div>
             <PipelineCatalog source={"customer"} activeTemplates={activeTemplates} />
@@ -115,8 +112,8 @@ function PipelineCatalogLibrary() {
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <CustomTab activeTab={activeTab} tabText={"Marketplace"} handleTabClick={handleTabClick} tabName={"all"} />
-        <CustomTab activeTab={activeTab} tabText={"Private Catalog"} handleTabClick={handleTabClick} tabName={"customer"} />
+        <PipelineCatalogCustomTab activeTab={activeTab} tabText={"Marketplace"} handleTabClick={handleTabClick} tabName={"all"} />
+        <PipelineCatalogCustomTab activeTab={activeTab} tabText={"Private"} handleTabClick={handleTabClick} tabName={"customer"} />
       </CustomTabContainer>
     );
   };

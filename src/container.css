@@ -1,0 +1,51 @@
+/* Help Documentation Container Styling */
+.help-documentation-container .header {
+    /*background-color: #f2c364;*/
+    background-color: #F6D179;
+    color: #3D3B36;
+}
+
+.help-documentation-container .help-body {
+    background-color: #fbe3b3;
+    min-height: 195px;
+    overflow-y: auto;
+    overflow-x: hidden
+}
+
+/* End Help Documentation Container Styling */
+
+/* Metric Container Styling */
+.metric-container {
+    width: 100%;
+    margin: 1em;
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .metric-container {
+        max-width: 100%;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .metric-container {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .metric-container {
+        max-width: 45%;
+        /* width: 100%; */
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .metric-container {
+        max-width: 30%;
+    }
+}
+/* End Metric Container Styling */

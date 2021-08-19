@@ -12,8 +12,9 @@ import axios from "axios";
 import GitRunTaskModal from "components/git/git_task_details/GitRunTaskModal";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAllowed }) {
+function GitTaskRunButton({gitTasksData, setGitTasksData, disable, className, loadData, actionAllowed }) {
   const [isCanceling, setIsCanceling] = useState(false);
+  const [taskStarting, setTaskStarting] = useState(false);
   const {getAccessToken} = useContext(AuthContext);
   const history = useHistory();
   let toastContext = useContext(DialogToastContext);
@@ -39,16 +40,16 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAll
   const handleCancelRunTask = async () => {
     setIsCanceling(true);
     // TODO: call cancel job api to jenkins integrator
-    let newGitTasksData = gitTasksData;
-    newGitTasksData.setData("status", "stopped");
-    await gitTaskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newGitTasksData);
+    await gitTaskActions.stopTask(getAccessToken, cancelTokenSource, gitTasksData);
     toastContext.showInformationToast("Task has been stopped", 10);
     setIsCanceling(false);
-    history.push(`/git`);
+    history.push(`/task`);
   };
 
   const handleClose = () => {
     setShowModal(false);
+    // TODO: This should be passed to modal
+    setTaskStarting(true);
   };
 
   const getButton = () => {
@@ -70,7 +71,7 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAll
     return (
       <Button
         variant={"success"}
-        disabled={gitTasksData?.getData("status") === "running" || disable || actionAllowed !== true}
+        disabled={gitTasksData?.getData("status") === "running" || disable || taskStarting || actionAllowed !== true}
         onClick={() => {
           setShowModal(true);
         }}
@@ -84,6 +85,10 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAll
     );
   };
 
+  if (gitTasksData?.type === "sfdc-cert-gen" || gitTasksData.getData("type") === "ecs_service_creation" || gitTasksData.getData("type") === "ecs_cluster_creation" || gitTasksData.getData("type") === "lambda_function_creation") {
+    return null;
+  }
+
   return (
     <div className={className}>
       {/*TODO: Make sure button is not clickable until form is valid*/}
@@ -92,6 +97,7 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAll
         showModal={showModal}
         handleClose={handleClose}
         gitTasksData={gitTasksData}
+        setGitTasksData={setGitTasksData}
         loadData={loadData}
         />
     </div>
@@ -100,6 +106,7 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAll
 
 GitTaskRunButton.propTypes = {
   gitTasksData: PropTypes.object,
+  setGitTasksData: PropTypes.func,
   loadData: PropTypes.func,
   disable: PropTypes.bool,
   className: PropTypes.string,

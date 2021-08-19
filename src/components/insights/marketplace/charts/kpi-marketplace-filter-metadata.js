@@ -12,7 +12,7 @@ const kpiMarketplaceFilterMetadata = {
     },
     {
       label: "Sort Option",
-      id: "sort",
+      id: "sortOption",
     },
     {
       label: "Tool",
@@ -52,7 +52,6 @@ const kpiMarketplaceFilterMetadata = {
   newObjectFields: {
     pageSize: 25,
     currentPage: 1,
-    sort: "name",
     search: "",
     sortOption: {text: "Sort: Name", value: "name"},
     status: {text: "Status: Active", value: "active"},

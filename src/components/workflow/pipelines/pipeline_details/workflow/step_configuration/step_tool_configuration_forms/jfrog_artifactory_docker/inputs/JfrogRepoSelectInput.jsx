@@ -59,7 +59,7 @@ function JfrogRepoSelect({ fieldName, dataObject, setDataObject, disabled, textF
 
   const loadRepos = async (cancelSource = cancelTokenSource) => {
     try {
-      const res = await JFrogStepActions.getRepos(dataObject.getData("jfrogToolConfigId"),"Docker", getAccessToken, cancelSource);
+      const res = await JFrogStepActions.getRepos(dataObject.getData("jfrogToolConfigId"),"Maven", getAccessToken, cancelSource);
       if (res && res.status === 200) {
         setRepos(res.data);
         return;

@@ -10,7 +10,8 @@ export const formatTypes = {
   percent: '%'
 };
 
-function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, placeholderText, formatType, setDataFunction, showLabel }) {
+// TODO: Move to /common/inputs/number
+function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, placeholderText, formatType, setDataFunction, showLabel, minimum, maximum, className, precision }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   simpleNumberLocalizer();
@@ -22,22 +23,30 @@ function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, place
     setDataObject({...newDataObject});
   };
 
+  const updateValue = (newValue) => {
+    if (setDataFunction) {
+      setDataFunction(field?.id, newValue);
+    }
+    else {
+      validateAndSetData(newValue);
+    }
+  };
+
   if (field == null) {
     return null;
   }
 
   return (
-    <InputContainer className="custom-number-input my-2">
+    <InputContainer className={className ? className : "custom-number-input my-2"}>
       <InputLabel field={field} showLabel={showLabel} />
       <NumberPicker
-        type="number"
         placeholder={placeholderText}
         disabled={disabled}
         value={dataObject.getData(fieldName)}
         className="max-content-width"
-        onChange={setDataFunction ? (newValue) => setDataFunction(field?.id, newValue) : (newValue) => validateAndSetData(newValue)}
-        min={field?.getMaxNumber}
-        max={field?.getMinNumber}
+        onChange={(newValue) => updateValue(newValue)}
+        min={typeof minimum === "number" ? minimum : field?.minNumber}
+        max={typeof minimum === "number" ? maximum : field?.maxNumber}
         format={ formatType && formatTypes[formatType] != null ? formatTypes[formatType] : undefined}
       />
       <InfoText field={field} errorMessage={errorMessage}/>
@@ -53,7 +62,11 @@ NumberInputBase.propTypes = {
   disabled: PropTypes.bool,
   formatType: PropTypes.string,
   setDataFunction: PropTypes.func,
-  showLabel: PropTypes.bool
+  showLabel: PropTypes.bool,
+  minimum: PropTypes.number,
+  maximum: PropTypes.number,
+  className: PropTypes.string,
+  precision: PropTypes.number
 };
 
 export default NumberInputBase;

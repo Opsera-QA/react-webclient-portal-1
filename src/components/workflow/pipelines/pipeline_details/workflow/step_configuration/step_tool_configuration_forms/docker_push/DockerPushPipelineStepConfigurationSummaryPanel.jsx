@@ -26,34 +26,7 @@ function DockerPushPipelineStepConfigurationSummaryPanel({ dockerPushDataObject,
           <TextFieldBase dataObject={dockerPushDataObject} fieldName={"jobName"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={dockerPushDataObject} fieldName={"toolJobId"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={dockerPushDataObject} fieldName={"gitCredential"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={dockerPushDataObject} fieldName={"workspace"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={dockerPushDataObject} fieldName={"repository"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={dockerPushDataObject} fieldName={"branch"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={dockerPushDataObject} fieldName={"gitBranch"} />
-        </Col>
-        {/*<Col lg={6}>*/}
-        {/*  <TextFieldBase dataObject={dockerPushDataObject} fieldName={"stepIdXML"} />*/}
-        {/*</Col>*/}
-        <Col lg={6}>
-          <TextFieldBase dataObject={dockerPushDataObject} fieldName={"dockerName"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={dockerPushDataObject} fieldName={"dockerTagName"} />
-        </Col>
-        <Col lg={6}>
-          <JsonField dataObject={dockerPushDataObject} fieldName={"buildArgs"} />
+          <TextFieldBase dataObject={dockerPushDataObject} fieldName={"ecrRepoName"} />
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>

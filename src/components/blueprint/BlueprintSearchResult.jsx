@@ -18,23 +18,29 @@ import {useHistory} from "react-router-dom";
 import ShowSecurityReportButton from "components/blueprint/ShowSecurityReportButton";
 import ShowPackageXmlButton from "components/blueprint/ShowPackageXmlButton";
 
-function BlueprintSearchResult({ logData }) {
+function BlueprintSearchResult({ logData, closeModal }) {
   const history = useHistory();
 
   let completeInput = [];
 
-  for (let item in logData.data) {
-    if (logData.data.length > 0) {
-      if (logData.data[item].api_response) {
-        if (logData.data[item].api_response.jenkins_console_log) {
-          completeInput.push(logData.data[item].api_response.jenkins_console_log);
-        } else if (logData.data[item].api_response.status) {
-          completeInput.push(logData.data[item].api_response.status);
-        } else if (logData.data[item].api_response.buildLog) {
-          completeInput.push(logData.data[item].api_response.buildLog);
-        } else {
-          if (logData.data[item].api_response) {
-            completeInput.push(JSON.stringify(logData.data[item].api_response, undefined, 4));
+  if (Array.isArray(logData?.data) && logData.data.length > 0) {
+    for (let item in logData.data) {
+      if (logData.data.length > 0) {
+        if (logData.data[item].api_response) {
+          if (logData.data[item].api_response.jenkinsConsoleLog) {
+            completeInput.push(logData.data[item].api_response.jenkinsConsoleLog);
+          } else if (logData.data[item].api_response.jenkins_console_log) {
+            completeInput.push(logData.data[item].api_response.jenkins_console_log);
+          } else if (logData.data[item].step_configuration?.topic === "opsera.pipeline.octopus.console.log") {
+            completeInput.push(logData.data[item].api_response.message);
+          } else if (logData.data[item].api_response.status) {
+            completeInput.push(logData.data[item].api_response.status);
+          } else if (logData.data[item].api_response.buildLog) {
+            completeInput.push(logData.data[item].api_response.buildLog);
+          } else {
+            if (logData.data[item].api_response) {
+              completeInput.push(JSON.stringify(logData.data[item].api_response, undefined, 4));
+            }
           }
         }
       }
@@ -122,14 +128,17 @@ function BlueprintSearchResult({ logData }) {
   }
 
   const goToPipeline = () => {
+    if (closeModal) {
+      closeModal();
+    }
+
     history.push(`/workflow/details/${logData?.pipelineId}/summary`);
   };
 
-
-  // TODO: Refactor
-  return (
-    <>
-      <div className="mt-3 bordered-content-block p-3 max-content-width">
+  // TODO: Work to have this be a part of the bottom with a container. Just separating for now.
+  const getTitleBar = () => {
+    return (
+      <div className="mt-3 bordered-content-block p-3">
         <Row>
           <Col>
             <strong>
@@ -138,16 +147,12 @@ function BlueprintSearchResult({ logData }) {
               </div>
             </strong>
           </Col>
-          <Button
-            variant="outline-dark mr-3"
-            size="sm"
-            onClick={() => {
-              goToPipeline();
-            }}
-          >
-            <FontAwesomeIcon icon={faDraftingCompass} fixedWidth/>
-            View Pipeline
-          </Button>
+          {!closeModal &&
+            <Button variant="outline-dark mr-3" size="sm" onClick={() => { goToPipeline();}}>
+              <FontAwesomeIcon icon={faDraftingCompass} fixedWidth/>
+              View Pipeline
+            </Button>
+          }
         </Row>
         <hr/>
         <Row className="mt-1">
@@ -162,9 +167,15 @@ function BlueprintSearchResult({ logData }) {
           </Col>
         </Row>
       </div>
-      <div className="mb-1 mt-3 bordered-content-block p-3 w-100">
-          {logData.data.length > 0 && (
-            <Tab.Container id="left-tabs-example" defaultActiveKey={0}>
+    );
+  };
+
+  // TODO: Refactor, add more defensive programming
+  const getBody = () => {
+    if (Array.isArray(logData?.data) && logData.data.length > 0) {
+      return (
+        <div className="mb-1 mt-3 bordered-content-block p-3 w-100">
+          <Tab.Container id="left-tabs-example" defaultActiveKey={0}>
             <Row>
               <Col sm={2} className={"pr-0"}>
                 <div className="blueprint-title mb-3">Steps</div>
@@ -174,11 +185,7 @@ function BlueprintSearchResult({ logData }) {
                       <Nav.Item key={idx}>
                         <Nav.Link key={idx} eventKey={idx}>
                           {makeUpper(
-                              item?.step_configuration?.configuration?.jobType
-                              ? item.step_configuration.configuration.jobType
-                              : item.tool_identifier
-                              ? item.tool_identifier
-                              : item.step_name
+                            item?.step_name
                           )}
                         </Nav.Link>
                       </Nav.Item>
@@ -200,10 +207,10 @@ function BlueprintSearchResult({ logData }) {
                   <div className={"justify-content-between d-flex w-100"}>
                     <div className="ml-1 blueprint-title">Blueprint</div>
                     <div className={"d-flex"}>
-                      {<ShowSecurityReportButton logData={logData} />}
-                      {<ShowPackageXmlButton logData={logData} />}
+                      {!closeModal && <ShowSecurityReportButton logData={logData} />}
+                      {!closeModal && <ShowPackageXmlButton logData={logData} />}
                       {/*// TODO: Just pass in logData to ExportBlueprintLogButton*/}
-                      {completeInput &&
+                      {!closeModal && completeInput &&
                       <ExportBlueprintLogButton
                         className="mr-2"
                         blueprintLog={completeInput}
@@ -220,9 +227,17 @@ function BlueprintSearchResult({ logData }) {
                 <Tab.Content>
                   {logData.data.map((item, idx) => (
                     <Tab.Pane key={idx} eventKey={idx}>
-                      {item.api_response.jenkins_console_log ? (
+                      {item.api_response.jenkinsConsoleLog ? (
+                        <div key={idx} className="console-text-invert">
+                          {item.api_response.jenkinsConsoleLog}
+                        </div>
+                      ) : item.api_response.jenkins_console_log ? (
                         <div key={idx} className="console-text-invert">
                           {item.api_response.jenkins_console_log}
+                        </div>
+                      ) : item.step_configuration?.topic === "opsera.pipeline.octopus.console.log" ? (
+                        <div key={idx} className="console-text-invert">
+                          {item.api_response.message}
                         </div>
                       ) : item.api_response.buildLog ? (
                         <div key={idx} className="console-text-invert">
@@ -246,15 +261,23 @@ function BlueprintSearchResult({ logData }) {
               </Col>
             </Row>
           </Tab.Container>
-        )}
-      </div>
+        </div>
+      );
+    }
+  };
+
+  // TODO: Refactor
+  return (
+    <>
+      {getTitleBar()}
+      {getBody()}
     </>
   );
 }
 
 BlueprintSearchResult.propTypes = {
   logData: PropTypes.object,
-  value: PropTypes.any,
+  closeModal: PropTypes.func,
 };
 
 export default BlueprintSearchResult;

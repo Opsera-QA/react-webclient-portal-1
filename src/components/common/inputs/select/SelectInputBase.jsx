@@ -1,9 +1,6 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import DropdownList from "react-widgets/lib/DropdownList";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTimes} from "@fortawesome/pro-light-svg-icons";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
@@ -14,7 +11,9 @@ function SelectInputBase(
     selectOptions, valueField, textField, placeholderText,
     setDataFunction, busy, disabled, clearDataFunction,
     showClearValueButton, errorMessage, getCurrentValue,
-    showLabel
+    showLabel, className, onSearch, requireClearDataConfirmation,
+    clearDataDetails, linkTooltipText, detailViewLink, infoOverlay, linkIcon,
+    ellipsisTooltipText,
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
@@ -42,15 +41,9 @@ function SelectInputBase(
     }
   };
 
-  const getClearDataIcon = () => {
+  const getClearDataFunction = () => {
     if (dataObject?.getData(field?.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
-      return (
-        <TooltipWrapper innerText={"Clear this Value"}>
-          <span onClick={() => clearValue()} className="my-auto badge badge-danger clear-value-badge pointer">
-            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>Clear Value
-          </span>
-        </TooltipWrapper>
-      );
+      return clearValue;
     }
   };
 
@@ -67,8 +60,19 @@ function SelectInputBase(
   }
 
   return (
-    <InputContainer className="custom-select-input my-2">
-      <InputLabel showLabel={showLabel} field={field} inputPopover={getClearDataIcon()} />
+    <InputContainer className={className}>
+      <InputLabel
+        showLabel={showLabel}
+        field={field}
+        clearDataFunction={getClearDataFunction()}
+        requireClearDataConfirmation={requireClearDataConfirmation}
+        linkTooltipText={linkTooltipText}
+        detailViewLink={detailViewLink}
+        clearDataDetails={clearDataDetails}
+        infoOverlay={infoOverlay}
+        linkIcon={linkIcon}
+        ellipsisTooltipText={ellipsisTooltipText}
+      />
       <DropdownList
         data={selectOptions}
         valueField={valueField}
@@ -79,7 +83,8 @@ function SelectInputBase(
         busy={busy}
         placeholder={placeholderText}
         onChange={(data) => updateValue(data)}
-        disabled={disabled}
+        disabled={disabled || !Array.isArray(selectOptions) || selectOptions.length === 0}
+        onSearch={onSearch}
       />
       <InfoText field={field} errorMessage={errorMessage} />
     </InputContainer>
@@ -111,11 +116,22 @@ SelectInputBase.propTypes = {
   showClearValueButton: PropTypes.bool,
   errorMessage: PropTypes.string,
   getCurrentValue: PropTypes.func,
-  showLabel: PropTypes.bool
+  showLabel: PropTypes.bool,
+  className: PropTypes.string,
+  onSearch: PropTypes.func,
+  requireClearDataConfirmation: PropTypes.bool,
+  clearDataDetails: PropTypes.any,
+  linkTooltipText: PropTypes.string,
+  detailViewLink: PropTypes.string,
+  infoOverlay: PropTypes.any,
+  linkIcon: PropTypes.object,
+  ellipsisTooltipText: PropTypes.string,
 };
 
 SelectInputBase.defaultProps = {
   showClearValueButton: true,
+  className: "custom-select-input my-2",
+  placeholderText: "Select One"
 };
 
 export default SelectInputBase;

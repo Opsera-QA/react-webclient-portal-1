@@ -4,7 +4,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import {Col} from "react-bootstrap";
 import DropdownList from "react-widgets/lib/DropdownList";
-import analyticsActions from "components/settings/analytics/analytics-settings-actions";
+import pipelineActions from "components/workflow/pipeline-actions";
 
 // TODO: Refactor into two separate SelectInputBase components
 function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange, stepFilter, setStepFilter }) {
@@ -14,6 +14,7 @@ function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange,
   const [errorMessage, setErrorMessage] = useState("");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [disabledPipelines, setDisabledPipelines] = useState([]);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -56,14 +57,16 @@ function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange,
 
   const getOpseraPipelineFilterData = async (cancelSource = cancelTokenSource) => {
     setPipelineFilters([]);
-    const response = await analyticsActions.getPipelineFilterData(getAccessToken, cancelSource);
-    let items = response?.data?.response;
+    const response = await pipelineActions.getPipelinesV3(getAccessToken, cancelSource);
+    let items = response?.data?.data;
+    let disabledArray = [];
 
     if (Array.isArray(items) && items.length > 0) {
       let formattedItems = [];
+      items.sort((pipeline) => pipeline?.workflow?.run_count === 0 ? 1 : -1);
       for (const item in items) {
         let array = [];
-        const pipeline = response?.data?.response[item];
+        const pipeline = items[item];
         const plan = pipeline?.workflow?.plan;
 
         if (plan) {
@@ -72,6 +75,10 @@ function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange,
           );
 
           formattedItems.push({value: pipeline._id, label: pipeline.name, steps: array});
+        }
+
+        if (pipeline?.workflow?.run_count === 0) {
+          disabledArray.push({value: pipeline._id, label: pipeline.name});
         }
       }
 
@@ -91,6 +98,7 @@ function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange,
           formattedFilterData.push(...filterGroup["options"]);
         });
 
+        setDisabledPipelines(disabledArray);
         setPipelineFilters(formattedFilterData);
       }
     }
@@ -98,12 +106,12 @@ function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange,
 
   return (
     <>
-      <Col className="custom-select-input my-2">
+    <Col className="custom-select-input my-2">
       <label><span>Pipeline</span></label>
-        <DropdownList
+      <DropdownList
           data={pipelineFilters}
           busy={isLoading}
-          disabled={Object.keys(pipelineFilters).length === 0}
+          disabled={disabledPipelines}
           valueField="value"
           textField="label"
           filter="contains"
@@ -111,6 +119,9 @@ function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange,
           placeholder={"Select Pipeline Name"}
           onChange={opseraPipelineSelectChange}
         />
+      <small className="text-muted form-text">
+        <div>Pipelines with no runs are visible in the dropdown but disabled.</div>
+      </small>
       </Col>
       <Col className="custom-select-input my-2">
       <label><span>Step</span></label>

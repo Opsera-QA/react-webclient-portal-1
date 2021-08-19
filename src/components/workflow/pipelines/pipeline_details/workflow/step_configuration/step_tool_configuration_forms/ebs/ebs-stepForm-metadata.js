@@ -9,20 +9,14 @@ const ebsStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Access Key",
-      id: "accessKey"
-    },
-    {
       label: "Docker Volume Path",
-      id: "dockerVolumePath"
+      id: "dockerVolumePath",
+      fieldText : "Enter Source, Target path as a JSON Object"
     },
     {
       label: "Environments",
-      id: "environments"
-    },
-    {
-      label: "Secret Key",
-      id: "secretKey"
+      id: "environments",
+      fieldText : "Enter environments as a JSON Object"
     },
     {
       label: "S3 Bucket Name",
@@ -36,6 +30,11 @@ const ebsStepFormMetadata = {
     {
       label: "Application Name",
       id: "applicationName",
+      isRequired: true
+    },
+    {
+      label: "Environment Name",
+      id: "environmentName",
       isRequired: true
     },
     {
@@ -55,8 +54,89 @@ const ebsStepFormMetadata = {
     },
     {
       label: "EC2 Key Name",
-      id: "ec2KeyName",
+      id: "ec2KeyName"
+    },
+    {
+      label: "Application Port",
+      id: "port",
+    },
+    {
+      label: "Platform",
+      id: "platform",
       isRequired: true
+    },
+    {
+      label: "Bucket Access",
+      id: "bucketAccess",
+      isRequired: true
+    },
+    {
+      label: "Route 53 Host Zone ID",
+      id: "hostedZoneId",
+    },
+    {
+      label: "Route 53 Domain Name",
+      id: "domainName",
+    },
+    {
+      label: "Create Domain",
+      id: "createDomain",
+    }
+  ],
+  
+  fieldsAlt: [
+    {
+      label: "AWS Tool Configuration",
+      id: "awsToolConfigId",
+      isRequired: true
+    },
+    {
+      label: "Docker Volume Path",
+      id: "dockerVolumePath",
+      fieldText : "Enter Source, Target path as a JSON Object"
+    },
+    {
+      label: "Environments",
+      id: "environments",
+      fieldText : "Enter environments as a JSON Object"
+    },
+    {
+      label: "S3 Bucket Name",
+      id: "bucketName",
+      isRequired: true
+    },
+    {
+      label: "Regions",
+      id: "regions"
+    },
+    {
+      label: "Application Name",
+      id: "applicationName",
+      isRequired: true
+    },
+    {
+      label: "Environment Name",
+      id: "environmentName",
+      isRequired: true
+    },
+    {
+      label: "Application Version",
+      id: "applicationVersionLabel",
+      isRequired: true
+    },
+    {
+      label: "S3/ECR Step",
+      id: "s3ECRStepId",
+      isRequired: true
+    },
+    {
+      label: "Description",
+      id: "description",
+      isRequired: true
+    },
+    {
+      label: "EC2 Key Name",
+      id: "ec2KeyName"
     },
     {
       label: "Application Port",
@@ -82,13 +162,16 @@ const ebsStepFormMetadata = {
       label: "Route 53 Domain Name",
       id: "domainName",
       isRequired: true
+    },
+    {
+      label: "Create Domain",
+      id: "createDomain",
     }
   ],
-  newModelBase:
+
+  newObjectFields:
     {
       awsToolConfigId: "",
-      accessKey: "",
-      secretKey: "",
       bucketName: "",
       regions: "",
       applicationName: "",
@@ -102,7 +185,8 @@ const ebsStepFormMetadata = {
       environments : {},
       bucketAccess : "",
       hostedZoneId: "",
-      domainName : ""
+      domainName : "",
+      createDomain: false
     }
 };
 

@@ -6,7 +6,6 @@ import CreateButton from "../CreateButton";
 import LenientSaveButton from "components/common/buttons/saving/LenientSaveButton";
 import CloseEditorButton from "components/common/buttons/cancel/CloseEditorButton";
 
-// TODO: If it makes sense, merge this with PersistButtonContainer
 function PersistAndCloseButtonContainer({ recordDto, setRecordDto, updateRecord, createRecord, handleClose, addAnotherOption, disable, lenient, extraButtons }) {
   const getSaveButton = () => {
     if (recordDto.isNew()){
@@ -36,8 +35,9 @@ function PersistAndCloseButtonContainer({ recordDto, setRecordDto, updateRecord,
       return (
         <CloseEditorButton
           closeEditorCallback={handleClose}
-          className={recordDto.isNew() ? "mt-auto mx-1" : undefined}
+          className={recordDto.isNew() ? "mt-auto mx-1" : "mx-1"}
           dataModel={recordDto}
+          setRecordDto={setRecordDto}
         />
       );
     }
@@ -45,8 +45,8 @@ function PersistAndCloseButtonContainer({ recordDto, setRecordDto, updateRecord,
 
   return (
     <SaveButtonContainer extraButtons={extraButtons}>
-      {getCloseButton()}
       {getSaveButton()}
+      {getCloseButton()}
     </SaveButtonContainer>
   );
 }

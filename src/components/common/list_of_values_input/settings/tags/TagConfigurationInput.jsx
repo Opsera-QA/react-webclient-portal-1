@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import regexHelpers from "utils/regexHelpers";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBracketsCurly, faExclamationTriangle, faTimes} from "@fortawesome/pro-light-svg-icons";
@@ -10,6 +9,7 @@ import {Combobox} from "react-widgets";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import {AuthContext} from "contexts/AuthContext";
+import regexDefinitions from "utils/regexDefinitions";
 
 function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -99,7 +99,7 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
   const updateProperty = (row, innerField, newValue) => {
     let newPropertyList = properties;
     let index = newPropertyList.indexOf(row);
-    let format = regexHelpers.regexTypes["generalText"];
+    let format = regexDefinitions["generalText"]?.regex;
     let meetsRegex = format.test(newValue);
 
     if (newValue !== '' && !meetsRegex) {
@@ -120,9 +120,27 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
     );
   };
 
+  const getHeaderBar = () => {
+    return (
+      <Row className="d-flex py-1 mx-0 justify-content-between">
+        <Col sm={11} className={"my-auto"}>
+          <Row>
+            <Col xs={6}>
+              Configuration Property
+            </Col>
+            <Col xs={6}>
+              Value
+            </Col>
+          </Row>
+        </Col>
+        <Col sm={1} />
+      </Row>
+    );
+  };
+
   const getPropertyRow = (property, index) => {
     return (
-      <div className="d-flex my-2 justify-content-between" key={index}>
+      <div className="d-flex py-2 justify-content-between" key={index}>
         <Col sm={11}>
           <Row>
             <Col sm={6} className={"pl-2 pr-1"}>
@@ -157,16 +175,20 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
   const getFieldBody = () => {
     if (!properties || properties.length === 0) {
       return (
-        <div className="text-center">
-          <div className="text-muted no-data-message">No configuration properties have been added to this Tag</div>
+        <div className="rules-input">
+          <div className="text-muted text-center no-data-message">No configuration properties have been added to this Tag</div>
         </div>
       );
     }
 
     return (
-      <div className="flex-fill">
+      <div>
         {properties.map((property, index) => {
-          return getPropertyRow(property, index);
+          return (
+            <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
+              {getPropertyRow(property, index)}
+            </div>
+          );
         })}
       </div>
     );
@@ -190,9 +212,9 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
   const getIncompletePropertyMessage = () => {
     if (!lastPropertyComplete()) {
       return (
-        <div className="w-100 pr-3 mb-1 text-muted small text-right">
+        <div className="w-100 pr-3 py-1 text-muted small text-right filter-bg-white">
           <FontAwesomeIcon className="text-warning mr-1" icon={faExclamationTriangle} fixedWidth />
-          <span className="mt-1">{`Incomplete ${field?.label} Will Be Removed From Saved Tag`}</span>
+          <span>{`Incomplete ${field?.label} Will Be Removed From Saved Tag`}</span>
         </div>
       );
     }
@@ -212,9 +234,10 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
       addAllowed={lastPropertyComplete()}
       type={"property"}
     >
-      <div className="properties-body">
-        {getFieldBody()}
+      <div className={"filter-bg-white"}>
+        {getHeaderBar()}
       </div>
+      {getFieldBody()}
       {getIncompletePropertyMessage()}
     </PropertyInputContainer>
   );

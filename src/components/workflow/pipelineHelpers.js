@@ -7,6 +7,18 @@ import React from "react";
 
 const pipelineHelpers = {};
 
+pipelineHelpers.getStepIndexWithName = (pipeline, stepName) => {
+  const plan = pipeline?.workflow?.plan;
+  let stepArrayIndex;
+
+  if (plan) {
+    stepArrayIndex = pipeline.workflow.plan.findIndex(x => x.name?.toLowerCase() === stepName.toLowerCase());
+  }
+
+  return stepArrayIndex > -1 ? stepArrayIndex + 1 : "UNKNOWN";
+};
+
+
 pipelineHelpers.getPendingApprovalStep = (pipeline) => {
   if (pipeline && pipeline.workflow && pipeline.workflow.last_step && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
     let step_id = pipeline.workflow.last_step.running.step_id;
@@ -147,14 +159,14 @@ pipelineHelpers.getRegistryPopover = (data) => {
     return (
       <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
         <Popover.Title as="h3">
-          Tool and Account Details{" "}
-          <FontAwesomeIcon icon={faTimes} className="fa-pull-right pointer" onClick={() => document.body.click()}/>
+          Tool and Account Details
+          <FontAwesomeIcon icon={faTimes} className="ml-2 fa-pull-right pointer" onClick={() => document.body.click()}/>
         </Popover.Title>
 
         <Popover.Content>
           <div className="text-muted mb-2">
             Configuration details for this item are listed below. Tool and account specific settings are stored in the
-            <Link to="/inventory/tools">Tool Registry</Link>. To add a new entry to a dropdown or update settings,
+            <span> <Link to="/inventory/tools">Tool Registry</Link></span>. To add a new entry to a dropdown or update settings,
             make those changes there.
           </div>
           {data.configuration && (
@@ -208,8 +220,7 @@ pipelineHelpers.formatStepOptions = (plan, stepId) => {
     0,
     plan.findIndex((element) => element._id === stepId),
   );
-  STEP_OPTIONS.unshift({ _id: "", name: "Select One", isDisabled: "yes" });
-  console.log(STEP_OPTIONS);
+  // console.log(STEP_OPTIONS);
   return STEP_OPTIONS;
 };
 

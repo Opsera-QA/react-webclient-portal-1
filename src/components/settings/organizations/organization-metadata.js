@@ -1,6 +1,3 @@
-// TODO: Move to server, pull with data
-import regexHelpers from "utils/regexHelpers";
-
 export const organizationMetadata = {
   idProperty: "name",
   type: "Organization",
@@ -8,7 +5,7 @@ export const organizationMetadata = {
     return `/settings/organizations/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `Organization Details [${record.getData("name")}]`;
+    return `Organization Details [${record?.getOriginalValue("name")}]`;
   },
   fields: [
     {
@@ -21,7 +18,7 @@ export const organizationMetadata = {
       minLength: 3,
       isRequired: true,
       maxLength: 50,
-      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces,
+      regexDefinitionName: "expandedTextAndSymbolsWithSpaces",
     },
     {
       label: "Leader",

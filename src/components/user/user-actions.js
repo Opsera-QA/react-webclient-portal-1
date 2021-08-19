@@ -155,4 +155,10 @@ userActions.getAccountInformation = async (domain, token) => {
   return await baseActions.customTokenApiPostCall(token, apiUrl, postBody);
 };
 
+userActions.getAccountInformationV2 = async (cancelTokenSource, domain, token) => {
+  const apiUrl = `/users/account/summary`;
+  const postBody = { domain: domain };
+  return await baseActions.customTokenApiPostCallV2(cancelTokenSource, token, apiUrl, postBody);
+};
+
 export default userActions;

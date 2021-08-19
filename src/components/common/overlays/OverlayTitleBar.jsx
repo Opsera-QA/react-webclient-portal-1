@@ -3,8 +3,10 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import {faSpinner, faTimes} from "@fortawesome/pro-light-svg-icons";
 import {Row} from "react-bootstrap";
+import CloseIcon from "components/common/icons/general/CloseIcon";
+import PageLinkIcon from "components/common/icons/general/PageLinkIcon";
 
-function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose }) {
+function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose, pageLink, linkTooltipText }) {
   const getTitleIcon = () => {
     if (titleIcon) {
       return (
@@ -16,21 +18,35 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose }) {
   if (titleText == null) {
     return (
       <Row className="title-text-header-1 w-100 p-1 mx-0 bg-white">
-        <FontAwesomeIcon className={"ml-auto dark-grey pointer"} icon={faTimes} fixedWidth onClick={() => { handleClose();}} />
+        <div className={"ml-auto dark-grey d-flex"}>
+          <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
+          <CloseIcon handleClose={handleClose} />
+        </div>
       </Row>
     );
   }
 
   if (isLoading) {
-    return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Data</span>);
+    return (
+      <div className="px-3 content-block-header title-text-header-1">
+        <div className="d-flex justify-content-between">
+          <div><span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Data</span></div>
+          <div className={"d-flex"}>
+            <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
+            <CloseIcon handleClose={handleClose} />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="px-3 content-block-header title-text-header-1">
       <div className="d-flex justify-content-between">
         <div><span>{getTitleIcon()}{titleText}</span></div>
-        <div className="pointer" onClick={() => { handleClose();}}>
-          <FontAwesomeIcon icon={faTimes} fixedWidth/>
+        <div className={"d-flex"}>
+          <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
+          <CloseIcon handleClose={handleClose} />
         </div>
       </div>
     </div>
@@ -42,7 +58,9 @@ OverlayTitleBar.propTypes = {
   titleText: PropTypes.string,
   titleIcon: PropTypes.object,
   handleClose: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  pageLink: PropTypes.string,
+  linkTooltipText: PropTypes.string
 };
 
 export default OverlayTitleBar;

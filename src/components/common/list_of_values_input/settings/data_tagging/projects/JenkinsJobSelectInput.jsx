@@ -44,27 +44,17 @@ function JenkinsJobSelectInput({ fieldName, dataObject, setDataObject, disabled,
     setJobs([]);
   };
 
-  const handleDtoChange = async (fieldName, value) => {
-    if (fieldName === "key") {
-      let newDataObject = dataObject;
-      newDataObject.setData("key", value);
-      setDataObject({ ...newDataObject });
-      return;
-    }
-  };
-
   return (
     <SelectInputBase
-      setDataFunction={handleDtoChange}
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      selectOptions={jobs ? jobs : []}
+      selectOptions={jobs}
       busy={isLoading}
       valueField={valueField}
       textField={textField}
       placeholderText={"Select a Jenkins Job"}
-      disabled={isLoading || jobs.length === 0}
+      disabled={isLoading || disabled}
     />
   );
 }

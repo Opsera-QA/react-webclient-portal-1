@@ -1,14 +1,30 @@
 import Model from "core/data_model/model";
-import {kpiDateFilterMetadata} from "components/insights/marketplace/charts/kpi-configuration-metadata";
+import ModelBase from "core/data_model/model.base";
 
 const modelHelpers = {};
 
 // TODO: Rename getConfigurationModel
 modelHelpers.getToolConfigurationModel = (toolConfiguration, metaData) => {
-  if (Object.entries(toolConfiguration).length === 0) {
+  if (toolConfiguration == null || Object.entries(toolConfiguration).length === 0) {
     return new Model({...metaData.newObjectFields}, metaData, true);
   }
   return new Model(toolConfiguration, metaData, false);
+};
+
+modelHelpers.parseObjectIntoModel = (object, metaData) => {
+  if (object == null || Object.entries(object).length === 0) {
+    return new Model({...metaData.newObjectFields}, metaData, true);
+  }
+
+  return new Model(object, metaData, false);
+};
+
+modelHelpers.parseObjectIntoModelBase = (object, metaData) => {
+  if (object == null || Object.entries(object).length === 0) {
+    return new ModelBase({...metaData.newObjectFields}, metaData, true);
+  }
+
+  return new ModelBase(object, metaData, false);
 };
 
 modelHelpers.getPipelineStepConfigurationModel = (pipelineStepConfiguration, pipelineStepMetadata) => {
@@ -55,5 +71,13 @@ modelHelpers.setDashboardFilterModelField = (kpiConfiguration, type, newValue) =
   return kpiConfiguration;
 };
 
+modelHelpers.getDashboardSettingsModel= (kpiConfiguration, metaData) => {
+  let dashboardSettings = kpiConfiguration.settings;
+  if (dashboardSettings) {
+    return new Model(dashboardSettings, metaData, true);
+  }
+
+  return new Model({...metaData.newObjectFields}, metaData, true);
+};
 
 export default modelHelpers;

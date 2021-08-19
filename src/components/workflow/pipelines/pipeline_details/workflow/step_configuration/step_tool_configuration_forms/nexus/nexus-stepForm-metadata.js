@@ -4,16 +4,23 @@ const nexusStepFormMetadata = {
     {
       label: "Group Name",
       id: "groupName",
-      isRequired: true
+      regexDefinitionName: "generalText",
+      maxLength: 50,
     },
     {
       label: "Artifact Name",
       id: "artifactName",
-      isRequired: true
+      regexDefinitionName: "generalText",
+      maxLength: 50,
     },
     {
       label: "Nexus Step Type",
       id: "type",
+      isRequired: true
+    },
+    {
+      label: "Repository Format",
+      id: "repositoryFormat",
       isRequired: true
     },
     {
@@ -41,18 +48,51 @@ const nexusStepFormMetadata = {
     {
       label: "Package ID",
       id: "packageId"
-    }
+    },
+    {
+      label: "Port",
+      id: "dockerPort",
+      regexDefinitionName: "numericalField",
+      maxLength: 4,
+    },
+    {
+      label: "Select Jenkins Tool",
+      id: "toolConfigId"      
+    },
+    {      
+      id: "jobType"      
+    },
+    {      
+      id: "jobDescription"      
+    },
+    {      
+      id: "toolJobType"
+    },
+    {      
+      id: "agentLabels"
+    },
+    {      
+      id: "jobName"
+    },    
   ],
-  newModelBase: {
+  newObjectFields: {
     groupName: "",
     artifactName: "",
     type: "",
+    repositoryFormat: "maven2",
     repositoryName: "",
     artifactStepId: "",
     customVersion: false,
     repositoryGroup : "",
     nexusToolConfigId: "",
-    packageId : ""
+    packageId : "",
+    dockerPort: "",
+    toolConfigId: "",
+    jobType: "",
+    jobDescription: "",
+    toolJobType: "",
+    agentLabels: "",
+    jobName: ""
   }
 };
 

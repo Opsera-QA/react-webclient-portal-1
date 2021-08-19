@@ -5,7 +5,7 @@ export const ldapDepartmentMetaData = {
   //   return `/admin/departments/details/${record.getData("name")}`;
   // },
   detailViewTitle: function (record) {
-    return `Department Details [${record.getData("name")}]`;
+    return `Department Details [${record.getOriginalValue("name")}]`;
   },
   fields: [
     {

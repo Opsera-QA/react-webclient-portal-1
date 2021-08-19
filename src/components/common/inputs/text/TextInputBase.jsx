@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
-function TextInputBase({ fieldName, dataObject, setDataObject, disabled, type, inputPopover, inputClasses }) {
-  const [field, setField] = useState(dataObject.getFieldById(fieldName));
+function TextInputBase(
+  {
+    fieldName, dataObject, setDataObject, disabled, type,
+    showLabel, inputClasses, linkTooltipText, detailViewLink, infoOverlay,
+    setDataFunction,
+  }) {
+  const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    setField(dataObject?.getFieldById(fieldName));
+  }, [fieldName]);
 
   const validateAndSetData = (value) => {
     let newDataObject = dataObject;
@@ -14,6 +23,20 @@ function TextInputBase({ fieldName, dataObject, setDataObject, disabled, type, i
     setErrorMessage(newDataObject.getFieldError(fieldName));
     setDataObject({...newDataObject});
   };
+
+  const updateValue = (newValue) => {
+    if (setDataFunction) {
+      const newDataObject = setDataFunction(fieldName, newValue);
+
+      if (newDataObject) {
+        setErrorMessage(newDataObject?.getFieldError(fieldName));
+      }
+    }
+    else {
+      validateAndSetData(newValue);
+    }
+  };
+
 
   const getInputClasses = () => {
     let classes = `form-control`;
@@ -31,12 +54,18 @@ function TextInputBase({ fieldName, dataObject, setDataObject, disabled, type, i
 
   return (
     <InputContainer>
-      <InputLabel field={field} inputPopover={inputPopover} />
+      <InputLabel
+        showLabel={showLabel}
+        field={field}
+        linkTooltipText={linkTooltipText}
+        detailViewLink={detailViewLink}
+        infoOverlay={infoOverlay}
+      />
       <input
         type={type}
         disabled={disabled}
         value={dataObject.getData(fieldName)}
-        onChange={(event) => validateAndSetData(event.target.value)}
+        onChange={(event) => updateValue(event.target.value)}
         className={getInputClasses()}
       />
       <InfoText field={field} errorMessage={errorMessage}/>
@@ -51,7 +80,12 @@ TextInputBase.propTypes = {
   setDataObject: PropTypes.func,
   inputPopover: PropTypes.object,
   inputClasses: PropTypes.string,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  showLabel: PropTypes.bool,
+  linkTooltipText: PropTypes.string,
+  detailViewLink: PropTypes.string,
+  infoOverlay: PropTypes.any,
+  setDataFunction: PropTypes.func,
 };
 
 export default TextInputBase;

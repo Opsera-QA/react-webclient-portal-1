@@ -12,7 +12,7 @@ const logsFilterMetadata = {
     },
     {
       label: "Sort Option",
-      id: "sort",
+      id: "sortOption",
     },
     {
       label: "Source",
@@ -56,7 +56,7 @@ const logsFilterMetadata = {
   newObjectFields: {
     pageSize: 10,
     currentPage: 1,
-    sort: "name",
+    sortOption: {text: "Sort: Name", value: "name"},
     search: "",
     type: "",
     source: "public",

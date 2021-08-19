@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const serviceNowStepNotificationMetadata = {
   idProperty: "name",
   type: "ServiceNow Notification",
@@ -18,7 +16,7 @@ const serviceNowStepNotificationMetadata = {
       id: "toolId",
       isRequired: "true",
       maxLength: 24,
-      regexValidator: regexHelpers.regexTypes.mongoId
+      regexDefinitionName: "mongoId"
     },
     {
       label: "ServiceNow User",
@@ -40,6 +38,7 @@ const serviceNowStepNotificationMetadata = {
     event: "all",
     toolId: "",
     serviceNowUserId: "",
+    serviceNowGroupId: "",
     enabled: false,
   }
 };

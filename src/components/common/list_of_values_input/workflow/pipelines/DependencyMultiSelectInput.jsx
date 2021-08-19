@@ -48,6 +48,12 @@ export const itemArray = [
   },
 
   {
+    "name": "Terrascan Version 1.4.0",
+    "dependencyType" : "terrascan",
+    "version": "1.4.0",
+  },
+
+  {
     "name": "Java openJDK Version 8",
     "dependencyType" : "java",
     "version": "8",
@@ -269,6 +275,16 @@ export const itemArray = [
     "name": ".NET Version 5.0",
     "dependencyType" : "dotnet",
     "version": "5.0",
+  },
+  {
+    "name": "Python 2",
+    "dependencyType" : "python",
+    "version": "2.0",
+  },
+  {
+    "name": "Python 3",
+    "dependencyType" : "python",
+    "version": "3.0",
   },
 
 ];

@@ -1,4 +1,4 @@
-import regexHelpers from "utils/regexHelpers";
+import {capitalizeFirstLetter} from "../../common/helpers/string-helpers";
 
 const dashboardMetadata = {
   idProperty: "_id",
@@ -8,7 +8,7 @@ const dashboardMetadata = {
     return `/insights/dashboards/${record?.getData("_id")}/viewer`;
   },
   detailViewTitle: function (record) {
-    return `Dashboard Details [${record?.getData("name")}]`;
+    return ` ${capitalizeFirstLetter(record?.getOriginalValue("name"))}`;
   },
   fields: [
     {
@@ -106,11 +106,20 @@ export const dashboardFiltersMetadata = {
     {
       label: "Organizations",
       id: "organizations"
+    },
+    {
+      label: "Date",
+      id: "date"
     }
   ],
   newObjectFields: {
     value: [],
-    organizations: []
+    organizations: [],
+    date: {
+      startDate: null,
+      endDate: null,
+      key: "selection",
+    }
   },
 };
 

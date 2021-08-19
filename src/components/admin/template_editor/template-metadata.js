@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const templateEditorMetadata = {
   idProperty: "_id",
   type: "Pipeline Template",
@@ -8,7 +6,7 @@ const templateEditorMetadata = {
     return `/admin/templates/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `Template Details [${record?.getData("name")}]`;
+    return `Template Details [${record?.getOriginalValue("name")}]`;
   },
   fields: [
     {
@@ -17,7 +15,7 @@ const templateEditorMetadata = {
       minLength: 3,
       maxLength:50,
       isRequired: true,
-      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
+      regexDefinitionName: "expandedTextAndSymbolsWithSpaces"
     },
     {
       label: "ID",
@@ -29,7 +27,7 @@ const templateEditorMetadata = {
       minLength: 3,
       maxLength:1000,
       isRequired: true,
-      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
+      regexDefinitionName: "expandedTextAndSymbolsWithSpaces"
     },
     {
       label: "Type",

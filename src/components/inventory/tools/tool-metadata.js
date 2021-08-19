@@ -1,4 +1,4 @@
-import regexHelpers from "utils/regexHelpers";
+import regexDefinitions from "utils/regexDefinitions";
 
 const toolMetadata = {
   idProperty: "_id",
@@ -8,7 +8,7 @@ const toolMetadata = {
     return `/inventory/tools/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `Tool Details [${record?.name}]`;
+    return `Tool Details [${record?.getOriginalValue("name")}]`;
   },
   fields: [
     {
@@ -20,7 +20,7 @@ const toolMetadata = {
       id: "name",
       isRequired: true,
       maxLength: 50,
-      regexValidator: regexHelpers.regexTypes["generalTextWithSpaces"],
+      regexDefinitionName: "generalTextWithSpaces",
       formText: "Names can be up to 50 characters and can consist of letters, apostrophes, numbers, spaces, dashes, colons, underscores, and periods"
     },
     {
@@ -28,10 +28,15 @@ const toolMetadata = {
       id: "account",
     },
     {
+      label: "Role Access Level",
+      id: "role_access_level",
+    },
+    {
       label: "Description",
       id: "description",
-      maxLength: 1000, 
-      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
+      maxLength: 1000,
+      regexDefinitionName: "generalTextWithSpacesSlash",
+      formText: "Description can be up to 1000 characters and can consist of letters, apostrophes, numbers, spaces, dashes, colons, underscores, and periods"
     },
     {
       label: "Owner",
@@ -106,7 +111,7 @@ const toolMetadata = {
     {
       label: "Cost Center",
       id: "costCenter",
-      inputMaskRegex: regexHelpers.regexTypes["generalText"],
+      inputMaskRegex: regexDefinitions.generalText?.regex,
       maxLength: 25
     },
     {
@@ -116,6 +121,10 @@ const toolMetadata = {
     {
       label: "Updated",
       id: "updatedAt",
+    },
+    {
+      label: "Vault Instance",
+      id: "vault"
     }
   ],
   newObjectFields: {
@@ -135,7 +144,8 @@ const toolMetadata = {
     roles: [],
     configuration: {},
     status: "",
-    tags: []
+    tags: [],
+    vault: ""
   }
 };
 

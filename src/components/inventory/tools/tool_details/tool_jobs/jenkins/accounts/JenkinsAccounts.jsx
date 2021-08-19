@@ -17,7 +17,7 @@ function JenkinsAccounts({ toolData, loadData, isLoading }) {
   const [applicationId, setApplicationID] = useState(undefined);
 
   const createJenkinsAccount = () => {
-    setJenkinsAccountData(new Model(jenkinsCreateAccountMetadata.newModelBase, jenkinsCreateAccountMetadata, true));
+    setJenkinsAccountData(new Model(jenkinsCreateAccountMetadata.newObjectFields, jenkinsCreateAccountMetadata, true));
     setApplicationID(undefined);
     setShowCreateAccountModal(true);
   };

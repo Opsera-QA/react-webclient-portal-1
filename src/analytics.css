@@ -1,0 +1,33 @@
+/* Data Block Styling */
+.data-block {
+    font-size: 2.43rem;
+    font-weight: 500;
+    font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    display: inline-block;
+    vertical-align: middle;
+    min-width: 120px;
+}
+
+.data-block-container {
+    background: white;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+
+.data-block-container:hover {
+    box-shadow: 0 2px 2px 0 rgba(46,41,60,0.2);
+    transition: 0.3s;
+}
+
+.data-block-title {
+    background-color: #46415C;
+    color: white;
+}
+
+
+
+/* End Data Block Styling */

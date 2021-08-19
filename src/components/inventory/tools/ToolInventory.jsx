@@ -8,15 +8,20 @@ import PropTypes from "prop-types";
 import cookieHelpers from "core/cookies/cookie-helpers";
 import ToolViews from "components/inventory/tools/ToolViews";
 import axios from "axios";
+import ToolRegistryHelpDocumentation
+  from "components/common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 
-function ToolInventory({ customerAccessRules }) {
-  const { getAccessToken } = useContext(AuthContext);
+function ToolInventory() {
+  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
   const [toolRegistryList, setToolRegistryList] = useState([]);
   const [toolFilterDto, setToolFilterDto] = useState(new Model({ ...toolFilterMetadata.newObjectFields }, toolFilterMetadata, false));
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [customerAccessRules, setCustomerAccessRules] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -60,6 +65,8 @@ function ToolInventory({ customerAccessRules }) {
   const loadData = async (filterDto = toolFilterDto, cancelSource = cancelTokenSource) => {
     try {
       setLoading(true);
+      const accessRoleData = await getAccessRoleData();
+      setCustomerAccessRules(accessRoleData);
       await getToolRegistryList(filterDto, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
@@ -91,20 +98,33 @@ function ToolInventory({ customerAccessRules }) {
   };
 
   return (
-    <ToolViews
-      isLoading={isLoading}
-      loadData={loadData}
-      saveCookies={saveCookies}
-      data={toolRegistryList}
-      toolFilterDto={toolFilterDto}
-      setToolFilterDto={setToolFilterDto}
-      customerAccessRules={customerAccessRules}
-    />
+    <ScreenContainer
+      navigationTabContainer={<InventorySubNavigationBar currentTab={"tools"} />}
+      breadcrumbDestination={"toolRegistry"}
+      pageDescription={`
+        The Opsera Tool Registry allows you to register, track and configure all of the tools in your organization in
+        one centralized location.
+      `}
+      helpComponent={
+        <ToolRegistryHelpDocumentation />
+      }
+    >
+      <ToolViews
+        isLoading={isLoading}
+        loadData={loadData}
+        saveCookies={saveCookies}
+        data={toolRegistryList}
+        toolFilterDto={toolFilterDto}
+        setToolFilterDto={setToolFilterDto}
+        customerAccessRules={customerAccessRules}
+      />
+    </ScreenContainer>
   );
 }
 
 ToolInventory.propTypes = {
   customerAccessRules: PropTypes.object,
+  handleTabClick: PropTypes.func
 };
 
 export default ToolInventory;

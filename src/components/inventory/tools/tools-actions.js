@@ -91,6 +91,22 @@ toolsActions.getRoleLimitedToolRegistryListV2 = async (getAccessToken, cancelTok
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+toolsActions.getToolAccessWithEmail = async (getAccessToken, cancelTokenSource, toolFilterModel, email) => {
+  const sortOption = toolFilterModel?.getData("sortOption");
+  const apiUrl = `/registry/configs/user/${email}`;
+  const urlParams = {
+    params: {
+      sort: sortOption?.value,
+      page: toolFilterModel.getData("currentPage"),
+      size: toolFilterModel.getData("pageSize"),
+      search: toolFilterModel.getFilterValue("search"),
+      fields: ["name", "roles", "owner"]
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 toolsActions.getFullRoleLimitedToolRegistryList = async (getAccessToken) => {
   let urlParams = {
     params: {
@@ -126,9 +142,31 @@ toolsActions.getRoleLimitedToolById = async (id, getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-toolsActions.getRoleLimitedToolByIdV2 = async (id, getAccessToken, cancelTokenSource) => {
+toolsActions.getRoleLimitedToolByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/registry/configs/${id}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+toolsActions.getRoleLimitedTools = async (getAccessToken, cancelTokenSource, fields) => {
+  const apiUrl = `/registry/configs/tools/`;
+  const urlParams = {
+    params: {
+      fields: fields,
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+toolsActions.getRoleLimitedToolsByIdentifier = async (getAccessToken, cancelTokenSource, toolIdentifier, fields) => {
+  const apiUrl = `/registry/configs/tools/${toolIdentifier}`;
+  const urlParams = {
+    params: {
+      fields: fields,
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 // TODO: Remove when all references are updated to V2
@@ -139,6 +177,32 @@ toolsActions.getToolLovs = async (getAccessToken) => {
 
 toolsActions.getToolLovsV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = `/registry/configs/summary`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+toolsActions.getToolNameById = async (getAccessToken, cancelTokenSource, toolId) => {
+  const apiUrl = `/registry/configs/${toolId}/name`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+toolsActions.getToolLogs = async (getAccessToken, cancelTokenSource, toolId, toolLogFilterModel, fields) => {
+  const apiUrl = `/registry/tools/${toolId}/logs/v2`;
+
+  const urlParams = {
+    params: {
+      page: toolLogFilterModel?.getData("currentPage"),
+      size: toolLogFilterModel?.getData("pageSize"),
+      search: toolLogFilterModel?.getFilterValue("search"),
+      fields: fields,
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+toolsActions.getToolLogById = async (getAccessToken, cancelTokenSource, logId) => {
+  const apiUrl = `/registry/logs/v2/${logId}`;
+
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
@@ -157,6 +221,11 @@ toolsActions.updateToolConfiguration = async (toolData, getAccessToken) => {
   const apiUrl = `/registry/${toolData._id}/update`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, toolData);
 };
+// getAccessToken, sourceToken, apiUrl, postBody
+toolsActions.updateToolConfigurationV2 = async (toolData, getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/registry/${toolData._id}/update`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, toolData);
+};
 
 toolsActions.installJiraApp = async (toolId, getAccessToken) => {
   const apiUrl = `/connectors/jira/${toolId}/app/install`;
@@ -172,6 +241,28 @@ toolsActions.savePasswordToVault = async (toolData, toolConfigurationData, field
     const keyName = `${toolId}-${toolIdentifier}-${fieldName}`;
     const body = { "key": `${keyName}`, "value": value, "toolId": toolId };
     const response = await pipelineActions.saveToolRegistryRecordToVault(body, getAccessToken);
+    return response?.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
+  }
+
+  // Faseeh says all vault values MUST be objects and not strings
+  let currentValue = toolConfigurationData.getData(fieldName);
+  return typeof currentValue === "string" ? {} : currentValue;
+};
+
+// Note: This is used for three part vault keys (tool ID, identifier, and key)
+toolsActions.saveThreePartToolPasswordToVaultV2 = async (getAccessToken, cancelTokenSource, toolData, toolConfigurationData, fieldName, value) => {
+  if (toolConfigurationData.isChanged(fieldName) && value != null && typeof(value) === "string") {
+    const toolId = toolData.getData("_id");
+    const toolIdentifier = toolData?.getData("tool_identifier");
+    const keyName = `${toolId}-${toolIdentifier}-${fieldName}`;
+    const postBody = {
+      key: keyName,
+      value: value,
+      toolId: toolId
+    };
+
+    const apiUrl = "/vault/tool/";
+    const response = await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
     return response?.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
   }
 
@@ -199,6 +290,12 @@ toolsActions.saveToolConfiguration = async (toolData, configurationItem, getAcce
   return await toolsActions.updateToolConfiguration(newToolData, getAccessToken);
 };
 
+toolsActions.saveToolConfigurationV2 = async (toolData, configurationItem, getAccessToken, cancelTokenSource) => {
+  let newToolData = toolData.getPersistData();
+  newToolData["configuration"] = configurationItem.configuration;
+  return await toolsActions.updateToolConfigurationV2(newToolData, getAccessToken, cancelTokenSource);
+};
+
 
 toolsActions.getToolCounts = async (getAccessToken) => {
   const apiUrl = `/reports/tools/counts`;
@@ -218,11 +315,6 @@ toolsActions.checkSFDXToolConnection = async (getAccessToken, toolDataDto, selec
     "tool": "sfdc"
   };
   const apiUrl = `/tools/sfdc/check-connectivity`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
-toolsActions.getScmReviewers = async (getAccessToken, postBody) => {  
-  const apiUrl = `/connectors/bitbucket/getReviewers`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 

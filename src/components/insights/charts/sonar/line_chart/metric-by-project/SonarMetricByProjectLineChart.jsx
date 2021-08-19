@@ -104,7 +104,7 @@ function SonarMetricByProjectLineChart({ kpiConfiguration, setKpiConfiguration, 
               {...config(getColor)}
               onClick={() => setShowModal(true)}
               tooltip={(node) => <ChartTooltip 
-                    titles={["", "Qualifier", "Date", capitalizeFirstLetter(node.point.data.metric)]}
+                    titles={["Status", "Qualifier", "Date", capitalizeFirstLetter(node.point.data.metric)]}
                     values={[node.point.data.status, node.point.data.gate, 
                              node.point.data.xFormatted, node.point.data.yFormatted]} />}
             />        

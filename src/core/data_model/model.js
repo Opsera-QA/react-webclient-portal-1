@@ -1,4 +1,5 @@
 import {validateData, validateField} from "core/data_model/modelValidation";
+import _ from "lodash";
 
 export const DataState = {
   LOADED: 0,
@@ -10,7 +11,7 @@ export const DataState = {
 export class Model {
 
   constructor(data, metaData, newModel) {
-    this.metaData = {...metaData};
+    this.metaData = _.cloneDeep(metaData);
     this.data = {...this.getNewObjectFields(), ...data};
     this.newModel = newModel;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
@@ -40,7 +41,6 @@ export class Model {
           this.data[id] = newValue;
         }
       },
-      // configurable: true
     });
   };
 
@@ -117,7 +117,7 @@ export class Model {
     }
   };
 
-  getArrayData = (fieldName) => {
+  getArrayData = (fieldName, index) => {
     let currentValue = this.getData(fieldName);
 
     if (currentValue == null) {
@@ -128,6 +128,10 @@ export class Model {
       console.error(`Value was not saved as array. Returning in array.`);
       console.error(`Value: ${JSON.stringify(currentValue)}`);
       return [currentValue];
+    }
+
+    if (typeof index === "number") {
+      return currentValue.length >= index + 1 ? currentValue[index] : null;
     }
 
     return currentValue;
@@ -229,13 +233,18 @@ export class Model {
 
   resetData = () => {
     this.changeMap.forEach((value, key) => {
-      let originalValue = this.changeMap.get(key);
-      this.setData(key, originalValue);
+      this.data[key] = value;
     });
+    this.clearChangeMap();
   };
 
+  getChangeMap = () => {
+    return this.changeMap;
+  }
+
   getOriginalValue = (fieldName) => {
-    return this.changeMap.get(fieldName);
+    const originalValue = this.changeMap.get(fieldName);
+    return originalValue ? originalValue : this.data[fieldName];
   };
 
   isDeleted = () => {
@@ -341,7 +350,7 @@ export class Model {
   };
 
   clone = () => {
-    return new Model(JSON.parse(JSON.stringify(this.data)), this.metaData, this.newModel);
+    return _.cloneDeep(this);
   };
 }
 

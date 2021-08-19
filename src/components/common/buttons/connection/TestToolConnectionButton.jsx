@@ -7,15 +7,20 @@ import {faExclamationTriangle} from "@fortawesome/pro-solid-svg-icons/faExclamat
 import {AuthContext} from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import ToolRegisteryConnectionLogModal from "components/common/modal/ToolRegisteryConnectionLogModal";
+import { isObject } from "@okta/okta-auth-js";
 
 function TestToolConnectionButton({ toolDataDto, disable, toolName }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isTesting, setIsTesting] = useState(false);
   const [successfulConnection, setSuccessfulConnection] = useState(false);
   const [failedConnection, setFailedConnection] = useState(false);
+  const [showConnectionLog, setShowConnectionLog] = useState(false);
 
+  const [log, setLog] = useState(["Starting connection test of tool...\n"]);
   const testConnection = async () => {
     try {
+      setShowConnectionLog(true);
       setIsTesting(true);
       setSuccessfulConnection(false);
       setFailedConnection(false);
@@ -26,13 +31,43 @@ function TestToolConnectionButton({ toolDataDto, disable, toolName }) {
       }
 
       if (response && response.data != null && response.data.status === 200) {
+        let message = isObject(response?.data?.message)
+        ? JSON.stringify(response?.data?.message)
+        : response?.data?.message;
+      let status = response?.data?.status;
+      setLog([
+        ...log,
+        "Connection Succeeded!\n",
+        `Status : ${status}\n`,
+        `Message: ${message}\n`,
+        `Test Complete.  Please close this window to proceed.\n`,
+      ]);
         setSuccessfulConnection(true);
       }
       else {
+        let message = isObject(response?.data?.message)
+          ? JSON.stringify(response?.data?.message)
+          : response?.data?.message;
+        let status = response?.data?.status;
+        setLog([
+          ...log,
+          `Connection Failed!\n`,
+          `Status : ${status}\n`,
+          `Message: ${message}\n`,
+          `Test Complete.  Please close this panel, address the issue and try again.\n`,
+        ]);
+
         setFailedConnection(true);
       }
     }
     catch (error) {
+      let message = isObject(error) ? JSON.stringify(error) : error;
+      setLog([
+        ...log,
+        `Connection Failed!\n ${error}\n`,
+        `Message: ${message}\n`,
+        `Test Complete.  Please close this panel, address the issue and try again.\n`,
+      ]);
       setFailedConnection(true);
     }
     finally {
@@ -78,6 +113,15 @@ function TestToolConnectionButton({ toolDataDto, disable, toolName }) {
           {getLabel()}
         </Button>
       </TooltipWrapper>
+      {showConnectionLog && (
+        <ToolRegisteryConnectionLogModal
+          isLoading={false}
+          handleClose={() => {
+            setShowConnectionLog(false);
+          }}
+          data={log}
+        />
+      )}
     </div>
   );
 }

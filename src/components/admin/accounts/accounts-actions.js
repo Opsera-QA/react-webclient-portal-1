@@ -225,6 +225,19 @@ accountsActions.updateUser = async (orgDomain, ldapUserDataDto, getAccessToken) 
   return await baseActions.apiPutCall(getAccessToken, apiUrl, postBody);
 };
 
+// TODO: Remove when V2 is wired up everywhere
+accountsActions.updateUserV2 = async (getAccessToken, cancelTokenSource, orgDomain, ldapUserModel) => {
+  const apiUrl = "/users/account/user/update";
+  const postBody = {
+    domain: orgDomain,
+    user: {
+      ...ldapUserModel.getPersistData()
+    }
+  };
+
+  return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 accountsActions.createUser = async (orgDomain, ldapUserDataDto, getAccessToken) => {
   let postData = {
       ...ldapUserDataDto.getPersistData()
@@ -232,6 +245,16 @@ accountsActions.createUser = async (orgDomain, ldapUserDataDto, getAccessToken) 
   const apiUrl = `/users/account/user/create?domain=${orgDomain}`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
+
+accountsActions.createUserV2 = async (getAccessToken, cancelTokenSource, orgDomain, ldapUserModel) => {
+  const postData = {
+    ...ldapUserModel.getPersistData()
+  };
+  const apiUrl = `/users/account/user/create?domain=${orgDomain}`;
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
+};
+
 
 accountsActions.getUsers = async (getAccessToken, cancelTokenSource) => {
   const urlParams = {
@@ -253,6 +276,18 @@ accountsActions.getAccountUsers = async (getAccessToken) => {
 accountsActions.getAccountUsersV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = `/users/account-users`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+accountsActions.getPendingUsersV2 = async (getAccessToken, cancelTokenSource, organizationDomain, organizationAccount) => {
+  const apiUrl = `/users/pending-users`;
+  const urlParams = {
+    params: {
+      domain: organizationDomain,
+      account: organizationAccount,
+    },
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 accountsActions.getUserDetailViewLink = async (getUserRecord) => {
@@ -316,17 +351,38 @@ accountsActions.getUserByEmailV2 = async (getAccessToken, cancelTokenSource, ema
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+accountsActions.getPendingUserByIdV2 = async (getAccessToken, cancelTokenSource, organizationDomain, id) => {
+  const apiUrl = `/users/pending-users/${id}`;
+  const urlParams = {
+    params: {
+      domain: organizationDomain,
+    },
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 accountsActions.getUser = async (userId, getAccessToken) => {
   const apiUrl = `/users/${userId}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+// TODO: Remove after all references are updated to V2
 accountsActions.isEmailAvailable = async (email, getAccessToken) => {
   const postBody = {
     email: email
   };
   const apiUrl = "/users/account/is-email-available";
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+accountsActions.isEmailAvailableV2 = async (getAccessToken, cancelTokenSource, email) => {
+  const apiUrl = "/users/account/is-email-available";
+  const postBody = {
+    email: email
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 accountsActions.getUserRegistrations = async (getAccessToken) => {
@@ -495,6 +551,17 @@ accountsActions.syncMembership = async (orgDomain, groupName, emailList, getAcce
   };
   const apiUrl = "/users/account/group/sync-membership";
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
+};
+
+accountsActions.syncMembershipV2 = async (getAccessToken, cancelTokenSource, orgDomain, groupName, emailList) => {
+  const apiUrl = "/users/account/group/sync-membership";
+  const postData = {
+    domain: orgDomain,
+    groupName: groupName,
+    emails: emailList,
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
 };
 
 export default accountsActions;
