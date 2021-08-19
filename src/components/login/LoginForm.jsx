@@ -114,7 +114,7 @@ const LoginForm = ({ authClient }) => {
 
   //uses Okta Login widet for federated login.
   //https://github.com/okta/okta-signin-widget#idp-discovery
-  const federatedOktaLogin = (ldapOrgName, federatedIdpIdentifier) => {
+  const federatedOktaLogin = (ldapOrgName, federatedIdpIdentifier, lookupAccountEmail) => {
     setLoginType("federated");
     console.log("Org Name: ", ldapOrgName);
     console.log("IdP ID: ", federatedIdpIdentifier);
@@ -144,6 +144,7 @@ const LoginForm = ({ authClient }) => {
       logoText: ldapOrgName + " Sign in",
       logo: '/img/logos/opsera_bird_infinity_171_126.png',
       language: 'en',
+      username: lookupAccountEmail,
       i18n: {
         en: {
           'primaryauth.title': ldapOrgName + " Sign in",
@@ -238,7 +239,7 @@ const LoginForm = ({ authClient }) => {
               setFederatedIdpEnabled(localAuth === "FALSE");
               setUsername(lookupAccountEmail);
               setViewType("federated-login");
-              federatedOktaLogin(accountName, idpIdentifier);
+              federatedOktaLogin(accountName, idpIdentifier, lookupAccountEmail);
               return;
             }
           }
