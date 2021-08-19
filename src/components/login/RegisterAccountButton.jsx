@@ -14,6 +14,7 @@ function RegisterAccountButton() {
     } else {
       history.push("/signup");
     }
+    history.go(0);
   };
 
   const goToLdapSignupForm = () => {
