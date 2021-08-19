@@ -12,7 +12,7 @@ function ArgoCdScmToolSelectInput({className, fieldName, model, setModel, disabl
 
   return (
     <RoleRestrictedToolByIdentifierInputBase
-      toolType={gitYamlTool}
+      toolIdentifier={gitYamlTool}
       toolFriendlyName={capitalizeFirstLetter(gitYamlTool)}
       fieldName={fieldName}
       placeholderText={"Select Source Control Management Tool"}

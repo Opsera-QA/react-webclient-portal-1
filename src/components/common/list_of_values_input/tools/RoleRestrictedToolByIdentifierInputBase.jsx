@@ -11,7 +11,7 @@ import RegistryToolInfoOverlay from "components/common/list_of_values_input/tool
 import toolsActions from "components/inventory/tools/tools-actions";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
-function RoleRestrictedToolByIdentifierInputBase({ toolType, toolFriendlyName, placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className, fields}) {
+function RoleRestrictedToolByIdentifierInputBase({ toolIdentifier, toolFriendlyName, placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className, fields}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
@@ -30,7 +30,7 @@ function RoleRestrictedToolByIdentifierInputBase({ toolType, toolFriendlyName, p
 
 
     setTools([]);
-    if (toolType !== "") {
+    if (toolIdentifier !== "") {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -42,7 +42,7 @@ function RoleRestrictedToolByIdentifierInputBase({ toolType, toolFriendlyName, p
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolType]);
+  }, [toolIdentifier]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -58,7 +58,7 @@ function RoleRestrictedToolByIdentifierInputBase({ toolType, toolFriendlyName, p
   };
 
   const loadTools = async (cancelSource = cancelTokenSource) => {
-    const response = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, cancelSource, toolType, fields);
+    const response = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, cancelSource, toolIdentifier, fields);
     const tools = response?.data?.data;
 
     if (Array.isArray(tools)) {
@@ -79,7 +79,7 @@ function RoleRestrictedToolByIdentifierInputBase({ toolType, toolFriendlyName, p
   };
 
   const getErrorMessage = () => {
-    if (!isLoading && (!Array.isArray(tools) || tools.length === 0) && toolFriendlyName && toolType) {
+    if (!isLoading && (!Array.isArray(tools) || tools.length === 0) && toolFriendlyName && toolIdentifier) {
       return (
         <div className="form-text text-muted p-2">
           <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
@@ -139,7 +139,7 @@ function RoleRestrictedToolByIdentifierInputBase({ toolType, toolFriendlyName, p
 }
 
 RoleRestrictedToolByIdentifierInputBase.propTypes = {
-  toolType: PropTypes.string,
+  toolIdentifier: PropTypes.string,
   toolFriendlyName: PropTypes.string,
   placeholderText: PropTypes.string,
   fieldName: PropTypes.string,
