@@ -26,13 +26,14 @@ const LoginForm = ({ authClient }) => {
   const [viewType, setViewType] = useState("domain"); //login, reset or domain
   const [loginType, setLoginType] = useState("standard"); //stardard: Opsera Okta Login, federated: Opsera Signing Widget
   const [federatedIdpEnabled, setFederatedIdpEnabled] = useState(false);
-
-  const [ldapOrgName, setLdapOrgName] = useState("");
-  const [federatedIdpIdentifier, setFederatedIdpIdentifier] = useState("");
-
+  const [oktaSignInWidget, setOktaSignInWidget] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
+    if (viewType === "domain" && oktaSignInWidget) {
+      oktaSignInWidget.remove();
+    }
+
     if (viewType !== "login") {
       setUsername("");
     }
@@ -113,9 +114,10 @@ const LoginForm = ({ authClient }) => {
 
   //uses Okta Login widet for federated login.
   //https://github.com/okta/okta-signin-widget#idp-discovery
-  const federatedOktaLogin = (idp) => {
+  const federatedOktaLogin = (ldapOrgName, federatedIdpIdentifier, lookupAccountEmail) => {
     setLoginType("federated");
-    console.log("idp: ", federatedIdpIdentifier);
+    console.log("Org Name: ", ldapOrgName);
+    console.log("IdP ID: ", federatedIdpIdentifier);
 
     const signIn = new OktaSignIn({
       baseUrl: process.env.REACT_APP_OKTA_BASEURL,
@@ -127,19 +129,30 @@ const LoginForm = ({ authClient }) => {
       },
       clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
       idps: [
-        //{ type: "GOOGLE", id: "0oa1njfc0lFlSp0mM4x7" }, //IDP of our GSuite as opposed to pure google
-        { text: "Opsera Demo", id: "0oa44bjfqlK7gTwnz4x7" }, //IDP of our DEV Okta Federated for use via PROD for testing
         { text: ldapOrgName, id: federatedIdpIdentifier }, //IDP of LDAP object
+        //{ text: "Opsera DEV DEMO", id: "0oa10wlxrgdHnKvOJ0h8" }, //IDP of our PROD Okta Federated for use via DEV/LOCALHOST for developerment
+        //{ text: "Opsera Inc", id: "0oa44bjfqlK7gTwnz4x7" }, //IDP of our DEV Okta Federated for use via PROD for Smoke Testing
+        //{ type: "GOOGLE", id: "0oa1njfc0lFlSp0mM4x7" }, //IDP of our GSuite as opposed to pure google
       ],
-      idpDisplay: "SECONDARY",
+      idpDisplay: "PRIMARY",
       idpDiscovery: {
         requestContext: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
       },
       features: {
         idpDiscovery: true,
       },
+      logoText: ldapOrgName + " Sign in",
+      logo: '/img/logos/opsera_bird_infinity_171_126.png',
+      language: 'en',
+      username: lookupAccountEmail,
+      i18n: {
+        en: {
+          'primaryauth.title': ldapOrgName + " Sign in",
+          'primaryauth.username.placeholder': "Opsera Managed Username",
+        }
+      },
     });
-
+    setOktaSignInWidget(signIn); //store it in state so access outside of function scope
     signIn.remove(); //ensure any prior existing instances are removed frist (throws errors otherwise)
 
     signIn.showSignInToGetTokens({
@@ -149,6 +162,7 @@ const LoginForm = ({ authClient }) => {
       // Store tokens
       authClient.tokenManager.setTokens(tokens);
       signIn.remove();
+
       history.push("/");
     }).catch(function(error) {
       toastContext.removeAllBanners();
@@ -200,6 +214,8 @@ const LoginForm = ({ authClient }) => {
     e.preventDefault();
     setLoading(true);
     setFederatedIdpEnabled(false);
+    toastContext.removeAllBanners();
+
     const apiUrl = "/users/active-account";
     const params = { "email": lookupAccountEmail, "hostname": window.location.hostname };
     try {
@@ -219,15 +235,18 @@ const LoginForm = ({ authClient }) => {
           if (domain && token) {
             const accountResponse = await userActions.getAccountInformation(domain, token);
             const { localAuth, accountName, idpIdentifier } = accountResponse.data;
-            if (localAuth && idpIdentifier) {
+            if (localAuth && localAuth === "FALSE" && idpIdentifier) {
               setFederatedIdpEnabled(localAuth === "FALSE");
-              setLdapOrgName(accountName);
-              setFederatedIdpIdentifier(idpIdentifier);
+              setUsername(lookupAccountEmail);
+              setViewType("federated-login");
+              federatedOktaLogin(accountName, idpIdentifier, lookupAccountEmail);
+              return;
             }
           }
         }
-        /* END NEW CODE */
+        /* END FEDERATION CODE */
 
+        //SET LOCAL AUTH
         setUsername(lookupAccountEmail);
         setViewType("login");
         return;
@@ -267,7 +286,6 @@ const LoginForm = ({ authClient }) => {
               </div>
 
               <div id="osw-container">
-                {loginType !== "federated" && <>
                   <div className="h4 auth-header">
                     Sign in
                   </div>
@@ -308,25 +326,15 @@ const LoginForm = ({ authClient }) => {
                               type="submit"
                               disabled={!username || !password}>
                         {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth />}
-                        Log In</Button>
+                        Sign in</Button>
                     </div>
                     <div className="text-center">
                       <Button variant="link" size="sm"
                               onClick={() => {
                                 setViewType("reset");
                               }}>Forgot Password</Button>
-
-                      {!federatedIdpEnabled ?
-                        <></>
-                        :
-                        <Button variant="link" size="sm"
-                                onClick={() => {
-                                  federatedOktaLogin();
-                                }}>Federated Login</Button>
-                      }
                     </div>
                   </form>
-                </>}
               </div>
 
             </div>
@@ -334,6 +342,37 @@ const LoginForm = ({ authClient }) => {
         </Col>
       </Row>
 
+    );
+  }
+
+  if (viewType === "federated-login") {
+    return (
+      <Row className="mt-4">
+        <Col md={5} className="p-4"><WelcomeMessage /></Col>
+        <Col>
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="auth-box-w">
+
+              <div id="osw-container">
+
+              </div>
+
+              <div className="buttons-w text-center">
+                <Button variant="outline-secondary"
+                        className="mb-3 mr-1" style={{ width: "46%" }}
+                        type="button"
+                        onClick={() => {
+                          setViewType("domain");
+                        }}>
+                  <FontAwesomeIcon icon={faArrowLeft} className="mr-1" size="sm" fixedWidth />
+                  Back
+                </Button>
+              </div>
+
+            </div>
+          </div>
+        </Col>
+      </Row>
     );
   }
 
