@@ -5,16 +5,11 @@ import NewJFrogMavenRepositoryModal from "components/inventory/tools/tool_detail
 import jfrogMavenRepositoryMetadata from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jfrog-maven-repository-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
-import {useHistory} from "react-router-dom";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import jfrogActions from "./jfrog-actions";
-
 function JFrogMavenRepositoriesTable({ toolData, isLoading }) {
-
-  console.log({toolData});
-
-  let history = useHistory();
+  
   const { getAccessToken } = useContext(AuthContext);
   const fields = jfrogMavenRepositoryMetadata.fields;
   const [showCreateRepoModal, setShowCreateRepoModal] = useState(false);
@@ -79,10 +74,8 @@ function JFrogMavenRepositoriesTable({ toolData, isLoading }) {
     []
   );
 
-  const onRowSelect = (rowData) => {
-    console.log({rowData});
+  const onRowSelect = (rowData) => {    
     let newDataObject = jfrogMavenRepos[rowData.index];
-    console.log({newDataObject});
     setEditRepoObj(newDataObject);
     setEditMode(true);    
     setShowCreateRepoModal(true);
@@ -106,8 +99,7 @@ function JFrogMavenRepositoriesTable({ toolData, isLoading }) {
         loadData={loadData} 
         setShowModal={setShowCreateRepoModal} 
         showModal={showCreateRepoModal} 
-        jfrogRepositories={jfrogMavenRepos} 
-        setJfrogRepositories={setJfrogMavenRepos}
+        jfrogRepositories={jfrogMavenRepos}
         editRepoObj={editRepoObj}
         editMode={editMode}
         setEditMode={setEditMode}

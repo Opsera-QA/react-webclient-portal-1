@@ -11,8 +11,7 @@ function NewJFrogMavenRepositoryModal({
   loadData, 
   setShowModal, 
   showModal, 
-  jfrogRepositories, 
-  setJfrogRepositories, 
+  jfrogRepositories,
   editRepoObj,
   editMode,
   setEditMode
@@ -42,7 +41,7 @@ function NewJFrogMavenRepositoryModal({
         loadData={loadData} 
         handleClose={handleClose} 
         jfrogRepositories={jfrogRepositories} 
-        setJfrogRepositories={setJfrogRepositories}
+        editMode={editMode}       
       />
     </CreateModal>
   );
@@ -54,7 +53,6 @@ NewJFrogMavenRepositoryModal.propTypes = {
   loadData: PropTypes.func,
   setShowModal: PropTypes.func,
   jfrogRepositories: PropTypes.array,
-  setJfrogRepositories: PropTypes.func,
   editRepoObj: PropTypes.object,
   editMode: PropTypes.bool,
   setEditMode: PropTypes.func,

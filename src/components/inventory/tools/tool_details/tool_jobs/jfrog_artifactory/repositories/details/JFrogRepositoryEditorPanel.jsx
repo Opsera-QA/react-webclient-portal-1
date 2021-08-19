@@ -1,25 +1,22 @@
 import React, {useContext, useEffect, useState, useRef} from "react";
 import PropTypes from "prop-types";
-import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import {generateUUID} from "components/common/helpers/string-helpers";
 import JFrogMavenPackageTypeInput from "./inputs/JFrogMavenPackageTypeInput";
 import jfrogActions from "../jfrog-actions";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
-
 
 function JFrogRepositoryEditorPanel({ 
   toolData, 
   jfrogRepositoryData, 
   setJFrogRepositoryData, 
   handleClose, 
-  jfrogRepositories, 
-  setJfrogRepositories
+  jfrogRepositories,
+  editMode
 }) {  
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -35,12 +32,6 @@ function JFrogRepositoryEditorPanel({
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    // loadData().catch((error) => {
-    //   if (isMounted?.current === true) {
-    //     throw error;
-    //   }
-    // });
-
     return () => {
       source.cancel();
       isMounted.current = false;
@@ -49,55 +40,32 @@ function JFrogRepositoryEditorPanel({
 
   const createJFrogMavenRepository = async () => {
 
-    const repoAlreadyExists = jfrogRepositories.some(repo => repo.key === jfrogRepositoryData.getData("key"));
-    console.log({repoAlreadyExists});
+    const repoAlreadyExists = jfrogRepositories.some(repo => repo.key === jfrogRepositoryData.getData("key"));    
     if (repoAlreadyExists) {
       throw new Error("Name Must Be Unique");      
     }
 
     const newRepo = jfrogRepositoryData.getPersistData();
-    console.log({newRepo});
     let postBody = {
       toolId: toolData.getData("_id"),
       packageType: newRepo.packageType,
       repositoryName: newRepo.key,
       description: newRepo.description,
     };
-    console.log({postBody});
-    // jfrogRepositories.push(newProject);
-    // setJfrogRepositories    
+
     try {
-      const response = await jfrogActions.createRepository(postBody, getAccessToken, cancelTokenSource);
-      console.log({response});
-      if (response && response.status === 200) {
-        // setRepos(res.data);        
-        return;
-      }
-      // setRepos([]);
-    } catch (error) {
-      console.log("in catch");
-      console.log({error});
-      toastContext.showErrorDialog(error);
-      
+      const response = await jfrogActions.createRepository(postBody, getAccessToken, cancelTokenSource);      
+      if (response && response.status === 200) {      
+        handleClose();
+      }      
+    } catch (error) {      
+      toastContext.showErrorDialog(error);      
     }
   };
 
-  const updateJFrogMavenRepository = async () => {    
+  const updateJFrogMavenRepository = async () => {
 
-    if (jfrogRepositoryData.isChanged("description")) {
-      const originalDesc = jfrogRepositoryData.getOriginalValue("description");
-    }
-
-    const currentIndex = jfrogRepositories.findIndex(repo => repo.key === jfrogRepositoryData.getData("key"));
-    const newRepo = jfrogRepositoryData.getPersistData();    
-
-    if (currentIndex != null) {
-      // jfrogRepositories[currentIndex] = jfrogRepositoryData.getPersistData();
-      console.log({currentIndex});
-    }
-    else {
-      throw new Error("Could not find repository to update");
-    }
+    const newRepo = jfrogRepositoryData.getPersistData();
 
     let postBody = {
       toolId: toolData.getData("_id"),      
@@ -105,8 +73,14 @@ function JFrogRepositoryEditorPanel({
       description: newRepo.description,
     };
 
-    const response = jfrogActions.updateRepository(postBody, getAccessToken, cancelTokenSource);
-    console.log({response});
+    try {
+      const response = await jfrogActions.updateRepository(postBody, getAccessToken, cancelTokenSource);
+      if (response && response.status === 200) {      
+        handleClose();
+      }      
+    } catch (error) {      
+      toastContext.showErrorDialog(error);      
+    }    
   };
 
   return (
@@ -124,7 +98,7 @@ function JFrogRepositoryEditorPanel({
       </div>
       <Row>
         <Col lg={12}>
-          <TextInputBase dataObject={jfrogRepositoryData} setDataObject={setJFrogRepositoryData} fieldName={"key"} />
+          <TextInputBase dataObject={jfrogRepositoryData} setDataObject={setJFrogRepositoryData} fieldName={"key"} disabled={editMode} />
         </Col>
         <Col lg={12}>
           <TextInputBase dataObject={jfrogRepositoryData} setDataObject={setJFrogRepositoryData} fieldName={"description"} />
@@ -141,7 +115,7 @@ JFrogRepositoryEditorPanel.propTypes = {
   setJFrogRepositoryData: PropTypes.func,
   handleClose: PropTypes.func,
   jfrogRepositories: PropTypes.array,
-  setJfrogRepositories: PropTypes.func,
+  editMode: PropTypes.bool,
 };
 
 export default JFrogRepositoryEditorPanel;
