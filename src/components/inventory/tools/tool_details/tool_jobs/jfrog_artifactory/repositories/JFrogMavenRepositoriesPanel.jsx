@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import JFrogMavenRepositoriesTable from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/JFrogMavenRepositoriesTable";
-import { useEffect } from "react";
 
 function JFrogMavenRepositoriesPanel({ toolData, isLoading }) {
   return (
