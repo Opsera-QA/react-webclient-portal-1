@@ -73,7 +73,7 @@ regexDefinitions.alphanumericPlusSpaces = {
 };
 
 regexDefinitions.gitBranchName = {
-  regex: /^[A-Za-z0-9\-_./]*[A-Za-z0-9\-_]$/,
+  regex: /^[A-Za-z0-9\-_./']*[A-Za-z0-9'\-_]$/,
   formText: "Letters, numbers, dashes, forward slashes, apostrophes, underscores, and periods are allowed. The inputted value cannot end with a slash or period",
   errorFormText: "Only letters, numbers, dashes, forward slashes, apostrophes, underscores, and periods are allowed. The inputted value cannot end with a slash or period"
 };
