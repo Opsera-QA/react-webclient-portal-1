@@ -9,6 +9,7 @@ import JFrogMavenPackageTypeInput from "./inputs/JFrogMavenPackageTypeInput";
 import jfrogActions from "../jfrog-actions";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 
 function JFrogRepositoryEditorPanel({ 
   toolData, 
@@ -65,12 +66,12 @@ function JFrogRepositoryEditorPanel({
 
   const updateJFrogMavenRepository = async () => {
 
-    const newRepo = jfrogRepositoryData.getPersistData();
+    const repo = jfrogRepositoryData.getPersistData();
 
     let postBody = {
       toolId: toolData.getData("_id"),      
-      repositoryName: newRepo.key,
-      description: newRepo.description,
+      repositoryName: repo.key,
+      description: repo.description,
     };
 
     try {
@@ -83,11 +84,31 @@ function JFrogRepositoryEditorPanel({
     }    
   };
 
+  const deleteJFrogMavenRepository = async () => {
+    const repo = jfrogRepositoryData.getPersistData();
+    let postBody = {
+      toolId: toolData.getData("_id"),      
+      repositoryName: repo.key
+    };
+    const response = await jfrogActions.deleteRepository(postBody, getAccessToken, cancelTokenSource);
+    handleClose();
+    return response;
+  };
+
+  const getExtraButtons = () => {
+    if (editMode) {
+      return (
+        <DeleteButtonWithInlineConfirmation dataObject={jfrogRepositoryData} deleteRecord={deleteJFrogMavenRepository}/>
+      );
+    }
+  };
+
   return (
     <EditorPanelContainer
       recordDto={jfrogRepositoryData}
       setRecordDto={setJFrogRepositoryData}
       handleClose={handleClose}
+      extraButtons={getExtraButtons()}
       updateRecord={updateJFrogMavenRepository}
       createRecord={createJFrogMavenRepository}
       lenient={true}
