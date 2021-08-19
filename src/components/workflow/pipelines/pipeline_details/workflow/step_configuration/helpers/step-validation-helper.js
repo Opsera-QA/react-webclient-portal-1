@@ -28,6 +28,12 @@ StepValidationHelper.isValidConfiguration = (stepConfig) => {
 
       case "octopus":
         return configuration.octopusToolId && configuration.spaceName ? true : false;
+      
+      case "jfrog_artifactory_maven":
+        return configuration.jfrogToolConfigId && configuration.type && 
+          configuration.repositoryName && configuration.repositoryFormat  && 
+          configuration.artifactName && configuration.groupName  && 
+          configuration.artifactStepId ? true : false;
 
       default:
         return true;
