@@ -14,28 +14,24 @@ const azureAksClusterTaskConfigurationMetadata = {
     {
       label: "Disk Size",
       id: "disk_size_gb",
-      isRequired: true,
       formText: "Disk size is in GB, Range: 1-500",
       regexDefinitionName: "numericalField",
     },
     {
       label: "Minimum Nodes",
       id: "node_min_count",
-      isRequired: true,
       formText: "Range: 1-20",
       regexDefinitionName: "numericalField",
     },
     {
       label: "Maximum Nodes",
       id: "node_max_count",
-      isRequired: true,
       formText: "Range: 1-20",
       regexDefinitionName: "numericalField",
     },
     {
       label: "Machine Type",
       id: "machine_type",
-      isRequired: true
     },
     {
       label: "VPC CIDR Block",
