@@ -1,5 +1,5 @@
 const jfrogMavenRepositoryMetadata = {
-    type: "JFrog Maven Repository Configuration",
+    type: "JFrog Maven Repository",
     fields: [
       {
         label: "Repository Name",
