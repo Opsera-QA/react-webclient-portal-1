@@ -4,6 +4,7 @@ import TextInputWithButtonBase from "components/common/inputs/text/TextInputWith
 import { faSpinner, faLaptopMedical } from "@fortawesome/pro-light-svg-icons";
 import AWSLambdaFunctionActions from "../aws-lambda-actions";
 import { AuthContext } from "contexts/AuthContext";
+import TextInputWithButtonAWSLambda from "./TextWithInputAWSLambda";
 
 const FunctionNameWithButton = ({dataObject, setDataObject, stepTool}) => {
 
@@ -40,7 +41,7 @@ const FunctionNameWithButton = ({dataObject, setDataObject, stepTool}) => {
   };
 
   return (
-    <TextInputWithButtonBase
+    <TextInputWithButtonAWSLambda
       setDataObject={setDataObject}
       dataObject={dataObject}
       fieldName={"functionName"}
