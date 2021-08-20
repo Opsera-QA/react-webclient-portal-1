@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { DateRangePicker } from "react-date-range";
-import InputLabel from "components/common/form_fields/input/InputLabel";
+import InputLabel from "components/common/inputs/info_text/InputLabel";
 // import { Button } from "react-bootstrap";
 import { useEffect } from "react";
 import InputContainer from "components/common/inputs/InputContainer";

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import InputLabel from "components/common/form_fields/input/InputLabel";
+import InputLabel from "components/common/inputs/info_text/InputLabel";
 import gitlabConnectionMetadata from "./gitlab-connection-metadata";
 
 function GitlabTwoFactorCheckbox({dataObject, setDataObject, fieldName}) {

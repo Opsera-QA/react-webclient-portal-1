@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import InputLabel from "../../../../../common/form_fields/input/InputLabel";
 import bitbucketConnectionMetadata from "./bitbucket-connection-metadata";
+import InputLabel from "components/common/inputs/info_text/InputLabel";
 
 function BitbucketTwoFactorCheckbox({dataObject, setDataObject, fieldName}) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));

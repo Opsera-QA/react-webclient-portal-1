@@ -5,9 +5,9 @@ import {AuthContext} from "contexts/AuthContext";
 import pipelineStepNotificationActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
 import FieldContainer from "components/common/fields/FieldContainer";
-import Label from "components/common/form_fields/Label";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
+import FieldLabel from "components/common/fields/FieldLabel";
 
 function JiraPriorityField({ dataObject, jiraToolId, fieldName }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -60,7 +60,7 @@ function JiraPriorityField({ dataObject, jiraToolId, fieldName }) {
 
   return (
     <FieldContainer>
-      <Label field={field}/>
+      <FieldLabel field={field}/>
       <span>{getPriorityName()}</span>
     </FieldContainer>
   );
