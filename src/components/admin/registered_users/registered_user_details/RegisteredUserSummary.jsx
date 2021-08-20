@@ -5,6 +5,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import GroupField from "components/common/fields/multiple_items/GroupField";
+import SmartIdField from "components/common/fields/text/id/SmartIdField";
 
 function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString, userAccess }) {
   const getConnectionString = () => {
@@ -31,7 +32,7 @@ function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString,
           <TextFieldBase fieldName={"email"} dataObject={userData}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase fieldName={"_id"} dataObject={userData}/>
+          <SmartIdField fieldName={"_id"} model={userData}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase fieldName={"organizationName"} dataObject={userData}/>

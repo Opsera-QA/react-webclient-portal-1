@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { DateRangePicker } from "react-date-range";
 import InputLabel from "components/common/form_fields/input/InputLabel";
-import InfoText from "components/common/form_fields/input/InfoText";
 // import { Button } from "react-bootstrap";
 import { useEffect } from "react";
 import InputContainer from "components/common/inputs/InputContainer";
@@ -10,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import { addDays, isSameDay } from "date-fns";
+import InfoText from "components/common/inputs/info_text/InfoText";
 // TODO: If this can't be used elsewhere, Tejas, we should change the name to be KPI Specific.
 function DateRangeInput({ fieldName, dataObject, setDataObject }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));

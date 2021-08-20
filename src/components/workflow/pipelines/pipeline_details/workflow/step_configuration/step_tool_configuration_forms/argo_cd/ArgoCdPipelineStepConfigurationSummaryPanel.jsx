@@ -20,7 +20,7 @@ function ArgoCdPipelineStepConfigurationSummaryPanel({ argoCdPipelineDataObject,
           <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"type"}/>
         </Col>
         <Col lg={6}>
-          <ToolNameField dataObject={argoCdPipelineDataObject} fieldName={"gitToolId"}/>
+          <ToolNameField model={argoCdPipelineDataObject} fieldName={"gitToolId"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"gitRepository"}/>
@@ -58,10 +58,10 @@ function ArgoCdPipelineStepConfigurationSummaryPanel({ argoCdPipelineDataObject,
         <Col lg={6}>
           <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"bitbucketWorkspaceName"}/>
         </Col>
-        <Col lg={6}>
+        <Col lg={12}>
           <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"gitUrl"}/>
         </Col>
-        <Col lg={6}>
+        <Col lg={12}>
           <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"sshUrl"}/>
         </Col>
       </Row>
