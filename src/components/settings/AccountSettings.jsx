@@ -68,7 +68,7 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"} visible={!isSassUser()}/>
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"userManagement"} visible={!isSassUser() && !envIsProd}/>
+          <BreadcrumbPageLink breadcrumbDestination={"userManagement"} visible={!isSassUser()}/>
         </>
       );
     }
@@ -87,7 +87,7 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"} visible={!isSassUser() || !envIsProd}/>
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"userManagement"} visible={!isSassUser() && !envIsProd}/>
+          <BreadcrumbPageLink breadcrumbDestination={"userManagement"} visible={!isSassUser()}/>
         </>
       );
     }
