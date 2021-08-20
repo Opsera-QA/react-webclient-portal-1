@@ -7,7 +7,7 @@ import CancelButton from "components/common/buttons/CancelButton";
 import StandaloneSaveButton from "components/common/buttons/saving/StandaloneSaveButton";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
-import MessageField from "components/common/form_fields/MessageField";
+import MessageField from "components/common/fields/text/MessageField";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 import SelectedUnitTestClassesPanel from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/panels/SelectedUnitTestClassesPanel";
 import UnitTestClassesPanel
