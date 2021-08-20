@@ -9,7 +9,7 @@ const sourceRepositoryConfigurationMetadata = {
     {
       label: "Platform",
       id: "service",
-      required: true,
+      isRequired: true,
     },
     {
       label: "Account ID",
@@ -18,16 +18,16 @@ const sourceRepositoryConfigurationMetadata = {
     {
       label: "Username",
       id: "username",
-      required: true,
+      isRequired: true,
     },
     {
       label: "Password",
       id: "password",
     },
     {
-      label: "Repo ID",
+      label: "Repository ID",
       id: "repoId",
-      required: true,
+      isRequired: true,
     },
     {
       label: "Git URL",
@@ -40,16 +40,17 @@ const sourceRepositoryConfigurationMetadata = {
     {
       label: "Repository",
       id: "repository",
+      isRequired: true,
     },
     {
       label: "Primary Branch",
       id: "branch",
-      required: true,
+      isRequired: true,
     },
     {
       label: "Secondary Branches",
       id: "secondary_branches",
-      required: true,
+      isRequired: true,
     },
     {
       label: "Workspace",

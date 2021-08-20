@@ -25,7 +25,7 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
     isMounted.current = true;
     setWorkspaces([]);
 
-    if (gitToolId !== "") {
+    if (gitToolId != null && gitToolId !== "") {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;

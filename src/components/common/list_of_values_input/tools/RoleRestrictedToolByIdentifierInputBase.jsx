@@ -100,6 +100,20 @@ function RoleRestrictedToolByIdentifierInputBase({ toolIdentifier, toolFriendlyN
     return (`View ${capitalizeFirstLetter(toolFriendlyName)} tools`);
   };
 
+  const getInfoOverlay = () => {
+    if (toolIdentifier != null && toolIdentifier !== "") {
+      return (
+        <RegistryToolInfoOverlay
+          selectedToolId={model?.getData(fieldName)}
+          tools={tools}
+          toolData={tools?.find((tool) => tool?._id === model?.getData(fieldName))}
+          loadData={loadData}
+          isLoading={isLoading}
+        />
+      );
+    }
+  };
+
   if (visible === false) {
     return null;
   }
@@ -121,15 +135,7 @@ function RoleRestrictedToolByIdentifierInputBase({ toolIdentifier, toolFriendlyN
         disabled={disabled || isLoading}
         detailViewLink={getDetailViewToolUrl()}
         ellipsisTooltipText={getEllipsisTooltipText()}
-        infoOverlay={
-          <RegistryToolInfoOverlay
-            selectedToolId={model?.getData(fieldName)}
-            tools={tools}
-            toolData={tools?.find((tool) => tool?._id === model?.getData(fieldName))}
-            loadData={loadData}
-            isLoading={isLoading}
-          />
-        }
+        infoOverlay={getInfoOverlay()}
         linkTooltipText={`Load Tool Registry`}
         linkIcon={faTools}
       />

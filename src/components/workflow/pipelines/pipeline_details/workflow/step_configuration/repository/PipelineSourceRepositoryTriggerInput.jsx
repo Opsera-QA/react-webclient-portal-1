@@ -36,20 +36,22 @@ function PipelineSourceRepositoryEventBasedTriggerInput({className, model, setMo
     };
   }, []);
 
+  const registerHook = async () => {
+    setIsRegisteringHook(true);
+
+    if (!model?.getData("service") || !model?.getData("accountId") || !model?.getData("repository")) {
+      toastContext.showWarningDialog("WARNING: Data is missing from the repository account configuration.  Unable to register webhook.");
+      return;
+    }
+
+    await savePipelineFunction(); //first save the settings, then trigger registration
+    return await SourceRepositoryActions.registerHook(getAccessToken, cancelTokenSource, pipeline?.owner, pipeline?.pipelineId, model);
+  };
+
   const getRegisterHookButton = () => {
-    const registerHook = async () => {
-      setIsRegisteringHook(true);
-
-      if (!model?.getData("service") || !model?.getData("accountId") || !model?.getData("repository")) {
-        toastContext.showWarningDialog("WARNING: Data is missing from the repository account configuration.  Unable to register webhook.");
-        return;
-      }
-
-      await savePipelineFunction(); //first save the settings, then trigger registration
-      return await SourceRepositoryActions.registerHook(getAccessToken, cancelTokenSource, pipeline?.owner, pipeline?.pipelineId, model);
-    };
-
-    if (model?.getData("branch")) {
+    const branch = model?.getData("branch");
+    console.log("branch: " + JSON.stringify(branch));
+    if (branch != null && branch !== "") {
       return (
         <div className="w-100 text-right">
           <Button variant="outline-success" type="button" className="mt-2 ml-2" disabled={isRegisteringHook} size={"sm"}
@@ -102,7 +104,7 @@ PipelineSourceRepositoryEventBasedTriggerInput.propTypes = {
   savePipelineFunction: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string,
-  pipeline: PropTypes.string,
+  pipeline: PropTypes.object,
 };
 
 export default PipelineSourceRepositoryEventBasedTriggerInput;
