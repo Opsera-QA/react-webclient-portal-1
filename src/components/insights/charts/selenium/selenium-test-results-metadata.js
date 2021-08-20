@@ -3,8 +3,12 @@ const seleniumTestResultsTableMetadata = {
   type: "Selenium Test Results",
   fields: [
     {
-      label: "Job",
+      label: "Pipeline Id",
       id: "pipelineId",
+    },
+    {
+      label: "Pipeline Name",
+      id: "pipelineName",
     },
     {
       label: "Run",
