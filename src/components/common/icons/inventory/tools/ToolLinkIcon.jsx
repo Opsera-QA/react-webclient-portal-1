@@ -5,7 +5,7 @@ import {faExternalLink, faLock} from "@fortawesome/pro-light-svg-icons";
 import {useHistory} from "react-router-dom";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function ToolLinkIcon({toolId, accessAllowed, loadToolInNewWindow, className, handleClose}) {
+function ToolLinkIcon({toolId, isLoading, accessAllowed, loadToolInNewWindow, className, handleClose}) {
   let history = useHistory();
 
   const loadTool = () => {
@@ -22,6 +22,10 @@ function ToolLinkIcon({toolId, accessAllowed, loadToolInNewWindow, className, ha
   };
 
   const getIcon = () => {
+    if (isLoading) {
+      return null;
+    }
+
     if (accessAllowed !== true) {
       return (
         <TooltipWrapper trigger={["hover", "focus"]} innerText={"You do not have access to this Tool"}>
@@ -57,7 +61,8 @@ ToolLinkIcon.propTypes = {
   accessAllowed: PropTypes.bool,
   className: PropTypes.string,
   loadToolInNewWindow: PropTypes.bool,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
+  isLoading: PropTypes.bool,
 };
 
 export default ToolLinkIcon;

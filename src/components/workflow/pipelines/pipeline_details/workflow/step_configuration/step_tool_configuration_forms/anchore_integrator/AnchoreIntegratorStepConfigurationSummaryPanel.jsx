@@ -5,6 +5,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function AnchoreIntegratorStepConfigurationSummaryPanel({ anchoreDataObject, pipelineData, setActiveTab }) {
 
@@ -16,7 +17,7 @@ function AnchoreIntegratorStepConfigurationSummaryPanel({ anchoreDataObject, pip
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={anchoreDataObject} fieldName={"anchoreToolConfigId"}/>
+          <ToolNameField model={anchoreDataObject} fieldName={"anchoreToolConfigId"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={anchoreDataObject} fieldName={"anchoreUrl"}/>
