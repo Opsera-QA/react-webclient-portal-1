@@ -14,7 +14,7 @@ import sfdcValidatePackageMetadata from "../configuration_forms/validate_package
 import sfdcDeployJobMetadata from "../configuration_forms/deploy_job/sfdcDeployJobMetadata";
 import sdfcUnitTestJobMetadata from "../configuration_forms/unit_test_job/sdfcUnitTestJobMetadata";
 import sfdcPushArtifactsJobMetadata from "../configuration_forms/push_artifacts_job/sfdcPushArtifactsJobMetadata";
-import TextFieldBase from "components/common/form_fields/TextFieldBase";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import { Col } from "react-bootstrap";
 
 function SfdcJobSummaryCardContainer({ children, isLoading, sfdcStepConfigurationDto }) {

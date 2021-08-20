@@ -1,11 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
-import TextFieldBase from "components/common/form_fields/TextFieldBase";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import GitTasksSummaryCardContainer from "components/git/git_task_details/configuration_forms/GitTasksSummaryCardContainer";
-import Col from "react-bootstrap/Col";
-import IAMRoleSelectInput from "./inputs/IAMRoleSelectInput";
-import SubnetSelectInput from "./inputs/SubnetSelectInput";
 
 function ECSServiceCreationTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
 
