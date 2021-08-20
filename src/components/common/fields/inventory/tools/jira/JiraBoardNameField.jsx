@@ -5,7 +5,7 @@ import {AuthContext} from "contexts/AuthContext";
 import pipelineStepNotificationActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
 import FieldContainer from "components/common/fields/FieldContainer";
-import Label from "components/common/form_fields/Label";
+import FieldLabel from "components/common/fields/FieldLabel";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
@@ -80,7 +80,7 @@ function JiraBoardNameField({ dataObject, jiraToolId, fieldName, jiraProjectKey 
 
   return (
     <FieldContainer>
-      <Label field={field}/>
+      <FieldLabel field={field}/>
       <span>{getBoardName()}</span>
     </FieldContainer>
   );

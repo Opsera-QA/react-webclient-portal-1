@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import Label from "./Label";
+import FieldLabel from "components/common/fields/FieldLabel";
 
 function TextFieldBase({ fieldName, dataObject }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
-  return (<div><Label field={field} /><span>{dataObject.getData(field.id)}</span></div>);
+  return (<div><FieldLabel field={field} /><span>{dataObject.getData(field.id)}</span></div>);
 }
 
 TextFieldBase.propTypes = {
