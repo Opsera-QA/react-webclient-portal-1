@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import LoadingDialog from "../../../../../../../common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
-import TextFieldBase from "../../../../../../../common/form_fields/TextFieldBase";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
 
 function NpmPipelineStepConfigurationSummaryPanel({ npmPipelineDataObject, pipelineData, setActiveTab }) {
 

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TextFieldBase from "../../TextFieldBase";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
 
 function PipelineTaskSummaryMessageField({ fieldName, dataObject }) {
   return (

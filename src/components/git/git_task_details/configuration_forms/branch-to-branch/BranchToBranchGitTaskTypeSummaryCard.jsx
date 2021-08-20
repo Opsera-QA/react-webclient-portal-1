@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
-import TextFieldBase from "components/common/form_fields/TextFieldBase";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import GitTasksSummaryCardContainer from "components/git/git_task_details/configuration_forms/GitTasksSummaryCardContainer";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
