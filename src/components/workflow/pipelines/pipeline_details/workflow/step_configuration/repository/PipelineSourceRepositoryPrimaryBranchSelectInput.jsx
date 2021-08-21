@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 
-function PipelineSourceRepositoryGitBranchSelectInput({className, fieldName, model, setModel, disabled}) {
+function PipelineSourceRepositoryPrimaryBranchSelectInput({className, fieldName, model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = model;
     newModel.setData("branch", selectedOption);
@@ -25,7 +25,7 @@ function PipelineSourceRepositoryGitBranchSelectInput({className, fieldName, mod
   );
 }
 
-PipelineSourceRepositoryGitBranchSelectInput.propTypes = {
+PipelineSourceRepositoryPrimaryBranchSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
@@ -33,8 +33,8 @@ PipelineSourceRepositoryGitBranchSelectInput.propTypes = {
   fieldName: PropTypes.string,
 };
 
-PipelineSourceRepositoryGitBranchSelectInput.defaultProps = {
+PipelineSourceRepositoryPrimaryBranchSelectInput.defaultProps = {
   fieldName: "branch",
 };
 
-export default PipelineSourceRepositoryGitBranchSelectInput;
+export default PipelineSourceRepositoryPrimaryBranchSelectInput;
