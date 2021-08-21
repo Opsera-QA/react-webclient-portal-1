@@ -39,7 +39,10 @@ SfdcPipelineWizardRuleFieldFilterSelectInput.propTypes = {
   className: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array
+  ]),
   showLabel: PropTypes.bool,
 };
 

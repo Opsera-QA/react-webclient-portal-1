@@ -13,7 +13,7 @@ function PipelineSourceRepositoryBitbucketWorkspaceSelectInput({className, field
     newModel.setData("gitUrl", "");
     newModel.setData("sshUrl", "");
     newModel.setData("branch", "");
-    newModel.setData("secondaryBranches", []);
+    newModel.setData("secondary_branches", []);
     setModel({...newModel});
   };
 

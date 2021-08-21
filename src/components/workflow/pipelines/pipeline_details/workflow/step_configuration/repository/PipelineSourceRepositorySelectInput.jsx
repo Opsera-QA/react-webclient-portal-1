@@ -10,7 +10,7 @@ function PipelineSourceRepositorySelectInput({className, fieldName, model, setMo
     newModel.setData("gitUrl", selectedOption?.httpUrl);
     newModel.setData("sshUrl", selectedOption?.sshUrl);
     newModel.setData("branch", "");
-    newModel.setData("secondaryBranches", []);
+    newModel.setData("secondary_branches", []);
     setModel({...newModel});
   };
 

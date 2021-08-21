@@ -13,7 +13,7 @@ function SelectInputBase(
     showClearValueButton, errorMessage, getCurrentValue,
     showLabel, className, onSearch, requireClearDataConfirmation,
     clearDataDetails, linkTooltipText, detailViewLink, infoOverlay, linkIcon,
-    ellipsisTooltipText,
+    ellipsisTooltipText, lenientClearValueButton,
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
@@ -43,7 +43,8 @@ function SelectInputBase(
   };
 
   const getClearDataFunction = () => {
-    if (dataObject?.getData(field?.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
+
+    if (dataObject?.getData(field?.id) !== "" && (disabled === false || lenientClearValueButton === true) && showClearValueButton !== false && (setDataFunction == null || clearDataFunction)) {
       return clearValue;
     }
   };
@@ -127,6 +128,7 @@ SelectInputBase.propTypes = {
   infoOverlay: PropTypes.any,
   linkIcon: PropTypes.object,
   ellipsisTooltipText: PropTypes.string,
+  lenientClearValueButton: PropTypes.bool,
 };
 
 SelectInputBase.defaultProps = {
