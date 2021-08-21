@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useMemo, useRef } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
@@ -9,8 +9,9 @@ import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSyno
 import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import InsightsPipelineDetailsTable from "components/insights/summary/metrics/InsightsPipelineDetailsTable";
 
-function StoppedPipelines({ dashboardData, toggleDynamicPanel, selectedDataBlock, style, disable }) {
+function FailedPipelineQualityAndSecurityMetric({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const fields = BuildDetailsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -64,16 +65,16 @@ function StoppedPipelines({ dashboardData, toggleDynamicPanel, selectedDataBlock
           )
         ]?.value;
 
-      let dateRange = dashboardData?.data?.filters[
-        dashboardData?.data?.filters.findIndex(
-          (obj) => obj.type === "date"
-        )
-      ]?.value;
+        let dateRange = dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "date"
+          )
+        ]?.value;
 
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "summaryStoppedPipelines",
+        "summaryPipelinesFailedQuality&Security",
         null,
         dashboardTags,
         filterDto,
@@ -106,32 +107,38 @@ function StoppedPipelines({ dashboardData, toggleDynamicPanel, selectedDataBlock
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("Stopped_Pipelines", metrics[0]?.data);
+    toggleDynamicPanel("quality_security_failed", getDynamicPanel());
+  };
+
+  const getDynamicPanel = () => {
+    return (
+      <InsightsPipelineDetailsTable
+        data={metrics[0]?.data}
+        tableTitle="Failed Pipeline Runs (Quality & Security)"
+      />
+    );
   };
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "Stopped_Pipelines" ? "selected-data-block" : undefined} style={style}>
+      <div className={selectedDataBlock === "quality_security_failed" ? "selected-data-block" : undefined} style={style}>
         <InsightsSynopsisDataBlock
           title={
-            disable? "-" : (
-              !isLoading && metrics[0]?.count[0] ? (
-                metrics[0]?.count[0]?.count
-              ) : (
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  fixedWidth
-                  className="mr-1"
-                />
-              )
-            ) 
+            !isLoading && metrics[0]?.count[0] ? (
+              metrics[0]?.count[0]?.count
+            ) : (
+              <FontAwesomeIcon
+                icon={faSpinner}
+                spin
+                fixedWidth
+                className="mr-1"
+              />
+            )
           }
-          subTitle="Stopped Pipelines"
-          toolTipText="Stopped Pipelines"
+          subTitle="Failed Pipelines (Quality & Security)"
+          toolTipText="Failed Pipelines (Quality & Security)"
           clickAction={() => onDataBlockSelect()}
-          statusColor={ disable? "" : "danger"}
-          disable={disable}
+          statusColor="danger"
         />
       </div>
     );
@@ -140,12 +147,11 @@ function StoppedPipelines({ dashboardData, toggleDynamicPanel, selectedDataBlock
   return getChartBody();
 }
 
-StoppedPipelines.propTypes = {
+FailedPipelineQualityAndSecurityMetric.propTypes = {
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
   selectedDataBlock: PropTypes.string,
-  style: PropTypes.object,
-  disable:PropTypes.bool
+  style: PropTypes.object
 };
 
-export default StoppedPipelines;
+export default FailedPipelineQualityAndSecurityMetric;

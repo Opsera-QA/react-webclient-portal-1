@@ -8,6 +8,8 @@ import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import JiraLeadTimeChartNoDataBlocks
+  from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks";
 
 function ChangeFailRateDataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock, style, disable }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -98,8 +100,14 @@ function ChangeFailRateDataBlock({ dashboardData, toggleDynamicPanel, selectedDa
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("change_fail_rate", metrics[0]?.data);
+    // toggleDynamicPanel("change_fail_rate", getDynamicPanel());
   };
+  //
+  // const getDynamicPanel = () => {
+  //   return (
+  //     // TODO: Add dynamic panel
+  //   );
+  // };
 
   const getChartBody = () => {
     return (

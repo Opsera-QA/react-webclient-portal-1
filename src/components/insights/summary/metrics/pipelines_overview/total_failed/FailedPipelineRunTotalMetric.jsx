@@ -6,14 +6,26 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
+import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
+import Model from "core/data_model/model";
+import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import InsightsPipelineDetailsTable from "components/insights/summary/metrics/InsightsPipelineDetailsTable";
 
-function ServiceNowMTTADataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
+function FailedPipelineRunTotalMetric({ dashboardData, toggleDynamicPanel, selectedDataBlock , style }) {
+  const fields = BuildDetailsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [tableFilterDto, setTableFilterDto] = useState(
+    new Model(
+      { ...genericChartFilterMetadata.newObjectFields },
+      genericChartFilterMetadata,
+      false
+    )
+  );
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -36,14 +48,22 @@ function ServiceNowMTTADataBlock({ dashboardData, toggleDynamicPanel, selectedDa
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (
+    cancelSource = cancelTokenSource,
+    filterDto = tableFilterDto
+  ) => {
     try {
       setIsLoading(true);
       let dashboardTags =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+        ]?.value;
       let dashboardOrgs =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-          ?.value;
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "organizations"
+          )
+        ]?.value;
       let dateRange = dashboardData?.data?.filters[
         dashboardData?.data?.filters.findIndex(
           (obj) => obj.type === "date"
@@ -52,17 +72,22 @@ function ServiceNowMTTADataBlock({ dashboardData, toggleDynamicPanel, selectedDa
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "serviceNowMTTA",
+        "failedPipelineExecutions",
         null,
         dashboardTags,
-        null,
+        filterDto,
         null,
         dashboardOrgs,
         null,
         null,
         dateRange
       );
-      let dataObject = response?.data?.data[0]?.serviceNowMTTA?.data[0];
+      let dataObject = response?.data
+        ? response?.data?.data[0]
+        : [{ data: [], count: [{ count: 0 }] }];
+      let newFilterDto = filterDto;
+      newFilterDto.setData("totalCount", dataObject[0]?.count[0]?.count);
+      setTableFilterDto({ ...newFilterDto });
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -80,25 +105,38 @@ function ServiceNowMTTADataBlock({ dashboardData, toggleDynamicPanel, selectedDa
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("serviceNowMTTA", metrics?.docs);
+    toggleDynamicPanel("failed_pipeline_executions", getDynamicPanel());
+  };
+
+  const getDynamicPanel = () => {
+    return (
+      <InsightsPipelineDetailsTable
+        data={metrics[0]?.data}
+        tableTitle="Failed Pipeline Runs"
+      />
+    );
   };
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "serviceNowMTTA" ? "selected-data-block" : undefined} style={style}>
+      <div className={selectedDataBlock === "failed_pipeline_executions" ? "selected-data-block" : undefined} style={style}>
         <InsightsSynopsisDataBlock
           title={
-            !isLoading && metrics?.overallMtta ? (
-              metrics?.overallMtta
-            ) : !isLoading ? (
-              0
+            !isLoading && metrics[0]?.count[0] ? (
+              metrics[0]?.count[0]?.count
             ) : (
-              <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1" />
+              <FontAwesomeIcon
+                icon={faSpinner}
+                spin
+                fixedWidth
+                className="mr-1"
+              />
             )
           }
-          subTitle="Mean Time to Acknowledge (Hours)"
-          toolTipText="Mean Time to Acknowledge (Hours)"
+          subTitle="Failed Pipeline Executions"
+          toolTipText="Failed Pipeline Executions"
           clickAction={() => onDataBlockSelect()}
+          statusColor="danger"
         />
       </div>
     );
@@ -107,11 +145,11 @@ function ServiceNowMTTADataBlock({ dashboardData, toggleDynamicPanel, selectedDa
   return getChartBody();
 }
 
-ServiceNowMTTADataBlock.propTypes = {
+FailedPipelineRunTotalMetric.propTypes = {
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
   selectedDataBlock: PropTypes.string,
-  style: PropTypes.object,
+  style: PropTypes.object
 };
 
-export default ServiceNowMTTADataBlock;
+export default FailedPipelineRunTotalMetric;

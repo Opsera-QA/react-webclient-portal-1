@@ -2,29 +2,17 @@ import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import HorizontalThreeDataBlockContainer
   from "components/common/metrics/data_blocks/horizontal/HorizontalThreeDataBlockContainer";
-import TotalPipelinesExecuted
-  from "components/insights/summary/metrics/pipelines_overview/total_executed/TotalPipelinesExecuted";
-import PipelinesSuccessfulExecutions
-  from "components/insights/summary/metrics/pipelines_overview/successful_executions/PipelinesSuccessfulExecutions";
-import TotalPipelinesFailed
-  from "components/insights/summary/metrics/pipelines_overview/total_failed/TotalpipelinesFailed";
 import InsightsPipelinesOverviewHelpDocumentation
   from "components/common/help/documentation/insights/Synopsis/InsightsPipelinesOverviewHelpDocumentation";
 import MetricContainer from "components/common/panels/insights/charts/MetricContainer";
 import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
-import PipelineFailedQualityAndSecurity
-  from "components/insights/summary/metrics/pipelines_failure_score/failed_quality_and_security/PipelineFailedQualityAndSecurity";
-import PipelinesFailedDeployment
-  from "components/insights/summary/metrics/pipelines_failure_score/failed_deployment/PipelinesFailedDeployment";
-import StoppedPipelines
-  from "components/insights/summary/metrics/pipelines_failure_score/stopped_pipelines/StoppedPipelinesDataBlock";
 import {AuthContext} from "contexts/AuthContext";
-import ServiceNowMTTRDataBlock
-  from "components/insights/summary/metrics/incidents/mean_time_to_resolution/ServiceNowMTTRDataBlock";
-import ServiceNowMTTADataBlock
-  from "components/insights/summary/metrics/incidents/mean_time_to_acknowledge/ServiceNowMTTADataBlock";
-import ServiceNowMTBFDataBlock
-  from "components/insights/summary/metrics/incidents/mean_time_between_failures/ServiceNowMTBFDataBlock";
+import ServiceNowMeanTimeToResolutionDataBlock
+  from "components/insights/summary/metrics/incidents/mean_time_to_resolution/ServiceNowMeanTimeToResolutionDataBlock";
+import ServiceNowMeanTimeToAcknowledgeDataBlock
+  from "components/insights/summary/metrics/incidents/mean_time_to_acknowledge/ServiceNowMeanTimeToAcknowledgeDataBlock";
+import ServiceNowMeanTimeBetweenFailuresDataBlock
+  from "components/insights/summary/metrics/incidents/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresDataBlock";
 
 // TODO: Rework to use new components after release
 function PipelineIncidentsMetrics({ dashboardData, toggleDynamicPanel, selectedDataBlock }) {
@@ -38,7 +26,7 @@ function PipelineIncidentsMetrics({ dashboardData, toggleDynamicPanel, selectedD
     return (
       <HorizontalThreeDataBlockContainer
         topDataBlock={
-          <ServiceNowMTTRDataBlock
+          <ServiceNowMeanTimeToResolutionDataBlock
             dashboardData={dashboardData}
             toggleDynamicPanel={toggleDynamicPanel}
             selectedDataBlock={selectedDataBlock}
@@ -46,7 +34,7 @@ function PipelineIncidentsMetrics({ dashboardData, toggleDynamicPanel, selectedD
           />
         }
         middleDataBlock={
-          <ServiceNowMTTADataBlock
+          <ServiceNowMeanTimeToAcknowledgeDataBlock
             dashboardData={dashboardData}
             toggleDynamicPanel={toggleDynamicPanel}
             selectedDataBlock={selectedDataBlock}
@@ -54,7 +42,7 @@ function PipelineIncidentsMetrics({ dashboardData, toggleDynamicPanel, selectedD
           />
         }
         bottomDataBlock={
-          <ServiceNowMTBFDataBlock
+          <ServiceNowMeanTimeBetweenFailuresDataBlock
             dashboardData={dashboardData}
             toggleDynamicPanel={toggleDynamicPanel}
             selectedDataBlock={selectedDataBlock}
@@ -68,19 +56,19 @@ function PipelineIncidentsMetrics({ dashboardData, toggleDynamicPanel, selectedD
   const getIncidents = () => {
     return (
       <DataBlockWrapper padding={0}>
-        <ServiceNowMTTRDataBlock
+        <ServiceNowMeanTimeToResolutionDataBlock
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
           style={{ width: "33%" }}
         />
-        <ServiceNowMTTADataBlock
+        <ServiceNowMeanTimeToAcknowledgeDataBlock
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
           style={{ width: "33%" }}
         />
-        <ServiceNowMTBFDataBlock
+        <ServiceNowMeanTimeBetweenFailuresDataBlock
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
@@ -96,7 +84,7 @@ function PipelineIncidentsMetrics({ dashboardData, toggleDynamicPanel, selectedD
 
   return (
     <MetricContainer
-      // chartHelpComponent={(closeHelpPanel) => <InsightsPipelinesOverviewHelpDocumentation closeHelpPanel={closeHelpPanel} />}
+      chartHelpComponent={(closeHelpPanel) => <InsightsPipelinesOverviewHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       title={"Pipelines: Incidents"}>
       {getIncidents()}
     </MetricContainer>

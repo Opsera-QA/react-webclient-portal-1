@@ -6,8 +6,10 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
+import ServiceNowMeanTimeBetweenFailuresBarChart
+  from "components/insights/charts/servicenow/bar_chart/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresBarChart";
 
-function ServiceNowMTTRDataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
+function ServiceNowMeanTimeBetweenFailuresDataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -44,7 +46,6 @@ function ServiceNowMTTRDataBlock({ dashboardData, toggleDynamicPanel, selectedDa
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
-      
       let dateRange = dashboardData?.data?.filters[
         dashboardData?.data?.filters.findIndex(
           (obj) => obj.type === "date"
@@ -53,7 +54,7 @@ function ServiceNowMTTRDataBlock({ dashboardData, toggleDynamicPanel, selectedDa
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "serviceNowMTTR",
+        "serviceNowMTBF",
         null,
         dashboardTags,
         null,
@@ -63,7 +64,7 @@ function ServiceNowMTTRDataBlock({ dashboardData, toggleDynamicPanel, selectedDa
         null,
         dateRange
       );
-      let dataObject = response?.data?.data[0]?.serviceNowMTTR?.data[0];
+      let dataObject = response?.data?.data[0]?.serviceNowMTBF?.data[0];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -81,24 +82,34 @@ function ServiceNowMTTRDataBlock({ dashboardData, toggleDynamicPanel, selectedDa
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("serviceNowMTTR", metrics?.docs);
+    toggleDynamicPanel("mean_time_between_failures", getDynamicPanel());
+  };
+
+  const getDynamicPanel = () => {
+    return (
+      <ServiceNowMeanTimeBetweenFailuresBarChart
+        dashboardData={dashboardData}
+        kpiConfiguration={{ kpi_name: "Service Now Mean Time Between Failures", filters: [] }}
+        showSettingsToggle={false}
+      />
+    );
   };
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "serviceNowMTTR" ? "selected-data-block" : undefined} style={style}>
+      <div className={selectedDataBlock === "mean_time_between_failures" ? "selected-data-block" : undefined} style={style}>
         <InsightsSynopsisDataBlock
           title={
-            !isLoading && metrics?.overallMttr ? (
-              metrics?.overallMttr
+            !isLoading && metrics?.overallMtbf ? (
+              metrics?.overallMtbf
             ) : !isLoading ? (
               0
             ) : (
               <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1" />
             )
           }
-          subTitle="Mean Time to Resolution (Hours)"
-          toolTipText="Mean Time to Resolution (Hours)"
+          subTitle="Mean Time Between Failures (Hours)"
+          toolTipText="Mean Time Between Failures (Hours)"
           clickAction={() => onDataBlockSelect()}
         />
       </div>
@@ -108,11 +119,11 @@ function ServiceNowMTTRDataBlock({ dashboardData, toggleDynamicPanel, selectedDa
   return getChartBody();
 }
 
-ServiceNowMTTRDataBlock.propTypes = {
+ServiceNowMeanTimeBetweenFailuresDataBlock.propTypes = {
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
   selectedDataBlock: PropTypes.string,
   style: PropTypes.object,
 };
 
-export default ServiceNowMTTRDataBlock;
+export default ServiceNowMeanTimeBetweenFailuresDataBlock;

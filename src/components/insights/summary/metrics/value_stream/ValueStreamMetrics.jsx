@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import HorizontalThreeDataBlockContainer
   from "components/common/metrics/data_blocks/horizontal/HorizontalThreeDataBlockContainer";
-import TotalPipelinesExecuted
-  from "components/insights/summary/metrics/pipelines_overview/total_executed/TotalPipelinesExecuted";
-import PipelinesSuccessfulExecutions
-  from "components/insights/summary/metrics/pipelines_overview/successful_executions/PipelinesSuccessfulExecutions";
+import ExecutedPipelineTotalMetric
+  from "components/insights/summary/metrics/pipelines_overview/total_executed/ExecutedPipelineTotalMetric";
+import SuccessfulPipelineRunTotalMetric
+  from "components/insights/summary/metrics/pipelines_overview/successful_executions/SuccessfulPipelineRunTotalMetric";
 import TotalPipelinesFailed
-  from "components/insights/summary/metrics/pipelines_overview/total_failed/TotalpipelinesFailed";
+  from "components/insights/summary/metrics/pipelines_overview/total_failed/FailedPipelineRunTotalMetric";
 import InsightsPipelinesOverviewHelpDocumentation
   from "components/common/help/documentation/insights/Synopsis/InsightsPipelinesOverviewHelpDocumentation";
 import MetricContainer from "components/common/panels/insights/charts/MetricContainer";

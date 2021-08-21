@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext, useMemo, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
@@ -6,12 +6,11 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
-import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import InsightsPipelineDetailsTable from "components/insights/summary/metrics/InsightsPipelineDetailsTable";
 
-function PipelinesSuccessfulExecutions({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
-  const fields = BuildDetailsMetadata.fields;
+function PipelineFailedDeployment({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -69,11 +68,10 @@ function PipelinesSuccessfulExecutions({ dashboardData, toggleDynamicPanel, sele
           (obj) => obj.type === "date"
         )
       ]?.value;
-
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "pipelinesSuccessfulExecutions",
+        "summaryPipelinesFailedDeployment",
         null,
         dashboardTags,
         filterDto,
@@ -106,12 +104,21 @@ function PipelinesSuccessfulExecutions({ dashboardData, toggleDynamicPanel, sele
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("successful_pipelines", metrics[0]?.data);
+    toggleDynamicPanel("pipelines_failed_deployments", getDynamicPanel());
+  };
+
+  const getDynamicPanel = () => {
+    return (
+      <InsightsPipelineDetailsTable
+        data={metrics[0]?.data}
+        tableTitle={"Failed Pipeline Runs (Deployments)"}
+      />
+    );
   };
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "successful_pipelines" ? "selected-data-block" : undefined} style={style}>
+      <div className={selectedDataBlock === "pipelines_failed_deployments" ? "selected-data-block" : undefined} style={style}>
         <InsightsSynopsisDataBlock
           title={
             !isLoading && metrics[0]?.count[0] ? (
@@ -125,10 +132,10 @@ function PipelinesSuccessfulExecutions({ dashboardData, toggleDynamicPanel, sele
               />
             )
           }
-          subTitle="Successful Pipeline Executions"
-          toolTipText="Successful Pipeline Executions"
+          subTitle="Failed Pipelines (Deployments)"
+          toolTipText="Failed Pipelines (Deployments)"
           clickAction={() => onDataBlockSelect()}
-          statusColor="success"
+          statusColor="danger"
         />
       </div>
     );
@@ -137,11 +144,11 @@ function PipelinesSuccessfulExecutions({ dashboardData, toggleDynamicPanel, sele
   return getChartBody();
 }
 
-PipelinesSuccessfulExecutions.propTypes = {
+PipelineFailedDeployment.propTypes = {
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
   selectedDataBlock: PropTypes.string,
   style: PropTypes.object
 };
 
-export default PipelinesSuccessfulExecutions;
+export default PipelineFailedDeployment;

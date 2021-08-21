@@ -6,23 +6,18 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
-import Model from "core/data_model/model";
-import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import InsightsPipelineDetailsDurationTable
+  from "components/insights/summary/metrics/pipelines_average_duration/InsightsPipelineDetailsDurationTable";
+import ServiceNowMeanTimeToResolutionBarChart
+  from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionBarChart";
 
-function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
+function ServiceNowMeanTimeToResolutionDataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [tableFilterDto, setTableFilterDto] = useState(
-    new Model(
-      { ...genericChartFilterMetadata.newObjectFields },
-      genericChartFilterMetadata,
-      false
-    )
-  );
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -45,50 +40,34 @@ function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel, selectedDat
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadData = async (
-    cancelSource = cancelTokenSource,
-    filterDto = tableFilterDto
-  ) => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      // TODO: Handle pagination
-      tableFilterDto.setData("pageSize", 1000);
       let dashboardTags =
-        dashboardData?.data?.filters[
-          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
-        ]?.value;
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardOrgs =
-        dashboardData?.data?.filters[
-          dashboardData?.data?.filters.findIndex(
-            (obj) => obj.type === "organizations"
-          )
-        ]?.value;
-
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      
       let dateRange = dashboardData?.data?.filters[
         dashboardData?.data?.filters.findIndex(
           (obj) => obj.type === "date"
         )
       ]?.value;
-
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "summaryTotalPipelines",
+        "serviceNowMTTR",
         null,
         dashboardTags,
-        filterDto,
+        null,
         null,
         dashboardOrgs,
         null,
         null,
         dateRange
       );
-      let dataObject = response?.data
-        ? response?.data?.data[0]
-        : [{ data: [], count: [{ count: 0 }] }];
-      let newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", dataObject[0]?.count[0]?.count);
-      setTableFilterDto({ ...newFilterDto });
+      let dataObject = response?.data?.data[0]?.serviceNowMTTR?.data[0];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -106,27 +85,34 @@ function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel, selectedDat
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("total_pipelines", metrics[0]?.data);
+    toggleDynamicPanel("mean_time_to_resolution", getDynamicPanel());
+  };
+
+  const getDynamicPanel = () => {
+    return (
+      <ServiceNowMeanTimeToResolutionBarChart
+        dashboardData={dashboardData}
+        kpiConfiguration={{kpi_name: "Service Now Mean Time to Resolution", filters: []}}
+        showSettingsToggle={false}
+      />
+    );
   };
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "total_pipelines" ? "selected-data-block" : undefined} style={style}>
+      <div className={selectedDataBlock === "mean_time_to_resolution" ? "selected-data-block" : undefined} style={style}>
         <InsightsSynopsisDataBlock
           title={
-            !isLoading && metrics[0]?.count[0] ? (
-              metrics[0]?.count[0]?.count
+            !isLoading && metrics?.overallMttr ? (
+              metrics?.overallMttr
+            ) : !isLoading ? (
+              0
             ) : (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                fixedWidth
-                className="mr-1"
-              />
+              <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1" />
             )
           }
-          subTitle="Total Number of Pipelines Executed"
-          toolTipText="Total Number of Pipelines Executed"
+          subTitle="Mean Time to Resolution (Hours)"
+          toolTipText="Mean Time to Resolution (Hours)"
           clickAction={() => onDataBlockSelect()}
         />
       </div>
@@ -136,11 +122,11 @@ function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel, selectedDat
   return getChartBody();
 }
 
-TotalPipelinesExecuted.propTypes = {
-  selectedDataBlock: PropTypes.string,
+ServiceNowMeanTimeToResolutionDataBlock.propTypes = {
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
-  style:PropTypes.object
+  selectedDataBlock: PropTypes.string,
+  style: PropTypes.object,
 };
 
-export default TotalPipelinesExecuted;
+export default ServiceNowMeanTimeToResolutionDataBlock;

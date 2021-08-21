@@ -1,5 +1,4 @@
-import React, {useState, useEffect, useMemo, useContext} from "react";
-import {useHistory} from "react-router-dom";
+import React, {useMemo, useContext} from "react";
 import PropTypes from "prop-types";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";

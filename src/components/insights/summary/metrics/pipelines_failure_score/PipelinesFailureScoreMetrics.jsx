@@ -2,22 +2,22 @@ import React from "react";
 import PropTypes from "prop-types";
 import HorizontalThreeDataBlockContainer
   from "components/common/metrics/data_blocks/horizontal/HorizontalThreeDataBlockContainer";
-import TotalPipelinesExecuted
-  from "components/insights/summary/metrics/pipelines_overview/total_executed/TotalPipelinesExecuted";
-import PipelinesSuccessfulExecutions
-  from "components/insights/summary/metrics/pipelines_overview/successful_executions/PipelinesSuccessfulExecutions";
+import ExecutedPipelineTotalMetric
+  from "components/insights/summary/metrics/pipelines_overview/total_executed/ExecutedPipelineTotalMetric";
+import SuccessfulPipelineRunTotalMetric
+  from "components/insights/summary/metrics/pipelines_overview/successful_executions/SuccessfulPipelineRunTotalMetric";
 import TotalPipelinesFailed
-  from "components/insights/summary/metrics/pipelines_overview/total_failed/TotalpipelinesFailed";
+  from "components/insights/summary/metrics/pipelines_overview/total_failed/FailedPipelineRunTotalMetric";
 import InsightsPipelinesOverviewHelpDocumentation
   from "components/common/help/documentation/insights/Synopsis/InsightsPipelinesOverviewHelpDocumentation";
 import MetricContainer from "components/common/panels/insights/charts/MetricContainer";
 import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
-import PipelineFailedQualityAndSecurity
-  from "components/insights/summary/metrics/pipelines_failure_score/failed_quality_and_security/PipelineFailedQualityAndSecurity";
+import FailedPipelineQualityAndSecurityMetric
+  from "components/insights/summary/metrics/pipelines_failure_score/failed_quality_and_security/FailedPipelineQualityAndSecurityMetric";
 import PipelinesFailedDeployment
-  from "components/insights/summary/metrics/pipelines_failure_score/failed_deployment/PipelinesFailedDeployment";
+  from "components/insights/summary/metrics/pipelines_failure_score/failed_deployment/FailedPipelineDeploymentMetric";
 import StoppedPipelines
-  from "components/insights/summary/metrics/pipelines_failure_score/stopped_pipelines/StoppedPipelinesDataBlock";
+  from "components/insights/summary/metrics/pipelines_failure_score/stopped_pipelines/StoppedPipelineCountMetric";
 
 // TODO: Rework to use new components after release
 function PipelinesFailureScoreMetrics({ dashboardData, toggleDynamicPanel, selectedDataBlock }) {
@@ -29,7 +29,7 @@ function PipelinesFailureScoreMetrics({ dashboardData, toggleDynamicPanel, selec
     return (
       <HorizontalThreeDataBlockContainer
         topDataBlock={
-          <PipelineFailedQualityAndSecurity
+          <FailedPipelineQualityAndSecurityMetric
             dashboardData={dashboardData}
             toggleDynamicPanel={toggleDynamicPanel}
             selectedDataBlock={selectedDataBlock}
@@ -60,7 +60,7 @@ function PipelinesFailureScoreMetrics({ dashboardData, toggleDynamicPanel, selec
   const getFailedPipelinesOverview = () => {
     return (
       <DataBlockWrapper padding={0}>
-        <PipelineFailedQualityAndSecurity
+        <FailedPipelineQualityAndSecurityMetric
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}

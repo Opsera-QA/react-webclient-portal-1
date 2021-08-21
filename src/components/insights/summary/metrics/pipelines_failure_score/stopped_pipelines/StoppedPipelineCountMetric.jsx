@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext, useMemo, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
@@ -6,17 +6,19 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
+import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import InsightsPipelineDetailsTable from "components/insights/summary/metrics/InsightsPipelineDetailsTable";
 
-function AvgBuildDuration({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
+function StoppedPipelines({ dashboardData, toggleDynamicPanel, selectedDataBlock, style, disable }) {
+  const fields = BuildDetailsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [dataForDynamicPanel , setDataForDynamicPanel] = useState([]);
   const [tableFilterDto, setTableFilterDto] = useState(
     new Model(
       { ...genericChartFilterMetadata.newObjectFields },
@@ -46,44 +48,58 @@ function AvgBuildDuration({ dashboardData, toggleDynamicPanel, selectedDataBlock
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
+  const loadData = async (
+    cancelSource = cancelTokenSource,
+    filterDto = tableFilterDto
+  ) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardTags =
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+        ]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "organizations"
+          )
+        ]?.value;
+
       let dateRange = dashboardData?.data?.filters[
         dashboardData?.data?.filters.findIndex(
           (obj) => obj.type === "date"
         )
       ]?.value;
+
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken, 
-        cancelSource, 
-        "opseraBuildDuration", 
-        null, 
+        getAccessToken,
+        cancelSource,
+        "summaryStoppedPipelines",
+        null,
         dashboardTags,
+        filterDto,
         null,
-        null,
-        null,
+        dashboardOrgs,
         null,
         null,
         dateRange
       );
-      let dataObject = response?.data?.data[0]?.opseraBuildDuration?.data || [];
-      
+      let dataObject = response?.data
+        ? response?.data?.data[0]
+        : [{ data: [], count: [{ count: 0 }] }];
+      let newFilterDto = filterDto;
+      newFilterDto.setData("totalCount", dataObject[0]?.count[0]?.count);
+      setTableFilterDto({ ...newFilterDto });
+
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
-        let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", response?.data?.data[0]?.opseraRecentCDStatus?.count);
-        setTableFilterDto({...newFilterDto});
       }
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -91,36 +107,41 @@ function AvgBuildDuration({ dashboardData, toggleDynamicPanel, selectedDataBlock
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("Average_Build_Duration", metrics);
+    toggleDynamicPanel("stopped_pipeline_data_block", getDynamicPanel());
   };
 
-  const getAverage = ()=>{
-    let sum = 0;
-    for(let pipeline of metrics){
-        sum += pipeline.duration;
-    }
-    return (sum / metrics.length).toFixed(2);
+  const getDynamicPanel = () => {
+    return (
+      <InsightsPipelineDetailsTable
+        data={metrics[0]?.data}
+        tableTitle={"Stopped Pipelines"}
+      />
+    );
   };
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "Average_Build_Duration" ? "selected-data-block" : undefined} style={style}>
+      <div className={selectedDataBlock === "stopped_pipeline_data_block" ? "selected-data-block" : undefined} style={style}>
         <InsightsSynopsisDataBlock
           title={
-            !isLoading && metrics[0] ? (
-              getAverage()
-            ) : !isLoading ? 0 : (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                fixedWidth
-                className="mr-1"
-              />
-            )
+            disable? "-" : (
+              !isLoading && metrics[0]?.count[0] ? (
+                metrics[0]?.count[0]?.count
+              ) : (
+                <FontAwesomeIcon
+                  icon={faSpinner}
+                  spin
+                  fixedWidth
+                  className="mr-1"
+                />
+              )
+            ) 
           }
-          subTitle="Average Build Duration (Mins)"
-          toolTipText="Average Build Duration (Mins)"
+          subTitle="Stopped Pipelines"
+          toolTipText="Stopped Pipelines"
           clickAction={() => onDataBlockSelect()}
+          statusColor={ disable? "" : "danger"}
+          disable={disable}
         />
       </div>
     );
@@ -129,11 +150,12 @@ function AvgBuildDuration({ dashboardData, toggleDynamicPanel, selectedDataBlock
   return getChartBody();
 }
 
-AvgBuildDuration.propTypes = {
-  selectedDataBlock: PropTypes.string,
+StoppedPipelines.propTypes = {
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
-  style:PropTypes.object
+  selectedDataBlock: PropTypes.string,
+  style: PropTypes.object,
+  disable:PropTypes.bool
 };
 
-export default AvgBuildDuration;
+export default StoppedPipelines;
