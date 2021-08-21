@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// TODO: Styling is temporary based on SonarRatings until we figure out which direction to go
 function DataBlockBase({ title, subtitle, className}) {
   const getTitle = () => {
     if (title) {
@@ -25,11 +24,11 @@ function DataBlockBase({ title, subtitle, className}) {
 
   return (
     <div className={className}>
-      <div className={"p-3 text-center"}>
+      <div className={"p-2 text-center"}>
         <div className="data-block">
           {getTitle()}
         </div>
-        <div className="w-100 text-muted mb-1">
+        <div className="w-100 text-muted">
           {getSubtitle()}
         </div>
       </div>

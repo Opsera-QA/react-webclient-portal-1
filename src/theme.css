@@ -1232,7 +1232,7 @@ div.data-blocks-ellipses {
 
 
 .modal-detail-view-body {
-    min-height: 65vh;
+    min-height: 80vh;
     max-height: 80vh;
     overflow-y: auto;
 }

@@ -4,11 +4,11 @@ import Model from "core/data_model/model";
 import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
 import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import MetricLetterGrade, {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGrade";
-import DataBlockBase from "components/common/metrics/data_blocks/DataBlockBase";
+import {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGrade";
 import HorizontalDataBlockContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlockContainer";
 import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import ScoreDataBlock from "components/common/metrics/score/ScoreDataBlock";
+import GradeDataBlock from "components/common/metrics/grade/GradeDataBlock";
 
 function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, reliabilityRating, bugCount }) {
   const toastContext = useContext(DialogToastContext);
@@ -46,8 +46,8 @@ function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, rel
 
   const getLeftDataBlock = () => {
     return (
-      <DataBlockBase
-        title={<MetricLetterGrade letterGrade={getSonarReliabilityGrade(reliabilityRating)}/>}
+      <GradeDataBlock
+        letterGrade={getSonarReliabilityGrade(reliabilityRating)}
         subtitle={"Reliability"}
       />
     );
@@ -66,7 +66,7 @@ function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, rel
     return (
       <LegendDataBlock
         firstItem={"Goal for Reliability: A"}
-        secondItem={"Fix X Bugs"}
+        // secondItem={"Fix X Bugs"}
       />
     );
   };

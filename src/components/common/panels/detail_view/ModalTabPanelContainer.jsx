@@ -7,7 +7,7 @@ function ModalTabPanelContainer({ tabContainer, detailView }) {
       <div>
           {tabContainer}
       </div>
-      <div className="shaded-panel px-3 pb-3 modal-detail-view-body">
+      <div className="py-2 modal-detail-view-body">
         {detailView}
       </div>
     </div>

@@ -1,38 +1,34 @@
 import React, { useState, useEffect, useContext, useMemo, useRef } from "react";
-import {useHistory} from "react-router-dom";
 import CustomTable from "components/common/table/CustomTable";
 import {AuthContext} from "contexts/AuthContext";
 import PropTypes from "prop-types";
 import axios from "axios";
-import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import {
-  getChartPipelineStatusColumn, getChartTrendStatusColumn, getLimitedTableTextColumn,
+  getLimitedTableTextColumn,
   getTableDateTimeColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import chartsActions from "components/insights/charts/charts-actions";
-import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
-import SonarBugsMetricScorecardMetaData from "components/insights/charts/sonar/table/bugs-scorecard/SonarBugsMetricScorecardMetaData";
+import SonarVulnerabilitiesMetricScorecardMetaData from "components/insights/charts/sonar/table/vulnerabilities-scorecard/SonarVulnerabilitiesMetricScorecardMetaData";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "../../../../blueprint/BlueprintLogOverlay";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faTable} from "@fortawesome/pro-light-svg-icons";
 
-function SonarRatingsBugsSummaryPanel({ dashboardData, kpiConfiguration, setActiveTab, currentDate }) {
-  const history = useHistory();
+function SonarSecurityRatingPipelinesTable({ dashboardData, kpiConfiguration }) {
   const toastContext = useContext(DialogToastContext);
-  const fields = SonarBugsMetricScorecardMetaData.fields;
+  const fields = SonarVulnerabilitiesMetricScorecardMetaData.fields;
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [modalData, setModalData] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
-    new Model({ ...genericChartFilterMetadata.newObjectFields }, SonarBugsMetricScorecardMetaData, false)
+    new Model({ ...genericChartFilterMetadata.newObjectFields }, SonarVulnerabilitiesMetricScorecardMetaData, false)
   );
 
   useEffect(() => {
@@ -68,19 +64,19 @@ function SonarRatingsBugsSummaryPanel({ dashboardData, kpiConfiguration, setActi
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "sonarBugsCodeBasedMetricScorecard",
+        "sonarVulnerabilitiesCodeBasedMetricScorecard",
         kpiConfiguration,
         dashboardTags,
         filterDto
       );
-      let dataObject = response?.data?.data[0]?.sonarBugsCodeBasedMetricScorecard?.data[0]?.data;
+      let dataObject = response?.data?.data[0]?.sonarVulnerabilitiesCodeBasedMetricScorecard?.data[0]?.data;
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;
         newFilterDto.setData(
           "totalCount",
-          response?.data?.data[0]?.sonarBugsCodeBasedMetricScorecard?.data[0]?.count[0]?.count
+          response?.data?.data[0]?.sonarVulnerabilitiesCodeBasedMetricScorecard?.data[0]?.count[0]?.count
         );
         setTableFilterDto({ ...newFilterDto });
       }
@@ -124,18 +120,24 @@ function SonarRatingsBugsSummaryPanel({ dashboardData, kpiConfiguration, setActi
   };
 
   return (
-    <SummaryPanelContainer setActiveTab={setActiveTab}>
-      {getChartTable()}
-    </SummaryPanelContainer>
+    <FilterContainer
+      loadData={loadData}
+      filterDto={tableFilterDto}
+      setFilterDto={setTableFilterDto}
+      isLoading={isLoading}
+      body={getChartTable()}
+      metadata={genericChartFilterMetadata}
+      titleIcon={faTable}
+      title={"Sonar Pipelines"}
+    />
   );
 }
 
-SonarRatingsBugsSummaryPanel.propTypes = {
+SonarSecurityRatingPipelinesTable.propTypes = {
   chartModel: PropTypes.object,
   setActiveTab: PropTypes.func,
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object,
-  currentDate: PropTypes.string
 };
 
-export default SonarRatingsBugsSummaryPanel;
+export default SonarSecurityRatingPipelinesTable;

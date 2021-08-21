@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useContext, useMemo, useRef } from "react";
-import {useHistory} from "react-router-dom";
 import CustomTable from "components/common/table/CustomTable";
 import {AuthContext} from "contexts/AuthContext";
 import PropTypes from "prop-types";
 import axios from "axios";
-import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import {
-  getChartPipelineStatusColumn, getChartTrendStatusColumn, getLimitedTableTextColumn,
+  getLimitedTableTextColumn,
   getTableDateTimeColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
@@ -17,17 +15,16 @@ import SonarDebtRatioMetaData from "components/insights/charts/sonar/sonar_ratin
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "../../../../blueprint/BlueprintLogOverlay";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faTable} from "@fortawesome/pro-light-svg-icons";
 
-function SonarRatingsDebtRatioSummaryPanel({ dashboardData, kpiConfiguration, setActiveTab }) {
-  const history = useHistory();
+function SonarMaintainabilityRatingPipelinesTable({ dashboardData, kpiConfiguration }) {
   const toastContext = useContext(DialogToastContext);
   const fields = SonarDebtRatioMetaData.fields;
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [modalData, setModalData] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
@@ -124,17 +121,22 @@ function SonarRatingsDebtRatioSummaryPanel({ dashboardData, kpiConfiguration, se
   };
 
   return (
-    <SummaryPanelContainer setActiveTab={setActiveTab}>
-      {getChartTable()}
-    </SummaryPanelContainer>
+    <FilterContainer
+      loadData={loadData}
+      filterDto={tableFilterDto}
+      setFilterDto={setTableFilterDto}
+      isLoading={isLoading}
+      body={getChartTable()}
+      metadata={genericChartFilterMetadata}
+      titleIcon={faTable}
+      title={"Sonar Pipelines"}
+    />
   );
 }
 
-SonarRatingsDebtRatioSummaryPanel.propTypes = {
-  chartModel: PropTypes.object,
-  setActiveTab: PropTypes.func,
+SonarMaintainabilityRatingPipelinesTable.propTypes = {
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object
 };
 
-export default SonarRatingsDebtRatioSummaryPanel;
+export default SonarMaintainabilityRatingPipelinesTable;
