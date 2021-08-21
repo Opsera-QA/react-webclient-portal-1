@@ -23,12 +23,13 @@ function SelectInputBase(
     setDataObject({...newDataObject});
   };
 
-  const updateValue = (data) => {
+  const updateValue = (newValue) => {
     if (setDataFunction) {
-      setDataFunction(field?.id, data);
+      setDataFunction(field?.id, newValue);
     }
     else {
-      validateAndSetData(field?.id, data[valueField]);
+      const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
+      validateAndSetData(field?.id, parsedValue);
     }
   };
 
@@ -82,7 +83,7 @@ function SelectInputBase(
         filter={"contains"}
         busy={busy}
         placeholder={placeholderText}
-        onChange={(data) => updateValue(data)}
+        onChange={(newValue) => updateValue(newValue)}
         disabled={disabled || !Array.isArray(selectOptions) || selectOptions.length === 0}
         onSearch={onSearch}
       />

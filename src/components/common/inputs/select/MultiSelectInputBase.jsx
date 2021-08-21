@@ -62,7 +62,12 @@ function MultiSelectInputBase(
 
     if (valueArray != null && valueArray.length > 0) {
       valueArray.map(value => {
-        parsedValues.push(value[valueField]);
+        if (typeof value === "string") {
+          parsedValues.push(value);
+        }
+        else {
+          parsedValues.push(value[valueField]);
+        }
       });
     }
 

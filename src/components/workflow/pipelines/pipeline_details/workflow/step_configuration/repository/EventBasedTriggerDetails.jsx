@@ -1,52 +1,43 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {Button, Form, InputGroup} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCopy} from "@fortawesome/pro-light-svg-icons";
+import RegisterSourceRepositoryHookButton
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/RegisterSourceRepositoryHookButton";
+import FieldContainer from "components/common/fields/FieldContainer";
+import CopyToClipboardIcon from "components/common/icons/CopyToClipboardIcon";
 
 // TODO: Refactor
-function EventBasedTriggerDetails({ pipelineId, userId }) {
+function EventBasedTriggerDetails({ pipeline, model, savePipelineFunction }) {
   const apiUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
   const [triggerUrl, setTriggerUrl] = useState("");
-  const [copySuccess, setCopySuccess] = useState(false);
 
   useEffect(() => {
-    setTriggerUrl(`${apiUrl}/hooks/${userId}/${pipelineId}/source`);
-    setCopySuccess(false);
-  }, [pipelineId]);
+    setTriggerUrl(`${apiUrl}/hooks/${pipeline?.owner}/${pipeline?._id}/source`);
+  }, [JSON.stringify(pipeline)]);
 
-  const copyToClipboard = (val) => {
-    navigator.clipboard.writeText(val);
-    setCopySuccess(true);
-  };
 
   return (
-    <div className="mt-1">
-      <Form.Group controlId="branchField">
-        {copySuccess && <div className="info-text float-right small">Copied to Clipboard!</div>}
-        <h6>Webhook URL:</h6>
-
-        <InputGroup className="mb-1">
-          <Form.Control maxLength="75" type="text" value={triggerUrl || ""} disabled={true}/>
-          <InputGroup.Append>
-            <Button variant="outline-secondary" onClick={() => {
-              copyToClipboard(triggerUrl);
-            }}><FontAwesomeIcon icon={faCopy}/></Button>
-          </InputGroup.Append>
-        </InputGroup>
-
-        {/*<Form.Text className="text-muted">
-          Use the URL above to manually configure your Webhook in a source repository. If a Secret Key/Token is required,
-          ensure the settings above match your hook configuration. Ensure the settings noted are configured properly.
-        </Form.Text>*/}
-      </Form.Group>
-    </div>
+    <FieldContainer>
+      <div className={"d-flex justify-content-between"}>
+        <div className={"no-wrap-inline mt-auto"}><h6 className={"mb-0"}>Webhook URL:</h6></div>
+        <RegisterSourceRepositoryHookButton
+          model={model}
+          savePipelineFunction={savePipelineFunction}
+          pipeline={pipeline}
+          branch={model?.getData("branch")}
+        />
+      </div>
+      <div className={"d-flex mt-2"}>
+        <div className={"text-break small-label-text mr-2"}>{triggerUrl}</div>
+        <CopyToClipboardIcon copyString={triggerUrl} />
+      </div>
+    </FieldContainer>
   );
 }
 
 EventBasedTriggerDetails.propTypes = {
-  pipelineId: PropTypes.string,
-  userId: PropTypes.string,
+  pipeline: PropTypes.object,
+  model: PropTypes.object,
+  savePipelineFunction: PropTypes.func,
 };
 
 export default EventBasedTriggerDetails;

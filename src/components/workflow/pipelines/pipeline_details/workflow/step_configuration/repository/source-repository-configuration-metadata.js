@@ -12,7 +12,7 @@ const sourceRepositoryConfigurationMetadata = {
       isRequired: true,
     },
     {
-      label: "Account ID",
+      label: "Account",
       id: "accountId",
     },
     {
