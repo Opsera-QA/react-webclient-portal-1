@@ -98,7 +98,7 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
     let { service, accountId, username, password, repository, branch, trigger_active } = sourceRepositoryModel?.getPersistData();
 
     if (service.length === 0) {
-      return false; //only truely required field
+      return false;
     }
 
     if (accountId.length === 0 && trigger_active) { //allows user to save just the webhook without a warning
@@ -129,6 +129,7 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
       recordDto={sourceRepositoryModel}
       persistRecord={callbackFunction}
       isLoading={isLoading}
+      disableSaveButton={sourceRepositoryModel?.getData("service")?.length === 0}
     >
       <div className="text-muted h6 mb-3">Configure Source Repository settings for this pipeline.</div>
       <PipelineSourceRepositoryToolIdentifierSelectInput
