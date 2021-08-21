@@ -17,7 +17,8 @@ function PipelineSourceRepositoryToolIdentifierSelectInput({ fieldName, model, s
     newModel?.setData("gitUrl", "");
     newModel?.setData("sshUrl", "");
     newModel?.setData("branch", "");
-    newModel?.setData("secondaryBranches", []);
+    newModel?.setData("trigger_active", false);
+    newModel?.setData("secondary_branches", []);
     setModel({...newModel});
   };
 
@@ -34,7 +35,8 @@ function PipelineSourceRepositoryToolIdentifierSelectInput({ fieldName, model, s
     newModel?.setData("gitUrl", "");
     newModel?.setData("sshUrl", "");
     newModel?.setData("branch", "");
-    newModel?.setData("secondaryBranches", []);
+    newModel?.setData("trigger_active", false);
+    newModel?.setData("secondary_branches", []);
     setModel({...newModel});
   };
 
@@ -43,6 +45,7 @@ function PipelineSourceRepositoryToolIdentifierSelectInput({ fieldName, model, s
       fieldName={fieldName}
       model={model}
       setModel={setModel}
+      lenientClearValueButton={true}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
       disabled={!model?.isChanged("service") && model?.getData("service") !== ""}

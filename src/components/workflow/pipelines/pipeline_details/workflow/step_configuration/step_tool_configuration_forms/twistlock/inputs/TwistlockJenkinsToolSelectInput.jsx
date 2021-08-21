@@ -123,7 +123,10 @@ TwistlockJenkinsToolSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array
+  ]),
   textField: PropTypes.string,
   valueField: PropTypes.string,
   tool_prop: PropTypes.string,

@@ -61,7 +61,7 @@ function GitBranchMultiSelectInput({ service, gitToolId, repoId, workspace, visi
       setBranches(branchesResponse);
     }
   };
-  
+
   const getNoBranchesMessage = () => {
     if (!isLoading && (branches == null || branches.length === 0) && service !== "" && gitToolId !== "" && repoId !== "") {
       return ("No Branches Found!");
@@ -98,7 +98,10 @@ GitBranchMultiSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   setDataFunction: PropTypes.func,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array
+  ]),
   visible: PropTypes.bool,
   clearDataFunction: PropTypes.func,
 };

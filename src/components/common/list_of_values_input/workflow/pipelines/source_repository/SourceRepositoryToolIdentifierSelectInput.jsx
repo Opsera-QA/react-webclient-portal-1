@@ -8,7 +8,7 @@ export const SOURCE_REPOSITORY_TOOLS = [
   { value: "bitbucket", text: "Bitbucket" },
 ];
 
-function SourceRepositoryToolIdentifierSelectInput({ fieldName, model, setModel, setDataFunction, clearDataFunction, disabled }) {
+function SourceRepositoryToolIdentifierSelectInput({ fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, lenientClearValueButton }) {
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -17,6 +17,7 @@ function SourceRepositoryToolIdentifierSelectInput({ fieldName, model, setModel,
       selectOptions={SOURCE_REPOSITORY_TOOLS}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
+      lenientClearValueButton={lenientClearValueButton}
       valueField="value"
       textField="text"
       disabled={disabled}
@@ -31,6 +32,7 @@ SourceRepositoryToolIdentifierSelectInput.propTypes = {
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
+  lenientClearValueButton: PropTypes.bool,
 };
 
 export default SourceRepositoryToolIdentifierSelectInput;
