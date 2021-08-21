@@ -1,24 +1,26 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
-import {Container, Row, Col} from "react-bootstrap";
 import ModalLogs from "components/common/modal/modalLogs";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import Model from "../../../../../core/data_model/model";
-import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
-import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
-import { DialogToastContext } from "../../../../../contexts/DialogToastContext";
 import SonarRatingsChartHelpDocumentation
   from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
+import SonarRatingsMaintainabilityDataBlock
+  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsMaintainabilityDataBlock";
+import SonarRatingsVulnerabilityDataBlock
+  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsVulnerabilityDataBlock";
+import HorizontalThreeDataBlockContainer
+  from "components/common/metrics/data_blocks/horizontal/HorizontalThreeDataBlockContainer";
+import SonarRatingsReliabilityDataBlock
+  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlock";
+import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 
-//TODO: Charts should have some sort of name that says they're a chart like SonarRatingsChart for clarity and easy of global search
-function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+// TODO: Replace SonarRatings once verified
+function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [error, setError] = useState(undefined);
-  const [metrics, setMetrics] = useState([]);
+  const [sonarRatingsMetric, setSonarRatingsMetric] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
@@ -45,15 +47,16 @@ function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, in
     };
   }, [JSON.stringify(dashboardData)]);
 
+  // TODO: Don't send this complicated object, just send the metric
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "sonarRatings", kpiConfiguration, dashboardTags);
-      let dataObject = response?.data ? response?.data?.data[0]?.sonarRatings?.data : [];
+      const metrics = response?.data?.data[0]?.sonarRatings?.data;
 
-      if (isMounted?.current === true && dataObject) {
-        setMetrics(dataObject);
+      if (isMounted?.current === true && Array.isArray(metrics)) {
+        setSonarRatingsMetric(metrics[0]);
       }
     }
     catch (error) {
@@ -69,85 +72,44 @@ function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, in
     }
   };
 
-  const onRowSelect = (stat) => {
-    const chartModel = new Model({...SonarRatingsBugsActionableMetadata.newObjectFields}, SonarRatingsBugsActionableMetadata, false);
-    toastContext.showOverlayPanel(
-      <ChartDetailsOverlay
-        dashboardData={dashboardData}
-        kpiConfiguration={kpiConfiguration}
-        chartModel={chartModel}
-        kpiIdentifier={"sonar-ratings" + "-" + stat} />);
-  };
-
   const getChartBody = () => {
-    if (!Array.isArray(metrics) || metrics.length === 0) {
+    if (sonarRatingsMetric == null) {
       return null;
     }
 
     return (
-      <div className="new-chart mb-3" style={{height: "300px"}}>
-      <Container>
-      <Row className="p-3">
-        <Col><div className="metric-box p-3 text-center">
-        <div className="box-metric pointer" onClick={() => onRowSelect("vulnerabilities")}>
-        {metrics[0].security_rating <= 1 && <div className="green">A</div>}
-        {1 < metrics[0].security_rating && metrics[0].security_rating <= 2 && <div className="green">B</div>}
-        {2 < metrics[0].security_rating && metrics[0].security_rating <= 3 && <div className="yellow">C</div>}
-        {3 < metrics[0].security_rating && metrics[0].security_rating <= 4 && <div className="red">D</div>}
-        {4 < metrics[0].security_rating && metrics[0].security_rating <= 5 && <div className="red">E</div>}
-        </div>
-        <div className="w-100 text-muted mb-1">Security</div>  
-      </div></Col>
-        <Col><div className="metric-box p-3 text-center">
-        <div className="box-metric pointer" onClick={() => onRowSelect("bugs")}>
-        {metrics[0].reliability_rating <= 1 && <div className="green">A</div>}
-        {1 < metrics[0].reliability_rating && metrics[0].reliability_rating <= 2 && <div className="green">B</div>}
-        {2 < metrics[0].reliability_rating && metrics[0].reliability_rating <= 3 && <div className="yellow">C</div>}
-        {3 < metrics[0].reliability_rating && metrics[0].reliability_rating <= 4 && <div className="red">D</div>}
-        {4 < metrics[0].reliability_rating && metrics[0].reliability_rating <= 5 && <div className="red">E</div>}
-        </div>
-        <div className="w-100 text-muted mb-1">Reliability</div> 
-      </div></Col>
-        <Col><div className="metric-box p-3 text-center">
-        <div className="box-metric pointer" onClick={() => onRowSelect("debt-ratio")}>
-        {metrics[0].maintainability_rating <= 1 && <div className="green">A</div>}
-        {1 < metrics[0].maintainability_rating && metrics[0].maintainability_rating <= 2 && <div className="green">B</div>}
-        {2 < metrics[0].maintainability_rating && metrics[0].maintainability_rating <= 3 && <div className="yellow">C</div>}
-        {3 < metrics[0].maintainability_rating && metrics[0].maintainability_rating <= 4 && <div className="red">D</div>}
-        {4 < metrics[0].maintainability_rating && metrics[0].maintainability_rating <= 5 && <div className="red">E</div>}
-        </div> 
-        <div className="w-100 text-muted mb-1">Maintainability</div>  
-      </div></Col>
-      </Row>
-      <Row className="p-3">
-          <Col><div className="metric-box p-3 text-center">
-          <div className="box-metric">
-            <div className="pointer" onClick={() => onRowSelect("vulnerabilities")}>{metrics[0].vulnerabilities}</div>
-          </div>
-          <div className="w-100 text-muted mb-1">Vulnerabilities</div>    
-        </div></Col>
-          <Col><div className="metric-box p-3 text-center">
-          <div className="box-metric">
-            <div className="red pointer" onClick={() => onRowSelect("bugs")}>{metrics[0].bugs}</div>
-          </div>  
-          <div className="w-100 text-muted mb-1">Bugs</div>    
-        </div></Col>
-          <Col><div className="metric-box p-3 text-center">
-          <div className="box-metric">
-            <div className="pointer" onClick={() => onRowSelect("debt-ratio")}>{metrics[0].technical_debt_ratio + "%"}</div>
-          </div>  
-          <div className="w-100 text-muted mb-1">Technical Debt Ratio</div>    
-        </div></Col>
-        </Row>
-    </Container>
-    </div>
-
+      <HorizontalThreeDataBlockContainer
+        topDataBlock={
+          <SonarRatingsVulnerabilityDataBlock
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+            securityRating={sonarRatingsMetric?.security_rating}
+            vulnerabilityCount={sonarRatingsMetric?.vulnerabilities}
+          />
+        }
+        middleDataBlock={
+          <SonarRatingsReliabilityDataBlock
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+            reliabilityRating={sonarRatingsMetric?.reliability_rating}
+            bugCount={sonarRatingsMetric?.bugs}
+          />
+        }
+        bottomDataBlock={
+          <SonarRatingsMaintainabilityDataBlock
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            maintainabilityRating={sonarRatingsMetric?.maintainability_rating}
+            technicalDebtRatio={sonarRatingsMetric.technical_debt_ratio}
+          />
+        }
+      />
     );
   };
 
   return (
     <div>
-      <ChartContainer
+      <VanityMetricContainer
         title={kpiConfiguration?.kpi_name}
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
@@ -163,7 +125,7 @@ function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, in
       <ModalLogs
         header="Build Duration"
         size="lg"
-        jsonMessage={metrics}
+        jsonMessage={sonarRatingsMetric}
         dataType="bar"
         show={showModal}
         setParentVisibility={setShowModal}
@@ -172,7 +134,7 @@ function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, in
   );
 }
 
-SonarRatings.propTypes = {
+SonarRatingMetrics.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -180,4 +142,4 @@ SonarRatings.propTypes = {
   setKpis: PropTypes.func
 };
 
-export default SonarRatings;
+export default SonarRatingMetrics;

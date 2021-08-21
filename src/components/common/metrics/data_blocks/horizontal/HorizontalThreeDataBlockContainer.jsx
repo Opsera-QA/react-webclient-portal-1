@@ -25,8 +25,4 @@ HorizontalThreeDataBlockContainer.propTypes = {
   height: PropTypes.string,
 };
 
-HorizontalThreeDataBlockContainer.defaultProps = {
-  height: "300px",
-};
-
 export default HorizontalThreeDataBlockContainer;

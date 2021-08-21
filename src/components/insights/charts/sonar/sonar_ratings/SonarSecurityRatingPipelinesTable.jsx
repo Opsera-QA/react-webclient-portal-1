@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useContext, useMemo, useRef } from "react";
-import {useHistory} from "react-router-dom";
 import CustomTable from "components/common/table/CustomTable";
 import {AuthContext} from "contexts/AuthContext";
 import PropTypes from "prop-types";
 import axios from "axios";
-import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import {
-  getChartPipelineStatusColumn, getChartTrendStatusColumn, getLimitedTableTextColumn,
+  getLimitedTableTextColumn,
   getTableDateTimeColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
@@ -17,17 +15,16 @@ import SonarVulnerabilitiesMetricScorecardMetaData from "components/insights/cha
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "../../../../blueprint/BlueprintLogOverlay";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faTable} from "@fortawesome/pro-light-svg-icons";
 
-function SonarRatingsVulnerabilitiesSummaryPanel({ dashboardData, kpiConfiguration, setActiveTab }) {
-  const history = useHistory();
+function SonarSecurityRatingPipelinesTable({ dashboardData, kpiConfiguration }) {
   const toastContext = useContext(DialogToastContext);
   const fields = SonarVulnerabilitiesMetricScorecardMetaData.fields;
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [modalData, setModalData] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
@@ -94,7 +91,6 @@ function SonarRatingsVulnerabilitiesSummaryPanel({ dashboardData, kpiConfigurati
       }
     }
   };
-  console.log(metrics);
 
   const noDataMessage = "No Data is available for this chart at this time";
   const columns = useMemo(
@@ -124,17 +120,24 @@ function SonarRatingsVulnerabilitiesSummaryPanel({ dashboardData, kpiConfigurati
   };
 
   return (
-    <SummaryPanelContainer setActiveTab={setActiveTab}>
-      {getChartTable()}
-    </SummaryPanelContainer>
+    <FilterContainer
+      loadData={loadData}
+      filterDto={tableFilterDto}
+      setFilterDto={setTableFilterDto}
+      isLoading={isLoading}
+      body={getChartTable()}
+      metadata={genericChartFilterMetadata}
+      titleIcon={faTable}
+      title={"Sonar Pipelines"}
+    />
   );
 }
 
-SonarRatingsVulnerabilitiesSummaryPanel.propTypes = {
+SonarSecurityRatingPipelinesTable.propTypes = {
   chartModel: PropTypes.object,
   setActiveTab: PropTypes.func,
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object,
 };
 
-export default SonarRatingsVulnerabilitiesSummaryPanel;
+export default SonarSecurityRatingPipelinesTable;

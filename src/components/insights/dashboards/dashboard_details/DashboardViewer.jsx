@@ -42,7 +42,7 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
   };
 
   const getKpiView = () => {
-    if (kpis == null || kpis.length === 0) {
+    if (!Array.isArray(kpis) || kpis.length === 0) {
       return (
         <div className="my-5" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
           <InfoDialog size="m" message="Your dashboard is empty! Add KPIs using the Add New KPI button"/>

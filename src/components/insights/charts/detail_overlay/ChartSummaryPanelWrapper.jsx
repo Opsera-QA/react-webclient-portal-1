@@ -15,9 +15,9 @@ import PipelineByStatusSuccessfulTable from "../opsera/bar_chart/pipeline_by_sta
 import PipelineByStatusFailedTable from "../opsera/bar_chart/pipeline_by_status/PipelineByStatusFailedTable";
 
 // Sonar
-import SonarRatingsBugsSummaryPanel from "../sonar/sonar_ratings/SonarRatingsBugsSummaryPanel";
-import SonarRatingsVulnerabilitiesSummaryPanel from "../sonar/sonar_ratings/SonarRatingsVulnerabilitiesSummaryPanel";
-import SonarRatingsDebtRatioSummaryPanel from "../sonar/sonar_ratings/SonarRatingsDebtRatioSummaryPanel";
+import SonarReliabilityRatingPipelinesTable from "components/insights/charts/sonar/sonar_ratings/SonarReliabilityRatingPipelinesTable";
+import SonarSecurityRatingPipelinesTable from "components/insights/charts/sonar/sonar_ratings/SonarSecurityRatingPipelinesTable";
+import SonarMaintainabilityRatingPipelinesTable from "components/insights/charts/sonar/sonar_ratings/SonarMaintainabilityRatingPipelinesTable";
 
 // Coverity
 import CoverityHighIssuesSummaryPanel from "../coverity/CoverityIssuesByCategory/CoverityHighIssuesSummaryPanel";
@@ -155,32 +155,23 @@ function ChartSummaryPanelWrapper({
         );
       case "sonar-ratings-bugs":
         return (
-          <SonarRatingsBugsSummaryPanel
+          <SonarReliabilityRatingPipelinesTable
             dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
-            chartModel={chartModel}
-            setActiveTab={setActiveTab}
-            pipelineName={pipelineName}
           />
         );
       case "sonar-ratings-vulnerabilities":
         return (
-          <SonarRatingsVulnerabilitiesSummaryPanel
+          <SonarSecurityRatingPipelinesTable
             dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
-            chartModel={chartModel}
-            setActiveTab={setActiveTab}
-            pipelineName={pipelineName}
           />
         );
       case "sonar-ratings-debt-ratio":
         return (
-          <SonarRatingsDebtRatioSummaryPanel
+          <SonarMaintainabilityRatingPipelinesTable
             dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
-            chartModel={chartModel}
-            setActiveTab={setActiveTab}
-            pipelineName={pipelineName}
           />
         );
       // Coverity
