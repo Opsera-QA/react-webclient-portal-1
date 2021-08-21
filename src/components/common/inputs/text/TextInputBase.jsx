@@ -8,7 +8,7 @@ function TextInputBase(
   {
     fieldName, dataObject, setDataObject, disabled, type,
     showLabel, inputClasses, linkTooltipText, detailViewLink, infoOverlay,
-    setDataFunction,
+    setDataFunction, name,
   }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -64,6 +64,7 @@ function TextInputBase(
       <input
         type={type}
         disabled={disabled}
+        name={name}
         value={dataObject.getData(fieldName)}
         onChange={(event) => updateValue(event.target.value)}
         className={getInputClasses()}
@@ -86,6 +87,7 @@ TextInputBase.propTypes = {
   detailViewLink: PropTypes.string,
   infoOverlay: PropTypes.any,
   setDataFunction: PropTypes.func,
+  name: PropTypes.string,
 };
 
 export default TextInputBase;

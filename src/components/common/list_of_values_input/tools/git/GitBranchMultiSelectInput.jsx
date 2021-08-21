@@ -61,16 +61,17 @@ function GitBranchMultiSelectInput({ service, gitToolId, repoId, workspace, visi
       setBranches(branchesResponse);
     }
   };
-
-  if (visible === false) {
-    return <></>;
-  }
-
+  
   const getNoBranchesMessage = () => {
     if (!isLoading && (branches == null || branches.length === 0) && service !== "" && gitToolId !== "" && repoId !== "") {
       return ("No Branches Found!");
     }
   };
+
+  if (visible === false) {
+    return <></>;
+  }
+
   return (
     <MultiSelectInputBase
       fieldName={fieldName}

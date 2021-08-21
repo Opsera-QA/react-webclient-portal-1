@@ -3,12 +3,6 @@ import PropTypes from "prop-types";
 import GitBranchMultiSelectInput from "components/common/list_of_values_input/tools/git/GitBranchMultiSelectInput";
 
 function PipelineSourceRepositorySecondaryBranchesMultiSelectInput({className, fieldName, model, setModel, disabled, primaryBranch}) {
-  // const setDataFunction = (fieldName, selectedOption) => {
-  //   let newModel = model;
-  //   newModel.setData(fieldName, selectedOption);
-  //   setModel({...newModel});
-  // };
-
   const getDisabledBranch = () => {
     if (disabled === true || primaryBranch == null || primaryBranch === "") {
       return true;
@@ -23,7 +17,6 @@ function PipelineSourceRepositorySecondaryBranchesMultiSelectInput({className, f
       service={model?.getData("service")}
       gitToolId={model?.getData("accountId")}
       workspace={model?.getData("workspace")}
-      // setDataFunction={setDataFunction}
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}

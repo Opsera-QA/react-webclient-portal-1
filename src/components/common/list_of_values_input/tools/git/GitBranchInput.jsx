@@ -65,15 +65,15 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
     }
   };
 
-  if (visible === false) {
-    return <></>;
-  }
-
   const getNoBranchesMessage = () => {
     if (!isLoading && (branches == null || branches.length === 0) && service !== "" && gitToolId !== "" && repoId !== "") {
       return ("No Branches Found!");
     }
   };
+
+  if (visible === false) {
+    return <></>;
+  }
 
   return (
     <SelectInputBase

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function PipelineSourceRepositoryToolSelectInput({className, fieldName, model, setModel, disabled, sourceRepositoryToolIdentifier}) {
   const setDataFunction = (fieldName, selectedOption) => {
@@ -24,6 +25,7 @@ function PipelineSourceRepositoryToolSelectInput({className, fieldName, model, s
       fieldName={fieldName}
       placeholderText={"Select Tool"}
       configurationRequired={true}
+      textField={(tool) => `${JSON.stringify(tool?.configuration)} (${tool?.name})`}
       model={model}
       setModel={setModel}
       setDataFunction={setDataFunction}
