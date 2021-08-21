@@ -70,7 +70,6 @@ function ServiceNowToolsSelectInput({
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = { ...dataObject };
     newModel.setData(fieldName, selectedOption?._id);
-    // newModel.setData("", "");
     setDataObject({ ...newModel });
   };
 

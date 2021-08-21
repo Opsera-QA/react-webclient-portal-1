@@ -1,15 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import { Col, OverlayTrigger, Row } from "react-bootstrap";
-import { AuthContext } from "contexts/AuthContext";
+import {AuthContext} from "contexts/AuthContext";
 import OctopusStepFormMetadata from "./octopus-stepForm-metadata";
 import Model from "core/data_model/model";
 import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import CloseButton from "../../../../../../../common/buttons/CloseButton";
-import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
+import {DialogToastContext} from "contexts/DialogToastContext";
 import octopusActions from "../../../../../../../inventory/tools/tool_details/tool_jobs/octopus/octopus-actions";
 import OctopusToolSelectInput from "./input/OctopusToolSelectInput";
 import OctopusSpaceNameSelectInput from "./input/OctopusSpaceNameSelectInput";
@@ -31,6 +28,8 @@ import OctopusDeployToIisView from "./sub-forms/OctopusDeployToIisView";
 import OctopusDeployToJavaArchiveView from "./sub-forms/OctopusDeployToJavaArchiveView";
 import OctopusProjectNameInput from "./input/OctopusProjectNameInput";
 import OctopusKubernetesPlatform from "./sub-forms/OctopusKubernetesPlatform";
+import PipelineStepEditorPanelContainer
+  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, callbackSaveToVault, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -39,8 +38,6 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
   const [octopusStepConfigurationDto, setOctopusStepConfigurationDataDto] = useState(undefined);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
-  const [octopusSearching, isOctopusSearching] = useState(false);
-  const [octopusList, setOctopusList] = useState([]);
   const [listOfSteps, setListOfSteps] = useState([]);
 
   useEffect(() => {
@@ -67,22 +64,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
       setListOfSteps(pipelineSteps);
     }
 
-    await fetchOctopusDetails();
     setIsLoading(false);
-  };
-
-  const fetchOctopusDetails = async () => {
-    isOctopusSearching(true);
-
-    let results = await getToolsList("octopus");
-
-    if(results && Array.isArray(results)) {
-      const filteredList = results.filter((el) => el.configuration !== undefined);
-      if (filteredList) {
-        setOctopusList(filteredList);
-      }
-    }    
-    isOctopusSearching(false);
   };
 
   const saveToVault = async (pipelineId, stepId, key, name, value) => {
@@ -117,23 +99,23 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
     };
     let validateDepVariables = await validateDeploymentVariables();
     let validateCondVariables = await validateConditionalVariables();
-    
-    if( octopusConfig.getData("applicationPoolIdentityType") &&
-        octopusConfig.getData("applicationPoolIdentityType").toLowerCase() === "custom_user" && 
-        octopusConfig.getData("applicationPoolIdentityUsername")?.length > 0 &&
-        typeof(octopusConfig.getData("applicationPoolIdentityPassword")) === "string" &&
-        octopusConfig.getData("applicationPoolIdentityPassword")?.length !== 0) {
-          let poolIdentityPassword = await saveToVault(pipelineId, stepId, "applicationPoolIdentityPassword", "Vault Secured Key", octopusConfig.getData("applicationPoolIdentityPassword"));
-          // console.log(poolIdentityPassword);
-          octopusConfig.setData("applicationPoolIdentityPassword", poolIdentityPassword);
-          setOctopusStepConfigurationDataDto({...octopusConfig});
-      } else if (
-        typeof(octopusConfig.getData("applicationPoolIdentityPassword")) === "string" &&
-        octopusConfig.getData("applicationPoolIdentityPassword")?.length === 0) {
-        octopusConfig.setData("applicationPoolIdentityUsername", "");
-        octopusConfig.setData("applicationPoolIdentityPassword", {});
-        setOctopusStepConfigurationDataDto({...octopusConfig});
-      }
+
+    if (octopusConfig.getData("applicationPoolIdentityType") &&
+      octopusConfig.getData("applicationPoolIdentityType").toLowerCase() === "custom_user" &&
+      octopusConfig.getData("applicationPoolIdentityUsername")?.length > 0 &&
+      typeof (octopusConfig.getData("applicationPoolIdentityPassword")) === "string" &&
+      octopusConfig.getData("applicationPoolIdentityPassword")?.length !== 0) {
+      let poolIdentityPassword = await saveToVault(pipelineId, stepId, "applicationPoolIdentityPassword", "Vault Secured Key", octopusConfig.getData("applicationPoolIdentityPassword"));
+      // console.log(poolIdentityPassword);
+      octopusConfig.setData("applicationPoolIdentityPassword", poolIdentityPassword);
+      setOctopusStepConfigurationDataDto({...octopusConfig});
+    } else if (
+      typeof (octopusConfig.getData("applicationPoolIdentityPassword")) === "string" &&
+      octopusConfig.getData("applicationPoolIdentityPassword")?.length === 0) {
+      octopusConfig.setData("applicationPoolIdentityUsername", "");
+      octopusConfig.setData("applicationPoolIdentityPassword", {});
+      setOctopusStepConfigurationDataDto({...octopusConfig});
+    }
 
     if (validateDepVariables && validateCondVariables) {
       await createDeploymentEnvironments();
@@ -144,10 +126,14 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
 
   const createOctopusProject = async () => {
     await octopusActions
-      .createOctopusProject({ pipelineId: pipelineId, stepId: stepId, variableSet: octopusStepConfigurationDto.getData("specifyDepVariables") ?  octopusStepConfigurationDto.getData("deploymentVariables") : [] }, getAccessToken)
+      .createOctopusProject({
+        pipelineId: pipelineId,
+        stepId: stepId,
+        variableSet: octopusStepConfigurationDto.getData("specifyDepVariables") ? octopusStepConfigurationDto.getData("deploymentVariables") : []
+      }, getAccessToken)
       .then(async (response) => {
         closeEditorPanel();
-        return response;        
+        return response;
       })
       .catch(function (error) {
         console.log(error);
@@ -174,7 +160,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
           "Missing required fields for rollback, Please select a version to rollback a deployment";
         toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
         return false;
-    }
+      }
     }
     if (octopusStepConfigurationDto.getData("octopusPlatformType") && (octopusStepConfigurationDto.getData("octopusPlatformType") === "Azure" || octopusStepConfigurationDto.getData("octopusPlatformType") === "Package")) {
       if (!octopusStepConfigurationDto.getData("octopusDeploymentType") || octopusStepConfigurationDto.getData("octopusDeploymentType") && octopusStepConfigurationDto.getData("octopusDeploymentType").length === 0) {
@@ -228,85 +214,161 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
   };
 
   if (isLoading || octopusStepConfigurationDto === undefined) {
-    return <LoadingDialog size="sm" />;
+    return <LoadingDialog size="sm"/>;
   }
 
   return (
-    <>
-      {octopusStepConfigurationDto && (
+    <PipelineStepEditorPanelContainer
+      handleClose={closeEditorPanel}
+      recordDto={octopusStepConfigurationDto}
+      persistRecord={callbackFunction}
+      isLoading={isLoading}
+    >
+      <OctopusToolSelectInput
+        model={octopusStepConfigurationDto}
+        setModel={setOctopusStepConfigurationDataDto}
+      />
+      <OctopusSpaceNameSelectInput
+        fieldName={"spaceName"}
+        dataObject={octopusStepConfigurationDto}
+        setDataObject={setOctopusStepConfigurationDataDto}
+        disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusToolId").length === 0}
+        tool_prop={octopusStepConfigurationDto ? octopusStepConfigurationDto.getData("octopusToolId") : ""}
+      />
+      <OctopusProjectNameInput
+        dataObject={octopusStepConfigurationDto}
+        setDataObject={setOctopusStepConfigurationDataDto}
+        stepTool={stepTool}
+      />
+      <TextInputBase
+        setDataObject={setOctopusStepConfigurationDataDto}
+        dataObject={octopusStepConfigurationDto}
+        fieldName={"projectDescription"}
+        disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
+      />
+      <OctopusEnvironmentNameSelectInput
+        fieldName={"environmentName"}
+        dataObject={octopusStepConfigurationDto}
+        setDataObject={setOctopusStepConfigurationDataDto}
+        disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
+        tool_prop={octopusStepConfigurationDto ? octopusStepConfigurationDto.getData("spaceName") : ""}
+      />
+      <DtoSelectInput
+        setDataObject={setOctopusStepConfigurationDataDto}
+        textField={"name"}
+        valueField={"_id"}
+        dataObject={octopusStepConfigurationDto}
+        filter={"contains"}
+        selectOptions={listOfSteps ? listOfSteps : []}
+        fieldName={"ecrPushStepId"}
+        disabled={listOfSteps.length === 0 || octopusStepConfigurationDto.getData("environmentName").length === 0}
+      />
+      <OctopusTargetRolesSelectInput
+        fieldName={"octopusTargetRoles"}
+        dataObject={octopusStepConfigurationDto}
+        setDataObject={setOctopusStepConfigurationDataDto}
+        disabled={
+          octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+            ? octopusStepConfigurationDto.getData("spaceName").length === 0
+            : true
+        }
+        tool_prop={
+          octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+            ? octopusStepConfigurationDto.getData("spaceName")
+            : ""
+        }
+      />
+      <OctopusLifecycleSelectInput
+        fieldName={"lifecycleId"}
+        dataObject={octopusStepConfigurationDto}
+        setDataObject={setOctopusStepConfigurationDataDto}
+        disabled={
+          octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+            ? octopusStepConfigurationDto.getData("spaceName").length === 0
+            : true
+        }
+        tool_prop={
+          octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+            ? octopusStepConfigurationDto.getData("spaceName")
+            : ""
+        }
+      />
+      <OctopusPlatformTypeSelectInput
+        fieldName={"octopusPlatformType"}
+        dataObject={octopusStepConfigurationDto}
+        setDataObject={setOctopusStepConfigurationDataDto}
+        disabled={
+          octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+            ? octopusStepConfigurationDto.getData("spaceName").length === 0
+            : true
+        }
+        tool_prop={
+          octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+            ? octopusStepConfigurationDto.getData("spaceName")
+            : ""
+        }
+      />
+      {octopusStepConfigurationDto &&
+      octopusStepConfigurationDto.getData("octopusPlatformType") &&
+      octopusStepConfigurationDto.getData("octopusPlatformType") === "Kubernetes" && (
+        <OctopusKubernetesPlatform
+          dataObject={octopusStepConfigurationDto}
+          setDataObject={setOctopusStepConfigurationDataDto}
+          isLoading={isLoading}
+          plan={plan}
+          stepId={stepId}
+        />
+      )}
+      {octopusStepConfigurationDto &&
+      octopusStepConfigurationDto.getData("octopusPlatformType") &&
+      (octopusStepConfigurationDto.getData("octopusPlatformType") === "Azure" ||
+        octopusStepConfigurationDto.getData("octopusPlatformType") === "Script") && (
         <>
-          <OctopusToolSelectInput
-            fieldName={"octopusToolId"}
-            dataObject={octopusStepConfigurationDto}
-            setDataObject={setOctopusStepConfigurationDataDto}
-          />
-          <OctopusSpaceNameSelectInput
-            fieldName={"spaceName"}
-            dataObject={octopusStepConfigurationDto}
-            setDataObject={setOctopusStepConfigurationDataDto}
-            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusToolId").length === 0}
-            tool_prop={octopusStepConfigurationDto ? octopusStepConfigurationDto.getData("octopusToolId") : ""}
-          />
-          <OctopusProjectNameInput 
-            dataObject={octopusStepConfigurationDto}
-            setDataObject={setOctopusStepConfigurationDataDto}
-            stepTool={stepTool}
-          />
-          <TextInputBase
-            setDataObject={setOctopusStepConfigurationDataDto}
-            dataObject={octopusStepConfigurationDto}
-            fieldName={"projectDescription"}
-            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
-          />
-          <OctopusEnvironmentNameSelectInput
-            fieldName={"environmentName"}
-            dataObject={octopusStepConfigurationDto}
-            setDataObject={setOctopusStepConfigurationDataDto}
-            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
-            tool_prop={octopusStepConfigurationDto ? octopusStepConfigurationDto.getData("spaceName") : ""}
-          />
-          <DtoSelectInput
-            setDataObject={setOctopusStepConfigurationDataDto}
-            textField={"name"}
-            valueField={"_id"}
-            dataObject={octopusStepConfigurationDto}
-            filter={"contains"}
-            selectOptions={listOfSteps ? listOfSteps : []}
-            fieldName={"ecrPushStepId"}
-            disabled={listOfSteps.length === 0 || octopusStepConfigurationDto.getData("environmentName").length === 0}
-          />
-          <OctopusTargetRolesSelectInput
-            fieldName={"octopusTargetRoles"}
+          <OctopusDeploymentTypeInputSelect
+            fieldName={"octopusDeploymentType"}
             dataObject={octopusStepConfigurationDto}
             setDataObject={setOctopusStepConfigurationDataDto}
             disabled={
-              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
-                ? octopusStepConfigurationDto.getData("spaceName").length === 0
+              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                ? octopusStepConfigurationDto.getData("octopusPlatformType").length === 0
                 : true
             }
             tool_prop={
-              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
-                ? octopusStepConfigurationDto.getData("spaceName")
+              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                ? octopusStepConfigurationDto.getData("octopusPlatformType")
                 : ""
             }
           />
-          <OctopusLifecycleSelectInput
-            fieldName={"lifecycleId"}
+          <OctopusScriptTypeSelectInput
             dataObject={octopusStepConfigurationDto}
             setDataObject={setOctopusStepConfigurationDataDto}
             disabled={
-              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
-                ? octopusStepConfigurationDto.getData("spaceName").length === 0
+              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                ? octopusStepConfigurationDto.getData("octopusPlatformType").length === 0
                 : true
             }
             tool_prop={
-              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
-                ? octopusStepConfigurationDto.getData("spaceName")
+              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                ? octopusStepConfigurationDto.getData("octopusPlatformType")
                 : ""
             }
           />
-          <OctopusPlatformTypeSelectInput
-            fieldName={"octopusPlatformType"}
+          <OctopusScriptTypeDetailsView
+            dataObject={octopusStepConfigurationDto}
+            setDataObject={setOctopusStepConfigurationDataDto}
+            disabled={
+              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("scriptSource")
+                ? octopusStepConfigurationDto.getData("scriptSource").length === 0
+                : true
+            }
+            tool_prop={
+              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                ? octopusStepConfigurationDto.getData("octopusPlatformType")
+                : ""
+            }
+          />
+          <OctopusFeedSelectInput
+            fieldName={"octopusFeedId"}
             dataObject={octopusStepConfigurationDto}
             setDataObject={setOctopusStepConfigurationDataDto}
             disabled={
@@ -321,224 +383,135 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
             }
           />
           {octopusStepConfigurationDto &&
-            octopusStepConfigurationDto.getData("octopusPlatformType") &&
-            octopusStepConfigurationDto.getData("octopusPlatformType") === "Kubernetes" && (
-              <OctopusKubernetesPlatform
+          octopusStepConfigurationDto.getData("octopusPlatformType") &&
+          octopusStepConfigurationDto.getData("octopusPlatformType") !== "Script" && (
+            <TextInputBase
+              dataObject={octopusStepConfigurationDto}
+              setDataObject={setOctopusStepConfigurationDataDto}
+              fieldName={"octopusPhysicalPath"}
+            />
+          )
+          }
+          <RollbackToggleInput
+            dataObject={octopusStepConfigurationDto}
+            setDataObject={setOctopusStepConfigurationDataDto}
+            fieldName={"isRollback"}
+          />
+          {octopusStepConfigurationDto && octopusStepConfigurationDto.getData("isRollback") && (
+            <OctopusVersionSelectInput
+              fieldName={"octopusVersion"}
+              dataObject={octopusStepConfigurationDto}
+              setDataObject={setOctopusStepConfigurationDataDto}
+              pipelineId={pipelineId}
+              disabled={
+                octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusFeedId")
+                  ? octopusStepConfigurationDto.getData("octopusFeedId").length === 0
+                  : true
+              }
+              tool_prop={
+                octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusFeedId")
+                  ? octopusStepConfigurationDto.getData("octopusFeedId")
+                  : ""
+              }
+            />
+          )}
+          <OctopusSpecifyDepVarsToggle
+            dataObject={octopusStepConfigurationDto}
+            setDataObject={setOctopusStepConfigurationDataDto}
+            fieldName={"specifyDepVariables"}
+          />
+          {octopusStepConfigurationDto && octopusStepConfigurationDto.getData("specifyDepVariables") && (
+            <>
+              <OctopusDeploymentVariables
+                fieldName={"deploymentVariables"}
                 dataObject={octopusStepConfigurationDto}
                 setDataObject={setOctopusStepConfigurationDataDto}
-                isLoading={isLoading}
-                plan={plan}
-                stepId={stepId}
               />
-            )}
-          {octopusStepConfigurationDto &&
-            octopusStepConfigurationDto.getData("octopusPlatformType") &&
-          (octopusStepConfigurationDto.getData("octopusPlatformType") === "Azure" ||
-            octopusStepConfigurationDto.getData("octopusPlatformType") === "Script") && (
-              <>
-                <OctopusDeploymentTypeInputSelect
-                  fieldName={"octopusDeploymentType"}
-                  dataObject={octopusStepConfigurationDto}
-                  setDataObject={setOctopusStepConfigurationDataDto}
-                  disabled={
-                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
-                      ? octopusStepConfigurationDto.getData("octopusPlatformType").length === 0
-                      : true
-                  }
-                  tool_prop={
-                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
-                      ? octopusStepConfigurationDto.getData("octopusPlatformType")
-                      : ""
-                  }
-                />
-                <OctopusScriptTypeSelectInput
-                  dataObject={octopusStepConfigurationDto}
-                  setDataObject={setOctopusStepConfigurationDataDto}
-                  disabled={
-                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
-                      ? octopusStepConfigurationDto.getData("octopusPlatformType").length === 0
-                      : true
-                  }
-                  tool_prop={
-                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
-                      ? octopusStepConfigurationDto.getData("octopusPlatformType")
-                      : ""
-                  }
-                  />
-                  <OctopusScriptTypeDetailsView
-                    dataObject={octopusStepConfigurationDto}
-                    setDataObject={setOctopusStepConfigurationDataDto}
-                    disabled={
-                      octopusStepConfigurationDto && octopusStepConfigurationDto.getData("scriptSource")
-                        ? octopusStepConfigurationDto.getData("scriptSource").length === 0
-                        : true
-                    }
-                    tool_prop={
-                      octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
-                        ? octopusStepConfigurationDto.getData("octopusPlatformType")
-                        : ""
-                    }
-                  />
-                <OctopusFeedSelectInput
-                  fieldName={"octopusFeedId"}
-                  dataObject={octopusStepConfigurationDto}
-                  setDataObject={setOctopusStepConfigurationDataDto}
-                  disabled={
-                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
-                      ? octopusStepConfigurationDto.getData("spaceName").length === 0
-                      : true
-                  }
-                  tool_prop={
-                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
-                      ? octopusStepConfigurationDto.getData("spaceName")
-                      : ""
-                  }
-                />
-                {octopusStepConfigurationDto &&
-                octopusStepConfigurationDto.getData("octopusPlatformType") &&
-                  octopusStepConfigurationDto.getData("octopusPlatformType") !== "Script" && (
-                <TextInputBase
-                  dataObject={octopusStepConfigurationDto}
-                  setDataObject={setOctopusStepConfigurationDataDto}
-                  fieldName={"octopusPhysicalPath"}
-                />
-                )
+              <TextInputBase
+                setDataObject={setOctopusStepConfigurationDataDto}
+                dataObject={octopusStepConfigurationDto}
+                fieldName={"structuredConfigVariablesPath"}
+                disabled={
+                  octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0
                 }
-                <RollbackToggleInput
-                  dataObject={octopusStepConfigurationDto}
-                  setDataObject={setOctopusStepConfigurationDataDto}
-                  fieldName={"isRollback"}
-                />
-                {octopusStepConfigurationDto && octopusStepConfigurationDto.getData("isRollback") && (
-                  <OctopusVersionSelectInput
-                    fieldName={"octopusVersion"}
-                    dataObject={octopusStepConfigurationDto}
-                    setDataObject={setOctopusStepConfigurationDataDto}
-                    pipelineId={pipelineId}
-                    disabled={
-                      octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusFeedId")
-                        ? octopusStepConfigurationDto.getData("octopusFeedId").length === 0
-                        : true
-                    }
-                    tool_prop={
-                      octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusFeedId")
-                        ? octopusStepConfigurationDto.getData("octopusFeedId")
-                        : ""
-                    }
-                  />
-                )}
-                <OctopusSpecifyDepVarsToggle
-                  dataObject={octopusStepConfigurationDto}
-                  setDataObject={setOctopusStepConfigurationDataDto}
-                  fieldName={"specifyDepVariables"}
-                />
-                {octopusStepConfigurationDto && octopusStepConfigurationDto.getData("specifyDepVariables") && (
-                  <>
-                    <OctopusDeploymentVariables
-                      fieldName={"deploymentVariables"}
-                      dataObject={octopusStepConfigurationDto}
-                      setDataObject={setOctopusStepConfigurationDataDto}
-                    />
-                    <TextInputBase
-                      setDataObject={setOctopusStepConfigurationDataDto}
-                      dataObject={octopusStepConfigurationDto}
-                      fieldName={"structuredConfigVariablesPath"}
-                      disabled={
-                        octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0
-                      }
-                    />
-                    <TextInputBase
-                      setDataObject={setOctopusStepConfigurationDataDto}
-                      dataObject={octopusStepConfigurationDto}
-                      fieldName={"xmlConfigTransformVariableValue"}
-                      disabled={
-                        octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0
-                      }
-                    />
-                  </>
-                )}
-              </>
-            )}
-            {octopusStepConfigurationDto &&
-              octopusStepConfigurationDto.getData("octopusPlatformType") &&
-              octopusStepConfigurationDto.getData("octopusPlatformType").toLowerCase() === "deploy to tomcat via manager" && (
-                <OctopusDeployToTomcatDetailsView
-                  dataObject={octopusStepConfigurationDto}
-                  setDataObject={setOctopusStepConfigurationDataDto}
-                  disabled={false}
-                  platformType={
-                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
-                      ? octopusStepConfigurationDto.getData("octopusPlatformType")
-                      : ""
-                  }
-                  pipelineId={pipelineId}
-                />
-            )}
-            {octopusStepConfigurationDto &&
-            octopusStepConfigurationDto.getData("octopusPlatformType") &&
-            octopusStepConfigurationDto.getData("octopusPlatformType") === "Package" && (
-              <>
-                <OctopusDeploymentTypeInputSelect
-                  fieldName={"octopusDeploymentType"}
-                  dataObject={octopusStepConfigurationDto}
-                  setDataObject={setOctopusStepConfigurationDataDto}
-                  disabled={
-                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
-                      ? octopusStepConfigurationDto.getData("octopusPlatformType").length === 0
-                      : true
-                  }
-                  tool_prop={
-                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
-                      ? octopusStepConfigurationDto.getData("octopusPlatformType")
-                      : ""
-                  }
-                />
-                {octopusStepConfigurationDto.getData("octopusDeploymentType") &&
-                  octopusStepConfigurationDto.getData("octopusDeploymentType").toLowerCase() === "octopus.iis" && (
-                    <OctopusDeployToIisView
-                      dataObject={octopusStepConfigurationDto}
-                      setDataObject={setOctopusStepConfigurationDataDto}
-                      disabled={false}
-                      platformType={
-                        octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
-                          ? octopusStepConfigurationDto.getData("octopusPlatformType")
-                          : ""
-                      }
-                      pipelineId={pipelineId}
-                    />
-                )}
-                {octopusStepConfigurationDto.getData("octopusDeploymentType") &&
-                  octopusStepConfigurationDto.getData("octopusDeploymentType").toLowerCase() === "octopus.javaarchive" && (
-                    <OctopusDeployToJavaArchiveView
-                      dataObject={octopusStepConfigurationDto}
-                      setDataObject={setOctopusStepConfigurationDataDto}
-                      disabled={false}
-                      platformType={
-                        octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
-                          ? octopusStepConfigurationDto.getData("octopusPlatformType")
-                          : ""
-                      }
-                      pipelineId={pipelineId}
-                    />
-                )}
-              </>
-            )}
-          <Row className="mx-1 py-2">
-            <SaveButtonBase
-              recordDto={octopusStepConfigurationDto}
-              setRecordDto={setOctopusStepConfigurationDataDto}
-              createRecord={callbackFunction}
-              updateRecord={callbackFunction}
-              showSuccessToasts={false}
-              lenient={true}
-              className="mr-2"
-            />
-            <CloseButton isLoading={isLoading} closeEditorCallback={closeEditorPanel} />
-          </Row>
+              />
+              <TextInputBase
+                setDataObject={setOctopusStepConfigurationDataDto}
+                dataObject={octopusStepConfigurationDto}
+                fieldName={"xmlConfigTransformVariableValue"}
+                disabled={
+                  octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0
+                }
+              />
+            </>
+          )}
         </>
       )}
-      <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
-    </>
+      {octopusStepConfigurationDto &&
+      octopusStepConfigurationDto.getData("octopusPlatformType") &&
+      octopusStepConfigurationDto.getData("octopusPlatformType").toLowerCase() === "deploy to tomcat via manager" && (
+        <OctopusDeployToTomcatDetailsView
+          dataObject={octopusStepConfigurationDto}
+          setDataObject={setOctopusStepConfigurationDataDto}
+          disabled={false}
+          platformType={
+            octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+              ? octopusStepConfigurationDto.getData("octopusPlatformType")
+              : ""
+          }
+          pipelineId={pipelineId}
+        />
+      )}
+      {octopusStepConfigurationDto &&
+      octopusStepConfigurationDto.getData("octopusPlatformType") &&
+      octopusStepConfigurationDto.getData("octopusPlatformType") === "Package" && (
+        <>
+          <OctopusDeploymentTypeInputSelect
+            fieldName={"octopusDeploymentType"}
+            dataObject={octopusStepConfigurationDto}
+            setDataObject={setOctopusStepConfigurationDataDto}
+            disabled={
+              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                ? octopusStepConfigurationDto.getData("octopusPlatformType").length === 0
+                : true
+            }
+            tool_prop={
+              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                ? octopusStepConfigurationDto.getData("octopusPlatformType")
+                : ""
+            }
+          />
+          {octopusStepConfigurationDto.getData("octopusDeploymentType") &&
+          octopusStepConfigurationDto.getData("octopusDeploymentType").toLowerCase() === "octopus.iis" && (
+            <OctopusDeployToIisView
+              dataObject={octopusStepConfigurationDto}
+              setDataObject={setOctopusStepConfigurationDataDto}
+              disabled={false}
+              platformType={
+                octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                  ? octopusStepConfigurationDto.getData("octopusPlatformType")
+                  : ""
+              }
+              pipelineId={pipelineId}
+            />
+          )}
+          {octopusStepConfigurationDto.getData("octopusDeploymentType") &&
+          octopusStepConfigurationDto.getData("octopusDeploymentType").toLowerCase() === "octopus.javaarchive" && (
+            <OctopusDeployToJavaArchiveView
+              dataObject={octopusStepConfigurationDto}
+              setDataObject={setOctopusStepConfigurationDataDto}
+              disabled={false}
+              platformType={
+                octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                  ? octopusStepConfigurationDto.getData("octopusPlatformType")
+                  : ""
+              }
+              pipelineId={pipelineId}
+            />
+          )}
+        </>
+      )}
+    </PipelineStepEditorPanelContainer>
   );
 }
 
