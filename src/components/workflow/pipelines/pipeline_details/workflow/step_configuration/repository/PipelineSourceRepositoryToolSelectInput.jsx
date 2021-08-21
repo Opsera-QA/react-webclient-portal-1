@@ -13,7 +13,6 @@ function PipelineSourceRepositoryToolSelectInput({className, fieldName, model, s
     newModel.setData("workspaceName", "");
     newModel.setData("repository", "");
     newModel.setData("branch", "");
-    newModel.setData("", "");
     setModel({...newModel});
   };
 
