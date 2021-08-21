@@ -77,7 +77,7 @@ function PipelinesOverviewMetrics({ dashboardData, toggleDynamicPanel, selectedD
 
   return (
     <MetricContainer
-      // chartHelpComponent={(closeHelpPanel) => <InsightsPipelinesOverviewHelpDocumentation closeHelpPanel={closeHelpPanel} />}
+      chartHelpComponent={(closeHelpPanel) => <InsightsPipelinesOverviewHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       title="Pipelines: Overview">
       {getPipelinesOverview()}
     </MetricContainer>
