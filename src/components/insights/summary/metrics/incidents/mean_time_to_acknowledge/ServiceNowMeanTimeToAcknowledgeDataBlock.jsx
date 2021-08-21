@@ -6,24 +6,18 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
-import Model from "core/data_model/model";
-import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import ServiceNowMeanTimeToResolutionBarChart
+  from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionBarChart";
+import ServiceNowMeanTimeToAcknowledgeBarChart
+  from "components/insights/charts/servicenow/bar_chart/mean_time_to_acknowledge/ServiceNowMeanTimeToAcknowledgeBarChart";
 
-function AvgBuildDuration({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
+function ServiceNowMeanTimeToAcknowledgeDataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [dataForDynamicPanel , setDataForDynamicPanel] = useState([]);
-  const [tableFilterDto, setTableFilterDto] = useState(
-    new Model(
-      { ...genericChartFilterMetadata.newObjectFields },
-      genericChartFilterMetadata,
-      false
-    )
-  );
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -46,44 +40,43 @@ function AvgBuildDuration({ dashboardData, toggleDynamicPanel, selectedDataBlock
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       let dateRange = dashboardData?.data?.filters[
         dashboardData?.data?.filters.findIndex(
           (obj) => obj.type === "date"
         )
       ]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken, 
-        cancelSource, 
-        "opseraBuildDuration", 
-        null, 
+        getAccessToken,
+        cancelSource,
+        "serviceNowMTTA",
+        null,
         dashboardTags,
         null,
         null,
-        null,
+        dashboardOrgs,
         null,
         null,
         dateRange
       );
-      let dataObject = response?.data?.data[0]?.opseraBuildDuration?.data || [];
+      let dataObject = response?.data?.data[0]?.serviceNowMTTA?.data[0];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
-        let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", response?.data?.data[0]?.opseraRecentCDStatus?.count);
-        setTableFilterDto({...newFilterDto});
       }
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -91,35 +84,34 @@ function AvgBuildDuration({ dashboardData, toggleDynamicPanel, selectedDataBlock
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("Average_Build_Duration", metrics);
+    toggleDynamicPanel("mean_time_to_acknowledge", getDynamicPanel());
   };
 
-  const getAverage = ()=>{
-    let sum = 0;
-    for(let pipeline of metrics){
-        sum += pipeline.duration;
-    }
-    return (sum / metrics.length).toFixed(2);
+  const getDynamicPanel = () => {
+    return (
+      <ServiceNowMeanTimeToAcknowledgeBarChart
+        dashboardData={dashboardData}
+        kpiConfiguration={{ kpi_name: "Service Now Mean Time to Acknowledgement", filters: [] }}
+        showSettingsToggle={false}
+      />
+    );
   };
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "Average_Build_Duration" ? "selected-data-block" : undefined} style={style}>
+      <div className={selectedDataBlock === "mean_time_to_acknowledge" ? "selected-data-block" : undefined} style={style}>
         <InsightsSynopsisDataBlock
           title={
-            !isLoading && metrics[0] ? (
-              getAverage()
-            ) : !isLoading ? 0 : (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                fixedWidth
-                className="mr-1"
-              />
+            !isLoading && metrics?.overallMtta ? (
+              metrics?.overallMtta
+            ) : !isLoading ? (
+              0
+            ) : (
+              <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1" />
             )
           }
-          subTitle="Average Build Duration (Mins)"
-          toolTipText="Average Build Duration (Mins)"
+          subTitle="Mean Time to Acknowledge (Hours)"
+          toolTipText="Mean Time to Acknowledge (Hours)"
           clickAction={() => onDataBlockSelect()}
         />
       </div>
@@ -129,11 +121,11 @@ function AvgBuildDuration({ dashboardData, toggleDynamicPanel, selectedDataBlock
   return getChartBody();
 }
 
-AvgBuildDuration.propTypes = {
-  selectedDataBlock: PropTypes.string,
+ServiceNowMeanTimeToAcknowledgeDataBlock.propTypes = {
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
-  style:PropTypes.object
+  selectedDataBlock: PropTypes.string,
+  style: PropTypes.object,
 };
 
-export default AvgBuildDuration;
+export default ServiceNowMeanTimeToAcknowledgeDataBlock;

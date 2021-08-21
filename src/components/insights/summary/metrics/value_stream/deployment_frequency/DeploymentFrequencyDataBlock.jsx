@@ -9,6 +9,7 @@ import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSyno
 import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import InsightsPipelineDetailsTable from "components/insights/summary/metrics/InsightsPipelineDetailsTable";
 
 function DeploymentFrequencyDataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock , style }) {
   const fields = BuildDetailsMetadata.fields;
@@ -104,7 +105,16 @@ function DeploymentFrequencyDataBlock({ dashboardData, toggleDynamicPanel, selec
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("deployment_frequency", metrics[0]?.data);
+    toggleDynamicPanel("deployment_frequency", getDynamicPanel());
+  };
+
+  const getDynamicPanel = () => {
+    return (
+      <InsightsPipelineDetailsTable
+        data={metrics[0]?.data}
+        tableTitle={"Deployment Frequency"}
+      />
+    );
   };
 
   const getChartBody = () => {

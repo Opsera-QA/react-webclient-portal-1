@@ -6,25 +6,18 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
-import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
-import Model from "core/data_model/model";
-import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import InsightsPipelineDetailsDurationTable
+  from "components/insights/summary/metrics/pipelines_average_duration/InsightsPipelineDetailsDurationTable";
+import ServiceNowMeanTimeToResolutionBarChart
+  from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionBarChart";
 
-function TotalpipelinesFailed({ dashboardData, toggleDynamicPanel, selectedDataBlock , style }) {
-  const fields = BuildDetailsMetadata.fields;
+function ServiceNowMeanTimeToResolutionDataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [tableFilterDto, setTableFilterDto] = useState(
-    new Model(
-      { ...genericChartFilterMetadata.newObjectFields },
-      genericChartFilterMetadata,
-      false
-    )
-  );
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -47,22 +40,14 @@ function TotalpipelinesFailed({ dashboardData, toggleDynamicPanel, selectedDataB
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadData = async (
-    cancelSource = cancelTokenSource,
-    filterDto = tableFilterDto
-  ) => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       let dashboardTags =
-        dashboardData?.data?.filters[
-          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
-        ]?.value;
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardOrgs =
-        dashboardData?.data?.filters[
-          dashboardData?.data?.filters.findIndex(
-            (obj) => obj.type === "organizations"
-          )
-        ]?.value;
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       let dateRange = dashboardData?.data?.filters[
         dashboardData?.data?.filters.findIndex(
           (obj) => obj.type === "date"
@@ -71,22 +56,17 @@ function TotalpipelinesFailed({ dashboardData, toggleDynamicPanel, selectedDataB
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "failedPipelineExecutions",
+        "serviceNowMTTR",
         null,
         dashboardTags,
-        filterDto,
+        null,
         null,
         dashboardOrgs,
         null,
         null,
         dateRange
       );
-      let dataObject = response?.data
-        ? response?.data?.data[0]
-        : [{ data: [], count: [{ count: 0 }] }];
-      let newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", dataObject[0]?.count[0]?.count);
-      setTableFilterDto({ ...newFilterDto });
+      let dataObject = response?.data?.data[0]?.serviceNowMTTR?.data[0];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -104,29 +84,35 @@ function TotalpipelinesFailed({ dashboardData, toggleDynamicPanel, selectedDataB
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("failed_pipeline_executions", metrics[0]?.data);
+    toggleDynamicPanel("mean_time_to_resolution", getDynamicPanel());
+  };
+
+  const getDynamicPanel = () => {
+    return (
+      <ServiceNowMeanTimeToResolutionBarChart
+        dashboardData={dashboardData}
+        kpiConfiguration={{kpi_name: "Service Now Mean Time to Resolution", filters: []}}
+        showSettingsToggle={false}
+      />
+    );
   };
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "failed_pipeline_executions" ? "selected-data-block" : undefined} style={style}>
+      <div className={selectedDataBlock === "mean_time_to_resolution" ? "selected-data-block" : undefined} style={style}>
         <InsightsSynopsisDataBlock
           title={
-            !isLoading && metrics[0]?.count[0] ? (
-              metrics[0]?.count[0]?.count
+            !isLoading && metrics?.overallMttr ? (
+              metrics?.overallMttr
+            ) : !isLoading ? (
+              0
             ) : (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                fixedWidth
-                className="mr-1"
-              />
+              <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1" />
             )
           }
-          subTitle="Failed Pipeline Executions"
-          toolTipText="Failed Pipeline Executions"
+          subTitle="Mean Time to Resolution (Hours)"
+          toolTipText="Mean Time to Resolution (Hours)"
           clickAction={() => onDataBlockSelect()}
-          statusColor="danger"
         />
       </div>
     );
@@ -135,11 +121,11 @@ function TotalpipelinesFailed({ dashboardData, toggleDynamicPanel, selectedDataB
   return getChartBody();
 }
 
-TotalpipelinesFailed.propTypes = {
+ServiceNowMeanTimeToResolutionDataBlock.propTypes = {
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
   selectedDataBlock: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
 };
 
-export default TotalpipelinesFailed;
+export default ServiceNowMeanTimeToResolutionDataBlock;

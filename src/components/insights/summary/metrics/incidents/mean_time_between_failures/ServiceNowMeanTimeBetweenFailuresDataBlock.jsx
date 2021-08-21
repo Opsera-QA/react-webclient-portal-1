@@ -6,23 +6,16 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
-import Model from "core/data_model/model";
-import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import ServiceNowMeanTimeBetweenFailuresBarChart
+  from "components/insights/charts/servicenow/bar_chart/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresBarChart";
 
-function AvgDeploymentDuration({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
+function ServiceNowMeanTimeBetweenFailuresDataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [tableFilterDto, setTableFilterDto] = useState(
-    new Model(
-      { ...genericChartFilterMetadata.newObjectFields },
-      genericChartFilterMetadata,
-      false
-    )
-  );
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -45,44 +38,43 @@ function AvgDeploymentDuration({ dashboardData, toggleDynamicPanel, selectedData
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      let dateRange = dashboardData?.data?.filters[
-        dashboardData?.data?.filters.findIndex(
-          (obj) => obj.type === "date"
-        )
-      ]?.value;
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+        let dateRange = dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "date"
+          )
+        ]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "opseraRecentCDStatus",
+        "serviceNowMTBF",
         null,
         dashboardTags,
-        filterDto,
         null,
         null,
+        dashboardOrgs,
         null,
         null,
         dateRange
       );
-      let dataObject = response?.data?.data[0]?.opseraRecentCDStatus?.data;
+      let dataObject = response?.data?.data[0]?.serviceNowMTBF?.data[0];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
-        let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", response?.data?.data[0]?.opseraRecentCDStatus?.count);
-        setTableFilterDto({...newFilterDto});
       }
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -90,35 +82,34 @@ function AvgDeploymentDuration({ dashboardData, toggleDynamicPanel, selectedData
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("Average_Deployment_Duration", metrics);
+    toggleDynamicPanel("mean_time_between_failures", getDynamicPanel());
   };
 
-  const getAverage = ()=>{
-    let sum = 0;
-    for(let pipeline of metrics){
-        sum += pipeline.duration;
-    }
-    return (sum / metrics.length).toFixed(2);
+  const getDynamicPanel = () => {
+    return (
+      <ServiceNowMeanTimeBetweenFailuresBarChart
+        dashboardData={dashboardData}
+        kpiConfiguration={{ kpi_name: "Service Now Mean Time Between Failures", filters: [] }}
+        showSettingsToggle={false}
+      />
+    );
   };
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "Average_Deployment_Duration" ? "selected-data-block" : undefined} style={style}>
+      <div className={selectedDataBlock === "mean_time_between_failures" ? "selected-data-block" : undefined} style={style}>
         <InsightsSynopsisDataBlock
           title={
-            !isLoading && metrics[0] ? (
-              getAverage()
-            ) : !isLoading ? 0 : (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                fixedWidth
-                className="mr-1"
-              />
+            !isLoading && metrics?.overallMtbf ? (
+              metrics?.overallMtbf
+            ) : !isLoading ? (
+              0
+            ) : (
+              <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1" />
             )
           }
-          subTitle="Average Deployment Duration (Mins)"
-          toolTipText="Average Deployment Duration (Mins)"
+          subTitle="Mean Time Between Failures (Hours)"
+          toolTipText="Mean Time Between Failures (Hours)"
           clickAction={() => onDataBlockSelect()}
         />
       </div>
@@ -128,11 +119,11 @@ function AvgDeploymentDuration({ dashboardData, toggleDynamicPanel, selectedData
   return getChartBody();
 }
 
-AvgDeploymentDuration.propTypes = {
-  selectedDataBlock: PropTypes.string,
+ServiceNowMeanTimeBetweenFailuresDataBlock.propTypes = {
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
-  style:PropTypes.object
+  selectedDataBlock: PropTypes.string,
+  style: PropTypes.object,
 };
 
-export default AvgDeploymentDuration;
+export default ServiceNowMeanTimeBetweenFailuresDataBlock;

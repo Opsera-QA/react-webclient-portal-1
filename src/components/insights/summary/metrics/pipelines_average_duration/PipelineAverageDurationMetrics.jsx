@@ -2,33 +2,33 @@ import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import HorizontalThreeDataBlockContainer
   from "components/common/metrics/data_blocks/horizontal/HorizontalThreeDataBlockContainer";
-import TotalPipelinesExecuted
-  from "components/insights/summary/metrics/pipelines_overview/total_executed/TotalPipelinesExecuted";
-import PipelinesSuccessfulExecutions
-  from "components/insights/summary/metrics/pipelines_overview/successful_executions/PipelinesSuccessfulExecutions";
+import ExecutedPipelineTotalMetric
+  from "components/insights/summary/metrics/pipelines_overview/total_executed/ExecutedPipelineTotalMetric";
+import SuccessfulPipelineRunTotalMetric
+  from "components/insights/summary/metrics/pipelines_overview/successful_executions/SuccessfulPipelineRunTotalMetric";
 import TotalPipelinesFailed
-  from "components/insights/summary/metrics/pipelines_overview/total_failed/TotalpipelinesFailed";
+  from "components/insights/summary/metrics/pipelines_overview/total_failed/FailedPipelineRunTotalMetric";
 import InsightsPipelinesOverviewHelpDocumentation
   from "components/common/help/documentation/insights/Synopsis/InsightsPipelinesOverviewHelpDocumentation";
 import MetricContainer from "components/common/panels/insights/charts/MetricContainer";
 import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
-import PipelineFailedQualityAndSecurity
-  from "components/insights/summary/metrics/pipelines_failure_score/failed_quality_and_security/PipelineFailedQualityAndSecurity";
+import FailedPipelineQualityAndSecurityMetric
+  from "components/insights/summary/metrics/pipelines_failure_score/failed_quality_and_security/FailedPipelineQualityAndSecurityMetric";
 import PipelinesFailedDeployment
-  from "components/insights/summary/metrics/pipelines_failure_score/failed_deployment/PipelinesFailedDeployment";
+  from "components/insights/summary/metrics/pipelines_failure_score/failed_deployment/FailedPipelineDeploymentMetric";
 import StoppedPipelines
-  from "components/insights/summary/metrics/pipelines_failure_score/stopped_pipelines/StoppedPipelinesDataBlock";
+  from "components/insights/summary/metrics/pipelines_failure_score/stopped_pipelines/StoppedPipelineCountMetric";
 import {AuthContext} from "contexts/AuthContext";
-import ServiceNowMTTRDataBlock
-  from "components/insights/summary/metrics/incidents/mean_time_to_resolution/ServiceNowMTTRDataBlock";
-import ServiceNowMTTADataBlock
-  from "components/insights/summary/metrics/incidents/mean_time_to_acknowledge/ServiceNowMTTADataBlock";
-import ServiceNowMTBFDataBlock
-  from "components/insights/summary/metrics/incidents/mean_time_between_failures/ServiceNowMTBFDataBlock";
-import AvgDeploymentDuration
-  from "components/insights/summary/metrics/pipelines_average_duration/deployment_duration/AvgDeploymentDuration";
-import AvgBuildDuration
-  from "components/insights/summary/metrics/pipelines_average_duration/build_duration/AvgBuildDuration";
+import ServiceNowMeanTimeToResolutionDataBlock
+  from "components/insights/summary/metrics/incidents/mean_time_to_resolution/ServiceNowMeanTimeToResolutionDataBlock";
+import ServiceNowMeanTimeToAcknowledgeDataBlock
+  from "components/insights/summary/metrics/incidents/mean_time_to_acknowledge/ServiceNowMeanTimeToAcknowledgeDataBlock";
+import ServiceNowMeanTimeBetweenFailuresDataBlock
+  from "components/insights/summary/metrics/incidents/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresDataBlock";
+import AveragePipelineDeploymentDurationMetric
+  from "components/insights/summary/metrics/pipelines_average_duration/deployment_duration/AveragePipelineDeploymentDurationMetric";
+import AveragePipelineBuildDurationMetric
+  from "components/insights/summary/metrics/pipelines_average_duration/build_duration/AveragePipelineBuildDurationMetric";
 import AvgApprovalTimeDataBlock
   from "components/insights/summary/metrics/pipelines_average_duration/approval_time/AvgApprovalTime";
 
@@ -44,7 +44,7 @@ function PipelineAverageDurationMetrics({ dashboardData, toggleDynamicPanel, sel
     return (
       <HorizontalThreeDataBlockContainer
         topDataBlock={
-          <AvgDeploymentDuration
+          <AveragePipelineDeploymentDurationMetric
             dashboardData={dashboardData}
             toggleDynamicPanel={toggleDynamicPanel}
             selectedDataBlock={selectedDataBlock}
@@ -52,7 +52,7 @@ function PipelineAverageDurationMetrics({ dashboardData, toggleDynamicPanel, sel
           />
         }
         middleDataBlock={
-          <AvgBuildDuration
+          <AveragePipelineBuildDurationMetric
             dashboardData={dashboardData}
             toggleDynamicPanel={toggleDynamicPanel}
             selectedDataBlock={selectedDataBlock}
@@ -75,13 +75,13 @@ function PipelineAverageDurationMetrics({ dashboardData, toggleDynamicPanel, sel
   const getIncidents = () => {
     return (
       <DataBlockWrapper padding={0}>
-        <AvgDeploymentDuration
+        <AveragePipelineDeploymentDurationMetric
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
           style={{ width: "33%" }}
         />
-        <AvgBuildDuration
+        <AveragePipelineBuildDurationMetric
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}

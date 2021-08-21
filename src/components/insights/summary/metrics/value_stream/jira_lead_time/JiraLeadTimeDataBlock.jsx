@@ -8,6 +8,9 @@ import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import InsightsPipelineDetailsTable from "components/insights/summary/metrics/InsightsPipelineDetailsTable";
+import JiraLeadTimeChartNoDataBlocks
+  from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks";
 
 function PipelineFailedSecurity({
   dashboardData,
@@ -95,14 +98,23 @@ function PipelineFailedSecurity({
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("jiraLeadTime", metrics[0]?.data);
+    toggleDynamicPanel("jira_lead_time", getDynamicPanel());
+  };
+
+  const getDynamicPanel = () => {
+    return (
+      <JiraLeadTimeChartNoDataBlocks
+        dashboardData={dashboardData}
+        kpiConfiguration={{kpi_name: "Lead Time", filters: []}}
+      />
+    );
   };
 
   const getChartBody = () => {
     return (
       <div
         className={
-          selectedDataBlock === "jiraLeadTime" ? "selected-data-block" : undefined }
+          selectedDataBlock === "jira_lead_time" ? "selected-data-block" : undefined }
         style={style}
       >
         <InsightsSynopsisDataBlock

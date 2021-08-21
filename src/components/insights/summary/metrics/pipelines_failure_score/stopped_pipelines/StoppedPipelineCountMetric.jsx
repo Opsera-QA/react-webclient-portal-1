@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext, useMemo, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
@@ -6,10 +6,13 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
+import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import InsightsPipelineDetailsTable from "components/insights/summary/metrics/InsightsPipelineDetailsTable";
 
-function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
+function StoppedPipelines({ dashboardData, toggleDynamicPanel, selectedDataBlock, style, disable }) {
+  const fields = BuildDetailsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -51,8 +54,6 @@ function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel, selectedDat
   ) => {
     try {
       setIsLoading(true);
-      // TODO: Handle pagination
-      tableFilterDto.setData("pageSize", 1000);
       let dashboardTags =
         dashboardData?.data?.filters[
           dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
@@ -72,7 +73,7 @@ function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel, selectedDat
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "summaryTotalPipelines",
+        "summaryStoppedPipelines",
         null,
         dashboardTags,
         filterDto,
@@ -105,28 +106,41 @@ function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel, selectedDat
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("total_pipelines", metrics[0]?.data);
+    toggleDynamicPanel("stopped_pipeline_data_block", getDynamicPanel());
+  };
+
+  const getDynamicPanel = () => {
+    return (
+      <InsightsPipelineDetailsTable
+        data={metrics[0]?.data}
+        tableTitle={"Stopped Pipelines"}
+      />
+    );
   };
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "total_pipelines" ? "selected-data-block" : undefined} style={style}>
+      <div className={selectedDataBlock === "stopped_pipeline_data_block" ? "selected-data-block" : undefined} style={style}>
         <InsightsSynopsisDataBlock
           title={
-            !isLoading && metrics[0]?.count[0] ? (
-              metrics[0]?.count[0]?.count
-            ) : (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                fixedWidth
-                className="mr-1"
-              />
-            )
+            disable? "-" : (
+              !isLoading && metrics[0]?.count[0] ? (
+                metrics[0]?.count[0]?.count
+              ) : (
+                <FontAwesomeIcon
+                  icon={faSpinner}
+                  spin
+                  fixedWidth
+                  className="mr-1"
+                />
+              )
+            ) 
           }
-          subTitle="Total Number of Pipelines Executed"
-          toolTipText="Total Number of Pipelines Executed"
+          subTitle="Stopped Pipelines"
+          toolTipText="Stopped Pipelines"
           clickAction={() => onDataBlockSelect()}
+          statusColor={ disable? "" : "danger"}
+          disable={disable}
         />
       </div>
     );
@@ -135,11 +149,12 @@ function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel, selectedDat
   return getChartBody();
 }
 
-TotalPipelinesExecuted.propTypes = {
-  selectedDataBlock: PropTypes.string,
+StoppedPipelines.propTypes = {
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
-  style:PropTypes.object
+  selectedDataBlock: PropTypes.string,
+  style: PropTypes.object,
+  disable:PropTypes.bool
 };
 
-export default TotalPipelinesExecuted;
+export default StoppedPipelines;
