@@ -96,7 +96,7 @@ function PipelineIncidentsMetrics({ dashboardData, toggleDynamicPanel, selectedD
 
   return (
     <MetricContainer
-      chartHelpComponent={(closeHelpPanel) => <InsightsPipelinesOverviewHelpDocumentation closeHelpPanel={closeHelpPanel} />}
+      // chartHelpComponent={(closeHelpPanel) => <InsightsPipelinesOverviewHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       title={"Pipelines: Incidents"}>
       {getIncidents()}
     </MetricContainer>
