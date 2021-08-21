@@ -4,7 +4,7 @@ import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClipboardCheck, faClipboardList} from "@fortawesome/pro-light-svg-icons";
 
-function CopyToClipboardButton({ copyString, size }) {
+function CopyToClipboardButton({ copyString, size, className }) {
   const [copiedToClipboard, setCopiedToClipboard] = useState(false);
 
   const copyToClipboard = () => {
@@ -26,19 +26,22 @@ function CopyToClipboardButton({ copyString, size }) {
   };
 
   return (
-    <Button size={size} variant={copiedToClipboard ? "success" : "outline-secondary"} onClick={() => {copyToClipboard();}} disabled={copyString == null}>
-      {getLabel()}
-    </Button>
+    <div className={className}>
+      <Button size={size} variant={copiedToClipboard ? "success" : "outline-secondary"} onClick={() => {copyToClipboard();}} disabled={copyString == null}>
+        {getLabel()}
+      </Button>
+    </div>
   );
 }
 
 CopyToClipboardButton.propTypes = {
   copyString: PropTypes.string,
-  size: PropTypes.string
+  size: PropTypes.string,
+  className: PropTypes.string,
 };
 
 CopyToClipboardButton.defaultProps = {
-  size: "sm"
+  size: "sm",
 };
 
 export default CopyToClipboardButton;
