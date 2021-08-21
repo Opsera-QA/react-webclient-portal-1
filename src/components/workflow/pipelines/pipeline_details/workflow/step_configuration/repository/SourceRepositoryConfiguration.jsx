@@ -15,13 +15,15 @@ import modelHelpers from "components/common/model/modelHelpers";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import axios from "axios";
-import PipelineSourceRepositoryGitBranchSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryGitBranchSelectInput";
+import PipelineSourceRepositoryPrimaryBranchSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryPrimaryBranchSelectInput";
 import PipelineSourceRepositoryEventBasedTriggerInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryTriggerInput";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineSourceRepositoryToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryToolSelectInput";
+import PipelineSourceRepositorySecondaryBranchesMultiSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositorySecondaryBranchesMultiSelectInput";
 
 function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseClick }) {
   const toastContext = useContext(DialogToastContext);
@@ -67,7 +69,7 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
 
   const callbackFunction = async () => {
     if (validateRequiredFields()) {
-      let { name, service, accountId, username, password, repository, branch, key, trigger_active, repoId, sshUrl, gitUrl, workspace, workspaceName } = sourceRepositoryModel?.getPersistData();
+      let { name, service, accountId, username, password, repository, branch, key, trigger_active, repoId, sshUrl, gitUrl, workspace, workspaceName, secondary_branches } = sourceRepositoryModel?.getPersistData();
       const item = {
         name: name,
         service: service,
@@ -81,6 +83,7 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
         gitUrl: gitUrl,
         sshUrl: sshUrl,
         branch: branch,
+        secondary_branches: secondary_branches,
         key: key,
         trigger_active: trigger_active,
       };
@@ -154,9 +157,14 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
           && sourceRepositoryModel?.getData("accountId") != null
           && (sourceRepositoryModel?.getData("service" === "bitbucket") ? sourceRepositoryModel?.getData("workspace") != null && sourceRepositoryModel?.getData("workspace").length > 0 : true)}
       />
-      <PipelineSourceRepositoryGitBranchSelectInput
+      <PipelineSourceRepositoryPrimaryBranchSelectInput
         model={sourceRepositoryModel}
         setModel={setSourceRepositoryModel}
+      />
+      <PipelineSourceRepositorySecondaryBranchesMultiSelectInput
+        model={sourceRepositoryModel}
+        setModel={setSourceRepositoryModel}
+        primaryBranch={sourceRepositoryModel?.getData("branch")}
       />
       <PipelineSourceRepositoryEventBasedTriggerInput
         model={sourceRepositoryModel}

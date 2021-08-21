@@ -50,7 +50,6 @@ const sourceRepositoryConfigurationMetadata = {
     {
       label: "Secondary Branches",
       id: "secondary_branches",
-      isRequired: true,
     },
     {
       label: "Workspace",

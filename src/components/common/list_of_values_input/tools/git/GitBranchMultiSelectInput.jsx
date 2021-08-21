@@ -1,13 +1,13 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import GitActionsHelper
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
 import axios from "axios";
+import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
 
-function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
+function GitBranchMultiSelectInput({ service, gitToolId, repoId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [branches, setBranches] = useState([]);
@@ -71,9 +71,8 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
       return ("No Branches Found!");
     }
   };
-
   return (
-    <SelectInputBase
+    <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
@@ -84,12 +83,12 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
       clearDataFunction={clearDataFunction}
       valueField="name"
       textField="name"
-      disabled={disabled || isLoading || branches.length === 0}
+      disabled={disabled || isLoading}
     />
   );
 }
 
-GitBranchInput.propTypes = {
+GitBranchMultiSelectInput.propTypes = {
   service: PropTypes.string,
   gitToolId: PropTypes.string,
   repoId: PropTypes.string,
@@ -98,12 +97,9 @@ GitBranchInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   setDataFunction: PropTypes.func,
-  disabled: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.array
-  ]),
+  disabled: PropTypes.bool,
   visible: PropTypes.bool,
-  clearDataFunction: PropTypes.func
+  clearDataFunction: PropTypes.func,
 };
 
-export default GitBranchInput;
+export default GitBranchMultiSelectInput;
