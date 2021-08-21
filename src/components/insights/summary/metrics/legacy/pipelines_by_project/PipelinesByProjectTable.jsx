@@ -10,7 +10,7 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import {faProjectDiagram} from "@fortawesome/pro-light-svg-icons";
-import ProjectDetailsMetadata from "./project-details-metadata";
+import ProjectDetailsMetadata from "components/insights/summary/project-details-metadata";
 import FilterContainer from "components/common/table/FilterContainer";
 
 function PipelinesByProjectTable({dashboardData, setDashboardData}) {
