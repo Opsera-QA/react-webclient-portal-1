@@ -1,28 +1,48 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import GitActionsHelper
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
+import axios from "axios";
 
 function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled,setBranchList}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [branches, setBranches] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
     setBranches([]);
     if (service && service !== "" && gitToolId  && gitToolId !== "" && repoId && repoId !== "") {
-      loadData();
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
     }
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, [service, gitToolId, workspace, repoId]);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getGitBranches();
+      await getGitBranches(cancelSource);
     }
     catch (error) {
       console.error(error);
@@ -33,8 +53,8 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
     }
   };
 
-  const getGitBranches = async () => {
-    const response  = await GitActionsHelper.searchBranches(service, gitToolId, repoId, workspace, getAccessToken);
+  const getGitBranches = async (cancelSource = cancelTokenSource) => {
+    const response  = await GitActionsHelper.getBranchesV2(getAccessToken, cancelSource, service, gitToolId, repoId, workspace);
     let branchesResponse = response?.data?.data;
 
     if (Array.isArray(branchesResponse)) {
@@ -45,7 +65,7 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
     }
   };
 
-  if (!visible) {
+  if (visible === false) {
     return <></>;
   }
 
@@ -84,11 +104,6 @@ GitBranchInput.propTypes = {
   visible: PropTypes.bool,
   clearDataFunction: PropTypes.func,
   setBranchList:PropTypes.func
-};
-
-GitBranchInput.defaultProps = {
-  visible: true,
-  setBranchList:null,
 };
 
 export default GitBranchInput;
