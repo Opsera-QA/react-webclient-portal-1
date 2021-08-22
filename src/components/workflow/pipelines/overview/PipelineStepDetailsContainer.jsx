@@ -22,7 +22,7 @@ function PipelineStepDetailsContainer({ isLoading, children, title }) {
       <div className="p-2 makeup-tab-content-title">
         {getTitleBar()}
       </div>
-      <div className={"m-2"}>
+      <div>
         {children}
       </div>
     </div>

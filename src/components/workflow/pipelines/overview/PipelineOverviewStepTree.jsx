@@ -16,17 +16,19 @@ function PipelineOverviewStepTree({ pipelineSteps }) {
   //   TODO: Make MakeupTreeBase Component
   //   Make MakeupTreeItem Component
   return (
-    <div className={"scroll-y makeup-tree-container"}>
+    <div className={"makeup-tree-container"}>
       <div className="p-2 makeup-tree-title">Pipeline Steps</div>
       <Nav variant={"pills"} className={"flex-column"}>
-        <div className={"scroll-y h-75 p-2"}>
-          {pipelineSteps.map((pipelineStep, index) => (
-            <Nav.Item key={index}>
-              <Nav.Link key={index} eventKey={index}>
-                {`Step ${index + 1}: ${pipelineStep?.name}`}
-              </Nav.Link>
-            </Nav.Item>
-          ))}
+        <div className={"h-100"}>
+          <div className={"makeup-tree-container-body p-2"}>
+            {pipelineSteps.map((pipelineStep, index) => (
+              <Nav.Item key={index}>
+                <Nav.Link key={index} eventKey={index}>
+                  {`Step ${index + 1}: ${pipelineStep?.name}`}
+                </Nav.Link>
+              </Nav.Item>
+            ))}
+          </div>
         </div>
       </Nav>
     </div>

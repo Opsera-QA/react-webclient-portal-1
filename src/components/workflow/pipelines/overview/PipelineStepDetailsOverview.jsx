@@ -51,7 +51,15 @@ function PipelineStepDetailsOverview({ pipelineStep, index }) {
 
   return (
     <PipelineStepDetailsContainer title={`Step ${index + 1}: [${pipelineStep?.name}]`}>
-      <GeneralTabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
+      <div className={"pt-2 pl-2 makeup-container-tab-container"}>
+        <GeneralTabPanelContainer
+          currentView={
+            <div className={"makeup-container-content-body"}>
+              {getCurrentView()}
+            </div>
+          }
+          tabContainer={getTabContainer()} />
+      </div>
     </PipelineStepDetailsContainer>
   );
 }
