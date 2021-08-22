@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
-import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import PipelineDetailsOverview from "components/workflow/pipelines/pipeline_details/PipelineDetailsOverview";
+import PipelineDetailsOverview from "components/workflow/pipelines/overview/PipelineDetailsOverview";
 
 function PipelineDetailsOverviewOverlay({ pipeline }) {
   const toastContext = useContext(DialogToastContext);
