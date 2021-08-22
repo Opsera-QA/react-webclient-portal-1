@@ -43,8 +43,8 @@ function PipelineOverviewContainer({ pipeline }) {
       <div className="object-properties-input">
         <div className="content-container">
           <TitleBarBase title={`${pipeline?.name} Pipeline Summary`} icon={faDraftingCompass} />
-          <Tab.Container id="left-tabs-example" defaultActiveKey={0}>
-            <Row className={"h-75 mx-0"}>
+          <Tab.Container defaultActiveKey={0}>
+            <Row className={"makeup-container-body mx-0"}>
               <Col sm={2} className={"px-0"}>
                 <PipelineOverviewStepTree pipelineSteps={pipelineSteps} />
               </Col>
