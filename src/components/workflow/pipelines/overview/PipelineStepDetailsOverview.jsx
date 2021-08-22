@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import PipelineStepConfigurationSummary
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepConfigurationSummary";
-import PipelineStepDetailsContainer from "components/workflow/pipelines/pipeline_details/PipelineStepDetailsContainer";
+import PipelineStepDetailsContainer from "components/workflow/pipelines/overview/PipelineStepDetailsContainer";
 import PipelineStepJsonPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepJsonPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";

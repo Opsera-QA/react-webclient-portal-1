@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import PipelineStepDetailsOverview from "components/workflow/pipelines/pipeline_details/PipelineStepDetailsOverview";
+import PipelineStepDetailsOverview from "components/workflow/pipelines/overview/PipelineStepDetailsOverview";
 import PipelineStepJsonPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepJsonPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import JsonTab from "components/common/tabs/detail_view/JsonTab";
 import OverlayTabPanelContainer from "components/common/panels/general/OverlayTabPanelContainer";
+import PipelineOverviewContainer from "components/workflow/pipelines/overview/PipelineOverviewContainer";
 
 function PipelineDetailsOverview({ pipeline }) {
   const [pipelineSteps, setPipelineSteps] = useState([]);
@@ -29,7 +30,7 @@ function PipelineDetailsOverview({ pipeline }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return getBody();
+        return <PipelineOverviewContainer pipelineSteps={pipelineSteps} />;
       case "json":
         return <PipelineStepJsonPanel pipelineStepData={pipeline} />;
       default:
@@ -43,24 +44,6 @@ function PipelineDetailsOverview({ pipeline }) {
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <JsonTab handleTabClick={handleTabClick} activeTab={activeTab} />
       </CustomTabContainer>
-    );
-  };
-
-  const getBody = () => {
-    if (Array.isArray(pipelineSteps) && pipelineSteps.length > 0) {
-      return (
-        pipelineSteps.map((pipelineStep, index) => {
-          return (
-            <div key={index} className={"my-3"}>
-              <PipelineStepDetailsOverview index={index} pipelineStep={pipelineStep} />
-            </div>
-          );
-        })
-      );
-    }
-
-    return (
-      <span>No Pipeline Steps</span>
     );
   };
 
