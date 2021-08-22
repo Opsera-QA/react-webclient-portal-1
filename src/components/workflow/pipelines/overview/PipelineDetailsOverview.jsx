@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import PipelineStepDetailsOverview from "components/workflow/pipelines/overview/PipelineStepDetailsOverview";
 import PipelineStepJsonPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepJsonPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
@@ -10,17 +9,7 @@ import OverlayTabPanelContainer from "components/common/panels/general/OverlayTa
 import PipelineOverviewContainer from "components/workflow/pipelines/overview/PipelineOverviewContainer";
 
 function PipelineDetailsOverview({ pipeline }) {
-  const [pipelineSteps, setPipelineSteps] = useState([]);
   const [activeTab, setActiveTab] = useState("summary");
-
-  useEffect(() => {
-    const steps = pipeline?.workflow?.plan;
-    setPipelineSteps([]);
-
-    if (Array.isArray(steps)) {
-      setPipelineSteps(steps);
-    }
-  }, [JSON.stringify(pipeline)]);
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
@@ -30,7 +19,7 @@ function PipelineDetailsOverview({ pipeline }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <PipelineOverviewContainer pipelineSteps={pipelineSteps} />;
+        return <PipelineOverviewContainer pipeline={pipeline} />;
       case "json":
         return <PipelineStepJsonPanel pipelineStepData={pipeline} />;
       default:

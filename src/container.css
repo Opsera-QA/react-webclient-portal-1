@@ -49,3 +49,18 @@
     }
 }
 /* End Metric Container Styling */
+
+/* Makeup Tree Container Styling */
+.makeup-tree-container {
+    border-right: 1px solid #E6E5E3;
+}
+
+.makeup-tree-title, .makeup-tab-content-title {
+    font-weight: 500;
+    line-height: 1.4;
+    font-size: 1.2rem;
+    background-color: #F3F3F1;
+    color: #3D3B36;
+}
+
+/* End Makeup Tree Container Styling */
