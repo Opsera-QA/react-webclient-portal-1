@@ -1,29 +1,34 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import Tab from "react-bootstrap/Tab";
 import {Col, Nav, Row} from "react-bootstrap";
 import PipelineStepDetailsOverview from "components/workflow/pipelines/overview/PipelineStepDetailsOverview";
+import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
+import TitleBarBase from "components/common/fields/TitleBarBase";
+import PipelineOverviewStepTree from "components/workflow/pipelines/overview/PipelineOverviewStepTree";
 
-function PipelineOverviewContainer({ pipelineSteps }) {
-  // TODO: Make own component
-  const getPipelineStepTree = () => {
+function PipelineOverviewContainer({ pipeline }) {
+  const [pipelineSteps, setPipelineSteps] = useState([]);
+
+  useEffect(() => {
+    const steps = pipeline?.workflow?.plan;
+    setPipelineSteps([]);
+
+    if (Array.isArray(steps)) {
+      setPipelineSteps(steps);
+    }
+  }, [JSON.stringify(pipeline)]);
+
+  // TODO: Make own component. Perhaps, make container for tree and tab content and don't put tab content in this component.
+  const getPipelineOverStepTabContent = () => {
     return (
-      <Col sm={2} className={"pr-0"}>
-        <div className="blueprint-title mb-3">Pipeline Steps</div>
-        <Nav variant={"pills"} className="flex-column">
-          <div className={"scroll-y"}>
-            {pipelineSteps.map((pipelineStep, index) => (
-              <>
-                <Nav.Item key={index}>
-                  <Nav.Link key={index} eventKey={index}>
-                    {`Step ${index + 1}: ${pipelineStep?.name}`}
-                  </Nav.Link>
-                </Nav.Item>
-              </>
-            ))}
-          </div>
-        </Nav>
-      </Col>
+      <Tab.Content>
+        {pipelineSteps.map((pipelineStep, index) => (
+          <Tab.Pane key={index} eventKey={index}>
+            <PipelineStepDetailsOverview pipelineStep={pipelineStep} index={index} />
+          </Tab.Pane>
+        ))}
+      </Tab.Content>
     );
   };
 
@@ -34,28 +39,30 @@ function PipelineOverviewContainer({ pipelineSteps }) {
   }
 
   return (
-    <div className="mb-1 mt-3 bordered-content-block p-3 w-100">
-      <Tab.Container id="left-tabs-example" defaultActiveKey={0}>
-        <Row>
-          {getPipelineStepTree()}
-          <Col sm={10}>
-            <Tab.Content>
-              {pipelineSteps.map((pipelineStep, index) => (
-                <Tab.Pane key={index} eventKey={index}>
-                  <PipelineStepDetailsOverview pipelineStep={pipelineStep} index={index} />
-                </Tab.Pane>
-              ))}
-            </Tab.Content>
-          </Col>
-        </Row>
-      </Tab.Container>
+    <div>
+      <div className="object-properties-input">
+        <div className="content-container">
+          <TitleBarBase title={`${pipeline?.name} Pipeline Summary`} icon={faDraftingCompass} />
+          <Tab.Container id="left-tabs-example" defaultActiveKey={0}>
+            <Row className={"h-75 mx-0"}>
+              <Col sm={2} className={"px-0"}>
+                <PipelineOverviewStepTree pipelineSteps={pipelineSteps} />
+              </Col>
+              <Col sm={10} className={"px-0"}>
+                {getPipelineOverStepTabContent()}
+              </Col>
+            </Row>
+          </Tab.Container>
+        </div>
+      </div>
+      <div className={"object-properties-footer"} />
     </div>
   );
 }
 
 
 PipelineOverviewContainer.propTypes = {
-  pipelineSteps: PropTypes.array,
+  pipeline: PropTypes.object,
 };
 
 export default PipelineOverviewContainer;

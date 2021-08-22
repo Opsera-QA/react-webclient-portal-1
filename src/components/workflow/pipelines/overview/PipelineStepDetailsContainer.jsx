@@ -18,8 +18,8 @@ function PipelineStepDetailsContainer({ isLoading, children, title }) {
   };
 
   return (
-    <div className={`content-container content-card-1`}>
-      <div className="px-2 content-block-header-inverse title-text-header-2">
+    <div>
+      <div className="p-2 makeup-tab-content-title">
         {getTitleBar()}
       </div>
       <div className={"m-2"}>
