@@ -60,7 +60,7 @@ function JfrogRepoSelectInput({ fieldName, dataObject, setDataObject, disabled, 
 
   const loadRepos = async (cancelSource = cancelTokenSource) => {
     try {
-      const res = await JFrogStepActions.getRepos(dataObject.getData("nexusToolId"),"Docker", getAccessToken, cancelSource);
+      const res = await JFrogStepActions.getRepos(dataObject.getData("nexusToolId"),"Maven", getAccessToken, cancelSource);
       if (res && res.status === 200) {
         setRepos(res.data);
         return;
