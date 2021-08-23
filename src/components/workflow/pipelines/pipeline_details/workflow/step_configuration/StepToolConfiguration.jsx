@@ -55,6 +55,8 @@ import AwsEcsDeployStepConfiguration
   from "./step_tool_configuration_forms/aws_ecs_deploy/AwsEcsDeployStepConfiguration";
 import CoverityStepConfiguration from "./step_tool_configuration_forms/coverity/CoverityStepConfiguration";
 import AzureAcrPushStepConfiguration from "./step_tool_configuration_forms/azure_acr_push/AzureAcrPushStepConfiguration";
+import JFrogMavenStepConfiguration 
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_maven/JFrogMavenStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -785,6 +787,22 @@ function StepToolConfiguration({
       case "jfrog_artifactory_docker":
         return (
           <JFrogDockerStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+            />
+        );
+      case "jfrog_artifactory_maven":
+        return (
+          <JFrogMavenStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}
