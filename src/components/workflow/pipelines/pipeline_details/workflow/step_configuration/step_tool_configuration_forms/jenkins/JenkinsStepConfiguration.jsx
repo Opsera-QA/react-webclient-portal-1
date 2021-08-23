@@ -244,13 +244,15 @@ function JenkinsStepConfiguration({
           label: "Docker Name",
           id: "dockerName",
           regexDefinitionName: "dockerName",
-          maxLength: 50
+          maxLength: 50,
+          lowercase: true,
         },
         {
           label: "Docker Tag",
           id: "dockerTagName",
           regexDefinitionName: "dockerName",
-          maxLength: 50
+          maxLength: 50,
+          lowercase: true,
         },
         {
           label: "Dynamic Tag",
@@ -265,7 +267,8 @@ function JenkinsStepConfiguration({
           id: "dockerDynamicTagName",
           formText: "date, timestamp, run_count text can be used to make it dynamic",
           regexDefinitionName: "dockerName",
-          maxLength: 50
+          maxLength: 50,
+          lowercase: true,
         }
       ]
     }, true));
