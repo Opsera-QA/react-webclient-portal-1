@@ -658,7 +658,7 @@ function JenkinsStepConfiguration({
         jenkinsUrl.length === 0 ||
         jUserId.length === 0 ||
         (formData.jobType === "SFDC UNIT TESTING" ? sfdcUnitTestType.length === 0 : false) ||
-        (buildType === "docker" ? dockerName.length === 0 || !regex.test(dockerName) || dockerTagName.length === 0 || !regex.test(dockerTagName) : false) 
+        (buildType === "docker" ? dockerName.length === 0 || !regex.test(dockerName) : false) 
       ) {
         let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
         setToast(toast);
