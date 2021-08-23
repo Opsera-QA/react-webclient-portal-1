@@ -88,7 +88,10 @@ userActions.createOpseraAccount = async (registrationDataDto) => {
     cloudProvider: registrationDataDto.getData("cloudProvider"),
     cloudProviderRegion: registrationDataDto.getData("cloudProviderRegion")
   };
-  let attributes = {title: registrationDataDto.getData("title"), company: registrationDataDto.getData("company")};
+  let attributes = {
+    title: registrationDataDto.getData("title"),
+    company: registrationDataDto.getData("company"),
+  };
   delete finalObject["cloudProviderRegion"];
   delete finalObject["cloudProvider"];
   finalObject["configuration"] = configuration;
