@@ -458,7 +458,7 @@ function JenkinsStepConfiguration({
       tmp.setData("dockerDynamicTagName", formData.dockerDynamicTagName);
       setDataObject(tmp);
     }    
-  }, [formData.dockerSecretKeys, formData.dockerName, formData.dockerTagName, formData.dockerTagType]);
+  }, [formData.dockerSecretKeys, formData.dockerName, formData.dockerTagName, formData.dockerTagType, formData.dockerDynamicTagName]);
 
   useEffect(() => {
     if(pythonScriptData){
