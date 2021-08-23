@@ -20,7 +20,8 @@ import {
   getMissingRequiredFieldsErrorDialog,
   getServiceUnavailableDialog,
 } from "../../../../../../../common/toasts/toasts";
-import SFDCConfiguration from "./jenkins_step_config_sub_forms/SFDCConfiguration";
+import SFDCConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/sub_forms/SFDCConfiguration";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import pipelineActions from "components/workflow/pipeline-actions";
 import JSONInput from "react-json-editor-ajrm";
