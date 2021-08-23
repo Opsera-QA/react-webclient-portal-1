@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PasswordInput from "components/common/inputs/text/PasswordInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function PipelineSourceRepositorySecretInput({className, fieldName, model, setModel, disabled, visible}) {
   if (visible === false) {
@@ -15,13 +15,13 @@ function PipelineSourceRepositorySecretInput({className, fieldName, model, setMo
         <b>SSL verification:</b> enabled<br/>
         <b>Selected events:</b> <i>just the push event</i><br/>
       </div>
-      <PasswordInput
+      <TextInputBase
         fieldName={fieldName}
-        configurationRequired={true}
         dataObject={model}
         setDataObject={setModel}
         disabled={disabled}
         className={className}
+        style={{WebkitTextSecurity: 'disc'}}
       />
     </div>
   );
