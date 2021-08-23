@@ -1,17 +1,20 @@
 import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
-import {Button} from 'react-bootstrap';
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import SfdcPipelineWizardSubmitFileTypeButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardSubmitFileTypeButton";
 import CancelButton from "components/common/buttons/CancelButton";
 import axios from "axios";
 import StandalonePackageXmlField from "components/common/fields/pipelines/sfdc/StandalonePackageXmlField";
-import PipelineRunNumberInput from "components/common/inputs/number/pipelines/PipelineRunNumberInput";
+import PipelineRunSelectInput
+  from "components/common/list_of_values_input/workflow/pipelines/run/PipelineRunSelectInput";
+import SfdcPipelineWizardUploadComponentTypesRadioInput
+  from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardUploadComponentTypesRadioInput";
 
 function SfdcPipelineWizardPastRunComponent({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -33,6 +36,9 @@ function SfdcPipelineWizardPastRunComponent({ pipelineWizardModel, setPipelineWi
     let newDataObject = {...pipelineWizardModel};
     newDataObject.setData("xmlFileContent", "");
     newDataObject.setData("csvFileContent", []);
+    newDataObject.setData("isXml", false);
+    newDataObject.setData("isCsv", false);
+    newDataObject.setData("fromFileUpload", false);
     setPipelineWizardModel({...newDataObject});
   };
 
@@ -40,6 +46,8 @@ function SfdcPipelineWizardPastRunComponent({ pipelineWizardModel, setPipelineWi
     let newDataObject = {...pipelineWizardModel};
     newDataObject.setData("xmlFileContent", xml);
     newDataObject.setData("csvFileContent", []);
+    newDataObject.setData("isXml", true);
+    newDataObject.setData("fromFileUpload", true);
     setPipelineWizardModel({...newDataObject});
   };
 
@@ -50,6 +58,8 @@ function SfdcPipelineWizardPastRunComponent({ pipelineWizardModel, setPipelineWi
           runNumber={pipelineWizardModel?.getData("selectedRunNumber")}
           pipelineWizardModel={pipelineWizardModel}
           setXmlFunction={validateXml}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
         />
         {buttonContainer()}
       </>
@@ -63,6 +73,7 @@ function SfdcPipelineWizardPastRunComponent({ pipelineWizardModel, setPipelineWi
           pipelineWizardModel={pipelineWizardModel}
           setPipelineWizardScreen={setPipelineWizardScreen}
           isXml={true}
+          isLoading={isLoading}
         />
         <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
       </SaveButtonContainer>
@@ -75,10 +86,17 @@ function SfdcPipelineWizardPastRunComponent({ pipelineWizardModel, setPipelineWi
         <div>
           <div className="my-4 w-100">
             <div className="my-3">
-              <PipelineRunNumberInput
+              <PipelineRunSelectInput
                 model={pipelineWizardModel}
                 setModel={setPipelineWizardModel}
-                maximumRunCount={pipelineWizardModel?.getData("run_count") > 0 ? pipelineWizardModel?.getData("run_count") : undefined}
+                maximumRunCount={pipelineWizardModel?.getData("run_count") > 0 ? pipelineWizardModel?.getData("run_count") - 1 : undefined}
+                disabled={isLoading}
+              />
+            </div>
+            <div className="my-3">
+              <SfdcPipelineWizardUploadComponentTypesRadioInput
+                pipelineWizardModel={pipelineWizardModel}
+                setPipelineWizardModel={setPipelineWizardModel}
               />
             </div>
           </div>
