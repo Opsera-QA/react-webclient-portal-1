@@ -20,6 +20,8 @@ import {
   getMissingRequiredFieldsErrorDialog,
   getServiceUnavailableDialog,
 } from "../../../../../../../common/toasts/toasts";
+import SFDCConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/sub_forms/SFDCConfiguration";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import pipelineActions from "components/workflow/pipeline-actions";
 import JSONInput from "react-json-editor-ajrm";
@@ -39,8 +41,8 @@ import PipelineStepEditorPanelContainer
 import ParameterSelectListInputBase
   from "../../../../../../../common/list_of_values_input/parameters/ParameterSelectListInputBase";
 import { faHandshake } from "@fortawesome/pro-light-svg-icons";
-import SFDCConfiguration
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/sub_forms/SFDCConfiguration";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import DockerTagTypeSelectionInput from "./inputs/DockerTagTypeSelectionInput";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -106,6 +108,9 @@ const INITIAL_DATA = {
   isManualRollBackBranch: false,
   terraformStepId: "",
   customParameters: [],
+  dynamicTag: false,
+  dockerTagType:[],
+  dockerDynamicTagName:"",
   useTerraformOutput: false
 };
 
@@ -230,11 +235,38 @@ function JenkinsStepConfiguration({
     }
     fetchJenkinsDetails("jenkins");
 
-    setDataObject(new Model({dockerSecrets: []}, {
+    setDataObject(new Model({dockerDetails: []}, {
       fields: [
         {
           label: "Docker Secrets",
           id: "dockerSecrets"
+        },
+        {
+          label: "Docker Name",
+          id: "dockerName",
+          regexDefinitionName: "dockerName",
+          maxLength: 50
+        },
+        {
+          label: "Docker Tag",
+          id: "dockerTagName",
+          regexDefinitionName: "dockerName",
+          maxLength: 50
+        },
+        {
+          label: "Dynamic Tag",
+          id: "dynamicTag"
+        },
+        {
+          label: "Docker Dynamic Tag Type",
+          id: "dockerTagType"
+        },
+        {
+          label: "Docker Dynamic Tag",
+          id: "dockerDynamicTagName",
+          formText: "date, timestamp, run_count text can be used to make it dynamic",
+          regexDefinitionName: "dockerName",
+          maxLength: 50
         }
       ]
     }, true));
@@ -420,9 +452,14 @@ function JenkinsStepConfiguration({
     if(dataObject){
       let tmp = dataObject;
       tmp.setData("dockerSecrets", formData.dockerSecretKeys);
+      tmp.setData("dynamicTag", formData.dynamicTag);
+      tmp.setData("dockerName", formData.dockerName);
+      tmp.setData("dockerTagName", formData.dockerTagName);
+      tmp.setData("dockerTagType", formData.dockerTagType);
+      tmp.setData("dockerDynamicTagName", formData.dockerDynamicTagName);
       setDataObject(tmp);
     }    
-  }, [formData.dockerSecretKeys]);
+  }, [formData.dockerSecretKeys, formData.dockerName, formData.dockerTagName, formData.dockerTagType, formData.dockerDynamicTagName]);
 
   useEffect(() => {
     if(pythonScriptData){
@@ -468,6 +505,16 @@ function JenkinsStepConfiguration({
 
       if(formData.buildType === "python" || formData.buildType === "gradle" || formData.buildType === "maven") {
         handlePythonScriptDetails();
+      }
+
+      if( formData.buildType === "docker" ) {
+        setFormData(Object.assign(formData, {
+          dynamicTag: dataObject.getData("dynamicTag"),
+          dockerName: dataObject.getData("dockerName"),
+          dockerTagName: dataObject.getData("dockerTagName"),
+          dockerTagType: dataObject.getData("dockerTagType"),
+          dockerDynamicTagName: dataObject.getData("dockerDynamicTagName"),
+        }));
       }
 
       if( formData.buildType === "docker" && (deleteDockerSecrets || _.isEmpty(formData.dockerBuildPathJson)) && dataObject.data.dockerSecrets?.length !== 0){
@@ -612,7 +659,7 @@ function JenkinsStepConfiguration({
         jenkinsUrl.length === 0 ||
         jUserId.length === 0 ||
         (formData.jobType === "SFDC UNIT TESTING" ? sfdcUnitTestType.length === 0 : false) ||
-        (buildType === "docker" ? dockerName.length === 0 || !regex.test(dockerName) || dockerTagName.length === 0 || !regex.test(dockerTagName) : false) 
+        (buildType === "docker" ? dockerName.length === 0 || !regex.test(dockerName) : false) 
       ) {
         let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
         setToast(toast);
@@ -1467,61 +1514,39 @@ function JenkinsStepConfiguration({
 
                 {formData.buildType === "docker" && (
                   <>
-                  <Form.Group controlId="dockerName">
-                    <Form.Label>Docker Name*</Form.Label>
-                    <Form.Control
-                      maxLength="256"
-                      type="text"
-                      placeholder=""
-                      value={formData.dockerName || ""}
-                      onChange={(e) =>{
-                        const regex = RegExp("^[ a-z0-9_.-]*$");
-                        if (!regex.test(e.target.value)) {
-                          setFormData({ ...formData, dockerName: e.target.value });
-                          setDockerNameErr(true);
-                          return;
-                        }
-                        setDockerNameErr(false);
-                        setFormData({ ...formData, dockerName: e.target.value });
-                      }}
+                  <TextInputBase 
+                    dataObject={dataObject}
+                    setDataObject={setDataObject}
+                    fieldName={"dockerName"}
+                  />
+                  <BooleanToggleInput
+                   dataObject={dataObject}
+                   setDataObject={setDataObject}
+                   fieldName={"dynamicTag"}                  
+                  />
+                  {!dataObject.getData("dynamicTag") && 
+                   <TextInputBase 
+                      dataObject={dataObject}
+                      setDataObject={setDataObject}
+                      fieldName={"dockerTagName"}
                     />
-                     {dockerNameErr ? 
-                      <Form.Control.Feedback type="invalid">
-                      Please provide a valid docker name.
-                      </Form.Control.Feedback> : 
-                     <Form.Text className="text-muted">
-                       Accepts lowercase alphanumeric characters, periods, dashes, and underscores without spaces.
-                      </Form.Text>
-                    }
-                  </Form.Group>
-                  <Form.Group controlId="dockerTag">
-                    <Form.Label>Docker Tag*</Form.Label>
-                    <Form.Control
-                      maxLength="256"
-                      type="text"
-                      placeholder=""
-                      value={formData.dockerTagName || ""}
-                      onChange={(e) =>{
-                        const regex = RegExp("^[ a-z0-9_.-]*$");
-                        if (!regex.test(e.target.value)) {
-                          setFormData({ ...formData, dockerTagName: e.target.value });
-                          setDockerTagErr(true);
-                          return;
-                        }
-                        setDockerTagErr(false);
-                        setFormData({ ...formData, dockerTagName: e.target.value });
-                      }}
-                    />
-                    {dockerTagErr ? 
-                      <Form.Control.Feedback type="invalid">
-                      Please provide a valid docker tag.
-                      </Form.Control.Feedback> : 
-                     <Form.Text className="text-muted">
-                       Accepts lowercase alphanumeric characters, periods, dashes, and underscores without spaces.
-                      </Form.Text>
-                    }
-                      
-                  </Form.Group>
+                  }
+                  {dataObject.getData("dynamicTag") &&
+                    <>
+                      <DockerTagTypeSelectionInput
+                      dataObject={dataObject}
+                      setDataObject={setDataObject}
+                      fieldName={"dockerTagType"}
+                      />
+                      {dataObject.getData("dockerTagType") === "other" && 
+                        <TextInputBase 
+                          dataObject={dataObject}
+                          setDataObject={setDataObject}
+                          fieldName={"dockerDynamicTagName"}
+                        />
+                      }
+                    </>
+                  }
                   <Form.Group controlId="dockerPath">
                     <Form.Label>Docker File Path</Form.Label>
                     <Form.Control
@@ -1584,57 +1609,6 @@ function JenkinsStepConfiguration({
                     setDeleteDockerSecrets={setDeleteDockerSecrets}
                     addSecret={deleteDockerSecrets || _.isEmpty(formData.dockerBuildPathJson)}
                   />
-                  {/* { deleteDockerSecrets || _.isEmpty(formData.dockerBuildPathJson) ? (                    
-                    <DockerSecretsInput 
-                      setDataObject={setDataObject} 
-                      dataObject={dataObject}
-                      deleteDockerSecrets={deleteDockerSecrets}
-                      setDeleteDockerSecrets={setDeleteDockerSecrets}
-                    />
-                  ) : (
-                    <div className="form-group m-2">
-                      <label>Secrets</label>
-                      { formData.dockerSecretKeys.length > 0 && 
-                        formData.dockerSecretKeys.map((secret, index) => {
-                          return (
-                            <div className="d-flex my-2 justify-content-between" key={index}>
-                              <Col sm={12}>
-                                <Row>
-                                  <Col sm={6} className={"pl-1 pr-0"}>
-                                    <input
-                                      className="form-control"
-                                      type={"text"}                              
-                                      placeholder={"Name"}                              
-                                      maxLength={30}
-                                      disabled={true}
-                                      value={secret.name}                                    
-                                    />
-                                  </Col>
-                                  <Col sm={6} className={"pl-1 pr-0"}>
-                                    <textarea
-                                      style={{WebkitTextSecurity: 'disc'}}
-                                      rows={3}
-                                      disabled={true}
-                                      value={secret.value}                                      
-                                      className="form-control"
-                                      placeholder={"Value"}
-                                    />                                    
-                                  </Col>
-                                </Row>
-                              </Col>                            
-                            </div>
-                          );                          
-                        })
-                      }                      
-                      <small className="form-text text-muted form-group m-2 text-left">
-                        Please delete the existing secrets to add new secrets
-                      </small>                      
-                      <div className="bottom-zoom-btns">
-                        <Button size="sm" variant="light" onClick={() => { setDeleteDockerSecrets(true);
-                          }}>Delete Secrets</Button>
-                      </div>                      
-                    </div>
-                  )}                   */}
                   </>
                 )}                
                 {(formData.buildType === "python" || formData.buildType === "gradle" || formData.buildType === "maven") && (
