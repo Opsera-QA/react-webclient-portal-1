@@ -49,10 +49,10 @@ import AzureDevopsToolConfiguration
   from "../../../../../inventory/tools/tool_details/tool_jobs/azure-devops/AzureDevopsToolConfiguration";
 import AzureDevopsStepConfiguration
   from "./step_tool_configuration_forms/azure_devops/AzureDevopsStepToolConfiguration";
-// import JenkinsStepConfiguration
-//   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
+import JenkinsStepConfiguration
+   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
 import KafkaConnectStepConfiguration from "./step_tool_configuration_forms/kafka_connect/KafkaConnectStepConfiguration";
-import JenkinsStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration-old";
+//import JenkinsStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration-old";
 import AwsEcsDeployStepConfiguration
   from "./step_tool_configuration_forms/aws_ecs_deploy/AwsEcsDeployStepConfiguration";
 import AwsLambdaDeployStepConfiguration
@@ -343,28 +343,29 @@ function StepToolConfiguration({
     switch (toolName) {
       case "jenkins":
         return (
-          <JenkinsStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            callbackGetFromVault={getFromVault}
-            callbackDeleteFromVault={deleteFromVaultUsingVaultKey}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
           // <JenkinsStepConfiguration
-          //   stepTool={stepTool}
-          //   plan={pipeline?.workflow?.plan}
-          //   stepId={stepId}            
-          //   closeEditorPanel={closeEditorPanel}
-          //   createJob={createJob}
           //   pipelineId={pipeline._id}
+          //   plan={pipeline.workflow.plan}
+          //   stepId={stepId}
+          //   stepTool={stepTool}
+          //   parentCallback={callbackFunction}
+          //   callbackSaveToVault={saveToVault}
+          //   callbackGetFromVault={getFromVault}
+          //   callbackDeleteFromVault={deleteFromVaultUsingVaultKey}
+          //   createJob={createJob}
+          //   setToast={setToast}
+          //   setShowToast={setShowToast}
+          //   closeEditorPanel={closeEditorPanel}
           // />
+          <JenkinsStepConfiguration
+            stepTool={stepTool}
+            plan={pipeline?.workflow?.plan}
+            stepId={stepId}            
+            closeEditorPanel={closeEditorPanel}
+            createJob={createJob}
+            pipelineId={pipeline._id}
+            parentCallback={callbackFunction}
+          />
         );
       case "junit":
         return (
