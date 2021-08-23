@@ -8,7 +8,7 @@ function PipelineSourceRepositoryToolSelectInput({className, fieldName, model, s
     let newModel = {...model};
     newModel.setData("accountId", selectedOption?._id);
     newModel.setData("username", selectedOption?.configuration?.accountUsername);
-    newModel.setData("password", selectedOption?.configuration?.accountUsername);
+    newModel.setData("password", selectedOption?.configuration?.accountPassword);
     newModel.setData("workspace", "");
     newModel.setData("workspaceName", "");
     newModel.setData("repository", "");
