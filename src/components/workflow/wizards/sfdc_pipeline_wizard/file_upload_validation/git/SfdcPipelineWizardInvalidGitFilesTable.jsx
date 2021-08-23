@@ -86,7 +86,6 @@ const SfdcPipelineWizardInvalidGitFilesTable = ({ pipelineWizardModel}) => {
     const response = await sfdcPipelineActions.getInvalidFileList(getAccessToken, cancelSource, pipelineWizardModel, newFilterModel);
     const data = response?.data;
     const fileList = response?.data?.data;
-    console.log("fileList: " + JSON.stringify(fileList));
 
     if (isMounted?.current === true && Array.isArray(fileList)) {
       let newDestSfdcFilterDto = newFilterModel;
