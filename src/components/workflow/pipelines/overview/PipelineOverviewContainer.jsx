@@ -6,6 +6,12 @@ import PipelineStepDetailsOverview from "components/workflow/pipelines/overview/
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import TitleBarBase from "components/common/fields/TitleBarBase";
 import PipelineOverviewStepTree from "components/workflow/pipelines/overview/PipelineOverviewStepTree";
+import sourceRepositoryConfigurationMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/source-repository-configuration-metadata";
+import modelHelpers from "components/common/model/modelHelpers";
+import PipelineSourceRepositorySummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositorySummaryPanel";
+import PipelineStepDetailsContainer from "components/workflow/pipelines/overview/PipelineStepDetailsContainer";
 
 function PipelineOverviewContainer({ pipeline }) {
   const [pipelineSteps, setPipelineSteps] = useState([]);
@@ -23,6 +29,13 @@ function PipelineOverviewContainer({ pipeline }) {
   const getPipelineOverStepTabContent = () => {
     return (
       <Tab.Content>
+        <Tab.Pane key={-1} eventKey={-1}>
+          <PipelineStepDetailsContainer title={`Pipeline Source Configuration`}>
+            <PipelineSourceRepositorySummaryPanel
+              sourceRepositoryModel={modelHelpers.parseObjectIntoModel(pipeline?.workflow?.source, sourceRepositoryConfigurationMetadata)}
+            />
+          </PipelineStepDetailsContainer>
+        </Tab.Pane>
         {pipelineSteps.map((pipelineStep, index) => (
           <Tab.Pane key={index} eventKey={index}>
             <PipelineStepDetailsOverview pipelineStep={pipelineStep} index={index} />

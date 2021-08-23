@@ -23,6 +23,8 @@ import Modal from "components/common/modal/modal";
 import "../../../workflows.css";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import WorkflowAuthorizedActions from "./workflow-authorized-actions";
+import PipelineDetailsOverviewOverlay
+  from "components/workflow/pipelines/overview/PipelineDetailsOverviewOverlay";
 
 function PipelineWorkflow({
   pipeline,
@@ -109,6 +111,7 @@ function PipelineWorkflow({
       });
       return;
     }
+    // toastContext.showOverlayPanel(<PipelineDetailsOverviewOverlay pipeline={pipeline} />);
     setModalHeader("Pipeline Configuration");
     setModalMessage(param);
     setShowModal(true);

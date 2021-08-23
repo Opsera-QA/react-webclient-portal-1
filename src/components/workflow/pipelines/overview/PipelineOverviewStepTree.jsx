@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Col, Nav} from "react-bootstrap";
+import {Nav} from "react-bootstrap";
 
 function PipelineOverviewStepTree({ pipelineSteps }) {
   // TODO: Make own component
@@ -18,9 +18,14 @@ function PipelineOverviewStepTree({ pipelineSteps }) {
   return (
     <div className={"makeup-tree-container"}>
       <div className="p-2 makeup-tree-title">Pipeline Steps</div>
-      <Nav variant={"pills"} className={"flex-column"}>
+      <Nav variant={"pills"} className={"flex-column"} defaultActiveKey={-1}>
         <div className={"h-100"}>
           <div className={"makeup-tree-container-body p-2"}>
+            <Nav.Item key={-1}>
+              <Nav.Link key={-1} eventKey={-1}>
+                {`Source Repository Configuration`}
+              </Nav.Link>
+            </Nav.Item>
             {pipelineSteps.map((pipelineStep, index) => (
               <Nav.Item key={index}>
                 <Nav.Link key={index} eventKey={index}>
@@ -37,7 +42,7 @@ function PipelineOverviewStepTree({ pipelineSteps }) {
 
 
 PipelineOverviewStepTree.propTypes = {
-  pipelineSteps: PropTypes.object,
+  pipelineSteps: PropTypes.array,
 };
 
 export default PipelineOverviewStepTree;
