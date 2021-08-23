@@ -17,6 +17,11 @@ const OctopusFeedMetadata = {
       isRequired: true
     },
     {
+      label: "Tool Type",
+      id: "toolType",
+      isRequired: true
+    },
+    {
       label: "Tool ID",
       id: "toolId",
       isRequired: true
@@ -32,12 +37,12 @@ const OctopusFeedMetadata = {
       isRequired: true
     },
     {
-      label: "Nexus Tool",
+      label: "Tool",
       id: "nexusToolId",
       isRequired: true
     },
     {
-      label: "Nexus Repository",
+      label: "Repository",
       id: "nexusRepository",
       isRequired: true
     },
@@ -62,6 +67,7 @@ const OctopusFeedMetadata = {
     nexusRepository: "",
     id: "",
     active: true,
+    toolType: "",
   }
 };
 
