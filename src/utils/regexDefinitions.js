@@ -151,7 +151,7 @@ regexDefinitions.customParameterNameRegex = {
 };
 
 regexDefinitions.dockerName = {
-  regex: /^[ a-z0-9_.-]*$/,
+  regex: /^[a-z0-9_.-]*$/,
   formText: "Accepts lowercase alphanumeric characters, periods, dashes, and underscores without spaces.",
   errorFormText: "Accepts lowercase alphanumeric characters, periods, dashes, and underscores without spaces.",
 };
