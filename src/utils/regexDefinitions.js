@@ -150,4 +150,10 @@ regexDefinitions.customParameterNameRegex = {
   errorFormText: "Name must begin with \"opsera-\" and can contain lowercase letters, numbers, dashes, and periods",
 };
 
+regexDefinitions.dockerName = {
+  regex: /^[a-z0-9_.-]*$/,
+  formText: "Accepts lowercase alphanumeric characters, periods, dashes, and underscores without spaces.",
+  errorFormText: "Accepts lowercase alphanumeric characters, periods, dashes, and underscores without spaces.",
+};
+
 export default regexDefinitions;

@@ -33,7 +33,6 @@ function SfdcPipelineWizardSubmitFileTypeButton({pipelineWizardModel, setPipelin
 
   const submitFiles = async () => {
     try {
-      console.log(isXml);
       setIsSaving(true);
       if (pipelineWizardModel.getData("isProfiles") === true) {
         toastContext.showInlineErrorMessage("Profile Migration with CSV/XML is not supported yet! Please check with Opsera Team.");

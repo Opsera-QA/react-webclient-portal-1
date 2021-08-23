@@ -11,7 +11,7 @@ import RegistryToolInfoOverlay from "components/common/list_of_values_input/tool
 import toolsActions from "components/inventory/tools/tools-actions";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
-function RoleRestrictedToolByIdentifierInputBase({ toolIdentifier, toolFriendlyName, placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className, fields}) {
+function RoleRestrictedToolByIdentifierInputBase({ toolIdentifier, toolFriendlyName, placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className, fields, textField, valueField}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
@@ -100,6 +100,20 @@ function RoleRestrictedToolByIdentifierInputBase({ toolIdentifier, toolFriendlyN
     return (`View ${capitalizeFirstLetter(toolFriendlyName)} tools`);
   };
 
+  const getInfoOverlay = () => {
+    if (toolIdentifier != null && toolIdentifier !== "") {
+      return (
+        <RegistryToolInfoOverlay
+          selectedToolId={model?.getData(fieldName)}
+          tools={tools}
+          toolData={tools?.find((tool) => tool?._id === model?.getData(fieldName))}
+          loadData={loadData}
+          isLoading={isLoading}
+        />
+      );
+    }
+  };
+
   if (visible === false) {
     return null;
   }
@@ -114,22 +128,14 @@ function RoleRestrictedToolByIdentifierInputBase({ toolIdentifier, toolFriendlyN
         setDataFunction={setDataFunction}
         selectOptions={tools}
         busy={isLoading}
-        valueField="_id"
-        textField="name"
+        valueField={valueField}
+        textField={textField}
         placeholderText={placeholderText}
         clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading}
         detailViewLink={getDetailViewToolUrl()}
         ellipsisTooltipText={getEllipsisTooltipText()}
-        infoOverlay={
-          <RegistryToolInfoOverlay
-            selectedToolId={model?.getData(fieldName)}
-            tools={tools}
-            toolData={tools?.find((tool) => tool?._id === model?.getData(fieldName))}
-            loadData={loadData}
-            isLoading={isLoading}
-          />
-        }
+        infoOverlay={getInfoOverlay()}
         linkTooltipText={`Load Tool Registry`}
         linkIcon={faTools}
       />
@@ -152,6 +158,13 @@ RoleRestrictedToolByIdentifierInputBase.propTypes = {
   clearDataFunction: PropTypes.func,
   className: PropTypes.string,
   fields: PropTypes.array,
+  textField: PropTypes.any,
+  valueField: PropTypes.string,
+};
+
+RoleRestrictedToolByIdentifierInputBase.defaultProps = {
+  textField: "name",
+  valueField: "_id",
 };
 
 export default RoleRestrictedToolByIdentifierInputBase;

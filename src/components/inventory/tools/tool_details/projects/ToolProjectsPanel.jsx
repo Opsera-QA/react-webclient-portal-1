@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
-import MessageField from "components/common/form_fields/MessageField";
+import MessageField from "components/common/fields/text/MessageField";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import JiraProjectsPanel from "components/inventory/tools/tool_details/tool_jobs/jira/projects/JiraProjectsPanel";
 

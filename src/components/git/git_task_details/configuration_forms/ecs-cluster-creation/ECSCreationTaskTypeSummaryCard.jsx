@@ -1,15 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
-import TextFieldBase from "components/common/form_fields/TextFieldBase";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import GitTasksSummaryCardContainer from "components/git/git_task_details/configuration_forms/GitTasksSummaryCardContainer";
-import FieldContainer from "components/common/fields/FieldContainer";
-import FieldLabel from "components/common/fields/FieldLabel";
 import BooleanField from "../../../../common/fields/boolean/BooleanField";
-import TextInputBase from "../../../../common/inputs/text/TextInputBase";
-import VpcSelectInput from "./inputs/VpcSelectInput";
-import SubnetSelectInput from "./inputs/SubnetSelectInput";
-import CodeFieldBase from "../../../../common/fields/code/CodeFieldBase";
 
 function EC2ClusterCreationTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
 

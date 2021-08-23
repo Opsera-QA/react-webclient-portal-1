@@ -5,13 +5,20 @@ import AzurePipelineStepConfigurationHelp
   from "../../../../common/help/documentation/pipelines/step_configuration/AzurePipelineStepConfigurationHelp";
 import PipelineStepSetupHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/PipelineStepSetupHelpDocumentation";
-
+import DockerEcrPushStepConfigurationHelp
+  from "../../../../common/help/documentation/pipelines/step_configuration/DockerEcrPushStepConfigurationHelp";
+import AwsEcsDeployStepConfigurationHelp
+  from "../../../../common/help/documentation/pipelines/step_configuration/AwsEcsDeployStepConfigurationHelp";
 function StepToolHelpIcon({type, tool, className, iconClassName}) {
   // TODO: Alphabetize when adding new help panels
   const getToolHelpPanel = () => {
     switch (tool) {
       case "azure-devops":
         return <AzurePipelineStepConfigurationHelp/>;
+      case "docker-push":
+        return <DockerEcrPushStepConfigurationHelp/>;
+      case "aws_ecs_deploy":
+        return <AwsEcsDeployStepConfigurationHelp/>;
       case "jenkins":
       case "junit":
       case "xunit":
@@ -30,7 +37,6 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
       case "spinnaker":
       case "approval":
       case "cypress":
-      case "docker-push":
       case "argo":
       case "anchore-scan":
       case "anchore-integrator":

@@ -6,10 +6,9 @@ import {parseError} from "components/common/helpers/error-helpers";
 import StandaloneXmlField from "components/common/fields/code/StandaloneXmlField";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 
-function StandalonePackageXmlField({pipelineWizardModel, runNumber, className, setXmlFunction}) {
+function StandalonePackageXmlField({pipelineWizardModel, runNumber, className, setXmlFunction, isLoading, setIsLoading}) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [xml, setXml] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -93,6 +92,8 @@ StandalonePackageXmlField.propTypes = {
   pipelineWizardModel: PropTypes.object,
   className: PropTypes.string,
   setXmlFunction: PropTypes.func,
+  isLoading: PropTypes.bool,
+  setIsLoading: PropTypes.bool,
 };
 
 export default StandalonePackageXmlField;

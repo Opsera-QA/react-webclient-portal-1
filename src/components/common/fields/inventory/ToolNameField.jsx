@@ -2,13 +2,13 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import Label from "components/common/form_fields/Label";
 import FieldContainer from "components/common/fields/FieldContainer";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import toolsActions from "components/inventory/tools/tools-actions";
 import axios from "axios";
 import ToolLinkIcon from "components/common/icons/inventory/tools/ToolLinkIcon";
+import FieldLabel from "components/common/fields/FieldLabel";
 
 function ToolNameField({ model, fieldName, className, handleClose }) {
   const [field] = useState(model?.getFieldById(fieldName));
@@ -88,9 +88,10 @@ function ToolNameField({ model, fieldName, className, handleClose }) {
 
   return (
     <FieldContainer className={className}>
-      <Label field={field}/>
+      <FieldLabel field={field}/>
       <span>{getToolName()}</span>
       <ToolLinkIcon
+        isLoading={isLoading}
         className={"ml-3"}
         toolId={model?.getData(fieldName)}
         accessAllowed={accessAllowed}

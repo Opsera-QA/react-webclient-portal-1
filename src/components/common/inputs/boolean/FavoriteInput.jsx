@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import InputLabel from "components/common/form_fields/input/InputLabel";
-import InfoText from "components/common/form_fields/input/InfoText";
 import {faStar as faStarSolid} from "@fortawesome/pro-solid-svg-icons";
 import {faStar} from "@fortawesome/pro-light-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 function FavoriteInput({fieldName, dataObject, setDataObject, disabled}) {
   const [field] = useState(dataObject.getFieldById(fieldName));

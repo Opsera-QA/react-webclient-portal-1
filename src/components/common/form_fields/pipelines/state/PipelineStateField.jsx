@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import Label from "../../Label";
+import FieldLabel from "components/common/fields/FieldLabel";
 import FailedPipelineState from "./FailedPipelineState";
 import RunningPipelineState from "./RunningPipelineState";
 import PausedPipelineState from "./PausedPipelineState";
@@ -25,7 +25,7 @@ function PipelineStateField({ fieldName, dataObject }) {
     }
   };
 
-  return (<div className="d-flex"><Label field={field} /><span>{getPipelineStateField(dataObject.getData(fieldName))}</span></div>);
+  return (<div className="d-flex"><FieldLabel field={field} /><span>{getPipelineStateField(dataObject.getData(fieldName))}</span></div>);
 }
 
 PipelineStateField.propTypes = {

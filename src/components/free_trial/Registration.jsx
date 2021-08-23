@@ -7,7 +7,7 @@ import LoadingDialog from "../common/status_notifications/loading";
 import {DialogToastContext} from "../../contexts/DialogToastContext";
 import userActions from "../user/user-actions";
 import RegisterButton from "../common/buttons/saving/RegisterButton";
-import PasswordInput from "../common/input/dto_input/PasswordInput";
+import PasswordInput from "../common/inputs/text/PasswordInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function FreeTrialSignup() {

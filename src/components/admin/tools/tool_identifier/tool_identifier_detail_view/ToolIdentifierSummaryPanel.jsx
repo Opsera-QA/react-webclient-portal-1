@@ -10,6 +10,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import TagField from "components/common/fields/multiple_items/TagField";
 import BooleanPropertiesField from "components/common/fields/multiple_items/BooleanPropertiesField";
+import SmartIdField from "components/common/fields/text/id/SmartIdField";
 
 function ToolIdentifierSummaryPanel({ toolIdentifierData, setActiveTab }) {
   if (toolIdentifierData == null) {
@@ -35,7 +36,7 @@ function ToolIdentifierSummaryPanel({ toolIdentifierData, setActiveTab }) {
           <DateFieldBase dataObject={toolIdentifierData} fieldName={"createdAt"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={toolIdentifierData} fieldName={"_id"}/>
+          <SmartIdField model={toolIdentifierData} fieldName={"_id"}/>
         </Col>
         <Col lg={6}>
           <ActivityField dataObject={toolIdentifierData} fieldName={"active"}/>

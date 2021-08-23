@@ -6,7 +6,7 @@ import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
-import InsightsSynopsisDetails from "components/insights/summary/pipeline_details/InsightsSynopsisDetails";
+import InsightsSynopsisDetails from "components/insights/summary/InsightsSynopsisDetails";
 import DashboardFiltersInput from "components/insights/dashboards/DashboardFiltersInput";
 import DashboardFilterOrganizationInput from "components/insights/dashboards/DashboardFilterOrganizationInput";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";

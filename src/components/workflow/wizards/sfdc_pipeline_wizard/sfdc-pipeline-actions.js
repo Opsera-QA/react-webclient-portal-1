@@ -428,8 +428,6 @@ const parsePackageXml = (log) => {
   const re = new RegExp(/==== PACKAGE.XML =====((?!==== END PACKAGE.XML =====)[\s\S])*==== END PACKAGE.XML =====/);
   const consoleLog = log?.api_response?.jenkinsConsoleLog ? log?.api_response?.jenkinsConsoleLog : log?.api_response?.jenkins_console_log;
 
-  console.log("consoleLog: " + JSON.stringify(consoleLog));
-
   if (consoleLog == null) {
     return null;
   }

@@ -13,7 +13,7 @@ function SelectInputBase(
     showClearValueButton, errorMessage, getCurrentValue,
     showLabel, className, onSearch, requireClearDataConfirmation,
     clearDataDetails, linkTooltipText, detailViewLink, infoOverlay, linkIcon,
-    ellipsisTooltipText,
+    ellipsisTooltipText, lenientClearValueButton,
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
@@ -23,12 +23,13 @@ function SelectInputBase(
     setDataObject({...newDataObject});
   };
 
-  const updateValue = (data) => {
+  const updateValue = (newValue) => {
     if (setDataFunction) {
-      setDataFunction(field?.id, data);
+      setDataFunction(field?.id, newValue);
     }
     else {
-      validateAndSetData(field?.id, data[valueField]);
+      const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
+      validateAndSetData(field?.id, parsedValue);
     }
   };
 
@@ -42,7 +43,8 @@ function SelectInputBase(
   };
 
   const getClearDataFunction = () => {
-    if (dataObject?.getData(field?.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
+
+    if (dataObject?.getData(field?.id) !== "" && (disabled === false || lenientClearValueButton === true) && showClearValueButton !== false && (setDataFunction == null || clearDataFunction)) {
       return clearValue;
     }
   };
@@ -82,7 +84,7 @@ function SelectInputBase(
         filter={"contains"}
         busy={busy}
         placeholder={placeholderText}
-        onChange={(data) => updateValue(data)}
+        onChange={(newValue) => updateValue(newValue)}
         disabled={disabled || !Array.isArray(selectOptions) || selectOptions.length === 0}
         onSearch={onSearch}
       />
@@ -126,6 +128,7 @@ SelectInputBase.propTypes = {
   infoOverlay: PropTypes.any,
   linkIcon: PropTypes.object,
   ellipsisTooltipText: PropTypes.string,
+  lenientClearValueButton: PropTypes.bool,
 };
 
 SelectInputBase.defaultProps = {

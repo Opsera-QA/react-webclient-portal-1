@@ -6,7 +6,7 @@ import {AuthContext} from "contexts/AuthContext";
 import pipelineSummaryMetadata
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
-import Label from "components/common/form_fields/Label";
+import FieldLabel from "components/common/fields/FieldLabel";
 import axios from "axios";
 
 function PipelineSummariesField({ fieldName, dataObject }) {
@@ -85,7 +85,7 @@ function PipelineSummariesField({ fieldName, dataObject }) {
 
   return (
     <div>
-      <Label field={field}/>
+      <FieldLabel field={field}/>
       {getPipelineCards()}
     </div>
   );

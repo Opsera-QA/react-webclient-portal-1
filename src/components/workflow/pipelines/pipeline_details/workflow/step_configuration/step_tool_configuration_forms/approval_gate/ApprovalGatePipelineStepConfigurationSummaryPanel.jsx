@@ -6,7 +6,6 @@ import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import BooleanField from "components/common/fields/boolean/BooleanField";
 
 function ApprovalGatePipelineStepConfigurationSummaryPanel({ approvalGatePipelineDataObject, pipelineData, setActiveTab }) {
 
@@ -21,7 +20,7 @@ function ApprovalGatePipelineStepConfigurationSummaryPanel({ approvalGatePipelin
           <TextFieldBase dataObject={approvalGatePipelineDataObject} fieldName={"message"}/>
         </Col>
         <Col lg={6}>
-          <BooleanField dataObject={approvalGatePipelineDataObject} fieldName={"contact"}/>
+          <TextFieldBase dataObject={approvalGatePipelineDataObject} fieldName={"contact"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>

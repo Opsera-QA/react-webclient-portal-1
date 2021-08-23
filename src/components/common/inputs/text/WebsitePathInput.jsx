@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import InputLabel from "components/common/form_fields/input/InputLabel";
-import InfoText from "components/common/form_fields/input/InfoText";
+import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 // TODO: I made this its own component in case we want to do specific styling,
 //  but if not just use new text component when implemented

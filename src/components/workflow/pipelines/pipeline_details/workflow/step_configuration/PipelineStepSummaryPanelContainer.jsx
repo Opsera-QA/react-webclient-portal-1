@@ -1,18 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Col, Row} from "react-bootstrap";
-import TextField from "components/common/form_fields/text-field";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 
 function PipelineStepSummaryPanelContainer({ pipelineData, setActiveTab, children }) {
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
-          <TextField value={pipelineData?.name} label={"Pipeline Step Name"}/>
+          <StandaloneTextFieldBase text={pipelineData?.name} label={"Pipeline Step Name"}/>
         </Col>
         <Col lg={6}>
-          <TextField value={pipelineData?.tool?.tool_identifier} label={"Pipeline Step Tool Identifier"}/>
+          <StandaloneTextFieldBase text={pipelineData?.tool?.tool_identifier} label={"Pipeline Step Tool Identifier"}/>
         </Col>
       </Row>
       {/*TODO: Wire up threshold*/}

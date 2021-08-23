@@ -9,6 +9,7 @@ import BooleanField from "components/common/fields/boolean/BooleanField";
 import ActivityField from "components/common/fields/boolean/ActivityField";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import SmartIdField from "components/common/fields/text/id/SmartIdField";
 
 function KpiSummaryPanel({ kpiData, setActiveTab }) {
   if (kpiData == null) {
@@ -28,7 +29,7 @@ function KpiSummaryPanel({ kpiData, setActiveTab }) {
           <BooleanField dataObject={kpiData} fieldName={"policySupport"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={kpiData} fieldName={"_id"} />
+          <SmartIdField model={kpiData} fieldName={"_id"} />
         </Col>
         <Col lg={6}>
           <DateFieldBase dataObject={kpiData} fieldName={"createdAt"} />

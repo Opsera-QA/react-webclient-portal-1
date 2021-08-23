@@ -6,9 +6,9 @@ import PipelineStepConfigurationButtonContainer
   from "../../buttons/saving/containers/PipelineStepConfigurationButtonContainer";
 
 // TODO: After final refactor of pipeline configurations, this component might be irrelevant
-function PipelineStepEditorPanelContainer({ children, isLoading, showRequiredFieldsMessage, persistRecord, recordDto, handleClose, isStrict }) {
+function PipelineStepEditorPanelContainer({ children, isLoading, showRequiredFieldsMessage, persistRecord, recordDto, handleClose, isStrict, disableSaveButton }) {
   const getRequiredFieldsMessage = () => {
-    if (showRequiredFieldsMessage) {
+    if (showRequiredFieldsMessage !== "false") {
       return (
         <div>
           <small className="form-text text-muted text-right mr-2 mt-3"><span className="danger-red">*</span> Required Fields</small>
@@ -30,6 +30,7 @@ function PipelineStepEditorPanelContainer({ children, isLoading, showRequiredFie
           recordDto={recordDto}
           handleClose={handleClose}
           isStrict={isStrict}
+          disableSaveButton={disableSaveButton}
         />
         {getRequiredFieldsMessage()}
       </div>
@@ -45,11 +46,8 @@ PipelineStepEditorPanelContainer.propTypes = {
   persistRecord: PropTypes.func,
   recordDto: PropTypes.object,
   handleClose: PropTypes.func,
-  isStrict: PropTypes.bool
-};
-
-PipelineStepEditorPanelContainer.defaultProps = {
-  showRequiredFieldsMessage: true
+  isStrict: PropTypes.bool,
+  disableSaveButton: PropTypes.bool,
 };
 
 export default PipelineStepEditorPanelContainer;
