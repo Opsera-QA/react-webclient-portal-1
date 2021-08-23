@@ -92,7 +92,7 @@ function LanguageSelectInput({
 
   const setDataFunction = (fieldName, value) => {
     let newDataObject = dataObject;
-    newDataObject.setData(fieldName, value);
+    newDataObject.setData(fieldName, value?.toLowerCase());
     setDataObject({...newDataObject});
   };
 

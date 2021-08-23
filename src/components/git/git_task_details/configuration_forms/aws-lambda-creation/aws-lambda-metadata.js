@@ -4,7 +4,8 @@ const awsLambdaFunctionTaskConfigurationMetadata = {
     {
       label: "Function Name",
       id: "functionName",
-      isRequired: true
+      isRequired: true,
+      regexDefinitionName: "generalText"
     },
     {
       label: "IAM Role",
