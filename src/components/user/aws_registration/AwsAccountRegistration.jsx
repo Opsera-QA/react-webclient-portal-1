@@ -11,7 +11,7 @@ import userActions from "components/user/user-actions";
 import RegisterButton from "components/common/buttons/saving/RegisterButton";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import awsAccountRegistrationMetadata from "components/user/aws_registration/aws_account_registration_metadata";
-import {MarketplaceMeteringClient} from "@aws-sdk/client-marketplace-metering/MarketplaceMeteringClient";
+// import {MarketplaceMeteringClient} from "@aws-sdk/client-marketplace-metering/MarketplaceMeteringClient";
 
 function Signup() {
   const history = useHistory();
@@ -25,22 +25,22 @@ function Signup() {
 
   const loadData = async () => {
     setIsLoading(true);
-    const marketplaceMetering = new MarketplaceMeteringClient({ region: "us-east-2"});
-
-    // x-amzn-marketplace-token
-
-    const params = {
-      RegistrationToken: 'STRING_VALUE' // x-amzn-marketplace-token required
-    };
-
-    marketplaceMetering.resolveCustomer(params, function(error, data) {
-      if (error) {
-        console.error(error, error.stack);
-      }
-      else {
-        console.log(data);
-      }
-    });
+    // const marketplaceMetering = new MarketplaceMeteringClient({ region: "us-east-2"});
+    //
+    // // x-amzn-marketplace-token
+    //
+    // const params = {
+    //   RegistrationToken: 'STRING_VALUE' // x-amzn-marketplace-token required
+    // };
+    //
+    // marketplaceMetering.resolveCustomer(params, function(error, data) {
+    //   if (error) {
+    //     console.error(error, error.stack);
+    //   }
+    //   else {
+    //     console.log(data);
+    //   }
+    // });
 
     await setRegistrationModel(new Model(awsAccountRegistrationMetadata.newObjectFields, awsAccountRegistrationMetadata, true));
     setIsLoading(false);
