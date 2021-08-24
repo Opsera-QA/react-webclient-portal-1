@@ -414,11 +414,23 @@ sfdcPipelineActions.getInvalidFileList = async (getAccessToken, cancelTokenSourc
 };
 
 sfdcPipelineActions.getPackageXmlFromRun = async (getAccessToken, cancelTokenSource, pipelineId, stepId, runNumber) => {
-  const response = await pipelineActivityActions.getPipelineActivityLogsByRunNumber(getAccessToken, cancelTokenSource, pipelineId, stepId, runNumber, "package creation", "console output");
+  const response = await pipelineActivityActions.getPipelineActivityLogsByRunNumber(getAccessToken, cancelTokenSource, pipelineId, undefined, runNumber, undefined, "console output");
   const logs = response?.data?.data;
 
   if (Array.isArray(logs) && logs.length > 0) {
-    return parsePackageXml(logs[0]);
+    console.log(JSON.stringify(logs.length));
+    for (let i = 0; i < logs.length; i++) {
+      try {
+        const packageXml = parsePackageXml(logs[i]);
+
+        if (packageXml != null) {
+          return packageXml;
+        }
+      }
+      catch (error) {
+        console.error(error);
+      }
+    }
   }
 
   return null;
