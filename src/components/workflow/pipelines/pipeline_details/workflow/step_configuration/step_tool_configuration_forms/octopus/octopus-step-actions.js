@@ -152,8 +152,15 @@ OctopusStepActions.getTargetRoles = async (id, spaceId, getAccessToken) => {
 };
 
 OctopusStepActions.validateItems = async (id, spaceId,type,dataObject, getAccessToken, packageId) => {
-  const apiUrl = `/tools/octopus/validate/${id}/${type}/${spaceId}/${dataObject.getData("id")}${packageId ? "?packageId="+packageId : ""}`;
-  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+
+  let body = {
+    params: {
+      packageId: packageId || ""
+    }
+  };
+
+  const apiUrl = `/tools/octopus/validate/${id}/${type}/${spaceId}/${dataObject.getData("id")}`;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl, body);
   if (response && response.status === 200) {
     return response.data;
   }
