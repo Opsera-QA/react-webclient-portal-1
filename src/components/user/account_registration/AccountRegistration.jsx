@@ -38,7 +38,7 @@ function AccountRegistration() {
       const token = await generateJwtServiceTokenWithValue({ id: "orgRegistrationForm" });
       setServiceToken(token);
 
-      const accountResponse = await userActions.getAccountInformation(domain, token);
+      const accountResponse = await userActions.getAccountInformationWithDomain(domain, token);
       let newAccountDto = (new Model(accountRegistrationMetadata.newObjectFields, accountRegistrationMetadata, true));
 
       if (accountResponse?.data) {

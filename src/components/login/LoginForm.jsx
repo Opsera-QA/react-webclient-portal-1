@@ -232,7 +232,7 @@ const LoginForm = ({ authClient }) => {
           const token = await generateJwtServiceTokenWithValue({ id: "orgRegistrationForm" });
 
           if (token) {
-            const accountResponse = await userActions.getAccountInformation(lookupAccountEmail, token);
+            const accountResponse = await userActions.getAccountInformationWithEmailAddress(lookupAccountEmail, token);
             const { localAuth, accountName, idpIdentifier } = accountResponse.data;
             if (localAuth && localAuth === "FALSE" && idpIdentifier) {
               setFederatedIdpEnabled(localAuth === "FALSE");
