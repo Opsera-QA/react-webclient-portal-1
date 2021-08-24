@@ -6,7 +6,6 @@ import modelHelpers from "components/common/model/modelHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import JenkinsToolConfigIdSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsToolConfigIdSelectInput";
 import JenkinsJobTypeSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsJobTypeSelectInput";
-import Model from "core/data_model/model";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import JenkinsSfdcConfigurationPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsSfdcConfigurationPanel";
 import JenkinsGitCredentialsSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsGitCredentialsSelectInput";
@@ -27,7 +26,8 @@ function JenkinsStepConfiguration({
   stepId,
   createJob,
   closeEditorPanel,
-  pipelineId
+  pipelineId,
+  parentCallback
 }) {
   const toastContext = useContext(DialogToastContext);
   const [jenkinsList, setJenkinsList] = useState([]);
@@ -88,7 +88,7 @@ function JenkinsStepConfiguration({
           stepId: jenkinsStepConfigurationDto.getData("stepIdXML"),
         },
       };
-      
+
       const toolConfiguration = {
         configuration: jenkinsStepConfigurationDto.getPersistData(),
         threshold: {
@@ -97,8 +97,11 @@ function JenkinsStepConfiguration({
         },
         job_type: jenkinsStepConfigurationDto.getData("job_type"),
       };
-
-      await createJob(toolId, toolConfiguration, stepId, createJobPostBody);
+      if(jenkinsStepConfigurationDto.getData("job_type") === "opsera-job"){
+        await createJob(toolId, toolConfiguration, stepId, createJobPostBody);
+      } else {
+        parentCallback(toolConfiguration);
+      }
     }
   };
 
@@ -197,7 +200,8 @@ JenkinsStepConfiguration.propTypes = {
   stepId: PropTypes.string,
   createJob: PropTypes.func,
   closeEditorPanel: PropTypes.func,
-  pipelineId: PropTypes.string
+  pipelineId: PropTypes.string,
+  parentCallback: PropTypes.func,
 };
 
 export default JenkinsStepConfiguration;
