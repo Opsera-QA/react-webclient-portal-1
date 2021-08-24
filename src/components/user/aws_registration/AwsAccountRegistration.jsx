@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import { Form, Row, Col, Card } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import defaultSignupFormFields from "components/user/signup/signup-form-fields.js";
 import usStateList from "components/user/states";
 import "components/user/user.css";
 import Model from "core/data_model/model";
@@ -11,12 +10,14 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import userActions from "components/user/user-actions";
 import RegisterButton from "components/common/buttons/saving/RegisterButton";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import awsAccountRegistrationMetadata from "components/user/aws_registration/aws_account_registration_metadata";
+import {MarketplaceMeteringClient} from "@aws-sdk/client-marketplace-metering/MarketplaceMeteringClient";
 
 function Signup() {
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [registrationDataDto, setRegistrationDataDto] = useState(undefined);
+  const [registrationModel, setRegistrationModel] = useState(undefined);
 
   useEffect(() => {
     loadData();
@@ -24,7 +25,24 @@ function Signup() {
 
   const loadData = async () => {
     setIsLoading(true);
-    await setRegistrationDataDto(new Model(defaultSignupFormFields.newObjectFields, defaultSignupFormFields, true));
+    const marketplaceMetering = new MarketplaceMeteringClient({ region: "us-east-2"});
+
+    // x-amzn-marketplace-token
+
+    const params = {
+      RegistrationToken: 'STRING_VALUE' // x-amzn-marketplace-token required
+    };
+
+    marketplaceMetering.resolveCustomer(params, function(error, data) {
+      if (error) {
+        console.error(error, error.stack);
+      }
+      else {
+        console.log(data);
+      }
+    });
+
+    await setRegistrationModel(new Model(awsAccountRegistrationMetadata.newObjectFields, awsAccountRegistrationMetadata, true));
     setIsLoading(false);
   };
 
@@ -34,23 +52,23 @@ function Signup() {
 
   const createAccount = async () => {
     // console.log("persistData: ", JSON.stringify(registrationDataDto.getPersistData()));
-    const isDomainAvailable = await userActions.isDomainAvailable(registrationDataDto.getData("domain"));
+    const isDomainAvailable = await userActions.isDomainAvailable(registrationModel?.getData("domain"));
 
     if (!isDomainAvailable) {
       toastContext.showDomainAlreadyRegisteredErrorDialog();
       return;
     }
 
-    const isEmailAvailable = await userActions.isEmailAvailable(registrationDataDto.getData("email"));
+    const isEmailAvailable = await userActions.isEmailAvailable(registrationModel?.getData("email"));
 
     if (!isEmailAvailable) {
       toastContext.showEmailAlreadyExistsErrorDialog();
       return;
     }
 
-    if (registrationDataDto.isModelValid2()) {
+    if (registrationModel?.isModelValid2()) {
       try {
-        await userActions.createOpseraAccount(registrationDataDto);
+        await userActions.createOpseraAccount(registrationModel);
         //toastContext.showCreateSuccessResultDialog("Opsera Account")
         loadRegistrationResponse();
       } catch (error) {
@@ -59,54 +77,85 @@ function Signup() {
     }
   };
 
-  if (isLoading || registrationDataDto == null) {
+  const getWarning = () => {
+    const attributes = registrationModel?.getData("attributes");
+    const customerId = attributes?.aws_customer_id;
+    const productCode = attributes?.aws_product_code;
+
+
+    if ((customerId == null || customerId === "") && (productCode == null || productCode === "")) {
+      return (
+        <div className="warning-text pl-4 mt-1">
+          Warning! Did not receive AWS credentials. User registration cannot be completed without these.
+        </div>
+      );
+    }
+    else if (customerId == null || customerId === "") {
+      return (
+        <div className="warning-text pl-4 mt-1">
+          Warning! did not receive Customer ID. User registration cannot be completed without this.
+        </div>
+      );
+    }
+    else if (productCode == null || productCode === "") {
+
+      return (
+      <div className="warning-text pl-4 mt-1">
+        Warning! did not receive Product Code. User registration cannot be completed without this.
+      </div>
+      );
+    }
+  };
+
+  if (isLoading || registrationModel == null) {
     return <LoadingDialog />;
   }
 
   return (
     <div className="new-user-signup-form mt-2">
+      {getWarning()}
       <Form className="full-signup-form m-auto" noValidate onSubmit={e => e.preventDefault()}>
         <Card>
           <Card.Header as="h5" className="new-user-header">Sign Up For Opsera</Card.Header>
           <Card.Body className="new-user-body-full p-3">
             <Row>
               <Col md={6}>
-                <TextInputBase fieldName={"firstName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"firstName"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
               </Col>
               <Col md={6}>
-                <TextInputBase fieldName={"lastName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"lastName"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
               </Col>
               <Col md={12}>
-                <TextInputBase fieldName={"email"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"email"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
               </Col>
               <Col md={6}>
-                <TextInputBase fieldName={"organizationName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"organizationName"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
               </Col>
               <Col md={6}>
-                <TextInputBase fieldName={"domain"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"domain"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
               </Col>
               <Col md={12}>
-                <TextInputBase fieldName={"street"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"street"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
               </Col>
               <Col md={4}>
-                <TextInputBase fieldName={"city"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"city"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
               </Col>
+              {/*<Col md={4}>*/}
+              {/*  <DtoSelectInput selectOptions={usStateList} fieldName={"state"} dataObject={registrationModel} setDataObject={setRegistrationModel} />*/}
+              {/*</Col>*/}
               <Col md={4}>
-                <DtoSelectInput selectOptions={usStateList} fieldName={"state"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
-              </Col>
-              <Col md={4}>
-                <TextInputBase fieldName={"zip"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"zip"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
               </Col>
               <Col md={6}>
-                <DtoSelectInput selectOptions={cloudProviders} fieldName={"cloudProvider"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"cloudProvider"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
               </Col>
               <Col md={6}>
-                <DtoSelectInput selectOptions={cloudProviderRegions} fieldName={"cloudProviderRegion"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"cloudProviderRegion"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
               </Col>
             </Row>
             <Row>
               <div className="ml-auto m-3 px-3">
-                <RegisterButton createAccount={createAccount} recordDto={registrationDataDto}/>
+                <RegisterButton createAccount={createAccount} recordDto={registrationModel} disable={getWarning() !== null}/>
               </div>
             </Row>
           </Card.Body>

@@ -125,6 +125,7 @@ import LoginForm from "./components/login/LoginForm";
 import UserManagement from "components/settings/users/UserManagement";
 import UserDetailView from "components/settings/users/details/UserDetailView";
 import SsoUserDetailView from "components/settings/users/sso_user_details/SsoUserDetailView";
+import AwsAccountRegistration from "components/user/aws_registration/AwsAccountRegistration";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -335,6 +336,7 @@ const AppWithRouterAccess = () => {
                 <Route path="/help" component={OnlineHelp} />
                 <Route path="/registration" exact component={Registration} />
                 <Route path="/account/registration/:domain" exact component={AccountRegistration} />
+                {/*<Route path="/signup/awsmarketplace" exact component={AwsAccountRegistration} />*/}
 
                 {/* User Settings */}
                 <SecureRoute path="/user/:tab?" exact component={UserSettings} />
