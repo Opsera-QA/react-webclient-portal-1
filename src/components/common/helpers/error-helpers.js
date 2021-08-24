@@ -9,10 +9,20 @@ export function parseError(error) {
   }
 
   if (typeof error === "object") {
-    if (error.error) {
-      if (error.error.message) {
+    if (error?.error) {
+      if (typeof error.error === "string") {
+        return error.error;
+      }
+
+      const requestResponseText = error?.error?.response?.data?.message;
+      if (requestResponseText) {
+        return `Status ${error?.error?.response?.status}: ${requestResponseText}`;
+      }
+
+      if (error?.error?.message) {
         return error.error.message;
       }
+
       return JSON.stringify(error.error);
     }
 

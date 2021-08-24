@@ -261,7 +261,7 @@ const LoginForm = ({ authClient }) => {
 
     } catch (error) {
       toastContext.removeAllBanners();
-      console.log(error);
+      console.error(error);
       toastContext.showErrorDialog(error);
     } finally {
       setLoading(false);
