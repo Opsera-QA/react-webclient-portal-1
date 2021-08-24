@@ -166,9 +166,23 @@ userActions.getAwsRegionsV2 = async (cancelTokenSource) => {
   return await baseActions.apiTokenlessGetCallV2(cancelTokenSource, apiUrl);
 };
 
-userActions.getAccountInformation = async (domain, token) => {
+userActions.getAccountInformationWithEmailAddress = async (emailAddress, token) => {
   const apiUrl = `/users/account/summary`;
-  const postBody = {domain:domain};
+
+  const postBody = {
+    email: emailAddress,
+  };
+
+  return await baseActions.customTokenApiPostCall(token, apiUrl, postBody);
+};
+
+userActions.getAccountInformationWithDomain = async (domain, token) => {
+  const apiUrl = `/users/account/summary`;
+
+  const postBody = {
+    domain: domain,
+  };
+
   return await baseActions.customTokenApiPostCall(token, apiUrl, postBody);
 };
 

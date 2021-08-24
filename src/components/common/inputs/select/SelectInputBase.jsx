@@ -34,7 +34,7 @@ function SelectInputBase(
   };
 
   const clearValue = () => {
-    if (!setDataFunction) {
+    if (!setDataFunction && !clearDataFunction) {
       validateAndSetData(field?.id, "");
     }
     else if (clearDataFunction) {

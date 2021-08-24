@@ -198,14 +198,14 @@ const LoginForm = ({ authClient }) => {
         console.log("response: ", response);
         setLoading(false);
         toastContext.removeAllBanners();
-        toastContext.showSystemInformationBanner(response.data.message);
+        toastContext.showSystemInformationBanner(response?.data?.message);
         setViewType("login");
       })
       .catch(error => {
         toastContext.removeAllBanners();
-        console.log(error.response.data.message);
+        console.error(error);
         setLoading(false);
-        toastContext.showErrorDialog(error.response.data.message);
+        toastContext.showErrorDialog(error?.response?.data?.message);
       });
   };
 
@@ -230,10 +230,9 @@ const LoginForm = ({ authClient }) => {
         /*START NEW FEDERATION CODE*/
         if (accountType === "ldap-organization") {
           const token = await generateJwtServiceTokenWithValue({ id: "orgRegistrationForm" });
-          const domain = lookupAccountEmail.split("@")[1];
 
-          if (domain && token) {
-            const accountResponse = await userActions.getAccountInformation(domain, token);
+          if (token) {
+            const accountResponse = await userActions.getAccountInformationWithEmailAddress(lookupAccountEmail, token);
             const { localAuth, accountName, idpIdentifier } = accountResponse.data;
             if (localAuth && localAuth === "FALSE" && idpIdentifier) {
               setFederatedIdpEnabled(localAuth === "FALSE");
@@ -262,7 +261,7 @@ const LoginForm = ({ authClient }) => {
 
     } catch (error) {
       toastContext.removeAllBanners();
-      console.log(error);
+      console.error(error);
       toastContext.showErrorDialog(error);
     } finally {
       setLoading(false);

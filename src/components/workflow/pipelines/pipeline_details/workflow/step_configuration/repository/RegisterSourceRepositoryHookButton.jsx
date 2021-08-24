@@ -95,9 +95,11 @@ function RegisterSourceRepositoryHookButton({ model, disable, pipeline, branch, 
 
   return (
     <div className={className}>
-      <Button variant={getVariant()} disabled={disable || isRegisteringHook} size={"sm"} onClick={() => {registerHook(model);}}>
-        {getLabel()}
-      </Button>
+      <TooltipWrapper innerText={"This is an option feature that can register the web hook."}>
+        <Button variant={getVariant()} disabled={disable || isRegisteringHook} size={"sm"} onClick={() => {registerHook(model);}}>
+          {getLabel()}
+        </Button>
+      </TooltipWrapper>
     </div>
   );
 }
