@@ -11,6 +11,9 @@ import userActions from "components/user/user-actions";
 import RegisterButton from "components/common/buttons/saving/RegisterButton";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import awsAccountRegistrationMetadata from "components/user/aws_registration/aws_account_registration_metadata";
+import SignupCloudProviderSelectInput
+  from "components/common/list_of_values_input/general/SignupCloudProviderSelectInput";
+import UsStateSelectInput from "components/common/list_of_values_input/general/UsStateSelectInput";
 // import {MarketplaceMeteringClient} from "@aws-sdk/client-marketplace-metering/MarketplaceMeteringClient";
 
 function Signup() {
@@ -59,6 +62,8 @@ function Signup() {
       return;
     }
 
+    // TODO: We should probably add check for unique customer IDs and throw error if found
+
     const isEmailAvailable = await userActions.isEmailAvailable(registrationModel?.getData("email"));
 
     if (!isEmailAvailable) {
@@ -68,7 +73,7 @@ function Signup() {
 
     if (registrationModel?.isModelValid2()) {
       try {
-        await userActions.createOpseraAccount(registrationModel);
+        await userActions.createAwsMarketplaceOpseraAccount(registrationModel);
         //toastContext.showCreateSuccessResultDialog("Opsera Account")
         loadRegistrationResponse();
       } catch (error) {
@@ -140,17 +145,20 @@ function Signup() {
               <Col md={4}>
                 <TextInputBase fieldName={"city"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
               </Col>
-              {/*<Col md={4}>*/}
-              {/*  <DtoSelectInput selectOptions={usStateList} fieldName={"state"} dataObject={registrationModel} setDataObject={setRegistrationModel} />*/}
-              {/*</Col>*/}
+              <Col md={4}>
+                <UsStateSelectInput fieldName={"state"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
+              </Col>
               <Col md={4}>
                 <TextInputBase fieldName={"zip"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
               </Col>
               <Col md={6}>
-                <TextInputBase fieldName={"cloudProvider"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
+                <SignupCloudProviderSelectInput disabled={true} fieldName={"cloudProvider"} model={registrationModel} setModel={setRegistrationModel} />
               </Col>
               <Col md={6}>
-                <TextInputBase fieldName={"cloudProviderRegion"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
+                <TextInputBase disabled={true} fieldName={"cloudProviderRegion"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
+              </Col>
+              <Col md={6}>
+                <TextInputBase disabled={true} fieldName={"aws_customer_id"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
               </Col>
             </Row>
             <Row>

@@ -2,29 +2,24 @@ import React, {useContext, useEffect, useState} from "react";
 import { Form, Row, Col, Card } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import defaultSignupFormFields from "components/user/signup/signup-form-fields.js";
-import usStateList from "components/user/states";
 import "components/user/user.css";
 import Model from "core/data_model/model";
-import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import userActions from "components/user/user-actions";
 import RegisterButton from "components/common/buttons/saving/RegisterButton";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import SignupCloudProviderSelectInput
+  from "components/common/list_of_values_input/general/SignupCloudProviderSelectInput";
+import AwsCloudProviderRegionSelectInput
+  from "components/common/list_of_values_input/general/AwsCloudProviderRegionSelectInput";
+import UsStateSelectInput from "components/common/list_of_values_input/general/UsStateSelectInput";
 
 function Signup() {
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [registrationDataDto, setRegistrationDataDto] = useState(undefined);
-  const [cloudProviderRegions, setCloudProviderRegions] = useState(undefined);
-
-  // TODO: when pulling actual data with react-dropdown, change text to label
-  const cloudProviders = [
-    { value: "EKS", text: "AWS" },
-    // { value: "GKE", text: "GCP" }
-  ];
-  // const cloudProviderRegions = [{ value: "us-east-2", text: "us-east-2" }];
 
   useEffect(() => {
     loadData();
@@ -32,29 +27,10 @@ function Signup() {
 
   const loadData = async () => {
     setIsLoading(true);
-    await searchAWSRegions();
     await setRegistrationDataDto(new Model(defaultSignupFormFields.newObjectFields, defaultSignupFormFields, true));
     setIsLoading(false);
   };
 
-  const searchAWSRegions = async () => {
-    try {
-      const res = await userActions.getAWSRegions();
-      if (typeof(res) != "object") {
-        setCloudProviderRegions([{ value: "", text: "Select One", isDisabled: "yes" }]);
-        let errorMessage =
-          "AWS Regions information is missing or unavailable!";
-        toastContext.showErrorDialog(errorMessage);
-        return;
-      }
-      setCloudProviderRegions(res);
-    } catch (error) {
-      setCloudProviderRegions([{ value: "", text: "Select One", isDisabled: "yes" }]);
-      console.error(error);
-      toastContext.showServiceUnavailableDialog();
-    }
-  };
-  
   const loadRegistrationResponse = () => {
     history.push("/registration");
   };
@@ -119,16 +95,16 @@ function Signup() {
                 <TextInputBase fieldName={"city"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={4}>
-                <DtoSelectInput selectOptions={usStateList} fieldName={"state"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <UsStateSelectInput fieldName={"state"} model={registrationDataDto} setModel={setRegistrationDataDto} />
               </Col>
               <Col md={4}>
                 <TextInputBase fieldName={"zip"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={6}>
-                <DtoSelectInput selectOptions={cloudProviders} fieldName={"cloudProvider"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <SignupCloudProviderSelectInput fieldName={"cloudProvider"} model={registrationDataDto} setModel={setRegistrationDataDto} />
               </Col>
               <Col md={6}>
-                <DtoSelectInput selectOptions={cloudProviderRegions} fieldName={"cloudProviderRegion"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <AwsCloudProviderRegionSelectInput fieldName={"cloudProviderRegion"} model={registrationDataDto} setModel={setRegistrationDataDto} />
               </Col>
             </Row>
             <Row>

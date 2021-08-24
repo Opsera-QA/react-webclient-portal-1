@@ -104,6 +104,37 @@ userActions.createOpseraAccount = async (registrationDataDto) => {
   return response;
 };
 
+userActions.createAwsMarketplaceOpseraAccount = async (registrationModel) => {
+  const apiUrl = "/users/create";
+  let finalObject = {...registrationModel.getPersistData()};
+
+  const configuration = {
+    cloudProvider: registrationModel.getData("cloudProvider"),
+    cloudProviderRegion: registrationModel.getData("cloudProviderRegion")
+  };
+
+  const attributes = {
+    title: registrationModel.getData("title"),
+    company: registrationModel.getData("company"),
+    aws_customer_id: registrationModel.getData("aws_customer_id"),
+    aws_product_code: registrationModel.getData("aws_product_code"),
+  };
+
+  delete finalObject["cloudProviderRegion"];
+  delete finalObject["cloudProvider"];
+  delete finalObject["aws_customer_id"];
+  delete finalObject["aws_product_code"];
+
+  finalObject["configuration"] = configuration;
+  finalObject["attributes"] = attributes;
+
+  const apiCall = new ApiService(apiUrl, {}, null, finalObject);
+  return await apiCall.post()
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+};
+
+
 
 userActions.logout = async (getAccessToken) => {
   const postBody = {};
@@ -130,26 +161,9 @@ userActions.syncUser = async (getAccessToken, cancelTokenSource) => {
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-userActions.getAWSRegions = async () => {
+userActions.getAwsRegionsV2 = async (cancelTokenSource) => {
   const apiUrl = `/users/aws/regions`;
-  const response = await axiosApiService().get(apiUrl)
-    .then((result) =>  {
-      if (result.data) {
-        let arrOfObj = result?.data?.data;
-        let response = arrOfObj.map(function(el) {
-          let o = Object.assign({});
-          o.value = el;
-          o.text = el;
-          return o;
-        });
-        return response;
-      }
-      else {
-        throw "AWS regions information is missing or unavailable!";
-      }
-    })
-    .catch(error => {throw { error };});
-  return response;
+  return await baseActions.apiTokenlessGetCallV2(cancelTokenSource, apiUrl);
 };
 
 userActions.getAccountInformation = async (domain, token) => {
