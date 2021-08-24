@@ -3,15 +3,15 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import LoadingDialog from "components/common/status_notifications/loading";
-import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/pro-light-svg-icons";
-import SourceRepositoryConfiguration from "./step_configuration/SourceRepositoryConfiguration";
 import StepToolConfiguration from "./step_configuration/StepToolConfiguration";
 import StepConfiguration from "./step_configuration/StepConfiguration";
 import StepNotificationConfiguration from "./step_configuration/step_notification_configuration/StepNotificationConfiguration";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
+import SourceRepositoryConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/SourceRepositoryConfiguration";
 
 
 const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPlan }) => {
@@ -85,7 +85,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
       <div className="p-3 bg-white step-settings-container">
         {showToast && <div className="mb-2">{toast}</div>}
         <SourceRepositoryConfiguration
-          data={pipeline}
+          pipeline={pipeline}
           parentCallback={callbackFunctionSource}
           handleCloseClick={handleCloseClick}/>
       </div>
