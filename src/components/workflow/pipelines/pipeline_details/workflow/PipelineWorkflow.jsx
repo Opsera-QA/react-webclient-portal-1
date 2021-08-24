@@ -15,7 +15,7 @@ import {
   faCheck,
   faClipboardCheck,
   faCode,
-  faSearchMinus, faFolder,
+  faSearchMinus, faFolder, faCodeBranch,
 } from "@fortawesome/pro-light-svg-icons";
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import PipelineWorkflowItemList from "./PipelineWorkflowItemList";
@@ -26,6 +26,7 @@ import WorkflowAuthorizedActions from "./workflow-authorized-actions";
 import PipelineDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/PipelineDetailsOverviewOverlay";
 
+// TODO: Clean up and refactor to make separate components. IE the source repository begin workflow box can be its own component
 function PipelineWorkflow({
   pipeline,
   fetchPlan,
@@ -278,6 +279,39 @@ function PipelineWorkflow({
                              className="mr-1"/>Source Repository: {pipeline.workflow.source.service}</span>
               </div>
             </div>}
+
+            {pipeline?.workflow?.source?.repository &&
+            <div className="d-flex">
+              <div className={"pl-2"}>
+                  <span className="text-muted small">
+                    <FontAwesomeIcon icon={faCode} size="sm" fixedWidth className="mr-1"/>
+                    Repository: {pipeline.workflow.source.repository}
+                  </span>
+              </div>
+            </div>
+            }
+
+            {pipeline?.workflow?.source?.branch &&
+            <div className="d-flex">
+              <div className={"pl-2"}>
+                  <span className="text-muted small my-auto">
+                    <FontAwesomeIcon icon={faCodeBranch} size="sm" fixedWidth className="mr-1"/>
+                    Primary Branch: {pipeline.workflow.source.branch}
+                  </span>
+              </div>
+            </div>
+            }
+
+            {Array.isArray(pipeline?.workflow?.source?.secondary_branches) && pipeline?.workflow?.source?.secondary_branches?.length > 0 &&
+            <div className="d-flex">
+              <div className={"pl-2"}>
+                  <span className="text-muted small my-auto">
+                    <FontAwesomeIcon icon={faCodeBranch} size="sm" fixedWidth className="mr-1"/>
+                    Secondary Branches: {pipeline.workflow.source.secondary_branches?.join(", ")}
+                  </span>
+              </div>
+            </div>
+            }
 
             <div className="d-flex align-items-end flex-row m-2">
               <div className="ml-auto text-right">
