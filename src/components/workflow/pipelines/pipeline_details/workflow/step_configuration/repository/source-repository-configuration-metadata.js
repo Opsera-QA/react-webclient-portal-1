@@ -50,6 +50,7 @@ const sourceRepositoryConfigurationMetadata = {
     {
       label: "Secondary Branches",
       id: "secondary_branches",
+      formText: "Primary Branch must be set before setting Secondary Branches."
     },
     {
       label: "Workspace",
