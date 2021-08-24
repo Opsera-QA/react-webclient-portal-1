@@ -5,8 +5,7 @@ import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import { Button } from "react-bootstrap";
 
-function OctopusFeedPackageIdInputModal({ handleClose, callback, dataObject, setDataObject }) {
-  console.log({dataObject});
+function OctopusFeedPackageIdInputModal({ handleClose, callback, dataObject, setDataObject }) {  
   return (
     <>
       <div className="flat-top-content-block p-0 workflow-tool-activity-container">
