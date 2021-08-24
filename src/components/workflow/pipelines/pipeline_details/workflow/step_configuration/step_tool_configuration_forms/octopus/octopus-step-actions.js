@@ -151,9 +151,16 @@ OctopusStepActions.getTargetRoles = async (id, spaceId, getAccessToken) => {
   return [];
 };
 
-OctopusStepActions.validateItems = async (id, spaceId,type,dataObject, getAccessToken) => {
+OctopusStepActions.validateItems = async (id, spaceId,type,dataObject, getAccessToken, packageId) => {
+
+  let body = {
+    params: {
+      packageId: packageId || ""
+    }
+  };
+
   const apiUrl = `/tools/octopus/validate/${id}/${type}/${spaceId}/${dataObject.getData("id")}`;
-  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl, body);
   if (response && response.status === 200) {
     return response.data;
   }
@@ -194,8 +201,7 @@ OctopusStepActions.getCerts = async (id, spaceId, environmentId, getAccessToken,
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-OctopusStepActions.getAzureRepoTags = async (getAccessToken, cancelSource, dataObject, acrStep, azureTool) => {
-  console.log(azureTool);
+OctopusStepActions.getAzureRepoTags = async (getAccessToken, cancelSource, dataObject, acrStep, azureTool) => {  
   const owner = azureTool?.owner;
   const url = acrStep?.acrLoginUrl;
   const repositoryName = acrStep?.azureRepoName;
