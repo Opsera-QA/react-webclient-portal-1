@@ -87,6 +87,9 @@ function TestConnectionButton({ toolDataDto, disable }) {
       setFailedConnection(true);
     }
     finally {
+      let newObj = {...feedPackageDto};
+      newObj.setData("packageId", "");
+      setFeedPackageDto({...newObj});
       setIsTesting(false);
     }
 
