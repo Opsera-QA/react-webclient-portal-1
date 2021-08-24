@@ -47,7 +47,7 @@ function TestConnectionButton({ toolDataDto, disable }) {
       let status;
 
       if (toolDataDto != null) {
-        response = await OctopusStepActions.validateItems(toolDataDto.getData("toolId"), toolDataDto.getData("spaceId"),toolDataDto.getData("type"),toolDataDto, getAccessToken);
+        response = await OctopusStepActions.validateItems(toolDataDto.getData("toolId"), toolDataDto.getData("spaceId"),toolDataDto.getData("type"),toolDataDto, getAccessToken, feedPackageDto.getData("packageId"));
         message = isObject(response?.data?.message)
         ? JSON.stringify(response?.data?.message)
         : response?.data?.message;
