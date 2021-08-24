@@ -5,8 +5,8 @@ import ToolConfigurationEditorPanelContainer
   from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Row from "react-bootstrap/Row";
 import awsConnectionMetadata from "./aws-connection-metadata";
-import CloudProviderRegionSelectInput
-  from "components/common/list_of_values_input/general/CloudProviderRegionSelectInput";
+import AwsCloudProviderRegionSelectInput
+  from "components/common/list_of_values_input/general/AwsCloudProviderRegionSelectInput";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
@@ -44,7 +44,7 @@ function AwsToolConfiguration({ toolData }) {
         <Col sm={12}>
           <VaultTextInput dataObject={awsConfigurationDto} setDataObject={setAwsConfigurationDto} fieldName={"accessKey"} />
           <VaultTextInput dataObject={awsConfigurationDto} setDataObject={setAwsConfigurationDto} fieldName={"secretKey"} />
-          <CloudProviderRegionSelectInput dataObject={awsConfigurationDto} setDataObject={setAwsConfigurationDto} fieldName={"regions"} />
+          <AwsCloudProviderRegionSelectInput model={awsConfigurationDto} setModel={setAwsConfigurationDto} fieldName={"regions"} />
           <VaultTextInput dataObject={awsConfigurationDto} setDataObject={setAwsConfigurationDto} fieldName={"awsAccountId"} />
         </Col>
       </Row>

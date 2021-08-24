@@ -4,7 +4,7 @@ import {
   axiosApiGetCall,
   axiosApiPatchCall,
   axiosApiPostCall,
-  axiosApiPutCall, axiosCustomTokenApiPostCall
+  axiosApiPutCall, axiosCustomTokenApiPostCall, axiosTokenlessApiGetCall
 } from "api/apiServiceV2";
 
 const baseActions = {};
@@ -18,6 +18,10 @@ baseActions.apiGetCall = async (getAccessToken, apiUrl, urlParams) => {
 
 baseActions.apiGetCallV2 = async (getAccessToken, sourceToken, apiUrl, urlParams) => {
   return await axiosApiGetCall(getAccessToken, sourceToken, apiUrl, urlParams);
+};
+
+baseActions.apiTokenlessGetCallV2 = async (sourceToken, apiUrl, urlParams) => {
+  return await axiosTokenlessApiGetCall(sourceToken, apiUrl, urlParams);
 };
 
 baseActions.customTokenApiGetCall = async (customToken, apiUrl, urlParams) => {

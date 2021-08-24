@@ -36,6 +36,12 @@ export async function axiosCustomTokenApiPostCall(customToken, cancelTokenSource
     .catch(error => { if (!axios.isCancel(error)) {throw error;}});
 }
 
+export async function axiosTokenlessApiGetCall(cancelTokenSource, apiUrl, postBody) {
+  return await getAxiosInstance(undefined, cancelTokenSource?.token).get(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => { if (!axios.isCancel(error)) {throw error;}});
+}
+
 export async function axiosApiPutCall(getAccessToken, cancelTokenSource, apiUrl, postBody) {
   const accessToken = await getAccessToken();
   return await getAxiosInstance(accessToken, cancelTokenSource?.token).put(apiUrl, postBody)

@@ -32,27 +32,27 @@ const awsAccountRegistrationMetadata = {
       label: "Street",
       id: "street",
       regexDefinitionName: "limitedTextWithSpaces",
-      isRequired: true,
+      // isRequired: true,
       maxLength: 150
     },
     {
       label: "City",
       id: "city",
       regexDefinitionName: "nameField",
-      isRequired: true,
+      // isRequired: true,
       maxLength: 50
     },
     {
       label: "State",
       id: "state",
       regexDefinitionName: "nameField",
-      isRequired: true,
+      // isRequired: true,
       maxLength: 50
     },
     {
       label: "Zip",
       id: "zip",
-      isRequired: true,
+      // isRequired: true,
       regexDefinitionName: "limitedTextWithSpaces",
       maxLength: 12
     },
@@ -79,6 +79,16 @@ const awsAccountRegistrationMetadata = {
     {
       label: "Attributes",
       id: "attributes",
+      // isRequired: true,
+    },
+    {
+      label: "AWS Customer ID",
+      id: "aws_customer_id",
+      isRequired: true,
+    },
+    {
+      label: "Product Code",
+      id: "aws_product_code",
       isRequired: true,
     },
   ],
@@ -95,10 +105,8 @@ const awsAccountRegistrationMetadata = {
     zip: "",
     cloudProvider: "EKS",
     cloudProviderRegion: "us-east-2",
-    attributes: {
-      aws_customer_id: "",
-      aws_product_code: "",
-    },
+    aws_customer_id: "",
+    aws_product_code: "",
   }
 };
 
