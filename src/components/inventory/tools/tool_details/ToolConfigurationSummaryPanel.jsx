@@ -5,6 +5,9 @@ import JenkinsToolConfigurationSummaryPanel
 import modelHelpers from "components/common/model/modelHelpers";
 import jenkinsConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jenkins-connection-metadata";
+import JiraToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/jira/JiraToolConfigurationSummaryPanel";
+import jiraConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/jira-connection-metadata";
 
 function ToolConfigurationSummaryPanel({ toolData }) {
   const getConfigurationSummaryPanel = () => {
@@ -20,7 +23,11 @@ function ToolConfigurationSummaryPanel({ toolData }) {
           />
         );
       case "jira":
-        // return <JiraToolConfiguration toolData={toolData} />;
+        return (
+          <JiraToolConfigurationSummaryPanel
+            jiraToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolData?.configuration, jiraConnectionMetadata)}
+          />
+        );
       case "github":
         // return <GithubToolConfiguration toolData={toolData} />;
       case "gitlab":
