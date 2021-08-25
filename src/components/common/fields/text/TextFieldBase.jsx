@@ -5,13 +5,17 @@ import FieldLabel from "components/common/fields/FieldLabel";
 import CopyToClipboardIcon from "components/common/icons/CopyToClipboardIcon";
 
 function TextFieldBase({dataObject, fieldName, className, showClipboardButton }) {
-  const [field] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(dataObject?.getFieldById(fieldName));
 
   const getClipboardButton = () => {
     if (showClipboardButton === true) {
-      return (<CopyToClipboardIcon className={"my-auto ml-auto"} copyString={dataObject?.getData(fieldName)} />);
+      return (<CopyToClipboardIcon className={"my-auto ml-3"} copyString={dataObject?.getData(fieldName)} />);
     }
   };
+
+  if (field == null) {
+    return null;
+  }
 
   return (
     <FieldContainer className={className}>
