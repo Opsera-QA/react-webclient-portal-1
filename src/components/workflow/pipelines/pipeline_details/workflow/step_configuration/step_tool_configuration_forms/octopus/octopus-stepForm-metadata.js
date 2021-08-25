@@ -263,6 +263,29 @@ const octopusStepFormMetadata = {
         id: "azureRepoName",
         // isRequired: true
       },
+      {
+        label: "Project Group",
+        id: "projectGroupId",
+      },
+      {
+        label: "Channel",
+        id: "channelId",
+      },
+      {
+        label: "Project Type",
+        id: "projectType",
+        isRequired: true
+      },
+      {
+        label: "Tenant",
+        id: "tenantId",        
+      },
+      {
+        id: "deploymentProcessId"
+      },
+      {
+        id: "tenantedDeploymentMode"
+      }
     ],
   newObjectFields:
       {
@@ -321,7 +344,11 @@ const octopusStepFormMetadata = {
         applicationPoolIdentityUsername: "",
         applicationPoolIdentityPassword : {},
         startApplicationPool : false,
-        azureToolId: ""
+        azureToolId: "",
+        projectGroupId: "",
+        channelId: "",
+        projectType: "OPSERA_MANAGED",
+        tenantId: "",     
       }
   };
   
