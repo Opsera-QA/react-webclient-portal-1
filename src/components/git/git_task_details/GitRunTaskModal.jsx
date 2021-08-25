@@ -22,8 +22,12 @@ import {AuthContext} from "contexts/AuthContext";
 import SFDCGitBranchTextInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitBranchTextInput";
 import workflowAuthorizedActions
 from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
+import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
+import SonarRatingsChartHelpDocumentation
+
+  from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
 function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, loadData }) {
+  const [showHelp, setShowHelp] = useState(false);
   const [dataObj, setDataObj] = useState(undefined);
   const [canEdit, setCanEdit] = useState(false);
   const { getAccessRoleData } = useContext(AuthContext);
@@ -115,6 +119,10 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
     );
   };
 
+  const getHelpComponent = () => {
+    return null;
+  };
+
   if (gitTasksData == null) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -127,8 +135,15 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
       size={"xl"}
       buttonContainer={getButtonContainer()}
     >
-      <div className={"m-3"}>Do you want to run {gitTasksData.getData("name")} task?</div>
-      {getRunView()}
+      <OverlayPanelBodyContainer
+        helpComponent={getHelpComponent()}
+        helpIsShown={showHelp}
+        setHelpIsShown={setShowHelp}
+        hideCloseButton={true}
+      >
+        <div className={"mb-3 mx-3"}>Do you want to run {gitTasksData.getData("name")} task?</div>
+        {getRunView()}
+      </OverlayPanelBodyContainer>
     </ModalBase>
   );
 }
