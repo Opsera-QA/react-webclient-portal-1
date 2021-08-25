@@ -2,7 +2,6 @@ import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Model from "core/data_model/model";
 import modelHelpers from "components/common/model/modelHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ModalBase from "components/common/modal/ModalBase";
@@ -20,12 +19,15 @@ import sfdcGitBranchTaskConfigurationMetadata from "components/git/git_task_deta
 import ec2ServiceCreationTaskConfigurationMetadata from "components/git/git_task_details/configuration_forms/ecs-service-creation/ecs-service-creation-git-task-configuration";
 import {AuthContext} from "contexts/AuthContext";
 import workflowAuthorizedActions
-from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
+
 function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, loadData }) {
+  const [showHelp, setShowHelp] = useState(false);
   const [dataObj, setDataObj] = useState(undefined);
   const [canEdit, setCanEdit] = useState(false);
   const { getAccessRoleData } = useContext(AuthContext);
-  
+
   useEffect(() => {
     loadRoles();
     loadConfig();
@@ -110,6 +112,10 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
     );
   };
 
+  const getHelpComponent = () => {
+    return null;
+  };
+
   if (gitTasksData == null) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -122,8 +128,15 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
       size={"xl"}
       buttonContainer={getButtonContainer()}
     >
-      <div className={"m-3"}>Do you want to run {gitTasksData.getData("name")} task?</div>
-      {getRunView()}
+      <OverlayPanelBodyContainer
+        helpComponent={getHelpComponent()}
+        helpIsShown={showHelp}
+        setHelpIsShown={setShowHelp}
+        hideCloseButton={true}
+      >
+        <div className={"mb-3 mx-3"}>Do you want to run {gitTasksData.getData("name")} task?</div>
+        {getRunView()}
+      </OverlayPanelBodyContainer>
     </ModalBase>
   );
 }
