@@ -177,10 +177,9 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               Enter the required configuration information below. These settings will be used for Octopus {type ? type.charAt(0).toUpperCase() + type.slice(1) + " Creation" : ""}.
             </div>
             <div>
-            {appID && octopusApplicationDataDto.getData("id") && type && (type !== "environment") 
-              && octopusApplicationDataDto.getData("toolType")?.toLowerCase() !== "jfrog" && (
+            {appID && octopusApplicationDataDto.getData("id") && type && (type !== "environment") && (
               <TestConnectionButton toolDataDto={octopusApplicationDataDto} />
-              )}
+            )}
             </div>
           </div>
         {octopusApplicationDataDto && type && type === "environment" && !isLoading && (
