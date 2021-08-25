@@ -9,7 +9,7 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import LoadingDialog from "components/common/status_notifications/loading";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
-function JiraPipelineStepNotificationSummaryPanel({ jiraNotificationModel }) {
+function PipelineStepJiraNotificationSummaryPanel({ jiraNotificationModel }) {
   if (jiraNotificationModel == null) {
     return (<LoadingDialog size={"sm"} message={"Loading Summary"} />);
   }
@@ -55,8 +55,8 @@ function JiraPipelineStepNotificationSummaryPanel({ jiraNotificationModel }) {
   );
 }
 
-JiraPipelineStepNotificationSummaryPanel.propTypes = {
+PipelineStepJiraNotificationSummaryPanel.propTypes = {
   jiraNotificationModel: PropTypes.object,
 };
 
-export default JiraPipelineStepNotificationSummaryPanel;
+export default PipelineStepJiraNotificationSummaryPanel;

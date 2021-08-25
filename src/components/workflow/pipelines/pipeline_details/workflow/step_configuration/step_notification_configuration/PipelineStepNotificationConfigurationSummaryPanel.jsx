@@ -1,10 +1,6 @@
 import React, {useEffect, useState} from "react";
-import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
-import BooleanField from "components/common/fields/boolean/BooleanField";
-import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import GenericItemField from "components/common/fields/multiple_items/GenericItemField";
 import jiraStepApprovalMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/jira/jiraStepApprovalMetadata";
 import jiraStepNotificationMetadata
@@ -20,8 +16,18 @@ import serviceNowStepNotificationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/servicenow/serviceNowStepNotificationMetadata";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
-import JiraPipelineStepNotificationSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/jira/JiraPipelineStepNotificationSummaryPanel";
+import PipelineStepJiraNotificationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/jira/PipelineStepJiraNotificationSummaryPanel";
+import PipelineStepEmailNotificationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/email/PipelineStepEmailNotificationSummaryPanel";
+import InfoContainer from "components/common/containers/InfoContainer";
+import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
+import PipelineStepServiceNowNotificationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/servicenow/PipelineStepServiceNowNotificationSummaryPanel";
+import PipelineStepSlackNotificationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/slack/PipelineStepSlackNotificationSummaryPanel";
+import PipelineStepMicrosoftTeamsNotificationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/teams/PipelineStepMicrosoftTeamsNotificationSummaryPanel";
 
 // TODO: Style
 function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData }) {
@@ -89,80 +95,41 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
 
   const getEmailFields = () => {
     return (
-      <Row>
-        <Col lg={6}>
-          <BooleanField dataObject={emailModel} fieldName={"enabled"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"address"} dataObject={emailModel} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"event"} dataObject={emailModel} />
-        </Col>
-      </Row>
+      <InfoContainer titleText={"Email Notifications"} titleIcon={faEnvelope} className={"mt-1 mb-2"}>
+        <PipelineStepEmailNotificationSummaryPanel emailNotificationModel={emailModel} />
+      </InfoContainer>
     );
   };
 
   const getJiraFields = () => {
     return (
-      <JiraPipelineStepNotificationSummaryPanel jiraNotificationModel={jiraModel} />
+      <InfoContainer titleText={"Jira Notifications"} titleIcon={faEnvelope} className={"mb-2"}>
+        <PipelineStepJiraNotificationSummaryPanel jiraNotificationModel={jiraModel} />
+      </InfoContainer>
     );
   };
 
   const getSlackFields = () => {
     return (
-      <Row>
-        <Col lg={6}>
-          <BooleanField dataObject={slackModel} fieldName={"enabled"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"event"} dataObject={slackModel} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"channel"} dataObject={slackModel} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"toolId"} dataObject={slackModel} />
-        </Col>
-      </Row>
+      <InfoContainer titleText={"Slack Notifications"} titleIcon={faEnvelope} className={"mb-2"}>
+        <PipelineStepSlackNotificationSummaryPanel slackNotificationModel={slackModel} />
+      </InfoContainer>
     );
   };
 
   const getTeamsFields = () => {
     return (
-      <Row>
-        <Col lg={6}>
-          <BooleanField dataObject={teamsModel} fieldName={"enabled"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"event"} dataObject={teamsModel} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"toolId"} dataObject={teamsModel} />
-        </Col>
-      </Row>
+      <InfoContainer titleText={"Microsoft Teams Notifications"} titleIcon={faEnvelope} className={"mb-2"}>
+        <PipelineStepMicrosoftTeamsNotificationSummaryPanel teamsNotificationModel={teamsModel} />
+      </InfoContainer>
     );
   };
 
   const getServiceNowFields = () => {
     return (
-      <Row>
-        <Col lg={6}>
-          <BooleanField dataObject={serviceNowModel} fieldName={"enabled"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"event"} dataObject={serviceNowModel} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"toolId"} dataObject={serviceNowModel} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"serviceNowUserId"} dataObject={serviceNowModel} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"serviceNowGroupId"} dataObject={serviceNowModel} />
-        </Col>
-      </Row>
+      <InfoContainer titleText={"ServiceNow Notifications"} titleIcon={faEnvelope} className={"mb-2"}>
+        <PipelineStepServiceNowNotificationSummaryPanel serviceNowNotificationModel={serviceNowModel} />
+      </InfoContainer>
     );
   };
 
@@ -171,7 +138,7 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
   }
 
   return (
-    <SummaryPanelContainer>
+    <SummaryPanelContainer className={"p-0"}>
       {getEmailFields()}
       {getJiraFields()}
       {getTeamsFields()}

@@ -12,6 +12,7 @@ import GeneralTabPanelContainer from "components/common/panels/general/GeneralTa
 import CustomTab from "components/common/tabs/CustomTab";
 import PipelineStepNotificationConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/PipelineStepNotificationConfigurationSummaryPanel";
+import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
 
 function PipelineStepDetailsOverview({ pipelineStep, index }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -43,7 +44,7 @@ function PipelineStepDetailsOverview({ pipelineStep, index }) {
           handleTabClick={handleTabClick}
           activeTab={activeTab}
           tabName={"notifications"}
-          // icon={}
+          icon={faEnvelope}
         />
         {/*{getActionSpecificTab()}*/}
         <JsonTab handleTabClick={handleTabClick} activeTab={activeTab} />
