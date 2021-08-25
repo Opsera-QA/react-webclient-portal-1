@@ -112,10 +112,11 @@ function PipelineWorkflow({
       });
       return;
     }
-    // toastContext.showOverlayPanel(<PipelineDetailsOverviewOverlay pipeline={pipeline} />);
-    setModalHeader("Pipeline Configuration");
-    setModalMessage(param);
-    setShowModal(true);
+    toastContext.showOverlayPanel(<PipelineDetailsOverviewOverlay pipeline={pipeline} />);
+    // TODO: Remove after verifying PipelineDetailsOverviewOverlay
+    // setModalHeader("Pipeline Configuration");
+    // setModalMessage(param);
+    // setShowModal(true);
   };
 
   const callbackFunctionEditItem = async (item) => {
@@ -213,7 +214,8 @@ function PipelineWorkflow({
           <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "View pipeline configuration" })}>
+            overlay={renderTooltip({ message: "" +
+                "View pipeline configuration" })}>
             <Button variant="outline-secondary" className="mr-1" size="sm" onClick={() => {
               handleViewPipelineClick(pipeline);
             }}>

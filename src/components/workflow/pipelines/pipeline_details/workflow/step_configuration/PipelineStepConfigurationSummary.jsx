@@ -470,7 +470,7 @@ function PipelineStepConfigurationSummary({
   };
 
   return (
-    <div>
+    <div className={"step-configuration-summary"}>
       {getStepConfigurationSummary()}
     </div>
   );
