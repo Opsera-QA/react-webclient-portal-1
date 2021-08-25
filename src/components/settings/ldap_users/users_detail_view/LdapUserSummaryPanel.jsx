@@ -3,6 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
 
 function LdapUserSummaryPanel({ ldapUserData, setActiveTab } ) {
   if (ldapUserData == null) {
@@ -25,7 +26,7 @@ function LdapUserSummaryPanel({ ldapUserData, setActiveTab } ) {
           <TextFieldBase dataObject={ldapUserData} fieldName={"preferredName"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ldapUserData} fieldName={"emailAddress"}/>
+          <EmailAddressField model={ldapUserData} fieldName={"emailAddress"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={ldapUserData} fieldName={"site"}/>
