@@ -14,7 +14,7 @@ const azureAksClusterTaskConfigurationMetadata = {
     {
       label: "Disk Size",
       id: "disk_size_gb",
-      formText: "Disk size is in GB, Range: 1-500",
+      formText: "Disk size is in GB, Range: 1-1000",
       regexDefinitionName: "numericalField",
     },
     {
