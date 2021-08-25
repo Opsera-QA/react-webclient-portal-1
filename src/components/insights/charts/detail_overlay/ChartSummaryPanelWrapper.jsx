@@ -38,9 +38,17 @@ function ChartSummaryPanelWrapper({
       case "bitbucket-rejected-merge-requests":
         return <BitbucketRejectedMergeRequestsSummaryPanel chartModel={chartModel} setActiveTab={setActiveTab} />;
       case "opsera-deployment-frequency-stats-successful":
-        return <OpseraDeploymentFreqStatsSuccessSummaryPanel chartModel={chartModel} setActiveTab={setActiveTab} />;
+        return ( <OpseraDeploymentFreqStatsSuccessSummaryPanel 
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration} 
+          setActiveTab={setActiveTab} />
+      );
       case "opsera-deployment-frequency-stats-failed":
-        return <OpseraDeploymentFreqStatsFailureSummaryPanel chartModel={chartModel} setActiveTab={setActiveTab} />;
+        return ( <OpseraDeploymentFreqStatsFailureSummaryPanel
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            setActiveTab={setActiveTab} />
+        );
       case "sfdc-backups-successful":
         return (
           <SFDCPipelinesSummaryPanel

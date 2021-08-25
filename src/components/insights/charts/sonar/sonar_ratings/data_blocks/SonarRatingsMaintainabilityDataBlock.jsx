@@ -66,7 +66,7 @@ function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration,
     return (
       <LegendDataBlock
         firstItem={"Goal for Maintainability: A"}
-        secondItem={"Technical Debt Ratio: 0 - 0.05%"}
+        secondItem={"Technical Debt Ratio: 0 - 5%"}
       />
     );
   };
