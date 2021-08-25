@@ -6,6 +6,7 @@ import JsonField from "components/common/fields/json/JsonField";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function TerraformPipelineStepConfigurationSummaryPanel({ terraformPipelineDataObject, pipelineData, setActiveTab }) {
   if (terraformPipelineDataObject == null) {
@@ -19,7 +20,7 @@ function TerraformPipelineStepConfigurationSummaryPanel({ terraformPipelineDataO
           <TextFieldBase dataObject={terraformPipelineDataObject} fieldName={"type"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={terraformPipelineDataObject} fieldName={"gitToolId"}/>
+          <ToolNameField model={terraformPipelineDataObject} fieldName={"gitToolId"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={terraformPipelineDataObject} fieldName={"gitRepository"}/>

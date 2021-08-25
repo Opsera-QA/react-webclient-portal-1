@@ -3,13 +3,14 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function ElasticBeanstalkDeployPipelineStepConfigurationSummaryPanel({ elasticBeanstalkDeployPipelineStepData, pipelineData, setActiveTab }) {
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={elasticBeanstalkDeployPipelineStepData} fieldName={"awsToolConfigId"} />
+          <ToolNameField model={elasticBeanstalkDeployPipelineStepData} fieldName={"awsToolConfigId"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={elasticBeanstalkDeployPipelineStepData} fieldName={"bucketName"} />

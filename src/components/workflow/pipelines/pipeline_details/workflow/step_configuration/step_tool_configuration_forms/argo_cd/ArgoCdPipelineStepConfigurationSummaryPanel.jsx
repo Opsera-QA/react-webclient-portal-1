@@ -17,10 +17,10 @@ function ArgoCdPipelineStepConfigurationSummaryPanel({ argoCdPipelineDataObject,
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"type"}/>
+          <ToolNameField model={argoCdPipelineDataObject} fieldName={"gitToolId"}/>
         </Col>
         <Col lg={6}>
-          <ToolNameField model={argoCdPipelineDataObject} fieldName={"gitToolId"}/>
+          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"type"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"gitRepository"}/>

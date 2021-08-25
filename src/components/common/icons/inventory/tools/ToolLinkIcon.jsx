@@ -1,12 +1,14 @@
-import React from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExternalLink, faLock} from "@fortawesome/pro-light-svg-icons";
 import {useHistory} from "react-router-dom";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function ToolLinkIcon({toolId, isLoading, accessAllowed, loadToolInNewWindow, className, handleClose}) {
   let history = useHistory();
+  const toastContext = useContext(DialogToastContext);
 
   const loadTool = () => {
     if (loadToolInNewWindow) {
@@ -17,6 +19,10 @@ function ToolLinkIcon({toolId, isLoading, accessAllowed, loadToolInNewWindow, cl
 
       if (handleClose) {
         handleClose();
+      }
+      else {
+        toastContext.removeInlineMessage();
+        toastContext.clearOverlayPanel();
       }
     }
   };

@@ -5,6 +5,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function JFrogMavenPipelineStepConfigurationSummaryPanel({ jFrogPipelineDataObject, pipelineData, setActiveTab }) {
   if (jFrogPipelineDataObject == null) {
@@ -15,7 +16,7 @@ function JFrogMavenPipelineStepConfigurationSummaryPanel({ jFrogPipelineDataObje
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={jFrogPipelineDataObject} fieldName={"jfrogToolConfigId"}/>
+          <ToolNameField model={jFrogPipelineDataObject} fieldName={"jfrogToolConfigId"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={jFrogPipelineDataObject} fieldName={"type"}/>

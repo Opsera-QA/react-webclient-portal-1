@@ -5,13 +5,14 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 import BooleanField from "components/common/fields/boolean/BooleanField";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function SfdcPipelineStepConfigurationSummaryPanel({ sfdcDataObject, pipelineData, setActiveTab }) {
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={sfdcDataObject} fieldName={"toolConfigId"} />
+          <ToolNameField model={sfdcDataObject} fieldName={"toolConfigId"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={sfdcDataObject} fieldName={"jenkinsUrl"} />

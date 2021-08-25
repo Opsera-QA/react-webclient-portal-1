@@ -3,14 +3,14 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import JsonField from "components/common/fields/json/JsonField";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function XUnitPipelineStepConfigurationSummaryPanel({ xunitPipelineStepData, pipelineData, setActiveTab }) {
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={xunitPipelineStepData} fieldName={"toolConfigId"} />
+          <ToolNameField model={xunitPipelineStepData} fieldName={"toolConfigId"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={xunitPipelineStepData} fieldName={"jobType"} />

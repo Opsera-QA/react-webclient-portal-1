@@ -4,13 +4,14 @@ import PropTypes from "prop-types";
 import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import JsonField from "../../../../../../../common/fields/json/JsonField";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function JenkinsPipelineStepConfigurationSummaryPanel({ jenkinsPipelineStepData, pipelineData, setActiveTab }) {
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={jenkinsPipelineStepData} fieldName={"toolConfigId"} />
+          <ToolNameField model={jenkinsPipelineStepData} fieldName={"toolConfigId"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={jenkinsPipelineStepData} fieldName={"jobType"} />

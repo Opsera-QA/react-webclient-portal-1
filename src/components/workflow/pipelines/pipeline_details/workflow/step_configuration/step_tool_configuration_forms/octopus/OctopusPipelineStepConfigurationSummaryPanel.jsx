@@ -5,6 +5,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function OctopusPipelineStepConfigurationSummaryPanel({ octopusPipelineDataObject, pipelineData, setActiveTab }) {
 
@@ -16,6 +17,9 @@ function OctopusPipelineStepConfigurationSummaryPanel({ octopusPipelineDataObjec
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
+          <ToolNameField model={octopusPipelineDataObject} fieldName={"octopusToolId"}/>
+        </Col>
+        <Col lg={6}>
           <TextFieldBase dataObject={octopusPipelineDataObject} fieldName={"toolURL"}/>
         </Col>
         <Col lg={6}>
@@ -26,9 +30,6 @@ function OctopusPipelineStepConfigurationSummaryPanel({ octopusPipelineDataObjec
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={octopusPipelineDataObject} fieldName={"environmentName"}/>
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={octopusPipelineDataObject} fieldName={"octopusToolId"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={octopusPipelineDataObject} fieldName={"spaceId"}/>

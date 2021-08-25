@@ -6,6 +6,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function JFrogDockerPipelineStepConfigurationSummaryPanel({ jFrogPipelineDataObject, pipelineData, setActiveTab }) {
   if (jFrogPipelineDataObject == null) {
@@ -16,10 +17,10 @@ function JFrogDockerPipelineStepConfigurationSummaryPanel({ jFrogPipelineDataObj
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={jFrogPipelineDataObject} fieldName={"jobType"}/>
+          <ToolNameField model={jFrogPipelineDataObject} fieldName={"toolConfigId"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={jFrogPipelineDataObject} fieldName={"toolConfigId"}/>
+          <TextFieldBase dataObject={jFrogPipelineDataObject} fieldName={"jobType"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={jFrogPipelineDataObject} fieldName={"jobName"}/>
