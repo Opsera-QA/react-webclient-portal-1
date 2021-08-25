@@ -5,6 +5,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function SpinnakerPipelineStepConfigurationSummaryPanel({ spinnakerPipelineDataObject, pipelineData, setActiveTab }) {
 
@@ -16,7 +17,7 @@ function SpinnakerPipelineStepConfigurationSummaryPanel({ spinnakerPipelineDataO
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={spinnakerPipelineDataObject} fieldName={"spinnakerId"}/>
+          <ToolNameField model={spinnakerPipelineDataObject} fieldName={"spinnakerId"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={spinnakerPipelineDataObject} fieldName={"toolURL"}/>

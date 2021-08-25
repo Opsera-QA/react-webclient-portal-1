@@ -4,13 +4,14 @@ import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function SeleniumPipelineStepConfigurationSummaryPanel({ seleniumDataObject, pipelineData, setActiveTab }) {
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={seleniumDataObject} fieldName={"toolConfigId"} />
+          <ToolNameField model={seleniumDataObject} fieldName={"toolConfigId"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={seleniumDataObject} fieldName={"jobType"} />

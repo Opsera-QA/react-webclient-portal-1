@@ -3,17 +3,16 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
-import PipelineSummariesField from "components/common/form_fields/pipelines/PipelineSummariesField";
-import PipelineConditionsField from "../../../../../../../common/fields/workflow/pipelines/PipelineConditionsField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import JsonField from "components/common/fields/json/JsonField";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function CypressPipelineStepConfigurationSummaryPanel({ cypressDataObject, pipelineData, setActiveTab }) {
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={cypressDataObject} fieldName={"toolConfigId"} />
+          <ToolNameField model={cypressDataObject} fieldName={"toolConfigId"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={cypressDataObject} fieldName={"jobType"} />

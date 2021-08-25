@@ -4,14 +4,14 @@ import PropTypes from "prop-types";
 import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import JsonField from "components/common/fields/json/JsonField";
-import VaultField from "../../../../../../../common/fields/text/VaultField";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function ElasticBeanstalkPipelineStepConfigurationSummaryPanel({ elasticBeanstalkPipelineStepData, pipelineData, setActiveTab }) {
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={elasticBeanstalkPipelineStepData} fieldName={"awsToolConfigId"} />
+          <ToolNameField model={elasticBeanstalkPipelineStepData} fieldName={"awsToolConfigId"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={elasticBeanstalkPipelineStepData} fieldName={"bucketName"} />

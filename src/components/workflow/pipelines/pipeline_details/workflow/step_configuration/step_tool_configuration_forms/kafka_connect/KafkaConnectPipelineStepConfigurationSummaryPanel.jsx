@@ -5,6 +5,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function KafkaConnectPipelineStepConfigurationSummaryPanel({ kafkaConnectPipelineDataObject, pipelineData, setActiveTab }) {
   if (kafkaConnectPipelineDataObject == null) {
@@ -15,7 +16,7 @@ function KafkaConnectPipelineStepConfigurationSummaryPanel({ kafkaConnectPipelin
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={kafkaConnectPipelineDataObject} fieldName={"kafkaToolId"}/>
+          <ToolNameField model={kafkaConnectPipelineDataObject} fieldName={"kafkaToolId"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={kafkaConnectPipelineDataObject} fieldName={"service"}/>

@@ -7,6 +7,7 @@ import BooleanField from "components/common/fields/boolean/BooleanField";
 
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function AzureAcrPushPipelineStepConfigurationSummary({ azureAcrPushPipelineDataObject, pipelineData, setActiveTab }) {
   if (azureAcrPushPipelineDataObject == null) {
@@ -17,7 +18,7 @@ function AzureAcrPushPipelineStepConfigurationSummary({ azureAcrPushPipelineData
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={azureAcrPushPipelineDataObject} fieldName={"toolConfigId"}/>
+          <ToolNameField model={azureAcrPushPipelineDataObject} fieldName={"toolConfigId"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={azureAcrPushPipelineDataObject} fieldName={"toolJobName"}/>

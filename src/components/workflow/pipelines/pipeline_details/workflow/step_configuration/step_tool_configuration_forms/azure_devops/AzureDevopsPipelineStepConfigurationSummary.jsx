@@ -5,6 +5,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function AzureDevopsPipelineStepConfigurationSummaryPanel({ azureDevopsPipelineDataObject, pipelineData, setActiveTab }) {
   if (azureDevopsPipelineDataObject == null) {
@@ -14,6 +15,9 @@ function AzureDevopsPipelineStepConfigurationSummaryPanel({ azureDevopsPipelineD
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
+        <Col lg={6}>
+          <ToolNameField model={azureDevopsPipelineDataObject} fieldName={"toolConfigId"}/>
+        </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={azureDevopsPipelineDataObject} fieldName={"organizationName"}/>
         </Col>
@@ -25,9 +29,6 @@ function AzureDevopsPipelineStepConfigurationSummaryPanel({ azureDevopsPipelineD
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={azureDevopsPipelineDataObject} fieldName={"pipelineVersion"}/>
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={azureDevopsPipelineDataObject} fieldName={"toolConfigId"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>

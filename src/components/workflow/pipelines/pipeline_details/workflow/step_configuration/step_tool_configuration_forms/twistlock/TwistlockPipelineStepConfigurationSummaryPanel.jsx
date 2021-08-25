@@ -5,6 +5,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function TwistlockPipelineStepConfigurationSummaryPanel({ twistlockPipelineDataObject, pipelineData, setActiveTab }) {
   if (twistlockPipelineDataObject == null) {
@@ -15,7 +16,7 @@ function TwistlockPipelineStepConfigurationSummaryPanel({ twistlockPipelineDataO
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={twistlockPipelineDataObject} fieldName={"toolConfigId"}/>
+          <ToolNameField model={twistlockPipelineDataObject} fieldName={"toolConfigId"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={twistlockPipelineDataObject} fieldName={"twistlockToolId"}/>

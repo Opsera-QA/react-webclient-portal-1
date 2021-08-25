@@ -4,14 +4,14 @@ import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import JsonField from "components/common/fields/json/JsonField";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function DockerPushPipelineStepConfigurationSummaryPanel({ dockerPushDataObject, pipelineData, setActiveTab }) {
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={dockerPushDataObject} fieldName={"toolConfigId"} />
+          <ToolNameField model={dockerPushDataObject} fieldName={"toolConfigId"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={dockerPushDataObject} fieldName={"awsToolConfigId"} />
