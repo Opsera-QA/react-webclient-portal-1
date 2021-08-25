@@ -70,11 +70,9 @@ const sourceRepositoryConfigurationMetadata = {
       label: "Trigger Active",
       id: "trigger_active",
       formText: `
-        To enable webhook event based pipeline runs from your repository, either configure
-        the account above to register it automatically or use the URL below (and optional security key) to configure
-        your repository manually.  If a specific repository and branch are selected above through account registration,
-        then ONLY events from that branch can trigger this pipeline, if no repository and branch are specified then
-        any commit events will trigger the pipeline.
+        Pipelines can be triggered by commit webhook events. 
+        To configure this pipeline to run anytime a commit occurs in the repository/branch, please complete the fields above. 
+        Then copy the webhook URL into your repository and configure it accordingly.
       `,
     },
   ],
