@@ -12,7 +12,7 @@ import Model from "../../../../../core/data_model/model";
 import CoverityIssuesByCategoryActionableMetadata from "./coverity-issues-by-category-actionable-metadata.js";
 import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
-// import CoverityIssuesByCategoryHelpDocumentation from "components/common/help/documentation/insights/charts/CoverityIssuesByCategoryHelpDocumentation";
+import CoverityIssuesByCategoryHelpDocumentation from "components/common/help/documentation/insights/charts/CoverityIssuesByCategoryHelpDocumentation";
 
 function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -273,9 +273,9 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
-        // chartHelpComponent={(closeHelpPanel) => (
-        //   <CoverityIssuesByCategoryHelpDocumentation closeHelpPanel={closeHelpPanel} />
-        // )}
+        chartHelpComponent={(closeHelpPanel) => (
+          <CoverityIssuesByCategoryHelpDocumentation closeHelpPanel={closeHelpPanel} />
+        )}
       />
       <ModalLogs
         header="Coverity Issues By Category"
