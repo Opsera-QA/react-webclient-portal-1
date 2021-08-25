@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 import IconBase from "components/common/icons/IconBase";
 
-function InfoContainer({ children, isLoading, titleIcon, titleText, helpComponent }) {
+function InfoContainer({ children, isLoading, titleIcon, titleText, helpComponent,className }) {
   const getTitleBar = () => {
     return (
       <div className="px-2 pt-2 d-flex justify-content-between">
@@ -16,12 +16,14 @@ function InfoContainer({ children, isLoading, titleIcon, titleText, helpComponen
   };
 
   return (
-    <div className="object-properties-input">
-      <div className="content-container">
-        <div className="property-header">
-          <h6>{getTitleBar()}</h6>
+    <div className={className}>
+      <div className="object-properties-input">
+        <div className="content-container">
+          <div className="property-header">
+            <h6>{getTitleBar()}</h6>
+          </div>
+          {children}
         </div>
-        {children}
       </div>
     </div>
   );
@@ -32,7 +34,8 @@ InfoContainer.propTypes = {
   titleText: PropTypes.string,
   children: PropTypes.any,
   helpComponent: PropTypes.any,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default InfoContainer;
