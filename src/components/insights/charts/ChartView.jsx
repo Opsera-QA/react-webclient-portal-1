@@ -48,7 +48,6 @@ import SonarReliabilityRemediationEffortByProjectLineChart from "./sonar/line_ch
 import SonarMetricByProjectLineChart from "./sonar/line_chart/metric-by-project/SonarMetricByProjectLineChart";
 import SonarCodeCoverageBarChart from "./sonar/bar_chart/code_coverage/SonarCodeCoverageBarChart";
 import SonarLinesToCoverBarChart from "./sonar/bar_chart/code_coverage/SonarLinesToCoverBarChart";
-import SonarRatings from "./sonar/sonar_ratings/SonarRatings";
 // import SonarSecurityScorecard from "./sonar/SonarSecurityScorecard";
 import SonarBugsMetricScorecard from "./sonar/table/bugs-scorecard/SonarBugsMetricScorecard";
 import SonarCodeSmellsMetricScorecard from "./sonar/table/codesmells-scorecard/SonarCodeSmellsMetricScorecard";
@@ -144,6 +143,7 @@ import {
   getTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 import { Col } from "react-bootstrap";
+import SonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings/SonarRatingMetrics";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -677,7 +677,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "sonar-ratings":
         return (
           <Col xl={6} md={12} className="p-2">
-            <SonarRatings
+            <SonarRatingMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
