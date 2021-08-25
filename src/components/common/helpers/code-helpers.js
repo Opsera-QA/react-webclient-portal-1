@@ -19,3 +19,49 @@ export const formatXml = (xml) => {
   const resultDoc = xsltProcessor.transformToDocument(xmlDoc);
   return new XMLSerializer().serializeToString(resultDoc);
 };
+
+export const parsePackageXml = (log) => {
+  const re = new RegExp(/==== PACKAGE.XML =====((?!==== END PACKAGE.XML =====)[\s\S])*==== END PACKAGE.XML =====/);
+  const consoleLog = log?.api_response?.jenkinsConsoleLog ? log?.api_response?.jenkinsConsoleLog : log?.api_response?.jenkins_console_log;
+
+  if (consoleLog == null) {
+    return null;
+  }
+
+  const matches = re.exec(consoleLog);
+
+  if (matches.length > 0) {
+    let xml = matches[0];
+    let splitArray = xml.length > 0 ? xml.split("\n") : [];
+    if (splitArray.length > 0) {
+      splitArray.splice(0, 1);
+      splitArray.pop();
+    }
+    let returnXML = splitArray.length > 0 ? splitArray.join("\n") : [];
+    return _xmlFormattingHelper(returnXML);
+  }
+
+  return false;
+};
+
+
+// TODO: Is this required or does the XMLFormatter work instead?
+export const _xmlFormattingHelper = (data) => {
+  try {
+    let returnVal = "";
+    let indentVal = "";
+    data.split(/>\s*</).forEach(function (line) {
+      if (line.match(/^\/\w/)) {
+        indentVal = indentVal.substring("  ".length);
+      }
+      returnVal += indentVal + "<" + line + ">\r\n";
+      if (line.match(/^<?\w[^>]*[^\/]$/)) {
+        indentVal += "  ";
+      }
+    });
+    returnVal = returnVal.substring(1, returnVal.length - 3);
+    return returnVal;
+  } catch (error) {
+    return data;
+  }
+};
