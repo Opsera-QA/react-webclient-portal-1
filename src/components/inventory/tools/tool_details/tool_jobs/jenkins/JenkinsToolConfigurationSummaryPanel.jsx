@@ -7,8 +7,8 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import VaultField from "components/common/fields/text/VaultField";
 
-function JenkinsToolConfigurationSummaryPanel({ accessToken }) {
-  if (accessToken == null) {
+function JenkinsToolConfigurationSummaryPanel({ jenkinsToolConfigurationModel }) {
+  if (jenkinsToolConfigurationModel == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
@@ -16,31 +16,31 @@ function JenkinsToolConfigurationSummaryPanel({ accessToken }) {
     <SummaryPanelContainer>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={accessToken} fieldName={"jenkinsUrl"} />
+          <TextFieldBase dataObject={jenkinsToolConfigurationModel} fieldName={"jenkinsUrl"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={accessToken} fieldName={"jenkinsPort"} />
+          <TextFieldBase dataObject={jenkinsToolConfigurationModel} fieldName={"jenkinsPort"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={accessToken} fieldName={"jUserId"} />
+          <TextFieldBase dataObject={jenkinsToolConfigurationModel} fieldName={"jUserId"} />
         </Col>
         <Col lg={6}>
-          <VaultField dataObject={accessToken} fieldName={"jAuthToken"} />
+          <VaultField dataObject={jenkinsToolConfigurationModel} fieldName={"jAuthToken"} />
         </Col>
         <Col lg={12}>
-          <BooleanField dataObject={accessToken} fieldName={"proxyEnable"} />
+          <BooleanField dataObject={jenkinsToolConfigurationModel} fieldName={"proxyEnable"} />
         </Col>
         <Col lg={12}>
-          <TextFieldBase dataObject={accessToken} fieldName={"proxyUserName"} />
+          <TextFieldBase dataObject={jenkinsToolConfigurationModel} fieldName={"proxyUserName"} />
         </Col>
         <Col lg={6}>
-          <VaultField dataObject={accessToken} fieldName={"proxyPassword"} />
+          <VaultField dataObject={jenkinsToolConfigurationModel} fieldName={"proxyPassword"} />
         </Col>
         <Col lg={6}>
-          <VaultField dataObject={accessToken} fieldName={"jPassword"} />
+          <VaultField dataObject={jenkinsToolConfigurationModel} fieldName={"jPassword"} />
         </Col>
         <Col lg={12}>
-          <BooleanField dataObject={accessToken} fieldName={"autoScaleEnable"} />
+          <BooleanField dataObject={jenkinsToolConfigurationModel} fieldName={"autoScaleEnable"} />
         </Col>
       </Row>
     </SummaryPanelContainer>
@@ -48,7 +48,7 @@ function JenkinsToolConfigurationSummaryPanel({ accessToken }) {
 }
 
 JenkinsToolConfigurationSummaryPanel.propTypes = {
-  accessToken: PropTypes.object,
+  jenkinsToolConfigurationModel: PropTypes.object,
 };
 
 export default JenkinsToolConfigurationSummaryPanel;
