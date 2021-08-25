@@ -38,7 +38,13 @@ function PipelineStepDetailsOverview({ pipelineStep, index }) {
     return (
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <CustomTab tabText={"Notification Configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabName={"notifications"} />
+        <CustomTab
+          tabText={"Notification Configuration"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabName={"notifications"}
+          // icon={}
+        />
         {/*{getActionSpecificTab()}*/}
         <JsonTab handleTabClick={handleTabClick} activeTab={activeTab} />
       </CustomTabContainer>

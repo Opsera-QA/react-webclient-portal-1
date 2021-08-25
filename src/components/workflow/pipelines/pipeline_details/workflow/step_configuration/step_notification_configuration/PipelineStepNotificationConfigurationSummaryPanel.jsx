@@ -20,6 +20,8 @@ import serviceNowStepNotificationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/servicenow/serviceNowStepNotificationMetadata";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
+import JiraPipelineStepNotificationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/jira/JiraPipelineStepNotificationSummaryPanel";
 
 // TODO: Style
 function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData }) {
@@ -103,41 +105,7 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
 
   const getJiraFields = () => {
     return (
-      <Row>
-        <Col lg={6}>
-          <BooleanField dataObject={jiraModel} fieldName={"enabled"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"jiraToolId"} dataObject={jiraModel} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"jiraProject"} dataObject={jiraModel} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"jiraSprint"} dataObject={jiraModel} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"jiraPriority"} dataObject={jiraModel} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"jiraPrimaryAssignee"} dataObject={jiraModel} />
-        </Col>
-        <Col lg={6}>
-          <GenericItemField fieldName={"jiraSecondaryAssignees"} dataObject={jiraModel} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"jiraBoard"} dataObject={jiraModel} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"jiraParentTicket"} dataObject={jiraModel} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"jiraOpenStep"} dataObject={jiraModel} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase fieldName={"jiraClosureStep"} dataObject={jiraModel} />
-        </Col>
-      </Row>
+      <JiraPipelineStepNotificationSummaryPanel jiraNotificationModel={jiraModel} />
     );
   };
 
