@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
-import XmlFieldBase from "components/common/fields/code/XmlFieldBase";
+import PackageXmlFieldBase from "components/common/fields/code/PackageXmlFieldBase";
 
 const PackageXmlViewer = ({isSaving, isLoading, pipelineWizardModel}) => {
   const getFormattedPackageXml = () => {
@@ -9,7 +9,7 @@ const PackageXmlViewer = ({isSaving, isLoading, pipelineWizardModel}) => {
 
     if (typeof xml === "string" && xml.length > 0) {
       return (
-        <XmlFieldBase fieldName={"xml"} model={pipelineWizardModel} isLoading={isLoading} />
+        <PackageXmlFieldBase fieldName={"xml"} model={pipelineWizardModel} isLoading={isLoading} />
       );
     }
   };
@@ -19,7 +19,7 @@ const PackageXmlViewer = ({isSaving, isLoading, pipelineWizardModel}) => {
 
     if (typeof destructiveXml === "string" && destructiveXml.length > 0) {
       return (
-        <XmlFieldBase fieldName={"destructiveXml"} model={pipelineWizardModel} isLoading={isLoading} />
+        <PackageXmlFieldBase fieldName={"destructiveXml"} model={pipelineWizardModel} isLoading={isLoading} />
       );
     }
   };
