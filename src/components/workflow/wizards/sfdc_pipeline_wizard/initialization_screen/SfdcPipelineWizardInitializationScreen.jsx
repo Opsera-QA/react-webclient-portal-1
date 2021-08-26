@@ -320,7 +320,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   };
 
   const getDynamicTab = () => {
-    if (featureFlagHideItemInProd() || pipelineWizardModel?.getData("run_count") === 1 || pipelineWizardModel?.getData("fromGitTasks") === true) {
+    if (pipelineWizardModel?.getData("run_count") === 1 || pipelineWizardModel?.getData("fromGitTasks") === true) {
       return null;
     }
 
