@@ -6,9 +6,10 @@ function SFDCNewBranchBoolInput({dataObject, setDataObject, disabled}) {
   const setNewBranch = (fieldName, value) => {
     let newDataObject = {...dataObject};
     newDataObject.setData("isNewBranch", value);
-    if(!value){
-        newDataObject.setData("upstreamBranch", "");
-    }
+    newDataObject.setData("upstreamBranch", "");
+    newDataObject.setData("gitBranch", "");
+    newDataObject.setData("defaultBranch", "");
+    newDataObject.setData("branch", "");
     setDataObject({...newDataObject});
   };
   return (
