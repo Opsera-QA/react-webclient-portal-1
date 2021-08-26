@@ -877,6 +877,15 @@ a.nav-link {
     text-align: center;
 }
 
+.new-aws-marketplace-user-header {
+    padding: .3em 1em;
+    background-color: #CF940C !important;
+    border-color: #CF940C;
+    color: #fff;
+    margin-top: 0;
+    text-align: center;
+}
+
 .new-user-body {
     padding: 0;
 }
