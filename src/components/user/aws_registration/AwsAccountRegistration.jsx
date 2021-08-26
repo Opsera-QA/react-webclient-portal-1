@@ -34,7 +34,6 @@ function Signup() {
   };
 
   const createAccount = async () => {
-    // console.log("persistData: ", JSON.stringify(registrationDataDto.getPersistData()));
     const isDomainAvailable = await userActions.isDomainAvailable(registrationModel?.getData("domain"));
 
     if (!isDomainAvailable) {
