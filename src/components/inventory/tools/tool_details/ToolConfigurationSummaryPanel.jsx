@@ -8,28 +8,36 @@ import jenkinsConnectionMetadata
 import JiraToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/jira/JiraToolConfigurationSummaryPanel";
 import jiraConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/jira-connection-metadata";
+import GithubToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/github/GithubToolConfigurationSummaryPanel";
+import githubConnectionMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/github/github-connection-metadata";
 
-function ToolConfigurationSummaryPanel({ toolData }) {
+function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
-    if (toolData == null) {
+    if (toolIdentifier == null || toolConfiguration == null) {
       return <></>;
     }
     
-    switch (toolData?.getData("tool_identifier")) {
+    switch (toolIdentifier) {
       case "jenkins":
         return (
           <JenkinsToolConfigurationSummaryPanel
-            jenkinsToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolData?.configuration, jenkinsConnectionMetadata)}
+            jenkinsToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, jenkinsConnectionMetadata)}
           />
         );
       case "jira":
         return (
           <JiraToolConfigurationSummaryPanel
-            jiraToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolData?.configuration, jiraConnectionMetadata)}
+            jiraToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, jiraConnectionMetadata)}
           />
         );
       case "github":
-        // return <GithubToolConfiguration toolData={toolData} />;
+        return (
+          <GithubToolConfigurationSummaryPanel
+            jiraToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, githubConnectionMetadata)}
+          />
+        );
       case "gitlab":
         // return <GitlabToolConfiguration toolData={toolData} />;
       case "bitbucket":
@@ -88,7 +96,8 @@ function ToolConfigurationSummaryPanel({ toolData }) {
 }
 
 ToolConfigurationSummaryPanel.propTypes = {
-  toolData: PropTypes.object,
+  toolIdentifier: PropTypes.string,
+  toolConfiguration: PropTypes.object,
 };
 
 
