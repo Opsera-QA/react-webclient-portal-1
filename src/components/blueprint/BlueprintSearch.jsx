@@ -68,7 +68,9 @@ function BlueprintSearch({sideBySide, id, run}) {
         data: [],
         xmlData: false,
         anchore: false,
-        stats: false,
+        anchoreStats: false,
+        twistlock: false,
+        twistlockStats: false,
         title: blueprintModel.getData("title"),
         runNumber: blueprintModel.getData("runNumber"),
         pipelineId: blueprintModel.getData("pipelineId"),
@@ -83,7 +85,9 @@ function BlueprintSearch({sideBySide, id, run}) {
         newLog.data = response?.data?.data ? response?.data?.data : [];
         newLog.xmlData = response?.data?.reports?.xml?.status === 200 ? response.data.reports.xml : false;
         newLog.anchore = response?.data?.reports?.anchore_report ? response.data.reports.anchore_report : false;
-        newLog.stats = response?.data?.reports?.anchore_stats ? response.data.reports.anchore_stats : false;
+        newLog.anchoreStats = response?.data?.reports?.anchore_stats ? response.data.reports.anchore_stats : false;
+        newLog.twistlock = response?.data?.reports?.twistlock_report ? response.data.reports.twistlock_report : false;
+        newLog.twistlockStats = response?.data?.reports?.twistlock_stats ? response.data.reports.twistlock_stats : false;
         newLogTabData[newLogTab] = newLog;
         setLogData([...newLogTabData]);
       }
