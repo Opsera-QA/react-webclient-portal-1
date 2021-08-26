@@ -109,6 +109,7 @@ function RoleRestrictedToolByIdentifierInputBase({ toolIdentifier, toolFriendlyN
           toolData={tools?.find((tool) => tool?._id === model?.getData(fieldName))}
           loadData={loadData}
           isLoading={isLoading}
+          toolIdentifier={toolIdentifier}
         />
       );
     }
