@@ -12,6 +12,9 @@ import SFDCBitbucketWorkspaceInput from "./inputs/SFDCBitbucketWorkspaceInput";
 import SFDCGitRepositoryInput from "./inputs/SFDCGitRepositoryInput";
 import SFDCGitBranchInput from "./inputs/SFDCGitBranchInput";
 import SFDCToolInput from "./inputs/SFDCToolInput";
+import SFDCNewBranchBoolInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCNewBranchBoolInput";
+import SfdcGitUpstreamBranchInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SfdcGitUpstreamBranchInput";
+import SFDCGitBranchTextInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitBranchTextInput";
 import AgentLabelsMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
 
 function SFDCGitTaskEditorPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
@@ -54,8 +57,24 @@ function SFDCGitTaskEditorPanel({ gitTasksDataDto, gitTasksConfigurationData, se
         <SFDCGitRepositoryInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
       </Col>
       <Col lg={12}>
-        <SFDCGitBranchInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
+      <SFDCGitBranchInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} visible={!(gitTasksConfigurationData?.getData("isNewBranch"))}/>
       </Col>
+      <Col lg={12}>
+        <SFDCNewBranchBoolInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
+      </Col>
+      {gitTasksConfigurationData?.getData("isNewBranch") && 
+        <>
+          <Col lg={12}>
+            <SFDCGitBranchTextInput
+              fieldName={"gitBranch"}
+              dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} visible={gitTasksConfigurationData?.getData("isNewBranch")}
+            />
+          </Col>
+          <Col lg={12}>
+            <SfdcGitUpstreamBranchInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
+          </Col>
+        </>
+      }
       {getDynamicFields()}
     </Row>
   );
