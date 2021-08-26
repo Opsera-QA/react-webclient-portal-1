@@ -138,7 +138,7 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
   }
 
   return (
-    <SummaryPanelContainer className={"p-0"}>
+    <SummaryPanelContainer className={"step-configuration-summary"}>
       {getEmailFields()}
       {getJiraFields()}
       {getTeamsFields()}
