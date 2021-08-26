@@ -13,7 +13,7 @@ import SFDCGitRepositoryInput from "./inputs/SFDCGitRepositoryInput";
 import SFDCGitBranchInput from "./inputs/SFDCGitBranchInput";
 import SFDCToolInput from "./inputs/SFDCToolInput";
 import SFDCNewBranchBoolInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCNewBranchBoolInput";
-import SfdcGitUpstreamBranchInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SfdcGitUpstreamBranchInput";
+import SFDCGitUpstreamBranchInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitUpstreamBranchInput";
 import SFDCGitBranchTextInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitBranchTextInput";
 import AgentLabelsMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
 
@@ -71,7 +71,7 @@ function SFDCGitTaskEditorPanel({ gitTasksDataDto, gitTasksConfigurationData, se
             />
           </Col>
           <Col lg={12}>
-            <SfdcGitUpstreamBranchInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
+            <SFDCGitUpstreamBranchInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
           </Col>
         </>
       }
