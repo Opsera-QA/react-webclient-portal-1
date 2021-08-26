@@ -8,15 +8,19 @@ function SfdcJenkinsAccountInput({dataObject, setDataObject, gitTasksDataDto, di
     let newDataObject = {...dataObject};
     newDataObject.setData("gitCredential", selectedOption.gitCredential);
     newDataObject.setData("gitToolId", selectedOption.toolId);
-    newDataObject.setData("type", selectedOption.service);
     newDataObject.setData("service", selectedOption.service);
+    // save the tool identifier to the parent obj
     gitTasksDataDto.setData("tool_identifier", selectedOption.service);
-    newDataObject.setData("gitUserName", selectedOption.gitUserName);
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");
+    newDataObject.setData("projectId", "");
     newDataObject.setData("gitBranch", "");
+    newDataObject.setData("branch", "");
+    newDataObject.setData("defaultBranch", "");
+    newDataObject.setData("sourceBranch", "");
     newDataObject.setData("workspace", "");
+    newDataObject.setData("workspaceName", "");
     setDataObject({...newDataObject});
   };
 
@@ -25,13 +29,13 @@ function SfdcJenkinsAccountInput({dataObject, setDataObject, gitTasksDataDto, di
     newDataObject.setData("gitCredential", "");
     newDataObject.setData("gitToolId", "");
     gitTasksDataDto.setData("tool_identifier", "");
-    newDataObject.setData("type", "");
     newDataObject.setData("service", "");
-    newDataObject.setData("gitUserName", "");
+    newDataObject.setData("branch", "");
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");
     newDataObject.setData("gitBranch", "");
+    newDataObject.setData("workspaceName", "");
     newDataObject.setData("workspace", "");
     setDataObject({...newDataObject});
   };

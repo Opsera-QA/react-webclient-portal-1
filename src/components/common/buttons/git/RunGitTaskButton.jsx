@@ -41,7 +41,7 @@ function RunGitTaskButton({gitTasksData, handleClose, setGitTasksData, gitTasksC
   const checkValidity = () => {
     if (gitTasksData.getData("type") === "sync-sfdc-repo") { 
       const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-      if(gitTasksConfigurationDataDto.checkCurrentValidity() && configuration?.newBranch && configuration?.upstreamBranch?.length < 1 ) {
+      if(gitTasksConfigurationDataDto.checkCurrentValidity() && configuration?.isNewBranch && configuration?.upstreamBranch?.length < 1 ) {
         return true;
       } else {
         return !gitTasksConfigurationDataDto.checkCurrentValidity();

@@ -7,15 +7,9 @@ function SfdcJenkinsToolInput({dataObject, setDataObject, disabled}) {
 
     let newDataObject = {...dataObject};
     newDataObject.setData("toolConfigId", selectedOption.id);
-    newDataObject.setData("toolName",selectedOption.name);
-    // newDataObject.setData("jenkinsUrl", selectedOption?.configuration?.jenkinsUrl);
-    // newDataObject.setData("jenkinsPort", selectedOption?.configuration?.jenkinsPort);
-    // newDataObject.setData("jUserId", selectedOption?.configuration?.jUserId);
-    // newDataObject.setData("jAuthToken", selectedOption?.configuration?.jAuthToken);    
+    newDataObject.setData("toolName",selectedOption.name);   
     newDataObject.setData("toolJobName", "");
     newDataObject.setData("toolJobId", "");
-    newDataObject.setData("jobType", "");    
-    // newDataObject.setData("type", "");
     newDataObject.setData("service", "");
     newDataObject.setData("gitToolId", "");
     newDataObject.setData("gitUrl", "");
@@ -28,8 +22,6 @@ function SfdcJenkinsToolInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("workspaceName", "");
     newDataObject.setData("sfdcDestToolId", "");
     newDataObject.setData("destAccountUsername", "");
-    newDataObject.setData("sfdcUnitTestType", "");
-    newDataObject.setData("workspaceDeleteFlag", false);
     newDataObject.setData("autoScaleEnable", selectedOption.configuration.autoScaleEnable || false);
     setDataObject({...newDataObject});
   };
