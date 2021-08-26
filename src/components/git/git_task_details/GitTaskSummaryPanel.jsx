@@ -22,6 +22,10 @@ import ec2ServiceCreationTaskConfigurationMetadata
   from "./configuration_forms/ecs-service-creation/ecs-service-creation-git-task-configuration";
 import sfdxCertGenTaskConfigurationMetadata from "components/git/git_task_details/configuration_forms/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
 import SFDXCertGenTaskTypeSummaryCard from "./configuration_forms/sfdx-cert-gen/SFDXCertGenTaskTypeSummaryCard";
+import AwsLambdaTaskTypeSummaryCard from "./configuration_forms/aws-lambda-creation/AwsLambdaSummaryPanel";
+import awsLambdaFunctionTaskConfigurationMetadata
+  from "./configuration_forms/aws-lambda-creation/aws-lambda-metadata";
+
 
 function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const isMounted = useRef(false);
@@ -88,6 +92,13 @@ function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, load
         return (
           <ECSServiceCreationTaskTypeSummaryCard
             gitTaskConfigurationData={wrapGitTaskType(ec2ServiceCreationTaskConfigurationMetadata)}
+            gitTasksData={gitTasksData}
+          />
+        );
+      case "lambda_function_creation":
+        return (
+          <AwsLambdaTaskTypeSummaryCard
+            gitTaskConfigurationData={wrapGitTaskType(awsLambdaFunctionTaskConfigurationMetadata)}
             gitTasksData={gitTasksData}
           />
         );

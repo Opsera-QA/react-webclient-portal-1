@@ -57,6 +57,8 @@ import CoverityStepConfiguration from "./step_tool_configuration_forms/coverity/
 import AzureAcrPushStepConfiguration from "./step_tool_configuration_forms/azure_acr_push/AzureAcrPushStepConfiguration";
 import JFrogMavenStepConfiguration 
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_maven/JFrogMavenStepConfiguration";
+import AwsLambdaDeployStepConfiguration
+  from "./step_tool_configuration_forms/aws_lambda_publish/AwsLambdaDeployStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -907,7 +909,24 @@ function StepToolConfiguration({
               createJob={createJob}
               setToast={setToast}
               setShowToast={setShowToast}
-            />);
+            />
+          );
+      case "aws_lambda":
+        return (
+          <AwsLambdaDeployStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
     }
   };
 
