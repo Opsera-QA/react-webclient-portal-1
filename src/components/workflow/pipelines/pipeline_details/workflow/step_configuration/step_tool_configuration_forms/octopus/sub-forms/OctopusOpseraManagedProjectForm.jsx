@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import OctopusEnvironmentNameSelectInput from "../input/OctopusEnvironmentSelectInput";
 import OctopusTargetRolesSelectInput from "../input/OctopusTargetRolesSelect";
 import OctopusPlatformTypeSelectInput from "../input/OctopusPlatformTypeSelectInput";
 import OctopusDeploymentTypeInputSelect from "../input/OctopusDeploymentTypeInputSelect";
@@ -58,14 +57,7 @@ function OctopusOpseraManagedProjectForm({
         dataObject={dataObject}
         setDataObject={setDataObject}
         disabled={dataObject && dataObject.getData("projectId").length === 0}
-      />
-      <OctopusEnvironmentNameSelectInput
-        fieldName={"environmentName"}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        disabled={dataObject && dataObject.getData("spaceName").length === 0}
-        tool_prop={dataObject ? dataObject.getData("spaceName") : ""}
-      />
+      />      
       <DtoSelectInput
         setDataObject={setDataObject}
         textField={"name"}

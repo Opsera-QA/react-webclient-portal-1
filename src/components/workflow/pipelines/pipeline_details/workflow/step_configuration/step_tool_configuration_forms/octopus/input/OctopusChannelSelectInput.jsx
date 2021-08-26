@@ -10,7 +10,7 @@ const OctopusChannelSelectInput = ({ fieldName, dataObject, setDataObject, disab
 
     const toastContext = useContext(DialogToastContext);
     const { getAccessToken } = useContext(AuthContext);
-    const [ placeholderText, setPlaceholderText ] = useState("");
+    const [ placeholderText, setPlaceholderText ] = useState("Select Channel");
     const [ channels, setChannels ] = useState([]);    
     const [ isLoading, setIsLoading ] = useState(false);
     const [ errorMessage, setErrorMessage ] = useState("");
@@ -40,24 +40,36 @@ const OctopusChannelSelectInput = ({ fieldName, dataObject, setDataObject, disab
             isMounted.current = false;
         };
 
-    }, []);
+    }, [dataObject.getData("projectId")]);
 
     const loadData = async (cancelSource = cancelTokenSource) => {
-        try {
-            setIsLoading(true);
-            setChannels([]);
-            const response = await OctopusStepActions.getChannels(dataObject.getData("octopusToolId"), dataObject.getData("spaceId"), dataObject.getData("projectId"), getAccessToken, cancelSource);
-            if(response && response.status === 200){
-                setChannels(response.data.data);
+        if(dataObject.getData("projectId") && dataObject.getData("projectId") !== ""){
+            try {
+                setIsLoading(true);
+                setChannels([]);
+                const response = await OctopusStepActions.getChannels(dataObject.getData("octopusToolId"), dataObject.getData("spaceId"), dataObject.getData("projectId"), getAccessToken, cancelSource);
+                if(response && response.status === 200){
+                    setChannels(response.data.data);
+                }
+            } catch (error) {
+                setPlaceholderText("No octopus channels found");
+                console.error(error);
+                toastContext.showServiceUnavailableDialog();
+            } finally {
+                setIsLoading(false);
             }
-        } catch (error) {
-            setPlaceholderText("No octopus channels found");
-            console.error(error);
-            toastContext.showServiceUnavailableDialog();
-        } finally {
-            setIsLoading(false);
-        }
+        }        
     };
+
+    const setDataFunction = (fieldName, selectedOption) => {
+        let newDataObject = {...dataObject};
+        newDataObject.setData(fieldName, selectedOption.id);        
+        setDataObject({...newDataObject});
+    };
+
+    if(!dataObject.getData("projectId") || dataObject.getData("projectId") === "" ){
+        return null;
+    }
 
     return (
         <div>
@@ -71,6 +83,7 @@ const OctopusChannelSelectInput = ({ fieldName, dataObject, setDataObject, disab
                 textField={textField}
                 placeholderText={placeholderText}
                 disabled={disabled || isLoading || !dataObject.getData("projectId") || dataObject.getData("projectId") === ""}
+                setDataFunction={setDataFunction}
             />
         </div>
     );

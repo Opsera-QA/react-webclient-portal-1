@@ -135,4 +135,24 @@ octopusActions.getAzureRegistries = async (getAccessToken, cancelTokenSource, co
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
 };
 
+octopusActions.createOctopusDeploymentProcess = async (toolDataDto, getAccessToken) => {
+  const postBody = {
+    data: toolDataDto,
+    type: "create",
+    item: "process",
+  };
+  const apiUrl = `registry/action/octopus/create-app`;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+octopusActions.createOctopusVariables = async (toolDataDto, getAccessToken) => {
+  const postBody = {
+    data: toolDataDto,
+    type: "create",
+    item: "variable",
+  };
+  const apiUrl = `registry/action/octopus/create-app`;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
 export default octopusActions;

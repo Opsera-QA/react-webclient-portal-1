@@ -14,6 +14,7 @@ import PipelineStepEditorPanelContainer
 import OctopusProjectTypeSelectInput from "./input/OctopusProjectTypeSelectInput";
 import OctopusCustomProjectForm from "./sub-forms/OctopusCustomProjectForm";
 import OctopusOpseraManagedProjectForm from "./sub-forms/OctopusOpseraManagedProjectForm";
+import OctopusEnvironmentNameSelectInput from "./input/OctopusEnvironmentSelectInput";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, callbackSaveToVault, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -104,13 +105,52 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
     if (validateDepVariables && validateCondVariables) {
       await createDeploymentEnvironments();
       await parentCallback(item);
-      await createOctopusProject();
+      if(!octopusStepConfigurationDto.getData("projectType") || octopusStepConfigurationDto.getData("projectType") !== "CUSTOM") {
+        await createOctopusProject();
+        await createOctopusDeploymentProcess();
+      }      
+      await createOctopusVariables();
     }
   };
 
   const createOctopusProject = async () => {
     await octopusActions
       .createOctopusProject({
+        pipelineId: pipelineId,
+        stepId: stepId,
+        variableSet: octopusStepConfigurationDto.getData("specifyDepVariables") ? octopusStepConfigurationDto.getData("deploymentVariables") : []
+      }, getAccessToken)
+      .then(async (response) => {        
+        return response;
+      })
+      .catch(function (error) {
+        console.log(error);
+        let errorMesage =
+          error && error.error && error.error.response && error.error.response.data ? error.error.response.data : "";
+        toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
+      });
+  };
+
+  const createOctopusDeploymentProcess = async () => {
+    await octopusActions
+      .createOctopusDeploymentProcess({
+        pipelineId: pipelineId,
+        stepId: stepId        
+      }, getAccessToken)
+      .then(async (response) => {        
+        return response;
+      })
+      .catch(function (error) {
+        console.log(error);
+        let errorMesage =
+          error && error.error && error.error.response && error.error.response.data ? error.error.response.data : "";
+        toastContext.showErrorDialog(`Error in octopus Deployment Process Creation:  ${errorMesage}`);
+      });
+  };
+
+  const createOctopusVariables = async () => {
+    await octopusActions
+      .createOctopusVariables({
         pipelineId: pipelineId,
         stepId: stepId,
         variableSet: octopusStepConfigurationDto.getData("specifyDepVariables") ? octopusStepConfigurationDto.getData("deploymentVariables") : []
@@ -123,7 +163,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
         console.log(error);
         let errorMesage =
           error && error.error && error.error.response && error.error.response.data ? error.error.response.data : "";
-        toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
+        toastContext.showErrorDialog(`Error in octopus Variable Creation:  ${errorMesage}`);
       });
   };
 
@@ -207,6 +247,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
             setDataObject={setOctopusStepConfigurationDataDto}
             disabled={false}          
             pipelineId={pipelineId}
+            listOfSteps={listOfSteps}
           />
         );
       }
@@ -246,6 +287,13 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
         setDataObject={setOctopusStepConfigurationDataDto}
         disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusToolId").length === 0}
         tool_prop={octopusStepConfigurationDto ? octopusStepConfigurationDto.getData("octopusToolId") : ""}
+      />
+      <OctopusEnvironmentNameSelectInput
+        fieldName={"environmentName"}
+        dataObject={octopusStepConfigurationDto}
+        setDataObject={setOctopusStepConfigurationDataDto}
+        disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
+        tool_prop={octopusStepConfigurationDto ? octopusStepConfigurationDto.getData("spaceName") : ""}
       />
       <OctopusProjectTypeSelectInput 
         fieldName={"projectType"}

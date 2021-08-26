@@ -10,7 +10,7 @@ const OctopusProjectGroupSelectInput = ({ fieldName, dataObject, setDataObject, 
 
     const toastContext = useContext(DialogToastContext);
     const { getAccessToken } = useContext(AuthContext);
-    const [ placeholderText, setPlaceholderText ] = useState("");
+    const [ placeholderText, setPlaceholderText ] = useState("Select Project Group");
     const [ projectGroups, setProjectGroups ] = useState([]);    
     const [ isLoading, setIsLoading ] = useState(false);
     const [ errorMessage, setErrorMessage ] = useState("");
@@ -40,23 +40,34 @@ const OctopusProjectGroupSelectInput = ({ fieldName, dataObject, setDataObject, 
             isMounted.current = false;
         };
 
-    }, []);
+    }, [dataObject.getData("spaceName")]);
 
     const loadData = async (cancelSource = cancelTokenSource) => {
-        try {
-            setIsLoading(true);
-            setProjectGroups([]);
-            const response = await OctopusStepActions.getProjectGroups(dataObject.getData("octopusToolId"), dataObject.getData("spaceId"), getAccessToken, cancelSource);
-            if(response && response.status === 200){
-                setProjectGroups(response.data.data);
+        if(dataObject.getData("spaceName") && dataObject.getData("spaceName") !== ""){
+            try {
+                setIsLoading(true);
+                setProjectGroups([]);
+                const response = await OctopusStepActions.getProjectGroups(dataObject.getData("octopusToolId"), dataObject.getData("spaceId"), getAccessToken, cancelSource);
+                if(response && response.status === 200){
+                    setProjectGroups(response.data.data);
+                }
+            } catch (error) {
+                setPlaceholderText("No Project Groups found");
+                console.error(error);
+                toastContext.showServiceUnavailableDialog();
+            } finally {
+                setIsLoading(false);
             }
-        } catch (error) {
-            setPlaceholderText("No Project Groups found");
-            console.error(error);
-            toastContext.showServiceUnavailableDialog();
-        } finally {
-            setIsLoading(false);
+        }        
+    };
+
+    const setDataFunction = (fieldName, selectedOption) => {
+        let newDataObject = {...dataObject};
+        newDataObject.setData(fieldName, selectedOption.id);
+        if(dataObject.getData("projectType") && dataObject.getData("projectType") === "CUSTOM"){
+            newDataObject.setData("projectId", "");
         }
+        setDataObject({...newDataObject});
     };
 
     return (
@@ -70,7 +81,8 @@ const OctopusProjectGroupSelectInput = ({ fieldName, dataObject, setDataObject, 
                 valueField={valueField}
                 textField={textField}
                 placeholderText={placeholderText}
-                disabled={disabled || isLoading}               
+                disabled={disabled || isLoading}
+                setDataFunction={setDataFunction}               
             />
         </div>
     );

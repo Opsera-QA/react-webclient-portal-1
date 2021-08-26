@@ -23,8 +23,7 @@ const octopusStepFormMetadata = {
       },
       {
         label: "Project Name",
-        id: "projectName",
-        isRequired: true,
+        id: "projectName",        
         regexDefinitionName: "generalText",
         maxLength: 100
       },
@@ -49,8 +48,7 @@ const octopusStepFormMetadata = {
       },
       {
         label: "Project Description",
-        id: "projectDescription",
-        isRequired: true,
+        id: "projectDescription",        
         regexDefinitionName: "generalText",
         maxLength: 100
       },

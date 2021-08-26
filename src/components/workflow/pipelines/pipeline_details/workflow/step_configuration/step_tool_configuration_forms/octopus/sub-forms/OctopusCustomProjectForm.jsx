@@ -9,11 +9,11 @@ import RollbackToggleInput from "../input/RollbackToggleInput";
 import OctopusVersionSelectInput from "../input/OctopusVersionSelectInput";
 import OctopusSpecifyDepVarsToggle from "../input/OctopusSpecifyDepVarsToggle";
 import OctopusDeploymentVariables from "../input/OctopusDeploymentVariables";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
+import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 
-function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabled, pipelineId }) {
+function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabled, pipelineId, listOfSteps }) {
   return (
-    <>
+    <>      
       <OctopusProjectGroupSelectInput
         fieldName={"projectGroupId"}
         dataObject={dataObject}
@@ -32,29 +32,41 @@ function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabl
         setDataObject={setDataObject}
         disabled={dataObject && dataObject.getData("projectId").length === 0}
       />
-      <OctopusFeedSelectInput
-        fieldName={"octopusFeedId"}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        disabled={
-          dataObject && dataObject.getData("spaceName")
-            ? dataObject.getData("spaceName").length === 0
-            : true
-        }
-        tool_prop={
-          dataObject && dataObject.getData("spaceName")
-            ? dataObject.getData("spaceName")
-            : ""
-        }
-      />
-      {dataObject && dataObject.getData("tenantedDeploymentMode") && dataObject.getData("tenantedDeploymentMode").toLowerCase() === "tenanted" && (
+      {dataObject && dataObject.getData("tenantedDeploymentMode") && (dataObject.getData("tenantedDeploymentMode").toLowerCase() === "tenanted" || dataObject.getData("tenantedDeploymentMode").toLowerCase() === "tenantedoruntenanted")  && (
         <OctopusTenantSelectInput
           fieldName={"tenantId"}
           dataObject={dataObject}
           setDataObject={setDataObject}
           disabled={dataObject && dataObject.getData("projectGroupId").length === 0}
         />
-      )}      
+      )}
+      <DtoSelectInput
+        setDataObject={setDataObject}
+        textField={"name"}
+        valueField={"_id"}
+        dataObject={dataObject}
+        filter={"contains"}
+        selectOptions={listOfSteps ? listOfSteps : []}
+        fieldName={"ecrPushStepId"}
+        disabled={listOfSteps.length === 0 || dataObject.getData("environmentName").length === 0}
+      />
+      {dataObject && dataObject.getData("ecrPushStepId") && (
+        <OctopusFeedSelectInput
+          fieldName={"octopusFeedId"}
+          dataObject={dataObject}
+          setDataObject={setDataObject}
+          disabled={
+            dataObject && dataObject.getData("spaceName")
+              ? dataObject.getData("spaceName").length === 0
+              : true
+          }
+          tool_prop={
+            dataObject && dataObject.getData("spaceName")
+              ? dataObject.getData("spaceName")
+              : ""
+          }
+        />
+      )}     
       <RollbackToggleInput
         dataObject={dataObject}
         setDataObject={setDataObject}
@@ -89,23 +101,7 @@ function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabl
             fieldName={"deploymentVariables"}
             dataObject={dataObject}
             setDataObject={setDataObject}
-          />
-          <TextInputBase
-            setDataObject={setDataObject}
-            dataObject={dataObject}
-            fieldName={"structuredConfigVariablesPath"}
-            disabled={
-              dataObject && dataObject.getData("spaceName").length === 0
-            }
-          />
-          <TextInputBase
-            setDataObject={setDataObject}
-            dataObject={dataObject}
-            fieldName={"xmlConfigTransformVariableValue"}
-            disabled={
-              dataObject && dataObject.getData("spaceName").length === 0
-            }
-          />
+          />          
         </>
       )}
     </>
@@ -120,7 +116,8 @@ OctopusCustomProjectForm.propTypes = {
   disabled: PropTypes.bool,
   isLoading: PropTypes.bool,
   className: PropTypes.string,
-  pipelineId: PropTypes.string
+  pipelineId: PropTypes.string,
+  listOfSteps: PropTypes.array,
 };
 
 export default OctopusCustomProjectForm;
