@@ -45,7 +45,7 @@ const defaultSignupFormFields = {
     {
       label: "State",
       id: "state",
-      regexDefinitionName: "nameField",
+      // regexDefinitionName: "nameField",
       isRequired: true,
       maxLength: 50
     },
