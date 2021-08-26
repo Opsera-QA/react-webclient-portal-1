@@ -54,7 +54,7 @@ function PipelineSourceRepositoryOverview({ pipeline }) {
       <div className={"pt-2 pl-2 makeup-container-tab-container"}>
         <GeneralTabPanelContainer
           currentView={
-            <div className={"makeup-container-content-body"}>
+            <div className={"makeup-container-content-body step-configuration-summary"}>
               {getCurrentView()}
             </div>
           }
