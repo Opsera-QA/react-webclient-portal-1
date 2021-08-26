@@ -106,7 +106,7 @@ const awsAccountRegistrationMetadata = {
     cloudProvider: "EKS",
     cloudProviderRegion: "us-east-2",
     aws_customer_id: "",
-    aws_product_code: "",
+    aws_product_code: "7dwskd2i8nz61yttpokqug1cu",
   }
 };
 
