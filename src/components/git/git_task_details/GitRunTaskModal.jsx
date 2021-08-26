@@ -79,8 +79,8 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
     return (
       <>
         <CloseButton closeEditorCallback={handleClose} showUnsavedChangesMessage={false} />
-         <RunGitTaskButton gitTasksData={gitTasksData} setGitTasksData={setGitTasksData} gitTasksConfigurationDataDto={dataObj} loadData={loadData} handleClose={handleClose} />
-        </>
+        <RunGitTaskButton gitTasksData={gitTasksData} setGitTasksData={setGitTasksData} gitTasksConfigurationDataDto={dataObj} loadData={loadData} handleClose={handleClose} />
+      </>
     );
   };
 
