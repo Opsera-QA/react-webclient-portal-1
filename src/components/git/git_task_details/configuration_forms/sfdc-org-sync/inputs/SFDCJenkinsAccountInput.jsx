@@ -29,13 +29,13 @@ function SfdcJenkinsAccountInput({dataObject, setDataObject, gitTasksDataDto, di
     newDataObject.setData("gitCredential", "");
     newDataObject.setData("gitToolId", "");
     gitTasksDataDto.setData("tool_identifier", "");
-    newDataObject.setData("type", "");
     newDataObject.setData("service", "");
-    newDataObject.setData("gitUserName", "");
+    newDataObject.setData("branch", "");
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");
     newDataObject.setData("gitBranch", "");
+    newDataObject.setData("workspaceName", "");
     newDataObject.setData("workspace", "");
     setDataObject({...newDataObject});
   };
