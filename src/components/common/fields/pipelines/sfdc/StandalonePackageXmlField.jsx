@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import {parseError} from "components/common/helpers/error-helpers";
-import StandaloneXmlField from "components/common/fields/code/StandaloneXmlField";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
+import StandalonePackageXmlFieldBase from "components/common/fields/code/StandalonePackageXmlFieldBase";
 
 function StandalonePackageXmlField({pipelineWizardModel, runNumber, className, setXmlFunction, isLoading, setIsLoading}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -77,7 +77,7 @@ function StandalonePackageXmlField({pipelineWizardModel, runNumber, className, s
   };
 
   return (
-    <StandaloneXmlField
+    <StandalonePackageXmlFieldBase
       isLoading={isLoading}
       className={className}
       errorMessage={errorMessage}
@@ -93,7 +93,7 @@ StandalonePackageXmlField.propTypes = {
   className: PropTypes.string,
   setXmlFunction: PropTypes.func,
   isLoading: PropTypes.bool,
-  setIsLoading: PropTypes.bool,
+  setIsLoading: PropTypes.func,
 };
 
 export default StandalonePackageXmlField;

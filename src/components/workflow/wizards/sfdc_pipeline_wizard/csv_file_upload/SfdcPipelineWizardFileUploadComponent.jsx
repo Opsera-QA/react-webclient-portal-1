@@ -12,12 +12,12 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import SfdcPipelineWizardSubmitFileTypeButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardSubmitFileTypeButton";
 import CancelButton from "components/common/buttons/CancelButton";
-import XmlFieldBase from "components/common/fields/code/XmlFieldBase";
 import ExternalPageLink from "components/common/links/ExternalPageLink";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import VanityTable from "components/common/table/VanityTable";
 import _ from "lodash";
+import PackageXmlFieldBase from "components/common/fields/code/PackageXmlFieldBase";
 
 function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) {
   const fields = PipelineWizardFileUploadMetadata.fields;
@@ -229,7 +229,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     if (pipelineWizardModel.getData("xmlFileContent") && pipelineWizardModel.getData("xmlFileContent").length > 0) {
       return (
         <>
-          <XmlFieldBase fieldName={"xmlFileContent"} model={pipelineWizardModel}/>
+          <PackageXmlFieldBase fieldName={"xmlFileContent"} model={pipelineWizardModel}/>
           {buttonContainer()}
         </>
       );
