@@ -16,6 +16,7 @@ export let taskTypes = [
   {name: "GIT to GIT Sync", value: "sync-git-branches"},
   { name: "Create AWS ECS Cluster", value: "ecs_cluster_creation" },
   { name: "Create AWS ECS Service", value: "ecs_service_creation" },
+  {name: "Create AWS Lambda Function", value: "lambda_function_creation"},
 ];
 // TODO: Remove the disabled items from here when done
 function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction, placeholderText }) {
