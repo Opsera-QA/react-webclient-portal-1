@@ -151,7 +151,7 @@ OctopusStepActions.getTargetRoles = async (id, spaceId, getAccessToken) => {
   return [];
 };
 
-OctopusStepActions.validateItems = async (id, spaceId,type,dataObject, getAccessToken, packageId) => {
+OctopusStepActions.validateItems = async (id, spaceId, type, packageId, dataObject, getAccessToken) => {
 
   let body = {
     params: {
