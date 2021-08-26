@@ -8,11 +8,11 @@ const OctopusProjectTypeSelectInput = ({ fieldName, dataObject, setDataObject, d
     const PROJECT_TYPES = [
         {
             id: "CUSTOM",
-            name: "Custom"
+            name: "Native Project"
         },
         {
             id: "OPSERA_MANAGED",
-            name: "Opsera Managed"
+            name: "Opsera Managed Project"
         }
     ];
 

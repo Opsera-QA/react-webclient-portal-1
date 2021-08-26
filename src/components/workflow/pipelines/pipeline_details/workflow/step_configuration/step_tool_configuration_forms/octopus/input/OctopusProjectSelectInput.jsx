@@ -10,7 +10,7 @@ const OctopusProjectSelectInput = ({ fieldName, dataObject, setDataObject, disab
 
     const toastContext = useContext(DialogToastContext);
     const { getAccessToken } = useContext(AuthContext);
-    const [ placeholderText, setPlaceholderText ] = useState("");
+    const [ placeholderText, setPlaceholderText ] = useState("Select Octopus Project");
     const [ projects, setProjects ] = useState([]);    
     const [ isLoading, setIsLoading ] = useState(false);
     const [ errorMessage, setErrorMessage ] = useState("");
@@ -40,18 +40,18 @@ const OctopusProjectSelectInput = ({ fieldName, dataObject, setDataObject, disab
             isMounted.current = false;
         };
 
-    }, []);
+    }, [dataObject.getData("projectGroupId")]);
 
     const loadData = async (cancelSource = cancelTokenSource) => {
         try {
             setIsLoading(true);
             setProjects([]);
-            const response = await OctopusStepActions.getProjectsV2(dataObject.getData("octopusToolId"), dataObject.getData("spaceId"), getAccessToken, cancelSource);
+            const response = await OctopusStepActions.getProjectsV2(dataObject.getData("octopusToolId"), dataObject.getData("spaceId"), dataObject.getData("projectGroupId"), getAccessToken, cancelSource);
             if(response && response.status === 200){
                 setProjects(response.data.data);
             }
         } catch (error) {
-            setPlaceholderText("No Project Groups found");
+            setPlaceholderText("No Projects found");
             console.error(error);
             toastContext.showServiceUnavailableDialog();
         } finally {
@@ -61,7 +61,7 @@ const OctopusProjectSelectInput = ({ fieldName, dataObject, setDataObject, disab
 
     const setDataFunction = (fieldName, selectedOption) => {
         let newDataObject = {...dataObject};
-        newDataObject.setData(fieldName, selectedOption.id);
+        newDataObject.setData("projectId", selectedOption.id);
         newDataObject.setData("deploymentProcessId", selectedOption.deploymentProcessId);
         newDataObject.setData("lifecycleId", selectedOption.lifecycleId);
         newDataObject.setData("tenantedDeploymentMode", selectedOption.tenantedDeploymentMode);
@@ -72,7 +72,7 @@ const OctopusProjectSelectInput = ({ fieldName, dataObject, setDataObject, disab
 
     const clearDataFunction = (fieldName) => {
         let newDataObject = {...dataObject};
-        newDataObject.setData(fieldName, "");
+        newDataObject.setData("projectId", "");
         newDataObject.setData("deploymentProcessId", "");
         newDataObject.setData("lifecycleId", "");
         newDataObject.setData("tenantedDeploymentMode", "");

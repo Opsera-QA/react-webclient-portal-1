@@ -227,8 +227,8 @@ OctopusStepActions.getChannels = async (id, spaceId, projectId, getAccessToken, 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-OctopusStepActions.getProjectsV2 = async (id, spaceId, getAccessToken, cancelTokenSource) => {
-  const apiUrl = `/tools/octopus/projects/${id}/octopus/${spaceId}`;
+OctopusStepActions.getProjectsV2 = async (id, spaceId, projectGroupId, getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/tools/octopus/projects/${id}/octopus/${spaceId}/${projectGroupId}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
