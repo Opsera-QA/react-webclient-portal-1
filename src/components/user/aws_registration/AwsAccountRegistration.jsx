@@ -70,7 +70,7 @@ function Signup() {
     <div className="new-user-signup-form mt-2">
       <Form className="full-signup-form m-auto" noValidate onSubmit={e => e.preventDefault()}>
         <Card>
-          <Card.Header as="h5" className="new-user-header">Sign Up For Opsera</Card.Header>
+          <Card.Header as="h5" className="new-aws-marketplace-user-header">AWS Marketplace Opsera Registration</Card.Header>
           <Card.Body className="new-user-body-full p-3">
             <Row>
               <Col md={6}>
