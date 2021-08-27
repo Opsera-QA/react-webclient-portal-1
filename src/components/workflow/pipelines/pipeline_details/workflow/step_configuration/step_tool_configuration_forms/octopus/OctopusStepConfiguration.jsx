@@ -105,7 +105,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
     }
 
     if (validateDepVariables && validateCondVariables) {
-      await createDeploymentEnvironments();
+      // await createDeploymentEnvironments();
       await parentCallback(item);
       if(!octopusStepConfigurationDto.getData("projectType") || octopusStepConfigurationDto.getData("projectType") !== "CUSTOM") {
         await createOctopusProject();
