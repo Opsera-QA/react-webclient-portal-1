@@ -51,6 +51,9 @@ import sfdcConnectionMetadata from "components/inventory/tools/tool_details/tool
 import NexusToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/nexus/NexusToolConfigurationSummaryPanel";
 import nexusConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/nexus/nexus-connection-metadata";
+import teamsConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/teams/teams-connection-metadata";
+import TeamsToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/teams/TeamsToolConfigurationSummaryPanel";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -144,7 +147,11 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
           />
         );
       case "teams":
-        // return <TeamsToolConfiguration toolData={toolData} />;
+        return (
+          <TeamsToolConfigurationSummaryPanel
+            teamsToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, teamsConnectionMetadata)}
+          />
+        );
       case "octopus":
         // return <OctopusToolConfiguration toolData={toolData} />;
       case "slack":
