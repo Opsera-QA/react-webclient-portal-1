@@ -40,55 +40,57 @@ function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabl
           disabled={dataObject && dataObject.getData("projectGroupId").length === 0}
         />
       )}
-      <DtoSelectInput
-        setDataObject={setDataObject}
-        textField={"name"}
-        valueField={"_id"}
-        dataObject={dataObject}
-        filter={"contains"}
-        selectOptions={listOfSteps ? listOfSteps : []}
-        fieldName={"ecrPushStepId"}
-        disabled={listOfSteps.length === 0 || dataObject.getData("environmentName").length === 0}
-      />
-      {dataObject && dataObject.getData("ecrPushStepId") && (
-        <OctopusFeedSelectInput
-          fieldName={"octopusFeedId"}
-          dataObject={dataObject}
-          setDataObject={setDataObject}
-          disabled={
-            dataObject && dataObject.getData("spaceName")
-              ? dataObject.getData("spaceName").length === 0
-              : true
-          }
-          tool_prop={
-            dataObject && dataObject.getData("spaceName")
-              ? dataObject.getData("spaceName")
-              : ""
-          }
-        />
-      )}     
-      <RollbackToggleInput
+      <OctopusFeedSelectInput
+        fieldName={"octopusFeedId"}
         dataObject={dataObject}
         setDataObject={setDataObject}
-        fieldName={"isRollback"}
+        disabled={
+          dataObject && dataObject.getData("spaceName")
+            ? dataObject.getData("spaceName").length === 0
+            : true
+        }
+        tool_prop={
+          dataObject && dataObject.getData("spaceName")
+            ? dataObject.getData("spaceName")
+            : ""
+        }
       />
-      {dataObject && dataObject.getData("isRollback") && (
-        <OctopusVersionSelectInput
-          fieldName={"octopusVersion"}
-          dataObject={dataObject}
-          setDataObject={setDataObject}
-          pipelineId={pipelineId}
-          disabled={
-            dataObject && dataObject.getData("octopusFeedId")
-              ? dataObject.getData("octopusFeedId").length === 0
-              : true
-          }
-          tool_prop={
-            dataObject && dataObject.getData("octopusFeedId")
-              ? dataObject.getData("octopusFeedId")
-              : ""
-          }
-        />
+      {dataObject && dataObject.getData("octopusFeedId") && (
+        <>
+          <DtoSelectInput
+            setDataObject={setDataObject}
+            textField={"name"}
+            valueField={"_id"}
+            dataObject={dataObject}
+            filter={"contains"}
+            selectOptions={listOfSteps ? listOfSteps : []}
+            fieldName={"ecrPushStepId"}
+            disabled={listOfSteps.length === 0 || dataObject.getData("environmentName").length === 0}
+          />    
+          <RollbackToggleInput
+            dataObject={dataObject}
+            setDataObject={setDataObject}
+            fieldName={"isRollback"}
+          />
+          {dataObject && dataObject.getData("isRollback") && (
+            <OctopusVersionSelectInput
+              fieldName={"octopusVersion"}
+              dataObject={dataObject}
+              setDataObject={setDataObject}
+              pipelineId={pipelineId}
+              disabled={
+                dataObject && dataObject.getData("octopusFeedId")
+                  ? dataObject.getData("octopusFeedId").length === 0
+                  : true
+              }
+              tool_prop={
+                dataObject && dataObject.getData("octopusFeedId")
+                  ? dataObject.getData("octopusFeedId")
+                  : ""
+              }
+            />
+          )}
+        </>
       )}
       <OctopusSpecifyDepVarsToggle
         dataObject={dataObject}
