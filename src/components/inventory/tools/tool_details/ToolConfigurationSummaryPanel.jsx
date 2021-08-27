@@ -63,7 +63,7 @@ import SlackToolConfigurationSummaryPanel
 import AzureToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/azure/AzureToolConfigurationSummaryPanel";
 import AzureConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/azure/azure-connection-metadata";
-import AzureV2ConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-connection-metadata";
+// import AzureV2ConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-connection-metadata";
 import AzureDevopsStepToolConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_devops/AzureDevopsStepToolConfiguration";
 import azureDevopsStepFormMetadata
@@ -74,6 +74,10 @@ import AzureDevopsToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/azure-devops/AzureDevopsToolConfigurationSummaryPanel";
 import AzureDevopsConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/azure-devops/azureDevops-connection-metadata";
+import JFrogToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/JFrogToolConfigurationSummaryPanel";
+import jfrogConnectionMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/jfrog-connection-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -194,15 +198,13 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
             azureToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, AzureDevopsConnectionMetadata)}
           />
         );
-      case "azure":
-        return (
-          <AzureV2ToolConfigurationSummaryPanel
-            azureToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, AzureV2ConnectionMetadata)}
-          />
-        );
       case "jfrog_artifactory_maven":
       case "jfrog_artifactory_docker":
-        // return <JFrogToolConfiguration toolData={toolData} />;
+        return (
+          <JFrogToolConfigurationSummaryPanel
+            jFrogToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, jfrogConnectionMetadata)}
+          />
+        );
       case "servicenow":
         // return <ServiceNowToolConfiguration toolData={toolData} /> ;
       case "hashicorp_vault":
@@ -213,6 +215,15 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
         // return <CoverityToolConfiguration toolData={toolData} />;
       case "twistlock":
         // return <TwistlockToolConfiguration toolData={toolData} />;
+
+
+        //TODO: WE need to rename either the old or the new metadata
+      case "azure":
+      // return (
+      //   <AzureV2ToolConfigurationSummaryPanel
+      //     azureToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, AzureV2ConnectionMetadata)}
+      //   />
+      // );
       default:
         return <div className="text-center p-5 text-muted mt-5">Summary Panel is not currently available for this tool configuration.</div>;
     }
