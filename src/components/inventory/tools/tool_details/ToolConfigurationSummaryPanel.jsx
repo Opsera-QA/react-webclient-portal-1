@@ -42,6 +42,9 @@ import anchoreIntegratorConnectionMetadata
 import SonarToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/sonar/SonarToolConfigurationSummaryPanel";
 import sonarConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/sonar/sonar-connection-metadata";
+import AwsToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/aws/AwsToolConfigurationSummaryPanel";
+import awsConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/aws/aws-connection-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -117,7 +120,11 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
           />
         );
       case "aws_account":
-        // return <AwsToolConfiguration toolData={toolData} />;
+        return (
+          <AwsToolConfigurationSummaryPanel
+            awsToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, awsConnectionMetadata)}
+          />
+        );
       case "sfdc-configurator":
         // return <SfdcToolConfiguration toolData={toolData} />;
       case "nexus":
