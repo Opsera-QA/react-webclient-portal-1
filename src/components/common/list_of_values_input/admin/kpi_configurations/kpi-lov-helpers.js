@@ -36,6 +36,9 @@ kpiLovHelpers.filters = [
   { id: { type: "servicenow-priorities", value: [] }, label: "Service Now Priorities" },
   { id: { type: "servicenow-tools", value: "" }, label: "Service Now Tool" },
   { id: { type: "servicenow-assignment-groups", value: "" }, label: "Service Now Assignment Groups" },
+  { id: { type: "servicenow-service-offerings", value: "" }, label: "Service Now Service Offerings" },
+  { id: { type: "servicenow-configuration-items", value: "" }, label: "Service Now Configuration Items" },
+  { id: { type: "servicenow-business-services", value: "" }, label: "Service Now Business Services" },
 ];
 
 kpiLovHelpers.getFilterById = (id) => {
