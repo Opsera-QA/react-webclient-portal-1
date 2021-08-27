@@ -24,15 +24,17 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [listOfSteps, setListOfSteps] = useState([]);
+  const [isFormUpdate, setIsFormUpdate] = useState(false);
 
   useEffect(() => {
     loadFormData(stepTool);
   }, []);
 
-  const loadFormData = async (step) => {
+  const loadFormData = async (step) => {    
     setIsLoading(true);
     let { configuration, threshold } = step;
     if (typeof configuration !== "undefined") {
+      setIsFormUpdate(true);      
       setOctopusStepConfigurationDataDto(new Model(configuration, OctopusStepFormMetadata, false));
       if (typeof threshold !== "undefined") {
         setThresholdType(threshold.type);
@@ -299,7 +301,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
         fieldName={"projectType"}
         dataObject={octopusStepConfigurationDto}
         setDataObject={setOctopusStepConfigurationDataDto}
-        disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
+        disabled={isFormUpdate || (octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0)}
       />
       { getFormFields() }
       
