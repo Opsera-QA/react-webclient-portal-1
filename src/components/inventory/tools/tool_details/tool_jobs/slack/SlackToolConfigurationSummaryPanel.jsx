@@ -1,16 +1,12 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
-import VaultField from "components/common/fields/text/VaultField";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import slackConnectorActions from "components/inventory/tools/tool_details/tool_jobs/slack/slack-actions";
 
-function SlackToolConfigurationSummaryPanel({ slackToolConfigurationModel }) {
+function SlackToolConfigurationSummaryPanel() {
   const {getAccessToken} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [token, setToken] = useState(undefined);
@@ -64,11 +60,11 @@ function SlackToolConfigurationSummaryPanel({ slackToolConfigurationModel }) {
     }
   };
 
-  if (isLoading === true || slackToolConfigurationModel == null) {
+  if (isLoading === true) {
     return (<LoadingDialog size="sm"/>);
   }
 
-  if (!isLoading && token != null) {
+  if (token != null) {
     return (
       <div className="m-3">
         <div className="h5">Slack Configured!</div>
@@ -85,8 +81,6 @@ function SlackToolConfigurationSummaryPanel({ slackToolConfigurationModel }) {
   );
 }
 
-SlackToolConfigurationSummaryPanel.propTypes = {
-  slackToolConfigurationModel: PropTypes.object,
-};
+SlackToolConfigurationSummaryPanel.propTypes = {};
 
 export default SlackToolConfigurationSummaryPanel;
