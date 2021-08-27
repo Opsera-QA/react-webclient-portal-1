@@ -43,19 +43,21 @@ const OctopusProjectSelectInput = ({ fieldName, dataObject, setDataObject, disab
     }, [dataObject.getData("projectGroupId")]);
 
     const loadData = async (cancelSource = cancelTokenSource) => {
-        try {
-            setIsLoading(true);
-            setProjects([]);
-            const response = await OctopusStepActions.getProjectsV2(dataObject.getData("octopusToolId"), dataObject.getData("spaceId"), dataObject.getData("projectGroupId"), getAccessToken, cancelSource);
-            if(response && response.status === 200){
-                setProjects(response.data.data);
+        if(dataObject.getData("projectGroupId") && dataObject.getData("projectGroupId") !== ""){
+            try {
+                setIsLoading(true);
+                setProjects([]);
+                const response = await OctopusStepActions.getProjectsV2(dataObject.getData("octopusToolId"), dataObject.getData("spaceId"), dataObject.getData("projectGroupId"), getAccessToken, cancelSource);
+                if(response && response.status === 200){
+                    setProjects(response.data.data);
+                }
+            } catch (error) {
+                setPlaceholderText("No Projects found");
+                console.error(error);
+                toastContext.showServiceUnavailableDialog();
+            } finally {
+                setIsLoading(false);
             }
-        } catch (error) {
-            setPlaceholderText("No Projects found");
-            console.error(error);
-            toastContext.showServiceUnavailableDialog();
-        } finally {
-            setIsLoading(false);
         }
     };
 
