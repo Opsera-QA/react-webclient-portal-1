@@ -60,6 +60,20 @@ import octopusConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/octopus/octopus-connection-metadata";
 import SlackToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/slack/SlackToolConfigurationSummaryPanel";
+import AzureToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/azure/AzureToolConfigurationSummaryPanel";
+import AzureConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/azure/azure-connection-metadata";
+import AzureV2ConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-connection-metadata";
+import AzureDevopsStepToolConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_devops/AzureDevopsStepToolConfiguration";
+import azureDevopsStepFormMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_devops/azureDevops-stepForm-metadata";
+import AzureV2ToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/azureV2/AzureV2ToolConfigurationSummaryPanel";
+import AzureDevopsToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/azure-devops/AzureDevopsToolConfigurationSummaryPanel";
+import AzureDevopsConnectionMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/azure-devops/azureDevops-connection-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -169,14 +183,28 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
           <SlackToolConfigurationSummaryPanel />
         );
       case "azure_account":
-        // return <AzureToolConfiguration toolData={toolData} />;
+        return (
+          <AzureToolConfigurationSummaryPanel
+            azureToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, AzureConnectionMetadata)}
+          />
+        );
+      case "azure-devops":
+        return (
+          <AzureDevopsToolConfigurationSummaryPanel
+            azureToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, AzureDevopsConnectionMetadata)}
+          />
+        );
+      case "azure":
+        return (
+          <AzureV2ToolConfigurationSummaryPanel
+            azureToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, AzureV2ConnectionMetadata)}
+          />
+        );
       case "jfrog_artifactory_maven":
       case "jfrog_artifactory_docker":
         // return <JFrogToolConfiguration toolData={toolData} />;
       case "servicenow":
         // return <ServiceNowToolConfiguration toolData={toolData} /> ;
-      case "azure-devops":
-        // return <AzureDevopsToolConfiguration toolData={toolData} />;
       case "hashicorp_vault":
         // return <HashicorpVaultToolConfiguration toolData={toolData} />;
       case "kafka_connect":
