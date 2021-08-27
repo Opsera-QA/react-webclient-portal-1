@@ -61,6 +61,8 @@ import AwsLambdaDeployStepConfiguration
   from "./step_tool_configuration_forms/aws_lambda_publish/AwsLambdaDeployStepConfiguration";
 import CoverityStepConfiguration from "./step_tool_configuration_forms/coverity/CoverityStepConfiguration";
 import AzureAcrPushStepConfiguration from "./step_tool_configuration_forms/azure_acr_push/AzureAcrPushStepConfiguration";
+import AksServiceDeployStepConfiguration
+  from "./step_tool_configuration_forms/aks_service_deploy/AksServiceDeployStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -931,7 +933,22 @@ function StepToolConfiguration({
               createJob={createJob}
               setToast={setToast}
               setShowToast={setShowToast}
-            />);
+            />
+          );
+      case "azure_aks_deploy":
+        return (
+          <AksServiceDeployStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+          />
+        );
     }
   };
 

@@ -154,6 +154,9 @@ import AwsLambdaPipelineStepConfigurationSummaryPanel
 import awsLambdaStepFormMetadata from "./step_tool_configuration_forms/aws_lambda_publish/awsLambda-stepForm-metadata";
 import coverityStepFormMetadata from "./step_tool_configuration_forms/coverity/coverity-stepForm-metadata";
 import CoverityPipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/coverity/CoverityPipelineStepConfigurationSummaryPanel";
+import AksServiceDeployStepSummary
+  from "./step_tool_configuration_forms/aks_service_deploy/AksServiceDeployStepSummary";
+import aksStepFormMetadata from "./step_tool_configuration_forms/aks_service_deploy/aks-stepForm-metadata";
 
 
 function PipelineStepConfigurationSummary({
@@ -458,6 +461,13 @@ function PipelineStepConfigurationSummary({
             <CoverityPipelineStepConfigurationSummaryPanel
               pipelineData={pipelineData}
               coverityPipelineDataObject={getModelWrappedObject(coverityStepFormMetadata)}
+            />
+        );
+      case "azure_aks_deploy":
+        return (
+          <AksServiceDeployStepSummary
+            pipelineData={pipelineData}
+            aksDeployPipelineDataObject={getModelWrappedObject(aksStepFormMetadata)}
             />
         );
       default:
