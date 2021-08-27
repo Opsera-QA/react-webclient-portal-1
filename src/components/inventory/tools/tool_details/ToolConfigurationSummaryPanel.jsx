@@ -16,6 +16,10 @@ import gitlabConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab-connection-metadata";
 import GitlabToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/gitlab/GitlabToolConfigurationSummaryPanel";
+import BitbucketToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/bitbucket/BitbucketToolConfigurationSummaryPanel";
+import bitbucketConnectionMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket-connection-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -49,7 +53,11 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
           />
         );
       case "bitbucket":
-        // return <BitbucketToolConfiguration toolData={toolData} />;
+        return (
+          <BitbucketToolConfigurationSummaryPanel
+            bitbucketToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, bitbucketConnectionMetadata)}
+          />
+        );
       case "spinnaker":
         // return <SpinnakerToolConfiguration toolData={toolData} />;
       case "cypress":
