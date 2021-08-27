@@ -26,8 +26,11 @@ function JenkinsStepConfigurationPythonEditorPanel({ dataObject, setDataObject, 
     if (dataObject.getData("customScript") === true) {
       return (
         <>
-          <StepConfigUseTerraformOutput dataObject={dataObject} setDataObject={setDataObject} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>
-          {getTerraformSelect()}
+          {dataObject.getData("buildType") === "python" && (
+          <>
+            <StepConfigUseTerraformOutput dataObject={dataObject} setDataObject={setDataObject} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>
+            {getTerraformSelect()}
+          </>)}
           <ParameterSelectListInputBase
             titleIcon={faHandshake}
             dataObject={dataObject}
@@ -38,18 +41,21 @@ function JenkinsStepConfigurationPythonEditorPanel({ dataObject, setDataObject, 
             regexValidationRequired={false}
             titleText={"Parameter Selection"}
             plan={plan}
-            tool_prop={dataObject?.getData("terraformStepId") && dataObject?.getData("terraformStepId").length > 0 ?
-              dataObject?.getData("terraformStepId") : ""}
+            //tool_prop={dataObject?.getData("terraformStepId") && dataObject?.getData("terraformStepId").length > 0 ?
+            //  dataObject?.getData("terraformStepId") : ""}
           />
           <TextAreaInput dataObject={dataObject} setDataObject={setDataObject} fieldName={"commands"} />
         </>
       );
     }
 
-    return <PythonFilesInput setDataObject={setDataObject} dataObject={dataObject} fieldName={"inputDetails"} />;
+    if(dataObject.getData("buildType") === "python"){
+      return <PythonFilesInput setDataObject={setDataObject} dataObject={dataObject} fieldName={"inputDetails"} />;
+    }
+    return null;
   };
 
-  if (dataObject == null || dataObject.getData("buildType") !== "python") {
+  if (dataObject == null || !["python","gradle","maven"].includes(dataObject.getData("buildType")))  {
     return null;
   }
 
