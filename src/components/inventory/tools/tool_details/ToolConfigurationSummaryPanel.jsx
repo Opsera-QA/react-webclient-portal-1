@@ -39,6 +39,9 @@ import AnchoreIntegratorToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/anchore_integrator/AnchoreIntegratorToolConfigurationSummaryPanel";
 import anchoreIntegratorConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/anchore_integrator/anchore-integrator-connection-metadata";
+import SonarToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/sonar/SonarToolConfigurationSummaryPanel";
+import sonarConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/sonar/sonar-connection-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -108,7 +111,11 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
           />
         );
       case "sonar":
-        // return <SonarToolConfiguration toolData={toolData} />;
+        return (
+          <SonarToolConfigurationSummaryPanel
+            sonarToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, sonarConnectionMetadata)}
+          />
+        );
       case "aws_account":
         // return <AwsToolConfiguration toolData={toolData} />;
       case "sfdc-configurator":
