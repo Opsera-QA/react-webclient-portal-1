@@ -24,6 +24,10 @@ import SpinnakerToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/spinnaker/SpinnakerToolConfigurationSummaryPanel";
 import spinnakerConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/spinnaker/spinnaker-connection-metadata";
+import CypressToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/cypress/CypressToolConfigurationSummaryPanel";
+import cypressConnectionMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/cypress/cypress-connection-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -69,7 +73,11 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
           />
         );
       case "cypress":
-        // return <CypressToolConfiguration toolData={toolData} />;
+        return (
+          <CypressToolConfigurationSummaryPanel
+            cypressToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, cypressConnectionMetadata)}
+          />
+        );
       case "argo":
         // return <ArgoToolConfiguration toolData={toolData} />;
       case "anchore-scan":
