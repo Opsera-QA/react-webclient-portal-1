@@ -1,15 +1,16 @@
-import {axiosApiService} from "../../../../../../api/apiService";
+import baseActions from "utils/actionsBase";
 
 const slackConnectorActions = {};
 
-slackConnectorActions.getSlackUrl = async (toolId, getAccessToken) => {
-  const accessToken = await getAccessToken();
+slackConnectorActions.getSlackUrlV2 = async (getAccessToken, cancelTokenSource, toolId) => {
   const apiUrl = `/tools/slack/authorization-url/${toolId}`;
 
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+slackConnectorActions.getSlackConnectorSettingsV2 = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/connectors/slack/settings`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 export default slackConnectorActions;

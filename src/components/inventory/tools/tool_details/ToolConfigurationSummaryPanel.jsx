@@ -58,6 +58,8 @@ import OctopusToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/octopus/OctopusToolConfigurationSummaryPanel";
 import octopusConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/octopus/octopus-connection-metadata";
+import SlackToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/slack/SlackToolConfigurationSummaryPanel";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -163,7 +165,9 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
           />
         );
       case "slack":
-        // return <SlackToolConfiguration toolData={toolData}/>;
+        return (
+          <SlackToolConfigurationSummaryPanel />
+        );
       case "azure_account":
         // return <AzureToolConfiguration toolData={toolData} />;
       case "jfrog_artifactory_maven":
