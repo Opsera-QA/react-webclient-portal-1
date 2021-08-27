@@ -8,7 +8,7 @@ const OctopusProjectTypeSelectInput = ({ fieldName, dataObject, setDataObject, d
     const PROJECT_TYPES = [
         {
             id: "CUSTOM",
-            name: "Native Project"
+            name: "Octopus Native Project"
         },
         {
             id: "OPSERA_MANAGED",

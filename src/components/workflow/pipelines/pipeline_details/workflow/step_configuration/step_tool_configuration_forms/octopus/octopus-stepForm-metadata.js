@@ -43,7 +43,7 @@ const octopusStepFormMetadata = {
         isRequired: true
       },
       {
-        label: "Project ID",
+        label: "Project Name",
         id: "projectId",
       },
       {
