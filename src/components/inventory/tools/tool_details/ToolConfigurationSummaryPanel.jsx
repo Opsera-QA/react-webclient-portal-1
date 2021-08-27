@@ -20,6 +20,10 @@ import BitbucketToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/bitbucket/BitbucketToolConfigurationSummaryPanel";
 import bitbucketConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket-connection-metadata";
+import SpinnakerToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/spinnaker/SpinnakerToolConfigurationSummaryPanel";
+import spinnakerConnectionMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/spinnaker/spinnaker-connection-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -59,7 +63,11 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
           />
         );
       case "spinnaker":
-        // return <SpinnakerToolConfiguration toolData={toolData} />;
+        return (
+          <SpinnakerToolConfigurationSummaryPanel
+            spinnakerToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, spinnakerConnectionMetadata)}
+          />
+        );
       case "cypress":
         // return <CypressToolConfiguration toolData={toolData} />;
       case "argo":
