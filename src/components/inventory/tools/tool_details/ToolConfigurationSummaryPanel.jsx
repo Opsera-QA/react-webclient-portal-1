@@ -12,6 +12,10 @@ import GithubToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/github/GithubToolConfigurationSummaryPanel";
 import githubConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/github/github-connection-metadata";
+import gitlabConnectionMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab-connection-metadata";
+import GitlabToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/gitlab/GitlabToolConfigurationSummaryPanel";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -35,11 +39,15 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
       case "github":
         return (
           <GithubToolConfigurationSummaryPanel
-            jiraToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, githubConnectionMetadata)}
+            githubToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, githubConnectionMetadata)}
           />
         );
       case "gitlab":
-        // return <GitlabToolConfiguration toolData={toolData} />;
+        return (
+          <GitlabToolConfigurationSummaryPanel
+            githubToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, gitlabConnectionMetadata)}
+          />
+        );
       case "bitbucket":
         // return <BitbucketToolConfiguration toolData={toolData} />;
       case "spinnaker":

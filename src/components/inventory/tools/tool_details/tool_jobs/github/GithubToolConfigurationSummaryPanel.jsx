@@ -7,8 +7,8 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import VaultField from "components/common/fields/text/VaultField";
 
-function GithubToolConfigurationSummaryPanel({ jenkinsToolConfigurationModel }) {
-  if (jenkinsToolConfigurationModel == null) {
+function GithubToolConfigurationSummaryPanel({ githubToolConfigurationModel }) {
+  if (githubToolConfigurationModel == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
@@ -16,22 +16,22 @@ function GithubToolConfigurationSummaryPanel({ jenkinsToolConfigurationModel }) 
     <SummaryPanelContainer>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={jenkinsToolConfigurationModel} fieldName={"accountUsername"} />
+          <TextFieldBase dataObject={githubToolConfigurationModel} fieldName={"accountUsername"} />
         </Col>
         <Col lg={12}>
-          <BooleanField dataObject={jenkinsToolConfigurationModel} fieldName={"twoFactorAuthentication"} />
+          <BooleanField dataObject={githubToolConfigurationModel} fieldName={"twoFactorAuthentication"} />
         </Col>
         <Col lg={6}>
-          <VaultField dataObject={jenkinsToolConfigurationModel} fieldName={"jAuthToken"} />
+          <VaultField dataObject={githubToolConfigurationModel} fieldName={"jAuthToken"} />
         </Col>
         <Col lg={6}>
-          <VaultField dataObject={jenkinsToolConfigurationModel} fieldName={"secretPrivateKey"} />
+          <VaultField dataObject={githubToolConfigurationModel} fieldName={"secretPrivateKey"} />
         </Col>
         <Col lg={6}>
-          <VaultField dataObject={jenkinsToolConfigurationModel} fieldName={"secretAccessTokenKey"} />
+          <VaultField dataObject={githubToolConfigurationModel} fieldName={"secretAccessTokenKey"} />
         </Col>
         <Col lg={12}>
-          <VaultField dataObject={jenkinsToolConfigurationModel} fieldName={"accountPassword"} />
+          <VaultField dataObject={githubToolConfigurationModel} fieldName={"accountPassword"} />
         </Col>
       </Row>
     </SummaryPanelContainer>
@@ -39,7 +39,7 @@ function GithubToolConfigurationSummaryPanel({ jenkinsToolConfigurationModel }) 
 }
 
 GithubToolConfigurationSummaryPanel.propTypes = {
-  jenkinsToolConfigurationModel: PropTypes.object,
+  githubToolConfigurationModel: PropTypes.object,
 };
 
 export default GithubToolConfigurationSummaryPanel;
