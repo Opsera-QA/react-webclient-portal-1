@@ -26,6 +26,11 @@ import OverlayPanelBodyContainer from "components/common/panels/detail_panel_con
 import SonarRatingsChartHelpDocumentation
 
   from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
+import SfdcOrgSyncPrerunHelpDocumentation
+  from "../../common/help/documentation/tasks/SfdcOrgSyncPrerunHelpDocumentation";
+import AwsEcsClusterCreationTaskHelpDocumentation
+  from "../../common/help/documentation/tasks/AwsEcsClusterCreationTaskHelpDocumentation";
+
 function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, loadData }) {
   const [showHelp, setShowHelp] = useState(false);
   const [dataObj, setDataObj] = useState(undefined);
@@ -120,7 +125,7 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
   };
 
   const getHelpComponent = () => {
-    return null;
+    return (<SfdcOrgSyncPrerunHelpDocumentation closeHelpPanel={() => setShowHelp(false)} />);
   };
 
   if (gitTasksData == null) {
