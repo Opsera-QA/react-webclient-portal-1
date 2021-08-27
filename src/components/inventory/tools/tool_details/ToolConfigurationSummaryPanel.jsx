@@ -35,6 +35,10 @@ import AnchoreScanToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/anchore_scan/AnchoreScanToolConfigurationSummaryPanel";
 import anchoreScanConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/anchore_scan/anchore-scan-connection-metadata";
+import AnchoreIntegratorToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/anchore_integrator/AnchoreIntegratorToolConfigurationSummaryPanel";
+import anchoreIntegratorConnectionMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/anchore_integrator/anchore-integrator-connection-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -98,7 +102,11 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
           />
         );
       case "anchore-integrator":
-        // return <AnchoreIntegratorToolConfiguration toolData={toolData} />;
+        return (
+          <AnchoreIntegratorToolConfigurationSummaryPanel
+            anchoreIntegratorToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, anchoreIntegratorConnectionMetadata)}
+          />
+        );
       case "sonar":
         // return <SonarToolConfiguration toolData={toolData} />;
       case "aws_account":
