@@ -28,6 +28,9 @@ import CypressToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/cypress/CypressToolConfigurationSummaryPanel";
 import cypressConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/cypress/cypress-connection-metadata";
+import ArgoToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/argo/ArgoToolConfigurationSummaryPanel";
+import argoConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/argo-connection-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -79,7 +82,11 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
           />
         );
       case "argo":
-        // return <ArgoToolConfiguration toolData={toolData} />;
+        return (
+          <ArgoToolConfigurationSummaryPanel
+            argoToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, argoConnectionMetadata)}
+          />
+        );
       case "anchore-scan":
         // return <AnchoreScanToolConfiguration toolData={toolData} />;
       case "anchore-integrator":
