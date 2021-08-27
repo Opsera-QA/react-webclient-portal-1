@@ -48,6 +48,9 @@ import awsConnectionMetadata from "components/inventory/tools/tool_details/tool_
 import SfdcToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/sfdc/SfdcToolConfigurationSummaryPanel";
 import sfdcConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/sfdc/sfdc-connection-metadata";
+import NexusToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/nexus/NexusToolConfigurationSummaryPanel";
+import nexusConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/nexus/nexus-connection-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -135,7 +138,11 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
           />
         );
       case "nexus":
-        // return <NexusToolConfiguration toolData={toolData} />;
+        return (
+          <NexusToolConfigurationSummaryPanel
+            nexusToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, nexusConnectionMetadata)}
+          />
+        );
       case "teams":
         // return <TeamsToolConfiguration toolData={toolData} />;
       case "octopus":
