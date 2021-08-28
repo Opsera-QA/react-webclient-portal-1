@@ -47,7 +47,7 @@ export const kpiSettingsMetadata = {
   ],
   newObjectFields: {
     useKpiTags: true,
-    useDashboardTags: true
+    useDashboardTags: true,
   },
 };
 
@@ -417,6 +417,57 @@ export const kpiServiceNowAssignmentGroupsFilterMetadata = {
     },
     {
       label: "Service Now Assignment Group",
+      id: "value",
+    },
+  ],
+  newObjectFields: {
+    value: "",
+  },
+};
+
+export const kpiServiceNowServiceOfferingsFilterMetadata = {
+  type: "Service Now Service Offering",
+  fields: [
+    {
+      label: "Type",
+      id: "type",
+    },
+    {
+      label: "Service Now Service Offering",
+      id: "value",
+    },
+  ],
+  newObjectFields: {
+    value: "",
+  },
+};
+
+export const kpiServiceNowConfigurationItemsFilterMetadata = {
+  type: "Service Now Configuration Items",
+  fields: [
+    {
+      label: "Type",
+      id: "type",
+    },
+    {
+      label: "Service Now Configuration Items",
+      id: "value",
+    },
+  ],
+  newObjectFields: {
+    value: "",
+  },
+};
+
+export const kpiServiceNowBusinessServicesFilterMetadata = {
+  type: "Service Now Business Services",
+  fields: [
+    {
+      label: "Type",
+      id: "type",
+    },
+    {
+      label: "Service Now Business Services",
       id: "value",
     },
   ],

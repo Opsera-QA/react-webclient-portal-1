@@ -9,7 +9,12 @@ pipelineStepNotificationActions.getJiraBoards = async (jiraStepNotificationDto, 
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-pipelineStepNotificationActions.getJiraBoardsWithIdV2 = async (getAccessToken, cancelTokenSource, toolId, projectKey) => {
+pipelineStepNotificationActions.getJiraBoardsWithIdV2 = async (
+  getAccessToken,
+  cancelTokenSource,
+  toolId,
+  projectKey
+) => {
   const apiUrl = `/connectors/jira/${toolId}/${projectKey}/boards/`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
@@ -70,7 +75,6 @@ pipelineStepNotificationActions.getJiraPrioritiesWithId = async (jiraToolId, get
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-
 pipelineStepNotificationActions.getJiraTicketDetails = async (toolId, ticketId, getAccessToken) => {
   const apiUrl = `/connectors/jira/${toolId}/ticket/${ticketId}/details`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
@@ -102,6 +106,21 @@ pipelineStepNotificationActions.getServiceNowUsers = async (toolId, getAccessTok
 
 pipelineStepNotificationActions.getServiceNowGroups = async (toolId, getAccessToken, cancelTokenSource) => {
   const apiUrl = `/connectors/servicenow/groups/${toolId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+pipelineStepNotificationActions.getServiceNowServiceOfferings = async (toolId, getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/connectors/servicenow/serviceOfferings/${toolId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+pipelineStepNotificationActions.getServiceNowConfigurationItems = async (toolId, getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/connectors/servicenow/configurationItems/${toolId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+pipelineStepNotificationActions.getServiceNowBusinessServices = async (toolId, getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/connectors/servicenow/businessServices/${toolId}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

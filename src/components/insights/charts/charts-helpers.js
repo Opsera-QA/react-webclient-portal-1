@@ -272,6 +272,50 @@ export function getServiceNowAssignmentGroupsFromKpiConfiguration(kpiConfigurati
   return null;
 }
 
+export function getServiceNowServiceOfferingsFromKpiConfiguration(kpiConfiguration) {
+  if (
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-service-offerings")]
+      ?.value &&
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-service-offerings")]
+      ?.value.length > 0
+  ) {
+    return kpiConfiguration.filters[
+      kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-service-offerings")
+    ].value;
+  }
+  return null;
+}
+
+export function getServiceNowConfigurationItemsFromKpiConfiguration(kpiConfiguration) {
+  if (
+    kpiConfiguration?.filters[
+      kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-configuration-items")
+    ]?.value &&
+    kpiConfiguration?.filters[
+      kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-configuration-items")
+    ]?.value.length > 0
+  ) {
+    return kpiConfiguration.filters[
+      kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-configuration-items")
+    ].value;
+  }
+  return null;
+}
+
+export function getServiceNowBusinessServicesFromKpiConfiguration(kpiConfiguration) {
+  if (
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-business-services")]
+      ?.value &&
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-business-services")]
+      ?.value.length > 0
+  ) {
+    return kpiConfiguration.filters[
+      kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-business-services")
+    ].value;
+  }
+  return null;
+}
+
 export function getChartIconFromKpiConfiguration(kpiConfiguration) {
   return faChartBar;
 }
