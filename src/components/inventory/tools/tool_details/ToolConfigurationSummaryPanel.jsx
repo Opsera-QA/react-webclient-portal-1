@@ -90,6 +90,14 @@ import KafkaConnectToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/kafka_connect/KafkaConnectToolConfigurationSummaryPanel";
 import KafkaConnectConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/kafka_connect/kafkaConnect-connection-metadata";
+import CoverityToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/coverity/CoverityToolConfigurationSummaryPanel";
+import CoverityConnectionMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/coverity/coverity-connection-metadata";
+import TwistlockToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/twistlock/TwistlockToolConfigurationSummaryPanel";
+import TwistlockConnectionMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/twistlock/twistlock-connection-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -236,12 +244,18 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
           />
         );
       case "coverity":
-        // return <CoverityToolConfiguration toolData={toolData} />;
+        return (
+          <CoverityToolConfigurationSummaryPanel
+            coverityToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, CoverityConnectionMetadata)}
+          />
+        );
       case "twistlock":
-        // return <TwistlockToolConfiguration toolData={toolData} />;
-
-
-        //TODO: WE need to rename either the old or the new metadata
+        return (
+          <TwistlockToolConfigurationSummaryPanel
+            twistlockToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, TwistlockConnectionMetadata)}
+          />
+        );
+        //TODO: We need to rename either the old or the new metadata
       case "azure":
       // return (
       //   <AzureV2ToolConfigurationSummaryPanel
