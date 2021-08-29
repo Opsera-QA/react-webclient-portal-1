@@ -82,6 +82,10 @@ import ServiceNowToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/service_now/ServiceNowToolConfigurationSummaryPanel";
 import serviceNowConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/service_now/service-now-connection-metadata";
+import HashicorpVaultToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/hashicorp_vault/HashicorpVaultToolConfigurationSummaryPanel";
+import HashicorpVaultConnectionMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/hashicorp_vault/hashicorpVault-connection-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -216,7 +220,11 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
           />
         );
       case "hashicorp_vault":
-        // return <HashicorpVaultToolConfiguration toolData={toolData} />;
+        return (
+          <HashicorpVaultToolConfigurationSummaryPanel
+            hashicorpVaultToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, HashicorpVaultConnectionMetadata)}
+          />
+        );
       case "kafka_connect":
         // return <KafkaConnectToolConfiguration toolData={toolData} />;
       case "coverity":
