@@ -86,6 +86,10 @@ import HashicorpVaultToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/hashicorp_vault/HashicorpVaultToolConfigurationSummaryPanel";
 import HashicorpVaultConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/hashicorp_vault/hashicorpVault-connection-metadata";
+import KafkaConnectToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/kafka_connect/KafkaConnectToolConfigurationSummaryPanel";
+import KafkaConnectConnectionMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/kafka_connect/kafkaConnect-connection-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -226,7 +230,11 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
           />
         );
       case "kafka_connect":
-        // return <KafkaConnectToolConfiguration toolData={toolData} />;
+        return (
+          <KafkaConnectToolConfigurationSummaryPanel
+            kafkaConnectToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, KafkaConnectConnectionMetadata)}
+          />
+        );
       case "coverity":
         // return <CoverityToolConfiguration toolData={toolData} />;
       case "twistlock":
