@@ -78,6 +78,10 @@ import JFrogToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/JFrogToolConfigurationSummaryPanel";
 import jfrogConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/jfrog-connection-metadata";
+import ServiceNowToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/service_now/ServiceNowToolConfigurationSummaryPanel";
+import serviceNowConnectionMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/service_now/service-now-connection-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -206,7 +210,11 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
           />
         );
       case "servicenow":
-        // return <ServiceNowToolConfiguration toolData={toolData} /> ;
+        return (
+          <ServiceNowToolConfigurationSummaryPanel
+            serviceNowToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, serviceNowConnectionMetadata)}
+          />
+        );
       case "hashicorp_vault":
         // return <HashicorpVaultToolConfiguration toolData={toolData} />;
       case "kafka_connect":
