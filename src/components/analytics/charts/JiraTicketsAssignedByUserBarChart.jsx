@@ -114,6 +114,7 @@ function JiraTicketsAssignedByUserBarChart( { persona, date } ) {
   }
 }
 JiraTicketsAssignedByUserBarChart.propTypes = {
+  date: PropTypes.object,
   persona: PropTypes.string
 };
 

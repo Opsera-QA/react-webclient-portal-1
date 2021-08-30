@@ -118,6 +118,7 @@ function JiraIssuesByPriorityBarChart({ persona, date }) {
     );
 }
 JiraIssuesByPriorityBarChart.propTypes = {
+  date: PropTypes.object,
   persona: PropTypes.string,
 };
 

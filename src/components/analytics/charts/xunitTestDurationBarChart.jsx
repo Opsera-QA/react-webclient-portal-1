@@ -139,7 +139,8 @@ function XUnitTestDurationBarChart( { persona, date } ) {
 }
 
 XUnitTestDurationBarChart.propTypes = {
-  persona: PropTypes.string
+  date: PropTypes.object,
+  persona: PropTypes.string,
 };
 
 export default XUnitTestDurationBarChart;

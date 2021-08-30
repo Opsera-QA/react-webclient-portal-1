@@ -257,7 +257,9 @@ function TestView_Developer ({ persona, date, index }) {
 
 
 TestView_Developer.propTypes = {
-  persona: PropTypes.string
+  persona: PropTypes.string,
+  date: PropTypes.object,
+  index: PropTypes.object,
 };
 
 export default TestView_Developer;

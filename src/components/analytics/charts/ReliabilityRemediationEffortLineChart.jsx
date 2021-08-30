@@ -118,6 +118,7 @@ function ReliabilityRemediationEffortLineChart({ persona, date }) {
     );
 }
 ReliabilityRemediationEffortLineChart.propTypes = {
+  date: PropTypes.object,
   persona: PropTypes.string,
 };
 

@@ -112,6 +112,7 @@ function JMeterThroughputLineChart({ persona, date }) {
     );
 }
 JMeterThroughputLineChart.propTypes = {
+  date: PropTypes.object,
   persona: PropTypes.string,
 };
 

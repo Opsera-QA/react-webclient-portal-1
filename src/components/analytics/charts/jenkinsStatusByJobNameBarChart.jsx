@@ -121,7 +121,7 @@ function JenkinsStatusByJobNameBarChar({ persona, date }) {
 }
 
 JenkinsStatusByJobNameBarChar.propTypes = {
-  data: PropTypes.object,
+  date: PropTypes.object,
   persona: PropTypes.string,
 };
 

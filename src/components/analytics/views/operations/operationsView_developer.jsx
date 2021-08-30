@@ -188,6 +188,7 @@ function OperationsView_Developer({ persona, index }) {
 
 OperationsView_Developer.propTypes = {
   persona: PropTypes.string,
+  index: PropTypes.object,
 };
 
 export default OperationsView_Developer;

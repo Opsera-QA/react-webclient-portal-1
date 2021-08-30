@@ -140,6 +140,7 @@ function TempTagManagerInput({ label, type, data, setData, disabled, filter, pla
 TempTagManagerInput.propTypes = {
   label: PropTypes.string,
   selectOptions: PropTypes.array,
+  data: PropTypes.object,
   setData: PropTypes.func,
   fieldName: PropTypes.string,
   groupBy: PropTypes.string,

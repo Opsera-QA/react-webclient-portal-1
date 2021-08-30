@@ -13,6 +13,7 @@ import CustomTab from "components/common/tabs/CustomTab";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import toolsActions from "components/inventory/tools/tools-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
+import PropTypes from "prop-types";
 import axios from "axios";
 
 function DataMappingManagement() {
@@ -281,5 +282,13 @@ function TagsTabView({ activeTab, loadData, isLoading, projectTags, usersTags })
     }
   }
 }
+
+TagsTabView.propTypes = {
+  activeTab: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  projectTags: PropTypes.object,
+  usersTags: PropTypes.object,
+  isLoading: PropTypes.bool,
+  loadData: PropTypes.func
+};
 
 export default DataMappingManagement;

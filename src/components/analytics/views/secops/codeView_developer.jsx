@@ -245,6 +245,8 @@ function CodeView_Developer({ persona, date, index }) {
 
 CodeView_Developer.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object,
+  index: PropTypes.object,
 };
 
 export default CodeView_Developer;
