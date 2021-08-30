@@ -6,6 +6,7 @@ import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 import CustomTable from "../../common/table/CustomTable";
 import SuccessIcon from '../../common/icons/table/SuccessIcon';
+import PropTypes from "prop-types";
 import FailIcon from '../../common/icons/table/FailIcon';
 import { format } from "date-fns";
 
@@ -46,8 +47,8 @@ function OpseraRecentPipelineStatus({ date }) {
       {
         Header: "Completed At",
         accessor: "timestamp",
-        Cell: (props) => {
-          return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
+        Cell: function parseDate(row) {
+          return format(new Date(row?.value), "yyyy-MM-dd', 'hh:mm a");
         },
       },
       {
@@ -57,9 +58,9 @@ function OpseraRecentPipelineStatus({ date }) {
       {
         Header: "Result",
         accessor: "status",
-        Cell: (props) => {
-          return props.value ? (
-            props.value === "failure" || props.value === "failed" ? (
+        Cell: function parseStatus(row) {
+          return row?.value ? (
+            row?.value === "failure" || row?.value === "failed" ? (
               <FailIcon />
               ) : (
               <SuccessIcon />
@@ -135,5 +136,9 @@ function OpseraRecentPipelineStatus({ date }) {
     );
   }
 }
+
+OpseraRecentPipelineStatus.propTypes = {
+  date: PropTypes.object,
+};
 
 export default OpseraRecentPipelineStatus;

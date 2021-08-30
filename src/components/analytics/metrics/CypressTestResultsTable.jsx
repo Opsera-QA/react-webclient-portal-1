@@ -5,6 +5,7 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 import { Table }  from "react-bootstrap";
+import PropTypes from "prop-types";
 import { format } from "date-fns";
 import CustomTable from "components/common/table/CustomTable";
 import { faTimesCircle, faCheckCircle, faSearchPlus, faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -156,5 +157,9 @@ function CypressResultsTable({ date }) {
       </>
     );}
 }
+
+CypressResultsTable.propTypes = {
+  date: PropTypes.object,
+};
 
 export default CypressResultsTable;

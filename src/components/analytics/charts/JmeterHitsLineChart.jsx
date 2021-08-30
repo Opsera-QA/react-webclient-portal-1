@@ -112,6 +112,7 @@ function JMeterHitsLineChart({ persona, date }) {
     );
 }
 JMeterHitsLineChart.propTypes = {
+  date: PropTypes.object,
   persona: PropTypes.string,
 };
 

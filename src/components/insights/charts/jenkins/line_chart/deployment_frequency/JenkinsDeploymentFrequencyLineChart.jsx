@@ -117,6 +117,7 @@ function JenkinsDeploymentFrequencyLineChart({ persona, date }) {
 }
 JenkinsDeploymentFrequencyLineChart.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object,
 };
 
 export default JenkinsDeploymentFrequencyLineChart;

@@ -336,7 +336,7 @@ const AppWithRouterAccess = () => {
                 <Route path="/help" component={OnlineHelp} />
                 <Route path="/registration" exact component={Registration} />
                 <Route path="/account/registration/:domain" exact component={AccountRegistration} />
-                <Route path="/signup/awsmarketplace" exact component={AwsAccountRegistration} />
+                <Route path="/signup/awsmarketplace/:customerId" exact component={AwsAccountRegistration} />
 
                 {/* User Settings */}
                 <SecureRoute path="/user/:tab?" exact component={UserSettings} />

@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useState} from "react";
+import React, {useEffect, useContext, useState, useRef} from "react";
 import slackConnectorActions from "./slack-actions";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
@@ -6,7 +6,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
-import apiConnectorActions from "components/api_connector/api-connector-actions";
+import axios from "axios";
 
 function SlackToolConfiguration({ toolData }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -14,20 +14,35 @@ function SlackToolConfiguration({ toolData }) {
   const [token, setToken] = useState(undefined);
   const [slackUrl, setSlackUrl] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-
-    if (toolData != null) {
-      loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
     }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
-
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getSlackUrl();
-      await getSlackToken();
+      await getSlackUrl(cancelSource);
+      await getSlackToken(cancelSource);
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -38,16 +53,18 @@ function SlackToolConfiguration({ toolData }) {
   };
 
   // TODO: Pull token from toolData's configuration once this is wired up, instead of doing the API call.
-  const getSlackToken = async () => {
+  const getSlackToken = async (cancelSource = cancelTokenSource) => {
     // let toolConfiguration = toolData["configuration"];
     // if (toolConfiguration != null && toolConfiguration["slackToken"] != null) {
     //   setToken(toolConfiguration["slackToken"]);
     // }
 
     try {
-      let response = await apiConnectorActions.getConnectorSettings("slack", getAccessToken);
-      if (response.data != null && response.data["slackToken"] !== undefined) {
-        setToken(response.data["slackToken"]);
+      const response = await slackConnectorActions.getSlackConnectorSettingsV2(getAccessToken, cancelSource);
+      const token = response?.data?.slackToken;
+
+      if (isMounted?.current === true && token) {
+        setToken(token);
       }
     }
     catch (error) {
@@ -58,11 +75,13 @@ function SlackToolConfiguration({ toolData }) {
     }
   };
 
-  const getSlackUrl = async () => {
-    let slackResponse = await slackConnectorActions.getSlackUrl(toolData.getData("_id"), getAccessToken);
+  const getSlackUrl = async (cancelSource = cancelTokenSource) => {
+    const response = await slackConnectorActions.getSlackUrlV2(getAccessToken, cancelSource, toolData?.getData("_id"));
+    const status = response?.data?.status;
+    const slackUrl = response?.data?.message;
 
-    if (slackResponse?.data != null && slackResponse?.data?.status === 200) {
-      setSlackUrl(slackResponse.data.message);
+    if (isMounted?.current === true && status === 200 && slackUrl) {
+      setSlackUrl(slackUrl);
     }
   };
 

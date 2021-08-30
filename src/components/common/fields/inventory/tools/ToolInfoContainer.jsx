@@ -6,8 +6,9 @@ import ToolSummaryPanel from "components/inventory/tools/tool_details/ToolSummar
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import Model from "core/data_model/model";
 import toolMetadata from "components/inventory/tools/tool-metadata";
+import ToolConfigurationSummaryPanel from "components/inventory/tools/tool_details/ToolConfigurationSummaryPanel";
 
-function ToolInfoContainer({ toolData }) {
+function ToolInfoContainer({ toolData, toolIdentifier }) {
   const [toolModel, setToolModel] = useState(undefined);
 
   useEffect(() => {
@@ -42,6 +43,10 @@ function ToolInfoContainer({ toolData }) {
       <SummaryPanelContainer>
         <div>Configuration Properties:</div>
         {getToolConfigurationInformation()}
+        {/*<ToolConfigurationSummaryPanel*/}
+        {/*  toolIdentifier={toolIdentifier}*/}
+        {/*  toolConfiguration={toolData?.configuration}*/}
+        {/*/>*/}
       </SummaryPanelContainer>
     </InfoContainer>
   );
@@ -49,6 +54,7 @@ function ToolInfoContainer({ toolData }) {
 
 ToolInfoContainer.propTypes = {
   toolData: PropTypes.object,
+  toolIdentifier: PropTypes.string,
 };
 
 export default ToolInfoContainer;

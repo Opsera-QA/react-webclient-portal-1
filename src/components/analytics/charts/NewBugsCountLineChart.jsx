@@ -123,6 +123,7 @@ function NewBugsCountLineChart({ persona, date }) {
     );
 }
 NewBugsCountLineChart.propTypes = {
+  date: PropTypes.object,
   persona: PropTypes.string,
 };
 

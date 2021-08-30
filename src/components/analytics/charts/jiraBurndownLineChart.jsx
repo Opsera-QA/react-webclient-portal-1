@@ -142,6 +142,7 @@ function JiraBurndownLineChart({ persona, date }) {
     );
 }
 JiraBurndownLineChart.propTypes = {
+  date: PropTypes.object,
   persona: PropTypes.string,
 };
 

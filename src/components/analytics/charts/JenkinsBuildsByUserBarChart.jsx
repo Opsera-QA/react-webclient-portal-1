@@ -115,7 +115,7 @@ function JenkinsBuildsByUserBarChart({ persona, date }) {
     );
 }
 JenkinsBuildsByUserBarChart.propTypes = {
-  data: PropTypes.object,
+  date: PropTypes.object,
   persona: PropTypes.string,
 };
 

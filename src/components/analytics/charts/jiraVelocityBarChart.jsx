@@ -147,6 +147,7 @@ function JiraVelocityBarChart({ persona, date }) {
     );
 }
 JiraVelocityBarChart.propTypes = {
+  date: PropTypes.object,
   persona: PropTypes.string,
 };
 

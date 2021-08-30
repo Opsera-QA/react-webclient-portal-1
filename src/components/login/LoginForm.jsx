@@ -10,6 +10,7 @@ import "@okta/okta-signin-widget/dist/css/okta-sign-in.min.css";
 import { useOktaAuth } from "@okta/okta-react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import RegisterAccountButton from "components/login/RegisterAccountButton";
+import PropTypes from "prop-types";
 import userActions from "../user/user-actions";
 
 const OktaSignIn = require("@okta/okta-signin-widget");
@@ -483,6 +484,10 @@ const WelcomeMessage = () => {
       </div>
     </div>
   );
+};
+
+LoginForm.propTypes = {
+  authClient: PropTypes.any
 };
 
 export default LoginForm;

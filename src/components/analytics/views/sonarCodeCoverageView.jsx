@@ -77,6 +77,7 @@ function CodeCoverageMetricsView({ persona, date }) {
 
 CodeCoverageMetricsView.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object
 };
 
 export default CodeCoverageMetricsView;

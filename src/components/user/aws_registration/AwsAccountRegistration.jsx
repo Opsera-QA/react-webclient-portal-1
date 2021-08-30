@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import { Form, Row, Col, Card } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import "components/user/user.css";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -13,7 +13,8 @@ import SignupCloudProviderSelectInput
   from "components/common/list_of_values_input/general/SignupCloudProviderSelectInput";
 import UsStateSelectInput from "components/common/list_of_values_input/general/UsStateSelectInput";
 
-function Signup() {
+function AwsAccountRegistration() {
+  const { customerId } = useParams();
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -25,7 +26,9 @@ function Signup() {
 
   const loadData = async () => {
     setIsLoading(true);
-    await setRegistrationModel(new Model(awsAccountRegistrationMetadata.newObjectFields, awsAccountRegistrationMetadata, true));
+    let newModel = new Model(awsAccountRegistrationMetadata.newObjectFields, awsAccountRegistrationMetadata, true);
+    newModel.setData("customerId", customerId);
+    await setRegistrationModel({...newModel});
     setIsLoading(false);
   };
 
@@ -34,7 +37,6 @@ function Signup() {
   };
 
   const createAccount = async () => {
-    // console.log("persistData: ", JSON.stringify(registrationDataDto.getPersistData()));
     const isDomainAvailable = await userActions.isDomainAvailable(registrationModel?.getData("domain"));
 
     if (!isDomainAvailable) {
@@ -62,6 +64,16 @@ function Signup() {
     }
   };
 
+  const getWarning = () => {
+    if ((customerId == null || customerId === "")) {
+      return (
+        <div className="warning-text pl-4 mt-1">
+          Warning! Did not receive AWS credentials. User registration cannot be completed without these.
+        </div>
+      );
+    }
+  };
+
   if (isLoading || registrationModel == null) {
     return <LoadingDialog />;
   }
@@ -70,8 +82,9 @@ function Signup() {
     <div className="new-user-signup-form mt-2">
       <Form className="full-signup-form m-auto" noValidate onSubmit={e => e.preventDefault()}>
         <Card>
-          <Card.Header as="h5" className="new-user-header">Sign Up For Opsera</Card.Header>
+          <Card.Header as="h5" className="new-aws-marketplace-user-header">AWS Marketplace Opsera Registration</Card.Header>
           <Card.Body className="new-user-body-full p-3">
+            {getWarning()}
             <Row>
               <Col md={6}>
                 <TextInputBase fieldName={"firstName"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
@@ -125,4 +138,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default AwsAccountRegistration;

@@ -114,6 +114,7 @@ function JiraHealthBySprintBarChart( { persona, date } ) {
   }
 }
 JiraHealthBySprintBarChart.propTypes = {
+  date: PropTypes.object,
   persona: PropTypes.string
 };
 
