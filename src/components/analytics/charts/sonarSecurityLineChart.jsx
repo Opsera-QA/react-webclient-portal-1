@@ -155,6 +155,7 @@ function SonarSecurityLineChart({ persona, sonarMeasure, date }) {
 
 
 SonarSecurityLineChart.propTypes = {
+  date: PropTypes.object,
   persona: PropTypes.string,
   sonarMeasure: PropTypes.string
 };

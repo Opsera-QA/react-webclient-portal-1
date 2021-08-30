@@ -96,6 +96,7 @@ function JenkinsChangeFailureRate({ persona, date }) {
 
 JenkinsChangeFailureRate.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object,
 };
 
 export default JenkinsChangeFailureRate;

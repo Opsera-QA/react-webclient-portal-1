@@ -5,6 +5,7 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 import { Table } from "react-bootstrap";
+import PropTypes from "prop-types";
 import { format } from "date-fns";
 import CustomTable from "components/common/table/CustomTable";
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
@@ -148,5 +149,9 @@ function OpseraRecentCDTable({ date }) {
       </>
     );
 }
+
+OpseraRecentCDTable.propTypes = {
+  date: PropTypes.object,
+};
 
 export default OpseraRecentCDTable;

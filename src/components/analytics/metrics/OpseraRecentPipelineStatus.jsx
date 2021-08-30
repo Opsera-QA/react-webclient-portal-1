@@ -6,6 +6,7 @@ import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 import CustomTable from "../../common/table/CustomTable";
 import SuccessIcon from '../../common/icons/table/SuccessIcon';
+import PropTypes from "prop-types";
 import FailIcon from '../../common/icons/table/FailIcon';
 import { format } from "date-fns";
 
@@ -135,5 +136,9 @@ function OpseraRecentPipelineStatus({ date }) {
     );
   }
 }
+
+OpseraRecentPipelineStatus.propTypes = {
+  date: PropTypes.object,
+};
 
 export default OpseraRecentPipelineStatus;

@@ -84,7 +84,8 @@ PipelineCatalogCustomTab.propTypes = {
   visible: PropTypes.bool,
   toolTipText: PropTypes.string,
   disabled: PropTypes.bool,
-  accessRestricted: PropTypes.bool
+  accessRestricted: PropTypes.bool,
+  closeTab: PropTypes.func
 };
 
 PipelineCatalogCustomTab.defaultProps = {

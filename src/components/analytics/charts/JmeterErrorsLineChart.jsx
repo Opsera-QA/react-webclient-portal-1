@@ -116,6 +116,7 @@ function JMeterErrorsLineChart({ persona, date }) {
   }
 }
 JMeterErrorsLineChart.propTypes = {
+  date: PropTypes.object,
   persona: PropTypes.string,
 };
 

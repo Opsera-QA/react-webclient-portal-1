@@ -125,7 +125,7 @@ function XUnitMaxMinPercBarChart( { persona, date} ) {
 }
 
 XUnitMaxMinPercBarChart.propTypes = {
-  data: PropTypes.object,
+  date: PropTypes.object,
   persona: PropTypes.string
 };
 

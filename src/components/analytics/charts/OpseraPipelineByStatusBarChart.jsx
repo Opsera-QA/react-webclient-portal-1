@@ -112,7 +112,7 @@ function OpseraPipelineByStatusBarChart( { persona, date  } ) {
 }
 
 OpseraPipelineByStatusBarChart.propTypes = {
-  data: PropTypes.object,
+  date: PropTypes.object,
   persona: PropTypes.string
 };
 

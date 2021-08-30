@@ -117,7 +117,7 @@ function OpseraBuildsByUserBarChart({ persona, date }) {
 }
 
 OpseraBuildsByUserBarChart.propTypes = {
-  data: PropTypes.object,
+  date: PropTypes.object,
   persona: PropTypes.string,
 };
 

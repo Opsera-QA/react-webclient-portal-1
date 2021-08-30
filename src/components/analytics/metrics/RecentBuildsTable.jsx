@@ -5,6 +5,7 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 // import { Table } from "react-bootstrap";
+import PropTypes from "prop-types";
 import { format } from "date-fns";
 import SuccessIcon from '../../common/icons/table/SuccessIcon';
 import FailIcon from '../../common/icons/table/FailIcon';
@@ -140,5 +141,9 @@ function RecentBuildsTable({ date }) {
       </>
     );
 }
+
+RecentBuildsTable.propTypes = {
+  date: PropTypes.object,
+};
 
 export default RecentBuildsTable;

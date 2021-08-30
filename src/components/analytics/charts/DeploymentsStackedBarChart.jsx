@@ -127,6 +127,7 @@ function DeploymentsStackedBarChart({ persona, date }) {
 }
 
 DeploymentsStackedBarChart.propTypes = {
+  date: PropTypes.object,
   persona: PropTypes.string,
 };
 

@@ -123,6 +123,7 @@ function ReliabilityRatingLineChart({ persona, date }) {
     );
 }
 ReliabilityRatingLineChart.propTypes = {
+  date: PropTypes.object,
   persona: PropTypes.string,
 };
 

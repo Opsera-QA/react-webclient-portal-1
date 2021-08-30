@@ -253,6 +253,8 @@ function CodeView_Manager({ persona, date, index }) {
 
 CodeView_Manager.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object,
+  index: PropTypes.object,
 };
 
 export default CodeView_Manager;
