@@ -805,7 +805,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-service-offerings")
-      ].value = kpiServiceNowAssignmentGroupsFilter.getData("value");
+      ].value = kpiServiceNowServiceOfferingsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
@@ -814,7 +814,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-configuration-items")
-      ].value = kpiServiceNowAssignmentGroupsFilter.getData("value");
+      ].value = kpiServiceNowConfigurationItemsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
@@ -823,7 +823,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-business-services")
-      ].value = kpiServiceNowAssignmentGroupsFilter.getData("value");
+      ].value = kpiServiceNowBusinessServicesFilter.getData("value");
     }
 
     setKpiSettings({ ...newKpiSettings });
