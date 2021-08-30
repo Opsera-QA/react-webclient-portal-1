@@ -4,9 +4,7 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
-import { Table } from "react-bootstrap";
 import PropTypes from "prop-types";
-import { format } from "date-fns";
 import CustomTable from "components/common/table/CustomTable";
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import FailIcon from "../../common/icons/table/FailIcon";
@@ -99,9 +97,9 @@ function OpseraRecentCDTable({ date }) {
       {
         Header: "Status",
         accessor: "status",
-        Cell: function parseStatus(props) {
-          return props.value ? (
-            props.value === "failure" || props.value === "failed" ? (
+        Cell: function parseStatus(row) {
+          return row?.value ? (
+            row?.value === "failure" || row?.value === "failed" ? (
               <FailIcon />
             ) : (
               <SuccessIcon />

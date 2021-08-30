@@ -4,7 +4,6 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
-// import { Table } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 import SuccessIcon from '../../common/icons/table/SuccessIcon';
@@ -41,16 +40,16 @@ function RecentBuildsTable({ date }) {
       {
         Header: "Completed At",
         accessor: "timestamp",
-        Cell: function parseDate(props) {
-          return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
+        Cell: function parseDate(row) {
+          return format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a");
         },
       },
       {
         Header: "Result",
         accessor: "data_result",
-        Cell: function parseStatus(props) {
-          return props?.value ? (
-            props?.value === "Failure" || props?.value === "failed" ? (
+        Cell: function parseStatus(row) {
+          return row?.value ? (
+            row?.value === "Failure" || rowvalue === "failed" ? (
               <FailIcon />
             ) : (
               <SuccessIcon />
