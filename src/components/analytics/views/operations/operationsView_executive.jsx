@@ -157,6 +157,7 @@ function OperationsView_Executive({ persona, index }) {
 
 OperationsView_Executive.propTypes = {
   persona: PropTypes.string,
+  index: PropTypes.object,
 };
 
 export default OperationsView_Executive;

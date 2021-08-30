@@ -5,6 +5,7 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 // import { Table } from "react-bootstrap";
+import PropTypes from "prop-types";
 import { format } from "date-fns";
 import SuccessIcon from '../../common/icons/table/SuccessIcon';
 import FailIcon from '../../common/icons/table/FailIcon';
@@ -40,16 +41,16 @@ function RecentBuildsTable({ date }) {
       {
         Header: "Completed At",
         accessor: "timestamp",
-        Cell: (props) => {
+        Cell: function parseDate(props) {
           return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
         },
       },
       {
         Header: "Result",
         accessor: "data_result",
-        Cell: (props) => {
-          return props.value ? (
-            props.value === "Failure" || props.value === "failed" ? (
+        Cell: function parseStatus(props) {
+          return props?.value ? (
+            props?.value === "Failure" || props?.value === "failed" ? (
               <FailIcon />
             ) : (
               <SuccessIcon />
@@ -140,5 +141,9 @@ function RecentBuildsTable({ date }) {
       </>
     );
 }
+
+RecentBuildsTable.propTypes = {
+  date: PropTypes.object,
+};
 
 export default RecentBuildsTable;

@@ -591,6 +591,13 @@ function ChartView({ selection, persona, date, index }) {
   }
 }
 
+ChartView.propTypes = {
+  selection: PropTypes.string,
+  persona: PropTypes.string,
+  date: PropTypes.object,
+  index: PropTypes.array,
+};
+
 Analytics.propTypes = {
   selection: PropTypes.string,
   persona: PropTypes.string,

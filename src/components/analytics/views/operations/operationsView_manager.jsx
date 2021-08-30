@@ -155,6 +155,7 @@ function OperationsView_Manager({ persona, index }) {
 
 OperationsView_Manager.propTypes = {
   persona: PropTypes.string,
+  index: PropTypes.object,
 };
 
 export default OperationsView_Manager;

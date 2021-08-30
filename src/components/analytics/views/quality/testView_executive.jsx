@@ -257,7 +257,9 @@ function TestView_Executive({ persona, date, index }) {
 
 
 TestView_Executive.propTypes = {
-  persona: PropTypes.string
+  persona: PropTypes.string,
+  date: PropTypes.object,
+  index: PropTypes.object,
 };
 
 export default TestView_Executive;

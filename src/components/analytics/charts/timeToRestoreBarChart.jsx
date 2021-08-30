@@ -18,7 +18,7 @@ const lineColor = "rgba(200, 30, 15, 1)";
 const barColor = "#0095ff";
 
 
-function TimeToRestoreBarChart( { token, persona } ) {
+function TimeToRestoreBarChart() {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -175,10 +175,5 @@ function TimeToRestoreBarChart( { token, persona } ) {
     );
   }
 }
-
-TimeToRestoreBarChart.propTypes = {
-  data: PropTypes.object,
-  persona: PropTypes.string
-};
 
 export default TimeToRestoreBarChart;

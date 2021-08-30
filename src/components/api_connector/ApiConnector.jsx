@@ -1,4 +1,5 @@
 import React, {Component, useEffect, useState} from "react";
+import PropTypes from "prop-types";
 import GitHub from "./source_control/gitHub";
 import GitLab from "./source_control/gitLab";
 import Bitbucket from "./source_control/bitbucket";
@@ -131,5 +132,8 @@ function ApiConnectorTabView({ activeTab }) {
     }
   }
 }
+ApiConnectorTabView.propTypes = {
+  activeTab: PropTypes.string,
+};
 
 export default ApiConnector;

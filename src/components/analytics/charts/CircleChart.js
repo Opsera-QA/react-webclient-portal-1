@@ -96,6 +96,7 @@ function CircleChart({ persona, date }) {
 }
 
 CircleChart.propTypes = {
+  date: PropTypes.object,
   persona: PropTypes.string,
 };
 

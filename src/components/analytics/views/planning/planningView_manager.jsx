@@ -180,6 +180,8 @@ function PlanningView_Manager({ persona, date, index }) {
 
 PlanningView_Manager.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object,
+  index: PropTypes.object,
 };
 
 export default PlanningView_Manager;

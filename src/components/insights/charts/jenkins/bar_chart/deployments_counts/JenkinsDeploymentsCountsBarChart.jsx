@@ -124,6 +124,7 @@ function JenkinsDeploymentsStackedBarChart({ persona, date }) {
 
 JenkinsDeploymentsStackedBarChart.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object,
 };
 
 export default JenkinsDeploymentsStackedBarChart;

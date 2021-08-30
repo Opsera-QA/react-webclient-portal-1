@@ -131,6 +131,7 @@ XunitTestResultsTable.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
+  date: PropTypes.object,
   setKpis: PropTypes.func
 };
 
