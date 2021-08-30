@@ -24,7 +24,6 @@ import workflowAuthorizedActions
 from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import SonarRatingsChartHelpDocumentation
-
   from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
 import SfdcOrgSyncPrerunHelpDocumentation
   from "../../common/help/documentation/tasks/SfdcOrgSyncPrerunHelpDocumentation";
@@ -125,7 +124,10 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
   };
 
   const getHelpComponent = () => {
-    return (<SfdcOrgSyncPrerunHelpDocumentation closeHelpPanel={() => setShowHelp(false)} />);
+    return (
+      <div className="mx-2 my-2">
+        <SfdcOrgSyncPrerunHelpDocumentation closeHelpPanel={() => setShowHelp(false)} />
+      </div>);
   };
 
   if (gitTasksData == null) {
