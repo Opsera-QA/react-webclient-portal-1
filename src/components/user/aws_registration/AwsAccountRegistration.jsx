@@ -27,7 +27,7 @@ function AwsAccountRegistration() {
   const loadData = async () => {
     setIsLoading(true);
     let newModel = new Model(awsAccountRegistrationMetadata.newObjectFields, awsAccountRegistrationMetadata, true);
-    newModel.setData("customerId", customerId);
+    newModel.setData("aws_customer_id", customerId);
     await setRegistrationModel({...newModel});
     setIsLoading(false);
   };
@@ -118,9 +118,6 @@ function AwsAccountRegistration() {
               </Col>
               <Col md={6}>
                 <TextInputBase disabled={true} fieldName={"cloudProviderRegion"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
-              </Col>
-              <Col md={6}>
-                <TextInputBase fieldName={"aws_customer_id"} dataObject={registrationModel} setDataObject={setRegistrationModel} />
               </Col>
             </Row>
             <Row>
