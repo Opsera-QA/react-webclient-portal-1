@@ -49,7 +49,7 @@ function RecentBuildsTable({ date }) {
         accessor: "data_result",
         Cell: function parseStatus(row) {
           return row?.value ? (
-            row?.value === "Failure" || rowvalue === "failed" ? (
+            row?.value === "Failure" || row?.value === "failed" ? (
               <FailIcon />
             ) : (
               <SuccessIcon />
