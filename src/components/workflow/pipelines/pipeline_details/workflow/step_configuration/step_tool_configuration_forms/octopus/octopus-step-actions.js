@@ -218,4 +218,24 @@ OctopusStepActions.getAzureRepoTags = async (getAccessToken, cancelSource, dataO
 
 };
 
+OctopusStepActions.getProjectGroups = async (id, spaceId, getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/tools/octopus/projectGroups/${id}/${spaceId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+OctopusStepActions.getChannels = async (id, spaceId, projectId, getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/tools/octopus/channels/${id}/${spaceId}/${projectId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+OctopusStepActions.getProjectsV2 = async (id, spaceId, projectGroupId, getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/tools/octopus/projects/${id}/octopus/${spaceId}/${projectGroupId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+OctopusStepActions.getTenantsV2 = async (id, spaceId, projectId, environmentId, getAccessToken, cancelTokenSource) => {  
+  const apiUrl = `/tools/octopus/tenants/${id}/octopus/${spaceId}/${projectId}/${environmentId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 export default OctopusStepActions;
