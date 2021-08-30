@@ -47,8 +47,8 @@ function OpseraRecentPipelineStatus({ date }) {
       {
         Header: "Completed At",
         accessor: "timestamp",
-        Cell: function parseDate(props) {
-          return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
+        Cell: function parseDate(row) {
+          return format(new Date(row?.value), "yyyy-MM-dd', 'hh:mm a");
         },
       },
       {
@@ -58,9 +58,9 @@ function OpseraRecentPipelineStatus({ date }) {
       {
         Header: "Result",
         accessor: "status",
-        Cell: function parseStatus(props) {
-          return props?.value ? (
-            props?.value === "failure" || props?.value === "failed" ? (
+        Cell: function parseStatus(row) {
+          return row?.value ? (
+            row?.value === "failure" || row?.value === "failed" ? (
               <FailIcon />
               ) : (
               <SuccessIcon />
