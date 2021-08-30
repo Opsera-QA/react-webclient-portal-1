@@ -41,16 +41,16 @@ function RecentBuildsTable({ date }) {
       {
         Header: "Completed At",
         accessor: "timestamp",
-        Cell: (props) => {
+        Cell: function parseDate(props) {
           return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
         },
       },
       {
         Header: "Result",
         accessor: "data_result",
-        Cell: (props) => {
-          return props.value ? (
-            props.value === "Failure" || props.value === "failed" ? (
+        Cell: function parseStatus(props) {
+          return props?.value ? (
+            props?.value === "Failure" || props?.value === "failed" ? (
               <FailIcon />
             ) : (
               <SuccessIcon />

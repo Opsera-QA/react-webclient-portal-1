@@ -58,8 +58,8 @@ function OpseraRecentCDTable({ date }) {
           metric: "bar",
         },
       ],
-      startDate: date.start,
-      endDate: date.end,
+      startDate: date?.start,
+      endDate: date?.end,
     };
 
     try {
@@ -99,7 +99,7 @@ function OpseraRecentCDTable({ date }) {
       {
         Header: "Status",
         accessor: "status",
-        Cell: (props) => {
+        Cell: function parseStatus(props) {
           return props.value ? (
             props.value === "failure" || props.value === "failed" ? (
               <FailIcon />
