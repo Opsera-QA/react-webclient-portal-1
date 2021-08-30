@@ -660,8 +660,7 @@ function JenkinsStepConfiguration({
         toolConfigId.length === 0 ||
         jenkinsUrl.length === 0 ||
         jUserId.length === 0 ||
-        (formData.jobType === "SFDC UNIT TESTING" ? sfdcUnitTestType.length === 0 : false) ||
-        (buildType === "docker" ? dockerName.length === 0 || !regex.test(dockerName) : false) 
+        (formData.jobType === "SFDC UNIT TESTING" ? sfdcUnitTestType.length === 0 : false)
       ) {
         let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
         setToast(toast);
@@ -726,6 +725,7 @@ function JenkinsStepConfiguration({
   // console.log(formData);
 
   const handleJobChange = (selectedOption) => {
+    console.log("selectedJob: " + JSON.stringify(selectedOption?._id));
     switch (selectedOption.type[0]) {
       case "SFDC":
         setFormData({
