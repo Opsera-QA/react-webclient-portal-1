@@ -184,7 +184,7 @@ function AccountRegistration() {
           <Card>
             <Card.Header as="h5" className="new-user-header">{getTitle()}</Card.Header>
             <Card.Body className="new-user-body-full p-3">
-              Adding a new User to the account requires account creation the Users form in your Opsera Settings.
+              Adding a new User to the account requires account creation on the User Management area in your Opsera Settings.
               Please ask your account owner or delegated administrator to grant you access through the Opsera Portal Settings.
               From there you can complete registration and gain access to the system.
             </Card.Body>
