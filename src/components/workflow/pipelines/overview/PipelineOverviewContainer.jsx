@@ -46,7 +46,7 @@ function PipelineOverviewContainer({ pipeline }) {
     <div>
       <div className="object-properties-input">
         <div className="content-container">
-          <TitleBarBase title={`${pipeline?.name} Pipeline Summary`} icon={faDraftingCompass} />
+          <TitleBarBase title={`${pipeline?.name}`} icon={faDraftingCompass} />
           <Tab.Container defaultActiveKey={0}>
             <Row className={"makeup-container-body mx-0"}>
               <Col sm={2} className={"px-0"}>

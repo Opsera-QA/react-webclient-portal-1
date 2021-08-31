@@ -94,6 +94,10 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
   };
 
   const getEmailFields = () => {
+    if (emailModel?.getData("enabled") !== true) {
+      return null;
+    }
+
     return (
       <InfoContainer titleText={"Email Notifications"} titleIcon={faEnvelope} className={"mt-1 mb-2"}>
         <PipelineStepEmailNotificationSummaryPanel emailNotificationModel={emailModel} />
@@ -102,6 +106,10 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
   };
 
   const getJiraFields = () => {
+    if (jiraModel?.getData("enabled") !== true) {
+      return null;
+    }
+
     return (
       <InfoContainer titleText={"Jira Notifications"} titleIcon={faEnvelope} className={"mb-2"}>
         <PipelineStepJiraNotificationSummaryPanel jiraNotificationModel={jiraModel} />
@@ -110,6 +118,10 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
   };
 
   const getSlackFields = () => {
+    if (slackModel?.getData("enabled") !== true) {
+      return null;
+    }
+
     return (
       <InfoContainer titleText={"Slack Notifications"} titleIcon={faEnvelope} className={"mb-2"}>
         <PipelineStepSlackNotificationSummaryPanel slackNotificationModel={slackModel} />
@@ -118,6 +130,10 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
   };
 
   const getTeamsFields = () => {
+    if (teamsModel?.getData("enabled") !== true) {
+      return null;
+    }
+
     return (
       <InfoContainer titleText={"Microsoft Teams Notifications"} titleIcon={faEnvelope} className={"mb-2"}>
         <PipelineStepMicrosoftTeamsNotificationSummaryPanel teamsNotificationModel={teamsModel} />
@@ -126,10 +142,48 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
   };
 
   const getServiceNowFields = () => {
+    if (serviceNowModel?.getData("enabled") !== true) {
+      return null;
+    }
+
     return (
       <InfoContainer titleText={"ServiceNow Notifications"} titleIcon={faEnvelope} className={"mb-2"}>
         <PipelineStepServiceNowNotificationSummaryPanel serviceNowNotificationModel={serviceNowModel} />
       </InfoContainer>
+    );
+  };
+
+  const getNotificationBody = () => {
+    const hasEmailNotifications = emailModel?.getData("enabled") === true;
+    const hasJiraNotifications = jiraModel?.getData("enabled") === true;
+    const hasTeamsNotifications = teamsModel?.getData("enabled") === true;
+    const hasSlackNotifications = slackModel?.getData("enabled") === true;
+    const hasServiceNowNotifications = serviceNowModel?.getData("enabled") === true;
+
+    if (
+         hasEmailNotifications === false
+      && hasJiraNotifications === false
+      && hasTeamsNotifications === false
+      && hasSlackNotifications === false
+      && hasServiceNowNotifications === false
+    ) {
+      return (
+        <div className={"h-100 w-100 table-border"}>
+          <div className="w-100 info-text text-center p-3">
+            No notifications are configured for this  Pipeline step
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        {getEmailFields()}
+        {getJiraFields()}
+        {getTeamsFields()}
+        {getSlackFields()}
+        {getServiceNowFields()}
+      </div>
     );
   };
 
@@ -139,11 +193,7 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
 
   return (
     <SummaryPanelContainer className={"step-configuration-summary"}>
-      {getEmailFields()}
-      {getJiraFields()}
-      {getTeamsFields()}
-      {getSlackFields()}
-      {getServiceNowFields()}
+      {getNotificationBody()}
     </SummaryPanelContainer>
   );
 }
