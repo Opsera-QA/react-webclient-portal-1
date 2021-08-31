@@ -46,7 +46,9 @@ function ToolNameField({ model, fieldName, className, handleClose }) {
       setIsLoading(true);
       await loadToolName(cancelSource);
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (error?.response?.status !== 404) {
+        toastContext.showLoadingErrorDialog(error);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -71,7 +73,12 @@ function ToolNameField({ model, fieldName, className, handleClose }) {
     }
 
     if (isLoading) {
-      return <span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>{model?.getData(fieldName)}</span>;
+      return (
+        <span>
+          <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
+          {model?.getData(fieldName)}
+        </span>
+      );
     }
 
     if (toolName) {
@@ -92,7 +99,7 @@ function ToolNameField({ model, fieldName, className, handleClose }) {
       <span>{getToolName()}</span>
       <ToolLinkIcon
         isLoading={isLoading}
-        className={"ml-3"}
+        className={"ml-2"}
         toolId={model?.getData(fieldName)}
         accessAllowed={accessAllowed}
         handleClose={handleClose}

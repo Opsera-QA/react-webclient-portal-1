@@ -7,6 +7,8 @@ import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import JsonTab from "components/common/tabs/detail_view/JsonTab";
 import OverlayTabPanelContainer from "components/common/panels/general/OverlayTabPanelContainer";
 import PipelineOverviewContainer from "components/workflow/pipelines/overview/PipelineOverviewContainer";
+import CustomTab from "components/common/tabs/CustomTab";
+import {faFileCode} from "@fortawesome/pro-light-svg-icons";
 
 function PipelineDetailsOverview({ pipeline }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -22,6 +24,7 @@ function PipelineDetailsOverview({ pipeline }) {
         return <PipelineOverviewContainer pipeline={pipeline} />;
       case "json":
         return <PipelineStepJsonPanel pipelineStepData={pipeline} />;
+      case "yaml":
       default:
         return null;
     }
@@ -32,6 +35,14 @@ function PipelineDetailsOverview({ pipeline }) {
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <JsonTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <CustomTab
+          tabText={"YAML View"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabName={"yaml"}
+          disabled={true}
+          icon={faFileCode}
+        />
       </CustomTabContainer>
     );
   };

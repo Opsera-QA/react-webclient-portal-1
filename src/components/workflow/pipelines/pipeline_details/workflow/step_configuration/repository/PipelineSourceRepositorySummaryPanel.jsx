@@ -6,10 +6,17 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import GenericItemField from "components/common/fields/multiple_items/GenericItemField";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import NoDataMessageField from "components/common/fields/text/standalone/NoDataMessageField";
 
 function PipelineSourceRepositorySummaryPanel({ sourceRepositoryModel, setActiveTab }) {
   if (sourceRepositoryModel == null) {
     return <LoadingDialog size="sm" />;
+  }
+
+  if (sourceRepositoryModel?.getData("service") == null || sourceRepositoryModel?.getData("service") === "") {
+    return (
+      <NoDataMessageField message={"There are no custom configurations defined at this time."} />
+    );
   }
 
   return (

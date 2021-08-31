@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import Tab from "react-bootstrap/Tab";
-import {Col, Nav, Row} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 import PipelineStepDetailsOverview from "components/workflow/pipelines/overview/PipelineStepDetailsOverview";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import TitleBarBase from "components/common/fields/TitleBarBase";
