@@ -101,7 +101,7 @@ import TwistlockConnectionMetadata
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
-    if (toolIdentifier == null || toolConfiguration == null) {
+    if (toolIdentifier == null || toolIdentifier === "" || toolConfiguration == null) {
       return <></>;
     }
     
