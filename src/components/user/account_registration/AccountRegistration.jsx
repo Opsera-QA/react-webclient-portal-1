@@ -53,6 +53,7 @@ function AccountRegistration() {
         newAccountDto.setData("ldapOrgDomain", accountResponse.data?.orgDomain);
         newAccountDto.setData("organizationName", accountResponse?.data?.accountName);
         newAccountDto.setData("orgAccount", accountResponse?.data?.name);
+        newAccountDto.setData("localAuth", accountResponse?.data?.localAuth === "TRUE");
       }
 
       setRegistrationDataDto(newAccountDto);
@@ -85,7 +86,7 @@ function AccountRegistration() {
 
     if (registrationDataDto.isModelValid2()) {
       try {
-        await userActions.createOpseraAccount(registrationDataDto);
+        const response = await userActions.createOpseraAccount(registrationDataDto);
         // toastContext.showCreateSuccessResultDialog("Opsera Account")
         loadRegistrationResponse();
       } catch (error) {

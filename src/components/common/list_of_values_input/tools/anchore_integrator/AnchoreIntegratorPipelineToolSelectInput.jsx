@@ -23,7 +23,7 @@ function AnchoreIntegratorPipelineToolSelectInput({className, fieldName, model, 
        setDataFunction={setDataFunction}
        disabled={disabled}
        className={className}
-       fields={["_id", "configuration", "name"]}
+       fields={["_id", "configuration", "name", "tool_identifier"]}
      />
   );
 }
