@@ -39,11 +39,6 @@ function ChartContainer(
   };
 
   const getHelpToggle = () => {
-    // TODO: Remove feature flag after verification
-    if (featureFlagHideItemInProd()) {
-      return null;
-    }
-
     if ((view !== "chart" || chartHelpComponent) && !helpIsShown) {
       return (
         <ActionBarToggleHelpButton
