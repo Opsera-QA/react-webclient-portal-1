@@ -230,11 +230,14 @@ const AppWithRouterAccess = () => {
   };
 
   const isPublicPath = (path) => {
-    return (path === "/login" ||
+    return (
+      path === "/login" ||
       path === "/signup" ||
       path === "/registration" ||
       path === "/trial/registration" ||
-      path.includes("/account/registration"));
+      path.includes("/account/registration") ||
+      path.includes("/signup/awsmarketplace")
+    );
   };
 
   const enableSideBar = (path) => {

@@ -152,9 +152,10 @@ const AuthContextProvider = (props) => {
       if (userData == null) {
         return false;
       }
-      
-      const { ldap, groups } = userData;
-      return ldap.type === "sass-user" || groups.includes("NonLDAPEndUser");
+
+      const ldap = userData?.ldap;
+      const groups = userData?.groups;
+      return ldap?.type === "sass-user" || (Array.isArray(groups) && groups?.includes("NonLDAPEndUser"));
     };
 
     return (
