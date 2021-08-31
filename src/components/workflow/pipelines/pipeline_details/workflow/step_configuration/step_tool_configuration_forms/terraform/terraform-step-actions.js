@@ -21,7 +21,7 @@ terraformStepActions.fetchSCMDetails = async (dataObject, fieldName, getAccessTo
       toolId: dataObject?.getData("awsToolConfigId")
     };
     const apiUrl = `/tools/aws/v2/IAMRoles`;
-    return await baseActions.apiPostCallV2(getAccessToken,cancelTokenSource, apiUrl, urlParams);
+    return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
   };
 
 export default terraformStepActions;

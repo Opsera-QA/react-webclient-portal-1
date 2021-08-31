@@ -6,10 +6,10 @@ import axios from "axios";
 import terraformStepActions from "../terraform-step-actions";
 import { AuthContext } from "contexts/AuthContext";
 
-function TerraformIAMRolesSelectInput({
+function TerraformIamRolesSelectInput({
   fieldName,
-  dataObject,
-  setDataObject,
+  model,
+  setModel,
   disabled,
   textField,
   valueField,
@@ -66,7 +66,7 @@ function TerraformIAMRolesSelectInput({
   const loadTypes = async (cancelSource) => {
     try {
       setIAMRoless([]);
-      let res = await terraformStepActions.getIAMRoles(getAccessToken, cancelSource, dataObject);
+      let res = await terraformStepActions.getIAMRoles(getAccessToken, cancelSource, model);
       if (res && res.status === 200) {
         res = res.data;
       } else {
@@ -90,14 +90,11 @@ function TerraformIAMRolesSelectInput({
     }
   };
 
-  
-
-
   return (
     <SelectInputBase
       fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      dataObject={model}
+      setDataObject={setModel}
       selectOptions={loadBalancers}     
       textField={textField}
       valueField={valueField}
@@ -108,10 +105,10 @@ function TerraformIAMRolesSelectInput({
   );
 }
 
-TerraformIAMRolesSelectInput.propTypes = {
+TerraformIamRolesSelectInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
@@ -119,10 +116,10 @@ TerraformIAMRolesSelectInput.propTypes = {
   pipelineId: PropTypes.string,
 };
 
-TerraformIAMRolesSelectInput.defaultProps = {
+TerraformIamRolesSelectInput.defaultProps = {
   fieldName: "role",
   textField: "roleName",
   valueField: "arn",
 };
 
-export default TerraformIAMRolesSelectInput;
+export default TerraformIamRolesSelectInput;

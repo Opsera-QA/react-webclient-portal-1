@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitRepositoryInput from "components/common/list_of_values_input/tools/git/GitRepositoryInput";
 
-function TerraformGitRepositoryInput({model, setModel, disabled}) {
-  const setRepository = (fieldName, selectedOption) => {
+function TerraformGitRepositorySelectInput({model, setModel, disabled}) {
+  const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("gitRepository", selectedOption?.name);
     newModel.setData("gitRepositoryID", selectedOption?.id);
@@ -20,16 +20,16 @@ function TerraformGitRepositoryInput({model, setModel, disabled}) {
        workspace={model?.getData("bitbucketWorkspace")}
        dataObject={model}
        setDataObject={setModel}
-       setDataFunction={setRepository}
+       setDataFunction={setDataFunction}
        disabled={disabled}
      />
   );
 }
 
-TerraformGitRepositoryInput.propTypes = {
+TerraformGitRepositorySelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default TerraformGitRepositoryInput;
+export default TerraformGitRepositorySelectInput;
