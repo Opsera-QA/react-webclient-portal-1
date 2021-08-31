@@ -2,24 +2,24 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitRepositoryInput from "components/common/list_of_values_input/tools/git/GitRepositoryInput";
 
-function TerraformGitRepositoryInput({dataObject, setDataObject, disabled}) {
+function TerraformGitRepositoryInput({model, setModel, disabled}) {
   const setRepository = (fieldName, selectedOption) => {
-    let newDataObject = {...dataObject};
-    newDataObject.setData("gitRepository", selectedOption.name);
-    newDataObject.setData("gitRepositoryID", selectedOption.id);
-    newDataObject.setData("sshUrl", selectedOption.sshUrl || "");
-    newDataObject.setData("gitUrl", selectedOption.httpUrl || "");
-    setDataObject({...newDataObject});
+    let newModel = {...model};
+    newModel.setData("gitRepository", selectedOption?.name);
+    newModel.setData("gitRepositoryID", selectedOption?.id);
+    newModel.setData("sshUrl", selectedOption?.sshUrl || "");
+    newModel.setData("gitUrl", selectedOption?.httpUrl || "");
+    setModel({...newModel});
   };
 
   return (
      <GitRepositoryInput
        fieldName={"gitRepository"}
-       service={dataObject.getData("type")}
-       gitToolId={dataObject.getData("gitToolId")}
-       workspace={dataObject.getData("bitbucketWorkspace")}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
+       service={model?.getData("type")}
+       gitToolId={model?.getData("gitToolId")}
+       workspace={model?.getData("bitbucketWorkspace")}
+       dataObject={model}
+       setDataObject={setModel}
        setDataFunction={setRepository}
        disabled={disabled}
      />
@@ -27,8 +27,8 @@ function TerraformGitRepositoryInput({dataObject, setDataObject, disabled}) {
 }
 
 TerraformGitRepositoryInput.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
