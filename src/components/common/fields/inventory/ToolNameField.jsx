@@ -68,10 +68,6 @@ function ToolNameField({ model, fieldName, className, handleClose }) {
   };
 
   const getToolName = () => {
-    if (model?.getData(fieldName) === "") {
-      return null;
-    }
-
     if (isLoading) {
       return (
         <span>
@@ -88,6 +84,25 @@ function ToolNameField({ model, fieldName, className, handleClose }) {
     return `Tool name could not be found with ID: [${model?.getData(fieldName)}]. The Tool may have been deleted.`;
   };
 
+  const getBody = () => {
+    if (model?.getData(fieldName) == null || model?.getData(fieldName) === "") {
+      return null;
+    }
+
+    return (
+      <span>
+        <span>{getToolName()}</span>
+        <ToolLinkIcon
+          isLoading={isLoading}
+          className={"ml-2"}
+          toolId={model?.getData(fieldName)}
+          accessAllowed={accessAllowed}
+          handleClose={handleClose}
+        />
+      </span>
+    );
+  };
+
 
   if (field == null) {
     return null;
@@ -96,14 +111,7 @@ function ToolNameField({ model, fieldName, className, handleClose }) {
   return (
     <FieldContainer className={className}>
       <FieldLabel field={field}/>
-      <span>{getToolName()}</span>
-      <ToolLinkIcon
-        isLoading={isLoading}
-        className={"ml-2"}
-        toolId={model?.getData(fieldName)}
-        accessAllowed={accessAllowed}
-        handleClose={handleClose}
-      />
+      {getBody()}
     </FieldContainer>
   );
 }
