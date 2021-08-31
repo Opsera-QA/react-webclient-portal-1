@@ -92,7 +92,6 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
 
     // TODO: Do these need to be passed as object props?
     const MeanLineLayer = ({ bars, xScale, yScale }) => {
-      console.log("bars",bars);
         const lineColor = accentColor;
         const lineGenerator = line()
           .x(d => xScale(d.data.data._id))
