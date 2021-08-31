@@ -11,7 +11,8 @@ aksStepActions.getAzureClusters = async (getAccessToken, cancelTokenSource, conf
     "clientSecret": applicationData?.clientSecret?.vaultKey,
     "tenantId": cfg?.azureTenantId,
     "subscriptionId": cfg?.azureSubscriptionId,
-    "resource": applicationData?.resource
+    "resource": applicationData?.resource,
+    "type": "v2"
   };
   const apiURL = `tools/azure/management/clusterNames`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);

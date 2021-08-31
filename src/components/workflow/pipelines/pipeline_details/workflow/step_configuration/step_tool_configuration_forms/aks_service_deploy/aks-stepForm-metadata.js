@@ -9,7 +9,6 @@ const aksStepFormMetadata = {
     {
       label: "Service Name",
       id: "aksServiceName",
-      isRequired: true
     },
     {
       label: "Image Hub",

@@ -70,14 +70,9 @@ function AksClusterSelectInput({
     );
 
     const result = response?.data?.data;
-    const listObject = result.map((el) => ({
-      name: el.name,
-      id: el.id,
-      displayName: el.properties?.displayName,
-    }));
     if (Array.isArray(result) && result.length > 0) {
       setErrorMessage("");
-      setAzureRegionList(listObject);
+      setAzureRegionList(result);
     }
 
     if (result?.length === 0) {
@@ -98,12 +93,10 @@ function AksClusterSelectInput({
   };
 
   const handleDTOChange = async (fieldName, value) => {
-    if (fieldName === "clusterName") {
       let newDataObject = dataObject;
-      newDataObject.setData("clusterName", value);
+      newDataObject.setData("aksClusterName", value);
       setDataObject({ ...newDataObject });
       return;
-    }
   };
 
   return (
@@ -138,6 +131,8 @@ AksClusterSelectInput.propTypes = {
 
 AksClusterSelectInput.defaultProps = {
   fieldName: "aksClusterName",
+  textField: "clusterName",
+  valueField: "clusterName",
 };
 
 export default AksClusterSelectInput;

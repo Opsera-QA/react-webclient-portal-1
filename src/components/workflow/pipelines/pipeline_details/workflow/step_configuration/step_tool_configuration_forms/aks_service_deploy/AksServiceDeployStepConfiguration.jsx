@@ -86,7 +86,7 @@ function AksServiceDeployStepConfiguration({ stepTool, closeEditorPanel, parentC
         <TextInputBase
           dataObject={aksModel}
           setDataObject={setAksModel}
-          fieldName={"ecsServiceName"}
+          fieldName={"aksServiceName"}
         />
       )}
       <TextInputBase
