@@ -47,7 +47,7 @@ const gitTasksFilterMetadata = {
     }
 
     if (filterDto.getData("type") != null) {
-      activeFilters.push({filterId: "type", ...filterDto.getData("type")});
+      activeFilters.push({filterId: "type", text: `Type: ${filterDto.getFilterText("type")}`});
     }
 
     if (filterDto.getData("tag") != null) {
