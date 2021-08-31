@@ -15,6 +15,7 @@ import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import CheckECSStatusButton from "../CheckECSStatusButton";
 import ECSActionButtons from "../ECSActionButtons";
+import AKSActionButtons from "../AKSActionButtons";
 
 function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, gitTaskTypeSummaryCard, loadData, accessRoleData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -103,6 +104,7 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
         <div className={"mx-auto"}>
           <div className={"mx-auto"}>
             <ECSActionButtons gitTasksData={gitTasksData} loadData={loadData} />
+            <AKSActionButtons gitTasksData={gitTasksData} loadData={loadData} />
           </div>
         </div>
       </Row>
