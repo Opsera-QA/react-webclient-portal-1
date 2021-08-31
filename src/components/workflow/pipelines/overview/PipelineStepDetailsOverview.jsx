@@ -40,7 +40,7 @@ function PipelineStepDetailsOverview({ pipelineStep, index }) {
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <CustomTab
-          tabText={"Notification Configuration"}
+          tabText={"Notifications"}
           handleTabClick={handleTabClick}
           activeTab={activeTab}
           tabName={"notifications"}

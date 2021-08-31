@@ -169,7 +169,7 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
     ) {
       return (
         <div className={"h-100 w-100 table-border"}>
-          <div className="w-100 info-text text-center p-3">
+          <div className="w-100 info-text text-center p-5">
             No notifications are configured for this  Pipeline step
           </div>
         </div>

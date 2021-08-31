@@ -24,11 +24,11 @@ function PipelineOverviewContainer({ pipeline }) {
   const getPipelineOverStepTabContent = () => {
     return (
       <Tab.Content>
-        <Tab.Pane key={-1} eventKey={-1}>
+        <Tab.Pane key={0} eventKey={0}>
           <PipelineSourceRepositoryOverview pipeline={pipeline} />
         </Tab.Pane>
         {pipelineSteps.map((pipelineStep, index) => (
-          <Tab.Pane key={index} eventKey={index}>
+          <Tab.Pane key={index + 1} eventKey={index + 1}>
             <PipelineStepDetailsOverview pipelineStep={pipelineStep} index={index} />
           </Tab.Pane>
         ))}
