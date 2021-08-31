@@ -39,7 +39,7 @@ function PipelineDetailsOverviewOverlay({ pipeline }) {
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
-      titleText={`[${pipeline?.name}] Pipeline Details`}
+      titleText={`Pipeline Configuration Viewer`}
       titleIcon={faDraftingCompass}
       showToasts={true}
       isLoading={isLoading}
