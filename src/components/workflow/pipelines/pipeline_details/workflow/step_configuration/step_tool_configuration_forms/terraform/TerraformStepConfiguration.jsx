@@ -16,6 +16,8 @@ import TerraformCustomParametersInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCustomParametersInput";
 import TerraformRuntimeArgsInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformRuntimeArgsInput";
+import TerraformIAMRolesSelectInput from "./inputs/TerraformIAMRolesSelectInput";
+import TerraformIAmRoleFlagBooleanInput from "./inputs/TerraformIAmRoleFlagBooleanInput";
 
 function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -80,14 +82,23 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       <TerraformGitBranchInput  dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
       <TextInputBase dataObject={terraformStepConfigurationDto} fieldName={"gitFilePath"} setDataObject={setTerraformStepConfigurationDataDto}/>
       <TerraformAWSCredsSelectInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
-      <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"accessKeyParamName"} />
+      <TerraformIAmRoleFlagBooleanInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
+      {!terraformStepConfigurationDto?.getData('iamRoleFlag') ? 
+      (<><TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"accessKeyParamName"} />
       <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"secretKeyParamName"} />
       <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"regionParamName"} />
+      </>):(
+        <TerraformIAMRolesSelectInput  
+          dataObject={terraformStepConfigurationDto}
+          setDataObject={setTerraformStepConfigurationDataDto}
+          disabled={terraformStepConfigurationDto?.getData("awsToolConfigId").length === 0}
+          toolConfigId={terraformStepConfigurationDto?.getData("awsToolConfigId")} />
+      )}
       <TerraformRuntimeArgsInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
       <TerraformCustomParametersInput
         model={terraformStepConfigurationDto}
         setModel={setTerraformStepConfigurationDataDto}
-      />
+      />    
     </PipelineStepEditorPanelContainer>
   );
 }

@@ -71,7 +71,15 @@ const TerraformStepFormMetadata = {
     {
       label: "Save Output Parameters?",
       id: "saveParameters"
-    }
+    },
+    {
+      label: "Use IAM Roles for Authentication?", 
+      id:"iamRoleFlag"
+    },
+    {
+      label: "IAM Role",
+      id: "role"
+    },
   ],
   newObjectFields: {
     toolActionType: "EXECUTE",
@@ -91,7 +99,9 @@ const TerraformStepFormMetadata = {
     bitbucketWorkspaceName: "",
     keyValueMap: {},
     customParameters: "",
-    saveParameters: false
+    saveParameters: false,
+    iamRoleFlag:false,
+    role:""
   }
 };
 
