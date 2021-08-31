@@ -25,24 +25,25 @@ gitTasksActions.createGitTaskV2 = async (getAccessToken, cancelTokenSource, gitT
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-gitTasksActions.getGitTasksListV2 = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {
-  let sortOption = gitTasksDataDto.getData("sortOption");
-
-  let urlParams = {
+gitTasksActions.getGitTasksListV2 = async (getAccessToken, cancelTokenSource, taskFilterModel) => {
+  // TODO: Wire up new route when ready
+  // const apiUrl = `/tasks`;
+  const apiUrl = `/tools/git/`;
+  const sortOption = taskFilterModel?.getData("sortOption");
+  const urlParams = {
     params: {
       sort: sortOption ? sortOption.value : undefined,
-      page: gitTasksDataDto.getData("currentPage"),
-      size: gitTasksDataDto.getData("pageSize"),
-      tag: gitTasksDataDto.getFilterValue("tag"),
-      type: gitTasksDataDto.getFilterValue("type"),
-      status: gitTasksDataDto.getFilterValue("status"),
-      tool: gitTasksDataDto.getFilterValue("toolIdentifier"),
-      search: gitTasksDataDto.getFilterValue("search"),
-      owner: gitTasksDataDto.getFilterValue("owner")
+      page: taskFilterModel?.getData("currentPage"),
+      size: taskFilterModel?.getData("pageSize"),
+      tag: taskFilterModel?.getFilterValue("tag"),
+      type: taskFilterModel?.getFilterValue("type"),
+      status: taskFilterModel?.getFilterValue("status"),
+      tool: taskFilterModel?.getFilterValue("toolIdentifier"),
+      search: taskFilterModel?.getFilterValue("search"),
+      owner: taskFilterModel?.getFilterValue("owner")
     }
   };
 
-  const apiUrl = `/tools/git/`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 

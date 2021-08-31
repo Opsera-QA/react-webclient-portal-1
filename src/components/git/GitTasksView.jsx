@@ -14,6 +14,7 @@ import NewGitTaskOverlay from "components/git/NewGitTaskOverlay";
 import axios from "axios";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TasksSubNavigationBar from "components/git/TasksSubNavigationBar";
+import InlineTaskTypeFilter from "components/common/filters/tasks/type/InlineTaskTypeFilter";
 
 function GitTasksView() {
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
@@ -129,6 +130,14 @@ function GitTasksView() {
         addRecordFunction={createNewNotification}
         supportSearch={true}
         isLoading={isLoading}
+        // inlineFilters={
+        //   <InlineTaskTypeFilter
+        //     filterModel={gitTasksFilterDto}
+        //     setFilterModel={setGitTasksFilterDto}
+        //     className={"mr-2"}
+        //     loadData={loadData}
+        //   />
+        //}
         body={getBody()}
         dropdownFilters={getDropdownFilters()}
         titleIcon={faTasks}
