@@ -63,7 +63,7 @@ function PipelineByStatusFailedTable({ dashboardData, kpiConfiguration, setActiv
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "listOfFailedRuns", null, dashboardTags, filterDto, null, null, pipelineName);
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "listOfFailedRuns", kpiConfiguration, dashboardTags, filterDto, null, null, pipelineName);
       let dataObject = response?.data ? response?.data?.data[0] : [{data: [], count: [{count: 0}]}];
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataObject[0]?.count[0]?.count);
