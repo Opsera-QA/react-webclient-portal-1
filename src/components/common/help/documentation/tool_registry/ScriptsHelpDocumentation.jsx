@@ -19,7 +19,8 @@ function ScriptsHelpDocumentation() {
           <li>Complete the <b>Create New Script</b> form including <b>Name</b>, <b>Language</b>, <b>Script</b> and apply any access roles.</li>
           <li>Select <b>Create</b> button to save the new script in the Opsera Scripts Library. The script can now be referenced in a pipeline.</li>
         </ol>
-      <div className={"mb-1"}>For more detailed information on Script creation and how to configure a script in Opsera pipelines, view the  <a href="https://opsera.atlassian.net/l/c/S2c72ieq" target="_blank" rel="noreferrer"><b>Script Library Help Documentation</b>.</a></div></div>
+        <div className={"mb-1"}>For more detailed information on Script creation and how to configure a script in Opsera pipelines, view the  <a href="https://opsera.atlassian.net/l/c/S2c72ieq" target="_blank" rel="noreferrer"><b>Script Library Help Documentation</b>.</a></div>
+      </div>
     </HelpOverlayBase>
   );
 }

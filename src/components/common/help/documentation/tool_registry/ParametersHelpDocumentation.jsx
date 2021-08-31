@@ -12,7 +12,7 @@ function ParametersHelpDocumentation() {
       closePanel={closePanel}
       showPanel={true}
       titleText={"Parameters Help"}>
-      <div className={"mt-3 ml-1"}>Opsera Custom Parameters allow the user to store sensitive information in the vault in order to reference it later in the pipeline step. </div>
+      <div className={"mt-3 ml-1"}>Opsera Custom Parameters allow the user to store sensitive information in the vault in order to reference it later in the pipeline step.</div>
       <div className={"mt-2 ml-4"}><b>To create a new parameter:</b>
         <ol>
           <li>Select the <b>+New Parameter</b> button.</li>
@@ -25,7 +25,8 @@ function ParametersHelpDocumentation() {
             </ul></li>
           <li>Select <b>Create</b> button to save the parameter. The parameter can now be referenced in a pipeline.</li>
         </ol>
-        <div className={"mb-1"}>For more detailed information on Parameter creation and how to configure them in Opsera pipelines, view the  <a href="https://opsera.atlassian.net/l/c/ERJ1YuUM" target="_blank" rel="noreferrer"><b>Custom Parameters Help Documentation</b>.</a></div></div>
+        <div className={"mb-1"}>For more detailed information on Parameter creation and how to configure them in Opsera pipelines, view the  <a href="https://opsera.atlassian.net/l/c/ERJ1YuUM" target="_blank" rel="noreferrer"><b>Custom Parameters Help Documentation</b>.</a></div>
+      </div>
 
     </HelpOverlayBase>
   );
