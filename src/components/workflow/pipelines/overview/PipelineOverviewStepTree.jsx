@@ -23,7 +23,7 @@ function PipelineOverviewStepTree({ pipelineSteps }) {
           <div className={"makeup-tree-container-body p-2"}>
             <Nav.Item key={0}>
               <Nav.Link key={0} eventKey={0}>
-                {`Source Repository Configuration`}
+                Pipeline Settings
               </Nav.Link>
             </Nav.Item>
             {pipelineSteps.map((pipelineStep, index) => (

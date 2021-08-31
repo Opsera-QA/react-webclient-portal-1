@@ -28,6 +28,7 @@ import PipelineStepSlackNotificationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/slack/PipelineStepSlackNotificationSummaryPanel";
 import PipelineStepMicrosoftTeamsNotificationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/teams/PipelineStepMicrosoftTeamsNotificationSummaryPanel";
+import NoDataMessageField from "components/common/fields/text/standalone/NoDataMessageField";
 
 // TODO: Style
 function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData }) {
@@ -168,11 +169,7 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
       && hasServiceNowNotifications === false
     ) {
       return (
-        <div className={"h-100 w-100 table-border"}>
-          <div className="w-100 info-text text-center p-5">
-            No notifications are configured for this  Pipeline step
-          </div>
-        </div>
+        <NoDataMessageField message={"No notifications are configured for this Pipeline step."} />
       );
     }
 
