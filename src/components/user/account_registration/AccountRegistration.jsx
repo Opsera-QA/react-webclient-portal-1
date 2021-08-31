@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import { Form, Row, Col, Card } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import "components/user/user.css";
@@ -13,10 +13,11 @@ import accountRegistrationMetadata from "components/user/account_registration/ac
 import { AuthContext } from "contexts/AuthContext";
 import TempTextInput from "components/common/inputs/text/TempTextInput";
 import {validateEmail} from "utils/helpers";
+import axios from "axios";
 
 function AccountRegistration() {
   const { domain } = useParams();
-  const { generateJwtServiceTokenWithValue } = useContext(AuthContext);
+  const { generateJwtServiceTokenWithValue, getUserRecord, setAccessRoles } = useContext(AuthContext);
   const [serviceToken, setServiceToken] = useState(undefined);
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
@@ -25,6 +26,30 @@ function AccountRegistration() {
   const [registrationDataDto, setRegistrationDataDto] = useState(undefined);
   const [companyName, setCompanyName] = useState("Opsera");
   const [invalidHost, setInvalidHost] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
+
 
 
   useEffect(() => {
@@ -54,9 +79,21 @@ function AccountRegistration() {
         newAccountDto.setData("organizationName", accountResponse?.data?.accountName);
         newAccountDto.setData("orgAccount", accountResponse?.data?.name);
         newAccountDto.setData("localAuth", accountResponse?.data?.localAuth === "TRUE");
+
+        if (accountResponse?.data?.localAuth === "FALSE") {
+          const userRecord = await getUserRecord();
+          const rules = userRecord ? await setAccessRoles(userRecord) : null;
+
+          if (rules?.Administrator || rules?.OpseraAdministrator || rules?.PowerUser) {
+            history.push(`/settings/user-management`);
+          }
+        }
       }
 
-      setRegistrationDataDto(newAccountDto);
+      if (isMounted?.current === true) {
+        setRegistrationDataDto(newAccountDto);
+      }
+
     } catch (error) {
       if (!error?.error?.message?.includes(404) && !error?.error?.message?.includes(400)) {
         toastContext.showLoadingErrorDialog(error);
@@ -67,7 +104,9 @@ function AccountRegistration() {
         setRegistrationDataDto(newAccountDto);
       }
     } finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -136,6 +175,23 @@ function AccountRegistration() {
 
   if (isLoading || registrationDataDto == null) {
     return <LoadingDialog />;
+  }
+
+  if (registrationDataDto?.getData("localAuth") === false) {
+    return (
+      <div className="new-user-signup-form mt-2">
+        <div className="full-signup-form m-auto">
+          <Card>
+            <Card.Header as="h5" className="new-user-header">{getTitle()}</Card.Header>
+            <Card.Body className="new-user-body-full p-3">
+              Adding a new User to the account requires account creation the Users form in your Opsera Settings.
+              Please ask your account owner or delegated administrator to grant you access through the Opsera Portal Settings.
+              From there you can complete registration and gain access to the system.
+            </Card.Body>
+          </Card>
+        </div>
+      </div>
+    );
   }
 
   return (
