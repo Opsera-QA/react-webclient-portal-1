@@ -4,12 +4,12 @@ import { format } from "date-fns";
 import FieldLabel from "components/common/fields/FieldLabel";
 import FieldContainer from "components/common/fields/FieldContainer";
 
-function CreateAndUpdateDateFieldBase({createdAtFieldName, updatedAtFieldName, dataObject, dateFormat, className}) {
-  const [createdAtField] = useState(dataObject.getFieldById(createdAtFieldName));
-  const [updatedAtField] = useState(dataObject.getFieldById(updatedAtFieldName));
+function CreateAndUpdateDateFieldBase({createdAtFieldName, updatedAtFieldName, model, dateFormat, className}) {
+  const [createdAtField] = useState(model?.getFieldById(createdAtFieldName));
+  const [updatedAtField] = useState(model?.getFieldById(updatedAtFieldName));
 
   const getDate = (field) => {
-    const date = dataObject.getData(field.id);
+    const date = model.getData(field.id);
     return date != null && dateFormat != null ? format(new Date(date), dateFormat) : null;
   };
 
@@ -24,13 +24,15 @@ function CreateAndUpdateDateFieldBase({createdAtFieldName, updatedAtFieldName, d
 CreateAndUpdateDateFieldBase.propTypes = {
   createdAtFieldName: PropTypes.string,
   updatedAtFieldName: PropTypes.string,
-  dataObject: PropTypes.object,
+  model: PropTypes.object,
   dateFormat: PropTypes.string,
   className: PropTypes.string
 };
 
 CreateAndUpdateDateFieldBase.defaultProps = {
-  dateFormat: "yyyy-MM-dd"
+  dateFormat: "yyyy-MM-dd",
+  createdAtFieldName: "createdAt",
+  updatedAtFieldName: "updatedAt",
 };
 
 export default CreateAndUpdateDateFieldBase;
