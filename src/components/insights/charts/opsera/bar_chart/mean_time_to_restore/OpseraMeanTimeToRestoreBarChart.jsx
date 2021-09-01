@@ -121,15 +121,6 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
         );
       };
 
-    // const MeanLineLayer2 = ({ xScale, yScale }) => {
-    //   const lineGenerator = line()
-    //     .x(d => xScale(d.data.data._id))
-    //     .y(d => yScale(d.data.data.mean));
-    //   return (
-    //     <path d={lineGenerator()} fill="none" stroke={mainPurple} strokeWidth="3" />
-    //   );
-    // };
-
     const onRowSelect = (data) => {
       const chartModel = new Model({...DeploymentFrequencyInsightsTableMetadata.newObjectFields}, DeploymentFrequencyInsightsTableMetadata, false);
       toastContext.showOverlayPanel(
@@ -159,7 +150,6 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
                     style={false}
                     color={color} />}
         />
-        
       </div>
     );
   };
@@ -196,7 +186,6 @@ OpseraMeanTimeToRestoreBarChart.propTypes = {
   setKpiConfiguration: PropTypes.func,
   setKpis: PropTypes.func,
   bars: PropTypes.any,
-  nodes: PropTypes.any,
   xScale: PropTypes.any,
   yScale: PropTypes.any
 };
