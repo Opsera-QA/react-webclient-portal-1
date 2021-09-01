@@ -91,7 +91,7 @@ function GitTasksView() {
       <GitTasksTable
         isLoading={isLoading}
         loadData={loadData}
-        data={gitTasksList}
+        taskData={gitTasksList}
         gitTasksFilterDto={gitTasksFilterDto}
         setGitTasksFilterDto={setGitTasksFilterDto}
       />
