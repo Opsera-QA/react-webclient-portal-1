@@ -12,8 +12,7 @@ function StepConfigJenkinsToolInput({dataObject, setDataObject, disabled}) {
         newDataObject.setData("jenkinsUrl", selectedOption.configuration.jenkinsUrl);
         newDataObject.setData("jenkinsPort", selectedOption.configuration.jenkinsPort);
         newDataObject.setData("jUserId", selectedOption.configuration.jUserId);
-        newDataObject.setData("jAuthToken", selectedOption.configuration.jAuthToken);        
-        newDataObject.setData("jobName", "");
+        newDataObject.setData("jAuthToken", selectedOption.configuration.jAuthToken);
         newDataObject.setData("toolJobId", "");
         newDataObject.setData("toolJobType", "");
         newDataObject.setData("accountUsername", "");
@@ -53,8 +52,7 @@ function StepConfigJenkinsToolInput({dataObject, setDataObject, disabled}) {
         newDataObject.setData("jenkinsUrl", "");
         newDataObject.setData("jenkinsPort", "");
         newDataObject.setData("jUserId", "");
-        newDataObject.setData("jAuthToken", "");        
-        newDataObject.setData("jobName", "");
+        newDataObject.setData("jAuthToken", "");
         newDataObject.setData("toolJobId", "");
         newDataObject.setData("toolJobType", "");
         newDataObject.setData("accountUsername", "");

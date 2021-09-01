@@ -11,7 +11,6 @@ function JFrogJenkinsJobInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("jobDescription", selectedOption.description);
     newDataObject.setData("toolJobType",  ["DOCKER PUSH"]);
     newDataObject.setData("agentLabels", selectedOption.configuration?.agentLabels || "");
-    newDataObject.setData("jobName", "");
     setDataObject({...newDataObject});
   };
 
