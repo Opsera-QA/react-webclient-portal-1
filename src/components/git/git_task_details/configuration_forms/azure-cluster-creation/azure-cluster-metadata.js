@@ -57,6 +57,12 @@ const azureAksClusterTaskConfigurationMetadata = {
       id: "azureCredentialId",
       isRequired: true
     },
+    {
+      label: "Azure Kubernetes Version",
+      id: "aksKubeVersion",
+      formText: "This indicates the default kubernetes version for the selected region.",
+      isRequired: true
+    },
   ],
   newObjectFields:
     {
@@ -69,7 +75,8 @@ const azureAksClusterTaskConfigurationMetadata = {
       vpcCIDRblock : "",
       subnetCIDRblock : "",
       azureToolConfigId: "",
-      azureCredentialId: ""
+      azureCredentialId: "",
+      aksKubeVersion: ""
     }
 };
 

@@ -23,6 +23,7 @@ function AzureClusterConfigurationPanel({ gitTasksData, gitTaskConfigurationData
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"subnetCIDRblock"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"azureToolConfigId"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"azureCredentialId"} />
+        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"aksKubeVersion"} />
       </div>
     </GitTasksSummaryCardContainer>
   );
