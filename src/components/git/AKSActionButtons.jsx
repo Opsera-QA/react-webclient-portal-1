@@ -223,7 +223,7 @@ function AKSActionButtons({ gitTasksData, handleClose, disable, className }) {
     return (
       <Button
         variant={"danger"}
-        disabled={!(gitTasksData?.getData("status") === "running") || disable || isLoading}
+        disabled={taskFinished}
         onClick={() => {
           handleCancelRunTask(false);
         }}
@@ -243,7 +243,7 @@ function AKSActionButtons({ gitTasksData, handleClose, disable, className }) {
     return (
       <Button
         variant={"success"}
-        disabled={gitTasksData?.getData("status") === "running" || disable || isLoading}
+        disabled={!taskFinished}
         onClick={() => {
           handleRunTask(true);
         }}
