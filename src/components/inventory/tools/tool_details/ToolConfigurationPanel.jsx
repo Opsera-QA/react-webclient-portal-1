@@ -30,6 +30,7 @@ import CoverityToolConfiguration from "./tool_jobs/coverity/CoverityToolConfigur
 import TwistlockToolConfiguration from "./tool_jobs/twistlock/TwistlockToolConfiguration";
 import AzureV2ToolConfiguration from "./tool_jobs/azureV2/AzureV2ToolConfiguration";
 import AnsibleToolConfiguration from "./tool_jobs/ansible/AnsibleToolConfiguration";
+import MongodbRealmToolConfiguration from "./tool_jobs/mongodb_realm/MongodbRealmToolConfiguration";
 function ToolConfigurationPanel({ toolData }) {
   const getConfiguration = () => {
     if (toolData == null) {
@@ -92,6 +93,8 @@ function ToolConfigurationPanel({ toolData }) {
         return <AzureV2ToolConfiguration toolData={toolData} />;
       case "ansible":
         return <AnsibleToolConfiguration toolData={toolData} />;
+      case "mongodb_realm":        
+        return <MongodbRealmToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
     }
