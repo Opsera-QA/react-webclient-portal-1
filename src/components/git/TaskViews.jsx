@@ -2,7 +2,6 @@ import React, {useContext} from "react";
 import TableCardView from "components/common/table/TableCardView";
 import StatusFilter from "components/common/filters/status/StatusFilter";
 import PropTypes from "prop-types";
-import ToolCardView from "components/inventory/tools/ToolCardView";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
