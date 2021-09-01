@@ -29,6 +29,9 @@ import {
   kpiServiceNowPrioritiesFilterMetadata,
   kpiServiceNowToolsFilterMetadata,
   kpiServiceNowAssignmentGroupsFilterMetadata,
+  kpiServiceNowServiceOfferingsFilterMetadata,
+  kpiServiceNowConfigurationItemsFilterMetadata,
+  kpiServiceNowBusinessServicesFilterMetadata,
 } from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import Model from "core/data_model/model";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
@@ -37,15 +40,28 @@ import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TagManager from "components/common/inputs/tags/TagManager";
-import JenkinsResultFilterInput from "components/common/list_of_values_input/insights/charts/jenkins/JenkinsResultFilterInput";
-import ManualKpiMultiSelectInputBase from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
-import SeleniumTestSuitesMultiSelectInput from "components/common/list_of_values_input/insights/charts/selenium/SeleniumTestSuitesMultiSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
+
+// Manual Entry Kpis
+import ManualKpiMultiSelectInputBase from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
+
+// Jenkins
+import JenkinsResultFilterInput from "components/common/list_of_values_input/insights/charts/jenkins/JenkinsResultFilterInput";
+
+// Selenium
+import SeleniumTestSuitesMultiSelectInput from "components/common/list_of_values_input/insights/charts/selenium/SeleniumTestSuitesMultiSelectInput";
+
+// Sonar
 import SonarProjectLanguagesMultiSelectInput from "components/common/list_of_values_input/insights/charts/sonar/SonarProjectLanguagesMultiSelectInput";
 import SonarProjectsMultiSelectInput from "components/common/list_of_values_input/insights/charts/sonar/SonarProjectsMultiSelectInput";
+
+// Service Now
 import ServiceNowPrioritiesMultiSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowPrioritiesMultiSelectInput";
 import ServiceNowToolsSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowToolsSelectInput";
 import ServiceNowAssignmentGroupSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowGroupsSelectInput";
+import ServiceNowServiceOfferingsSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowServiceOfferingsSelectInput";
+import ServiceNowConfigurationItemsSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowConfigurationItemsSelectInput";
+import ServiceNowBusinessServicesSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowBusinessServicesSelectInput";
 
 function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -141,6 +157,27 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       kpiConfiguration,
       "servicenow-assignment-groups",
       kpiServiceNowAssignmentGroupsFilterMetadata
+    )
+  );
+  const [kpiServiceNowServiceOfferingsFilter, setKpiServiceNowServiceOfferingsFilter] = useState(
+    modelHelpers.getDashboardFilterModel(
+      kpiConfiguration,
+      "servicenow-service-offerings",
+      kpiServiceNowServiceOfferingsFilterMetadata
+    )
+  );
+  const [kpiServiceNowConfigurationItemsFilter, setKpiServiceNowConfigurationItemsFilter] = useState(
+    modelHelpers.getDashboardFilterModel(
+      kpiConfiguration,
+      "servicenow-configuration-items",
+      kpiServiceNowConfigurationItemsFilterMetadata
+    )
+  );
+  const [kpiServiceNowBusinessServicesFilter, setKpiServiceNowBusinessServicesFilter] = useState(
+    modelHelpers.getDashboardFilterModel(
+      kpiConfiguration,
+      "servicenow-business-services",
+      kpiServiceNowBusinessServicesFilterMetadata
     )
   );
 
@@ -518,6 +555,54 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
             />
           </div>
         );
+      case "servicenow-service-offerings":
+        return (
+          <div>
+            <ServiceNowServiceOfferingsSelectInput
+              visible={true}
+              placeholderText={"Select Service Offering"}
+              type={"kpi_filter"}
+              fieldName={"value"}
+              valueField={"sys_id"}
+              textField={"name"}
+              setDataObject={setKpiServiceNowServiceOfferingsFilter}
+              dataObject={kpiServiceNowServiceOfferingsFilter}
+              serviceNowToolId={kpiServiceNowToolsFilter.getData("value")}
+            />
+          </div>
+        );
+      case "servicenow-configuration-items":
+        return (
+          <div>
+            <ServiceNowConfigurationItemsSelectInput
+              visible={true}
+              placeholderText={"Select Configuration Item"}
+              type={"kpi_filter"}
+              fieldName={"value"}
+              valueField={"sys_id"}
+              textField={"name"}
+              setDataObject={setKpiServiceNowConfigurationItemsFilter}
+              dataObject={kpiServiceNowConfigurationItemsFilter}
+              serviceNowToolId={kpiServiceNowToolsFilter.getData("value")}
+            />
+          </div>
+        );
+      case "servicenow-business-services":
+        return (
+          <div>
+            <ServiceNowBusinessServicesSelectInput
+              visible={true}
+              placeholderText={"Select Business Service"}
+              type={"kpi_filter"}
+              fieldName={"value"}
+              valueField={"sys_id"}
+              textField={"name"}
+              setDataObject={setKpiServiceNowBusinessServicesFilter}
+              dataObject={kpiServiceNowBusinessServicesFilter}
+              serviceNowToolId={kpiServiceNowToolsFilter.getData("value")}
+            />
+          </div>
+        );
     }
   };
 
@@ -712,6 +797,33 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-assignment-groups")
       ].value = kpiServiceNowAssignmentGroupsFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-service-offerings")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-service-offerings")
+      ].value = kpiServiceNowServiceOfferingsFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-configuration-items")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-configuration-items")
+      ].value = kpiServiceNowConfigurationItemsFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-business-services")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-business-services")
+      ].value = kpiServiceNowBusinessServicesFilter.getData("value");
     }
 
     setKpiSettings({ ...newKpiSettings });
