@@ -6,7 +6,7 @@ import RoleRestrictedToolByIdentifierInputBase
 function TerraformAwsCredentialsSelectInput({model, setModel, disabled}) {
   return (
      <RoleRestrictedToolByIdentifierInputBase
-       toolIdentifier={"aws-account"}
+       toolIdentifier={"aws_account"}
        configurationRequired={true}
        fieldName={"awsToolConfigId"}
        model={model}
