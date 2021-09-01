@@ -73,7 +73,7 @@ const TerraformStepFormMetadata = {
       id: "saveParameters"
     },
     {
-      label: "Use IAM Roles for Authentication?", 
+      label: "IAM Roles", 
       id:"iamRoleFlag"
     },
     {
