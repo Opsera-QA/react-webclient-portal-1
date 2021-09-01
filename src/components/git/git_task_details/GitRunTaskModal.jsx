@@ -29,8 +29,6 @@ import SfdcOrgSyncPrerunHelpDocumentation
   from "../../common/help/documentation/tasks/SfdcOrgSyncPrerunHelpDocumentation";
 import AwsEcsClusterCreationTaskHelpDocumentation
   from "../../common/help/documentation/tasks/AwsEcsClusterCreationTaskHelpDocumentation";
-
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import azureAksClusterTaskConfigurationMetadata
   from "./configuration_forms/azure-cluster-creation/azure-cluster-metadata";
 function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, loadData }) {
