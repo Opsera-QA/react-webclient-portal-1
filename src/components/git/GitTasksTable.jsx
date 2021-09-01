@@ -11,7 +11,7 @@ import gitTasksMetadata from "./git-tasks-metadata";
 import {useHistory} from "react-router-dom";
 import {getField} from "components/common/metadata/metadata-helpers";
 
-function GitTasksTable({ data, gitTasksFilterDto, setGitTasksFilterDto, loadData, isLoading }) {
+function GitTasksTable({ taskData, gitTasksFilterDto, setGitTasksFilterDto, loadData, isLoading }) {
   let history = useHistory();
   const fields = gitTasksMetadata.fields;
   
@@ -36,7 +36,7 @@ function GitTasksTable({ data, gitTasksFilterDto, setGitTasksFilterDto, loadData
     <CustomTable
       className={"no-table-border"}
       columns={columns}
-      data={data}
+      data={taskData}
       isLoading={isLoading}
       onRowSelect={onRowSelect}
       paginationDto={gitTasksFilterDto}
@@ -47,7 +47,7 @@ function GitTasksTable({ data, gitTasksFilterDto, setGitTasksFilterDto, loadData
 }
 
 GitTasksTable.propTypes = {
-  data: PropTypes.array,
+  taskData: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   gitTasksFilterDto: PropTypes.object,
