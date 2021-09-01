@@ -3,8 +3,16 @@ import PropTypes from "prop-types";
 import {faCode} from "@fortawesome/pro-light-svg-icons";
 import CustomTab from "../CustomTab";
 
-function JsonTab({ activeTab, handleTabClick }) {
-  return (<CustomTab activeTab={activeTab} tabText={"JSON Details"} tabName={"json"} handleTabClick={handleTabClick} icon={faCode} />);
+function JsonTab({activeTab, handleTabClick}) {
+  return (
+    <CustomTab
+      activeTab={activeTab}
+      tabText={"JSON View"}
+      tabName={"json"}
+      handleTabClick={handleTabClick}
+      icon={faCode}
+    />
+  );
 }
 
 JsonTab.propTypes = {

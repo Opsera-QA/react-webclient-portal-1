@@ -50,7 +50,7 @@ function PipelineSourceRepositoryOverview({ pipeline }) {
   }
 
   return (
-    <PipelineStepDetailsContainer title={`Pipeline Source Configuration`}>
+    <PipelineStepDetailsContainer title={`Pipeline Settings`}>
       <div className={"pt-2 pl-2 makeup-container-tab-container"}>
         <GeneralTabPanelContainer
           currentView={

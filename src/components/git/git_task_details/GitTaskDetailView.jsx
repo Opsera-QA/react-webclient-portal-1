@@ -70,6 +70,8 @@ function GitTaskDetailView() {
   const getGitTaskData = async (cancelSource = cancelTokenSource) => {
     const response = await gitTasksActions.getGitTaskByIdV2(getAccessToken, cancelSource, id);
     const gitTask = response?.data?.data[0];
+    // TODO: Wire up new route when ready
+    // const gitTask = response?.data?.data;
     let action = "delete_task";
     if (isMounted.current === true && gitTask != null) {
       setGitTasksData(new Model(gitTask, gitTasksMetadata, false));

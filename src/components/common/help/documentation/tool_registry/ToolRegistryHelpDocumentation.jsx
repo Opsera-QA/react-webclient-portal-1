@@ -12,15 +12,18 @@ function ToolRegistryHelpDocumentation() {
       closePanel={closePanel}
       showPanel={true}
       titleText={"Tool Registry Help"}>
-      <br></br>
-      <div className={"mb-1"}><b>To create a new tool:</b></div>
-      <div>1. Select <b>+New Tool</b>. </div>
-      <div>2. Complete the  <b>Create New Tool</b> form including required fields and any additional information. </div>
-      <div>3. Select <b>Create</b> to save new tool, or to immediately add another, select the <b>Add Another</b> checkbox and proceed.</div>
-      <br></br>
+      <div className={"mt-3 ml-1"}>The Opsera Tool Registry allows you to register, track and configure all of the tools in your organization in one centralized location so you can integrate them into Opsera pipelines.  </div>
+      <div className={"mt-2 ml-4"}><b>To create a new tool:</b>
+        <ol>
+          <li>Select the <b>+New Tool</b> button.</li>
+          <li>Complete the <b>Create New Tool</b> form including required fields and any additional information.</li>
+          <li>Select <b>Create</b> button to save the new tool, or to immediately add another, select the <b>Add Another</b> checkbox and proceed.</li>
+        </ol>
       <div className={"mb-1"}><b>To view, edit or configure an existing tool:</b></div>
-      <div>1. Easily locate your tool with <b>Filter by Tool</b> dropdown, the <b>Search</b> bar, or using the filter icon: filter by <b>Status</b>, <b>Tool Owner</b> or <b>Tag.</b></div>
-      <div>2. Select <b>View</b>.</div>
+        <ol>
+          <li>Easily locate your tool with the <b>Filter by Tool</b> dropdown, search bar, or by using the filter icon: filter by <b>Status</b>, <b>Tool Owner</b>, or <b>Tag</b>.</li>
+          <li>Select <b>View</b>.</li>
+        </ol></div>
     </HelpOverlayBase>
   );
 }

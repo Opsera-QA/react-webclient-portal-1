@@ -46,7 +46,9 @@ function ToolNameField({ model, fieldName, className, handleClose }) {
       setIsLoading(true);
       await loadToolName(cancelSource);
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (error?.response?.status !== 404) {
+        toastContext.showLoadingErrorDialog(error);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -66,12 +68,13 @@ function ToolNameField({ model, fieldName, className, handleClose }) {
   };
 
   const getToolName = () => {
-    if (model?.getData(fieldName) === "") {
-      return null;
-    }
-
     if (isLoading) {
-      return <span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>{model?.getData(fieldName)}</span>;
+      return (
+        <span>
+          <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
+          {model?.getData(fieldName)}
+        </span>
+      );
     }
 
     if (toolName) {
@@ -79,6 +82,25 @@ function ToolNameField({ model, fieldName, className, handleClose }) {
     }
 
     return `Tool name could not be found with ID: [${model?.getData(fieldName)}]. The Tool may have been deleted.`;
+  };
+
+  const getBody = () => {
+    if (model?.getData(fieldName) == null || model?.getData(fieldName) === "") {
+      return null;
+    }
+
+    return (
+      <span>
+        <span>{getToolName()}</span>
+        <ToolLinkIcon
+          isLoading={isLoading}
+          className={"ml-2"}
+          toolId={model?.getData(fieldName)}
+          accessAllowed={accessAllowed}
+          handleClose={handleClose}
+        />
+      </span>
+    );
   };
 
 
@@ -89,14 +111,7 @@ function ToolNameField({ model, fieldName, className, handleClose }) {
   return (
     <FieldContainer className={className}>
       <FieldLabel field={field}/>
-      <span>{getToolName()}</span>
-      <ToolLinkIcon
-        isLoading={isLoading}
-        className={"ml-3"}
-        toolId={model?.getData(fieldName)}
-        accessAllowed={accessAllowed}
-        handleClose={handleClose}
-      />
+      {getBody()}
     </FieldContainer>
   );
 }

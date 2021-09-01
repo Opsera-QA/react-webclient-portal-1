@@ -12,7 +12,7 @@ import GeneralTabPanelContainer from "components/common/panels/general/GeneralTa
 import CustomTab from "components/common/tabs/CustomTab";
 import PipelineStepNotificationConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/PipelineStepNotificationConfigurationSummaryPanel";
-import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
+import {faEnvelope, faFileCode} from "@fortawesome/pro-light-svg-icons";
 
 function PipelineStepDetailsOverview({ pipelineStep, index }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -30,6 +30,7 @@ function PipelineStepDetailsOverview({ pipelineStep, index }) {
         return <PipelineStepNotificationConfigurationSummaryPanel pipelineStepData={pipelineStep} />;
       case "json":
         return <PipelineStepJsonPanel pipelineStepData={pipelineStep} />;
+      case "yaml":
       default:
         return null;
     }
@@ -40,14 +41,21 @@ function PipelineStepDetailsOverview({ pipelineStep, index }) {
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <CustomTab
-          tabText={"Notification Configuration"}
+          tabText={"Notifications"}
           handleTabClick={handleTabClick}
           activeTab={activeTab}
           tabName={"notifications"}
           icon={faEnvelope}
         />
-        {/*{getActionSpecificTab()}*/}
         <JsonTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <CustomTab
+          tabText={"YAML View"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabName={"yaml"}
+          disabled={true}
+          icon={faFileCode}
+        />
       </CustomTabContainer>
     );
   };

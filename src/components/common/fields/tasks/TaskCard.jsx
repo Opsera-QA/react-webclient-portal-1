@@ -7,9 +7,9 @@ import DescriptionField from "components/common/fields/text/DescriptionField";
 import CreateAndUpdateDateFieldBase from "components/common/fields/date/CreateAndUpdateDateFieldBase";
 import {getLargeVendorIconFromToolIdentifier} from "components/common/helpers/icon-helpers";
 
-function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
+function TaskCard({ taskData, isLoading, loadToolInNewWindow }) {
   const getTitleBar = () => {
-    let icon = getLargeVendorIconFromToolIdentifier(process.env.REACT_APP_OPSERA_S3_STORAGE_URL, toolData?.getData("tool_identifier"));
+    let icon = getLargeVendorIconFromToolIdentifier(process.env.REACT_APP_OPSERA_S3_STORAGE_URL, taskData?.getData("tool_identifier"));
 
     if (typeof icon === "string") {
       icon = (
@@ -22,7 +22,7 @@ function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
     return (
       <IconTitleBar
         icon={icon}
-        title={`${toolData.getData("name")}`}
+        title={`${taskData.getData("name")}`}
         isLoading={isLoading}
       />
     );
@@ -32,12 +32,10 @@ function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
   const getDescription = () => {
     return (
       <div className="description-height small pl-1">
-      <DescriptionField dataObject={toolData} fieldName={"description"} />
+      <DescriptionField dataObject={taskData} fieldName={"description"} />
     </div>
     );
   };
-
-
 
   if (isLoading) {
     return <IconCardContainerBase titleBar={getTitleBar()} isLoading={isLoading} />;
@@ -47,14 +45,11 @@ function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
     <IconCardContainerBase titleBar={getTitleBar()} contentBody={getDescription()} isLoading={isLoading} className={"tool-registry-card"}>
       <div className="date-and-button">
         <div className="small pl-1">
-          <CreateAndUpdateDateFieldBase
-            className={"mt-3 mb-1"}
-            model={toolData}
-          />
+          <CreateAndUpdateDateFieldBase className={"mt-3 mb-1"} model={taskData} />
         </div>
         <div>
           <ToolLinkButton
-            toolId={toolData.getData("_id")}
+            toolId={taskData?.getData("_id")}
             className={"w-100 mt-1"}
             loadToolInNewWindow={loadToolInNewWindow}
             variant={"primary"}
@@ -65,10 +60,10 @@ function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
   );
 }
 
-RegistryToolCard.propTypes = {
-  toolData: PropTypes.object,
+TaskCard.propTypes = {
+  taskData: PropTypes.object,
   isLoading: PropTypes.bool,
   loadToolInNewWindow: PropTypes.bool
 };
 
-export default RegistryToolCard;
+export default TaskCard;

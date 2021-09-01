@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import Tab from "react-bootstrap/Tab";
-import {Col, Nav, Row} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 import PipelineStepDetailsOverview from "components/workflow/pipelines/overview/PipelineStepDetailsOverview";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import TitleBarBase from "components/common/fields/TitleBarBase";
@@ -24,11 +24,11 @@ function PipelineOverviewContainer({ pipeline }) {
   const getPipelineOverStepTabContent = () => {
     return (
       <Tab.Content>
-        <Tab.Pane key={-1} eventKey={-1}>
+        <Tab.Pane key={0} eventKey={0}>
           <PipelineSourceRepositoryOverview pipeline={pipeline} />
         </Tab.Pane>
         {pipelineSteps.map((pipelineStep, index) => (
-          <Tab.Pane key={index} eventKey={index}>
+          <Tab.Pane key={index + 1} eventKey={index + 1}>
             <PipelineStepDetailsOverview pipelineStep={pipelineStep} index={index} />
           </Tab.Pane>
         ))}
@@ -46,7 +46,7 @@ function PipelineOverviewContainer({ pipeline }) {
     <div>
       <div className="object-properties-input">
         <div className="content-container">
-          <TitleBarBase title={`${pipeline?.name} Pipeline Summary`} icon={faDraftingCompass} />
+          <TitleBarBase title={`${pipeline?.name}`} icon={faDraftingCompass} />
           <Tab.Container defaultActiveKey={0}>
             <Row className={"makeup-container-body mx-0"}>
               <Col sm={2} className={"px-0"}>

@@ -83,7 +83,7 @@ function OpseraRecentCDStatusTable({ kpiConfiguration, setKpiConfiguration, dash
   };
 
   const onRowSelect = (rowData) => {    
-    toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={rowData?.original?._id?.id} runCount={rowData?.original?.run_count} />);    
+    toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={rowData?.original?.pipeline_id} runCount={rowData?.original?.run_count} />);    
   };
 
   const noDataMessage = "No Data is available for this chart at this time";
