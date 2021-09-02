@@ -3,42 +3,39 @@ import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import CopyToClipboardButton from "components/common/buttons/data/CopyToClipboardButton";
+import ShowSensitiveDataButton from "components/common/buttons/data/ShowSensitiveDataButton";
 
-// TODO: Use new VisibleVaultTextInput when complete
-function ParameterValueTextInput({fieldName, dataObject, parameterId, setDataObject, disabled}) {
-  const [field, setField] = useState(dataObject.getFieldById(fieldName));
+function ParameterValueTextInput({fieldName, model, parameterId, setModel, disabled}) {
+  const [field, setField] = useState(model.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [valueShown, setValueShown] = useState(false);
+  const [secretValue, setSecretValue] = useState("");
   const isMounted = useRef(false);
 
   useEffect(() => {
     isMounted.current = true;
 
-    if (!dataObject.isNew()) {
-      getValueFromVault().catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
-
+    setSecretValue("");
+    setValueShown(false);
     return () => {
       isMounted.current = false;
     };
   }, [parameterId]);
 
   const validateAndSetData = (value) => {
-    let newDataObject = dataObject;
+    let newDataObject = model;
     newDataObject.setTextData(fieldName, value);
     setErrorMessage(newDataObject.getFieldError(fieldName));
-    setDataObject({...newDataObject});
+    setModel({...newDataObject});
   };
 
   const getValueFromVault = async () => {
     try {
       setIsLoading(true);
-      if (dataObject?.getData("vaultEnabled") === true) {
-        await dataObject.getValueFromVault(fieldName);
+      if (!model.isNew() && model?.getData("vaultEnabled") === true) {
+        setSecretValue(await model.getValueFromVault(fieldName));
       }
     }
     catch (error) {
@@ -56,16 +53,60 @@ function ParameterValueTextInput({fieldName, dataObject, parameterId, setDataObj
     }
   };
 
+  const getButtons = () => {
+    return (
+      <div className={"d-flex ml-2"}>
+        <ShowSensitiveDataButton
+          showData={showData}
+          hideData={hideValue}
+          isLoading={isLoading}
+          className={"input-button"}
+          valueShown={valueShown || model?.isChanged(fieldName)}
+          disable={model?.isChanged(fieldName)}
+        />
+        <CopyToClipboardButton
+          copyString={model?.getData(fieldName)}
+          className={"input-button ml-2"}
+        />
+      </div>
+    );
+  };
+
+  const hideValue = () => {
+    setSecretValue("");
+    setValueShown(false);
+  };
+
+  const showData = async () => {
+    await getValueFromVault();
+    setValueShown(true);
+  };
+
+  const getValue = () => {
+    if (valueShown === true && !model?.isChanged(fieldName)) {
+      return secretValue;
+    }
+
+    if (typeof model?.getData(fieldName) === "object") {
+      return "stored_in_vault";
+    }
+
+    return (model?.getData(fieldName));
+  };
+
   return (
     <InputContainer>
       <InputLabel field={field}/>
-      <div className={isLoading ? "d-flex loading-input-wrapper" : ""}>
+      <div className={"d-flex"}>
         <input
-          disabled={disabled || isLoading}
-          value={isLoading ? "Loading Value From Vault" : dataObject?.getData(fieldName)}
+          type={valueShown === false && !model?.isChanged(fieldName) ? "password" : undefined}
+          disabled={disabled}
+          value={getValue()}
           onChange={(event) => validateAndSetData(event.target.value)}
           className="form-control"
+          autoComplete="off"
         />
+        {getButtons()}
       </div>
       <InfoText field={field} errorMessage={errorMessage}/>
     </InputContainer>
@@ -74,8 +115,8 @@ function ParameterValueTextInput({fieldName, dataObject, parameterId, setDataObj
 
 ParameterValueTextInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   parameterId: PropTypes.string
 };

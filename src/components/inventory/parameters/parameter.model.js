@@ -28,15 +28,9 @@ export class ParameterModel extends ModelBase {
     return response;
   };
 
-  getValueFromVault = async (fieldName = "value") => {
+  getValueFromVault = async () => {
     const response = await parametersActions.getParameterValueFromVaultV2(this.getAccessToken, this.cancelTokenSource, this.getData("_id"));
-    const value = response?.data?.data;
-
-    if (value) {
-      this.setData(fieldName, value, false);
-    }
-
-    return value;
+    return response?.data?.data;
   };
 
   getNewInstance = (newData = this.getNewObjectFields()) => {
