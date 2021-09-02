@@ -90,11 +90,19 @@ function TerraformIamRolesSelectInput({
     }
   };
 
+  const handleChange=(fieldName,selectedOption)=>{
+    let newModel = {...model};
+    newModel.setData(fieldName, selectedOption?.arn);
+    newModel.setData("roleName", selectedOption?.roleName);
+    setModel({...newModel});
+  };
+
   return (
     <SelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
+      setDataFunction={handleChange}
       selectOptions={loadBalancers}     
       textField={textField}
       valueField={valueField}
@@ -117,7 +125,7 @@ TerraformIamRolesSelectInput.propTypes = {
 };
 
 TerraformIamRolesSelectInput.defaultProps = {
-  fieldName: "role",
+  fieldName: "roleArn",
   textField: "roleName",
   valueField: "arn",
 };
