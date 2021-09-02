@@ -183,7 +183,7 @@ const AppWithRouterAccess = () => {
 
 
   authClient.authStateManager.subscribe(async (authState) => {
-    console.info("Auth State manager subscription event: ", authState);
+    //console.info("Auth State manager subscription event: ", authState);
     setAuthenticatedState(authState.isAuthenticated);
 
     if (!authState.isAuthenticated) {
