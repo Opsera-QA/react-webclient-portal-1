@@ -10,7 +10,7 @@ import JenkinsJobsGenericAgentTypeSelectInput
 import JenkinsJobsShellScriptBuildTypeSelectInput
   from "components/common/list_of_values_input/tools/jenkins/jobs/shell_script/JenkinsJobsShellScriptBuildTypeSelectInput";
 import JenkinsJobsPythonAgentLabelSelectInput
-  from "components/common/list_of_values_input/tools/jenkins/jobs/python/JenkinsJobsPythonAgentLabelSelectInput";
+  from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobsPythonAgentLabelSelectInput";
 
 function JenkinsShellScriptEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled }) {
   useEffect(() => {

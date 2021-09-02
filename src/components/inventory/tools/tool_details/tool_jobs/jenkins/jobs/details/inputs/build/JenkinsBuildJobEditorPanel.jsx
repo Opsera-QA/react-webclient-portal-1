@@ -6,12 +6,12 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
 import JenkinsJobsBuildMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/build/jenkins-jobs-build-metadata";
-import JenkinsJobsPythonAgentLabelSelectInput
-  from "components/common/list_of_values_input/tools/jenkins/jobs/python/JenkinsJobsPythonAgentLabelSelectInput";
 import JenkinsJobsGenericAgentTypeSelectInput
   from "components/common/list_of_values_input/tools/jenkins/jobs/JenkinsJobsGenericAgentTypeSelectInput";
 import JenkinsJobsBuildTypeSelectInput
   from "components/common/list_of_values_input/tools/jenkins/jobs/build/JenkinsJobsBuildTypeSelectInput";
+import JenkinsJobsPythonAgentLabelSelectInput
+  from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobsPythonAgentLabelSelectInput";
 
 function JenkinsBuildJobEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled }) {
   useEffect(() => {
@@ -69,6 +69,7 @@ function JenkinsBuildJobEditorPanel({ jenkinsJobConfiguration, model, setModel, 
       );
     }
   };
+
 
   if (!model) {
     return <></>;
