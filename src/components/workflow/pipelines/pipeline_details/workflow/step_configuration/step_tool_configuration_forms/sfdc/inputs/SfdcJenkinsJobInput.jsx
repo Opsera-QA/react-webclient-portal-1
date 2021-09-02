@@ -10,7 +10,6 @@ function SfdcJenkinsJobInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("toolJobType", selectedOption.type);
     newDataObject.setData("toolJobId", selectedOption._id);
     newDataObject.setData("jobType", selectedOption.configuration.jobType);
-    newDataObject.setData("jobName", "");
     newDataObject.setData("jobDescription", selectedOption.description);
     newDataObject.setData("buildType", selectedOption.configuration.buildType || "ant");
     newDataObject.setData("agentLabels", selectedOption.configuration?.agentLabels || "");
@@ -23,7 +22,6 @@ function SfdcJenkinsJobInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("toolJobType", "");
     newDataObject.setData("toolJobId", "");
     newDataObject.setData("jobType", "");
-    newDataObject.setData("jobName", "");
     newDataObject.setData("jobDescription", "");
     newDataObject.setData("buildType", "");
     newDataObject.setData("agentLabels", "");

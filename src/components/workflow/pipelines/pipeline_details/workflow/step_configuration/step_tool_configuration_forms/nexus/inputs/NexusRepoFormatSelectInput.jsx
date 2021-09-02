@@ -27,7 +27,6 @@ const NexusRepoFormatSelectInput = ({dataObject, setDataObject, disabled}) => {
       newDataObject.setData("jobType", "");
       newDataObject.setData("jobDescription", "");
       newDataObject.setData("toolJobType", "");
-      newDataObject.setData("jobName", "");
       newDataObject.setData("agentLabels", "");
       newDataObject.setData("dockerPort", "");
     }
@@ -42,7 +41,6 @@ const NexusRepoFormatSelectInput = ({dataObject, setDataObject, disabled}) => {
     newDataObject.setData("jobType", "");
     newDataObject.setData("jobDescription", "");
     newDataObject.setData("toolJobType", "");
-    newDataObject.setData("jobName", "");
     newDataObject.setData("agentLabels", "");
     newDataObject.setData("dockerPort", "");
     newDataObject.setData("groupName", "");

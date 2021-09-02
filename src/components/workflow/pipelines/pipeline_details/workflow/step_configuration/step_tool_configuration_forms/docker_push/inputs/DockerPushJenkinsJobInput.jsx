@@ -9,7 +9,6 @@ function DockerPushJenkinsJobInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("toolJobId", selectedOption._id);
     newDataObject.setData("jobType", selectedOption.type[0]);
     newDataObject.setData("buildType", selectedOption.configuration?.buildType || "docker");
-    newDataObject.setData("jobName", "");
     newDataObject.setData("agentLabels", selectedOption.configuration?.agentLabels || "");    
     setDataObject({...newDataObject});
   };
@@ -19,7 +18,6 @@ function DockerPushJenkinsJobInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("toolJobId", "");
     newDataObject.setData("jobType", "");
     newDataObject.setData("buildType", "docker");
-    newDataObject.setData("jobName", "");
     newDataObject.setData("agentLabels", "");    
     setDataObject({...newDataObject});
   };
