@@ -13,7 +13,6 @@ function DotNetJenkinsJobInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("buildTool", selectedOption.configuration.buildTool);
     newDataObject.setData("commandLineArgs", selectedOption.configuration.commandLineArgs);
     newDataObject.setData("agentLabels", selectedOption.configuration?.agentLabels || "");
-    newDataObject.setData("jobName", "");
     setDataObject({...newDataObject});
   };
 

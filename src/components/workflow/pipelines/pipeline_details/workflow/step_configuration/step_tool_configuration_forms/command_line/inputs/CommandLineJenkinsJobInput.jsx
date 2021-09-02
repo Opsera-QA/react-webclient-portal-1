@@ -8,7 +8,6 @@ function CommandLineJenkinsJobInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("toolJobName", selectedOption.name);
     newDataObject.setData("toolJobId", selectedOption._id);
     newDataObject.setData("jobType", selectedOption.type[0]);
-    newDataObject.setData("jobName", "");
     newDataObject.setData("agentLabels", selectedOption.configuration?.agentLabels || "");    
     newDataObject.setData("buildType", selectedOption.configuration?.buildType || "");
     setDataObject({...newDataObject});

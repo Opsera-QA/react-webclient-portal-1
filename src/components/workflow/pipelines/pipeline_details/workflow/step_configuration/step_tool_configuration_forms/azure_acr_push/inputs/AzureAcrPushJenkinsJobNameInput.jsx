@@ -11,7 +11,6 @@ function AzureAcrPushJenkinsJobNameInput({dataObject, setDataObject, disabled}) 
     newDataObject.setData("jobType", selectedOption.type[0]);   
     newDataObject.setData("buildType", selectedOption.configuration?.buildType || "docker");
     newDataObject.setData("agentLabels", selectedOption.configuration?.agentLabels || "");
-    newDataObject.setData("jobName", "");
     setDataObject({...newDataObject});
   };
 
@@ -22,7 +21,6 @@ function AzureAcrPushJenkinsJobNameInput({dataObject, setDataObject, disabled}) 
     newDataObject.setData("jobType", "");
     newDataObject.setData("buildType", "docker");
     newDataObject.setData("agentLabels", "");
-    newDataObject.setData("jobName", "");
     setDataObject({...newDataObject});
   };
   

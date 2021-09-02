@@ -7,12 +7,10 @@ function NUnitJenkinsJobInput({dataObject, setDataObject, disabled}) {
     dataObject.setData("toolJobName", "");
     dataObject.setData("toolJobId", "");
     dataObject.setData("jobType", "");
-    dataObject.setData("jobName", "");
     let newDataObject = {...dataObject};
     newDataObject.setData("toolJobName", selectedOption.name);
     newDataObject.setData("toolJobId", selectedOption._id);
     newDataObject.setData("jobType", selectedOption.type[0]);
-    newDataObject.setData("jobName", "");
     newDataObject.setData("agentLabels", selectedOption.configuration?.agentLabels || "");
     setDataObject({...newDataObject});
   };
