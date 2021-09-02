@@ -25,6 +25,9 @@ import SFDXCertGenTaskTypeSummaryCard from "./configuration_forms/sfdx-cert-gen/
 import AwsLambdaTaskTypeSummaryCard from "./configuration_forms/aws-lambda-creation/AwsLambdaSummaryPanel";
 import awsLambdaFunctionTaskConfigurationMetadata
   from "./configuration_forms/aws-lambda-creation/aws-lambda-metadata";
+import AzureClusterSummaryPanel from "./configuration_forms/azure-cluster-creation/AzureClusterSummaryPanel";
+import azureAksClusterTaskConfigurationMetadata
+  from "./configuration_forms/azure-cluster-creation/azure-cluster-metadata";
 
 function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const isMounted = useRef(false);
@@ -98,6 +101,13 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         return (
           <AwsLambdaTaskTypeSummaryCard
             gitTaskConfigurationData={wrapGitTaskType(awsLambdaFunctionTaskConfigurationMetadata)}
+            gitTasksData={gitTasksData}
+          />
+        );
+      case "azure_cluster_creation":
+        return (
+          <AzureClusterSummaryPanel
+            gitTaskConfigurationData={wrapGitTaskType(azureAksClusterTaskConfigurationMetadata)}
             gitTasksData={gitTasksData}
           />
         );

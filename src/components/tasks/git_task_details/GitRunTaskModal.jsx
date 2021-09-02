@@ -24,7 +24,10 @@ import OverlayPanelBodyContainer from "components/common/panels/detail_panel_con
 import {TASK_TYPES} from "components/tasks/task.types";
 import SfdcOrgSyncPrerunHelpDocumentation
   from "components/common/help/documentation/tasks/SfdcOrgSyncPrerunHelpDocumentation";
-
+import AwsEcsClusterCreationTaskHelpDocumentation
+from "../../common/help/documentation/tasks/AwsEcsClusterCreationTaskHelpDocumentation";
+import azureAksClusterTaskConfigurationMetadata
+from "./configuration_forms/azure-cluster-creation/azure-cluster-metadata";
 function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, loadData }) {
   const [showHelp, setShowHelp] = useState(false);
   const [dataObj, setDataObj] = useState(undefined);
@@ -70,9 +73,9 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
         setDataObj({...configurationData});
         break;
       case TASK_TYPES.AZURE_CLUSTER_CREATION:
-        // configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), azureAksClusterTaskConfigurationMetadata);
-        // setDataObj({...configurationData});
-        // break;
+        configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), azureAksClusterTaskConfigurationMetadata);
+        setDataObj({...configurationData});
+        break;
       default:
         setDataObj(undefined);
     }

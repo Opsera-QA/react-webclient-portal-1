@@ -151,6 +151,9 @@ import awsECSDeployStepFormMetadata
   from "./step_tool_configuration_forms/aws_ecs_deploy/awsECSDeploy-stepForm-metadata";
 import coverityStepFormMetadata from "./step_tool_configuration_forms/coverity/coverity-stepForm-metadata";
 import CoverityPipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/coverity/CoverityPipelineStepConfigurationSummaryPanel";
+import AksServiceDeployStepSummary
+  from "./step_tool_configuration_forms/aks_service_deploy/AksServiceDeployStepSummary";
+import aksStepFormMetadata from "./step_tool_configuration_forms/aks_service_deploy/aks-stepForm-metadata";
 
 import AwsLambdaPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/aws_lambda_publish/AwsLambdaPipelineStepConfigurationSummary";
@@ -467,6 +470,13 @@ function PipelineStepConfigurationSummary({
           <MongodbRealmStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             mongodbRealmPipelineDataObject={getModelWrappedObject(mongodbRealmStepFormMetadata)}
+          />
+        );
+      case "azure_aks_deploy":
+        return (
+          <AksServiceDeployStepSummary
+            pipelineData={pipelineData}
+            aksDeployPipelineDataObject={getModelWrappedObject(aksStepFormMetadata)}
             />
         );
       default:
