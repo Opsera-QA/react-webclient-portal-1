@@ -2,7 +2,6 @@ import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Model from "core/data_model/model";
 import modelHelpers from "components/common/model/modelHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ModalBase from "components/common/modal/ModalBase";
@@ -10,7 +9,6 @@ import CloseButton from "components/common/buttons/CloseButton";
 import RunGitTaskButton from "components/common/buttons/git/RunGitTaskButton";
 import SFDCGitBranchInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitBranchInput";
 import SFDCNewBranchBoolInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCNewBranchBoolInput";
-import SFDCHasUpstreamBoolInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCHasUpstreamBoolInput";
 import SFDCGitUpstreamBranchInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitUpstreamBranchInput";
 import sfdcGitTaskConfigurationMetadata from "components/git/git_task_details/configuration_forms/sfdc-org-sync/sfdc-git-task-configuration-metadata";
 import ec2ClusterCreationTaskConfigurationMetadata from "components/git/git_task_details/configuration_forms/ecs-cluster-creation/ecs-creation-git-task-configuration";
@@ -23,12 +21,8 @@ import SFDCGitBranchTextInput from "components/git/git_task_details/configuratio
 import workflowAuthorizedActions
 from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import SonarRatingsChartHelpDocumentation
-  from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
 import SfdcOrgSyncPrerunHelpDocumentation
   from "../../common/help/documentation/tasks/SfdcOrgSyncPrerunHelpDocumentation";
-import AwsEcsClusterCreationTaskHelpDocumentation
-  from "../../common/help/documentation/tasks/AwsEcsClusterCreationTaskHelpDocumentation";
 import azureAksClusterTaskConfigurationMetadata
   from "./configuration_forms/azure-cluster-creation/azure-cluster-metadata";
 function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, loadData }) {
