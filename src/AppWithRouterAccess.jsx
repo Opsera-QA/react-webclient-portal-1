@@ -183,7 +183,7 @@ const AppWithRouterAccess = () => {
 
 
   authClient.authStateManager.subscribe(async (authState) => {
-    console.info("Auth State manager subscription event: ", authState);
+    //console.info("Auth State manager subscription event: ", authState);
     setAuthenticatedState(authState.isAuthenticated);
 
     if (!authState.isAuthenticated) {
@@ -462,8 +462,8 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/settings/:orgDomain/users/details/:userEmail" exact
                              component={LdapUserDetailView} />
                 <SecureRoute path="/settings/user-management/" exact component={UserManagement} />
-                {/*<SecureRoute path="/settings/user-management/active/:userEmail/details" exact component={UserDetailView} />*/}
-                {/*<SecureRoute path="/settings/user-management/pending/:userId/details" exact component={SsoUserDetailView} />*/}
+                <SecureRoute path="/settings/user-management/active/:userEmail/details" exact component={UserDetailView} />
+                <SecureRoute path="/settings/user-management/pending/:userId/details" exact component={SsoUserDetailView} />
 
                 <SecureRoute path="/settings/tags" exact component={TagEditor} />
                 <SecureRoute path="/settings/tags/:id" exact component={TagDetailView} />
