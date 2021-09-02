@@ -11,6 +11,8 @@ import ParameterFilterModel from "components/inventory/parameters/parameter.filt
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
+import ToolRegistryHelpDocumentation from "../../common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
+import ParametersHelpDocumentation from "../../common/help/documentation/tool_registry/ParametersHelpDocumentation";
 
 function ParametersInventory() {
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
@@ -96,6 +98,12 @@ function ParametersInventory() {
     <ScreenContainer
       navigationTabContainer={<InventorySubNavigationBar currentTab={"parameters"} />}
       breadcrumbDestination={"customParameters"}
+      pageDescription={`
+        Parameters allow the user to store sensitive information in the vault in order to reference it later in the pipeline step.
+      `}
+      helpComponent={
+        <ParametersHelpDocumentation />
+      }
     >
       <ParametersView
         isLoading={isLoading}

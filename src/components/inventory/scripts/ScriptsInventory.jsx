@@ -11,6 +11,8 @@ import ScriptsFilterModel from "components/inventory/scripts/scripts.filter.mode
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
+import ScriptsHelpDocumentation from "../../common/help/documentation/tool_registry/ScriptsHelpDocumentation";
+import ToolRegistryHelpDocumentation from "../../common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
 
 function ScriptsInventory() {
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
@@ -98,6 +100,12 @@ function ScriptsInventory() {
     <ScreenContainer
       navigationTabContainer={<InventorySubNavigationBar currentTab={"scripts"} />}
       breadcrumbDestination={"scripts"}
+      pageDescription={`
+        The Opsera Scripts Library enables user to register a new script, give it a name and apply RBAC. The script can then be referenced in the a pipeline step.
+      `}
+      helpComponent={
+        <ScriptsHelpDocumentation />
+      }
     >
       <ScriptsView
         isLoading={isLoading}
