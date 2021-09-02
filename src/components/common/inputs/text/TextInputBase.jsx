@@ -69,6 +69,7 @@ function TextInputBase(
         value={dataObject.getData(fieldName)}
         onChange={(event) => updateValue(event.target.value)}
         className={getInputClasses()}
+        autoComplete="off"
       />
       <InfoText field={field} errorMessage={errorMessage}/>
     </InputContainer>

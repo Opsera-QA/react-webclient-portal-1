@@ -17,7 +17,6 @@ function ParameterValueField({fieldName, model}) {
 
   const getValueFromVault = async () => {
     try {
-      console.log("in get value from vault");
       if (model?.getData("vaultEnabled") === true) {
         return await model.getValueFromVault(fieldName);
       }

@@ -23,8 +23,4 @@ PasswordInput.propTypes = {
   name: PropTypes.string,
 };
 
-PasswordInput.defaultProps = {
-  name: "no-auto-fill " + Math.random(),
-};
-
 export default PasswordInput;
