@@ -94,9 +94,9 @@ function SonarReliabilityRemediationEffortAggTrendLineChart({
           ? response?.data?.data[0]?.sonarTrendOverTime?.data
           : [];
 
-      let newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", response?.data?.data[0].sonarTrendOverTime?.data[0]?.data[0]?.count);
-      setFilterDto({ ...newFilterDto });
+      // let newFilterDto = filterDto;
+      // newFilterDto.setData("totalCount", response?.data?.data[0].sonarTrendOverTime?.data[0]?.data[0]?.count);
+      // setFilterDto({ ...newFilterDto });
 
       assignStandardColors(dataObject);
       shortenLegend(dataObject);
@@ -143,6 +143,9 @@ function SonarReliabilityRemediationEffortAggTrendLineChart({
 
   const getBody = (thisDataPoint) => {
     const projectDocs = thisDataPoint.data.docs;
+    let newFilterDto = filterDto;
+    newFilterDto.setData("totalCount", thisDataPoint?.data?.count);
+    setFilterDto({ ...newFilterDto });
 
     return (
       <FilterContainer
