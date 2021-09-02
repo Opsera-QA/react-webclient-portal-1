@@ -78,8 +78,8 @@ const TerraformStepFormMetadata = {
     },
     {
       label: "IAM Role",
-      id: "role"
-    },
+      id: "roleArn"
+    }
   ],
   newObjectFields: {
     toolActionType: "EXECUTE",
@@ -101,7 +101,8 @@ const TerraformStepFormMetadata = {
     customParameters: "",
     saveParameters: false,
     iamRoleFlag:false,
-    role:""
+    roleArn:"",
+    roleName:""
   }
 };
 

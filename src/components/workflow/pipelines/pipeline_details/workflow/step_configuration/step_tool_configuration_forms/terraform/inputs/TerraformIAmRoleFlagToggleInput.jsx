@@ -7,10 +7,12 @@ function TerraformIAmRoleFlagToggleInput({model, setModel, disabled}) {
   const setRoleFlag = (fieldName, selectedValue) => {
     let newModel = {...model};
     newModel.setData(fieldName, selectedValue);
-    newModel.setData("accessKeyParamName", selectedValue);
-    newModel.setData("secretKeyParamName", selectedValue);
-    newModel.setData("regionParamName", selectedValue);
-    newModel.setData(fieldName, selectedValue);
+    newModel.setData("accessKeyParamName", "");
+    newModel.setData("secretKeyParamName", "");
+    newModel.setData("regionParamName", "");
+    newModel.setData("roleArn", "");
+    newModel.setData("roleName", "");
+
     setModel({...newModel});
   };
   
