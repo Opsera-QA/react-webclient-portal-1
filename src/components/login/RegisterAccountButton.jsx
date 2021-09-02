@@ -21,6 +21,7 @@ function RegisterAccountButton() {
     const tenant = process.env.REACT_APP_OPSERA_TENANT;
     const accountRegistrationPath = `account/registration`;
     history.push(`/${accountRegistrationPath}/${tenant}`);
+    history.go(0);
   };
 
   const getButton = () => {
