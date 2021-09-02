@@ -9,12 +9,11 @@ jenkinsJobsActions.updateJenkinsJobs = async (getAccessToken, cancelTokenSource,
   let index = toolDataSet?.jobs?.findIndex((el) => el._id === data._id);
 
   toolDataSet.jobs[index] = {
-    ...toolDataSet.jobs[index],
     active: true,
     configuration: data.configuration,
     description: data.description,
     name: data.name,
-    type: [data.jobType],
+    type: data.type,
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, {...toolDataSet});
@@ -31,7 +30,7 @@ jenkinsJobsActions.createJenkinsJobs = async (getAccessToken, cancelTokenSource,
     configuration: data?.configuration,
     description: data?.description,
     name: data?.name,
-    type: [data?.jobType],
+    type: data.type,
   };
 
   jobs.push(newJob);

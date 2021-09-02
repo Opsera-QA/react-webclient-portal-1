@@ -25,7 +25,15 @@ const JENKINS_BUILD_OPTIONS = [
     },
   ];
 
-function JenkinsJobsBuildTypeSelectInput({ fieldName, model, setModel, setDataFunction }) {
+function JenkinsJobsBuildTypeSelectInput({ fieldName, model, setModel }) {
+  const setDataFunction = (fieldName, selectedOption) => {
+    const value = selectedOption?.value;
+    let newModel = model;
+    newModel.setData("buildTool", value);
+    newModel.setData("buildType", value);
+    setModel({...newModel});
+  };
+
   return (
     <SelectInputBase
       fieldName={fieldName}

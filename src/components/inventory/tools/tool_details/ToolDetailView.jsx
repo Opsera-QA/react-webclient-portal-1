@@ -78,7 +78,7 @@ function ToolDetailView() {
       dataObject={toolData}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      detailPanel={<ToolDetailPanel toolData={toolData} isLoading={isLoading} tab={tab} setToolData={setToolData} loadData={getTool}/>}
+      detailPanel={<ToolDetailPanel toolData={toolData}  isLoading={isLoading} tab={tab} setToolData={setToolData} loadData={getTool}/>}
     />
   );
 }

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import JenkinsJobEditorPanel from "./JenkinsJobEditorPanel";
+import JenkinsJobEditorPanelV1 from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/JenkinsJobEditorPanelV1";
 import CustomTabContainer from "../../../../../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../../../../../common/tabs/CustomTab";
 import {faCogs} from "@fortawesome/pro-solid-svg-icons/faCogs";
@@ -47,7 +47,7 @@ function LdapDetailsView({ activeTab, jenkinsJobData, setJenkinsJobData }) {
   if (activeTab) {
     switch (activeTab) {
     case "settings":
-      return <JenkinsJobEditorPanel setJenkinsJobData={setJenkinsJobData} jenkinsJobData={jenkinsJobData} />;
+      return <JenkinsJobEditorPanelV1 setJenkinsJobData={setJenkinsJobData} jenkinsJobData={jenkinsJobData} />;
     default:
       return null;
     }
