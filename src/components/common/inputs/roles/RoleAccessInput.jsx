@@ -15,6 +15,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import axios from "axios";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 const roleTypes = [
   {text: "Administrator", value: "administrator"},
@@ -446,12 +447,28 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
     }
   };
 
+  const getRolesMessage = () => {
+    if (!Array.isArray(roles) || roles.length === 0 || (roles.length === 1 && lastRoleComplete() === false)) {
+      return (`
+        If no Roles are assigned, all users will have access. 
+        Once a role is applied, only then will access be restricted to the Roles given. 
+        All users given roles will have access. 
+        All group members will have access, if a group is assigned a role.
+      `);
+    }
+
+    return (`
+      Only the listed users, all members assigned to the listed groups, and site administrators have access.
+    `);
+  };
+
   if (field == null || isSassUser() === true) {
     return <></>;
   }
 
   return (
     <div style={{minWidth: "575px"}}>
+      <InfoText customMessage={getRolesMessage()} />
       <PropertyInputContainer
         titleIcon={faIdCard}
         field={field}
