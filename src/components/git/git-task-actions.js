@@ -222,5 +222,18 @@ gitTasksActions.logClusterCancellation = async (getAccessToken, cancelTokenSourc
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+gitTasksActions.createAKSCluster = async (postBody, getAccessToken) => {
+  const apiUrl = `/tools/azure/create/aks`;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+gitTasksActions.logAksClusterCancellation = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {
+  const apiUrl = `/tools/azure/cancel/aks`;
+  let postBody = {
+    taskId: gitTasksDataDto.getData("_id"),
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 
 export default gitTasksActions;

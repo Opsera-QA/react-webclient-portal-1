@@ -29,7 +29,8 @@ import SfdcOrgSyncPrerunHelpDocumentation
   from "../../common/help/documentation/tasks/SfdcOrgSyncPrerunHelpDocumentation";
 import AwsEcsClusterCreationTaskHelpDocumentation
   from "../../common/help/documentation/tasks/AwsEcsClusterCreationTaskHelpDocumentation";
-
+import azureAksClusterTaskConfigurationMetadata
+  from "./configuration_forms/azure-cluster-creation/azure-cluster-metadata";
 function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, loadData }) {
   const [showHelp, setShowHelp] = useState(false);
   const [dataObj, setDataObj] = useState(undefined);
@@ -72,6 +73,10 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
         break;
       case "ecs_service_creation":
         configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), ec2ServiceCreationTaskConfigurationMetadata);
+        setDataObj({...configurationData});
+        break;
+      case "azure_cluster_creation":
+        configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), azureAksClusterTaskConfigurationMetadata);
         setDataObj({...configurationData});
         break;
       default:

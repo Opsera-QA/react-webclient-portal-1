@@ -13,7 +13,9 @@ import workflowAuthorizedActions
 export let taskTypes = [
   {name: "SFDC Org sync", value: "sync-sfdc-repo"},
   {name: "SFDC Branch Structuring", value: "sync-branch-structure"},
-  {name: "GIT to GIT Sync", value: "sync-git-branches"}
+  {name: "GIT to GIT Sync", value: "sync-git-branches"},
+  { name: "Create AWS ECS Cluster", value: "ecs_cluster_creation" },
+  { name: "Create AWS ECS Service", value: "ecs_service_creation" },
 ];
 // TODO: Remove the disabled items from here when done
 // TODO: Make a generic version if necessary and rename this
@@ -46,6 +48,7 @@ function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled
         { name: "Create AWS ECS Cluster", value: "ecs_cluster_creation" },
         { name: "Create AWS ECS Service", value: "ecs_service_creation" },
         {name: "Create AWS Lambda Function", value: "lambda_function_creation"},
+        {name: "Create Azure AKS Cluster", value: "azure_cluster_creation"},
       ];
       getTasksList(gitTasksFilterDto, source).catch((error) => {
         if (isMounted?.current === true) {

@@ -85,7 +85,7 @@ function GitTaskRunButton({gitTasksData, setGitTasksData, disable, className, lo
     );
   };
 
-  if (gitTasksData?.type === "sfdc-cert-gen" || gitTasksData.getData("type") === "ecs_service_creation" || gitTasksData.getData("type") === "ecs_cluster_creation" || gitTasksData.getData("type") === "lambda_function_creation") {
+  if (gitTasksData?.type === "sfdc-cert-gen" || gitTasksData.getData("type") === "ecs_service_creation" || gitTasksData.getData("type") === "ecs_cluster_creation" || gitTasksData.getData("type") === "lambda_function_creation" || gitTasksData.getData("type") === "azure_cluster_creation") {
     return null;
   }
 
