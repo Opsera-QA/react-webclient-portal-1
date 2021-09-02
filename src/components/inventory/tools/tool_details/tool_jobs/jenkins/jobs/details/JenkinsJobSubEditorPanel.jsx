@@ -34,8 +34,8 @@ export const getMetadataForJenkinsJobType = (jenkinsJobType) => {
     case "SHELL SCRIPT":
       return JenkinsShellScriptJobMetadata;
     case "BUILD":
-      return JenkinsJobsBuildMetadata;
     default:
+      return JenkinsJobsBuildMetadata;
   }
 };
 
@@ -114,7 +114,6 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
             type="ARTIFACTORY_DOCKER_PUSH"
-            autoScalingEnabled={autoScalingEnabled}
           />
         );
       case "AZURE_DOCKER_PUSH":

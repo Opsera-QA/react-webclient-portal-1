@@ -4,11 +4,15 @@ const JobTypeSFDC = {
     id: "jobType",
     type: "select",
     value: "",
-    options: [
-      // {
-      //   name: "SFDC Create XML Package",
-      //   value: "SFDC CREATE PACKAGE XML"
-      // },
+    options: [      
+      {
+        name: "SFDC Create XML Package",
+        value: "SFDC CREATE PACKAGE XML"
+      },
+      {
+        name: "Profile Migration",
+        value: "SFDC PROFILE DEPLOY"
+      },
       {
         name: "SFDC Validate XML Package",
         value: "SFDC VALIDATE PACKAGE XML"
@@ -25,10 +29,10 @@ const JobTypeSFDC = {
         name: "SDFC Unit Test",
         value: "SFDC UNIT TESTING"
       },
-      // {
-      //   name: "SDFC Push Artifacts",
-      //   value: "SFDC PUSH ARTIFACTS"
-      // }
+      {
+        name: "SDFC Push Artifacts",
+        value: "SFDC PUSH ARTIFACTS"
+      }
     ],
     toShow: true,
     disabled: false,

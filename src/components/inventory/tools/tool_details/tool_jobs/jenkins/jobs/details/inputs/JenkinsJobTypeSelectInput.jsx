@@ -55,11 +55,10 @@ const JENKINS_JOB_TYPES = [
     label: "Powershell Script",
     value: "POWERSHELL SCRIPT"
   },
-  // TODO: This is commented out until verified
-  // {
-  //   label: "Azure Docker Push",
-  //   value: "AZURE_DOCKER_PUSH"
-  // },
+  {
+    label: "Azure Docker Push",
+    value: "AZURE_DOCKER_PUSH"
+  },
 ];
 
 function JenkinsJobTypeSelectInput({ fieldName, model, setModel, setConfigurationModel, disabled }) {
