@@ -112,10 +112,7 @@ function PipelineWorkflow({
       });
       return;
     }
-    // toastContext.showOverlayPanel(<PipelineDetailsOverviewOverlay pipeline={pipeline} />);
-    setModalHeader("Pipeline Configuration");
-    setModalMessage(param);
-    setShowModal(true);
+    toastContext.showOverlayPanel(<PipelineDetailsOverviewOverlay pipeline={pipeline} />);
   };
 
   const callbackFunctionEditItem = async (item) => {
