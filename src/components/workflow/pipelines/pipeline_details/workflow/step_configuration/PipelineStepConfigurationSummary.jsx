@@ -157,6 +157,8 @@ import CoverityPipelineStepConfigurationSummaryPanel from "./step_tool_configura
 import AksServiceDeployStepSummary
   from "./step_tool_configuration_forms/aks_service_deploy/AksServiceDeployStepSummary";
 import aksStepFormMetadata from "./step_tool_configuration_forms/aks_service_deploy/aks-stepForm-metadata";
+import mongodbRealmStepFormMetadata from "./step_tool_configuration_forms/mongodb_realm/mongodb-realm-stepForm-metadata";
+import MongodbRealmStepConfigurationSummaryPanel from "./step_tool_configuration_forms/mongodb_realm/MongodbRealmStepConfigurationSummaryPanel";
 
 
 function PipelineStepConfigurationSummary({
@@ -468,6 +470,13 @@ function PipelineStepConfigurationSummary({
           <AksServiceDeployStepSummary
             pipelineData={pipelineData}
             aksDeployPipelineDataObject={getModelWrappedObject(aksStepFormMetadata)}
+            />
+        );
+      case "mongodb_realm":
+        return (
+          <MongodbRealmStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            mongodbRealmPipelineDataObject={getModelWrappedObject(mongodbRealmStepFormMetadata)}
             />
         );
       default:
