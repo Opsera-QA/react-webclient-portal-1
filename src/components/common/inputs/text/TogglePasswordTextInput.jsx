@@ -37,16 +37,22 @@ function TogglePasswordTextInput({fieldName, model, setModel, disabled}) {
     setValueShown(true);
   };
 
+  const getSensitiveDataButton = () => {
+    return (
+      <ShowSensitiveDataButton
+        showData={showData}
+        hideData={hideValue}
+        className={"input-button"}
+        valueShown={valueShown}
+      />
+    );
+  };
+
   const getButtons = () => {
     if (!model?.isNew()) {
       return (
         <div className={"d-flex ml-2"}>
-          <ShowSensitiveDataButton
-            showData={showData}
-            hideData={hideValue}
-            className={"input-button"}
-            valueShown={valueShown}
-          />
+          {getSensitiveDataButton()}
           <CopyToClipboardButton
             copyString={model?.getData(fieldName)}
             className={"input-button"}
@@ -57,12 +63,7 @@ function TogglePasswordTextInput({fieldName, model, setModel, disabled}) {
 
     return (
       <div className={"d-flex ml-2"}>
-        <ShowSensitiveDataButton
-          showData={showData}
-          hideData={hideValue}
-          className={"input-button"}
-          valueShown={valueShown}
-        />
+        {getSensitiveDataButton()}
       </div>
     );
   };
