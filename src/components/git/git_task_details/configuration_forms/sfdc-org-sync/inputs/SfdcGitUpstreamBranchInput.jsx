@@ -14,6 +14,7 @@ function SfdcGitUpstreamBranchInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("upstreamBranch", "");    
     setDataObject({...newDataObject});
   };
+  
 
   return (
      <GitBranchInput

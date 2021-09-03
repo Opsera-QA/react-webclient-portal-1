@@ -10,7 +10,7 @@ import CloseButton from "components/common/buttons/CloseButton";
 import RunGitTaskButton from "components/common/buttons/git/RunGitTaskButton";
 import SFDCGitBranchInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitBranchInput";
 import SFDCNewBranchBoolInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCNewBranchBoolInput";
-import SFDCGitUpstreamBranchInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitUpstreamBranchInput";
+import SfdcGitUpstreamBranchInput from "./configuration_forms/sfdc-org-sync/inputs/SfdcGitUpstreamBranchInput";
 import sfdcGitTaskConfigurationMetadata from "components/git/git_task_details/configuration_forms/sfdc-org-sync/sfdc-git-task-configuration-metadata";
 import ec2ClusterCreationTaskConfigurationMetadata from "components/git/git_task_details/configuration_forms/ecs-cluster-creation/ecs-creation-git-task-configuration";
 import sfdxCertGenTaskConfigurationMetadata from "components/git/git_task_details/configuration_forms/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
@@ -111,7 +111,7 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
                     <SFDCHasUpstreamBoolInput dataObject={dataObj} setDataObject={setDataObj} />
                   </Col> */}
                   <Col lg={12}>
-                    <SFDCGitUpstreamBranchInput dataObject={dataObj} setDataObject={setDataObj} />
+                    <SfdcGitUpstreamBranchInput dataObject={dataObj} setDataObject={setDataObj} />
                   </Col>
                 </>
               }
