@@ -9,6 +9,7 @@ const aksStepFormMetadata = {
     {
       label: "Service Name",
       id: "aksServiceName",
+      regexValidator: /[a-z]([-a-z0-9]*[a-z0-9])?/
     },
     {
       label: "Image Hub",
@@ -49,7 +50,7 @@ const aksStepFormMetadata = {
       id: "namePretext",
       formText: "Enter a prefix to be prepended to the uniquely generated name",
       maxLength: 25,
-      regexValidator: /^[A-Za-z0-9-.:]*$/
+      regexValidator: /[a-z]([-a-z0-9]*[a-z0-9])?/
     },
     {
       label: "Generate Dynamic Service Name?",
