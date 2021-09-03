@@ -37,6 +37,10 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
 
     let { threshold, job_type } = stepTool;
     let terraformConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, terraformStepFormMetadata);
+
+    if (terraformConfigurationData.getData("iamRoleFlag") === true) {
+      terraformConfigurationData.setMetaDataFields(terraformStepFormMetadata.fieldsAlt);
+    }
     
     setTerraformStepConfigurationModel(terraformConfigurationData);
     
