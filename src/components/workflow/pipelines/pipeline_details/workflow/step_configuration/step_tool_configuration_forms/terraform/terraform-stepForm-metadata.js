@@ -71,6 +71,14 @@ const TerraformStepFormMetadata = {
     {
       label: "Save Output Parameters?",
       id: "saveParameters"
+    },
+    {
+      label: "IAM Roles", 
+      id:"iamRoleFlag"
+    },
+    {
+      label: "IAM Role",
+      id: "roleArn"
     }
   ],
   newObjectFields: {
@@ -91,7 +99,10 @@ const TerraformStepFormMetadata = {
     bitbucketWorkspaceName: "",
     keyValueMap: {},
     customParameters: "",
-    saveParameters: false
+    saveParameters: false,
+    iamRoleFlag:false,
+    roleArn:"",
+    roleName:""
   }
 };
 
