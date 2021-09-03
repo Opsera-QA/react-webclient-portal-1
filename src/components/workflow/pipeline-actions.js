@@ -558,4 +558,9 @@ pipelineActions.createMongodbRealmJob = async (toolId, postBody, getAccessToken)
   return response;
 };
 
+pipelineActions.createMongodbRealmJobV2 = async (getAccessToken, cancelTokenSource, toolId, postBody) => {
+  const apiUrl = `/registry/action/${toolId}/createMongodbRealmJob`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default pipelineActions;

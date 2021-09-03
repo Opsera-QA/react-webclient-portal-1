@@ -111,8 +111,8 @@ function MongodbRealmStepConfiguration({
           isLoading={isLoading}
         >
           <StepConfigJenkinsToolInput dataObject={mongodbRealmStepConfigurationDto} setDataObject={setMongodbRealmStepConfigurationDto} />
-          <MongodbRealmToolInput dataObject={mongodbRealmStepConfigurationDto} setDataObject={setMongodbRealmStepConfigurationDto} />
-          <TextInputBase dataObject={mongodbRealmStepConfigurationDto} setDataObject={setMongodbRealmStepConfigurationDto} fieldName={"applicationName"} />
+          <MongodbRealmToolInput model={mongodbRealmStepConfigurationDto} setModel={setMongodbRealmStepConfigurationDto} fieldName="mongoToolId" />
+          <TextInputBase dataObject={mongodbRealmStepConfigurationDto} setDataObject={setMongodbRealmStepConfigurationDto} fieldName="applicationName" />
           <StepConfigJenkinsAccountInput dataObject={mongodbRealmStepConfigurationDto} setDataObject={setMongodbRealmStepConfigurationDto} />
           <StepConfigBitbucketWorkspaceInput dataObject={mongodbRealmStepConfigurationDto} setDataObject={setMongodbRealmStepConfigurationDto} />
           <StepConfigGitRepositoryInput dataObject={mongodbRealmStepConfigurationDto} setDataObject={setMongodbRealmStepConfigurationDto} />
