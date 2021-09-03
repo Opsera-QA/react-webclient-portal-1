@@ -221,44 +221,45 @@ function OverviewLanding() {
 
               <div className="mt-2">
                 {(statsData.pendingPipelines && statsData.pendingPipelines.length > 0) &&
-                <div>
-                  {statsData.pendingPipelines.map((item, key) => (
-                    <div key={key} className={"my-1"}>
-                      <Button
-                        variant="link"
-                        onClick={() => {
+                <div className="row">
+                  <div className="col-12">
+                    <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                         aria-orientation="vertical">
+
+                      {statsData.pendingPipelines.map((item, key) => (
+                        <a key={key} className="nav-link pointer" data-toggle="pill"
+                           role="tab" aria-controls="v-pills-home" aria-selected="true" onClick={() => {
                           loadPipelines(item._id);
-                        }}
-                      >
-                        {item.name.substring(0, 20)}
-                        <Badge variant="warning" className="ml-1" size="sm">
-                          Pending Approval
-                        </Badge>
-                      </Button>
+                        }}>{item.name.substring(0, 30)}
+                          {item.name.length > 30 && <>...</>}
+                          <span className={"opsera-yellow"} style={{ fontStyle: "italic", fontSize: "smaller", paddingLeft:"5px"}}>Pending Approval</span></a>
+                      ))}
+
                     </div>
-                  ))}
+                  </div>
                 </div>
                 }
 
                 {(statsData.recentPipelines && statsData.recentPipelines.length > 0) &&
-                <div>
-                  {statsData.recentPipelines.map((item, key) => (
-                    <div key={key} className={"my-1"}>
-                      <Button
-                        variant="link"
-                        onClick={() => {
+                <div className="row">
+                  <div className="col-12">
+                    <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                         aria-orientation="vertical">
+
+                      {statsData.recentPipelines.map((item, key) => (
+                        <a key={key} className="nav-link pointer" data-toggle="pill"
+                           role="tab" aria-controls="v-pills-home" aria-selected="true" onClick={() => {
                           loadPipelines(item._id);
-                        }}
-                      >
-                        {item.name.substring(0, 50)}
-                        {new Date(item.createdAt) > d &&
-                        <Badge variant="secondary" className="ml-1" size="sm">
-                          New
-                        </Badge>
-                        }
-                      </Button>
+                        }}>{item.name.substring(0, 50)}
+                          {item.name.length > 30 && <>...</>}
+                          {new Date(item.createdAt) > d &&
+                          <span className={"opsera-yellow"} style={{ fontStyle: "italic", fontSize: "smaller", paddingLeft:"5px"}}>New</span>
+                          }
+                        </a>
+                      ))}
+
                     </div>
-                  ))}
+                  </div>
                 </div>
                 }
               </div>
