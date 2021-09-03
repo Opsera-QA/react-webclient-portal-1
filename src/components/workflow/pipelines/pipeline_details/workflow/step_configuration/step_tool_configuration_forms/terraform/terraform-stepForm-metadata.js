@@ -81,7 +81,7 @@ const TerraformStepFormMetadata = {
       id: "roleArn"
     }
   ],
-  fields: [
+  fieldsAlt: [
     {
       label: "SCM Tool Type",
       id: "type",
