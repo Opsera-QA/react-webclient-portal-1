@@ -14,7 +14,7 @@ import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadi
 import MongodbRealmToolInput from "./inputs/MongodbRealmToolInput";
 import MongodbRealmSchemaMapInput from "./inputs/MongodbRealmSchemaMapInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-
+import _ from "lodash";
 function MongodbRealmStepConfiguration({ 
   pipelineId, 
   stepTool, 
@@ -84,11 +84,7 @@ function MongodbRealmStepConfiguration({
           mongodbRealmStepConfigurationDto.getData("toolConfigId").length === 0 ||
           mongodbRealmStepConfigurationDto.getData("jenkinsUrl").length === 0 ||
           mongodbRealmStepConfigurationDto.getData("jUserId").length === 0 ||
-          mongodbRealmStepConfigurationDto.getData("jAuthToken").length === 0 ||
-          (mongodbRealmStepConfigurationDto.getData("buildType") === "docker"
-            ? mongodbRealmStepConfigurationDto.getData("dockerName").length === 0 || 
-            mongodbRealmStepConfigurationDto.getData("dockerTagName").length === 0
-            : false)
+          mongodbRealmStepConfigurationDto.getData("jAuthToken").length === 0
         ) {
             let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
             setToast(toast);
@@ -103,12 +99,29 @@ function MongodbRealmStepConfiguration({
         return <DetailPanelLoadingDialog />;
       }
 
+      const disableSaveButton = () => {
+        return (
+          mongodbRealmStepConfigurationDto.getData("toolConfigId").length === 0 ||
+          mongodbRealmStepConfigurationDto.getData("jenkinsUrl").length === 0 ||
+          mongodbRealmStepConfigurationDto.getData("jUserId").length === 0 ||
+          mongodbRealmStepConfigurationDto.getData("jAuthToken").length === 0 || 
+          mongodbRealmStepConfigurationDto.getData("mongoToolId").length === 0 ||
+          mongodbRealmStepConfigurationDto.getData("applicationName").length === 0 ||
+          mongodbRealmStepConfigurationDto.getData("gitCredential").length === 0 ||
+          mongodbRealmStepConfigurationDto.getData("repository").length === 0 ||
+          mongodbRealmStepConfigurationDto.getData("gitBranch").length === 0 ||
+          _.isEmpty(mongodbRealmStepConfigurationDto.getData("schemaGitFileList"))
+        );
+      };
+
       return (
         <PipelineStepEditorPanelContainer
           handleClose={closeEditorPanel}
           recordDto={mongodbRealmStepConfigurationDto}
           persistRecord={handleCreateAndSave}
           isLoading={isLoading}
+          isStrict={true}
+          disableSaveButton={disableSaveButton()}
         >
           <StepConfigJenkinsToolInput dataObject={mongodbRealmStepConfigurationDto} setDataObject={setMongodbRealmStepConfigurationDto} />
           <MongodbRealmToolInput model={mongodbRealmStepConfigurationDto} setModel={setMongodbRealmStepConfigurationDto} fieldName="mongoToolId" />
