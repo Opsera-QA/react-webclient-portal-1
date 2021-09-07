@@ -3,12 +3,16 @@ import PropTypes from 'prop-types';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFile, faTimes} from "@fortawesome/pro-light-svg-icons";
 import { Row, Col, Button } from "react-bootstrap";
+import regexDefinitions from "utils/regexDefinitions";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 const MongodbRealmSchemaMapInput = ({ dataObject, setDataObject, fieldName, disabled, allowIncompleteItems }) => {
 
   const [mappings, setMappings] = useState([]);
   const [field] = useState(dataObject.getFieldById(fieldName));
-  const [errorMessage, setErrorMessage] = useState("");  
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessageCollection, setErrorMessageCollection] = useState("");
+  const [errorMessageFilepath, setErrorMessageFilepath] = useState("");
   const [collection, setCollection] = useState("");
   const [gitFilePath, setGitFilePath] = useState("");
   const [addView, setAddView] = useState(false);
@@ -38,9 +42,6 @@ const MongodbRealmSchemaMapInput = ({ dataObject, setDataObject, fieldName, disa
           </div>
         ) : (
           <div>
-            <small className="form-text text-muted form-group m-2 text-left">
-              Please delete the existing secrets to add new secrets
-            </small>                      
             <div className="bottom-zoom-btns mr-2">
               <Button size="sm" variant="light" onClick={() => handleDelete()}>Delete Secrets</Button>
             </div>
@@ -63,8 +64,9 @@ const MongodbRealmSchemaMapInput = ({ dataObject, setDataObject, fieldName, disa
               onChange={(event) => setCollection(event.target.value)}
               value={collection}
             />
-          </Col>
-        </Row>
+            <InfoText errorMessage={errorMessageCollection} />
+          </Col>          
+        </Row>        
         <Row>
           <Col sm={11} className={"my-1 ml-2"}>
             <input
@@ -74,9 +76,10 @@ const MongodbRealmSchemaMapInput = ({ dataObject, setDataObject, fieldName, disa
               maxLength={200}
               onChange={(event) => setGitFilePath(event.target.value)}
               value={gitFilePath}
-            />            
-          </Col>
-        </Row>
+            />
+            <InfoText errorMessage={errorMessageFilepath} />
+          </Col>          
+        </Row>        
         <Button size="sm" className="my-1 ml-2" variant="success" 
           disabled={!collection || collection.length === 0 || !gitFilePath || gitFilePath.length === 0}
           onClick={() => { addMapping();}}
@@ -107,7 +110,23 @@ const MongodbRealmSchemaMapInput = ({ dataObject, setDataObject, fieldName, disa
     );
   };
 
-  const addMapping = () => {    
+  const addMapping = () => {
+    const collectionSchemaRegex = regexDefinitions.collectionName;
+    const filepathRegex = regexDefinitions.jsonFile;
+
+    setErrorMessageCollection("");
+    setErrorMessageFilepath("");
+
+    if(!collection.match(collectionSchemaRegex?.regex)){
+      setErrorMessageCollection(collectionSchemaRegex?.errorFormText);
+      return;
+    }
+
+    if(!gitFilePath.match(filepathRegex?.regex)){
+      setErrorMessageFilepath(filepathRegex?.errorFormText);
+      return;
+    }
+
     let newMappingList = [...mappings, {
       collection,
       gitFilePath
