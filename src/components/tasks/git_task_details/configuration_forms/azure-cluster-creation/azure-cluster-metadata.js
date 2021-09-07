@@ -4,7 +4,8 @@ const azureAksClusterTaskConfigurationMetadata = {
     {
       label: "Cluster Name",
       id: "clustername",
-      isRequired: true
+      isRequired: true,
+      regexDefinitionName: "azureLabels",
     },
     {
       label: "Azure Region",
