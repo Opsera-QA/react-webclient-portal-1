@@ -34,11 +34,12 @@ function TableBase({ columns, data, onRowSelect, rowStyling, sort, height }) {
       data: data && Array.isArray(data) && data.length > 0 ? data : [],
       htmlEnable: true,
       resizable: true,
+      css: "vanity-table",
       headerRowHeight: 30,
       rowHeight: 30,
       // TODO: Wire up custom row styling
       rowCss: (row) => {
-        let styling = onRowSelect != null ? "pointer" : "hide-grid-pointer";
+        let styling = onRowSelect != null ? "main-text pointer" : "main-text hide-grid-pointer";
 
         if (rowStyling) {
           styling = `${styling} ${rowStyling(row)}`;

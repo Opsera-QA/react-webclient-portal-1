@@ -55,7 +55,7 @@ function RoleAccessTableBase({ roleAccessDefinitions, loadData, isLoading }) {
     () => [
       getTableTextColumn(getField(fields, "description")),
       getTableBooleanIconColumn(getField(fields, "administrator"), undefined, 130),
-      getTableBooleanIconColumn(getField(fields, "owner")),
+      getTableBooleanIconColumn(getField(fields, "owner"), undefined, 60),
       getTableBooleanIconColumn(getField(fields, "manager"), undefined, 75),
       getTableBooleanIconColumn(getField(fields, "power_user"), undefined, 90),
       getTableBooleanIconColumn(getField(fields, "user"), undefined, 45),
@@ -83,8 +83,6 @@ function RoleAccessTableBase({ roleAccessDefinitions, loadData, isLoading }) {
       metadata={roleDefinitionMetadata}
       titleIcon={faHandshake}
       title={"Role Access"}
-      className={"px-2 pb-2"}
-      showBorder={false}
     />
   );
 }
