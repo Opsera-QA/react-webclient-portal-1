@@ -10,7 +10,6 @@ function HelpOverlayBase({ helpDocumentation, children, showPanel, closePanel, i
       return (
         <HelpDocumentationContainer
           isLoading={isLoading}
-          closeHelpPanel={closePanel}
           helpTopic={helpTopic}
         >
           {helpDocumentation}
@@ -25,7 +24,7 @@ function HelpOverlayBase({ helpDocumentation, children, showPanel, closePanel, i
       showPanel={showPanel}
       isLoading={isLoading}
       titleIcon={titleIcon}
-      titleText={`${helpTopic} Help`}
+      titleText={`Help`}
     >
       <div className={className}>
         {getHelpDocumentationContainer()}
