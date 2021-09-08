@@ -10,7 +10,6 @@ function NexusJenkinsToolInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("jobType", "NEXUS_DOCKER_PUSH");
     newDataObject.setData("jobDescription", "");
     newDataObject.setData("toolJobType", ["DOCKER PUSH"]);
-    newDataObject.setData("jobName", "");
     newDataObject.setData("agentLabels", "generic-linux");
     setDataObject({...newDataObject});
   };
