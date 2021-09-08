@@ -12,7 +12,6 @@ import GitRunTaskModal from "components/tasks/git_task_details/GitRunTaskModal";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import taskActions from "components/tasks/task.actions";
 import TaskActivityView from './TaskActivityView';
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 function GitTaskRunButton({gitTasksData, setGitTasksData, disable, className, loadData, actionAllowed }) {
   const [isCanceling, setIsCanceling] = useState(false);
