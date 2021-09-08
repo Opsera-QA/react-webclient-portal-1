@@ -544,7 +544,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
           <div>
             <ServiceNowAssignmentGroupSelectInput
               visible={true}
-              placeholderText={"Select Assignment Group"}
+              placeholderText={"Select Assignment Groups"}
               type={"kpi_filter"}
               fieldName={"value"}
               valueField={"sys_id"}
@@ -560,7 +560,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
           <div>
             <ServiceNowServiceOfferingsSelectInput
               visible={true}
-              placeholderText={"Select Service Offering"}
+              placeholderText={"Select Service Offerings"}
               type={"kpi_filter"}
               fieldName={"value"}
               valueField={"sys_id"}
@@ -576,7 +576,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
           <div>
             <ServiceNowConfigurationItemsSelectInput
               visible={true}
-              placeholderText={"Select Configuration Item"}
+              placeholderText={"Select Configuration Items"}
               type={"kpi_filter"}
               fieldName={"value"}
               valueField={"sys_id"}
@@ -592,7 +592,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
           <div>
             <ServiceNowBusinessServicesSelectInput
               visible={true}
-              placeholderText={"Select Business Service"}
+              placeholderText={"Select Business Services"}
               type={"kpi_filter"}
               fieldName={"value"}
               valueField={"sys_id"}

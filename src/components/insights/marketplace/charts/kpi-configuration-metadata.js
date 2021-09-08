@@ -409,19 +409,19 @@ export const kpiServiceNowToolsFilterMetadata = {
 };
 
 export const kpiServiceNowAssignmentGroupsFilterMetadata = {
-  type: "Service Now Assignment Group",
+  type: "Service Now Assignment Groups",
   fields: [
     {
       label: "Type",
       id: "type",
     },
     {
-      label: "Service Now Assignment Group",
+      label: "Service Now Assignment Groups",
       id: "value",
     },
   ],
   newObjectFields: {
-    value: "",
+    value: [],
   },
 };
 
@@ -438,7 +438,7 @@ export const kpiServiceNowServiceOfferingsFilterMetadata = {
     },
   ],
   newObjectFields: {
-    value: "",
+    value: [],
   },
 };
 
@@ -455,7 +455,7 @@ export const kpiServiceNowConfigurationItemsFilterMetadata = {
     },
   ],
   newObjectFields: {
-    value: "",
+    value: [],
   },
 };
 
@@ -472,7 +472,7 @@ export const kpiServiceNowBusinessServicesFilterMetadata = {
     },
   ],
   newObjectFields: {
-    value: "",
+    value: [],
   },
 };
 
