@@ -25,6 +25,8 @@ import AwsEcsClusterCreationTaskHelpDocumentation
 import TaskCreationHelpDocumentation from "components/common/help/documentation/tasks/TaskCreationHelpDocumentation";
 import AwsEcsServiceCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsEcsServiceCreationTaskHelpDocumentation";
+import SfdcOrgSyncTaskHelpDocumentation
+  from "components/common/help/documentation/tasks/SfdcOrgSyncTaskHelpDocumentation";
 
 function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }) {
   const { getAccessToken, featureFlagHideItemInProd } = useContext(AuthContext);
@@ -123,6 +125,7 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
       case "ecs_service_creation":
         return <AwsEcsServiceCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case "sync-sfdc-repo":
+        return <SfdcOrgSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case "sync-branch-structure":
       case "sync-git-branches":
       case "sfdc-cert-gen":
