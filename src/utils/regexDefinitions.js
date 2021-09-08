@@ -151,4 +151,16 @@ regexDefinitions.dockerName = {
   errorFormText: "Accepts lowercase alphanumeric characters, periods, dashes, and underscores without spaces.",
 };
 
+regexDefinitions.jsonFile = {
+  regex: /^[a-zA-Z0-9\-_/\\]*\.json$/,
+  formText: "Accepts .json file as input",
+  errorFormText: "Only .json files are accepted as input. Only letters, numbers, dashes, underscores and slashes are allowed",
+};
+
+regexDefinitions.collectionName = {
+  regex: /^[a-zA-Z0-9_-]*(?:\.[a-zA-Z0-9_-]+)$/,
+  formText: "Accepts input in [DatabaseName].[CollectionName] format",
+  errorFormText: "Input should be in [DatabaseName].[CollectionName] format. Only letters, numbers, dashes, underscores and periods are allowed",
+};
+
 export default regexDefinitions;
