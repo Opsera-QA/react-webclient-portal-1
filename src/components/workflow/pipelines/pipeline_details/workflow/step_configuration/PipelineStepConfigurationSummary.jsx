@@ -155,6 +155,8 @@ import CoverityPipelineStepConfigurationSummaryPanel from "./step_tool_configura
 import AwsLambdaPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/aws_lambda_publish/AwsLambdaPipelineStepConfigurationSummary";
 import awsLambdaStepFormMetadata from "./step_tool_configuration_forms/aws_lambda_publish/awsLambda-stepForm-metadata";
+import mongodbRealmStepFormMetadata from "./step_tool_configuration_forms/mongodb_realm/mongodb-realm-stepForm-metadata";
+import MongodbRealmStepConfigurationSummaryPanel from "./step_tool_configuration_forms/mongodb_realm/MongodbRealmStepConfigurationSummaryPanel";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -459,6 +461,13 @@ function PipelineStepConfigurationSummary({
             pipelineData={pipelineData}
             awsECSDeployPipelineDataObject={getModelWrappedObject(awsLambdaStepFormMetadata)}
           />
+        );
+      case "mongodb_realm":
+        return (
+          <MongodbRealmStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            mongodbRealmPipelineDataObject={getModelWrappedObject(mongodbRealmStepFormMetadata)}
+            />
         );
       default:
         return (
