@@ -187,7 +187,6 @@ export const parseRoleDefinitionsIntoTableRows =  (roleDefinitions) => {
           user: roleAllowed(accessRoles, ACCESS_ROLES.USER),
           no_access_rules: roleAllowed(accessRoles, ACCESS_ROLES.NO_ACCESS_RULES),
         };
-        console.log("tableRow: " + JSON.stringify(tableRow));
 
         accessRoleRows.push(tableRow);
       });
