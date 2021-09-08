@@ -2,13 +2,13 @@ import React, {useContext, useEffect, useMemo, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
-import VanityTable from "components/common/table/VanityTable";
 import FilterContainer from "components/common/table/FilterContainer";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import {parseRoleDefinitionsIntoTableRows} from "components/common/helpers/role-helpers";
 import roleDefinitionMetadata from "components/common/fields/access/table/role-definition-metadata";
-import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
+import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
+import CustomTable from "components/common/table/CustomTable";
 
 function RoleAccessTableBase({ roleAccessDefinitions, loadData, isLoading }) {
   const { getAccessRoleData } = useContext(AuthContext);
@@ -66,7 +66,7 @@ function RoleAccessTableBase({ roleAccessDefinitions, loadData, isLoading }) {
 
   const getRoleDefinitionTable = () => {
     return (
-      <VanityTable
+      <CustomTable
         data={accessRoles}
         columns={columns}
         isLoading={isLoading}
@@ -83,6 +83,7 @@ function RoleAccessTableBase({ roleAccessDefinitions, loadData, isLoading }) {
       metadata={roleDefinitionMetadata}
       titleIcon={faHandshake}
       title={"Role Access"}
+      showBorder={false}
     />
   );
 }
