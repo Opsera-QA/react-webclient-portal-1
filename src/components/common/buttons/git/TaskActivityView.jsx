@@ -48,7 +48,6 @@ function TaskActivityView({ gitTasksData, handleClose }) {
 
   const loadFormData = async (gitTasksData) => {
     try {
-        console.log(gitTasksData);
       setLoading(true);
       const accessToken = await getAccessToken();
       const apiUrl = `/tasks/${gitTasksData.getData("_id")}/tool-activity/`;
