@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
-import { DialogToastContext } from "../../../../../contexts/DialogToastContext";
-import HelpOverlayBase from "../../../overlays/center/help/HelpOverlayBase";
+import PropTypes from "prop-types";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
+import RoleAccessTable from "components/common/fields/access/table/RoleAccessTable";
 
-function ScriptsHelpDocumentation() {
+function ScriptsHelpDocumentation({scriptRoleDefinitions, scriptMetadata}) {
     const toastContext = useContext(DialogToastContext);
     const closePanel = () => {
       toastContext.clearOverlayPanel();
@@ -21,8 +23,19 @@ function ScriptsHelpDocumentation() {
         </ol>
         <div className={"mb-1"}>For more detailed information on Script creation and how to configure a script in Opsera pipelines, view the  <a href="https://opsera.atlassian.net/l/c/S2c72ieq" target="_blank" rel="noreferrer"><b>Script Library Help Documentation</b>.</a></div>
       </div>
+      {/*<div className={"my-2"}>*/}
+      {/*  <RoleAccessTable*/}
+      {/*    roleAccessDefinitions={scriptRoleDefinitions}*/}
+      {/*    roleAccessMetadata={scriptMetadata}*/}
+      {/*  />*/}
+      {/*</div>*/}
     </HelpOverlayBase>
   );
 }
+
+ScriptsHelpDocumentation.propTypes = {
+  scriptRoleDefinitions: PropTypes.object,
+  scriptMetadata: PropTypes.object,
+};
 
 export default React.memo(ScriptsHelpDocumentation);
