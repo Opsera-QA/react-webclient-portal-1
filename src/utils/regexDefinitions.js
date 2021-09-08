@@ -156,4 +156,22 @@ regexDefinitions.dockerName = {
   errorFormText: "Accepts lowercase alphanumeric characters, periods, dashes, and underscores without spaces.",
 };
 
+regexDefinitions.jsonFile = {
+  regex: /^[a-zA-Z0-9\-_/\\]*\.json$/,
+  formText: "Accepts .json file as input",
+  errorFormText: "Only .json files are accepted as input. Only letters, numbers, dashes, underscores and slashes are allowed",
+};
+
+regexDefinitions.collectionName = {
+  regex: /^[a-zA-Z0-9_-]*(?:\.[a-zA-Z0-9_-]+)$/,
+  formText: "Accepts input in [DatabaseName].[CollectionName] format",
+  errorFormText: "Input should be in [DatabaseName].[CollectionName] format. Only letters, numbers, dashes, underscores and periods are allowed",
+};
+
+regexDefinitions.azureLabels = {
+  regex: /^[a-z0-9_.-]*$/,
+  formText: "Accepts lowercase alphanumeric characters and dashes without spaces.",
+  errorFormText: "The name must consist of lower case alphanumeric characters or '-', start with an alphabetic character, and end with an alphanumeric character (e.g. 'my-name', or 'abc-123')"
+};
+
 export default regexDefinitions;

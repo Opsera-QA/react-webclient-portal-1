@@ -261,6 +261,23 @@ function ToastContextProvider ({ children, navBar }) {
     addBannerMessage(errorBanner, id, notificationTypes.SYSTEM);
   };
 
+  const showPipelineDropdownOptionsUnavailableBanner = (field, error) => {
+    const customMessage = "Please review the settings for the tool associated with this step in order to resolve the issue. ";
+    showDropdownOptionsUnavailableBanner(field, error, customMessage);
+  };
+
+  const showDropdownOptionsUnavailableBanner = (field, error, customMessage) => {
+    let id = generateUUID();
+    console.error(error);
+    let errorBanner = getErrorBanner(undefined, id,
+      `There was an issue pulling select options for the field ${field.label}. 
+      ${customMessage}
+      You can check the error logs for details on the specific error.
+      `);
+    addBannerMessage(errorBanner, id, notificationTypes.SYSTEM);
+  };
+
+
   const showUpdateSuccessResultDialog = (type, autoCloseLengthInSeconds = 10) => {
     let id = generateUUID();
     let successToast = getSuccessToast(`${type} updated successfully!`, id, autoCloseLengthInSeconds);
@@ -429,6 +446,8 @@ function ToastContextProvider ({ children, navBar }) {
           showEmailAlreadyExistsErrorDialog: showEmailAlreadyExistsErrorDialog,
           showDomainAlreadyRegisteredErrorDialog: showDomainAlreadyRegisteredErrorDialog,
           showServiceUnavailableDialog: showServiceUnavailableDialog,
+          showDropdownOptionsUnavailableBanner: showDropdownOptionsUnavailableBanner,
+          showPipelineDropdownOptionsUnavailableBanner: showPipelineDropdownOptionsUnavailableBanner,
           showLoadingErrorDialog: showLoadingErrorDialog,
           showIncompleteCreateSuccessResultDialog: showIncompleteCreateSuccessResultDialog,
 
