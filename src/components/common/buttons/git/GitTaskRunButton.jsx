@@ -12,7 +12,6 @@ import axios from "axios";
 import GitRunTaskModal from "components/git/git_task_details/GitRunTaskModal";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import TaskActivityView from './TaskActivityView';
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 function GitTaskRunButton({gitTasksData, setGitTasksData, disable, className, loadData, actionAllowed }) {
   const [isCanceling, setIsCanceling] = useState(false);
