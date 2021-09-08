@@ -130,7 +130,6 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
       case "sync-git-branches":
       case "sfdc-cert-gen":
       case "lambda_function_creation":
-        break;
       default:
         return <TaskCreationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
     }
