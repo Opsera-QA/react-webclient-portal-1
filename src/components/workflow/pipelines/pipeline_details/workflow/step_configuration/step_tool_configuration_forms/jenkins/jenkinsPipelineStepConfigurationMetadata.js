@@ -73,10 +73,25 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Docker Tag",
       id: "dockerTagName",
-      isRequired: true,
-      regexValidator:RegExp("^[a-zA-Z0-9_.-]*$"),
-      formText:"Lowercase alphanumeric characters and underscore, period, and dash are allowed",
-      maxLength:256,
+      regexDefinitionName: "dockerName",
+      maxLength: 50,
+      lowercase: true,
+    },
+    {
+      label: "Dynamic Tag",
+      id: "dynamicTag"
+    },
+    {
+      label: "Docker Dynamic Tag Type",
+      id: "dockerTagType"
+    },
+    {
+      label: "Docker Dynamic Tag",
+      id: "dockerDynamicTagName",
+      formText: "date, timestamp, run_count text can be used to make it dynamic",
+      regexDefinitionName: "dockerName",
+      maxLength: 50,
+      lowercase: true,
     },
     {
       label: "Docker File Path",
@@ -216,7 +231,10 @@ const jenkinsPipelineStepConfigurationMetadata = {
     customParameters:[],
     terraformStepId:"",
     useTerraformOutput: false,
-    job_type:""
+    job_type:"",
+    dynamicTag: false,
+    dockerTagType:[],
+    dockerDynamicTagName:"",
   }
 };
 
