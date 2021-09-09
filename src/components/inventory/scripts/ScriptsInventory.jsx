@@ -94,6 +94,17 @@ function ScriptsInventory() {
     }
   };
 
+  const getHelpComponent = () => {
+    if (!isLoading) {
+      return (
+        <ScriptsHelpDocumentation
+          scriptRoleDefinitions={scriptRoleDefinitions}
+          scriptsMetadata={scriptMetadata}
+        />
+      );
+    }
+  };
+
   return (
     <ScreenContainer
       navigationTabContainer={<InventorySubNavigationBar currentTab={"scripts"} />}
@@ -101,12 +112,7 @@ function ScriptsInventory() {
       pageDescription={`
         The Opsera Scripts Library enables user to register a new script, give it a name and apply RBAC. The script can then be referenced in the a pipeline step.
       `}
-      helpComponent={
-        <ScriptsHelpDocumentation
-          scriptRoleDefinitions={scriptRoleDefinitions}
-          scriptsMetadata={scriptMetadata}
-        />
-      }
+      helpComponent={getHelpComponent()}
     >
       <ScriptsView
         isLoading={isLoading}

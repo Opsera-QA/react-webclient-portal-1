@@ -1,7 +1,7 @@
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import {faSpinner, faTimes} from "@fortawesome/pro-light-svg-icons";
+import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {Row} from "react-bootstrap";
 import CloseIcon from "components/common/icons/general/CloseIcon";
 import PageLinkIcon from "components/common/icons/general/PageLinkIcon";
@@ -15,6 +15,20 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose, pageLin
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="pl-2 pr-3 content-block-header title-text-header-1">
+        <div className="d-flex justify-content-between">
+          <div><span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-2"/>Loading Data</span></div>
+          <div className={"d-flex"}>
+            <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
+            <CloseIcon handleClose={handleClose} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (titleText == null) {
     return (
       <Row className="title-text-header-1 w-100 p-1 mx-0 bg-white">
@@ -26,22 +40,8 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose, pageLin
     );
   }
 
-  if (isLoading) {
-    return (
-      <div className="px-3 content-block-header title-text-header-1">
-        <div className="d-flex justify-content-between">
-          <div><span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Data</span></div>
-          <div className={"d-flex"}>
-            <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
-            <CloseIcon handleClose={handleClose} />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="px-3 content-block-header title-text-header-1">
+    <div className="pl-2 pr-3 content-block-header title-text-header-1">
       <div className="d-flex justify-content-between">
         <div><span>{getTitleIcon()}{titleText}</span></div>
         <div className={"d-flex"}>
