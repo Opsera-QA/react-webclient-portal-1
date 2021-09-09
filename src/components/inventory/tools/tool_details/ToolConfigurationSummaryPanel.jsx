@@ -277,11 +277,7 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
     }
   };
   
-  return (
-    <div className="p-3">
-      {getConfigurationSummaryPanel() }
-    </div>
-  );
+  return (getConfigurationSummaryPanel());
 }
 
 ToolConfigurationSummaryPanel.propTypes = {

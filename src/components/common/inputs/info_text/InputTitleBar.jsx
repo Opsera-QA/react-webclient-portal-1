@@ -4,11 +4,23 @@ import IconBase from "components/common/icons/IconBase";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 
 function InputTitleBar({ field, icon, isLoading, helpComponent, searchTerm, setSearchTerm, showSearchBar, disabled, customTitle }) {
+  const getTitle = () => {
+    if (customTitle) {
+      return customTitle;
+    }
+
+    if (field) {
+      return (
+        <span>{field?.label}{field?.isRequired && <span className="danger-red">*</span>}</span>
+      );
+    }
+  };
+
   const getFormattedLabel = () => {
     return (
       <div className={"my-auto"}>
         <IconBase icon={icon} isLoading={isLoading} className={"mr-2"}/>
-        <span>{customTitle ? customTitle : field?.label}{field?.isRequired ? <span className="danger-red">*</span> : null}</span>
+        <span>{getTitle()}</span>
       </div>
     );
   };
