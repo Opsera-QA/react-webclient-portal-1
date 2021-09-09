@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 function AwsLambdaFunctionCreationTaskHelpDocumentation({closeHelpPanel}) {
   return (
-    <HelpDocumentationContainer helpTopic={"AWS ECS Cluster Creation"} closeHelpPanel={closeHelpPanel}>
+    <HelpDocumentationContainer helpTopic={"Create AWS Lambda Function"} closeHelpPanel={closeHelpPanel}>
       <div className={"mb-1"}>Create AWS Lambda Function workflow requires setup in both Tasks and Opsera Pipelines. The workflow is separated into two parts where the user enters certain static information in the Tasks page and then links the task to the respective step in the pipeline. For more detailed information on the AWS Lambda Function Creation workflow including pipeline setup, view the <a href="https://opsera.atlassian.net/l/c/Pcv3z811" target="_blank" rel="noreferrer"><b>AWS Lambda Functions Documentation</b>.</a></div>
       <div className={"mt-2"}><h5>Task Setup Instructions:</h5></div>
       <ol>
