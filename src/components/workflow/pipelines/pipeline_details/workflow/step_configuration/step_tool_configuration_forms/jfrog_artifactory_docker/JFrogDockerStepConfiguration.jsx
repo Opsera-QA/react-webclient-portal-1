@@ -89,8 +89,6 @@ function JFrogDockerStepConfiguration({ pipelineId, stepTool, stepId, createJob,
     return <DetailPanelLoadingDialog />;
   }
 
-  console.log(jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("type") );
-
   return (
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}

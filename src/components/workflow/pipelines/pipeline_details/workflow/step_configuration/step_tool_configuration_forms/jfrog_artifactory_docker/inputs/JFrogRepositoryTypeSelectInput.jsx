@@ -12,7 +12,6 @@ const repositoryTypes = [
 function JFrogRepositoryTypeSelectInput({ fieldName, dataObject, setDataObject, disabled }) {
   
     const setDataFunction = (fieldName, selectedOption) => {
-        console.log(selectedOption.value);
         let newDataObject = dataObject;
         newDataObject.setData("type", selectedOption.value);
         newDataObject.setData("repositoryName", "");
