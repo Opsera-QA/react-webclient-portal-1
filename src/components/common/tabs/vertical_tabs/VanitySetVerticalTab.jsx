@@ -5,7 +5,7 @@ import {tabAccessRestricted, tabDisabled} from "components/common/tooltip/popove
 import {Nav} from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
 
-function VanityVerticalTab({tabName, tabText, icon, visible, disabled, accessRestricted, tooltipText}) {
+function VanitySetVerticalTab({tabName, tabText, icon, visible, disabled, accessRestricted, tooltipText}) {
   const getTooltipText = () => {
     if (accessRestricted) {
       return (tabAccessRestricted);
@@ -34,7 +34,7 @@ function VanityVerticalTab({tabName, tabText, icon, visible, disabled, accessRes
   );
 }
 
-VanityVerticalTab.propTypes = {
+VanitySetVerticalTab.propTypes = {
   tabName: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   tabText: PropTypes.string.isRequired,
   icon: PropTypes.object,
@@ -44,4 +44,4 @@ VanityVerticalTab.propTypes = {
   accessRestricted: PropTypes.bool,
 };
 
-export default VanityVerticalTab;
+export default VanitySetVerticalTab;
