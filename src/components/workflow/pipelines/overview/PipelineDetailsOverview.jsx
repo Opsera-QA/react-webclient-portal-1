@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import PropTypes from 'prop-types';
 import PipelineStepJsonPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepJsonPanel";
@@ -9,9 +9,11 @@ import OverlayTabPanelContainer from "components/common/panels/general/OverlayTa
 import PipelineOverviewContainer from "components/workflow/pipelines/overview/PipelineOverviewContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faFileCode} from "@fortawesome/pro-light-svg-icons";
+import {AuthContext} from "contexts/AuthContext";
 
 function PipelineDetailsOverview({ pipeline }) {
   const [activeTab, setActiveTab] = useState("summary");
+  const { featureFlagHideItemInProd } = useContext(AuthContext);
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
@@ -30,11 +32,9 @@ function PipelineDetailsOverview({ pipeline }) {
     }
   };
 
-  const getTabContainer = () => {
-    return (
-      <CustomTabContainer>
-        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <JsonTab handleTabClick={handleTabClick} activeTab={activeTab} />
+  const getYamlTab = () => {
+    if (featureFlagHideItemInProd() === false) {
+      return (
         <CustomTab
           tabText={"YAML View"}
           handleTabClick={handleTabClick}
@@ -43,6 +43,16 @@ function PipelineDetailsOverview({ pipeline }) {
           disabled={true}
           icon={faFileCode}
         />
+      );
+    }
+  };
+
+  const getTabContainer = () => {
+    return (
+      <CustomTabContainer>
+        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <JsonTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        {getYamlTab()}
       </CustomTabContainer>
     );
   };
