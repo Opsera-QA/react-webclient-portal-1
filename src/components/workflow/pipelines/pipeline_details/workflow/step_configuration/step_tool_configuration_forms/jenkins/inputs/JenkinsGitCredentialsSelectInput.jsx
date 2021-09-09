@@ -85,7 +85,7 @@ function JenkinsGitCredentialsSelectInput({
     } 
   };
 
-  
+
 
   const checkValidity = ()=>{
     return dataObject !== null
@@ -94,16 +94,16 @@ function JenkinsGitCredentialsSelectInput({
     && jenkinsList.length > 0
     && dataObject?.getData("jobType") 
     && dataObject?.getData("jobType").length >= 0
-    && excludeArr.some(item => item!==dataObject?.getData("jobType"))
+    && !excludeArr.some(item => item==dataObject?.getData("jobType"))
     && !dataObject?.getData("isOrgToOrg"); 
    
   };
   if(!checkValidity()){
     return null;
   }
-    
+  
   return (
-    <>      
+    <>
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}

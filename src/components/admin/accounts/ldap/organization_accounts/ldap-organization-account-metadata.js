@@ -96,7 +96,7 @@ export const ldapOrganizationAccountMetaData = {
       id: "entityID",
       isRequired: true,
       maxLength: 50,
-      formText: "Maps to the Okta configured Identity Provider ID in Opsera Okta"
+      formText: "Maps to the Okta configured Identity Provider ID in Opsera Okta.  Disabled Federation set to 0"
     }
   ],
   newObjectFields: {

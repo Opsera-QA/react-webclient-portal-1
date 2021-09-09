@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlay, faSpinner, faStop} from "@fortawesome/pro-light-svg-icons";
+import {faPlay, faSpinner, faTerminal, faStop} from "@fortawesome/pro-light-svg-icons";
 import {useHistory} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
@@ -11,6 +11,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import GitRunTaskModal from "components/git/git_task_details/GitRunTaskModal";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import TaskActivityView from './TaskActivityView';
 
 function GitTaskRunButton({gitTasksData, setGitTasksData, disable, className, loadData, actionAllowed }) {
   const [isCanceling, setIsCanceling] = useState(false);
@@ -19,6 +20,7 @@ function GitTaskRunButton({gitTasksData, setGitTasksData, disable, className, lo
   const history = useHistory();
   let toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
+  const [showToolActivity, setShowToolActivity] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -63,6 +65,17 @@ function GitTaskRunButton({gitTasksData, setGitTasksData, disable, className, lo
                 <FontAwesomeIcon icon={faStop} fixedWidth className="mr-1"/>
               } Cancel Task
             </Button>
+            {gitTasksData.getData("type") === "sync-sfdc-repo" && 
+               <Button variant="secondary" className="m-2" style={{ cursor: "pointer" }}
+               onClick={() => {
+                 setShowToolActivity(true);
+               }}  >
+                  View Logs
+              <FontAwesomeIcon icon={faTerminal}
+                className="white mx-1" fixedWidth
+              />
+            </Button>
+            }
           </TooltipWrapper>
         </div>
       );
@@ -85,7 +98,7 @@ function GitTaskRunButton({gitTasksData, setGitTasksData, disable, className, lo
     );
   };
 
-  if (gitTasksData?.type === "sfdc-cert-gen" || gitTasksData.getData("type") === "ecs_service_creation" || gitTasksData.getData("type") === "ecs_cluster_creation" || gitTasksData.getData("type") === "lambda_function_creation" || gitTasksData.getData("type") === "azure_cluster_creation") {
+  if (gitTasksData.getData("type") === "ecs_service_creation" || gitTasksData.getData("type") === "ecs_cluster_creation" || gitTasksData.getData("type") === "lambda_function_creation" || gitTasksData.getData("type") === "azure_cluster_creation") {
     return null;
   }
 
@@ -99,7 +112,11 @@ function GitTaskRunButton({gitTasksData, setGitTasksData, disable, className, lo
         gitTasksData={gitTasksData}
         setGitTasksData={setGitTasksData}
         loadData={loadData}
-        />
+      />
+      {showToolActivity && <TaskActivityView 
+        gitTasksData={gitTasksData}
+        handleClose={() => setShowToolActivity(false)} />
+      }
     </div>
   );
 }

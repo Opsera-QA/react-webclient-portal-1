@@ -15,7 +15,7 @@ const roleDefinitionMetadata = {
       id: "allowedRoles",
     },
     {
-      label: "Site Administrator",
+      label: "Administrator",
       id: "administrator",
     },
     {

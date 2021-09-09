@@ -27,6 +27,8 @@ import TaskCreationHelpDocumentation from "components/common/help/documentation/
 import AwsEcsServiceCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsEcsServiceCreationTaskHelpDocumentation";
 import SfdcOrgSyncTaskHelpDocumentation from "../../common/help/documentation/tasks/SfdcOrgSyncTaskHelpDocumentation";
+import AwsLambdaFunctionCreationTaskHelpDocumentation
+  from "../../common/help/documentation/tasks/AwsLambdaFunctionCreationTaskHelpDocumentation";
 
 function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }) {
   const { getAccessToken, isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
@@ -124,12 +126,13 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
         return <AwsEcsClusterCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case "ecs_service_creation":
         return <AwsEcsServiceCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case "lambda_function_creation":
+        return <AwsLambdaFunctionCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case "sync-sfdc-repo":
         return <SfdcOrgSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case "sync-branch-structure":
       case "sync-git-branches":
       case "sfdc-cert-gen":
-      case "lambda_function_creation":
         break;
       default:
         return <TaskCreationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;

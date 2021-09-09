@@ -117,8 +117,18 @@ const LoginForm = ({ authClient }) => {
   //https://github.com/okta/okta-signin-widget#idp-discovery
   const federatedOktaLogin = (ldapOrgName, federatedIdpIdentifier, lookupAccountEmail) => {
     setLoginType("federated");
-    console.log("Org Name: ", ldapOrgName);
-    console.log("IdP ID: ", federatedIdpIdentifier);
+    //console.log("Org Name: ", ldapOrgName);
+    //console.log("IdP ID: ", federatedIdpIdentifier);
+
+    let idpValues = [];
+    if (federatedIdpIdentifier && federatedIdpIdentifier !== "0") {
+      idpValues = [
+        { text: ldapOrgName, id: federatedIdpIdentifier },//IDP of LDAP object
+        //{ text: "Opsera DEV DEMO", id: "0oa10wlxrgdHnKvOJ0h8" }, //IDP of our PROD Okta Federated for use via DEV/LOCALHOST for developerment
+        //{ text: "Opsera Inc", id: "0oa44bjfqlK7gTwnz4x7" }, //IDP of our DEV Okta Federated for use via PROD for Smoke Testing
+        //{ type: "GOOGLE", id: "0oa1njfc0lFlSp0mM4x7" }, //IDP of our GSuite as opposed to pure google
+      ];
+    }
 
     const signIn = new OktaSignIn({
       baseUrl: process.env.REACT_APP_OKTA_BASEURL,
@@ -129,12 +139,7 @@ const LoginForm = ({ authClient }) => {
         scopes: ["openid", "email"],
       },
       clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
-      idps: [
-        { text: ldapOrgName, id: federatedIdpIdentifier }, //IDP of LDAP object
-        //{ text: "Opsera DEV DEMO", id: "0oa10wlxrgdHnKvOJ0h8" }, //IDP of our PROD Okta Federated for use via DEV/LOCALHOST for developerment
-        //{ text: "Opsera Inc", id: "0oa44bjfqlK7gTwnz4x7" }, //IDP of our DEV Okta Federated for use via PROD for Smoke Testing
-        //{ type: "GOOGLE", id: "0oa1njfc0lFlSp0mM4x7" }, //IDP of our GSuite as opposed to pure google
-      ],
+      idps: idpValues,
       idpDisplay: "PRIMARY",
       idpDiscovery: {
         requestContext: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
@@ -149,7 +154,7 @@ const LoginForm = ({ authClient }) => {
       i18n: {
         en: {
           'primaryauth.title': ldapOrgName + " Sign in",
-          'primaryauth.username.placeholder': "Opsera Managed Username",
+          'primaryauth.username.placeholder': "Email Address",
         }
       },
     });
