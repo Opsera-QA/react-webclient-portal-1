@@ -6,6 +6,7 @@ const azureAksClusterTaskConfigurationMetadata = {
       id: "clustername",
       isRequired: true,
       regexDefinitionName: "azureLabels",
+      maxLength: 63
     },
     {
       label: "Azure Region",
@@ -15,7 +16,7 @@ const azureAksClusterTaskConfigurationMetadata = {
     {
       label: "Disk Size",
       id: "disk_size_gb",
-      formText: "Disk size is in GB, Range: 1-1000",
+      formText: "Disk size is in GB, Range: 32-1000",
       regexDefinitionName: "numericalField",
     },
     {

@@ -9,7 +9,8 @@ const aksStepFormMetadata = {
     {
       label: "Service Name",
       id: "aksServiceName",
-      regexDefinitionName: "azureLabels"
+      regexDefinitionName: "azureLabels",
+      maxLength: 63
     },
     {
       label: "Image Hub",
@@ -49,7 +50,7 @@ const aksStepFormMetadata = {
       label: "Dynamic Name Prefix",
       id: "namePretext",
       formText: "Enter a prefix to be prepended to the uniquely generated name",
-      maxLength: 25,
+      maxLength: 60,
       regexDefinitionName: "azureLabels"
     },
     {
