@@ -39,12 +39,12 @@ function ScriptsHelpDocumentation({scriptRoleDefinitions, scriptMetadata}) {
       helpTopic={"Scripts"}
       helpDocumentation={getHelpDocumentation()}
     >
-      {/*<div className={"my-2"}>*/}
-      {/*  <RoleAccessTable*/}
-      {/*    roleAccessDefinitions={scriptRoleDefinitions}*/}
-      {/*    roleAccessMetadata={scriptMetadata}*/}
-      {/*  />*/}
-      {/*</div>*/}
+      <div className={"my-2"}>
+        <RoleAccessTable
+          roleAccessDefinitions={scriptRoleDefinitions}
+          roleAccessMetadata={scriptMetadata}
+        />
+      </div>
     </HelpOverlayBase>
   );
 }
