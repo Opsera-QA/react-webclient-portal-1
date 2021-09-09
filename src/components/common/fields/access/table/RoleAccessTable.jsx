@@ -89,7 +89,7 @@ function RoleAccessTableBase({ roleAccessDefinitions, loadData, isLoading }) {
 }
 
 RoleAccessTableBase.propTypes = {
-  roleAccessDefinitions: PropTypes.array,
+  roleAccessDefinitions: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   roleAccessMetadata: PropTypes.object,
