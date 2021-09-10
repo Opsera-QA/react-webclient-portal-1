@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Col} from "react-bootstrap";
-import RegistryToolCard from "components/common/fields/inventory/RegistryToolCard";
 import Model from "core/data_model/model";
-import toolMetadata from "components/inventory/tools/tool-metadata";
 import Row from "react-bootstrap/Row";
 import CardView from "components/common/card/CardView";
+import TaskCard from "components/common/fields/tasks/TaskCard";
+import gitTasksMetadata from "components/git/git-tasks-metadata";
 
 function TaskCardView({ taskData, taskFilterModel, setTaskFilterModel, loadData, isLoading }) {
   const getCards = () => {
@@ -17,7 +17,7 @@ function TaskCardView({ taskData, taskFilterModel, setTaskFilterModel, loadData,
       <Row className={"mx-0"}>
         {taskData.map((task, index) => (
           <Col key={index} className={"mb-2"}>
-            <RegistryToolCard toolData={new Model({ ...task }, toolMetadata, false)}/>
+            <TaskCard taskData={new Model({ ...task }, gitTasksMetadata, false)}/>
           </Col>
         ))}
       </Row>

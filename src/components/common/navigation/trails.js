@@ -707,18 +707,18 @@ const breadcrumbs = {
   },
 
   //GIT Tasks
-  gitTasksManagement : {
+  taskManagement : {
     parent: undefined,
-    name: "gitTasksManagement",
-    path: paths.gitTasks,
+    name: "taskManagement",
+    path: paths.taskManagement,
     title: "Opsera Task Management",
     linkText: "Opsera Task Management",
     icon: faTasks
   },
-  gitTasksDetailView: {
-    parent: "gitTasksManagement",
-    name: "gitTasksDetailView",
-    path: paths.gitTasksDetailView,
+  taskManagementDetailView: {
+    parent: "taskManagement",
+    name: "taskManagementDetailView",
+    path: paths.taskManagementDetailView,
     title: "Opsera Task Details",
     linkText: "Opsera Task Details",
     icon: faTasks

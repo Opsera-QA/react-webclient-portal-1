@@ -99,7 +99,7 @@ import ToolCountsReport from "components/reports/tools/counts/ToolCountsReport";
 import UserSettings from "components/user/user_settings/UserSettings";
 import AccessTokenDetailView from "components/user/user_settings/access_tokens/details/AccessTokenDetailView";
 import DetailedToolReport from "./components/reports/tools/detailedReport/DetailedToolReport";
-import GitTaskDetailView from "components/git/git_task_details/GitTaskDetailView";
+import TaskDetailView from "components/git/git_task_details/TaskDetailView";
 import TagsUsedInDashboardsReport from "components/reports/tags/dashboards/TagsUsedInDashboardReport";
 import OrganizationManagement from "components/settings/organizations/OrganizationManagement";
 import OrganizationDetailView from "components/settings/organizations/organization_detail_view/OrganizationDetailView";
@@ -119,7 +119,7 @@ import TagReportsScreen from "components/reports/tags/TagReportsScreen";
 import PipelineReportsScreen from "components/reports/pipelines/PipelineReportsScreen";
 import ToolReportsScreen from "components/reports/tools/ToolReportsScreen";
 import UserReportsScreen from "components/reports/users/UserReportsScreen";
-import GitTasksView from "components/git/GitTasksView";
+import TaskManagement from "components/git/TaskManagement";
 import TaskAllActivityPanel from "components/git/git_task_details/activity_logs/TaskAllActivityPanel";
 import LoginForm from "./components/login/LoginForm";
 import UserManagement from "components/settings/users/UserManagement";
@@ -399,9 +399,9 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/insights/synopsis" component={InsightsSynopsis} />
 
                 {/* tasks */}
-                <SecureRoute path="/task" exact component={GitTasksView} />
+                <SecureRoute path="/task" exact component={TaskManagement} />
                 <SecureRoute path="/task/activity" exact component={TaskAllActivityPanel} />
-                <SecureRoute path="/task/details/:id" exact component={GitTaskDetailView} />
+                <SecureRoute path="/task/details/:id" exact component={TaskDetailView} />
 
                 {/* Administration Pages */}
                 <SecureRoute path="/admin" exact component={AdminTools} />

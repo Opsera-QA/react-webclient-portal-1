@@ -16,7 +16,7 @@ import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import TasksSubNavigationBar from "components/git/TasksSubNavigationBar";
 
-function GitTaskDetailView() {
+function TaskDetailView() {
   const location = useLocation();
   const { id } = useParams();
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
@@ -103,7 +103,7 @@ function GitTaskDetailView() {
 
   return (
     <DetailScreenContainer
-      breadcrumbDestination={"gitTasksDetailView"}
+      breadcrumbDestination={"taskManagementDetailView"}
       metadata={gitTasksMetadata}
       dataObject={gitTasksData}
       isLoading={isLoading}
@@ -125,4 +125,4 @@ function GitTaskDetailView() {
   );
 }
 
-export default GitTaskDetailView;
+export default TaskDetailView;
