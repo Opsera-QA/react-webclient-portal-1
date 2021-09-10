@@ -6,8 +6,8 @@ import { faPlay, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
-import GitTaskSfdcPipelineWizardOverlay from "components/git/git_task_details/configuration_forms/sfdc-org-sync/GitTaskSfdcPipelineWizardOverlay";
-import gitTasksActions from "components/git/git-task-actions";
+import GitTaskSfdcPipelineWizardOverlay from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/GitTaskSfdcPipelineWizardOverlay";
+import gitTasksActions from "components/tasks/git-task-actions";
 import axios from "axios";
 
 function RunGitTaskButton({gitTasksData, handleClose, setGitTasksData, gitTasksConfigurationDataDto, disable, className, loadData }) {

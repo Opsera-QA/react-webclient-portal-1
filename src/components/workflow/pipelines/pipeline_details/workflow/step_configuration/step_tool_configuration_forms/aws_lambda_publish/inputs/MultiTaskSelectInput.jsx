@@ -10,8 +10,8 @@ import { AuthContext } from "contexts/AuthContext";
 import DropdownList from "react-widgets/lib/DropdownList";
 import axios from "axios";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import gitTasksActions from "components/git/git-task-actions";
-import gitTasksFilterMetadata from "components/git/git-tasks-filter-metadata";
+import gitTasksActions from "components/tasks/git-task-actions";
+import gitTasksFilterMetadata from "components/tasks/git-tasks-filter-metadata";
 import Model from "../../../../../../../../../core/data_model/model";
 
 function MultiTaskSelectInputBase({
