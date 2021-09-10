@@ -114,13 +114,6 @@ function SonarReliabilityRemediationEffortAggBytimeLineChart({
         if (insightsDataObject) {
           setInsights(insightsDataObject);
         }
-
-        let newFilterDto = filterDto;
-        newFilterDto.setData(
-          "totalCount",
-          insightsResponse?.data?.data[0]?.sonarReliabilityRemediationEffortAggByTimeActIns?.data[0]?.count[0]?.count
-        );
-        setFilterDto({ ...newFilterDto });
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -174,6 +167,9 @@ function SonarReliabilityRemediationEffortAggBytimeLineChart({
   const getBody = (thisDataPoint) => {
     let date = thisDataPoint?.data?.xFormatted;
     let projects = getProjectsFromDate(date);
+    let newFilterDto = filterDto;
+    newFilterDto.setData("totalCount", projects?.length);
+    setFilterDto({ ...newFilterDto });
 
     return (
       <FilterContainer
