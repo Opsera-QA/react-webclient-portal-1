@@ -66,7 +66,6 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraMeanTimeToRestore", kpiConfiguration, dashboardTags);
-      console.log(response);
       let dataObject = response?.data?.data[0]?.opseraMeanTimeToRestore?.data[0].data;
       assignStandardColors(dataObject, true);
       dataObject.forEach(data => data.Count = data.count);
@@ -92,19 +91,13 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
-    console.log("metrics",metrics);
     const getMaxValue = (data) => {
       let countsMax = Math.max.apply(Math,data.map(function(o){return o.count;}));
       let mttrMax = Math.max.apply(Math,data.map(function(o){return o.mttr;}));
       let max = Math.ceil(Math.max(countsMax, mttrMax));
       return max;
     };
-
-    const getPopoverBody = () => {
-      let mead = metrics[0].mean;
-      return mead;
-    };
-
+    
     let mead = metrics[0].mean;
     // TODO: Do these need to be passed as object props?
     const MeanLineLayer = ({ bars, xScale, yScale }) => {
