@@ -16,6 +16,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import MeanTimeToRestoreSummaryPanelMetadata from "components/insights/charts/opsera/bar_chart/mean_time_to_restore/opseraMeanTimeToRestoreSummaryPanelMetadata";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import BlueprintLogOverlay from "../../../../../blueprint/BlueprintLogOverlay";
 
 function OpseraMeanTimeToRestoreSummaryPanel({ dashboardData, kpiConfiguration, setActiveTab, currentDate }) {
   const history = useHistory();
@@ -55,8 +56,7 @@ function OpseraMeanTimeToRestoreSummaryPanel({ dashboardData, kpiConfiguration, 
   }, [JSON.stringify(dashboardData)]);
 
   const onRowSelect = (rowData) => {
-    toastContext.clearOverlayPanel();
-    history.push(`/blueprint/${rowData.original._id.id}/${rowData.original.run_count}`);
+    toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.run_count} />);
   };
 
   const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
