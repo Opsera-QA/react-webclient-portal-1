@@ -82,6 +82,12 @@ export class Model {
       this.data[fieldName] = newValue;
   };
 
+  setDefaultValue = (fieldName) => {
+    const defaultValue = this.metaData?.newObjectFields?.[fieldName];
+    this.propertyChange(fieldName, defaultValue, this.getData(fieldName));
+    this.data[fieldName] = defaultValue;
+  };
+
   setMetaData = (metaData) => {
     this.metaData = metaData;
   };

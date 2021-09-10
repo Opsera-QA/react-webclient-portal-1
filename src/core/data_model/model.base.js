@@ -94,6 +94,12 @@ export class ModelBase {
     this.updateState();
   };
 
+  setDefaultValue = (fieldName) => {
+    const defaultValue = this.metaData?.newObjectFields?.[fieldName];
+    this.propertyChange(fieldName, defaultValue, this.getData(fieldName));
+    this.data[fieldName] = defaultValue;
+  };
+
   createModel = async () => {
     console.error("No createModel function was wired up");
   };
