@@ -286,7 +286,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "opsera-mean-time-to-restore":
         return (
-          <Col md={12} className="p-2">
+          <Col xl={6} md={12} className="p-2">
             <OpseraMeanTimeToRestoreBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
