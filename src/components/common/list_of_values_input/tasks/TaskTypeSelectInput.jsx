@@ -21,6 +21,7 @@ export const nonProductionTaskTypes = [
   {text: "AWS: Create ECS Cluster", value: TASK_TYPES.AWS_CREATE_ECS_CLUSTER},
   {text: "AWS: Create ECS Service", value: TASK_TYPES.AWS_CREATE_ECS_SERVICE},
   {text: "AWS: Create Lambda Function", value: TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION},
+  {name: "Create Azure AKS Cluster", value: TASK_TYPES.AZURE_CLUSTER_CREATION},
 ];
 
 function TaskTypeSelectInput({ fieldName, model, setModel, setDataFunction, disabled }) {
