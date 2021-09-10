@@ -6,7 +6,7 @@ AnsibleStepActions.getSCMRepoFiles = async (dataObject, getAccessToken, cancelTo
   const apiUrl = `/tools/scm/getFilesUnderPath`;
   const postBody = {
     branch: dataObject?.getData("defaultBranch"),
-    filePath: dataObject?.getData("connectorFilePath"),
+    filePath: dataObject?.getData("playbookFilePath"),
     gitToolId: dataObject?.getData("gitToolId"),
     projectId: dataObject?.getData("repoId"),
     workspace: dataObject?.getData("workspace"),
