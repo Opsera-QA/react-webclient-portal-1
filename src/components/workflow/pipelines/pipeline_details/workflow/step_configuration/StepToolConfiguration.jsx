@@ -64,6 +64,7 @@ import AzureAcrPushStepConfiguration from "./step_tool_configuration_forms/azure
 import AksServiceDeployStepConfiguration
   from "./step_tool_configuration_forms/aks_service_deploy/AksServiceDeployStepConfiguration";
 import MongodbRealmStepConfiguration from "./step_tool_configuration_forms/mongodb_realm/MongodbRealmStepConfiguration";
+import AzureFunctionsStepConfiguration from "./step_tool_configuration_forms/azure_functions/AzureFunctionsStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -1005,6 +1006,20 @@ function StepToolConfiguration({
       case "azure_aks_deploy":
         return (
           <AksServiceDeployStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+          />
+        );            
+      case "azure-functions":
+        return (
+          <AzureFunctionsStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}
