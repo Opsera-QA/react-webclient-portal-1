@@ -9,15 +9,11 @@ import gitTasksActions from "components/tasks/git-task-actions";
 import gitTasksFilterMetadata from "components/tasks/git-tasks-filter-metadata";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+import {
+  nonProductionTaskTypes,
+  productionTaskTypes
+} from "components/common/list_of_values_input/tasks/TaskTypeSelectInput";
 
-export let taskTypes = [
-  {name: "SFDC Org sync", value: "sync-sfdc-repo"},
-  {name: "SFDC Branch Structuring", value: "sync-branch-structure"},
-  {name: "GIT to GIT Sync", value: "sync-git-branches"},
-  { name: "Create AWS ECS Cluster", value: "ecs_cluster_creation" },
-  { name: "Create AWS ECS Service", value: "ecs_service_creation" },
-  {name: "Create AWS Lambda Function", value: "lambda_function_creation"},
-];
 // TODO: Remove the disabled items from here when done
 function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction, placeholderText }) {
   const { featureFlagHideItemInProd } = useContext(AuthContext);
@@ -40,15 +36,6 @@ function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled
     setCancelTokenSource(source);
     isMounted.current = true;
     if (!envIsProd) {
-      taskTypes = [
-        { name: "SFDC Org sync", value: "sync-sfdc-repo"},
-        { name: "Generate Certificate for SFDX", value: "sfdc-cert-gen"},
-        { name: "SFDC Branch Structuring", value: "sync-branch-structure"},
-        { name: "GIT to GIT Sync", value: "sync-git-branches"},
-        { name: "Create AWS ECS Cluster", value: "ecs_cluster_creation" },
-        { name: "Create AWS ECS Service", value: "ecs_service_creation" },
-        {name: "Create AWS Lambda Function", value: "lambda_function_creation"},
-      ];
       getTasksList(gitTasksFilterDto, source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -102,11 +89,11 @@ function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      selectOptions={taskTypes}
+      selectOptions={featureFlagHideItemInProd() !== false ? productionTaskTypes : nonProductionTaskTypes}
       setDataFunction={setDataFunction}
       placeholderText={placeholderText}
       valueField="value"
-      textField="name" 
+      textField="text"
       busy={isLoading}
       disabled={isLoading || checkDisabledTaskType()}
     />
