@@ -5,8 +5,8 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import Model from "core/data_model/model";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
-import gitTasksActions from "components/git/git-task-actions";
-import gitTasksFilterMetadata from "components/git/git-tasks-filter-metadata";
+import gitTasksActions from "components/tasks/git-task-actions";
+import gitTasksFilterMetadata from "components/tasks/git-tasks-filter-metadata";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 

@@ -11,7 +11,7 @@ import axios from "axios";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 import OwnershipReportLdapUserSelectInput
   from "components/common/list_of_values_input/reports/user_reports/OwnershipReportLdapUserSelectInput";
-import gitTasksActions from "components/git/git-task-actions";
+import gitTasksActions from "components/tasks/git-task-actions";
 import reportsFilterMetadata from "components/reports/reports-filter-metadata";
 
 function UserTaskOwnershipReport() {
