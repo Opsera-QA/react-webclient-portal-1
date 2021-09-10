@@ -6,4 +6,5 @@ export const TASK_TYPES = {
   AWS_CREATE_ECS_CLUSTER: "ecs_cluster_creation",
   AWS_CREATE_ECS_SERVICE: "ecs_service_creation",
   AWS_CREATE_LAMBDA_FUNCTION: "lambda_function_creation",
+  AZURE_CLUSTER_CREATION: "azure_cluster_creation",
 };
