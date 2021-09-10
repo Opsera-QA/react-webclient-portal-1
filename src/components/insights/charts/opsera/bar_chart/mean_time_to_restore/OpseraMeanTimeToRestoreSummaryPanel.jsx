@@ -16,6 +16,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import MeanTimeToRestoreSummaryPanelMetadata from "components/insights/charts/opsera/bar_chart/mean_time_to_restore/opseraMeanTimeToRestoreSummaryPanelMetadata";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import BlueprintLogOverlay from "../../../../../blueprint/BlueprintLogOverlay";
 
 function OpseraMeanTimeToRestoreSummaryPanel({ dashboardData, kpiConfiguration, setActiveTab, currentDate }) {
   const history = useHistory();
@@ -33,6 +34,7 @@ function OpseraMeanTimeToRestoreSummaryPanel({ dashboardData, kpiConfiguration, 
     new Model({ ...genericChartFilterMetadata.newObjectFields }, MeanTimeToRestoreSummaryPanelMetadata, false)
   );
   
+  console.log(currentDate);
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -55,15 +57,15 @@ function OpseraMeanTimeToRestoreSummaryPanel({ dashboardData, kpiConfiguration, 
   }, [JSON.stringify(dashboardData)]);
 
   const onRowSelect = (rowData) => {
-    toastContext.clearOverlayPanel();
-    history.push(`/blueprint/${rowData.original._id.id}/${rowData.original.run_count}`);
+    console.log(rowData);
+    toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.run_count} />);
   };
 
   const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "summaryPipelinesSuccessfulDeployment", kpiConfiguration, dashboardTags, filterDto, null, null, null, currentDate);
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "getMTTRListOfPipelines", kpiConfiguration, dashboardTags, filterDto, null, null, null, currentDate);
       let dataObject = response?.data ? response?.data?.data[0] : [{data: [], count: [{count: 0}]}];
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataObject[0]?.count[0]?.count);

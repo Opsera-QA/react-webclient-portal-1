@@ -11,15 +11,24 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { line } from "d3-shape";
 import {
   defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
-  accentColor, mainPurple,
+  accentColor, mainPurple, neutralColor, mainColor,
 } from "../../../charts-views";
 import ChartTooltip from '../../../ChartTooltip';
 import DeploymentFrequencyInsightsTableMetadata
   from "components/insights/charts/opsera/OpseraDeploymentFreqStats/deployment-frequency-actionable-metadata";
 import Model from "../../../../../../core/data_model/model";
-
 import ChartDetailsOverlay from "../../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import MeanTimeToDeployHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/MeanTimeToDeployHelpDocumentation";
+import CoverityIssuesByCategoryHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/CoverityIssuesByCategoryHelpDocumentation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinus , faSquare} from "@fortawesome/pro-solid-svg-icons";
+import TooltipWrapper from "../../../../../common/tooltip/TooltipWrapper";
+import useTooltip from "@nivo/tooltip";
+import InputPopover from "../../../../../common/inputs/info_text/InputPopover";
+
 
 function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -83,6 +92,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
+    console.log("metrics",metrics);
     const getMaxValue = (data) => {
       let countsMax = Math.max.apply(Math,data.map(function(o){return o.count;}));
       let mttrMax = Math.max.apply(Math,data.map(function(o){return o.mttr;}));
@@ -90,21 +100,29 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
       return max;
     };
 
+    const getPopoverBody = () => {
+      let mead = metrics[0].mean;
+      return mead;
+    };
+
+    let mead = metrics[0].mean;
     // TODO: Do these need to be passed as object props?
     const MeanLineLayer = ({ bars, xScale, yScale }) => {
-        const lineColor = accentColor;
+        const lineColor = neutralColor;
         const lineGenerator = line()
           .x(d => xScale(d.data.data._id))
           .y(d => yScale(d.data.data.mean));
+        const mean = metrics[0]?.mean;
         return (
           <Fragment>
-          <path
+          <path 
             d={lineGenerator(bars)}
             fill="none"
             stroke={lineColor}
             strokeWidth="3"
-            style={{ pointerEvents: "none" }}
+            style={{ pointerEvents: null }}
           />
+            
       {/*{bars.map(bar => {*/}
       {/*    return <circle*/}
       {/*      key={bar.key}*/}
@@ -128,14 +146,17 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
           chartModel={chartModel}
-          kpiIdentifier={"opsera-deployment-frequency-stats-successful"}
-          currentDate={data.data._id}/>);
+          kpiIdentifier={"mean-time-to-restore"}
+          currentDate={data.data._id}
+        />);
     };
 
     return (
       <div className="new-chart mb-3 pointer" style={{height: "300px"}}>
         <div style={{float: "right", fontSize: "10px"}}>
-          Total Number of Deployments - #
+          # - Total Number of Deployments <br></br>
+          <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg"/> Average MTTD <b>({mead} minutes)</b> <br></br>
+          <FontAwesomeIcon icon={faSquare} color={mainColor} size="lg"/> MTTD <br></br>
         </div>
         <ResponsiveBar
           data={metrics}
@@ -166,6 +187,9 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
           error={error}
           setKpis={setKpis}
           isLoading={isLoading}
+          chartHelpComponent={(closeHelpPanel) => (
+            <MeanTimeToDeployHelpDocumentation closeHelpPanel={closeHelpPanel} />
+          )}
         />
         <ModalLogs
           header="Mean Time to Restore"
@@ -187,7 +211,7 @@ OpseraMeanTimeToRestoreBarChart.propTypes = {
   setKpis: PropTypes.func,
   bars: PropTypes.any,
   xScale: PropTypes.any,
-  yScale: PropTypes.any
+  yScale: PropTypes.any,
 };
 
 export default OpseraMeanTimeToRestoreBarChart;
