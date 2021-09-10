@@ -2,21 +2,25 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {AuthContext} from "contexts/AuthContext";
+import {TASK_TYPES} from "components/tasks/task-types";
 
 export const productionTaskTypes = [
-  {text: "Salesforce Organization Sync", value: "sync-sfdc-repo"},
-  {text: "Salesforce Branch Structuring", value: "sync-branch-structure"},
-  {text: "Git to Git Sync", value: "sync-git-branches"},
+  {text: "Salesforce Organization Sync", value: TASK_TYPES.SYNC_SALESFORCE_REPO},
+  {text: "Salesforce Branch Structuring", value: TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE},
+  {text: "Git to Git Sync", value: TASK_TYPES.SYNC_GIT_BRANCHES},
+  {text: "AWS: Create ECS Cluster", value: TASK_TYPES.AWS_CREATE_ECS_CLUSTER},
+  {text: "AWS: Create ECS Service", value: TASK_TYPES.AWS_CREATE_ECS_SERVICE},
+  {text: "AWS: Create Lambda Function", value: TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION},
 ];
 
 export const nonProductionTaskTypes = [
-  {text: "Salesforce Organization Sync", value: "sync-sfdc-repo"},
-  {text: "Generate Certificate for SFDX", value: "sfdc-cert-gen"},
-  {text: "Salesforce Branch Structuring", value: "sync-branch-structure"},
-  {text: "Git to Git Sync", value: "sync-git-branches"},
-  {text: "Create AWS ECS Cluster", value: "ecs_cluster_creation"},
-  {text: "Create AWS ECS Service", value: "ecs_service_creation"},
-  {text: "Create AWS Lambda Function", value: "lambda_function_creation"},
+  {text: "Salesforce Organization Sync", value: TASK_TYPES.SYNC_SALESFORCE_REPO},
+  {text: "Generate Certificate for SFDX", value: TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION},
+  {text: "Salesforce Branch Structuring", value: TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE},
+  {text: "Git to Git Sync", value: TASK_TYPES.SYNC_GIT_BRANCHES},
+  {text: "AWS: Create ECS Cluster", value: TASK_TYPES.AWS_CREATE_ECS_CLUSTER},
+  {text: "AWS: Create ECS Service", value: TASK_TYPES.AWS_CREATE_ECS_SERVICE},
+  {text: "AWS: Create Lambda Function", value: TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION},
 ];
 
 function TaskTypeSelectInput({ fieldName, model, setModel, setDataFunction, disabled }) {
