@@ -5,8 +5,8 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
 import axios from "axios";
 import Model from "../../../../../../../../../core/data_model/model";
-import gitTasksActions from "../../../../../../../../git/git-task-actions";
-import gitTasksFilterMetadata from "../../../../../../../../git/git-tasks-filter-metadata";
+import gitTasksActions from "../../../../../../../../tasks/git-task-actions";
+import gitTasksFilterMetadata from "../../../../../../../../tasks/git-tasks-filter-metadata";
 
 function TaskSelectInput({
   fieldName,

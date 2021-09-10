@@ -5,6 +5,7 @@ export let mainGold, warningColor = "#F1AD0F";
 export const mainPurple = "#494173";
 export const accentColor = "#A8D0DB";
 export const failColor = "#E57373";
+export const neutralColor = "#FFA500";
 
 // Color schema for Nivo charts
 export const standardColors = [mainColor, "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173", "#E6E5E3", mainPurple, "#1E1D1B"];

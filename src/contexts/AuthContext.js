@@ -1,12 +1,14 @@
-import React, {createContext} from "react";
+import React, { createContext } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
 
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
 
 const AuthContextProvider = (props) => {
     const { userData, refreshToken, authClient } = props;
+    const history = useHistory();
 
     const logoutUserContext = async () => {
       authClient.tokenManager.clear();
@@ -14,7 +16,8 @@ const AuthContextProvider = (props) => {
       await authClient.revokeRefreshToken();
       authClient.closeSession()
         .then(() => {
-          window.location.replace("/");
+          //window.location.replace("/");
+          history.push("/");
         })
         .catch(e => {
           if (e.xhr && e.xhr.status === 429) {
@@ -24,7 +27,8 @@ const AuthContextProvider = (props) => {
     };
 
     const loginUserContext = () => {
-      window.location = "/login";
+      //window.location = "/login";
+      history.push("/login");
     };
 
     const renewUserToken = () => {
@@ -33,6 +37,7 @@ const AuthContextProvider = (props) => {
 
     const getAccessToken = async () => {
       const isAuthenticated = await getIsAuthenticated();
+
       if (!isAuthenticated) {
         //console.log("!getAccessToken: refreshing UI to trigger login");
         //window.location = "/login"; //if not authenticated, may just need to take user to login page
@@ -47,19 +52,19 @@ const AuthContextProvider = (props) => {
         let tokenExp = moment.unix(tokenObject.expiresAt);
 
         if (now.isBefore(tokenExp)) { //maybe check if 30min has passed and then force refresh?  Be proactive?
-          console.log("TOKEN NOT EXPIRED: ", tokenExp.format("MMMM Do YYYY, h:mm:ss a"));
+          console.info("TOKEN NOT EXPIRED: ", tokenExp.format("MMMM Do YYYY, h:mm:ss a"));
           //console.log("Existing token: ", tokenObject.accessToken);
           return tokenObject.accessToken;
         } else {
-          console.log("EXPIRED TOKEN FOUND ON:", tokenExp.format("MMMM Do YYYY, h:mm:ss a"));
+          console.info("EXPIRED TOKEN FOUND ON:", tokenExp.format("MMMM Do YYYY, h:mm:ss a"));
           const newToken = await authClient.tokenManager.renew("accessToken");
-          console.log("REFRESHED TOKEN FOR:", moment.unix(newToken.expiresAt).format("MMMM Do YYYY, h:mm:ss a"));
+          console.info("REFRESHED TOKEN FOR:", moment.unix(newToken.expiresAt).format("MMMM Do YYYY, h:mm:ss a"));
           //console.log("token being returned from getAccessToken:", newToken.accessToken);
           return newToken.accessToken;
         }
 
       } else {
-        console.log("returning a false result from getAccessToken");
+        console.info("no access token available");
         return false;
       }
     };
@@ -185,7 +190,7 @@ AuthContextProvider.propTypes = {
   userData: PropTypes.object,
   refreshToken: PropTypes.func,
   authClient: PropTypes.object,
-  children: PropTypes.any
+  children: PropTypes.any,
 };
 
 export const AuthContext = createContext();

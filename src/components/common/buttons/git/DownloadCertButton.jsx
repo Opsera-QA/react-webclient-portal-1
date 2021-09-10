@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileDownload, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import gitTasksActions from "components/git/git-task-actions";
+import gitTasksActions from "components/tasks/git-task-actions";
 
 function DownloadCertButton({recordDto, disable, size, showSuccessToasts, className, saveButtonText}) {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);

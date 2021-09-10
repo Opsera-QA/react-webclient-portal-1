@@ -1,3 +1,4 @@
+/* THIS MAY BE DEPRECATED!!! */
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -9,7 +10,7 @@ const Login = ({ issuer, authClient }) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (!authState.isPending && authState.isAuthenticated) {
+    if (authState && !authState.isPending && authState.isAuthenticated) {
       history.push("/");
     }
   }, [authState.isAuthenticated]);

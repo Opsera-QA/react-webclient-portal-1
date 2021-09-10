@@ -9,7 +9,7 @@ import {faTools} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 
 // TODO: Rework to use Summary panel for both the main tool view and also the configuration based off tool identifier like in the registry
-function RegistryToolInfoOverlay({tools, toolData, loadData, isLoading, selectedToolId, toolIdentifier}) {
+function RegistryToolInfoOverlay({tools, toolData, loadData, isLoading, selectedToolId}) {
   const getBody = () => {
     if (toolData) {
       return (
@@ -20,7 +20,7 @@ function RegistryToolInfoOverlay({tools, toolData, loadData, isLoading, selected
             <div>To add a new entry to a dropdown or update settings, make those changes there.</div>
             <div><Link to={`/inventory/tools/details/${selectedToolId}`} target="_blank" rel="noopener noreferrer">Click here to view the selected Tool&apos;s details</Link></div>
           </div>
-          <ToolInfoContainer toolData={toolData} toolIdentifier={toolIdentifier} />
+          <ToolInfoContainer toolId={selectedToolId} />
         </>
       );
     }
@@ -67,7 +67,6 @@ RegistryToolInfoOverlay.propTypes = {
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   selectedToolId: PropTypes.string,
-  toolIdentifier: PropTypes.string,
 };
 
 export default RegistryToolInfoOverlay;
