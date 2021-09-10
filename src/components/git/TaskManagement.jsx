@@ -16,7 +16,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TasksSubNavigationBar from "components/git/TasksSubNavigationBar";
 import InlineTaskTypeFilter from "components/common/filters/tasks/type/InlineTaskTypeFilter";
 
-function GitTasksView() {
+function TaskManagement() {
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -107,7 +107,7 @@ function GitTasksView() {
     );
   };
 
-  const createNewNotification = () => {
+  const createNewTask = () => {
     toastContext.showOverlayPanel(<NewGitTaskOverlay loadData={loadData} isMounted={isMounted} />);
   };
 
@@ -117,7 +117,7 @@ function GitTasksView() {
 
   return (
     <ScreenContainer
-      breadcrumbDestination={"gitTasksManagement"}
+      breadcrumbDestination={"taskManagement"}
       pageDescription={`
         Create and Manage Opsera Related Tasks.
       `}
@@ -127,7 +127,7 @@ function GitTasksView() {
         loadData={loadData}
         filterDto={gitTasksFilterDto}
         setFilterDto={setGitTasksFilterDto}
-        addRecordFunction={createNewNotification}
+        addRecordFunction={createNewTask}
         supportSearch={true}
         isLoading={isLoading}
         // inlineFilters={
@@ -148,5 +148,5 @@ function GitTasksView() {
   );
 }
 
-export default GitTasksView;
+export default TaskManagement;
 

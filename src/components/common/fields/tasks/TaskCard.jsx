@@ -9,7 +9,7 @@ import {getLargeVendorIconFromToolIdentifier} from "components/common/helpers/ic
 
 function TaskCard({ taskData, isLoading, loadToolInNewWindow }) {
   const getTitleBar = () => {
-    let icon = getLargeVendorIconFromToolIdentifier(process.env.REACT_APP_OPSERA_S3_STORAGE_URL, taskData?.getData("tool_identifier"));
+    let icon = getLargeVendorIconFromToolIdentifier(process.env.REACT_APP_OPSERA_S3_STORAGE_URL, taskData?.getData("type"));
 
     if (typeof icon === "string") {
       icon = (
