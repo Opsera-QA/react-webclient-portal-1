@@ -72,6 +72,9 @@ export function getLargeVendorIconFromToolIdentifier (s3Bucket, toolIdentifier) 
       return <Image src={`${vendorIconPrefix}/xunit-60-213.png`} className={"xunit-icon"} />;
     case "ansible":
       return <Image src={`${vendorIconPrefix}/ansible-98-124.png`} className={"ansible-icon"} />;
+    case "mongodb":
+    case "mongodb_realm":
+      return <Image src={`${vendorIconPrefix}/icons8-mongodb-96.png`} />;
     default:
       return <FontAwesomeIcon icon={faWrench} fixedWidth className={"title-fa-icon wrench"} />;
   }
