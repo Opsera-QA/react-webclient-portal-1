@@ -473,7 +473,7 @@ function PipelineStepConfigurationSummary({
             aksDeployPipelineDataObject={getModelWrappedObject(aksStepFormMetadata)}
             />
         );
-      case "azure_functions":
+      case "azure-functions":
         return (
           <AzureFunctionsStepConfigurationSummaryPanel
             pipelineData={pipelineData}

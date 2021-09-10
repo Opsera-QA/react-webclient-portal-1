@@ -7,8 +7,8 @@ import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 import BooleanField from "../../../../../../../common/fields/boolean/BooleanField";
 
-function AksServiceDeployStepSummary({ aksDeployPipelineDataObject, pipelineData, setActiveTab }) {
-  if (aksDeployPipelineDataObject == null) {
+function AzureFunctionsStepConfigurationSummaryPanel({ azureFunctionsPipelineDataObject, pipelineData, setActiveTab }) {
+  if (azureFunctionsPipelineDataObject == null) {
     return <LoadingDialog size="sm" />;
   }
 
@@ -16,21 +16,27 @@ function AksServiceDeployStepSummary({ aksDeployPipelineDataObject, pipelineData
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <BooleanField dataObject={aksDeployPipelineDataObject} fieldName={"dynamicServiceName"}/>
+          <TextFieldBase dataObject={azureFunctionsPipelineDataObject} fieldName={"azureRegion"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={aksDeployPipelineDataObject} fieldName={"namePretext"}/>
+          <TextFieldBase dataObject={azureFunctionsPipelineDataObject} fieldName={"applicationType"}/>
+        </Col>
+        <Col lg={6}>
+          <BooleanField dataObject={azureFunctionsPipelineDataObject} fieldName={"dynamicServiceName"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={azureFunctionsPipelineDataObject} fieldName={"namePretext"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
   );
 }
 
-AksServiceDeployStepSummary.propTypes = {
-  aksDeployPipelineDataObject: PropTypes.object,
+AzureFunctionsStepConfigurationSummaryPanel.propTypes = {
+  azureFunctionsPipelineDataObject: PropTypes.object,
   pipelineData: PropTypes.object,
   setActiveTab: PropTypes.func
 };
 
 
-export default AksServiceDeployStepSummary;
+export default AzureFunctionsStepConfigurationSummaryPanel;

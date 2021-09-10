@@ -75,7 +75,6 @@ function AzureFunctionsApplicationTypeSelectInput({
     
     const applicationTypesList = result.map((el) => ({
       name: `${el?.properties?.display} - ( ${el?.properties.name} )`,
-      value: el
     }));
 
     console.log(applicationTypesList);
@@ -110,7 +109,7 @@ function AzureFunctionsApplicationTypeSelectInput({
         setDataObject={setDataObject}
         selectOptions={azureApplicationTypeList}
         busy={isLoading}
-        valueField={"value"}
+        valueField={"name"}
         textField={"name"}
         disabled={isLoading || azureApplicationTypeList.length === 0}
         placeholder={placeholder}

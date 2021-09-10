@@ -6,7 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/pro-light-svg-icons";
-import azureTaskActions from "components/git/git_task_details/configuration_forms/azure-cluster-creation/azure-cluster-actions";
+import azureFunctionsActions from "../azure-functions-step-actions";
 
 
 function AzureFunctionsRegionSelectInput({
@@ -64,7 +64,7 @@ function AzureFunctionsRegionSelectInput({
   };
 
   const loadAzureRegions = async (cancelSource = cancelTokenSource) => {
-    const response = await azureTaskActions.getAzureRegions(
+    const response = await azureFunctionsActions.getAzureRegions(
       getAccessToken,
       cancelSource,
       azureConfig,
