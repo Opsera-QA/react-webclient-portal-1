@@ -17,40 +17,25 @@ export const TERRAFORM_SCM_TOOL_LIST = [
   },
 ];
 
-function TerraformScmToolTypeSelectInput({fieldName, dataObject, setDataObject, isLoading, disabled}) {
-  
+function TerraformScmToolTypeSelectInput({model, setModel, isLoading, disabled}) {
   const setDataFunction = async (fieldName, selectedOption) => {
-    let newDataObject = {...dataObject};
-    await newDataObject.setData(fieldName, selectedOption?.value);
-    newDataObject.setData("gitToolId", "");
-    newDataObject.setData("gitRepository", "");
-    newDataObject.setData("defaultBranch", "");
-    newDataObject.setData("gitFilePath", "");
-    newDataObject.setData("bitbucketWorkspace", "");
-    newDataObject.setData("bitbucketWorkspaceName", "");
-    setDataObject({...newDataObject});
-  };
-
-  const clearDataFunction = async () => {
-    let newDataObject = {...dataObject};
-    await newDataObject.setData(fieldName, "");
-    newDataObject.setData("gitToolId", "");
-    newDataObject.setData("gitRepository", "");
-    newDataObject.setData("defaultBranch", "");
-    newDataObject.setData("gitFilePath", "");
-    newDataObject.setData("bitbucketWorkspace", "");
-    newDataObject.setData("bitbucketWorkspaceName", "");
-    setDataObject({...newDataObject});
+    let newModel = {...model};
+    await newModel.setData(fieldName, selectedOption?.value);
+    newModel.setData("gitToolId", "");
+    newModel.setData("gitRepository", "");
+    newModel.setData("defaultBranch", "");
+    newModel.setData("gitFilePath", "");
+    newModel.setData("bitbucketWorkspace", "");
+    newModel.setData("bitbucketWorkspaceName", "");
+    setModel({...newModel});
   };
 
   return (
-    
      <SelectInputBase
-       fieldName={fieldName}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
+       fieldName={"type"}
+       dataObject={model}
+       setDataObject={setModel}
        selectOptions={TERRAFORM_SCM_TOOL_LIST}
-       clearDataFunction={clearDataFunction}
        valueField={"value"}
        textField={"name"}
        placeholderText={"Select a Tool Type"}
@@ -62,16 +47,11 @@ function TerraformScmToolTypeSelectInput({fieldName, dataObject, setDataObject, 
 }
 
 TerraformScmToolTypeSelectInput.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   isLoading: PropTypes.bool,
-  className: PropTypes.string,
-  fieldName: PropTypes.string
-};
-
-TerraformScmToolTypeSelectInput.defaultProps = {
-  fieldName: "type"
+  className: PropTypes.string
 };
 
 export default TerraformScmToolTypeSelectInput;

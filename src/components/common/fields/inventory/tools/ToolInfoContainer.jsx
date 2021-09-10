@@ -2,13 +2,13 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import InfoContainer from "components/common/containers/InfoContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
-import ToolSummaryPanel from "components/inventory/tools/tool_details/ToolSummaryPanel";
-import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import Model from "core/data_model/model";
 import toolMetadata from "components/inventory/tools/tool-metadata";
 import ToolReadOnlyDetailPanel from "components/inventory/tools/tool_details/ToolReadOnlyDetailPanel";
+import ToolSummaryPanel from "components/inventory/tools/tool_details/ToolSummaryPanel";
+import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 
-function ToolInfoContainer({ toolData, toolIdentifier }) {
+function ToolInfoContainer({ toolData }) {
   const [toolModel, setToolModel] = useState(undefined);
 
   useEffect(() => {
@@ -33,6 +33,16 @@ function ToolInfoContainer({ toolData, toolIdentifier }) {
       );
     }
   };
+
+  // TODO: Merge this in once OPL-1459 is approved
+  // return (
+  //   <InfoContainer
+  //     titleIcon={faTools}
+  //     titleText={`${toolData?.name}`}
+  //   >
+  //     <ToolReadOnlyDetailPanel toolModel={toolModel} />
+  //   </InfoContainer>
+  // );
 
   return (
     <InfoContainer

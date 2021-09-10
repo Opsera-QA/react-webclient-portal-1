@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import PageLinkIcon from "components/common/icons/general/PageLinkIcon";
 import CloseIcon from "components/common/icons/general/CloseIcon";
 import IconBase from "components/common/icons/IconBase";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function HelpDocumentationContainer({ children, isLoading, helpTopic, confluenceLink, closeHelpPanel, externalLinkText, bodyClassName }) {
   const getTitleBar = () => {

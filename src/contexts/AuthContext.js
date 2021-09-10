@@ -11,9 +11,10 @@ const AuthContextProvider = (props) => {
     const logoutUserContext = async () => {
       authClient.tokenManager.clear();
       await authClient.revokeAccessToken();
+      await authClient.revokeRefreshToken();
       authClient.closeSession()
         .then(() => {
-          //window.location.reload(); // optional
+          window.location.replace("/");
         })
         .catch(e => {
           if (e.xhr && e.xhr.status === 429) {

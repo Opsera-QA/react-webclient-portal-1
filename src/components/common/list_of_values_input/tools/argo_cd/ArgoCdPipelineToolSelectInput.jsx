@@ -23,7 +23,8 @@ function ArgoCdPipelineToolSelectInput({className, fieldName, model, setModel, d
        setDataFunction={setDataFunction}
        disabled={disabled}
        className={className}
-       fields={["_id", "configuration", "name"]}
+       // TODO: Until read-only tool view is done, pulling entire tool so tools table works properly
+       // fields={["_id", "configuration", "name"]}
      />
   );
 }

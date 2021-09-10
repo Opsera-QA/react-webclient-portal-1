@@ -22,7 +22,15 @@ const notificationTypes = {
   UNKNOWN: "unknown"
 };
 
-function ToastContextProvider ({ children, navBar }) {
+const SITE_LOCATION = {
+  PIPELINES: "pipelines",
+  TASKS: "tasks",
+  DASHBOARDS: "dashboards",
+  REGISTRY: "registry",
+  NOTIFICATIONS: "notifications",
+};
+
+function ToastContextProvider({children, navBar}) {
   const [toasts, setToasts] = useState([]);
   // TODO: Wire up way to arrow through banners
   const [bannerMessages, setBannerMessages] = useState([]);
@@ -66,8 +74,8 @@ function ToastContextProvider ({ children, navBar }) {
   );
 
   const clearOverlayPanel = useCallback(() => {
-    document.body.style.overflow = 'unset';
-    setOverlayPanel(undefined);
+      document.body.style.overflow = 'unset';
+      setOverlayPanel(undefined);
     }, [setOverlayPanel]
   );
 
@@ -190,7 +198,7 @@ function ToastContextProvider ({ children, navBar }) {
     showSuccessBanner(successMessage, notificationTypes.FORM);
   };
 
-  const showSuccessBanner = (successMessage, notificationType = notificationTypes.UNKNOWN)=> {
+  const showSuccessBanner = (successMessage, notificationType = notificationTypes.UNKNOWN) => {
     let id = generateUUID();
     let successBanner = getSuccessBanner(successMessage, id);
     addBannerMessage(successBanner, id, notificationType);
@@ -226,19 +234,19 @@ function ToastContextProvider ({ children, navBar }) {
 
   const showFormValidationErrorDialog = (errorMessage = "") => {
     let id = generateUUID();
-    let errorToast = getErrorToast(undefined, id,`WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`);
+    let errorToast = getErrorToast(undefined, id, `WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`);
     addToast(errorToast, id, notificationTypes.FORM);
   };
 
   const showFormValidationErrorBanner = (errorMessage = "") => {
     let id = generateUUID();
-    let errorToast = getErrorToast(undefined, id,`WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`);
+    let errorToast = getErrorToast(undefined, id, `WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`);
     addToast(errorToast, id, notificationTypes.FORM);
   };
 
   const showFormValidationErrorToast = (errorMessage = "") => {
     let id = generateUUID();
-    let errorToast = getErrorToast(undefined, id,`WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`);
+    let errorToast = getErrorToast(undefined, id, `WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`);
     addToast(errorToast, id, notificationTypes.FORM);
   };
 
@@ -251,13 +259,29 @@ function ToastContextProvider ({ children, navBar }) {
   // TODO: Phase this out on many screens. Instead of showing loading error, find way to make it look better (like the data not found container) where relevant
   const showLoadingErrorDialog = (error) => {
     let id = generateUUID();
-    let errorBanner = getErrorBanner(error, id,`WARNING! An error has occurred loading:`);
+    let errorBanner = getErrorBanner(error, id, `WARNING! An error has occurred loading:`);
     addBannerMessage(errorBanner, id, notificationTypes.SYSTEM);
   };
 
   const showServiceUnavailableDialog = (error) => {
     let id = generateUUID();
     let errorBanner = getErrorBanner(error, id, `Service Unavailable. Please try again or report this issue:`);
+    addBannerMessage(errorBanner, id, notificationTypes.SYSTEM);
+  };
+
+  const showPipelineDropdownOptionsUnavailableBanner = (field, error) => {
+    const customMessage = "Please review the settings for the tool associated with this step in order to resolve the issue. ";
+    showDropdownOptionsUnavailableBanner(field, error, customMessage);
+  };
+
+  const showDropdownOptionsUnavailableBanner = (field, error, customMessage) => {
+    let id = generateUUID();
+    console.error(error);
+    let errorBanner = getErrorBanner(undefined, id,
+      `There was an issue pulling select options for the field ${field.label}. 
+      ${customMessage}
+      You can check the error logs for details on the specific error.
+      `);
     addBannerMessage(errorBanner, id, notificationTypes.SYSTEM);
   };
 
@@ -320,25 +344,25 @@ function ToastContextProvider ({ children, navBar }) {
 
   const showDeleteFailureResultDialog = (type, error) => {
     let id = generateUUID();
-    let errorToast = getErrorToast(error, id,`WARNING! An error has occurred deleting this ${type}:`);
+    let errorToast = getErrorToast(error, id, `WARNING! An error has occurred deleting this ${type}:`);
     addToast(errorToast, id, notificationTypes.FORM);
   };
 
   const showEmailAlreadyExistsErrorDialog = () => {
     let id = generateUUID();
-    let errorBanner = getErrorBanner( `WARNING! The email address given has already been registered to an Opsera account`, id);
+    let errorBanner = getErrorBanner(`WARNING! The email address given has already been registered to an Opsera account`, id);
     addBannerMessage(errorBanner, id, notificationTypes.FORM);
   };
 
   const showDomainAlreadyRegisteredErrorDialog = () => {
     let id = generateUUID();
-    let errorBanner = getErrorBanner( `WARNING! The domain given has already been registered to an Opsera account`, id);
+    let errorBanner = getErrorBanner(`WARNING! The domain given has already been registered to an Opsera account`, id);
     addBannerMessage(errorBanner, id, notificationTypes.FORM);
   };
 
   const showIncompleteCreateSuccessResultDialog = () => {
     let id = generateUUID();
-    let informationDialog = getInformationBanner( `WARNING! An incomplete configuration is being saved.  This step must be fully configured in order to use this feature.`, id);
+    let informationDialog = getInformationBanner(`WARNING! An incomplete configuration is being saved.  This step must be fully configured in order to use this feature.`, id);
     removeFormBanners();
     addBannerMessage(informationDialog, id, notificationTypes.FORM);
   };
@@ -360,39 +384,99 @@ function ToastContextProvider ({ children, navBar }) {
   };
 
   const getSuccessBanner = (message, id) => {
-    return <SuccessBanner successMessage={message} removeBanner={removeBannerMessage} id={id} />;
+    return (
+      <SuccessBanner
+        successMessage={message}
+        removeBanner={removeBannerMessage}
+        id={id}
+      />
+    );
   };
 
   const getSuccessToast = (message, id, autoCloseLengthInSeconds = 10) => {
-    return <SuccessToast successMessage={message} id={id} removeToast={removeToast} autoCloseLength={autoCloseLengthInSeconds}/>;
+    return (
+      <SuccessToast
+        successMessage={message}
+        id={id}
+        removeToast={removeToast}
+        autoCloseLength={autoCloseLengthInSeconds}
+      />
+    );
   };
 
   const getErrorBanner = (error, id, prependMessage = "") => {
-    return <ErrorBanner error={error} prependMessage={prependMessage} id={id} removeBanner={removeBannerMessage} />;
+    return (
+      <ErrorBanner
+        error={error}
+        prependMessage={prependMessage}
+        id={id} removeBanner={removeBannerMessage}
+      />
+    );
   };
 
   const getInlineErrorBanner = (error, id, prependMessage = "") => {
-    return <InlineError error={error} prependMessage={prependMessage} id={id} removeInlineMessage={removeInlineMessage} />;
+    return (
+      <InlineError
+        error={error}
+        prependMessage={prependMessage}
+        id={id}
+        removeInlineMessage={removeInlineMessage}
+      />
+    );
   };
 
   const getErrorToast = (error, id, prependMessage = "", autoCloseLengthInSeconds) => {
-    return <ErrorToast error={error} prependMessage={prependMessage} id={id} removeToast={removeToast} autoCloseLength={autoCloseLengthInSeconds} />;
+    return (
+      <ErrorToast
+        error={error}
+        prependMessage={prependMessage}
+        id={id}
+        removeToast={removeToast}
+        autoCloseLength={autoCloseLengthInSeconds}
+      />
+    );
   };
 
   const getWarningBanner = (message, id) => {
-    return <WarningBanner warningMessage={message} removeBanner={removeBannerMessage} id={id}/>;
+    return (
+      <WarningBanner
+        warningMessage={message}
+        removeBanner={removeBannerMessage}
+        id={id}
+      />
+    );
   };
 
   const getWarningToast = (message, id, autoCloseLengthInSeconds) => {
-    return <WarningToast warningMessage={message} id={id} removeToast={removeToast} autoCloseLength={autoCloseLengthInSeconds}/>;
+    return (
+      <WarningToast
+        warningMessage={message}
+        id={id}
+        removeToast={removeToast}
+        autoCloseLength={autoCloseLengthInSeconds}
+      />
+    );
   };
 
   const getInformationBanner = (message, id) => {
-    return <InformationBanner informationMessage={message} removeBanner={removeBannerMessage} id={id}/>;
+    return (
+      <InformationBanner
+        informationMessage={message}
+        removeBanner={removeBannerMessage}
+        id={id}
+      />
+    );
   };
 
   const getInformationToast = (message, id, autoCloseLengthInSeconds) => {
-    return <InformationToast informationMessage={message} id={id} removeToast={removeToast} autoCloseLength={autoCloseLengthInSeconds}/>;
+    return (
+      <InformationToast
+        informationMessage={message}
+        id={id}
+        removeToast={removeToast}
+        autoCloseLength={autoCloseLengthInSeconds}
+      />
+    );
   };
 
   const getInlineBanner = () => {
@@ -406,99 +490,101 @@ function ToastContextProvider ({ children, navBar }) {
   };
 
   return (
-      <DialogToastContext.Provider
-        value={{
-          // TODO: Rename to Toast instead of dialog for clarity
-          showDeleteFailureResultDialog: showDeleteFailureResultDialog,
-          showUpdateFailureResultDialog: showUpdateFailureResultDialog,
-          showCreateFailureResultDialog: showCreateFailureResultDialog,
-          showDeleteSuccessResultDialog: showDeleteSuccessResultDialog,
-          showUpdateSuccessResultDialog: showUpdateSuccessResultDialog,
-          showCreateSuccessResultDialog: showCreateSuccessResultDialog,
-          showFormValidationErrorDialog: showFormValidationErrorDialog,
-          showMissingRequiredFieldsErrorDialog: showMissingRequiredFieldsErrorDialog,
-          showSuccessDialog: showSuccessToast,
+    <DialogToastContext.Provider
+      value={{
+        // TODO: Rename to Toast instead of dialog for clarity
+        showDeleteFailureResultDialog: showDeleteFailureResultDialog,
+        showUpdateFailureResultDialog: showUpdateFailureResultDialog,
+        showCreateFailureResultDialog: showCreateFailureResultDialog,
+        showDeleteSuccessResultDialog: showDeleteSuccessResultDialog,
+        showUpdateSuccessResultDialog: showUpdateSuccessResultDialog,
+        showCreateSuccessResultDialog: showCreateSuccessResultDialog,
+        showFormValidationErrorDialog: showFormValidationErrorDialog,
+        showMissingRequiredFieldsErrorDialog: showMissingRequiredFieldsErrorDialog,
+        showSuccessDialog: showSuccessToast,
 
-          showInlineCreateFailureResultDialog: showInlineCreateFailureResultDialog,
-          showInlineFormValidationError: showInlineFormValidationError,
+        showInlineCreateFailureResultDialog: showInlineCreateFailureResultDialog,
+        showInlineFormValidationError: showInlineFormValidationError,
 
-          // TODO: Remove instances
-          showInformationToast: showInformationToast,
+        // TODO: Remove instances
+        showInformationToast: showInformationToast,
 
-          // TODO: Rename to Banner instead of dialog for clarity
-          showEmailAlreadyExistsErrorDialog: showEmailAlreadyExistsErrorDialog,
-          showDomainAlreadyRegisteredErrorDialog: showDomainAlreadyRegisteredErrorDialog,
-          showServiceUnavailableDialog: showServiceUnavailableDialog,
-          showLoadingErrorDialog: showLoadingErrorDialog,
-          showIncompleteCreateSuccessResultDialog: showIncompleteCreateSuccessResultDialog,
+        // TODO: Rename to Banner instead of dialog for clarity
+        showEmailAlreadyExistsErrorDialog: showEmailAlreadyExistsErrorDialog,
+        showDomainAlreadyRegisteredErrorDialog: showDomainAlreadyRegisteredErrorDialog,
+        showServiceUnavailableDialog: showServiceUnavailableDialog,
+        showDropdownOptionsUnavailableBanner: showDropdownOptionsUnavailableBanner,
+        showPipelineDropdownOptionsUnavailableBanner: showPipelineDropdownOptionsUnavailableBanner,
+        showLoadingErrorDialog: showLoadingErrorDialog,
+        showIncompleteCreateSuccessResultDialog: showIncompleteCreateSuccessResultDialog,
 
-          // Success Banners
-          showFormSuccessBanner: showFormSuccessBanner,
-          showSystemSuccessBanner: showSystemSuccessBanner,
+        // Success Banners
+        showFormSuccessBanner: showFormSuccessBanner,
+        showSystemSuccessBanner: showSystemSuccessBanner,
 
-          // Success Toasts
-          showFormSuccessToast: showFormSuccessToast,
-          showSystemSuccessToast: showSystemSuccessToast,
-          showSaveSuccessToast: showSaveSuccessToast,
-          showSaveFailureToast: showSaveFailureToast,
+        // Success Toasts
+        showFormSuccessToast: showFormSuccessToast,
+        showSystemSuccessToast: showSystemSuccessToast,
+        showSaveSuccessToast: showSaveSuccessToast,
+        showSaveFailureToast: showSaveFailureToast,
 
-          // Information Banners
-          showSystemInformationBanner: showSystemInformationBanner,
-          showFormInformationBanner: showFormInformationBanner,
+        // Information Banners
+        showSystemInformationBanner: showSystemInformationBanner,
+        showFormInformationBanner: showFormInformationBanner,
 
-          // Information Toasts
-          showSystemInformationToast: showSystemInformationToast,
-          showFormInformationToast: showFormInformationToast,
+        // Information Toasts
+        showSystemInformationToast: showSystemInformationToast,
+        showFormInformationToast: showFormInformationToast,
 
-          // Warning Banners
-          showSystemWarningBanner: showSystemWarningBanner,
-          showFormWarningBanner: showFormWarningBanner,
+        // Warning Banners
+        showSystemWarningBanner: showSystemWarningBanner,
+        showFormWarningBanner: showFormWarningBanner,
 
-          // Warning Toasts
-          showSystemWarningToast: showSystemWarningToast,
-          showFormWarningToast: showFormWarningToast,
+        // Warning Toasts
+        showSystemWarningToast: showSystemWarningToast,
+        showFormWarningToast: showFormWarningToast,
 
-          // Error Banners
-          showSystemErrorBanner: showSystemErrorBanner,
-          showFormErrorBanner: showFormErrorBanner,
-          showFormValidationErrorBanner: showFormValidationErrorBanner,
+        // Error Banners
+        showSystemErrorBanner: showSystemErrorBanner,
+        showFormErrorBanner: showFormErrorBanner,
+        showFormValidationErrorBanner: showFormValidationErrorBanner,
 
-          // Error Toasts
-          showSystemErrorToast: showSystemErrorToast,
-          showFormErrorToast: showFormErrorToast,
-          showFormValidationErrorToast: showFormValidationErrorToast,
+        // Error Toasts
+        showSystemErrorToast: showSystemErrorToast,
+        showFormErrorToast: showFormErrorToast,
+        showFormValidationErrorToast: showFormValidationErrorToast,
 
-          //Inline Errors
-          showInlineErrorMessage: showInlineErrorMessage,
-          showInlineUpdateFailureMessage: showInlineUpdateFailureMessage,
+        //Inline Errors
+        showInlineErrorMessage: showInlineErrorMessage,
+        showInlineUpdateFailureMessage: showInlineUpdateFailureMessage,
 
-          // TODO: Remove when everything is using the banner ones.
-          showWarningDialog: showWarningBanner,
-          showErrorDialog: showErrorBanner,
+        // TODO: Remove when everything is using the banner ones.
+        showWarningDialog: showWarningBanner,
+        showErrorDialog: showErrorBanner,
 
-          removeAllBanners: removeAllBanners,
-          removeFormBanners: removeFormBanners,
-          removeAllToasts: removeAllToasts,
-          removeFormToasts: removeFormToasts,
-          getInlineBanner: getInlineBanner,
-          removeInlineMessage: removeInlineMessage,
+        removeAllBanners: removeAllBanners,
+        removeFormBanners: removeFormBanners,
+        removeAllToasts: removeAllToasts,
+        removeFormToasts: removeFormToasts,
+        getInlineBanner: getInlineBanner,
+        removeInlineMessage: removeInlineMessage,
 
-          clearToastsArray: clearToastsArray, //tmp solution till next version of toasts
+        clearToastsArray: clearToastsArray, //tmp solution till next version of toasts
 
-          showOverlayPanel: showOverlayPanel,
-          clearOverlayPanel: clearOverlayPanel,
-          showModal: showModal,
-          clearModal: clearModal
-        }}>
-        <OverlayPanelContainer overlayPanel={overlayPanel} />
-        {navBar}
-        <SiteNotificationDisplayer />
-        <BannerMessageContainer bannerMessages={bannerMessages} />
-        {children}
-        <Toaster toasts={toasts} />
-      </DialogToastContext.Provider>
-    );
-  }
+        showOverlayPanel: showOverlayPanel,
+        clearOverlayPanel: clearOverlayPanel,
+        showModal: showModal,
+        clearModal: clearModal
+      }}>
+      <OverlayPanelContainer overlayPanel={overlayPanel}/>
+      {navBar}
+      <SiteNotificationDisplayer/>
+      <BannerMessageContainer bannerMessages={bannerMessages}/>
+      {children}
+      <Toaster toasts={toasts}/>
+    </DialogToastContext.Provider>
+  );
+}
 
 ToastContextProvider.propTypes = {
   children: PropTypes.any,

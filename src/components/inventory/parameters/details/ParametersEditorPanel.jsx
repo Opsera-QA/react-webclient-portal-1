@@ -31,8 +31,9 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
   }, [parameterModelId]);
 
   const getValueInput = () => {
-    if (parameterModel?.isNew()) {
-      if (parameterModel?.getData("vaultEnabled") === true) {
+    if (parameterModel?.getData("vaultEnabled") === true) {
+
+      if (parameterModel?.isNew()) {
         return (
           <TogglePasswordTextInput
             model={parameterModel}
@@ -43,21 +44,22 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
       }
 
       return (
-        <TextInputBase
-          dataObject={parameterModel}
+        <ParameterValueTextInput
+          disabled={parameterModel?.isNew() === false && parameterModel?.canUpdate() !== true}
           setDataObject={setParameterModel}
+          dataObject={parameterModel}
           fieldName={"value"}
+          parameterId={parameterModel?.getData("_id")}
         />
       );
     }
 
     return (
-      <ParameterValueTextInput
-        disabled={parameterModel?.canUpdate() !== true}
-        setDataObject={setParameterModel}
+      <TextInputBase
         dataObject={parameterModel}
+        setDataObject={setParameterModel}
         fieldName={"value"}
-        parameterId={parameterModel?.getData("_id")}
+        disabled={parameterModel?.isNew() === false && parameterModel?.canUpdate() !== true}
       />
     );
   };

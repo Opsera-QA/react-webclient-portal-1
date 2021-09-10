@@ -461,13 +461,17 @@ a.text-primary:hover, a.text-primary:focus {
     cursor: default;
 }
 
-.custom-table th {
+.custom-table th, .dhx_grid-header-cell-text_content {
     background-color: #f7f7f7; /*#2588ec;*/
     border-bottom: 1px solid #E6E5E3; /*#3598fc;*/
     color: #3D3B36;
     line-height: 2.4em;
     vertical-align: middle;
     white-space: nowrap;
+}
+
+.vanity-table {
+    border: none;
 }
 
 .custom-table .no-header-text {

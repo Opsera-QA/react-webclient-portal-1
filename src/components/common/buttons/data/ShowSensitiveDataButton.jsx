@@ -5,7 +5,7 @@ import {faEye, faEyeSlash} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 
-function ShowSensitiveDataButton({ isLoading, valueShown, hideData, showData, variant, size, className }) {
+function ShowSensitiveDataButton({ isLoading, valueShown, hideData, showData, variant, size, className, disable }) {
   if (showData == null || hideData == null) {
     return null;
   }
@@ -22,7 +22,7 @@ function ShowSensitiveDataButton({ isLoading, valueShown, hideData, showData, va
   return (
     <ButtonTooltip trigger={["hover", "focus"]} innerText={valueShown === true ? "Hide Sensitive Data" : "Show Sensitive Data"}>
       <div className={className}>
-        <Button variant={variant} size={size} disabled={isLoading} onClick={() => {onClick();}}>
+        <Button variant={variant} size={size} disabled={isLoading || disable} onClick={() => onClick()}>
           <span><IconBase isLoading={isLoading} icon={valueShown === true ? faEyeSlash : faEye} /></span>
         </Button>
       </div>
@@ -37,7 +37,8 @@ ShowSensitiveDataButton.propTypes = {
   variant: PropTypes.string,
   size: PropTypes.string,
   className: PropTypes.string,
-  valueShown: PropTypes.string
+  valueShown: PropTypes.bool,
+  disable: PropTypes.bool,
 };
 
 ShowSensitiveDataButton.defaultProps = {

@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import ConsolidatedUserReportTaskAccessTable from "components/reports/users/user/consolidated_user_report/task_access/ConsolidatedUserReportTaskAccessTable";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import gitTasksActions from "components/git/git-task-actions";
+import gitTasksActions from "components/tasks/git-task-actions";
 import Model from "core/data_model/model";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTasks} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
-import taskMetadata from "components/git/git-tasks-metadata";
+import taskMetadata from "components/tasks/git-tasks-metadata";
 import genericFilterMetadata from "components/common/filters/generic-filter-metadata";
 
 function ConsolidatedUserTaskAccessReport({ userEmailAddress }) {

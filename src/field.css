@@ -54,7 +54,7 @@
 .object-properties-input .property-header, .input-title-bar {
     background-color: #E6E5E3;
     color: #3D3B36;
-    min-height: 40px;
+    min-height: 42px;
     font-size: 1.1rem;
 }
 
@@ -322,7 +322,8 @@
 /* End Custom Badge styling */
 
 .input-search-filter {
-    margin: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .text-input {

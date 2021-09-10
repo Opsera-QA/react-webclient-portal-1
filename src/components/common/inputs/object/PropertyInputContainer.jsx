@@ -5,27 +5,14 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Row from "react-bootstrap/Row";
 import {Button} from "react-bootstrap";
 import {faPlus} from "@fortawesome/pro-light-svg-icons";
-import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
-import IconBase from "components/common/icons/IconBase";
+import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 
-function PropertyInputContainer({ children, isLoading, titleIcon, titleText, field, errorMessage, addProperty, type, addAllowed, helpComponent, toggleButton }) {
-  const getTitleBar = () => {
-    return (
-      <div className="px-2 pt-2 d-flex justify-content-between">
-        <div><IconBase isLoading={isLoading} icon={titleIcon} className="mr-2"/>{titleText}</div>
-        <div>
-          <LaunchHelpIcon helpComponent={helpComponent} className={"pt-2 pr-2"} />
-          <div>{toggleButton}</div>
-        </div>
-      </div>
-    );
-  };
-
+function PropertyInputContainer({ children, isLoading, titleIcon, titleText, field, errorMessage, addProperty, type, addAllowed, helpComponent }) {
   const getAddPropertyButton = () => {
     if (addProperty) {
       return (
-        <Row>
-          <div className="ml-auto mt-2 mr-3 d-flex">
+        <Row className={"mx-0"}>
+          <div className="ml-auto m-2 d-flex">
             <Button variant="secondary" disabled={!addAllowed} onClick={() => addProperty()} size="sm">
               <span className="text-white"><FontAwesomeIcon className="text-white mr-2" icon={faPlus} fixedWidth />Add {type}</span>
             </Button>
@@ -38,12 +25,15 @@ function PropertyInputContainer({ children, isLoading, titleIcon, titleText, fie
   return (
     <div className="object-properties-input">
       <div className="content-container">
-        <div className="property-header">
-          <h6>{getTitleBar()}</h6>
-        </div>
+        <InputTitleBar
+          icon={titleIcon}
+          isLoading={isLoading}
+          helpComponent={helpComponent}
+          customTitle={titleText}
+          />
         {children}
+        <div>{getAddPropertyButton()}</div>
       </div>
-      <div>{getAddPropertyButton()}</div>
       <InfoText field={field} errorMessage={errorMessage}/>
     </div>
   );
@@ -59,7 +49,6 @@ PropertyInputContainer.propTypes = {
   addProperty: PropTypes.func,
   addAllowed: PropTypes.bool,
   helpComponent: PropTypes.any,
-  toggleButton: PropTypes.object,
   isLoading: PropTypes.bool
 };
 

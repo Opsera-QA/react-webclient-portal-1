@@ -28,6 +28,7 @@ import HashicorpVaultToolConfiguration from "./tool_jobs/hashicorp_vault/Hashico
 import KafkaConnectToolConfiguration from "./tool_jobs/kafka_connect/KafkaConnectToolConfiguration";
 import CoverityToolConfiguration from "./tool_jobs/coverity/CoverityToolConfiguration";
 import TwistlockToolConfiguration from "./tool_jobs/twistlock/TwistlockToolConfiguration";
+import MongodbRealmToolConfiguration from "./tool_jobs/mongodb_realm/MongodbRealmToolConfiguration";
 
 function ToolConfigurationPanel({ toolData }) {
   const getConfiguration = () => {
@@ -87,6 +88,8 @@ function ToolConfigurationPanel({ toolData }) {
         return <CoverityToolConfiguration toolData={toolData} />;
       case "twistlock":
         return <TwistlockToolConfiguration toolData={toolData} />;
+      case "mongodb_realm":        
+        return <MongodbRealmToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
     }

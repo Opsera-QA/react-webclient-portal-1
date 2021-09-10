@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import PropTypes from 'prop-types';
 import PipelineStepConfigurationSummary
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepConfigurationSummary";
@@ -13,9 +13,11 @@ import CustomTab from "components/common/tabs/CustomTab";
 import PipelineStepNotificationConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/PipelineStepNotificationConfigurationSummaryPanel";
 import {faEnvelope, faFileCode} from "@fortawesome/pro-light-svg-icons";
+import {AuthContext} from "contexts/AuthContext";
 
 function PipelineStepDetailsOverview({ pipelineStep, index }) {
   const [activeTab, setActiveTab] = useState("summary");
+  const { featureFlagHideItemInProd } = useContext(AuthContext);
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
@@ -36,6 +38,21 @@ function PipelineStepDetailsOverview({ pipelineStep, index }) {
     }
   };
 
+  const getYamlTab = () => {
+    if (featureFlagHideItemInProd() === false) {
+      return (
+        <CustomTab
+          tabText={"YAML View"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabName={"yaml"}
+          disabled={true}
+          icon={faFileCode}
+        />
+      );
+    }
+  };
+
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
@@ -48,14 +65,7 @@ function PipelineStepDetailsOverview({ pipelineStep, index }) {
           icon={faEnvelope}
         />
         <JsonTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <CustomTab
-          tabText={"YAML View"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabName={"yaml"}
-          disabled={true}
-          icon={faFileCode}
-        />
+        {getYamlTab()}
       </CustomTabContainer>
     );
   };
@@ -65,7 +75,7 @@ function PipelineStepDetailsOverview({ pipelineStep, index }) {
   }
 
   return (
-    <PipelineStepDetailsContainer title={`Step ${index + 1}: [${pipelineStep?.name}]`}>
+    <PipelineStepDetailsContainer title={`Step ${index + 1}: ${pipelineStep?.name}`}>
       <div className={"pt-2 pl-2 makeup-container-tab-container"}>
         <GeneralTabPanelContainer
           currentView={

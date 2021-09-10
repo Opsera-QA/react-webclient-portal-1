@@ -94,7 +94,7 @@ body {
     min-height: 100vh;
 }
 
-.main-text {
+.main-text, .vanity-table {
     font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-size: 0.9rem;
     font-weight: 400;

@@ -98,6 +98,10 @@ import TwistlockToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/twistlock/TwistlockToolConfigurationSummaryPanel";
 import TwistlockConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/twistlock/twistlock-connection-metadata";
+import mongodbeRealmConnectionMetadata 
+  from "components/inventory/tools/tool_details/tool_jobs/mongodb_realm/mongodb-realm-connection-metadata";
+import MongodbRealmToolConfigurationSummaryPanel 
+  from "components/inventory/tools/tool_details/tool_jobs/mongodb_realm/MongodbRealmToolConfigurationSummaryPanel";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -255,6 +259,12 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
             twistlockToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, TwistlockConnectionMetadata)}
           />
         );
+      case "mongodb_realm":
+        return (
+          <MongodbRealmToolConfigurationSummaryPanel
+            mongodbRealmToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, mongodbeRealmConnectionMetadata)}
+          />
+        );
         //TODO: We need to rename either the old or the new metadata
       case "azure":
       // return (
@@ -267,11 +277,7 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
     }
   };
   
-  return (
-    <div className="p-3">
-      {getConfigurationSummaryPanel() }
-    </div>
-  );
+  return (getConfigurationSummaryPanel());
 }
 
 ToolConfigurationSummaryPanel.propTypes = {

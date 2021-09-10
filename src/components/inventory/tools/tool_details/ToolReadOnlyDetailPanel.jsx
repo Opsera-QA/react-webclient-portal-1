@@ -33,7 +33,7 @@ import ToolConfigurationSummaryPanel from "components/inventory/tools/tool_detai
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 
 // TODO: This is in progress and needs to be cleaned up
-function ToolReadOnlyDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
+function ToolReadOnlyDetailPanel({ toolModel, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
   const [customerAccessRules, setCustomerAccessRules] = useState({});
@@ -65,21 +65,13 @@ function ToolReadOnlyDetailPanel({ toolData, setToolData, loadData, isLoading, t
     setActiveTab(activeTab);
   };
 
-  const toggleSummaryPanel = () => {
-    setActiveTab("summary");
-  };
-
-  const toggleAttributesPanel = () => {
-    setActiveTab("attributes");
-  };
-
   const getDynamicTabs = () => {
-    switch (toolData?.getData("tool_identifier")) {
+    switch (toolModel?.getData("tool_identifier")) {
       case "jenkins":
         return (
           <>
-            <CustomTab icon={faAbacus} tabName={"jobs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Jobs"} disabled={!authorizedAction("edit_tool_job_tabs", toolData?.data)}/>
-            <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"} disabled={!authorizedAction("edit_tool_account_tabs", toolData?.data)}/>
+            <CustomTab icon={faAbacus} tabName={"jobs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Jobs"} disabled={!authorizedAction("edit_tool_job_tabs", toolModel?.data)}/>
+            <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"} disabled={!authorizedAction("edit_tool_account_tabs", toolModel?.data)}/>
             <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"}/>
           </>
         );
@@ -87,7 +79,7 @@ function ToolReadOnlyDetailPanel({ toolData, setToolData, loadData, isLoading, t
       case "octopus":
         return (
           <>
-            <CustomTab icon={faBrowser} tabName={"applications"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Applications"} disabled={!authorizedAction("edit_tool_application_tabs", toolData?.data)}/>
+            <CustomTab icon={faBrowser} tabName={"applications"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Applications"} disabled={!authorizedAction("edit_tool_application_tabs", toolModel?.data)}/>
             <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"}/>
           </>
         );
@@ -97,13 +89,13 @@ function ToolReadOnlyDetailPanel({ toolData, setToolData, loadData, isLoading, t
         return (
           <>
           {/*<CustomTab icon={faTags} tabName={"tagging"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tagging"}/>*/}
-          <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"} disabled={!authorizedAction("edit_tool_account_tabs", toolData?.data)}/>
+          <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"} disabled={!authorizedAction("edit_tool_account_tabs", toolModel?.data)}/>
           </>
         );
       case "jira":
         return (
           <>
-            <CustomTab icon={faProjectDiagram} tabName={"projects"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Projects"} disabled={!authorizedAction("edit_tool_projects_tabs", toolData?.data)}/>
+            <CustomTab icon={faProjectDiagram} tabName={"projects"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Projects"} disabled={!authorizedAction("edit_tool_projects_tabs", toolModel?.data)}/>
           </>
         );
       case "sfdc-configurator":
@@ -123,14 +115,14 @@ function ToolReadOnlyDetailPanel({ toolData, setToolData, loadData, isLoading, t
   };
 
   const getVaultTab = () => {
-    switch (toolData?.getData("tool_identifier")) {
+    switch (toolModel?.getData("tool_identifier")) {
       case "jenkins":
       case "gitlab":
       case "github":
       case "sonar":
       case "kafka_connect":
         return (
-            <CustomTab icon={faKey} tabName={"vault"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Vault"} disabled={!authorizedAction("vault", toolData?.data)}/>
+            <CustomTab icon={faKey} tabName={"vault"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Vault"} disabled={!authorizedAction("vault", toolModel?.data)}/>
         );
       default: return <></>;
     }
@@ -142,9 +134,9 @@ function ToolReadOnlyDetailPanel({ toolData, setToolData, loadData, isLoading, t
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Attributes"}/>
         {/*{getVaultTab()}*/}
-        <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"} disabled={!authorizedAction("edit_tool_connection", toolData?.data)}/>
+        <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"} disabled={!authorizedAction("edit_tool_connection", toolModel?.data)}/>
         {/*{getDynamicTabs()}*/}
-        <CustomTab icon={faDraftingCompass} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
+        {/*<CustomTab icon={faDraftingCompass} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>*/}
       </CustomTabContainer>
     );
   };
@@ -152,35 +144,35 @@ function ToolReadOnlyDetailPanel({ toolData, setToolData, loadData, isLoading, t
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <ToolSummaryPanel toolData={toolData} setToolData={setToolData} />;
+        return <ToolSummaryPanel toolData={toolModel} />;
       case "attributes":
-        return <ToolAttributesPanel toolData={toolData} customerAccessRules={customerAccessRules} />;
+        return <ToolAttributesPanel toolData={toolModel} customerAccessRules={customerAccessRules} />;
       case "configuration":
         return (
           <ToolConfigurationSummaryPanel
-            toolIdentifier={toolData?.getData("tool_identifier")}
-            toolConfiguration={toolData?.getData("configuration")}
+            toolIdentifier={toolModel?.getData("tool_identifier")}
+            toolConfiguration={toolModel?.getData("configuration")}
             loadData={loadData}
           />
         );
       case "jobs":
-        return <ToolJobsPanel toolData={toolData} loadData={loadData} isLoading={isLoading}/>;
+        return <ToolJobsPanel toolData={toolModel} loadData={loadData} isLoading={isLoading}/>;
       case "applications":
-        return <ToolApplicationsPanel toolData={toolData} loadData={loadData} isLoading={isLoading}/>;
+        return <ToolApplicationsPanel toolData={toolModel} loadData={loadData} isLoading={isLoading}/>;
       case "accounts":
-        return <ToolAccountsPanel isLoading={isLoading} toolData={toolData} loadData={loadData} />;
+        return <ToolAccountsPanel isLoading={isLoading} toolData={toolModel} loadData={loadData} />;
       case "logs":
-        return <ToolLogsPanel toolData={toolData}/>;
+        return <ToolLogsPanel toolData={toolModel}/>;
       case "tagging":
-        return <ToolTaggingPanel toolData={toolData} />;
+        return <ToolTaggingPanel toolData={toolModel} />;
       case "projects":
-        return <ToolProjectsPanel toolData={toolData} isLoading={isLoading} loadData={loadData} />;
+        return <ToolProjectsPanel toolData={toolModel} isLoading={isLoading} loadData={loadData} />;
       case "pipelines":
-        return <ToolPipelinesPanel toolData={toolData} />;
+        return <ToolPipelinesPanel toolData={toolModel} />;
       case "vault":
-        return <ToolVaultPanel toolData={toolData} setToolData={setToolData} />;
+        return <ToolVaultPanel toolData={toolModel} />;
       case "repositories":
-        return <ToolRepositoriesPanel toolData={toolData} setToolData={setToolData} />;
+        return <ToolRepositoriesPanel toolData={toolModel} />;
       default:
         return null;
     }
@@ -190,7 +182,7 @@ function ToolReadOnlyDetailPanel({ toolData, setToolData, loadData, isLoading, t
 }
 
 ToolReadOnlyDetailPanel.propTypes = {
-  toolData: PropTypes.object,
+  toolModel: PropTypes.object,
   setToolData: PropTypes.func,
   loadData: PropTypes.func,
   tab: PropTypes.string,

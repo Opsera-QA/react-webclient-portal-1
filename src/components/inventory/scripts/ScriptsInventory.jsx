@@ -1,7 +1,6 @@
 import { AuthContext } from "contexts/AuthContext";
 import React, {useContext, useEffect, useRef, useState} from "react";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import PropTypes from "prop-types";
 import axios from "axios";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import ScriptsView from "components/inventory/scripts/ScriptsView";
@@ -11,6 +10,7 @@ import ScriptsFilterModel from "components/inventory/scripts/scripts.filter.mode
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
+import ScriptsHelpDocumentation from "../../common/help/documentation/tool_registry/ScriptsHelpDocumentation";
 
 function ScriptsInventory() {
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
@@ -94,10 +94,25 @@ function ScriptsInventory() {
     }
   };
 
+  const getHelpComponent = () => {
+    if (!isLoading) {
+      return (
+        <ScriptsHelpDocumentation
+          scriptRoleDefinitions={scriptRoleDefinitions}
+          scriptsMetadata={scriptMetadata}
+        />
+      );
+    }
+  };
+
   return (
     <ScreenContainer
       navigationTabContainer={<InventorySubNavigationBar currentTab={"scripts"} />}
       breadcrumbDestination={"scripts"}
+      pageDescription={`
+        The Opsera Scripts Library enables user to register a new script, give it a name and apply RBAC. The script can then be referenced in the a pipeline step.
+      `}
+      helpComponent={getHelpComponent()}
     >
       <ScriptsView
         isLoading={isLoading}

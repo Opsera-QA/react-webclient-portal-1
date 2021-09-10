@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useEffect, useState } from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
@@ -7,68 +7,57 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TerraformJobTypeSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformJobTypeSelectInput";
 import TerraformScmToolTypeSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformScmToolTypeSelectInput";
 import TerraformScmToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformScmToolSelectInput";
-import TerraformBitbucketWorkspaceInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformBitbucketWorkspaceInput";
-import TerraformGitRepositoryInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformGitRepositoryInput";
-import TerraformGitBranchInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformGitBranchInput";
+import TerraformBitbucketWorkspaceSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformBitbucketWorkspaceSelectInput";
+import TerraformGitRepositorySelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformGitRepositorySelectInput";
+import TerraformGitBranchSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformGitBranchSelectInput";
 import TerraformAwsCredentialsSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformAwsCredentialsSelectInput";
 import terraformStepFormMetadata from "./terraform-stepForm-metadata";
-import TerraformRuntimeArgumentsInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformRuntimeArgumentsInput";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import TerraformCustomParametersInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCustomParametersInput";
+import TerraformRuntimeArgsInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformRuntimeArgsInput";
+import TerraformIamRolesSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformIamRolesSelectInput";
+import TerraformIAmRoleFlagToggleInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformIAmRoleFlagToggleInput";
 
 function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback }) {
-  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [jobType, setJobType] = useState("");
-  const [terraformStepConfigurationDto, setTerraformStepConfigurationDataDto] = useState(undefined);
+  const [terraformStepConfigurationModel, setTerraformStepConfigurationModel] = useState(undefined);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
-  const isMounted = useRef(false);
+  // const [configuration, setConfiguration] = useState("");
+
 
   useEffect(() => {
-    isMounted.current = true;
-
     loadData();
-
-    return () => {
-      isMounted.current = false;
-    };
   }, []);
 
   const loadData = () => {
+    setIsLoading(true);
 
-    try {
-      setIsLoading(true);
-      let { threshold, job_type } = stepTool;
-      let terraformConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, terraformStepFormMetadata);
-
-      setTerraformStepConfigurationDataDto(terraformConfigurationData);
-
-      if (job_type) {
-        setJobType(job_type);
-      }
-
-      if (threshold) {
-        setThresholdType(threshold?.type);
-        setThresholdValue(threshold?.value);
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        console.error(error);
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
+    let { threshold, job_type } = stepTool;
+    let terraformConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, terraformStepFormMetadata);
+    
+    if (terraformConfigurationData.getData("iamRoleFlag") === true) {
+      terraformConfigurationData.setMetaDataFields(terraformStepFormMetadata.fieldsAlt);
     }
+    setTerraformStepConfigurationModel(terraformConfigurationData);
+    
+    if (job_type) {
+      setJobType(job_type);
+    }
+
+    if (threshold) {
+      setThresholdType(threshold?.type);
+      setThresholdValue(threshold?.value);
+    }
+
+    setIsLoading(false);
   };
 
   const callbackFunction = async () => {
     const item = {
-      configuration: terraformStepConfigurationDto.getPersistData(),
+      configuration: terraformStepConfigurationModel?.getPersistData(),
       threshold: {
         type: thresholdType,
         value: thresholdVal,
@@ -76,39 +65,54 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
     };
     await parentCallback(item);
   };
+
+  const getIamRoleFields = () => {
+    if (terraformStepConfigurationModel?.getData('iamRoleFlag') === true) {
+      return (
+        <TerraformIamRolesSelectInput
+          model={terraformStepConfigurationModel}
+          setModel={setTerraformStepConfigurationModel}
+          disabled={terraformStepConfigurationModel?.getData("awsToolConfigId").length === 0}
+          toolConfigId={terraformStepConfigurationModel?.getData("awsToolConfigId")}
+        />
+      );
+    }
+
+    return (
+      <>
+        <TextInputBase dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName={"accessKeyParamName"} />
+        <TextInputBase dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName={"secretKeyParamName"} />
+        <TextInputBase dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName={"regionParamName"} />
+      </>
+    );
+  };
  
-  if (isLoading || terraformStepConfigurationDto == null) {
+  if (isLoading || terraformStepConfigurationModel == null) {
     return <DetailPanelLoadingDialog />;
   }
   
   return (
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
-      recordDto={terraformStepConfigurationDto}
+      recordDto={terraformStepConfigurationModel}
       persistRecord={callbackFunction}
       isLoading={isLoading}
     >
-      <TerraformJobTypeSelectInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
-      <TerraformScmToolTypeSelectInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
-      <TerraformScmToolSelectInput
-        dataObject={terraformStepConfigurationDto}
-        setDataObject={setTerraformStepConfigurationDataDto}
-        type={terraformStepConfigurationDto?.getData("type")}
-      />
-      <TerraformBitbucketWorkspaceInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
-      <TerraformGitRepositoryInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
-      <TerraformGitBranchInput  dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
-      <TextInputBase dataObject={terraformStepConfigurationDto} fieldName={"gitFilePath"} setDataObject={setTerraformStepConfigurationDataDto}/>
-      <TerraformAwsCredentialsSelectInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto}/>
-      <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"accessKeyParamName"} />
-      <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"secretKeyParamName"} />
-      <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"regionParamName"} />
-      <TerraformRuntimeArgumentsInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
+      <TerraformJobTypeSelectInput dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} />
+      <TerraformScmToolTypeSelectInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
+      <TerraformScmToolSelectInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
+      <TerraformBitbucketWorkspaceSelectInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
+      <TerraformGitRepositorySelectInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
+      <TerraformGitBranchSelectInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
+      <TextInputBase dataObject={terraformStepConfigurationModel} fieldName={"gitFilePath"} setDataObject={setTerraformStepConfigurationModel}/>
+      <TerraformAwsCredentialsSelectInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
+      <TerraformIAmRoleFlagToggleInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
+      {getIamRoleFields()}
+      <TerraformRuntimeArgsInput dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} />
       <TerraformCustomParametersInput
-        model={terraformStepConfigurationDto}
-        setModel={setTerraformStepConfigurationDataDto}
-        fieldName={"saveParameters"}
-      />
+        model={terraformStepConfigurationModel}
+        setModel={setTerraformStepConfigurationModel}
+      />    
     </PipelineStepEditorPanelContainer>
   );
 }
