@@ -64,6 +64,7 @@ import AzureAcrPushStepConfiguration from "./step_tool_configuration_forms/azure
 import AksServiceDeployStepConfiguration
   from "./step_tool_configuration_forms/aks_service_deploy/AksServiceDeployStepConfiguration";
 import MongodbRealmStepConfiguration from "./step_tool_configuration_forms/mongodb_realm/MongodbRealmStepConfiguration";
+import AnsibleStepConfiguration from "./step_tool_configuration_forms/ansible/AnsibleStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -703,6 +704,22 @@ function StepToolConfiguration({
             closeEditorPanel={closeEditorPanel}
           />
         );
+        case "ansible":
+          return (
+            <AnsibleStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+            />
+          );
       case "sfdc-configurator":
         return (
           <SFDCStepConfiguration
