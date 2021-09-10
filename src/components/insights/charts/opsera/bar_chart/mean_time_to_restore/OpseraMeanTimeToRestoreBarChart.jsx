@@ -9,14 +9,22 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { line } from "d3-shape";
-import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
-         accentColor } from '../../../charts-views';
+import {
+  defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
+  accentColor, mainPurple, neutralColor, mainColor,
+} from "../../../charts-views";
 import ChartTooltip from '../../../ChartTooltip';
-import MeanTimeToRestoreSummaryPanelMetadata from 'components/insights/charts/opsera/bar_chart/mean_time_to_restore/opseraMeanTimeToRestoreSummaryPanelMetadata';
+import DeploymentFrequencyInsightsTableMetadata
+  from "components/insights/charts/opsera/OpseraDeploymentFreqStats/deployment-frequency-actionable-metadata";
 import Model from "../../../../../../core/data_model/model";
-
 import ChartDetailsOverlay from "../../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import MeanTimeToDeployHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/MeanTimeToDeployHelpDocumentation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinus , faSquare} from "@fortawesome/pro-solid-svg-icons";
+
+
 function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const {getAccessToken} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -85,93 +93,102 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
       return max;
     };
 
+    let mead = metrics[0].mean;
     // TODO: Do these need to be passed as object props?
     const MeanLineLayer = ({ bars, xScale, yScale }) => {
-        const lineColor = accentColor;
-        const lineGenerator = line()
-          .x(d => xScale(d.data.data._id))
-          .y(d => yScale(d.data.data.mean));
-        return (
-          <Fragment>
+      const lineColor = neutralColor;
+      const lineGenerator = line()
+        .x(d => xScale(d.data.data._id))
+        .y(d => yScale(d.data.data.mean));
+      const mean = metrics[0]?.mean;
+      return (
+        <Fragment>
           <path
             d={lineGenerator(bars)}
             fill="none"
             stroke={lineColor}
             strokeWidth="3"
-            style={{ pointerEvents: "none" }}
+            style={{ pointerEvents: null }}
           />
-          {/*{bars.map(bar => {*/}
-          {/*  return <circle*/}
-          {/*    key={bar.key}*/}
-          {/*    cx={xScale(bar.data.data._id)}*/}
-          {/*    cy={yScale(bar.data.data.mttr)}*/}
-          {/*    r={4}*/}
-          {/*    fill={lineColor}*/}
-          {/*    stroke={lineColor}*/}
-          {/*    style={{ pointerEvents: "none" }}*/}
-          {/*  />;*/}
-          {/*}*/}
-          {/*)}*/}
-        </Fragment>        
-        );
-      };
 
-    // const onRowSelect = (data) => {
-    //   const chartModel = new Model({...MeanTimeToRestoreSummaryPanelMetadata.newObjectFields}, MeanTimeToRestoreSummaryPanelMetadata, false);
-    //   toastContext.showOverlayPanel(
-    //     <ChartDetailsOverlay
-    //       dashboardData={dashboardData}
-    //       kpiConfiguration={kpiConfiguration}
-    //       chartModel={chartModel}
-    //       kpiIdentifier={"mean-time-to-restore"}
-    //       currentDate={data.data._id}/>);
-    // };
+          {/*{bars.map(bar => {*/}
+          {/*    return <circle*/}
+          {/*      key={bar.key}*/}
+          {/*      cx={xScale(bar.data.data._id)}*/}
+          {/*      cy={yScale(bar.data.data.mttr)}*/}
+          {/*      r={4}*/}
+          {/*      fill={lineColor}*/}
+          {/*      stroke={lineColor}*/}
+          {/*      style={{ pointerEvents: "none" }}*/}
+          {/*    />;*/}
+          {/*  }*/}
+          {/*)}*/}
+        </Fragment>
+      );
+    };
+
+    const onRowSelect = (data) => {
+      const chartModel = new Model({...DeploymentFrequencyInsightsTableMetadata.newObjectFields}, DeploymentFrequencyInsightsTableMetadata, false);
+      toastContext.showOverlayPanel(
+        <ChartDetailsOverlay
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+          chartModel={chartModel}
+          kpiIdentifier={"mean-time-to-restore"}
+          currentDate={data.data._id}
+        />);
+    };
 
     return (
       <div className="new-chart mb-3 pointer" style={{height: "300px"}}>
         <div style={{float: "right", fontSize: "10px"}}>
-          #- total number of deployments
+          # - Total Number of Deployments <br></br>
+          <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg"/> Average MTTD <b>({mead} minutes)</b> <br></br>
+          <FontAwesomeIcon icon={faSquare} color={mainColor} size="lg"/> MTTD <br></br>
         </div>
         <ResponsiveBar
           data={metrics}
-          {...defaultConfig("Mean Time to Deploy", "Date", 
-                    false, false, "wholeNumbers", "monthDate2")}
+          {...defaultConfig("Mean Time to Deploy (in minutes)", "Date",
+            false, false, "wholeNumbers", "monthDate2")}
           {...config(getColorByData, getMaxValue(metrics), MeanLineLayer)}
           {...adjustBarWidth(metrics)}
-          // onClick={(data) => onRowSelect(data)}
-          tooltip={({ indexValue, value, data, color }) => <ChartTooltip 
-                    titles={["Date", "Mean Time to Deploy", "Number of Deployments"]}
-                    values={[new Date(indexValue).toDateString(), `${value} minutes`, data.count ]}
-                    style={false}
-                    color={color} />}
+          onClick={(data) => onRowSelect(data)}
+          tooltip={({ indexValue, value, data, color }) => <ChartTooltip
+            titles={["Date", "Mean Time to Deploy", "Number of Deployments"]}
+            values={[new Date(indexValue).toDateString(), `${value} minutes`, data.count ]}
+            style={false}
+            color={color} />}
         />
       </div>
     );
   };
 
-    return (
-      <>
-        <ChartContainer
-          kpiConfiguration={kpiConfiguration}
-          setKpiConfiguration={setKpiConfiguration}
-          chart={getChartBody()}
-          loadChart={loadData}
-          dashboardData={dashboardData}
-          index={index}
-          error={error}
-          setKpis={setKpis}
-          isLoading={isLoading}
-        />
-        <ModalLogs
-          header="Mean Time to Restore"
-          size="lg"
-          jsonMessage={metrics}
-          dataType="bar"
-          show={showModal}
-          setParentVisibility={setShowModal}
-        />
-      </>
-    );
+  return (
+    <>
+      <ChartContainer
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
+        chart={getChartBody()}
+        loadChart={loadData}
+        dashboardData={dashboardData}
+        index={index}
+        error={error}
+        setKpis={setKpis}
+        isLoading={isLoading}
+        chartHelpComponent={(closeHelpPanel) => (
+          <MeanTimeToDeployHelpDocumentation closeHelpPanel={closeHelpPanel} />
+        )}
+      />
+      <ModalLogs
+        header="Mean Time to Restore"
+        size="lg"
+        jsonMessage={metrics}
+        dataType="bar"
+        show={showModal}
+        setParentVisibility={setShowModal}
+      />
+    </>
+  );
 }
 
 OpseraMeanTimeToRestoreBarChart.propTypes = {
@@ -182,7 +199,7 @@ OpseraMeanTimeToRestoreBarChart.propTypes = {
   setKpis: PropTypes.func,
   bars: PropTypes.any,
   xScale: PropTypes.any,
-  yScale: PropTypes.any
+  yScale: PropTypes.any,
 };
 
 export default OpseraMeanTimeToRestoreBarChart;
