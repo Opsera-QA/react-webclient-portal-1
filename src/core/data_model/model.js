@@ -82,6 +82,12 @@ export class Model {
       this.data[fieldName] = newValue;
   };
 
+  setDefaultValue = (fieldName) => {
+    const defaultValue = this.metaData?.newObjectFields?.[fieldName];
+    this.propertyChange(fieldName, defaultValue, this.getData(fieldName));
+    this.data[fieldName] = defaultValue;
+  };
+
   setMetaData = (metaData) => {
     this.metaData = metaData;
   };
@@ -203,7 +209,7 @@ export class Model {
     // TODO: this is only at the top level, add support for trimming inner objects
     try {
       Object.keys(data).forEach(key => {
-        if (typeof data[key] == 'string') {
+        if (typeof data[key] === 'string') {
           data[key] = data[key].trim();
         }
       });
