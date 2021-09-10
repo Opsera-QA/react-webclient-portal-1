@@ -34,7 +34,6 @@ function OpseraMeanTimeToRestoreSummaryPanel({ dashboardData, kpiConfiguration, 
     new Model({ ...genericChartFilterMetadata.newObjectFields }, MeanTimeToRestoreSummaryPanelMetadata, false)
   );
   
-  console.log(currentDate);
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -57,7 +56,6 @@ function OpseraMeanTimeToRestoreSummaryPanel({ dashboardData, kpiConfiguration, 
   }, [JSON.stringify(dashboardData)]);
 
   const onRowSelect = (rowData) => {
-    console.log(rowData);
     toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.run_count} />);
   };
 
