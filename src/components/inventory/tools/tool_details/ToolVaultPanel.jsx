@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import VaultSelectInput from "./input/VaultSelectInput";
 import { Col, Row } from "react-bootstrap";
-import toolsActions from "../tools-actions";
-import { AuthContext } from "../../../../contexts/AuthContext";
-import Model from "../../../../core/data_model/model";
-import WarningDialog from "../../../common/status_notifications/WarningDialog";
-import ErrorDialog from "../../../common/status_notifications/error";
-import RequiredFieldsMessage from "../../../common/fields/editor/RequiredFieldsMessage";
-import PersistAndCloseButtonContainer from "../../../common/buttons/saving/containers/PersistAndCloseButtonContainer";
+import Model from "core/data_model/model";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import {AuthContext} from "contexts/AuthContext";
+import ErrorDialog from "components/common/status_notifications/error";
+import WarningDialog from "components/common/status_notifications/WarningDialog";
+import toolsActions from "components/inventory/tools/tools-actions";
+import VaultSelectInput from "components/inventory/tools/tool_details/input/VaultSelectInput";
 
 function ToolVaultPanel({ toolData, isLoading }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -27,16 +26,16 @@ function ToolVaultPanel({ toolData, isLoading }) {
   };
 
   const getWarningDialogs = () => {
-    if (
-      (toolData.getData("vault") && toolData.getData("vault").length > 0) ||
-      (temporaryDataObject?.getData("vault") && temporaryDataObject?.getData("vault").length > 0)
-    ) {
+    if (toolData?.getData("vault")?.length > 0 || temporaryDataObject?.getData("vault")?.length > 0) {
       return (
         <div className={"px-3"}>
           <WarningDialog
-            warningMessage={
-              "A non-Opsera provided Hashicorp Vault is in use for this tool. Any operations that require this tool require access to this vault.  If the vault is down, then any Opsera operations will fail as a result. Opsera cannot manage or control the uptime of this tool."
-            }
+            warningMessage={`
+                A non-Opsera provided Hashicorp Vault is in use for this tool. 
+                Any operations that require this tool require access to this vault. 
+                If the vault is down, then any Opsera operations will fail as a result. 
+                Opsera cannot manage or control the uptime of this tool.
+           `}
             alignment={"toolRegistryWarning"}
           />
         </div>
@@ -45,15 +44,16 @@ function ToolVaultPanel({ toolData, isLoading }) {
   };
 
   const getErrorDialogs = () => {
-    if (
-      temporaryDataObject?.changeMap.has("vault")
-    ) {
+    if (temporaryDataObject?.isChanged("vault")) {
       return (
         <div className={"py-1"}>
           <ErrorDialog
-            error={
-              "Changing the Vault Instance does not migrate data between vault instances. In order to successfully change the vault in use please re-save the connection configuration with the required information to ensure the tokens/passwords being updated in the vault. This tool would be broken until the connection information is re-saved after a vault change."
-            }
+            error={`
+              Changing the Vault Instance does not migrate data between vault instances. 
+              In order to successfully change the vault in use, please reenter the connection details 
+              with the required information and save again to ensure the tokens/passwords exist in the new vault. 
+              If you proceed, the tool will be broken until the connection information is reentered and saved after a vault change.
+            `}
             align="stepConfigurationTop"
           />
         </div>
@@ -61,25 +61,31 @@ function ToolVaultPanel({ toolData, isLoading }) {
     }
   };
 
-  const getPersistButtonContainer = () => {
-    if (temporaryDataObject) {
-      return (
-        <PersistAndCloseButtonContainer
-          createRecord={saveData}
-          updateRecord={saveData}
-          setRecordDto={setTemporaryDataObject}
-          recordDto={temporaryDataObject}
-        />
-      );
-    }
-  };
+  if (temporaryDataObject == null) {
+    return (<></>);
+  }
 
-  const getVaultPanel = () => {
-    if (temporaryDataObject == null) {
-      return null;
-    }
-    return (
-      <>
+  return (
+    <EditorPanelContainer
+      createRecord={saveData}
+      updateRecord={saveData}
+      showRequiredFieldsMessage={false}
+      recordDto={temporaryDataObject}
+      setRecordDto={setTemporaryDataObject}
+      className={"px-3"}
+    >
+      <div className="text-muted p-3">
+        <div className="h6">Vault Management</div>
+        <div className="mb-3">
+          Opsera secures tokens, passwords, and other sensitive information in a Hashicorp Vault Instance.
+          By default, Opsera uses the vault instance that is spun up for the the specific organization.
+          Users have the option to choose whether to store information in the default Opsera provided vault
+          or configure their own Hashicorp vault instance in the Tool Registry.
+          This setting only applies to this tool.
+          All other tools will use the Opsera provided default vault unless specified by the user.
+        </div>
+        {getWarningDialogs()}
+        {getErrorDialogs()}
         <Row>
           <Col lg={12}>
             <VaultSelectInput
@@ -89,24 +95,8 @@ function ToolVaultPanel({ toolData, isLoading }) {
             />
           </Col>
         </Row>
-        <div>{getPersistButtonContainer()}</div>
-        <div>
-          <RequiredFieldsMessage />
-        </div>
-      </>
-    );
-  };
-
-  return (
-    <>
-      <div className="text-muted p-3">
-        <div className="h6">Vault Management</div>
-        <div className="mb-3">Opsera secures tokens, passwords and other sensitive information in a Hashicorp Vault Instance. By default Opsera uses the vault instance that is spun up for the the specific organization but users have the option to choose whether to store information in the default Opsera provided vault or configure their own Hashicorp vault instance in Tool Registry. This setting only applies to this tool. All other tools use the Opsera provided default vault unless specified by the user.</div>
-        {getWarningDialogs()}
-        {getErrorDialogs()}
-        {getVaultPanel()}
       </div>
-    </>
+    </EditorPanelContainer>
   );
 }
 
@@ -118,3 +108,4 @@ ToolVaultPanel.propTypes = {
 };
 
 export default ToolVaultPanel;
+
