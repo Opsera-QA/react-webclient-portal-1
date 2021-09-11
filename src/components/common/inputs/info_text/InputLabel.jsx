@@ -49,7 +49,7 @@ function InputLabel(
           <ClearDataIcon
             requireConfirmation={requireClearDataConfirmation}
             clearValueFunction={clearDataFunction}
-            clearDataDetails={clearDataDetails}
+            furtherDetails={clearDataDetails}
             className={"ml-2"}
           />
           {extraActionButtons}
