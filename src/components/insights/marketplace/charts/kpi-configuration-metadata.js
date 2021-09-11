@@ -1,6 +1,6 @@
 const kpiConfigurationMetadata = {
   idProperty: "_id",
-  type: "KPI Configuration",
+  type: "KPI",
   fields: [
     {
       label: "Name",
