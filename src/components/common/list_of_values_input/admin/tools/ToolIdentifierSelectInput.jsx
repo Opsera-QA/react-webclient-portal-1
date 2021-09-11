@@ -73,8 +73,8 @@ function ToolIdentifierSelectInput({ fieldName, dataObject, setDataFunction, set
       groupBy={"tool_type_name"}
       busy={isLoading}
       valueField={valueField}
-      requireClearDataConfirmation={true}
-      lenientClearValueButton={true}
+      // requireClearDataConfirmation={true}
+      // lenientClearValueButton={true}
       clearDataFunction={clearDataFunction}
       clearDataDetails={clearDataDetails}
       textField={textField}
