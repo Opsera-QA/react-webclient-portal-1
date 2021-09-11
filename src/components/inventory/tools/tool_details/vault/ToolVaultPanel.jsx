@@ -7,7 +7,7 @@ import {AuthContext} from "contexts/AuthContext";
 import ErrorDialog from "components/common/status_notifications/error";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import toolsActions from "components/inventory/tools/tools-actions";
-import VaultSelectInput from "components/common/list_of_values_input/tools/vault/VaultSelectInput";
+import VaultSelectInput from "components/common/list_of_values_input/tools/vault/VaultToolSelectInput";
 
 function ToolVaultPanel({ toolData, isLoading }) {
   const { getAccessToken } = useContext(AuthContext);
