@@ -658,6 +658,11 @@ a:hover, .active, .link-text:hover {
     z-index: 1200;
 }
 
+.tool-registry-dialog-block {
+    padding: 1em;
+    border-radius: 5px;
+}
+
 .pipeline-summary-dialog-block {
     background-color: #FFF;
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;

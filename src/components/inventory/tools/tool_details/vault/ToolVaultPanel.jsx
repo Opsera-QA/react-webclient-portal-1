@@ -7,7 +7,7 @@ import {AuthContext} from "contexts/AuthContext";
 import ErrorDialog from "components/common/status_notifications/error";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import toolsActions from "components/inventory/tools/tools-actions";
-import VaultSelectInput from "components/inventory/tools/tool_details/input/VaultSelectInput";
+import VaultSelectInput from "components/common/list_of_values_input/tools/vault/VaultToolSelectInput";
 
 function ToolVaultPanel({ toolData, isLoading }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -28,7 +28,7 @@ function ToolVaultPanel({ toolData, isLoading }) {
   const getWarningDialogs = () => {
     if (toolData?.getData("vault")?.length > 0 || temporaryDataObject?.getData("vault")?.length > 0) {
       return (
-        <div className={"px-3"}>
+        <div className={"mx-3 my-2"}>
           <WarningDialog
             warningMessage={`
                 A non-Opsera provided Hashicorp Vault is in use for this tool. 
@@ -46,7 +46,7 @@ function ToolVaultPanel({ toolData, isLoading }) {
   const getErrorDialogs = () => {
     if (temporaryDataObject?.isChanged("vault")) {
       return (
-        <div className={"py-1"}>
+        <div className={"my-2"}>
           <ErrorDialog
             error={`
               Changing the Vault Instance does not migrate data between vault instances. 
@@ -76,7 +76,7 @@ function ToolVaultPanel({ toolData, isLoading }) {
     >
       <div className="text-muted p-3">
         <div className="h6">Vault Management</div>
-        <div className="mb-3">
+        <div className={"mb-2"}>
           Opsera secures tokens, passwords, and other sensitive information in a Hashicorp Vault Instance.
           By default, Opsera uses the vault instance that is spun up for the the specific organization.
           Users have the option to choose whether to store information in the default Opsera provided vault
@@ -84,17 +84,16 @@ function ToolVaultPanel({ toolData, isLoading }) {
           This setting only applies to this tool.
           All other tools will use the Opsera provided default vault unless specified by the user.
         </div>
-        {getWarningDialogs()}
-        {getErrorDialogs()}
         <Row>
           <Col lg={12}>
             <VaultSelectInput
-              dataObject={temporaryDataObject}
-              setDataObject={setTemporaryDataObject}
-              fieldName={"vault"}
+              model={temporaryDataObject}
+              setModel={setTemporaryDataObject}
             />
           </Col>
         </Row>
+        {getWarningDialogs()}
+        {getErrorDialogs()}
       </div>
     </EditorPanelContainer>
   );

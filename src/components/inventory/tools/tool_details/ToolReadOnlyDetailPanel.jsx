@@ -27,7 +27,7 @@ import ToolProjectsPanel from "components/inventory/tools/tool_details/projects/
 import { AuthContext } from "contexts/AuthContext";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
-import ToolVaultPanel from "./ToolVaultPanel";
+import ToolVaultPanel from "components/inventory/tools/tool_details/vault/ToolVaultPanel";
 import ToolRepositoriesPanel from "./ToolRepositoriesPanel";
 import ToolConfigurationSummaryPanel from "components/inventory/tools/tool_details/ToolConfigurationSummaryPanel";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";

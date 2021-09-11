@@ -31,7 +31,7 @@ import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import ToolAttributeEditorPanel from "components/inventory/tools/tool_details/ToolAttributeEditorPanel";
 import ToggleTab from "components/common/tabs/detail_view/ToggleTab";
-import ToolVaultPanel from "./ToolVaultPanel";
+import ToolVaultPanel from "components/inventory/tools/tool_details/vault/ToolVaultPanel";
 import ToolRepositoriesPanel from "./ToolRepositoriesPanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
