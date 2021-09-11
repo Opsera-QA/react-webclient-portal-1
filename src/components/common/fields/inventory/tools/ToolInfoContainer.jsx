@@ -62,7 +62,6 @@ function ToolInfoContainer({ toolId }) {
     return (<LoadingDialog size={"sm"} message={"Loading Tool Data"} />);
   }
 
-  // TODO: Merge this in once OPL-1459 is approved
   return (
     <InfoContainer
       titleIcon={faTools}
