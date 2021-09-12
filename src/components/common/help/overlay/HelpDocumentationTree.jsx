@@ -18,7 +18,12 @@ function HelpDocumentationTree({ setCurrentView }) {
 
   return (
     <div className={"h-100 scroll-y p-2"}>
-      <TreeBase data={HELP_DOCUMENTATION_TREE} onItemClick={onTreeItemClick} setParentWidget={setTreeWidget}/>
+      <TreeBase
+        data={HELP_DOCUMENTATION_TREE}
+        onItemClick={onTreeItemClick}
+        setParentWidget={setTreeWidget}
+        expanded={true}
+      />
     </div>
   );
 }

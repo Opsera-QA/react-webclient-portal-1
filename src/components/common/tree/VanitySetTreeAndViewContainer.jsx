@@ -27,7 +27,7 @@ function VanitySetTreeAndViewContainer({treeContainer, currentView, className, t
         <div className="content-container">
           <TitleBarBase title={title} icon={icon}/>
           <Row className={"makeup-container-body mx-0"}>
-            <Col sm={getTreeColumnSize()} className={"px-0 h-100"}>
+            <Col sm={getTreeColumnSize()} className={"px-0 h-100 makeup-tree-container"}>
               {treeContainer}
             </Col>
             <Col sm={getViewColumnSize()} className={"px-0"}>
