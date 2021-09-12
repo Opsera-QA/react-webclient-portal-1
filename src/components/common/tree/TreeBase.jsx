@@ -4,7 +4,7 @@ import {Tree} from "dhx-suite-package";
 import "dhx-suite-package/codebase/suite.css";
 import {useWindowSize} from "components/common/hooks/useWindowSize";
 
-function TreeBase({ data, onItemClick, setParentWidget }) {
+function TreeBase({ data, onItemClick, setParentWidget, expanded }) {
   const containerRef = useRef(null);
   const [tree, setTree] = useState(null);
   const windowSize = useWindowSize();
@@ -58,6 +58,10 @@ function TreeBase({ data, onItemClick, setParentWidget }) {
       onItemClick(tree.data.getItem(id));
     }
 
+    if (expanded === true) {
+      tree.expandAll();
+    }
+
     if (selectedId) {
       tree.selection.remove();
       tree.selection.add(selectedId);
@@ -91,6 +95,7 @@ TreeBase.propTypes = {
   data: PropTypes.array,
   onItemClick: PropTypes.func,
   setParentWidget: PropTypes.func,
+  expanded: PropTypes.bool,
 };
 
 TreeBase.defaultProps = {
