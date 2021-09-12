@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import HorizontalThreeDataBlockContainer from "components/common/metrics/data_blocks/horizontal/HorizontalThreeDataBlockContainer";
-import InsightsPipelinesOverviewHelpDocumentation from "components/common/help/documentation/insights/Synopsis/InsightsPipelinesOverviewHelpDocumentation";
+import InsightsPipelinesOverviewHelpDocumentation from "components/common/help/documentation/insights/synopsis/InsightsPipelinesOverviewHelpDocumentation";
 import MetricContainer from "components/common/panels/insights/charts/MetricContainer";
 import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
 import { AuthContext } from "contexts/AuthContext";
