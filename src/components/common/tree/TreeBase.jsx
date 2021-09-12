@@ -79,7 +79,11 @@ function TreeBase({ data, onItemClick, setParentWidget }) {
   };
 
   return (
-    <div id="tree_container" className={"w-100"} ref={el => (containerRef.current = el)} />
+    <div
+      id="tree_container"
+      className={"w-100 h-100"}
+      ref={el => (containerRef.current = el)}
+    />
   );
 }
 
