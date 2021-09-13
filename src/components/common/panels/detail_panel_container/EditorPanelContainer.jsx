@@ -94,6 +94,20 @@ function EditorPanelContainer(
     return ("mx-2 p-3");
   };
 
+  const getActionBar = () => {
+    if (getBooleanToggle() != null || getHelpToggle() != null) {
+      return (
+        <div className={"mt-2 d-flex justify-content-between"} style={{paddingRight: "20px"}}>
+          <div />
+          <div className={"d-flex"}>
+            {getBooleanToggle()}
+            {getHelpToggle()}
+          </div>
+        </div>
+      );
+    }
+  };
+
   if (isLoading) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -112,13 +126,7 @@ function EditorPanelContainer(
 
   return (
     <div className="h-100">
-      <div className={"mt-2 d-flex justify-content-between"} style={{paddingRight: "20px"}}>
-        <div />
-        <div className={"d-flex"}>
-          {getBooleanToggle()}
-          {getHelpToggle()}
-        </div>
-      </div>
+      {getActionBar()}
       <div className={getStyling()}>
         <div>{children}</div>
         <div>

@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
-import ActionBarContainer from "components/common/actions/ActionBarContainer";
 
 function OverlayPanelBodyContainer({ children, className, helpIsShown, setHelpIsShown, helpComponent, isLoading, hideCloseButton, leftSideItems }) {
   if (isLoading) {
@@ -26,22 +25,24 @@ function OverlayPanelBodyContainer({ children, className, helpIsShown, setHelpIs
     }
 
     return (
-      <div className={"mr-1"}>
-        <ActionBarContainer>
-          <div>
-            {leftSideItems}
-          </div>
-          <div>
-            {getHelpToggle()}
-          </div>
-        </ActionBarContainer>
+      <div className={"d-flex px-3 mr-1 justify-content-between pt-2"}>
+        <div>
+          {leftSideItems}
+        </div>
+        <div>
+          {getHelpToggle()}
+        </div>
       </div>
     );
   };
 
   const getBody = () => {
     if (helpIsShown && helpComponent) {
-      return helpComponent;
+      return (
+        <div className={"p-2"}>
+          {helpComponent}
+        </div>
+      );
     }
 
     return children;
