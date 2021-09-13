@@ -8,15 +8,15 @@ import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import toolMetadata from "components/inventory/tools/tool-metadata";
 import InlineTaskTypeFilter from "components/common/filters/tasks/type/InlineTaskTypeFilter";
-import GitTasksTable from "components/tasks/GitTasksTable";
-import NewGitTaskOverlay from "components/tasks/NewGitTaskOverlay";
+import TaskTable from "components/tasks/TaskTable";
+import NewTaskOverlay from "components/tasks/NewTaskOverlay";
 import TaskCardView from "components/tasks/TaskCardView";
 
 function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData, saveCookies, customerAccessRules, isMounted}) {
   const toastContext = useContext(DialogToastContext);
 
   const createNewTask = () => {
-    toastContext.showOverlayPanel(<NewGitTaskOverlay loadData={loadData} isMounted={isMounted} />);
+    toastContext.showOverlayPanel(<NewTaskOverlay loadData={loadData} isMounted={isMounted} />);
   };
 
   const getDropdownFilters = () => {
@@ -53,7 +53,7 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
 
   const getTableView = () => {
     return (
-      <GitTasksTable
+      <TaskTable
         isLoading={isLoading}
         loadData={loadData}
         taskData={taskData}

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import { AuthContext } from "contexts/AuthContext";
-import GitTasksTable from "./GitTasksTable";
+import TaskTable from "components/tasks/TaskTable";
 import gitTasksActions from "./git-task-actions";
 import gitTasksFilterMetadata from "./git-tasks-filter-metadata";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -10,7 +10,7 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faTasks} from "@fortawesome/pro-light-svg-icons";
 import StatusFilter from "components/common/filters/status/StatusFilter";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
-import NewGitTaskOverlay from "components/tasks/NewGitTaskOverlay";
+import NewTaskOverlay from "components/tasks/NewTaskOverlay";
 import axios from "axios";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
@@ -88,7 +88,7 @@ function TaskManagement() {
 
   const getBody = () => {
     return (
-      <GitTasksTable
+      <TaskTable
         isLoading={isLoading}
         loadData={loadData}
         taskData={gitTasksList}
@@ -108,7 +108,7 @@ function TaskManagement() {
   };
 
   const createNewTask = () => {
-    toastContext.showOverlayPanel(<NewGitTaskOverlay loadData={loadData} isMounted={isMounted} />);
+    toastContext.showOverlayPanel(<NewTaskOverlay loadData={loadData} isMounted={isMounted} />);
   };
 
   if (!accessRoleData) {
