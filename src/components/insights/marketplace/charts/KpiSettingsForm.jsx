@@ -877,9 +877,9 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
   };
 
   const getBody = () => {
-    if (kpiSettings && kpiSettings?.getData) {
+    if (kpiSettings?.getData) {
       return (
-        <div className={"px-2"}>
+        <div className={"px-2 mb-5"}>
           <TextInputBase className={"mb-2"} fieldName={"kpi_name"} dataObject={kpiSettings} setDataObject={setKpiSettings}/>
           {kpiSettings?.getData("filters").map((filter, index) => (
             <div key={index}>{getKpiFilters(filter)}</div>
