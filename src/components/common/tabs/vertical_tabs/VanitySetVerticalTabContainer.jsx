@@ -5,7 +5,7 @@ import {Nav} from "react-bootstrap";
 function VanitySetVerticalTabContainer({children, className, title}) {
   const getTitleBar = () => {
     if (title != null) {
-      return (<div className="p-2 makeup-tree-title">{title}</div>);
+      return (<div className="p-2 my-auto makeup-tree-title">{title}</div>);
     }
   };
 
