@@ -9,11 +9,27 @@ function TerraformStoreStateInS3Toggle({ dataObject, setDataObject, fieldName, d
     return null;
   }
 
+  const setDataFunction = (fieldName, value) => {
+    let newDataObject = {...dataObject};
+    newDataObject.setData(fieldName, value);
+    newDataObject.setData("bucketName", "");
+    newDataObject.setData("bucketRegion", "");
+    if(value){
+      newDataObject.getFieldById("bucketName").isRequired = true;
+      newDataObject.getFieldById("bucketRegion").isRequired = true;
+    }else {
+      newDataObject.getFieldById("bucketName").isRequired = false;
+      newDataObject.getFieldById("bucketRegion").isRequired = false;
+    }
+    setDataObject({...newDataObject});
+  };
+
   return (
     <>
       <BooleanToggleInput disabled={disabled} fieldName={field.id}
         dataObject={dataObject}
         setDataObject={setDataObject}
+        setDataFunction={setDataFunction}
       />
     </>
   );
