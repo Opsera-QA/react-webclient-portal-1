@@ -31,7 +31,6 @@ function RegistryToolIdentifierSelectInput({ dataObject, setDataObject, fieldNam
     <ToolIdentifierSelectInput
       dataObject={dataObject}
       setDataObject={setDataObject}
-      toolRegistryFilter={true}
       status={"active"}
       fieldName={fieldName}
       setDataFunction={validateAndSetData}

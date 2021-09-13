@@ -117,11 +117,7 @@ export const getTaskTypeColumn = (field, className) => {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     Cell: function formatTaskTypeLabel(row) {
-      const taskTypeLabel = getTaskTypeLabel(row?.value);
-
-      console.log("taskTypeLabel: " + taskTypeLabel);
-
-      return taskTypeLabel;
+      return getTaskTypeLabel(row?.value);
     },
     class: className ? className : "no-wrap-inline"
   };
