@@ -11,6 +11,10 @@ import TaskTable from "components/tasks/TaskTable";
 import NewTaskOverlay from "components/tasks/NewTaskOverlay";
 import TaskCardView from "components/tasks/TaskCardView";
 import gitTasksMetadata from "components/tasks/git-tasks-metadata";
+import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
+import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData, saveCookies, customerAccessRules, isMounted}) {
   const toastContext = useContext(DialogToastContext);
@@ -63,16 +67,35 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
     );
   };
 
+  const getTaskTypeTabs = () => {
+    return (
+      <VanitySetVerticalTabContainer className={"h-100"} title={"Task Types"}>
+        <VanitySetVerticalTab tabText={"All"} tabName={""} />
+        <VanitySetVerticalTab tabText={"AWS"} tabName={"aws"} />
+        <VanitySetVerticalTab tabText={"Azure"} tabName={"azure"} />
+        <VanitySetVerticalTab tabText={"Git"} tabName={"git"} />
+        <VanitySetVerticalTab tabText={"Salesforce"} tabName={"salesforce"} />
+      </VanitySetVerticalTabContainer>
+    );
+  };
+
   const getTableCardView = () => {
     return (
-      <TableCardView
-        filterDto={taskFilterModel}
-        data={taskData}
-        isLoading={isLoading}
-        loadData={loadData}
-        cardView={getCardView()}
-        tableView={getTableView()}
-      />
+      // <Row className={"mx-0"}>
+      //   <Col sm={2} className={"px-0"}>
+      //     {getTaskTypeTabs()}
+      //   </Col>
+      //   <Col sm={10} className={"px-0"}>
+          <TableCardView
+            filterDto={taskFilterModel}
+            data={taskData}
+            isLoading={isLoading}
+            loadData={loadData}
+            cardView={getCardView()}
+            tableView={getTableView()}
+          />
+      //   </Col>
+      // </Row>
     );
   };
 

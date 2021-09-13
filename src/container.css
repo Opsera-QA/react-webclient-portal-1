@@ -61,6 +61,7 @@
 }
 
 .makeup-tree-title {
+    min-height: 47px;
     font-weight: 500;
     line-height: 1.4;
     font-size: 1.2rem;
