@@ -6,7 +6,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import gitTasksMetadata from "components/tasks/git-tasks-metadata";
 import GitTaskEditorPanel from "components/tasks/git_task_details/GitTaskEditorPanel";
 
-function NewGitTaskOverlay({ loadData, isMounted } ) {
+function NewTaskOverlay({ loadData, isMounted } ) {
   const toastContext = useContext(DialogToastContext);
   const [gitTasksData, setGitTasksData] = useState(new Model({...gitTasksMetadata.newObjectFields}, gitTasksMetadata, true));
 
@@ -26,9 +26,9 @@ function NewGitTaskOverlay({ loadData, isMounted } ) {
   );
 }
 
-NewGitTaskOverlay.propTypes = {
+NewTaskOverlay.propTypes = {
   loadData: PropTypes.func,
   isMounted: PropTypes.object,
 };
 
-export default NewGitTaskOverlay;
+export default NewTaskOverlay;
