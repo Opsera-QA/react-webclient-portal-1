@@ -92,7 +92,7 @@ export function getLargeVendorIconFromTaskType (taskType) {
     case TASK_TYPES.SYNC_SALESFORCE_REPO:
     case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
     case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-      return <Image src={`${vendorIconPrefix}/jira-74-220.png`} className={"jira-icon"} />;
+      return <FontAwesomeIcon icon={faSalesforce} fixedWidth style={{color: "#0D80D8"}} className={"title-fa-icon"} />;
     case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
     case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
     case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:

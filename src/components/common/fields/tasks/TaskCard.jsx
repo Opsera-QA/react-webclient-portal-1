@@ -6,10 +6,11 @@ import DescriptionField from "components/common/fields/text/DescriptionField";
 import CreateAndUpdateDateFieldBase from "components/common/fields/date/CreateAndUpdateDateFieldBase";
 import {getLargeVendorIconFromTaskType} from "components/common/helpers/icon-helpers";
 import TaskLinkButton from "components/common/buttons/task/TaskLinkButton";
+import TaskTypeField from "components/common/fields/tasks/TaskTypeField";
 
-function TaskCard({ taskData, isLoading, loadTaskInNewWindow }) {
+function TaskCard({ taskModel, isLoading, loadTaskInNewWindow }) {
   const getTitleBar = () => {
-    let icon = getLargeVendorIconFromTaskType(taskData?.getData("type"));
+    let icon = getLargeVendorIconFromTaskType(taskModel?.getData("type"));
 
     if (typeof icon === "string") {
       icon = (
@@ -22,7 +23,7 @@ function TaskCard({ taskData, isLoading, loadTaskInNewWindow }) {
     return (
       <IconTitleBar
         icon={icon}
-        title={`${taskData.getData("name")}`}
+        title={`${taskModel?.getData("name")}`}
         isLoading={isLoading}
       />
     );
@@ -32,7 +33,7 @@ function TaskCard({ taskData, isLoading, loadTaskInNewWindow }) {
   const getDescription = () => {
     return (
       <div className="description-height small pl-1">
-      <DescriptionField dataObject={taskData} fieldName={"description"} />
+      <DescriptionField dataObject={taskModel} fieldName={"description"} />
     </div>
     );
   };
@@ -42,14 +43,20 @@ function TaskCard({ taskData, isLoading, loadTaskInNewWindow }) {
   }
 
   return (
-    <IconCardContainerBase titleBar={getTitleBar()} contentBody={getDescription()} isLoading={isLoading} className={"tool-registry-card"}>
+    <IconCardContainerBase
+      titleBar={getTitleBar()}
+      contentBody={getDescription()}
+      isLoading={isLoading}
+      className={"tool-registry-card"}
+    >
       <div className="date-and-button">
         <div className="small pl-1">
-          <CreateAndUpdateDateFieldBase className={"mt-3 mb-1"} model={taskData} />
+          <TaskTypeField model={taskModel} fieldName={"type"} showLabel={false} />
+          <CreateAndUpdateDateFieldBase className={"mt-3 mb-1"} model={taskModel} />
         </div>
         <div>
           <TaskLinkButton
-            taskId={taskData?.getData("_id")}
+            taskId={taskModel?.getData("_id")}
             className={"w-100 mt-1"}
             openInNewWindow={loadTaskInNewWindow}
             variant={"primary"}
@@ -61,7 +68,7 @@ function TaskCard({ taskData, isLoading, loadTaskInNewWindow }) {
 }
 
 TaskCard.propTypes = {
-  taskData: PropTypes.object,
+  taskModel: PropTypes.object,
   isLoading: PropTypes.bool,
   loadTaskInNewWindow: PropTypes.bool
 };

@@ -9,7 +9,7 @@ function CreateAndUpdateDateFieldBase({createdAtFieldName, updatedAtFieldName, m
   const [updatedAtField] = useState(model?.getFieldById(updatedAtFieldName));
 
   const getDate = (field) => {
-    const date = model.getData(field.id);
+    const date = model.getData(field?.id);
     return date != null && dateFormat != null ? format(new Date(date), dateFormat) : null;
   };
 

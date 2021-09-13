@@ -122,7 +122,6 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
           <RegistryToolInfoOverlay
             selectedToolId={model?.getData(fieldName)}
             tools={tools}
-            toolData={tools?.find((tool) => tool?._id === model?.getData(fieldName))}
             loadData={loadData}
             isLoading={isLoading}
           />
