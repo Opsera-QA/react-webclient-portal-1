@@ -10,7 +10,7 @@ export const TASK_TYPES = {
 };
 
 export const TASK_TYPE_LABELS = {
-  SYNC_SALESFORCE_REPO: "Salesforce Organization Sync",
+  SYNC_SALESFORCE_REPO: "Salesforce: Organization Sync",
   SALESFORCE_CERTIFICATE_GENERATION: "Salesforce: Generate Certificate for SFDX",
   SYNC_SALESFORCE_BRANCH_STRUCTURE: "Salesforce: Branch Structuring",
   SYNC_GIT_BRANCHES: "Git: Git to Git Sync",
@@ -18,4 +18,27 @@ export const TASK_TYPE_LABELS = {
   AWS_CREATE_ECS_SERVICE: "AWS: Create ECS Service",
   AWS_CREATE_LAMBDA_FUNCTION: "AWS: Create Lambda Function",
   AZURE_CLUSTER_CREATION: "Azure: Create AKS Cluster",
+};
+
+export const getTaskTypeLabel = (taskType) => {
+  switch (taskType) {
+    case TASK_TYPES.SYNC_SALESFORCE_REPO:
+      return TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO;
+        case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
+      return TASK_TYPE_LABELS.SALESFORCE_CERTIFICATE_GENERATION;
+        case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+      return TASK_TYPE_LABELS.SYNC_SALESFORCE_BRANCH_STRUCTURE;
+        case TASK_TYPES.SYNC_GIT_BRANCHES:
+      return TASK_TYPE_LABELS.SYNC_GIT_BRANCHES;
+        case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
+      return TASK_TYPE_LABELS.AWS_CREATE_ECS_CLUSTER;
+        case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
+      return TASK_TYPE_LABELS.AWS_CREATE_ECS_SERVICE;
+        case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
+      return TASK_TYPE_LABELS.AWS_CREATE_LAMBDA_FUNCTION;
+        case TASK_TYPES.AZURE_CLUSTER_CREATION:
+      return TASK_TYPE_LABELS.AZURE_CLUSTER_CREATION;
+    default:
+      return "";
+  }
 };
