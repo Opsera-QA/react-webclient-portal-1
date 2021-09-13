@@ -32,6 +32,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
+import {getTaskTypeLabel, TASK_TYPE_LABELS} from "components/tasks/task-types";
 
 const getTableHeader = (field) => {
   return field ? field.label : "";
@@ -106,6 +107,21 @@ export const getStringifiedArrayColumn = (field, className) => {
       }
 
       return "";
+    },
+    class: className ? className : "no-wrap-inline"
+  };
+};
+
+export const getTaskTypeColumn = (field, className) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: function formatTaskTypeLabel(row) {
+      const taskTypeLabel = getTaskTypeLabel(row?.value);
+
+      console.log("taskTypeLabel: " + taskTypeLabel);
+
+      return taskTypeLabel;
     },
     class: className ? className : "no-wrap-inline"
   };
