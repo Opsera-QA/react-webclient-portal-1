@@ -69,7 +69,8 @@ const gitTasksFilterMetadata = {
     currentPage: 1,
     sortOption: {text: "Sort: Name", value: "name"},
     search: "",
-    activeFilters: []
+    activeFilters: [],
+    viewType: "table",
   },
   // TODO: If these are the same options everywhere, move to PageSort
   sortOptions: [

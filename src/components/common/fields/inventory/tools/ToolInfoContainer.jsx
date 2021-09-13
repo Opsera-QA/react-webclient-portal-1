@@ -10,6 +10,7 @@ import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
+import {Link} from "react-router-dom";
 
 function ToolInfoContainer({ toolId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -58,6 +59,34 @@ function ToolInfoContainer({ toolId }) {
     }
   };
 
+  const getBody = () => {
+    if (toolModel) {
+      return (
+        <div>
+          <div className="text-muted mb-2">
+            Configuration details for this item are listed below. Tool and account specific settings are stored in the
+            <span> <Link to="/inventory/tools" target="_blank" rel="noopener noreferrer">Tool Registry</Link></span>.
+            <div>To add a new entry to a dropdown or update settings, make those changes there.</div>
+            <div>
+              <Link to={`/inventory/tools/details/${toolId}`} target="_blank" rel="noopener noreferrer">
+                Click here to view the selected Tool&apos;s details
+              </Link>
+            </div>
+          </div>
+          <ToolReadOnlyDetailPanel toolModel={toolModel} />
+        </div>
+      );
+    }
+
+    return (
+      <div className="text-muted mb-2">
+        The selected Tool was not found when pulling available tools. Its Access Rules may have changed or it may have been deleted.
+        <span> <Link to="/inventory/tools" target="_blank" rel="noopener noreferrer">Tool Registry</Link></span>.
+        <div>To add a new entry to a dropdown or update settings, make those changes there.</div>
+      </div>
+    );
+  };
+
   if (isLoading) {
     return (<LoadingDialog size={"sm"} message={"Loading Tool Data"} />);
   }
@@ -68,7 +97,7 @@ function ToolInfoContainer({ toolId }) {
       titleIcon={faTools}
       titleText={`${toolModel?.getData("name")}`}
     >
-      <ToolReadOnlyDetailPanel toolModel={toolModel} />
+      {getBody()}
     </InfoContainer>
   );
 }

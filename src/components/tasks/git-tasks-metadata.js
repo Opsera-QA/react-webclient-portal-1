@@ -74,6 +74,10 @@ const gitTasksMetadata = {
       id: "createdAt",
     },
     {
+      label: "Updated",
+      id: "updatedAt",
+    },
+    {
       label: "Access Rules",
       id: "roles",
     },

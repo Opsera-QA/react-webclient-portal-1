@@ -3,14 +3,14 @@ import TableCardView from "components/common/table/TableCardView";
 import StatusFilter from "components/common/filters/status/StatusFilter";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faTools} from "@fortawesome/pro-light-svg-icons";
+import {faTasks} from "@fortawesome/pro-light-svg-icons";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import toolMetadata from "components/inventory/tools/tool-metadata";
 import InlineTaskTypeFilter from "components/common/filters/tasks/type/InlineTaskTypeFilter";
 import TaskTable from "components/tasks/TaskTable";
 import NewTaskOverlay from "components/tasks/NewTaskOverlay";
 import TaskCardView from "components/tasks/TaskCardView";
+import gitTasksMetadata from "components/tasks/git-tasks-metadata";
 
 function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData, saveCookies, customerAccessRules, isMounted}) {
   const toastContext = useContext(DialogToastContext);
@@ -86,13 +86,13 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
         saveCookies={saveCookies}
         // supportViewToggle={true}
         isLoading={isLoading}
-        metadata={toolMetadata}
+        metadata={gitTasksMetadata}
         body={getTableCardView()}
         dropdownFilters={getDropdownFilters()}
         inlineFilters={getInlineFilters()}
-        titleIcon={faTools}
-        title={"Tools"}
-        className="px-2 pb-2"
+        titleIcon={faTasks}
+        title={"Tasks"}
+        className={"px-2 pb-2"}
       />
   );
 }
@@ -102,7 +102,6 @@ TaskViews.propTypes = {
   isLoading: PropTypes.bool,
   taskFilterModel: PropTypes.object,
   setTaskFilterModel: PropTypes.func,
-  createNewRecord: PropTypes.func,
   loadData: PropTypes.func,
   saveCookies: PropTypes.func,
   customerAccessRules: PropTypes.object,

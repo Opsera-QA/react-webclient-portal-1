@@ -9,6 +9,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import axios from "axios";
 import ToolLinkIcon from "components/common/icons/inventory/tools/ToolLinkIcon";
 import FieldLabel from "components/common/fields/FieldLabel";
+import RegistryToolInfoOverlay from "components/common/list_of_values_input/tools/RegistryToolInfoOverlay";
 
 function ToolNameField({ model, fieldName, className, handleClose }) {
   const [field] = useState(model?.getFieldById(fieldName));
@@ -84,6 +85,20 @@ function ToolNameField({ model, fieldName, className, handleClose }) {
     return `Tool name could not be found with ID: [${model?.getData(fieldName)}]. The Tool may have been deleted.`;
   };
 
+  const getToolInfoOverlay = () => {
+    const toolId = model?.getData(fieldName);
+
+    if (toolId != null && toolId !== "") {
+      return (
+        <RegistryToolInfoOverlay
+          selectedToolId={model?.getData(fieldName)}
+          loadData={loadData}
+          isLoading={isLoading}
+        />
+      );
+    }
+  };
+
   const getBody = () => {
     if (model?.getData(fieldName) == null || model?.getData(fieldName) === "") {
       return null;
@@ -92,6 +107,13 @@ function ToolNameField({ model, fieldName, className, handleClose }) {
     return (
       <span>
         <span>{getToolName()}</span>
+        {/*// TODO: Determine if worth using*/}
+        {/*<EllipsisIcon*/}
+        {/*  overlay={getToolInfoOverlay()}*/}
+        {/*  tooltipText={`View selected tool's details`}*/}
+        {/*  className={"ml-2 view-details-icon"}*/}
+        {/*  placement={"bottom"}*/}
+        {/*/>*/}
         <ToolLinkIcon
           isLoading={isLoading}
           className={"ml-2"}
