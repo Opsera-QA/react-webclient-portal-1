@@ -9,7 +9,7 @@ import axios from "axios";
 import taskActivityHelpers
   from "components/tasks/git_task_details/activity_logs/task-activity-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import gitTaskActions from "components/tasks/task.actions";
+import taskActions from "components/tasks/task.actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -88,7 +88,7 @@ function TaskAllActivityPanel() {
       }
 
       // TODO: if search term applies ignore run count and reconstruct tree?
-      const treeResponse = await gitTaskActions.getTaskActivityLogTypeTree(getAccessToken, cancelSource, filterDto);
+      const treeResponse = await taskActions.getTaskActivityLogTypeTree(getAccessToken, cancelSource, filterDto);
       const taskTree = taskActivityHelpers.constructTaskTree(treeResponse?.data?.data);
       setTaskActivityTreeData([...taskTree]);
 
@@ -127,7 +127,7 @@ function TaskAllActivityPanel() {
         }
 
       }
-      const response = await gitTaskActions.getAllTaskActivityLogs(getAccessToken, cancelSource, taskNameArray, filterDto);
+      const response = await taskActions.getAllTaskActivityLogs(getAccessToken, cancelSource, taskNameArray, filterDto);
       const taskActivityData = response?.data?.data;
 
       if (taskActivityData) {

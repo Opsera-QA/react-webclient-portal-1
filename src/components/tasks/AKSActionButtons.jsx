@@ -6,11 +6,10 @@ import { faLaptopMedical, faPlay, faSpinner, faStop } from "@fortawesome/pro-lig
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
-import gitTasksActions from "components/tasks/git-task-actions";
-import gitTaskActions from "./git-task-actions";
 import { useHistory } from "react-router-dom";
 import Model from "../../core/data_model/model";
 import gitTasksMetadata from "./git-tasks-metadata";
+import taskActions from "components/tasks/task.actions";
 
 function AKSActionButtons({ gitTasksData, handleClose, disable, className }) {
   let toastContext = useContext(DialogToastContext);
@@ -120,7 +119,7 @@ function AKSActionButtons({ gitTasksData, handleClose, disable, className }) {
   };
 
   const getTaskStatus = async (cancelSource = cancelTokenSource) => {
-    const response = await gitTasksActions.getGitTaskByIdV2(getAccessToken, cancelSource, gitTasksData.getData("_id"));
+    const response = await taskActions.getGitTaskByIdV2(getAccessToken, cancelSource, gitTasksData.getData("_id"));
     const data = response?.data?.data[0];
     if (isMounted?.current === true && data) {
       if (data?.error) {
@@ -142,7 +141,7 @@ function AKSActionButtons({ gitTasksData, handleClose, disable, className }) {
       let postBody = {
         taskId: gitTasksData.getData("_id"),
       };
-      let result = await gitTasksActions.createAKSCluster(postBody, getAccessToken);
+      let result = await taskActions.createAKSCluster(postBody, getAccessToken);
       gitTasksData.setData("status", "running");
       toastContext.showSuccessDialog("AKS Cluster Creation Triggered Successfully");
     } catch (error) {
@@ -165,8 +164,8 @@ function AKSActionButtons({ gitTasksData, handleClose, disable, className }) {
 
   const handleCancelRunTask = async (automatic) => {
     setIsCanceling(true);
-    await gitTaskActions.stopTask(getAccessToken, cancelTokenSource, gitTasksData);
-    await gitTaskActions.logAksClusterCancellation(getAccessToken, axios.CancelToken.source(), gitTasksData);
+    await taskActions.stopTask(getAccessToken, cancelTokenSource, gitTasksData);
+    await taskActions.logAksClusterCancellation(getAccessToken, axios.CancelToken.source(), gitTasksData);
     setTaskFinished(true);
     isMounted.current = false;
     if (automatic) {

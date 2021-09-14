@@ -7,7 +7,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import taskActions from "components/tasks/task.actions";
-import gitTaskActions from "components/tasks/task.actions";
+import taskActions from "components/tasks/task.actions";
 import { useHistory } from "react-router-dom";
 import Model from "../../core/data_model/model";
 import gitTasksMetadata from "./git-tasks-metadata";
@@ -165,8 +165,8 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
 
   const handleCancelRunTask = async (automatic) => {
     setIsCanceling(true);    
-    await gitTaskActions.stopTask(getAccessToken, cancelTokenSource, gitTasksData);
-    await gitTaskActions.logClusterCancellation(getAccessToken, axios.CancelToken.source(), gitTasksData);
+    await taskActions.stopTask(getAccessToken, cancelTokenSource, gitTasksData);
+    await taskActions.logClusterCancellation(getAccessToken, axios.CancelToken.source(), gitTasksData);
     setTaskFinished(true);
     isMounted.current = false;
     if (automatic) {
