@@ -43,7 +43,7 @@ function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfile
   };
 
   const updateProfile = async () => {
-    if(analyticsProfileDataDto.isModelValid2()) {
+    if(analyticsProfileDataDto.isModelValid()) {
       try {
         const response = await RegisteredUserActions.updateAnalyticsProfile(analyticsProfileDataDto, getAccessToken);
         let newDto = new Model(response?.data, analyticsProfileDataDto.metaData, false);

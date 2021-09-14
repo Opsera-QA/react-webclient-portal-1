@@ -123,7 +123,7 @@ function AccountRegistration() {
       return;
     }
 
-    if (registrationDataDto.isModelValid2()) {
+    if (registrationDataDto.isModelValid()) {
       try {
         const response = await userActions.createOpseraAccount(registrationDataDto);
         // toastContext.showCreateSuccessResultDialog("Opsera Account")

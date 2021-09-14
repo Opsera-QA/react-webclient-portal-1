@@ -53,7 +53,7 @@ function AwsAccountRegistration() {
       return;
     }
 
-    if (registrationModel?.isModelValid2()) {
+    if (registrationModel?.isModelValid()) {
       try {
         await userActions.createAwsMarketplaceOpseraAccount(registrationModel);
         //toastContext.showCreateSuccessResultDialog("Opsera Account")

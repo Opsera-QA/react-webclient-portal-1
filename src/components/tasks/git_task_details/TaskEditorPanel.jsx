@@ -18,8 +18,6 @@ import {
   faPlay,
 } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
-import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
-import GitTaskTypeSelectInput from "components/common/list_of_values_input/git_tasks/GitTaskTypeSelectInput";
 import AwsEcsClusterCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsEcsClusterCreationTaskHelpDocumentation";
 import TaskCreationHelpDocumentation from "components/common/help/documentation/tasks/TaskCreationHelpDocumentation";
@@ -29,8 +27,9 @@ import SfdcOrgSyncTaskHelpDocumentation
   from "components/common/help/documentation/tasks/SfdcOrgSyncTaskHelpDocumentation";
 import AwsLambdaFunctionCreationTaskHelpDocumentation
   from "../../common/help/documentation/tasks/AwsLambdaFunctionCreationTaskHelpDocumentation";
+import {TASK_TYPES} from "components/tasks/task.types";
 
-function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }) {
+function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }) {
   const { getAccessToken, featureFlagHideItemInProd } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [gitTasksDataDto, setGitTasksDataDto] = useState(undefined);
@@ -104,35 +103,30 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
   const getRunTaskText = () => {
     if (runTask === true) {
       return (
-        <div>Listed below are all settings related to this task. If you want to run the task, please confirm all
-          settings
-          and then click the Run button at the bottom of the form. This will trigger the job which will take a few
-          minutes to
-          complete. The status of this job will be updated in the Activity logs. Please consult those logs for all
-          details on
-          this action.
+        <div>
+          Listed below are all settings related to this task.
+          If you want to run the task, please confirm all settings and then click the Run button
+          at the bottom of the form. This will trigger the job which will take a few minutes to complete.
+          The status of this job will be updated in the Activity logs. Please consult those logs for all details on this action.
         </div>
       );
     }
   };
 
   const getHelpDocumentation = (setHelpIsShown) => {
-    if (featureFlagHideItemInProd()) {
-      return null;
-    }
-
     switch (gitTasksDataDto?.getData("type")) {
-      case "ecs_cluster_creation":
+      case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
         return <AwsEcsClusterCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-      case "ecs_service_creation":
+      case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
         return <AwsEcsServiceCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-      case "sync-sfdc-repo":
+      case TASK_TYPES.SYNC_SALESFORCE_REPO:
         return <SfdcOrgSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-      case "lambda_function_creation":
+      case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
         return <AwsLambdaFunctionCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-      case "sync-branch-structure":
-      case "sync-git-branches":
-      case "sfdc-cert-gen":
+      case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+      case TASK_TYPES.SYNC_GIT_BRANCHES:
+      case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
+      case TASK_TYPES.AZURE_CLUSTER_CREATION:
         break;
       default:
         return <TaskCreationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
@@ -163,6 +157,7 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
           gitTasksDataDto={gitTasksDataDto}
           setGitTasksDataDto={setGitTasksDataDto}
           setGitTasksConfigurationData={setGitTasksConfigurationDataDto}
+          taskType={gitTasksDataDto?.getData("type")}
         />
       </>
     );
@@ -172,6 +167,7 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
     return (<LoadingDialog size="sm"/>);
   }
 
+  // TODO: Refactor to VanityEditorPanelContainer in a future enhancement
   return (
     <div>
       <EditorPanelContainer
@@ -195,13 +191,13 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
   );
 }
 
-GitTaskEditorPanel.propTypes = {
+TaskEditorPanel.propTypes = {
   gitTasksData: PropTypes.object,
   setGitTasksData: PropTypes.func,
   handleClose: PropTypes.func,
   runTask: PropTypes.bool,
 };
 
-export default GitTaskEditorPanel;
+export default TaskEditorPanel;
 
 

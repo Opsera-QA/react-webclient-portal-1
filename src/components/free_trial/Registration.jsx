@@ -47,7 +47,7 @@ function FreeTrialSignup() {
       return;
     }
 
-    if (registrationDataDto.isModelValid2()) {
+    if (registrationDataDto.isModelValid()) {
       try {
         await userActions.createFreeTrialAccount(registrationDataDto);
         // TODO: Do we want to pop up success toast?

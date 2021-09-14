@@ -1,28 +1,30 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import GitTaskDetailPanel from "./GitTaskDetailPanel";
+import TaskDetailPanel from "components/tasks/git_task_details/TaskDetailPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
-import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import axios from "axios";
 import taskActions from "components/tasks/task.actions";
-import gitTasksMetadata from "components/tasks/git-tasks-metadata";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
+import Model from "core/data_model/model";
+import TaskModel from "components/tasks/task.model";
+import VanitySetDetailScreenContainer
+  from "components/common/panels/detail_view_container/VanitySetDetailScreenContainer";
 
 function TaskDetailView() {
   const location = useLocation();
   const { id } = useParams();
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [gitTasksData, setGitTasksData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+  const [taskData, setTaskData] = useState(undefined);
+  const [taskMetadata, setTaskMetadata] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [canDelete, setCanDelete] = useState(false);
@@ -52,40 +54,47 @@ function TaskDetailView() {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getGitTaskData(cancelSource);
+      await getTaskData(cancelSource);
     }
     catch (error) {
-      if (isMounted.current === true && !error?.error?.message?.includes(404)) {
+      if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
         console.error(error);
       }
     }
     finally {
-      if (isMounted.current === true) {
+      if (isMounted?.current === true) {
         setIsLoading(false);
       }
     }
   };
 
-  const getGitTaskData = async (cancelSource = cancelTokenSource) => {
+  const getTaskData = async (cancelSource = cancelTokenSource) => {
     const response = await taskActions.getGitTaskByIdV2(getAccessToken, cancelSource, id);
-    const gitTask = response?.data?.data[0];
-    // TODO: Wire up new route when ready
-    // const gitTask = response?.data?.data;
+    const task = response?.data?.data;
+    const taskMetadata = response?.data?.metadata;
+
     let action = "delete_task";
-    if (isMounted.current === true && gitTask != null) {
-      setGitTasksData(new Model(gitTask, gitTasksMetadata, false));
-      if (gitTask.type === "sfdc-cert-gen") {
+    if (isMounted.current === true && task != null) {
+      setTaskMetadata(taskMetadata);
+
+      // const canDelete = workflowAuthorizedActions.gitItems(customerAccessRules, action, task?.owner, task?.roles);
+      // const canUpdate
+      // setTaskData(new Model(task, taskMetadata, false, getAccessToken, cancelSource, loadData, false, false, setTaskData));
+      setTaskData(new TaskModel(task, taskMetadata, false, getAccessToken, cancelSource, loadData, false, false, setTaskData));
+
+      if (task?.type === "sfdc-cert-gen") {
         action = "delete_admin_task";
       }
+
       const customerAccessRules = await getAccessRoleData();
       setAccessRoleData(customerAccessRules);
-      setCanDelete(workflowAuthorizedActions.gitItems(customerAccessRules, action, gitTask.owner, gitTask.roles));
+      setCanDelete(workflowAuthorizedActions.gitItems(customerAccessRules, action, task?.owner, task?.roles));
     }
   };
 
   const deleteGitTask = async () => {
-    return await taskActions.deleteGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
+    return await taskActions.deleteGitTaskV2(getAccessToken, cancelTokenSource, taskData);
   };
 
   const getActionBar = () => {
@@ -95,29 +104,29 @@ function TaskDetailView() {
           <ActionBarBackButton path={"/task"} />
         </div>
         <div>
-          {canDelete && <ActionBarDeleteButton2 relocationPath={"/task/"} handleDelete={deleteGitTask} dataObject={gitTasksData} />}
+          {canDelete && <ActionBarDeleteButton2 relocationPath={"/task/"} handleDelete={deleteGitTask} dataObject={taskData} />}
         </div>
       </ActionBarContainer>
     );
   };
 
   return (
-    <DetailScreenContainer
+    <VanitySetDetailScreenContainer
       breadcrumbDestination={"taskManagementDetailView"}
-      metadata={gitTasksMetadata}
-      dataObject={gitTasksData}
+      metadata={taskMetadata}
+      model={taskData}
       isLoading={isLoading}
       accessRoleData={accessRoleData}
       navigationTabContainer={<TasksSubNavigationBar currentTab={"taskViewer"} />}
-      objectRoles={gitTasksData?.getData("roles")}
+      objectRoles={taskData?.getData("roles")}
       actionBar={getActionBar()}
       detailPanel={
-        <GitTaskDetailPanel
-          gitTasksData={gitTasksData}
+        <TaskDetailPanel
+          gitTasksData={taskData}
           isLoading={isLoading}
-          setGitTasksData={setGitTasksData}
+          setGitTasksData={setTaskData}
           accessRoleData={accessRoleData}
-          loadData={getGitTaskData}
+          loadData={loadData}
           runTask={location?.state?.runTask}
         />
       }

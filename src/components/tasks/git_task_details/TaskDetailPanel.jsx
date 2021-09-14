@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 
 import PropTypes from "prop-types";
-import GitTaskEditorPanel from "./GitTaskEditorPanel";
+import TaskEditorPanel from "components/tasks/git_task_details/TaskEditorPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faTable, faKey} from "@fortawesome/pro-light-svg-icons";
-import GitTaskSummaryPanel
-  from "components/tasks/git_task_details/GitTaskSummaryPanel";
+import TaskSummaryPanel
+  from "components/tasks/git_task_details/TaskSummaryPanel";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import CertManagementPanel from "./configuration_forms/sfdx-cert-gen/CertManagementPanel";
 import TaskActivityPanel from "components/tasks/git_task_details/activity_logs/TaskActivityPanel";
+import {TASK_TYPES} from "components/tasks/task.types";
 
-function GitTaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleData, runTask }) {
+function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleData, runTask }) {
   const [activeTab, setActiveTab] = useState(runTask ? "settings" : "summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -27,9 +28,15 @@ function GitTaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRol
 
   const getDynamicTabs = () => {
     switch (gitTasksData?.getData("type")) {
-      case "sfdc-cert-gen":
+      case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
       return (
-        <CustomTab icon={faKey} tabName={"cert"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Certificate Management"}/>
+        <CustomTab
+          icon={faKey}
+          tabName={"cert"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Certificate Management"}
+        />
       );
       default: return <></>;
     }
@@ -49,7 +56,7 @@ function GitTaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRol
     switch (activeTab) {
       case "summary":
         return (
-          <GitTaskSummaryPanel
+          <TaskSummaryPanel
             gitTasksData={gitTasksData}
             setActiveTab={setActiveTab}
             accessRoleData={accessRoleData}
@@ -59,7 +66,7 @@ function GitTaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRol
         );
       case "settings":
         return (
-          <GitTaskEditorPanel
+          <TaskEditorPanel
             handleClose={toggleSummaryPanel}
             gitTasksData={gitTasksData}
             setGitTasksData={setGitTasksData}
@@ -89,7 +96,7 @@ function GitTaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRol
   return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
 }
 
-GitTaskDetailPanel.propTypes = {
+TaskDetailPanel.propTypes = {
   gitTasksData: PropTypes.object,
   setGitTasksData: PropTypes.func,
   loadData: PropTypes.func,
@@ -97,6 +104,6 @@ GitTaskDetailPanel.propTypes = {
   runTask: PropTypes.bool,
 };
 
-export default GitTaskDetailPanel;
+export default TaskDetailPanel;
 
 
