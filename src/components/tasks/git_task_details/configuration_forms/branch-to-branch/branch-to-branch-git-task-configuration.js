@@ -7,7 +7,7 @@ const branchToBranchGitTaskConfigurationMetadata = {
       isRequired: true,
       maxLength: 10,
       lowercase: true,
-      regexValidator: "alphabetic",
+      regexDefinitionName: "alphabetic",
     },    
     {
       label: "Account",
