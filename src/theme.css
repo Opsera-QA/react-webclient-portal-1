@@ -1292,6 +1292,9 @@ div.data-blocks-ellipses {
 /* Pagination Container Styling */
 .pagination-container .top-pagination {
     background-color: #F3F3F1;
+    border: 1px solid #e4e4e4;
+    border-left: none;
+    border-right: none;
 }
 
 .top-pagination .page-sort {
@@ -1310,6 +1313,7 @@ div.data-blocks-ellipses {
 
 .pagination-container .bottom-pagination {
     background-color: #F3F3F1;
+    border-top: 1px solid #e4e4e4;
 }
 
 /* End Pagination Container Styling */

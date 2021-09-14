@@ -12,10 +12,10 @@ import NewTaskOverlay from "components/tasks/NewTaskOverlay";
 import TaskCardView from "components/tasks/TaskCardView";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
-import {
-  getLargeVendorIconComponentFromTaskType,
-} from "components/common/helpers/icon-helpers";
-import {TASK_TYPES} from "components/tasks/task.types";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import {faAws, faMicrosoft, faSalesforce} from "@fortawesome/free-brands-svg-icons";
+import {faGit} from "@fortawesome/free-brands-svg-icons/faGit";
 
 function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData, saveCookies, customerAccessRules, isMounted, taskMetadata}) {
   const toastContext = useContext(DialogToastContext);
@@ -72,34 +72,39 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
     return (
       <VanitySetVerticalTabContainer className={"h-100"} title={"Task Types"}>
         <VanitySetVerticalTab
-          iconComponent={getLargeVendorIconComponentFromTaskType("default")}
+          icon={faTasks}
           tabText={"All"}
           tabName={""}
           onSelect={onSelect}
+          activeTab={taskFilterModel?.getData("category")}
         />
         <VanitySetVerticalTab
-          iconComponent={getLargeVendorIconComponentFromTaskType(TASK_TYPES.AWS_CREATE_ECS_CLUSTER)}
+          icon={faAws}
           tabText={"AWS"}
           tabName={"aws"}
           onSelect={onSelect}
+          activeTab={taskFilterModel?.getData("category")}
         />
         <VanitySetVerticalTab
-          iconComponent={getLargeVendorIconComponentFromTaskType(TASK_TYPES.AZURE_CLUSTER_CREATION)}
+          icon={faMicrosoft}
           tabText={"Azure"}
           tabName={"azure"}
           onSelect={onSelect}
+          activeTab={taskFilterModel?.getData("category")}
         />
         <VanitySetVerticalTab
-          iconComponent={getLargeVendorIconComponentFromTaskType(TASK_TYPES.SYNC_GIT_BRANCHES)}
+          icon={faGit}
           tabText={"Git"}
           tabName={"git"}
           onSelect={onSelect}
+          activeTab={taskFilterModel?.getData("category")}
         />
         <VanitySetVerticalTab
-          iconComponent={getLargeVendorIconComponentFromTaskType(TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION)}
+          icon={faSalesforce}
           tabText={"Salesforce"}
           tabName={"salesforce"}
           onSelect={onSelect}
+          activeTab={taskFilterModel?.getData("category")}
         />
       </VanitySetVerticalTabContainer>
     );
@@ -138,7 +143,7 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
         addRecordFunction={createNewTask}
         supportSearch={true}
         saveCookies={saveCookies}
-        // supportViewToggle={true}
+        supportViewToggle={true}
         isLoading={isLoading}
         metadata={taskMetadata}
         body={getTableCardView()}

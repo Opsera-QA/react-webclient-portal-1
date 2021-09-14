@@ -2,10 +2,10 @@ import React  from "react";
 import PropTypes from "prop-types";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {tabAccessRestricted, tabDisabled} from "components/common/tooltip/popover-text";
-import {Image, Nav} from "react-bootstrap";
+import {Nav} from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
 
-function VanitySetVerticalTab({tabName, tabText, icon, visible, disabled, accessRestricted, tooltipText, onSelect, iconComponent}) {
+function VanitySetVerticalTab({tabName, tabText, icon, visible, disabled, accessRestricted, tooltipText, onSelect, activeTab}) {
   const getTooltipText = () => {
     if (accessRestricted) {
       return (tabAccessRestricted);
@@ -20,22 +20,6 @@ function VanitySetVerticalTab({tabName, tabText, icon, visible, disabled, access
     }
   };
 
-  const getIcon = () => {
-    if (iconComponent) {
-      return (
-        <div className={"tab-icon"}>
-          {iconComponent}
-        </div>
-      );
-    }
-
-    return (
-      <div>
-        <IconBase icon={icon} className={"mr-2"} />
-      </div>
-    );
-  };
-
   if (visible === false) {
     return null;
   }
@@ -47,9 +31,15 @@ function VanitySetVerticalTab({tabName, tabText, icon, visible, disabled, access
         eventKey={tabName}
         disabled={disabled || accessRestricted}
         onSelect={onSelect}
+        className={"my-auto"}
+        active={activeTab != null ? activeTab === tabName : undefined}
       >
-        {getIcon()}
-        <span className="d-none d-lg-inline">{tabText}</span>
+        <div>
+          <div className={"h-100 d-flex"}>
+            <IconBase icon={icon} className={"mr-2"} iconSize={"2x"} />
+            <div className="d-none d-lg-inline my-auto">{tabText}</div>
+          </div>
+        </div>
       </Nav.Link>
     </TooltipWrapper>
   );
@@ -64,7 +54,7 @@ VanitySetVerticalTab.propTypes = {
   disabled: PropTypes.bool,
   accessRestricted: PropTypes.bool,
   onSelect: PropTypes.func,
-  iconComponent: PropTypes.object,
+  activeTab: PropTypes.string,
 };
 
 export default VanitySetVerticalTab;
