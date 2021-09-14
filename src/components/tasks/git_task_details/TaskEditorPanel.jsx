@@ -29,6 +29,8 @@ import SfdcOrgSyncTaskHelpDocumentation from "../../common/help/documentation/ta
 import AwsLambdaFunctionCreationTaskHelpDocumentation
   from "../../common/help/documentation/tasks/AwsLambdaFunctionCreationTaskHelpDocumentation";
 import {TASK_TYPES} from "components/tasks/task.types";
+import AzureAksClusterCreationTaskHelpDocumentation
+  from "../../common/help/documentation/tasks/AzureAksClusterCreationTaskHelpDocumentation";
 
 function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }) {
   const { getAccessToken, isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
@@ -124,10 +126,11 @@ function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }
         return <SfdcOrgSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
         return <AwsLambdaFunctionCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.AZURE_CLUSTER_CREATION:
+        return <AzureAksClusterCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
       case TASK_TYPES.SYNC_GIT_BRANCHES:
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-      case TASK_TYPES.AZURE_CLUSTER_CREATION:
         break;
       default:
         return <TaskCreationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
