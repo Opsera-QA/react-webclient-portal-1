@@ -4,16 +4,17 @@ import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import Row from "react-bootstrap/Row";
 import argoActions from "../../argo-actions";
-import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import ArgoClusterSelectInput from "./inputs/ArgoClusterSelectInput";
-import ArgoProjectsSelectInput from "./inputs/ArgoProjectsSelectInput";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
+import SCMTypeInput from "./inputs/SCMTypeInput";
+import SCMToolInput from "./inputs/SCMToolInput";
+import ArgoBitbucketWorkspaceInput from "./inputs/ArgoBitbucketWorkspaceInput";
+import ArgoGitRepositoryInput from "./inputs/ArgoGitRepositoryInput";
 
 function ArgoRepositoryEditorPanel({ argoRepositoryData, toolData, repoId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -54,15 +55,15 @@ function ArgoRepositoryEditorPanel({ argoRepositoryData, toolData, repoId, handl
   };
 
   const createRepository = async () => {
-    // return await argoActions.createArgoRepository(getAccessToken, cancelTokenSource, toolData?._id, argoRepositoryModel);
+    return await argoActions.createArgoRepository(getAccessToken, cancelTokenSource, toolData?._id, argoRepositoryModel);
   };
 
   const updateRepository = async () => {
-    // return await argoActions.updateArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, repoId, argoRepositoryModel);
+    // return await argoActions.updateArgoRepository(getAccessToken, cancelTokenSource, toolData?._id, repoId, argoRepositoryModel);
   };
 
   const deleteRepository = async () => {
-    // await argoActions.deleteArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, repoId);
+    // await argoActions.deleteArgoRepository(getAccessToken, cancelTokenSource, toolData?._id, repoId);
     handleClose();
   };
 
@@ -85,7 +86,7 @@ function ArgoRepositoryEditorPanel({ argoRepositoryData, toolData, repoId, handl
       }
       handleClose={handleClose}
     >
-      <div className="scroll-y">
+      <div>
         <Row>
           <Col lg={12}>
             <TextInputBase
@@ -95,7 +96,31 @@ function ArgoRepositoryEditorPanel({ argoRepositoryData, toolData, repoId, handl
               disabled={!argoRepositoryData?.isNew()}
             />
           </Col>
-         
+          <Col lg={12}>
+            <SCMTypeInput
+              setDataObject={setArgoRepositoryModel}
+              dataObject={argoRepositoryModel}
+            />
+          </Col>
+          <Col lg={12}>
+            <SCMToolInput
+              setDataObject={setArgoRepositoryModel}
+              dataObject={argoRepositoryModel}
+            />
+          </Col>
+          <Col lg={12}>
+            <ArgoBitbucketWorkspaceInput
+              setDataObject={setArgoRepositoryModel}
+              dataObject={argoRepositoryModel}
+            />
+          </Col>
+          <Col lg={12}>
+            <ArgoGitRepositoryInput
+              setDataObject={setArgoRepositoryModel}
+              dataObject={argoRepositoryModel}
+            />
+          </Col>
+
         </Row>
       </div>
     </EditorPanelContainer>
