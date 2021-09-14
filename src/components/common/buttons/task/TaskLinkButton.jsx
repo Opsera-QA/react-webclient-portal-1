@@ -10,10 +10,10 @@ function TaskLinkButton({taskId, openInNewWindow, className, variant, closePanel
 
   const loadTool = () => {
     if (openInNewWindow) {
-      window.open(`/inventory/task/details/${taskId}`);
+      window.open(`/task/details/${taskId}`);
     }
     else {
-      history.push(`/inventory/task/details/${taskId}`);
+      history.push(`/task/details/${taskId}`);
 
       if (closePanel) {
         closePanel();
