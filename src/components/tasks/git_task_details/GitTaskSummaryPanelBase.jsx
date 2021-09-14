@@ -8,7 +8,7 @@ import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import GitTaskRoleAccessInput from "components/tasks/git_task_details/GitTaskRoleAccessInput";
 import GitTaskRunButton from "components/common/buttons/git/GitTaskRunButton";
 import TagsInlineInputBase from "components/common/inline_inputs/tags/TagsInlineInputBase";
-import gitTasksActions from "components/tasks/git-task-actions";
+import taskActions from "components/tasks/task.actions";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import workflowAuthorizedActions
@@ -37,7 +37,7 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
   }, [JSON.stringify(accessRoleData)]);
 
   const updateRecord = async (newDataModel) => {
-    const response = await gitTasksActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newDataModel);
+    const response = await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newDataModel);
     loadData();
     return response;
   };

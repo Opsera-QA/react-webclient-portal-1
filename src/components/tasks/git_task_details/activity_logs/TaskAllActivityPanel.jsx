@@ -9,7 +9,7 @@ import axios from "axios";
 import taskActivityHelpers
   from "components/tasks/git_task_details/activity_logs/task-activity-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import gitTaskActions from "components/tasks/git-task-actions";
+import gitTaskActions from "components/tasks/task.actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
 import FilterContainer from "components/common/table/FilterContainer";

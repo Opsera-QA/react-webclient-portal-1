@@ -4,13 +4,13 @@ import IconCardContainerBase from "components/common/card_containers/IconCardCon
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import DescriptionField from "components/common/fields/text/DescriptionField";
 import CreateAndUpdateDateFieldBase from "components/common/fields/date/CreateAndUpdateDateFieldBase";
-import {getLargeVendorIconFromTaskType} from "components/common/helpers/icon-helpers";
+import {getLargeVendorIconComponentFromTaskType} from "components/common/helpers/icon-helpers";
 import TaskLinkButton from "components/common/buttons/task/TaskLinkButton";
 import TaskTypeField from "components/common/fields/tasks/TaskTypeField";
 
 function TaskCard({ taskModel, isLoading, loadTaskInNewWindow }) {
   const getTitleBar = () => {
-    let icon = getLargeVendorIconFromTaskType(taskModel?.getData("type"));
+    let icon = getLargeVendorIconComponentFromTaskType(taskModel?.getData("type"));
 
     if (typeof icon === "string") {
       icon = (

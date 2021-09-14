@@ -1,5 +1,5 @@
 import ModelBase from "core/data_model/model.base";
-import gitTasksActions from "components/tasks/git-task-actions";
+import taskActions from "components/tasks/task.actions";
 
 export class TaskModel extends ModelBase {
   constructor(data, metaData, newModel, getAccessToken, cancelTokenSource, loadData, canUpdate = false, canDelete = false, setStateFunction) {
@@ -13,15 +13,15 @@ export class TaskModel extends ModelBase {
   }
 
   createModel = async () => {
-    return await gitTasksActions.createGitTaskV2(this.getAccessToken, this.cancelTokenSource, this);
+    return await taskActions.createGitTaskV2(this.getAccessToken, this.cancelTokenSource, this);
   };
 
   saveModel = async () => {
-    return await gitTasksActions.updateGitTaskV2(this.getAccessToken, this.cancelTokenSource, this);
+    return await taskActions.updateGitTaskV2(this.getAccessToken, this.cancelTokenSource, this);
   };
 
   deleteModel = async () => {
-    return await gitTasksActions.deleteGitTaskV2(this.getAccessToken, this.cancelTokenSource, this);
+    return await taskActions.deleteGitTaskV2(this.getAccessToken, this.cancelTokenSource, this);
   };
 
   getNewInstance = (newData = this.getNewObjectFields()) => {

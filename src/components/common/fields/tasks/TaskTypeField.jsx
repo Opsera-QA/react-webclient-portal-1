@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
-import {getTaskTypeLabel} from "components/tasks/task-types";
+import {getTaskTypeLabel} from "components/tasks/task.types";
 
 function TaskTypeField({model, fieldName, className, showLabel }) {
   const [field] = useState(model?.getFieldById(fieldName));

@@ -4,7 +4,7 @@ import JenkinsToolMultiSelectInput from './JenkinsToolMultiSelectInput';
 import { Button } from "react-bootstrap";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import gitTasksActions from "components/tasks/git-task-actions";
+import taskActions from "components/tasks/task.actions";
 
 function JenkinsSynchPanel({gitTasksData, setGitTasksData}) {
     const [isSynching, setIsSynching] = useState(false);
@@ -15,7 +15,7 @@ function JenkinsSynchPanel({gitTasksData, setGitTasksData}) {
         console.log("Trigger kafka call here"); 
         try{
             setIsSynching(true);
-            const response = await gitTasksActions.syncCertToJenkins(getAccessToken, gitTasksData);
+            const response = await taskActions.syncCertToJenkins(getAccessToken, gitTasksData);
             console.log(response);
       
           } catch (e) {

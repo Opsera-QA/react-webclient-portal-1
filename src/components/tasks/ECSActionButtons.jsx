@@ -6,8 +6,8 @@ import { faLaptopMedical, faPlay, faSpinner, faStop } from "@fortawesome/pro-lig
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
-import gitTasksActions from "components/tasks/git-task-actions";
-import gitTaskActions from "./git-task-actions";
+import taskActions from "components/tasks/task.actions";
+import gitTaskActions from "components/tasks/task.actions";
 import { useHistory } from "react-router-dom";
 import Model from "../../core/data_model/model";
 import gitTasksMetadata from "./git-tasks-metadata";
@@ -120,7 +120,7 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
   };
 
   const getTaskStatus = async (cancelSource = cancelTokenSource) => {
-    const response = await gitTasksActions.getGitTaskByIdV2(getAccessToken, cancelSource, gitTasksData.getData("_id"));
+    const response = await taskActions.getGitTaskByIdV2(getAccessToken, cancelSource, gitTasksData.getData("_id"));
     const data = response?.data?.data[0];
     if (isMounted?.current === true && data) {
       if (data?.error) {
@@ -142,7 +142,7 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
       let postBody = {
         taskId: gitTasksData.getData("_id"),
       };
-      let result = await gitTasksActions.createECSCluster(postBody, getAccessToken);
+      let result = await taskActions.createECSCluster(postBody, getAccessToken);
       gitTasksData.setData("status", "running");
       toastContext.showSuccessDialog("ECS Cluster Creation Triggered Successfully");
     } catch (error) {
@@ -190,7 +190,7 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
         let postBody = {
           taskId: gitTasksData.getData("_id"),
         };
-        await gitTasksActions.checkECSStatus(postBody, getAccessToken);
+        await taskActions.checkECSStatus(postBody, getAccessToken);
         toastContext.showSuccessDialog("Status check successful. View Activity Logs for a detailed report");
       } catch (error) {
         console.log(error);

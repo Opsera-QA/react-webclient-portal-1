@@ -10,7 +10,7 @@ import axios from "axios";
 import taskActivityHelpers
   from "components/tasks/git_task_details/activity_logs/task-activity-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import gitTaskActions from "components/tasks/git-task-actions";
+import gitTaskActions from "components/tasks/task.actions";
 
 function TaskActivityPanel() {
   const [loading, setLoading] = useState(false);

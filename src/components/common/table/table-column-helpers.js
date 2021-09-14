@@ -32,7 +32,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
-import {getTaskTypeLabel, TASK_TYPE_LABELS} from "components/tasks/task-types";
+import {getTaskTypeLabel} from "components/tasks/task.types";
 
 const getTableHeader = (field) => {
   return field ? field.label : "";

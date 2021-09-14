@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faLaptopMedical, faPlay, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import gitTasksActions from "components/tasks/git-task-actions";
+import taskActions from "components/tasks/task.actions";
 
 function CheckECSStatus({gitTasksData, handleClose, disable, className, loadData }) {
   let toastContext = useContext(DialogToastContext);
@@ -19,7 +19,7 @@ function CheckECSStatus({gitTasksData, handleClose, disable, className, loadData
         let postBody = {
           "taskId":gitTasksData.getData("_id")
         };
-        await gitTasksActions.checkECSStatus(postBody, getAccessToken);
+        await taskActions.checkECSStatus(postBody, getAccessToken);
         toastContext.showSuccessDialog("Status check successful. View Activity Logs for a detailed report");
       } catch (error) {
         console.log(error);
