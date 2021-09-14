@@ -1,0 +1,113 @@
+import React, {useEffect, useContext, useState, useRef} from "react";
+import { Col } from "react-bootstrap";
+import PropTypes from "prop-types";
+import "components/inventory/tools/tools.css";
+import Row from "react-bootstrap/Row";
+import argoActions from "../../argo-actions";
+import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import ArgoClusterSelectInput from "./inputs/ArgoClusterSelectInput";
+import ArgoProjectsSelectInput from "./inputs/ArgoProjectsSelectInput";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import LoadingDialog from "components/common/status_notifications/loading";
+import axios from "axios";
+import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
+
+function ArgoRepositoryEditorPanel({ argoRepositoryData, toolData, repoId, handleClose }) {
+  const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
+  const [argoRepositoryModel, setArgoRepositoryModel] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    if(argoRepositoryData) {
+      loadData();
+    }
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [argoRepositoryData]);
+
+  const loadData = () => {
+    try {
+      setIsLoading(true);
+      setArgoRepositoryModel(argoRepositoryData);
+    } catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const createRepository = async () => {
+    // return await argoActions.createArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, argoApplicationModel);
+  };
+
+  const updateRepository = async () => {
+    // return await argoActions.updateArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, applicationId, argoApplicationModel);
+  };
+
+  const deleteRepository = async () => {
+    // await argoActions.deleteArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, applicationId);
+    handleClose();
+  };
+
+  if (isLoading || argoRepositoryModel == null) {
+    return <LoadingDialog size="sm" message={"Loading Data"} />;
+  }
+
+  return (
+    <EditorPanelContainer
+      recordDto={argoRepositoryModel}
+      createRecord={createRepository}
+      updateRecord={updateRepository}
+      setRecordDto={setArgoRepositoryModel}
+      isLoading={isLoading}
+      extraButtons={
+        <DeleteButtonWithInlineConfirmation
+          dataObject={argoRepositoryModel}
+          deleteRecord={deleteRepository}
+        />
+      }
+      handleClose={handleClose}
+    >
+      <div className="scroll-y">
+        <Row>
+          <Col lg={12}>
+            <TextInputBase
+              setDataObject={setArgoRepositoryModel}
+              dataObject={argoRepositoryModel}
+              fieldName={"name"}
+              disabled={!argoRepositoryData?.isNew()}
+            />
+          </Col>
+         
+        </Row>
+      </div>
+    </EditorPanelContainer>
+  );
+}
+
+ArgoRepositoryEditorPanel.propTypes = {
+  argoRepositoryData: PropTypes.object,
+  toolData: PropTypes.object,
+  loadData: PropTypes.func,
+  repoId: PropTypes.string,
+  handleClose: PropTypes.func
+};
+
+export default ArgoRepositoryEditorPanel;
