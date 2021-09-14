@@ -10,17 +10,14 @@ import InlineTaskTypeFilter from "components/common/filters/tasks/type/InlineTas
 import TaskTable from "components/tasks/TaskTable";
 import NewTaskOverlay from "components/tasks/NewTaskOverlay";
 import TaskCardView from "components/tasks/TaskCardView";
-import gitTasksMetadata from "components/tasks/git-tasks-metadata";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import {
   getLargeVendorIconComponentFromTaskType,
 } from "components/common/helpers/icon-helpers";
 import {TASK_TYPES} from "components/tasks/task.types";
 
-function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData, saveCookies, customerAccessRules, isMounted}) {
+function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData, saveCookies, customerAccessRules, isMounted, taskMetadata}) {
   const toastContext = useContext(DialogToastContext);
 
   const createNewTask = () => {
@@ -143,7 +140,7 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
         saveCookies={saveCookies}
         // supportViewToggle={true}
         isLoading={isLoading}
-        metadata={gitTasksMetadata}
+        metadata={taskMetadata}
         body={getTableCardView()}
         dropdownFilters={getDropdownFilters()}
         inlineFilters={getInlineFilters()}
@@ -162,7 +159,8 @@ TaskViews.propTypes = {
   loadData: PropTypes.func,
   saveCookies: PropTypes.func,
   customerAccessRules: PropTypes.object,
-  isMounted: PropTypes.object
+  isMounted: PropTypes.object,
+  taskMetadata: PropTypes.object,
 };
 
 export default TaskViews;

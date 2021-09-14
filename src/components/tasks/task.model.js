@@ -27,6 +27,10 @@ export class TaskModel extends ModelBase {
   getNewInstance = (newData = this.getNewObjectFields()) => {
     return new TaskModel({...newData}, this.metaData, this.newModel, this.getAccessToken, this.cancelTokenSource, this.loadData, this.updateAllowed, this.deleteAllowed);
   };
+
+  getDetailViewTitle = () => {
+    return `${this.getData("name")} Task Details`;
+  };
 }
 
 export default TaskModel;

@@ -29,8 +29,7 @@ import AzureClusterSummaryPanel from "./configuration_forms/azure-cluster-creati
 import azureAksClusterTaskConfigurationMetadata
   from "./configuration_forms/azure-cluster-creation/azure-cluster-metadata";
 
-
-function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
+function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -133,7 +132,7 @@ function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, load
   );
 }
 
-GitTaskSummaryPanel.propTypes = {
+TaskSummaryPanel.propTypes = {
   gitTasksData: PropTypes.object,
   setActiveTab: PropTypes.func,
   setGitTasksData: PropTypes.func,
@@ -141,4 +140,4 @@ GitTaskSummaryPanel.propTypes = {
   accessRoleData: PropTypes.object
 };
 
-export default GitTaskSummaryPanel;
+export default TaskSummaryPanel;

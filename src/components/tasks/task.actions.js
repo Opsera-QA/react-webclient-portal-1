@@ -56,9 +56,9 @@ taskActions.getGitTasksListV2 = async (getAccessToken, cancelTokenSource, taskFi
 };
 
 taskActions.getGitTaskByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
-  const apiUrl = `/tools/git/${id}`;
-  // TODO: Wire up new route when ready
-  // const apiUrl = `/tasks/${id}`;
+  const apiUrl = `/tasks/${id}`;
+  // TODO: Remove this after verification
+  // const apiUrl = `/tools/git/${id}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

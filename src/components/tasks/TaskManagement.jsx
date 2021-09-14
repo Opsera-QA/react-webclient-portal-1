@@ -17,6 +17,7 @@ function TaskManagement() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [tasks, setTasks] = useState([]);
   const [taskFilterModel, setTaskFilterModel] = useState(new Model({...gitTasksFilterMetadata.newObjectFields}, gitTasksFilterMetadata, false));
+  const [taskMetadata, setTaskMetadata] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -71,9 +72,12 @@ function TaskManagement() {
     const tableFields = ["name", "description", "type", "tags", "createdAt", "active", "status"];
     const response = await taskActions.getGitTasksListV2(getAccessToken, cancelSource, filterDto, tableFields);
     const taskList = response?.data?.data;
+    const taskMetadata = response?.data?.metadata;
 
     if (isMounted.current === true && Array.isArray(taskList)) {
       setTasks(taskList);
+      setTaskMetadata(taskMetadata);
+
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response?.data?.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());

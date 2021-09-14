@@ -10,9 +10,9 @@ import ECSServiceCreationTaskConfigurationPanel from "./ecs-service-creation/ECS
 import AwsLambdaConfigurationPanel from "./aws-lambda-creation/AwsLambdaConfigurationPanel";
 import AzureClusterConfigurationPanel from "./azure-cluster-creation/AzureClusterConfigurationPanel";
 
-function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
+function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData, taskType }) {
   const getConfigurationPanel = () => {
-    switch (gitTasksDataDto.getData("type")) {
+    switch (taskType) {
       case "sync-sfdc-repo":
         return (
           <SFDCGitTaskEditorPanel 
@@ -91,7 +91,7 @@ function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTa
 }
 
 GitTasksConfigurationPanel.propTypes = {
-  gitTaskType: PropTypes.string,
+  taskType: PropTypes.string,
   gitTasksDataDto: PropTypes.object,
   gitTasksConfigurationData: PropTypes.object,
   setGitTasksConfigurationData: PropTypes.func,
