@@ -3,7 +3,7 @@ import ArgoApplications from "./tool_jobs/argo/applications/ArgoApplications";
 import OctopusApplications from "./tool_jobs/octopus/applications/OctopusApplications";
 import PropTypes from "prop-types";
 
-function ToolApplicationsPanel({ toolData, loadData, isLoading }) {
+function ToolApplicationsPanel({ toolData, setToolData, loadData, isLoading }) {
   const getPanel = (toolIdentifier, loadData) => {
     switch (toolIdentifier) {
       case "argo":
@@ -48,6 +48,7 @@ function ToolApplicationsPanel({ toolData, loadData, isLoading }) {
 ToolApplicationsPanel.propTypes = {
   toolData: PropTypes.object,
   loadData: PropTypes.func,
+  setToolData: PropTypes.func,
   isLoading: PropTypes.bool,
 };
 

@@ -186,7 +186,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case "vault":
         return <ToolVaultPanel toolData={toolData} setToolData={setToolData} />;
       case "repositories":
-        return <ToolRepositoriesPanel toolData={toolData} setToolData={setToolData} />;
+        return <ToolRepositoriesPanel toolData={toolData} setToolData={setToolData} loadData={loadData} isLoading={isLoading} />;
       default:
         return null;
     }
