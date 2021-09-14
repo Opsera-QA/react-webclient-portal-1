@@ -30,7 +30,7 @@ import AwsLambdaFunctionCreationTaskHelpDocumentation
   from "../../common/help/documentation/tasks/AwsLambdaFunctionCreationTaskHelpDocumentation";
 import {TASK_TYPES} from "components/tasks/task.types";
 
-function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }) {
+function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }) {
   const { getAccessToken, isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [gitTasksDataDto, setGitTasksDataDto] = useState(undefined);
