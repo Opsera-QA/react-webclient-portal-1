@@ -16,6 +16,7 @@ function ServiceNowToolsSelectInput({
   groupsDataObject,
   groupsSetDataObject,
 }) {
+  console.log("groupsDataObject", groupsDataObject);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [tools, setTools] = useState([]);
