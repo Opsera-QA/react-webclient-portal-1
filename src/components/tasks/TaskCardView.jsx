@@ -14,9 +14,9 @@ function TaskCardView({ taskData, taskFilterModel, setTaskFilterModel, loadData,
     }
 
     return (
-      <Row className={"mx-0"}>
+      <Row className={"mx-0 my-2"}>
         {taskData.map((task, index) => (
-          <Col key={index} className={"mb-2"}>
+          <Col key={index} className={"my-2"}>
             <TaskCard taskModel={new Model({ ...task }, gitTasksMetadata, false)}/>
           </Col>
         ))}
