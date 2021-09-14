@@ -12,9 +12,9 @@ function AwsLambdaFunctionCreationTaskHelpDocumentation({closeHelpPanel}) {
           <ul style={{listStyleType: "none"}}>
             <li><b>AWS Tool</b> - Select an established AWS tool from the Tool Registry.</li>
             <li><b>Function Name</b> - Create a unique name for the function. To confirm that the name is unique and does not exist in AWS yet, click the Validate button. If it already exists user will receive an error stating that the function with that name already exists.</li>
-            <li><b>Handler</b> - Use this syntax:   <em>example.Hello::handleRequest</em> </li>
+            <li><b>Handler</b> - Use this syntax for java8:   <em>example.Hello::handleRequest</em> </li>
             <li><b>IAM Role</b> - Select from the drop down fetched from AWS. </li>
-            <li><b>Runtime</b> - Select the language to write the function. </li>
+            <li><b>Runtime</b> - Select the language to write the function. Currently supported: java8 </li>
           </ul></li>
         <li> Select <b>Save</b> to create a template.</li>
       </ol>
