@@ -14,7 +14,7 @@ function SummaryPanelContainer({ setActiveTab, editingAllowed, children, setting
   };
 
   return (
-    <div className="scroll-y">
+    <div className="scroll-y h-100">
       {getSettingsToggle()}
       <div className={className}>
         {children}

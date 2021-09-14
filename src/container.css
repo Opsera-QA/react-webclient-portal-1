@@ -56,8 +56,9 @@
 }
 
 .makeup-tree-container-body {
-    height: calc(70vh - 90px);
-    max-height: calc(70vh - 42px);
+    min-height: calc(70vh - 49px);
+    height: calc(70vh - 49px);
+    max-height: calc(70vh - 49px);
     overflow-y: auto;
 }
 
@@ -101,7 +102,9 @@
 }
 
 .makeup-container-content-body {
-    max-height: calc(70vh - 82px - .5rem);
-    overflow-y: auto;
+    min-height: calc(70vh);
+    height: calc(70vh);
+    max-height: calc(70vh);
+    overflow-y: hidden;
 }
 /* End Makeup Container Styling */

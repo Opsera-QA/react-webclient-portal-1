@@ -10,6 +10,7 @@ import axios from "axios";
 import ToolLinkIcon from "components/common/icons/inventory/tools/ToolLinkIcon";
 import FieldLabel from "components/common/fields/FieldLabel";
 import RegistryToolInfoOverlay from "components/common/list_of_values_input/tools/RegistryToolInfoOverlay";
+import EllipsisIcon from "components/common/icons/general/EllipsisIcon";
 
 function ToolNameField({ model, fieldName, className, handleClose }) {
   const [field] = useState(model?.getFieldById(fieldName));
@@ -112,7 +113,7 @@ function ToolNameField({ model, fieldName, className, handleClose }) {
         {/*  overlay={getToolInfoOverlay()}*/}
         {/*  tooltipText={`View selected tool's details`}*/}
         {/*  className={"ml-2 view-details-icon"}*/}
-        {/*  placement={"bottom"}*/}
+        {/*  placement={"right"}*/}
         {/*/>*/}
         <ToolLinkIcon
           isLoading={isLoading}
