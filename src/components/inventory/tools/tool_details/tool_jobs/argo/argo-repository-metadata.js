@@ -23,6 +23,7 @@ const argoRepositoryMetadata = {
       isRequired: true
     },
     {
+      label: "SCM Tool",
       id: "gitToolId",
       isRequired: true,
       maxLength: 24,
