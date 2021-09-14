@@ -34,7 +34,7 @@ function TaskTable({ taskData, gitTasksFilterDto, setGitTasksFilterDto, loadData
 
   return (
     <CustomTable
-      className={"no-table-border"}
+      className={"no-table-border makeup-container-table"}
       columns={columns}
       data={taskData}
       isLoading={isLoading}

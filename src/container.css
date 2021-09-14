@@ -91,6 +91,10 @@
     overflow-y: hidden;
 }
 
+.makeup-container-table {
+    min-height: calc(70vh - 82px - .5rem);
+}
+
 .makeup-container-tab-container {
     max-height: 100%;
     overflow-y: hidden;

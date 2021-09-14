@@ -72,10 +72,28 @@ function VanitySetDetailScreenContainer(
 
   const getAccessBasedField = () => {
     if (objectRoles != null) {
-      return (<AccessRoleLevelField className={"mx-2"} accessRoleData={accessRoleData} objectRoles={objectRoles} model={model} />);
+      return (
+        <div className="content-block-footer-text-container pt-2">
+          <AccessRoleLevelField
+            className={"mx-2"}
+            accessRoleData={accessRoleData}
+            objectRoles={objectRoles}
+            dataObject={model}
+          />
+        </div>
+      );
     }
 
-    return (<RoleRequirementField className={"mx-2"} roleRequirement={roleRequirement} />);
+    if (roleRequirement) {
+      return (
+        <div className="content-block-footer-text-container pt-2">
+          <RoleRequirementField
+            className={"mx-2"}
+            roleRequirement={roleRequirement}
+          />
+        </div>
+      );
+    }
   };
 
   if (!isLoading && accessDenied) {
@@ -109,9 +127,7 @@ function VanitySetDetailScreenContainer(
             {getDetailBody()}
           </div>
         </div>
-        <div className="content-block-footer-text-container pt-2">
-          {getAccessBasedField()}
-        </div>
+        {getAccessBasedField()}
         <div className="content-block-footer"/>
       </div>
     </div>
