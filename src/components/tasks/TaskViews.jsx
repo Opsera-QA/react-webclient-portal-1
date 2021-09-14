@@ -143,7 +143,7 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
         addRecordFunction={createNewTask}
         supportSearch={true}
         saveCookies={saveCookies}
-        supportViewToggle={true}
+        // supportViewToggle={true}
         isLoading={isLoading}
         metadata={taskMetadata}
         body={getTableCardView()}

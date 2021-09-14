@@ -30,6 +30,7 @@ function TaskCardView({ taskData, taskFilterModel, setTaskFilterModel, loadData,
       loadData={loadData}
       setPaginationDto={setTaskFilterModel}
       paginationDto={taskFilterModel}
+      className={"makeup-container-table"}
       cards={getCards()}
     />
   );
