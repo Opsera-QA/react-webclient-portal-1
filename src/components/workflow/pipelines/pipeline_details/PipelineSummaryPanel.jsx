@@ -127,7 +127,7 @@ function PipelineSummaryPanel({
   };
 
 
-  const handleViewClick = (param) => {
+  const handleViewClick = () => {
     toastContext.showOverlayPanel(<PipelineDetailsOverviewOverlay pipeline={pipeline} />);
   };
 
@@ -627,9 +627,6 @@ function PipelineSummaryPanel({
                                 button="Confirm"
                                 handleCancelModal={() => setShowDeleteModal(false)}
                                 handleConfirmModal={() => deleteItem(modalDeleteId)} /> : null}
-
-      <ModalActivityLogsDialog header="Pipeline Details" size="lg" jsonData={modalMessage} show={showModal}
-                               setParentVisibility={setShowModal} />
 
       {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
                                 handleCancelModal={() => setInfoModal({ ...infoModal, show: false })} />}
