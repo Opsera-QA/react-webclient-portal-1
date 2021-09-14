@@ -70,7 +70,7 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
 
   const getTaskTypeTabs = () => {
     return (
-      <VanitySetVerticalTabContainer className={"h-100"} title={"Task Types"}>
+      <VanitySetVerticalTabContainer className={"h-100"}>
         <VanitySetVerticalTab
           icon={faTasks}
           tabText={"All"}

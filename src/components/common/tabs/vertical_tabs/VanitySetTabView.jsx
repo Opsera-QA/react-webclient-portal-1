@@ -16,4 +16,8 @@ VanitySetTabView.propTypes = {
   tabKey: PropTypes.any,
 };
 
+VanitySetTabView.defaultProps = {
+  className: "makeup-container-content-body",
+};
+
 export default VanitySetTabView;
