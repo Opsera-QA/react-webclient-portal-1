@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import ConsolidatedUserReportTaskAccessTable from "components/reports/users/user/consolidated_user_report/task_access/ConsolidatedUserReportTaskAccessTable";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import gitTasksActions from "components/tasks/git-task-actions";
+import taskActions from "components/tasks/task.actions";
 import Model from "core/data_model/model";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTasks} from "@fortawesome/pro-light-svg-icons";
@@ -48,7 +48,7 @@ function ConsolidatedUserTaskAccessReport({ userEmailAddress }) {
     try {
       if (isMounted?.current === true && userEmailAddress) {
         setIsLoading(true);
-        const response = await gitTasksActions.getGitTaskAccessForUserEmail(getAccessToken, cancelSource, newFilterDto, userEmailAddress);
+        const response = await taskActions.getGitTaskAccessForUserEmail(getAccessToken, cancelSource, newFilterDto, userEmailAddress);
         const newTaskList = response?.data?.data;
 
         if (Array.isArray(newTaskList)) {

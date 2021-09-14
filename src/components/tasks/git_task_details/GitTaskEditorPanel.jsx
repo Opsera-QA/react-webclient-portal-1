@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import gitTasksActions from "components/tasks/git-task-actions";
+import taskActions from "components/tasks/task.actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import GitTasksConfigurationPanel
@@ -68,13 +68,13 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
   const createGitTask = async () => {
     const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
     gitTasksDataDto.setData("configuration", configuration);
-    return await gitTasksActions.createGitTaskV2(getAccessToken, cancelTokenSource, gitTasksDataDto);
+    return await taskActions.createGitTaskV2(getAccessToken, cancelTokenSource, gitTasksDataDto);
   };
 
   const updateGitTask = async () => {
     const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
     gitTasksDataDto.setData("configuration", configuration);
-    return await gitTasksActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksDataDto);
+    return await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksDataDto);
   };
 
   const handleRunTask = () => {

@@ -6,7 +6,7 @@ import {faPlay, faSpinner, faTerminal, faStop} from "@fortawesome/pro-light-svg-
 import {useHistory} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
-import gitTaskActions from "components/tasks/git-task-actions";
+import gitTaskActions from "components/tasks/task.actions";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import GitRunTaskModal from "components/tasks/git_task_details/GitRunTaskModal";

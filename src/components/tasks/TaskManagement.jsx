@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import { AuthContext } from "contexts/AuthContext";
-import gitTasksActions from "./git-task-actions";
+import taskActions from "components/tasks/task.actions";
 import gitTasksFilterMetadata from "./git-tasks-filter-metadata";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
@@ -68,16 +68,17 @@ function TaskManagement() {
   };
 
   const getTasksList = async (filterDto = taskFilterModel, cancelSource = cancelTokenSource) => {
-      const response = await gitTasksActions.getGitTasksListV2(getAccessToken, cancelSource, filterDto);
-      const taskList = response?.data?.data;
+    const tableFields = ["name", "description", "type", "tags", "createdAt", "active", "status"];
+    const response = await taskActions.getGitTasksListV2(getAccessToken, cancelSource, filterDto, tableFields);
+    const taskList = response?.data?.data;
 
-      if (isMounted.current === true && Array.isArray(taskList)) {
-        setTasks(taskList);
-        let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", response?.data?.count);
-        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-        setTaskFilterModel({...newFilterDto});
-      }
+    if (isMounted.current === true && Array.isArray(taskList)) {
+      setTasks(taskList);
+      let newFilterDto = filterDto;
+      newFilterDto.setData("totalCount", response?.data?.count);
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+      setTaskFilterModel({...newFilterDto});
+    }
   };
 
   if (!accessRoleData) {

@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faOctopusDeploy, faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import {faTasks, faWrench} from "@fortawesome/pro-light-svg-icons";
 import React from "react";
-import {TASK_TYPES} from "components/tasks/task-types";
+import {TASK_TYPES} from "components/tasks/task.types";
 
 export function getLargeVendorIconFromToolIdentifier (s3Bucket, toolIdentifier) {
   if (toolIdentifier == null) {
@@ -81,6 +81,31 @@ export function getLargeVendorIconFromToolIdentifier (s3Bucket, toolIdentifier) 
   }
 }
 
+export function getLargeVendorIconComponentFromTaskType (taskType) {
+  if (taskType == null) {
+    return <></>;
+  }
+
+  const vendorIconPrefix = `${process.env.REACT_APP_OPSERA_S3_STORAGE_URL}/vendor-logos`;
+
+  switch (taskType) {
+    case TASK_TYPES.SYNC_SALESFORCE_REPO:
+    case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
+    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+      return <FontAwesomeIcon icon={faSalesforce} fixedWidth style={{color: "#0D80D8"}} className={"title-fa-icon icon-image"} />;
+    case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
+    case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
+    case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
+      return <Image className={"icon-image"} src={`${vendorIconPrefix}/icons8-amazon-web-services-96.png`} />;
+    case TASK_TYPES.SYNC_GIT_BRANCHES:
+      return <Image className={"icon-image"} src={`${vendorIconPrefix}/icons8-git-96.png`} />;
+    case TASK_TYPES.AZURE_CLUSTER_CREATION:
+      return <Image className={"icon-image"} src={`${vendorIconPrefix}/icons8-azure-96.png`} />;
+    default:
+      return <FontAwesomeIcon icon={faTasks} fixedWidth className={"title-fa-icon wrench"} />;
+  }
+}
+
 export function getLargeVendorIconFromTaskType (taskType) {
   if (taskType == null) {
     return <></>;
@@ -92,17 +117,17 @@ export function getLargeVendorIconFromTaskType (taskType) {
     case TASK_TYPES.SYNC_SALESFORCE_REPO:
     case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
     case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-      return <FontAwesomeIcon icon={faSalesforce} fixedWidth style={{color: "#0D80D8"}} className={"title-fa-icon"} />;
+      return faSalesforce;
     case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
     case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
     case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
-      return <Image src={`${vendorIconPrefix}/icons8-amazon-web-services-96.png`} />;
+      return `${vendorIconPrefix}/icons8-amazon-web-services-96.png`;
     case TASK_TYPES.SYNC_GIT_BRANCHES:
-      return <Image src={`${vendorIconPrefix}/icons8-git-96.png`} />;
+      return `${vendorIconPrefix}/icons8-git-96.png`;
     case TASK_TYPES.AZURE_CLUSTER_CREATION:
-      return <Image src={`${vendorIconPrefix}/icons8-azure-96.png`} />;
+      return `${vendorIconPrefix}/icons8-azure-96.png`;
     default:
-      return <FontAwesomeIcon icon={faTasks} fixedWidth className={"title-fa-icon wrench"} />;
+      return faTasks;
   }
 }
 

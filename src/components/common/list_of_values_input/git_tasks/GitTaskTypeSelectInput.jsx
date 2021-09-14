@@ -5,7 +5,7 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import Model from "core/data_model/model";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
-import gitTasksActions from "components/tasks/git-task-actions";
+import taskActions from "components/tasks/task.actions";
 import gitTasksFilterMetadata from "components/tasks/git-tasks-filter-metadata";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
@@ -58,7 +58,7 @@ function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled
       setCanCreate(workflowAuthorizedActions.gitItems(customerAccessRules, "create_cert_task", gitTask.owner, gitTask.roles));
     
       filterDto.setData("type", "sfdc-cert-gen");
-      const response = await gitTasksActions.getGitTasksListV2(getAccessToken, cancelSource, filterDto);
+      const response = await taskActions.getGitTasksListV2(getAccessToken, cancelSource, filterDto);
       const tasksList = response?.data?.data;
       if (isMounted.current === true && tasksList) {
         let newFilterDto = filterDto;

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {AuthContext} from "contexts/AuthContext";
-import {TASK_TYPE_LABELS, TASK_TYPES} from "components/tasks/task-types";
+import {TASK_TYPE_LABELS, TASK_TYPES} from "components/tasks/task.types";
 
 export const productionTaskTypes = [
   {text: TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO, value: TASK_TYPES.SYNC_SALESFORCE_REPO},

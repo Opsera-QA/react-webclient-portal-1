@@ -7,7 +7,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import Model from "core/data_model/model";
-import gitTasksActions from "components/tasks/git-task-actions";
+import taskActions from "components/tasks/task.actions";
 
 function TaskDetailViewer({ taskActivityLogId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -58,7 +58,7 @@ function TaskDetailViewer({ taskActivityLogId }) {
   };
 
   const getPipelineTaskData = async (cancelSource = cancelTokenSource) => {
-    const response = await gitTasksActions.getTaskActivityLogById(getAccessToken, cancelSource, taskActivityLogId);
+    const response = await taskActions.getTaskActivityLogById(getAccessToken, cancelSource, taskActivityLogId);
     const pipelineActivityLogData = response?.data?.data;
 
     if (isMounted?.current === true && pipelineActivityLogData) {

@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
 import {AuthContext} from "contexts/AuthContext";
-import gitTasksActions from "components/tasks/git-task-actions";
+import taskActions from "components/tasks/task.actions";
 import axios from "axios";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
@@ -47,7 +47,7 @@ function GitTaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled,
   const saveData = async (newRoles) => {
     let newDataObject = {...dataObject};
     newDataObject.setData(fieldName, newRoles);
-    const response = await gitTasksActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newDataObject);
+    const response = await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newDataObject);
 
     if(isMounted?.current === true) {
       setDataObject({...newDataObject});

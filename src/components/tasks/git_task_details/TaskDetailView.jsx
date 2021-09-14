@@ -10,7 +10,7 @@ import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import axios from "axios";
-import gitTasksActions from "components/tasks/git-task-actions";
+import taskActions from "components/tasks/task.actions";
 import gitTasksMetadata from "components/tasks/git-tasks-metadata";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
@@ -68,7 +68,7 @@ function TaskDetailView() {
   };
 
   const getGitTaskData = async (cancelSource = cancelTokenSource) => {
-    const response = await gitTasksActions.getGitTaskByIdV2(getAccessToken, cancelSource, id);
+    const response = await taskActions.getGitTaskByIdV2(getAccessToken, cancelSource, id);
     const gitTask = response?.data?.data[0];
     // TODO: Wire up new route when ready
     // const gitTask = response?.data?.data;
@@ -85,7 +85,7 @@ function TaskDetailView() {
   };
 
   const deleteGitTask = async () => {
-    return await gitTasksActions.deleteGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
+    return await taskActions.deleteGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
   };
 
   const getActionBar = () => {

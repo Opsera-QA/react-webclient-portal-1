@@ -167,9 +167,16 @@
     max-width: 100%;
 }
 
-.tool-registry-card .title-fa-icon {
+.tool-registry-card .title-fa-icon, .title-fa-icon {
     font-size: 75px;
     margin-top: 15px;
+}
+
+.icon-image {
+    background-color: white;
+    border-radius: 0.25rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
 }
 
 .tool-registry-card .small-title-icon {

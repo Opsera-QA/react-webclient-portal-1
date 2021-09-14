@@ -5,7 +5,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
 import axios from "axios";
 import Model from "../../../../../../../../../core/data_model/model";
-import gitTasksActions from "../../../../../../../../tasks/git-task-actions";
+import taskActions from "components/tasks/task.actions";
 import gitTasksFilterMetadata from "../../../../../../../../tasks/git-tasks-filter-metadata";
 
 function TaskSelectInput({
@@ -72,7 +72,7 @@ function TaskSelectInput({
       let newFilterDto = gitTasksFilterDto;
       newFilterDto.setData("type", "ecs_service_creation");
       setGitTasksFilterDto({...newFilterDto});
-      const response = await gitTasksActions.getGitTasksListV2(getAccessToken, cancelSource, gitTasksFilterDto);
+      const response = await taskActions.getGitTasksListV2(getAccessToken, cancelSource, gitTasksFilterDto);
       const taskList = response?.data?.data;
       if (isMounted.current === true && taskList) {
         setTasks(taskList);

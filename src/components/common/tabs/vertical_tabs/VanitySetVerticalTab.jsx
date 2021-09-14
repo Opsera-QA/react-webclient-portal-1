@@ -2,10 +2,10 @@ import React  from "react";
 import PropTypes from "prop-types";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {tabAccessRestricted, tabDisabled} from "components/common/tooltip/popover-text";
-import {Nav} from "react-bootstrap";
+import {Image, Nav} from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
 
-function VanitySetVerticalTab({tabName, tabText, icon, visible, disabled, accessRestricted, tooltipText}) {
+function VanitySetVerticalTab({tabName, tabText, icon, visible, disabled, accessRestricted, tooltipText, onSelect, iconComponent}) {
   const getTooltipText = () => {
     if (accessRestricted) {
       return (tabAccessRestricted);
@@ -20,14 +20,35 @@ function VanitySetVerticalTab({tabName, tabText, icon, visible, disabled, access
     }
   };
 
+  const getIcon = () => {
+    if (iconComponent) {
+      return (
+        <div className={"tab-icon"}>
+          {iconComponent}
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        <IconBase icon={icon} className={"mr-2"} />
+      </div>
+    );
+  };
+
   if (visible === false) {
     return null;
   }
 
   return (
     <TooltipWrapper innerText={getTooltipText()}>
-      <Nav.Link key={tabName} eventKey={tabName} disabled={disabled || accessRestricted}>
-        <IconBase icon={icon} className={"mr-2"} />
+      <Nav.Link
+        key={tabName}
+        eventKey={tabName}
+        disabled={disabled || accessRestricted}
+        onSelect={onSelect}
+      >
+        {getIcon()}
         <span className="d-none d-lg-inline">{tabText}</span>
       </Nav.Link>
     </TooltipWrapper>
@@ -42,6 +63,8 @@ VanitySetVerticalTab.propTypes = {
   tooltipText: PropTypes.string,
   disabled: PropTypes.bool,
   accessRestricted: PropTypes.bool,
+  onSelect: PropTypes.func,
+  iconComponent: PropTypes.object,
 };
 
 export default VanitySetVerticalTab;

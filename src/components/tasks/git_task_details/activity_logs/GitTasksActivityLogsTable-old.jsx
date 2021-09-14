@@ -9,7 +9,7 @@ import {
 } from "components/common/table/table-column-helpers";
 import gitTasksActivityLogMetadata
   from "components/tasks/git_task_details/activity_logs/git-tasks-activity-log-metadata";
-import gitTaskActions from "components/tasks/git-task-actions";
+import gitTaskActions from "components/tasks/task.actions";
 import Model from "core/data_model/model";
 import gitTasksActivityLogFilterMetadata
   from "components/tasks/git_task_details/activity_logs/git-tasks-activity-log-filter-metadata";
