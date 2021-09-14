@@ -423,6 +423,11 @@ export class ModelBase {
     return this.metaData?.activeField;
   }
 
+  isInactive = () => {
+    const activeField = this.metaData?.activeField;
+    return activeField && this.getData(activeField) === false;
+  }
+
   getIsLoading = () => {
     return this.isLoading === true;
   };

@@ -38,9 +38,9 @@ export async function persistNewRecordAndAddAnother(recordDto, toastContext, sho
 
 export async function persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient, showErrorToastsInline = true) {
   try {
-    let isModelValid = recordDto.isModelValid2();
+    let isModelValid = recordDto.isModelValid();
     if (!isModelValid && !lenient) {
-      let errors = recordDto.isModelValid();
+      let errors = recordDto.getErrors();
       console.error(JSON.stringify(errors));
 
       if (showErrorToastsInline) {
@@ -78,9 +78,9 @@ export async function persistNewRecord(recordDto, toastContext, showSuccessToast
 
 export async function persistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient) {
   try {
-    let isModelValid = recordDto.isModelValid2();
+    let isModelValid = recordDto.isModelValid();
     if(!isModelValid && !lenient) {
-      let errors = recordDto.isModelValid();
+      let errors = recordDto.getErrors();
       console.error(JSON.stringify(errors));
       toastContext.showFormValidationErrorDialog(errors && errors.length > 0 ? errors[0] : undefined);
       return false;
@@ -106,9 +106,9 @@ export async function persistUpdatedRecord(recordDto, toastContext, showSuccessT
 
 export async function modalPersistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient, handleClose) {
   try {
-    let isModelValid = recordDto.isModelValid2();
+    let isModelValid = recordDto.isModelValid();
     if(!isModelValid && !lenient) {
-      let errors = recordDto.isModelValid();
+      let errors = recordDto.getErrors();
       console.error(JSON.stringify(errors));
       toastContext.showInlineFormValidationError(errors && errors.length > 0 ? errors[0] : undefined);
       return false;

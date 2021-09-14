@@ -143,12 +143,11 @@ export class Model {
     return currentValue;
   };
 
-  isModelValid = () => {
+  getErrors = () => {
     return validateData(this);
   };
 
-  // TODO Replace top method with getErrors and rename this
-  isModelValid2 = () => {
+  isModelValid = () => {
     // Trim strings before testing validity
     this.trimStrings();
     let isValid = validateData(this);
@@ -339,6 +338,11 @@ export class Model {
 
   getActiveField = () => {
     return this.metaData?.activeField;
+  }
+
+  isInactive = () => {
+    const activeField = this.metaData?.activeField;
+    return activeField && this.getData(activeField) === false;
   }
 
   getFieldById = (id) => {
