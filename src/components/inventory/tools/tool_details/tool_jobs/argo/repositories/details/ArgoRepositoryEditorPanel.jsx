@@ -54,15 +54,15 @@ function ArgoRepositoryEditorPanel({ argoRepositoryData, toolData, repoId, handl
   };
 
   const createRepository = async () => {
-    // return await argoActions.createArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, argoApplicationModel);
+    // return await argoActions.createArgoRepository(getAccessToken, cancelTokenSource, toolData?._id, argoRepositoryModel);
   };
 
   const updateRepository = async () => {
-    // return await argoActions.updateArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, applicationId, argoApplicationModel);
+    // return await argoActions.updateArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, repoId, argoRepositoryModel);
   };
 
   const deleteRepository = async () => {
-    // await argoActions.deleteArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, applicationId);
+    // await argoActions.deleteArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, repoId);
     handleClose();
   };
 
