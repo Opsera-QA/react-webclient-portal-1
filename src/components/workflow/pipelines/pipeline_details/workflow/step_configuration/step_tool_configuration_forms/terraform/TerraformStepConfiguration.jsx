@@ -21,6 +21,7 @@ import TerraformIAmRoleFlagToggleInput from "components/workflow/pipelines/pipel
 import TerraformStoreStateInS3Toggle from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformStoreStateInS3Toggle";
 import TerraformS3BucketSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformS3BucketSelectInput";
 import TerraformS3BucketRegionSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformS3BucketRegionSelectInput";
+import TerraformCloudProviderSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCloudProviderSelectInput";
 
 function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -120,6 +121,7 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       <TerraformGitRepositorySelectInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
       <TerraformGitBranchSelectInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
       <TextInputBase dataObject={terraformStepConfigurationModel} fieldName={"gitFilePath"} setDataObject={setTerraformStepConfigurationModel}/>
+      <TerraformCloudProviderSelectInput dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName={"cloudProvider"} />
       <TerraformAwsCredentialsSelectInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
       <TerraformIAmRoleFlagToggleInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
       {getIamRoleFields()}

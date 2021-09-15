@@ -186,6 +186,11 @@ const TerraformStepFormMetadata = {
       label: "Bucket Region",
       id: "bucketRegion"
     },
+    {
+      label: "Cloud Provider",
+      id: "cloudProvider",
+      isRequired: true
+    }
   ],
   newObjectFields: {
     toolActionType: "EXECUTE",
@@ -212,6 +217,7 @@ const TerraformStepFormMetadata = {
     storeStateInBucket: false,
     bucketName: "",
     bucketRegion: "",
+    cloudProvider: "aws",
   }
 };
 
