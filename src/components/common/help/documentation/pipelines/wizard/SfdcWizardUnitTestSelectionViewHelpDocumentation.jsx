@@ -5,7 +5,7 @@ import HelpDocumentationContainer from "components/common/help/HelpDocumentation
 function SfdcWizardUnitTestSelectionViewHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer
-      helpTopic={"SalesForce Pipeline Run: Unit Test Selection View"}
+      helpTopic={"Salesforce Pipeline Run: Unit Test Selection View"}
       closeHelpPanel={closeHelpPanel}
       confluenceLink={`https://opsera.atlassian.net/l/c/XbSETC14`}
     >

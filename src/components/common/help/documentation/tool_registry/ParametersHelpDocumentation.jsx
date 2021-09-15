@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
+import RoleAccessTable from "components/common/fields/access/table/RoleAccessTable";
+import PropTypes from "prop-types";
 
-function ParametersHelpDocumentation() {
+function ParametersHelpDocumentation({parameterRoleDefinitions}) {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -37,8 +39,18 @@ function ParametersHelpDocumentation() {
       showPanel={true}
       helpTopic={"Parameters"}
       helpDocumentation={getHelpDocumentation()}
-    />
+    >
+      <div className={"my-2"}>
+        <RoleAccessTable
+          roleAccessDefinitions={parameterRoleDefinitions}
+        />
+      </div>
+    </HelpOverlayBase>
   );
 }
+
+ParametersHelpDocumentation.propTypes = {
+  parameterRoleDefinitions: PropTypes.object,
+};
 
 export default React.memo(ParametersHelpDocumentation);
