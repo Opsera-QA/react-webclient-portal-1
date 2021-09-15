@@ -2,31 +2,30 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
 import axios from "axios";
-import Model from "../../../../../../../../../core/data_model/model";
 import taskActions from "components/tasks/task.actions";
-import gitTasksFilterMetadata from "../../../../../../../../tasks/git-tasks-filter-metadata";
+import {AuthContext} from "contexts/AuthContext";
 
-function TaskSelectInput({
-  fieldName,
-  dataObject,
-  setDataObject,
-  disabled,
-  textField,
-  valueField,
-  tool_prop,
-  pipelineId,
-}) {
+function TaskSelectInputBase(
+  {
+    fieldName,
+    dataObject,
+    setDataObject,
+    setDataFunction,
+    disabled,
+    textField,
+    valueField,
+    type,
+    fields,
+    placeholderText,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Service Template");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [gitTasksFilterDto, setGitTasksFilterDto] = useState(new Model({...gitTasksFilterMetadata.newObjectFields}, gitTasksFilterMetadata, false));
-
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -54,7 +53,8 @@ function TaskSelectInput({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadTypes(cancelSource);
+      setErrorMessage("");
+      await loadTasks(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -67,19 +67,16 @@ function TaskSelectInput({
     }
   };
 
-  const loadTypes = async (filterDto = gitTasksFilterDto, cancelSource = cancelTokenSource) => {
+  const loadTasks = async (cancelSource = cancelTokenSource) => {
     try {
-      let newFilterDto = gitTasksFilterDto;
-      newFilterDto.setData("type", "ecs_service_creation");
-      setGitTasksFilterDto({...newFilterDto});
-      const response = await taskActions.getGitTasksListV2(getAccessToken, cancelSource, gitTasksFilterDto);
+      const response = await taskActions.getLovTasksListV2(getAccessToken, cancelSource, type, fields);
       const taskList = response?.data?.data;
       if (isMounted.current === true && taskList) {
         setTasks(taskList);
       }
     } catch (error) {
-      setPlaceholder("No Service Templates Found");
       console.error(error);
+      setErrorMessage("There was an error pulling Tasks. Please check the browser logs for more details");
       toastContext.showServiceUnavailableDialog();
     }
   };
@@ -92,28 +89,31 @@ function TaskSelectInput({
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={tasks}
+      setDataFunction={setDataFunction}
       busy={isLoading}
-      placeholderText={placeholder}
-      disabled={disabled || isLoading || (!isLoading && (tasks == null || tasks.length === 0))}
+      placeholderText={placeholderText}
+      disabled={disabled}
+      errorMessage={errorMessage}
     />
   );
 }
 
-TaskSelectInput.propTypes = {
+TaskSelectInputBase.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  tool_prop: PropTypes.string,
-  pipelineId: PropTypes.string,
+  setDataFunction: PropTypes.func,
+  type: PropTypes.string,
+  fields: PropTypes.array,
+  placeholderText: PropTypes.func,
 };
 
-TaskSelectInput.defaultProps = {
-  fieldName: "ecsServiceTaskId",
+TaskSelectInputBase.defaultProps = {
   textField: "name",
   valueField: "_id"
 };
 
-export default TaskSelectInput;
+export default TaskSelectInputBase;

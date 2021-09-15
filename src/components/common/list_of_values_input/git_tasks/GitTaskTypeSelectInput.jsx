@@ -56,7 +56,8 @@ function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled
       const customerAccessRules = await getAccessRoleData();
       const gitTask = dataObject.getPersistData();
       setCanCreate(workflowAuthorizedActions.gitItems(customerAccessRules, "create_cert_task", gitTask.owner, gitTask.roles));
-    
+
+      // TODO: Write new route to pull whether or not a certificate generation task exists as this will not work properly with RBAC rules
       filterDto.setData("type", "sfdc-cert-gen");
       const response = await taskActions.getGitTasksListV2(getAccessToken, cancelSource, filterDto);
       const tasksList = response?.data?.data;

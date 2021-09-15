@@ -1,14 +1,13 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import { AuthContext } from "contexts/AuthContext";
 import taskActions from "components/tasks/task.actions";
-import gitTasksFilterMetadata from "./git-tasks-filter-metadata";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
 import TaskViews from "components/tasks/TaskViews";
+import TaskFilterModel from "components/tasks/task.filter.model";
 
 function TaskManagement() {
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
@@ -16,7 +15,7 @@ function TaskManagement() {
   const [isLoading, setIsLoading] = useState(true);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [tasks, setTasks] = useState([]);
-  const [taskFilterModel, setTaskFilterModel] = useState(new Model({...gitTasksFilterMetadata.newObjectFields}, gitTasksFilterMetadata, false));
+  const [taskFilterModel, setTaskFilterModel] = useState(undefined);
   const [taskMetadata, setTaskMetadata] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -30,7 +29,8 @@ function TaskManagement() {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(taskFilterModel, source).catch((error) => {
+    const newTaskFilterModel = new TaskFilterModel(getAccessToken, source, loadData);
+    loadData(newTaskFilterModel, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -102,6 +102,7 @@ function TaskManagement() {
         loadData={loadData}
         isLoading={isLoading}
         isMounted={isMounted}
+        taskMetadata={taskMetadata}
         taskFilterModel={taskFilterModel}
         setTaskFilterModel={setTaskFilterModel}
       />
