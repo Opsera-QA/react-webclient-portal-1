@@ -11,7 +11,7 @@ import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/t
 import CustomTable from "components/common/table/CustomTable";
 
 function RoleAccessTableBase({ roleAccessDefinitions, loadData, isLoading }) {
-  const { getAccessRoleData } = useContext(AuthContext);
+  const { getAccessRoleData, isSassUser } = useContext(AuthContext);
   const fields = roleDefinitionMetadata?.fields;
   const [userRoleAccess, setUserRoleAccess] = useState(undefined);
   const [accessRoles, setAccessRoles] = useState(undefined);
@@ -74,6 +74,10 @@ function RoleAccessTableBase({ roleAccessDefinitions, loadData, isLoading }) {
       />
     );
   };
+
+  if (isSassUser() === true) {
+    return null;
+  }
 
   return (
     <FilterContainer
