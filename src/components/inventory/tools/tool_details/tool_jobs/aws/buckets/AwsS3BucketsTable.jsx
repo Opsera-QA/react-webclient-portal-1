@@ -1,4 +1,4 @@
-import React, {useContext, useMemo} from "react";
+import React, {useContext, useMemo, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import awsS3BucketMetadata from "./aws-s3-bucket-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -9,12 +9,13 @@ import AwsS3BucketsOverlay from "./AwsS3BucketsOverlay";
 import {getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 
-function AwsS3BucketsTable({ toolData, awsS3Buckets, loadData, onRowSelect, isLoading }) {
-  const toastContext = useContext(DialogToastContext);
+function AwsS3BucketsTable({ toolData, awsS3Buckets, loadData, isLoading }) {
+  const toastContext = useContext(DialogToastContext);  
+  
   let fields = awsS3BucketMetadata.fields;
 
   const createAwsS3Bucket = () => {
-    toastContext.showOverlayPanel(<AwsS3BucketsOverlay toolData={toolData} loadData={loadData} />);
+    toastContext.showOverlayPanel(<AwsS3BucketsOverlay toolData={toolData} loadData={loadData} editMode={false} />);
   };
 
   const columns = useMemo(
@@ -24,6 +25,17 @@ function AwsS3BucketsTable({ toolData, awsS3Buckets, loadData, onRowSelect, isLo
     ],
     []
   );
+
+  const onRowSelect = async (grid, row) => {    
+    toastContext.showOverlayPanel(
+      <AwsS3BucketsOverlay 
+        toolData={toolData} 
+        loadData={loadData} 
+        editMode={true} 
+        editRowData={row}
+      />
+    );
+  };
 
   const getTable = () => {
     return (
@@ -53,7 +65,6 @@ function AwsS3BucketsTable({ toolData, awsS3Buckets, loadData, onRowSelect, isLo
 AwsS3BucketsTable.propTypes = {
   toolData: PropTypes.object,
   loadData: PropTypes.func,
-  onRowSelect: PropTypes.func,
   isLoading: PropTypes.bool,
   awsS3Buckets: PropTypes.array
 };

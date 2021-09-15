@@ -7,7 +7,7 @@ import axios from "axios";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import modelHelpers from "components/common/model/modelHelpers";
 
-function AwsS3BucketsOverlay({ loadData, toolData, dataObject, applicationId }) {
+function AwsS3BucketsOverlay({ loadData, toolData, editMode, editRowData }) {
   const toastContext = useContext(DialogToastContext);
   const [awsS3BucketsData, setAwsS3BucketsData] = useState(undefined);
   const isMounted = useRef(false);
@@ -28,10 +28,10 @@ function AwsS3BucketsOverlay({ loadData, toolData, dataObject, applicationId }) 
       source.cancel();
       isMounted.current = false;
     };
-  }, [dataObject]);
+  }, []);
 
   const initializeModel = () => {
-    setAwsS3BucketsData(modelHelpers.parseObjectIntoModel(dataObject, awsS3BucketMetadata));    
+    setAwsS3BucketsData(modelHelpers.parseObjectIntoModel({}, awsS3BucketMetadata));
   };
 
   const closePanel = () => {
@@ -50,7 +50,8 @@ function AwsS3BucketsOverlay({ loadData, toolData, dataObject, applicationId }) 
         toolData={toolData}
         loadData={loadData}
         handleClose={closePanel}
-        applicationId={applicationId}
+        editMode={editMode}
+        editRowData={editRowData}
       />
     </CreateCenterPanel>
   );
@@ -58,9 +59,9 @@ function AwsS3BucketsOverlay({ loadData, toolData, dataObject, applicationId }) 
 
 AwsS3BucketsOverlay.propTypes = {
   toolData: PropTypes.object,
-  dataObject: PropTypes.object,
+  editRowData: PropTypes.object,
   loadData: PropTypes.func,
-  applicationId: PropTypes.string,
+  editMode: PropTypes.bool,
 };
 
 export default AwsS3BucketsOverlay;

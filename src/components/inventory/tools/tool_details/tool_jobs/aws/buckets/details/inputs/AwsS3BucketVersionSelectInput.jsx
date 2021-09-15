@@ -9,12 +9,11 @@ function AwsS3BucketVersionSelectInput({ fieldName, model, setModel }) {
 
   const { getAccessToken } = useContext(AuthContext);
   const [bucketVersions, setBucketVersions] = useState(undefined);
-  const [isVersionLoading, setIsVersionLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [error, setError] = useState(undefined);
   
-
   useEffect (() => {
     if(cancelTokenSource){
       cancelTokenSource.cancel();
@@ -36,7 +35,7 @@ function AwsS3BucketVersionSelectInput({ fieldName, model, setModel }) {
 
   const loadBucketVersions = async (cancelSource = cancelTokenSource) => {
     try {
-      setIsVersionLoading(true);
+      setIsLoading(true);
       const response = await awsActions.getS3BucketVersions(getAccessToken, cancelSource);      
       if(response.status === 200) {
         setBucketVersions(response.data.data);
@@ -49,7 +48,7 @@ function AwsS3BucketVersionSelectInput({ fieldName, model, setModel }) {
       }
     } finally {
       if(isMounted?.current === true) {
-        setIsVersionLoading(false);
+        setIsLoading(false);
       }      
     }
   };
@@ -62,7 +61,7 @@ function AwsS3BucketVersionSelectInput({ fieldName, model, setModel }) {
       selectOptions={bucketVersions ? bucketVersions : []}
       valueField="value"
       textField="name"
-      isLoading={isVersionLoading}
+      busy={isLoading}
       placeholder="Select Bucket Version"
     />
   );
