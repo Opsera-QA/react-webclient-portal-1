@@ -22,7 +22,7 @@ function ArgoRepositoryTable({ toolData, argoRepositories, loadData, onRowSelect
     () => [
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "service")),
-      getTableTextColumn(getField(fields, "repository")),
+      getTableTextColumn(getField(fields, "repositoryName")),
       getTableTextColumn(getField(fields, "repositoryType")),
     ],
     []

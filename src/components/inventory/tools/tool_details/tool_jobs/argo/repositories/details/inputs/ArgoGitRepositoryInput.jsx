@@ -6,7 +6,7 @@ function ArgoGitRepositoryInput({dataObject, setDataObject, disabled}) {
   const setRepository = (fieldName, selectedOption) => {
 
     let newDataObject = {...dataObject};
-    newDataObject.setData("repository", selectedOption.name);
+    newDataObject.setData("repositoryName", selectedOption.name);
     newDataObject.setData("projectId", selectedOption.id);
     newDataObject.setData("repoId", selectedOption.id);
     newDataObject.setData("sshUrl", selectedOption.sshUrl);
@@ -16,7 +16,7 @@ function ArgoGitRepositoryInput({dataObject, setDataObject, disabled}) {
 
   const clearData = () => {
     let newDataObject = {...dataObject};
-    newDataObject.setData("repository", "");
+    newDataObject.setData("repositoryName", "");
     newDataObject.setData("projectId", "");
     newDataObject.setData("repoId", "");
     newDataObject.setData("sshUrl", "");
@@ -26,7 +26,7 @@ function ArgoGitRepositoryInput({dataObject, setDataObject, disabled}) {
 
   return (
      <GitRepositoryInput
-       fieldName={"repository"}
+       fieldName={"repositoryName"}
        service={dataObject.getData("service")}
        gitToolId={dataObject.getData("gitToolId")}
        workspace={dataObject.getData("workspace")}
