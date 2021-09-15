@@ -11,22 +11,22 @@ function ArgoRepository({ toolData, loadData, isLoading, toolActions }) {
   const [argoRepositories, setArgoRepositorie] = useState([]);
 
   useEffect(() => {
-    unpackApplications(toolActions);
+    unpackRepos(toolActions);
   }, [toolActions]);
 
-  const unpackApplications = (toolActions) => {
-    const newApplicationList = [];
+  const unpackRepos = (toolActions) => {
+    const newRepoList = [];
 
     if (Array.isArray(toolActions)) {
       toolActions.forEach((toolAction, index) => {
-        let application = toolAction?.configuration;
-        application = {...application, applicationId: toolAction?._id};
-        application = {...application, index: index};
-        newApplicationList?.push(application);
+        let repo = toolAction?.configuration;
+        repo = {...repo, repoId: toolAction?._id};
+        repo = {...repo, index: index};
+        newRepoList?.push(repo);
       });
     }
 
-    setArgoRepositorie(newApplicationList);
+    setArgoRepositorie(newRepoList);
   };
 
   const onRowSelect = (grid, row) => {

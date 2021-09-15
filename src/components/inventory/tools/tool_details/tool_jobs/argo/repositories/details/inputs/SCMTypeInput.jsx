@@ -25,7 +25,7 @@ function SCMTypeInput({dataObject, setDataObject, disabled}) {
         newDataObject.setData("gitToolId", "");
         newDataObject.setData("gitUrl", "");
         newDataObject.setData("sshUrl", "");
-        newDataObject.setData("repository", "");
+        newDataObject.setData("repositoryName", "");
         newDataObject.setData("projectId", "");
         newDataObject.setData("workspace", "");
         setDataObject({...newDataObject});

@@ -9,7 +9,7 @@ function SCMToolInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("projectId", "");
-    newDataObject.setData("repository", "");
+    newDataObject.setData("repositoryName", "");
     newDataObject.setData("workspace", "");
     setDataObject({...newDataObject});
   };
