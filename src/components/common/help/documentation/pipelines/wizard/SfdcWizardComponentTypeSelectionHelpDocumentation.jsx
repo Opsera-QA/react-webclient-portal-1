@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 function SfdcWizardComponentTypeSelectionHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer
-      helpTopic={"SalesForce Pipeline Run: Component Type Selection"}
+      helpTopic={"Salesforce Pipeline Run: Component Type Selection"}
       closeHelpPanel={closeHelpPanel}
       confluenceLink={`https://opsera.atlassian.net/l/c/XbSETC14`}
     >

@@ -10,8 +10,8 @@ function TaskCreationHelpDocumentation({closeHelpPanel}) {
         <li><b>Name</b> - Create a unique name for your task.</li>
         <li><b>Type</b> - Select a Task Type from the drop down menu. Once selection is made you can configure task details. .
           <ul>
-            <li><b>SFDC Org Sync</b> - Create and configure the SFDC Org Sync task to sync the changes in Salesforce Org with the configured Git branch.</li>
-            <li><b>SFDC Branch Restructuring</b> - Convert the Salesforce metadata components available in Git Branch from Ant to SFDX format or vice versa.</li>
+            <li><b>Salesforce Organization Sync</b> - Create and configure the Salesforce Organization Sync task to sync the changes in Salesforce Org with the configured Git branch.</li>
+            <li><b>Salesforce Branch Restructuring</b> - Convert the Salesforce metadata components available in Git Branch from Ant to SFDX format or vice versa.</li>
             <li><b>GIT to GIT Sync </b> - Use this task to sync up between 2 different Git branches and merge the changes. The resulting Merge Request can be configured to be approved by set of approvers before Merging.</li>
             <li><b>Create AWS ECS Cluster </b> - Create an AWS Elastic Container Service Cluster template and run the task to create a cluster.</li>
             <li><b>Create AWS ECS Service </b> - Create AWS Elastic Container Service to integrate tasks and management, then publish the containers through Opsera pipelines.</li>
