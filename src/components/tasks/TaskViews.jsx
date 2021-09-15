@@ -112,6 +112,7 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
 
   const onSelect = (tab) => {
     taskFilterModel?.setData("category", tab);
+    taskFilterModel?.setData("type", "");
     loadData(taskFilterModel);
   };
 
