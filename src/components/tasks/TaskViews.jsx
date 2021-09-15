@@ -15,9 +15,9 @@ import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySet
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {faAws, faMicrosoft, faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import {faGit} from "@fortawesome/free-brands-svg-icons/faGit";
+import {faGitAlt} from "@fortawesome/free-brands-svg-icons/faGitAlt";
 
-function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData, saveCookies, customerAccessRules, isMounted, taskMetadata}) {
+function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData, isMounted, taskMetadata}) {
   const toastContext = useContext(DialogToastContext);
 
   const createNewTask = () => {
@@ -62,8 +62,9 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
         isLoading={isLoading}
         loadData={loadData}
         taskData={taskData}
-        gitTasksFilterDto={taskFilterModel}
-        setGitTasksFilterDto={setTaskFilterModel}
+        taskMetadata={taskMetadata}
+        taskFilterModel={taskFilterModel}
+        setTaskFilterModel={setTaskFilterModel}
       />
     );
   };
@@ -93,7 +94,7 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
           activeTab={taskFilterModel?.getData("category")}
         />
         <VanitySetVerticalTab
-          icon={faGit}
+          icon={faGitAlt}
           tabText={"Git"}
           tabName={"git"}
           onSelect={onSelect}
@@ -118,11 +119,11 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
 
   const getTableCardView = () => {
     return (
-      // <Row className={"mx-0"}>
-      //   <Col sm={2} className={"px-0"}>
-      //     {getTaskTypeTabs()}
-      //   </Col>
-      //   <Col sm={10} className={"px-0"}>
+      <Row className={"mx-0"}>
+        <Col sm={2} className={"px-0"}>
+          {getTaskTypeTabs()}
+        </Col>
+        <Col sm={10} className={"px-0"}>
           <TableCardView
             filterDto={taskFilterModel}
             data={taskData}
@@ -131,8 +132,8 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
             cardView={getCardView()}
             tableView={getTableView()}
           />
-      //   </Col>
-      // </Row>
+        </Col>
+      </Row>
     );
   };
 
@@ -143,8 +144,7 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
         setFilterDto={setTaskFilterModel}
         addRecordFunction={createNewTask}
         supportSearch={true}
-        saveCookies={saveCookies}
-        // supportViewToggle={true}
+        supportViewToggle={true}
         isLoading={isLoading}
         metadata={taskMetadata}
         body={getTableCardView()}
@@ -163,8 +163,6 @@ TaskViews.propTypes = {
   taskFilterModel: PropTypes.object,
   setTaskFilterModel: PropTypes.func,
   loadData: PropTypes.func,
-  saveCookies: PropTypes.func,
-  customerAccessRules: PropTypes.object,
   isMounted: PropTypes.object,
   taskMetadata: PropTypes.object,
 };

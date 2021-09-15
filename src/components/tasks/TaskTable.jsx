@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
@@ -7,30 +7,43 @@ import {
   getTableTextColumn,
   getPipelineActivityStatusColumn, getTagColumn, getTaskTypeColumn
 } from "components/common/table/table-column-helpers";
-import gitTasksMetadata from "./git-tasks-metadata";
 import {useHistory} from "react-router-dom";
 import {getField} from "components/common/metadata/metadata-helpers";
 
-function TaskTable({ taskData, gitTasksFilterDto, setGitTasksFilterDto, loadData, isLoading }) {
+function TaskTable({ taskData, taskFilterModel, setTaskFilterModel, loadData, isLoading, taskMetadata }) {
   let history = useHistory();
-  const fields = gitTasksMetadata.fields;
-  
+  const [columns, setColumns] = useState([]);
+
+  useEffect(() => {
+    setColumns([]);
+    loadColumnMetadata(taskMetadata);
+  }, [JSON.stringify(taskMetadata)]);
+
+  const loadColumnMetadata = (newActivityMetadata) => {
+    if (newActivityMetadata?.fields) {
+      const fields = newActivityMetadata?.fields;
+
+      setColumns(
+        [
+          getTableTextColumn(getField(fields, "name"), "force-text-wrap"),
+          getTableTextColumn(getField(fields, "description"), "force-text-wrap"),
+          getTaskTypeColumn(getField(fields, "type")),
+          getTagColumn(getField(fields, "tags")),
+          getTableDateColumn(getField(fields, "createdAt")),
+          getTableBooleanIconColumn(getField(fields, "active")),
+          getPipelineActivityStatusColumn(getField(fields, "status")),
+        ]
+      );
+    }
+  };
+
   const onRowSelect = (rowData) => {
     history.push({pathname: `/task/details/${rowData?.original?._id}`});
   };
 
-  const columns = useMemo(
-    () => [
-      getTableTextColumn(getField(fields, "name"), "force-text-wrap"),
-      getTableTextColumn(getField(fields, "description"), "force-text-wrap"),
-      getTaskTypeColumn(getField(fields, "type")),
-      getTagColumn(getField(fields, "tags")),
-      getTableDateColumn(getField(fields, "createdAt")),
-      getTableBooleanIconColumn(getField(fields, "active")),
-      getPipelineActivityStatusColumn(getField(fields, "status")),
-    ],
-    []
-  );
+  if (taskMetadata == null) {
+    return null;
+  }
 
   return (
     <CustomTable
@@ -39,8 +52,8 @@ function TaskTable({ taskData, gitTasksFilterDto, setGitTasksFilterDto, loadData
       data={taskData}
       isLoading={isLoading}
       onRowSelect={onRowSelect}
-      paginationDto={gitTasksFilterDto}
-      setPaginationDto={setGitTasksFilterDto}
+      paginationDto={taskFilterModel}
+      setPaginationDto={setTaskFilterModel}
       loadData={loadData}
     />
   );
@@ -50,8 +63,9 @@ TaskTable.propTypes = {
   taskData: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  gitTasksFilterDto: PropTypes.object,
-  setGitTasksFilterDto: PropTypes.func,
+  taskFilterModel: PropTypes.object,
+  setTaskFilterModel: PropTypes.func,
+  taskMetadata: PropTypes.object,
 };
 
 export default TaskTable;
