@@ -4,7 +4,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
 import RoleAccessTable from "components/common/fields/access/table/RoleAccessTable";
 
-function ScriptsHelpDocumentation({scriptRoleDefinitions, scriptMetadata}) {
+function ScriptsHelpDocumentation({scriptRoleDefinitions}) {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -40,10 +40,7 @@ function ScriptsHelpDocumentation({scriptRoleDefinitions, scriptMetadata}) {
       helpDocumentation={getHelpDocumentation()}
     >
       <div className={"my-2"}>
-        <RoleAccessTable
-          roleAccessDefinitions={scriptRoleDefinitions}
-          roleAccessMetadata={scriptMetadata}
-        />
+        <RoleAccessTable roleAccessDefinitions={scriptRoleDefinitions} />
       </div>
     </HelpOverlayBase>
   );
@@ -51,7 +48,6 @@ function ScriptsHelpDocumentation({scriptRoleDefinitions, scriptMetadata}) {
 
 ScriptsHelpDocumentation.propTypes = {
   scriptRoleDefinitions: PropTypes.object,
-  scriptMetadata: PropTypes.object,
 };
 
 export default React.memo(ScriptsHelpDocumentation);

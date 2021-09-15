@@ -28,6 +28,7 @@ export class ModelBase {
     this.isLoading = false;
     this.updateAllowed = false;
     this.deleteAllowed = false;
+    this.editAccssRolesAllowed = false;
   }
 
   initializeObjectProperties = (metaData) => {
@@ -465,6 +466,11 @@ export class ModelBase {
   canDelete = () => {
     return this.deleteAllowed === true;
   };
+
+  canEditAccessRoles = () => {
+    return this.canUpdate() === true && this.editAccssRolesAllowed === true;
+  };
+
 }
 
 export default ModelBase;
