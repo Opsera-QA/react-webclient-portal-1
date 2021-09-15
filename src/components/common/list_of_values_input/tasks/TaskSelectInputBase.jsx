@@ -77,7 +77,6 @@ function TaskSelectInputBase(
     } catch (error) {
       console.error(error);
       setErrorMessage("There was an error pulling Tasks. Please check the browser logs for more details");
-      toastContext.showServiceUnavailableDialog();
     }
   };
 

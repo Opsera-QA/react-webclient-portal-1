@@ -69,6 +69,12 @@ taskActions.getLovTasksListV2 = async (getAccessToken, cancelTokenSource, type, 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+taskActions.doesCertificateGenerationTaskExist = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/tasks/certificate-generation-task-exists`;
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 taskActions.getGitTaskByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/tasks/${id}`;
   // TODO: Remove this after verification

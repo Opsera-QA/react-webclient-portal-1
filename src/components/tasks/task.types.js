@@ -19,20 +19,20 @@ export const TASK_TYPES = {
 
 export const TASK_TYPE_LABELS = {
   // Salesforce
-  SYNC_SALESFORCE_REPO: "Salesforce: Organization Sync",
-  SALESFORCE_CERTIFICATE_GENERATION: "Salesforce: Generate Certificate for SFDX",
-  SYNC_SALESFORCE_BRANCH_STRUCTURE: "Salesforce: Branch Structuring",
+  SYNC_SALESFORCE_REPO: "Salesforce Organization Sync",
+  SALESFORCE_CERTIFICATE_GENERATION: "Salesforce DX Certificate Generation",
+  SYNC_SALESFORCE_BRANCH_STRUCTURE: "Salesforce Branch Structuring",
 
   // Git
-  SYNC_GIT_BRANCHES: "Git: Git to Git Sync",
+  SYNC_GIT_BRANCHES: "Git to Git Sync",
 
   // AWS
-  AWS_CREATE_ECS_CLUSTER: "AWS: Create ECS Cluster",
-  AWS_CREATE_ECS_SERVICE: "AWS: Create ECS Service",
-  AWS_CREATE_LAMBDA_FUNCTION: "AWS: Create Lambda Function",
+  AWS_CREATE_ECS_CLUSTER: "AWS ECS Cluster Creation",
+  AWS_CREATE_ECS_SERVICE: "AWS ECS Service Creation",
+  AWS_CREATE_LAMBDA_FUNCTION: "AWS Lambda Function Creation",
 
   // Azure
-  AZURE_CLUSTER_CREATION: "Azure: Create AKS Cluster",
+  AZURE_CLUSTER_CREATION: "Azure AKS Cluster Creation",
 };
 
 export const getTaskTypeLabel = (taskType) => {
