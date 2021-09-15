@@ -6,6 +6,8 @@ const awsS3BucketMetadata = {
         label: "S3 Bucket Name",
         id: "bucketName",
         isRequired: true,
+        regexDefinitionName: "azureLabels",
+        maxLength: 100
       },
       {
         label: "Bucket Version",
@@ -20,22 +22,18 @@ const awsS3BucketMetadata = {
       {
         label: "Block Public Acls",
         id: "blockPublicAcls",
-        isRequired: true,
       },
       {
         label: "Block Public Policy",
         id: "blockPublicPolicy",
-        isRequired: true,
       },
       {
         label: "Ignore Public Acls",
         id: "ignorePublicAcls",
-        isRequired: true,
       },
       {
         label: "Restrict Public Buckets",
         id: "restrictPublicBuckets",
-        isRequired: true,
       },
     ],
     newObjectFields: {

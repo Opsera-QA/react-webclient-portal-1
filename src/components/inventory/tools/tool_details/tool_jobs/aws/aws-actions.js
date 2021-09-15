@@ -12,12 +12,8 @@ awsActions.createS3Bucket = async (getAccessToken, cancelTokenSource, toolId, aw
 };
 
 awsActions.deleteS3Bucket = async (getAccessToken, cancelTokenSource, toolId, awsBucketModel) => {
-    const apiUrl = `/tools/aws/bucket`;
-    const postBody = {
-      ...awsBucketModel,
-      toolId: toolId
-    };
-    return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  const apiUrl = `/tools/aws/bucket?toolId=${toolId}&region=${awsBucketModel.regions}&bucketName=${awsBucketModel.bucketName}`;
+  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 awsActions.getS3BucketList = async (toolId, getAccessToken, cancelTokenSource) => {
