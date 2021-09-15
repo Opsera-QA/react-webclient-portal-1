@@ -8,7 +8,9 @@ import JfrogJenkinsToolInput from "./inputs/JFrogJenkinsToolSelectInput";
 import JFrogJenkinsJobInput from "./inputs/JfrogJenkinsJobInput";
 import JFrogBuildStepSelectInput from "./inputs/JFrogBuildStepSelectInput";
 import JfrogRepoSelectInput from "./inputs/JfrogRepoSelectInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 import jfrogStepFormMetadata from "./jfrog-stepForm-metadata";
+import JFrogRepositoryTypeSelectInput from "./inputs/JFrogRepositoryTypeSelectInput";
 
 function JFrogDockerStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -41,6 +43,9 @@ function JFrogDockerStepConfiguration({ pipelineId, stepTool, stepId, createJob,
     let { threshold, job_type } = stepTool;
     let jfrogConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, jfrogStepFormMetadata);
 
+    if (jfrogConfigurationData.getData("type") === "PORTPERREPO") {
+      jfrogConfigurationData.setMetaDataFields(jfrogStepFormMetadata.fieldsAlt);
+    }
     setJFrogStepConfigurationDataDto(jfrogConfigurationData);
 
     if (job_type) {
@@ -107,18 +112,25 @@ function JFrogDockerStepConfiguration({ pipelineId, stepTool, stepId, createJob,
           (listOfSteps && listOfSteps.length === 0)
         }
       />
-      <JfrogRepoSelectInput
-        fieldName={"repositoryName"}
+      <JFrogRepositoryTypeSelectInput
         dataObject={jfrogStepConfigurationDto}
         setDataObject={setJFrogStepConfigurationDataDto}
-        options={listOfSteps}
-        disabled={jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("jfrogToolConfigId")?.length === 0}
-        tool_prop={
-          jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("jfrogToolConfigId")
-            ? jfrogStepConfigurationDto.getData("jfrogToolConfigId")
-            : ""
-        }
       />
+      {jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("type") === "PORTPERREPO" ?
+        <TextInputBase fieldName="port" setDataObject={setJFrogStepConfigurationDataDto} dataObject={jfrogStepConfigurationDto}/> :
+        <JfrogRepoSelectInput
+          fieldName={"repositoryName"}
+          dataObject={jfrogStepConfigurationDto}
+          setDataObject={setJFrogStepConfigurationDataDto}
+          options={listOfSteps}
+          disabled={jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("jfrogToolConfigId")?.length === 0}
+          tool_prop={
+            jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("jfrogToolConfigId")
+              ? jfrogStepConfigurationDto.getData("jfrogToolConfigId")
+              : ""
+          }
+        />
+      }
     </PipelineStepEditorPanelContainer>
   );
 }
