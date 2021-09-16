@@ -12,7 +12,7 @@ import {faUserChart} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {analyticsDataMetadata} from "components/settings/analytics_data_entry/analytics-data-metadata";
 import NewAnalyticsDataEntryOverlay from "components/settings/analytics_data_entry/NewAnalyticsDataEntryOverlay";
-import StatusFilter from "components/common/filters/status/StatusFilter";
+import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import KpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_identifier/KpiIdentifierFilter";
 import InlineKpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_identifier/InlineKpiIdentifierFilter";
 
@@ -75,7 +75,7 @@ function AnalyticsDataEntryTable({ analyticsDataEntries, isLoading, loadData, is
           manualDataEntry={true}
           className={"mb-2"}
         />
-        <StatusFilter
+        <ActiveFilter
           filterDto={analyticsDataEntryFilterModel}
           setFilterDto={setAnalyticsDataEntryFilterModel}
         />

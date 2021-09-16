@@ -8,7 +8,7 @@ const statusOptions = [
   {text: "Inactive", value: "inactive"}
 ];
 
-function StatusFilter({ filterDto, setFilterDto, className, fieldName, inline}) {
+function ActiveFilter({ filterDto, setFilterDto, className, fieldName, inline}) {
   if (filterDto == null) {
     return null;
   }
@@ -25,7 +25,7 @@ function StatusFilter({ filterDto, setFilterDto, className, fieldName, inline}) 
   );
 }
 
-StatusFilter.propTypes = {
+ActiveFilter.propTypes = {
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
   className: PropTypes.string,
@@ -33,10 +33,10 @@ StatusFilter.propTypes = {
   inline: PropTypes.bool
 };
 
-StatusFilter.defaultProps = {
+ActiveFilter.defaultProps = {
   fieldName: "status"
 };
 
-export default StatusFilter;
+export default ActiveFilter;
 
 
