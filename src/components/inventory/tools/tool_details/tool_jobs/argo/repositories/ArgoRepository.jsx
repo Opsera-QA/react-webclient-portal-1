@@ -34,7 +34,7 @@ function ArgoRepository({ toolData, loadData, isLoading, toolActions }) {
     toastContext.showOverlayPanel(
       <ArgoRepositoryOverlay
         argoDataObject={selectedRow?.configuration}
-        applicationId={selectedRow?._id}
+        repoId={selectedRow?._id}
         toolData={toolData}
         loadData={loadData}
       />

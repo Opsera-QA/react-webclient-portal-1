@@ -42,20 +42,20 @@ argoActions.getArgoApplicationsV2 = async (getAccessToken, cancelTokenSource, to
 };
 
 
-argoActions.createArgoRepository = async (getAccessToken, cancelTokenSource, toolId, argoApplicationModel) => {
+argoActions.createArgoRepository = async (getAccessToken, cancelTokenSource, toolId, argoRepositoryModel) => {
   const apiUrl = `/tools/${toolId}/argo/repo/create`;
   const postBody = {
-    ...argoApplicationModel.getPersistData(),
+    ...argoRepositoryModel.getPersistData(),
   };
 
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 
-argoActions.updateArgoRepository = async (getAccessToken, cancelTokenSource, toolId, repoId, argoApplicationModel) => {
+argoActions.updateArgoRepository = async (getAccessToken, cancelTokenSource, toolId, repoId, argoRepositoryModel) => {
   const apiUrl = `/tools/${toolId}/argo/repo/${repoId}/update`;
   const postBody = {
-    ...argoApplicationModel.getPersistData(),
+    ...argoRepositoryModel.getPersistData(),
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
