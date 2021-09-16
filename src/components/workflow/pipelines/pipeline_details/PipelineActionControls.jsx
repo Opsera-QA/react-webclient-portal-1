@@ -85,8 +85,6 @@ function PipelineActionControls({
       if (pipeline.workflow?.last_step?.running?.step_id) {
         const runningStep = pipelineHelpers.getStepIndexFromPlan(pipeline.workflow.plan, pipeline.workflow?.last_step?.running?.step_id);
         setIsApprovalGate(pipeline.workflow.plan[runningStep].tool?.tool_identifier === "approval");
-
-        console.log("WE GET THIS? ", pipeline.workflow.plan[runningStep].tool?.tool_identifier === "approval");
       }
 
       return;
