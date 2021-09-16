@@ -721,7 +721,7 @@ const breadcrumbs = {
     path: paths.taskActivityLogs,
     title: "Opsera Task Activity Logs",
     linkText: "Opsera Task Activity Logs",
-    icon: faListAlt
+    icon: faClipboardList
   },
   taskManagementDetailView: {
     parent: "taskManagement",
