@@ -28,7 +28,6 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   const [isLoading, setIsLoading] = useState(false);
   const [creatingNewRecord, setCreatingNewRecord] = useState(false);
   const [existingRecord, setExistingRecord] = useState(undefined);
-  const {featureFlagHideItemInProd, featureFlagHideItemInTest} = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -337,6 +336,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   };
 
   const getTabContainer = () => {
+    // TODO: Remove this when profile migration file validation is supported
     if (pipelineWizardModel?.getData("isProfiles") === true) {
       return null;
     }
