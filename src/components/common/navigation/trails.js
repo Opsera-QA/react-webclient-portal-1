@@ -706,7 +706,7 @@ const breadcrumbs = {
     icon: faEnvelope
   },
 
-  //GIT Tasks
+  // Tasks
   taskManagement : {
     parent: undefined,
     name: "taskManagement",
@@ -714,6 +714,14 @@ const breadcrumbs = {
     title: "Opsera Task Management",
     linkText: "Opsera Task Management",
     icon: faTasks
+  },
+  taskActivityLogs : {
+    parent: undefined,
+    name: "taskManagement",
+    path: paths.taskActivityLogs,
+    title: "Opsera Task Activity Logs",
+    linkText: "Opsera Task Activity Logs",
+    icon: faListAlt
   },
   taskManagementDetailView: {
     parent: "taskManagement",

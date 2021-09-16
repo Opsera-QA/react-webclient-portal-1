@@ -1,11 +1,11 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn,
-  getPipelineActivityStatusColumn, getTagColumn, getTaskTypeColumn
+  getTagColumn, getTaskTypeColumn, getTaskStatusColumn
 } from "components/common/table/table-column-helpers";
 import {useHistory} from "react-router-dom";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -31,7 +31,7 @@ function TaskTable({ taskData, taskFilterModel, setTaskFilterModel, loadData, is
           getTagColumn(getField(fields, "tags")),
           getTableDateColumn(getField(fields, "createdAt")),
           getTableBooleanIconColumn(getField(fields, "active")),
-          getPipelineActivityStatusColumn(getField(fields, "status")),
+          getTaskStatusColumn(getField(fields, "status")),
         ]
       );
     }

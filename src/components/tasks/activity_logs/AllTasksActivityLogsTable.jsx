@@ -4,7 +4,7 @@ import { faClipboardList } from "@fortawesome/pro-light-svg-icons";
 import {
   getPipelineActivityStatusColumn,
   getTableDateTimeColumn,
-  getTableTextColumn
+  getTableTextColumn, getTaskTypeColumn
 } from "components/common/table/table-column-helpers-v2";
 import FilterContainer from "components/common/table/FilterContainer";
 import TaskDetailViewer from "components/tasks/activity_logs/details/TaskDetailViewer";
@@ -45,7 +45,7 @@ function AllTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadData
         [
           // {...getTableTextColumn(fields.find(field => { return field.id === "run_count";}), "cell-center no-wrap-inline", 100,)},
           getTableTextColumn(fields.find(field => { return field.id === "name";})),
-          getTableTextColumn(fields.find(field => { return field.id === "type";})),
+          getTaskTypeColumn(fields.find(field => { return field.id === "type";})),
           getTableTextColumn(fields.find(field => { return field.id === "log_type";})),
           getTableTextColumn(fields.find(field => { return field.id === "message";})),
           getPipelineActivityStatusColumn(fields.find(field => { return field.id === "status";})),
