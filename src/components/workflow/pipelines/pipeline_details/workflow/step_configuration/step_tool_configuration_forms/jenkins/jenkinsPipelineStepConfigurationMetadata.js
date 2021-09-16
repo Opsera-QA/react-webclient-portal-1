@@ -184,6 +184,12 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label:"Jenkins - Job Type",
       id:"job_type",
+    },
+    {
+      label: "Runtime Arguments",
+      id: "runtimeArguments",
+      regexDefinitionName: "argumentList",
+      formText: "A newline-separated list of Runtime Arguments"
     }
   ],
   newObjectFields: {
@@ -235,6 +241,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     dynamicTag: false,
     dockerTagType:[],
     dockerDynamicTagName:"",
+    runtimeArguments: "",
   }
 };
 
