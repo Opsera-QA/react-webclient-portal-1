@@ -55,6 +55,13 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
       case "jfrog_artifactory_docker":
       case "terrascan":
       case "kafka_connect":
+      case "aws_lambda":
+      case "coverity":
+      case "azure_acr_push":
+      case "azure_aks_deploy":
+      case "jfrog_artifactory_maven":
+      case "azure-functions":
+      case "mongodb_realm":
       default:
         return null;
     }
