@@ -50,8 +50,10 @@ function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled
       const canCreateCertificateGenerationTask = workflowAuthorizedActions.gitItems(customerAccessRules, "create_cert_task", gitTask.owner, gitTask.roles);
 
       const response = await taskActions.doesCertificateGenerationTaskExist(getAccessToken, cancelSource);
-      setCanCreateCertificateGenerationTask(canCreateCertificateGenerationTask && response?.data === false);
 
+      if (isMounted?.current === true) {
+        setCanCreateCertificateGenerationTask(canCreateCertificateGenerationTask && response?.data === false);
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);

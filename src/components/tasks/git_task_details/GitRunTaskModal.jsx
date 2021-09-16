@@ -2,7 +2,6 @@ import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Model from "core/data_model/model";
 import modelHelpers from "components/common/model/modelHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ModalBase from "components/common/modal/ModalBase";
@@ -22,12 +21,9 @@ import SFDCGitBranchTextInput from "components/tasks/git_task_details/configurat
 import workflowAuthorizedActions
 from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import SonarRatingsChartHelpDocumentation
-  from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
+import {TASK_TYPES} from "components/tasks/task.types";
 import SfdcOrgSyncPrerunHelpDocumentation
-  from "../../common/help/documentation/tasks/SfdcOrgSyncPrerunHelpDocumentation";
-import AwsEcsClusterCreationTaskHelpDocumentation
-  from "../../common/help/documentation/tasks/AwsEcsClusterCreationTaskHelpDocumentation";
+  from "components/common/help/documentation/tasks/SfdcOrgSyncPrerunHelpDocumentation";
 
 function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, loadData }) {
   const [showHelp, setShowHelp] = useState(false);
@@ -49,30 +45,34 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
   const loadConfig = () => {
     let configurationData;
     switch (gitTasksData.getData("type")) {
-      case "sync-sfdc-repo":
+      case TASK_TYPES.SYNC_SALESFORCE_REPO:
         configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), sfdcGitTaskConfigurationMetadata);
         setDataObj({...configurationData});
         break;
-      case "sfdc-cert-gen":
+      case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
         configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), sfdxCertGenTaskConfigurationMetadata);
         setDataObj({...configurationData});
         break;
-      case "sync-branch-structure":
+      case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
         configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), sfdcGitBranchTaskConfigurationMetadata);
         setDataObj({...configurationData});
         break;
-      case "sync-git-branches":
+      case TASK_TYPES.SYNC_GIT_BRANCHES:
         configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), branchToBranchGitTaskConfigurationMetadata);
         setDataObj({...configurationData});
         break;
-      case "ecs_cluster_creation":
+      case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
         configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), ec2ClusterCreationTaskConfigurationMetadata);
         setDataObj({...configurationData});
         break;
-      case "ecs_service_creation":
+      case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
         configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), ec2ServiceCreationTaskConfigurationMetadata);
         setDataObj({...configurationData});
         break;
+      case TASK_TYPES.AZURE_CLUSTER_CREATION:
+        // configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), azureAksClusterTaskConfigurationMetadata);
+        // setDataObj({...configurationData});
+        // break;
       default:
         setDataObj(undefined);
     }
@@ -88,45 +88,53 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
   };
 
   const getRunView = () => {
-    return (
-      <>
-        { canEdit && gitTasksData.getData("type") === "sync-sfdc-repo" && 
-          <div style={{minHeight : "400px"}}>
-            <Row className={"m-3"}>
+    if (canEdit && gitTasksData?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_REPO) {
+      return (
+        <div style={{minHeight: "400px"}}>
+          <Row className={"m-3"}>
+            <Col lg={12}>
+              <SFDCGitBranchInput
+                dataObject={dataObj}
+                setDataObject={setDataObj}
+                visible={!(dataObj?.getData("isNewBranch"))}/>
+            </Col>
+            <Col lg={12}>
+              <SFDCNewBranchBoolInput dataObject={dataObj} setDataObject={setDataObj}/>
+            </Col>
+            {dataObj?.getData("isNewBranch") &&
+            <>
               <Col lg={12}>
-                <SFDCGitBranchInput dataObject={dataObj} setDataObject={setDataObj} visible={!(dataObj?.getData("isNewBranch"))}/>
+                <SFDCGitBranchTextInput
+                  fieldName={"gitBranch"}
+                  dataObject={dataObj} setDataObject={setDataObj} visible={dataObj?.getData("isNewBranch")}
+                />
               </Col>
-              <Col lg={12}>
-                <SFDCNewBranchBoolInput dataObject={dataObj} setDataObject={setDataObj} />
-              </Col>
-              {dataObj?.getData("isNewBranch") && 
-                <>
-                  <Col lg={12}>
-                    <SFDCGitBranchTextInput
-                        fieldName={"gitBranch"}
-                        dataObject={dataObj} setDataObject={setDataObj} visible={dataObj?.getData("isNewBranch")}
-                      />
-                   </Col>
-                  {/* <Col lg={12}>
+              {/* <Col lg={12}>
                     <SFDCHasUpstreamBoolInput dataObject={dataObj} setDataObject={setDataObj} />
                   </Col> */}
-                  <Col lg={12}>
-                    <SfdcGitUpstreamBranchInput dataObject={dataObj} setDataObject={setDataObj} />
-                  </Col>
-                </>
-              }
-            </Row>
-          </div>
-        }
-      </>
-    );
+              <Col lg={12}>
+                <SfdcGitUpstreamBranchInput dataObject={dataObj} setDataObject={setDataObj}/>
+              </Col>
+            </>
+            }
+          </Row>
+        </div>
+      );
+    }
   };
 
   const getHelpComponent = () => {
-    return (
-      <div className="mx-2 my-2">
-        <SfdcOrgSyncPrerunHelpDocumentation closeHelpPanel={() => setShowHelp(false)} />
-      </div>);
+    switch (gitTasksData?.getData("type")) {
+      case TASK_TYPES.SYNC_SALESFORCE_REPO:
+        return (<SfdcOrgSyncPrerunHelpDocumentation closeHelpPanel={() => setShowHelp(false)} /> );
+      case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
+      case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
+      case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+      case TASK_TYPES.SYNC_GIT_BRANCHES:
+      case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
+      default:
+        return null;
+    }
   };
 
   if (gitTasksData == null) {
