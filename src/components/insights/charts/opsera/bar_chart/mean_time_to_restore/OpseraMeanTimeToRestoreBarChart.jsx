@@ -108,7 +108,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
             fill="none"
             stroke={lineColor}
             strokeWidth="3"
-            style={{ pointerEvents: null }}
+            style={{ pointerEvents: "none" }}
           />
 
           {/*{bars.map(bar => {*/}
@@ -199,7 +199,7 @@ OpseraMeanTimeToRestoreBarChart.propTypes = {
   setKpis: PropTypes.func,
   bars: PropTypes.any,
   xScale: PropTypes.any,
-  yScale: PropTypes.any,
+  yScale: PropTypes.any
 };
 
 export default OpseraMeanTimeToRestoreBarChart;
