@@ -63,7 +63,7 @@ function ArgoRepositoryEditorPanel({ argoRepositoryData, toolData, repoId, handl
   };
 
   const deleteRepository = async () => {
-    // await argoActions.deleteArgoRepository(getAccessToken, cancelTokenSource, toolData?._id, repoId);
+    await argoActions.deleteArgoRepository(getAccessToken, cancelTokenSource, toolData?._id, repoId);
     handleClose();
   };
 
