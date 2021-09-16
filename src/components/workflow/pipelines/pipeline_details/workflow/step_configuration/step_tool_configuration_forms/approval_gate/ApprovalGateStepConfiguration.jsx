@@ -65,11 +65,10 @@ function ApprovalGateStepConfiguration({ stepTool, parentCallback, closeEditorPa
       persistRecord={callbackFunction}
       isLoading={isLoading}
     >
-      <div className="mx-2">Approval functionality halts the pipeline at this step and requires Owner or
-        Administrator approval before the pipeline can continue.
-        Approval notification follows the
-        rules defined for overall step notification.
-        <div>Use the notification icon (<FontAwesomeIcon icon={faEnvelope}/>) to enable the various channels to use.</div>
+      <div>An Approval Gate in an Opsera Pipeline will halt the running pipeline and notify the configured
+        users in order to allow the pipeline to proceed. Approval notification follows the rules defined for overall step notification.
+        But <b>only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this action</b>.
+        <div className="my-3">Use the notification icon (<FontAwesomeIcon icon={faEnvelope}/>) to enable the various channels to use.</div>
       </div>
       <TextAreaInput fieldName={"message"} dataObject={approvalGateData} setDataObject={setApprovalGateData} />
       <TextInputBase fieldName={"contact"} dataObject={approvalGateData} setDataObject={setApprovalGateData} />

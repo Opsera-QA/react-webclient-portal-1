@@ -285,7 +285,7 @@ const PipelineWorkflowItem = ({
                 <OverlayTrigger
                   placement="top"
                   delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Approval of this step is required to proceed" })}>
+                  overlay={renderTooltip({ message: "Approval of this step is required to proceed. Only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this action." })}>
                   <FontAwesomeIcon icon={faFlag} className="mr-2 red"
                                    style={{ cursor: "help" }} />
                 </OverlayTrigger>}

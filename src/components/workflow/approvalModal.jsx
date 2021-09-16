@@ -226,8 +226,9 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
 
             <div>
               Approval of this interaction is required in order for the pipeline to proceed. Please review the
-              details below as well as the Pipline Activity Logs and confirm that this pipeline can complete its
-              operations.
+              details below as well as the Pipeline Activity Logs and confirm that this pipeline can complete its
+              operations.  Only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this
+              action.
             </div>
 
             {isLoading && <LoadingDialog/>}
