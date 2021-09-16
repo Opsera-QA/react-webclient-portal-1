@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import TableCardView from "components/common/table/TableCardView";
-import StatusFilter from "components/common/filters/status/StatusFilter";
+import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTasks} from "@fortawesome/pro-light-svg-icons";
@@ -27,7 +27,7 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
   const getDropdownFilters = () => {
     return(
       <>
-        <StatusFilter filterDto={taskFilterModel} setFilterDto={setTaskFilterModel} className="mb-2" />
+        <ActiveFilter filterDto={taskFilterModel} setFilterDto={setTaskFilterModel} className="mb-2" />
         <TagFilter filterDto={taskFilterModel} setFilterDto={setTaskFilterModel} />
       </>
     );
