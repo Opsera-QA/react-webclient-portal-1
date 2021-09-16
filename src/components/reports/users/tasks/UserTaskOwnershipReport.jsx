@@ -61,7 +61,7 @@ function UserTaskOwnershipReport() {
         }
 
         setIsLoading(true);
-        const response = await taskActions.getGitTasksListV2(getAccessToken, cancelSource, newFilterModel);
+        const response = await taskActions.getTasksListV2(getAccessToken, cancelSource, newFilterModel);
         const tasks = response?.data?.data;
 
         if (Array.isArray(tasks)) {

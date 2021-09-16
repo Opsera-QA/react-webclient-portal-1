@@ -105,7 +105,7 @@ function MultiTaskSelectInputBase({
       let newFilterDto = gitTasksFilterDto;
       newFilterDto.setData("type", "lambda_function_creation");
       setGitTasksFilterDto({ ...newFilterDto });
-      const results = await taskActions.getGitTasksListV2(getAccessToken, cancelSource, gitTasksFilterDto);
+      const results = await taskActions.getTasksListV2(getAccessToken, cancelSource, gitTasksFilterDto);
       const taskListCopy = results?.data?.data;
       if (isMounted?.current === true && results?.data?.data) {
         setTaskList(taskListCopy);
