@@ -5,6 +5,10 @@ const taskFilterMetadata = {
   fields: [
     {
       label: "Active",
+      id: "active",
+    },
+    {
+      label: "Status",
       id: "status",
     },
     {
@@ -48,6 +52,8 @@ const taskFilterMetadata = {
     activeFilters: [],
     viewType: "list",
     category: "",
+    status: "",
+    active: "",
   },
 };
 
@@ -70,8 +76,12 @@ export class TaskFilterModel extends FilterModelBase {
   getActiveFilters = () => {
     let activeFilters = [];
 
-    if (this.getData("status") != null) {
-      activeFilters.push({filterId: "status", ...this.getData("status")});
+    if (this.getData("status") != null && this.getData("status") !== "") {
+      activeFilters.push({filterId: "status", text: `Status: ${this.getFilterText("status")}`});
+    }
+
+    if (this.getData("active") != null && this.getData("active") !== "") {
+      activeFilters.push({filterId: "active",  text: `${this.getFilterText("active")}`});
     }
 
     if (this.getData("type") != null) {

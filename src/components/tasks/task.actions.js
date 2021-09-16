@@ -31,10 +31,8 @@ taskActions.createGitTaskV2 = async (getAccessToken, cancelTokenSource, gitTasks
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-taskActions.getGitTasksListV2 = async (getAccessToken, cancelTokenSource, taskFilterModel, fields) => {
+taskActions.getTasksListV2 = async (getAccessToken, cancelTokenSource, taskFilterModel, fields) => {
   const apiUrl = `/tasks`;
-  // TODO: Remove this after verification
-  // const apiUrl = `/tools/git/`;
   const sortOption = taskFilterModel?.getData("sortOption");
   const urlParams = {
     params: {
@@ -44,6 +42,7 @@ taskActions.getGitTasksListV2 = async (getAccessToken, cancelTokenSource, taskFi
       tag: taskFilterModel?.getFilterValue("tag"),
       type: taskFilterModel?.getFilterValue("type"),
       status: taskFilterModel?.getFilterValue("status"),
+      active: taskFilterModel?.getFilterValue("active"),
       tool: taskFilterModel?.getFilterValue("toolIdentifier"),
       search: taskFilterModel?.getFilterValue("search"),
       category: taskFilterModel?.getData("category"),
@@ -77,8 +76,6 @@ taskActions.doesCertificateGenerationTaskExist = async (getAccessToken, cancelTo
 
 taskActions.getGitTaskByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/tasks/${id}`;
-  // TODO: Remove this after verification
-  // const apiUrl = `/tools/git/${id}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

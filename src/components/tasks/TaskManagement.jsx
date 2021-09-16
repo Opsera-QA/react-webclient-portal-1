@@ -42,10 +42,10 @@ function TaskManagement() {
     };
   }, []);
 
-  const loadData = async (newFilterDto = taskFilterModel, cancelSource = cancelTokenSource) => {
+  const loadData = async (newFilterModel = taskFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles(newFilterDto, cancelSource);
+      await getRoles(newFilterModel, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -58,19 +58,19 @@ function TaskManagement() {
     }
   };
 
-  const getRoles = async (newFilterDto = taskFilterModel, cancelSource = cancelTokenSource) => {
+  const getRoles = async (newFilterModel = taskFilterModel, cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
 
     if (isMounted?.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      await getTasksList(newFilterDto, cancelSource);
+      await getTasksList(newFilterModel, cancelSource);
     }
   };
 
-  const getTasksList = async (filterDto = taskFilterModel, cancelSource = cancelTokenSource) => {
+  const getTasksList = async (newFilterModel = taskFilterModel, cancelSource = cancelTokenSource) => {
     const tableFields = ["name", "description", "type", "tags", "createdAt", "active", "status"];
-    const response = await taskActions.getGitTasksListV2(getAccessToken, cancelSource, filterDto, tableFields);
+    const response = await taskActions.getTasksListV2(getAccessToken, cancelSource, newFilterModel, tableFields);
     const taskList = response?.data?.data;
     const taskMetadata = response?.data?.metadata;
 
@@ -78,7 +78,7 @@ function TaskManagement() {
       setTasks(taskList);
       setTaskMetadata(taskMetadata);
 
-      let newFilterDto = filterDto;
+      let newFilterDto = newFilterModel;
       newFilterDto.setData("totalCount", response?.data?.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
       setTaskFilterModel({...newFilterDto});
