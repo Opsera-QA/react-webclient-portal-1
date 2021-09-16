@@ -137,7 +137,7 @@ function ToolReadOnlyDetailPanel({ toolModel, loadData, isLoading, tab }) {
         {getVaultTab()}
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"} disabled={!authorizedAction("edit_tool_connection", toolModel?.data)}/>
         {/*{getDynamicTabs()}*/}
-        {/*<CustomTab icon={faDraftingCompass} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>*/}
+        <CustomTab icon={faDraftingCompass} tabName={"usage"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
       </CustomTabContainer>
     );
   };
@@ -168,7 +168,7 @@ function ToolReadOnlyDetailPanel({ toolModel, loadData, isLoading, tab }) {
         return <ToolTaggingPanel toolData={toolModel} />;
       case "projects":
         return <ToolProjectsPanel toolData={toolModel} isLoading={isLoading} loadData={loadData} />;
-      case "pipelines":
+      case "usage":
         return <ToolUsagePanel toolData={toolModel} />;
       case "vault":
         return <ToolVaultSummaryPanel toolModel={toolModel} />;

@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import CustomTabContainer from "../../../../common/tabs/CustomTabContainer";
-import SummaryTab from "../../../../common/tabs/detail_view/SummaryTab";
-import JsonTab from "../../../../common/tabs/detail_view/JsonTab";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
+import JsonTab from "components/common/tabs/detail_view/JsonTab";
 import Model from "core/data_model/model";
-import ModalTabPanelContainer from "../../../../common/panels/detail_view/ModalTabPanelContainer";
-import ConsoleLogTab from "../../../../common/tabs/detail_view/ConsoleLogTab";
-import GitTaskActivitySummaryPanel from "./GitTaskActivitySummaryPanel";
-import gitTasksActivityLogMetadata
-  from "components/tasks/git_task_details/activity_logs/git-tasks-activity-log-metadata";
-import GitTaskActivityConsoleLogPanel from "./GitTaskConsoleLogPanel";
-import GitTaskActivityJsonPanel from "./GitTaskActivityJsonPanel";
+import ModalTabPanelContainer from "components/common/panels/detail_view/ModalTabPanelContainer";
+import ConsoleLogTab from "components/common/tabs/detail_view/ConsoleLogTab";
+import TaskActivitySummaryPanel from "components/tasks/activity_logs/details/TaskActivitySummaryPanel";
+import tasksActivityLogMetadata
+  from "components/tasks/activity_logs/tasks-activity-log-metadata";
+import TaskActivityConsoleLogPanel from "components/tasks/activity_logs/details/TaskConsoleLogPanel";
+import TaskActivityJsonPanel from "components/tasks/activity_logs/details/TaskActivityJsonPanel";
 
 
-function GitTaskTaskActivityTabPanel({ gitTaskActivityData }) {
+function TaskActivityTabPanel({ gitTaskActivityData }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -45,11 +45,11 @@ function GitTaskTaskActivityTabPanel({ gitTaskActivityData }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <GitTaskActivitySummaryPanel gitTaskActivityData={wrapObject(gitTasksActivityLogMetadata)} />;
+        return <TaskActivitySummaryPanel gitTaskActivityData={wrapObject(tasksActivityLogMetadata)} />;
       case "log":
-        return <GitTaskActivityConsoleLogPanel gitTaskActivityData={gitTaskActivityData} />;
+        return <TaskActivityConsoleLogPanel gitTaskActivityData={gitTaskActivityData} />;
       case "json":
-        return <GitTaskActivityJsonPanel gitTaskActivityData={gitTaskActivityData} />;
+        return <TaskActivityJsonPanel gitTaskActivityData={gitTaskActivityData} />;
       default:
         return null;
     }
@@ -58,10 +58,10 @@ function GitTaskTaskActivityTabPanel({ gitTaskActivityData }) {
   return (<ModalTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
 }
 
-GitTaskTaskActivityTabPanel.propTypes = {
+TaskActivityTabPanel.propTypes = {
   gitTaskActivityData: PropTypes.object,
 };
 
-export default GitTaskTaskActivityTabPanel;
+export default TaskActivityTabPanel;
 
 

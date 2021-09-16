@@ -1,26 +1,24 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "contexts/AuthContext";
-import GitAllTasksActivityLogsTable
-  from "components/tasks/git_task_details/activity_logs/GitAllTasksActivityLogsTable";
-import Model from "../../../../core/data_model/model";
-import gitTasksActivityLogFilterMetadata
-  from "components/tasks/git_task_details/activity_logs/git-tasks-activity-log-filter-metadata";
+import GitTasksActivityLogsTable
+  from "components/tasks/git_task_details/TaskActivityLogsTable";
+import {useHistory, useParams} from "react-router-dom";
+import Model from "core/data_model/model";
+import tasksActivityLogFilterMetadata
+  from "components/tasks/activity_logs/tasks-activity-log-filter-metadata";
 import axios from "axios";
 import taskActivityHelpers
-  from "components/tasks/git_task_details/activity_logs/task-activity-helpers";
+  from "components/tasks/activity_logs/task-activity-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import taskActions from "components/tasks/task.actions";
-import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
-import FilterContainer from "components/common/table/FilterContainer";
-import {faTasks} from "@fortawesome/pro-light-svg-icons";
 
-function TaskAllActivityPanel() {
+function TaskActivityPanel() {
   const [loading, setLoading] = useState(false);
+  const { id } = useParams();
   const [logsIsLoading, setLogsIsLoading] = useState(false);
   const toastContext = useContext(DialogToastContext);
 
-  const [taskActivityFilterDto, setTaskActivityFilterDto] = useState(new Model(gitTasksActivityLogFilterMetadata.newObjectFields, gitTasksActivityLogFilterMetadata, false));
+  const [taskActivityFilterDto, setTaskActivityFilterDto] = useState(new Model(tasksActivityLogFilterMetadata.newObjectFields, tasksActivityLogFilterMetadata, false));
   const [taskActivityMetadata, setTaskActivityMetadata] = useState(undefined);
   const [taskActivityTreeData, setTaskActivityTreeData] = useState([]);
   const [currentLogTreePage, setCurrentLogTreePage] = useState(0);
@@ -29,7 +27,6 @@ function TaskAllActivityPanel() {
   /* Role based Access Controls */
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
   const [customerAccessRules, setCustomerAccessRules] = useState({});
-
 
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -88,8 +85,8 @@ function TaskAllActivityPanel() {
       }
 
       // TODO: if search term applies ignore run count and reconstruct tree?
-      const treeResponse = await taskActions.getTaskActivityLogTypeTree(getAccessToken, cancelSource, filterDto);
-      const taskTree = taskActivityHelpers.constructTaskTree(treeResponse?.data?.data);
+      const treeResponse = await taskActions.getTaskActivityLogTree(getAccessToken, cancelSource, id, filterDto);
+      const taskTree = taskActivityHelpers.constructTree(treeResponse?.data?.data);
       setTaskActivityTreeData([...taskTree]);
 
       if (Array.isArray(taskTree) && taskTree.length > 0) {
@@ -109,7 +106,7 @@ function TaskAllActivityPanel() {
       // create run count query based on tree -- tree is 0 index based
       const startIndex = 20 * currentLogTreePage;
       let runCountArray = [];
-      let taskNameArray = [];
+
 
       if (!silentLoading) {
         setLogsIsLoading(true);
@@ -117,17 +114,13 @@ function TaskAllActivityPanel() {
 
       for (let i = startIndex; i < startIndex + 20 && i < taskTree.length; i++) {
         let runCount = taskTree[i].runNumber;
-        let taskName = taskTree[i].taskName;
 
         if (runCount) {
           runCountArray.push(runCount);
         }
-        if (taskName) {
-          taskNameArray.push(taskName);
-        }
-
       }
-      const response = await taskActions.getAllTaskActivityLogs(getAccessToken, cancelSource, taskNameArray, filterDto);
+
+      const response = await taskActions.getTaskActivityLogs(getAccessToken, cancelSource, id, runCountArray, filterDto);
       const taskActivityData = response?.data?.data;
 
       if (taskActivityData) {
@@ -150,31 +143,25 @@ function TaskAllActivityPanel() {
   };
 
 
-  return (
-    <ScreenContainer
-      breadcrumbDestination={"taskManagement"}
-      pageDescription={`
-        Create and Manage Opsera Related Tasks.
-      `}
-      navigationTabContainer={<TasksSubNavigationBar currentTab={"activity"}/>}
-    >
-      <GitAllTasksActivityLogsTable
-        taskLogData={activityData}
-        isLoading={logsIsLoading}
-        loadData={pullLogData}
-        taskActivityFilterDto={taskActivityFilterDto}
-        setTaskActivityFilterDto={setTaskActivityFilterDto}
-        taskActivityMetadata={taskActivityMetadata}
-        taskActivityTreeData={taskActivityTreeData}
-        setCurrentLogTreePage={setCurrentLogTreePage}
-      />
-    </ScreenContainer>
-  );
+    return (
+        <div>
+            <GitTasksActivityLogsTable
+                taskLogData={activityData}
+                isLoading={logsIsLoading}
+                loadData={pullLogData}
+                taskActivityFilterDto={taskActivityFilterDto}
+                setTaskActivityFilterDto={setTaskActivityFilterDto}
+                taskActivityMetadata={taskActivityMetadata}
+                taskActivityTreeData={taskActivityTreeData}
+                setCurrentLogTreePage={setCurrentLogTreePage}
+          />
+        </div>
+    );
 }
 
-TaskAllActivityPanel.propTypes = {
+TaskActivityPanel.propTypes = {
 
 };
 
-export default TaskAllActivityPanel;
+export default TaskActivityPanel;
 

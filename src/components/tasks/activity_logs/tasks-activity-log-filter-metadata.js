@@ -1,8 +1,8 @@
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
-const gitTasksActivityLogFilterMetadata = {
+const tasksActivityLogFilterMetadata = {
   idProperty: "_id",
-  type: "Git Tasks Activity Log",
+  type: "Tasks Activity Log",
   fields: [
     {
       label: "Status",
@@ -75,4 +75,4 @@ const gitTasksActivityLogFilterMetadata = {
   ]
 };
 
-export default gitTasksActivityLogFilterMetadata;
+export default tasksActivityLogFilterMetadata;
