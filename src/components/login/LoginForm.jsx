@@ -240,8 +240,8 @@ const LoginForm = ({ authClient }) => {
           if (token) {
             const accountResponse = await userActions.getAccountInformationWithEmailAddress(lookupAccountEmail, token);
             const { localAuth, accountName, idpIdentifier } = accountResponse.data;
-            if (localAuth && localAuth === "FALSE" && idpIdentifier) {
-              setFederatedIdpEnabled(localAuth === "FALSE");
+            if (localAuth && localAuth === "FALSE" && idpIdentifier !== "0") {
+              setFederatedIdpEnabled(localAuth === "FALSE" && idpIdentifier !== "0");
               setUsername(lookupAccountEmail);
               setViewType("federated-login");
               federatedOktaLogin(accountName, idpIdentifier, lookupAccountEmail);

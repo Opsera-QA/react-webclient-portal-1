@@ -71,7 +71,7 @@ function AccountRegistration() {
           setInvalidHost(true);
           toastContext.showSystemErrorBanner("Warning!  You are attempting to create an account on the wrong Opsera Portal tenant.  Please check with your account owner or contact Opsera to get the proper URL register accounts.");
         }
-
+      
         setCompanyName(accountResponse.data?.orgName);
         newAccountDto.setData("company", accountResponse.data?.orgName);
         newAccountDto.setData("ldapOrgAccount", accountResponse.data?.name);
@@ -79,13 +79,15 @@ function AccountRegistration() {
         newAccountDto.setData("organizationName", accountResponse?.data?.accountName);
         newAccountDto.setData("orgAccount", accountResponse?.data?.name);
         newAccountDto.setData("localAuth", accountResponse?.data?.localAuth === "TRUE");
+        newAccountDto.setData("idpIdentifier", accountResponse?.data?.idpIdentifier);
 
-        if (accountResponse?.data?.localAuth === "FALSE") {
+        if (accountResponse?.data?.localAuth === "FALSE" && accountResponse?.data?.idpIdentifier !== "0") {
           const userRecord = await getUserRecord();
           const rules = userRecord ? await setAccessRoles(userRecord) : null;
 
           if (rules?.Administrator || rules?.OpseraAdministrator || rules?.PowerUser) {
             history.push(`/settings/user-management`);
+            history.go(0);
           }
         }
       }
@@ -177,7 +179,7 @@ function AccountRegistration() {
     return <LoadingDialog />;
   }
 
-  if (registrationDataDto?.getData("localAuth") === false) {
+  if (registrationDataDto?.getData("localAuth") === false && registrationDataDto?.getData("idpIdentifier") !== "0") {
     return (
       <div className="new-user-signup-form mt-2">
         <div className="full-signup-form m-auto">
