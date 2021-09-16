@@ -21,7 +21,7 @@ import {
 import ToolApplicationsPanel from "./ToolAppliationsPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import ToolSummaryPanel from "./ToolSummaryPanel";
-import ToolPipelinesPanel from "./ToolPipelinesPanel";
+import ToolUsagePanel from "components/inventory/tools/tool_details/ToolUsagePanel";
 import ToolTaggingPanel from "./ToolTaggingPanel";
 import ToolProjectsPanel from "components/inventory/tools/tool_details/projects/ToolProjectsPanel";
 import { AuthContext } from "contexts/AuthContext";
@@ -169,7 +169,7 @@ function ToolReadOnlyDetailPanel({ toolModel, loadData, isLoading, tab }) {
       case "projects":
         return <ToolProjectsPanel toolData={toolModel} isLoading={isLoading} loadData={loadData} />;
       case "pipelines":
-        return <ToolPipelinesPanel toolData={toolModel} />;
+        return <ToolUsagePanel toolData={toolModel} />;
       case "vault":
         return <ToolVaultSummaryPanel toolModel={toolModel} />;
       case "repositories":

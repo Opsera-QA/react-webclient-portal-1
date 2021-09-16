@@ -23,7 +23,7 @@ import {
 import ToolApplicationsPanel from "./ToolAppliationsPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import ToolSummaryPanel from "./ToolSummaryPanel";
-import ToolPipelinesPanel from "./ToolPipelinesPanel";
+import ToolUsagePanel from "components/inventory/tools/tool_details/ToolUsagePanel";
 import ToolTaggingPanel from "./ToolTaggingPanel";
 import ToolProjectsPanel from "components/inventory/tools/tool_details/projects/ToolProjectsPanel";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
@@ -142,7 +142,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         {getVaultTab()}
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"} disabled={!authorizedAction("edit_tool_connection", toolData?.data)}/>
         {getDynamicTabs()}
-        <CustomTab icon={faDraftingCompass} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
+        <CustomTab icon={faDraftingCompass} tabName={"usage"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
       </CustomTabContainer>
     );
   };
@@ -171,8 +171,8 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         return <ToolTaggingPanel toolData={toolData} />;
       case "projects":
         return <ToolProjectsPanel toolData={toolData} isLoading={isLoading} loadData={loadData} />;
-      case "pipelines":
-        return <ToolPipelinesPanel toolData={toolData} />;
+      case "usage":
+        return <ToolUsagePanel toolData={toolData} />;
       case "vault":
         return <ToolVaultPanel toolData={toolData} setToolData={setToolData} />;
       case "repositories":

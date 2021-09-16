@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import ToolUsedInPipelinesField from "../../../common/fields/inventory/ToolUsedInPipelinesField";
 
-function ToolPipelinesPanel({ toolData }) {
+function ToolUsagePanel({ toolData }) {
   return (
     <DetailPanelContainer>
       <Row>
@@ -16,8 +16,8 @@ function ToolPipelinesPanel({ toolData }) {
   );
 }
 
-ToolPipelinesPanel.propTypes = {
+ToolUsagePanel.propTypes = {
   toolData: PropTypes.object,
 };
 
-export default ToolPipelinesPanel;
+export default ToolUsagePanel;
