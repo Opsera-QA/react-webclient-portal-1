@@ -63,13 +63,20 @@ import ServiceNowServiceOfferingsSelectInput from "components/common/list_of_val
 import ServiceNowConfigurationItemsSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowConfigurationItemsSelectInput";
 import ServiceNowBusinessServicesSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowBusinessServicesSelectInput";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import GenericChartSettingsHelpDocumentation
-  from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
-import StandaloneDeleteButtonWithConfirmationModal
-  from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
+import GenericChartSettingsHelpDocumentation from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
+import StandaloneDeleteButtonWithConfirmationModal from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 
-function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData, index, closePanel, loadChart, setKpis, settingsHelpComponent }) {
+function KpiSettingsForm({
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  closePanel,
+  loadChart,
+  setKpis,
+  settingsHelpComponent,
+}) {
   const { getAccessToken } = useContext(AuthContext);
   const [helpIsShown, setHelpIsShown] = useState(false);
   const [kpiSettings, setKpiSettings] = useState(new Model(kpiConfiguration, kpiConfigurationMetadata, false));
@@ -551,7 +558,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
           <div>
             <ServiceNowAssignmentGroupSelectInput
               visible={true}
-              placeholderText={"Select Assignment Group"}
+              placeholderText={"Select Assignment Groups"}
               type={"kpi_filter"}
               fieldName={"value"}
               valueField={"sys_id"}
@@ -567,7 +574,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
           <div>
             <ServiceNowServiceOfferingsSelectInput
               visible={true}
-              placeholderText={"Select Service Offering"}
+              placeholderText={"Select Service Offerings"}
               type={"kpi_filter"}
               fieldName={"value"}
               valueField={"sys_id"}
@@ -583,7 +590,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
           <div>
             <ServiceNowConfigurationItemsSelectInput
               visible={true}
-              placeholderText={"Select Configuration Item"}
+              placeholderText={"Select Configuration Items"}
               type={"kpi_filter"}
               fieldName={"value"}
               valueField={"sys_id"}
@@ -599,7 +606,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
           <div>
             <ServiceNowBusinessServicesSelectInput
               visible={true}
-              placeholderText={"Select Business Service"}
+              placeholderText={"Select Business Services"}
               type={"kpi_filter"}
               fieldName={"value"}
               valueField={"sys_id"}
@@ -862,25 +869,23 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       settingsHelpComponent(() => setHelpIsShown(false));
     }
 
-    return (
-      <GenericChartSettingsHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />
-    );
+    return <GenericChartSettingsHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
   };
 
   const getDeleteButton = () => {
-    return (
-      <DeleteButtonWithInlineConfirmation
-        dataObject={kpiSettings}
-        deleteRecord={deleteKpi}
-      />
-    );
+    return <DeleteButtonWithInlineConfirmation dataObject={kpiSettings} deleteRecord={deleteKpi} />;
   };
 
   const getBody = () => {
     if (kpiSettings?.getData) {
       return (
         <div className={"px-2 mb-5"}>
-          <TextInputBase className={"mb-2"} fieldName={"kpi_name"} dataObject={kpiSettings} setDataObject={setKpiSettings}/>
+          <TextInputBase
+            className={"mb-2"}
+            fieldName={"kpi_name"}
+            dataObject={kpiSettings}
+            setDataObject={setKpiSettings}
+          />
           {kpiSettings?.getData("filters").map((filter, index) => (
             <div key={index}>{getKpiFilters(filter)}</div>
           ))}
@@ -890,7 +895,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
   };
 
   if (kpiSettings == null) {
-    return (<></>);
+    return <></>;
   }
 
   return (
