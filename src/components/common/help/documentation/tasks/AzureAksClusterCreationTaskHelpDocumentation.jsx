@@ -10,6 +10,7 @@ function AzureAksClusterCreationTaskHelpDocumentation({closeHelpPanel}) {
       <ol>
         <li>Select <b>Azure: Create AKS Cluster</b> from the Type drop down. Once this has been selected, the following values will be available for selection:
           <ul>
+            <li className={"mt-1"}><b>Azure Tool</b> - Select an established Azure tool from the Tool Registry.</li>
             <li><b>Azure Credential</b> - This field is fetched from Applications tab of the selected Azure tool.</li>
             <li><b>Azure Region</b> - The region selected is the location of the data center where the resources will operate. In selecting a region, consider that the region is close in proximity to customer (if necessary) and that it will meet all necessary legal or compliance needs.</li>
             <li><b>Machine Type</b> - Select the name of the desired virtual machine size.</li>
