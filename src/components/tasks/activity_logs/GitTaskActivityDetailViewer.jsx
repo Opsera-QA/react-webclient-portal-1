@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
-import GitTaskTaskActivityTabPanel from "./activity_details/GitTaskActivityTabPanel";
+import GitTaskTaskActivityTabPanel from "components/tasks/activity_logs/details/TaskActivityTabPanel";
 
-
-function GitTaskActivityDetailViewer({ gitTaskActivityData, showModal, setShowModal }) {
+function TaskActivityDetailViewer({ gitTaskActivityData, showModal, setShowModal }) {
   const handleClose = () => {
     setShowModal(false);
   };
@@ -31,10 +30,10 @@ function GitTaskActivityDetailViewer({ gitTaskActivityData, showModal, setShowMo
 }
 
 
-GitTaskActivityDetailViewer.propTypes = {
+TaskActivityDetailViewer.propTypes = {
   gitTaskActivityData: PropTypes.object,
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func
 };
 
-export default GitTaskActivityDetailViewer;
+export default TaskActivityDetailViewer;

@@ -11,7 +11,7 @@ import TaskSummaryPanel
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import CertManagementPanel from "./configuration_forms/sfdx-cert-gen/CertManagementPanel";
-import TaskActivityPanel from "components/tasks/git_task_details/activity_logs/TaskActivityPanel";
+import TaskActivityPanel from "components/tasks/activity_logs/TaskActivityPanel";
 import {TASK_TYPES} from "components/tasks/task.types";
 
 function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleData, runTask }) {

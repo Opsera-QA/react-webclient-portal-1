@@ -4,9 +4,9 @@ import "components/inventory/tools/tools.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ReactJson from "react-json-view";
-import SummaryPanelContainer from "../../../../common/panels/detail_view/SummaryPanelContainer";
+import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 
-function GitTaskActivityJsonPanel({ gitTaskActivityData }) {
+function TaskActivityJsonPanel({ gitTaskActivityData }) {
   return (
     <SummaryPanelContainer>
       <Row>
@@ -18,9 +18,9 @@ function GitTaskActivityJsonPanel({ gitTaskActivityData }) {
   );
 }
 
-GitTaskActivityJsonPanel.propTypes = {
+TaskActivityJsonPanel.propTypes = {
   gitTaskActivityData: PropTypes.object,
 };
 
 
-export default GitTaskActivityJsonPanel;
+export default TaskActivityJsonPanel;
