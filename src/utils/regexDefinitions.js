@@ -169,8 +169,8 @@ regexDefinitions.collectionName = {
 };
 
 regexDefinitions.azureLabels = {
-  regex: /^[a-z0-9_-]*$/,
-  formText: "Accepts lowercase alphanumeric characters dashes, and underscores without spaces.",
+  regex: /^[a-z0-9-]*$/,
+  formText: "Accepts lowercase alphanumeric characters and dashes without spaces.",
   errorFormText: "The name must consist of lower case alphanumeric characters or '-', start with an alphabetic character, and end with an alphanumeric character (e.g. 'my-name', or 'abc-123')"
 };
 

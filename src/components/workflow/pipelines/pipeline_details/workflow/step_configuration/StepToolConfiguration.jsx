@@ -1001,6 +1001,7 @@ function StepToolConfiguration({
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );
       case "azure_aks_deploy":
@@ -1015,6 +1016,7 @@ function StepToolConfiguration({
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );            
       case "azure-functions":
@@ -1029,6 +1031,7 @@ function StepToolConfiguration({
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );            
       case "mongodb_realm":
