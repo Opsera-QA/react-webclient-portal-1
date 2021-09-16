@@ -53,7 +53,6 @@ const argoRepositoryMetadata = {
     },
   ],
   newObjectFields: {
-    _id: "",
     name: "",
     gitToolId: "",
     service: "",
