@@ -13,9 +13,10 @@ import SFDCGitRepositoryInput from "./inputs/SFDCGitRepositoryInput";
 import SFDCGitBranchInput from "./inputs/SFDCGitBranchInput";
 import SFDCToolInput from "./inputs/SFDCToolInput";
 import SFDCNewBranchBoolInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCNewBranchBoolInput";
-import SFDCGitUpstreamBranchInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitUpstreamBranchInput";
 import SFDCGitBranchTextInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitBranchTextInput";
 import AgentLabelsMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
+import SfdcGitUpstreamBranchInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/inputs/SfdcGitUpstreamBranchInput";
 
 function SFDCGitTaskEditorPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   useEffect(() => {loadData();}, []);
@@ -71,7 +72,7 @@ function SFDCGitTaskEditorPanel({ gitTasksDataDto, gitTasksConfigurationData, se
             />
           </Col>
           <Col lg={12}>
-            <SFDCGitUpstreamBranchInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
+            <SfdcGitUpstreamBranchInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
           </Col>
         </>
       }

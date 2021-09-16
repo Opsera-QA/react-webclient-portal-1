@@ -1,6 +1,6 @@
-const gitTasksActivityLogMetadata = {
+const tasksActivityLogMetadata = {
   idProperty: "_id",
-  type: "Git Tasks Activity",
+  type: "Task Activity Log",
   fields: [
     {
       label: "Name",
@@ -49,4 +49,4 @@ const gitTasksActivityLogMetadata = {
   ],
 };
 
-export default gitTasksActivityLogMetadata;
+export default tasksActivityLogMetadata;

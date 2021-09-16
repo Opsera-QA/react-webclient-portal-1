@@ -1,13 +1,13 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "contexts/AuthContext";
-import GitAllTasksActivityLogsTable
-  from "components/tasks/git_task_details/activity_logs/GitAllTasksActivityLogsTable";
-import Model from "../../../../core/data_model/model";
-import gitTasksActivityLogFilterMetadata
-  from "components/tasks/git_task_details/activity_logs/git-tasks-activity-log-filter-metadata";
+import AllTasksActivityLogsTable
+  from "components/tasks/activity_logs/AllTasksActivityLogsTable";
+import Model from "core/data_model/model";
+import tasksActivityLogFilterMetadata
+  from "components/tasks/activity_logs/tasks-activity-log-filter-metadata";
 import axios from "axios";
 import taskActivityHelpers
-  from "components/tasks/git_task_details/activity_logs/task-activity-helpers";
+  from "components/tasks/activity_logs/task-activity-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import taskActions from "components/tasks/task.actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
@@ -20,7 +20,7 @@ function TaskAllActivityPanel() {
   const [logsIsLoading, setLogsIsLoading] = useState(false);
   const toastContext = useContext(DialogToastContext);
 
-  const [taskActivityFilterDto, setTaskActivityFilterDto] = useState(new Model(gitTasksActivityLogFilterMetadata.newObjectFields, gitTasksActivityLogFilterMetadata, false));
+  const [taskActivityFilterDto, setTaskActivityFilterDto] = useState(new Model(tasksActivityLogFilterMetadata.newObjectFields, tasksActivityLogFilterMetadata, false));
   const [taskActivityMetadata, setTaskActivityMetadata] = useState(undefined);
   const [taskActivityTreeData, setTaskActivityTreeData] = useState([]);
   const [currentLogTreePage, setCurrentLogTreePage] = useState(0);
@@ -152,13 +152,13 @@ function TaskAllActivityPanel() {
 
   return (
     <ScreenContainer
-      breadcrumbDestination={"taskManagement"}
+      breadcrumbDestination={"taskActivityLogs"}
       pageDescription={`
-        Create and Manage Opsera Related Tasks.
+        View Opsera Task logs.
       `}
       navigationTabContainer={<TasksSubNavigationBar currentTab={"activity"}/>}
     >
-      <GitAllTasksActivityLogsTable
+      <AllTasksActivityLogsTable
         taskLogData={activityData}
         isLoading={logsIsLoading}
         loadData={pullLogData}

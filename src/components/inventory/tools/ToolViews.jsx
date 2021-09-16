@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import ToolsTable from "components/inventory/tools/ToolsTable";
 import TableCardView from "components/common/table/TableCardView";
-import StatusFilter from "components/common/filters/status/StatusFilter";
+import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import NewToolOverlay from "components/inventory/tools/NewToolOverlay";
 import PropTypes from "prop-types";
 import ToolCardView from "components/inventory/tools/ToolCardView";
@@ -29,7 +29,7 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
   const getDropdownFilters = () => {
     return(
       <>
-        <StatusFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} className="mb-2" />
+        <ActiveFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} className="mb-2" />
         <LdapOwnerFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} className="mb-2" />
         <TagFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
       </>

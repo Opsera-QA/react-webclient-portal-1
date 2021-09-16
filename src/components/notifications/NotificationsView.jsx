@@ -11,7 +11,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faFlag} from "@fortawesome/pro-light-svg-icons";
 import NewNotificationOverlay from "components/notifications/NewNotificationOverlay";
-import StatusFilter from "components/common/filters/status/StatusFilter";
+import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import NotificationTypeFilter from "components/common/filters/notifications/notification_type/NotificationTypeFilter";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import InlineNotificationTypeFilter
@@ -79,7 +79,7 @@ function NotificationsView({isMounted}) {
   const getDropdownFilters = () => {
     return (
       <>
-        <StatusFilter filterDto={notificationFilterDto} setFilterDto={setNotificationFilterDto} className="mb-2" />
+        <ActiveFilter filterDto={notificationFilterDto} setFilterDto={setNotificationFilterDto} className="mb-2" />
         <NotificationTypeFilter filterDto={notificationFilterDto} setFilterDto={setNotificationFilterDto} className="mb-2" />
         <TagFilter filterDto={notificationFilterDto} setFilterDto={setNotificationFilterDto} />
       </>

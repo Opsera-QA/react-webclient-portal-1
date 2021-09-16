@@ -21,7 +21,7 @@ import {
 import ToolApplicationsPanel from "./ToolAppliationsPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import ToolSummaryPanel from "./ToolSummaryPanel";
-import ToolPipelinesPanel from "./ToolPipelinesPanel";
+import ToolUsagePanel from "components/inventory/tools/tool_details/ToolUsagePanel";
 import ToolTaggingPanel from "./ToolTaggingPanel";
 import ToolProjectsPanel from "components/inventory/tools/tool_details/projects/ToolProjectsPanel";
 import { AuthContext } from "contexts/AuthContext";
@@ -137,7 +137,7 @@ function ToolReadOnlyDetailPanel({ toolModel, loadData, isLoading, tab }) {
         {getVaultTab()}
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"} disabled={!authorizedAction("edit_tool_connection", toolModel?.data)}/>
         {/*{getDynamicTabs()}*/}
-        {/*<CustomTab icon={faDraftingCompass} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>*/}
+        <CustomTab icon={faDraftingCompass} tabName={"usage"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
       </CustomTabContainer>
     );
   };
@@ -168,8 +168,8 @@ function ToolReadOnlyDetailPanel({ toolModel, loadData, isLoading, tab }) {
         return <ToolTaggingPanel toolData={toolModel} />;
       case "projects":
         return <ToolProjectsPanel toolData={toolModel} isLoading={isLoading} loadData={loadData} />;
-      case "pipelines":
-        return <ToolPipelinesPanel toolData={toolModel} />;
+      case "usage":
+        return <ToolUsagePanel toolData={toolModel} />;
       case "vault":
         return <ToolVaultSummaryPanel toolModel={toolModel} />;
       case "repositories":

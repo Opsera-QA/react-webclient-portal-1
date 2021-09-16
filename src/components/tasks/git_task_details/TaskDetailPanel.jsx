@@ -6,12 +6,12 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faTable, faKey} from "@fortawesome/pro-light-svg-icons";
-import TaskActivityPanel from "components/tasks/git_task_details/activity_logs/TaskActivityPanel";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import CertManagementPanel from "./configuration_forms/sfdx-cert-gen/CertManagementPanel";
 import TaskSummaryPanel
   from "components/tasks/git_task_details/TaskSummaryPanel";
+import TaskActivityPanel from "components/tasks/activity_logs/TaskActivityPanel";
 import {TASK_TYPES} from "components/tasks/task.types";
 
 function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleData, runTask }) {

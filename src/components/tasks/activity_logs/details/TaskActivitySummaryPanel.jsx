@@ -10,7 +10,7 @@ import PipelineTaskSummaryMessageField
   from "components/common/form_fields/pipelines/activity/PipelineTaskSummaryMessageField";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 
-function GitTaskActivitySummaryPanel({ gitTaskActivityData }) {
+function TaskActivitySummaryPanel({ gitTaskActivityData }) {
   return (
     <SummaryPanelContainer>
       <Row>
@@ -40,9 +40,9 @@ function GitTaskActivitySummaryPanel({ gitTaskActivityData }) {
   );
 }
 
-GitTaskActivitySummaryPanel.propTypes = {
+TaskActivitySummaryPanel.propTypes = {
   gitTaskActivityData: PropTypes.object,
 };
 
 
-export default GitTaskActivitySummaryPanel;
+export default TaskActivitySummaryPanel;

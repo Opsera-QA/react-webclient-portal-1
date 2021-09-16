@@ -26,12 +26,6 @@ function RunGitTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationD
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
     return () => {
       source.cancel();
       isMounted.current = false;

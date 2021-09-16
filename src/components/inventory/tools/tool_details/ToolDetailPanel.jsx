@@ -22,7 +22,7 @@ import {
 import ToolApplicationsPanel from "./ToolAppliationsPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import ToolSummaryPanel from "./ToolSummaryPanel";
-import ToolPipelinesPanel from "./ToolPipelinesPanel";
+import ToolUsagePanel from "components/inventory/tools/tool_details/ToolUsagePanel";
 import ToolTaggingPanel from "./ToolTaggingPanel";
 import ToolProjectsPanel from "components/inventory/tools/tool_details/projects/ToolProjectsPanel";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
@@ -33,6 +33,7 @@ import ToolAttributeEditorPanel from "components/inventory/tools/tool_details/To
 import ToggleTab from "components/common/tabs/detail_view/ToggleTab";
 import ToolVaultPanel from "components/inventory/tools/tool_details/vault/ToolVaultPanel";
 import ToolRepositoriesPanel from "./ToolRepositoriesPanel";
+import ToolS3BucketsPanel from "./ToolS3BucketsPanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
@@ -116,6 +117,12 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
             <CustomTab icon={faTable} tabName={"repositories"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Repositories"}/>
           </>
         );
+      case "aws_account":
+        return (
+          <>
+            <CustomTab icon={faTable} tabName={"buckets"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"S3 Buckets"}/>
+          </>
+        );
       default: return <></>;
     }
   };
@@ -142,7 +149,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         {getVaultTab()}
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"} disabled={!authorizedAction("edit_tool_connection", toolData?.data)}/>
         {getDynamicTabs()}
-        <CustomTab icon={faDraftingCompass} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
+        <CustomTab icon={faDraftingCompass} tabName={"usage"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
       </CustomTabContainer>
     );
   };
@@ -171,12 +178,14 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         return <ToolTaggingPanel toolData={toolData} />;
       case "projects":
         return <ToolProjectsPanel toolData={toolData} isLoading={isLoading} loadData={loadData} />;
-      case "pipelines":
-        return <ToolPipelinesPanel toolData={toolData} />;
+      case "usage":
+        return <ToolUsagePanel toolData={toolData} />;
       case "vault":
         return <ToolVaultPanel toolData={toolData} setToolData={setToolData} />;
       case "repositories":
         return <ToolRepositoriesPanel toolData={toolData} setToolData={setToolData} />;
+      case "buckets":
+        return <ToolS3BucketsPanel toolData={toolData} setToolData={setToolData} loadData={loadData} />;
       default:
         return null;
     }

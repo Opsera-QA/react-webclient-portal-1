@@ -4,17 +4,18 @@ import { faClipboardList } from "@fortawesome/pro-light-svg-icons";
 import {
   getPipelineActivityStatusColumn,
   getTableDateTimeColumn,
-  getTableTextColumn
+  getTableTextColumn, getTaskTypeColumn
 } from "components/common/table/table-column-helpers-v2";
 import FilterContainer from "components/common/table/FilterContainer";
-import TaskDetailViewer from "components/tasks/git_task_details/activity_logs/activity_details/TaskDetailViewer";
+import TaskDetailViewer from "components/tasks/activity_logs/details/TaskDetailViewer";
 import ExportPipelineActivityLogButton from "components/common/buttons/export/pipelines/ExportPipelineActivityLogButton";
 import TableBase from "components/common/table/TableBase";
 import TreeAndTableBase from "components/common/table/TreeAndTableBase";
 import TaskActivityLogTree
-  from "components/tasks/git_task_details/activity_logs/TaskActivityLogTree";
+  from "components/tasks/activity_logs/TaskActivityLogTree";
 import {DialogToastContext} from "contexts/DialogToastContext";
-function GitAllTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadData, isLoading, pipeline, taskActivityFilterDto, setTaskActivityFilterDto, taskActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
+
+function AllTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadData, isLoading, pipeline, taskActivityFilterDto, setTaskActivityFilterDto, taskActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
   const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
@@ -44,7 +45,7 @@ function GitAllTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadD
         [
           // {...getTableTextColumn(fields.find(field => { return field.id === "run_count";}), "cell-center no-wrap-inline", 100,)},
           getTableTextColumn(fields.find(field => { return field.id === "name";})),
-          getTableTextColumn(fields.find(field => { return field.id === "type";})),
+          getTaskTypeColumn(fields.find(field => { return field.id === "type";})),
           getTableTextColumn(fields.find(field => { return field.id === "log_type";})),
           getTableTextColumn(fields.find(field => { return field.id === "message";})),
           getPipelineActivityStatusColumn(fields.find(field => { return field.id === "status";})),
@@ -135,7 +136,7 @@ function GitAllTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadD
   );
 }
 
-GitAllTasksActivityLogsTable.propTypes = {
+AllTasksActivityLogsTable.propTypes = {
   taskLogData: PropTypes.array,
   isLoading: PropTypes.bool,
   taskActivityFilterDto: PropTypes.object,
@@ -148,4 +149,4 @@ GitAllTasksActivityLogsTable.propTypes = {
   currentLogTreePage: PropTypes.number
 };
 
-export default GitAllTasksActivityLogsTable;
+export default AllTasksActivityLogsTable;

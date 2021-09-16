@@ -7,14 +7,15 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers-v2";
 import FilterContainer from "components/common/table/FilterContainer";
-import TaskDetailViewer from "components/tasks/git_task_details/activity_logs/activity_details/TaskDetailViewer";
+import TaskDetailViewer from "components/tasks/activity_logs/details/TaskDetailViewer";
 import ExportPipelineActivityLogButton from "components/common/buttons/export/pipelines/ExportPipelineActivityLogButton";
 import TableBase from "components/common/table/TableBase";
 import TreeAndTableBase from "components/common/table/TreeAndTableBase";
 import PipelineActivityLogTree
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTree";
 import {DialogToastContext} from "contexts/DialogToastContext";
-function GitTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadData, isLoading, pipeline, taskActivityFilterDto, setTaskActivityFilterDto, taskActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
+
+function TaskActivityLogsTable({ taskLogData, taskActivityMetadata, loadData, isLoading, pipeline, taskActivityFilterDto, setTaskActivityFilterDto, taskActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
   const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
@@ -129,7 +130,7 @@ function GitTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadData
   );
 }
 
-GitTasksActivityLogsTable.propTypes = {
+TaskActivityLogsTable.propTypes = {
   taskLogData: PropTypes.array,
   isLoading: PropTypes.bool,
   taskActivityFilterDto: PropTypes.object,
@@ -142,4 +143,4 @@ GitTasksActivityLogsTable.propTypes = {
   currentLogTreePage: PropTypes.number
 };
 
-export default GitTasksActivityLogsTable;
+export default TaskActivityLogsTable;

@@ -20,6 +20,7 @@ import "../../workflows.css";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
 import WorkflowAuthorizedActions from "./workflow/workflow-authorized-actions";
+import pipelineHelpers from "../../pipelineHelpers";
 
 
 const delayCheckInterval = 12000;
@@ -38,6 +39,7 @@ function PipelineActionControls({
   const [startPipeline, setStartPipeline] = useState(false);
   const [stopPipeline, setStopPipeline] = useState(false);
   const [approval, setApproval] = useState(false);
+  const [isApprovalGate, setIsApprovalGate] = useState(false);
   const [statusMessage, setStatusMessage] = useState(false);
   const [statusMessageBody, setStatusMessageBody] = useState("");
   const [showApprovalModal, setShowApprovalModal] = useState(false);
@@ -59,6 +61,7 @@ function PipelineActionControls({
     if (workflowStatus === "paused") {
       setStatusMessage("This pipeline is currently paused.");
       setStatusMessageBody("A paused pipeline requires either approval or review of the logs in order to proceed.");
+      setApproval(false);
     } else {
       setStatusMessage(false);
       setStatusMessageBody("");
@@ -78,6 +81,13 @@ function PipelineActionControls({
     let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
     if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
       setWorkflowStatus("paused");
+
+      //if step set currently running is an approval step, flag that
+      if (pipeline.workflow?.last_step?.running?.step_id) {
+        const runningStep = pipelineHelpers.getStepIndexFromPlan(pipeline.workflow.plan, pipeline.workflow?.last_step?.running?.step_id);
+        setIsApprovalGate(pipeline.workflow.plan[runningStep].tool?.tool_identifier === "approval");
+      }
+
       return;
     }
 
@@ -358,12 +368,11 @@ function PipelineActionControls({
           </>}
 
           {workflowStatus === "paused" &&
-          //TODO: AND IF THERE IS AN APPROVAL STEP!!!
           <>
             <OverlayTrigger
               placement="top"
               delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "Approve the current state of the pipeline in order for it to proceed." })}>
+              overlay={renderTooltip({ message: "Approve the current state of the pipeline in order for it to proceed. Only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this action." })}>
               <Button variant="warning"
                       className="btn-default"
                       size="sm"
@@ -381,7 +390,7 @@ function PipelineActionControls({
             <OverlayTrigger
               placement="top"
               delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "Start pipeline from the beginning" })}>
+              overlay={renderTooltip({ message: "Start pipeline from the beginning." })}>
               <Button variant="success"
                       className="btn-default"
                       size="sm"
@@ -395,14 +404,15 @@ function PipelineActionControls({
             </OverlayTrigger>
           </>}
 
-          {(workflowStatus === "paused" ||
-            (workflowStatus !== "running" &&
-              pipeline.workflow.last_run?.run_count && pipeline.workflow.run_count !== pipeline.workflow.last_run.run_count &&
+          {((workflowStatus === "paused" && !isApprovalGate) ||
+            (workflowStatus === "stopped" &&
+              pipeline.workflow.last_run?.run_count &&
+              pipeline.workflow.run_count !== pipeline.workflow.last_run.run_count &&
               pipeline.workflow.last_step?.step_id !== "")) &&
           <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Attempts to resume the pipeline from where it left off" })}>
+            overlay={renderTooltip({ message: "Will resume the pipeline on the next step.  It will not rerun the last step, even if that step failed. To clear a failed step, reset the pipeline and run it from the start." })}>
             <Button variant="success"
                     className="btn-default"
                     size="sm"

@@ -1,24 +1,29 @@
 import React from "react";
 import PropTypes from "prop-types";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
-import AzurePipelineStepConfigurationHelp
-  from "../../../../common/help/documentation/pipelines/step_configuration/AzurePipelineStepConfigurationHelp";
+import AzureDevopsPipelineStepConfigurationHelp
+  from "../../../../common/help/documentation/pipelines/step_configuration/AzureDevopsPipelineStepConfigurationHelp";
 import PipelineStepSetupHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/PipelineStepSetupHelpDocumentation";
 import DockerEcrPushStepConfigurationHelp
   from "../../../../common/help/documentation/pipelines/step_configuration/DockerEcrPushStepConfigurationHelp";
 import AwsEcsDeployStepConfigurationHelp
   from "../../../../common/help/documentation/pipelines/step_configuration/AwsEcsDeployStepConfigurationHelp";
+import AzureAksDeployPipelineStepConfigurationHelp
+  from "../../../../common/help/documentation/pipelines/step_configuration/AzureAksDeployPipelineStepConfigurationHelp";
+
 function StepToolHelpIcon({type, tool, className, iconClassName}) {
   // TODO: Alphabetize when adding new help panels
   const getToolHelpPanel = () => {
     switch (tool) {
       case "azure-devops":
-        return <AzurePipelineStepConfigurationHelp/>;
+        return <AzureDevopsPipelineStepConfigurationHelp/>;
       case "docker-push":
         return <DockerEcrPushStepConfigurationHelp/>;
       case "aws_ecs_deploy":
         return <AwsEcsDeployStepConfigurationHelp/>;
+      case "azure_aks_deploy":
+        return <AzureAksDeployPipelineStepConfigurationHelp/>;
       case "jenkins":
       case "junit":
       case "xunit":
@@ -55,6 +60,12 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
       case "jfrog_artifactory_docker":
       case "terrascan":
       case "kafka_connect":
+      case "aws_lambda":
+      case "coverity":
+      case "jfrog_artifactory_maven":
+      case "azure_acr_push":
+      case "azure-functions":
+      case "mongodb_realm":
       default:
         return null;
     }

@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import TableCardView from "components/common/table/TableCardView";
-import StatusFilter from "components/common/filters/status/StatusFilter";
+import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTasks} from "@fortawesome/pro-light-svg-icons";
@@ -16,6 +16,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {faAws, faMicrosoft, faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import {faGitAlt} from "@fortawesome/free-brands-svg-icons/faGitAlt";
+import TaskTypeFilter from "components/common/filters/tasks/type/TaskTypeFilter";
+import TaskStatusFilter from "components/common/filters/tasks/status/TaskStatusFilter";
 
 function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData, isMounted, taskMetadata}) {
   const toastContext = useContext(DialogToastContext);
@@ -27,8 +29,26 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
   const getDropdownFilters = () => {
     return(
       <>
-        <StatusFilter filterDto={taskFilterModel} setFilterDto={setTaskFilterModel} className="mb-2" />
-        <TagFilter filterDto={taskFilterModel} setFilterDto={setTaskFilterModel} />
+        <TaskTypeFilter
+          filterModel={taskFilterModel}
+          setFilterModel={setTaskFilterModel}
+          className={"mb-2"}
+        />
+        <TaskStatusFilter
+          className={"mb-2"}
+          filterModel={taskFilterModel}
+          setFilterModel={setTaskFilterModel}
+        />
+        <ActiveFilter
+          filterDto={taskFilterModel}
+          setFilterDto={setTaskFilterModel}
+          className="mb-2"
+          fieldName={"active"}
+        />
+        <TagFilter
+          filterDto={taskFilterModel}
+          setFilterDto={setTaskFilterModel}
+        />
       </>
     );
   };
