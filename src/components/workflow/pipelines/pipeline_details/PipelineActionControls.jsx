@@ -61,6 +61,7 @@ function PipelineActionControls({
     if (workflowStatus === "paused") {
       setStatusMessage("This pipeline is currently paused.");
       setStatusMessageBody("A paused pipeline requires either approval or review of the logs in order to proceed.");
+      setApproval(false);
     } else {
       setStatusMessage(false);
       setStatusMessageBody("");
