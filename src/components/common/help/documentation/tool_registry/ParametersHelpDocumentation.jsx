@@ -40,11 +40,11 @@ function ParametersHelpDocumentation({parameterRoleDefinitions}) {
       helpTopic={"Parameters"}
       helpDocumentation={getHelpDocumentation()}
     >
-      {/*<div className={"my-2"}>*/}
-      {/*  <RoleAccessTable*/}
-      {/*    roleAccessDefinitions={parameterRoleDefinitions}*/}
-      {/*  />*/}
-      {/*</div>*/}
+      <div className={"my-2"}>
+        <RoleAccessTable
+          roleAccessDefinitions={parameterRoleDefinitions}
+        />
+      </div>
     </HelpOverlayBase>
   );
 }
