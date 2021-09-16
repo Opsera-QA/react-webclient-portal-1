@@ -61,7 +61,7 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
         <Col md={6}>
           <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
         </Col>
-        {gitTasksData.getData("type") != "ecs_cluster_creation" ||
+        {gitTasksData.getData("type") !== "ecs_cluster_creation" ||
           (gitTasksData.getData("type") !== "ecs_service_creation" && (
             <Col md={6}>
               <TextFieldBase
@@ -91,7 +91,7 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
           />
         </Col>
       </Row>
-     {gitTasksData.getData("type") != "sfdc-cert-gen" && 
+     {gitTasksData.getData("type") !== "sfdc-cert-gen" &&
         <Row className={"mx-0 w-100 my-2"}>
           <div className={"mx-auto"}>
             <div className={"mx-auto"}><GitTaskRunButton gitTasksData={gitTasksData} setGitTasksData={setGitTasksData} loadData={loadData} actionAllowed={actionAllowed("run_task")} /></div>
