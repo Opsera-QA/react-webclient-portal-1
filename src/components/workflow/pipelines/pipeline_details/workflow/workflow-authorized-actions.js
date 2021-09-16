@@ -68,6 +68,7 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, o
     return true; //all actions are authorized to administrator
   }
 
+  //no longer used role
   if (userObjectRole === "secops") {
     switch (action) {
     case "view_step_configuration":
@@ -113,7 +114,7 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, o
       case "edit_step_details":
       case "stop_pipeline_btn":
       case "edit_access_roles":
-      case "approve_step_btn":
+      //case "approve_step_btn":
       case "start_pipeline_btn":
       case "reset_pipeline_btn":
       case "edit_step_notification":
@@ -201,7 +202,6 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
     case "edit_tool_projects_tabs":
     case "edit_access_roles":
     case "create_tool":
-    case "vault":
       return true;
     default:
       return false; //all other options are disabled
@@ -219,7 +219,6 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
     case "edit_tool_projects_tabs":
     case "edit_access_roles":
     case "create_tool":
-    case "vault":
       return true;
     default:
       return false; //all other options are disabled
