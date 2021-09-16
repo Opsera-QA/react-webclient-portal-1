@@ -132,6 +132,7 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
       case TASK_TYPES.SYNC_GIT_BRANCHES:
       case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
+      case TASK_TYPES.AZURE_CLUSTER_CREATION:
       default:
         return null;
     }
