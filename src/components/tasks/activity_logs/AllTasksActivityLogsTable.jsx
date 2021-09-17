@@ -118,6 +118,28 @@ function AllTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadData
     );
   };
 
+  const getDropdownFilters = () => {
+    return(
+      <>
+        <TaskTypeFilter
+          filterModel={taskActivityFilterDto}
+          setFilterModel={setTaskActivityFilterDto}
+          className={"mb-2"}
+        />
+        <TaskStatusFilter
+          className={"mb-2"}
+          filterModel={taskActivityFilterDto}
+          setFilterModel={setTaskActivityFilterDto}
+        />
+        <TagFilter
+          filterDto={taskActivityFilterDto}
+          setFilterDto={setTaskActivityFilterDto}
+        />
+      </>
+    );
+  };
+
+
   return (
     <FilterContainer
       showBorder={false}
@@ -129,6 +151,7 @@ function AllTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadData
       className={"px-2 pb-2"}
       titleIcon={faClipboardList}
       body={getTaskActivityTable()}
+      // dropdownFilters={getDropdownFilters()}
       supportSearch={true}
       exportButton={
         <ExportPipelineActivityLogButton

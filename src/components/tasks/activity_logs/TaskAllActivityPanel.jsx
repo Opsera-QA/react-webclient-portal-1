@@ -86,7 +86,7 @@ function TaskAllActivityPanel() {
       }
 
       // TODO: if search term applies ignore run count and reconstruct tree?
-      const treeResponse = await taskActions.getTaskActivityLogTypeTree(getAccessToken, cancelSource, filterDto);
+      const treeResponse = await taskActions.getAllTasksActivityTree(getAccessToken, cancelSource, filterDto);
       const taskTree = taskActivityHelpers.constructTaskTree(treeResponse?.data?.data);
       setTaskActivityTreeData([...taskTree]);
 
