@@ -14,6 +14,10 @@ import TreeAndTableBase from "components/common/table/TreeAndTableBase";
 import TaskActivityLogTree
   from "components/tasks/activity_logs/TaskActivityLogTree";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import TaskTypeFilter from "components/common/filters/tasks/type/TaskTypeFilter";
+import ActiveFilter from "components/common/filters/status/ActiveFilter";
+import TagFilter from "components/common/filters/tags/tag/TagFilter";
+import TaskStatusFilter from "components/common/filters/tasks/status/TaskStatusFilter";
 
 function AllTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadData, isLoading, pipeline, taskActivityFilterDto, setTaskActivityFilterDto, taskActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
   const toastContext = useContext(DialogToastContext);
@@ -114,6 +118,27 @@ function AllTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadData
     );
   };
 
+  const getDropdownFilters = () => {
+    return(
+      <>
+        <TaskTypeFilter
+          filterModel={taskActivityFilterDto}
+          setFilterModel={setTaskActivityFilterDto}
+          className={"mb-2"}
+        />
+        <TaskStatusFilter
+          className={"mb-2"}
+          filterModel={taskActivityFilterDto}
+          setFilterModel={setTaskActivityFilterDto}
+        />
+        <TagFilter
+          filterDto={taskActivityFilterDto}
+          setFilterDto={setTaskActivityFilterDto}
+        />
+      </>
+    );
+  };
+
   return (
     <FilterContainer
       showBorder={false}
@@ -124,6 +149,7 @@ function AllTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadData
       title={"Activity Logs"}
       className={"px-2 pb-2"}
       titleIcon={faClipboardList}
+      // dropdownFilters={getDropdownFilters()}
       body={getTaskActivityTable()}
       supportSearch={true}
       exportButton={
