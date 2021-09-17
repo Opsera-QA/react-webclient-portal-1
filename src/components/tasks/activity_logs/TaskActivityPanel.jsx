@@ -103,8 +103,6 @@ function TaskActivityPanel({ taskName }) {
       if (taskActivityData) {
         setActivityData(taskActivityData);
         setTaskActivityMetadata(response?.data?.metadata);
-
-        // TODO: Remove pagination.
         const newFilterDto = filterDto;
         newFilterDto.setData("totalCount", response?.data?.count);
         newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());

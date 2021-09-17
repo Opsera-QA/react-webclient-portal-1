@@ -13,8 +13,9 @@ function TaskActivityLogs({ taskLogData, taskName, taskActivityMetadata, loadDat
   const [currentStepName, setCurrentStepName] = useState(undefined);
 
   const getNoDataMessage = () => {
-    if (taskActivityFilterModel?.getData("search") !== "") {
-      return ("Could not find any results with the given keywords.");
+    const activeFilters = taskActivityFilterModel?.getActiveFilters();
+    if (activeFilters?.length > 0) {
+      return ("Could not find any results with the given filters.");
     }
 
     return ("Task activity data has not been generated yet. Once this Task begins running, it will publish details here.");
