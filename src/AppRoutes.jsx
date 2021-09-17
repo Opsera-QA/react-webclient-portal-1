@@ -247,7 +247,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/admin/manage_systems" component={ManageSystems} />
           <SecureRoute path="/admin/registered-users" exact component={RegisteredUsersManagement} />
           <SecureRoute path="/admin/registered-users/:id" exact component={RegisteredUserDetailView} />
-          <SecureRoute path="/admin/system-status" component={SystemStatus} />
+          {/* <SecureRoute path="/admin/system-status" component={SystemStatus} /> */}
           <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration} />
           <SecureRoute path="/admin/tools/:tabKey?" exact component={ToolManagement} />
           <SecureRoute path="/admin/tools/types/details/:toolTypeId" exact component={ToolCategoryDetailView} />
@@ -305,7 +305,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
 
           <SecureRoute path="/settings/tags" exact component={TagEditor} />
           <SecureRoute path="/settings/tags/:id" exact component={TagDetailView} />
-          <SecureRoute path="/settings/customer-system-status" exact component={CustomerSystemStatus} />
+          {/* <SecureRoute path="/settings/customer-system-status" exact component={CustomerSystemStatus} /> */}
           <SecureRoute path="/settings/analytics-profile" exact component={AnalyticsProfileSettings} />
           <SecureRoute path="/settings/data_mapping" exact component={DataMappingManagement} />
           <SecureRoute path="/settings/data_mapping/projects/details/:projectMappingId" exact
