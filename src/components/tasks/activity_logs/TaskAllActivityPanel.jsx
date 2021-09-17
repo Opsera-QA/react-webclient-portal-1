@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "contexts/AuthContext";
-import AllTasksActivityLogsTable
-  from "components/tasks/activity_logs/AllTasksActivityLogsTable";
+import AllTasksActivityLogs
+  from "components/tasks/activity_logs/AllTasksActivityLogs";
 import Model from "core/data_model/model";
 import tasksActivityLogFilterMetadata
   from "components/tasks/activity_logs/tasks-activity-log-filter-metadata";
@@ -156,7 +156,7 @@ function TaskAllActivityPanel() {
       `}
       navigationTabContainer={<TasksSubNavigationBar currentTab={"activity"}/>}
     >
-      <AllTasksActivityLogsTable
+      <AllTasksActivityLogs
         taskLogData={activityData}
         isLoading={logsIsLoading}
         loadData={pullLogData}

@@ -76,9 +76,7 @@ function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleDa
         );
       case "logs":
         return (
-          <DetailPanelContainer>
-            <TaskActivityPanel />
-          </DetailPanelContainer>
+          <TaskActivityPanel taskName={gitTasksData?.name} />
         );
       case "cert":
         return (
