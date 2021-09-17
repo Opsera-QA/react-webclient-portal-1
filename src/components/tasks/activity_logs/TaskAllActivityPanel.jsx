@@ -6,7 +6,6 @@ import axios from "axios";
 import taskActivityHelpers
   from "components/tasks/activity_logs/task-activity-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import taskActions from "components/tasks/task.actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
 import taskActions from "components/tasks/task.actions";
