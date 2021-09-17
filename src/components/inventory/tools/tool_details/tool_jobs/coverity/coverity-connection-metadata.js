@@ -17,13 +17,18 @@ const CoverityConnectionMetadata = {
         id: "coverityPassword",
         isRequired: true
       },
-      
+      {
+        label: "Coverity Cert",
+        id: "coverityCert",
+        isRequired: true
+      },
     ],
     newObjectFields:
       {
         coverityUrl: "",
         coverityUsername: "",
         coverityPassword: "",
+        coverityCert: "",
       }
   };
   
