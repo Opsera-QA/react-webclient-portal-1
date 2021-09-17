@@ -1,8 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "contexts/AuthContext";
-import GitTasksActivityLogsTable
-  from "components/tasks/git_task_details/TaskActivityLogsTable";
-import {useHistory, useParams} from "react-router-dom";
+import PropTypes from "prop-types";
+import {useParams} from "react-router-dom";
 import Model from "core/data_model/model";
 import tasksActivityLogFilterMetadata
   from "components/tasks/activity_logs/tasks-activity-log-filter-metadata";
@@ -11,8 +10,9 @@ import taskActivityHelpers
   from "components/tasks/activity_logs/task-activity-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import gitTaskActions from "components/tasks/task.actions";
+import TaskActivityLogs from "components/tasks/git_task_details/TaskActivityLogs";
 
-function TaskActivityPanel() {
+function TaskActivityPanel({ taskName }) {
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const [logsIsLoading, setLogsIsLoading] = useState(false);
@@ -143,24 +143,23 @@ function TaskActivityPanel() {
   };
 
 
-    return (
-        <div>
-            <GitTasksActivityLogsTable
-                taskLogData={activityData}
-                isLoading={logsIsLoading}
-                loadData={pullLogData}
-                taskActivityFilterDto={taskActivityFilterDto}
-                setTaskActivityFilterDto={setTaskActivityFilterDto}
-                taskActivityMetadata={taskActivityMetadata}
-                taskActivityTreeData={taskActivityTreeData}
-                setCurrentLogTreePage={setCurrentLogTreePage}
-          />
-        </div>
-    );
+  return (
+    <TaskActivityLogs
+      taskLogData={activityData}
+      isLoading={logsIsLoading}
+      loadData={pullLogData}
+      taskActivityFilterDto={taskActivityFilterDto}
+      setTaskActivityFilterDto={setTaskActivityFilterDto}
+      taskActivityMetadata={taskActivityMetadata}
+      taskActivityTreeData={taskActivityTreeData}
+      setCurrentLogTreePage={setCurrentLogTreePage}
+      taskName={taskName}
+    />
+  );
 }
 
 TaskActivityPanel.propTypes = {
-
+  taskName: PropTypes.string,
 };
 
 export default TaskActivityPanel;

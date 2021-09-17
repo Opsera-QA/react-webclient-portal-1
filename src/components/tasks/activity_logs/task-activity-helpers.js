@@ -128,7 +128,7 @@ taskActivityHelpers.constructTaskTree = (pipelineLogData) => {
                   return -1;
                 }
 
-                return parsedRunNumber1 - parsedRunNumber2;
+                return parsedRunNumber2 - parsedRunNumber1;
               });
 
               currentValue.items = currentItems;

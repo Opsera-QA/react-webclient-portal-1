@@ -12,7 +12,7 @@ function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurr
     isMounted.current = true;
 
     if (Array.isArray(pipelineLogTree) && pipelineLogTree.length > 1) {
-      setSelectedId(pipelineLogTree[0].id);
+      setSelectedId(pipelineLogTree[1].id);
     }
 
     return () => {
