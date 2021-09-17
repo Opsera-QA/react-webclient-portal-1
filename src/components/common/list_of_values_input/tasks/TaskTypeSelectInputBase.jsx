@@ -5,13 +5,6 @@ import {AuthContext} from "contexts/AuthContext";
 import {TASK_TYPE_LABELS, TASK_TYPES} from "components/tasks/task.types";
 
 export const productionTaskTypes = [
-  // Salesforce
-  {text: TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO, value: TASK_TYPES.SYNC_SALESFORCE_REPO, category: "Salesforce"},
-  {text: TASK_TYPE_LABELS.SYNC_SALESFORCE_BRANCH_STRUCTURE, value: TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE, category: "Salesforce"},
-
-  // Git
-  {text: TASK_TYPE_LABELS.SYNC_GIT_BRANCHES, value: TASK_TYPES.SYNC_GIT_BRANCHES, category: "Git"},
-
   // AWS
   {text: TASK_TYPE_LABELS.AWS_CREATE_ECS_CLUSTER, value: TASK_TYPES.AWS_CREATE_ECS_CLUSTER, category: "AWS"},
   {text: TASK_TYPE_LABELS.AWS_CREATE_ECS_SERVICE, value: TASK_TYPES.AWS_CREATE_ECS_SERVICE, category: "AWS"},
@@ -19,17 +12,16 @@ export const productionTaskTypes = [
 
   // Azure
   {text: TASK_TYPE_LABELS.AZURE_CLUSTER_CREATION, value: TASK_TYPES.AZURE_CLUSTER_CREATION, category: "Azure"},
+
+  // Git
+  {text: TASK_TYPE_LABELS.SYNC_GIT_BRANCHES, value: TASK_TYPES.SYNC_GIT_BRANCHES, category: "Git"},
+
+  // Salesforce
+  {text: TASK_TYPE_LABELS.SYNC_SALESFORCE_BRANCH_STRUCTURE, value: TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE, category: "Salesforce"},
+  {text: TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO, value: TASK_TYPES.SYNC_SALESFORCE_REPO, category: "Salesforce"},
 ];
 
 export const nonProductionTaskTypes = [
-  // Salesforce
-  {text: TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO, value: TASK_TYPES.SYNC_SALESFORCE_REPO, category: "Salesforce"},
-  {text: TASK_TYPE_LABELS.SALESFORCE_CERTIFICATE_GENERATION, value: TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION, category: "Salesforce"},
-  {text: TASK_TYPE_LABELS.SYNC_SALESFORCE_BRANCH_STRUCTURE, value: TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE, category: "Salesforce"},
-
-  // Git
-  {text: TASK_TYPE_LABELS.SYNC_GIT_BRANCHES, value: TASK_TYPES.SYNC_GIT_BRANCHES, category: "Git"},
-
   // AWS
   {text: TASK_TYPE_LABELS.AWS_CREATE_ECS_CLUSTER, value: TASK_TYPES.AWS_CREATE_ECS_CLUSTER, category: "AWS"},
   {text: TASK_TYPE_LABELS.AWS_CREATE_ECS_SERVICE, value: TASK_TYPES.AWS_CREATE_ECS_SERVICE, category: "AWS"},
@@ -37,6 +29,14 @@ export const nonProductionTaskTypes = [
 
   // Azure
   {text: TASK_TYPE_LABELS.AZURE_CLUSTER_CREATION, value: TASK_TYPES.AZURE_CLUSTER_CREATION, category: "Azure"},
+
+  // Git
+  {text: TASK_TYPE_LABELS.SYNC_GIT_BRANCHES, value: TASK_TYPES.SYNC_GIT_BRANCHES, category: "Git"},
+
+  // Salesforce
+  {text: TASK_TYPE_LABELS.SYNC_SALESFORCE_BRANCH_STRUCTURE, value: TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE, category: "Salesforce"},
+  {text: TASK_TYPE_LABELS.SALESFORCE_CERTIFICATE_GENERATION, value: TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION, category: "Salesforce"},
+  {text: TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO, value: TASK_TYPES.SYNC_SALESFORCE_REPO, category: "Salesforce"},
 ];
 
 function TaskTypeSelectInputBase({ fieldName, model, setModel, isLoading, setDataFunction, disabled }) {
