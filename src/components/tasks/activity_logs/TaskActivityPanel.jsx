@@ -2,36 +2,27 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import PropTypes from "prop-types";
 import {useParams} from "react-router-dom";
-import Model from "core/data_model/model";
-import tasksActivityLogFilterMetadata
-  from "components/tasks/activity_logs/tasks-activity-log-filter-metadata";
 import axios from "axios";
 import taskActivityHelpers
   from "components/tasks/activity_logs/task-activity-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import taskActions from "components/tasks/task.actions";
 import TaskActivityLogs from "components/tasks/git_task_details/TaskActivityLogs";
+import {TaskActivityFilterModel} from "components/tasks/activity_logs/task-activity.filter.model";
 
 function TaskActivityPanel({ taskName }) {
-  const [loading, setLoading] = useState(false);
   const { id } = useParams();
-  const [logsIsLoading, setLogsIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const toastContext = useContext(DialogToastContext);
-
-  const [taskActivityFilterDto, setTaskActivityFilterDto] = useState(new Model(tasksActivityLogFilterMetadata.newObjectFields, tasksActivityLogFilterMetadata, false));
+  const [taskActivityFilterModel, setTaskActivityFilterModel] = useState(undefined);
   const [taskActivityMetadata, setTaskActivityMetadata] = useState(undefined);
   const [taskActivityTreeData, setTaskActivityTreeData] = useState([]);
   const [currentLogTreePage, setCurrentLogTreePage] = useState(0);
   const [activityData, setActivityData] = useState([]);
-
-  /* Role based Access Controls */
-  const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
-  const [customerAccessRules, setCustomerAccessRules] = useState({});
-
+  const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-    
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -41,7 +32,8 @@ function TaskActivityPanel({ taskName }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    initComponent(source).catch((error) => {
+    let newFilterModel = new TaskActivityFilterModel(getAccessToken, source, loadData);
+    loadData(newFilterModel, false, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -51,37 +43,23 @@ function TaskActivityPanel({ taskName }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
-
-
-  const initComponent = async (cancelSource = cancelTokenSource) => {
-    setLoading(true);
-
-    const userRecord = await getUserRecord(); //RBAC Logic
-    const rules = await setAccessRoles(userRecord);
-    setCustomerAccessRules(rules);
-
-    await getActivityLogs(undefined, false, cancelSource);
-    setLoading(false);
-  };
+  }, [currentLogTreePage]);
 
   useEffect(() => {
-    pullLogData().catch((error) => {
-    if (isMounted?.current === true) {
-        throw error;
+    if (taskActivityFilterModel) {
+      getActivityLogs().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
     }
-    });
   }, [currentLogTreePage]);
 
   // TODO: Find way to put refresh inside table itself
-  const getActivityLogs = async (filterDto = taskActivityFilterDto, silentLoading = false, cancelSource = cancelTokenSource) => {
-    if (logsIsLoading) {
-      return;
-    }
-
+  const loadData = async (filterDto = taskActivityFilterModel, silentLoading = false, cancelSource = cancelTokenSource) => {
     try {
       if (!silentLoading) {
-        setLogsIsLoading(true);
+        setIsLoading(true);
       }
 
       // TODO: if search term applies ignore run count and reconstruct tree?
@@ -90,26 +68,24 @@ function TaskActivityPanel({ taskName }) {
       setTaskActivityTreeData([...taskTree]);
 
       if (Array.isArray(taskTree) && taskTree.length > 0) {
-        await pullLogData(taskTree, filterDto, cancelSource);
+        await getActivityLogs(filterDto, taskTree, cancelSource);
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
       console.log(error.message);
     } finally {
-      setLogsIsLoading(false);
+      setIsLoading(false);
     }
   };
 
-  const pullLogData = async (taskTree = taskActivityTreeData, filterDto = taskActivityFilterDto, cancelSource = cancelTokenSource, silentLoading = false) => {
-
+  const getActivityLogs = async (filterDto = taskActivityFilterModel, taskTree = taskActivityTreeData, cancelSource = cancelTokenSource, silentLoading = false) => {
     try {
       // create run count query based on tree -- tree is 0 index based
       const startIndex = 20 * currentLogTreePage;
       let runCountArray = [];
 
-
       if (!silentLoading) {
-        setLogsIsLoading(true);
+        setIsLoading(true);
       }
 
       for (let i = startIndex; i < startIndex + 20 && i < taskTree.length; i++) {
@@ -131,25 +107,24 @@ function TaskActivityPanel({ taskName }) {
         const newFilterDto = filterDto;
         newFilterDto.setData("totalCount", response?.data?.count);
         newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-        setTaskActivityFilterDto({...newFilterDto});
+        setTaskActivityFilterModel({...newFilterDto});
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
       console.log(error.message);
     }
     finally {
-      setLogsIsLoading(false);
+      setIsLoading(false);
     }
   };
-
 
   return (
     <TaskActivityLogs
       taskLogData={activityData}
-      isLoading={logsIsLoading}
-      loadData={pullLogData}
-      taskActivityFilterDto={taskActivityFilterDto}
-      setTaskActivityFilterDto={setTaskActivityFilterDto}
+      isLoading={isLoading}
+      loadData={loadData}
+      taskActivityFilterModel={taskActivityFilterModel}
+      setTaskActivityFilterModel={setTaskActivityFilterModel}
       taskActivityMetadata={taskActivityMetadata}
       taskActivityTreeData={taskActivityTreeData}
       setCurrentLogTreePage={setCurrentLogTreePage}
