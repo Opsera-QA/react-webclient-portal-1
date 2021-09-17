@@ -84,7 +84,7 @@ export class TaskFilterModel extends FilterModelBase {
       activeFilters.push({filterId: "active",  text: `${this.getFilterText("active")}`});
     }
 
-    if (this.getData("type") != null) {
+    if (this.getData("type") != null && this.getData("type") !== "") {
       activeFilters.push({filterId: "type", text: `Type: ${this.getFilterText("type")}`});
     }
 
