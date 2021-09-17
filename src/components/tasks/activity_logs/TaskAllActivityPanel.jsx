@@ -104,8 +104,8 @@ function TaskAllActivityPanel() {
       const response = await taskActions.getAllTaskActivityLogs(getAccessToken, cancelSource, taskNameArray, runCountArray, newFilterModel);
       const taskActivityData = response?.data?.data;
 
-      if (taskActivityData) {
-        setActivityData(taskActivityData);
+      if (Array.isArray(taskActivityData)) {
+        setActivityData([...taskActivityData]);
         setTaskActivityMetadata(response?.data?.metadata);
         newFilterModel?.setData("totalCount", response?.data?.count);
         newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
