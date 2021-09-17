@@ -60,7 +60,7 @@ function AccountSettings() {
         <>
           <BreadcrumbPageLink breadcrumbDestination={"analyticsDataEntryManagement"} />
           <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"} visible={!envIsProd}/>
+          {/* <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"} visible={!envIsProd}/> */}
           <BreadcrumbPageLink breadcrumbDestination={"dataMappingManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"deleteTools"} />
           <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>
@@ -79,7 +79,7 @@ function AccountSettings() {
         <>
           <BreadcrumbPageLink breadcrumbDestination={"analyticsDataEntryManagement"} />
           <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"} visible={!envIsProd}/>
+          {/* <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"} visible={!envIsProd}/> */}
           <BreadcrumbPageLink breadcrumbDestination={"dataMappingManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"deleteTools"} />
           <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"} visible={!isSassUser()}/>

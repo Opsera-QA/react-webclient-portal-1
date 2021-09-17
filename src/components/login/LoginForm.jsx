@@ -72,8 +72,9 @@ const LoginForm = ({ authClient }) => {
             setLoading(false);
             //history.push("/");
 
-            if (history.location.pathname === "/logout") {
+            if (history.location.pathname === "/logout" || history.location.pathname === "/login") {
               history.push("/");
+              history.go(0);
             }
           })
           .catch(function(err) {
