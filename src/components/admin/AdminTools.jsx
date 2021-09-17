@@ -46,7 +46,7 @@ function AdminTools() {
       pageDescription={"Listed below are administration tools for the platform."}
     >
       <Row className="ml-3">
-        <BreadcrumbPageLink breadcrumbDestination={"systemStatus"} />
+        {/* <BreadcrumbPageLink breadcrumbDestination={"systemStatus"} /> */}
         {/*<BreadcrumbPageLink breadcrumbDestination={"systemHealthCheck"} />*/}
         <BreadcrumbPageLink breadcrumbDestination={"deprecatedReports"} />
         <BreadcrumbPageLink breadcrumbDestination={"reportsRegistration"} />
