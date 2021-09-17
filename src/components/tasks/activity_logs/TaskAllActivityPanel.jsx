@@ -68,6 +68,7 @@ function TaskAllActivityPanel() {
       const treeResponse = await gitTaskActions.getAllTasksActivityTree(getAccessToken, cancelSource, newFilterModel);
       const taskTree = taskActivityHelpers.constructTaskTree(treeResponse?.data?.data);
       setTaskActivityTreeData([...taskTree]);
+      setActivityData([]);
 
       if (Array.isArray(taskTree) && taskTree.length > 0) {
         await loadActivityLogs(newFilterModel, taskTree, cancelSource);
