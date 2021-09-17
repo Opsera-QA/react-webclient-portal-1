@@ -61,6 +61,8 @@ import AwsLambdaDeployStepConfiguration
   from "./step_tool_configuration_forms/aws_lambda_publish/AwsLambdaDeployStepConfiguration";
 import MongodbRealmStepConfiguration from "./step_tool_configuration_forms/mongodb_realm/MongodbRealmStepConfiguration";
 
+import AksServiceDeployStepConfiguration
+  from "./step_tool_configuration_forms/aks_service_deploy/AksServiceDeployStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -1008,6 +1010,22 @@ function StepToolConfiguration({
             setShowToast={setShowToast}
           />
         );
+        case "azure_aks_deploy":
+          return (
+            <AksServiceDeployStepConfiguration
+              pipelineId={pipeline._id}
+              plan={pipeline.workflow.plan}
+              stepId={stepId}
+              stepTool={stepTool}
+              parentCallback={callbackFunction}
+              callbackSaveToVault={saveToVault}
+              getToolsList={getToolsList}
+              createJob={createJob}
+              setToast={setToast}
+              setShowToast={setShowToast}
+              closeEditorPanel={closeEditorPanel}
+            />
+          );
     }
   };
 

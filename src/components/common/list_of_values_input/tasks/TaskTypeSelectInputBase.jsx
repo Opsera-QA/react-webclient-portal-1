@@ -18,6 +18,7 @@ export const productionTaskTypes = [
   {text: TASK_TYPE_LABELS.AWS_CREATE_LAMBDA_FUNCTION, value: TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION, category: "AWS"},
 
   // Azure
+  {text: TASK_TYPE_LABELS.AZURE_CLUSTER_CREATION, value: TASK_TYPES.AZURE_CLUSTER_CREATION, category: "Azure"},
 ];
 
 export const nonProductionTaskTypes = [
