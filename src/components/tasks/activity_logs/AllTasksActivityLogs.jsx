@@ -97,6 +97,7 @@ function AllTasksActivityLogs({ taskLogData, taskActivityMetadata, loadData, isL
           loadData={loadData}
           className={"mr-2"}
         />
+      }
       body={getTaskActivityTable()}
       supportSearch={true}
       exportButton={
