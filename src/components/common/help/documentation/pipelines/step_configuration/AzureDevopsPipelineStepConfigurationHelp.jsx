@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import HelpOverlayBase from "../../../../overlays/center/help/HelpOverlayBase";
 import { DialogToastContext } from "contexts/DialogToastContext";
 
-function AzurePipelineStepConfiguration() {
+function AzureDevopsPipelineStepConfigurationHelp() {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -13,7 +13,7 @@ function AzurePipelineStepConfiguration() {
     return (
       <div>
         <div className={"mb-1 ml-3"}>
-          In Azure Pipeline Step Configuration, you are simply selecting values provided in the following drop down fields.
+          In Azure DevOps Pipeline Step Configuration, you are simply selecting values provided in the following drop down fields.
           Organization Name, Project Name/ID and Pipeline ID are fetched from a pipeline that has already been configured in the Azure DevOps portal.
         </div>
         <ul style={{listStyleType: "none"}}>
@@ -30,10 +30,10 @@ function AzurePipelineStepConfiguration() {
     <HelpOverlayBase
       closePanel={closePanel}
       showPanel={true}
-      helpTopic={"Azure Step Configuration"}
+      helpTopic={"Azure DevOps Step Configuration"}
       helpDocumentation={getHelpDocumentation()}
     />
   );
 }
 
-export default React.memo(AzurePipelineStepConfiguration);
+export default React.memo(AzureDevopsPipelineStepConfigurationHelp);
