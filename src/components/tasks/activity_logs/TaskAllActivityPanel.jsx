@@ -12,11 +12,9 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import taskActions from "components/tasks/task.actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
-import FilterContainer from "components/common/table/FilterContainer";
-import {faTasks} from "@fortawesome/pro-light-svg-icons";
 
 function TaskAllActivityPanel() {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [logsIsLoading, setLogsIsLoading] = useState(false);
   const toastContext = useContext(DialogToastContext);
 
@@ -58,14 +56,14 @@ function TaskAllActivityPanel() {
 
 
   const initComponent = async (cancelSource = cancelTokenSource) => {
-    setLoading(true);
+    setIsLoading(true);
 
     const userRecord = await getUserRecord(); //RBAC Logic
     const rules = await setAccessRoles(userRecord);
     setCustomerAccessRules(rules);
 
     await getActivityLogs(undefined, false, cancelSource);
-    setLoading(false);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -127,7 +125,7 @@ function TaskAllActivityPanel() {
         }
 
       }
-      const response = await taskActions.getAllTaskActivityLogs(getAccessToken, cancelSource, taskNameArray, filterDto);
+      const response = await taskActions.getAllTaskActivityLogs(getAccessToken, cancelSource, taskNameArray, runCountArray, filterDto);
       const taskActivityData = response?.data?.data;
 
       if (taskActivityData) {

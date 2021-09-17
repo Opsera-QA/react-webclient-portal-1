@@ -14,8 +14,11 @@ import TreeAndTableBase from "components/common/table/TreeAndTableBase";
 import TaskActivityLogTree
   from "components/tasks/activity_logs/TaskActivityLogTree";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import TaskTypeFilter from "components/common/filters/tasks/type/TaskTypeFilter";
+import TagFilter from "components/common/filters/tags/tag/TagFilter";
+import TaskStatusFilter from "components/common/filters/tasks/status/TaskStatusFilter";
 
-function AllTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadData, isLoading, pipeline, taskActivityFilterDto, setTaskActivityFilterDto, taskActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
+function AllTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadData, isLoading, taskActivityFilterDto, setTaskActivityFilterDto, taskActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
   const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
@@ -59,6 +62,7 @@ function AllTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadData
     if (currentTaskName === null || currentTaskName === undefined ) {
       return taskLogData;
     }
+
     return taskLogData.filter((item) => {
       if (currentRunNumber === "logs") {
         return item.name === currentTaskName;
