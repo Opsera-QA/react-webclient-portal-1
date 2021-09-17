@@ -66,6 +66,7 @@ function TaskActivityPanel({ taskName }) {
       const treeResponse = await taskActions.getTaskActivityLogTree(getAccessToken, cancelSource, id, filterDto);
       const taskTree = taskActivityHelpers.constructTree(treeResponse?.data?.data);
       setTaskActivityTreeData([...taskTree]);
+      setActivityData([]);
 
       if (Array.isArray(taskTree) && taskTree.length > 0) {
         await getActivityLogs(filterDto, taskTree, cancelSource);
