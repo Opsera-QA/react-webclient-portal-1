@@ -20,6 +20,9 @@ import {
   faDraftingCompass,
   faKey
 } from "@fortawesome/pro-light-svg-icons";
+import {
+  faGit
+} from "@fortawesome/free-brands-svg-icons";
 import ToolApplicationsPanel from "./ToolAppliationsPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import ToolSummaryPanel from "./ToolSummaryPanel";
@@ -82,6 +85,13 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
           </>
         );
       case "argo":
+        return (
+          <>
+            <CustomTab icon={faBrowser} tabName={"applications"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Applications"} disabled={!authorizedAction("edit_tool_application_tabs", toolData?.data)}/>
+            <CustomTab icon={faGit} tabName={"repositories"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Repositories"} disabled={!authorizedAction("edit_tool_application_tabs", toolData?.data)}/>
+            <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"}/>
+          </>
+        );
       case "octopus":
         return (
           <>
@@ -176,7 +186,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case "vault":
         return <ToolVaultPanel toolData={toolData} setToolData={setToolData} />;
       case "repositories":
-        return <ToolRepositoriesPanel toolData={toolData} setToolData={setToolData} />;
+        return <ToolRepositoriesPanel toolData={toolData} setToolData={setToolData} loadData={loadData} isLoading={isLoading} />;
       default:
         return null;
     }
