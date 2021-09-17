@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileDownload, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import gitTasksActions from "components/git/git-task-actions";
+import taskActions from "components/tasks/task.actions";
 
 function DownloadCertButton({recordDto, disable, size, showSuccessToasts, className, saveButtonText}) {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
@@ -25,7 +25,7 @@ function DownloadCertButton({recordDto, disable, size, showSuccessToasts, classN
   const downloadCertificate = async () => {
     try{
       setIsSaving(true);
-      const response = await gitTasksActions.getCert(getAccessToken, recordDto.getData("_id"));
+      const response = await taskActions.getCert(getAccessToken, recordDto.getData("_id"));
       let certEncodedString = response?.data?.message;
       let decodedString = atob(certEncodedString);
       const element = document.createElement("a");

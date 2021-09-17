@@ -99,6 +99,16 @@ function ScreenContainer(
     );
   };
 
+  const getRoleRequirementField = () => {
+    if (roleRequirement) {
+      return (
+        <div className="content-block-footer-text-container pt-2">
+          <RoleRequirementField className={"mx-2"} roleRequirement={roleRequirement} />
+        </div>
+      );
+    }
+  };
+
   if (!isLoading && accessDenied) {
     return (
       <AccessDeniedContainer />
@@ -125,9 +135,7 @@ function ScreenContainer(
           />
         </div>
         {getBody()}
-        <div className="content-block-footer-text-container pt-2">
-          <RoleRequirementField className={"mx-2"} roleRequirement={roleRequirement} />
-        </div>
+        {getRoleRequirementField()}
         <div className="content-block-footer"/>
       </div>
     </div>

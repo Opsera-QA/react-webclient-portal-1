@@ -8,7 +8,7 @@ import ScriptModel from "components/inventory/scripts/script.model";
 function NewScriptOverlay({ loadData, isMounted, scriptMetadata, getAccessToken, cancelTokenSource }) {
   const toastContext = useContext(DialogToastContext);
   const [scriptModel, setScriptModel] = useState(
-    new ScriptModel({...scriptMetadata.newObjectFields}, scriptMetadata, true, getAccessToken, cancelTokenSource, loadData, true, false)
+    new ScriptModel({...scriptMetadata.newObjectFields}, scriptMetadata, true, getAccessToken, cancelTokenSource, loadData, true, false, true)
   );
 
   const closePanel = () => {

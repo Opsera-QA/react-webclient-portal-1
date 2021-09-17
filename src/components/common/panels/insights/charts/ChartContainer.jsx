@@ -1,17 +1,16 @@
-import React, {useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import {faTag, faExclamationCircle, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import "components/analytics/charts/charts.css";
-import KpiSettingsForm from "components/insights/marketplace/charts/KpiSettingsForm";
 import {getChartIconFromKpiConfiguration} from "components/insights/charts/charts-helpers";
 import InfoDialog from "components/common/status_notifications/info";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";
 import CustomBadge from "components/common/badges/CustomBadge";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
-import GenericChartSettingsHelpDocumentation
-  from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import ChartSettingsOverlay from "components/insights/marketplace/charts/ChartSettingsOverlay";
 
 function ChartContainer(
   {
@@ -29,15 +28,25 @@ function ChartContainer(
     settingsHelpComponent,
     showSettingsToggle,
   }) {
+  const toastContext = useContext(DialogToastContext);
   const [view, setView] = useState("chart");
   const [helpIsShown, setHelpIsShown] = useState(false);
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   const closeHelpPanel = () => {
     setHelpIsShown(false);
   };
 
   const getHelpToggle = () => {
-    if ((view !== "chart" || chartHelpComponent) && !helpIsShown) {
+    if (chartHelpComponent && !helpIsShown) {
       return (
         <ActionBarToggleHelpButton
           helpIsShown={helpIsShown}
@@ -49,13 +58,19 @@ function ChartContainer(
     }
   };
 
-  const getSettingsHelpComponent = () => {
-    if (settingsHelpComponent) {
-      settingsHelpComponent(closeHelpPanel);
-    }
-
-    return (
-      <GenericChartSettingsHelpDocumentation closeHelpPanel={closeHelpPanel} />
+  const showSettingsPanel = () => {
+    toastContext.showOverlayPanel(
+      <ChartSettingsOverlay
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
+        settingsHelpComponent={settingsHelpComponent}
+        dashboardData={dashboardData}
+        index={index}
+        loadData={loadChart}
+        setKpis={setKpis}
+        setView={setView}
+        isMounted={isMounted}
+      />
     );
   };
 
@@ -67,7 +82,7 @@ function ChartContainer(
           className={"ml-2"}
           visible={!helpIsShown}
           activeTab={view}
-          setActiveTab={setView}
+          setActiveTab={() => showSettingsPanel()}
         />
       );
     }
@@ -108,28 +123,6 @@ function ChartContainer(
 
   // TODO: Make ErrorChartContainer
   const getChartBody = () => {
-    if (view === "settings") {
-      if (helpIsShown) {
-        return (
-          <div className={"m-2"}>
-            {getSettingsHelpComponent()}
-          </div>
-        );
-      }
-
-      return (
-        <KpiSettingsForm
-          kpiConfiguration={kpiConfiguration}
-          setKpiConfiguration={setKpiConfiguration}
-          dashboardData={dashboardData}
-          index={index}
-          loadChart={loadChart}
-          setKpis={setKpis}
-          setView={setView}
-        />
-      );
-    }
-
     if (error) {
       return (
         <span>There was an error loading this chart: {error.message}. Please check logs for more details.</span>

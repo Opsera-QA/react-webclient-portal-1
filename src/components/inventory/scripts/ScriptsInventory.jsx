@@ -80,7 +80,8 @@ function ScriptsInventory() {
         scripts.forEach((script) => {
           const deleteAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "delete_script", script.owner, script.roles, newScriptRoleDefinitions);
           const updateAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "update_script", script.owner, script.roles, newScriptRoleDefinitions);
-          const newModel = {...new ScriptModel({...script}, newScriptMetadata, false, getAccessToken, cancelTokenSource, loadData, updateAllowed, deleteAllowed)};
+          const canEditAccessRoles = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "edit_access_roles", script.owner, script.roles, newScriptRoleDefinitions);
+          const newModel = {...new ScriptModel({...script}, newScriptMetadata, false, getAccessToken, cancelTokenSource, loadData, updateAllowed, deleteAllowed, canEditAccessRoles)};
 
           modelWrappedArray.push(newModel);
         });
@@ -96,12 +97,7 @@ function ScriptsInventory() {
 
   const getHelpComponent = () => {
     if (!isLoading) {
-      return (
-        <ScriptsHelpDocumentation
-          scriptRoleDefinitions={scriptRoleDefinitions}
-          scriptsMetadata={scriptMetadata}
-        />
-      );
+      return (<ScriptsHelpDocumentation scriptRoleDefinitions={scriptRoleDefinitions} />);
     }
   };
 

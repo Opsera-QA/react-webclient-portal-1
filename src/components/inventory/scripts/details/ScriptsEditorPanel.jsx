@@ -52,7 +52,7 @@ function ScriptsEditorPanel({ scriptModel, setScriptModel, scriptModelId, handle
           <ScriptValueInput setModel={setScriptModel} model={scriptModel} />
         </Col>
         <Col md={8} className={"my-2"}>
-          <RoleAccessInput disabled={scriptModel?.canUpdate() !== true} dataObject={scriptModel} setDataObject={setScriptModel} fieldName={"roles"} />
+          <RoleAccessInput disabled={scriptModel?.canEditAccessRoles() !== true} dataObject={scriptModel} setDataObject={setScriptModel} fieldName={"roles"} />
         </Col>
       </Row>
     </VanityEditorPanelContainer>

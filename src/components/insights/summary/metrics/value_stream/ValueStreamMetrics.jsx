@@ -9,7 +9,7 @@ import SuccessfulPipelineRunTotalMetric
 import TotalPipelinesFailed
   from "components/insights/summary/metrics/pipelines_overview/total_failed/FailedPipelineRunTotalMetric";
 import InsightsPipelinesOverviewHelpDocumentation
-  from "components/common/help/documentation/insights/Synopsis/InsightsPipelinesOverviewHelpDocumentation";
+  from "components/common/help/documentation/insights/synopsis/InsightsPipelinesOverviewHelpDocumentation";
 import MetricContainer from "components/common/panels/insights/charts/MetricContainer";
 import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
 import JiraLeadTimeDataBlock

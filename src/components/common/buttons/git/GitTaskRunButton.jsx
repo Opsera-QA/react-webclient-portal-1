@@ -6,10 +6,10 @@ import {faPlay, faSpinner, faStop} from "@fortawesome/pro-light-svg-icons";
 import {useHistory} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
-import gitTaskActions from "components/git/git-task-actions";
+import gitTaskActions from "components/tasks/task.actions";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import GitRunTaskModal from "components/git/git_task_details/GitRunTaskModal";
+import GitRunTaskModal from "components/tasks/git_task_details/GitRunTaskModal";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function GitTaskRunButton({gitTasksData, setGitTasksData, disable, className, loadData, actionAllowed }) {

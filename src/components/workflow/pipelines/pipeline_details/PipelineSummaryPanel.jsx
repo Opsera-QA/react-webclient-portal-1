@@ -32,6 +32,7 @@ import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer"
 import CustomBadge from "components/common/badges/CustomBadge";
 import PipelineScheduledTasksOverlay from "components/workflow/pipelines/scheduler/PipelineScheduledTasksOverlay";
 import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
+import PipelineDetailsOverviewOverlay from "components/workflow/pipelines/overview/PipelineDetailsOverviewOverlay";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -126,9 +127,8 @@ function PipelineSummaryPanel({
   };
 
 
-  const handleViewClick = (param) => {
-    setModalMessage(param);
-    setShowModal(true);
+  const handleViewClick = () => {
+    toastContext.showOverlayPanel(<PipelineDetailsOverviewOverlay pipeline={pipeline} />);
   };
 
   const handleDeleteClick = (itemId) => {
@@ -627,9 +627,6 @@ function PipelineSummaryPanel({
                                 button="Confirm"
                                 handleCancelModal={() => setShowDeleteModal(false)}
                                 handleConfirmModal={() => deleteItem(modalDeleteId)} /> : null}
-
-      <ModalActivityLogsDialog header="Pipeline Details" size="lg" jsonData={modalMessage} show={showModal}
-                               setParentVisibility={setShowModal} />
 
       {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
                                 handleCancelModal={() => setInfoModal({ ...infoModal, show: false })} />}

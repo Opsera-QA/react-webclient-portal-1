@@ -1,57 +1,108 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import InfoContainer from "components/common/containers/InfoContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
-import ToolSummaryPanel from "components/inventory/tools/tool_details/ToolSummaryPanel";
-import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import Model from "core/data_model/model";
 import toolMetadata from "components/inventory/tools/tool-metadata";
 import ToolReadOnlyDetailPanel from "components/inventory/tools/tool_details/ToolReadOnlyDetailPanel";
+import toolsActions from "components/inventory/tools/tools-actions";
+import axios from "axios";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import LoadingDialog from "components/common/status_notifications/loading";
+import {Link} from "react-router-dom";
 
-function ToolInfoContainer({ toolData, toolIdentifier }) {
+function ToolInfoContainer({ toolId }) {
+  const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [toolModel, setToolModel] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    setToolModel(new Model(toolData, toolMetadata, false));
-  }, [JSON.stringify(toolData)]);
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
 
-  // TODO: Make a component that uses summary panels relating to tool connection details based on tool identifier
-  const getToolConfigurationInformation = () => {
-    if (toolData?.configuration && Object.entries(toolData?.configuration)?.length > 0) {
-      return (
-        Object.entries(toolData?.configuration).map(function(item) {
-          return (
-            <div key={item}>
-              {item[1].length > 0 && (
-                <>
-                  <span className="text-muted pr-1">{item[0]}: </span> {item[1]}
-                </>
-              )}
-            </div>
-          );
-        })
-      );
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [toolId]);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+      const response = await toolsActions.getRoleLimitedToolByIdV2(getAccessToken, cancelSource, toolId);
+
+      if (response?.data?.data) {
+        setToolModel(new Model(response.data.data[0], toolMetadata, false));
+      }
+    } catch (error) {
+      if (!error?.error?.message?.includes(404)) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    }
+    finally {
+      setIsLoading(false);
     }
   };
+
+  const getBody = () => {
+    if (toolModel) {
+      return (
+        <div>
+          <div className="text-muted mb-2">
+            Configuration details for this item are listed below. Tool and account specific settings are stored in the
+            <span> <Link to="/inventory/tools" target="_blank" rel="noopener noreferrer">Tool Registry</Link></span>.
+            <div>To add a new entry to a dropdown or update settings, make those changes there.</div>
+            <div>
+              <Link to={`/inventory/tools/details/${toolId}`} target="_blank" rel="noopener noreferrer">
+                Click here to view the selected Tool&apos;s details
+              </Link>
+            </div>
+          </div>
+          <ToolReadOnlyDetailPanel toolModel={toolModel} />
+        </div>
+      );
+    }
+
+    return (
+      <div className="text-muted mb-2">
+        The selected Tool was not found when pulling available tools. Its Access Rules may have changed or it may have been deleted.
+        <span> <Link to="/inventory/tools" target="_blank" rel="noopener noreferrer">Tool Registry</Link></span>.
+        <div>To add a new entry to a dropdown or update settings, make those changes there.</div>
+      </div>
+    );
+  };
+
+  if (isLoading) {
+    return (<LoadingDialog size={"sm"} message={"Loading Tool Data"} />);
+  }
 
   return (
     <InfoContainer
       titleIcon={faTools}
-      titleText={`${toolData?.name} Tool Details`}
+      titleText={`${toolModel?.getData("name")}`}
     >
-      <ToolSummaryPanel toolData={toolModel} />
-      <SummaryPanelContainer>
-        <div>Configuration Properties:</div>
-        {getToolConfigurationInformation()}
-      </SummaryPanelContainer>
-      {/*<ToolReadOnlyDetailPanel toolData={toolModel} />*/}
+      {getBody()}
     </InfoContainer>
   );
 }
 
 ToolInfoContainer.propTypes = {
-  toolData: PropTypes.object,
-  toolIdentifier: PropTypes.string,
+  toolId: PropTypes.string,
 };
 
 export default ToolInfoContainer;

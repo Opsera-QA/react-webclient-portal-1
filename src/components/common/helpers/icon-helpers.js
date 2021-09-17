@@ -1,8 +1,9 @@
 import {Image} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faOctopusDeploy, faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import {faWrench} from "@fortawesome/pro-light-svg-icons";
+import {faTasks, faWrench} from "@fortawesome/pro-light-svg-icons";
 import React from "react";
+import {TASK_TYPES} from "components/tasks/task.types";
 
 export function getLargeVendorIconFromToolIdentifier (s3Bucket, toolIdentifier) {
   if (toolIdentifier == null) {
@@ -26,8 +27,13 @@ export function getLargeVendorIconFromToolIdentifier (s3Bucket, toolIdentifier) 
       return <Image src={`${vendorIconPrefix}/icons8-github-96.png`} />;
     case "gitlab":
       return <Image src={`${vendorIconPrefix}/icons8-gitlab-96.png`} />;
+    case "git":
+      return <Image src={`${vendorIconPrefix}/icons8-git-96.png`} />;
     case "azure":
-      return <Image src={`${vendorIconPrefix}/cons8-azure-96.png`} />;
+    case "azure-devops":
+    case "azure-functions":
+    case "azure_account":
+      return <Image src={`${vendorIconPrefix}/icons8-azure-96.png`} />;
     case "octopus":
       return <FontAwesomeIcon icon={faOctopusDeploy} fixedWidth style={{color: "#0D80D8"}} className={"title-fa-icon"} />;
     case "slack":
@@ -67,13 +73,61 @@ export function getLargeVendorIconFromToolIdentifier (s3Bucket, toolIdentifier) 
       return <Image src={`${vendorIconPrefix}/xunit-60-213.png`} className={"xunit-icon"} />;
     case "ansible":
       return <Image src={`${vendorIconPrefix}/ansible-98-124.png`} className={"ansible-icon"} />;
-
-
-    // base example
-    // case "":
-    //   return <Image src={`${vendorIconPrefix}/`} />;
+    case "mongodb":
+    case "mongodb_realm":
+      return <Image src={`${vendorIconPrefix}/icons8-mongodb-96.png`} />;
     default:
       return <FontAwesomeIcon icon={faWrench} fixedWidth className={"title-fa-icon wrench"} />;
+  }
+}
+
+export function getLargeVendorIconComponentFromTaskType (taskType) {
+  if (taskType == null) {
+    return <></>;
+  }
+
+  const vendorIconPrefix = `${process.env.REACT_APP_OPSERA_S3_STORAGE_URL}/vendor-logos`;
+
+  switch (taskType) {
+    case TASK_TYPES.SYNC_SALESFORCE_REPO:
+    case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
+    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+      return <FontAwesomeIcon icon={faSalesforce} fixedWidth style={{color: "#0D80D8"}} className={"title-fa-icon icon-image"} />;
+    case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
+    case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
+    case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
+      return <Image className={"icon-image"} src={`${vendorIconPrefix}/icons8-amazon-web-services-96.png`} />;
+    case TASK_TYPES.SYNC_GIT_BRANCHES:
+      return <Image className={"icon-image"} src={`${vendorIconPrefix}/icons8-git-96.png`} />;
+    case TASK_TYPES.AZURE_CLUSTER_CREATION:
+      return <Image className={"icon-image"} src={`${vendorIconPrefix}/icons8-azure-96.png`} />;
+    default:
+      return <FontAwesomeIcon icon={faTasks} fixedWidth className={"title-fa-icon wrench"} />;
+  }
+}
+
+export function getLargeVendorIconFromTaskType (taskType) {
+  if (taskType == null) {
+    return <></>;
+  }
+
+  const vendorIconPrefix = `${process.env.REACT_APP_OPSERA_S3_STORAGE_URL}/vendor-logos`;
+
+  switch (taskType) {
+    case TASK_TYPES.SYNC_SALESFORCE_REPO:
+    case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
+    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+      return faSalesforce;
+    case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
+    case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
+    case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
+      return `${vendorIconPrefix}/icons8-amazon-web-services-96.png`;
+    case TASK_TYPES.SYNC_GIT_BRANCHES:
+      return `${vendorIconPrefix}/icons8-git-96.png`;
+    case TASK_TYPES.AZURE_CLUSTER_CREATION:
+      return `${vendorIconPrefix}/icons8-azure-96.png`;
+    default:
+      return faTasks;
   }
 }
 

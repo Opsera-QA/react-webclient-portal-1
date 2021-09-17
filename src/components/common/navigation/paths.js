@@ -110,8 +110,9 @@ paths.toolDetailView = paths.toolRegistry + "/details";
 paths.notificationManagement = "notifications";
 paths.notificationDetailView = paths.notificationDetailView + "/details";
 
-//GIT Tasks
-paths.gitTasks = "task";
-paths.gitTasksDetailView = paths.gitTasksDetailView + "/details";
+//Tasks
+paths.taskManagement = "task";
+paths.taskActivityLogs = "task/activity";
+paths.taskManagementDetailView = paths.tasks + "/details";
 
 export default paths;

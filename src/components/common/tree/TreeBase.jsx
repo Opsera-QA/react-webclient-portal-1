@@ -4,11 +4,10 @@ import {Tree} from "dhx-suite-package";
 import "dhx-suite-package/codebase/suite.css";
 import {useWindowSize} from "components/common/hooks/useWindowSize";
 
-function TreeBase({ data, onItemClick, setParentWidget }) {
+function TreeBase({ data, onItemClick, setParentWidget, expanded, treeId, selectedId }) {
   const containerRef = useRef(null);
   const [tree, setTree] = useState(null);
   const windowSize = useWindowSize();
-  const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
     const treeGrid = setUpTree();
@@ -26,17 +25,17 @@ function TreeBase({ data, onItemClick, setParentWidget }) {
         tree.selection.remove();
         tree.selection.add(selectedId);
       }
-      else {
-        const id = tree.data.getId(0);
-
-        if (id) {
-          tree.selection.add(id);
-          setSelectedId(id);
-          onItemClick(tree.data.getItem(id));
-        }
-      }
     }
   }, [data]);
+
+  useEffect(() => {
+    if (tree) {
+      if (selectedId) {
+        tree.selection.remove();
+        tree.selection.add(selectedId);
+      }
+    }
+  }, [selectedId]);
 
   // Refresh width on resize
   useEffect(() => {
@@ -46,16 +45,12 @@ function TreeBase({ data, onItemClick, setParentWidget }) {
   }, [windowSize, tree]);
 
   const setUpTree = () => {
-    const tree = new Tree("tree_container", {
+    const tree = new Tree(treeId, {
       data: Array.isArray(data) && data.length > 0 ? data : [],
     });
 
-    // TODO: This might cause issues, remove if so
-    if (Array.isArray(data) && data.length > 0 && tree.selection.getId() == null && selectedId == null && onItemClick) {
-      const id = tree.data.getId(0);
-      tree.selection.add(id);
-      setSelectedId(id);
-      onItemClick(tree.data.getItem(id));
+    if (expanded === true) {
+      tree.expandAll();
     }
 
     if (selectedId) {
@@ -65,7 +60,6 @@ function TreeBase({ data, onItemClick, setParentWidget }) {
 
     if (onItemClick) {
       tree.events.on("afterSelect", (id) => {
-        setSelectedId(id);
         onItemClick(tree.data.getItem(id));
       });
     }
@@ -79,7 +73,11 @@ function TreeBase({ data, onItemClick, setParentWidget }) {
   };
 
   return (
-    <div id="tree_container" className={"w-100"} ref={el => (containerRef.current = el)} />
+    <div
+      id={treeId}
+      className={"w-100 h-100"}
+      ref={el => (containerRef.current = el)}
+    />
   );
 }
 
@@ -87,10 +85,14 @@ TreeBase.propTypes = {
   data: PropTypes.array,
   onItemClick: PropTypes.func,
   setParentWidget: PropTypes.func,
+  expanded: PropTypes.bool,
+  treeId: PropTypes.string,
+  selectedId: PropTypes.string,
 };
 
 TreeBase.defaultProps = {
   data: [],
+  treeId: "tree-container",
 };
 
 export default TreeBase;

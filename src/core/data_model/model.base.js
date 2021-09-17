@@ -28,6 +28,7 @@ export class ModelBase {
     this.isLoading = false;
     this.updateAllowed = false;
     this.deleteAllowed = false;
+    this.editAccssRolesAllowed = false;
   }
 
   initializeObjectProperties = (metaData) => {
@@ -92,6 +93,12 @@ export class ModelBase {
 
     this.data[fieldName] = newValue;
     this.updateState();
+  };
+
+  setDefaultValue = (fieldName) => {
+    const defaultValue = this.metaData?.newObjectFields?.[fieldName];
+    this.propertyChange(fieldName, defaultValue, this.getData(fieldName));
+    this.data[fieldName] = defaultValue;
   };
 
   createModel = async () => {
@@ -417,6 +424,11 @@ export class ModelBase {
     return this.metaData?.activeField;
   }
 
+  isInactive = () => {
+    const activeField = this.metaData?.activeField;
+    return activeField && this.getData(activeField) === false;
+  }
+
   getIsLoading = () => {
     return this.isLoading === true;
   };
@@ -454,6 +466,11 @@ export class ModelBase {
   canDelete = () => {
     return this.deleteAllowed === true;
   };
+
+  canEditAccessRoles = () => {
+    return this.canUpdate() === true && this.editAccssRolesAllowed === true;
+  };
+
 }
 
 export default ModelBase;

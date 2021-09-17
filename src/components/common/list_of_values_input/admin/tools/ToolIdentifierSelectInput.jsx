@@ -6,7 +6,7 @@ import toolManagementActions from "components/admin/tools/tool-management-action
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 
-function ToolIdentifierSelectInput({ fieldName, dataObject, setDataFunction, setDataObject, disabled, textField, valueField, enabledInToolRegistry, status}) {
+function ToolIdentifierSelectInput({ fieldName, dataObject, setDataFunction, setDataObject, disabled, textField, valueField, enabledInToolRegistry, status, clearDataFunction, clearDataDetails}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
@@ -73,6 +73,10 @@ function ToolIdentifierSelectInput({ fieldName, dataObject, setDataFunction, set
       groupBy={"tool_type_name"}
       busy={isLoading}
       valueField={valueField}
+      requireClearDataConfirmation={true}
+      lenientClearValueButton={true}
+      clearDataFunction={clearDataFunction}
+      clearDataDetails={clearDataDetails}
       textField={textField}
       placeholderText={"Select a Tool Identifier"}
       disabled={disabled || isLoading}
@@ -90,6 +94,8 @@ ToolIdentifierSelectInput.propTypes = {
   textField: PropTypes.string,
   valueField: PropTypes.string,
   status: PropTypes.string,
+  clearDataFunction: PropTypes.func,
+  clearDataDetails: PropTypes.any,
 };
 
 ToolIdentifierSelectInput.defaultProps = {

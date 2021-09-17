@@ -9,7 +9,7 @@ import {
   getTableDateColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
-import StatusFilter from "components/common/filters/status/StatusFilter";
+import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import NewKpiOverlay from "components/admin/kpi_editor/NewKpiOverlay";
 import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -44,7 +44,7 @@ function KpiTable({ data, loadData, isLoading, kpiFilterDto, setKpiFilterDto, is
   };
 
   const getDropdownFilters = () => {
-    return <StatusFilter filterDto={kpiFilterDto} setFilterDto={setKpiFilterDto} />;
+    return <ActiveFilter filterDto={kpiFilterDto} setFilterDto={setKpiFilterDto} />;
   };
 
   const getKpiTable = () => {

@@ -110,7 +110,7 @@ ServiceNowToolsSelectInput.propTypes = {
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   placeholderText: PropTypes.string,
-  groupsDataObject: PropTypes.func,
+  groupsDataObject: PropTypes.object,
   groupsSetDataObject: PropTypes.func,
 };
 

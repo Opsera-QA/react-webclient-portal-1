@@ -10,7 +10,7 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
-import StatusFilter from "components/common/filters/status/StatusFilter";
+import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import DashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/DashboardTypeFilter";
 import FavoritesFilter from "components/common/filters/dashboards/favorites/FavoritesFilter";
 import NewDashboardModal from "components/insights/dashboards/NewDashboardModal";
@@ -45,7 +45,7 @@ function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadD
   const getDropdownFilters = () => {
     return (
       <>
-        <StatusFilter filterDto={dashboardFilterDto} setFilterDto={setDashboardFilterDto} className="mb-2" />
+        <ActiveFilter filterDto={dashboardFilterDto} setFilterDto={setDashboardFilterDto} className="mb-2" />
         <FavoritesFilter filterModel={dashboardFilterDto} setFilterModel={setDashboardFilterDto}/>
       </>
     );

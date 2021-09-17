@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCog, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import gitTasksActions from "components/git/git-task-actions";
+import taskActions from "components/tasks/task.actions";
 import axios from "axios";
 import workflowAuthorizedActions
 from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
@@ -63,7 +63,7 @@ function GenerateCertButton({refreshData, recordDto, disable, size, showSuccessT
   const generateCertificate = async () => {
     try{
       setIsSaving(true);
-      const response = await gitTasksActions.generateCert(getAccessToken, recordDto.getData("_id"), cancelTokenSource);
+      const response = await taskActions.generateCert(getAccessToken, recordDto.getData("_id"), cancelTokenSource);
       // console.log(response);
       if(!(response?.data?.message === "SUCCESS")) {
         toastContext.showErrorDialog("error occured while generating cert!");

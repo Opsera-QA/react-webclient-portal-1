@@ -131,7 +131,7 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
       case "gitlab":
         return (
           <GitlabToolConfigurationSummaryPanel
-            githubToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, gitlabConnectionMetadata)}
+            gitlabToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, gitlabConnectionMetadata)}
           />
         );
       case "bitbucket":
@@ -277,11 +277,7 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
     }
   };
   
-  return (
-    <div className="p-3">
-      {getConfigurationSummaryPanel() }
-    </div>
-  );
+  return (getConfigurationSummaryPanel());
 }
 
 ToolConfigurationSummaryPanel.propTypes = {

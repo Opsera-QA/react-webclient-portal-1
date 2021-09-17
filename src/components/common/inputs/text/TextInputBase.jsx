@@ -8,7 +8,7 @@ function TextInputBase(
   {
     fieldName, dataObject, setDataObject, disabled, type,
     showLabel, inputClasses, linkTooltipText, detailViewLink, infoOverlay,
-    setDataFunction, name, style,
+    setDataFunction, name, style, className
   }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -53,7 +53,7 @@ function TextInputBase(
   };
 
   return (
-    <InputContainer>
+    <InputContainer className={className}>
       <InputLabel
         showLabel={showLabel}
         field={field}
@@ -91,6 +91,7 @@ TextInputBase.propTypes = {
   setDataFunction: PropTypes.func,
   name: PropTypes.string,
   style: PropTypes.object,
+  className: PropTypes.string,
 };
 
 export default TextInputBase;

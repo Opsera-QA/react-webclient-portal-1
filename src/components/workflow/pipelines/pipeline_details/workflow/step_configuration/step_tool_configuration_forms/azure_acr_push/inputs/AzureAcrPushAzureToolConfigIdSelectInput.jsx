@@ -113,8 +113,7 @@ function AzureAcrPushAzureToolConfigIdSelectInput({ fieldName, dataObject, setDa
     newDataObject.setData('azureRegistryName', "");
     newDataObject.setData('azureRepoName', "");
     newDataObject.setData('acrLoginUrl', "");
-    newDataObject.setData('newRepo', "");
-    newDataObject.setData('useRunCount', "");
+    newDataObject.setData('newRepo', false);
     setDataObject({...newDataObject});
   };
 
@@ -124,9 +123,8 @@ function AzureAcrPushAzureToolConfigIdSelectInput({ fieldName, dataObject, setDa
     newDataObject.setData('azureRegistryName', "");
     newDataObject.setData('azureRepoName', "");
     newDataObject.setData('acrLoginUrl', "");
-    newDataObject.setData('newRepo', "");
-    newDataObject.setData('useRunCount', "");
-    setAzureConfig(null);  
+    newDataObject.setData('newRepo', false);
+    setAzureConfig(null);
     setDataObject({...newDataObject});
   };
 

@@ -124,7 +124,11 @@ const toolMetadata = {
     },
     {
       label: "Vault Instance",
-      id: "vault"
+      id: "vault",
+      formText: `
+        If no value is specified, the Opsera Default Hashicorp Vault is used. 
+        To resume using the Opsera Default Hashicorp Vault after a value is set, please use the clear value button.
+      `
     }
   ],
   newObjectFields: {

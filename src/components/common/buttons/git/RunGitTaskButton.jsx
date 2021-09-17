@@ -6,8 +6,8 @@ import { faPlay, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
-import GitTaskSfdcPipelineWizardOverlay from "components/git/git_task_details/configuration_forms/sfdc-org-sync/GitTaskSfdcPipelineWizardOverlay";
-import gitTasksActions from "components/git/git-task-actions";
+import GitTaskSfdcPipelineWizardOverlay from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/GitTaskSfdcPipelineWizardOverlay";
+import taskActions from "components/tasks/task.actions";
 import axios from "axios";
 
 function RunGitTaskButton({gitTasksData, handleClose, setGitTasksData, gitTasksConfigurationDataDto, disable, className, loadData }) {
@@ -25,12 +25,6 @@ function RunGitTaskButton({gitTasksData, handleClose, setGitTasksData, gitTasksC
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
 
     return () => {
       source.cancel();
@@ -57,7 +51,7 @@ function RunGitTaskButton({gitTasksData, handleClose, setGitTasksData, gitTasksC
         setIsLoading(true);
         const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
         gitTasksData.setData("configuration", configuration);
-        await gitTasksActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
+        await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
       } catch (error) {
         toastContext.showLoadingErrorDialog(error);
         setIsLoading(false);
@@ -85,7 +79,7 @@ function RunGitTaskButton({gitTasksData, handleClose, setGitTasksData, gitTasksC
         let postBody = {
           "gitTaskId":gitTasksData.getData("_id")
         };
-        await gitTasksActions.processSyncRequest(postBody, getAccessToken);
+        await taskActions.processSyncRequest(postBody, getAccessToken);
       } catch (error) {
         console.log(error);
         if(error?.error?.response?.data?.message){
@@ -106,7 +100,7 @@ function RunGitTaskButton({gitTasksData, handleClose, setGitTasksData, gitTasksC
         let postBody = {
           "taskId":gitTasksData.getData("_id")
         };
-        let result = await gitTasksActions.createECSCluster(postBody, getAccessToken);
+        let result = await taskActions.createECSCluster(postBody, getAccessToken);
         toastContext.showSuccessDialog("ECS Cluster Creation Triggered Successfully");
       } catch (error) {
         console.log(error);

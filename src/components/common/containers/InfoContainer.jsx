@@ -1,27 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
-import IconBase from "components/common/icons/IconBase";
+import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 
-function InfoContainer({ children, isLoading, titleIcon, titleText, helpComponent,className }) {
-  const getTitleBar = () => {
-    return (
-      <div className="px-2 pt-2 d-flex justify-content-between">
-        <div><IconBase isLoading={isLoading} icon={titleIcon} className="mr-2"/>{titleText}</div>
-        <div>
-          <LaunchHelpIcon helpComponent={helpComponent} className={"pt-2 pr-2"} />
-        </div>
-      </div>
-    );
-  };
-
+function InfoContainer({ children, isLoading, titleIcon, titleText, helpComponent, className }) {
   return (
     <div className={className}>
       <div className="object-properties-input">
         <div className="content-container">
-          <div className="property-header">
-            <h6>{getTitleBar()}</h6>
-          </div>
+          <InputTitleBar
+            customTitle={titleText}
+            icon={titleIcon}
+            helpComponent={helpComponent}
+            isLoading={isLoading}
+          />
           {children}
         </div>
       </div>

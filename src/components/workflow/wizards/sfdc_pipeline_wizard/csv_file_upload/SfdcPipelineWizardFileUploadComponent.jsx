@@ -346,12 +346,10 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
       return (
         <div>
           <div className="my-4 w-100">
-            <div className="my-3">
-              <SfdcPipelineWizardUploadComponentTypesRadioInput
-                pipelineWizardModel={pipelineWizardModel}
-                setPipelineWizardModel={setPipelineWizardModel}
-              />
-            </div>
+            <SfdcPipelineWizardUploadComponentTypesRadioInput
+              pipelineWizardModel={pipelineWizardModel}
+              setPipelineWizardModel={setPipelineWizardModel}
+            />
             {getFileUploadBody()}
             {getFilesBody()}
             {getValidateButton()}

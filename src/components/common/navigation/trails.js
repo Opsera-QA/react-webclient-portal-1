@@ -706,19 +706,27 @@ const breadcrumbs = {
     icon: faEnvelope
   },
 
-  //GIT Tasks
-  gitTasksManagement : {
+  // Tasks
+  taskManagement : {
     parent: undefined,
-    name: "gitTasksManagement",
-    path: paths.gitTasks,
+    name: "taskManagement",
+    path: paths.taskManagement,
     title: "Opsera Task Management",
     linkText: "Opsera Task Management",
     icon: faTasks
   },
-  gitTasksDetailView: {
-    parent: "gitTasksManagement",
-    name: "gitTasksDetailView",
-    path: paths.gitTasksDetailView,
+  taskActivityLogs : {
+    parent: undefined,
+    name: "taskManagement",
+    path: paths.taskActivityLogs,
+    title: "Opsera Task Activity Logs",
+    linkText: "Opsera Task Activity Logs",
+    icon: faClipboardList
+  },
+  taskManagementDetailView: {
+    parent: "taskManagement",
+    name: "taskManagementDetailView",
+    path: paths.taskManagementDetailView,
     title: "Opsera Task Details",
     linkText: "Opsera Task Details",
     icon: faTasks

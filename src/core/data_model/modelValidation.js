@@ -92,11 +92,6 @@ export const fieldValidation = (value, data, field) => {
     errorMessages.push("Does not meet field requirements.");
   }
 
-  if (field.regexValidatorV2 != null && value !== "" && !matchesRegex(field.regexValidatorV2, value))
-  {
-    errorMessages.push(field.regexErrorText);
-  }
-
   if (field.regexDefinitionName != null && value !== "")
   {
     const definitionName = field.regexDefinitionName;

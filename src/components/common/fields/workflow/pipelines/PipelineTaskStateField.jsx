@@ -8,7 +8,6 @@ function PipelineTaskStateField({ fieldName, dataObject, className }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const getPipelineStateField = (pipelineState) => {
-    console.log("pipeline state: " + JSON.stringify(pipelineState));
     return <span>{getAssociatedPipelineStatusIcon(pipelineState)}<span className="ml-1 mt-1">{pipelineState}</span></span>;
   };
 

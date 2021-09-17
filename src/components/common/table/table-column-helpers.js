@@ -32,6 +32,8 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
+import {getTaskTypeLabel} from "components/tasks/task.types";
+import {getColumnHeader, getColumnId, getPipelineStatusIconCss} from "components/common/table/table-column-helpers-v2";
 
 const getTableHeader = (field) => {
   return field ? field.label : "";
@@ -108,6 +110,44 @@ export const getStringifiedArrayColumn = (field, className) => {
       return "";
     },
     class: className ? className : "no-wrap-inline"
+  };
+};
+
+export const getTaskTypeColumn = (field, className) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: function formatTaskTypeLabel(row) {
+      return getTaskTypeLabel(row?.value);
+    },
+    class: className ? className : "no-wrap-inline"
+  };
+};
+
+export const getTaskStatusColumn = (field, className) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    width: 105,
+    Cell: function getTaskStatus(row) {
+      const taskStatus = row?.value;
+      if (taskStatus == null || taskStatus === "") {
+        return (
+          <div className="d-flex flex-nowrap">
+            <div>{getPipelineStatusIcon("created")}</div>
+            <div className="ml-1">Created</div>
+          </div>
+        );
+      }
+
+      return (
+        <div className="d-flex flex-nowrap">
+          <div>{getPipelineStatusIcon(row)}</div>
+          <div className="ml-1">{capitalizeFirstLetter(taskStatus)}</div>
+        </div>
+      );
+    },
+    class: className ? className : undefined
   };
 };
 
@@ -412,6 +452,7 @@ export const getPipelineStatusIcon = (row) => {
     case "stopped":
     case "halted":
       return (<FontAwesomeIcon icon={faOctagon} className="cell-icon red my-auto" fixedWidth/>);
+    case "created":
     default:
       return (<FontAwesomeIcon icon={faCheckCircle} className="cell-icon green my-auto" fixedWidth/>);
   }
