@@ -4,7 +4,6 @@ import GitBranchInput from "components/common/list_of_values_input/tools/git/Git
 import GitUpstreamBranchInput from "components/common/list_of_values_input/tools/git/GitUpstreamBranchInput";
 import GitBranchManualRollBackBranchInput from "components/common/list_of_values_input/tools/git/GitBranchManualRollBackBranchInput";
 import { Form } from "react-bootstrap";
-import ConsoleLogTab from "components/common/tabs/detail_view/ConsoleLogTab";
 
 const excludeArrs = [
   "SFDC VALIDATE PACKAGE XML",
@@ -54,7 +53,7 @@ function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setD
       dataObject.getData("service") &&
       dataObject.getData("gitToolId") &&
       dataObject.getData("repoId") &&     
-      excludeArrs.some(item=>item!==dataObject.getData("jobType")) &&
+      !excludeArrs.some(item=>item==dataObject.getData("jobType")) &&
       !dataObject.getData("isOrgToOrg")
       
     );
