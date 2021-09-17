@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import pipelineStepNotificationActions from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
@@ -17,11 +17,18 @@ function ServiceNowConfigurationItemsSelectInput({
   serviceNowToolId,
 }) {
   // const toastContext = useContext(DialogToastContext);
+  const [field] = useState(dataObject?.getFieldById(fieldName));
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [configurationItems, setConfigurationItems] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  const validateAndSetData = (fieldName, value) => {
+    let newDataObject = dataObject;
+    newDataObject.setData(fieldName, value);
+    setDataObject({ ...newDataObject });
+  };
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -84,10 +91,14 @@ function ServiceNowConfigurationItemsSelectInput({
     if (!isLoading && serviceNowToolId !== "" && configurationItems.length === 0) {
       return "No Configuration Items found for selected ServiceNow account.";
     }
+
+    if (!isLoading && serviceNowToolId !== "" && configurationItems.length !== 0) {
+      return "Select Configuration Items";
+    }
   };
 
   return (
-    <SelectInputBase
+    <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
@@ -98,6 +109,7 @@ function ServiceNowConfigurationItemsSelectInput({
       textField={textField}
       placeholderText={getPlaceholderText()}
       disabled={disabled || isLoading || serviceNowToolId === "" || configurationItems.length === 0}
+      onChange={(newValue) => validateAndSetData(field.id, newValue)}
     />
   );
 }
