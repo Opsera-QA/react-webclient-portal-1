@@ -9,6 +9,7 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
+import FileInputBase from "components/common/inputs/file/FileInputBase";
 
 function CoverityToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -43,6 +44,7 @@ function CoverityToolConfiguration({ toolData }) {
           <TextInputBase dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} fieldName={"coverityUrl"} />
           <TextInputBase dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} fieldName={"coverityUsername"} />
           <VaultTextInput dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} fieldName={"coverityPassword"}/>
+          <FileInputBase dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} fieldName={"coverityCert"}/>
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
