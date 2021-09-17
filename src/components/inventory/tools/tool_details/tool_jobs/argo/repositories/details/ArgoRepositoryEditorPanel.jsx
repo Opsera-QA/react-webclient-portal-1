@@ -100,24 +100,28 @@ function ArgoRepositoryEditorPanel({ argoRepositoryData, toolData, repoId, handl
             <SCMTypeInput
               setDataObject={setArgoRepositoryModel}
               dataObject={argoRepositoryModel}
+              disabled={!argoRepositoryData?.isNew()}
             />
           </Col>
           <Col lg={12}>
             <SCMToolInput
               setDataObject={setArgoRepositoryModel}
               dataObject={argoRepositoryModel}
+              disabled={!argoRepositoryData?.isNew()}
             />
           </Col>
           <Col lg={12}>
             <ArgoBitbucketWorkspaceInput
               setDataObject={setArgoRepositoryModel}
               dataObject={argoRepositoryModel}
+              disabled={!argoRepositoryData?.isNew()}
             />
           </Col>
           <Col lg={12}>
             <ArgoGitRepositoryInput
               setDataObject={setArgoRepositoryModel}
               dataObject={argoRepositoryModel}
+              disabled={!argoRepositoryData?.isNew()}
             />
           </Col>
 

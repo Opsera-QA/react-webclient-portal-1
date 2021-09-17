@@ -23,7 +23,7 @@ function SCMToolInput({dataObject, setDataObject, disabled}) {
        dataObject={dataObject}
        setDataObject={setDataObject}
        setDataFunction={setScmTool}
-       disabled={!dataObject.getData("service") || dataObject.getData("service").length < 0}
+       disabled={disabled || !dataObject.getData("service") || dataObject.getData("service").length < 0}
      />
   );
 }
