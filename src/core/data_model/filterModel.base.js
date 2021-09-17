@@ -135,6 +135,10 @@ export class FilterModelBase {
   getNewObjectFields = () => {
     return this.metaData?.newObjectFields != null ? this.metaData.newObjectFields : {};
   };
+
+  getNewInstance = () => {
+    return new FilterModelBase(this.metaData);
+  };
 }
 
 export default FilterModelBase;

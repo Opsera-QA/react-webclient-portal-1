@@ -6,16 +6,14 @@ import ExportPipelineActivityLogButton from "components/common/buttons/export/pi
 import TreeAndTableBase from "components/common/table/TreeAndTableBase";
 import TaskActivityLogsTable from "components/tasks/activity_logs/TaskActivityLogTable";
 import TaskActivityLogTree from "components/tasks/activity_logs/TaskActivityLogTree";
-import TaskTypeFilter from "components/common/filters/tasks/type/TaskTypeFilter";
 import TaskStatusFilter from "components/common/filters/tasks/status/TaskStatusFilter";
-import TagFilter from "components/common/filters/tags/tag/TagFilter";
 
-function TaskActivityLogs({ taskLogData, taskName, taskActivityMetadata, loadData, isLoading, taskActivityFilterDto, setTaskActivityFilterDto, taskActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
+function TaskActivityLogs({ taskLogData, taskName, taskActivityMetadata, loadData, isLoading, taskActivityFilterModel, setTaskActivityFilterModel, taskActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
   const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
   const [currentStepName, setCurrentStepName] = useState(undefined);
 
   const getNoDataMessage = () => {
-    if (taskActivityFilterDto?.getData("search") !== "") {
+    if (taskActivityFilterModel?.getData("search") !== "") {
       return ("Could not find any results with the given keywords.");
     }
 
@@ -41,6 +39,8 @@ function TaskActivityLogs({ taskLogData, taskName, taskActivityMetadata, loadDat
         currentLogTreePage={currentLogTreePage}
         setCurrentLogTreePage={setCurrentLogTreePage}
         setCurrentTaskName={setCurrentStepName}
+        taskActivityFilterModel={taskActivityFilterModel}
+        loadData={loadData}
         taskLogTree={taskActivityTreeData}
       />
     );
@@ -64,12 +64,8 @@ function TaskActivityLogs({ taskLogData, taskName, taskActivityMetadata, loadDat
       <>
         <TaskStatusFilter
           className={"mb-2"}
-          filterModel={taskActivityFilterDto}
-          setFilterModel={setTaskActivityFilterDto}
-        />
-        <TagFilter
-          filterDto={taskActivityFilterDto}
-          setFilterDto={setTaskActivityFilterDto}
+          filterModel={taskActivityFilterModel}
+          setFilterModel={setTaskActivityFilterModel}
         />
       </>
     );
@@ -80,12 +76,12 @@ function TaskActivityLogs({ taskLogData, taskName, taskActivityMetadata, loadDat
       showBorder={false}
       className={"pt-2"}
       loadData={loadData}
-      filterDto={taskActivityFilterDto}
-      setFilterDto={setTaskActivityFilterDto}
+      filterDto={taskActivityFilterModel}
+      setFilterDto={setTaskActivityFilterModel}
       isLoading={isLoading}
       title={"Activity Logs"}
       titleIcon={faClipboardList}
-      // dropdownFilters={getDropdownFilters()}
+      dropdownFilters={getDropdownFilters()}
       body={getTaskActivityTable()}
       supportSearch={true}
       exportButton={<ExportPipelineActivityLogButton className={"ml-2"} isLoading={isLoading} activityLogData={taskLogData}/>}
@@ -96,10 +92,9 @@ function TaskActivityLogs({ taskLogData, taskName, taskActivityMetadata, loadDat
 TaskActivityLogs.propTypes = {
   taskLogData: PropTypes.array,
   isLoading: PropTypes.bool,
-  taskActivityFilterDto: PropTypes.object,
-  setTaskActivityFilterDto: PropTypes.func,
+  taskActivityFilterModel: PropTypes.object,
+  setTaskActivityFilterModel: PropTypes.func,
   loadData: PropTypes.func,
-  pipeline: PropTypes.object,
   taskActivityMetadata: PropTypes.object,
   taskActivityTreeData: PropTypes.array,
   setCurrentLogTreePage: PropTypes.func,

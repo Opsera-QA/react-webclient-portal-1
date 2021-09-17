@@ -4,7 +4,7 @@ import TreeBase from "components/common/tree/TreeBase";
 import VanityBottomPaginatorBase from "components/common/pagination/VanityBottomPaginatorBase";
 import taskActivityHelpers from "components/tasks/activity_logs/task-activity-helpers";
 
-function TaskActivityLogTree({ taskLogTree, setCurrentRunNumber, setCurrentTaskName, currentLogTreePage, setCurrentLogTreePage}) {
+function TaskActivityLogTree({ taskLogTree, setCurrentRunNumber, setCurrentTaskName, loadData, taskActivityFilterModel, currentLogTreePage, setCurrentLogTreePage}) {
   const [treeWidget, setTreeWidget] = useState(undefined);
   const [secondaryTreeWidget, setSecondaryTreeWidget] = useState(undefined);
   const [secondaryLogTree, setSecondaryLogTree] = useState(undefined);
@@ -14,8 +14,9 @@ function TaskActivityLogTree({ taskLogTree, setCurrentRunNumber, setCurrentTaskN
   useEffect(() => {
     isMounted.current = true;
 
-    if (Array.isArray(taskLogTree) && taskLogTree.length > 0) {
-      setSelectedId(taskLogTree[0].id);
+    const currentIndex = currentLogTreePage * 20;
+    if (Array.isArray(taskLogTree) && taskLogTree.length > currentIndex) {
+      setSelectedId(taskLogTree[currentIndex].id);
       setSecondaryLogTree(taskActivityHelpers.getSecondaryTree());
     }
 
@@ -101,7 +102,9 @@ TaskActivityLogTree.propTypes = {
   setCurrentRunNumber: PropTypes.func,
   setCurrentTaskName: PropTypes.func,
   currentLogTreePage: PropTypes.number,
-  setCurrentLogTreePage: PropTypes.func
+  setCurrentLogTreePage: PropTypes.func,
+  loadData: PropTypes.func,
+  taskActivityFilterModel: PropTypes.object,
 };
 
 export default TaskActivityLogTree;

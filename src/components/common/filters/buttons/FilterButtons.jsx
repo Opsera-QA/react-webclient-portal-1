@@ -15,13 +15,21 @@ function FilterButtons({ dropdownFilters, filterDto, loadData, className, isLoad
   };
 
   const resetFilters = async () => {
-    let newFilterDto = new Model({...filterDto.getNewObjectFields()}, filterDto.getMetaData(), false);
+    let newFilterModel;
+
+    if (filterDto?.getNewInstance) {
+      newFilterModel = filterDto.getNewInstance();
+    }
+    else {
+      newFilterModel = new Model({...filterDto.getNewObjectFields()}, filterDto.getMetaData(), false);
+    }
+
     let pageSize = filterDto.getData("pageSize");
-    newFilterDto.setData("pageSize", pageSize);
+    newFilterModel.setData("pageSize", pageSize);
     let sortOption = filterDto.getData("sortOption");
-    newFilterDto.setData("sortOption", sortOption);
+    newFilterModel.setData("sortOption", sortOption);
     document.body.click();
-    await loadData(newFilterDto);
+    await loadData(newFilterModel);
   };
 
   const getInnerFilters = () => {

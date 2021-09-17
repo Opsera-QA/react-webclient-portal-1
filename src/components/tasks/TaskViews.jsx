@@ -34,11 +34,11 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
           setFilterModel={setTaskFilterModel}
           className={"mb-2"}
         />
-        {/*<TaskStatusFilter*/}
-        {/*  className={"mb-2"}*/}
-        {/*  filterModel={taskFilterModel}*/}
-        {/*  setFilterModel={setTaskFilterModel}*/}
-        {/*/>*/}
+        <TaskStatusFilter
+          className={"mb-2"}
+          filterModel={taskFilterModel}
+          setFilterModel={setTaskFilterModel}
+        />
         <ActiveFilter
           filterDto={taskFilterModel}
           setFilterDto={setTaskFilterModel}

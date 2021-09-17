@@ -7,16 +7,16 @@ import TreeAndTableBase from "components/common/table/TreeAndTableBase";
 import TaskActivityLogTree
   from "components/tasks/activity_logs/TaskActivityLogTree";
 import TaskTypeFilter from "components/common/filters/tasks/type/TaskTypeFilter";
-import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import TaskStatusFilter from "components/common/filters/tasks/status/TaskStatusFilter";
 import TaskActivityLogsTable from "components/tasks/activity_logs/TaskActivityLogTable";
+import InlineTaskTypeFilter from "components/common/filters/tasks/type/InlineTaskTypeFilter";
 
-function AllTasksActivityLogs({ taskLogData, taskActivityMetadata, loadData, isLoading, taskActivityFilterDto, setTaskActivityFilterDto, taskActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
+function AllTasksActivityLogs({ taskLogData, taskActivityMetadata, loadData, isLoading, taskActivityFilterModel, setTaskActivityFilterModel, taskActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
   const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
   const [currentTaskName, setCurrentTaskName] = useState(undefined);
 
   const getNoDataMessage = () => {
-    if (taskActivityFilterDto?.getData("search") !== "") {
+    if (taskActivityFilterModel?.getData("search") !== "") {
       return ("Could not find any results with the given keywords.");
     }
 
@@ -43,6 +43,7 @@ function AllTasksActivityLogs({ taskLogData, taskActivityMetadata, loadData, isL
         setCurrentTaskName={setCurrentTaskName}
         currentLogTreePage={currentLogTreePage}
         setCurrentLogTreePage={setCurrentLogTreePage}
+        taskActivityFilterModel={taskActivityFilterModel}
       />
     );
   };
@@ -61,21 +62,17 @@ function AllTasksActivityLogs({ taskLogData, taskActivityMetadata, loadData, isL
   };
 
   const getDropdownFilters = () => {
-    return(
+    return (
       <>
         <TaskTypeFilter
-          filterModel={taskActivityFilterDto}
-          setFilterModel={setTaskActivityFilterDto}
+          filterModel={taskActivityFilterModel}
+          setFilterModel={setTaskActivityFilterModel}
           className={"mb-2"}
         />
         <TaskStatusFilter
           className={"mb-2"}
-          filterModel={taskActivityFilterDto}
-          setFilterModel={setTaskActivityFilterDto}
-        />
-        <TagFilter
-          filterDto={taskActivityFilterDto}
-          setFilterDto={setTaskActivityFilterDto}
+          filterModel={taskActivityFilterModel}
+          setFilterModel={setTaskActivityFilterModel}
         />
       </>
     );
@@ -85,13 +82,21 @@ function AllTasksActivityLogs({ taskLogData, taskActivityMetadata, loadData, isL
     <FilterContainer
       showBorder={false}
       loadData={loadData}
-      filterDto={taskActivityFilterDto}
-      setFilterDto={setTaskActivityFilterDto}
+      filterDto={taskActivityFilterModel}
+      setFilterDto={setTaskActivityFilterModel}
       isLoading={isLoading}
       title={"Activity Logs"}
       className={"px-2 pb-2"}
       titleIcon={faClipboardList}
-      // dropdownFilters={getDropdownFilters()}
+      dropdownFilters={getDropdownFilters()}
+      inlineFilters={
+        <InlineTaskTypeFilter
+          filterModel={taskActivityFilterModel}
+          setFilterModel={setTaskActivityFilterModel}
+          loadData={loadData}
+          className={"mr-2"}
+        />
+      }
       body={getTaskActivityTable()}
       supportSearch={true}
       exportButton={
@@ -107,8 +112,8 @@ function AllTasksActivityLogs({ taskLogData, taskActivityMetadata, loadData, isL
 AllTasksActivityLogs.propTypes = {
   taskLogData: PropTypes.array,
   isLoading: PropTypes.bool,
-  taskActivityFilterDto: PropTypes.object,
-  setTaskActivityFilterDto: PropTypes.func,
+  taskActivityFilterModel: PropTypes.object,
+  setTaskActivityFilterModel: PropTypes.func,
   loadData: PropTypes.func,
   taskActivityMetadata: PropTypes.object,
   taskActivityTreeData: PropTypes.array,

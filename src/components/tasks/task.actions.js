@@ -106,13 +106,13 @@ taskActions.getTaskActivityLogs = async (getAccessToken, cancelTokenSource, id, 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-taskActions.getAllTaskActivityLogs = async (getAccessToken, cancelTokenSource, taskNameArray, runCountArray, taskActivityFilterDto) => {
-  const search = taskActivityFilterDto?.getData("search");
+taskActions.getAllTaskActivityLogs = async (getAccessToken, cancelTokenSource, taskNameArray, runCountArray, taskActivityFilterModel) => {
   const urlParams = {
     params: {
-      search: search ? search : undefined,
+      search: taskActivityFilterModel?.getData("search"),
       taskNameArray: taskNameArray,
       runCountArray: runCountArray,
+      status: taskActivityFilterModel?.getFilterValue("status"),
       fields: ["run_count", "name", "log_type", "type", "message", "status", "createdAt"]
     },
   };
@@ -121,27 +121,28 @@ taskActions.getAllTaskActivityLogs = async (getAccessToken, cancelTokenSource, t
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-taskActions.getTaskActivityLogTree = async (getAccessToken, cancelTokenSource, id, taskActivityFilterDto) => {
-  const search = taskActivityFilterDto?.getData("search");
+taskActions.getTaskActivityLogTree = async (getAccessToken, cancelTokenSource, id, taskActivityFilterModel) => {
+  const apiUrl = `/tasks/logs/${id}/activity/v2/tree`;
   const urlParams = {
     params: {
-      search: search ? search : undefined
+      search: taskActivityFilterModel?.getData("search"),
+      status: taskActivityFilterModel?.getFilterValue("status"),
     },
   };
 
-  const apiUrl = `/tasks/logs/${id}/activity/v2/tree`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-taskActions.getAllTasksActivityTree = async (getAccessToken, cancelTokenSource, taskActivityFilterDto) => {
-  const search = taskActivityFilterDto?.getData("search");
+taskActions.getAllTasksActivityTree = async (getAccessToken, cancelTokenSource, taskActivityFilterModel) => {
+  const apiUrl = `/tasks/logs/activity/v2/all-tasks-tree`;
   const urlParams = {
     params: {
-      search: search ? search : undefined
+      search: taskActivityFilterModel?.getData("search"),
+      type: taskActivityFilterModel?.getFilterValue("type"),
+      status: taskActivityFilterModel?.getFilterValue("status"),
     },
   };
 
-  const apiUrl = `/tasks/logs/activity/v2/all-tasks-tree`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
