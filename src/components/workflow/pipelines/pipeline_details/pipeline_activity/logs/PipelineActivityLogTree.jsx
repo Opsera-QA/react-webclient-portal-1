@@ -6,9 +6,14 @@ import VanityBottomPaginatorBase from "components/common/pagination/VanityBottom
 function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurrentStepName, currentLogTreePage, setCurrentLogTreePage}) {
   const [treeWidget, setTreeWidget] = useState(undefined);
   const isMounted = useRef(false);
+  const [selectedId, setSelectedId] = useState(undefined);
 
   useEffect(() => {
     isMounted.current = true;
+
+    if (Array.isArray(pipelineLogTree) && pipelineLogTree.length > 1) {
+      setSelectedId(pipelineLogTree[0].id);
+    }
 
     return () => {
       isMounted.current = false;
@@ -19,6 +24,7 @@ function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurr
     if (treeItem) {
       setCurrentRunNumber(treeItem.runNumber);
       setCurrentStepName(treeItem.stepName);
+      setSelectedId(treeItem?.id);
     }
   };
 
@@ -47,7 +53,12 @@ function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurr
   return (
     <div className={"table-tree mb-3"}>
       <div className={"scroll-y table-tree-with-paginator p-2"}>
-        <TreeBase data={pipelineLogTree} onItemClick={onTreeItemClick} setParentWidget={setTreeWidget}/>
+        <TreeBase
+          data={pipelineLogTree}
+          onItemClick={onTreeItemClick}
+          setParentWidget={setTreeWidget}
+          selectedId={selectedId}
+        />
       </div>
       <div>
         <VanityBottomPaginatorBase widgetData={treeWidget?.data} pageSize={20} onPageChange={onPageChange}/>

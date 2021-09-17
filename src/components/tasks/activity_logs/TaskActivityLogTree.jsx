@@ -2,20 +2,46 @@ import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import TreeBase from "components/common/tree/TreeBase";
 import VanityBottomPaginatorBase from "components/common/pagination/VanityBottomPaginatorBase";
+import taskActivityHelpers from "components/tasks/activity_logs/task-activity-helpers";
 
 function TaskActivityLogTree({ taskLogTree, setCurrentRunNumber, setCurrentTaskName, currentLogTreePage, setCurrentLogTreePage}) {
   const [treeWidget, setTreeWidget] = useState(undefined);
+  const [secondaryTreeWidget, setSecondaryTreeWidget] = useState(undefined);
+  const [secondaryLogTree, setSecondaryLogTree] = useState(undefined);
+  const [selectedId, setSelectedId] = useState(undefined);
   const isMounted = useRef(false);
 
   useEffect(() => {
     isMounted.current = true;
+
+    if (Array.isArray(taskLogTree) && taskLogTree.length > 0) {
+      setSelectedId(taskLogTree[0].id);
+      setSecondaryLogTree(taskActivityHelpers.getSecondaryTree());
+    }
 
     return () => {
       isMounted.current = false;
     };
   }, [taskLogTree]);
 
-  const onTreeItemClick = (treeItem) => {
+  const onMainTreeItemClick = (treeItem) => {
+    setSelectedId(treeItem?.id);
+    if (secondaryTreeWidget) {
+      secondaryTreeWidget?.selection?.remove();
+    }
+
+    if (treeItem) {
+      setCurrentRunNumber(treeItem.runNumber);
+      setCurrentTaskName(treeItem.taskName);
+    }
+  };
+
+  const onSecondaryTreeItemClick = (treeItem) => {
+    setSelectedId(treeItem?.id);
+    if (treeWidget) {
+      treeWidget?.selection?.remove();
+    }
+
     if (treeItem) {
       setCurrentRunNumber(treeItem.runNumber);
       setCurrentTaskName(treeItem.taskName);
@@ -39,16 +65,30 @@ function TaskActivityLogTree({ taskLogTree, setCurrentRunNumber, setCurrentTaskN
     }
   };
 
-
   if (taskLogTree == null) {
     return null;
   }
 
   return (
     <div className={"table-tree mb-3"}>
+      {/*<div className={"scroll-y table-tree-with-paginator-and-secondary-tree p-2"}>*/}
       <div className={"scroll-y table-tree-with-paginator p-2"}>
-        <TreeBase data={taskLogTree} onItemClick={onTreeItemClick} setParentWidget={setTreeWidget}/>
+        <TreeBase
+          data={taskLogTree}
+          onItemClick={onMainTreeItemClick}
+          setParentWidget={setTreeWidget}
+          selectedId={selectedId}
+        />
       </div>
+      {/*<div className={"secondary-table-tree p-2"}>*/}
+      {/*  <TreeBase*/}
+      {/*    data={secondaryLogTree}*/}
+      {/*    onItemClick={onSecondaryTreeItemClick}*/}
+      {/*    setParentWidget={setSecondaryTreeWidget}*/}
+      {/*    treeId={"secondary-table-tree"}*/}
+      {/*    selectedId={selectedId}*/}
+      {/*  />*/}
+      {/*</div>*/}
       <div>
         <VanityBottomPaginatorBase widgetData={treeWidget?.data} pageSize={20} onPageChange={onPageChange}/>
       </div>
