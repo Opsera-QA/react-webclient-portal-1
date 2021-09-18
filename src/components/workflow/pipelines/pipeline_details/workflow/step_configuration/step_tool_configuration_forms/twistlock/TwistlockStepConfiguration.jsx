@@ -6,7 +6,10 @@ import twistlockStepFormMetadata from "./twistlock-stepForm-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import TwistlockToolSelectInput from "./inputs/TwistlockToolSelectInput";
 import TwistlockDockerPushSelectInput from "./inputs/TwistlockDockerPushSelectInput";
-import TwistlockJenkinsToolSelectInput from "./inputs/TwistlockJenkinsToolSelectInput";
+import RoleRestrictedJenkinsToolSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
+import RoleRestrictedTwistlockToolSelectInput
+  from "components/common/list_of_values_input/tools/twistlock/RoleRestrictedTwistlockToolSelectInput";
 
 function TwistlockStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPanel, parentCallback, plan, createJob}) {
   const [isLoading, setIsLoading] = useState(false);
@@ -74,9 +77,17 @@ function TwistlockStepConfiguration({ pipelineId, stepTool, stepId, closeEditorP
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <TwistlockJenkinsToolSelectInput dataObject={twistlockStepConfigurationDto} setDataObject={setTwistlockStepConfigurationDataDto} />
-      <TwistlockToolSelectInput dataObject={twistlockStepConfigurationDto} setDataObject={setTwistlockStepConfigurationDataDto} />
-      <TwistlockDockerPushSelectInput  
+      <RoleRestrictedJenkinsToolSelectInput
+        model={twistlockStepConfigurationDto}
+        setModel={setTwistlockStepConfigurationDataDto}
+        fieldName={"toolConfigId"}
+      />
+      <RoleRestrictedTwistlockToolSelectInput
+        model={twistlockStepConfigurationDto}
+        setModel={setTwistlockStepConfigurationDataDto}
+        fieldName={"twistlockToolId"}
+      />
+      <TwistlockDockerPushSelectInput
         dataObject={twistlockStepConfigurationDto}
         setDataObject={setTwistlockStepConfigurationDataDto}
         plan={plan}
