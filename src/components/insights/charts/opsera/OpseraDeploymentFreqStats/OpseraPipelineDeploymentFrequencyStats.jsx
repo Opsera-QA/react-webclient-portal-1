@@ -13,6 +13,7 @@ import DeploymentFrequencyInsightsTableMetadata
   from "./deployment-frequency-actionable-metadata.js";
 import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import genericChartFilterMetadata from "../../generic_filters/genericChartFilterMetadata";
 
 function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -23,6 +24,9 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [tableFilterDto, setTableFilterDto] = useState(
+    new Model({ ...genericChartFilterMetadata.newObjectFields }, DeploymentFrequencyInsightsTableMetadata, false)
+  );
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -45,12 +49,16 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "pipelineDeploymentFrequencyCounts", kpiConfiguration, dashboardTags);
-      let dataObject = response?.data ? response?.data?.data[0]?.pipelineDeploymentFrequencyCounts?.data : [];
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "deduplicatePipelineDeploymentFrequencyCounts", kpiConfiguration, dashboardTags, filterDto);
+      let dataObject = response?.data ? response?.data?.data[0]?.deduplicatePipelineDeploymentFrequencyCounts?.data : [];
+      console.log("dataObject", dataObject);
+      let newFilterDto = filterDto;
+      newFilterDto.setData("totalCount", dataObject[0]);
+      setTableFilterDto({ ...newFilterDto });
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -73,7 +81,7 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
-
+   console.log("metrics", metrics);
     const infoPopover = (item) => {
       return (
         <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
