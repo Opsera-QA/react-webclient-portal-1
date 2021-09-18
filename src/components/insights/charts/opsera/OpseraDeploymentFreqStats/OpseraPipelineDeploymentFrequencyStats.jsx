@@ -55,7 +55,6 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "deduplicatePipelineDeploymentFrequencyCounts", kpiConfiguration, dashboardTags, filterDto);
       let dataObject = response?.data ? response?.data?.data[0]?.deduplicatePipelineDeploymentFrequencyCounts?.data : [];
-      console.log("dataObject", dataObject);
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataObject[0]);
       setTableFilterDto({ ...newFilterDto });
@@ -81,7 +80,7 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
-   console.log("metrics", metrics);
+    
     const infoPopover = (item) => {
       return (
         <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
