@@ -137,7 +137,7 @@ function TwistlockStepConfiguration ({
           persistRecord={handleCreateAndSave}
           isLoading={isLoading}
         >
-          <StepConfigJenkinsToolInput dataObject={twistLockStepConfigurationDto} setDataObject={setTwistLockStepConfigurationDto} />
+          <StepConfigJenkinsToolInput model={twistLockStepConfigurationDto} setModel={setTwistLockStepConfigurationDto} />
           <StepConfigJenkinsJobInput dataObject={twistLockStepConfigurationDto} setDataObject={setTwistLockStepConfigurationDto} typeFilter={""} />
           <StepConfigJenkinsAccountInput dataObject={twistLockStepConfigurationDto} setDataObject={setTwistLockStepConfigurationDto} />
           <StepConfigBitbucketWorkspaceInput dataObject={twistLockStepConfigurationDto} setDataObject={setTwistLockStepConfigurationDto} />
