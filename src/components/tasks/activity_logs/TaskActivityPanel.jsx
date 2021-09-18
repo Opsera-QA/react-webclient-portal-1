@@ -56,20 +56,25 @@ function TaskActivityPanel({ taskName }) {
   }, [currentLogTreePage]);
 
   // TODO: Find way to put refresh inside table itself
-  const loadData = async (filterDto = taskActivityFilterModel, silentLoading = false, cancelSource = cancelTokenSource) => {
+  const loadData = async (newFilterModel = taskActivityFilterModel, silentLoading = false, cancelSource = cancelTokenSource) => {
     try {
       if (!silentLoading) {
         setIsLoading(true);
       }
 
       // TODO: if search term applies ignore run count and reconstruct tree?
-      const treeResponse = await taskActions.getTaskActivityLogTree(getAccessToken, cancelSource, id, filterDto);
+      const treeResponse = await taskActions.getTaskActivityLogTree(getAccessToken, cancelSource, id, newFilterModel);
       const taskTree = taskActivityHelpers.constructTree(treeResponse?.data?.data);
       setTaskActivityTreeData([...taskTree]);
       setActivityData([]);
 
       if (Array.isArray(taskTree) && taskTree.length > 0) {
-        await getActivityLogs(filterDto, taskTree, cancelSource);
+        await getActivityLogs(newFilterModel, taskTree, cancelSource);
+      }
+      else {
+        newFilterModel?.setData("totalCount", 0);
+        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
+        setTaskActivityFilterModel({...newFilterModel});
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);

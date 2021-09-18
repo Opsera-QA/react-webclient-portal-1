@@ -71,6 +71,11 @@ function TaskAllActivityPanel() {
       if (Array.isArray(taskTree) && taskTree.length > 0) {
         await loadActivityLogs(newFilterModel, taskTree, cancelSource);
       }
+      else {
+        newFilterModel?.setData("totalCount", 0);
+        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
+        setTaskActivityFilterModel({...newFilterModel});
+      }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
       console.log(error.message);
