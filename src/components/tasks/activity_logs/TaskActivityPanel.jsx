@@ -6,9 +6,9 @@ import axios from "axios";
 import taskActivityHelpers
   from "components/tasks/activity_logs/task-activity-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import gitTaskActions from "components/tasks/task.actions";
 import TaskActivityLogs from "components/tasks/git_task_details/TaskActivityLogs";
 import {TaskActivityFilterModel} from "components/tasks/activity_logs/task-activity.filter.model";
+import taskActions from "components/tasks/task.actions";
 
 function TaskActivityPanel({ taskName }) {
   const { id } = useParams();
@@ -56,20 +56,25 @@ function TaskActivityPanel({ taskName }) {
   }, [currentLogTreePage]);
 
   // TODO: Find way to put refresh inside table itself
-  const loadData = async (filterDto = taskActivityFilterModel, silentLoading = false, cancelSource = cancelTokenSource) => {
+  const loadData = async (newFilterModel = taskActivityFilterModel, silentLoading = false, cancelSource = cancelTokenSource) => {
     try {
       if (!silentLoading) {
         setIsLoading(true);
       }
 
       // TODO: if search term applies ignore run count and reconstruct tree?
-      const treeResponse = await gitTaskActions.getTaskActivityLogTree(getAccessToken, cancelSource, id, filterDto);
+      const treeResponse = await taskActions.getTaskActivityLogTree(getAccessToken, cancelSource, id, newFilterModel);
       const taskTree = taskActivityHelpers.constructTree(treeResponse?.data?.data);
       setTaskActivityTreeData([...taskTree]);
       setActivityData([]);
 
       if (Array.isArray(taskTree) && taskTree.length > 0) {
-        await getActivityLogs(filterDto, taskTree, cancelSource);
+        await getActivityLogs(newFilterModel, taskTree, cancelSource);
+      }
+      else {
+        newFilterModel?.setData("totalCount", 0);
+        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
+        setTaskActivityFilterModel({...newFilterModel});
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -97,7 +102,7 @@ function TaskActivityPanel({ taskName }) {
         }
       }
 
-      const response = await gitTaskActions.getTaskActivityLogs(getAccessToken, cancelSource, id, runCountArray, filterDto);
+      const response = await taskActions.getTaskActivityLogs(getAccessToken, cancelSource, id, runCountArray, filterDto);
       const taskActivityData = response?.data?.data;
 
       if (taskActivityData) {

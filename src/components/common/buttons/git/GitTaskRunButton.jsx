@@ -6,11 +6,11 @@ import {faPlay, faSpinner, faStop} from "@fortawesome/pro-light-svg-icons";
 import {useHistory} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
-import gitTaskActions from "components/tasks/task.actions";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import GitRunTaskModal from "components/tasks/git_task_details/GitRunTaskModal";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import taskActions from "components/tasks/task.actions";
 
 function GitTaskRunButton({gitTasksData, setGitTasksData, disable, className, loadData, actionAllowed }) {
   const [isCanceling, setIsCanceling] = useState(false);
@@ -42,7 +42,7 @@ function GitTaskRunButton({gitTasksData, setGitTasksData, disable, className, lo
     // TODO: call cancel job api to jenkins integrator
     let newGitTasksData = gitTasksData;
       newGitTasksData.setData("status", "stopped");
-    await gitTaskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newGitTasksData);
+    await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newGitTasksData);
     toastContext.showInformationToast("Task has been stopped", 10);
     setIsCanceling(false);
     history.push(`/task`);

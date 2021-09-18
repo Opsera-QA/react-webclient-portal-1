@@ -6,7 +6,6 @@ import axios from "axios";
 import taskActivityHelpers
   from "components/tasks/activity_logs/task-activity-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import gitTaskActions from "components/tasks/task.actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
 import taskActions from "components/tasks/task.actions";
@@ -65,13 +64,18 @@ function TaskAllActivityPanel() {
       }
 
       // TODO: if search term applies ignore run count and reconstruct tree?
-      const treeResponse = await gitTaskActions.getAllTasksActivityTree(getAccessToken, cancelSource, newFilterModel);
+      const treeResponse = await taskActions.getAllTasksActivityTree(getAccessToken, cancelSource, newFilterModel);
       const taskTree = taskActivityHelpers.constructTaskTree(treeResponse?.data?.data);
       setTaskActivityTreeData([...taskTree]);
       setActivityData([]);
 
       if (Array.isArray(taskTree) && taskTree.length > 0) {
         await loadActivityLogs(newFilterModel, taskTree, cancelSource);
+      }
+      else {
+        newFilterModel?.setData("totalCount", 0);
+        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
+        setTaskActivityFilterModel({...newFilterModel});
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
