@@ -4,7 +4,6 @@ import PipelineStepEditorPanelContainer from "components/common/panels/detail_pa
 import PropTypes from "prop-types";
 import twistlockStepFormMetadata from "./twistlock-stepForm-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
-import TwistlockToolSelectInput from "./inputs/TwistlockToolSelectInput";
 import TwistlockDockerPushSelectInput from "./inputs/TwistlockDockerPushSelectInput";
 import RoleRestrictedJenkinsToolSelectInput
   from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
