@@ -9,7 +9,7 @@ function StepConfigJenkinsToolInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("jobType", "");
-    newModel.setData("toolConfigId", selectedOption?.id);
+    newModel.setData("toolConfigId", selectedOption?._id);
     newModel.setData("jenkinsUrl", selectedOption?.configuration?.jenkinsUrl);
     newModel.setData("jenkinsPort", selectedOption?.configuration?.jenkinsPort);
     newModel.setData("jUserId", selectedOption?.configuration?.jUserId);

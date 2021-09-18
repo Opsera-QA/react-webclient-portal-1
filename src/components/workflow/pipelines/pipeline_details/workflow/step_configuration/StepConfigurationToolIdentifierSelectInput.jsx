@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import PipelineUsageToolSelectInput
   from "components/common/list_of_values_input/workflow/pipelines/PipelineUsageToolSelectInput";
 
-function StepConfigurationToolSelectInput({fieldName, dataObject, setDataObject, disabled, textField, valueField}) {
+function StepConfigurationToolIdentifierSelectInput({fieldName, dataObject, setDataObject, disabled, textField, valueField}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
     newDataObject.setData("tool_identifier", selectedOption?.identifier);
@@ -26,7 +26,7 @@ function StepConfigurationToolSelectInput({fieldName, dataObject, setDataObject,
   );
 }
 
-StepConfigurationToolSelectInput.propTypes = {
+StepConfigurationToolIdentifierSelectInput.propTypes = {
   fieldName: PropTypes.string,
   textField: PropTypes.string,
   valueField: PropTypes.string,
@@ -36,8 +36,8 @@ StepConfigurationToolSelectInput.propTypes = {
   visible: PropTypes.bool
 };
 
-StepConfigurationToolSelectInput.defaultProps = {
+StepConfigurationToolIdentifierSelectInput.defaultProps = {
   fieldName: "tool_identifier",
 };
 
-export default StepConfigurationToolSelectInput;
+export default StepConfigurationToolIdentifierSelectInput;
