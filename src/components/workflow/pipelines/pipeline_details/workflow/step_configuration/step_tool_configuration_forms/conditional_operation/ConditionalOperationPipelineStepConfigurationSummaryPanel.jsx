@@ -3,8 +3,8 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
-import PipelineSummariesField from "components/common/form_fields/pipelines/PipelineSummariesField";
 import PipelineConditionsField from "../../../../../../../common/fields/workflow/pipelines/PipelineConditionsField";
+import PipelineSummaryField from "components/common/fields/pipelines/PipelineSummaryField";
 
 function ConditionalOperationPipelineStepConfigurationSummaryPanel({ conditionalOperationDataObject, pipelineData, setActiveTab }) {
   return (
@@ -14,7 +14,11 @@ function ConditionalOperationPipelineStepConfigurationSummaryPanel({ conditional
           <PipelineConditionsField dataObject={conditionalOperationDataObject} fieldName={"conditions"}/>
         </Col>
         <Col lg={6}>
-          <PipelineSummariesField dataObject={conditionalOperationDataObject} fieldName={"pipelineId"}/>
+          <PipelineSummaryField
+            pipelineId={conditionalOperationDataObject?.getData("pipelineId")}
+            model={conditionalOperationDataObject}
+            fieldName={"pipelineId"}
+          />
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>

@@ -12,7 +12,7 @@ import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pip
 import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function PipelineSelectInput({ visible, fieldName, dataObject, setDataObject, disabled, currentPipelineId}) {
+function PipelineSelectInput({ visible, fieldName, dataObject, setDataObject, disabled, fields}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [pipelines, setPipelines] = useState([]);
@@ -60,7 +60,7 @@ function PipelineSelectInput({ visible, fieldName, dataObject, setDataObject, di
   };
 
   const loadPipelines = async (cancelSource = cancelTokenSource) => {
-    const response = await pipelineActions.getPipelinesV3(getAccessToken, cancelSource);
+    const response = await pipelineActions.getPipelinesV3(getAccessToken, cancelSource, undefined, undefined, fields);
     const pipelines = response?.data?.data;
 
     if (isMounted.current === true && Array.isArray(pipelines)) {
@@ -93,32 +93,24 @@ function PipelineSelectInput({ visible, fieldName, dataObject, setDataObject, di
     return <span>Select a pipeline to get started.</span>;
   };
 
+  const getNoDataMessage = () => {
+    if (!isLoading && (!Array.isArray(pipelines) || pipelines.length === 0)) {
+      return (
+        <div className="form-text text-muted p-2">
+          <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          No other pipelines have been registered. Please go to <Link to="/workflow">Pipelines</Link> and add another pipeline in order to
+          configure this field.
+        </div>
+      );
+    }
+  };
+
   if (visible === false) {
     return <></>;
   }
 
-  if (!isLoading && (pipelines == null || pipelines.length === 0)) {
-    return (
-      <div className="form-text text-muted p-2">
-        <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
-        No other pipelines have been registered. Please go to <Link to="/workflow">Pipelines</Link> and add another pipeline in order to
-        configure a child pipeline step.
-      </div>
-    );
-  }
-
-  const getDisabledPipelines = () => {
-    if (disabled === true) {
-      return true;
-    }
-
-    if (currentPipelineId != null) {
-      return [currentPipelineId];
-    }
-  };
-
   return (
-    // <div>
+    <div>
       <SelectInputBase
         fieldName={fieldName}
         selectOptions={pipelines}
@@ -128,20 +120,23 @@ function PipelineSelectInput({ visible, fieldName, dataObject, setDataObject, di
         textField={(pipeline) => `${pipeline?.name} (${pipeline?._id})`}
         busy={isLoading}
         placeholderText={"Select A Pipeline"}
-        disabled={getDisabledPipelines()}
+        disabled={disabled}
       />
-      // {getPipelineSummaries()}
-    // </div>
+      {getNoDataMessage()}
+    </div>
   );
 }
 
 PipelineSelectInput.propTypes = {
-  currentPipelineId: PropTypes.string,
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array
+  ]),
   visible: PropTypes.bool,
+  fields: PropTypes.array,
 };
 
 export default PipelineSelectInput;
