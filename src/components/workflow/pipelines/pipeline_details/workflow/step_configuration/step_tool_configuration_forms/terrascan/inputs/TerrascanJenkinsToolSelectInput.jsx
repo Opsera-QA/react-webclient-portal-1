@@ -6,7 +6,7 @@ import RoleRestrictedJenkinsToolSelectInput
 function TerrascanJenkinsToolSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...model};
-    newDataObject.setData("toolConfigId", selectedOption.id);
+    newDataObject.setData("toolConfigId", selectedOption._id);
     newDataObject.setData("toolName", selectedOption.name);
     newDataObject.setData("toolJobName", "");
     newDataObject.setData("toolJobId", "");
