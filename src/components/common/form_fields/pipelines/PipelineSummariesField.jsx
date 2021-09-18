@@ -9,9 +9,9 @@ import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/
 import FieldLabel from "components/common/fields/FieldLabel";
 import axios from "axios";
 
-function PipelineSummariesField({ fieldName, dataObject }) {
+function PipelineSummariesField({ fieldName, model, pipelineIds }) {
   const {getAccessToken} = useContext(AuthContext);
-  const [field] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(model.getFieldById(fieldName));
   const [isLoading, setIsLoading] = useState(false);
   const [pipelines, setPipelines] = useState([]);
   const isMounted = useRef(false);
@@ -41,12 +41,15 @@ function PipelineSummariesField({ fieldName, dataObject }) {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      let pipelineIds = dataObject.getData(field.id);
-      pipelineIds = Array.isArray(pipelineIds) ? pipelineIds : [pipelineIds];
-      const response = await pipelineActions.getPipelineSummariesV2(getAccessToken, cancelSource, pipelineIds);
+      setPipelines([]);
 
-      if (isMounted?.current === true && Array.isArray(response?.data)) {
-        setPipelines(response?.data);
+      if (Array.isArray(pipelineIds) && pipelineIds.length > 0) {
+        const response = await pipelineActions.getPipelineSummariesV2(getAccessToken, cancelSource, pipelineIds);
+        const pipelineList = response?.data;
+
+        if (isMounted?.current === true && Array.isArray(pipelineList)) {
+          setPipelines(pipelineList);
+        }
       }
     }
     catch (error) {
@@ -79,6 +82,10 @@ function PipelineSummariesField({ fieldName, dataObject }) {
     return <PipelineSummaryCard isLoading={isLoading} />;
   }
 
+  if (pipelineIds == null || pipelineIds === []) {
+    return null;
+  }
+
   if (!isLoading && (!Array.isArray(pipelines) || pipelines.length === 0)) {
     return <span>No Pipelines Found</span>;
   }
@@ -93,7 +100,8 @@ function PipelineSummariesField({ fieldName, dataObject }) {
 
 PipelineSummariesField.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
+  model: PropTypes.object,
+  pipelineIds: PropTypes.array,
 };
 
 export default PipelineSummariesField;

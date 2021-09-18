@@ -8,7 +8,6 @@ import PipelineStepSummaryPanelContainer
 import PipelineSummariesField from "components/common/form_fields/pipelines/PipelineSummariesField";
 
 function ParallelProcessPipelineStepConfigurationSummaryPanel({ parallelPipelineDataObject, pipelineData, setActiveTab }) {
-
   if (parallelPipelineDataObject == null) {
     return <LoadingDialog size="sm" />;
   }
@@ -17,7 +16,11 @@ function ParallelProcessPipelineStepConfigurationSummaryPanel({ parallelPipeline
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={12}>
-          <PipelineSummariesField dataObject={parallelPipelineDataObject} fieldName={"pipelines"}/>
+          <PipelineSummariesField
+            model={parallelPipelineDataObject}
+            fieldName={"pipelines"}
+            pipelineIds={parallelPipelineDataObject?.getData("pipelines")}
+          />
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>

@@ -3,14 +3,14 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
-import PipelineSummariesField from "../../../../../../../common/form_fields/pipelines/PipelineSummariesField";
+import PipelineSummaryField from "components/common/fields/pipelines/PipelineSummaryField";
 
 function ChildPipelineStepConfigurationSummaryPanel({ childPipelineDataObject, pipelineData, setActiveTab }) {
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={12}>
-          <PipelineSummariesField dataObject={childPipelineDataObject} fieldName={"pipelineId"}/>
+          <PipelineSummaryField model={childPipelineDataObject} fieldName={"pipelineId"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>

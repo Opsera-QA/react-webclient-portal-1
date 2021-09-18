@@ -12,6 +12,8 @@ import PipelineConditionMultiSelectInput
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import PipelineSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineSelectInput";
+import ConditionalOperationPipelineSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/conditional_operation/ConditionalOperationPipelineSelectInput";
 
 function ConditionalOperationPipelineStepConfiguration({ stepTool, pipelineId, parentCallback, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -82,9 +84,9 @@ function ConditionalOperationPipelineStepConfiguration({ stepTool, pipelineId, p
       </Row>
       <Row>
         <Col>
-          <PipelineSelectInput
-            dataObject={conditionalOperationPipelineStepConfigurationDto}
-            setDataObject={setConditionalOperationPipelineStepConfigurationDataDto}
+          <ConditionalOperationPipelineSelectInput
+            model={conditionalOperationPipelineStepConfigurationDto}
+            setModel={setConditionalOperationPipelineStepConfigurationDataDto}
             currentPipelineId={pipelineId}
             fieldName={"pipelineId"}
           />

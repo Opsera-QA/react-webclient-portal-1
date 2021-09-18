@@ -7,7 +7,8 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import thresholdMetadata from "components/common/metadata/pipelines/thresholdMetadata";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
-import PipelineSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineSelectInput";
+import ChildPipelineSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/child/ChildPipelineSelectInput";
 
 function ChildPipelineStepConfiguration({ stepTool, pipelineId, parentCallback, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -71,9 +72,9 @@ function ChildPipelineStepConfiguration({ stepTool, pipelineId, parentCallback, 
       </div>
 
       <div className="mt-4 title-text-7" style={{paddingBottom: "0"}}>Settings</div>
-      <PipelineSelectInput
-        dataObject={childPipelineStepConfigurationDto}
-        setDataObject={setChildPipelineStepConfigurationDataDto}
+      <ChildPipelineSelectInput
+        model={childPipelineStepConfigurationDto}
+        setModel={setChildPipelineStepConfigurationDataDto}
         currentPipelineId={pipelineId}
         fieldName={"pipelineId"}
       />
