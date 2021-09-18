@@ -1,7 +1,7 @@
 import FilterModelBase from "core/data_model/filterModel.base";
 
-const taskFilterMetadata = {
-  type: "Task",
+const taskActivityFilterMetadata = {
+  type: "Task Activity Log",
   fields: [
     {
       label: "Active",
@@ -32,10 +32,6 @@ const taskFilterMetadata = {
       id: "owner",
     },
     {
-      label: "Tag",
-      id: "tag",
-    },
-    {
       label: "Search",
       id: "search",
     },
@@ -50,16 +46,16 @@ const taskFilterMetadata = {
     sortOption: {text: "Sort: Name", value: "name"},
     search: "",
     activeFilters: [],
-    viewType: "list",
     category: "",
     status: "",
     active: "",
+    logTreePage: 0,
   },
 };
 
-export class TaskFilterModel extends FilterModelBase {
+export class TaskActivityFilterModel extends FilterModelBase {
   constructor(getAccessToken, cancelTokenSource, loadData) {
-    super(taskFilterMetadata);
+    super(taskActivityFilterMetadata);
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
     this.loadData = loadData;
@@ -70,7 +66,7 @@ export class TaskFilterModel extends FilterModelBase {
   };
 
   showPagination = () => {
-    return true;
+    return false;
   };
 
   getActiveFilters = () => {
@@ -84,12 +80,8 @@ export class TaskFilterModel extends FilterModelBase {
       activeFilters.push({filterId: "active",  text: `${this.getFilterText("active")}`});
     }
 
-    if (this.getData("type") != null && this.getData("type") !== "") {
+    if (this.getData("type") != null) {
       activeFilters.push({filterId: "type", text: `Type: ${this.getFilterText("type")}`});
-    }
-
-    if (this.getData("tag") != null) {
-      activeFilters.push({filterId: "tag", ...this.getData("tag")});
     }
 
     if (this.getData("owner") != null) {
@@ -113,8 +105,12 @@ export class TaskFilterModel extends FilterModelBase {
       ]
     );
   };
+
+  getNewInstance = () => {
+    return new TaskActivityFilterModel(this.getAccessToken, this.cancelTokenSource, this.loadData);
+  };
 }
 
-export default TaskFilterModel;
+export default TaskActivityFilterModel;
 
 

@@ -13,6 +13,8 @@ import DeploymentFrequencyInsightsTableMetadata
   from "./deployment-frequency-actionable-metadata.js";
 import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import OpseraDeploymentFrequencyHelpDocumentation
+  from "../../../../common/help/documentation/insights/charts/OpseraDeploymentFrequencyHelpDocumentation";
 import genericChartFilterMetadata from "../../generic_filters/genericChartFilterMetadata";
 
 function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -177,6 +179,9 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        chartHelpComponent={(closeHelpPanel) => (
+          <OpseraDeploymentFrequencyHelpDocumentation closeHelpPanel={closeHelpPanel} />
+        )}
       />
       <ModalLogs
         header="Build Duration"

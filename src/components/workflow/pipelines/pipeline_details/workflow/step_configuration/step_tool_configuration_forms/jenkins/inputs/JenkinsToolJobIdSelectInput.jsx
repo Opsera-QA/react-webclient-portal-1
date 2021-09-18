@@ -19,7 +19,7 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
     if(Array.isArray(jenkinsList) && jenkinsList.length > 0){
       const jobs = jenkinsList[jenkinsList.findIndex((x) => x.id === toolConfigId)]?.jobs;
 
-      if (Array.isArray(jobs) && jobs.length > 0) {
+      if (Array.isArray(jobs) && jobs.length > 0) {  
         setJobsList(jobs);
       }
     }
@@ -41,17 +41,21 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
   useEffect(() => {
     if (dataObject.data.toolJobType && dataObject.data.toolJobType.includes("SFDC")) {
       let newDataObject = { ...dataObject };
-      newDataObject.setData("buildType", "ant");
+      newDataObject.setData("buildType", "ant");     
       setDataObject({ ...newDataObject });      
     }
-  }, [dataObject.data.toolJobType]);
+  }, [dataObject.getData("toolJobType")]);
 
   const setDataFunction = (fieldName, selectedOption) => {
-    
+
     let newDataObject = { ...dataObject };
     newDataObject.setData("toolJobId", selectedOption._id);
     newDataObject.setData("toolJobType", selectedOption.type);
-    newDataObject.setData("jobType", selectedOption.type[0]);
+    if(selectedOption.type[0]==='SFDC'){
+      newDataObject.setData("jobType", selectedOption.configuration.jobType);
+    } else {
+      newDataObject.setData("jobType", selectedOption.type[0]);
+    }
     newDataObject.setData("rollbackBranchName", "");
     newDataObject.setData("stepIdXML", "");
     newDataObject.setData("sfdcDestToolId", "");
@@ -61,7 +65,7 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
     // TODO: There is probably a less confusing way of doing this
     if ("configuration" in selectedOption) {
       const keys = Object.keys(selectedOption.configuration);
-      keys.forEach((item) => {
+      keys.forEach((item) => {       
         if (!["toolJobId", "toolJobType", "jobType"].includes(item)) {
           newDataObject.setData(item, selectedOption.configuration[item]);
         }

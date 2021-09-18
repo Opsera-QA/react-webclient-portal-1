@@ -452,6 +452,17 @@ a.text-primary:hover, a.text-primary:focus {
     border-bottom: 1px solid #dfdfdf;
 }
 
+.table-tree-with-paginator-and-secondary-tree {
+    height: 385px;
+    border-bottom: 1px solid #dfdfdf;
+}
+
+.secondary-table-tree {
+    height: 65px;
+    border-bottom: 1px solid #dfdfdf;
+    overflow-y: hidden;
+}
+
 .tree-table {
     width: 75%;
 }
