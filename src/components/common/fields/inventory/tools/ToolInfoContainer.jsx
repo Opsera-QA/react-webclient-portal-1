@@ -46,7 +46,7 @@ function ToolInfoContainer({ toolId }) {
       setIsLoading(true);
       const response = await toolsActions.getRoleLimitedToolByIdV2(getAccessToken, cancelSource, toolId);
 
-      if (response?.data?.data) {
+      if (isMounted?.current === true && response?.data?.data) {
         setToolModel(new Model(response.data.data[0], toolMetadata, false));
       }
     } catch (error) {
