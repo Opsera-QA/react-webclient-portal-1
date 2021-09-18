@@ -76,6 +76,7 @@ function TwistlockToolSelectInput({ fieldName, dataObject, setDataObject, disabl
     setIsTwistlockSearching(true);
     try {
       let results = await PipelineActions.getToolsListV2(getAccessToken, cancelSource, "twistlock");
+      console.log("results: " + JSON.stringify(results));
       if (results?.data) {
         let respObj = [];
         let arrOfObj = results.data;
