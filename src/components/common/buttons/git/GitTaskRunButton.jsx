@@ -6,12 +6,12 @@ import {faPlay, faSpinner, faTerminal, faStop} from "@fortawesome/pro-light-svg-
 import {useHistory} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
-import taskActions from "components/tasks/task.actions";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import GitRunTaskModal from "components/tasks/git_task_details/GitRunTaskModal";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import TaskActivityView from './TaskActivityView';
+import taskActions from "components/tasks/task.actions";
 
 function GitTaskRunButton({gitTasksData, setGitTasksData, disable, className, loadData, actionAllowed }) {
   const [isCanceling, setIsCanceling] = useState(false);
