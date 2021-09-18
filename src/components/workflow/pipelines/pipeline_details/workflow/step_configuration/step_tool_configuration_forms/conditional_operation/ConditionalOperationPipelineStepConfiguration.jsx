@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import conditionalOperationStepConfigurationMetadata from "./conditional-operation-step-configuration-metadata";
-import PipelineInput from "components/common/list_of_values_input/workflow/pipelines/PipelineInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import thresholdMetadata from "components/common/metadata/pipelines/thresholdMetadata";
 import PipelineStepEditorPanelContainer
@@ -12,6 +11,7 @@ import PipelineConditionMultiSelectInput
   from "components/common/list_of_values_input/workflow/pipelines/conditional_operation/PipelineConditionMultiSelectInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import PipelineSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineSelectInput";
 
 function ConditionalOperationPipelineStepConfiguration({ stepTool, pipelineId, parentCallback, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -71,7 +71,7 @@ function ConditionalOperationPipelineStepConfiguration({ stepTool, pipelineId, p
         In the case of “Prior Step Failure” this step will ONLY run if the prior step failed.
       </div>
 
-      <div className="mt-4 ml-2 title-text-7" style={{paddingBottom: "0"}}>Settings</div>
+      <div className="mt-4 title-text-7" style={{paddingBottom: "0"}}>Settings</div>
       <Row>
         <Col>
           <PipelineConditionMultiSelectInput
@@ -82,7 +82,7 @@ function ConditionalOperationPipelineStepConfiguration({ stepTool, pipelineId, p
       </Row>
       <Row>
         <Col>
-          <PipelineInput
+          <PipelineSelectInput
             dataObject={conditionalOperationPipelineStepConfigurationDto}
             setDataObject={setConditionalOperationPipelineStepConfigurationDataDto}
             currentPipelineId={pipelineId}

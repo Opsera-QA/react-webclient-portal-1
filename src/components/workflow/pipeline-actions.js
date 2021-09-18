@@ -88,18 +88,6 @@ pipelineActions.getPipelineStateAtRun = async (pipelineId, runNumber, getAccessT
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-pipelineActions.getAllPipelines = async (getAccessToken) => {
-  const urlParams = {
-    params: {
-      sort: "name",
-      order: 1
-    },
-  };
-
-  let apiUrl = `/pipelines`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
-};
-
 // TODO: Refactor
 pipelineActions.getAllPipelinesV2 = async (getAccessToken, cancelTokenSource) => {
   const urlParams = {
