@@ -722,12 +722,8 @@ function StepToolConfiguration({
             stepId={stepId}
             stepTool={stepTool}
             parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
             closeEditorPanel={closeEditorPanel}
             createJob={createJob}
-            getToolsList={getToolsList}
-            setToast={setToast}
-            setShowToast={setShowToast}
           />
         );
       case "octopus":
