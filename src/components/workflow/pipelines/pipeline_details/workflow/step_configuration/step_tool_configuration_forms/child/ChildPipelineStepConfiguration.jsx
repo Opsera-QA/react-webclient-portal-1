@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import childPipelineStepConfigurationMetadata from "./child-pipeline-step-configuration-metadata";
-import PipelineInput from "components/common/list_of_values_input/workflow/pipelines/PipelineInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import thresholdMetadata from "components/common/metadata/pipelines/thresholdMetadata";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineSelectInput";
 
 function ChildPipelineStepConfiguration({ stepTool, pipelineId, parentCallback, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -70,8 +70,8 @@ function ChildPipelineStepConfiguration({ stepTool, pipelineId, parentCallback, 
         and runs successfully, then add it to this step.
       </div>
 
-      <div className="mt-4 ml-2 title-text-7" style={{paddingBottom: "0"}}>Settings</div>
-      <PipelineInput
+      <div className="mt-4 title-text-7" style={{paddingBottom: "0"}}>Settings</div>
+      <PipelineSelectInput
         dataObject={childPipelineStepConfigurationDto}
         setDataObject={setChildPipelineStepConfigurationDataDto}
         currentPipelineId={pipelineId}

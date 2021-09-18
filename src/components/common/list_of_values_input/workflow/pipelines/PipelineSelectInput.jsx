@@ -12,7 +12,7 @@ import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pip
 import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function PipelineSelectInput({ visible, fieldName, dataObject, setDataObject, disabled}) {
+function PipelineSelectInput({ visible, fieldName, dataObject, setDataObject, disabled, currentPipelineId}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [pipelines, setPipelines] = useState([]);
@@ -60,9 +60,10 @@ function PipelineSelectInput({ visible, fieldName, dataObject, setDataObject, di
   };
 
   const loadPipelines = async (cancelSource = cancelTokenSource) => {
-    const response = await pipelineActions.getAllPipelinesV2(getAccessToken, cancelSource);
-    if (response?.data?.response) {
-      let pipelines = response?.data?.response;
+    const response = await pipelineActions.getPipelinesV3(getAccessToken, cancelSource);
+    const pipelines = response?.data?.data;
+
+    if (isMounted.current === true && Array.isArray(pipelines)) {
       setPipelines(pipelines);
     }
   };
@@ -106,6 +107,16 @@ function PipelineSelectInput({ visible, fieldName, dataObject, setDataObject, di
     );
   }
 
+  const getDisabledPipelines = () => {
+    if (disabled === true) {
+      return true;
+    }
+
+    if (currentPipelineId != null) {
+      return [currentPipelineId];
+    }
+  };
+
   return (
     // <div>
       <SelectInputBase
@@ -117,7 +128,7 @@ function PipelineSelectInput({ visible, fieldName, dataObject, setDataObject, di
         textField={(pipeline) => `${pipeline?.name} (${pipeline?._id})`}
         busy={isLoading}
         placeholderText={"Select A Pipeline"}
-        disabled={disabled}
+        disabled={getDisabledPipelines()}
       />
       // {getPipelineSummaries()}
     // </div>
@@ -130,7 +141,7 @@ PipelineSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
-  visible: PropTypes.bool
+  visible: PropTypes.bool,
 };
 
 export default PipelineSelectInput;
