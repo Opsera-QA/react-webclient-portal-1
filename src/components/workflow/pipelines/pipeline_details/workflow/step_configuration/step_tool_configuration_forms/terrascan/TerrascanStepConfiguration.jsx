@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
 import terrascanStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/terrascan-stepForm-metadata";
-import TerrascanJenkinsToolInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanJenkinsToolInput";
+import TerrascanJenkinsToolSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanJenkinsToolSelectInput";
 import TerrascanJenkinsJobInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanJenkinsJobInput";
 import modelHelpers from "components/common/model/modelHelpers";
@@ -95,7 +94,10 @@ function TerrascanStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <TerrascanJenkinsToolInput dataObject={terrascanStepConfigurationDto} setDataObject={setTerrascanStepConfigurationDataDto} />
+      <TerrascanJenkinsToolSelectInput
+        model={terrascanStepConfigurationDto}
+        setModel={setTerrascanStepConfigurationDataDto}
+      />
       <TerrascanJenkinsJobInput dataObject={terrascanStepConfigurationDto} setDataObject={setTerrascanStepConfigurationDataDto} />
       <TerrascanJenkinsAccountInput dataObject={terrascanStepConfigurationDto} setDataObject={setTerrascanStepConfigurationDataDto} />
       <TerrascanBitbucketWorkspaceInput dataObject={terrascanStepConfigurationDto} setDataObject={setTerrascanStepConfigurationDataDto} />
