@@ -445,14 +445,10 @@ function StepToolConfiguration({
         return (
           <XUnitStepConfiguration
             pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
             stepId={stepId}
             stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
             createJob={createJob}
-            setShowToast={setShowToast}
-            setToast={setToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );
       case "sonar":

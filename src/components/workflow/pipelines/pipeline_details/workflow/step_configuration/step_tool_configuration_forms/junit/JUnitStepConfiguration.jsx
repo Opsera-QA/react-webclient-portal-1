@@ -123,7 +123,7 @@ function JUnitStepConfiguration({
           persistRecord={handleCreateAndSave}
           isLoading={isLoading}
         >
-          <StepConfigJenkinsToolInput dataObject={junitStepConfigurationDto} setDataObject={setJunitStepConfigurationDto} />
+          <StepConfigJenkinsToolInput model={junitStepConfigurationDto} setModel={setJunitStepConfigurationDto} />
           <StepConfigJenkinsJobInput dataObject={junitStepConfigurationDto} setDataObject={setJunitStepConfigurationDto} typeFilter={""} />
           <StepConfigJenkinsAccountInput dataObject={junitStepConfigurationDto} setDataObject={setJunitStepConfigurationDto} />
           <StepConfigBitbucketWorkspaceInput dataObject={junitStepConfigurationDto} setDataObject={setJunitStepConfigurationDto} />

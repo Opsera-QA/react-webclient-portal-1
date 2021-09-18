@@ -1,105 +1,106 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineToolInput from "components/common/list_of_values_input/workflow/pipelines/PipelineToolInput";
+import RoleRestrictedToolByIdentifierInputBase
+  from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
-function StepConfigJenkinsToolInput({dataObject, setDataObject, disabled}) {
+// TODO: There should be a base component. Each step form should be only setting the relevant fields
+//  instead of setting all of these fields for every instance of the dropdown.
+function StepConfigJenkinsToolInput({model, setModel, disabled}) {
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newModel = {...model};
+    newModel.setData("jobType", "");
+    newModel.setData("toolConfigId", selectedOption?.id);
+    newModel.setData("jenkinsUrl", selectedOption?.configuration?.jenkinsUrl);
+    newModel.setData("jenkinsPort", selectedOption?.configuration?.jenkinsPort);
+    newModel.setData("jUserId", selectedOption?.configuration?.jUserId);
+    newModel.setData("jAuthToken", selectedOption?.configuration?.jAuthToken);
+    newModel.setData("toolJobId", "");
+    newModel.setData("toolJobType", "");
+    newModel.setData("accountUsername", "");
+    newModel.setData("projectId", "");
+    newModel.setData("defaultBranch", "");
+    newModel.setData("dockerName", "");
+    newModel.setData("dockerTagName", "");
+    // newModel.setData("buildType", "gradle");
+    newModel.setData("gitToolId", "");
+    newModel.setData("repoId", "");
+    newModel.setData("gitUrl", "");
+    newModel.setData("sshUrl", "");
+    newModel.setData("service", "");
+    newModel.setData("gitCredential", "");
+    newModel.setData("gitUserName", "");
+    newModel.setData("repository", "");
+    newModel.setData("branch", "");
+    newModel.setData("gitBranch", "");
+    newModel.setData("workspace", "");
+    newModel.setData("workspaceName", "");
+    newModel.setData("workspaceDeleteFlag", false);
+    newModel.setData("jobDescription", "");
+    // newModel.setData("buildTool", "gradle");
+    // newModel.setData("gradleTask", "clean test");
+    // newModel.setData("mavenTask", "");
+    newModel.setData("stepIdXML", "");
+    newModel.setData("toolJobName", "");
+    newModel.setData("autoScaleEnable", selectedOption?.configuration?.autoScaleEnable === true);
+    setModel({...newModel});
+  };
 
-    const setJenkinsTool = (fieldName, selectedOption) => {
+  const clearDataFunction = () => {
+    let newModel = {...model};
+    newModel.setData("jobType", "");
+    newModel.setData("toolConfigId", "");
+    newModel.setData("jenkinsUrl", "");
+    newModel.setData("jenkinsPort", "");
+    newModel.setData("jUserId", "");
+    newModel.setData("jAuthToken", "");
+    newModel.setData("toolJobId", "");
+    newModel.setData("toolJobType", "");
+    newModel.setData("accountUsername", "");
+    newModel.setData("projectId", "");
+    newModel.setData("defaultBranch", "");
+    newModel.setData("dockerName", "");
+    newModel.setData("dockerTagName", "");
+    newModel.setData("gitToolId", "");
+    newModel.setData("repoId", "");
+    newModel.setData("gitUrl", "");
+    newModel.setData("sshUrl", "");
+    newModel.setData("service", "");
+    newModel.setData("gitCredential", "");
+    newModel.setData("gitUserName", "");
+    newModel.setData("repository", "");
+    newModel.setData("branch", "");
+    newModel.setData("gitBranch", "");
+    newModel.setData("workspace", "");
+    newModel.setData("workspaceName", "");
+    newModel.setData("workspaceDeleteFlag", false);
+    newModel.setData("jobDescription", "");
+    newModel.setData("stepIdXML", "");
+    newModel.setData("toolJobName", "");
+    newModel.setData("autoScaleEnable", false);
+    setModel({...newModel});
+  };
 
-        let newDataObject = {...dataObject};
-        newDataObject.setData("jobType", "");
-        newDataObject.setData("toolConfigId", selectedOption.id);
-        newDataObject.setData("jenkinsUrl", selectedOption.configuration.jenkinsUrl);
-        newDataObject.setData("jenkinsPort", selectedOption.configuration.jenkinsPort);
-        newDataObject.setData("jUserId", selectedOption.configuration.jUserId);
-        newDataObject.setData("jAuthToken", selectedOption.configuration.jAuthToken);
-        newDataObject.setData("toolJobId", "");
-        newDataObject.setData("toolJobType", "");
-        newDataObject.setData("accountUsername", "");
-        newDataObject.setData("projectId", "");
-        newDataObject.setData("defaultBranch", "");
-        newDataObject.setData("dockerName", "");
-        newDataObject.setData("dockerTagName", "");
-        // newDataObject.setData("buildType", "gradle");
-        newDataObject.setData("gitToolId", "");
-        newDataObject.setData("repoId", "");
-        newDataObject.setData("gitUrl", "");
-        newDataObject.setData("sshUrl", "");
-        newDataObject.setData("service", "");
-        newDataObject.setData("gitCredential", "");
-        newDataObject.setData("gitUserName", "");    
-        newDataObject.setData("repository", "");
-        newDataObject.setData("branch", "");
-        newDataObject.setData("gitBranch", "");
-        newDataObject.setData("workspace", "");
-        newDataObject.setData("workspaceName", "");
-        newDataObject.setData("workspaceDeleteFlag", false);
-        newDataObject.setData("jobDescription", "");
-        // newDataObject.setData("buildTool", "gradle");
-        // newDataObject.setData("gradleTask", "clean test");
-        // newDataObject.setData("mavenTask", "");
-        newDataObject.setData("stepIdXML", "");
-        newDataObject.setData("toolJobName", "");
-        newDataObject.setData("autoScaleEnable", selectedOption.configuration.autoScaleEnable || false);
-        setDataObject({...newDataObject});
-    };
+  console.log("in StepConfigJenkinsToolInput");
 
-    const clearJenkinsTool = (fieldName) => {
-
-        let newDataObject = {...dataObject};
-        newDataObject.setData("jobType", "");
-        newDataObject.setData("toolConfigId", "");
-        newDataObject.setData("jenkinsUrl", "");
-        newDataObject.setData("jenkinsPort", "");
-        newDataObject.setData("jUserId", "");
-        newDataObject.setData("jAuthToken", "");
-        newDataObject.setData("toolJobId", "");
-        newDataObject.setData("toolJobType", "");
-        newDataObject.setData("accountUsername", "");
-        newDataObject.setData("projectId", "");
-        newDataObject.setData("defaultBranch", "");
-        newDataObject.setData("dockerName", "");
-        newDataObject.setData("dockerTagName", "");
-        newDataObject.setData("gitToolId", "");
-        newDataObject.setData("repoId", "");
-        newDataObject.setData("gitUrl", "");
-        newDataObject.setData("sshUrl", "");
-        newDataObject.setData("service", "");
-        newDataObject.setData("gitCredential", "");
-        newDataObject.setData("gitUserName", "");    
-        newDataObject.setData("repository", "");
-        newDataObject.setData("branch", "");
-        newDataObject.setData("gitBranch", "");
-        newDataObject.setData("workspace", "");
-        newDataObject.setData("workspaceName", "");
-        newDataObject.setData("workspaceDeleteFlag", false);
-        newDataObject.setData("jobDescription", "");        
-        newDataObject.setData("stepIdXML", "");
-        newDataObject.setData("toolJobName", "");
-        newDataObject.setData("autoScaleEnable", false);
-        setDataObject({...newDataObject});
-    };
-
-
-    return (
-        <PipelineToolInput
-            toolType={"jenkins"}
-            toolFriendlyName={"Jenkins"}
-            fieldName={"toolConfigId"}
-            configurationRequired={true}
-            dataObject={dataObject}
-            setDataObject={setDataObject}
-            setDataFunction={setJenkinsTool}
-            clearDataFunction={clearJenkinsTool}
-            disabled={disabled}
-        />
-    );
+  return (
+    <RoleRestrictedToolByIdentifierInputBase
+      toolIdentifier={"jenkins"}
+      toolFriendlyName={"Jenkins"}
+      fieldName={"toolConfigId"}
+      configurationRequired={true}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+    />
+  );
 }
 
 StepConfigJenkinsToolInput.propTypes = {
-    dataObject: PropTypes.object,
-    setDataObject: PropTypes.func,
-    disabled: PropTypes.bool,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default StepConfigJenkinsToolInput;

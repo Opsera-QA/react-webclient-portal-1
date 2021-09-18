@@ -124,7 +124,7 @@ function MongodbRealmStepConfiguration({
           isStrict={true}
           disableSaveButton={disableSaveButton()}
         >
-          <StepConfigJenkinsToolInput dataObject={mongodbRealmStepConfigurationDto} setDataObject={setMongodbRealmStepConfigurationDto} />
+          <StepConfigJenkinsToolInput model={mongodbRealmStepConfigurationDto} setModel={setMongodbRealmStepConfigurationDto} />
           <MongodbRealmToolInput model={mongodbRealmStepConfigurationDto} setModel={setMongodbRealmStepConfigurationDto} fieldName="mongoToolId" />
           <TextInputBase dataObject={mongodbRealmStepConfigurationDto} setDataObject={setMongodbRealmStepConfigurationDto} fieldName="applicationName" />
           <StepConfigJenkinsAccountInput dataObject={mongodbRealmStepConfigurationDto} setDataObject={setMongodbRealmStepConfigurationDto} />
