@@ -15,7 +15,7 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import BranchToBranchGitReviewerInput from "./inputs/BranchToBranchGitReviewerInput";
 import BranchToBranchSourceBranchInput from "./inputs/BranchToBranchSourceBranchInput";
 import BranchToBranchDestinationBranchInput from "./inputs/BranchToBranchDestinationBranchInput";
-import SCMTypeInput from "./inputs/SCMTypeInput";
+import BranchToBranchScmTypeSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/BranchToBranchScmTypeSelectInput";
 import SFDCSCMToolInput from "./inputs/SFDCSCMToolInput";
 function BranchToBranchGitTaskConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   useEffect(() => {loadData();}, []);
@@ -42,7 +42,7 @@ function BranchToBranchGitTaskConfigurationPanel({ gitTasksDataDto, gitTasksConf
   return (
     <Row>
       <Col lg={12}>
-        <SCMTypeInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} gitTasksDataDto={gitTasksDataDto}  />
+        <BranchToBranchScmTypeSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} gitTasksDataDto={gitTasksDataDto}  />
       </Col>     
       <Col lg={12}>
         <SFDCSCMToolInput  dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
