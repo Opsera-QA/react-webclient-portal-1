@@ -19,7 +19,7 @@ import OctopusDeployToTomcatDetailsView from "./OctopusDeployToTomcatDetailsView
 import OctopusDeployToIisView from "./OctopusDeployToIisView";
 import OctopusDeployToJavaArchiveView from "./OctopusDeployToJavaArchiveView";
 import OctopusKubernetesPlatform from "./OctopusKubernetesPlatform";
-import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function OctopusOpseraManagedProjectForm({
     dataObject, 
@@ -58,7 +58,7 @@ function OctopusOpseraManagedProjectForm({
         setDataObject={setDataObject}
         disabled={dataObject && dataObject.getData("projectId").length === 0}
       />      
-      <DtoSelectInput
+      <SelectInputBase
         setDataObject={setDataObject}
         textField={"name"}
         valueField={"_id"}

@@ -9,7 +9,7 @@ import RollbackToggleInput from "../input/RollbackToggleInput";
 import OctopusVersionSelectInput from "../input/OctopusVersionSelectInput";
 import OctopusSpecifyDepVarsToggle from "../input/OctopusSpecifyDepVarsToggle";
 import OctopusDeploymentVariables from "../input/OctopusDeploymentVariables";
-import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabled, pipelineId, listOfSteps }) {
   return (
@@ -57,7 +57,7 @@ function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabl
       />
       {dataObject && dataObject.getData("octopusFeedId") && (
         <>
-          <DtoSelectInput
+          <SelectInputBase
             setDataObject={setDataObject}
             textField={"name"}
             valueField={"_id"}
