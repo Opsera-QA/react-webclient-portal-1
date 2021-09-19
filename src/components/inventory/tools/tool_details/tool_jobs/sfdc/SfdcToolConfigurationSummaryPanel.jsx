@@ -23,7 +23,7 @@ function SfdcToolConfigurationSummaryPanel({ sfdcToolConfigurationModel }) {
           <TextFieldBase dataObject={sfdcToolConfigurationModel} fieldName={"toolURL"} />
         </Col>
         <Col lg={12}>
-          <ToolNameField dataObject={sfdcToolConfigurationModel} fieldName={"jenkinsToolId"} />
+          <ToolNameField model={sfdcToolConfigurationModel} fieldName={"jenkinsToolId"} />
         </Col>
         <Col lg={12}>
           <TextFieldBase dataObject={sfdcToolConfigurationModel} fieldName={"buildType"} />

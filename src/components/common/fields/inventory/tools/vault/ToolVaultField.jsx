@@ -8,7 +8,7 @@ function ToolVaultField({ model, fieldName }) {
     return (<StandaloneTextFieldBase label={model?.getLabel(fieldName)} text={"Opsera Default Hashicorp Vault"} />);
   }
 
-  return (<ToolNameField dataObject={model} fieldName={fieldName} />);
+  return (<ToolNameField model={model} fieldName={fieldName} />);
 }
 
 ToolVaultField.propTypes = {
