@@ -7,12 +7,12 @@ import { AuthContext } from "contexts/AuthContext";
 import { Link } from "react-router-dom";
 import spinnakerStepFormMetadata from "./spinnaker-stepForm-metadata";
 import Model from "core/data_model/model";
-import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import LoadingDialog from "components/common/status_notifications/loading";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import spinnakerStepActions from "./spinnaker-step-actions";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function SpinnakerStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -220,7 +220,7 @@ function SpinnakerStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
           onClick={() => document.body.click()}
         />
       </OverlayTrigger>
-      <DtoSelectInput
+      <SelectInputBase
         setDataFunction={handleDTOChange}
         setDataObject={setSpinnakerStepConfigurationDataDto}
         textField={"name"}
@@ -230,7 +230,7 @@ function SpinnakerStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
         selectOptions={spinnakerList ? spinnakerList : []}
         fieldName={"spinnakerId"}
       />
-      <DtoSelectInput
+      <SelectInputBase
         setDataFunction={handleDTOChange}
         setDataObject={setSpinnakerStepConfigurationDataDto}
         textField={"name"}
@@ -242,7 +242,7 @@ function SpinnakerStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
         busy={spinnakerAppsSearching}
         disabled={spinnakerStepConfigurationDto.getData("spinnakerId").length === 0 || spinnakerAppsSearching}
       />
-      <DtoSelectInput
+      <SelectInputBase
         setDataObject={setSpinnakerStepConfigurationDataDto}
         textField={"name"}
         valueField={"name"}

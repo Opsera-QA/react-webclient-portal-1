@@ -11,13 +11,13 @@ import DockerPushJenkinsToolInput
 import DockerPushJenkinsJobInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushJenkinsJobInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import AgentLabelsMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
 import DockerPushNewRepoToggleInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushNewRepoToggleInput";
-import AWSToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/AWSToolSelectInput";
-import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import _ from "lodash";
 import DockerPushAwsRepoInput from "./inputs/DockerPushAwsRepoInput";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import AWSToolSelectInput
+  from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/AWSToolSelectInput";
 
 function DockerPushStepConfiguration({ pipelineId, plan, stepTool, stepId, createJob, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -122,7 +122,7 @@ function DockerPushStepConfiguration({ pipelineId, plan, stepTool, stepId, creat
             : false
         }
       />
-      <DtoSelectInput
+      <SelectInputBase
         setDataObject={setDockerPushStepConfigurationDataDto}
         textField={"name"}
         valueField={"_id"}
