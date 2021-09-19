@@ -7,7 +7,6 @@ import ToolVaultField from "components/common/fields/inventory/tools/vault/ToolV
 
 function ToolVaultSummaryPanel({ toolModel }) {
   if (toolModel == null) {
-    console.log("tool Model is null");
     return (<LoadingDialog size="sm"/>);
   }
 
