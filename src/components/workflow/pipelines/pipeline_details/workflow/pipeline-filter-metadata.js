@@ -60,7 +60,7 @@ const pipelineFilterMetadata = {
   newObjectFields: {
     pageSize: 25,
     currentPage: 1,
-    sortOption: { value: "name", text: "Pipeline Name (A-Za-z)", order: 1 },
+    sortOption: { value: "name", text: "Sort: Pipeline Name (A-Za-z)", order: 1 },
     search: "",
     viewType: "cards",
     activeFilters: []
