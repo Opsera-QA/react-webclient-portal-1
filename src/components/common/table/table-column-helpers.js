@@ -19,7 +19,7 @@ import MinusCircle from "../../common/icons/table/MinusCircle";
 import PauseCircle from "../../common/icons/table/PauseCircle";
 import React from "react";
 import Model from "core/data_model/model";
-import PipelineTypesField from "components/common/form_fields/pipelines/PipelineTypesField";
+import PipelineTypesField from "components/common/fields/pipelines/PipelineTypesField";
 import PipelineStatus from "components/workflow/pipelines/PipelineStatus";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import DashboardFavoritesIcon from "components/common/icons/dashboards/DashboardFavoritesIcon";

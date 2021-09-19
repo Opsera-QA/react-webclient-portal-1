@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import FieldLabel from "components/common/fields/FieldLabel";
-import FailedPipelineState from "./FailedPipelineState";
-import RunningPipelineState from "./RunningPipelineState";
-import PausedPipelineState from "./PausedPipelineState";
-import SuccessPipelineState from "./SuccessPipelineState";
-import StoppedPipelineState from "./StoppedPipelineState";
+import FailedPipelineState from "components/common/fields/pipelines/state/FailedPipelineState";
+import RunningPipelineState from "components/common/fields/pipelines/state/RunningPipelineState";
+import PausedPipelineState from "components/common/fields/pipelines/state/PausedPipelineState";
+import SuccessPipelineState from "components/common/fields/pipelines/state/SuccessPipelineState";
+import StoppedPipelineState from "components/common/fields/pipelines/state/StoppedPipelineState";
 
 function PipelineStateField({ fieldName, dataObject }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
