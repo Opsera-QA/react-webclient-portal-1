@@ -2,14 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
-function MongodbRealmToolInput({className, fieldName, model, setModel, disabled}) {
-  
-  const setDataFunction = (fieldName, selectedOption) => {
-    let newModel = {...model};
-    newModel.setData("mongoToolId", selectedOption?._id);    
-    setModel({...newModel});
-  };
-
+function RoleRestrictedMongoDbRealmToolSelectInput({className, fieldName, model, setModel, setDataFunction, disabled}) {
   return (
      <RoleRestrictedToolByIdentifierInputBase
        toolIdentifier={"mongodb_realm"}
@@ -22,21 +15,22 @@ function MongodbRealmToolInput({className, fieldName, model, setModel, disabled}
        setDataFunction={setDataFunction}
        disabled={disabled}
        className={className}
-       fields={["id", "configuration", "name"]}
+       // fields={["_id", "configuration", "name"]}
      />
   );
 }
 
-MongodbRealmToolInput.propTypes = {
+RoleRestrictedMongoDbRealmToolSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string,
-  fieldName: PropTypes.string
+  fieldName: PropTypes.string,
+  setDataFunction: PropTypes.func,
 };
 
-MongodbRealmToolInput.defaultProps = {
+RoleRestrictedMongoDbRealmToolSelectInput.defaultProps = {
   fieldName: "mongoToolId",
 };
 
-export default MongodbRealmToolInput;
+export default RoleRestrictedMongoDbRealmToolSelectInput;
