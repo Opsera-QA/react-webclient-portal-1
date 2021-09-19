@@ -4,19 +4,17 @@ import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {getUsersByDomain} from "components/settings/ldap_users/user-functions";
 import departmentActions from "components/admin/accounts/ldap/ldap_departments/department-functions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
+import LdapUserSelectInput from "components/common/list_of_values_input/users/LdapUserSelectInput";
 
 function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, orgDomain, authorizedActions, handleClose }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [ldapDepartmentDataDto, setLdapDepartmentDataDto] = useState({});
-  const [ldapUsers, setLdapUsers] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -27,7 +25,6 @@ function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, orgDomain, 
     try {
       setIsLoading(true);
       setLdapDepartmentDataDto(ldapDepartmentData);
-      await getLdapOrganizationUsers();
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -37,16 +34,8 @@ function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, orgDomain, 
     }
   };
 
-  const getLdapOrganizationUsers = async () => {
-    const response = await getUsersByDomain(orgDomain, getAccessToken);
-
-    if (response?.length > 0) {
-      setLdapUsers(response);
-    }
-  };
-
   const addOwnerIfNotPresent = async () => {
-    const newOwnerEmail = ldapDepartmentDataDto.getData("ownerEmail");
+    const newOwnerEmail = ldapDepartmentDataDto?.getData("ownerEmail");
     let member = ldapDepartmentData.members.find((member) => member.emailAddress === newOwnerEmail.emailAddress);
 
     if (member == null) {
@@ -127,16 +116,11 @@ function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, orgDomain, 
         </Col>
         <Col lg={12}>
           {/*TODO: Make component*/}
-          <DtoSelectInput
-            dataObject={ldapDepartmentDataDto}
-            setDataObject={setLdapDepartmentDataDto}
-            busy={isLoading}
+          <LdapUserSelectInput
+            model={ldapDepartmentDataDto}
+            setModel={setLdapDepartmentDataDto}
             fieldName={"ownerEmail"}
-            groupBy={"emailAddress"}
             valueField={"emailAddress"}
-            textField={"name"}
-            filter={"contains"}
-            selectOptions={ldapUsers}
           />
         </Col>
       </Row>

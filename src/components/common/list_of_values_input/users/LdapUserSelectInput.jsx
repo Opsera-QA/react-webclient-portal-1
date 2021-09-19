@@ -62,8 +62,9 @@ function LdapUserSelectInput({ model, setModel, fieldName, valueField, textField
     if (Array.isArray(users)) {
       let formattedUsers = [];
 
+      // TODO: Rework this
       users.map((user) => {
-        formattedUsers.push({text: `${user.firstName} ${user.lastName} (${user.email})`, value:`${user._id}`, user: user});
+        formattedUsers.push({text: `${user.firstName} ${user.lastName} (${user.email})`, emailAddress: `${user?.email}`, value:`${user._id}`, user: user});
       });
 
       setUsers(formattedUsers);
