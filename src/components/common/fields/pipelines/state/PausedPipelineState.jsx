@@ -1,6 +1,6 @@
 import React from "react";
 import {faPause} from "@fortawesome/pro-light-svg-icons";
-import PipelineStateBase from "./PipelineStateBase";
+import PipelineStateBase from "components/common/fields/pipelines/state/PipelineStateBase";
 
 function PausedPipelineState() {
   return (
