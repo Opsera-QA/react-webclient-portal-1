@@ -176,8 +176,8 @@ regexDefinitions.azureLabels = {
 
 regexDefinitions.argumentList = {
   regex: /^[A-Za-z0-9-_.$=\n]*$/,
-  formText: "Letters, numbers, dashes, underscores, equals, dollar, periods and new lines are allowed",
-  errorFormText: "Only letters, numbers, dashes, underscores, equals, dollar, periods and new lines are allowed",
+  formText: "Letters, numbers, dashes, underscores, equals sign, dollar sign, periods and new lines are allowed",
+  errorFormText: "Only letters, numbers, dashes, underscores, equals sign, dollar sign, periods and new lines are allowed",
 };
 
 export default regexDefinitions;
