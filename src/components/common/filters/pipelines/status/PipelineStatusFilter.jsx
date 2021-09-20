@@ -19,6 +19,7 @@ function PipelineStatusFilter({ filterModel, setFilterModel, setDataFunction, cl
       className={className}
       fieldName={fieldName}
       inline={inline}
+      textField={(selectOption) => {return `Status: ${selectOption?.text}`;}}
       setDataObject={setFilterModel}
       setDataFunction={setDataFunction}
       placeholderText={"Select Pipeline Status"}

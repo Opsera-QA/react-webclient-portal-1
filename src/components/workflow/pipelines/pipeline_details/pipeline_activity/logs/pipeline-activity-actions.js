@@ -36,7 +36,8 @@ pipelineActivityActions.getPipelineActivityLogTree = async (getAccessToken, canc
   const search = pipelineActivityFilterDto?.getData("search");
   const urlParams = {
     params: {
-      search: search ? search : undefined
+      search: search ? search : undefined,
+      status: pipelineActivityFilterDto?.getFilterValue("status"),
     },
   };
 

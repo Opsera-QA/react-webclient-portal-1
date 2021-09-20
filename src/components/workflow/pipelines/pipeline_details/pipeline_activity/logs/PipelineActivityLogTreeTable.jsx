@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import { faClipboardList } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -11,7 +11,6 @@ import InlinePipelineStatusFilter from "components/common/filters/pipelines/stat
 import PipelineActivityLogTable
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTable";
 
-// TODO: Separate this further into PipelineActivityLogTreeTable
 function PipelineActivityLogTreeTable({ pipelineLogData, pipelineActivityMetadata, loadData, isLoading, pipeline, pipelineActivityFilterDto, setPipelineActivityFilterDto, pipelineActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
   const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
   const [currentStepName, setCurrentStepName] = useState(undefined);
