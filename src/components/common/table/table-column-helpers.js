@@ -498,8 +498,8 @@ export const getTablePipelineStatusColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: function parseStatus(workflow) {
-      let pipelineStatus = pipelineHelpers.getPipelineStatus(workflow.row.original);
+    Cell: function parseStatus(pipeline) {
+      let pipelineStatus = pipelineHelpers.getPipelineStatus(pipeline.row.original);
 
       switch (pipelineStatus) {
       case "failed":

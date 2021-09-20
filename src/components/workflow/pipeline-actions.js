@@ -31,23 +31,26 @@ pipelineActions.getInUseTemplatesV2 = async (getAccessToken, cancelTokenSource) 
 };
 
 
-pipelineActions.getPipelinesV2 = async (getAccessToken, cancelTokenSource, pipelineFilterDto, type) => {
-  let sortOption = pipelineFilterDto.getData("sortOption");
+pipelineActions.getPipelinesV2 = async (getAccessToken, cancelTokenSource, pipelineFilterModel, type, fields) => {
+  let sortOption = pipelineFilterModel?.getData("sortOption");
 
   const urlParams = {
     params: {
-      sort: sortOption ? sortOption.value : null,
-      order: sortOption ? sortOption.order : null,
-      size: pipelineFilterDto.getData("pageSize"),
-      page: pipelineFilterDto.getData("currentPage"),
-      type: type !== 'all' && type !== null ? type : undefined,
-      search: pipelineFilterDto.getFilterValue("search"),
-      owner: pipelineFilterDto.getFilterValue("owner"),
-      tag:pipelineFilterDto.getFilterValue("tag")
+      sort: sortOption?.value,
+      order: sortOption?.order,
+      size: pipelineFilterModel?.getData("pageSize"),
+      page: pipelineFilterModel?.getData("currentPage"),
+      type: type !== "all" && type !== "owner" ? type : undefined,
+      myPipelines: type === "owner",
+      search: pipelineFilterModel?.getFilterValue("search"),
+      owner: pipelineFilterModel?.getFilterValue("owner"),
+      tag: pipelineFilterModel?.getFilterValue("tag"),
+      status: pipelineFilterModel?.getFilterValue("status"),
+      fields: fields,
     },
   };
 
-  let apiUrl = `/pipelines`;
+  let apiUrl = `/pipelines/v2`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 

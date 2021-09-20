@@ -103,8 +103,13 @@ pipelineHelpers.getPipelineStatus = (pipeline) => {
       return "running";
     }
 
-    if (workflow.last_step?.status === "stopped" && workflow.last_step?.running?.status === "pending") {
+    if (workflow.last_step?.status === "stopped"
+      && (workflow.last_step?.running?.status === "pending" || workflow.last_step?.running?.paused === true) ) {
       return "paused";
+    }
+
+    if (workflow.last_step?.status === "stopped") {
+      return "stopped";
     }
 
     return false; //idle or stopped state

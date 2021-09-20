@@ -1,3 +1,4 @@
+// TODO: Cleanup and make pipelineActivity.filter.model
 const pipelineActivityFilterMetadata = {
   idProperty: "_id",
   type: "Pipeline Activity",
@@ -66,6 +67,10 @@ const pipelineActivityFilterMetadata = {
       activeFilters.push({filterId: "search", text: `Keyword: ${filterDto.getData("search")}`});
     }
 
+    if (filterDto.getData("status") != null && filterDto.getData("status") !== "") {
+      activeFilters.push({filterId: "status", text: `Status: ${filterDto.getFilterValue("status")}`});
+    }
+
     return activeFilters;
   },
   newObjectFields: {
@@ -76,6 +81,7 @@ const pipelineActivityFilterMetadata = {
     hide_status: true,
     latest: false,
     tool: "",
+    status: "",
     // step_id: "",
     run: 0,
     activeFilters: []
