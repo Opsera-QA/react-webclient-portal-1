@@ -47,7 +47,7 @@ const taskFilterMetadata = {
   newObjectFields: {
     pageSize: 100,
     currentPage: 1,
-    sortOption: {text: "Sort: Name", value: "name"},
+    sortOption: {text: "Name", value: "name"},
     search: "",
     activeFilters: [],
     viewType: "list",
@@ -110,9 +110,10 @@ export class TaskFilterModel extends FilterModelBase {
   getSortOptions = () => {
     return (
       [
-        {text: "Oldest", option: "oldest"},
-        {text: "Newest", option: "newest"},
-        {text: "Name", option: "name"},
+        {text: "Oldest Tasks", option: "oldest"},
+        {text: "Newest Tasks", option: "newest"},
+        {text: "Task Name (A-Za-z)", option: "name"},
+        {text: "Task Name (z-aZ-A)", option: "name"},
         {text: "Last Updated", option: "lastupdated"},
       ]
     );

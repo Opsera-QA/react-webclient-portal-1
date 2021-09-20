@@ -48,6 +48,7 @@ function TaskTable({ taskData, taskFilterModel, setTaskFilterModel, loadData, is
   return (
     <CustomTable
       className={"no-table-border makeup-container-table"}
+      nextGeneration={true}
       columns={columns}
       data={taskData}
       isLoading={isLoading}

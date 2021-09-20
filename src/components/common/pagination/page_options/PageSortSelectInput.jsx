@@ -21,7 +21,7 @@ function PageSortSelectInput({ paginationModel, loadData, isLoading, className})
       className={className}
       selectOptions={paginationModel?.getSortOptions()}
       valueField={"value"}
-      textField={"text"}
+      textField={(sortOption) => `Sort: ${sortOption?.text}`}
       disabled={isLoading || paginationModel?.getData("totalCount") == null}
       placeholder={"Sort Page"}
       setDataFunction={updateSortOption}

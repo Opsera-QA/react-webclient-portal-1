@@ -38,6 +38,7 @@ function PipelinesTable({ data, isLoading, paginationModel, setPaginationModel, 
 
   return (
     <CustomTable
+      nextGeneration={true}
       className="table-no-border"
       columns={columns}
       onRowSelect={onRowSelect}

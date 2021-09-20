@@ -47,7 +47,7 @@ const pipelineFilterMetadata = {
   newObjectFields: {
     pageSize: 25,
     currentPage: 1,
-    sortOption: { value: "name", text: "Sort: Pipeline Name (A-Za-z)"},
+    sortOption: { value: "name", text: "Pipeline Name (A-Za-z)"},
     search: "",
     activeFilters: [],
     viewType: "list",
@@ -106,12 +106,12 @@ export class PipelineFilterModel extends FilterModelBase {
   getSortOptions = () => {
     return (
       [
-        {text: "Sort: Oldest Pipelines", value: "oldest"},
-        {text: "Sort: Newest Pipelines", value: "newest"},
-        {text: "Sort: Pipeline Name (A-Za-z)", value: "name"},
-        {text: "Sort: Pipeline Name (z-aZ-A)", value: "name-descending"},
-        {text: "Sort: Updated (Latest)", value: "lastupdated"},
-        {text: "Sort: Updated (Earliest)", value: "earliest-updated"},
+        {text: "Oldest Pipelines", value: "oldest"},
+        {text: "Newest Pipelines", value: "newest"},
+        {text: "Pipeline Name (A-Za-z)", value: "name"},
+        {text: "Pipeline Name (z-aZ-A)", value: "name-descending"},
+        {text: "Updated (Latest)", value: "lastupdated"},
+        {text: "Updated (Earliest)", value: "earliest-updated"},
       ]
     );
   };
