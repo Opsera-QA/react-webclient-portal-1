@@ -29,6 +29,7 @@ import KafkaConnectToolConfiguration from "./tool_jobs/kafka_connect/KafkaConnec
 import CoverityToolConfiguration from "./tool_jobs/coverity/CoverityToolConfiguration";
 import TwistlockToolConfiguration from "./tool_jobs/twistlock/TwistlockToolConfiguration";
 import MongodbRealmToolConfiguration from "./tool_jobs/mongodb_realm/MongodbRealmToolConfiguration";
+import AzureV2ToolConfiguration from "./tool_jobs/azureV2/AzureV2ToolConfiguration";
 
 function ToolConfigurationPanel({ toolData }) {
   const getConfiguration = () => {
@@ -90,6 +91,8 @@ function ToolConfigurationPanel({ toolData }) {
         return <TwistlockToolConfiguration toolData={toolData} />;
       case "mongodb_realm":        
         return <MongodbRealmToolConfiguration toolData={toolData} />;
+      case "azure":
+        return <AzureV2ToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
     }
