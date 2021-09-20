@@ -970,6 +970,7 @@ function StepToolConfiguration({
               createJob={createJob}
               setToast={setToast}
               setShowToast={setShowToast}
+              closeEditorPanel={closeEditorPanel}
             />
           );
       case "aws_lambda":
