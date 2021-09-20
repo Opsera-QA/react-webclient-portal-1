@@ -1,26 +1,17 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import { faClipboardList } from "@fortawesome/pro-light-svg-icons";
 import {
   getPipelineActivityStatusColumn,
   getTableDateTimeColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers-v2";
-import FilterContainer from "components/common/table/FilterContainer";
 import PipelineTaskDetailViewer from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineTaskDetailViewer";
-import ExportPipelineActivityLogButton from "components/common/buttons/export/pipelines/ExportPipelineActivityLogButton";
 import TableBase from "components/common/table/TableBase";
-import TreeAndTableBase from "components/common/table/TreeAndTableBase";
-import PipelineActivityLogTree
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTree";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-// TODO: Separate this further into PipelineActivityLogTreeTable
-function PipelineActivityLogTable({ pipelineLogData, pipelineActivityMetadata, loadData, isLoading, pipeline, pipelineActivityFilterDto, setPipelineActivityFilterDto, pipelineActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
+function PipelineActivityLogTable({ pipelineLogData, pipelineActivityMetadata, isLoading, pipeline, pipelineActivityFilterDto, currentRunNumber, currentStepName }) {
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
-  const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
-  const [currentStepName, setCurrentStepName] = useState(undefined);
   const [columns, setColumns] = useState([]);
 
   useEffect(() => {
@@ -34,7 +25,7 @@ function PipelineActivityLogTable({ pipelineLogData, pipelineActivityMetadata, l
     };
   }, [JSON.stringify(pipelineActivityMetadata)]);
 
-  const onRowSelect = (treeGrid, row, column, e) => {
+  const onRowSelect = (treeGrid, row) => {
     toastContext.showOverlayPanel(<PipelineTaskDetailViewer pipelineName={pipeline?.name} pipelineActivityLogId={row._id} />);
   };
 
@@ -79,58 +70,14 @@ function PipelineActivityLogTable({ pipelineLogData, pipelineActivityMetadata, l
     return ("Pipeline activity data has not been generated yet. Once this pipeline begins running, it will publish details here.");
   };
 
-  const getTable = () => {
-    return (
-      <div className={"tree-table"}>
-        <TableBase
-          columns={columns}
-          data={getFilteredData()}
-          isLoading={isLoading}
-          noDataMessage={getNoDataMessage()}
-          onRowSelect={onRowSelect}
-        />
-      </div>
-    );
-  };
-
-  const getTree = () => {
-    return (
-      <PipelineActivityLogTree
-        pipelineLogTree={pipelineActivityTreeData}
-        setCurrentRunNumber={setCurrentRunNumber}
-        setCurrentStepName={setCurrentStepName}
-        currentLogTreePage={currentLogTreePage}
-        setCurrentLogTreePage={setCurrentLogTreePage}
-      />
-    );
-  };
-
-  const getPipelineActivityTable = () => {
-    return (
-      <TreeAndTableBase
-        data={pipelineLogData}
+  return (
+    <div className={"tree-table"}>
+      <TableBase
+        columns={columns}
+        data={getFilteredData()}
         isLoading={isLoading}
         noDataMessage={getNoDataMessage()}
-        tableComponent={getTable()}
-        loadData={loadData}
-        treeComponent={getTree()}
-      />
-    );
-  };
-
-  return (
-    <div className={"mr-2"}>
-      <FilterContainer
-        showBorder={false}
-        loadData={loadData}
-        filterDto={pipelineActivityFilterDto}
-        setFilterDto={setPipelineActivityFilterDto}
-        isLoading={isLoading}
-        title={"Pipeline Logs"}
-        titleIcon={faClipboardList}
-        body={getPipelineActivityTable()}
-        supportSearch={true}
-        exportButton={<ExportPipelineActivityLogButton className={"ml-2"} isLoading={isLoading} activityLogData={pipelineLogData} />}
+        onRowSelect={onRowSelect}
       />
     </div>
   );
@@ -138,15 +85,12 @@ function PipelineActivityLogTable({ pipelineLogData, pipelineActivityMetadata, l
 
 PipelineActivityLogTable.propTypes = {
   pipelineLogData: PropTypes.array,
-  isLoading: PropTypes.bool,
-  pipelineActivityFilterDto: PropTypes.object,
-  setPipelineActivityFilterDto: PropTypes.func,
-  loadData: PropTypes.func,
-  pipeline: PropTypes.object,
   pipelineActivityMetadata: PropTypes.object,
-  pipelineActivityTreeData: PropTypes.array,
-  setCurrentLogTreePage: PropTypes.func,
-  currentLogTreePage: PropTypes.number
+  isLoading: PropTypes.bool,
+  pipeline: PropTypes.object,
+  pipelineActivityFilterDto: PropTypes.object,
+  currentRunNumber: PropTypes.number,
+  currentStepName: PropTypes.number
 };
 
 export default PipelineActivityLogTable;

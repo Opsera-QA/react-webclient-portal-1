@@ -61,12 +61,13 @@ function UserPipelineOwnershipReport() {
         }
 
         setIsLoading(true);
-        const response = await pipelineActions.getPipelinesV2(getAccessToken, cancelSource, newFilterModel);
-        const pipelines = response?.data?.response;
+        const pipelineFields = ["type", "_id", "name", "workflow.last_step", "workflow.run_count", "createdAt", "updatedAt"];
+        const response = await pipelineActions.getPipelinesV2(getAccessToken, cancelSource, newFilterModel, undefined, pipelineFields);
+        const pipelines = response?.data?.data;
 
-        if (Array.isArray(response?.data?.response)) {
+        if (Array.isArray(response?.data?.data)) {
           setPipelines(pipelines);
-          newFilterModel.setData("totalCount", response.data.count);
+          newFilterModel.setData("totalCount", response?.data?.count);
           newFilterModel.setData("activeFilters", newFilterModel.getActiveFilters());
           setPipelineFilterModel({...newFilterModel});
         }

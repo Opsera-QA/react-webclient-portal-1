@@ -47,12 +47,16 @@ const pipelineFilterMetadata = {
       activeFilters.push({filterId: "tag", text: `Tag: ${tag?.value}`});
     }
 
-    if (filterDto.getData("owner") != null) {
+    if (filterDto.getData("owner") != null && filterDto.getData("owner") !== "") {
       activeFilters.push({filterId: "owner", ...filterDto.getData("owner")});
     }
 
     if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
       activeFilters.push({filterId: "search", text: `Keyword: ${filterDto.getData("search")}`});
+    }
+
+    if (filterDto.getData("status") != null && filterDto.getData("status") !== "") {
+      activeFilters.push({filterId: "status", text: `Status: ${filterDto.getFilterText("status")}`});
     }
 
     return activeFilters;

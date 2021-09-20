@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import {axiosApiService} from "api/apiService";
-import PipelineActivityLogTable
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTable";
+import PipelineActivityLogTreeTable
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTreeTable";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import "../../workflows.css";
@@ -391,11 +391,11 @@ function PipelineDetailView() {
           />
         </div>
         <div className="max-content-width-1875">
-          <PipelineActivityLogTable
+          <PipelineActivityLogTreeTable
             pipeline={pipeline}
             pipelineLogData={activityData}
             isLoading={logsIsLoading}
-            loadData={pullLogData}
+            loadData={getActivityLogs}
             pipelineActivityFilterDto={pipelineActivityFilterDto}
             setPipelineActivityFilterDto={setPipelineActivityFilterDto}
             pipelineActivityMetadata={pipelineActivityMetadata}

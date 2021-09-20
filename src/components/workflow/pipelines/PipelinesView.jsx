@@ -19,11 +19,12 @@ import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import pipelineSummaryMetadata
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
+import PipelineStatusFilter from "components/common/filters/pipelines/status/PipelineStatusFilter";
 
 function PipelinesView({ currentTab, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [data, setData] = useState([]);
+  const [pipelines, setPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [pipelineFilterDto, setPipelineFilterDto] = useState(undefined);
   const isMounted = useRef(false);
@@ -95,17 +96,19 @@ function PipelinesView({ currentTab, setActiveTab }) {
     try {
       if (isMounted?.current === true) {
         setIsLoading(true);
-        setData([]);
+        setPipelines([]);
         saveCookies(newPipelineFilterDto);
       }
 
-      const response = await pipelineActions.getPipelinesV2(getAccessToken, cancelSource, newPipelineFilterDto, currentTab);
+      const pipelineFields = ["type", "_id", "name", "owner", "workflow.last_step", "workflow.run_count", "createdAt", "updatedAt"];
+      const response = await pipelineActions.getPipelinesV2(getAccessToken, cancelSource, newPipelineFilterDto, currentTab, pipelineFields);
+      const pipelines = response?.data?.data;
 
-      if (isMounted?.current === true && response?.data) {
-        setData(response?.data);
+      if (isMounted?.current === true && Array.isArray(pipelines)) {
+        setPipelines([...pipelines]);
         let newFilterDto = newPipelineFilterDto;
-        newFilterDto.setData("totalCount", response.data.count);
-        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+        newFilterDto.setData("totalCount", response?.data?.count);
+        newFilterDto.setData("activeFilters", newFilterDto?.getActiveFilters());
         setPipelineFilterDto({...newFilterDto});
       }
     } catch (error) {
@@ -130,6 +133,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   const getDropdownFilters = () => {
     return (
       <>
+        <PipelineStatusFilter filterModel={pipelineFilterDto} setFilterModel={setPipelineFilterDto} className={"mb-2"} />
         <TagFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>
         {getDynamicFilter()}
       </>
@@ -142,38 +146,34 @@ function PipelinesView({ currentTab, setActiveTab }) {
 
   const getView = () => {
     if (isLoading) {
-      return (<LoadingDialog size="md" message="Loading pipelines..."/>);
+      return (<LoadingDialog size="md" message="Loading Pipelines..."/>);
     }
 
     if (pipelineFilterDto?.getData("viewType") === "list") {
-      return (showList());
+      return (
+        <PipelinesTable
+          isLoading={isLoading}
+          paginationModel={pipelineFilterDto}
+          setPaginationModel={setPipelineFilterDto}
+          data={pipelines}
+          loadData={loadData}
+        />
+      );
     }
 
     return (
       <PipelineCardView
         isLoading={isLoading}
         loadData={loadData}
-        data={data?.response}
+        data={pipelines}
         pipelineFilterDto={pipelineFilterDto}
         setPipelineFilterDto={setPipelineFilterDto}
       />
     );
   };
 
-  const showList = () => {
-    return (
-        <PipelinesTable
-          isLoading={isLoading}
-          paginationModel={pipelineFilterDto}
-          setPaginationModel={setPipelineFilterDto}
-          data={data?.response}
-          loadData={loadData}
-        />
-    );
-  };
-
   const getPipelinesBody = () => {
-    if (data && data.count === 0) {
+    if (!Array.isArray(pipelines) && pipelines.length === 0) {
       const activeFilters = pipelineFilterDto?.getActiveFilters();
       if (activeFilters && activeFilters.length > 0) {
         return (
@@ -193,11 +193,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
     return (getView());
   };
 
-  if (data && data.count === 0 && currentTab === "owner" && (pipelineFilterDto?.getActiveFilters() == null || pipelineFilterDto?.getActiveFilters()?.length === 0) ) {
-    return (<><PipelineWelcomeView setActiveTab={setActiveTab}/></>);
-  }
-
-  if (!data && !isLoading) {
+  if (!Array.isArray(pipelines) && !isLoading) {
     return (
       <div className="px-2 max-content-width" style={{minWidth: "505px"}}>
         <div className="my-5">
@@ -205,6 +201,10 @@ function PipelinesView({ currentTab, setActiveTab }) {
         </div>
       </div>
     );
+  }
+
+  if (Array.isArray(pipelines) && pipelines.count === 0 && currentTab === "owner" && (pipelineFilterDto?.getActiveFilters() == null || pipelineFilterDto?.getActiveFilters()?.length === 0) ) {
+    return (<><PipelineWelcomeView setActiveTab={setActiveTab}/></>);
   }
 
   return (
