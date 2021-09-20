@@ -17,7 +17,7 @@ export const defaultInitialState = {
   pageIndex: 0
 };
 
-function CustomTable({ className, tableStyleName, type, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, paginationOptions, showHeaderText, isLoading, tableTitle, createNewRecord, tableFilterBar, paginationDto, setPaginationDto, loadData, noFooter, scrollOnLoad }) {
+function CustomTable({ className, tableStyleName, type, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, paginationOptions, showHeaderText, isLoading, tableTitle, createNewRecord, tableFilterBar, paginationDto, setPaginationDto, loadData, noFooter, scrollOnLoad, nextGeneration }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -203,7 +203,7 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
 
 
   return (
-    <PaginationContainer isLoading={isLoading} filterDto={paginationDto} setFilterDto={setPaginationDto} loadData={loadData} scrollOnLoad={scrollOnLoad}>
+    <PaginationContainer nextGeneration={nextGeneration} isLoading={isLoading} filterDto={paginationDto} setFilterDto={setPaginationDto} loadData={loadData} scrollOnLoad={scrollOnLoad}>
       {tableTitle && getTableTitleBar()}
       <div className={className}>
           <table className={tableStyleName} responsive="true" hover="true" {...getTableProps()}>
@@ -240,7 +240,8 @@ CustomTable.propTypes = {
   loadData: PropTypes.func,
   className: PropTypes.string,
   noFooter: PropTypes.bool,
-  scrollOnLoad: PropTypes.bool
+  scrollOnLoad: PropTypes.bool,
+  nextGeneration: PropTypes.bool,
 };
 
 CustomTable.defaultProps = {

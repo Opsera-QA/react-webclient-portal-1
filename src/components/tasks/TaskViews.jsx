@@ -67,11 +67,11 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
   const getCardView = () => {
     return (
       <TaskCardView
+        taskMetadata={taskMetadata}
         isLoading={isLoading}
         loadData={loadData}
         taskData={taskData}
         taskFilterModel={taskFilterModel}
-        setTaskFilterModel={setTaskFilterModel}
       />
     );
   };

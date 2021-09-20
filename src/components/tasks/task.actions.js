@@ -25,10 +25,9 @@ taskActions.createGitTaskV2 = async (getAccessToken, cancelTokenSource, gitTasks
 
 taskActions.getTasksListV2 = async (getAccessToken, cancelTokenSource, taskFilterModel, fields) => {
   const apiUrl = `/tasks`;
-  const sortOption = taskFilterModel?.getData("sortOption");
   const urlParams = {
     params: {
-      sort: sortOption ? sortOption.value : undefined,
+      sort: taskFilterModel?.getFilterValue("sortOption"),
       page: taskFilterModel?.getData("currentPage"),
       size: taskFilterModel?.getData("pageSize"),
       tag: taskFilterModel?.getFilterValue("tag"),
