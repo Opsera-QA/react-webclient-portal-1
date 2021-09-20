@@ -13,8 +13,7 @@ function MeanTimeToDeployHelpDocumentation({ closeHelpPanel }) {
         pipeline and run count for each successful deployment, linked to the respective blueprint for further insights.
         The goal is to have as low as possible mean time to deploy.
       </div>
-      <div> *The number of pipelines in insights may not match the total number
-        of successful deployments mentioned on the bar if there are pipelines that have two deployment steps.* </div>
+      <div> *Results of time filter may have slight variations due to timezone settings limitations of chart library.* </div>
     </HelpDocumentationContainer>
   );
 }
