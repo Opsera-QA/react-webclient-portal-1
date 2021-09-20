@@ -85,11 +85,11 @@ export class FilterModelBase {
 
   getPageSizes = () => {
     return [
+      {value: 25, text: "25 results per page"},
       {value: 50, text: "50 results per page"},
       {value: 100, text: "100 results per page"},
       {value: 150, text: "150 results per page"},
       {value: 200, text: "200 results per page"},
-      {value: 250, text: "250 results per page"},
     ];
   };
 

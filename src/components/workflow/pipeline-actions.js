@@ -32,13 +32,10 @@ pipelineActions.getInUseTemplatesV2 = async (getAccessToken, cancelTokenSource) 
 
 
 pipelineActions.getPipelinesV2 = async (getAccessToken, cancelTokenSource, pipelineFilterModel, type, fields) => {
-  let sortOption = pipelineFilterModel?.getData("sortOption");
-
   const urlParams = {
     params: {
-      sort: sortOption?.value,
-      order: sortOption?.order,
-      size: pipelineFilterModel?.getData("pageSize"),
+      sort: pipelineFilterModel?.getFilterValue("sortOption"),
+      size: pipelineFilterModel?.getFilterValue("pageSize"),
       page: pipelineFilterModel?.getData("currentPage"),
       type: type !== "all" && type !== "owner" ? type : undefined,
       myPipelines: type === "owner",

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 
-function PageSort({ paginationModel, loadData, isLoading}) {
+function PageSortSelectInput({ paginationModel, loadData, isLoading, className}) {
   const updateSortOption = (fieldName, sortOption) => {
     paginationModel.setData("currentPage", 1);
     paginationModel.setData("sortOption", sortOption);
@@ -17,8 +17,8 @@ function PageSort({ paginationModel, loadData, isLoading}) {
     <FilterSelectInputBase
       dataObject={paginationModel}
       fieldName={"sortOption"}
-      showLabel={false}
       inline={true}
+      className={className}
       selectOptions={paginationModel?.getSortOptions()}
       valueField={"value"}
       textField={"text"}
@@ -29,12 +29,13 @@ function PageSort({ paginationModel, loadData, isLoading}) {
   );
 }
 
-PageSort.propTypes = {
+PageSortSelectInput.propTypes = {
   paginationModel: PropTypes.object,
   isLoading: PropTypes.bool,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  className: PropTypes.string,
 };
 
-export default PageSort;
+export default PageSortSelectInput;
 
 
