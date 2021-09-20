@@ -110,11 +110,11 @@ export class TaskFilterModel extends FilterModelBase {
   getSortOptions = () => {
     return (
       [
-        {text: "Oldest Tasks", option: "oldest"},
-        {text: "Newest Tasks", option: "newest"},
-        {text: "Task Name (A-Za-z)", option: "name"},
-        {text: "Task Name (z-aZ-A)", option: "name"},
-        {text: "Last Updated", option: "lastupdated"},
+        {text: "Oldest Tasks", value: "oldest"},
+        {text: "Newest Tasks", value: "newest"},
+        {text: "Task Name (A-Za-z)", value: "name"},
+        {text: "Task Name (z-aZ-A)", value: "name"},
+        {text: "Last Updated", value: "lastupdated"},
       ]
     );
   };
