@@ -1,7 +1,7 @@
 import FilterModelBase from "core/data_model/filterModel.base";
 
-const taskFilterMetadata = {
-  type: "Task",
+const pipelineFilterMetadata = {
+  type: "Pipeline",
   fields: [
     {
       label: "Active",
@@ -45,9 +45,9 @@ const taskFilterMetadata = {
     },
   ],
   newObjectFields: {
-    pageSize: 100,
+    pageSize: 25,
     currentPage: 1,
-    sortOption: {text: "Sort: Name", value: "name"},
+    sortOption: { value: "name", text: "Sort: Pipeline Name (A-Za-z)"},
     search: "",
     activeFilters: [],
     viewType: "list",
@@ -57,9 +57,9 @@ const taskFilterMetadata = {
   },
 };
 
-export class TaskFilterModel extends FilterModelBase {
+export class PipelineFilterModel extends FilterModelBase {
   constructor(getAccessToken, cancelTokenSource, loadData) {
-    super(taskFilterMetadata);
+    super(pipelineFilterMetadata);
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
     this.loadData = loadData;
@@ -73,6 +73,10 @@ export class TaskFilterModel extends FilterModelBase {
     return true;
   };
 
+  canSort = () => {
+    return true;
+  }
+
   getActiveFilters = () => {
     let activeFilters = [];
 
@@ -82,10 +86,6 @@ export class TaskFilterModel extends FilterModelBase {
 
     if (this.getData("active") != null && this.getData("active") !== "") {
       activeFilters.push({filterId: "active",  text: `${this.getFilterText("active")}`});
-    }
-
-    if (this.getData("type") != null && this.getData("type") !== "") {
-      activeFilters.push({filterId: "type", text: `Type: ${this.getFilterText("type")}`});
     }
 
     if (this.getData("tag") != null) {
@@ -103,22 +103,20 @@ export class TaskFilterModel extends FilterModelBase {
     return activeFilters;
   };
 
-  canSort = () => {
-    return true;
-  };
-
   getSortOptions = () => {
     return (
       [
-        {text: "Oldest", option: "oldest"},
-        {text: "Newest", option: "newest"},
-        {text: "Name", option: "name"},
-        {text: "Last Updated", option: "lastupdated"},
+        {text: "Sort: Oldest Pipelines", value: "oldest"},
+        {text: "Sort: Newest Pipelines", value: "newest"},
+        {text: "Sort: Pipeline Name (A-Za-z)", value: "name"},
+        {text: "Sort: Pipeline Name (z-aZ-A)", value: "name-descending"},
+        {text: "Sort: Updated (Latest)", value: "lastupdated"},
+        {text: "Sort: Updated (Earliest)", value: "earliest-updated"},
       ]
     );
   };
 }
 
-export default TaskFilterModel;
+export default PipelineFilterModel;
 
 

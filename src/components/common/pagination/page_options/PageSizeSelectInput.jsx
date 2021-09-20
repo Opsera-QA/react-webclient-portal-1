@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 
-function PageSizeSelectInput({ paginationModel, loadData, isLoading}) {
+function PageSizeSelectInput({ paginationModel, loadData, isLoading, className}) {
   const updatePageSize = (fieldName, pageSize) => {
     paginationModel.setData("currentPage", 1);
     paginationModel.setData("pageSize", pageSize);
@@ -15,12 +15,11 @@ function PageSizeSelectInput({ paginationModel, loadData, isLoading}) {
 
   return (
     <FilterSelectInputBase
-      className={"inline-filter-input inline-select-filter"}
-      selectOptions={paginationModel.getPageSizes()}
-      formatItems={false}
-      showLabel={false}
+      className={className}
+      selectOptions={paginationModel?.getPageSizes()}
+      inline={true}
       dataObject={paginationModel}
-      textField={"text"}
+      textField={(option) => `${option?.value} Results Per Page`}
       valueField={"value"}
       fieldName={"pageSize"}
       disabled={isLoading || paginationModel?.getData("totalCount") == null}
@@ -36,7 +35,8 @@ PageSizeSelectInput.propTypes = {
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
   pageSizeList: PropTypes.array,
-  showPageSize: PropTypes.bool
+  showPageSize: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default PageSizeSelectInput;

@@ -20,11 +20,12 @@ pipelineHelpers.getStepIndexWithName = (pipeline, stepName) => {
 
 
 pipelineHelpers.getPendingApprovalStep = (pipeline) => {
-  if (pipeline && pipeline.workflow && pipeline.workflow.last_step && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
-    let step_id = pipeline.workflow.last_step.running.step_id;
-    let stepArrayIndex = pipeline.workflow.plan.findIndex(x => x._id === step_id);
-    if (stepArrayIndex > -1 && pipeline.workflow.plan[stepArrayIndex].tool.tool_identifier === "approval") {
-      return pipeline.workflow.plan[stepArrayIndex];
+  if (pipeline?.workflow?.last_step?.running?.paused) {
+    let step_id = pipeline?.workflow?.last_step?.running?.step_id;
+    let stepArrayIndex = pipeline?.workflow?.plan?.findIndex(x => x._id === step_id);
+
+    if (stepArrayIndex && stepArrayIndex > -1 && pipeline?.workflow?.plan[stepArrayIndex]?.tool?.tool_identifier === "approval") {
+      return pipeline?.workflow?.plan[stepArrayIndex];
     }
   }
   return false;
