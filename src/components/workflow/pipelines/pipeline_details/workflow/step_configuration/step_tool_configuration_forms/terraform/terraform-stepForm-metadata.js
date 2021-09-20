@@ -79,7 +79,23 @@ const TerraformStepFormMetadata = {
     {
       label: "IAM Role",
       id: "roleArn"
-    }
+    },
+    {
+      label: "Store State in S3 Bucket", 
+      id:"storeStateInBucket"
+    },
+    {
+      label: "S3 Bucket Name",
+      id: "bucketName"      
+    },
+    {
+      label: "Bucket Region",
+      id: "bucketRegion"
+    },
+    {
+      label: "Cloud Provider",
+      id: "cloudProvider"
+    },
   ],
   fieldsAlt:[
     {
@@ -161,7 +177,23 @@ const TerraformStepFormMetadata = {
       label: "IAM Role",
       id: "roleArn",
       isRequired:true
-    }
+    },
+    {
+      label: "Store State in S3 Bucket", 
+      id:"storeStateInBucket"
+    },
+    {
+      label: "S3 Bucket Name",
+      id: "bucketName"      
+    },
+    {
+      label: "Bucket Region",
+      id: "bucketRegion"
+    },
+    {
+      label: "Cloud Provider",
+      id: "cloudProvider"
+    },
   ],
   newObjectFields: {
     toolActionType: "EXECUTE",
@@ -184,7 +216,11 @@ const TerraformStepFormMetadata = {
     saveParameters: false,
     iamRoleFlag:false,
     roleArn:"",
-    roleName:""
+    roleName:"",
+    storeStateInBucket: false,
+    bucketName: "",
+    bucketRegion: "",
+    cloudProvider: "aws",
   }
 };
 
