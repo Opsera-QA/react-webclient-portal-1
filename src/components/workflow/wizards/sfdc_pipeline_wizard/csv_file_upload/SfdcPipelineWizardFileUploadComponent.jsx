@@ -207,6 +207,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
   const validateFiles = async () => {
     // read the csv file and send string to node
     const file = validFiles[0];
+    console.log(file);
     const reader = new FileReader();
     reader.onload = async (evt) => {
       /* Parse data */
