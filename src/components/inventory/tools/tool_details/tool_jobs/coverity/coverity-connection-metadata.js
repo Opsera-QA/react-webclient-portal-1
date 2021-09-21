@@ -4,31 +4,36 @@ const CoverityConnectionMetadata = {
     fields: [
       {
         label: "Coverity Connect URL",
-        id: "coverityUrl",
+        id: "toolURL",
         isRequired: true
       },
       {
         label: "Username",
-        id: "coverityUsername",
+        id: "accountUsername",
         isRequired: true
       },
       {
         label: "Password",
-        id: "coverityPassword",
+        id: "accountPassword",
         isRequired: true
       },
       {
-        label: "Coverity Cert",
-        id: "coverityCert",
+        label: "Coverity License",
+        id: "license",
         isRequired: true
+      },
+      {
+        label: "Coverity License file name",
+        id: "fileName",
       },
     ],
     newObjectFields:
       {
-        coverityUrl: "",
-        coverityUsername: "",
-        coverityPassword: "",
-        coverityCert: "",
+        toolURL: "",
+        accountUsername: "",
+        accountPassword: "",
+        license: "",
+        fileName: ""
       }
   };
   

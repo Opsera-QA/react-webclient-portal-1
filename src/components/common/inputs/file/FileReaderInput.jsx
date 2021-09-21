@@ -9,17 +9,16 @@ function FileReaderInput({ fieldName, dataObject, setDataObject, setDataFunction
   const [errorMessage, setErrorMessage] = useState("");
   const fileInputRef = useRef();
 
-  const validateAndSetData = async (event) => {
-    let newDataObject = dataObject;
+  const validateAndSetData = async () => {
     if (fileInputRef.current.files.length) {
       handleFiles(fileInputRef.current.files);
     }
-    setErrorMessage(newDataObject.getFieldError(fieldName));
   };
 
   const resetStoredFileContents = () => {
     let newDataObject = {...dataObject};
     newDataObject.setData(fieldName, "");
+    newDataObject.setData("fileName", "");
     setDataObject({...newDataObject});
   };
 
@@ -37,19 +36,19 @@ function FileReaderInput({ fieldName, dataObject, setDataObject, setDataFunction
     setErrorMessage('');
     let newDataObject = {...dataObject};
     for (let i = 0; i < files.length; i++) {
-        console.log(files[i]);
         if(validateFileSize(files[i])) {
             const file = files[i];
             const reader = new FileReader();
             reader.onload = async (evt) => {
-            /* Parse data */
             const dataString = evt.target.result;
-            console.log(dataString);
-            newDataObject.setData(fieldName, dataString);
-            };
+            // console.log(dataString);
+            if(dataString){
+                newDataObject.setData(fieldName, dataString);
+                newDataObject.setData("fileName", files[i].name);
+                setDataObject({...newDataObject});
+            }
+        };
             reader.readAsBinaryString(file);
-        
-            setDataObject({...newDataObject});
         } else {
             setErrorMessage('File size not permitted');
         }
@@ -59,12 +58,11 @@ function FileReaderInput({ fieldName, dataObject, setDataObject, setDataFunction
 
   return (
     <InputContainer>
-      <InputLabel field={field} />
+      <InputLabel field={field} /> {!fileInputRef?.current?.files && <div className="mb-2">Saved File: <b>{dataObject.getData("fileName")}</b></div>}
       <input
         type={"file"}
         ref={fileInputRef}
         disabled={disabled}
-        value={dataObject.getData(fieldName)}
         onChange={(event) => validateAndSetData(event)}
         accept={acceptType}
         onClick={ e => e.target.value = null}
