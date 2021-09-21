@@ -61,10 +61,7 @@ function AzureToolApplicationSelectInput({ azureToolId, fieldName, model, setMod
     if (isMounted?.current === true && tool != null) {
       const applications = tool?.applications;
 
-      console.log("response: " + JSON.stringify(response));
-      console.log("applications: " + JSON.stringify(applications));
       if (Array.isArray(applications)) {
-        console.log("applications: " + JSON.stringify(applications));
         setAzureApplications(applications);
       }
     }

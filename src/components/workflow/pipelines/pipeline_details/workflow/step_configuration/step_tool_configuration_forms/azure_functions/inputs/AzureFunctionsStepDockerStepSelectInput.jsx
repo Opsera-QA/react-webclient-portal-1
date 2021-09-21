@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function DockerStepSelectInput({
+// TODO: We should probably make base components for this. One that can be passed a tool identifier abd a docker push specific one
+function AzureFunctionsStepDockerStepSelectInput({
   fieldName,
   dataObject,
   setDataObject,
@@ -86,7 +87,7 @@ function DockerStepSelectInput({
   );
 }
 
-DockerStepSelectInput.propTypes = {
+AzureFunctionsStepDockerStepSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
@@ -98,10 +99,10 @@ DockerStepSelectInput.propTypes = {
   stepId: PropTypes.string,
 };
 
-DockerStepSelectInput.defaultProps = {
+AzureFunctionsStepDockerStepSelectInput.defaultProps = {
   valueField: "_id",
   textField: "name",
   fieldName: "artifactStepId",
 };
 
-export default DockerStepSelectInput;
+export default AzureFunctionsStepDockerStepSelectInput;
