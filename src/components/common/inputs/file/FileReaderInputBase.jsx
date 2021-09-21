@@ -16,6 +16,7 @@ function FileReaderInputBase({ fieldName, model, setModel, setDataFunction, clea
       setDataFunction(fieldName, newFile, fileName);
     }
     else {
+      console.log("setting file name: " + fileName);
       const newModel = {...model};
       newModel.setData(fieldName, newFile);
       newModel.setData("fileName", fileName);
@@ -73,7 +74,7 @@ function FileReaderInputBase({ fieldName, model, setModel, setDataFunction, clea
 
   const getFileText = () => {
     const fileName = model?.getData("fileName");
-    if (fieldName !== "" && model?.isChanged("fileName")) {
+    if (fileName !== "" && model?.isChanged("fileName")) {
       return (
         <div className={"ml-3 my-auto d-flex text-muted"}>
           <span>Selected {field?.label}: <b className={"ml-1"}>{fileName}</b></span>
