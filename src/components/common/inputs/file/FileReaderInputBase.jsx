@@ -50,7 +50,7 @@ function FileReaderInputBase({ fieldName, model, setModel, setDataFunction, clea
     setErrorMessage("");
 
     if (files == null || files?.length === 0) {
-      resetStoredFileContents();
+      clearValue();
     }
 
     const file = files[0];
@@ -67,7 +67,7 @@ function FileReaderInputBase({ fieldName, model, setModel, setDataFunction, clea
       };
       reader.readAsBinaryString(file);
     } else {
-      resetStoredFileContents();
+      clearValue();
       setErrorMessage('File size not permitted');
     }
   };
