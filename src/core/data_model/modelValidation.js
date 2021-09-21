@@ -116,6 +116,11 @@ export const fieldValidation = (value, data, field) => {
     }
   }
 
+  if (field?.minItems != null && value?.length < field?.minItems)
+  {
+    errorMessages.push(`You have selected ${value?.length} values, but the minimum allowed is ${field?.minItems}`);
+  }
+
   if (field.maxItems != null && value.length > field.maxItems)
   {
     errorMessages.push(`You have selected ${value.length} values, but the maximum allowed is ${field.maxItems}`);
@@ -159,6 +164,6 @@ const maxLengthValidator = (value, maxLength) => {
 
 // TODO: THis probably doesn't work with boolean values,
 //  however boolean values by design should always have a value
-const requiredValidator = value => {
+const requiredValidator = (value) => {
   return value != null && !!value;
 };
