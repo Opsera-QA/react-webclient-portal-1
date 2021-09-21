@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 
 function AwsEcsClusterCreationTaskHelpDocumentation({closeHelpPanel}) {
   return (
-    <HelpDocumentationContainer helpTopic={"AWS: Create ECS Cluster"} closeHelpPanel={closeHelpPanel}>
+    <HelpDocumentationContainer helpTopic={"AWS ECS Cluster Creation"} closeHelpPanel={closeHelpPanel}>
       <div className={"mb-1"}>When creating an ECS Cluster, it is important to know the correct values to enter. It is a nuanced operation and prior knowledge is essential. There are 2 steps to cluster creation including template creation. Once the template is created, you must select <b>Run Task</b>. If the Activity Logs indicate that cluster creation is successful, the cluster has been created in AWS and the task can be linked to a pipeline step.</div>
       <div className={"mt-2"}><h5>Task Setup Instructions:</h5></div>
       <ol>
-        <li>Select <b>AWS: Create ECS Cluster</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:
+        <li>Select <b>AWS ECS Cluster Creation</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:
           <ul>
             <li><b>AWS Tool</b> - Select an established AWS tool from the Tool Registry.</li>
             <li><b>Cluster Template</b> - Select Networking/Fargate or EC2.</li>

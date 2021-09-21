@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 
 function AwsEcsServiceCreationTaskHelpDocumentation({closeHelpPanel}) {
   return (
-    <HelpDocumentationContainer helpTopic={"AWS: Create ECS Service"} closeHelpPanel={closeHelpPanel}>
+    <HelpDocumentationContainer helpTopic={"AW ECS Service Creation"} closeHelpPanel={closeHelpPanel}>
       <div>This workflow requires setup in both Tasks and Pipeline. Service Creation and deployment require the latest image URL in order to deploy. This is generated during pipeline runtime. The workflow is separated into two parts where the user enters certain static information in the Tasks page and then links the task to the respective Docker step in the pipeline. </div>
       <div className={"mt-2"}><h5>Task Setup Instructions:</h5></div>
       <ol>
-        <li>Select <b>AWS: Create ECS Service</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:
+        <li>Select <b>AW ECS Service Creation</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:
           <ul>
             <li><b>AWS Tool</b> - Select an established AWS tool from the Tool Registry.</li>
             <li><b>Required Compatibility</b> - Select Fargate or EC2.</li>
