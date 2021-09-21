@@ -1,14 +1,15 @@
 import React from "react";
 import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
 import PropTypes from "prop-types";
+import { getTaskTypeLabel, TASK_TYPES } from "../../../../tasks/task.types";
 
 function SfdcOrgSyncTaskHelpDocumentation({closeHelpPanel}) {
   return (
-    <HelpDocumentationContainer helpTopic={"Salesforce Organization Sync"} closeHelpPanel={closeHelpPanel}>
+    <HelpDocumentationContainer helpTopic={getTaskTypeLabel(TASK_TYPES.SYNC_SALESFORCE_REPO)} closeHelpPanel={closeHelpPanel}>
       <div className={"mb-1"}>This workflow requires task creation, followed by a task run. Once the task has been created, you must select the <b>Run Task</b> button and follow the steps to complete the wizard. The prerequisite to Salesforce Organization Sync task setup is having successfully configured Jenkins, Salesforce Configurator, and SCM tools set up in the Tool Registry to select from the drop downs. The configured SCM tool must be added to Accounts within the Jenkins and SFDC Configurator tools. For more detailed information on the Salesforce Organization Sync workflow including Run Merge instructions, view the <a href="https://opsera.atlassian.net/l/c/5T1dgmnA" target="_blank" rel="noreferrer"><b>Salesforce Organization Sync Task Help Documentation</b>.</a> </div>
       <div className={"mt-2"}><h5>Task Setup Instructions:</h5></div>
       <ol>
-        <li>Select <b>Salesforce Organization Sync</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:
+        <li>Select <b>{getTaskTypeLabel(TASK_TYPES.SYNC_SALESFORCE_REPO)}</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:
           <ul style={{listStyleType: "none"}}>
             <li><b>Jenkins Tool</b> - Select an established Jenkins tool from the Tool Registry.</li>
             <li><b>Salesforce Account</b> - Select an established Salesforce tool from Tool Registry.</li>
