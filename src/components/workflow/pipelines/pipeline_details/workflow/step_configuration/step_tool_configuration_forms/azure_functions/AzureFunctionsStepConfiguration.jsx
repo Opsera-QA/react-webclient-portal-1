@@ -3,15 +3,17 @@ import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadi
 import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
-import TextInputBase from "../../../../../../../common/inputs/text/TextInputBase";
 import azureFunctionsStepFormMetadata from "./azureFunctions-stepForm-metadata";
-import AzureToolSelectInput from "./inputs/AzureToolSelectInput";
 import AzureCredentialIdSelectInput
   from "./inputs/AzureCredentialIdSelectInput";
-import DynamicNameToggleInput from "./inputs/DynamicNameToggleInput";
+import AzureFunctionsStepDynamicNameToggleInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/inputs/AzureFunctionsStepDynamicNameToggleInput";
 import AzureFunctionsRegionSelectInput from "./inputs/AzureFunctionsRegionSelectInput";
 import DockerPushStepSelectInput from "./inputs/DockerPushStepSelectInput";
 import AzureFunctionsApplicationTypeSelectInput from "./inputs/AzureFunctionsApplicationTypeSelectInput";
+import AzureFunctionsStepServiceNameTextInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/inputs/AzureFunctionsServiceNameTextInput";
+import AzureFunctionsStepAzureToolSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/inputs/AzureFunctionsStepAzureToolSelectInput";
 
 function AzureFunctionsStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan, stepId, pipelineId }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -58,9 +60,9 @@ function AzureFunctionsStepConfiguration({ stepTool, closeEditorPanel, parentCal
       persistRecord={saveAzureFunctionsStepConfiguration}
       isLoading={isLoading}
     >
-      <AzureToolSelectInput
-        dataObject={azureFunctionsModel}
-        setDataObject={setAzureFunctionsModel}
+      <AzureFunctionsStepAzureToolSelectInput
+        model={azureFunctionsModel}
+        setModel={setAzureFunctionsModel}
         setAzureConfig={setAzureConfig}
       />
       <AzureCredentialIdSelectInput
@@ -88,19 +90,16 @@ function AzureFunctionsStepConfiguration({ stepTool, closeEditorPanel, parentCal
         applicationData={applicationData}
         region={azureFunctionsModel?.getData("azureRegion")}
       />
-      <DynamicNameToggleInput
+      <AzureFunctionsStepDynamicNameToggleInput
         dataObject={azureFunctionsModel}
         setDataObject={setAzureFunctionsModel}
         fieldName={"dynamicServiceName"}
         pipelineId={pipelineId}
       />
-      {azureFunctionsModel && !azureFunctionsModel?.getData("dynamicServiceName") && (
-        <TextInputBase
-          dataObject={azureFunctionsModel}
-          setDataObject={setAzureFunctionsModel}
-          fieldName={"azureFunctionsServiceName"}
-        />
-      )}
+      <AzureFunctionsStepServiceNameTextInput
+        azureFunctionsModel={azureFunctionsModel}
+        setAzureFunctionsModel={setAzureFunctionsModel}
+      />
       <DockerPushStepSelectInput
         dataObject={azureFunctionsModel}
         setDataObject={setAzureFunctionsModel}
