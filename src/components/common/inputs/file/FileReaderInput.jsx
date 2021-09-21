@@ -4,7 +4,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
-function FileReaderInput({ fieldName, dataObject, setDataObject, setDataFunction, disabled }) {
+function FileReaderInput({ fieldName, dataObject, setDataObject, setDataFunction, acceptType, disabled }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const fileInputRef = useRef();
@@ -14,7 +14,6 @@ function FileReaderInput({ fieldName, dataObject, setDataObject, setDataFunction
     if (fileInputRef.current.files.length) {
       handleFiles(fileInputRef.current.files);
     }
-    
     setErrorMessage(newDataObject.getFieldError(fieldName));
   };
 
@@ -24,30 +23,37 @@ function FileReaderInput({ fieldName, dataObject, setDataObject, setDataFunction
     setDataObject({...newDataObject});
   };
 
+  const validateFileSize = (file) => {
+    const validSize = 500000; // 500KB
+    if (file.size > validSize) {
+      return false;
+    }
+    return true;
+  };
+
   const handleFiles = (files) => {
     setErrorMessage(false);
     resetStoredFileContents();
     setErrorMessage('');
     let newDataObject = {...dataObject};
     for (let i = 0; i < files.length; i++) {
-     
-        // const validateFiles = async () => {
-          // read the csv file and send string to node
-          console.log(files[i]);
-          const file = files[i];
-          const reader = new FileReader();
-          reader.onload = async (evt) => {
+        console.log(files[i]);
+        if(validateFileSize(files[i])) {
+            const file = files[i];
+            const reader = new FileReader();
+            reader.onload = async (evt) => {
             /* Parse data */
             const dataString = evt.target.result;
             console.log(dataString);
             newDataObject.setData(fieldName, dataString);
-          };
-          reader.readAsBinaryString(file);
-        // };
-      
-        setDataObject({...newDataObject});
-        setErrorMessage('File size not permitted');
-
+            };
+            reader.readAsBinaryString(file);
+        
+            setDataObject({...newDataObject});
+        } else {
+            setErrorMessage('File size not permitted');
+        }
+        
     }
   };
 
@@ -60,7 +66,7 @@ function FileReaderInput({ fieldName, dataObject, setDataObject, setDataFunction
         disabled={disabled}
         value={dataObject.getData(fieldName)}
         onChange={(event) => validateAndSetData(event)}
-        accept=".dat"
+        accept={acceptType}
         onClick={ e => e.target.value = null}
       />
       <InfoText field={field} errorMessage={errorMessage}/>
@@ -71,6 +77,7 @@ function FileReaderInput({ fieldName, dataObject, setDataObject, setDataFunction
 FileReaderInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
+  acceptType: PropTypes.string,
   setDataObject: PropTypes.func,
   setDataFunction: PropTypes.func,
   inputPopover: PropTypes.object,
