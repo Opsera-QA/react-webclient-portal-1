@@ -4,17 +4,18 @@ import InputContainer from "components/common/inputs/InputContainer";
 import { Form } from "react-bootstrap";
 import TextInputBase from "../../../../../../../../common/inputs/text/TextInputBase";
 import FieldContainer from "../../../../../../../../common/fields/FieldContainer";
+import AzureFunctionsStepServiceNameTextInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/inputs/AzureFunctionsServiceNameTextInput";
 
-
-function AzureFunctionsStepDynamicNameToggleInput({ dataObject, setDataObject, fieldName, disabled }) {
-  const [field, setField] = useState(dataObject?.getFieldById(fieldName));
+function AzureFunctionsStepDynamicNameToggleInput({ model, setModel, fieldName, disabled }) {
+  const [field, setField] = useState(model?.getFieldById(fieldName));
 
   const handleChange = () => {
-    let newDataObject = dataObject;
-    let sourceScriptFlag = !dataObject.getData(fieldName);
+    let newDataObject = model;
+    let sourceScriptFlag = !model.getData(fieldName);
     newDataObject.setData("ecsServiceName", "");
     newDataObject.setData(fieldName, sourceScriptFlag);
-    setDataObject({ ...newDataObject });
+    setModel({ ...newDataObject });
   };
 
   if (field == null) {
@@ -23,24 +24,24 @@ function AzureFunctionsStepDynamicNameToggleInput({ dataObject, setDataObject, f
 
   const getExampleName = () => {
     if (
-      !dataObject.getData("namePretext") ||
-      (dataObject.getData("namePretext") && dataObject.getData("namePretext").length === 0)
+      !model.getData("namePretext") ||
+      (model.getData("namePretext") && model.getData("namePretext").length === 0)
     ) {
       return "Enter a prefix in order to view the sample format";
     }
 
     return (
       <label className="text-muted stepForm-data-display">
-        {dataObject?.getData("namePretext")}-runCount
+        {model?.getData("namePretext")}-runCount
       </label>
     );
   };
 
   const getDynamicFields = () => {
-    if (dataObject.getData("dynamicServiceName")) {
+    if (model.getData("dynamicServiceName")) {
       return (
         <>
-          <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"namePretext"} />
+          <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"namePretext"} />
           <FieldContainer>
             <div className="w-100 d-flex">
               <label className="mb-0 mr-2">
@@ -52,6 +53,14 @@ function AzureFunctionsStepDynamicNameToggleInput({ dataObject, setDataObject, f
         </>
       );
     }
+    else {
+      return (
+        <AzureFunctionsStepServiceNameTextInput
+          azureFunctionsModel={model}
+          setAzureFunctionsModel={setModel}
+        />
+      );
+    }
   };
 
   return (
@@ -59,7 +68,7 @@ function AzureFunctionsStepDynamicNameToggleInput({ dataObject, setDataObject, f
       <Form.Check
         type="switch"
         id={field.id}
-        checked={!!dataObject.getData(fieldName)}
+        checked={!!model.getData(fieldName)}
         disabled={disabled}
         label={field.label}
         onChange={() => handleChange()}
@@ -73,11 +82,10 @@ function AzureFunctionsStepDynamicNameToggleInput({ dataObject, setDataObject, f
 }
 
 AzureFunctionsStepDynamicNameToggleInput.propTypes = {
-  dataObject: PropTypes.object,
+  model: PropTypes.object,
   fieldName: PropTypes.string,
-  setDataObject: PropTypes.func,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
-  pipelineId: PropTypes.string,
 };
 
 export default AzureFunctionsStepDynamicNameToggleInput;

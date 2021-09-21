@@ -85,14 +85,9 @@ function AzureFunctionsStepConfiguration({ stepTool, closeEditorPanel, parentCal
       {/*  azureApplicationId={azureFunctionsModel?.getData("azureCredentialId")}*/}
       {/*/>*/}
       <AzureFunctionsStepDynamicNameToggleInput
-        dataObject={azureFunctionsModel}
-        setDataObject={setAzureFunctionsModel}
+        model={azureFunctionsModel}
+        setModel={setAzureFunctionsModel}
         fieldName={"dynamicServiceName"}
-        pipelineId={pipelineId}
-      />
-      <AzureFunctionsStepServiceNameTextInput
-        azureFunctionsModel={azureFunctionsModel}
-        setAzureFunctionsModel={setAzureFunctionsModel}
       />
       <AzureFunctionsStepDockerStepSelectInput
         dataObject={azureFunctionsModel}
