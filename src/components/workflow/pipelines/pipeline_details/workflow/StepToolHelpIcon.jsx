@@ -26,6 +26,8 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
         return <AwsEcsDeployStepConfigurationHelp/>;
       case "azure_aks_deploy":
         return <AzureAksDeployPipelineStepConfigurationHelp/>;
+      case "azure_acr_push":
+        return <AzureAcrPushPipelineStepConfigurationHelp/>;
       case "jenkins":
       case "junit":
       case "xunit":
@@ -65,8 +67,6 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
       case "aws_lambda":
       case "coverity":
       case "jfrog_artifactory_maven":
-      case "azure_acr_push":
-        return <AzureAcrPushPipelineStepConfigurationHelp/>;
       case "azure-functions":
       case "mongodb_realm":
       default:
