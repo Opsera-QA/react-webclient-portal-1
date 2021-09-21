@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
+import toolsActions from "components/inventory/tools/tools-actions";
 import azureFunctionsActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/azure-functions-step-actions";
-import toolsActions from "components/inventory/tools/tools-actions";
 
-function AzureRegionSelectInput(
+function AzureApplicationTypeSelectInput(
   {
     fieldName,
     model,
@@ -16,15 +16,15 @@ function AzureRegionSelectInput(
     azureToolApplicationId,
     disabled,
     setDataFunction,
-    clearDataFunction
+    clearDataFunction,
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [azureRegionList, setAzureRegionList] = useState([]);
+  const [azureApplicationTypeList, setAzureApplicationTypeList] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Azure Region");
+  const [placeholder, setPlaceholderText] = useState("Select Application Type");
   const isMounted = useRef(false);
-  const {getAccessToken} = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -34,7 +34,7 @@ function AzureRegionSelectInput(
     isMounted.current = true;
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-    setAzureRegionList([]);
+    setAzureApplicationTypeList([]);
 
     if (azureToolId != null && azureToolId !== "" && azureToolApplicationId != null && azureToolApplicationId !== "") {
       loadData(source).catch((error) => {
@@ -53,8 +53,8 @@ function AzureRegionSelectInput(
       setIsLoading(true);
       await loadAzureTool(cancelSource);
     } catch (error) {
-      setPlaceholderText("No Regions Available!");
-      setErrorMessage("There was an error pulling Azure Regions");
+      setPlaceholderText("No Application Types Available!");
+      setErrorMessage("There was an error pulling Azure Application Types");
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -83,31 +83,29 @@ function AzureRegionSelectInput(
           setPlaceholderText("No Regions Available!");
           setErrorMessage("There was an error pulling Azure Regions. Azure Application not found!");
         } else {
-          await loadAzureRegions(cancelSource, azureTool, azureApplication);
+          await loadAzureApplicationTypes(cancelSource, azureTool, azureApplication);
         }
       }
     }
   };
 
-  const loadAzureRegions = async (cancelSource = cancelTokenSource, azureToolData, azureApplicationData) => {
-    setErrorMessage("");
-    const response = await azureFunctionsActions.getAzureRegions(
+  const loadAzureApplicationTypes = async (cancelSource = cancelTokenSource, azureToolData, azureApplicationData) => {
+    const response = await azureFunctionsActions.getApplicationType(
       getAccessToken,
       cancelSource,
       azureToolData,
-      azureApplicationData
+      azureApplicationData,
     );
 
-    const azureRegions = response?.data?.data;
+    const applicationTypes = response?.data?.data;
 
-    if (!Array.isArray(azureRegions)) {
-      setPlaceholderText("No Regions Available!");
-      setErrorMessage("There was an error pulling Azure Regions");
-    } else if (azureRegions.length > 0) {
-      setAzureRegionList(azureRegions);
-    } else {
-      setPlaceholderText("No regions found with this Azure configuration");
-      setErrorMessage("No Azure Regions found");
+    if (Array.isArray(applicationTypes) && applicationTypes.length > 0) {
+      setErrorMessage("");
+      setAzureApplicationTypeList(applicationTypes);
+    }
+    else {
+      setPlaceholderText("No Application Types found with this Azure configuration");
+      setErrorMessage("No Azure Application Types found");
     }
   };
 
@@ -116,26 +114,26 @@ function AzureRegionSelectInput(
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={azureRegionList}
+      selectOptions={azureApplicationTypeList}
       busy={isLoading}
-      setDataFunction={setDataFunction}
-      clearDataFunction={clearDataFunction}
       valueField={"name"}
-      textField={(region) => {
-        if (region?.properties) {
-          return (region?.properties?.displayName);
+      textField={(applicationType) => {
+        if (applicationType?.properties) {
+          return (`${applicationType?.properties?.display} - (${applicationType?.properties?.name})`);
         }
 
         return model?.getData(fieldName);
       }}
-      disabled={disabled || azureRegionList.length === 0}
+      disabled={disabled}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
       placeholder={placeholder}
       errorMessage={errorMessage}
     />
   );
 }
 
-AzureRegionSelectInput.propTypes = {
+AzureApplicationTypeSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -144,6 +142,7 @@ AzureRegionSelectInput.propTypes = {
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
+  region: PropTypes.string,
 };
 
-export default AzureRegionSelectInput;
+export default AzureApplicationTypeSelectInput;
