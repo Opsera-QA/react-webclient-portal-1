@@ -7,8 +7,8 @@ import azureFunctionsStepFormMetadata from "./azureFunctions-stepForm-metadata";
 import AzureFunctionsStepApplicationSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/inputs/AzureFunctionsStepApplicationSelectInput";
 import AzureFunctionsStepDynamicNameToggleInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/inputs/AzureFunctionsStepDynamicNameToggleInput";
-import AzureFunctionsRegionSelectInput from "./inputs/AzureFunctionsRegionSelectInput";
-import AzureFunctionsApplicationTypeSelectInput from "./inputs/AzureFunctionsApplicationTypeSelectInput";
+import AzureFunctionsStepRegionSelectInput from "./inputs/AzureFunctionsRegionSelectInput";
+import AzureFunctionsStepApplicationTypeSelectInput from "./inputs/AzureFunctionsApplicationTypeSelectInput";
 import AzureFunctionsStepServiceNameTextInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/inputs/AzureFunctionsServiceNameTextInput";
 import AzureFunctionsStepAzureToolSelectInput
@@ -72,22 +72,18 @@ function AzureFunctionsStepConfiguration({ stepTool, closeEditorPanel, parentCal
         setApplicationData={setApplicationData}
         azureToolId={azureFunctionsModel?.getData("azureToolConfigId")}
       />
-      <AzureFunctionsRegionSelectInput
+      <AzureFunctionsStepRegionSelectInput
         model={azureFunctionsModel}
         setModel={setAzureFunctionsModel}
         azureToolId={azureFunctionsModel?.getData("azureToolConfigId")}
         azureApplicationId={azureFunctionsModel?.getData("azureCredentialId")}
       />
-      <AzureFunctionsApplicationTypeSelectInput
-        fieldName="applicationType"
-        dataObject={azureFunctionsModel}
-        setDataObject={setAzureFunctionsModel}
-        azureToolConfigId={azureFunctionsModel?.getData("azureToolConfigId")}
-        azureConfig={azureConfig}
-        azureApplication={azureFunctionsModel?.getData("azureCredentialId")}
-        applicationData={applicationData}
-        region={azureFunctionsModel?.getData("azureRegion")}
-      />
+      {/*<AzureFunctionsStepApplicationTypeSelectInput*/}
+      {/*  model={azureFunctionsModel}*/}
+      {/*  setModel={setAzureFunctionsModel}*/}
+      {/*  azureToolId={azureFunctionsModel?.getData("azureToolConfigId")}*/}
+      {/*  azureApplicationId={azureFunctionsModel?.getData("azureCredentialId")}*/}
+      {/*/>*/}
       <AzureFunctionsStepDynamicNameToggleInput
         dataObject={azureFunctionsModel}
         setDataObject={setAzureFunctionsModel}

@@ -19,8 +19,6 @@ azureFunctionsActions.getAzureRegions = async (getAccessToken, cancelTokenSource
     resource: azureApplicationConfiguration?.resource,
   };
 
-  console.log("postBody: " + JSON.stringify(postBody));
-
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
 };
 
@@ -56,18 +54,20 @@ azureFunctionsActions.getKubeVersions = async (getAccessToken, cancelTokenSource
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
 };
 
-azureFunctionsActions.getApplicationType = async (getAccessToken, cancelTokenSource, config, applicationData) => {
-  const cfg = config?.configuration;
-  const owner = config?.owner;
-  const postBody = {
-    "owner": owner,
-    "clientId": applicationData?.clientId?.vaultKey,
-    "clientSecret": applicationData?.clientSecret?.vaultKey,
-    "tenantId": cfg?.azureTenantId,
-    "subscriptionId": cfg?.azureSubscriptionId,
-    "resource": applicationData?.resource,
-  };
+azureFunctionsActions.getApplicationType = async (getAccessToken, cancelTokenSource, azureToolData, applicationData) => {
   const apiURL = `tools/azure/functions/applicationType`;
+  const azureToolConfiguration = azureToolData?.configuration;
+  const applicationConfiguration = applicationData?.configuration;
+
+  const postBody = {
+    owner: azureToolData?.owner,
+    clientId: applicationConfiguration?.clientId?.vaultKey,
+    clientSecret: applicationConfiguration?.clientSecret?.vaultKey,
+    tenantId: azureToolConfiguration?.azureTenantId,
+    subscriptionId: azureToolConfiguration?.azureSubscriptionId,
+    resource: applicationConfiguration?.resource,
+  };
+
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
 };
 
