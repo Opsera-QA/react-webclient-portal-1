@@ -18,9 +18,9 @@ function InsightsSubNavigationBar({currentTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-      case "analytics":
+      /*case "analytics":
         history.push(`/insights/analytics`);
-        return;
+        return;*/
       case "marketplace":
         history.push(`/insights/marketplace`);
         return;
@@ -54,7 +54,7 @@ function InsightsSubNavigationBar({currentTab}) {
     <NavigationTabContainer>
       <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleTabClick} activeTab={currentTab} tabText={"Dashboards"} />
       <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleTabClick} activeTab={currentTab} tabText={"Marketplace"} />
-      <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleTabClick} activeTab={currentTab} tabText={"Analytics"} />
+      {/*<NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleTabClick} activeTab={currentTab} tabText={"Analytics"} />*/}
       <NavigationTab icon={faRadar} tabName={"synopsis"} handleTabClick={handleTabClick} activeTab={currentTab} tabText={"Synopsis"} />
       {getActiveViewerTab()}
     </NavigationTabContainer>

@@ -336,13 +336,11 @@ function PipelineDetailView() {
           </li>*/}
           <li className="nav-item">
             <a className={"nav-link " + (activeTab === "summary" ? "active" : "")} href="#"
-               onClick={handleTabClick("summary")}><FontAwesomeIcon
-              icon={getTypeIcon(pipeline["type"] ? pipeline["type"][0] : "default")} className="mr-2"/>Summary</a>
+               onClick={handleTabClick("summary")}>Summary</a>
           </li>
           <li className="nav-item">
             <a className={"nav-link " + (activeTab === "model" ? "active" : "")} href="#"
-               onClick={handleTabClick("model")}><FontAwesomeIcon icon={faDiceD20}
-                                                                  className="mr-2"/>Workflow</a>
+               onClick={handleTabClick("model")}>Workflow</a>
           </li>
           {/*<li className="nav-item">*/}
           {/*  <a className={"nav-link " + (activeTab === "editor" ? "active" : "")} href="#"*/}
@@ -379,7 +377,7 @@ function PipelineDetailView() {
 
     return (
       <div>
-        <div className="max-content-width-1080 content-block-no-height pb-2" style={{ width: "80vw" }}>
+        <div className="max-content-width-1080 content-block-no-height p-2 mb-2 flat-top-content-block" style={{ width: "80vw" }}>
           <PipelineSummaryPanel
             pipeline={pipeline}
             setPipeline={setPipeline}
@@ -420,7 +418,7 @@ function PipelineDetailView() {
 
     return (
       <span>
-        <FontAwesomeIcon icon={getTypeIcon(pipeline["type"] ? pipeline["type"][0] : "default")} className="mr-2"/>
+        {/*<FontAwesomeIcon icon={getTypeIcon(pipeline["type"] ? pipeline["type"][0] : "default")} className="mr-2"/>*/}
         {pipeline?.name}
       </span>
     );
@@ -449,7 +447,7 @@ function PipelineDetailView() {
   return (
     <div>
       {getNavigationTabContainer()}
-      <div className="h4 mt-2 mb-4">{getPipelineTitle()}</div>
+      <div className="h4 mt-3 mb-2">{getPipelineTitle()}</div>
       {getNavigationTabs()}
       {getCurrentView()}
     </div>
