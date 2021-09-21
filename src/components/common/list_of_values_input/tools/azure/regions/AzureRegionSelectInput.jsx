@@ -24,7 +24,7 @@ function AzureRegionSelectInput(
   const [errorMessage, setErrorMessage] = useState("");
   const [placeholder, setPlaceholderText] = useState("Select Azure Region");
   const isMounted = useRef(false);
-  const { getAccessToken } = useContext(AuthContext);
+  const {getAccessToken} = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -51,7 +51,6 @@ function AzureRegionSelectInput(
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      setErrorMessage("");
       await loadAzureTool(cancelSource);
     } catch (error) {
       setPlaceholderText("No Regions Available!");
@@ -73,19 +72,17 @@ function AzureRegionSelectInput(
       if (azureTool == null) {
         setPlaceholderText("No Regions Available!");
         setErrorMessage("There was an error pulling Azure Regions. Azure tool not found!");
-      }
-      else {
+      } else {
         const applications = azureTool?.applications;
 
         const azureApplication = Array.isArray(applications)
           ? applications.find((application) => application._id === azureToolApplicationId)
-        : undefined;
+          : undefined;
 
         if (azureApplication == null) {
           setPlaceholderText("No Regions Available!");
           setErrorMessage("There was an error pulling Azure Regions. Azure Application not found!");
-        }
-        else {
+        } else {
           await loadAzureRegions(cancelSource, azureTool, azureApplication);
         }
       }
@@ -93,6 +90,7 @@ function AzureRegionSelectInput(
   };
 
   const loadAzureRegions = async (cancelSource = cancelTokenSource, azureToolData, azureApplicationData) => {
+    setErrorMessage("");
     const response = await azureFunctionsActions.getAzureRegions(
       getAccessToken,
       cancelSource,
@@ -105,11 +103,9 @@ function AzureRegionSelectInput(
     if (!Array.isArray(azureRegions)) {
       setPlaceholderText("No Regions Available!");
       setErrorMessage("There was an error pulling Azure Regions");
-    }
-    else if (azureRegions.length > 0) {
+    } else if (azureRegions.length > 0) {
       setAzureRegionList(azureRegions);
-    }
-    else {
+    } else {
       setPlaceholderText("No regions found with this Azure configuration");
       setErrorMessage("No Azure Regions found");
     }
@@ -125,7 +121,9 @@ function AzureRegionSelectInput(
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
       valueField={"name"}
-      textField={(region) => region?.property?.displayName}
+      textField={(region) => {
+        return (`${region?.properties?.displayName}`);
+      }}
       disabled={disabled || azureRegionList.length === 0}
       placeholder={placeholder}
       errorMessage={errorMessage}
@@ -142,10 +140,6 @@ AzureRegionSelectInput.propTypes = {
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
-};
-
-AzureRegionSelectInput.defaultProps = {
-  fieldName: "azureRegion",
 };
 
 export default AzureRegionSelectInput;
