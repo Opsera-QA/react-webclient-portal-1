@@ -3,6 +3,10 @@ import PropTypes from "prop-types";
 import GitRepositoryInput from "components/common/list_of_values_input/tools/git/GitRepositoryInput";
 
 function JenkinsRepositorySelectInput({dataObject, setDataObject, disabled}) {
+
+  //const sfdcJobType =  dataObject.getData("sfdcJobType");
+  const jobType =  dataObject.getData("jobType");
+
   const setRepository = (fieldName, selectedOption) => {
     let newDataObject = { ...dataObject };
 
@@ -33,7 +37,9 @@ function JenkinsRepositorySelectInput({dataObject, setDataObject, disabled}) {
   };
   const valid =()=>{
     return dataObject.data.service && dataObject.data.gitToolId &&
-      !["SFDC VALIDATE PACKAGE XML","SFDC UNIT TESTING","SFDC DEPLOY"].some(item=>item === dataObject.data.jobType) &&
+      jobType != "SFDC VALIDATE PACKAGE XML" && 
+      jobType != "SFDC UNIT TESTING" && 
+      jobType != "SFDC DEPLOY" && 
       (dataObject.data.service === "bitbucket" ? dataObject.data.workspace && dataObject.data.workspace.length > 0 : true ) && 
       !dataObject.data.isOrgToOrg;
   };

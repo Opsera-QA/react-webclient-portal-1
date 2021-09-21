@@ -116,6 +116,12 @@ export const fieldValidation = (value, data, field) => {
     }
   }
 
+  if (field?.minItems != null && value?.length < field?.minItems)
+  {
+    errorMessages.push(`You have selected ${value?.length} values, but the minimum allowed is ${field?.minItems}`);
+  }
+
+
   if (field.maxItems != null && value.length > field.maxItems)
   {
     errorMessages.push(`You have selected ${value.length} values, but the maximum allowed is ${field.maxItems}`);

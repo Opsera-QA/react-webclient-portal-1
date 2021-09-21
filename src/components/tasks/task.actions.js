@@ -33,10 +33,9 @@ taskActions.createGitTaskV2 = async (getAccessToken, cancelTokenSource, gitTasks
 
 taskActions.getTasksListV2 = async (getAccessToken, cancelTokenSource, taskFilterModel, fields) => {
   const apiUrl = `/tasks`;
-  const sortOption = taskFilterModel?.getData("sortOption");
   const urlParams = {
     params: {
-      sort: sortOption ? sortOption.value : undefined,
+      sort: taskFilterModel?.getFilterValue("sortOption"),
       page: taskFilterModel?.getData("currentPage"),
       size: taskFilterModel?.getData("pageSize"),
       tag: taskFilterModel?.getFilterValue("tag"),
@@ -95,42 +94,6 @@ taskActions.getGitTaskAccessForUserEmail = async (getAccessToken, cancelTokenSou
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-taskActions.getGitTaskActivityLogs = async (gitTasksDataDto, gitTasksActivityFilterDto, getAccessToken) => {
-  let sortOption = gitTasksActivityFilterDto.getData("sortOption");
-  let urlParams = {
-    params: {
-      sort: gitTasksActivityFilterDto ? sortOption.value : undefined,
-      page: gitTasksActivityFilterDto.getData("currentPage"),
-      size: gitTasksActivityFilterDto.getData("pageSize"),
-      tag: gitTasksActivityFilterDto.getFilterValue("tag"),
-      type: gitTasksActivityFilterDto.getFilterValue("type"),
-      status: gitTasksActivityFilterDto.getFilterValue("status"),
-      search: gitTasksActivityFilterDto.getFilterValue("search"),
-    }
-  };
-
-  const apiUrl = `/tools/git/logs/${gitTasksDataDto.getData("_id")}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
-};
-
-taskActions.getAllGitTasksActivityLogs = async (gitTasksActivityFilterDto, getAccessToken) => {
-  let sortOption = gitTasksActivityFilterDto.getData("sortOption");
-  let urlParams = {
-    params: {
-      sort: gitTasksActivityFilterDto ? sortOption.value : undefined,
-      page: gitTasksActivityFilterDto.getData("currentPage"),
-      size: gitTasksActivityFilterDto.getData("pageSize"),
-      tag: gitTasksActivityFilterDto.getFilterValue("tag"),
-      type: gitTasksActivityFilterDto.getFilterValue("type"),
-      status: gitTasksActivityFilterDto.getFilterValue("status"),
-      search: gitTasksActivityFilterDto.getFilterValue("search"),
-    }
-  };
-
-  const apiUrl = `/tools/git/logs/`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
-};
-
 taskActions.processSyncRequest = async (postBody, getAccessToken) => {
   const apiUrl = `/tools/git/processSyncRequest`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
@@ -170,50 +133,52 @@ taskActions.getTaskActivityLogs = async (getAccessToken, cancelTokenSource, id, 
     },
   };
 
-  const apiUrl = `/tools/git/logs/${id}/activity/v2/`;
+  const apiUrl = `tasks/logs/${id}/activity/v2/`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-taskActions.getAllTaskActivityLogs = async (getAccessToken, cancelTokenSource, taskNameArray, taskActivityFilterDto) => {
-  const search = taskActivityFilterDto?.getData("search");
+taskActions.getAllTaskActivityLogs = async (getAccessToken, cancelTokenSource, taskNameArray, runCountArray, taskActivityFilterModel) => {
   const urlParams = {
     params: {
-      search: search ? search : undefined,
+      search: taskActivityFilterModel?.getData("search"),
       taskNameArray: taskNameArray,
+      runCountArray: runCountArray,
+      status: taskActivityFilterModel?.getFilterValue("status"),
       fields: ["run_count", "name", "log_type", "type", "message", "status", "createdAt"]
     },
   };
 
-  const apiUrl = `/tools/git/alllogs/activity/v2/`;
+  const apiUrl = `/tasks/logs/activity/v2/`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-taskActions.getTaskActivityLogTree = async (getAccessToken, cancelTokenSource, id, taskActivityFilterDto) => {
-  const search = taskActivityFilterDto?.getData("search");
+taskActions.getTaskActivityLogTree = async (getAccessToken, cancelTokenSource, id, taskActivityFilterModel) => {
+  const apiUrl = `/tasks/logs/${id}/activity/v2/tree`;
   const urlParams = {
     params: {
-      search: search ? search : undefined
+      search: taskActivityFilterModel?.getData("search"),
+      status: taskActivityFilterModel?.getFilterValue("status"),
     },
   };
 
-  const apiUrl = `/tools/git/logs/${id}/activity/v2/tree`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-taskActions.getTaskActivityLogTypeTree = async (getAccessToken, cancelTokenSource, taskActivityFilterDto) => {
-  const search = taskActivityFilterDto?.getData("search");
+taskActions.getAllTasksActivityTree = async (getAccessToken, cancelTokenSource, taskActivityFilterModel) => {
+  const apiUrl = `/tasks/logs/activity/v2/all-tasks-tree`;
   const urlParams = {
     params: {
-      search: search ? search : undefined
+      search: taskActivityFilterModel?.getData("search"),
+      type: taskActivityFilterModel?.getFilterValue("type"),
+      status: taskActivityFilterModel?.getFilterValue("status"),
     },
   };
 
-  const apiUrl = `/tools/git/logs/activity/v2/alltaskstree`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 taskActions.getTaskActivityLogById = async (getAccessToken, cancelTokenSource, id) => {
-  const apiUrl = `/tools/git/logs/activity/v2/${id}`;
+  const apiUrl = `/tasks/logs/activity/v2/${id}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

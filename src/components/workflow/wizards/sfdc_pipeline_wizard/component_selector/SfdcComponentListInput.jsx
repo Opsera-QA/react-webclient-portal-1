@@ -39,15 +39,6 @@ const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel, s
     };
   }, []);
 
-  // TODO: Figure out how to get both sides working properly without reloading list--
-  //  probably need to make a new component for side by side with selection
-  useEffect(() => {
-    if (isMounted?.current === true && Array.isArray(componentTypes) && componentTypes.length > 0) {
-      setComponentTypes([...componentTypes]);
-    }
-  }, [selectedComponents]);
-
-
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
@@ -114,6 +105,14 @@ const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel, s
     `);
   };
 
+  // TODO: This is a workaround for the refresh issue.
+  const handleRemoveFromSelected = (fieldName, valueArray) => {
+    let newModel = pipelineWizardModel;
+    pipelineWizardModel.setData(fieldName, valueArray);
+    setPipelineWizardModel({...newModel});
+    setComponentTypes([...componentTypes]);
+  };
+
   if (pipelineWizardModel == null) {
     return <LoadingDialog size={"md"} message={"Loading Data"} />;
   }
@@ -146,6 +145,7 @@ const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel, s
           selectOptions={getSelectedOptions()}
           dataObject={pipelineWizardModel}
           setDataObject={setPipelineWizardModel}
+          setDataFunction={handleRemoveFromSelected}
           disabledOptions={getDisabledOptions()}
           noDataMessage={"No Component Types Selected"}
           valueField={"name"}

@@ -3,8 +3,7 @@ import { Row, Col, Card, Button, OverlayTrigger, Tooltip } from "react-bootstrap
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "../../../contexts/DialogToastContext";
 import analyticsActions from "components/settings/analytics/analytics-settings-actions";
-import DtoSelectInput from "../../common/input/dto_input/dto-select-input";
-import Model from "../../../core/data_model/model";
+import Model from "core/data_model/model";
 import AnalyticsProfileMetadata from "./analytics-profile-metadata";
 import ScreenContainer from "../../common/panels/general/ScreenContainer";
 import LoadingView from "../../common/status_notifications/loading";
@@ -12,21 +11,8 @@ import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
-
-const DEFAULT_PERSONAS = [
-  {
-    name: "Developer",
-    value: "developer",
-  },
-  {
-    name: "Manager",
-    value: "manager",
-  },
-  {
-    name: "Executive",
-    value: "executive",
-  },
-];
+import AnalyticsDefaultPersonaSelectInput
+  from "components/common/list_of_values_input/analytics_profile/AnalyticsDefaultPersonaSelectInput";
 
 function AnalyticsProfileSettings() {
   const toastContext = useContext(DialogToastContext);
@@ -242,13 +228,9 @@ function AnalyticsProfileSettings() {
               />
             </Col>
             <Col lg={12}>
-              <DtoSelectInput
-                setDataObject={setAnalyticsProfileData}
-                textField={"name"}
-                valueField={"value"}
-                dataObject={analyticsProfileData}
-                filter={"contains"}
-                selectOptions={DEFAULT_PERSONAS ? DEFAULT_PERSONAS : []}
+              <AnalyticsDefaultPersonaSelectInput
+                setModel={setAnalyticsProfileData}
+                model={analyticsProfileData}
                 fieldName={"defaultPersona"}
                 disabled={analyticsProfileData.getData("ldapAccount") && !analyticsProfileData.getData("ldapOwner")}
               />

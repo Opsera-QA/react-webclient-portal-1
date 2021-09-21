@@ -189,7 +189,8 @@ const jenkinsPipelineStepConfigurationMetadata = {
       label: "Runtime Arguments",
       id: "runtimeArguments",
       regexDefinitionName: "argumentList",
-      formText: "A newline-separated list of Runtime Arguments"
+      formText: "A newline-separated list of Runtime Arguments",
+      maxLength: 500
     }
   ],
   newObjectFields: {

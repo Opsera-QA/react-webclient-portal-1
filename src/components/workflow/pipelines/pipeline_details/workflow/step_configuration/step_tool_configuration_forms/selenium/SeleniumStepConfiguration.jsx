@@ -140,7 +140,7 @@ function SeleniumStepConfiguration({
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <StepConfigJenkinsToolInput dataObject={seleniumStepConfigurationDto} setDataObject={setSeleniumStepConfigurationDto} />
+      <StepConfigJenkinsToolInput model={seleniumStepConfigurationDto} setModel={setSeleniumStepConfigurationDto} />
       <StepConfigJenkinsJobInput dataObject={seleniumStepConfigurationDto} setDataObject={setSeleniumStepConfigurationDto} typeFilter={""} />
       <StepConfigJenkinsAccountInput dataObject={seleniumStepConfigurationDto} setDataObject={setSeleniumStepConfigurationDto} />
       <StepConfigBitbucketWorkspaceInput dataObject={seleniumStepConfigurationDto} setDataObject={setSeleniumStepConfigurationDto} />

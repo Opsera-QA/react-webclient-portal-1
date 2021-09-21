@@ -4,7 +4,7 @@ import OctopusApplications from "./tool_jobs/octopus/applications/OctopusApplica
 import PropTypes from "prop-types";
 import AzureApplications from "./tool_jobs/azureV2/applications/AzureApplications";
 
-function ToolApplicationsPanel({ toolData, loadData, isLoading }) {
+function ToolApplicationsPanel({ toolData, setToolData, loadData, isLoading }) {
   const getPanel = (toolIdentifier, loadData) => {
     switch (toolIdentifier) {
       case "argo":
@@ -57,6 +57,7 @@ function ToolApplicationsPanel({ toolData, loadData, isLoading }) {
 
 ToolApplicationsPanel.propTypes = {
   toolData: PropTypes.object,
+  setToolData: PropTypes.func,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
 };

@@ -3,13 +3,12 @@ import PropTypes from "prop-types";
 import {Col} from "react-bootstrap";
 import Model from "core/data_model/model";
 import Row from "react-bootstrap/Row";
-import CardView from "components/common/card/CardView";
 import TaskCard from "components/common/fields/tasks/TaskCard";
-import gitTasksMetadata from "components/tasks/git-tasks-metadata";
+import VanitySetCardView from "components/common/card/VanitySetCardView";
 
-function TaskCardView({ taskData, taskFilterModel, setTaskFilterModel, loadData, isLoading }) {
+function TaskCardView({ taskData, taskFilterModel, loadData, isLoading, taskMetadata }) {
   const getCards = () => {
-    if (!Array.isArray(taskData) || taskData.length === 0) {
+    if (!Array.isArray(taskData) || taskData.length === 0 || taskMetadata == null) {
       return null;
     }
 
@@ -17,7 +16,7 @@ function TaskCardView({ taskData, taskFilterModel, setTaskFilterModel, loadData,
       <Row className={"mx-0 my-2"}>
         {taskData.map((task, index) => (
           <Col key={index} className={"my-2"}>
-            <TaskCard taskModel={new Model({ ...task }, gitTasksMetadata, false)}/>
+            <TaskCard taskModel={new Model({ ...task }, taskMetadata, false)}/>
           </Col>
         ))}
       </Row>
@@ -25,11 +24,10 @@ function TaskCardView({ taskData, taskFilterModel, setTaskFilterModel, loadData,
   };
 
   return (
-    <CardView
+    <VanitySetCardView
       isLoading={isLoading}
       loadData={loadData}
-      setPaginationDto={setTaskFilterModel}
-      paginationDto={taskFilterModel}
+      paginationModel={taskFilterModel}
       className={"makeup-container-table"}
       cards={getCards()}
     />
@@ -39,7 +37,7 @@ function TaskCardView({ taskData, taskFilterModel, setTaskFilterModel, loadData,
 TaskCardView.propTypes = {
   taskData: PropTypes.array,
   taskFilterModel: PropTypes.object,
-  setTaskFilterModel: PropTypes.func,
+  taskMetadata: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool
 };

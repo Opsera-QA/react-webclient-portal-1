@@ -32,6 +32,36 @@ taskActivityHelpers.constructTree = (pipelineLogData) => {
   return newTree;
 };
 
+taskActivityHelpers.getSecondaryTree = () => {
+  return [
+    {
+      id: "latest",
+      runNumber: undefined,
+      value: "Latest Logs",
+      items: [],
+      type: undefined,
+      name: undefined,
+      icon: {
+        "folder": "fal fa-layer-group opsera-primary",
+        "openFolder": "fal fa-layer-group opsera-yellow",
+        "file": "fal fa-layer-group opsera-primary"
+      }
+    },
+    {
+      id: "other_logs",
+      runNumber: null,
+      value: "Secondary Logs",
+      items: [],
+      type: undefined,
+      name: undefined,
+      icon: {
+        "folder": "fal fa-layer-group opsera-primary",
+        "openFolder": "fal fa-layer-group opsera-yellow",
+        "file": "fal fa-layer-group opsera-primary"
+      }
+    },
+  ];
+};
 
 taskActivityHelpers.constructTaskTree = (pipelineLogData) => {
     let newTree = [];
@@ -53,7 +83,8 @@ taskActivityHelpers.constructTaskTree = (pipelineLogData) => {
             const existingStep = currentValue.items.find((item) => { return item.id === `${runNumber}-${taskName}`; });
     
             if (existingStep == null) {
-              currentValue.items.push({
+              let currentItems = currentValue.items;
+              currentItems.push({
                 id: `${runNumber}-${taskName}`,
                 runNumber: runNumber,
                 taskName: taskName,
@@ -64,8 +95,45 @@ taskActivityHelpers.constructTaskTree = (pipelineLogData) => {
                   "file": "fal fa-tasks opsera-primary"
                 }
               });
+
+              // Force Sort Run Count Descending
+              currentItems.sort((treeItem1, treeItem2) => {
+                const runNumber1 = treeItem1.runCount;
+                const runNumber2 = treeItem2?.runNumber;
+
+                if (runNumber1 === "logs" && runNumber2 === "logs") {
+                  return 0;
+                }
+
+                if (runNumber1 === "logs") {
+                  return 1;
+                }
+
+                if (runNumber2 === "logs") {
+                  return -1;
+                }
+
+                const parsedRunNumber1 = parseInt(treeItem1?.runNumber);
+                const parsedRunNumber2 = parseInt(treeItem2?.runNumber);
+
+                if (typeof parsedRunNumber1 !== "number" && typeof parsedRunNumber2 !== "number") {
+                  return 0;
+                }
+
+                if (typeof parsedRunNumber1 !== "number") {
+                  return 1;
+                }
+
+                if (typeof parsedRunNumber2 !== "number") {
+                  return -1;
+                }
+
+                return parsedRunNumber2 - parsedRunNumber1;
+              });
+
+              currentValue.items = currentItems;
             }
-    
+
             newTree[index] = currentValue;
           }
           else {
@@ -100,6 +168,22 @@ taskActivityHelpers.constructTaskTree = (pipelineLogData) => {
       }
     
       if (newTree.length > 0) {
+        // Sort alphabetically
+        newTree.sort((treeItem1, treeItem2) => {
+          const taskName1 = treeItem1?.taskName?.toUpperCase();
+          const taskName2 = treeItem2?.taskName?.toUpperCase();
+
+          if (taskName1 < taskName2) {
+            return -1;
+          }
+
+          if (taskName1 > taskName2) {
+            return 1;
+          }
+
+          return 0;
+        });
+
         newTree[0].opened = true;
         newTree[0].selected = 1;
       }

@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import {axiosApiService} from "api/apiService";
-import PipelineActivityLogTable
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTable";
+import PipelineActivityLogTreeTable
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTreeTable";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import "../../workflows.css";
@@ -19,17 +19,15 @@ import {
   faMicrochip,
 } from "@fortawesome/pro-light-svg-icons";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import Model from "../../../../core/data_model/model";
 import pipelineActivityActions
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-actions";
-import pipelineActivityFilterMetadata
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-filter-metadata";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import axios from "axios";
 import pipelineActivityHelpers
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
 
 const refreshInterval = 8000;
 
@@ -50,7 +48,7 @@ function PipelineDetailView() {
   const [editItem, setEditItem] = useState(false);
   const [ownerName, setOwnerName] = useState(undefined);
   const [refreshCount, setRefreshCount] = useState(0);
-  const [pipelineActivityFilterDto, setPipelineActivityFilterDto] = useState(new Model(pipelineActivityFilterMetadata.newObjectFields, pipelineActivityFilterMetadata, false));
+  const [pipelineActivityFilterModel, setPipelineActivityFilterModel] = useState(new PipelineFilterModel());
   const history = useHistory();
   const [pipelineActivityMetadata, setPipelineActivityMetadata] = useState(undefined);
   const [pipelineActivityTreeData, setPipelineActivityTreeData] = useState([]);
@@ -212,7 +210,7 @@ function PipelineDetailView() {
       await fetchData();
       if (staleRefreshCount % 3 === 0) {
         console.log("divisible by 3 refresh: getting activity logs");
-        await getActivityLogs(pipelineActivityFilterDto, true);
+        await getActivityLogs(pipelineActivityFilterModel, true);
       }
     }, refreshInterval);
     setRefreshTimer(refreshTimer);
@@ -227,7 +225,7 @@ function PipelineDetailView() {
   };
 
   // TODO: Find way to put refresh inside table itself
-  const getActivityLogs = async (filterDto = pipelineActivityFilterDto, silentLoading = false, cancelSource = cancelTokenSource) => {
+  const getActivityLogs = async (newFilterModel = pipelineActivityFilterModel, silentLoading = false, cancelSource = cancelTokenSource) => {
     if (activeTab !== "summary" || logsIsLoading) {
       return;
     }
@@ -238,12 +236,18 @@ function PipelineDetailView() {
       }
 
       // TODO: if search term applies ignore run count and reconstruct tree?
-      const treeResponse = await pipelineActivityActions.getPipelineActivityLogTree(getAccessToken, cancelSource, id, filterDto);
+      const treeResponse = await pipelineActivityActions.getPipelineActivityLogTree(getAccessToken, cancelSource, id, newFilterModel);
       const pipelineTree = pipelineActivityHelpers.constructTree(treeResponse?.data?.data);
       setPipelineActivityTreeData([...pipelineTree]);
+      setActivityData([]);
 
       if (Array.isArray(pipelineTree) && pipelineTree.length > 0) {
-        await pullLogData(pipelineTree, filterDto, cancelSource);
+        await pullLogData(pipelineTree, newFilterModel, cancelSource);
+      }
+      else {
+        newFilterModel?.setData("totalCount", 0);
+        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
+        setPipelineActivityFilterModel({...newFilterModel});
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -253,7 +257,7 @@ function PipelineDetailView() {
     }
   };
 
-  const pullLogData = async (pipelineTree = pipelineActivityTreeData, filterDto = pipelineActivityFilterDto, cancelSource = cancelTokenSource, silentLoading = false) => {
+  const pullLogData = async (pipelineTree = pipelineActivityTreeData, filterDto = pipelineActivityFilterModel, cancelSource = cancelTokenSource, silentLoading = false) => {
 
     try {
       // create run count query based on tree -- tree is 0 index based
@@ -287,7 +291,7 @@ function PipelineDetailView() {
         const newFilterDto = filterDto;
         newFilterDto.setData("totalCount", data?.count);
         newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-        setPipelineActivityFilterDto({...newFilterDto});
+        setPipelineActivityFilterModel({...newFilterDto});
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -332,13 +336,11 @@ function PipelineDetailView() {
           </li>*/}
           <li className="nav-item">
             <a className={"nav-link " + (activeTab === "summary" ? "active" : "")} href="#"
-               onClick={handleTabClick("summary")}><FontAwesomeIcon
-              icon={getTypeIcon(pipeline["type"] ? pipeline["type"][0] : "default")} className="mr-2"/>Summary</a>
+               onClick={handleTabClick("summary")}>Summary</a>
           </li>
           <li className="nav-item">
             <a className={"nav-link " + (activeTab === "model" ? "active" : "")} href="#"
-               onClick={handleTabClick("model")}><FontAwesomeIcon icon={faDiceD20}
-                                                                  className="mr-2"/>Workflow</a>
+               onClick={handleTabClick("model")}>Workflow</a>
           </li>
           {/*<li className="nav-item">*/}
           {/*  <a className={"nav-link " + (activeTab === "editor" ? "active" : "")} href="#"*/}
@@ -375,7 +377,7 @@ function PipelineDetailView() {
 
     return (
       <div>
-        <div className="max-content-width-1080 content-block-no-height pb-2" style={{ width: "80vw" }}>
+        <div className="max-content-width-1080 content-block-no-height p-2 mb-2" style={{ width: "80vw", border: "1px solid #d2d2d2", borderRadius: "0" }}>
           <PipelineSummaryPanel
             pipeline={pipeline}
             setPipeline={setPipeline}
@@ -391,13 +393,13 @@ function PipelineDetailView() {
           />
         </div>
         <div className="max-content-width-1875">
-          <PipelineActivityLogTable
+          <PipelineActivityLogTreeTable
             pipeline={pipeline}
             pipelineLogData={activityData}
             isLoading={logsIsLoading}
-            loadData={pullLogData}
-            pipelineActivityFilterDto={pipelineActivityFilterDto}
-            setPipelineActivityFilterDto={setPipelineActivityFilterDto}
+            loadData={getActivityLogs}
+            pipelineActivityFilterDto={pipelineActivityFilterModel}
+            setPipelineActivityFilterDto={setPipelineActivityFilterModel}
             pipelineActivityMetadata={pipelineActivityMetadata}
             pipelineActivityTreeData={pipelineActivityTreeData}
             setCurrentLogTreePage={setCurrentLogTreePage}
@@ -416,7 +418,7 @@ function PipelineDetailView() {
 
     return (
       <span>
-        <FontAwesomeIcon icon={getTypeIcon(pipeline["type"] ? pipeline["type"][0] : "default")} className="mr-2"/>
+        {/*<FontAwesomeIcon icon={getTypeIcon(pipeline["type"] ? pipeline["type"][0] : "default")} className="mr-2"/>*/}
         {pipeline?.name}
       </span>
     );
@@ -445,7 +447,7 @@ function PipelineDetailView() {
   return (
     <div>
       {getNavigationTabContainer()}
-      <div className="h4 mt-2 mb-4">{getPipelineTitle()}</div>
+      <div className="h4 mt-3 mb-2">{getPipelineTitle()}</div>
       {getNavigationTabs()}
       {getCurrentView()}
     </div>

@@ -21,10 +21,10 @@ function JenkinsSfdcUnitTestTypeSelectInput({ dataObject, setDataObject,  disabl
     return (<SelectInputBase
       fieldName={'sfdcUnitTestType'}
       dataObject={dataObject}
-      setDataObject={setDataObject}
+      setDataObject={setDataObject} 
       placeholderText={"Please select type of unit test"}
       selectOptions={options}
-      valueField="id"
+      valueField="value"
       textField="label"
       disabled={disabled}
     />);

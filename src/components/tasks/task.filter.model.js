@@ -47,7 +47,7 @@ const taskFilterMetadata = {
   newObjectFields: {
     pageSize: 100,
     currentPage: 1,
-    sortOption: {text: "Sort: Name", value: "name"},
+    sortOption: {text: "Name", value: "name"},
     search: "",
     activeFilters: [],
     viewType: "list",
@@ -84,7 +84,7 @@ export class TaskFilterModel extends FilterModelBase {
       activeFilters.push({filterId: "active",  text: `${this.getFilterText("active")}`});
     }
 
-    if (this.getData("type") != null) {
+    if (this.getData("type") != null && this.getData("type") !== "") {
       activeFilters.push({filterId: "type", text: `Type: ${this.getFilterText("type")}`});
     }
 
@@ -103,13 +103,18 @@ export class TaskFilterModel extends FilterModelBase {
     return activeFilters;
   };
 
+  canSort = () => {
+    return true;
+  };
+
   getSortOptions = () => {
     return (
       [
-        {text: "Oldest", option: "oldest"},
-        {text: "Newest", option: "newest"},
-        {text: "Name", option: "name"},
-        {text: "Last Updated", option: "lastupdated"},
+        {text: "Oldest Tasks", value: "oldest"},
+        {text: "Newest Tasks", value: "newest"},
+        {text: "Task Name (A-Za-z)", value: "name"},
+        {text: "Task Name (z-aZ-A)", value: "name"},
+        {text: "Last Updated", value: "lastupdated"},
       ]
     );
   };

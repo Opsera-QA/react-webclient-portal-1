@@ -4,7 +4,7 @@ import "components/inventory/tools/tools.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import PipelineTaskConsoleLogField from "components/common/form_fields/pipelines/activity/PipelineTaskConsoleLogField";
+import PipelineTaskConsoleLogField from "components/common/fields/pipelines/activity/PipelineTaskConsoleLogField";
 
 function PipelineTaskConsoleLogPanel({ pipelineTaskData }) {
   return (

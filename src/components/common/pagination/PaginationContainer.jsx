@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import DtoTopPagination from "components/common/pagination/DtoTopPagination";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import LoadingDialog from "components/common/status_notifications/loading";
+import VanityPaginationContainer from "components/common/pagination/v2/VanityPaginationContainer";
 
-function PaginationContainer({ isLoading, filterDto, setFilterDto, loadData, children, scrollOnLoad }) {
+function PaginationContainer({ isLoading, filterDto, setFilterDto, loadData, children, scrollOnLoad, nextGeneration }) {
   const getTopPaginator = () => {
     return (
       <DtoTopPagination
@@ -40,6 +41,15 @@ function PaginationContainer({ isLoading, filterDto, setFilterDto, loadData, chi
     return children;
   }
 
+  //TODO: This is a workaround until everything is updated to new standards
+  if (nextGeneration === true) {
+    return (
+      <VanityPaginationContainer paginationModel={filterDto} isLoading={isLoading} loadData={loadData}>
+        {children}
+      </VanityPaginationContainer>
+    );
+  }
+
   return (
     <div className="pagination-container">
       {getTopPaginator()}
@@ -55,7 +65,8 @@ PaginationContainer.propTypes = {
   setFilterDto: PropTypes.func,
   children: PropTypes.any,
   loadData: PropTypes.func,
-  scrollOnLoad: PropTypes.bool
+  scrollOnLoad: PropTypes.bool,
+  nextGeneration: PropTypes.bool,
 };
 
 export default PaginationContainer;
