@@ -9,11 +9,12 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
-import FileReaderInput from "components/common/inputs/file/FileReaderInput";
+import FileReaderInputBase from "components/common/inputs/file/FileReaderInputBase";
 
 function CoverityToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [coverityConfigurationDto, setCoverityConfigurationDto] = useState(undefined);
+
   useEffect(() => {
     loadData();
   }, []);
@@ -45,7 +46,7 @@ function CoverityToolConfiguration({ toolData }) {
           <TextInputBase dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} fieldName={"toolURL"} />
           <TextInputBase dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} fieldName={"accountUsername"} />
           <VaultTextInput dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} fieldName={"accountPassword"}/>
-          <FileReaderInput dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} acceptType={".dat,.xml"} fieldName={"license"}/>
+          <FileReaderInputBase model={coverityConfigurationDto} setModel={setCoverityConfigurationDto} acceptType={".dat,.xml"} fieldName={"license"}/>
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
