@@ -451,7 +451,7 @@ function PipelineSummaryPanel({
       <div className="pr-1">
         <Row>
           <Col sm={9}>
-            <div className="d-flex pb-3 title-text-header-2">
+            <div className="d-flex title-text-header-2">
               {editTitle ?
                 <>
                   <div className="flex-fill p-2">

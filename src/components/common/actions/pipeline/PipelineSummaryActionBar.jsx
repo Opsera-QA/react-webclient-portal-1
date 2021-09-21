@@ -10,7 +10,7 @@ import PipelineSubscriptionIcon from "components/common/icons/subscription/Pipel
 
 function PipelineSummaryActionBar({pipelineModel, canTransferPipeline, handleDuplicateClick, handleDeleteClick, handleEditAccessRolesClick, handleViewClick, handlePublishClick, pipeline, loadPipeline}) {
   return (
-    <div className="text-muted action-bar justify-content-end d-flex pb-2">
+    <div className="text-muted action-bar justify-content-end d-flex pb-2 pt-2">
       <div className="ml-3"><PipelineSubscriptionIcon pipelineModel={pipelineModel} /></div>
       {handleViewClick && <div className="ml-3"><ActionBarViewButton handleViewClick={handleViewClick} itemName={"Pipeline"} data={pipeline} /></div>}
       {handlePublishClick && <div className="ml-3"><ActionBarPublishPipelineButton handlePublishClick={handlePublishClick} itemId={pipeline._id} /></div>}
