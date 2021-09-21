@@ -13,7 +13,7 @@
     color: #E57373;
 }
 
-.danger-red {
+.danger-red, .delete-icon {
     color: #dc3545;
 }
 
