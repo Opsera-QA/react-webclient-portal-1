@@ -4,8 +4,8 @@ import PipelineStepEditorPanelContainer from "components/common/panels/detail_pa
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
 import azureFunctionsStepFormMetadata from "./azureFunctions-stepForm-metadata";
-import AzureCredentialIdSelectInput
-  from "./inputs/AzureCredentialIdSelectInput";
+import AzureFunctionsStepApplicationSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/inputs/AzureFunctionsStepApplicationSelectInput";
 import AzureFunctionsStepDynamicNameToggleInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/inputs/AzureFunctionsStepDynamicNameToggleInput";
 import AzureFunctionsRegionSelectInput from "./inputs/AzureFunctionsRegionSelectInput";
 import DockerPushStepSelectInput from "./inputs/DockerPushStepSelectInput";
@@ -65,11 +65,11 @@ function AzureFunctionsStepConfiguration({ stepTool, closeEditorPanel, parentCal
         setModel={setAzureFunctionsModel}
         setAzureConfig={setAzureConfig}
       />
-      <AzureCredentialIdSelectInput
-        dataObject={azureFunctionsModel}
-        setDataObject={setAzureFunctionsModel}
-        azureConfig={azureConfig}
+      <AzureFunctionsStepApplicationSelectInput
+        model={azureFunctionsModel}
+        setModel={setAzureFunctionsModel}
         setApplicationData={setApplicationData}
+        azureToolId={azureFunctionsModel?.getData("azureToolConfigId")}
       />
       <AzureFunctionsRegionSelectInput
         fieldName="azureRegion"
