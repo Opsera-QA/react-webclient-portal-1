@@ -9,7 +9,7 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
-import FileInputBase from "components/common/inputs/file/FileInputBase";
+import FileReaderInput from "components/common/inputs/file/FileReaderInput";
 
 function CoverityToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -26,14 +26,11 @@ function CoverityToolConfiguration({ toolData }) {
 
   const saveCoverityConfigurationDto = async () => {
     let newConfiguration = coverityConfigurationDto.getPersistData();
-    newConfiguration.coverityPassword = await toolsActions.savePasswordToVault(toolData, coverityConfigurationDto, "coverityPassword", newConfiguration.coverityPassword, getAccessToken);
+    newConfiguration.accountPassword = await toolsActions.savePasswordToVault(toolData, coverityConfigurationDto, "accountPassword", newConfiguration.accountPassword, getAccessToken);
+    newConfiguration.license = await toolsActions.savePasswordToVault(toolData, coverityConfigurationDto, "license", newConfiguration.license, getAccessToken);
 
     const item = {configuration: newConfiguration};
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
-  };
-  
-  const setDataFunction = (fieldName, value) => {
-   console.log(value);
   };
 
   return (
@@ -45,10 +42,10 @@ function CoverityToolConfiguration({ toolData }) {
     >
       <Row>
         <Col sm={12}>
-          <TextInputBase dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} fieldName={"coverityUrl"} />
-          <TextInputBase dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} fieldName={"coverityUsername"} />
-          <VaultTextInput dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} fieldName={"coverityPassword"}/>
-          <FileInputBase dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} setDataFunction={setDataFunction}  fieldName={"coverityCert"}/>
+          <TextInputBase dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} fieldName={"toolURL"} />
+          <TextInputBase dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} fieldName={"accountUsername"} />
+          <VaultTextInput dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} fieldName={"accountPassword"}/>
+          <FileReaderInput dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} acceptType={".dat,.xml"} fieldName={"license"}/>
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
