@@ -22,7 +22,6 @@ import SfdcWizardInitializationHelpDocumentation
   from "components/common/help/documentation/pipelines/wizard/SfdcWizardInitializationHelpDocumentation";
 import SfdcWizardComponentTypeSelectionHelpDocumentation
   from "components/common/help/documentation/pipelines/wizard/SfdcWizardComponentTypeSelectionHelpDocumentation";
-import {AuthContext} from "contexts/AuthContext";
 import SfdcWizardUnitTestSelectionViewHelpDocumentation
   from "components/common/help/documentation/pipelines/wizard/SfdcWizardUnitTestSelectionViewHelpDocumentation";
 import SfdcWizardFileSelectionHelpDocumentation
@@ -54,7 +53,6 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [helpIsShown, setHelpIsShown] = useState(false);
-  const { featureFlagHideItemInProd } = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
