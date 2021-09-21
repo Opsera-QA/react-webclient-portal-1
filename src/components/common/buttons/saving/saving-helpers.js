@@ -56,7 +56,7 @@ export async function persistNewRecord(recordDto, toastContext, showSuccessToast
 
     if (showSuccessToasts) {
       if (lenient && !isModelValid) {
-        toastContext.showIncompleteCreateSuccessResultDialog(recordDto.getType());
+        toastContext.showSavingIncompleteObjectSuccessResultToast(recordDto.getType());
       } else {
         toastContext.showCreateSuccessResultDialog(recordDto.getType());
       }
@@ -90,7 +90,7 @@ export async function persistUpdatedRecord(recordDto, toastContext, showSuccessT
 
     if (showSuccessToasts) {
       if (lenient && !isModelValid) {
-        toastContext.showIncompleteCreateSuccessResultDialog(recordDto.getType());
+        toastContext.showSavingIncompleteObjectSuccessResultToast(recordDto.getType());
       } else {
         toastContext.showUpdateSuccessResultDialog(recordDto.getType());
       }
@@ -118,7 +118,7 @@ export async function modalPersistUpdatedRecord(recordDto, toastContext, showSuc
 
     if (showSuccessToasts) {
       if (lenient && !isModelValid) {
-        toastContext.showIncompleteCreateSuccessResultDialog(recordDto.getType());
+        toastContext.showSavingIncompleteObjectSuccessResultToast(recordDto.getType());
       } else {
         toastContext.showUpdateSuccessResultDialog(recordDto.getType());
       }

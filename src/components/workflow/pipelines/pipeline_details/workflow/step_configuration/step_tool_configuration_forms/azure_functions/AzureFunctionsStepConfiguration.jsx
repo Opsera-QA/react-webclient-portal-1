@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { faBracketsCurly, faInfoCircle, faSync, faTimes, faHandshake} from "@fortawesome/pro-light-svg-icons";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
@@ -36,7 +35,7 @@ function AzureFunctionsStepConfiguration({ stepTool, closeEditorPanel, parentCal
     setIsLoading(false);
   };
 
-  const callbackFunction = async () => {
+  const saveAzureFunctionsStepConfiguration = async () => {
     const item = {
       configuration: azureFunctionsModel.getPersistData(),
       threshold: {
@@ -44,7 +43,8 @@ function AzureFunctionsStepConfiguration({ stepTool, closeEditorPanel, parentCal
         value: threshold?.value,
       },
     };
-    parentCallback(item);
+
+   return await parentCallback(item);
   };
 
   if (isLoading || azureFunctionsModel == null) {
@@ -55,7 +55,7 @@ function AzureFunctionsStepConfiguration({ stepTool, closeEditorPanel, parentCal
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
       recordDto={azureFunctionsModel}
-      persistRecord={callbackFunction}
+      persistRecord={saveAzureFunctionsStepConfiguration}
       isLoading={isLoading}
     >
       <AzureToolSelectInput
