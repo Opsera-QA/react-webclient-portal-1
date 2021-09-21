@@ -6,15 +6,20 @@ const azureFunctionsActions = {};
 azureFunctionsActions.getAzureRegions = async (getAccessToken, cancelTokenSource, azureToolData, applicationData) => {
   const apiURL = `tools/azure/management/regions`;
   const azureToolConfiguration = azureToolData?.configuration;
+  const azureApplicationConfiguration = applicationData?.configuration;
+
+  console.log(applicationData);
 
   const postBody = {
     owner: azureToolData?.owner,
-    clientId: applicationData?.clientId?.vaultKey,
-    clientSecret: applicationData?.clientSecret?.vaultKey,
+    clientId: azureApplicationConfiguration?.clientId?.vaultKey,
+    clientSecret: azureApplicationConfiguration?.clientSecret?.vaultKey,
     tenantId: azureToolConfiguration?.azureTenantId,
     subscriptionId: azureToolConfiguration?.azureSubscriptionId,
-    resource: applicationData?.resource,
+    resource: azureApplicationConfiguration?.resource,
   };
+
+  console.log("postBody: " + JSON.stringify(postBody));
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
 };
