@@ -91,7 +91,7 @@ function FileReaderInputBase({ fieldName, model, setModel, setDataFunction, clea
       );
     }
 
-    return (<span className={"ml-3 mt-auto text-muted"}>No {field?.label} Selected</span>);
+    return (<span className={"ml-3 my-auto text-muted"}>No {field?.label} Selected</span>);
   };
 
   const handleFileSelectionClick = () => {
