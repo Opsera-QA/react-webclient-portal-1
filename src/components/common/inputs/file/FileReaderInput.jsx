@@ -50,6 +50,7 @@ function FileReaderInput({ fieldName, dataObject, setDataObject, setDataFunction
         };
             reader.readAsBinaryString(file);
         } else {
+            resetStoredFileContents();
             setErrorMessage('File size not permitted');
         }
         
