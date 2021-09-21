@@ -32,6 +32,10 @@ function CoverityToolConfiguration({ toolData }) {
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };
   
+  const setDataFunction = (fieldName, value) => {
+   console.log(value);
+  };
+
   return (
     <ToolConfigurationEditorPanelContainer
       recordDto={coverityConfigurationDto}
@@ -44,7 +48,7 @@ function CoverityToolConfiguration({ toolData }) {
           <TextInputBase dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} fieldName={"coverityUrl"} />
           <TextInputBase dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} fieldName={"coverityUsername"} />
           <VaultTextInput dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} fieldName={"coverityPassword"}/>
-          <FileInputBase dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} fieldName={"coverityCert"}/>
+          <FileInputBase dataObject={coverityConfigurationDto} setDataObject={setCoverityConfigurationDto} setDataFunction={setDataFunction}  fieldName={"coverityCert"}/>
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
