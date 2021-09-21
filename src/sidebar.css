@@ -9,6 +9,7 @@
 .sidebar-menu .nav-link {
   padding-left: 0 !important;
   /* font-size: 1rem; */
+  letter-spacing: .05rem;
 }
 
 .sidebar-menu .nav-link-sub {
@@ -21,8 +22,8 @@
 .sub-header {
   color: #241F3D;
   text-transform: uppercase;
-  font-size: 0.72rem;
-  letter-spacing: 1px;
+  font-size: 0.85rem;
+  letter-spacing: .3rem;
 }
 
 .sidebar-menu .menu-text {
@@ -42,11 +43,13 @@
 }
 
 .sidebar-menu a:hover {
-  color: #7A756C; /* #0f3e84;*/
+  /*color: #7A756C;*/ /* #0f3e84;*/
+  color: #CF940C;
 }
 
 .sidebar-menu a.chosen:hover {
-  color: #7A756C;
+  /*color: #7A756C;*/
+  color: #CF940C;
 }
 
 .fixed-row-footer-bottom {

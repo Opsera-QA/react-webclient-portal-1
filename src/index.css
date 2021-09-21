@@ -4,6 +4,11 @@
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+.h4, .h5 {
+    letter-spacing: .6px;
+}
+
+
 .failure-text {
     color: red;
     font-weight: bold;
@@ -113,6 +118,7 @@ a:hover, .active, .link-text:hover {
 
 .title-text-header-1 {
     font-size: 1.25rem;
+    letter-spacing: .8px;
 }
 
 .title-text-header-2 {
