@@ -6,7 +6,7 @@ import TextInputBase from "../../../../../../../../common/inputs/text/TextInputB
 import FieldContainer from "../../../../../../../../common/fields/FieldContainer";
 
 
-function DynamicNameToggleInput({ dataObject, setDataObject, fieldName, disabled, pipelineId }) {
+function AzureFunctionsStepDynamicNameToggleInput({ dataObject, setDataObject, fieldName, disabled }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
 
   const handleChange = () => {
@@ -72,7 +72,7 @@ function DynamicNameToggleInput({ dataObject, setDataObject, fieldName, disabled
   );
 }
 
-DynamicNameToggleInput.propTypes = {
+AzureFunctionsStepDynamicNameToggleInput.propTypes = {
   dataObject: PropTypes.object,
   fieldName: PropTypes.string,
   setDataObject: PropTypes.func,
@@ -80,4 +80,4 @@ DynamicNameToggleInput.propTypes = {
   pipelineId: PropTypes.string,
 };
 
-export default DynamicNameToggleInput;
+export default AzureFunctionsStepDynamicNameToggleInput;
