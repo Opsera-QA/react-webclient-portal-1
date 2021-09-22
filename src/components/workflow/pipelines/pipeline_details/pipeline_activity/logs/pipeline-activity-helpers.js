@@ -83,7 +83,7 @@ pipelineActivityHelpers.getSecondaryTree = () => {
   return [
     {
       id: "latest",
-      runNumber: undefined,
+      runNumber: "latest",
       stepName: null,
       value: "Latest Logs",
       items: [],
@@ -94,8 +94,8 @@ pipelineActivityHelpers.getSecondaryTree = () => {
       }
     },
     {
-      id: "other_logs",
-      runNumber: "other_logs_query",
+      id: "secondary",
+      runNumber: "secondary",
       stepName: null,
       value: "Secondary Logs",
       items: [],

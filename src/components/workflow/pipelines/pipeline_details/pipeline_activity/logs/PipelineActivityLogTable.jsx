@@ -9,7 +9,18 @@ import PipelineTaskDetailViewer from "components/workflow/pipelines/pipeline_det
 import TableBase from "components/common/table/TableBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function PipelineActivityLogTable({ pipelineLogData, pipelineActivityMetadata, isLoading, pipeline, pipelineActivityFilterDto, currentRunNumber, currentStepName }) {
+function PipelineActivityLogTable(
+  {
+    pipelineLogData,
+    pipelineActivityMetadata,
+    isLoading,
+    pipeline,
+    pipelineActivityFilterDto,
+    currentRunNumber,
+    currentStepName,
+    secondaryActivityLogs,
+    latestActivityLogs,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
   const [columns, setColumns] = useState([]);
@@ -51,10 +62,12 @@ function PipelineActivityLogTable({ pipelineLogData, pipelineActivityMetadata, i
       return pipelineLogData;
     }
 
-    if (currentRunNumber === "other_logs_query") {
-      return pipelineLogData.filter((item) => {
-        return item.run_count == null;
-      });
+    if (currentRunNumber === "latest") {
+      return [...latestActivityLogs];
+    }
+
+    if (currentRunNumber === "secondary") {
+      return [...secondaryActivityLogs];
     }
 
     return pipelineLogData.filter((item) => {
@@ -63,8 +76,8 @@ function PipelineActivityLogTable({ pipelineLogData, pipelineActivityMetadata, i
   };
 
   const getNoDataMessage = () => {
-    if (pipelineActivityFilterDto?.getData("search") !== "") {
-      return ("Could not find any results with the given keywords.");
+    if (pipelineActivityFilterDto?.getActiveFilters()?.length > 0) {
+      return ("Could not find any results with the given filters.");
     }
 
     return ("Pipeline activity data has not been generated yet. Once this pipeline begins running, it will publish details here.");
@@ -93,7 +106,9 @@ PipelineActivityLogTable.propTypes = {
     PropTypes.number,
     PropTypes.string,
   ]),
-  currentStepName: PropTypes.string
+  currentStepName: PropTypes.string,
+  secondaryActivityLogs: PropTypes.array,
+  latestActivityLogs: PropTypes.array,
 };
 
 export default PipelineActivityLogTable;
