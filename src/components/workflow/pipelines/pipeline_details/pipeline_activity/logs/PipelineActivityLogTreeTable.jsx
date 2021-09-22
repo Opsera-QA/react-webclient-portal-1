@@ -60,6 +60,7 @@ function PipelineActivityLogTreeTable(
         setCurrentRunNumber={setCurrentRunNumber}
         setCurrentStepName={setCurrentStepName}
         currentLogTreePage={currentLogTreePage}
+        currentRunNumber={currentRunNumber}
         setCurrentLogTreePage={setCurrentLogTreePage}
       />
     );

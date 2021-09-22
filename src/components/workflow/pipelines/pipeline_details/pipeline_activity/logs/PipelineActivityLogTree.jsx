@@ -101,7 +101,11 @@ PipelineActivityLogTree.propTypes = {
   setCurrentRunNumber: PropTypes.func,
   setCurrentStepName: PropTypes.func,
   currentLogTreePage: PropTypes.number,
-  setCurrentLogTreePage: PropTypes.func
+  setCurrentLogTreePage: PropTypes.func,
+  currentRunNumber: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
 };
 
 export default PipelineActivityLogTree;
