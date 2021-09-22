@@ -52,8 +52,11 @@ function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurr
   const onPageChange = (newPage) => {
     if (currentLogTreePage !== newPage) {
       setCurrentLogTreePage(newPage);
-      setCurrentRunNumber(undefined);
-      setCurrentStepName(undefined);
+
+      if (currentRunNumber !== "latest" && currentRunNumber !== "secondary") {
+        setCurrentRunNumber(undefined);
+        setCurrentStepName(undefined);
+      }
 
       if (treeWidget) {
         treeWidget.selection.remove();
