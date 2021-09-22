@@ -16,8 +16,6 @@ function PipelineActivityLogTable(
     isLoading,
     pipeline,
     pipelineActivityFilterDto,
-    currentRunNumber,
-    currentStepName,
     secondaryActivityLogs,
     latestActivityLogs,
   }) {
@@ -58,6 +56,9 @@ function PipelineActivityLogTable(
   };
 
   const getFilteredData = () => {
+    const currentRunNumber = pipelineActivityFilterDto?.getData("currentRunNumber");
+    const currentStepName = pipelineActivityFilterDto?.getData("currentStepName");
+
     if (currentRunNumber == null) {
       return pipelineLogData;
     }
@@ -102,11 +103,6 @@ PipelineActivityLogTable.propTypes = {
   isLoading: PropTypes.bool,
   pipeline: PropTypes.object,
   pipelineActivityFilterDto: PropTypes.object,
-  currentRunNumber: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
-  currentStepName: PropTypes.string,
   secondaryActivityLogs: PropTypes.array,
   latestActivityLogs: PropTypes.array,
 };
