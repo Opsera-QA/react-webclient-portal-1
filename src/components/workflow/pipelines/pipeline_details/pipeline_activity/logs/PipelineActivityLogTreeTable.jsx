@@ -11,13 +11,27 @@ import InlinePipelineStatusFilter from "components/common/filters/pipelines/stat
 import PipelineActivityLogTable
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTable";
 
-function PipelineActivityLogTreeTable({ pipelineLogData, pipelineActivityMetadata, loadData, isLoading, pipeline, pipelineActivityFilterDto, setPipelineActivityFilterDto, pipelineActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
+function PipelineActivityLogTreeTable(
+  {
+    pipelineLogData,
+    pipelineActivityMetadata,
+    loadData,
+    isLoading,
+    pipeline,
+    pipelineActivityFilterDto,
+    setPipelineActivityFilterDto,
+    pipelineActivityTreeData,
+    setCurrentLogTreePage,
+    currentLogTreePage,
+    secondaryActivityLogs,
+    latestActivityLogs,
+  }) {
   const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
   const [currentStepName, setCurrentStepName] = useState(undefined);
 
   const getNoDataMessage = () => {
-    if (pipelineActivityFilterDto?.getData("search") !== "") {
-      return ("Could not find any results with the given keywords.");
+    if (pipelineActivityFilterDto?.getActiveFilters()?.length > 0) {
+      return ("Could not find any results with the given filters.");
     }
 
     return ("Pipeline activity data has not been generated yet. Once this pipeline begins running, it will publish details here.");
@@ -33,6 +47,8 @@ function PipelineActivityLogTreeTable({ pipelineLogData, pipelineActivityMetadat
         pipelineActivityMetadata={pipelineActivityMetadata}
         pipelineLogData={pipelineLogData}
         pipelineActivityFilterDto={pipelineActivityFilterDto}
+        latestActivityLogs={latestActivityLogs}
+        secondaryActivityLogs={secondaryActivityLogs}
       />
     );
   };
@@ -113,7 +129,9 @@ PipelineActivityLogTreeTable.propTypes = {
   pipelineActivityMetadata: PropTypes.object,
   pipelineActivityTreeData: PropTypes.array,
   setCurrentLogTreePage: PropTypes.func,
-  currentLogTreePage: PropTypes.number
+  currentLogTreePage: PropTypes.number,
+  secondaryActivityLogs: PropTypes.array,
+  latestActivityLogs: PropTypes.array,
 };
 
 export default PipelineActivityLogTreeTable;
