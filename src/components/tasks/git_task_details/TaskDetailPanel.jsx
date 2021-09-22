@@ -24,6 +24,7 @@ function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleDa
 
   const toggleSummaryPanel = () => {
     setActiveTab("summary");
+    loadData();
   };
 
   const getDynamicTabs = () => {
