@@ -18,7 +18,7 @@ sfdcPipelineActions.updateSelectedComponentTypesV2 = async (getAccessToken, canc
     toDate: pipelineWizardModel.getData("toDate"),
     includedComponentTypes: pipelineWizardModel.getData("includedComponentTypes"),
     nameSpacePrefix: pipelineWizardModel.getData("namespacePrefix"),
-    includeDependencies: pipelineWizardModel.getData("includeDependencies"),
+    excludeDependencies: pipelineWizardModel.getData("includeDependencies") === false,
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/update_selected_component_types`;
