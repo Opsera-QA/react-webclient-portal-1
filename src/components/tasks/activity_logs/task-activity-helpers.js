@@ -98,7 +98,7 @@ taskActivityHelpers.constructTaskTree = (pipelineLogData) => {
 
               // Force Sort Run Count Descending
               currentItems.sort((treeItem1, treeItem2) => {
-                const runNumber1 = treeItem1.runCount;
+                const runNumber1 = treeItem1.runNumber;
                 const runNumber2 = treeItem2?.runNumber;
 
                 if (runNumber1 === "logs" && runNumber2 === "logs") {

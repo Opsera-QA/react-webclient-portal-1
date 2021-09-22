@@ -72,6 +72,29 @@ pipelineActivityHelpers.constructTree = (pipelineLogData) => {
   }
 
   if (newTree.length > 0) {
+    // Sort tree by run number
+    newTree.sort((treeItem1, treeItem2) => {
+      const runNumber1 = treeItem1?.runNumber;
+      const runNumber2 = treeItem2?.runNumber;
+
+      const parsedRunNumber1 = parseInt(runNumber1);
+      const parsedRunNumber2 = parseInt(runNumber2);
+
+      if (typeof parsedRunNumber1 !== "number" && typeof parsedRunNumber2 !== "number") {
+        return 0;
+      }
+
+      if (typeof parsedRunNumber1 !== "number") {
+        return 1;
+      }
+
+      if (typeof parsedRunNumber2 !== "number") {
+        return -1;
+      }
+
+      return parsedRunNumber2 - parsedRunNumber1;
+    });
+
     newTree[0].opened = true;
     newTree[0].selected = 1;
   }
