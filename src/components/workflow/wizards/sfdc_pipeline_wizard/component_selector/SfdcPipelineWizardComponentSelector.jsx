@@ -23,6 +23,20 @@ const SfdcPipelineWizardComponentSelector = ({ pipelineWizardModel, setPipelineW
     return null;
   }
 
+  const getDependenciesToggle = () => {
+    if (pipelineWizardModel.getData("isProfiles") !== true && pipelineWizardModel.getData("fromGitTasks") !== true) {
+      return (
+        <div>
+          <BooleanToggleInput
+            dataObject={pipelineWizardModel}
+            setDataObject={setPipelineWizardModel}
+            fieldName={"includeDependencies"}
+          />
+        </div>
+      );
+    }
+  };
+
   return (
     <div>
       <div className="h5">SalesForce Pipeline Run: Component Type Selection</div>
@@ -43,13 +57,7 @@ const SfdcPipelineWizardComponentSelector = ({ pipelineWizardModel, setPipelineW
         setPipelineWizardModel={setPipelineWizardModel}
         selectedComponents={[...pipelineWizardModel.getArrayData("selectedComponentTypes")]}
       />
-      {/*<div>*/}
-      {/*  <BooleanToggleInput*/}
-      {/*    dataObject={pipelineWizardModel}*/}
-      {/*    setDataObject={setPipelineWizardModel}*/}
-      {/*    fieldName={"includeDependencies"}*/}
-      {/*  />*/}
-      {/*</div>*/}
+      {/*{getDependenciesToggle()}*/}
       <div className={"my-3"}>
         <SfdcPipelineWizardFileSelectionDateTimeRange
           pipelineWizardModel={pipelineWizardModel}

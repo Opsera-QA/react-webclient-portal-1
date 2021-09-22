@@ -70,11 +70,22 @@ const SfdcPipelineWizardValidatedSfdcFileViewer = ({ pipelineWizardModel, setPip
   };
 
   const toggleFileValidation = async (cancelSource = cancelTokenSource) => {
-    if (pipelineWizardModel?.getData("isXml") === true) {
-      await sfdcPipelineActions.toggleSfdcXmlFilesValidation(getAccessToken, cancelSource, pipelineWizardModel);
+    if (pipelineWizardModel?.getData("isProfiles") === true)
+    {
+      if (pipelineWizardModel?.getData("isXml") === true) {
+        await sfdcPipelineActions.toggleProfileMigrationXmlFilesValidation(getAccessToken, cancelSource, pipelineWizardModel);
+      }
+      else if (pipelineWizardModel?.getData("isCsv") === true) {
+        await sfdcPipelineActions.toggleProfileMigrationCsvFilesValidation(getAccessToken, cancelSource, pipelineWizardModel);
+      }
     }
-    else if (pipelineWizardModel?.getData("isCsv") === true) {
-      await sfdcPipelineActions.toggleSfdcCsvFilesValidation(getAccessToken, cancelSource, pipelineWizardModel);
+    else {
+      if (pipelineWizardModel?.getData("isXml") === true) {
+        await sfdcPipelineActions.toggleSfdcXmlFilesValidation(getAccessToken, cancelSource, pipelineWizardModel);
+      }
+      else if (pipelineWizardModel?.getData("isCsv") === true) {
+        await sfdcPipelineActions.toggleSfdcCsvFilesValidation(getAccessToken, cancelSource, pipelineWizardModel);
+      }
     }
   };
 
