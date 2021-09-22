@@ -89,8 +89,11 @@ PipelineActivityLogTable.propTypes = {
   isLoading: PropTypes.bool,
   pipeline: PropTypes.object,
   pipelineActivityFilterDto: PropTypes.object,
-  currentRunNumber: PropTypes.number,
-  currentStepName: PropTypes.number
+  currentRunNumber: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
+  currentStepName: PropTypes.string
 };
 
 export default PipelineActivityLogTable;
