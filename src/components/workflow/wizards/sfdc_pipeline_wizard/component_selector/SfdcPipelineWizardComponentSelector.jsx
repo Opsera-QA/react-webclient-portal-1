@@ -16,6 +16,7 @@ import SfdcPipelineWizardSubmitComponentTypesButton
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStepBackward} from "@fortawesome/free-solid-svg-icons";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 const SfdcPipelineWizardComponentSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) => {
   if (pipelineWizardModel == null) {
@@ -42,6 +43,13 @@ const SfdcPipelineWizardComponentSelector = ({ pipelineWizardModel, setPipelineW
         setPipelineWizardModel={setPipelineWizardModel}
         selectedComponents={[...pipelineWizardModel.getArrayData("selectedComponentTypes")]}
       />
+      {/*<div>*/}
+      {/*  <BooleanToggleInput*/}
+      {/*    dataObject={pipelineWizardModel}*/}
+      {/*    setDataObject={setPipelineWizardModel}*/}
+      {/*    fieldName={"includeDependencies"}*/}
+      {/*  />*/}
+      {/*</div>*/}
       <div className={"my-3"}>
         <SfdcPipelineWizardFileSelectionDateTimeRange
           pipelineWizardModel={pipelineWizardModel}
