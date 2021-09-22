@@ -8,7 +8,7 @@ import pipelineActivityHelpers
 function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurrentStepName, currentLogTreePage, setCurrentLogTreePage, currentRunNumber}) {
   const [treeWidget, setTreeWidget] = useState(undefined);
   const [secondaryTreeWidget, setSecondaryTreeWidget] = useState(undefined);
-  const [secondaryLogTree, setSecondaryLogTree] = useState(undefined);
+  const [secondaryLogTree] = useState(pipelineActivityHelpers.getSecondaryTree());
   const isMounted = useRef(false);
   const [selectedId, setSelectedId] = useState(undefined);
 
@@ -16,8 +16,11 @@ function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurr
     isMounted.current = true;
 
     if (Array.isArray(pipelineLogTree) && pipelineLogTree.length > 0) {
-      setSelectedId(pipelineLogTree[0].id);
-      setSecondaryLogTree(pipelineActivityHelpers.getSecondaryTree());
+      const treeItem = pipelineLogTree[0];
+
+      if (currentRunNumber !== "latest" && currentRunNumber !== "secondary") {
+        setSelectedId(treeItem.id);
+      }
     }
 
     return () => {
@@ -56,10 +59,10 @@ function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurr
       if (currentRunNumber !== "latest" && currentRunNumber !== "secondary") {
         setCurrentRunNumber(undefined);
         setCurrentStepName(undefined);
-      }
 
-      if (treeWidget) {
-        treeWidget.selection.remove();
+        if (treeWidget) {
+          treeWidget.selection.remove();
+        }
       }
     }
   };
