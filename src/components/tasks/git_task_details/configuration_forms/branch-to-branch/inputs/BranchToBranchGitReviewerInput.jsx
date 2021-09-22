@@ -20,7 +20,6 @@ function BranchToBranchGitReviewerInput({dataObject, setDataObject, disabled}) {
     };
 
     const setReviewer = (fieldName, selectedOption) => {        
-        console.log({selectedOption});
         let newDataObject = {...dataObject};
         newDataObject.setData("reviewers", selectedOption.map(option => option.reviewerId));
         newDataObject.setData("reviewerNames", selectedOption.map(option => option.reviewerName));
