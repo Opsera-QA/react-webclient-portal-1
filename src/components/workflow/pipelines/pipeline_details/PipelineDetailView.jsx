@@ -196,7 +196,7 @@ function PipelineDetailView() {
       return;
     }
 
-    const pipelineStatus = analyzePipelineStatus(pipeline);
+    const pipelineStatus = pipeline?.workflow?.last_step?.status;
 
     if (pipelineStatus === "stopped" || !pipelineStatus) {
       console.log("Pipeline stopped, no need to schedule refresh. Status: ", pipelineStatus);
@@ -214,14 +214,6 @@ function PipelineDetailView() {
       }
     }, refreshInterval);
     setRefreshTimer(refreshTimer);
-  };
-
-  const analyzePipelineStatus = (pipeline) => {
-    if (!pipeline || Object.entries(pipeline).length === 0) {
-      return;
-    }
-    const { workflow } = pipeline;
-    return workflow.last_step !== undefined && workflow.last_step.hasOwnProperty("status") ? workflow.last_step.status : false;
   };
 
   // TODO: Find way to put refresh inside table itself
