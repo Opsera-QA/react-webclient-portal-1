@@ -17,7 +17,8 @@ sfdcPipelineActions.updateSelectedComponentTypesV2 = async (getAccessToken, canc
     fromDate: pipelineWizardModel.getData("fromDate"),
     toDate: pipelineWizardModel.getData("toDate"),
     includedComponentTypes: pipelineWizardModel.getData("includedComponentTypes"),
-    nameSpacePrefix: pipelineWizardModel.getData("namespacePrefix")
+    nameSpacePrefix: pipelineWizardModel.getData("namespacePrefix"),
+    excludeDependencies: pipelineWizardModel.getData("includeDependencies") === false,
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/update_selected_component_types`;
@@ -387,6 +388,16 @@ sfdcPipelineActions.toggleSfdcCsvFilesValidation = async (getAccessToken, cancel
 
 sfdcPipelineActions.toggleSfdcXmlFilesValidation = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/toggle_sfdc_xml_upload_validation`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+sfdcPipelineActions.toggleProfileMigrationCsvFilesValidation = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/toggle_profile_migration_csv_upload_validation`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+sfdcPipelineActions.toggleProfileMigrationXmlFilesValidation = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/toggle_profile_migration_xml_upload_validation`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

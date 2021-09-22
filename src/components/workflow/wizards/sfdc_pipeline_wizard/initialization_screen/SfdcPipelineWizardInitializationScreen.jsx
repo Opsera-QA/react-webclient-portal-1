@@ -28,6 +28,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   const [isLoading, setIsLoading] = useState(false);
   const [creatingNewRecord, setCreatingNewRecord] = useState(false);
   const [existingRecord, setExistingRecord] = useState(undefined);
+  const { featureFlagHideItemInProd } = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -241,6 +242,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       newPipelineWizardModel.setData("toDate", parsedToDate);
     }
 
+    newPipelineWizardModel.setData("includeDependencies", existingRecord?.excludeDependencies !== true);
     setPipelineWizardModel({...newPipelineWizardModel});
     setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR);
   };
@@ -336,8 +338,8 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   };
 
   const getTabContainer = () => {
-    // TODO: Remove this when profile migration file validation is supported
-    if (pipelineWizardModel?.getData("isProfiles") === true) {
+    // TODO: Remove this if statement when profile migration is validated by QA
+    if (pipelineWizardModel?.getData("isProfiles") === true && featureFlagHideItemInProd()) {
       return null;
     }
 

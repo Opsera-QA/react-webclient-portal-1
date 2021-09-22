@@ -116,6 +116,14 @@ const sfdcPipelineWizardMetadata = {
       id: "isRollBack",
     },
     {
+      label: "Include Dependencies",
+      id: "includeDependencies",
+      formText: `
+        By default, all CustomObject dependencies are included in the deployment while selecting components from the Git Side. 
+        By disabling this toggle, dependencies will be excluded unless explicitly selected.
+      `
+    },
+    {
       label: "Run Count",
       id: "run_count",
     },
@@ -155,6 +163,7 @@ const sfdcPipelineWizardMetadata = {
     fromGitTasks: false, // TODO: Remove if irrelevant
     fromFileUpload: false,
     isRollBack: false,
+    includeDependencies: true,
     gitBranch: "",
     accountUsername: "",
   }

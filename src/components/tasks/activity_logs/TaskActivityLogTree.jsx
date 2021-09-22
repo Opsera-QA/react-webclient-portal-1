@@ -52,11 +52,6 @@ function TaskActivityLogTree({ taskLogTree, setCurrentRunNumber, setCurrentTaskN
   const onPageChange = (newPage) => {
     if (currentLogTreePage !== newPage) {
       setCurrentLogTreePage(newPage);
-
-      // TODO: Do we want to select the top item when changing pages?
-      //  This will require allowing selection to be passed into tree
-      // const newTopIndex = newPage * 20;
-      // const topItem = pipelineActivityTreeData[newTopIndex];
       setCurrentRunNumber(undefined);
       setCurrentTaskName(undefined);
 
