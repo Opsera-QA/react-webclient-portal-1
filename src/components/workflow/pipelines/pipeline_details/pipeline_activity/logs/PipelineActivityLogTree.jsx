@@ -5,7 +5,7 @@ import VanityBottomPaginatorBase from "components/common/pagination/VanityBottom
 import pipelineActivityHelpers
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-helpers";
 
-function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurrentStepName, currentLogTreePage, setCurrentLogTreePage}) {
+function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurrentStepName, currentLogTreePage, setCurrentLogTreePage, currentRunNumber}) {
   const [treeWidget, setTreeWidget] = useState(undefined);
   const [secondaryTreeWidget, setSecondaryTreeWidget] = useState(undefined);
   const [secondaryLogTree, setSecondaryLogTree] = useState(undefined);
