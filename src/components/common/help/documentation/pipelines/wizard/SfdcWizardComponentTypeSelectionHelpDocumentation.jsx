@@ -37,6 +37,9 @@ function SfdcWizardComponentTypeSelectionHelpDocumentation({closeHelpPanel}) {
             </li>
           </ul>
         </li>
+        <li><b>Include Dependencies</b> - By default, all CustomObject dependencies are included.
+          By disabling this toggle, dependencies will be excluded unless explicitly selected.
+        </li>
       </ul>
     </HelpDocumentationContainer>
   );

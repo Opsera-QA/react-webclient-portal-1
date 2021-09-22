@@ -242,6 +242,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       newPipelineWizardModel.setData("toDate", parsedToDate);
     }
 
+    newPipelineWizardModel.setData("excludeDependencies", existingRecord?.includeDependencies !== false);
     setPipelineWizardModel({...newPipelineWizardModel});
     setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR);
   };
