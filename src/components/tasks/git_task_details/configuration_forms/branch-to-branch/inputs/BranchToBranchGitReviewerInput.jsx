@@ -5,10 +5,19 @@ import GitReviewerMultiSelectInput from "components/common/list_of_values_input/
 function BranchToBranchGitReviewerInput({dataObject, setDataObject, disabled}) {
 
     useEffect(() => {
+        setRequired(true, 1);
         return () => {
+            setRequired(false, null);
             clearReviewer();
         };
     }, []);
+
+    const setRequired = (isRequired, minItems) => {
+        let newDataObject = {...dataObject};
+        newDataObject.getFieldById("reviewerNames").isRequired = isRequired;
+        newDataObject.getFieldById("reviewerNames").minItems = minItems;
+        setDataObject({...newDataObject});
+    };
 
     const setReviewer = (fieldName, selectedOption) => {        
         console.log({selectedOption});
