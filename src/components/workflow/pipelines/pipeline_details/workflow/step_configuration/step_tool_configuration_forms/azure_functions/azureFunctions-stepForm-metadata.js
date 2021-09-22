@@ -19,7 +19,6 @@ const azureFunctionsStepFormMetadata = {
     {
       label: "Application Type",
       id: "applicationType",
-      isRequired: true
     },
     {
       label: "Artifact Tool",
@@ -27,7 +26,8 @@ const azureFunctionsStepFormMetadata = {
     },
     {
       label: "Artifact Step",
-      id: "artifactStepId"
+      id: "artifactStepId",
+      formText: "Docker based function deployments will keep created resources occupied at all times unless manually destroyed by the user."
     },
     {
       label: "Service Name",
