@@ -5,7 +5,7 @@ import VanityBottomPaginatorBase from "components/common/pagination/VanityBottom
 import pipelineActivityHelpers
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-helpers";
 
-function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurrentStepName, currentLogTreePage, setCurrentLogTreePage, currentRunNumber}) {
+function PipelineActivityLogTree({ pipelineLogTree, currentLogTreePage, setCurrentLogTreePage, pipelineActivityFilterDto, setPipelineActivityFilterDto}) {
   const [treeWidget, setTreeWidget] = useState(undefined);
   const [secondaryTreeWidget, setSecondaryTreeWidget] = useState(undefined);
   const [secondaryLogTree] = useState(pipelineActivityHelpers.getSecondaryTree());
@@ -17,6 +17,8 @@ function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurr
 
     if (Array.isArray(pipelineLogTree) && pipelineLogTree.length > 0) {
       const treeItem = pipelineLogTree[0];
+
+      const currentRunNumber = pipelineActivityFilterDto?.getData("currentRunNumber");
 
       if (currentRunNumber !== "latest" && currentRunNumber !== "secondary") {
         setSelectedId(treeItem.id);
@@ -35,8 +37,9 @@ function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurr
     }
 
     if (treeItem) {
-      setCurrentRunNumber(treeItem.runNumber);
-      setCurrentStepName(treeItem.stepName);
+      pipelineActivityFilterDto?.setData("currentRunNumber", treeItem?.runNumber);
+      pipelineActivityFilterDto?.setData("currentStepName", treeItem?.stepName);
+      setPipelineActivityFilterDto({...pipelineActivityFilterDto});
     }
   };
 
@@ -47,23 +50,27 @@ function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurr
     }
 
     if (treeItem) {
-      setCurrentRunNumber(treeItem.runNumber);
-      setCurrentStepName(treeItem.stepName);
+      pipelineActivityFilterDto?.setData("currentRunNumber", treeItem?.runNumber);
+      pipelineActivityFilterDto?.setData("currentStepName", treeItem?.stepName);
+      setPipelineActivityFilterDto({...pipelineActivityFilterDto});
     }
   };
 
   const onPageChange = (newPage) => {
     if (currentLogTreePage !== newPage) {
-      setCurrentLogTreePage(newPage);
+      const currentRunNumber = pipelineActivityFilterDto?.getData("currentRunNumber");
 
       if (currentRunNumber !== "latest" && currentRunNumber !== "secondary") {
-        setCurrentRunNumber(undefined);
-        setCurrentStepName(undefined);
+        pipelineActivityFilterDto?.setData("currentRunNumber", undefined);
+        pipelineActivityFilterDto?.setData("currentStepName", undefined);
+        setPipelineActivityFilterDto({...pipelineActivityFilterDto});
 
         if (treeWidget) {
           treeWidget.selection.remove();
         }
       }
+
+      setCurrentLogTreePage(newPage);
     }
   };
 
@@ -101,14 +108,10 @@ function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurr
 
 PipelineActivityLogTree.propTypes = {
   pipelineLogTree: PropTypes.array,
-  setCurrentRunNumber: PropTypes.func,
-  setCurrentStepName: PropTypes.func,
   currentLogTreePage: PropTypes.number,
   setCurrentLogTreePage: PropTypes.func,
-  currentRunNumber: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
+  pipelineActivityFilterDto: PropTypes.object,
+  setPipelineActivityFilterDto: PropTypes.func,
 };
 
 export default PipelineActivityLogTree;

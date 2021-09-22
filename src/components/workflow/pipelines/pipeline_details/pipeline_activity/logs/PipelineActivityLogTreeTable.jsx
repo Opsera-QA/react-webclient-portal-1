@@ -26,8 +26,6 @@ function PipelineActivityLogTreeTable(
     secondaryActivityLogs,
     latestActivityLogs,
   }) {
-  const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
-  const [currentStepName, setCurrentStepName] = useState(undefined);
 
   const getNoDataMessage = () => {
     if (pipelineActivityFilterDto?.getActiveFilters()?.length > 0) {
@@ -41,8 +39,6 @@ function PipelineActivityLogTreeTable(
     return (
       <PipelineActivityLogTable
         isLoading={isLoading}
-        currentRunNumber={currentRunNumber}
-        currentStepName={currentStepName}
         pipeline={pipeline}
         pipelineActivityMetadata={pipelineActivityMetadata}
         pipelineLogData={pipelineLogData}
@@ -57,11 +53,10 @@ function PipelineActivityLogTreeTable(
     return (
       <PipelineActivityLogTree
         pipelineLogTree={pipelineActivityTreeData}
-        setCurrentRunNumber={setCurrentRunNumber}
-        setCurrentStepName={setCurrentStepName}
         currentLogTreePage={currentLogTreePage}
-        currentRunNumber={currentRunNumber}
         setCurrentLogTreePage={setCurrentLogTreePage}
+        pipelineActivityFilterDto={pipelineActivityFilterDto}
+        setPipelineActivityFilterDto={setPipelineActivityFilterDto}
       />
     );
   };

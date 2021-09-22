@@ -31,6 +31,18 @@ const pipelineActivityFilterMetadata = {
       label: "Active Filters",
       id: "activeFilters",
     },
+    {
+      label: "Current Run Number",
+      id: "currentRunNumber",
+    },
+    {
+      label: "Current Step Name",
+      id: "currentStepName",
+    },
+    {
+      label: "Current Step Name",
+      id: "currentLogTreePage",
+    },
   ],
   newObjectFields: {
     pageSize: 25,
@@ -38,7 +50,6 @@ const pipelineActivityFilterMetadata = {
     search: "",
     activeFilters: [],
     status: "",
-    run: 0,
   },
 };
 
