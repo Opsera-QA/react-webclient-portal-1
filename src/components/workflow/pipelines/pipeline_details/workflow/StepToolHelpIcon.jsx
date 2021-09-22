@@ -11,6 +11,10 @@ import AwsEcsDeployStepConfigurationHelp
   from "../../../../common/help/documentation/pipelines/step_configuration/AwsEcsDeployStepConfigurationHelp";
 import AzureAksDeployPipelineStepConfigurationHelp
   from "../../../../common/help/documentation/pipelines/step_configuration/AzureAksDeployPipelineStepConfigurationHelp";
+import AzureAcrPushPipelineStepConfigurationHelp
+  from "../../../../common/help/documentation/pipelines/step_configuration/AzureAcrPushPipelineStepConfigurationHelp";
+import OctopusDeployStepConfigurationHelp
+  from "../../../../common/help/documentation/pipelines/step_configuration/OctopusDeployStepConfigurationHelp";
 
 function StepToolHelpIcon({type, tool, className, iconClassName}) {
   // TODO: Alphabetize when adding new help panels
@@ -24,6 +28,10 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
         return <AwsEcsDeployStepConfigurationHelp/>;
       case "azure_aks_deploy":
         return <AzureAksDeployPipelineStepConfigurationHelp/>;
+      case "azure_acr_push":
+        return <AzureAcrPushPipelineStepConfigurationHelp/>;
+      case "octopus":
+        return <OctopusDeployStepConfigurationHelp/>;
       case "jenkins":
       case "junit":
       case "xunit":
@@ -47,7 +55,6 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
       case "anchore-integrator":
       case "sfdc-configurator":
       case "nexus":
-      case "octopus":
       case "terraform":
       case "elastic-beanstalk":
       case "child-pipeline":
@@ -63,7 +70,6 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
       case "aws_lambda":
       case "coverity":
       case "jfrog_artifactory_maven":
-      case "azure_acr_push":
       case "azure-functions":
       case "mongodb_realm":
       default:
