@@ -19,6 +19,7 @@ import JenkinsGradleMavenScriptFilePathPanel from "components/workflow/pipelines
 import {DialogToastContext} from "contexts/DialogToastContext";
 import JenkinsToolJobIdSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsToolJobIdSelectInput";
+import JenkinsDependencyTypeInput from "./inputs/JenkinsDependencyTypeInput";
 
 function JenkinsStepConfiguration({
   stepTool,
@@ -190,6 +191,7 @@ function JenkinsStepConfiguration({
         setDataObject={setJenkinsStepConfigurationDto}   
       />
       {getJobForm()}
+      <JenkinsDependencyTypeInput dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
     </PipelineStepEditorPanelContainer>
   );
 }
