@@ -134,7 +134,7 @@ function JenkinsDependencyMultiSelectInput({ fieldName, model, setModel, setData
         }
       });
       // remove selected items from this list and push
-      let finalList = disabledObj.filter(({name, dependencyType, version}) => !dataObject.getData(fieldName).some(x => x.name === name && x.dependencyType === dependencyType && x.version === version));
+      let finalList = disabledObj.filter(({name, dependencyType, version}) => !model?.getData(fieldName).some(x => x.name === name && x.dependencyType === dependencyType && x.version === version));
       setDisabledItems(finalList);
       return;
     }
