@@ -18,7 +18,7 @@ import JenkinsGradleMavenScriptFilePathPanel from "components/workflow/pipelines
 import {DialogToastContext} from "contexts/DialogToastContext";
 import JenkinsToolJobIdSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsToolJobIdSelectInput";
-import JenkinsDependencyTypeInput from "./inputs/JenkinsDependencyTypeInput";
+import JenkinsStepDependencyTypeInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepDependencyTypeInput";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
@@ -242,9 +242,9 @@ function JenkinsStepConfiguration({
         setModel={setJenkinsStepConfigurationDto}
       />
       {getJobForm()}
-      <JenkinsDependencyTypeInput
-        dataObject={jenkinsStepConfigurationDto}
-        setDataObject={setJenkinsStepConfigurationDto}
+      <JenkinsStepDependencyTypeInput
+        model={jenkinsStepConfigurationDto}
+        setModel={setJenkinsStepConfigurationDto}
       />
     </PipelineStepEditorPanelContainer>
   );
