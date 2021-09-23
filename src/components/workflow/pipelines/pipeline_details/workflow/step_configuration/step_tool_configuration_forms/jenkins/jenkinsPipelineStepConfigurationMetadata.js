@@ -186,6 +186,15 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id:"job_type",
     },
     {
+      label: "Dependency",
+      id: "dependencyType",
+      // isRequired: true
+    },
+    {
+      id: "dependencies",
+      // isRequired: true
+    },
+    {
       label: "Runtime Arguments",
       id: "runtimeArguments",
       regexDefinitionName: "argumentList",
@@ -243,6 +252,8 @@ const jenkinsPipelineStepConfigurationMetadata = {
     dockerTagType:[],
     dockerDynamicTagName:"",
     runtimeArguments: "",
+    dependencies: {},
+    dependencyType:"",
   }
 };
 
