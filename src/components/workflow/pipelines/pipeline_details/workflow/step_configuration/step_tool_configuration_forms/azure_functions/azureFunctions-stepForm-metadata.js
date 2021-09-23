@@ -32,6 +32,8 @@ const azureFunctionsStepFormMetadata = {
     {
       label: "Service Name",
       id: "azureFunctionsServiceName",
+      regexDefinitionName: "azureLabels",
+      maxLength: 63
     },
     {
       label: "Dynamic Name Prefix",
