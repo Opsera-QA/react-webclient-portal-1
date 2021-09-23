@@ -92,8 +92,8 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
     if (ebsStepConfigurationDto.getData("tool_identifier") === "docker-push") {
       return (
         <div>
-          <JsonInput fieldName={"dockerVolumePath"} dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto}/>
-          <JsonInput fieldName={"environments"} dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto}/>
+          <JsonInput fieldName={"dockerVolumePath"} model={ebsStepConfigurationDto} setModel={setEBSStepConfigurationDataDto}/>
+          <JsonInput fieldName={"environments"} model={ebsStepConfigurationDto} setModel={setEBSStepConfigurationDataDto}/>
         </div>
       );
     }
