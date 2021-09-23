@@ -10,8 +10,6 @@ import PipelineRunSelectInput
   from "components/common/list_of_values_input/workflow/pipelines/run/PipelineRunSelectInput";
 import SfdcPipelineWizardUploadComponentTypesRadioInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardUploadComponentTypesRadioInput";
-import SfdcComponentListInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcComponentListInput";
 import SfdcPipelineWizardIncludeDependenciesToggle
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
 
@@ -69,7 +67,7 @@ function SfdcPipelineWizardPastRunComponent({ pipelineWizardModel, setPipelineWi
       </>
     );
   };
-  
+
   const buttonContainer = () => {
     return (
       <SaveButtonContainer>
@@ -84,15 +82,24 @@ function SfdcPipelineWizardPastRunComponent({ pipelineWizardModel, setPipelineWi
     );
   };
 
+  const getDependenciesToggle = () => {
+    if (pipelineWizardModel?.getData("modifiedFilesOrigin") === "git") {
+      return (
+        <div>
+          <SfdcPipelineWizardIncludeDependenciesToggle
+            pipelineWizardModel={pipelineWizardModel}
+            setPipelineWizardModel={setPipelineWizardModel}
+          />
+        </div>
+      );
+    }
+  };
+
   const getBody = () => {
     if (pipelineWizardModel.getData("recordId") && pipelineWizardModel.getData("recordId").length > 0) {
       return (
         <div>
           <div className="my-4 w-100">
-            <SfdcPipelineWizardIncludeDependenciesToggle
-              pipelineWizardModel={pipelineWizardModel}
-              setPipelineWizardModel={setPipelineWizardModel}
-            />
             <div className="my-3">
               <PipelineRunSelectInput
                 model={pipelineWizardModel}
@@ -107,6 +114,7 @@ function SfdcPipelineWizardPastRunComponent({ pipelineWizardModel, setPipelineWi
                 setPipelineWizardModel={setPipelineWizardModel}
               />
             </div>
+            {getDependenciesToggle()}
           </div>
           {getXMLView()}
         </div>
