@@ -208,7 +208,7 @@ function JenkinsStepConfiguration({
         />
         <JenkinsStepConfigurationBranchEditorPanel dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} jenkinsList={jenkinsList} />
         <JenkinsXmlStepInfoSelectInput dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} plan={plan} stepId={stepId} />
-        <JenkinsStepConfigurationDockerEditorPanel dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
+        <JenkinsStepConfigurationDockerEditorPanel model={jenkinsStepConfigurationDto} setModel={setJenkinsStepConfigurationDto} />
         <JenkinsPythonPanel dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} plan={plan}  stepId={stepId} />
         <JenkinsGradleMavenScriptFilePathPanel  dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
       </div>
