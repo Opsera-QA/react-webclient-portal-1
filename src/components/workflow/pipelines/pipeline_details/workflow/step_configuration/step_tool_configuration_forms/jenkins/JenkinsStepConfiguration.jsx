@@ -20,6 +20,9 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import JenkinsToolJobIdSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsToolJobIdSelectInput";
 import JenkinsDependencyTypeInput from "./inputs/JenkinsDependencyTypeInput";
+import toolsActions from "components/inventory/tools/tools-actions";
+import {AuthContext} from "contexts/AuthContext";
+import axios from "axios";
 
 function JenkinsStepConfiguration({
   stepTool,
@@ -31,25 +34,39 @@ function JenkinsStepConfiguration({
   parentCallback
 }) {
   const toastContext = useContext(DialogToastContext);
+  const { getAccessToken } = useContext(AuthContext);
   const [jenkinsList, setJenkinsList] = useState([]);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [jenkinsStepConfigurationDto, setJenkinsStepConfigurationDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
+
+
   useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
     isMounted.current = true;
-    loadData().catch((error) => {
+
+
+    loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
+
     return () => {
+      source.cancel();
       isMounted.current = false;
     };
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       let { threshold, job_type } = stepTool;
@@ -72,13 +89,20 @@ function JenkinsStepConfiguration({
     }
     finally {
       setIsLoading(false);
+      await getJenkinsTools(cancelSource);
     }
   };
 
   // TODO: This is temporary to allow changes to the form without rewriting the whole thing.
   //  I need to rework the dropdowns that expect jenkinsList to be passed in.
-  const getJenkinsTools = () => {
+  const getJenkinsTools = async (cancelSource = cancelTokenSource) => {
+    const response = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, cancelSource, "jenkins");
+    const tools = response?.data?.data;
 
+    if (Array.isArray(tools)) {
+        const filteredTools = tools?.filter((tool) => {return tool.configuration != null && Object.entries(tool.configuration).length > 0; });
+        setJenkinsList(filteredTools);
+    }
   };
 
 
@@ -186,10 +210,8 @@ function JenkinsStepConfiguration({
       isLoading={isLoading}
     >
       <JenkinsToolConfigIdSelectInput
-        dataObject={jenkinsStepConfigurationDto}
-        setDataObject={setJenkinsStepConfigurationDto}
-        jenkinsList={jenkinsList}
-        setJenkinsList={setJenkinsList}
+        model={jenkinsStepConfigurationDto}
+        setModel={setJenkinsStepConfigurationDto}
       />
       <JenkinsJobTypeSelectInput
         dataObject={jenkinsStepConfigurationDto}
