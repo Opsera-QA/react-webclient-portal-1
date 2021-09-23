@@ -100,8 +100,21 @@ function JenkinsStepConfiguration({
     const tools = response?.data?.data;
 
     if (Array.isArray(tools)) {
-        const filteredTools = tools?.filter((tool) => {return tool.configuration != null && Object.entries(tool.configuration).length > 0; });
-        setJenkinsList(filteredTools);
+      const filteredTools = tools?.filter((tool) => {
+        return tool.configuration != null && Object.entries(tool.configuration).length > 0;
+      });
+
+      let respObj = [];
+      filteredTools?.map((item) => {
+        respObj.push({
+          name: item.name,
+          id: item._id,
+          configuration: item.configuration,
+          accounts: item.accounts,
+          jobs: item.jobs,
+        });
+      });
+      setJenkinsList(respObj);
     }
   };
 
