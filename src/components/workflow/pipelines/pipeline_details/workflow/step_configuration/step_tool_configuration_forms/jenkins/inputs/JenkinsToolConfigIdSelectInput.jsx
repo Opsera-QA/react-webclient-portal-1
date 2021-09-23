@@ -6,7 +6,7 @@ import RoleRestrictedJenkinsToolSelectInput
 function JenkinsToolConfigIdSelectInput({ model, setModel, disabled }) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...model};
-    newDataObject.setData("toolConfigId", selectedOption.id);
+    newDataObject.setData("toolConfigId", selectedOption._id);
     newDataObject.setData("jenkinsUrl", selectedOption?.configuration?.jenkinsUrl);
     newDataObject.setData("jUserId", selectedOption?.configuration?.jUserId);
     newDataObject.setData("jenkinsPort", selectedOption?.configuration?.jenkinsPort);
