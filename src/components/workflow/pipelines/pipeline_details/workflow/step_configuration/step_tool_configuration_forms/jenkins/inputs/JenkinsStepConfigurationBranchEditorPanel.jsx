@@ -102,12 +102,11 @@ function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setD
         <Form.Check
           inline
           type="checkbox"
-          label={"Delete workspace before building"}
+          label={"Delete the Workspace before building."}
           id={`workspaceDeleteFlag`}
           checked={dataObject.getData("workspaceDeleteFlag")}
           onChange={(e) => handleWorkspaceDeleteFlagChange(e.target.checked)}
         />
-        <Form.Text className="text-muted">Delete the Jenkins Workspace before building.</Form.Text>
       </Form.Group>
       {getDynamicFields()}
     </>
