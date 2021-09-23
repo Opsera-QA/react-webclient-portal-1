@@ -18,7 +18,6 @@ export const JENKINS_JOB_OPTIONS = [
 ];
 
 function JenkinsStepJobTypeSelectInput({ model, setModel }) {
-
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...model};
     newDataObject.setData("job_type", selectedOption?.value);
