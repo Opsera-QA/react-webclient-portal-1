@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import PipelineActions from "../../../../pipeline-actions";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
-import JenkinsConfiguration from "./step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
 import JUnitStepConfiguration from "./step_tool_configuration_forms/junit/JUnitStepConfiguration";
 import XUnitStepConfiguration from "./step_tool_configuration_forms/xunit/XUnitStepConfiguration";
 import SonarStepConfiguration from "./step_tool_configuration_forms/sonar/SonarStepConfiguration";
@@ -63,6 +62,8 @@ import MongodbRealmStepConfiguration from "./step_tool_configuration_forms/mongo
 
 import AksServiceDeployStepConfiguration
   from "./step_tool_configuration_forms/aks_service_deploy/AksServiceDeployStepConfiguration";
+import LegacyJenkinsStepConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/LegacyJenkinsStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -412,7 +413,7 @@ function StepToolConfiguration({
     switch (toolName) {
       case "jenkins":
         return (
-          <JenkinsConfiguration
+          <LegacyJenkinsStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}
