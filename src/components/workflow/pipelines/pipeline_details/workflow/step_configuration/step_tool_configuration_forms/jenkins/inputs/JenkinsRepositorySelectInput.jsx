@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import GitRepositoryInput from "components/common/list_of_values_input/tools/git/GitRepositoryInput";
+import RepositorySelectInput from "components/common/list_of_values_input/tools/git/RepositorySelectInput";
 
 function JenkinsRepositorySelectInput({dataObject, setDataObject, disabled}) {
 
@@ -46,7 +46,7 @@ function JenkinsRepositorySelectInput({dataObject, setDataObject, disabled}) {
   if(!valid()) return null;
 
   return (
-     <GitRepositoryInput
+     <RepositorySelectInput
        fieldName={"repository"}
        service={dataObject.getData("service")}
        gitToolId={dataObject.getData("gitToolId")}
