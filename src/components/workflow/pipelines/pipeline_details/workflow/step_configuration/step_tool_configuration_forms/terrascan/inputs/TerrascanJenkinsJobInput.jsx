@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import JenkinsJobInput from "components/common/list_of_values_input/tools/jenkins/JenkinsJobInput";
+import JenkinsJobInput from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsJobInput";
 
 function TerrascanJenkinsJobInput({dataObject, setDataObject, disabled}) {
   const setJenkinsJob = (fieldName, selectedOption) => {    
