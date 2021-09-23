@@ -7,7 +7,7 @@ import GitActionsHelper
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
   import axios from "axios";
 
-function GitRepositoryInput({ service, gitToolId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
+function RepositorySelectInput({ service, gitToolId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [repositories, setRepositories] = useState([]);
@@ -99,7 +99,7 @@ function GitRepositoryInput({ service, gitToolId, workspace, visible, fieldName,
   );
 }
 
-GitRepositoryInput.propTypes = {
+RepositorySelectInput.propTypes = {
   service: PropTypes.string,
   gitToolId: PropTypes.string,
   workspace: PropTypes.string,
@@ -112,9 +112,9 @@ GitRepositoryInput.propTypes = {
   clearDataFunction: PropTypes.func
 };
 
-GitRepositoryInput.defaultProps = {
+RepositorySelectInput.defaultProps = {
   visible: true,
   placeholderText: "Select Repository"
 };
 
-export default GitRepositoryInput;
+export default RepositorySelectInput;
