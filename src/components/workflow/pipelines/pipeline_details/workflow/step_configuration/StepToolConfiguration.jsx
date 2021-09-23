@@ -1054,7 +1054,7 @@ function StepToolConfiguration({
         getConfigurationTool(editItem.tool_name.toLowerCase())
       ) : null}
 
-      <div className="text-muted small mt-2">Tools and Accounts can be saved in <Link to="/inventory/tools">Tool Registry</Link>.</div>
+      <div className="text-muted small my-2">Tools and Accounts can be saved in <Link to="/inventory/tools">Tool Registry</Link>.</div>
     </div>
   );
 }

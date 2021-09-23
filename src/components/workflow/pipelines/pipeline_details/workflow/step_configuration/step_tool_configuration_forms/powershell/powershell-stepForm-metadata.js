@@ -109,6 +109,7 @@ const powershellStepFormMetadata = {
     {
       label: "Output File Name",
       id: "outputFileName",
+      formText: "File name with extension is expected.",
     },
     {
       label: "Jenkins Agent",
