@@ -24,6 +24,14 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 
+// TODO: This should probably be moved to some helper function so we only need to update it in one spot
+//  and also use ENUMs to make it easier to ensure spelling it is correct and consistent everywhere.
+export const SFDC_JOB_TYPES = [
+  "sfdc-ant-profile",
+  "sfdc-ant",
+];
+
+
 function JenkinsStepConfiguration({
   stepTool,
   plan,
@@ -156,8 +164,10 @@ function JenkinsStepConfiguration({
   const loadSfdcConfigurationPanel = () => {
     const jobType = jenkinsStepConfigurationDto?.getData("job_type");
     const toolJobType = jenkinsStepConfigurationDto?.getData("toolJobType");
-      if ((jobType  && (["sfdc-ant-profile", "sfdc-ant"]).some(item=>item === jobType ? jobType :"")) || 
-          (toolJobType  && toolJobType.some(item=>item==="SFDC"))) {
+    const isSfdcJob =  SFDC_JOB_TYPES.includes(jobType);
+    const isSfdcToolJobType = Array.isArray(toolJobType) && toolJobType.includes("SFDC");
+
+    if (isSfdcJob === true || isSfdcToolJobType === true) {
       return (
         <JenkinsSfdcConfigurationPanel
           dataObject={jenkinsStepConfigurationDto}
