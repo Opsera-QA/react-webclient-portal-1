@@ -1,14 +1,15 @@
 import React from "react";
 import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
 import PropTypes from "prop-types";
+import { getTaskTypeLabel, TASK_TYPES } from "../../../../tasks/task.types";
 
 function AzureAksClusterCreationTaskHelpDocumentation({closeHelpPanel}) {
   return (
-    <HelpDocumentationContainer helpTopic={"Create AKS Azure Cluster"} closeHelpPanel={closeHelpPanel}>
-      <div>The AKS Azure Cluster workflow requires setup in both Tasks and Opsera Pipelines. The workflow is separated into two parts where the user enters certain static information in the Tasks page and then links the task to the respective step in the pipeline.  Template creation is a prerequisite to creating the cluster. Once the template has been created, you must select <b>Run Task</b> for the first cluster to be created in Azure and for it to be accessed in the Azure pipeline step. For more detailed information on the Azure AKS Functionality including pipeline setup, view the <a href="https://opsera.atlassian.net/l/c/sFZ1m56B" target="_blank" rel="noreferrer"><b>Azure AKS Functionality Help Documentation</b>.</a></div>
+    <HelpDocumentationContainer helpTopic={getTaskTypeLabel(TASK_TYPES.AZURE_CLUSTER_CREATION)} closeHelpPanel={closeHelpPanel}>
+      <div>This workflow requires setup in both Tasks and Opsera Pipelines. The workflow is separated into two parts where the user enters certain static information in the Tasks page and then links the task to the respective step in the pipeline.  Template creation is a prerequisite to creating the cluster. Once the template has been created, you must select <b>Run Task</b> for the first cluster to be created in Azure and for it to be accessed in the Azure pipeline step. For more detailed information on the Azure AKS Functionality including pipeline setup, view the <a href="https://opsera.atlassian.net/l/c/sFZ1m56B" target="_blank" rel="noreferrer"><b>Azure AKS Functionality Help Documentation</b>.</a></div>
       <div className={"mt-2"}><h5>Task Setup Instructions:</h5></div>
       <ol>
-        <li>Select <b>Azure: Create AKS Cluster</b> from the Type drop down. Once this has been selected, the following values will be available for selection:
+        <li>Select <b>{getTaskTypeLabel(TASK_TYPES.AZURE_CLUSTER_CREATION)}</b> from the Type drop down. Once this has been selected, the following values will be available for selection:
           <ul>
             <li className={"mt-1"}><b>Azure Tool</b> - Select an established Azure tool from the Tool Registry.</li>
             <li><b>Azure Credential</b> - This field is fetched from Applications tab of the selected Azure tool.</li>
