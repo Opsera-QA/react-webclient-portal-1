@@ -4,8 +4,7 @@ import PipelineStepEditorPanelContainer from "components/common/panels/detail_pa
 import jenkinsPipelineStepConfigurationMetadata from "./jenkinsPipelineStepConfigurationMetadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import JenkinsToolConfigIdSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsToolConfigIdSelectInput";
-import JenkinsJobTypeSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsJobTypeSelectInput";
+import JenkinsStepToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepToolSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import JenkinsSfdcConfigurationPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsSfdcConfigurationPanel";
 import JenkinsGitCredentialsSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsGitCredentialsSelectInput";
@@ -24,7 +23,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import JenkinsStepJobTypeSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsJobTypeSelectInput";
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepJobTypeSelectInput";
 
 // TODO: This should probably be moved to some helper function so we only need to update it in one spot
 //  and also use ENUMs to make it easier to ensure spelling it is correct and consistent everywhere.
@@ -234,7 +233,7 @@ function JenkinsStepConfiguration({
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <JenkinsToolConfigIdSelectInput
+      <JenkinsStepToolSelectInput
         model={jenkinsStepConfigurationDto}
         setModel={setJenkinsStepConfigurationDto}
       />
@@ -243,7 +242,10 @@ function JenkinsStepConfiguration({
         setModel={setJenkinsStepConfigurationDto}
       />
       {getJobForm()}
-      <JenkinsDependencyTypeInput dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
+      <JenkinsDependencyTypeInput
+        dataObject={jenkinsStepConfigurationDto}
+        setDataObject={setJenkinsStepConfigurationDto}
+      />
     </PipelineStepEditorPanelContainer>
   );
 }
