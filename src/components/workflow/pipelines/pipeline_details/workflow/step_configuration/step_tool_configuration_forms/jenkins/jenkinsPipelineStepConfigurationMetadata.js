@@ -182,8 +182,9 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id:"isManualRollBackBranch"
     },
     {
-      label:"Jenkins - Job Type",
+      label:"Jenkins Job Type",
       id:"job_type",
+      isRequired: true,
     },
     {
       label: "Dependency",

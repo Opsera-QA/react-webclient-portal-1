@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import PipelineToolInput from "components/common/list_of_values_input/workflow/pipelines/PipelineToolInput";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import RoleRestrictedJenkinsToolSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
 
 function JenkinsToolConfigIdSelectInput({ dataObject, setDataObject, disabled, setJenkinsList }) {
   const toastContext = useContext(DialogToastContext);
@@ -51,16 +53,12 @@ function JenkinsToolConfigIdSelectInput({ dataObject, setDataObject, disabled, s
   };
 
   return (
-    <PipelineToolInput
-      toolType={"jenkins"}
-      toolFriendlyName={"Jenkins"}
+    <RoleRestrictedJenkinsToolSelectInput
       fieldName={"toolConfigId"}
-      configurationRequired={true}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      model={dataObject}
+      setModel={setDataObject}
       setDataFunction={setDataFunction}
       disabled={disabled}
-      setJenkinsList={setJenkinsList}
     />
   );
 }

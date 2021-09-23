@@ -75,6 +75,12 @@ function JenkinsStepConfiguration({
     }
   };
 
+  // TODO: This is temporary to allow changes to the form without rewriting the whole thing.
+  //  I need to rework the dropdowns that expect jenkinsList to be passed in.
+  const getJenkinsTools = () => {
+
+  };
+
 
   const handleCreateAndSave = async () => {
     const toolId = jenkinsStepConfigurationDto.getData("toolConfigId");
@@ -141,7 +147,6 @@ function JenkinsStepConfiguration({
       <div>
         <JenkinsToolJobIdSelectInput
           jenkinsList={jenkinsList}
-          
           dataObject={jenkinsStepConfigurationDto}
           setDataObject={setJenkinsStepConfigurationDto}
           toolConfigId={jenkinsStepConfigurationDto?.getData("toolConfigId")}
