@@ -64,23 +64,27 @@ function JenkinsStepConfigurationDockerEditorPanel({model, setModel}) {
       <TextInputBase disabled={false} fieldName={"dockerName"} dataObject={model} setDataObject={setModel}/>
       {getDockerTagInputs()}
       <TextInputBase disabled={false} fieldName={"dockerPath"} dataObject={model} setDataObject={setModel}/>
-      <div className="text-muted mb-2">
-        Enter Runtime Build arguments as a key/value pair JSON Object. You can add any number of runtime arguments to
-        the JSON Object. Sample: {" { Key1: Value1, Key2: value2 }"}
-      </div>
-      <div className={"mt-2"}>
-        Sample:
-        <ReactJson
-          className={"mt-1 py-1"}
-          src={{ Key1: "Value1", Key2: "value2" }}
-          displayDataTypes={false}
-        />
-      </div>
       <JsonInput
+        className={"my-2"}
         fieldName={"buildArgs"}
         model={model}
         setModel={setModel}
       />
+      <div className="text-muted mb-2">
+        Enter Runtime Build arguments as a key/value pair JSON Object. You can add any number of runtime arguments to
+        the JSON Object.
+      </div>
+      <div className={"mt-2"}>
+        Sample:
+        <div>
+          <ReactJson
+            name={false}
+            className={"my-1 px-2"}
+            src={{ Key1: "Value1", Key2: "value2" }}
+            displayDataTypes={false}
+          />
+        </div>
+      </div>
       <DockerSecretsInput
         setDataObject={setModel}
         dataObject={model}
