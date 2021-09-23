@@ -16,26 +16,13 @@ import SfdcPipelineWizardSubmitComponentTypesButton
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStepBackward} from "@fortawesome/free-solid-svg-icons";
-import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import SfdcPipelineWizardIncludeDependenciesToggle
+  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
 
 const SfdcPipelineWizardComponentSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) => {
   if (pipelineWizardModel == null) {
     return null;
   }
-
-  const getDependenciesToggle = () => {
-    if (pipelineWizardModel.getData("isProfiles") !== true && pipelineWizardModel.getData("fromGitTasks") !== true) {
-      return (
-        <div>
-          <BooleanToggleInput
-            dataObject={pipelineWizardModel}
-            setDataObject={setPipelineWizardModel}
-            fieldName={"includeDependencies"}
-          />
-        </div>
-      );
-    }
-  };
 
   return (
     <div>
@@ -57,7 +44,10 @@ const SfdcPipelineWizardComponentSelector = ({ pipelineWizardModel, setPipelineW
         setPipelineWizardModel={setPipelineWizardModel}
         selectedComponents={[...pipelineWizardModel.getArrayData("selectedComponentTypes")]}
       />
-      {getDependenciesToggle()}
+      <SfdcPipelineWizardIncludeDependenciesToggle
+        pipelineWizardModel={pipelineWizardModel}
+        setPipelineWizardModel={setPipelineWizardModel}
+      />
       <div className={"my-3"}>
         <SfdcPipelineWizardFileSelectionDateTimeRange
           pipelineWizardModel={pipelineWizardModel}

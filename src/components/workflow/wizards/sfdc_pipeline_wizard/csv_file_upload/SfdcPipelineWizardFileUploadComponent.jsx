@@ -18,6 +18,10 @@ import FilterContainer from "components/common/table/FilterContainer";
 import VanityTable from "components/common/table/VanityTable";
 import _ from "lodash";
 import PackageXmlFieldBase from "components/common/fields/code/PackageXmlFieldBase";
+import SfdcComponentListInput
+  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcComponentListInput";
+import SfdcPipelineWizardIncludeDependenciesToggle
+  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
 
 function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) {
   const fields = PipelineWizardFileUploadMetadata.fields;
@@ -333,6 +337,18 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     }
   };
 
+  // TODO: Check if validating against git branch
+  const getDependenciesToggle = () => {
+    if (pipelineWizardModel?.getData("modifiedFilesOrigin") === "git") {
+      return (
+        <SfdcPipelineWizardIncludeDependenciesToggle
+          pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardModel={setPipelineWizardModel}
+        />
+      );
+    }
+  };
+
   const getValidateButton = () => {
     if (unsupportedFiles.length === 0 && validFiles.length && pipelineWizardModel.getData("xmlFileContent").length === 0 && pipelineWizardModel.getData("csvFileContent").length === 0) {
       return (
@@ -354,6 +370,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
             {getFilesBody()}
             {getValidateButton()}
           </div>
+          {getDependenciesToggle()}
           {getXMLView()}
           {getCsvView()}
         </div>
