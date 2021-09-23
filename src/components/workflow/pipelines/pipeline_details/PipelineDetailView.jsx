@@ -10,9 +10,8 @@ import {useHistory, useParams} from "react-router-dom";
 import PipelineWorkflowView from "./workflow/PipelineWorkflowView";
 import PipelineSummaryPanel from "./PipelineSummaryPanel";
 import PipelineHelpers from "../../pipelineHelpers";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-  faBracketsCurly, faDiceD20,
+  faBracketsCurly,
   faDraftingCompass,
   faHexagon,
   faLayerGroup,
@@ -39,6 +38,8 @@ function PipelineDetailView() {
   const [data, setData] = useState({});
   const [pipeline, setPipeline] = useState({});
   const [activityData, setActivityData] = useState([]);
+  const [latestActivityLogs, setLatestActivityLogs] = useState([]);
+  const [secondaryActivityLogs, setSecondaryActivityLogs] = useState([]);
   //const [stepStatus, setStepStatus] = useState({});
   const [loading, setLoading] = useState(false);
   const [softLoading, setSoftLoading] = useState(false);
@@ -196,7 +197,7 @@ function PipelineDetailView() {
       return;
     }
 
-    const pipelineStatus = analyzePipelineStatus(pipeline);
+    const pipelineStatus = pipeline?.workflow?.last_step?.status;
 
     if (pipelineStatus === "stopped" || !pipelineStatus) {
       console.log("Pipeline stopped, no need to schedule refresh. Status: ", pipelineStatus);
@@ -216,14 +217,6 @@ function PipelineDetailView() {
     setRefreshTimer(refreshTimer);
   };
 
-  const analyzePipelineStatus = (pipeline) => {
-    if (!pipeline || Object.entries(pipeline).length === 0) {
-      return;
-    }
-    const { workflow } = pipeline;
-    return workflow.last_step !== undefined && workflow.last_step.hasOwnProperty("status") ? workflow.last_step.status : false;
-  };
-
   // TODO: Find way to put refresh inside table itself
   const getActivityLogs = async (newFilterModel = pipelineActivityFilterModel, silentLoading = false, cancelSource = cancelTokenSource) => {
     if (activeTab !== "summary" || logsIsLoading) {
@@ -240,6 +233,8 @@ function PipelineDetailView() {
       const pipelineTree = pipelineActivityHelpers.constructTree(treeResponse?.data?.data);
       setPipelineActivityTreeData([...pipelineTree]);
       setActivityData([]);
+      setSecondaryActivityLogs([]);
+      setLatestActivityLogs([]);
 
       if (Array.isArray(pipelineTree) && pipelineTree.length > 0) {
         await pullLogData(pipelineTree, newFilterModel, cancelSource);
@@ -249,6 +244,9 @@ function PipelineDetailView() {
         newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
         setPipelineActivityFilterModel({...newFilterModel});
       }
+
+      await getLatestActivityLogs(newFilterModel, cancelSource);
+      await getSecondaryActivityLogs(newFilterModel, cancelSource);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
       console.log(error.message);
@@ -258,47 +256,63 @@ function PipelineDetailView() {
   };
 
   const pullLogData = async (pipelineTree = pipelineActivityTreeData, filterDto = pipelineActivityFilterModel, cancelSource = cancelTokenSource, silentLoading = false) => {
-
     try {
-      // create run count query based on tree -- tree is 0 index based
-      const startIndex = 20 * currentLogTreePage;
-      let runCountArray = [];
-      let otherLogsQuery = false;
-
       if (!silentLoading) {
         setLogsIsLoading(true);
       }
-
-      for (let i = startIndex; i < startIndex + 20 && i < pipelineTree.length; i++) {
-        let runCount = pipelineTree[i].runNumber;
-
-        if (runCount === "other_logs_query") {
-          otherLogsQuery = true;
-        }
-        else if (runCount) {
-          runCountArray.push(runCount);
-        }
-      }
-
-      const response = await pipelineActivityActions.getPipelineActivityLogsV3(getAccessToken, cancelSource, id, runCountArray, filterDto, otherLogsQuery);
-      const pipelineActivityData = response?.data?.data;
-
-      if (Array.isArray(pipelineActivityData)) {
-        setActivityData([...pipelineActivityData]);
-        setPipelineActivityMetadata(response?.data?.metadata);
-
-        // TODO: Remove pagination.
-        const newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", data?.count);
-        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-        setPipelineActivityFilterModel({...newFilterDto});
-      }
+      await getActivityLogsBasedOnTree(pipelineTree, filterDto, cancelSource);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
       console.log(error.message);
     }
     finally {
       setLogsIsLoading(false);
+    }
+  };
+
+  const getActivityLogsBasedOnTree = async (pipelineTree = pipelineActivityTreeData, filterDto = pipelineActivityFilterModel, cancelSource = cancelTokenSource,) => {
+    // create run count query based on tree -- tree is 0 index based
+    const startIndex = 20 * currentLogTreePage;
+    let runCountArray = [];
+
+    for (let i = startIndex; i < startIndex + 20 && i < pipelineTree.length; i++) {
+      let runCount = pipelineTree[i].runNumber;
+
+      if (runCount) {
+        runCountArray.push(runCount);
+      }
+    }
+
+    const response = await pipelineActivityActions.getPipelineActivityLogsV3(getAccessToken, cancelSource, id, runCountArray, filterDto);
+    const pipelineActivityData = response?.data?.data;
+
+    if (Array.isArray(pipelineActivityData)) {
+      setActivityData([...pipelineActivityData]);
+      setPipelineActivityMetadata(response?.data?.metadata);
+
+      // TODO: Remove pagination.
+      const newFilterDto = filterDto;
+      newFilterDto.setData("totalCount", data?.count);
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+      setPipelineActivityFilterModel({...newFilterDto});
+    }
+  };
+
+  const getLatestActivityLogs = async (filterDto = pipelineActivityFilterModel, cancelSource = cancelTokenSource,) => {
+    const response = await pipelineActivityActions.getLatestPipelineActivityLogsV3(getAccessToken, cancelSource, id, filterDto);
+    const pipelineActivityData = response?.data?.data;
+
+    if (Array.isArray(pipelineActivityData)) {
+      setLatestActivityLogs([...pipelineActivityData]);
+    }
+  };
+
+  const getSecondaryActivityLogs = async (filterDto = pipelineActivityFilterModel, cancelSource = cancelTokenSource,) => {
+    const response = await pipelineActivityActions.getSecondaryPipelineActivityLogsV3(getAccessToken, cancelSource, id, filterDto);
+    const pipelineActivityData = response?.data?.data;
+
+    if (Array.isArray(pipelineActivityData)) {
+      setSecondaryActivityLogs([...pipelineActivityData]);
     }
   };
 
@@ -403,27 +417,13 @@ function PipelineDetailView() {
             pipelineActivityMetadata={pipelineActivityMetadata}
             pipelineActivityTreeData={pipelineActivityTreeData}
             setCurrentLogTreePage={setCurrentLogTreePage}
+            latestActivityLogs={latestActivityLogs}
+            secondaryActivityLogs={secondaryActivityLogs}
           />
         </div>
       </div>
     );
   };
-
-  const getPipelineTitle = () => {
-    if (loading) {
-      //return (<span><FontAwesomeIcon icon={faSpinner} className="mr-2" spin/>Loading Pipeline</span>)
-      //return (<div><FontAwesomeIcon icon={faSpinner} className="mr-2" spin/></div>);
-      return (<></>);
-    }
-
-    return (
-      <span>
-        {/*<FontAwesomeIcon icon={getTypeIcon(pipeline["type"] ? pipeline["type"][0] : "default")} className="mr-2"/>*/}
-        {pipeline?.name}
-      </span>
-    );
-  };
-
 
   const getNavigationTabContainer = () => {
     return (
@@ -447,7 +447,7 @@ function PipelineDetailView() {
   return (
     <div>
       {getNavigationTabContainer()}
-      <div className="h4 mt-3 mb-2">{getPipelineTitle()}</div>
+      <div className="h4 mt-3 mb-2">{pipeline?.name}</div>
       {getNavigationTabs()}
       {getCurrentView()}
     </div>

@@ -2,19 +2,43 @@ import baseActions from "utils/actionsBase";
 
 const pipelineActivityActions = {};
 
-pipelineActivityActions.getPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, runCountArray, pipelineActivityFilterDto, otherLogsQuery) => {
-  const search = pipelineActivityFilterDto?.getData("search");
+pipelineActivityActions.getPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, runCountArray, pipelineActivityFilterDto) => {
   const urlParams = {
     params: {
-      search: search,
+      search:   pipelineActivityFilterDto?.getData("search"),
       runCountArray: runCountArray,
       fields: ["run_count", "step_name", "action", "message", "status", "createdAt"],
-      showOtherLogs: otherLogsQuery === true ? true : undefined,
       status: pipelineActivityFilterDto?.getFilterValue("status"),
     },
   };
 
   const apiUrl = `/pipelines/${id}/activity/v2/`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+pipelineActivityActions.getLatestPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterDto) => {
+  const urlParams = {
+    params: {
+      search: pipelineActivityFilterDto?.getData("search"),
+      fields: ["run_count", "step_name", "action", "message", "status", "createdAt"],
+      status: pipelineActivityFilterDto?.getFilterValue("status"),
+    },
+  };
+
+  const apiUrl = `/pipelines/${id}/activity/v2/latest`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+pipelineActivityActions.getSecondaryPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterDto) => {
+  const urlParams = {
+    params: {
+      search: pipelineActivityFilterDto?.getData("search"),
+      fields: ["run_count", "step_name", "action", "message", "status", "createdAt"],
+      status: pipelineActivityFilterDto?.getFilterValue("status"),
+    },
+  };
+
+  const apiUrl = `/pipelines/${id}/activity/v2/secondary`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 

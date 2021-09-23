@@ -19,6 +19,7 @@ import SfdcPipelineWizardFileUploadComponent
   from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardFileUploadComponent";
 import SfdcPipelineWizardPastRunComponent
   from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardPastRunComponent";
+import toolsActions from "components/inventory/tools/tools-actions";
 
 const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, pipeline, gitTaskData, setError }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -38,7 +39,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    loadData(pipelineWizardModel, gitTaskData, pipeline?.workflow?.plan).catch((error) => {
+    loadData(pipelineWizardModel, gitTaskData, pipeline?.workflow?.plan, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -50,7 +51,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     };
   }, [pipeline]);
 
-  const loadData = async (newPipelineWizardModel, gitTaskData, plan) => {
+  const loadData = async (newPipelineWizardModel, gitTaskData, plan, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       let newPipelineWizardRecord;
@@ -59,7 +60,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
         newPipelineWizardRecord = loadGitTaskInformation(newPipelineWizardModel, gitTaskData);
       }
       else {
-        newPipelineWizardRecord = loadSfdcInitStep(newPipelineWizardModel, plan);
+        newPipelineWizardRecord = await loadSfdcInitStep(newPipelineWizardModel, plan, cancelSource);
       }
 
       await initializePipelineWizardRecord(newPipelineWizardRecord);
@@ -105,7 +106,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     return newPipelineWizardModel;
   };
 
-  const loadSfdcInitStep = (newPipelineWizardModel, steps) => {
+  const loadSfdcInitStep = async (newPipelineWizardModel, steps, cancelSource = cancelTokenSource) => {
     let stepArrayIndex = steps.findIndex(
       (step) => step?.active && step?.tool?.tool_identifier === "jenkins" && (step?.tool?.job_type === "sfdc-ant" || step?.tool?.job_type === "sfdc-ant-profile")
     );
@@ -116,16 +117,18 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       return;
     }
 
-    const stepId = steps[stepArrayIndex]?._id;
+    const sfdcStep = steps[stepArrayIndex];
+
+    const stepId = sfdcStep?._id;
     const pipelineId = pipeline?._id;
     const runCount = pipeline?.workflow?.run_count;
-    const accountUsername = steps[stepArrayIndex]?.tool?.configuration?.accountUsername;
-    const sfdcToolId = steps[stepArrayIndex]?.tool?.configuration?.sfdcToolId;
-    const gitToolId = steps[stepArrayIndex]?.tool?.configuration?.gitToolId;
-    const gitBranch = steps[stepArrayIndex]?.tool?.configuration?.gitBranch;
-    const sfdcDestToolId = steps[stepArrayIndex]?.tool?.configuration?.sfdcDestToolId;
-    const isOrgToOrg = steps[stepArrayIndex]?.tool?.configuration?.isOrgToOrg === true;
-    const jobType = steps[stepArrayIndex]?.tool?.job_type;
+    const accountUsername = sfdcStep?.tool?.configuration?.accountUsername;
+    const sfdcToolId = sfdcStep?.tool?.configuration?.sfdcToolId;
+    const gitToolId = sfdcStep?.tool?.configuration?.gitToolId;
+    const gitBranch = sfdcStep?.tool?.configuration?.gitBranch;
+    const sfdcDestToolId = sfdcStep?.tool?.configuration?.sfdcDestToolId;
+    const isOrgToOrg = sfdcStep?.tool?.configuration?.isOrgToOrg === true;
+    const jobType = sfdcStep?.tool?.job_type;
     const isProfiles = jobType === "sfdc-ant-profile" || jobType?.toUpperCase() === "SFDC PROFILE DEPLOY";
 
     if (pipelineId == null) {
@@ -151,8 +154,24 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     newPipelineWizardModel.setData("isOrgToOrg", isOrgToOrg);
     newPipelineWizardModel.setData("isProfiles", isProfiles);
     newPipelineWizardModel.setData("unitTestSteps", getCustomUnitTestSteps(steps));
+    const isSfdx = await checkIfSfdx(cancelSource, sfdcToolId);
+    newPipelineWizardModel.setData("isSfdx", isSfdx);
     setPipelineWizardModel({...newPipelineWizardModel});
     return newPipelineWizardModel;
+  };
+
+  const checkIfSfdx = async (cancelSource, sfdcToolId) => {
+    try {
+      const response = await toolsActions.getFullToolByIdV2(getAccessToken, cancelSource, sfdcToolId);
+      const tools = response?.data;
+
+      if (Array.isArray(tools) && tools.length > 0) {
+       return tools[0]?.configuration?.buildType === "sfdx";
+      }
+    }
+    catch (error) {
+      console.error("Could not verify if tool is SFDX");
+    }
   };
 
   const initializePipelineWizardRecord = async (newPipelineWizardModel = pipelineWizardModel) => {

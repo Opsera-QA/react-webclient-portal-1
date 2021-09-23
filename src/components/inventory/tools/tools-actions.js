@@ -137,6 +137,11 @@ toolsActions.getFullToolById = async (id, getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+toolsActions.getFullToolByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `/registry/${id}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 toolsActions.getRoleLimitedToolById = async (id, getAccessToken) => {
   const apiUrl = `/registry/configs/${id}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);

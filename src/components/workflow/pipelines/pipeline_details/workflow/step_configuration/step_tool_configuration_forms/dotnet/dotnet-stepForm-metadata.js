@@ -138,6 +138,7 @@ const dotnetStepFormMetadata = {
     {
       label: "Output File Name",
       id: "outputFileName",
+      formText: "File name with extension is expected.",
     },
     {
       label: "Solution File Path",

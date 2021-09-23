@@ -76,6 +76,10 @@ const sfdcPipelineWizardMetadata = {
       id: "isProfiles",
     },
     {
+      label: "Is SFDX?",
+      id: "isSfdx",
+    },
+    {
       label: "Unit Test Steps",
       id: "unitTestSteps",
     },
@@ -166,6 +170,7 @@ const sfdcPipelineWizardMetadata = {
     includeDependencies: true,
     gitBranch: "",
     accountUsername: "",
+    isSfdx: false,
   }
 };
 

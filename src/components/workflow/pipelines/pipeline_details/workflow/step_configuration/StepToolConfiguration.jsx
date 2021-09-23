@@ -54,7 +54,6 @@ import AzureDevopsStepConfiguration
 import JenkinsStepConfiguration
    from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
 import KafkaConnectStepConfiguration from "./step_tool_configuration_forms/kafka_connect/KafkaConnectStepConfiguration";
-//import JenkinsStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration-old";
 import AwsEcsDeployStepConfiguration
   from "./step_tool_configuration_forms/aws_ecs_deploy/AwsEcsDeployStepConfiguration";
 import AwsLambdaDeployStepConfiguration
@@ -415,20 +414,6 @@ function StepToolConfiguration({
     switch (toolName) {
       case "jenkins":
         return (
-          // <JenkinsStepConfiguration
-          //   pipelineId={pipeline._id}
-          //   plan={pipeline.workflow.plan}
-          //   stepId={stepId}
-          //   stepTool={stepTool}
-          //   parentCallback={callbackFunction}
-          //   callbackSaveToVault={saveToVault}
-          //   callbackGetFromVault={getFromVault}
-          //   callbackDeleteFromVault={deleteFromVaultUsingVaultKey}
-          //   createJob={createJob}
-          //   setToast={setToast}
-          //   setShowToast={setShowToast}
-          //   closeEditorPanel={closeEditorPanel}
-          // />
           <JenkinsStepConfiguration
             stepTool={stepTool}
             plan={pipeline?.workflow?.plan}
@@ -1054,7 +1039,7 @@ function StepToolConfiguration({
         getConfigurationTool(editItem.tool_name.toLowerCase())
       ) : null}
 
-      <div className="text-muted small mt-2">Tools and Accounts can be saved in <Link to="/inventory/tools">Tool Registry</Link>.</div>
+      <div className="text-muted small my-2">Tools and Accounts can be saved in <Link to="/inventory/tools">Tool Registry</Link>.</div>
     </div>
   );
 }

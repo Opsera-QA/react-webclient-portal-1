@@ -182,8 +182,18 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id:"isManualRollBackBranch"
     },
     {
-      label:"Jenkins - Job Type",
+      label:"Jenkins Job Type",
       id:"job_type",
+      isRequired: true,
+    },
+    {
+      label: "Dependency",
+      id: "dependencyType",
+      // isRequired: true
+    },
+    {
+      id: "dependencies",
+      // isRequired: true
     },
     {
       label: "Runtime Arguments",
@@ -243,6 +253,8 @@ const jenkinsPipelineStepConfigurationMetadata = {
     dockerTagType:[],
     dockerDynamicTagName:"",
     runtimeArguments: "",
+    dependencies: {},
+    dependencyType:"",
   }
 };
 
