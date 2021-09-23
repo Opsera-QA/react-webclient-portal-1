@@ -15,6 +15,7 @@ import NetworkingOnlySubForm from "../ecs-cluster-creation/sub_forms/NetworkingO
 import EC2SubForm from "../ecs-cluster-creation/sub_forms/EC2SubForm";
 import IAMRoleSelectInput from "./inputs/IAMRoleSelectInput";
 import SubnetSelectInput from "./inputs/SubnetSelectInput";
+import LogGroupSelectInput from "./inputs/LogGroupSelectInput";
 
 function ECSServiceCreationTaskConfigurationPanel({
   gitTasksDataDto,
@@ -82,17 +83,20 @@ function ECSServiceCreationTaskConfigurationPanel({
         <ClusterSelectInput
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
-          disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0 || gitTasksConfigurationData?.getData("ecsServiceRequiresCompatibilities").length === 0}
+          disabled={
+            gitTasksConfigurationData?.getData("toolConfigId").length === 0 ||
+            gitTasksConfigurationData?.getData("ecsServiceRequiresCompatibilities").length === 0
+          }
           requiresCompatibilities={gitTasksConfigurationData?.getData("ecsServiceRequiresCompatibilities")}
         />
       </Col>
       <Col lg={12}>
-      <VpcSelectInput
-        dataObject={gitTasksConfigurationData}
-        setDataObject={setGitTasksConfigurationData}
-        disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0}
-        toolConfigId={gitTasksConfigurationData?.getData("toolConfigId")}
-      />
+        <VpcSelectInput
+          dataObject={gitTasksConfigurationData}
+          setDataObject={setGitTasksConfigurationData}
+          disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0}
+          toolConfigId={gitTasksConfigurationData?.getData("toolConfigId")}
+        />
       </Col>
       <Col lg={12}>
         <TextInputBase
@@ -101,13 +105,14 @@ function ECSServiceCreationTaskConfigurationPanel({
           fieldName={"ecsServiceDesiredCount"}
         />
       </Col>
-      {/*<Col lg={12}>*/}
-      {/*  <TextInputBase*/}
-      {/*    dataObject={taskConfigurationModel}*/}
-      {/*    setDataObject={setTaskConfigurationModel}*/}
-      {/*    fieldName={"ecsServiceLogGroup"}*/}
-      {/*  />*/}
-      {/*</Col>*/}
+      <Col lg={12}>
+        <LogGroupSelectInput
+          dataObject={gitTasksConfigurationData}
+          setDataObject={setGitTasksConfigurationData}
+          disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0}
+          toolConfigId={gitTasksConfigurationData?.getData("toolConfigId")}
+        />
+      </Col>
       <Col lg={12}>
         <LoadBalancerSelectInput
           dataObject={gitTasksConfigurationData}
