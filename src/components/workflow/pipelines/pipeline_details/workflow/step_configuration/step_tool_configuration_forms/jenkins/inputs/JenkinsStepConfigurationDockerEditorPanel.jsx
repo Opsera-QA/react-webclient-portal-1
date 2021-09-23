@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import JsonInput from "components/common/inputs/object/JsonInput";
@@ -6,61 +6,95 @@ import DockerSecretsInput from "../DockerSecretsInput";
 import _ from "lodash";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import DockerTagTypeSelectionInput from "./DockerTagTypeSelectionInput";
+import ReactJson from "react-json-view";
 
-function JenkinsStepConfigurationDockerEditorPanel({ dataObject, setDataObject }) {
+function JenkinsStepConfigurationDockerEditorPanel({model, setModel}) {
   const [deleteDockerSecrets, setDeleteDockerSecrets] = useState(false);
 
-  const loadDockerTags =()=>{
+  const getDynamicTagNameField = () => {
+    if (model?.getData("dockerTagType") === "other") {
+      return (
+        <TextInputBase
+          dataObject={model}
+          setDataObject={setModel}
+          fieldName={"dockerDynamicTagName"}
+        />
+      );
+    }
+  };
+
+  const getDynamicDockerTagInput = () => {
+    if (model?.getData("dynamicTag") === true) {
+      return (
+        <>
+          <DockerTagTypeSelectionInput
+            dataObject={model}
+            setDataObject={setModel}
+            fieldName={"dockerTagType"}
+          />
+          {getDynamicTagNameField()}
+        </>
+      );
+    } else {
+      return (
+        <TextInputBase
+          dataObject={model}
+          setDataObject={setModel}
+          fieldName={"dockerTagName"}
+        />
+      );
+    }
+  };
+
+  const getDockerTagInputs = () => {
     return (
       <>
-        <BooleanToggleInput dataObject={dataObject} setDataObject={setDataObject} fieldName={"dynamicTag"} />
-        {!dataObject.getData("dynamicTag") && (
-          <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"dockerTagName"} />
-        )}
-        {dataObject.getData("dynamicTag") && (
-          <>
-            <DockerTagTypeSelectionInput
-              dataObject={dataObject}
-              setDataObject={setDataObject}
-              fieldName={"dockerTagType"}
-            />
-            {dataObject.getData("dockerTagType") === "other" && (
-              <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"dockerDynamicTagName"} />
-            )}
-          </>
-        )}
+        <BooleanToggleInput dataObject={model} setDataObject={setModel} fieldName={"dynamicTag"}/>
+        {getDynamicDockerTagInput()}
       </>
     );
   };
 
-  if (dataObject == null || dataObject.getData("buildType") !== "docker") {
+  if (model?.getData("buildType") !== "docker") {
     return null;
   }
 
   return (
     <div className={"mb-3"}>
-      <TextInputBase disabled={false} fieldName={"dockerName"} dataObject={dataObject} setDataObject={setDataObject} />
-      {loadDockerTags()}
-      <TextInputBase disabled={false} fieldName={"dockerPath"} dataObject={dataObject} setDataObject={setDataObject} />
+      <TextInputBase disabled={false} fieldName={"dockerName"} dataObject={model} setDataObject={setModel}/>
+      {getDockerTagInputs()}
+      <TextInputBase disabled={false} fieldName={"dockerPath"} dataObject={model} setDataObject={setModel}/>
       <div className="text-muted mb-2">
-        Enter Runtime Build arguments as a key value pair JSON. You can add any number of runtime arguments to
+        Enter Runtime Build arguments as a key/value pair JSON Object. You can add any number of runtime arguments to
         the JSON Object. Sample: {" { Key1: Value1, Key2: value2 }"}
       </div>
-      <JsonInput fieldName={"buildArgs"} dataObject={dataObject} setDataObject={setDataObject} />
+      <div className={"mt-2"}>
+        Sample:
+        <ReactJson
+          className={"mt-1 py-1"}
+          src={{ Key1: "Value1", Key2: "value2" }}
+          displayDataTypes={false}
+        />
+      </div>
+      <JsonInput
+        fieldName={"buildArgs"}
+        model={model}
+        setModel={setModel}
+      />
       <DockerSecretsInput
-        setDataObject={setDataObject}
-        dataObject={dataObject}
+        setDataObject={setModel}
+        dataObject={model}
         deleteDockerSecrets={deleteDockerSecrets}
         setDeleteDockerSecrets={setDeleteDockerSecrets}
-        addSecret={deleteDockerSecrets || _.isEmpty(dataObject.data.dockerBuildPathJson)}
+        addSecret={deleteDockerSecrets || _.isEmpty(model.data.dockerBuildPathJson)}
       />
     </div>
   );
 }
 
 JenkinsStepConfigurationDockerEditorPanel.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
 };
 
 export default JenkinsStepConfigurationDockerEditorPanel;

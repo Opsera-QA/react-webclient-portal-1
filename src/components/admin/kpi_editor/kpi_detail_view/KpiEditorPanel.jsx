@@ -80,7 +80,7 @@ function KpiEditorPanel({ kpiData, handleClose }) {
           <KpiChartTypeInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
           <KpiToolsInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
           <KpiFiltersInput dataObject={kpiDataDto} fieldName={"supported_filters"} setDataObject={setKpiDataDto} />
-          <JsonInput dataObject={kpiDataDto} fieldName={"dataPoints"} setDataObject={setKpiDataDto} />
+          <JsonInput model={kpiDataDto} fieldName={"dataPoints"} setModel={setKpiDataDto} />
           <KpiCategoriesInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
           <NotificationConditionTriggerSelectInput
             dataObject={kpiDataDto}
@@ -90,7 +90,7 @@ function KpiEditorPanel({ kpiData, handleClose }) {
           <WebsitePathInput dataObject={kpiDataDto} fieldName={"thumbnailPath"} setDataObject={setKpiDataDto} />
         </Col>
         <Col lg={6}>
-          <JsonInput dataObject={kpiDataDto} fieldName={"settings"} setDataObject={setKpiDataDto} />
+          <JsonInput model={kpiDataDto} fieldName={"settings"} setModel={setKpiDataDto} />
         </Col>
         <Col lg={12}>
           <TextAreaInput dataObject={kpiDataDto} fieldName={"description"} setDataObject={setKpiDataDto} />

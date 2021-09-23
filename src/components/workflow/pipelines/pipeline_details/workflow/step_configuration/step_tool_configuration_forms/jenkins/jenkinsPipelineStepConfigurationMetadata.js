@@ -101,7 +101,6 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Build Arguments",
       id: "buildArgs",
-      formText:"Enter runtime build arguments as a JSON Object",
     },
     {
       label: "Jenkins Agent",

@@ -57,7 +57,7 @@ function OctopusDeploymentVariables({ fieldName, dataObject, setDataObject }) {
         />
       </OverlayTrigger>
       <div className="form-group">
-        <JsonInput fieldName={fieldName} dataObject={dataObject} setDataObject={setDataObject} />
+        <JsonInput fieldName={fieldName} model={dataObject} setModel={setDataObject} />
       </div>
       <small className="form-text text-muted form-group m-2 text-left">
         Enter deployment variables as a list of JSON Objects
