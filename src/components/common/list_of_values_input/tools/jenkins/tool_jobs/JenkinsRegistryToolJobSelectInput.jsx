@@ -5,8 +5,15 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import toolsActions from "components/inventory/tools/tools-actions";
+import {OverlayTrigger, Popover} from "react-bootstrap";
+import {RegistryPopover} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/utility";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEllipsisH} from "@fortawesome/free-solid-svg-icons";
+import {Link} from "react-router-dom";
+import {faTimes} from "@fortawesome/pro-light-svg-icons";
+import InfoOverlayContainer from "components/common/inputs/info_text/InfoOverlayContainer";
 
-function JenkinsRegistryToolJobSelectInput({ jenkinsId, visible, typeFilter, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, configurationRequired}) {
+function JenkinsRegistryToolJobSelectInput({ jenkinsToolId, visible, typeFilter, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [jenkinsJobs, setJenkinsJobs] = useState([]);
@@ -25,7 +32,7 @@ function JenkinsRegistryToolJobSelectInput({ jenkinsId, visible, typeFilter, fie
 
 
     setJenkinsJobs([]);
-    if (jenkinsId !== "") {
+    if (jenkinsToolId != null && jenkinsToolId !== "") {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -37,7 +44,7 @@ function JenkinsRegistryToolJobSelectInput({ jenkinsId, visible, typeFilter, fie
       source.cancel();
       isMounted.current = false;
     };
-  }, [jenkinsId]);
+  }, [jenkinsToolId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -53,37 +60,83 @@ function JenkinsRegistryToolJobSelectInput({ jenkinsId, visible, typeFilter, fie
   };
 
   const loadJenkinsJobs = async (cancelSource = cancelTokenSource) => {
-    const response = await toolsActions.getFullToolByIdV2(getAccessToken, cancelSource, jenkinsId);
-    const jenkinsJobs = response?.data?.jobs;
+    const response = await toolsActions.getFullToolByIdV2(getAccessToken, cancelSource, jenkinsToolId);
+    const jenkinsToolArray = response?.data;
+    const jenkinsJobs = jenkinsToolArray ? jenkinsToolArray[0]?.jobs : [];
+    const existingJobSelection = dataObject?.getData(fieldName);
 
     if (Array.isArray(jenkinsJobs) && jenkinsJobs.length > 0) {
-      if (configurationRequired) {
-        if (typeFilter) {
-          let filteredJobs = jenkinsJobs.filter((job) => {return job.type[0] === typeFilter;});
-          setJenkinsJobs(filteredJobs);
+      if (typeFilter) {
+        let filteredJobs = jenkinsJobs.filter((job) => {return job.type[0] === typeFilter;});
+
+        if (Array.isArray(filteredJobs) && existingJobSelection != null && existingJobSelection !== "") {
+          // TODO: We should probably pass in valueField and check based on that.
+          const existingJob = jenkinsJobs.find((x) => x._id === existingJobSelection);
+
+          if (existingJob == null) {
+            toastContext.showLoadingErrorDialog(
+              "Preselected job is no longer available. It may have been deleted. Please select another job from the list or recreate the job in Tool Registry."
+            );
+          }
         }
-        else {
-          setJenkinsJobs(jenkinsJobs);
-        }
-      }
-      else {
-        if (jenkinsJobs.length > 0 && typeFilter) {
-          let filteredJobs = jenkinsJobs.filter((job) => {return job.type[0] === typeFilter;});
-          setJenkinsJobs(filteredJobs);
-        }
-        else {
-          setJenkinsJobs(jenkinsJobs);
+        setJenkinsJobs(filteredJobs);
+      } else {
+        setJenkinsJobs(jenkinsJobs);
+
+        const existingJob = jenkinsJobs.find((x) => x._id === existingJobSelection);
+
+        if (existingJob == null) {
+          toastContext.showLoadingErrorDialog(
+            "Preselected job is no longer available. It may have been deleted. Please select another job from the list or recreate the job in Tool Registry."
+          );
         }
       }
     }
   };
 
   const getPlaceholderText = () => {
-    if (!isLoading && (jenkinsJobs == null || jenkinsJobs.length === 0 && jenkinsId !== "")) {
+    if (!isLoading && (jenkinsJobs == null || jenkinsJobs.length === 0 && jenkinsToolId !== "")) {
       return (`No configured ${typeFilter ? typeFilter + " " : ""} Jenkins Jobs have been registered for this Jenkins tool.`);
     }
 
     return ("Select Jenkins Job");
+  };
+
+  // TODO: Make tool job overlay
+  const renderOverlayTrigger = () => {
+    const toolJobId = dataObject.getData("toolJobId");
+    const jenkinsJobIndex = jenkinsJobs.findIndex((x) => x._id === toolJobId);
+    const jenkinsJob = jenkinsJobIndex !== -1 ? jenkinsJobs[jenkinsJobIndex] : undefined;
+
+    if (jenkinsJob) {
+      return (
+        <InfoOverlayContainer title={"Jenkins Job Details"}>
+            <div>
+              <div className="text-muted mb-2">
+                Configuration details for this item are listed below. Tool and account specific settings are stored in
+                the
+                <Link to="/inventory/tools">Tool Registry</Link>. To add a new entry to a dropdown or update settings,
+                make those changes there.
+              </div>
+              {jenkinsJob?.configuration && (
+                <>
+                  {Object.entries(jenkinsJob?.configuration).map(function (a) {
+                    return (
+                      <div key={a}>
+                        {a[1] != null && a[1].length > 0 && (
+                          <>
+                            <span className="text-muted pr-1">{a[0]}: </span> {a[1]}
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
+                </>
+              )}
+            </div>
+        </InfoOverlayContainer>
+      );
+    }
   };
 
   if (visible === false) {
@@ -99,16 +152,17 @@ function JenkinsRegistryToolJobSelectInput({ jenkinsId, visible, typeFilter, fie
       selectOptions={jenkinsJobs}
       placeholderText={getPlaceholderText()}
       busy={isLoading}
-      valueField="name"
+      valueField="_id"
       textField="name"
+      infoOverlay={renderOverlayTrigger()}
       clearDataFunction={clearDataFunction}
-      disabled={disabled || jenkinsId === ""}
+      disabled={disabled || jenkinsToolId === ""}
     />
   );
 }
 
 JenkinsRegistryToolJobSelectInput.propTypes = {
-  jenkinsId: PropTypes.string,
+  jenkinsToolId: PropTypes.string,
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
