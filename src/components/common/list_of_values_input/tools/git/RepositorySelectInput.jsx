@@ -69,7 +69,7 @@ function RepositorySelectInput({ service, gitToolId, workspace, visible, fieldNa
     if (Array.isArray(repositoriesResponse)) {
       setRepositories(repositoriesResponse);
 
-      const existingRepository =
+      // const existingRepository =
     }
   };
 
