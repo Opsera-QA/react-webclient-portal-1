@@ -2,28 +2,34 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
+// TODO: Should we move these to a jenkins.job.types.js helper file?
+export const JENKINS_JOB_TYPES = {
+  OPSERA_MANAGED_JOB: "opsera-job",
+  CUSTOM_JOB: "job",
+  SALESFORCE_PACKAGE_GENERATION_JOB: "sfdc-ant",
+  SALESFORCE_PROFILE_MIGRATION_JOB: "sfdc-ant-profile",
+};
+
 export const JENKINS_JOB_OPTIONS = [
-  { value: "job", label: "Custom Job" },
-  { value: "opsera-job", label: "Opsera Managed Jobs" },
-  { value: "sfdc-ant", label: "SFDC Package Generation Job" },
-  { value: "sfdc-ant-profile", label: "SFDC Profile Migration" },
+  { value: JENKINS_JOB_TYPES.CUSTOM_JOB, label: "Custom Job" },
+  { value: JENKINS_JOB_TYPES.OPSERA_MANAGED_JOB, label: "Opsera Managed Job" },
+  { value: JENKINS_JOB_TYPES.SALESFORCE_PACKAGE_GENERATION_JOB, label: "Salesforce Package Generation Job" },
+  { value: JENKINS_JOB_TYPES.SALESFORCE_PROFILE_MIGRATION_JOB, label: "Salesforce Profile Migration Job" },
 ];
 
-function JenkinsJobTypeSelectInput({ dataObject, setDataObject }) {
- 
+function JenkinsStepJobTypeSelectInput({ model, setModel }) {
   const setDataFunction = (fieldName, selectedOption) => {
-    let newDataObject = { ...dataObject };
-    newDataObject.setData("job_type", selectedOption.value);
-    
+    let newDataObject = {...model};
+    newDataObject.setData("job_type", selectedOption?.value);
 
     switch (selectedOption.value) {
-      case "sfdc-ant":
+      case JENKINS_JOB_TYPES.SALESFORCE_PACKAGE_GENERATION_JOB:
         newDataObject.setData("buildType", "ant");
         newDataObject.setData("jobDescription", "PACKAGEXML_CREATION");
         newDataObject.setData("jobType", "SFDC CREATE PACKAGE XML");
         newDataObject.setData("isOrgToOrg", false);
         break;
-      case "sfdc-ant-profile":
+      case JENKINS_JOB_TYPES.SALESFORCE_PROFILE_MIGRATION_JOB:
         newDataObject.setData("buildType", "ant");
         newDataObject.setData("jobDescription", "Profile-migration");
         newDataObject.setData("jobType", "SFDC PROFILE DEPLOY");
@@ -45,33 +51,26 @@ function JenkinsJobTypeSelectInput({ dataObject, setDataObject }) {
     newDataObject.setData("rollbackBranchName", "");
     newDataObject.setData("stepIdXML", "");
     newDataObject.setData("sfdcDestToolId", "");
-    setDataObject({ ...newDataObject });
+    setModel({...newDataObject});
   };
   
-  if (dataObject == null) {
-    return <></>;
-  }
-
   return (
-    <div className={"mb-3"}>
-      <SelectInputBase
-        fieldName={"job_type"}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        setDataFunction={setDataFunction}
-        placeholderText={"Select Job Type"}
-        selectOptions={JENKINS_JOB_OPTIONS}
-        valueField="value"
-        textField="label"
-      />
-    </div>
+    <SelectInputBase
+      fieldName={"job_type"}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setDataFunction}
+      placeholderText={"Select Job Type"}
+      selectOptions={JENKINS_JOB_OPTIONS}
+      valueField={"value"}
+      textField={"label"}
+    />
   );
 }
 
-JenkinsJobTypeSelectInput.propTypes = {
-  
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+JenkinsStepJobTypeSelectInput.propTypes = {
+  model: PropTypes.object,
+  setModel: PropTypes.func,
 };
 
-export default JenkinsJobTypeSelectInput;
+export default JenkinsStepJobTypeSelectInput;

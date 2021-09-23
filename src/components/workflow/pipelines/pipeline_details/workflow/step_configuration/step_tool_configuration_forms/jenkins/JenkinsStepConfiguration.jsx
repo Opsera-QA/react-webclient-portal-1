@@ -23,6 +23,8 @@ import JenkinsDependencyTypeInput from "./inputs/JenkinsDependencyTypeInput";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
+import JenkinsStepJobTypeSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsJobTypeSelectInput";
 
 // TODO: This should probably be moved to some helper function so we only need to update it in one spot
 //  and also use ENUMs to make it easier to ensure spelling it is correct and consistent everywhere.
@@ -236,9 +238,9 @@ function JenkinsStepConfiguration({
         model={jenkinsStepConfigurationDto}
         setModel={setJenkinsStepConfigurationDto}
       />
-      <JenkinsJobTypeSelectInput
-        dataObject={jenkinsStepConfigurationDto}
-        setDataObject={setJenkinsStepConfigurationDto}   
+      <JenkinsStepJobTypeSelectInput
+        model={jenkinsStepConfigurationDto}
+        setModel={setJenkinsStepConfigurationDto}
       />
       {getJobForm()}
       <JenkinsDependencyTypeInput dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
