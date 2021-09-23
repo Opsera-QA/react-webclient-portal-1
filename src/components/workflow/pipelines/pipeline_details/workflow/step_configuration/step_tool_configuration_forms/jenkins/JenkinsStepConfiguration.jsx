@@ -16,8 +16,8 @@ import JenkinsStepConfigurationDockerEditorPanel from "components/workflow/pipel
 import JenkinsPythonPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepConfigurationPythonEditorPanel";
 import JenkinsGradleMavenScriptFilePathPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsGradleMavenScriptFilePathPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import JenkinsToolJobIdSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsToolJobIdSelectInput";
+import JenkinsStepToolJobSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepToolJobSelectInput";
 import JenkinsStepDependencyTypeInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepDependencyTypeInput";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
@@ -194,11 +194,12 @@ function JenkinsStepConfiguration({
 
     return (
       <div>
-        <JenkinsToolJobIdSelectInput
-          jenkinsList={jenkinsList}
-          dataObject={jenkinsStepConfigurationDto}
-          setDataObject={setJenkinsStepConfigurationDto}
-          toolConfigId={jenkinsStepConfigurationDto?.getData("toolConfigId")}
+        <JenkinsStepToolJobSelectInput
+          model={jenkinsStepConfigurationDto}
+          setModel={setJenkinsStepConfigurationDto}
+          jenkinsToolId={jenkinsStepConfigurationDto?.getData("toolConfigId")}
+          jobType={jenkinsStepConfigurationDto?.getData("job_type")}
+          toolJobType={jenkinsStepConfigurationDto?.getData("toolJobType")}
         />
         {loadSfdcConfigurationPanel()}
         <JenkinsGitCredentialsSelectInput
