@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
-function JenkinsGradleMavenScriptFilePathPanel({dataObject, setDataObject}) {
-  if (dataObject == null || (dataObject.getData("buildType") !== "gradle" && dataObject.getData("buildType") !== "maven")) {
+function JenkinsGradleMavenScriptFilePathPanel({dataObject, setDataObject, buildType}) {
+  if (buildType == null || (buildType !== "gradle" && buildType !== "maven")) {
     return null;
   }
 
@@ -22,6 +22,7 @@ function JenkinsGradleMavenScriptFilePathPanel({dataObject, setDataObject}) {
 JenkinsGradleMavenScriptFilePathPanel.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
+  buildType: PropTypes.string,
 };
 
 export default JenkinsGradleMavenScriptFilePathPanel;
