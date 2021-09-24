@@ -61,9 +61,13 @@ function JenkinsStepConfigurationDockerEditorPanel({model, setModel}) {
 
   return (
     <div className={"mb-3"}>
-      <TextInputBase disabled={false} fieldName={"dockerName"} dataObject={model} setDataObject={setModel}/>
+      <TextInputBase
+        fieldName={"dockerName"}
+        dataObject={model}
+        setDataObject={setModel}
+      />
       {getDockerTagInputs()}
-      <TextInputBase disabled={false} fieldName={"dockerPath"} dataObject={model} setDataObject={setModel}/>
+      <TextInputBase fieldName={"dockerPath"} dataObject={model} setDataObject={setModel}/>
       <JsonInput
         className={"my-2"}
         fieldName={"buildArgs"}

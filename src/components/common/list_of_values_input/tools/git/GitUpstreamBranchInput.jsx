@@ -35,25 +35,26 @@ function GitUpstreamBranchInput({ dataObject, setDataObject, options }) {
     setDataObject({ ...newDataObject });
   };
 
-  return (
-    <div>
-      <CheckboxInput
-        fieldName={"isNewBranch"}
-        model={dataObject}
-        setModel={setDataObject}
-      />
-      {/*<Form.Group controlId="isNewBranch">*/}
-      {/*  <Form.Check*/}
-      {/*    inline*/}
-      {/*    type="checkbox"*/}
-      {/*    label={"Create a new backup branch?"}*/}
-      {/*    id={`newBranch`}*/}
-      {/*    checked={dataObject.data.isNewBranch}*/}
-      {/*    onChange={handleCreateNewBranchFlag}*/}
-      {/*  />*/}
-      {/*  <Form.Text className="text-muted">Creates a new branch and push the artifacts.</Form.Text>*/}
-      {/*</Form.Group>*/}
-      {dataObject.data.isNewBranch ? (
+  const getUpstreamBranchField = () => {
+    if (dataObject?.getData("hasUpstreamBranch") === true) {
+      return (
+        <SelectInputBase
+          fieldName={"upstreamBranch"}
+          dataObject={dataObject}
+          setDataObject={setDataObject}
+          placeholderText={"Select"}
+          selectOptions={options}
+          valueField="name"
+          textField="name"
+          clearDataFunction={clearUpstreamBranchChange}
+        />
+      );
+    }
+  };
+
+  const getDynamicFields = () => {
+    if (dataObject?.getData("isNewBranch") === true) {
+      return (
         <div>
           <TextInputBase
             disabled={false}
@@ -61,46 +62,38 @@ function GitUpstreamBranchInput({ dataObject, setDataObject, options }) {
             dataObject={dataObject}
             setDataObject={setDataObject}
           />
-          <Form.Group controlId="isNewBranch">
-            <Form.Check
-              inline
-              type="checkbox"
-              label={"Use an upstream branch?"}
-              id={`hasUpstreamBranch`}
-              checked={dataObject.data.hasUpstreamBranch}
-              onChange={(e) => handleHasUpstreamBranch(e.target.checked)}
-            />
-            <Form.Text className="text-muted">
-              Configure an upstream/source branch. The Files will be overwritten when pushing the artifacts. If no
-              upstream branch is configured, then the new Artifact branch is created as an Orphan branch, having only
-              the artifact files and no commit history.
-            </Form.Text>
-          </Form.Group>
-          {dataObject.data.hasUpstreamBranch && (
-            <SelectInputBase
-              fieldName={"upstreamBranch"}
-              dataObject={dataObject}
-              setDataObject={setDataObject}
-              placeholderText={"Select"}
-              selectOptions={options}
-              valueField="name"
-              textField="name"
-              clearDataFunction={clearUpstreamBranchChange}
-            />
-          )}
+          <CheckboxInput
+            fieldName={"hasUpstreamBranch"}
+            model={dataObject}
+            setModel={setDataObject}
+          />
+          {getUpstreamBranchField()}
         </div>
-      ) : (
-        <SelectInputBase
-          fieldName={"branch"}
-          dataObject={dataObject}
-          setDataObject={setDataObject}
-          setDataFunction={setDataFunction}
-          selectOptions={options}
-          valueField="name"
-          textField="name"
-          clearDataFunction={clearDataFunction}
-        />
-      )}
+      );
+    }
+
+    return (
+      <SelectInputBase
+        fieldName={"branch"}
+        dataObject={dataObject}
+        setDataObject={setDataObject}
+        setDataFunction={setDataFunction}
+        selectOptions={options}
+        valueField="name"
+        textField="name"
+        clearDataFunction={clearDataFunction}
+      />
+    );
+  };
+
+  return (
+    <div>
+      <CheckboxInput
+        fieldName={"isNewBranch"}
+        model={dataObject}
+        setModel={setDataObject}
+      />
+      {getDynamicFields()}
     </div>
   );
 }
