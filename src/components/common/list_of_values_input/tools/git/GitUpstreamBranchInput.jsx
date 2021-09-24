@@ -57,7 +57,6 @@ function GitUpstreamBranchInput({ dataObject, setDataObject, options }) {
       return (
         <div>
           <TextInputBase
-            disabled={false}
             fieldName={"gitBranch"}
             dataObject={dataObject}
             setDataObject={setDataObject}

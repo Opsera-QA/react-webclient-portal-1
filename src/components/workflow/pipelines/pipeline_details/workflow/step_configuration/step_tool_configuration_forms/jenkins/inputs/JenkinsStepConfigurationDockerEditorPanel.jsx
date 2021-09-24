@@ -8,7 +8,7 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import DockerTagTypeSelectionInput from "./DockerTagTypeSelectionInput";
 import ReactJson from "react-json-view";
 
-function JenkinsStepConfigurationDockerEditorPanel({model, setModel}) {
+function JenkinsStepConfigurationDockerEditorPanel({model, setModel, buildType}) {
   const [deleteDockerSecrets, setDeleteDockerSecrets] = useState(false);
 
   const getDynamicTagNameField = () => {
@@ -55,7 +55,7 @@ function JenkinsStepConfigurationDockerEditorPanel({model, setModel}) {
     );
   };
 
-  if (model?.getData("buildType") !== "docker") {
+  if (buildType !== "docker") {
     return null;
   }
 
@@ -103,6 +103,7 @@ function JenkinsStepConfigurationDockerEditorPanel({model, setModel}) {
 JenkinsStepConfigurationDockerEditorPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
+  buildType: PropTypes.string,
 };
 
 export default JenkinsStepConfigurationDockerEditorPanel;
