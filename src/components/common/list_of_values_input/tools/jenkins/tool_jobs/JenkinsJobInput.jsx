@@ -79,7 +79,7 @@ function JenkinsJobInput({ jenkinsId, visible, typeFilter, fieldName, placeholde
     }
   };
 
-  if (!visible) {
+  if (visible === false) {
     return <></>;
   }
 
@@ -115,11 +115,6 @@ JenkinsJobInput.propTypes = {
   typeFilter: PropTypes.string,
   configurationRequired: PropTypes.bool,
   clearDataFunction: PropTypes.func
-};
-
-JenkinsJobInput.defaultProps = {
-  visible: true,
-  placeholderText: "Select One",
 };
 
 export default JenkinsJobInput;

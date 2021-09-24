@@ -113,7 +113,7 @@ function JenkinsAccountInput({ jenkinsId, visible, fieldName, placeholderText, d
     }
   };
 
-  if (!visible) {
+  if (visible === false) {
     return <></>;
   }
 
@@ -150,11 +150,6 @@ JenkinsAccountInput.propTypes = {
   configurationRequired: PropTypes.bool,
   className: PropTypes.string,
   clearDataFunction: PropTypes.func
-};
-
-JenkinsAccountInput.defaultProps = {
-  visible: true,
-  placeholderText: "Select One",
 };
 
 export default JenkinsAccountInput;
