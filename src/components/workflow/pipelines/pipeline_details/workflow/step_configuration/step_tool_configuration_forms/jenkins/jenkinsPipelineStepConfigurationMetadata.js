@@ -196,6 +196,19 @@ const jenkinsPipelineStepConfigurationMetadata = {
       // isRequired: true
     },
     {
+      label: "Create New Backup Branch",
+      id: "isNewBranch",
+    },
+    {
+      label: "Use Upstream Branch",
+      id: "hasUpstreamBranch",
+      formText: `
+        Configure an upstream/source branch. The files will be overwritten when pushing the artifacts. 
+        If no upstream branch is configured, then the new Artifact branch is created as an Orphan branch, 
+        having only the artifact files and no commit history.
+      `,
+    },
+    {
       label: "Runtime Arguments",
       id: "runtimeArguments",
       regexDefinitionName: "argumentList",

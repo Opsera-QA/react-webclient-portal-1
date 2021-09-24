@@ -233,7 +233,13 @@ function JenkinsStepConfiguration({
           workspace={jenkinsStepConfigurationDto?.getData("workspace")}
           repoId={jenkinsStepConfigurationDto?.getData("repoId")}
         />
-        <JenkinsXmlStepInfoSelectInput dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} plan={plan} stepId={stepId} />
+        <JenkinsXmlStepInfoSelectInput
+          dataObject={jenkinsStepConfigurationDto}
+          setDataObject={setJenkinsStepConfigurationDto}
+          plan={plan}
+          stepId={stepId}
+          jobType={jenkinsStepConfigurationDto?.getData("jobType")}
+        />
         <JenkinsStepConfigurationDockerEditorPanel model={jenkinsStepConfigurationDto} setModel={setJenkinsStepConfigurationDto} />
         <JenkinsPythonPanel dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} plan={plan}  stepId={stepId} />
         <JenkinsGradleMavenScriptFilePathPanel  dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />

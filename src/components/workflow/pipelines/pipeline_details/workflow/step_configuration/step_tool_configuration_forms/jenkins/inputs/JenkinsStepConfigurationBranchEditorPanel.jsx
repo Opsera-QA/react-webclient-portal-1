@@ -55,8 +55,26 @@ function JenkinsStepConfigurationBranchEditorPanel(
         />
       );
     }
+    else {
+      return (
+        <GitBranchInput
+          fieldName={fieldName}
+          service={service}
+          gitToolId={gitToolId}
+          workspace={workspace}
+          repoId={repoId}
+          dataObject={dataObject}
+          setDataFunction={setDataFunction}
+          setDataObject={setDataObject}
+          disabled={disabled}
+          setBranchList={setBranchList}
+          clearDataFunction={clearDataFunction}
+        />
+      );
+    }
   };
 
+  // TODO: Make new component and move these inside.
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = { ...dataObject };
     newDataObject.setData("branch", selectedOption);
@@ -92,20 +110,6 @@ function JenkinsStepConfigurationBranchEditorPanel(
 
   return (
     <>
-      <GitBranchInput
-        fieldName={fieldName}
-        service={service}
-        gitToolId={gitToolId}
-        workspace={workspace}
-        repoId={repoId}
-        dataObject={dataObject}
-        setDataFunction={setDataFunction}
-        setDataObject={setDataObject}
-        disabled={disabled}
-        setBranchList={setBranchList}
-        clearDataFunction={clearDataFunction}
-        visible ={jobType !== "SFDC BACK UP"}
-      />
       {getDynamicFields()}
       <CheckboxInput
         fieldName={"workspaceDeleteFlag"}
