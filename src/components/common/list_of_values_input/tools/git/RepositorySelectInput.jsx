@@ -7,6 +7,7 @@ import GitActionsHelper
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
   import axios from "axios";
 
+// TODO: Change "gitToolId" to "toolId"
 function RepositorySelectInput({ service, gitToolId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -67,6 +68,8 @@ function RepositorySelectInput({ service, gitToolId, workspace, visible, fieldNa
 
     if (Array.isArray(repositoriesResponse)) {
       setRepositories(repositoriesResponse);
+
+      // const existingRepository =
     }
   };
 
@@ -75,7 +78,7 @@ function RepositorySelectInput({ service, gitToolId, workspace, visible, fieldNa
   }
 
   const getNoRepositoriesMessage = () => {
-    if (!isLoading && (repositories == null || repositories.length === 0) && service !== "" && gitToolId !== "") {
+    if (!isLoading && (!Array.isArray(repositories) || repositories.length === 0) && service !== "" && gitToolId !== "") {
       return ("No Repositories Found!");
     }
   };
