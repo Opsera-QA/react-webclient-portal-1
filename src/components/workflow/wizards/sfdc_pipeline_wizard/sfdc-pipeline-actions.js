@@ -377,18 +377,20 @@ sfdcPipelineActions.getPackageXmlV2 = async (getAccessToken, cancelTokenSource, 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-sfdcPipelineActions.setXmlFileComponentsV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+sfdcPipelineActions.setXmlFileContentsV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const postBody = {
-    packageXml: pipelineWizardModel?.getData("xmlFileContent")
+    packageXml: pipelineWizardModel?.getData("xmlFileContent"),
+    excludeDependencies: pipelineWizardModel.getData("includeDependencies") === false,
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/set_xml_file_contents`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-sfdcPipelineActions.setCsvFileComponentsV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+sfdcPipelineActions.setUploadedCsvFileListV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const postBody = {
-    selectedFileList: pipelineWizardModel?.getData("csvFileContent")
+    selectedFileList: pipelineWizardModel?.getData("csvFileContent"),
+    excludeDependencies: pipelineWizardModel.getData("includeDependencies") === false,
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/set_csv_file_contents`;
