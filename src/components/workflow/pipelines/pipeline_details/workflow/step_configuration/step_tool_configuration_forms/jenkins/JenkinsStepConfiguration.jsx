@@ -206,19 +206,28 @@ function JenkinsStepConfiguration({
           setDataObject={setJenkinsStepConfigurationDto}
           jenkinsList={jenkinsList}
           toolConfigId={jenkinsStepConfigurationDto?.getData("toolConfigId")}
+          jobType={jenkinsStepConfigurationDto?.getData("jobType")}
         />
         <JenkinsWorkspaceProjectSelectInput
           dataObject={jenkinsStepConfigurationDto}
           setDataObject={setJenkinsStepConfigurationDto}
+          service={jenkinsStepConfigurationDto?.getData("service")}
+          gitToolId={jenkinsStepConfigurationDto?.getData("gitToolId")}
+          jobType={jenkinsStepConfigurationDto?.getData("jobType")}
         />
         <JenkinsRepositorySelectInput
           dataObject={jenkinsStepConfigurationDto}
           setDataObject={setJenkinsStepConfigurationDto}
           service={jenkinsStepConfigurationDto.getData("service")}
           gitToolId={jenkinsStepConfigurationDto.getData("gitToolId")}
-          
+          jobType={jenkinsStepConfigurationDto?.getData("jobType")}
+          workspace={jenkinsStepConfigurationDto?.getData("workspace")}
         />
-        <JenkinsStepConfigurationBranchEditorPanel dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} jenkinsList={jenkinsList} />
+        <JenkinsStepConfigurationBranchEditorPanel
+          dataObject={jenkinsStepConfigurationDto}
+          setDataObject={setJenkinsStepConfigurationDto}
+          jenkinsList={jenkinsList}
+        />
         <JenkinsXmlStepInfoSelectInput dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} plan={plan} stepId={stepId} />
         <JenkinsStepConfigurationDockerEditorPanel model={jenkinsStepConfigurationDto} setModel={setJenkinsStepConfigurationDto} />
         <JenkinsPythonPanel dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} plan={plan}  stepId={stepId} />
