@@ -76,7 +76,7 @@ export async function persistNewRecord(recordDto, toastContext, showSuccessToast
   }
 }
 
-export async function persistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient) {
+export async function persistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient, showIncompleteDataMessage) {
   try {
     let isModelValid = recordDto.isModelValid();
     if(!isModelValid && !lenient) {
@@ -89,7 +89,7 @@ export async function persistUpdatedRecord(recordDto, toastContext, showSuccessT
     let response = await updateRecord();
 
     if (showSuccessToasts) {
-      if (lenient && !isModelValid) {
+      if (lenient && !isModelValid && showIncompleteDataMessage !== false) {
         toastContext.showSavingIncompleteObjectSuccessResultToast(recordDto.getType());
       } else {
         toastContext.showUpdateSuccessResultDialog(recordDto.getType());

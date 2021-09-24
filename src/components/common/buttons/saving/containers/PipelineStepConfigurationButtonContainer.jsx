@@ -6,14 +6,35 @@ import LenientSaveButton from "../LenientSaveButton";
 import StrictSaveButton from "components/common/buttons/saving/StrictSaveButton";
 
 // TODO: This will probably be removed if we make an actual detail view or if we do the modal concept where we have the tabs
-function PipelineStepConfigurationButtonContainer({ recordDto, persistRecord, handleClose, isStrict, disableSaveButton }) {
+function PipelineStepConfigurationButtonContainer(
+  {
+    recordDto,
+    persistRecord,
+    handleClose,
+    isStrict,
+    disableSaveButton,
+    showIncompleteDataMessage,
+  }) {
 
   const getSaveButton = () => {
     if (isStrict === true) {
-      return (<StrictSaveButton disable={disableSaveButton} recordDto={recordDto} updateRecord={persistRecord} />);
+      return (
+        <StrictSaveButton
+          disable={disableSaveButton}
+          recordDto={recordDto}
+          updateRecord={persistRecord}
+        />
+      );
     }
 
-    return (<LenientSaveButton disable={disableSaveButton} recordDto={recordDto} updateRecord={persistRecord} />);
+    return (
+      <LenientSaveButton
+        disable={disableSaveButton}
+        recordDto={recordDto}
+        updateRecord={persistRecord}
+        showIncompleteDataMessage={showIncompleteDataMessage}
+      />
+    );
   };
 
   return (
@@ -30,6 +51,7 @@ PipelineStepConfigurationButtonContainer.propTypes = {
   handleClose: PropTypes.func,
   isStrict: PropTypes.bool,
   disableSaveButton: PropTypes.bool,
+  showIncompleteDataMessage: PropTypes.bool,
 };
 
 export default PipelineStepConfigurationButtonContainer;
