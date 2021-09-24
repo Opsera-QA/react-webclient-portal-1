@@ -8,9 +8,15 @@ toolsActions.checkToolConnectivity = async (toolId, toolName, getAccessToken) =>
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+// TODO: Update all references to V2 and remove this
 toolsActions.deleteTool = async (dataObject, getAccessToken) => {
   const apiUrl = `/registry/${dataObject.getData("_id")}`;
   return baseActions.apiDeleteCall(getAccessToken, apiUrl);
+};
+
+toolsActions.deleteToolV2 = async (getAccessToken, cancelToken, toolModel) => {
+  const apiUrl = `/registry/${toolModel?.getData("_id")}`;
+  return baseActions.apiDeleteCallV2(getAccessToken, cancelToken, apiUrl);
 };
 
 toolsActions.deleteVaultRecordsForToolId = async (toolDataDto,getAccessToken) => {
@@ -22,6 +28,7 @@ toolsActions.deleteVaultRecordsForToolId = async (toolDataDto,getAccessToken) =>
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
+// TODO: Update all references to V2 and remove this
 toolsActions.deleteOwnerVaultRecordsForToolId = async (toolDataDto,getAccessToken) => {
   const apiUrl = `/vault/tool/delete`;
   let id = toolDataDto.getData("_id");
@@ -29,6 +36,14 @@ toolsActions.deleteOwnerVaultRecordsForToolId = async (toolDataDto,getAccessToke
     id : id
   };
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+toolsActions.deleteOwnerVaultRecordsForToolIdV2 = async (getAccessToken, cancelTokenSource, toolModel) => {
+  const apiUrl = `/vault/tool/delete`;
+  let postBody = {
+    id: toolModel?.getData("_id")
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 toolsActions.updateTool = async (toolDataDto, getAccessToken) => {

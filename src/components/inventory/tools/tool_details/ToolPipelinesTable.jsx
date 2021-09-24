@@ -5,8 +5,10 @@ import pipelineSummaryMetadata
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import {getTableDateColumn} from "../../../common/table/table-column-helpers";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 
-function ToolPipelinesTable({ data, isLoading }) {
+function ToolPipelinesTable({ pipelineData, isLoading, loadData, toolModel }) {
   const fields = pipelineSummaryMetadata.fields;
 
   const columns = useMemo(
@@ -18,21 +20,36 @@ function ToolPipelinesTable({ data, isLoading }) {
     []
   );
 
-  return (
-    <div className="p-2">
+  const getPipelinesTable = () => {
+    return (
       <CustomTable
         columns={columns}
-        data={data}
+        data={pipelineData}
         isLoading={isLoading}
         noDataMessage={"This tool is not used by any pipelines."}
       />
-    </div>
+    );
+  };
+
+  return (
+    <FilterContainer
+      className={"my-2"}
+      loadData={loadData}
+      isLoading={isLoading}
+      metadata={pipelineSummaryMetadata}
+      type={"Pipeline"}
+      body={getPipelinesTable()}
+      titleIcon={faDraftingCompass}
+      title={`Pipelines Used By ${toolModel?.getData("name")}`}
+    />
   );
 }
 
 ToolPipelinesTable.propTypes = {
-  data: PropTypes.array,
+  pipelineData: PropTypes.array,
   isLoading: PropTypes.bool,
+  loadData: PropTypes.func,
+  toolModel: PropTypes.object,
 };
 
 export default ToolPipelinesTable;
