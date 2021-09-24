@@ -16,7 +16,7 @@ import deleteToolsActions from "components/settings/delete_tools/settings-delete
 import ToolPipelinesTable from 'components/inventory/tools/tool_details/ToolPipelinesTable';
 import DeleteToolDependenciesView from './DeleteToolDependenciesView';
 
-function ToolsTable({ data, loadData, isLoading, className }) {
+function DeleteToolsTable({ data, loadData, isLoading, className }) {
     
   let fields = ToolMetadata.fields;
   
@@ -82,19 +82,19 @@ function ToolsTable({ data, loadData, isLoading, className }) {
             columns={columns}
             // loadData={loadData}
             />
-            {selectedTool && 
+            {selectedTool &&
                 <DestructiveDeleteModal deleteDetails={<DeleteToolDependenciesView selectedTool={selectedTool}/>} showModal={confirmationModal} setShowModal={setShowConfirmationModal} dataObject={selectedTool} handleDelete={deleteTool} modalSize={"lg"}/>
             }
         </>
     );
 }
 
-ToolsTable.propTypes = {
+DeleteToolsTable.propTypes = {
     data: PropTypes.array,
     isLoading: PropTypes.bool,
     loadData: PropTypes.func,
     className: PropTypes.string,
 };
 
-export default ToolsTable;
+export default DeleteToolsTable;
 
