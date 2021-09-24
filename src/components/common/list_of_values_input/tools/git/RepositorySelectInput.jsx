@@ -5,7 +5,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import GitActionsHelper
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
-  import axios from "axios";
+import axios from "axios";
 
 // TODO: Clean up this component. Change "gitToolId" to "toolId", make validateSavedData default to true after all use cases are tested.
 function RepositorySelectInput(
@@ -21,6 +21,8 @@ function RepositorySelectInput(
     clearDataFunction,
     disabled,
     placeholderText,
+    valueField,
+    textField,
 
     // TODO: This will default to true in the future. So it only needs to be
     validateSavedData,
@@ -48,13 +50,13 @@ function RepositorySelectInput(
         setRepositories([]);
         return;
       }
-      
+
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
       });
-    
+
       return () => {
         source.cancel();
         isMounted.current = false;
@@ -73,7 +75,7 @@ function RepositorySelectInput(
     }
     finally {
       if(isMounted?.current === true){
-      setIsLoading(false);
+        setIsLoading(false);
       }
     }
   };
@@ -89,7 +91,7 @@ function RepositorySelectInput(
         const existingRepository = dataObject?.getData(fieldName);
 
         if (existingRepository != null && existingRepository !== "") {
-          const existingRepositoryExists = repositoriesResponse.find((repository) => repository?._id === existingRepository?._id);
+          const existingRepositoryExists = repositoriesResponse.find((repository) => repository[valueField] === existingRepository[valueField]);
 
           if (existingRepositoryExists == null) {
             toastContext.showLoadingErrorDialog(
@@ -126,8 +128,8 @@ function RepositorySelectInput(
         busy={isLoading}
         placeholderText={getPlaceholderText()}
         clearDataFunction={clearDataFunction}
-        valueField="name"
-        textField="name"
+        valueField={valueField}
+        textField={textField}
         disabled={disabled || isLoading || repositories.length === 0}
       />
     </div>
@@ -147,10 +149,13 @@ RepositorySelectInput.propTypes = {
   clearDataFunction: PropTypes.func,
   validateSavedData: PropTypes.bool,
   placeholderText: PropTypes.string,
+  valueField: PropTypes.string,
 };
 
 RepositorySelectInput.defaultProps = {
-  placeholderText: "Select Repository"
+  placeholderText: "Select Repository",
+  valueField: "name",
+  textField: "name",
 };
 
 export default RepositorySelectInput;
