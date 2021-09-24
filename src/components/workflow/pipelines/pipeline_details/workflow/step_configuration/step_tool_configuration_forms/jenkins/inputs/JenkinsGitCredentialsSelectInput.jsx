@@ -14,7 +14,8 @@ function JenkinsGitCredentialsSelectInput({
   setDataObject,
   disabled,
   jenkinsList,
-  toolConfigId
+  toolConfigId,
+  jobType,
 }) {
   const [accountsList, setAccountsList] = useState([]);
 
@@ -28,7 +29,7 @@ function JenkinsGitCredentialsSelectInput({
         setAccountsList(accounts);
       }
     }
-  },[jenkinsList,toolConfigId]);
+  },[jenkinsList, toolConfigId]);
 
   const setDataFunction = (fieldName, value) => {
     let newDataObject = {...dataObject};
@@ -85,19 +86,17 @@ function JenkinsGitCredentialsSelectInput({
     } 
   };
 
-
-
   const checkValidity = ()=>{
     return dataObject !== null
     && dataObject?.getData("jenkinsUrl")
     && Array.isArray(jenkinsList) 
     && jenkinsList.length > 0
-    && dataObject?.getData("jobType") 
-    && dataObject?.getData("jobType").length >= 0
-    && !excludeArr.some(item => item==dataObject?.getData("jobType"))
+    && jobType
+    && jobType.length >= 0
+    && !excludeArr.includes(jobType)
     && !dataObject?.getData("isOrgToOrg"); 
-   
   };
+
   if(!checkValidity()){
     return null;
   }
@@ -128,7 +127,8 @@ JenkinsGitCredentialsSelectInput.propTypes = {
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   jenkinsList: PropTypes.any,
-  toolConfigId: PropTypes.string
+  toolConfigId: PropTypes.string,
+  jobType: PropTypes.string,
 };
 
 JenkinsGitCredentialsSelectInput.defaultProps = {

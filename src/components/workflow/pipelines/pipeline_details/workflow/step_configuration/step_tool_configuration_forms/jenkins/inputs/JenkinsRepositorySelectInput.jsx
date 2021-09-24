@@ -2,12 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import RepositorySelectInput from "components/common/list_of_values_input/tools/git/RepositorySelectInput";
 
-function JenkinsRepositorySelectInput({dataObject, setDataObject, disabled}) {
+// TODO: Rework
+const disallowedJobTypes = [
+  "SFDC VALIDATE PACKAGE XML",
+  "SFDC UNIT TESTING",
+  "SFDC DEPLOY",
+];
 
-  //const sfdcJobType =  dataObject.getData("sfdcJobType");
-  const jobType =  dataObject.getData("jobType");
+function JenkinsRepositorySelectInput({dataObject, setDataObject, disabled, gitToolId, jobType, service, workspace}) {
 
-  const setRepository = (fieldName, selectedOption) => {
+  const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = { ...dataObject };
 
     newDataObject.setData("repository", selectedOption.name);
@@ -21,6 +25,7 @@ function JenkinsRepositorySelectInput({dataObject, setDataObject, disabled}) {
 
     setDataObject({ ...newDataObject });
   };
+
   const clearDataFunction = () => {
     let newDataObject = { ...dataObject };
 
@@ -35,15 +40,22 @@ function JenkinsRepositorySelectInput({dataObject, setDataObject, disabled}) {
 
     setDataObject({ ...newDataObject });
   };
-  const valid =()=>{
-    return dataObject.data.service && dataObject.data.gitToolId &&
-      jobType != "SFDC VALIDATE PACKAGE XML" && 
-      jobType != "SFDC UNIT TESTING" && 
-      jobType != "SFDC DEPLOY" && 
-      (dataObject.data.service === "bitbucket" ? dataObject.data.workspace && dataObject.data.workspace.length > 0 : true ) && 
-      !dataObject.data.isOrgToOrg;
+
+  // TODO: Rework
+  const valid = () => {
+    return (
+      service != null
+      && service !== ""
+      && gitToolId
+      && !disallowedJobTypes.includes(jobType)
+      && (service === "bitbucket" ? workspace && workspace.length > 0 : true)
+      && !dataObject.getData("isOrgToOrg")
+    );
   };
-  if(!valid()) return null;
+
+  if(valid() !== true) {
+    return null;
+  }
 
   return (
      <RepositorySelectInput
@@ -54,7 +66,7 @@ function JenkinsRepositorySelectInput({dataObject, setDataObject, disabled}) {
        validateSavedData={true}
        dataObject={dataObject}
        setDataObject={setDataObject}
-       setDataFunction={setRepository}
+       setDataFunction={setDataFunction}
        disabled={disabled}
        clearDataFunction={clearDataFunction}
      />
@@ -64,10 +76,11 @@ function JenkinsRepositorySelectInput({dataObject, setDataObject, disabled}) {
 JenkinsRepositorySelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  disabled: PropTypes.bool
-};
-JenkinsRepositorySelectInput.defaultProps = {
-  disabled: false,
+  disabled: PropTypes.bool,
+  service: PropTypes.string,
+  gitToolId: PropTypes.string,
+  jobType: PropTypes.string,
+  workspace: PropTypes.string,
 };
 
 export default JenkinsRepositorySelectInput;
