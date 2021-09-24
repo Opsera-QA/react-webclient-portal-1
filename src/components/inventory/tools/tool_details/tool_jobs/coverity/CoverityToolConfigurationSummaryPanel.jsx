@@ -15,13 +15,19 @@ function CoverityToolConfigurationSummaryPanel({ coverityToolConfigurationModel 
     <SummaryPanelContainer>
       <Row>
         <Col lg={12}>
-          <TextFieldBase dataObject={coverityToolConfigurationModel} fieldName={"coverityUsername"} />
+          <TextFieldBase dataObject={coverityToolConfigurationModel} fieldName={"accountUsername"} />
         </Col>
         <Col lg={12}>
-          <TextFieldBase dataObject={coverityToolConfigurationModel} fieldName={"coverityUrl"} />
+          <TextFieldBase dataObject={coverityToolConfigurationModel} fieldName={"toolURL"} />
         </Col>
         <Col lg={12}>
-          <VaultField dataObject={coverityToolConfigurationModel} fieldName={"coverityPassword"} />
+          <VaultField dataObject={coverityToolConfigurationModel} fieldName={"accountPassword"} />
+        </Col>
+        <Col lg={12}>
+          <TextFieldBase dataObject={coverityToolConfigurationModel} fieldName={"fileName"} />
+        </Col>
+        <Col lg={12}>
+          <VaultField dataObject={coverityToolConfigurationModel} fieldName={"license"} />
         </Col>
       </Row>
     </SummaryPanelContainer>
