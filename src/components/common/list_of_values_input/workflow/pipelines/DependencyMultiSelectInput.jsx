@@ -52,7 +52,11 @@ export const itemArray = [
     "dependencyType" : "terrascan",
     "version": "1.4.0",
   },
-
+  {
+    "name": "Java openJDK Version 7",
+    "dependencyType" : "java",
+    "version": "7",
+  },
   {
     "name": "Java openJDK Version 8",
     "dependencyType" : "java",
