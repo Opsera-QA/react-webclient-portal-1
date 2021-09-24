@@ -3,8 +3,11 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import { Form } from "react-bootstrap";
+import CheckboxInput from "components/common/inputs/boolean/CheckboxInput";
 
-function GitUpstreamBranchInput({ dataObject, setDataObject, options, handleDTOChange, clearDataFunction }) {
+// TODO: Rework component
+function GitUpstreamBranchInput({ dataObject, setDataObject, options }) {
+
   const clearUpstreamBranchChange = (fieldName) => {
     let newDataObject = { ...dataObject };
     newDataObject.setData(fieldName, "");
@@ -15,25 +18,41 @@ function GitUpstreamBranchInput({ dataObject, setDataObject, options, handleDTOC
     newDataObject.setData("hasUpstreamBranch", value);
     setDataObject({ ...newDataObject });
   };
-  const handleCreateNewBranchFlag = (e) => {
+
+  const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = { ...dataObject };
-    newDataObject.setData("isNewBranch", e.target.checked);
+    newDataObject.setData("branch", selectedOption);
+    newDataObject.setData("defaultBranch", selectedOption);
+    newDataObject.setData("gitBranch", selectedOption);
+    setDataObject({ ...newDataObject });
+  };
+
+  const clearDataFunction = () => {
+    let newDataObject = { ...dataObject };
+    newDataObject.setData("branch", "");
+    newDataObject.setData("defaultBranch", "");
+    newDataObject.setData("gitBranch", "");
     setDataObject({ ...newDataObject });
   };
 
   return (
     <div>
-      <Form.Group controlId="isNewBranch">
-        <Form.Check
-          inline
-          type="checkbox"
-          label={"Create a new backup branch?"}
-          id={`newBranch`}
-          checked={dataObject.data.isNewBranch}
-          onChange={handleCreateNewBranchFlag}
-        />
-        <Form.Text className="text-muted">Creates a new branch and push the artifacts.</Form.Text>
-      </Form.Group>
+      <CheckboxInput
+        fieldName={"isNewBranch"}
+        model={dataObject}
+        setModel={setDataObject}
+      />
+      {/*<Form.Group controlId="isNewBranch">*/}
+      {/*  <Form.Check*/}
+      {/*    inline*/}
+      {/*    type="checkbox"*/}
+      {/*    label={"Create a new backup branch?"}*/}
+      {/*    id={`newBranch`}*/}
+      {/*    checked={dataObject.data.isNewBranch}*/}
+      {/*    onChange={handleCreateNewBranchFlag}*/}
+      {/*  />*/}
+      {/*  <Form.Text className="text-muted">Creates a new branch and push the artifacts.</Form.Text>*/}
+      {/*</Form.Group>*/}
       {dataObject.data.isNewBranch ? (
         <div>
           <TextInputBase
@@ -75,8 +94,7 @@ function GitUpstreamBranchInput({ dataObject, setDataObject, options, handleDTOC
           fieldName={"branch"}
           dataObject={dataObject}
           setDataObject={setDataObject}
-          setDataFunction={handleDTOChange}
-          placeholderText={"Select"}
+          setDataFunction={setDataFunction}
           selectOptions={options}
           valueField="name"
           textField="name"
@@ -91,9 +109,6 @@ GitUpstreamBranchInput.propTypes = {
   options: PropTypes.object,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  setDataFunction: PropTypes.func,
-  handleDTOChange: PropTypes.func,
-  clearDataFunction: PropTypes.func,
 };
 
 export default GitUpstreamBranchInput;

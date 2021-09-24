@@ -31,7 +31,7 @@ const SfdcPipelineWizardGitFilesTable = ({ pipelineWizardModel, setPipelineWizar
     ],
     [],
   );
-console.log(gitFiles);
+
   const getGitInlineFilters = () => {
     return (
       <InlineSfdcComponentTypesFilter

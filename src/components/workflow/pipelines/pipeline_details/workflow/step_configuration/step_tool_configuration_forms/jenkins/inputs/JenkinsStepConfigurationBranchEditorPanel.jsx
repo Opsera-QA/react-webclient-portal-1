@@ -4,25 +4,58 @@ import GitBranchInput from "components/common/list_of_values_input/tools/git/Git
 import GitUpstreamBranchInput from "components/common/list_of_values_input/tools/git/GitUpstreamBranchInput";
 import GitBranchManualRollBackBranchInput from "components/common/list_of_values_input/tools/git/GitBranchManualRollBackBranchInput";
 import { Form } from "react-bootstrap";
+import CheckboxInput from "components/common/inputs/boolean/CheckboxInput";
 
-const excludeArrs = [
+const disallowedJobTypes = [
   "SFDC VALIDATE PACKAGE XML",
   "SFDC UNIT TESTING",
   "SFDC DEPLOY",
 ];
 
-function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setDataObject, disabled, jenkinsList }) {
+function JenkinsStepConfigurationBranchEditorPanel(
+  {
+    fieldName,
+    dataObject,
+    setDataObject,
+    disabled,
+    gitToolId,
+    jobType,
+    service,
+    workspace,
+    repoId,
+  }) {
   const [branchList, setBranchList] = useState([]);
   const toolJobType = dataObject.getData("toolJobType");
+
+  // TODO: Is this necessary?
   useEffect(() => {
     if (toolJobType && toolJobType.includes("SFDC")) {
       let newDataObject = { ...dataObject };
       newDataObject.setData("buildType", "ant");
       setDataObject({ ...newDataObject });
-
-      
     }
   }, [toolJobType]);
+
+  const getDynamicFields = () => {
+    if (jobType === "SFDC BACK UP") {
+      return (
+        <GitBranchManualRollBackBranchInput
+          dataObject={dataObject}
+          setDataObject={setDataObject}
+        />
+      );
+    }
+    else if (jobType === "SFDC PUSH ARTIFACTS") {
+      return (
+        <GitUpstreamBranchInput
+          dataObject={dataObject}
+          setDataObject={setDataObject}
+          options={branchList}
+          clearDataFunction={clearDataFunction}
+        />
+      );
+    }
+  };
 
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = { ...dataObject };
@@ -40,44 +73,20 @@ function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setD
     setDataObject({ ...newDataObject });
   };
 
-  const handleWorkspaceDeleteFlagChange = (value) => {
-    let newDataObject = { ...dataObject };
-    newDataObject.setData("workspaceDeleteFlag", value);
-    setDataObject({ ...newDataObject });
-  };
-
+  // TODO: Rework
   const valid = () => {
     return (
-      dataObject.getData("service") &&
-      dataObject.getData("gitToolId") &&
-      dataObject.getData("repoId") &&     
-      !excludeArrs.some(item=>item==dataObject.getData("jobType")) &&
-      !dataObject.getData("isOrgToOrg")
-      
+         service != null && service !== ""
+      && gitToolId != null && gitToolId !== ""
+      && repoId != null && repoId !== ""
+      && gitToolId != null && service !== ""
+      && !disallowedJobTypes.includes(jobType)
+      && !dataObject.getData("isOrgToOrg")
     );
   };
 
-  const getDynamicFields = () => {
-    if (dataObject.getData("jobType") === "SFDC BACK UP") {
-      return (
-        <GitBranchManualRollBackBranchInput dataObject={dataObject} setDataObject={setDataObject}/>
-      );
-    }
 
-    if (dataObject.getData("jobType") === "SFDC PUSH ARTIFACTS") {
-      return (
-        <GitUpstreamBranchInput
-          dataObject={dataObject}
-          setDataObject={setDataObject}
-          options={branchList}
-          handleDTOChange={setDataFunction}
-          clearDataFunction={clearDataFunction}
-        />
-      );
-    }
-  };
-
-  if (dataObject === null || !valid()) {
+  if (!valid()) {
     return null;
   }
 
@@ -85,29 +94,25 @@ function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setD
     <>
       <GitBranchInput
         fieldName={fieldName}
-        service={dataObject.getData("service")}
-        gitToolId={dataObject.getData("gitToolId")}
-        workspace={dataObject.getData("workspace")}
-        repoId={dataObject.getData("repoId")}
+        service={service}
+        gitToolId={gitToolId}
+        workspace={workspace}
+        repoId={repoId}
         dataObject={dataObject}
         setDataFunction={setDataFunction}
         setDataObject={setDataObject}
         disabled={disabled}
         setBranchList={setBranchList}
         clearDataFunction={clearDataFunction}
-        visible ={!(dataObject.getData("jobType") === "SFDC BACK UP")}
+        visible ={jobType !== "SFDC BACK UP"}
       />
       {getDynamicFields()}
-      <Form.Group controlId="workspaceDeleteFlag">
-        <Form.Check
-          inline
-          type="checkbox"
-          label={"Delete the Workspace before building."}
-          id={`workspaceDeleteFlag`}
-          checked={dataObject.getData("workspaceDeleteFlag")}
-          onChange={(e) => handleWorkspaceDeleteFlagChange(e.target.checked)}
-        />
-      </Form.Group>
+      <CheckboxInput
+        fieldName={"workspaceDeleteFlag"}
+        model={dataObject}
+        setModel={setDataObject}
+        disabled={disabled}
+      />
     </>
   );
 }
@@ -118,6 +123,11 @@ JenkinsStepConfigurationBranchEditorPanel.propTypes = {
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   jenkinsList: PropTypes.any,
+  repoId: PropTypes.string,
+  service: PropTypes.string,
+  gitToolId: PropTypes.string,
+  jobType: PropTypes.string,
+  workspace: PropTypes.string,
 };
 
 JenkinsStepConfigurationBranchEditorPanel.defaultProps = {
