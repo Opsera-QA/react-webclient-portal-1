@@ -21,6 +21,8 @@ function RepositorySelectInput(
     clearDataFunction,
     disabled,
     placeholderText,
+    valueField,
+    textField,
 
     // TODO: This will default to true in the future. So it only needs to be
     validateSavedData,
@@ -89,7 +91,7 @@ function RepositorySelectInput(
         const existingRepository = dataObject?.getData(fieldName);
 
         if (existingRepository != null && existingRepository !== "") {
-          const existingRepositoryExists = repositoriesResponse.find((repository) => repository?._id === existingRepository?._id);
+          const existingRepositoryExists = repositoriesResponse.find((repository) => repository[valueField] === existingRepository[valueField]);
 
           if (existingRepositoryExists == null) {
             toastContext.showLoadingErrorDialog(
@@ -126,8 +128,8 @@ function RepositorySelectInput(
         busy={isLoading}
         placeholderText={getPlaceholderText()}
         clearDataFunction={clearDataFunction}
-        valueField="name"
-        textField="name"
+        valueField={valueField}
+        textField={textField}
         disabled={disabled || isLoading || repositories.length === 0}
       />
     </div>
@@ -147,10 +149,13 @@ RepositorySelectInput.propTypes = {
   clearDataFunction: PropTypes.func,
   validateSavedData: PropTypes.bool,
   placeholderText: PropTypes.string,
+  valueField: PropTypes.string,
 };
 
 RepositorySelectInput.defaultProps = {
-  placeholderText: "Select Repository"
+  placeholderText: "Select Repository",
+  valueField: "name",
+  textField: "name",
 };
 
 export default RepositorySelectInput;
