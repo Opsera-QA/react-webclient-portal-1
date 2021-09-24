@@ -9,8 +9,6 @@ const excludeArrs = [
   "SFDC VALIDATE PACKAGE XML",
   "SFDC UNIT TESTING",
   "SFDC DEPLOY",
-  "SFDC BACK UP",
-  "SFDC PUSH ARTIFACTS",
 ];
 
 function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setDataObject, disabled, jenkinsList }) {
@@ -78,6 +76,7 @@ function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setD
       );
     }
   };
+
   if (dataObject === null || !valid()) {
     return null;
   }
@@ -96,8 +95,9 @@ function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setD
         disabled={disabled}
         setBranchList={setBranchList}
         clearDataFunction={clearDataFunction}
-       visible ={!dataObject.getData("isManualRollBackBranch")}
+        visible ={!(dataObject.getData("jobType") === "SFDC BACK UP")}
       />
+      {getDynamicFields()}
       <Form.Group controlId="workspaceDeleteFlag">
         <Form.Check
           inline
@@ -108,7 +108,6 @@ function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setD
           onChange={(e) => handleWorkspaceDeleteFlagChange(e.target.checked)}
         />
       </Form.Group>
-      {getDynamicFields()}
     </>
   );
 }
