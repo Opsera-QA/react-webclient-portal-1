@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
 
 export const itemArray = [
   {

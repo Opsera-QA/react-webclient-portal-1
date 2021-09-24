@@ -253,7 +253,11 @@ function JenkinsStepConfiguration({
           stepId={stepId}
           buildType={jenkinsStepConfigurationDto?.getData("buildType")}
         />
-        <JenkinsGradleMavenScriptFilePathPanel  dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
+        <JenkinsGradleMavenScriptFilePathPanel
+          dataObject={jenkinsStepConfigurationDto}
+          setDataObject={setJenkinsStepConfigurationDto}
+          buildType={jenkinsStepConfigurationDto?.getData("buildType")}
+        />
       </div>
     );
   };
