@@ -11,11 +11,11 @@ function PythonFilesInput({ dataObject, setDataObject, disabled, fieldName}) {
       dataObject={dataObject}
       setDataObject={setDataObject}
       fieldName={fieldName}
-      allowIncompleteItems={true}
+      allowIncompleteItems={false}
       type={"Input File"}
       disabled={disabled}
       regexValidationRequired={false}
-      titleText={"Input File Details"}      
+      titleText={"Input File Details"}
     />
   );
 }
