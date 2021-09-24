@@ -150,6 +150,7 @@ RepositorySelectInput.propTypes = {
   validateSavedData: PropTypes.bool,
   placeholderText: PropTypes.string,
   valueField: PropTypes.string,
+  textField: PropTypes.string,
 };
 
 RepositorySelectInput.defaultProps = {
