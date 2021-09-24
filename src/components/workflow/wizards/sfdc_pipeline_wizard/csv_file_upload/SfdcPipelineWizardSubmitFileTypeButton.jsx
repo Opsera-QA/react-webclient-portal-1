@@ -42,11 +42,11 @@ function SfdcPipelineWizardSubmitFileTypeButton({pipelineWizardModel, setPipelin
 
       else {
         if(isXml) {
-          await sfdcPipelineActions.setXmlFileComponentsV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+          await sfdcPipelineActions.setXmlFileContentsV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
           setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER);
         }
         else {
-          await sfdcPipelineActions.setCsvFileComponentsV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+          await sfdcPipelineActions.setUploadedCsvFileListV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
           setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER);
         }
       }
