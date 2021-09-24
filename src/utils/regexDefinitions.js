@@ -174,6 +174,12 @@ regexDefinitions.azureLabels = {
   errorFormText: "The name must consist of lower case alphanumeric characters or '-', start with an alphabetic character, and end with an alphanumeric character (e.g. 'my-name', or 'abc-123')"
 };
 
+regexDefinitions.azureFunctionsLabel = {
+  regex: /^[a-z0-9]*$/,
+  formText: "Accepts lowercase alphanumeric characters without spaces.",
+  errorFormText: "The name must consist of lowercase alphanumeric characters (e.g. 'name', or 'abc123')"
+};
+
 regexDefinitions.argumentList = {
   regex: /^[A-Za-z0-9-_.$=\n]*$/,
   formText: "Letters, numbers, dashes, underscores, equals sign, dollar sign, periods and new lines are allowed",
