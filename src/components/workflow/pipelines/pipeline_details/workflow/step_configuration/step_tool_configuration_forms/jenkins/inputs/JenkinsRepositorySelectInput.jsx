@@ -51,6 +51,7 @@ function JenkinsRepositorySelectInput({dataObject, setDataObject, disabled}) {
        service={dataObject.getData("service")}
        gitToolId={dataObject.getData("gitToolId")}
        workspace={dataObject.getData("workspace")}
+       validateSavedData={true}
        dataObject={dataObject}
        setDataObject={setDataObject}
        setDataFunction={setRepository}
