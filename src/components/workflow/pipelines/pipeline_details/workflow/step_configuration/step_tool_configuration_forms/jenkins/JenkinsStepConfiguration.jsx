@@ -233,6 +233,7 @@ function JenkinsStepConfiguration({
       handleClose={closeEditorPanel}
       recordDto={jenkinsStepConfigurationDto}
       persistRecord={handleCreateAndSave}
+      showIncompleteDataMessage={false}
       isLoading={isLoading}
     >
       <JenkinsStepToolSelectInput
