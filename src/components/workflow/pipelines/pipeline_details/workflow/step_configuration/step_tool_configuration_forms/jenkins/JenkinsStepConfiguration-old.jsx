@@ -277,7 +277,7 @@ function JenkinsStepConfiguration({
     setPythonScriptData(new Model({inputDetails: []}, {
       fields: [
         {
-          label: "Use a Custom Script",
+          label: "Specify Script File Path",
           id: "customScript"
         },
         {

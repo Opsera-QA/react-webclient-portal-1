@@ -71,7 +71,7 @@ function JenkinsStepConfigurationPythonEditorPanel({dataObject, setDataObject, p
     }
   };
 
-  if (buildType == null || !allowedBuildTypes.includes(buildType)) {
+  if (buildType == null || buildType === "" || !allowedBuildTypes.includes(buildType)) {
     return null;
   }
 
