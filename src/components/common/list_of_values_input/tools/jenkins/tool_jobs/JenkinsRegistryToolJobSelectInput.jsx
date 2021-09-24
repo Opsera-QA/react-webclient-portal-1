@@ -83,13 +83,14 @@ function JenkinsRegistryToolJobSelectInput({ jenkinsToolId, visible, typeFilter,
       } else {
         setJenkinsJobs(jenkinsJobs);
 
-        const existingJob = jenkinsJobs.find((x) => x._id === existingJobSelection);
-
-        if (existingJob == null) {
-          toastContext.showLoadingErrorDialog(
-            "Preselected job is no longer available. It may have been deleted. Please select another job from the list or recreate the job in Tool Registry."
-          );
-        }
+        if (existingJobSelection != null && existingJobSelection !== "") {
+          const existingJob = jenkinsJobs.find((x) => x._id === existingJobSelection);
+          if (existingJob == null) {
+            toastContext.showLoadingErrorDialog(
+              "Preselected job is no longer available. It may have been deleted. Please select another job from the list or recreate the job in Tool Registry."
+            );
+          }
+        } 
       }
     }
   };
