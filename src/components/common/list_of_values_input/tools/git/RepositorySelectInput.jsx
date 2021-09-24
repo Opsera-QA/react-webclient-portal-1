@@ -7,7 +7,24 @@ import GitActionsHelper
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
   import axios from "axios";
 
-function GitRepositoryInput({ service, gitToolId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
+// TODO: Clean up this component. Change "gitToolId" to "toolId", make validateSavedData default to true after all use cases are tested.
+function RepositorySelectInput(
+  {
+    service,
+    gitToolId,
+    workspace,
+    visible,
+    fieldName,
+    dataObject,
+    setDataObject,
+    setDataFunction,
+    clearDataFunction,
+    disabled,
+    placeholderText,
+
+    // TODO: This will default to true in the future. So it only needs to be
+    validateSavedData,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [repositories, setRepositories] = useState([]);
@@ -67,17 +84,35 @@ function GitRepositoryInput({ service, gitToolId, workspace, visible, fieldName,
 
     if (Array.isArray(repositoriesResponse)) {
       setRepositories(repositoriesResponse);
+
+      if (validateSavedData === true) {
+        const existingRepository = dataObject?.getData(fieldName);
+
+        if (existingRepository != null && existingRepository !== "") {
+          const existingRepositoryExists = repositoriesResponse.find((repository) => repository?._id === existingRepository?._id);
+
+          if (existingRepositoryExists == null) {
+            toastContext.showLoadingErrorDialog(
+              "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list."
+            );
+          }
+        }
+      }
     }
   };
 
-  if (!visible) {
+  if (visible === false) {
     return <></>;
   }
 
-  const getNoRepositoriesMessage = () => {
-    if (!isLoading && (repositories == null || repositories.length === 0) && service !== "" && gitToolId !== "") {
+  const getPlaceholderText = () => {
+    const requiredFieldsExist = service !== "" && gitToolId !== "";
+    const bitbucketRequiredFieldsExist = service !== "bitbucket" || (workspace != null && workspace !== "");
+    if (!isLoading && (!Array.isArray(repositories) || repositories.length === 0) && requiredFieldsExist && bitbucketRequiredFieldsExist) {
       return ("No Repositories Found!");
     }
+
+    return (placeholderText);
   };
 
   return (
@@ -89,7 +124,7 @@ function GitRepositoryInput({ service, gitToolId, workspace, visible, fieldName,
         setDataFunction={setDataFunction}
         selectOptions={repositories}
         busy={isLoading}
-        placeholderText={getNoRepositoriesMessage()}
+        placeholderText={getPlaceholderText()}
         clearDataFunction={clearDataFunction}
         valueField="name"
         textField="name"
@@ -99,7 +134,7 @@ function GitRepositoryInput({ service, gitToolId, workspace, visible, fieldName,
   );
 }
 
-GitRepositoryInput.propTypes = {
+RepositorySelectInput.propTypes = {
   service: PropTypes.string,
   gitToolId: PropTypes.string,
   workspace: PropTypes.string,
@@ -109,12 +144,13 @@ GitRepositoryInput.propTypes = {
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
-  clearDataFunction: PropTypes.func
+  clearDataFunction: PropTypes.func,
+  validateSavedData: PropTypes.bool,
+  placeholderText: PropTypes.string,
 };
 
-GitRepositoryInput.defaultProps = {
-  visible: true,
+RepositorySelectInput.defaultProps = {
   placeholderText: "Select Repository"
 };
 
-export default GitRepositoryInput;
+export default RepositorySelectInput;

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import GitRepositoryInput from "components/common/list_of_values_input/tools/git/GitRepositoryInput";
+import RepositorySelectInput from "components/common/list_of_values_input/tools/git/RepositorySelectInput";
 
 function PipelineSourceRepositorySelectInput({className, fieldName, model, setModel, disabled, service, accountId, workspace, visible}) {
   const setDataFunction = (fieldName, selectedOption) => {
@@ -19,7 +19,7 @@ function PipelineSourceRepositorySelectInput({className, fieldName, model, setMo
   }
 
   return (
-    <GitRepositoryInput
+    <RepositorySelectInput
       service={service}
       gitToolId={accountId}
       workspace={workspace}

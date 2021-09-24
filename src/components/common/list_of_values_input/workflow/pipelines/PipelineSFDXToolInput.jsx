@@ -8,6 +8,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 
+// TODO: Rewrite this component
 function PipelineSFDXToolInput({ toolType, toolFriendlyName, placeholderText, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, configurationRequired}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -60,11 +61,11 @@ function PipelineSFDXToolInput({ toolType, toolFriendlyName, placeholderText, vi
     return <span>SFDX build type Accounts are only supported.</span>;
   };
 
-  if (!visible) {
+  if (visible === false) {
     return <></>;
   }
 
-  if (!isLoading && (tools == null || tools.length === 0) && toolFriendlyName) {
+  if (!isLoading && (!Array.isArray(tools) || tools.length === 0) && toolFriendlyName && toolType) {
     return (
       <div className="form-text text-muted p-2">
         <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
@@ -91,7 +92,7 @@ function PipelineSFDXToolInput({ toolType, toolFriendlyName, placeholderText, vi
         clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading}
       />
-      <small className="text-muted ml-3">
+      <small className="text-muted">
         {getInfoText()}
       </small>
     </div>
@@ -113,8 +114,7 @@ PipelineSFDXToolInput.propTypes = {
 };
 
 PipelineSFDXToolInput.defaultProps = {
-  visible: true,
-  toolType: "sfdc-configurator"
+  toolType: "sfdc-configurator",
 };
 
 export default PipelineSFDXToolInput;

@@ -32,13 +32,15 @@ const azureFunctionsStepFormMetadata = {
     {
       label: "Service Name",
       id: "azureFunctionsServiceName",
+      regexDefinitionName: "azureLabels",
+      maxLength: 63
     },
     {
       label: "Dynamic Name Prefix",
       id: "namePretext",
       formText: "Enter a prefix to be prepended to the uniquely generated name",
       maxLength: 25,
-      regexValidator: /^[A-Za-z0-9-.:]*$/
+      regexDefinitionName: "azureLabels"
     },
     {
       label: "Generate Dynamic Service Name?",

@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBracketsCurly, faTimes} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import regexDefinitions from "utils/regexDefinitions";
 
 function FilesInputBase({
   dataObject, 
@@ -22,7 +23,9 @@ function FilesInputBase({
   const [errorMessage, setErrorMessage] = useState("");
   const [properties, setProperties] = useState([]);
   const [inputFilePath, setInputFilePath] = useState("");
-  const [inputFileName, setInputFileName] = useState("");  
+  const [inputFileName, setInputFileName] = useState("");
+  const [inputFilePathError, setInputFilePathError] = useState("");
+  const [inputFileNameError, setInputFileNameError] = useState("");
 
   useEffect(() => {
     loadData();
@@ -64,6 +67,26 @@ function FilesInputBase({
     setDataObject({...newDataObject});
   };
 
+  const setInputFilePathHandler = (filePath) => {
+    setInputFilePathError("");
+    let format = regexDefinitions?.pathField?.regex;
+    let meetsRegex = format.test(filePath);
+    setInputFilePath(filePath);
+    if(!meetsRegex){
+      setInputFilePathError(regexDefinitions?.pathField?.errorFormText);
+    }
+  };
+
+  const setInputFileNameHandler = (fileName) => {
+    setInputFileNameError("");
+    let format = regexDefinitions?.genericFileName?.regex;
+    let meetsRegex = format.test(fileName);
+    setInputFileName(fileName);
+    if(!meetsRegex){
+      setInputFileNameError(regexDefinitions?.genericFileName?.errorFormText);
+    }
+  };
+
   const addProperty = () => {    
     setProperties([...properties, {
       inputFilePath,
@@ -89,9 +112,12 @@ function FilesInputBase({
               type={"text"}                
               placeholder={"Input File Path"}                
               maxLength={nameMaxLength}
-              onChange={(event) => setInputFilePath(event.target.value)}
+              onChange={(event) => setInputFilePathHandler(event.target.value)}
               value={inputFilePath}
             />
+            <small className="red form-text">
+              <div>{inputFilePathError}</div>
+            </small>
           </Col>
         </Row>
         <Row>
@@ -101,9 +127,12 @@ function FilesInputBase({
               type={"text"}                
               placeholder={"Input File Name"}                
               maxLength={nameMaxLength}
-              onChange={(event) => setInputFileName(event.target.value)}
+              onChange={(event) => setInputFileNameHandler(event.target.value)}
               value={inputFileName}
-            />            
+            />
+            <small className="red form-text">
+              <div>{inputFileNameError}</div>
+            </small>            
           </Col>
         </Row>
         <Button size="sm" className="my-1 ml-2" variant="success" 

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import GitRepositoryInput from "components/common/list_of_values_input/tools/git/GitRepositoryInput";
+import RepositorySelectInput from "components/common/list_of_values_input/tools/git/RepositorySelectInput";
 
 function ArgoCdGitRepositorySelectInput({className, fieldName, model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
@@ -24,7 +24,7 @@ function ArgoCdGitRepositorySelectInput({className, fieldName, model, setModel, 
   };
 
   return (
-    <GitRepositoryInput
+    <RepositorySelectInput
       gitToolId={model?.getData("gitToolId")}
       workspace={model?.getData("bitbucketWorkspace")}
       service={model?.getData("type")}

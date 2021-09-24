@@ -12,7 +12,7 @@ const AzureDevopsConnectionMetadata = {
       id: "organization",
       isRequired: true,
       maxLength: 128,
-      regexDefinitionName: "alphanumericPlusSpaces",
+      regexValidator: /^[A-Za-z0-9-.:/]*$/
     }
   ],
   newObjectFields:

@@ -29,7 +29,6 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   const [isLoading, setIsLoading] = useState(false);
   const [creatingNewRecord, setCreatingNewRecord] = useState(false);
   const [existingRecord, setExistingRecord] = useState(undefined);
-  const { featureFlagHideItemInProd } = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -340,7 +339,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   };
 
   const getDynamicTab = () => {
-    if (pipelineWizardModel?.getData("run_count") === 1 || pipelineWizardModel?.getData("fromGitTasks") === true) {
+    if (pipelineWizardModel?.getData("run_count") === 1 || pipelineWizardModel?.getData("fromGitTasks") === true || pipelineWizardModel?.getData("isProfiles") === true) {
       return null;
     }
 
@@ -357,11 +356,6 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   };
 
   const getTabContainer = () => {
-    // TODO: Remove this if statement when profile migration is validated by QA
-    if (pipelineWizardModel?.getData("isProfiles") === true && featureFlagHideItemInProd()) {
-      return null;
-    }
-
     return (
       <div>
         <div className={"mt-2"}>

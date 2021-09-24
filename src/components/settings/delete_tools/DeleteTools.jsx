@@ -12,7 +12,7 @@ import DeleteToolMetadata from "./delete-tool-metadata";
 import PropTypes from "prop-types";
 import ApplicationListInput from "./inputs/ApplicationListInput";
 import deleteToolsActions from "components/settings/delete_tools/settings-delete-tools-action.js";
-import ToolsTable from "./ToolsTable";
+import DeleteToolsTable from "components/settings/delete_tools/DeleteToolsTable";
 function DeleteTools() {
   const toastContext = useContext(DialogToastContext);
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -95,7 +95,7 @@ function DeleteTools() {
  const getToolsTable = () => {
   if(!isLoading && deleteToolDto.getData("applicationId") && deleteToolDto.getData("applicationId").length > 0 &&  deleteToolDto.getData("toolsList") ) {
     return (
-          <ToolsTable data={deleteToolDto.getData("toolsList")} loadData={loadApplicationTools} className="p-2 ml-2" />
+          <DeleteToolsTable data={deleteToolDto.getData("toolsList")} loadData={loadApplicationTools} className="p-2 ml-2" />
         );
   }
 };

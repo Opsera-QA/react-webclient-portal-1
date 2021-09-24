@@ -63,8 +63,16 @@ function ToolDetailView() {
           <ActionBarBackButton path={"/inventory/tools"} />
         </div>
         <div className="d-flex">
-          <ActionBarTransferToolButton className={"mr-3"} toolData={toolData} loadTool={getTool} toolDataObject={toolData} />
-          <ActionBarDeleteToolButton status={toolData?.getData("active")} toolDataObject={toolData} />
+          <ActionBarTransferToolButton
+            className={"ml-3"}
+            toolData={toolData}
+            loadTool={getTool}
+            toolDataObject={toolData}
+          />
+          <ActionBarDeleteToolButton
+            className={"ml-3"}
+            toolModel={toolData}
+          />
         </div>
       </ActionBarContainer>
     );

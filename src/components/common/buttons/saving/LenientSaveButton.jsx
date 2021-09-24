@@ -2,7 +2,17 @@ import React from 'react';
 import PropTypes from "prop-types";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 
-function LenientSaveButton({recordDto, size, updateRecord, disable, showSuccessToasts, customLabel, showTypeOnLabel}) {
+function LenientSaveButton(
+  {
+    recordDto,
+    size,
+    updateRecord,
+    disable,
+    showSuccessToasts,
+    customLabel,
+    showTypeOnLabel,
+    showIncompleteDataMessage,
+  }) {
   return (
     <SaveButtonBase
       lenient={true}
@@ -13,6 +23,7 @@ function LenientSaveButton({recordDto, size, updateRecord, disable, showSuccessT
       showSuccessToasts={showSuccessToasts}
       customLabel={customLabel}
       showTypeOnLabel={showTypeOnLabel}
+      showIncompleteDataMessage={showIncompleteDataMessage}
     />
   );
 }
@@ -24,7 +35,8 @@ LenientSaveButton.propTypes = {
   size: PropTypes.string,
   showSuccessToasts: PropTypes.bool,
   customLabel: PropTypes.string,
-  showTypeOnLabel: PropTypes.bool
+  showTypeOnLabel: PropTypes.bool,
+  showIncompleteDataMessage: PropTypes.bool,
 };
 
 LenientSaveButton.defaultProps = {

@@ -90,7 +90,7 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
           <BooleanToggleInput fieldName={"publicUse"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
         </Col>
         <Col lg={6}>
-          <JsonInput fieldName={"plan"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
+          <JsonInput fieldName={"plan"} model={templateDataDto} setModel={setTemplateDataDto}/>
         </Col>
         <Col lg={6}>
           <TagManager type={"template"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import RoleRestrictedJenkinsToolSelectInput
   from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
 
-function JenkinsToolConfigIdSelectInput({ model, setModel, disabled }) {
+function JenkinsStepToolSelectInput({ model, setModel, disabled }) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...model};
     newDataObject.setData("toolConfigId", selectedOption._id);
@@ -46,10 +46,10 @@ function JenkinsToolConfigIdSelectInput({ model, setModel, disabled }) {
   );
 }
 
-JenkinsToolConfigIdSelectInput.propTypes = {
+JenkinsStepToolSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default JenkinsToolConfigIdSelectInput;
+export default JenkinsStepToolSelectInput;

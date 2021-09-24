@@ -57,6 +57,20 @@ sfdcPipelineActions.getSelectedFileList = async (getAccessToken, cancelTokenSour
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+sfdcPipelineActions.getValidatedFileList = async (getAccessToken, cancelTokenSource, pipelineWizardModel, newFilterDto) => {
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/get_validated_file_list`;
+  const urlParams = {
+    params: {
+      page: newFilterDto ? newFilterDto.getData("currentPage") : 1,
+      size: newFilterDto ? newFilterDto.getData("pageSize") : 3000,
+      search: newFilterDto ? newFilterDto.getData("search") : "",
+      componentFilter: newFilterDto ? newFilterDto.getData("componentFilter") : "",
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 sfdcPipelineActions.setSfdcFileListV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const postBody = {
     rules: pipelineWizardModel.getData("sfdcModifiedRuleList")
@@ -363,18 +377,20 @@ sfdcPipelineActions.getPackageXmlV2 = async (getAccessToken, cancelTokenSource, 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-sfdcPipelineActions.setXmlFileComponentsV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+sfdcPipelineActions.setXmlFileContentsV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const postBody = {
-    packageXml: pipelineWizardModel?.getData("xmlFileContent")
+    packageXml: pipelineWizardModel?.getData("xmlFileContent"),
+    excludeDependencies: pipelineWizardModel.getData("includeDependencies") === false,
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/set_xml_file_contents`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-sfdcPipelineActions.setCsvFileComponentsV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+sfdcPipelineActions.setUploadedCsvFileListV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const postBody = {
-    selectedFileList: pipelineWizardModel?.getData("csvFileContent")
+    selectedFileList: pipelineWizardModel?.getData("csvFileContent"),
+    excludeDependencies: pipelineWizardModel.getData("includeDependencies") === false,
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/set_csv_file_contents`;

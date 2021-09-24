@@ -98,15 +98,17 @@ export const itemArray = [
 
 ];
 
-function JenkinsDependencyMultiSelectInput({ fieldName, dataObject, setDataObject, setDataFunction }) {
+// TODO: This code should be cleaned up.
+//  If we need to support having dependencyType and version with a dash, make that an object property.
+//  Stop constructing and deconstructing static objects-- these don't change so we can just make a constant out of it.
+function JenkinsDependencyMultiSelectInput({ fieldName, model, setModel, setDataFunction }) {
   const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
   const [disabledItems, setDisabledItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     loadData();
-  }, [dataObject.getData(fieldName)]);
+  }, [model.getData(fieldName)]);
 
   const loadData = async () => {
     try {
@@ -124,7 +126,7 @@ function JenkinsDependencyMultiSelectInput({ fieldName, dataObject, setDataObjec
 
   const isDependencyItemDisabled = () => {
     let disabledObj = [];
-    if (dataObject.getData(fieldName) && dataObject.getData(fieldName).length > 0) {
+    if (model.getData(fieldName) && model.getData(fieldName).length > 0) {
       const selectedDependencyTypes = getSelectedDependencyTypes();
       itemArray.map(item => {
         if(selectedDependencyTypes.includes(item.dependencyType)){
@@ -132,7 +134,7 @@ function JenkinsDependencyMultiSelectInput({ fieldName, dataObject, setDataObjec
         }
       });
       // remove selected items from this list and push
-      let finalList = disabledObj.filter(({name, dependencyType, version}) => !dataObject.getData(fieldName).some(x => x.name === name && x.dependencyType === dependencyType && x.version === version));
+      let finalList = disabledObj.filter(({name, dependencyType, version}) => !model?.getData(fieldName).some(x => x.name === name && x.dependencyType === dependencyType && x.version === version));
       setDisabledItems(finalList);
       return;
     }
@@ -140,14 +142,14 @@ function JenkinsDependencyMultiSelectInput({ fieldName, dataObject, setDataObjec
   };
 
   const getSelectedDependencyTypes = () => {
-    return dataObject.getData(fieldName).map((dependency) => dependency.dependencyType);
+    return model?.getData(fieldName).map((dependency) => dependency.dependencyType);
   };
 
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      dataObject={model}
+      setDataObject={setModel}
       selectOptions={itemArray}
       setDataFunction={setDataFunction}
       groupBy="dependencyType"
@@ -161,8 +163,8 @@ function JenkinsDependencyMultiSelectInput({ fieldName, dataObject, setDataObjec
 JenkinsDependencyMultiSelectInput.propTypes = {
   currentPipelineId: PropTypes.string,
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
 };
 
