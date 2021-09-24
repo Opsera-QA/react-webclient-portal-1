@@ -74,7 +74,7 @@ function JenkinsStepConfigurationDockerEditorPanel({model, setModel}) {
         Enter Runtime Build arguments as a key/value pair JSON Object. You can add any number of runtime arguments to
         the JSON Object.
       </div>
-      <div className={"mt-2"}>
+      <div className={"my-2"}>
         Sample:
         <div>
           <ReactJson

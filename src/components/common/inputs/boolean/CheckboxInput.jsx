@@ -4,26 +4,29 @@ import { Form } from "react-bootstrap";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
-// TODO: This hasn't been used anywhere, so might need to be altered when put into use.
-function CheckboxInput({ fieldName, dataObject, setDataObject, disabled }) {
-    const [field] = useState(dataObject.getFieldById(fieldName));
+function CheckboxInput({ fieldName, model, setModel, disabled }) {
+    const [field] = useState(model?.getFieldById(fieldName));
 
   const validateAndSetData = (value) => {
-    let newDataObject = dataObject;
-    newDataObject.setData(field.id, value);
-    setDataObject({...newDataObject});
+    let newDataObject = model;
+    newDataObject.setData(field.id, !!value);
+    setModel({...newDataObject});
   };
+
+  if (field == null) {
+    return null;
+  }
 
   return (
     <InputContainer>
       <Form.Check
         type="checkbox"
-        id={field.id}
-        checked={!!dataObject.getData(fieldName)}
+        id={field?.id}
+        checked={!!model?.getData(fieldName)}
         disabled={disabled}
-        label={dataObject.getData(fieldName)}
+        label={model?.getLabel(fieldName)}
         onChange={() => {
-          validateAndSetData(!dataObject.getData(fieldName));
+          validateAndSetData(!model?.getData(fieldName));
         }}
       />
       <InfoText field={field} errorMessage={null}/>
@@ -33,10 +36,9 @@ function CheckboxInput({ fieldName, dataObject, setDataObject, disabled }) {
 
 CheckboxInput.propTypes = {
   disabled: PropTypes.bool,
-  setDataObject: PropTypes.func,
+  setModel: PropTypes.func,
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setData: PropTypes.func
+  model: PropTypes.object,
 };
 
 export default CheckboxInput;

@@ -277,7 +277,7 @@ function LegacyJenkinsStepConfiguration({
     setPythonScriptData(new Model({inputDetails: []}, {
       fields: [
         {
-          label: "Want to use a Custom Script",
+          label: "Use a Custom Script",
           id: "customScript"
         },
         {

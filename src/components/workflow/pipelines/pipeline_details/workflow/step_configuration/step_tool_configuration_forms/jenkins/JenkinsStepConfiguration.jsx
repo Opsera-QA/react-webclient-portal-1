@@ -218,7 +218,7 @@ function JenkinsStepConfiguration({
         <JenkinsRepositorySelectInput
           dataObject={jenkinsStepConfigurationDto}
           setDataObject={setJenkinsStepConfigurationDto}
-          service={jenkinsStepConfigurationDto.getData("service")}
+          service={jenkinsStepConfigurationDto?.getData("service")}
           gitToolId={jenkinsStepConfigurationDto.getData("gitToolId")}
           jobType={jenkinsStepConfigurationDto?.getData("jobType")}
           workspace={jenkinsStepConfigurationDto?.getData("workspace")}
@@ -227,6 +227,11 @@ function JenkinsStepConfiguration({
           dataObject={jenkinsStepConfigurationDto}
           setDataObject={setJenkinsStepConfigurationDto}
           jenkinsList={jenkinsList}
+          service={jenkinsStepConfigurationDto?.getData("service")}
+          gitToolId={jenkinsStepConfigurationDto?.getData("gitToolId")}
+          jobType={jenkinsStepConfigurationDto?.getData("jobType")}
+          workspace={jenkinsStepConfigurationDto?.getData("workspace")}
+          repoId={jenkinsStepConfigurationDto?.getData("repoId")}
         />
         <JenkinsXmlStepInfoSelectInput dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} plan={plan} stepId={stepId} />
         <JenkinsStepConfigurationDockerEditorPanel model={jenkinsStepConfigurationDto} setModel={setJenkinsStepConfigurationDto} />

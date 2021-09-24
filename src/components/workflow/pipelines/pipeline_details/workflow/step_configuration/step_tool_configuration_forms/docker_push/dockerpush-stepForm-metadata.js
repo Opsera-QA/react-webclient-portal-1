@@ -65,7 +65,7 @@ const dockerPushStepFormMetadata = {
         isRequired: true
       },
       {
-        label: "Want to use an existing repository?",
+        label: "Use Existing Repository",
         id: "newRepo",
       },
       {
