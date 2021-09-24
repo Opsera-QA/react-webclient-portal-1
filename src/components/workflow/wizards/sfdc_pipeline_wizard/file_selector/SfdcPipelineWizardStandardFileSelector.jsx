@@ -13,6 +13,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
+import {parseError} from "components/common/helpers/error-helpers";
 
 const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -50,8 +51,8 @@ const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipeli
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error("Service Error Pulling File List from SalesForce: " + error);
-        toastContext.showInlineErrorMessage("Service Error Pulling File List from SalesForce: " + error);
+        const prependMessage = "Service Error Pulling File List from SalesForce:";
+        toastContext.showInlineErrorMessage(error, prependMessage);
       }
     }
     finally {
@@ -67,7 +68,6 @@ const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipeli
 
     if (result?.data?.status === 500) {
       const message = result?.data?.message;
-      console.error("Service Error Pulling File List from SalesForce: " + message);
       toastContext.showInlineErrorMessage("Service Error Pulling File List from SalesForce: " + message);
     }
     else {
