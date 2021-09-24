@@ -133,7 +133,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "dockerSecrets",
     },
     {
-      label: "Use a Custom Script",
+      label: "Specify Script File Path",
       id: "customScript",
     },
     {
