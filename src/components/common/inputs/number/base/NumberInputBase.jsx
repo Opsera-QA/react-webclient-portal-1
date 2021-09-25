@@ -10,7 +10,6 @@ export const formatTypes = {
   percent: '%'
 };
 
-// TODO: Move to /common/inputs/number
 function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, placeholderText, formatType, setDataFunction, showLabel, minimum, maximum, className, precision }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");

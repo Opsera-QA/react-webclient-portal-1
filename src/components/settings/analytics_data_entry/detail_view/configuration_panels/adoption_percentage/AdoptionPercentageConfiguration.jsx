@@ -6,12 +6,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import adoptionPercentageMetadata
   from "components/settings/analytics_data_entry/detail_view/configuration_panels/adoption_percentage/adoption-percentage-metadata";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PipelineSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineSelectInput";
-import NumberInputBase from "components/common/inputs/text/NumberInputBase";
 import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeInputBase";
 import ManualKpiMultiSelectInputBase
   from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
+import NumberInputBase from "components/common/inputs/number/base/NumberInputBase";
 
 function AdoptionPercentageConfiguration({ analyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
   useEffect(() => {loadData();}, []);
