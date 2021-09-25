@@ -97,7 +97,6 @@ function JenkinsStepConfigurationBranchEditorPanel(
          service != null && service !== ""
       && gitToolId != null && gitToolId !== ""
       && repoId != null && repoId !== ""
-      && gitToolId != null && service !== ""
       && !disallowedJobTypes.includes(jobType)
       && !dataObject.getData("isOrgToOrg")
     );
