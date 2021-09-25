@@ -91,7 +91,7 @@ function RepositorySelectInput(
         const existingRepository = dataObject?.getData(fieldName);
 
         if (existingRepository != null && existingRepository !== "") {
-          const existingRepositoryExists = repositoriesResponse.find((repository) => repository[valueField] === existingRepository[valueField]);
+          const existingRepositoryExists = repositoriesResponse.find((repository) => repository[valueField] === existingRepository);
 
           if (existingRepositoryExists == null) {
             toastContext.showLoadingErrorDialog(
