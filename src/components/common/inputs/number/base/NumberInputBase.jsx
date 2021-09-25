@@ -46,7 +46,7 @@ function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, place
         className="max-content-width"
         onChange={(newValue) => updateValue(newValue)}
         min={typeof minimum === "number" ? minimum : field?.minNumber}
-        max={typeof minimum === "number" ? maximum : field?.maxNumber}
+        max={typeof maximum === "number" ? maximum : field?.maxNumber}
         format={ formatType && formatTypes[formatType] != null ? formatTypes[formatType] : undefined}
       />
       <InfoText field={field} errorMessage={errorMessage}/>

@@ -2,13 +2,17 @@ import React, { useEffect, useState } from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
-import twistlockStepFormMetadata from "./twistlock-stepForm-metadata";
+import twistlockStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/twistlockPipelineStepForm.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import TwistlockDockerPushSelectInput from "./inputs/TwistlockDockerPushSelectInput";
 import RoleRestrictedJenkinsToolSelectInput
   from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
 import RoleRestrictedTwistlockToolSelectInput
   from "components/common/list_of_values_input/tools/twistlock/RoleRestrictedTwistlockToolSelectInput";
+import TwistlockStepComplianceThresholdInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/inputs/TwistlockStepComplianceThresholdInput";
+import TwistlockStepVulnerabilityThresholdInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/inputs/TwistlockStepVulnerabilityThresholdInput";
 
 function TwistlockStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPanel, parentCallback, plan, createJob}) {
   const [isLoading, setIsLoading] = useState(false);
@@ -92,6 +96,14 @@ function TwistlockStepConfiguration({ pipelineId, stepTool, stepId, closeEditorP
         plan={plan}
         stepId={stepId}
       />
+      {/*<TwistlockStepComplianceThresholdInput*/}
+      {/*  model={twistlockStepConfigurationDto}*/}
+      {/*  setModel={setTwistlockStepConfigurationDataDto}*/}
+      {/*/>*/}
+      {/*<TwistlockStepVulnerabilityThresholdInput*/}
+      {/*  model={twistlockStepConfigurationDto}*/}
+      {/*  setModel={setTwistlockStepConfigurationDataDto}*/}
+      {/*/>*/}
     </PipelineStepEditorPanelContainer>
   );
 }

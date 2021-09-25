@@ -3,7 +3,7 @@ import { AuthContext } from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import { Button, Row, Col } from "react-bootstrap";
 import BlueprintSearchResult from "components/blueprint/BlueprintSearchResult";
-import NumberInputBase from "components/common/inputs/text/NumberInputBase";
+import NumberInputBase from "components/common/inputs/number/base/NumberInputBase";
 import Model from "core/data_model/model";
 import blueprintMetadata from "components/blueprint/blueprint-metadata";
 import BlueprintSearchPipelineSelectInput from "components/blueprint/BlueprintSearchPipelineSelectInput";

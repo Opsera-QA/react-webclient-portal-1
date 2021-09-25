@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import NumberInputBase from "components/common/inputs/text/NumberInputBase";
+import NumberInputBase from "components/common/inputs/number/base/NumberInputBase";
 
 function PipelineRunNumberInput({ model, setModel, fieldName, setDataFunction, maximumRunCount, className, showLabel, disabled}) {
   return (
