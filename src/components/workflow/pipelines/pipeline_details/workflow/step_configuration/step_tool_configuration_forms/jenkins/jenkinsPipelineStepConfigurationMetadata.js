@@ -200,6 +200,10 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "isNewBranch",
     },
     {
+      label: "Delete Workspace Before Building",
+      id: "workspaceDeleteFlag",
+    },
+    {
       label: "Use Upstream Branch",
       id: "hasUpstreamBranch",
       formText: `
