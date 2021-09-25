@@ -12,7 +12,7 @@ function TopPaginator({paginationModel, loadData, isLoading}) {
   return (
     <div className={"top-pagination py-2 w-100"}>
       <div className="px-2 d-flex">
-        <div className="my-auto">
+        <div className="my-auto small">
           <ResultsSummary isLoading={isLoading} paginationModel={paginationModel} />
         </div>
         <div className="d-flex ml-auto">
