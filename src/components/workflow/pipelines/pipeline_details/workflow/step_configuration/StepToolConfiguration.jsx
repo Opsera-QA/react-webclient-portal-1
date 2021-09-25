@@ -64,7 +64,9 @@ import AksServiceDeployStepConfiguration
   from "./step_tool_configuration_forms/aks_service_deploy/AksServiceDeployStepConfiguration";
 import LegacyJenkinsStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/LegacyJenkinsStepConfiguration";
-  import AzureFunctionsStepConfiguration from "./step_tool_configuration_forms/azure_functions/AzureFunctionsStepConfiguration";
+import AzureFunctionsStepConfiguration from "./step_tool_configuration_forms/azure_functions/AzureFunctionsStepConfiguration";
+import JenkinsStepConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -414,19 +416,28 @@ function StepToolConfiguration({
     switch (toolName) {
       case "jenkins":
         return (
-          <LegacyJenkinsStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
+          // <LegacyJenkinsStepConfiguration
+          //   pipelineId={pipeline._id}
+          //   plan={pipeline.workflow.plan}
+          //   stepId={stepId}
+          //   stepTool={stepTool}
+          //   parentCallback={callbackFunction}
+          //   callbackSaveToVault={saveToVault}
+          //   callbackGetFromVault={getFromVault}
+          //   callbackDeleteFromVault={deleteFromVaultUsingVaultKey}
+          //   createJob={createJob}
+          //   setToast={setToast}
+          //   setShowToast={setShowToast}
+          //   closeEditorPanel={closeEditorPanel}
+          // />
+          <JenkinsStepConfiguration
             stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            callbackGetFromVault={getFromVault}
-            callbackDeleteFromVault={deleteFromVaultUsingVaultKey}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
+            plan={pipeline?.workflow?.plan}
+            stepId={stepId}            
             closeEditorPanel={closeEditorPanel}
+            createJob={createJob}
+            pipelineId={pipeline._id}
+            parentCallback={callbackFunction}
           />
         );
       case "junit":
