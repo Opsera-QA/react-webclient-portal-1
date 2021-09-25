@@ -15,21 +15,29 @@ const twistlockPipelineStepFormMetadata = {
       label: "Docker Build Step",
       id: "buildStepId",
       isRequired: true
-    }
-   
+    },
+    {
+      label: "Vulnerability Threshold",
+      id: "threshold_vulnerability",
+    },
+    {
+      label: "Compliance Threshold",
+      id: "threshold_compliance",
+    },
   ],
-  newObjectFields: {    
+  newObjectFields: {
     toolConfigId: "",
-    twistlockToolId:"",
+    twistlockToolId: "",
     buildStepId: "",
     jobType: "TWISTLOCK_SCAN",
-    toolJobType : [
+    toolJobType: [
       "TWISTLOCK_SCAN"
     ],
-    agentLabels : "generic-linux",
-    workspaceDeleteFlag:false,
-    jobName:""
-   
+    agentLabels: "generic-linux",
+    workspaceDeleteFlag: false,
+    jobName: "",
+    threshold_vulnerability: [],
+    threshold_compliance: [],
   }
 };
 
