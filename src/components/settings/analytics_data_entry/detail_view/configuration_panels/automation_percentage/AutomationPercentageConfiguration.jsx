@@ -10,7 +10,7 @@ import PipelineSelectInput from "components/common/list_of_values_input/workflow
 import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeInputBase";
 import ManualKpiMultiSelectInputBase
   from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
-import PositiveIntegerNumberInput from "../../../../../common/inputs/number/PositiveIntegerNumberInput";
+import PositiveIntegerNumberPickerInput from "components/common/inputs/number/picker/PositiveIntegerNumberPickerInput";
 
 function AutomationPercentageConfiguration({ analyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
   useEffect(() => {loadData();}, []);
@@ -48,10 +48,10 @@ function AutomationPercentageConfiguration({ analyticsDataEntryModel, kpiConfigu
         <ManualKpiMultiSelectInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"release"} type={"release"} />
       </Col>
       <Col lg={6}>
-        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_tests"} />
+        <PositiveIntegerNumberPickerInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_tests"} />
       </Col>
       <Col lg={6}>
-        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_automated"} />
+        <PositiveIntegerNumberPickerInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_automated"} />
       </Col>
     </Row>
   );
