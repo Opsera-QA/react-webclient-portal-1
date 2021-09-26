@@ -7,7 +7,7 @@ export const formatTypes = {
   percent: '%'
 };
 
-function StandaloneNumberInputBase({ value, disabled, placeholderText, formatType, setDataFunction, minimum, maximum }) {
+function StandaloneNumberPickerInputBase({ value, disabled, placeholderText, formatType, setDataFunction, minimum, maximum }) {
   simpleNumberLocalizer();
 
   if (setDataFunction == null) {
@@ -28,7 +28,7 @@ function StandaloneNumberInputBase({ value, disabled, placeholderText, formatTyp
   );
 }
 
-StandaloneNumberInputBase.propTypes = {
+StandaloneNumberPickerInputBase.propTypes = {
   placeholderText: PropTypes.string,
   value: PropTypes.number,
   disabled: PropTypes.bool,
@@ -38,4 +38,4 @@ StandaloneNumberInputBase.propTypes = {
   maximum: PropTypes.number,
 };
 
-export default StandaloneNumberInputBase;
+export default StandaloneNumberPickerInputBase;

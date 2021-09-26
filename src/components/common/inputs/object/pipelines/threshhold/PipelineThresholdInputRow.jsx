@@ -9,7 +9,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import DropdownList from "react-widgets/lib/DropdownList";
 import {THRESHOLD_LEVELS} from "components/common/list_of_values_input/pipelines/thresholds/PipelineThresholdLevelSelectInputBase";
-import StandaloneNumberInputBase from "components/common/inputs/number/base/StandaloneNumberInputBase";
+import StandaloneNumberPickerInputBase from "components/common/inputs/number/base/StandaloneNumberPickerInputBase";
 
 function PipelineThresholdInputRow(
   {
@@ -53,7 +53,7 @@ function PipelineThresholdInputRow(
             {getThresholdLevelInput(threshold, index)}
           </Col>
           <Col sm={6} className={"pl-1 pr-0"}>
-            <StandaloneNumberInputBase
+            <StandaloneNumberPickerInputBase
               setDataFunction={(newValue) => updateThresholdRow(threshold, "level", newValue?.value)}
               disabled={disabled}
               placeholderText={"Select Count"}
