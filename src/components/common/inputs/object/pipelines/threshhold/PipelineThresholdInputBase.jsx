@@ -62,7 +62,10 @@ function PipelineThresholdInputBase({ fieldName, model, setModel, helpComponent,
 
     if (newRoleList && newRoleList.length > 0) {
       newRoleList.map((item) => {
-        if (item["level"] === "" || item["count"]) {
+        const level = item?.level;
+        const count = item?.count;
+
+        if (level === "" || count === "") {
           return;
         }
 
@@ -75,7 +78,7 @@ function PipelineThresholdInputBase({ fieldName, model, setModel, helpComponent,
   };
 
   const isThresholdComplete = (threshold) => {
-    return threshold["level"] !== "" && threshold["count"] !== "";
+    return threshold?.level !== "" && threshold?.count !== "";
   };
 
   const lastThresholdComplete = () => {
@@ -105,9 +108,8 @@ function PipelineThresholdInputBase({ fieldName, model, setModel, helpComponent,
     validateAndSetData(newThresholdList);
   };
 
-  const updateThresholdRow = (row, innerField, newValue) => {
+  const updateThresholdRow = (index, innerField, newValue) => {
     let newPropertyList = thresholdRows;
-    let index = newPropertyList.indexOf(row);
 
     if (newPropertyList[index][innerField] !== newValue) {
       newPropertyList[index][innerField] = newValue;
@@ -146,8 +148,9 @@ function PipelineThresholdInputBase({ fieldName, model, setModel, helpComponent,
                 index={index}
                 deleteThresholdRow={deleteThresholdRow}
                 disabledThresholdLevels={getDisabledThresholdLevels()}
-                threshold={threshold}
-                updateThresholdRow={updateThresholdRow}
+                count={threshold?.count}
+                level={threshold?.level}
+                updateThresholdRow={(newValue) => updateThresholdRow(index, "count", newValue)}
               />
             </div>
           );
