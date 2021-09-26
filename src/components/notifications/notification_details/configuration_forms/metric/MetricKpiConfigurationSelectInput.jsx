@@ -5,7 +5,7 @@ import KpiSelectInput from "components/common/list_of_values_input/admin/kpi_con
 import {Image} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import NumberInputBase from "components/common/inputs/number/base/NumberInputBase";
+import NumberPickerInputBase from "components/common/inputs/number/base/NumberPickerInputBase";
 import NotificationConditionSelectInput
   from "components/common/list_of_values_input/notifications/NotificationConditionSelectInput";
 import  NotificationConditionTriggerSelectInput
@@ -87,7 +87,7 @@ function MetricKpiConfigurationSelectInput({ fieldName, dataObject, setDataObjec
                 <NotificationConditionSelectInput dataObject={dataObject} setDataObject={setDataObject}/>
               </Col>
               <Col lg={4}>
-                <NumberInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"threshold"} formatType={dataObject.getData("conditionIf")}/>
+                <NumberPickerInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"threshold"} formatType={dataObject.getData("conditionIf")}/>
               </Col>
             </Row>
           </MetricNotificationConfigurationCardContainer>

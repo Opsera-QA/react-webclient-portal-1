@@ -10,7 +10,7 @@ export const formatTypes = {
   percent: '%'
 };
 
-function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, placeholderText, formatType, setDataFunction, showLabel, minimum, maximum, className, precision }) {
+function NumberPickerInputBase({ fieldName, dataObject, setDataObject, disabled, placeholderText, formatType, setDataFunction, showLabel, minimum, maximum, className, precision }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   simpleNumberLocalizer();
@@ -53,7 +53,7 @@ function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, place
   );
 }
 
-NumberInputBase.propTypes = {
+NumberPickerInputBase.propTypes = {
   placeholderText: PropTypes.string,
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
@@ -68,4 +68,4 @@ NumberInputBase.propTypes = {
   precision: PropTypes.number
 };
 
-export default NumberInputBase;
+export default NumberPickerInputBase;

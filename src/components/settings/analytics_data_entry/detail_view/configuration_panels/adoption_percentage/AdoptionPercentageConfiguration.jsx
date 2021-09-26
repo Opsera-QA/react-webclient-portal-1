@@ -10,7 +10,7 @@ import PipelineSelectInput from "components/common/list_of_values_input/workflow
 import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeInputBase";
 import ManualKpiMultiSelectInputBase
   from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
-import NumberInputBase from "components/common/inputs/number/base/NumberInputBase";
+import NumberPickerInputBase from "components/common/inputs/number/base/NumberPickerInputBase";
 
 function AdoptionPercentageConfiguration({ analyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
   useEffect(() => {loadData();}, []);
@@ -48,10 +48,10 @@ function AdoptionPercentageConfiguration({ analyticsDataEntryModel, kpiConfigura
         <ManualKpiMultiSelectInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"release"} type={"release"} />
       </Col>
       <Col lg={6}>
-        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_executed"} />
+        <NumberPickerInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_executed"} />
       </Col>
       <Col lg={6}>
-        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_manual"} />
+        <NumberPickerInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_manual"} />
       </Col>
     </Row>
   );
