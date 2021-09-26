@@ -9,7 +9,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import DropdownList from "react-widgets/lib/DropdownList";
 import {THRESHOLD_LEVELS} from "components/common/list_of_values_input/pipelines/thresholds/PipelineThresholdLevelSelectInputBase";
-import StandaloneNumberPickerInputBase from "components/common/inputs/number/base/StandaloneNumberPickerInputBase";
+import StandaloneNumberPickerInputBase from "components/common/inputs/number/picker/base/StandaloneNumberPickerInputBase";
 
 function PipelineThresholdInputRow(
   {

@@ -5,7 +5,7 @@ import KpiSelectInput from "components/common/list_of_values_input/admin/kpi_con
 import {Image} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import NumberPickerInputBase from "components/common/inputs/number/base/NumberPickerInputBase";
+import NumberPickerInputBase from "components/common/inputs/number/picker/base/NumberPickerInputBase";
 import NotificationConditionSelectInput
   from "components/common/list_of_values_input/notifications/NotificationConditionSelectInput";
 import  NotificationConditionTriggerSelectInput

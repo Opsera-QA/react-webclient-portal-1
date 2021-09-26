@@ -8,7 +8,7 @@ import NumberPicker from "react-widgets/lib/NumberPicker";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import regexDefinitions from "utils/regexDefinitions";
 
-function PositiveIntegerNumberInput({ fieldName, className, dataObject, setDataObject, disabled, placeholderText, showLabel, minimum, maximum }) {
+function PositiveIntegerNumberPickerInput({ fieldName, className, dataObject, setDataObject, disabled, placeholderText, showLabel, minimum, maximum }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   simpleNumberLocalizer();
@@ -73,7 +73,7 @@ function PositiveIntegerNumberInput({ fieldName, className, dataObject, setDataO
   );
 }
 
-PositiveIntegerNumberInput.propTypes = {
+PositiveIntegerNumberPickerInput.propTypes = {
   placeholderText: PropTypes.string,
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
@@ -86,8 +86,8 @@ PositiveIntegerNumberInput.propTypes = {
   className: PropTypes.string
 };
 
-PositiveIntegerNumberInput.defaultProps = {
+PositiveIntegerNumberPickerInput.defaultProps = {
   minimum: 0
 };
 
-export default PositiveIntegerNumberInput;
+export default PositiveIntegerNumberPickerInput;
