@@ -9,28 +9,31 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import DropdownList from "react-widgets/lib/DropdownList";
 import {THRESHOLD_LEVELS} from "components/common/list_of_values_input/pipelines/thresholds/PipelineThresholdLevelSelectInputBase";
-import StandaloneNumberPickerInputBase from "components/common/inputs/number/picker/base/StandaloneNumberPickerInputBase";
+import StandalonePositiveIntegerNumberTextInput
+  from "components/common/inputs/text/number/integer/StandalonePositiveIntegerNumberTextInput";
 
 function PipelineThresholdInputRow(
   {
     disabledThresholdLevels,
     index,
-    threshold,
     disabled,
     updateThresholdRow,
-    deleteThresholdRow
+    deleteThresholdRow,
+    count,
+    level
   }) {
-  const getThresholdLevelInput = (threshold) => {
+
+  const getThresholdLevelInput = () => {
     return (
       <DropdownList
         data={THRESHOLD_LEVELS}
         valueField={"value"}
         textField={"text"}
-        value={threshold?.level}
+        value={level}
         disabled={disabled || disabledThresholdLevels}
         filter={"contains"}
         placeholder={"Select A Group"}
-        onChange={(newValue) => updateThresholdRow(threshold, "level", newValue?.value)}
+        onChange={(newValue) => updateThresholdRow(index, "level", newValue?.value)}
       />
     );
   };
@@ -50,17 +53,13 @@ function PipelineThresholdInputRow(
       <Col sm={11}>
         <Row>
           <Col sm={6} className={"pr-1"}>
-            {getThresholdLevelInput(threshold, index)}
+            {getThresholdLevelInput()}
           </Col>
           <Col sm={6} className={"pl-1 pr-0"}>
-            <StandaloneNumberPickerInputBase
-              setDataFunction={(newValue) => updateThresholdRow(threshold, "level", newValue?.value)}
+            <StandalonePositiveIntegerNumberTextInput
+              setDataFunction={(newValue) => updateThresholdRow(newValue)}
               disabled={disabled}
-              placeholderText={"Select Count"}
-              value={threshold?.count}
-              minimum={1}
-              // TODO: Should there be a maximum?
-              // maximum={}
+              value={count}
             />
           </Col>
         </Row>
@@ -73,12 +72,16 @@ function PipelineThresholdInputRow(
 }
 
 PipelineThresholdInputRow.propTypes = {
-  threshold: PropTypes.object,
   disabledThresholdLevels: PropTypes.array,
   index: PropTypes.number,
   updateThresholdRow: PropTypes.func,
   deleteThresholdRow: PropTypes.func,
   disabled: PropTypes.bool,
+  count: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  level: PropTypes.string,
 };
 
 export default PipelineThresholdInputRow;
