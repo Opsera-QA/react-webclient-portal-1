@@ -1,10 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-  faExclamationTriangle,
-  faIdCard,
-} from "@fortawesome/pro-light-svg-icons";
+import {faClipboardListCheck} from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
@@ -200,7 +196,7 @@ function PipelineThresholdInputBase({ fieldName, model, setModel, helpComponent,
   return (
     <div className={className}>
       <PropertyInputContainer
-        titleIcon={faIdCard}
+        titleIcon={faClipboardListCheck}
         field={field}
         addProperty={addThresholdRow}
         titleText={field?.label}

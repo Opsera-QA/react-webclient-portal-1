@@ -64,7 +64,7 @@ function PipelineThresholdInputRow(
           </Col>
         </Row>
       </Col>
-      <Col sm={1} className={"px-0 mr-auto delete-button"}>
+      <Col sm={1} className={"px-0 ml-auto mr-auto delete-button"}>
         {getDeletePropertyButton(index)}
       </Col>
     </div>
