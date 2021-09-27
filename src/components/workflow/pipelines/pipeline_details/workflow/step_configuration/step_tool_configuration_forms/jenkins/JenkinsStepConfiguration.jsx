@@ -240,9 +240,23 @@ function JenkinsStepConfiguration({
           stepId={stepId}
           jobType={jenkinsStepConfigurationDto?.getData("jobType")}
         />
-        <JenkinsStepConfigurationDockerEditorPanel model={jenkinsStepConfigurationDto} setModel={setJenkinsStepConfigurationDto} />
-        <JenkinsPythonPanel dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} plan={plan}  stepId={stepId} />
-        <JenkinsGradleMavenScriptFilePathPanel  dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
+        <JenkinsStepConfigurationDockerEditorPanel
+          model={jenkinsStepConfigurationDto}
+          setModel={setJenkinsStepConfigurationDto}
+          buildType={jenkinsStepConfigurationDto?.getData("buildType")}
+        />
+        <JenkinsPythonPanel
+          dataObject={jenkinsStepConfigurationDto}
+          setDataObject={setJenkinsStepConfigurationDto}
+          plan={plan}
+          stepId={stepId}
+          buildType={jenkinsStepConfigurationDto?.getData("buildType")}
+        />
+        <JenkinsGradleMavenScriptFilePathPanel
+          dataObject={jenkinsStepConfigurationDto}
+          setDataObject={setJenkinsStepConfigurationDto}
+          buildType={jenkinsStepConfigurationDto?.getData("buildType")}
+        />
       </div>
     );
   };

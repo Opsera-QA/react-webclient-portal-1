@@ -7,16 +7,37 @@ import StepConfigTerraformStepSelectInput from "../../common/inputs/StepConfigTe
 import StepConfigUseTerraformOutput from "../../common/inputs/StepConfigUseTerraformOutput";
 import ParameterSelectListInputBase
   from "../../../../../../../../common/list_of_values_input/parameters/ParameterSelectListInputBase";
-import { faHandshake } from "@fortawesome/pro-light-svg-icons";
-import PipelineStepEditorPanelContainer
-  from "../../../../../../../../common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 
-function JenkinsStepConfigurationPythonEditorPanel({ dataObject, setDataObject, plan, stepId }) {
+const allowedBuildTypes = [
+  "python",
+  "gradle",
+  "maven"
+];
+
+function JenkinsStepConfigurationPythonEditorPanel({dataObject, setDataObject, plan, stepId, buildType}) {
 
   const getTerraformSelect = () => {
     if (dataObject?.getData("useTerraformOutput")) {
       return (
-        <StepConfigTerraformStepSelectInput setDataObject={setDataObject} dataObject={dataObject} plan={plan} stepId={stepId} />
+        <StepConfigTerraformStepSelectInput
+          setDataObject={setDataObject}
+          dataObject={dataObject}
+          plan={plan}
+          stepId={stepId}
+        />
+      );
+    }
+  };
+
+  const getPythonCustomScriptFields = () => {
+    if (buildType === "python") {
+      return (
+        <>
+          <StepConfigUseTerraformOutput dataObject={dataObject} setDataObject={setDataObject}
+                                        fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>
+          {getTerraformSelect()}
+        </>
       );
     }
   };
@@ -26,11 +47,7 @@ function JenkinsStepConfigurationPythonEditorPanel({ dataObject, setDataObject, 
     if (dataObject.getData("customScript") === true) {
       return (
         <>
-          {dataObject.getData("buildType") === "python" && (
-          <>
-            <StepConfigUseTerraformOutput dataObject={dataObject} setDataObject={setDataObject} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>
-            {getTerraformSelect()}
-          </>)}
+          {getPythonCustomScriptFields()}
           <ParameterSelectListInputBase
             titleIcon={faHandshake}
             dataObject={dataObject}
@@ -44,24 +61,23 @@ function JenkinsStepConfigurationPythonEditorPanel({ dataObject, setDataObject, 
             //tool_prop={dataObject?.getData("terraformStepId") && dataObject?.getData("terraformStepId").length > 0 ?
             //  dataObject?.getData("terraformStepId") : ""}
           />
-          <TextAreaInput dataObject={dataObject} setDataObject={setDataObject} fieldName={"commands"} />
+          <TextAreaInput dataObject={dataObject} setDataObject={setDataObject} fieldName={"commands"}/>
         </>
       );
     }
 
-    if(dataObject.getData("buildType") === "python"){
-      return <PythonFilesInput setDataObject={setDataObject} dataObject={dataObject} fieldName={"inputDetails"} />;
+    if (buildType === "python") {
+      return <PythonFilesInput setDataObject={setDataObject} dataObject={dataObject} fieldName={"inputDetails"}/>;
     }
-    return null;
   };
 
-  if (dataObject == null || !["python","gradle","maven"].includes(dataObject.getData("buildType")))  {
+  if (buildType == null || buildType === "" || !allowedBuildTypes.includes(buildType)) {
     return null;
   }
 
   return (
     <>
-      <BooleanToggleInput dataObject={dataObject} setDataObject={setDataObject} fieldName={"customScript"} />
+      <BooleanToggleInput dataObject={dataObject} setDataObject={setDataObject} fieldName={"customScript"}/>
       {getDynamicInput()}
     </>
   );
@@ -73,6 +89,7 @@ JenkinsStepConfigurationPythonEditorPanel.propTypes = {
   jenkinsList: PropTypes.any,
   plan: PropTypes.array,
   stepId: PropTypes.string,
+  buildType: PropTypes.string,
 };
 
 export default JenkinsStepConfigurationPythonEditorPanel;

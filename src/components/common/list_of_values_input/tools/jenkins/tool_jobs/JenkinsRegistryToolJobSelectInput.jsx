@@ -5,13 +5,9 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import toolsActions from "components/inventory/tools/tools-actions";
-import {OverlayTrigger, Popover} from "react-bootstrap";
-import {RegistryPopover} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/utility";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEllipsisH} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
-import {faTimes} from "@fortawesome/pro-light-svg-icons";
 import InfoOverlayContainer from "components/common/inputs/info_text/InfoOverlayContainer";
+import {getJenkinsJobTypeLabelForValue} from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobTypeSelectInput";
 
 function JenkinsRegistryToolJobSelectInput({ jenkinsToolId, visible, typeFilter, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);
@@ -152,6 +148,7 @@ function JenkinsRegistryToolJobSelectInput({ jenkinsToolId, visible, typeFilter,
       selectOptions={jenkinsJobs}
       placeholderText={getPlaceholderText()}
       busy={isLoading}
+      groupBy={(job) => getJenkinsJobTypeLabelForValue(job?.type)}
       valueField="_id"
       textField="name"
       infoOverlay={renderOverlayTrigger()}

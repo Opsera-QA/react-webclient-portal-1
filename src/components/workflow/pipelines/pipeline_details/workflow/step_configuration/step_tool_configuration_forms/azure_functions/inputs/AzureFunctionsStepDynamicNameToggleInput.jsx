@@ -32,7 +32,7 @@ function AzureFunctionsStepDynamicNameToggleInput({ model, setModel, fieldName, 
 
     return (
       <label className="text-muted stepForm-data-display">
-        {model?.getData("namePretext")}-runCount
+        {model?.getData("namePretext")}[runCount]
       </label>
     );
   };

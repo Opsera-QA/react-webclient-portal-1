@@ -56,7 +56,7 @@ function AdminTools() {
         <BreadcrumbPageLink breadcrumbDestination={"toolManagement"} />
         <BreadcrumbPageLink breadcrumbDestination={"deleteTools"} />
         <BreadcrumbPageLink breadcrumbDestination={"kpiManagement"} />
-        {!featureFlagHideItemInProd() && <BreadcrumbPageLink breadcrumbDestination={"pipelineStorageManagement"} />}
+        <BreadcrumbPageLink breadcrumbDestination={"pipelineStorageManagement"} />
         <BreadcrumbPageLink breadcrumbDestination={"templateManagement"} />
         <BreadcrumbPageLink breadcrumbDestination={"siteNotificationManager"} />
         <BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationManagement"} />

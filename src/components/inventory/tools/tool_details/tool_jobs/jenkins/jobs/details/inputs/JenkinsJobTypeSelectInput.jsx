@@ -61,6 +61,27 @@ const JENKINS_JOB_TYPES = [
   },
 ];
 
+// TODO: Rewrite Syntax to follow tasks.types.js
+export const getJenkinsJobTypeLabelForValue = (jenkinsJobType) => {
+  if (Array.isArray(jenkinsJobType) && jenkinsJobType.length > 0) {
+    const objectProperty = jenkinsJobType[0];
+    const found = JENKINS_JOB_TYPES.find((jobType) => {return jobType.value === objectProperty;});
+
+    if (found != null) {
+      return found?.label;
+    }
+  }
+  else if (typeof jenkinsJobType === "string") {
+    const found = JENKINS_JOB_TYPES.find((jobType) => {return jobType.value === jenkinsJobType;});
+
+    if (found != null) {
+      return found?.label;
+    }
+  }
+
+  return "Unknown Job Type";
+};
+
 function JenkinsJobTypeSelectInput({ fieldName, model, setModel, setConfigurationModel, disabled }) {
   const setDataFunction = (fieldName, valueObject) => {
     const value = valueObject?.value;

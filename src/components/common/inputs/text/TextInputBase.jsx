@@ -3,12 +3,13 @@ import PropTypes from "prop-types";
 import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import {parseError} from "components/common/helpers/error-helpers";
 
 function TextInputBase(
   {
     fieldName, dataObject, setDataObject, disabled, type,
     showLabel, inputClasses, linkTooltipText, detailViewLink, infoOverlay,
-    setDataFunction, name, style, className
+    setDataFunction, name, style, className, error
   }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -16,6 +17,10 @@ function TextInputBase(
   useEffect(() => {
     setField(dataObject?.getFieldById(fieldName));
   }, [fieldName]);
+
+  useEffect(() => {
+    setErrorMessage(parseError(error));
+  }, [error]);
 
   const validateAndSetData = (value) => {
     let newDataObject = dataObject;
@@ -92,6 +97,10 @@ TextInputBase.propTypes = {
   name: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
+  error: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
 };
 
 export default TextInputBase;
