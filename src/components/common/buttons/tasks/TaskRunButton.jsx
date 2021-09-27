@@ -12,8 +12,15 @@ import GitRunTaskModal from "components/tasks/git_task_details/GitRunTaskModal";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import TaskActivityView from './TaskActivityView';
 import taskActions from "components/tasks/task.actions";
+import {TASK_TYPES} from "components/tasks/task.types";
 
-function GitTaskRunButton({gitTasksData, setGitTasksData, disable, className, loadData, actionAllowed }) {
+const ALLOWED_TASK_TYPES = [
+  TASK_TYPES.SYNC_GIT_BRANCHES,
+  TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE,
+  TASK_TYPES.SYNC_SALESFORCE_REPO,
+];
+
+function TaskRunButton({gitTasksData, setGitTasksData, disable, className, loadData, actionAllowed, taskType }) {
   const [isCanceling, setIsCanceling] = useState(false);
   const [taskStarting, setTaskStarting] = useState(false);
   const {getAccessToken} = useContext(AuthContext);
@@ -98,7 +105,7 @@ function GitTaskRunButton({gitTasksData, setGitTasksData, disable, className, lo
     );
   };
 
-  if (gitTasksData.getData("type") === "ecs_service_creation" || gitTasksData.getData("type") === "ecs_cluster_creation" || gitTasksData.getData("type") === "lambda_function_creation" || gitTasksData.getData("type") === "azure_cluster_creation") {
+  if (!ALLOWED_TASK_TYPES.includes(taskType)) {
     return null;
   }
 
@@ -121,13 +128,14 @@ function GitTaskRunButton({gitTasksData, setGitTasksData, disable, className, lo
   );
 }
 
-GitTaskRunButton.propTypes = {
+TaskRunButton.propTypes = {
   gitTasksData: PropTypes.object,
   setGitTasksData: PropTypes.func,
   loadData: PropTypes.func,
   disable: PropTypes.bool,
   className: PropTypes.string,
-  actionAllowed: PropTypes.bool
+  actionAllowed: PropTypes.bool,
+  taskType: PropTypes.string,
 };
 
-export default GitTaskRunButton;
+export default TaskRunButton;
