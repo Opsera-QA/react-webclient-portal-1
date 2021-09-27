@@ -10,71 +10,71 @@ import AwsLambdaConfigurationPanel from "./aws-lambda-creation/AwsLambdaConfigur
 import AzureClusterConfigurationPanel from "./azure-cluster-creation/AzureClusterConfigurationPanel";
 import {TASK_TYPES} from "components/tasks/task.types";
 
-function TaskConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData, taskType }) {
+function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationModel, setTaskConfigurationModel, taskType }) {
   const getConfigurationPanel = () => {
     switch (taskType) {
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
         return (
           <SFDCGitTaskEditorPanel 
-            gitTasksDataDto={gitTasksDataDto}
-            setGitTasksConfigurationData={setGitTasksConfigurationData}
-            gitTasksConfigurationData={gitTasksConfigurationData}
+            gitTasksDataDto={taskModel}
+            setGitTasksConfigurationData={setTaskConfigurationModel}
+            gitTasksConfigurationData={taskConfigurationModel}
           />
         );
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
         return (
           <SFDXCertGenTaskTypeConfigurationPanel
-            gitTasksDataDto={gitTasksDataDto}
-            setGitTasksConfigurationData={setGitTasksConfigurationData}
-            gitTasksConfigurationData={gitTasksConfigurationData}
+            gitTasksDataDto={taskModel}
+            setGitTasksConfigurationData={setTaskConfigurationModel}
+            gitTasksConfigurationData={taskConfigurationModel}
           />
         );
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
         return (
           <SFDCBranchStructuringTaskTypeConfigurationPanel
-            gitTasksDataDto={gitTasksDataDto}
-            setGitTasksConfigurationData={setGitTasksConfigurationData}
-            gitTasksConfigurationData={gitTasksConfigurationData}
+            gitTasksDataDto={taskModel}
+            setGitTasksConfigurationData={setTaskConfigurationModel}
+            gitTasksConfigurationData={taskConfigurationModel}
           />
         ); 
       case TASK_TYPES.SYNC_GIT_BRANCHES:
         return (
           <BranchToBranchGitTaskConfigurationPanel 
-            gitTasksDataDto={gitTasksDataDto}
-            setGitTasksConfigurationData={setGitTasksConfigurationData}
-            gitTasksConfigurationData={gitTasksConfigurationData}
+            taskModel={taskModel}
+            setTaskConfigurationModel={setTaskConfigurationModel}
+            taskConfigurationModel={taskConfigurationModel}
           />
         );
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
         return (
           <ECSCreationTaskConfigurationPanel
-            gitTasksDataDto={gitTasksDataDto}
-            setGitTasksConfigurationData={setGitTasksConfigurationData}
-            gitTasksConfigurationData={gitTasksConfigurationData}
+            gitTasksDataDto={taskModel}
+            setGitTasksConfigurationData={setTaskConfigurationModel}
+            gitTasksConfigurationData={taskConfigurationModel}
           />
         );
         case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
         return (
           <ECSServiceCreationTaskConfigurationPanel
-            gitTasksDataDto={gitTasksDataDto}
-            setGitTasksConfigurationData={setGitTasksConfigurationData}
-            gitTasksConfigurationData={gitTasksConfigurationData}
+            gitTasksDataDto={taskModel}
+            setGitTasksConfigurationData={setTaskConfigurationModel}
+            gitTasksConfigurationData={taskConfigurationModel}
           />
         );
       case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
         return (
           <AwsLambdaConfigurationPanel
-            gitTasksDataDto={gitTasksDataDto}
-            setGitTasksConfigurationData={setGitTasksConfigurationData}
-            gitTasksConfigurationData={gitTasksConfigurationData}
+            gitTasksDataDto={taskModel}
+            setGitTasksConfigurationData={setTaskConfigurationModel}
+            gitTasksConfigurationData={taskConfigurationModel}
           />
         );
       case TASK_TYPES.AZURE_CLUSTER_CREATION:
         return (
           <AzureClusterConfigurationPanel
-            gitTasksConfigurationData={gitTasksConfigurationData}
-            setGitTasksConfigurationData={setGitTasksConfigurationData}
-            gitTasksDataDto={gitTasksDataDto}
+            gitTasksConfigurationData={taskConfigurationModel}
+            setGitTasksConfigurationData={setTaskConfigurationModel}
+            gitTasksDataDto={taskModel}
             />
         );
       case "":
@@ -92,10 +92,10 @@ function TaskConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTasksC
 
 TaskConfigurationPanel.propTypes = {
   taskType: PropTypes.string,
-  gitTasksDataDto: PropTypes.object,
-  gitTasksConfigurationData: PropTypes.object,
-  setGitTasksConfigurationData: PropTypes.func,
-  setGitTasksDataDto: PropTypes.func
+  taskModel: PropTypes.object,
+  taskConfigurationModel: PropTypes.object,
+  setTaskConfigurationModel: PropTypes.func,
+  setTaskModel: PropTypes.func
 };
 
 export default TaskConfigurationPanel;

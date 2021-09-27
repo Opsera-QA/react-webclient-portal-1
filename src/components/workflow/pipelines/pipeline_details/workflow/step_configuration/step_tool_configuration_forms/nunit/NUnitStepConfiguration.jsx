@@ -19,8 +19,8 @@ import NUnitGitBranchInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/NUnitGitBranchInput";
 import NUnitBitbucketWorkspaceInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/NUnitBitbucketWorkspaceInput";
-import AgentLabelsMultiSelectInput
-  from "../../../../../../../common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
+import AgentLabelsSelectInput
+  from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
 import WorkspaceDeleteToggleInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/WorkspaceDeleteToggleInput";
 
 function NUnitStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel }) {
@@ -97,7 +97,7 @@ function NUnitStepConfiguration({ pipelineId, stepTool, stepId, createJob, close
       <NUnitGitRepositoryInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} />
       <NUnitGitBranchInput  dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} />
       <WorkspaceDeleteToggleInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} fieldName={"workspaceDeleteFlag"}/>
-      {/* <AgentLabelsMultiSelectInput
+      {/* <AgentLabelsSelectInput
         dataObject={nunitStepConfigurationDto}
         fieldName={"agentLabels"}
         setDataObject={setNUnitStepConfigurationDataDto}
