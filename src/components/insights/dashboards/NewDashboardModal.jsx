@@ -1,33 +1,34 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
-import CreateModal from "components/common/modal/CreateModal";
+import {DialogToastContext} from "contexts/DialogToastContext";
 import DashboardEditorPanel from "components/insights/dashboards/dashboard_details/DashboardEditorPanel";
+import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 
-function NewDashboardModal({ setShowModal, loadData, showModal } ) {
-  const [dashboardData, setDashboardData] = useState(undefined);
+function NewDashboardModal({loadData, isMounted } ) {
+  const toastContext = useContext(DialogToastContext);
+  const [dashboardData, setDashboardData] = useState(new Model({...dashboardMetadata.newObjectFields}, dashboardMetadata, true));
 
-  useEffect(() => {
-    setDashboardData(new Model({...dashboardMetadata.newObjectFields}, dashboardMetadata, true));
-  }, [showModal]);
+  const closePanel = () => {
+    if (isMounted?.current === true) {
+      loadData();
+    }
 
-  const handleClose = () => {
-    loadData();
-    setShowModal(false);
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
   };
 
   return (
-    <CreateModal handleCancelModal={handleClose} objectType={"Dashboard"} showModal={showModal} loadData={loadData} >
-      <DashboardEditorPanel setDashboardData={setDashboardData} handleClose={handleClose} dashboardData={dashboardData} />
-    </CreateModal>
+    <CreateCenterPanel closePanel={closePanel} objectType={dashboardMetadata.type} loadData={loadData}>
+      <DashboardEditorPanel setDashboardData={setDashboardData} handleClose={closePanel} dashboardData={dashboardData} />
+    </CreateCenterPanel>
   );
 }
 
 NewDashboardModal.propTypes = {
   loadData: PropTypes.func,
-  showModal: PropTypes.bool,
-  setShowModal: PropTypes.func,
+  isMounted: PropTypes.object
 };
 
 export default NewDashboardModal;
