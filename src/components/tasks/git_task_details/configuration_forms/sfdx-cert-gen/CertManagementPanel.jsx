@@ -7,8 +7,8 @@ import taskActions from "components/tasks/task.actions";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import PropTypes from 'prop-types';
-import GenerateCertButton from "components/common/buttons/git/GenerateCertButton";
-import DownloadCertButton from "components/common/buttons/git/DownloadCertButton";
+import GenerateSalesforceCertificateButton from "components/common/buttons/tasks/GenerateSalesforceCertificateButton";
+import DownloadSalesforceCertificateButton from "components/common/buttons/tasks/DownloadSalesforceCertificateButton";
 import JenkinsToolMultiSelectInput from "./panels/JenkinsToolMultiSelectInput";
 import JenkinsSynchPanel from "./panels/JenkinsSynchPanel";
 
@@ -77,7 +77,7 @@ function CertManagementPanel({gitTasksData, setGitTasksData, loadData, handleClo
         <td>
             {isLoading ? <>loading</> : 
             <>
-              {certDownloadable ? <DownloadCertButton recordDto={gitTasksData}/> : <GenerateCertButton recordDto={gitTasksData} refreshData={loadTaskData} /> }
+              {certDownloadable ? <DownloadSalesforceCertificateButton recordDto={gitTasksData}/> : <GenerateSalesforceCertificateButton recordDto={gitTasksData} refreshData={loadTaskData} /> }
             </>
             } 
           </td>

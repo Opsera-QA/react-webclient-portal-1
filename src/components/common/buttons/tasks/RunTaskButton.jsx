@@ -10,7 +10,7 @@ import GitTaskSfdcPipelineWizardOverlay from "components/tasks/git_task_details/
 import taskActions from "components/tasks/task.actions";
 import axios from "axios";
 
-function RunGitTaskButton({gitTasksData, handleClose, setGitTasksData, gitTasksConfigurationDataDto, disable, className, loadData }) {
+function RunTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationDataDto, handleClose, disable, className, loadData }) {
   let toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -141,7 +141,7 @@ function RunGitTaskButton({gitTasksData, handleClose, setGitTasksData, gitTasksC
   );
 }
 
-RunGitTaskButton.propTypes = {
+RunTaskButton.propTypes = {
   gitTasksData: PropTypes.object,
   loadData: PropTypes.func,
   disable: PropTypes.bool,
@@ -151,4 +151,4 @@ RunGitTaskButton.propTypes = {
   handleClose: PropTypes.func
 };
 
-export default RunGitTaskButton;
+export default RunTaskButton;

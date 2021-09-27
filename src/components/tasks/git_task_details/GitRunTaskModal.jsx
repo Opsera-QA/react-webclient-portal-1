@@ -6,7 +6,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ModalBase from "components/common/modal/ModalBase";
 import CloseButton from "components/common/buttons/CloseButton";
-import RunGitTaskButton from "components/common/buttons/git/RunGitTaskButton";
+import RunTaskButton from "components/common/buttons/tasks/RunTaskButton";
 import SFDCGitBranchInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitBranchInput";
 import SFDCNewBranchBoolInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCNewBranchBoolInput";
 import SfdcGitUpstreamBranchInput from "./configuration_forms/sfdc-org-sync/inputs/SfdcGitUpstreamBranchInput";
@@ -83,7 +83,7 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
     return (
       <>
         <CloseButton closeEditorCallback={handleClose} showUnsavedChangesMessage={false} />
-        <RunGitTaskButton gitTasksData={gitTasksData} setGitTasksData={setGitTasksData} gitTasksConfigurationDataDto={dataObj} loadData={loadData} handleClose={handleClose} />
+        <RunTaskButton gitTasksData={gitTasksData} setGitTasksData={setGitTasksData} gitTasksConfigurationDataDto={dataObj} loadData={loadData} handleClose={handleClose} />
       </>
     );
   };

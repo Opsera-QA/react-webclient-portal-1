@@ -13,7 +13,7 @@ import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import TagsInlineInputBase from "components/common/inline_inputs/tags/TagsInlineInputBase";
 import GitTaskRoleAccessInput from "components/tasks/git_task_details/GitTaskRoleAccessInput";
-import GitTaskRunButton from "components/common/buttons/git/GitTaskRunButton";
+import TaskRunButton from "components/common/buttons/tasks/TaskRunButton";
 import ECSActionButtons from "components/tasks/ECSActionButtons";
 import AKSActionButtons from "components/tasks/AKSActionButtons";
 import TaskConfigurationSummaryPanel from "components/tasks/git_task_details/TaskConfigurationSummaryPanel";
@@ -100,7 +100,15 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
       {gitTasksData.getData("type") !== "sfdc-cert-gen" &&
       <Row className={"mx-0 w-100 my-2"}>
         <div className={"mx-auto"}>
-          <div className={"mx-auto"}><GitTaskRunButton gitTasksData={gitTasksData} setGitTasksData={setGitTasksData} loadData={loadData} actionAllowed={actionAllowed("run_task")} /></div>
+          <div className={"mx-auto"}>
+            <TaskRunButton
+              gitTasksData={gitTasksData}
+              setGitTasksData={setGitTasksData}
+              loadData={loadData}
+              actionAllowed={actionAllowed("run_task")}
+              taskType={actionAllowed("type")}
+            />
+          </div>
         </div>
       </Row>
       }

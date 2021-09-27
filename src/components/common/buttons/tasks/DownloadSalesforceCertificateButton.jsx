@@ -7,7 +7,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import taskActions from "components/tasks/task.actions";
 
-function DownloadCertButton({recordDto, disable, size, showSuccessToasts, className, saveButtonText}) {
+function DownloadSalesforceCertificateButton({recordDto, disable, size, showSuccessToasts, className, saveButtonText}) {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
   let toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
@@ -63,7 +63,7 @@ function DownloadCertButton({recordDto, disable, size, showSuccessToasts, classN
   );
 }
 
-DownloadCertButton.propTypes = {
+DownloadSalesforceCertificateButton.propTypes = {
   recordDto: PropTypes.object,
   disable: PropTypes.bool,
   showSuccessToasts: PropTypes.bool,
@@ -72,11 +72,11 @@ DownloadCertButton.propTypes = {
   saveButtonText: PropTypes.string
 };
 
-DownloadCertButton.defaultProps = {
+DownloadSalesforceCertificateButton.defaultProps = {
   disable: false,
   size: "md",
   showSuccessToasts: true,
   saveButtonText: "Download Certificate"
 };
 
-export default DownloadCertButton;
+export default DownloadSalesforceCertificateButton;
