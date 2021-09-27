@@ -145,9 +145,9 @@ regexDefinitions.customParameterValueRegex = {
 };
 
 regexDefinitions.customParameterNameRegex = {
-  regex: /^opsera-[a-z0-9-_.]*$/,
-  formText: "Name must begin with \"opsera-\" and can contain lowercase letters, numbers, dashes, and periods",
-  errorFormText: "Name must begin with \"opsera-\" and can contain lowercase letters, numbers, dashes, and periods",
+  regex: /^opsera-[a-z0-9-_]*$/,
+  formText: "Name must begin with \"opsera-\" and can contain lowercase letters, numbers, and dashes",
+  errorFormText: "Name must begin with \"opsera-\" and can contain lowercase letters, numbers, and dashes",
 };
 
 regexDefinitions.dockerName = {
