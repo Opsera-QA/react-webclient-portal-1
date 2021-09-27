@@ -227,12 +227,7 @@ function ContactInput({dataObject, setDataObject, fieldName, disabledFields, typ
 
   const getIncompletePropertyMessage = () => {
     if (!lastPropertyComplete() && !allowIncompleteItems) {
-      return (
-        <div className="w-100 pr-3 mb-1 text-muted small text-right">
-          <FontAwesomeIcon className="text-warning mr-1" icon={faExclamationTriangle} fixedWidth />
-          <span className="mt-1">{`Incomplete ${field?.label} Will Be Removed Upon Saving`}</span>
-        </div>
-      );
+      return (`Incomplete ${field?.label} Will Be Removed Upon Saving`);
     }
   };
 
@@ -250,6 +245,7 @@ function ContactInput({dataObject, setDataObject, fieldName, disabledFields, typ
         errorMessage={errorMessage}
         type={type}
         addAllowed={lastPropertyComplete() || (allowIncompleteItems === true && lastPropertyEdited())}
+        incompleteRowMessage={getIncompletePropertyMessage()}
       >
         <div>
           {getHeaderBar()}
