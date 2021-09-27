@@ -145,22 +145,22 @@ function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }
           <Col lg={6}>
             <TextInputBase setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto} fieldName={"name"}/>
           </Col>
-          {/* <Col lg={6}>
-          <ActivityToggleInput dataObject={gitTasksDataDto} setDataObject={setGitTasksDataDto} fieldName={"active"}/>
-        </Col> */}
           <Col lg={6}>
-            <TextInputBase setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}
-                           fieldName={"description"}/>
-          </Col>
-          <Col lg={12}>
-            <TagManager type={"task"} setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}/>
-          </Col>
-          <Col lg={12}>
             <TasksTaskTypeSelectInput
               model={gitTasksDataDto}
               setModel={setGitTasksDataDto}
               setTaskConfigurationModel={setGitTasksConfigurationDataDto}
             />
+          </Col>
+          {/* <Col lg={6}>
+          <ActivityToggleInput dataObject={gitTasksDataDto} setDataObject={setGitTasksDataDto} fieldName={"active"}/>
+        </Col> */}
+          <Col lg={12}>
+            <TextInputBase setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}
+                           fieldName={"description"}/>
+          </Col>
+          <Col lg={12}>
+            <TagManager type={"task"} setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}/>
           </Col>
         </Row>
         <TaskConfigurationPanel
