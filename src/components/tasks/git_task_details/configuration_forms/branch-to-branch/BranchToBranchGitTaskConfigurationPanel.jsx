@@ -16,7 +16,8 @@ import BranchToBranchGitReviewerInput from "./inputs/BranchToBranchGitReviewerIn
 import BranchToBranchSourceBranchInput from "./inputs/BranchToBranchSourceBranchInput";
 import BranchToBranchDestinationBranchInput from "./inputs/BranchToBranchDestinationBranchInput";
 import BranchToBranchScmTypeSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/BranchToBranchScmTypeSelectInput";
-import SFDCSCMToolInput from "./inputs/SFDCSCMToolInput";
+import TaskSalesforceScmToolSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/TaskSalesforceScmToolSelectInput";
+
 function BranchToBranchGitTaskConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   useEffect(() => {loadData();}, []);
 
@@ -29,7 +30,7 @@ function BranchToBranchGitTaskConfigurationPanel({ gitTasksDataDto, gitTasksConf
     return (<LoadingDialog size="sm"/>);
   }
 
-  const getDynamicFields = () => {
+  const getAgentLabelsInput = () => {
     if(gitTasksConfigurationData.getData("autoScaleEnable") === true){
       return (
         <Col lg={12}>
@@ -45,7 +46,7 @@ function BranchToBranchGitTaskConfigurationPanel({ gitTasksDataDto, gitTasksConf
         <BranchToBranchScmTypeSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} gitTasksDataDto={gitTasksDataDto}  />
       </Col>     
       <Col lg={12}>
-        <SFDCSCMToolInput  dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
+        <TaskSalesforceScmToolSelectInput model={gitTasksConfigurationData} setModel={setGitTasksConfigurationData} />
       </Col>        
       <Col lg={12}>
         <SFDCBitbucketWorkspaceInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
@@ -62,7 +63,7 @@ function BranchToBranchGitTaskConfigurationPanel({ gitTasksDataDto, gitTasksConf
       <Col lg={12}>
         <BooleanToggleInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"deleteSourceBranch"} />
       </Col>      
-      {getDynamicFields()}
+      {getAgentLabelsInput()}
       <Col lg={12}>
         {gitTasksConfigurationData.getData("gitToolId") && <BooleanToggleInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"autoApprove"} />}
       </Col>

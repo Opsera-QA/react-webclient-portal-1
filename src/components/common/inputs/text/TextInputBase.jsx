@@ -19,7 +19,7 @@ function TextInputBase(
   }, [fieldName]);
 
   useEffect(() => {
-    setErrorMessage(parseError(error));
+    setErrorMessage(error ? parseError(error) : "");
   }, [error]);
 
   const validateAndSetData = (value) => {

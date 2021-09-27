@@ -6,8 +6,8 @@ import Row from "react-bootstrap/Row";
 import taskActions from "components/tasks/task.actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import GitTasksConfigurationPanel
-  from "components/tasks/git_task_details/configuration_forms/GitTasksConfigurationPanel";
+import TaskConfigurationPanel
+  from "components/tasks/git_task_details/configuration_forms/TaskConfigurationPanel";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TagManager from "components/common/inputs/tags/TagManager";
 import { Button } from "react-bootstrap";
@@ -155,7 +155,7 @@ function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }
             <TagManager type={"task"} setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}/>
           </Col>
         </Row>
-        <GitTasksConfigurationPanel
+        <TaskConfigurationPanel
           gitTasksConfigurationData={gitTasksConfigurationDataDto}
           gitTasksDataDto={gitTasksDataDto}
           setGitTasksDataDto={setGitTasksDataDto}
