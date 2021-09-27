@@ -10,8 +10,7 @@ export const formatTypes = {
   percent: '%'
 };
 
-// TODO: Move to /common/inputs/number
-function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, placeholderText, formatType, setDataFunction, showLabel, minimum, maximum, className, precision }) {
+function NumberPickerInputBase({ fieldName, dataObject, setDataObject, disabled, placeholderText, formatType, setDataFunction, showLabel, minimum, maximum, className, precision }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   simpleNumberLocalizer();
@@ -46,7 +45,7 @@ function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, place
         className="max-content-width"
         onChange={(newValue) => updateValue(newValue)}
         min={typeof minimum === "number" ? minimum : field?.minNumber}
-        max={typeof minimum === "number" ? maximum : field?.maxNumber}
+        max={typeof maximum === "number" ? maximum : field?.maxNumber}
         format={ formatType && formatTypes[formatType] != null ? formatTypes[formatType] : undefined}
       />
       <InfoText field={field} errorMessage={errorMessage}/>
@@ -54,7 +53,7 @@ function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, place
   );
 }
 
-NumberInputBase.propTypes = {
+NumberPickerInputBase.propTypes = {
   placeholderText: PropTypes.string,
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
@@ -69,4 +68,4 @@ NumberInputBase.propTypes = {
   precision: PropTypes.number
 };
 
-export default NumberInputBase;
+export default NumberPickerInputBase;

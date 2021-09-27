@@ -145,9 +145,9 @@ regexDefinitions.customParameterValueRegex = {
 };
 
 regexDefinitions.customParameterNameRegex = {
-  regex: /^opsera-[a-z0-9-_.]*$/,
-  formText: "Name must begin with \"opsera-\" and can contain lowercase letters, numbers, dashes, and periods",
-  errorFormText: "Name must begin with \"opsera-\" and can contain lowercase letters, numbers, dashes, and periods",
+  regex: /^opsera-[a-z0-9-_]*$/,
+  formText: "Name must begin with \"opsera-\" and can contain lowercase letters, numbers, and dashes",
+  errorFormText: "Name must begin with \"opsera-\" and can contain lowercase letters, numbers, and dashes",
 };
 
 regexDefinitions.dockerName = {
@@ -172,6 +172,12 @@ regexDefinitions.azureLabels = {
   regex: /^[a-z0-9-]*$/,
   formText: "Accepts lowercase alphanumeric characters and dashes without spaces.",
   errorFormText: "The name must consist of lower case alphanumeric characters or '-', start with an alphabetic character, and end with an alphanumeric character (e.g. 'my-name', or 'abc-123')"
+};
+
+regexDefinitions.azureFunctionsLabel = {
+  regex: /^[a-z0-9]*$/,
+  formText: "Accepts lowercase alphanumeric characters without spaces.",
+  errorFormText: "The name must consist of lowercase alphanumeric characters (e.g. 'name', or 'abc123')"
 };
 
 regexDefinitions.argumentList = {

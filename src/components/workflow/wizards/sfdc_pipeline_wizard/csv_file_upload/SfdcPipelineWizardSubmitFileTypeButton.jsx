@@ -10,7 +10,6 @@ import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizar
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 
 function SfdcPipelineWizardSubmitFileTypeButton({pipelineWizardModel, setPipelineWizardScreen, size, className, icon, isLoading, isXml}) {
-  const { featureFlagHideItemInProd } = useContext(AuthContext);
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
@@ -35,20 +34,13 @@ function SfdcPipelineWizardSubmitFileTypeButton({pipelineWizardModel, setPipelin
   const submitFiles = async () => {
     try {
       setIsSaving(true);
-      // TODO: Remove this if statement when profile migration is validated by QA
-      if (pipelineWizardModel.getData("isProfiles") === true && featureFlagHideItemInProd()) {
-        toastContext.showInlineErrorMessage("Profile Migration with CSV/XML is not supported yet! Please check with Opsera Team.");
-      }
 
-      else {
-        if(isXml) {
-          await sfdcPipelineActions.setXmlFileContentsV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
-          setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER);
-        }
-        else {
-          await sfdcPipelineActions.setUploadedCsvFileListV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
-          setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER);
-        }
+      if (isXml) {
+        await sfdcPipelineActions.setXmlFileContentsV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+        setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER);
+      } else {
+        await sfdcPipelineActions.setUploadedCsvFileListV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+        setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER);
       }
     } catch (error) {
       console.error(error);

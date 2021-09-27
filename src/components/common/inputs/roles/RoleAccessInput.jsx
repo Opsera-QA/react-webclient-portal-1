@@ -437,12 +437,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
 
   const getIncompleteRoleMessage = () => {
     if (!lastRoleComplete()) {
-      return (
-        <div className="w-100 pr-3 mb-1 text-muted small text-right">
-          <FontAwesomeIcon className="text-warning mr-1" icon={faExclamationTriangle} fixedWidth />
-          <span className="mt-1">Incomplete Roles Will Be Removed Upon Saving</span>
-        </div>
-      );
+      return (`Incomplete Roles Will Be Removed Upon Saving`);
     }
   };
 
@@ -483,6 +478,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
         type={"Role"}
         addAllowed={lastRoleComplete() && disabled !== true}
         helpComponent={getHelpComponent()}
+        incompleteRowMessage={getIncompleteRoleMessage()}
       >
         <div>
           <div className={"filter-bg-white"}>
@@ -492,7 +488,6 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
             {getFieldBody()}
           </div>
         </div>
-        {getIncompleteRoleMessage()}
       </PropertyInputContainer>
     </div>
   );

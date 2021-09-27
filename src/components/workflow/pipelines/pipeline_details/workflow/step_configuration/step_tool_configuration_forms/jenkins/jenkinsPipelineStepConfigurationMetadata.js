@@ -133,7 +133,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "dockerSecrets",
     },
     {
-      label: "Use a Custom Script",
+      label: "Specify Script File Path",
       id: "customScript",
     },
     {
@@ -198,6 +198,10 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Create New Backup Branch",
       id: "isNewBranch",
+    },
+    {
+      label: "Delete Workspace Before Building",
+      id: "workspaceDeleteFlag",
     },
     {
       label: "Use Upstream Branch",

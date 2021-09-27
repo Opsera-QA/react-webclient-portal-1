@@ -4,6 +4,7 @@ import JenkinsRegistryToolJobSelectInput
   from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 
 function JenkinsStepToolJobSelectInput({ fieldName, model, setModel, disabled, jenkinsToolId, toolJobType, jobType }) {
+  // TODO: We need to rework this
   useEffect(() => {
     if (Array.isArray(toolJobType) && toolJobType.includes("SFDC")) {
       let newDataObject = { ...model };
@@ -30,7 +31,20 @@ function JenkinsStepToolJobSelectInput({ fieldName, model, setModel, disabled, j
     newDataObject.setData("buildToolVersion", "6.3");
     newDataObject.setData("buildArgs", {});
 
-    // TODO: There is probably a less confusing way of doing this
+    const configuration = selectedOption?.configuration;
+    const gradleTask = configuration?.gradleTask || "";
+    const mavenTask = configuration?.mavenTask || "";
+    const buildTool = configuration?.buildTool || "";
+    const agentLabels = configuration?.agentLabels || "";
+    const buildType = configuration?.buildType || "";
+
+    newDataObject.setData("gradleTask", gradleTask);
+    newDataObject.setData("mavenTask", mavenTask);
+    newDataObject.setData("agentLabels", agentLabels);
+    newDataObject.setData("buildType", buildType);
+    newDataObject.setData("buildTool", buildTool);
+
+    // TODO: We need to re-evaluate and rework this:
     if ("configuration" in selectedOption) {
       const keys = Object.keys(selectedOption?.configuration);
       keys.forEach((item) => {       
@@ -40,12 +54,6 @@ function JenkinsStepToolJobSelectInput({ fieldName, model, setModel, disabled, j
       });
     }
     
-    newDataObject.setData("stepIdXML", "");
-    newDataObject.setData("sfdcDestToolId", "");
-    newDataObject.setData("destAccountUsername", "");
-    newDataObject.setData("buildToolVersion", "6.3");
-    newDataObject.setData("buildArgs", {});
-
     setModel({ ...newDataObject });
   };
 

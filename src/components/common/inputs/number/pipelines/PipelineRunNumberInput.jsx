@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import NumberInputBase from "components/common/inputs/text/NumberInputBase";
+import NumberPickerInputBase from "components/common/inputs/number/picker/base/NumberPickerInputBase";
 
 function PipelineRunNumberInput({ model, setModel, fieldName, setDataFunction, maximumRunCount, className, showLabel, disabled}) {
   return (
-    <NumberInputBase
+    <NumberPickerInputBase
       className={className}
       fieldName={fieldName}
       dataObject={model}
