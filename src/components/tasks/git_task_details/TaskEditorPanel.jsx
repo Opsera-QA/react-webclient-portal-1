@@ -10,13 +10,6 @@ import TaskConfigurationPanel
   from "components/tasks/git_task_details/configuration_forms/TaskConfigurationPanel";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TagManager from "components/common/inputs/tags/TagManager";
-import { Button } from "react-bootstrap";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import GitTaskSfdcPipelineWizardOverlay from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/GitTaskSfdcPipelineWizardOverlay";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlay,
-} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import AwsEcsClusterCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsEcsClusterCreationTaskHelpDocumentation";
@@ -25,16 +18,15 @@ import AwsEcsServiceCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsEcsServiceCreationTaskHelpDocumentation";
 import SfdcOrgSyncTaskHelpDocumentation
   from "components/common/help/documentation/tasks/SfdcOrgSyncTaskHelpDocumentation";
-import AwsLambdaFunctionCreationTaskHelpDocumentation
-  from "../../common/help/documentation/tasks/AwsLambdaFunctionCreationTaskHelpDocumentation";
 import {TASK_TYPES} from "components/tasks/task.types";
 import AzureAksClusterCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AzureAksClusterCreationTaskHelpDocumentation";
 import TasksTaskTypeSelectInput from "components/common/list_of_values_input/git_tasks/TasksTaskTypeSelectInput";
+import AwsLambdaFunctionCreationTaskHelpDocumentation
+  from "components/common/help/documentation/tasks/AwsLambdaFunctionCreationTaskHelpDocumentation";
 
-function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }) {
+function TaskEditorPanel({ taskData, handleClose }) {
   const { getAccessToken, featureFlagHideItemInProd } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [gitTasksDataDto, setGitTasksDataDto] = useState(undefined);
   const [gitTasksConfigurationDataDto, setGitTasksConfigurationDataDto] = useState(undefined);
   const isMounted = useRef(false);
@@ -63,7 +55,7 @@ function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }
 
   const loadData = async () => {
     if (isMounted?.current === true) {
-      setGitTasksDataDto(gitTasksData);
+      setGitTasksDataDto(taskData);
     }
   };
 
@@ -77,43 +69,6 @@ function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }
     const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
     gitTasksDataDto.setData("configuration", configuration);
     return await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksDataDto);
-  };
-
-  const handleRunTask = () => {
-    if (gitTasksData.getData("type") === "sync-sfdc-repo") {
-      // open wizard views
-      toastContext.showOverlayPanel(<GitTaskSfdcPipelineWizardOverlay gitTasksData={gitTasksData}/>);
-      return;
-    }
-    if (gitTasksData.getData("type") === "sync-branch-structure") {
-      // open wizard views
-      console.log("Git branch task run triggered");
-      return;
-    }
-  };
-
-  const getExtraButtons = () => {
-    // TODO: Make run task button
-    if (runTask === true) {
-      return (
-        <Button variant="primary" onClick={handleRunTask}>
-          <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/> Run Task
-        </Button>
-      );
-    }
-  };
-
-  const getRunTaskText = () => {
-    if (runTask === true) {
-      return (
-        <div>
-          Listed below are all settings related to this task.
-          If you want to run the task, please confirm all settings and then click the Run button
-          at the bottom of the form. This will trigger the job which will take a few minutes to complete.
-          The status of this job will be updated in the Activity logs. Please consult those logs for all details on this action.
-        </div>
-      );
-    }
   };
 
   const getHelpDocumentation = (setHelpIsShown) => {
@@ -140,7 +95,6 @@ function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }
   const getBody = () => {
     return (
       <>
-        {getRunTaskText()}
         <Row>
           <Col lg={6}>
             <TextInputBase setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto} fieldName={"name"}/>
@@ -188,7 +142,6 @@ function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }
         updateRecord={updateGitTask}
         setRecordDto={setGitTasksDataDto}
         getHelpComponent={getHelpDocumentation}
-        // extraButtons={getExtraButtons()}
         lenient={true}
         disable={
           !gitTasksDataDto.checkCurrentValidity()
@@ -203,10 +156,8 @@ function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }
 }
 
 TaskEditorPanel.propTypes = {
-  gitTasksData: PropTypes.object,
-  setGitTasksData: PropTypes.func,
+  taskData: PropTypes.object,
   handleClose: PropTypes.func,
-  runTask: PropTypes.bool,
 };
 
 export default TaskEditorPanel;

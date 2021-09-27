@@ -8,7 +8,7 @@ import TaskEditorPanel from "components/tasks/git_task_details/TaskEditorPanel";
 
 function NewTaskOverlay({ loadData, isMounted } ) {
   const toastContext = useContext(DialogToastContext);
-  const [gitTasksData, setGitTasksData] = useState(new Model({...gitTasksMetadata.newObjectFields}, gitTasksMetadata, true));
+  const [taskData] = useState(new Model({...gitTasksMetadata.newObjectFields}, gitTasksMetadata, true));
 
   const closePanel = () => {
     if (isMounted?.current === true) {
@@ -21,7 +21,7 @@ function NewTaskOverlay({ loadData, isMounted } ) {
 
   return (
     <CreateCenterPanel objectType={gitTasksMetadata.type} loadData={loadData} closePanel={closePanel}>
-      <TaskEditorPanel gitTasksData={gitTasksData} setGitTasksData={setGitTasksData} handleClose={closePanel} />
+      <TaskEditorPanel taskData={taskData} handleClose={closePanel} />
     </CreateCenterPanel>
   );
 }
