@@ -51,8 +51,8 @@ function PipelineThresholdInputRow(
   return (
     <div className="d-flex py-2" key={index}>
       <Col sm={11}>
-        <Row>
-          <Col sm={6} className={"pr-1"}>
+        <Row className={"pl-2"}>
+          <Col sm={6} className={"pl-0 pr-1"}>
             {getThresholdLevelInput()}
           </Col>
           <Col sm={6} className={"pl-1 pr-0"}>

@@ -12,7 +12,7 @@ import axios from "axios";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import PipelineThresholdInputRow from "components/common/inputs/object/pipelines/threshhold/PipelineThresholdInputRow";
 
-function PipelineThresholdInputBase({ fieldName, model, setModel, helpComponent, disabled }) {
+function PipelineThresholdInputBase({ fieldName, model, setModel, helpComponent, disabled, className }) {
   const [field] = useState(model.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [thresholdRows, setThresholdRows] = useState([]);
@@ -177,14 +177,9 @@ function PipelineThresholdInputBase({ fieldName, model, setModel, helpComponent,
     );
   };
 
-  const getThresholdsRoleMessage = () => {
+  const getIncompleteThresholdsMessage = () => {
     if (!lastThresholdComplete()) {
-      return (
-        <div className="w-100 pr-3 mb-1 text-muted small text-right">
-          <FontAwesomeIcon className="text-warning mr-1" icon={faExclamationTriangle} fixedWidth />
-          <span className="mt-1">Incomplete Threshold Rows Will Be Removed Upon Saving</span>
-        </div>
-      );
+      return (`Incomplete Threshold Rows Will Be Removed Upon Saving`);
     }
   };
 
@@ -203,7 +198,7 @@ function PipelineThresholdInputBase({ fieldName, model, setModel, helpComponent,
   }
 
   return (
-    <div style={{minWidth: "575px"}}>
+    <div className={className}>
       <PropertyInputContainer
         titleIcon={faIdCard}
         field={field}
@@ -213,6 +208,7 @@ function PipelineThresholdInputBase({ fieldName, model, setModel, helpComponent,
         type={"Threshold"}
         addAllowed={lastThresholdComplete() && disabled !== true}
         helpComponent={getHelpComponent()}
+        incompleteRowMessage={getIncompleteThresholdsMessage()}
       >
         <div>
           <div className={"filter-bg-white"}>
@@ -222,7 +218,6 @@ function PipelineThresholdInputBase({ fieldName, model, setModel, helpComponent,
             {getFieldBody()}
           </div>
         </div>
-        {getThresholdsRoleMessage()}
       </PropertyInputContainer>
       <InfoText customMessage={getThresholdMessage()} />
     </div>
@@ -235,6 +230,7 @@ PipelineThresholdInputBase.propTypes = {
   fieldName: PropTypes.string,
   helpComponent: PropTypes.object,
   disabled: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default PipelineThresholdInputBase;
