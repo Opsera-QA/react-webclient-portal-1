@@ -1,35 +1,25 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect, useRef, useContext} from "react";
 import PropTypes from "prop-types";
-import Model from "core/data_model/model";
-import LoadingDialog from "components/common/status_notifications/loading";
-import GitTaskSummaryPanelBase from "components/tasks/git_task_details/GitTaskSummaryPanelBase";
-import sfdcGitTaskConfigurationMetadata
-  from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/sfdc-git-task-configuration-metadata";
-import SFDCGitTaskTypeSummaryCard
-  from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/SFDCGitTaskTypeSummaryCard";
 import axios from "axios";
-import SFDCBranchStructuringTaskTypeSummaryCard from "./configuration_forms/sfdc-branch-structure/SFDCBranchStructuringTaskTypeSummaryCard";
-import sfdcGitBranchTaskConfigurationMetadata
-  from "components/tasks/git_task_details/configuration_forms/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
-import branchToBranchGitTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/branch-to-branch/branch-to-branch-git-task-configuration";
-import BranchToBranchGitTaskTypeSummaryCard from "components/tasks/git_task_details/configuration_forms/branch-to-branch/BranchToBranchGitTaskTypeSummaryCard";
-import ECSCreationTaskTypeSummaryCard from "./configuration_forms/ecs-cluster-creation/ECSCreationTaskTypeSummaryCard";
-import ec2ClusterCreationTaskConfigurationMetadata
-  from "./configuration_forms/ecs-cluster-creation/ecs-creation-git-task-configuration";
-import ECSServiceCreationTaskTypeSummaryCard
-  from "./configuration_forms/ecs-service-creation/ECSServiceCreationTaskTypeSummaryCard";
-import ec2ServiceCreationTaskConfigurationMetadata
-  from "./configuration_forms/ecs-service-creation/ecs-service-creation-git-task-configuration";
-import sfdxCertGenTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
-import SFDXCertGenTaskTypeSummaryCard from "./configuration_forms/sfdx-cert-gen/SFDXCertGenTaskTypeSummaryCard";
-import AwsLambdaTaskTypeSummaryCard from "./configuration_forms/aws-lambda-creation/AwsLambdaSummaryPanel";
-import awsLambdaFunctionTaskConfigurationMetadata
-  from "./configuration_forms/aws-lambda-creation/aws-lambda-metadata";
-import AzureClusterSummaryPanel from "./configuration_forms/azure-cluster-creation/AzureClusterSummaryPanel";
-import azureAksClusterTaskConfigurationMetadata
-  from "./configuration_forms/azure-cluster-creation/azure-cluster-metadata";
+import {AuthContext} from "contexts/AuthContext";
+import taskActions from "components/tasks/task.actions";
+import workflowAuthorizedActions
+  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import {Col, Row} from "react-bootstrap";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import TaskTypeField from "components/common/fields/tasks/TaskTypeField";
+import SmartIdField from "components/common/fields/text/id/SmartIdField";
+import DateFieldBase from "components/common/fields/date/DateFieldBase";
+import TagsInlineInputBase from "components/common/inline_inputs/tags/TagsInlineInputBase";
+import GitTaskRoleAccessInput from "components/tasks/git_task_details/GitTaskRoleAccessInput";
+import GitTaskRunButton from "components/common/buttons/git/GitTaskRunButton";
+import ECSActionButtons from "components/tasks/ECSActionButtons";
+import AKSActionButtons from "components/tasks/AKSActionButtons";
+import TaskConfigurationSummaryPanel from "components/tasks/git_task_details/TaskConfigurationSummaryPanel";
 
 function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
+  const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -46,89 +36,86 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [JSON.stringify(accessRoleData)]);
 
-  const wrapGitTaskType = (metaData) => {
-    return new Model(gitTasksData.getData("configuration"), metaData, false);
+  const updateRecord = async (newDataModel) => {
+    const response = await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newDataModel);
+    loadData();
+    return response;
   };
 
-  // TODO: Make these panels more similar to the pipeline summary cards
-  const getTaskTypeSummaryPanel = () => {
-    switch (gitTasksData.getData("type")) {
-      case "sync-sfdc-repo":
-        return (
-          <SFDCGitTaskTypeSummaryCard
-            gitTaskConfigurationData={wrapGitTaskType(sfdcGitTaskConfigurationMetadata)}
-            gitTasksData={gitTasksData}
-          />
-        );
-      case "sfdc-cert-gen":
-        return (
-          <SFDXCertGenTaskTypeSummaryCard
-            gitTaskConfigurationData={wrapGitTaskType(sfdxCertGenTaskConfigurationMetadata)}
-            gitTasksData={gitTasksData}
-          />
-        );    
-      case "sync-branch-structure":
-        return (
-          <SFDCBranchStructuringTaskTypeSummaryCard
-            gitTaskConfigurationData={wrapGitTaskType(sfdcGitBranchTaskConfigurationMetadata)}
-            gitTasksData={gitTasksData}
-          />
-        );
-      case "sync-git-branches":
-        return (
-          <BranchToBranchGitTaskTypeSummaryCard
-            gitTaskConfigurationData={wrapGitTaskType(branchToBranchGitTaskConfigurationMetadata)}
-            gitTasksData={gitTasksData}
-          />
-        );
-      case "ecs_cluster_creation":
-        return (
-          <ECSCreationTaskTypeSummaryCard
-            gitTaskConfigurationData={wrapGitTaskType(ec2ClusterCreationTaskConfigurationMetadata)}
-            gitTasksData={gitTasksData}
-          />
-        );
-      case "ecs_service_creation":
-        return (
-          <ECSServiceCreationTaskTypeSummaryCard
-            gitTaskConfigurationData={wrapGitTaskType(ec2ServiceCreationTaskConfigurationMetadata)}
-            gitTasksData={gitTasksData}
-          />
-        );
-      case "lambda_function_creation":
-        return (
-          <AwsLambdaTaskTypeSummaryCard
-            gitTaskConfigurationData={wrapGitTaskType(awsLambdaFunctionTaskConfigurationMetadata)}
-            gitTasksData={gitTasksData}
-          />
-        );
-      case "azure_cluster_creation":
-        return (
-          <AzureClusterSummaryPanel
-            gitTaskConfigurationData={wrapGitTaskType(azureAksClusterTaskConfigurationMetadata)}
-            gitTasksData={gitTasksData}
-          />
-        );
-      default:
-        return (<div>No type is associated with this Task</div>);
-    }
+  const actionAllowed = (action) => {
+    return workflowAuthorizedActions.gitItems(accessRoleData, action, gitTasksData?.getData("owner"), gitTasksData?.getData("roles"));
   };
-
-  if (gitTasksData == null || accessRoleData == null) {
-    return (<LoadingDialog size="sm"/>);
-  }
 
   return (
-    <GitTaskSummaryPanelBase
-      gitTasksData={gitTasksData}
-      setActiveTab={setActiveTab}
-      gitTaskTypeSummaryCard={getTaskTypeSummaryPanel()}
-      setGitTasksData={setGitTasksData}
-      accessRoleData={accessRoleData}
-      loadData={loadData}
-    />
+    <SummaryPanelContainer setActiveTab={setActiveTab} editingAllowed={actionAllowed("edit_settings")}>
+      <Row>
+        <Col md={6}>
+          <TextFieldBase dataObject={gitTasksData} fieldName={"name"} />
+        </Col>
+        <Col md={6}>
+          <TaskTypeField fieldName={"type"} model={gitTasksData} />
+        </Col>
+        <Col md={6}>
+          <TextFieldBase dataObject={gitTasksData} fieldName={"owner_name"} />
+        </Col>
+        <Col md={6}>
+          <SmartIdField model={gitTasksData} fieldName={"_id"} />
+        </Col>
+        <Col md={6}>
+          <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
+        </Col>
+        {gitTasksData.getData("type") !== "ecs_cluster_creation" ||
+        (gitTasksData.getData("type") === "ecs_service_creation" && (
+          <Col md={6}>
+            <TextFieldBase
+              className={"upper-case-first my-2"}
+              dataObject={gitTasksData}
+              fieldName={"tool_identifier"}
+            />
+          </Col>
+        ))}
+
+        <Col md={12} className={"pt-1"}>
+          <TagsInlineInputBase
+            type={"task"}
+            dataObject={gitTasksData}
+            fieldName={"tags"}
+            saveData={updateRecord}
+            disabled={!actionAllowed("edit_settings")}
+          />
+        </Col>
+        <Col md={12} className={"pt-1"}>
+          <TextFieldBase dataObject={gitTasksData} fieldName={"description"} />
+        </Col>
+        <Col lg={12}>
+          <GitTaskRoleAccessInput
+            dataObject={gitTasksData}
+            setDataObject={setGitTasksData}
+            disabled={!actionAllowed("edit_access_roles")}
+          />
+        </Col>
+      </Row>
+      {gitTasksData.getData("type") !== "sfdc-cert-gen" &&
+      <Row className={"mx-0 w-100 my-2"}>
+        <div className={"mx-auto"}>
+          <div className={"mx-auto"}><GitTaskRunButton gitTasksData={gitTasksData} setGitTasksData={setGitTasksData} loadData={loadData} actionAllowed={actionAllowed("run_task")} /></div>
+        </div>
+      </Row>
+      }
+      <Row className={"mx-0 w-100 my-2"}>
+        <div className={"mx-auto"}>
+          <div className={"mx-auto"}>
+            <ECSActionButtons gitTasksData={gitTasksData} loadData={loadData} />
+            <AKSActionButtons gitTasksData={gitTasksData} loadData={loadData} />
+          </div>
+        </div>
+      </Row>
+      <div className="px-3 mt-3">
+        <TaskConfigurationSummaryPanel taskModel={gitTasksData} />
+      </div>
+    </SummaryPanelContainer>
   );
 }
 

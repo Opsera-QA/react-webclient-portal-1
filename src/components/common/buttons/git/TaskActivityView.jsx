@@ -38,7 +38,7 @@ function TaskActivityView({ gitTasksData, handleClose }) {
 //       console.debug("entering a shutdown sequence on timer: ", timer);
 //       clearInterval(timer);
 
-//       setTimeout(async function(gitTasksData) {
+//       setTimeout(async function(taskModel) {
 //         await loadFormData();
 //         setLoading(false);
 //       }, 10000);
