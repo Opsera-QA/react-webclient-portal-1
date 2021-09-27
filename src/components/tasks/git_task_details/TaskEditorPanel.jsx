@@ -26,7 +26,7 @@ import AwsLambdaFunctionCreationTaskHelpDocumentation
 import SfdcOrgSyncTaskHelpDocumentation
   from "components/common/help/documentation/tasks/SfdcOrgSyncTaskHelpDocumentation";
 
-function TaskEditorPanel({ taskData, runTask, handleClose }) {
+function TaskEditorPanel({ taskData, handleClose }) {
   const { getAccessToken, isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
   const [gitTasksDataDto, setGitTasksDataDto] = useState(undefined);
   const [gitTasksConfigurationDataDto, setGitTasksConfigurationDataDto] = useState(undefined);
@@ -72,19 +72,6 @@ function TaskEditorPanel({ taskData, runTask, handleClose }) {
     return await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksDataDto);
   };
 
-  const getRunTaskText = () => {
-    if (runTask === true) {
-      return (
-        <div>
-          Listed below are all settings related to this task.
-          If you want to run the task, please confirm all settings and then click the Run button
-          at the bottom of the form. This will trigger the job which will take a few minutes to complete.
-          The status of this job will be updated in the Activity logs. Please consult those logs for all details on this action.
-        </div>
-      );
-    }
-  };
-
   const getHelpDocumentation = (setHelpIsShown) => {
     switch (gitTasksDataDto?.getData("type")) {
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
@@ -119,7 +106,6 @@ function TaskEditorPanel({ taskData, runTask, handleClose }) {
   const getBody = () => {
     return (
       <>
-        {getRunTaskText()}
         <Row>
           <Col lg={6}>
             <TextInputBase setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto} fieldName={"name"}/>
@@ -186,7 +172,6 @@ function TaskEditorPanel({ taskData, runTask, handleClose }) {
 TaskEditorPanel.propTypes = {
   taskData: PropTypes.object,
   handleClose: PropTypes.func,
-  runTask: PropTypes.bool,
 };
 
 export default TaskEditorPanel;
