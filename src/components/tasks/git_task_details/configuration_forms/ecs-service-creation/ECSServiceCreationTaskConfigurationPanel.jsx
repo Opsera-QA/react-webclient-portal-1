@@ -103,8 +103,8 @@ function ECSServiceCreationTaskConfigurationPanel({
       </Col>
       {/*<Col lg={12}>*/}
       {/*  <TextInputBase*/}
-      {/*    dataObject={gitTasksConfigurationData}*/}
-      {/*    setDataObject={setGitTasksConfigurationData}*/}
+      {/*    dataObject={taskConfigurationModel}*/}
+      {/*    setDataObject={setTaskConfigurationModel}*/}
       {/*    fieldName={"ecsServiceLogGroup"}*/}
       {/*  />*/}
       {/*</Col>*/}

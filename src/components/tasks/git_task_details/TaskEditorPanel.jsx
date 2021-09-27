@@ -21,14 +21,14 @@ import SfdcOrgSyncTaskHelpDocumentation
 import {TASK_TYPES} from "components/tasks/task.types";
 import AzureAksClusterCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AzureAksClusterCreationTaskHelpDocumentation";
-import TasksTaskTypeSelectInput from "components/common/list_of_values_input/git_tasks/TasksTaskTypeSelectInput";
+import TasksTaskTypeSelectInput from "components/tasks/git_task_details/TasksTaskTypeSelectInput";
 import AwsLambdaFunctionCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsLambdaFunctionCreationTaskHelpDocumentation";
 
 function TaskEditorPanel({ taskData, handleClose }) {
   const { getAccessToken, featureFlagHideItemInProd } = useContext(AuthContext);
-  const [gitTasksDataDto, setGitTasksDataDto] = useState(undefined);
-  const [gitTasksConfigurationDataDto, setGitTasksConfigurationDataDto] = useState(undefined);
+  const [taskModel, setTaskModel] = useState(undefined);
+  const [taskConfigurationModel, setTaskConfigurationModel] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -55,24 +55,24 @@ function TaskEditorPanel({ taskData, handleClose }) {
 
   const loadData = async () => {
     if (isMounted?.current === true) {
-      setGitTasksDataDto(taskData);
+      setTaskModel(taskData);
     }
   };
 
   const createGitTask = async () => {
-    const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-    gitTasksDataDto.setData("configuration", configuration);
-    return await taskActions.createGitTaskV2(getAccessToken, cancelTokenSource, gitTasksDataDto);
+    const configuration = taskConfigurationModel ? taskConfigurationModel.getPersistData() : {};
+    taskModel.setData("configuration", configuration);
+    return await taskActions.createGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
   };
 
   const updateGitTask = async () => {
-    const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-    gitTasksDataDto.setData("configuration", configuration);
-    return await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksDataDto);
+    const configuration = taskConfigurationModel ? taskConfigurationModel.getPersistData() : {};
+    taskModel.setData("configuration", configuration);
+    return await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
   };
 
   const getHelpDocumentation = (setHelpIsShown) => {
-    switch (gitTasksDataDto?.getData("type")) {
+    switch (taskModel?.getData("type")) {
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
         return <AwsEcsClusterCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
@@ -97,38 +97,38 @@ function TaskEditorPanel({ taskData, handleClose }) {
       <>
         <Row>
           <Col lg={6}>
-            <TextInputBase setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto} fieldName={"name"}/>
+            <TextInputBase setDataObject={setTaskModel} dataObject={taskModel} fieldName={"name"}/>
           </Col>
           <Col lg={6}>
             <TasksTaskTypeSelectInput
-              model={gitTasksDataDto}
-              setModel={setGitTasksDataDto}
-              setTaskConfigurationModel={setGitTasksConfigurationDataDto}
+              model={taskModel}
+              setModel={setTaskModel}
+              setTaskConfigurationModel={setTaskConfigurationModel}
             />
           </Col>
           {/* <Col lg={6}>
-          <ActivityToggleInput dataObject={gitTasksDataDto} setDataObject={setGitTasksDataDto} fieldName={"active"}/>
+          <ActivityToggleInput dataObject={taskModel} setDataObject={setGitTasksDataDto} fieldName={"active"}/>
         </Col> */}
           <Col lg={12}>
-            <TextInputBase setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}
+            <TextInputBase setDataObject={setTaskModel} dataObject={taskModel}
                            fieldName={"description"}/>
           </Col>
           <Col lg={12}>
-            <TagManager type={"task"} setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}/>
+            <TagManager type={"task"} setDataObject={setTaskModel} dataObject={taskModel}/>
           </Col>
         </Row>
         <TaskConfigurationPanel
-          gitTasksConfigurationData={gitTasksConfigurationDataDto}
-          gitTasksDataDto={gitTasksDataDto}
-          setGitTasksDataDto={setGitTasksDataDto}
-          setGitTasksConfigurationData={setGitTasksConfigurationDataDto}
-          taskType={gitTasksDataDto?.getData("type")}
+          taskConfigurationModel={taskConfigurationModel}
+          taskModel={taskModel}
+          setTaskModel={setTaskModel}
+          setTaskConfigurationModel={setTaskConfigurationModel}
+          taskType={taskModel?.getData("type")}
         />
       </>
     );
   };
 
-  if (gitTasksDataDto == null) {
+  if (taskModel == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
@@ -137,16 +137,16 @@ function TaskEditorPanel({ taskData, handleClose }) {
     <div>
       <EditorPanelContainer
         handleClose={handleClose}
-        recordDto={gitTasksDataDto}
+        recordDto={taskModel}
         createRecord={createGitTask}
         updateRecord={updateGitTask}
-        setRecordDto={setGitTasksDataDto}
+        setRecordDto={setTaskModel}
         getHelpComponent={getHelpDocumentation}
         lenient={true}
         disable={
-          !gitTasksDataDto.checkCurrentValidity()
-          || (gitTasksConfigurationDataDto == null || !gitTasksConfigurationDataDto.checkCurrentValidity()) ||
-          gitTasksDataDto?.getData("status") === "running"
+          !taskModel.checkCurrentValidity()
+          || (taskConfigurationModel == null || !taskConfigurationModel.checkCurrentValidity()) ||
+          taskModel?.getData("status") === "running"
         }
       >
         {getBody()}

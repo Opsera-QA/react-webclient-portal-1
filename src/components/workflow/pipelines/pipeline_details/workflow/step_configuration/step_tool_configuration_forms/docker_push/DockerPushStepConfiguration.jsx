@@ -131,7 +131,7 @@ function DockerPushStepConfiguration({ pipelineId, plan, stepTool, stepId, creat
         selectOptions={listOfSteps ? listOfSteps : []}
         fieldName={"buildStepId"}
       />
-      {/* <AgentLabelsMultiSelectInput
+      {/* <AgentLabelsSelectInput
         dataObject={dockerPushStepConfigurationDto}
         fieldName={"agentLabels"}
         setDataObject={setDockerPushStepConfigurationDataDto}

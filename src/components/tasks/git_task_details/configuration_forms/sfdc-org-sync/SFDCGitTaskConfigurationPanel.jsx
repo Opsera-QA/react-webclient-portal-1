@@ -16,7 +16,7 @@ import SFDCNewBranchBoolInput from "components/tasks/git_task_details/configurat
 import SfdcGitUpstreamBranchInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SfdcGitUpstreamBranchInput";
 import SFDCGitBranchTextInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitBranchTextInput";
 
-import AgentLabelsMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
+import AgentLabelsSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
 
 function SFDCGitTaskEditorPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   useEffect(() => {loadData();}, []);
@@ -34,7 +34,7 @@ function SFDCGitTaskEditorPanel({ gitTasksDataDto, gitTasksConfigurationData, se
     if(gitTasksConfigurationData.getData("autoScaleEnable") === true){
       return (
         <Col lg={12}>
-          <AgentLabelsMultiSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"agentLabels"} />
+          <AgentLabelsSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"agentLabels"} />
         </Col>
       );
     }

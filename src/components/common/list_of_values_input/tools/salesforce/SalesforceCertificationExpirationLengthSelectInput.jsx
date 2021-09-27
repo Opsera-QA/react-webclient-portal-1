@@ -2,21 +2,21 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-const expirationLengths = [
+export const CERTIFICATE_EXPIRATION_LENGTHS = [
   {text: "3 Months", value: "3mo"},
   {text: "1 Year", value: "1yr"},
   {text: "3 Years", value: "3yrs"},
   {text: "6 Years", value: "6yrs"},
 ];
 
-function CertExpirationSelectInput({ fieldName, dataObject, setDataObject, disabled}) {
+function SalesforceCertificationExpirationLengthSelectInput({ fieldName, dataObject, setDataObject, disabled}) {
   return (
     <div>
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
         setDataObject={setDataObject}
-        selectOptions={expirationLengths}
+        selectOptions={CERTIFICATE_EXPIRATION_LENGTHS}
         valueField={"value"}
         showClearValueButton={false}
         textField={"text"}
@@ -26,15 +26,15 @@ function CertExpirationSelectInput({ fieldName, dataObject, setDataObject, disab
   );
 }
 
-CertExpirationSelectInput.propTypes = {
+SalesforceCertificationExpirationLengthSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-CertExpirationSelectInput.defaultProps = {
+SalesforceCertificationExpirationLengthSelectInput.defaultProps = {
   fieldName: "expiration",
 };
 
-export default CertExpirationSelectInput;
+export default SalesforceCertificationExpirationLengthSelectInput;

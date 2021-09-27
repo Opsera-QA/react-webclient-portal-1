@@ -7,7 +7,7 @@ import sfdxCertGenTaskConfigurationMetadata
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SFDCJenkinsToolInput from "../sfdc-org-sync/inputs/SFDCJenkinsToolInput";
-import AgentLabelsMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
+import AgentLabelsSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 
@@ -28,7 +28,7 @@ function SFDXCertGenTaskTypeConfigurationPanel({ gitTasksDataDto, gitTasksConfig
     if(gitTasksConfigurationData.getData("autoScaleEnable") === true){
       return (
         <Col lg={12}>
-          <AgentLabelsMultiSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"agentLabels"} />
+          <AgentLabelsSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"agentLabels"} />
         </Col>
       );
     }
