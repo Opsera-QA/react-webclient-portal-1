@@ -19,7 +19,6 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
-import GitTaskTypeSelectInput from "components/common/list_of_values_input/git_tasks/GitTaskTypeSelectInput";
 import AwsEcsClusterCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsEcsClusterCreationTaskHelpDocumentation";
 import TaskCreationHelpDocumentation from "components/common/help/documentation/tasks/TaskCreationHelpDocumentation";
@@ -29,8 +28,9 @@ import SfdcOrgSyncTaskHelpDocumentation from "../../common/help/documentation/ta
 import AwsLambdaFunctionCreationTaskHelpDocumentation
   from "../../common/help/documentation/tasks/AwsLambdaFunctionCreationTaskHelpDocumentation";
 import {TASK_TYPES} from "components/tasks/task.types";
+import TasksTaskTypeSelectInput from "components/common/list_of_values_input/git_tasks/TasksTaskTypeSelectInput";
 import AzureAksClusterCreationTaskHelpDocumentation
-  from "../../common/help/documentation/tasks/AzureAksClusterCreationTaskHelpDocumentation";
+  from "components/common/help/documentation/tasks/AzureAksClusterCreationTaskHelpDocumentation";
 
 function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }) {
   const { getAccessToken, isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
@@ -156,16 +156,16 @@ function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }
             <TextInputBase setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto} fieldName={"name"}/>
           </Col>
           <Col lg={6}>
-          <GitTaskTypeSelectInput
-            setGitTasksConfigurationDataDto={setGitTasksConfigurationDataDto}
-            dataObject={gitTasksDataDto}
-            setDataObject={setGitTasksDataDto}
-          />
+            <TasksTaskTypeSelectInput
+              model={gitTasksDataDto}
+              setModel={setGitTasksDataDto}
+              setTaskConfigurationModel={setGitTasksConfigurationDataDto}
+            />
           </Col>
           {/* <Col lg={6}>
           <ActivityToggleInput dataObject={gitTasksDataDto} setDataObject={setGitTasksDataDto} fieldName={"active"}/>
         </Col> */}
-          
+
           <Col lg={12}>
             <TagManager type={"task"} setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}/>
           </Col>
@@ -182,7 +182,6 @@ function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }
           setGitTasksConfigurationData={setGitTasksConfigurationDataDto}
           taskType={gitTasksDataDto?.getData("type")}
         />
-        
       </>
     );
   };

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import GitTaskTypeSelectInput from "components/common/list_of_values_input/git_tasks/GitTaskTypeSelectInput";
 import SFDCGitTaskEditorPanel from "./sfdc-org-sync/SFDCGitTaskConfigurationPanel";
 import SFDCBranchStructuringTaskTypeConfigurationPanel from "./sfdc-branch-structure/SFDCBranchStructuringTaskTypeConfigurationPanel";
 import BranchToBranchGitTaskConfigurationPanel from "./branch-to-branch/BranchToBranchGitTaskConfigurationPanel";
@@ -84,19 +83,8 @@ function TaskConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTasksC
     }
   };
 
-  const handleTaskTypeChange = (fieldName, value) => {
-    let newDataObject = gitTasksDataDto;
-    newDataObject.setData("type", value.value);
-    newDataObject.setData("configuration", {});
-    setGitTasksConfigurationData(undefined);
-    setGitTasksDataDto({...newDataObject});
-  };
-
   return (
     <div>
-      <div>
-        <GitTaskTypeSelectInput setDataFunction={handleTaskTypeChange} dataObject={gitTasksDataDto} setDataObject={setGitTasksDataDto} />
-      </div>
       {getConfigurationPanel()}
     </div>
   );
