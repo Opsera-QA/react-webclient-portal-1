@@ -12,7 +12,7 @@ import TaskTypeField from "components/common/fields/tasks/TaskTypeField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import TagsInlineInputBase from "components/common/inline_inputs/tags/TagsInlineInputBase";
-import GitTaskRoleAccessInput from "components/tasks/git_task_details/GitTaskRoleAccessInput";
+import TaskRoleAccessInput from "components/tasks/git_task_details/TaskRoleAccessInput";
 import TaskRunButton from "components/common/buttons/tasks/TaskRunButton";
 import ECSActionButtons from "components/tasks/ECSActionButtons";
 import AKSActionButtons from "components/tasks/AKSActionButtons";
@@ -90,14 +90,13 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
           <TextFieldBase dataObject={gitTasksData} fieldName={"description"} />
         </Col>
         <Col lg={12}>
-          <GitTaskRoleAccessInput
+          <TaskRoleAccessInput
             dataObject={gitTasksData}
             setDataObject={setGitTasksData}
             disabled={!actionAllowed("edit_access_roles")}
           />
         </Col>
       </Row>
-      {gitTasksData.getData("type") !== "sfdc-cert-gen" &&
       <Row className={"mx-0 w-100 my-2"}>
         <div className={"mx-auto"}>
           <div className={"mx-auto"}>
@@ -111,7 +110,6 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
           </div>
         </div>
       </Row>
-      }
       <Row className={"mx-0 w-100 my-2"}>
         <div className={"mx-auto"}>
           <div className={"mx-auto"}>

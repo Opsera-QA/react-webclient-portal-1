@@ -14,7 +14,7 @@ import BranchToBranchGitReviewerInput from "./inputs/BranchToBranchGitReviewerIn
 import BranchToBranchSourceBranchInput from "./inputs/BranchToBranchSourceBranchInput";
 import BranchToBranchDestinationBranchInput from "./inputs/BranchToBranchDestinationBranchInput";
 import BranchToBranchScmTypeSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/BranchToBranchScmTypeSelectInput";
-import TaskSalesforceScmToolSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/TaskSalesforceScmToolSelectInput";
+import BranchToBranchScmToolSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/BranchToBranchScmToolSelectInput";
 
 function BranchToBranchGitTaskConfigurationPanel({ taskModel, taskConfigurationModel, setTaskConfigurationModel }) {
   useEffect(() => {loadData();}, []);
@@ -51,7 +51,7 @@ function BranchToBranchGitTaskConfigurationPanel({ taskModel, taskConfigurationM
         />
       </Col>     
       <Col lg={12}>
-        <TaskSalesforceScmToolSelectInput
+        <BranchToBranchScmToolSelectInput
           model={taskConfigurationModel}
           setModel={setTaskConfigurationModel}
           toolIdentifier={taskConfigurationModel?.getData("service")}

@@ -9,7 +9,7 @@ import workflowAuthorizedActions
 import GitRoleAccessHelpDocumentation
   from "components/common/help/documentation/tasks/GitRoleAccessHelpDocumentation";
 
-function GitTaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled, visible}) {
+function TaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled, visible}) {
   const { getAccessToken, getAccessRoleData, isSassUser } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -79,7 +79,7 @@ function GitTaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled,
   );
 }
 
-GitTaskRoleAccessInput.propTypes = {
+TaskRoleAccessInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
@@ -87,8 +87,8 @@ GitTaskRoleAccessInput.propTypes = {
   visible: PropTypes.bool,
 };
 
-GitTaskRoleAccessInput.defaultProps = {
+TaskRoleAccessInput.defaultProps = {
   fieldName: "roles"
 };
 
-export default GitTaskRoleAccessInput;
+export default TaskRoleAccessInput;

@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import GitTasksSummaryCardContainer from "components/tasks/git_task_details/configuration_forms/GitTasksSummaryCardContainer";
+import TaskSummaryCardContainer from "components/tasks/git_task_details/configuration_forms/TaskSummaryCardContainer";
 import BooleanField from "../../../../common/fields/boolean/BooleanField";
 
 function EC2ClusterCreationTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
 
   if (isLoading) {
-    return <GitTasksSummaryCardContainer isLoading={isLoading} />;
+    return <TaskSummaryCardContainer isLoading={isLoading} />;
   }
 
   const getEC2VPCFields = () => {
@@ -63,7 +63,7 @@ function EC2ClusterCreationTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurat
   };
 
   return (
-    <GitTasksSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
+    <TaskSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
       <div className="mb-2">
         <BooleanField dataObject={gitTaskConfigurationData} fieldName={"createVpc"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"clusterName"} />
@@ -73,7 +73,7 @@ function EC2ClusterCreationTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurat
         {getEC2GenFields()}
         {getFargateFields()}
       </div>
-    </GitTasksSummaryCardContainer>
+    </TaskSummaryCardContainer>
   );
 }
 

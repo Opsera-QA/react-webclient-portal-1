@@ -25,8 +25,9 @@ import {TASK_TYPES} from "components/tasks/task.types";
 import SfdcOrgSyncPrerunHelpDocumentation
   from "components/common/help/documentation/tasks/SfdcOrgSyncPrerunHelpDocumentation";
 import azureAksClusterTaskConfigurationMetadata
-from "./configuration_forms/azure-cluster-creation/azure-cluster-metadata";
-function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, loadData }) {
+  from "components/tasks/git_task_details/configuration_forms/azure-cluster-creation/azure-cluster-metadata";
+
+function RunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, loadData }) {
   const [showHelp, setShowHelp] = useState(false);
   const [dataObj, setDataObj] = useState(undefined);
   const [canEdit, setCanEdit] = useState(false);
@@ -164,7 +165,7 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
   );
 }
 
-GitRunTaskModal.propTypes = {
+RunTaskModal.propTypes = {
   gitTasksData: PropTypes.object,
   setActiveTab: PropTypes.func,
   setGitTasksData: PropTypes.func,
@@ -173,4 +174,4 @@ GitRunTaskModal.propTypes = {
   handleClose: PropTypes.func,
 };
 
-export default GitRunTaskModal;
+export default RunTaskModal;

@@ -8,7 +8,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import GitRunTaskModal from "components/tasks/git_task_details/GitRunTaskModal";
+import RunTaskModal from "components/tasks/git_task_details/RunTaskModal";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import taskActions from "components/tasks/task.actions";
 import {TASK_TYPES} from "components/tasks/task.types";
@@ -115,7 +115,7 @@ function TaskRunButton({gitTasksData, setGitTasksData, disable, className, loadD
     <div className={className}>
       {/*TODO: Make sure button is not clickable until form is valid*/}
       {getButton()}
-      <GitRunTaskModal
+      <RunTaskModal
         showModal={showModal}
         handleClose={handleClose}
         gitTasksData={gitTasksData}

@@ -2,16 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import GitTasksSummaryCardContainer from "components/tasks/git_task_details/configuration_forms/GitTasksSummaryCardContainer";
+import TaskSummaryCardContainer from "components/tasks/git_task_details/configuration_forms/TaskSummaryCardContainer";
 import {Row, Col} from "react-bootstrap";
 
 function SFDCGitTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
   if (isLoading) {
-    return <GitTasksSummaryCardContainer isLoading={isLoading} />;
+    return <TaskSummaryCardContainer isLoading={isLoading} />;
   }
 
   return (
-    <GitTasksSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
+    <TaskSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
       <Row className="mx-0 mb-2">
         <Col xs={12} sm={6} md={4}>
           <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"toolName"} />
@@ -29,7 +29,7 @@ function SFDCGitTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, is
           <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitBranch"} />
         </Col>
       </Row>
-    </GitTasksSummaryCardContainer>
+    </TaskSummaryCardContainer>
   );
 }
 
