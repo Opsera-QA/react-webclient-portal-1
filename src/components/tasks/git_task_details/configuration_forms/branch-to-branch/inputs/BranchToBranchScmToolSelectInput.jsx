@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase
   from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
-function TaskSalesforceScmToolSelectInput({model, setModel, disabled, toolIdentifier}) {
+function BranchToBranchScmToolSelectInput({model, setModel, disabled, toolIdentifier}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("gitToolId", selectedOption?._id);
@@ -57,11 +57,11 @@ function TaskSalesforceScmToolSelectInput({model, setModel, disabled, toolIdenti
   );
 }
 
-TaskSalesforceScmToolSelectInput.propTypes = {
+BranchToBranchScmToolSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   toolIdentifier: PropTypes.string,
 };
 
-export default TaskSalesforceScmToolSelectInput;
+export default BranchToBranchScmToolSelectInput;

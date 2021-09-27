@@ -28,7 +28,7 @@ import azureAksClusterTaskConfigurationMetadata
 import SfdcGitUpstreamBranchInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/inputs/SfdcGitUpstreamBranchInput";
 
-function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, loadData }) {
+function RunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, loadData }) {
   const [showHelp, setShowHelp] = useState(false);
   const [dataObj, setDataObj] = useState(undefined);
   const [canEdit, setCanEdit] = useState(false);
@@ -166,7 +166,7 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
   );
 }
 
-GitRunTaskModal.propTypes = {
+RunTaskModal.propTypes = {
   gitTasksData: PropTypes.object,
   setActiveTab: PropTypes.func,
   setGitTasksData: PropTypes.func,
@@ -175,4 +175,4 @@ GitRunTaskModal.propTypes = {
   handleClose: PropTypes.func,
 };
 
-export default GitRunTaskModal;
+export default RunTaskModal;
