@@ -3,23 +3,23 @@ import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase
   from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
-function TaskSalesforceScmToolSelectInput({model, setModel, disabled}) {
+function TaskSalesforceScmToolSelectInput({model, setModel, disabled, toolIdentifier}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
-    newModel.setData("gitToolId", selectedOption?.id);
+    newModel.setData("gitToolId", selectedOption?._id);
     newModel.setData("gitCredential", selectedOption?.name);
-    newModel.setData("gitUrl");
-    newModel.setData("sshUrl");
-    newModel.setData("projectId");
-    newModel.setData("repository");
-    newModel.setData("gitBranch");
-    newModel.setData("defaultBranch");
-    newModel.setData("workspace");
-    newModel.setData("sourceBranch");
-    newModel.setData("workspaceName");
-    newModel.setData("autoApprove");
-    newModel.setData("reviewers");
-    newModel.setData("reviewerNames");
+    newModel.setDefaultValue("gitUrl");
+    newModel.setDefaultValue("sshUrl");
+    newModel.setDefaultValue("projectId");
+    newModel.setDefaultValue("repository");
+    newModel.setDefaultValue("gitBranch");
+    newModel.setDefaultValue("defaultBranch");
+    newModel.setDefaultValue("workspace");
+    newModel.setDefaultValue("sourceBranch");
+    newModel.setDefaultValue("workspaceName");
+    newModel.setDefaultValue("autoApprove");
+    newModel.setDefaultValue("reviewers");
+    newModel.setDefaultValue("reviewerNames");
     setModel({...newModel});
   };
 
@@ -44,7 +44,7 @@ function TaskSalesforceScmToolSelectInput({model, setModel, disabled}) {
 
   return (
      <RoleRestrictedToolByIdentifierInputBase
-       toolType={model?.getData("service")}
+       toolIdentifier={toolIdentifier}
        toolFriendlyName={"SCM Tool"}
        fieldName={"gitToolId"}
        configurationRequired={true}
@@ -61,6 +61,7 @@ TaskSalesforceScmToolSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
+  toolIdentifier: PropTypes.string,
 };
 
 export default TaskSalesforceScmToolSelectInput;

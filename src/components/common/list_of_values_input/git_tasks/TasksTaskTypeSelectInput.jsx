@@ -9,7 +9,7 @@ import {AuthContext} from "contexts/AuthContext";
 import TaskTypeSelectInputBase from "components/common/list_of_values_input/tasks/TaskTypeSelectInputBase";
 import {TASK_TYPES} from "components/tasks/task.types";
 
-function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction, placeholderText }) {
+function TasksTaskTypeSelectInput({ fieldName, model, setModel, setTaskConfigurationModel, disabled, placeholderText }) {
   const { featureFlagHideItemInProd } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const toastContext = useContext(DialogToastContext);
@@ -46,7 +46,7 @@ function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled
     try {
       setIsLoading(true);
       const customerAccessRules = await getAccessRoleData();
-      const gitTask = dataObject.getPersistData();
+      const gitTask = model?.getPersistData();
       const canCreateCertificateGenerationTask = workflowAuthorizedActions.gitItems(customerAccessRules, "create_cert_task", gitTask.owner, gitTask.roles);
 
       const response = await taskActions.doesCertificateGenerationTaskExist(getAccessToken, cancelSource);
@@ -66,6 +66,16 @@ function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled
     }
   };
 
+
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newModel = model;
+    newModel.setData("type", selectedOption?.value);
+    newModel.setDefaultValue("configuration");
+    setTaskConfigurationModel(undefined);
+    setModel({...newModel});
+  };
+
+
   const checkDisabledTaskType = () => {
     if (disabled === true) {
       return true;
@@ -79,30 +89,30 @@ function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled
   return (
     <TaskTypeSelectInputBase
       fieldName={fieldName}
-      model={dataObject}
-      setModel={setDataObject}
+      model={model}
+      setModel={setModel}
       setDataFunction={setDataFunction}
       placeholderText={placeholderText}
-      valueField="value"
-      textField="text"
+      valueField={"value"}
+      textField={"text"}
       isLoading={isLoading}
       disabled={isLoading || checkDisabledTaskType()}
     />
   );
 }
 
-GitTaskTypeSelectInput.propTypes = {
+TasksTaskTypeSelectInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   placeholderText: PropTypes.string,
-  setDataFunction: PropTypes.func,
+  setTaskConfigurationModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-GitTaskTypeSelectInput.defaultProps = {
+TasksTaskTypeSelectInput.defaultProps = {
   fieldName: "type",
   placeholderText: "Select Task Type"
 };
 
-export default GitTaskTypeSelectInput;
+export default TasksTaskTypeSelectInput;

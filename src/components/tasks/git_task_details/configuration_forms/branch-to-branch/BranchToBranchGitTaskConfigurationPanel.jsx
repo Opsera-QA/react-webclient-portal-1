@@ -6,8 +6,6 @@ import branchToBranchGitTaskConfigurationMetadata
   from "components/tasks/git_task_details/configuration_forms/branch-to-branch/branch-to-branch-git-task-configuration";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import SFDCJenkinsToolInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCJenkinsToolInput";
-import SFDCJenkinsAccountInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCJenkinsAccountInput";
 import SFDCBitbucketWorkspaceInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCBitbucketWorkspaceInput";
 import SFDCGitRepositoryInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitRepositoryInput";
 import AgentLabelsMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
@@ -34,7 +32,11 @@ function BranchToBranchGitTaskConfigurationPanel({ gitTasksDataDto, gitTasksConf
     if(gitTasksConfigurationData.getData("autoScaleEnable") === true){
       return (
         <Col lg={12}>
-          <AgentLabelsMultiSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"agentLabels"} />
+          <AgentLabelsMultiSelectInput
+            dataObject={gitTasksConfigurationData}
+            setDataObject={setGitTasksConfigurationData}
+            fieldName={"agentLabels"}
+          />
         </Col>
       );
     }
@@ -46,7 +48,11 @@ function BranchToBranchGitTaskConfigurationPanel({ gitTasksDataDto, gitTasksConf
         <BranchToBranchScmTypeSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} gitTasksDataDto={gitTasksDataDto}  />
       </Col>     
       <Col lg={12}>
-        <TaskSalesforceScmToolSelectInput model={gitTasksConfigurationData} setModel={setGitTasksConfigurationData} />
+        <TaskSalesforceScmToolSelectInput
+          model={gitTasksConfigurationData}
+          setModel={setGitTasksConfigurationData}
+          toolIdentifier={gitTasksConfigurationData?.getData("service")}
+        />
       </Col>        
       <Col lg={12}>
         <SFDCBitbucketWorkspaceInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />

@@ -30,6 +30,7 @@ import AwsLambdaFunctionCreationTaskHelpDocumentation
 import {TASK_TYPES} from "components/tasks/task.types";
 import AzureAksClusterCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AzureAksClusterCreationTaskHelpDocumentation";
+import TasksTaskTypeSelectInput from "components/common/list_of_values_input/git_tasks/TasksTaskTypeSelectInput";
 
 function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }) {
   const { getAccessToken, featureFlagHideItemInProd } = useContext(AuthContext);
@@ -153,6 +154,13 @@ function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }
           </Col>
           <Col lg={12}>
             <TagManager type={"task"} setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}/>
+          </Col>
+          <Col lg={12}>
+            <TasksTaskTypeSelectInput
+              model={gitTasksDataDto}
+              setModel={setGitTasksDataDto}
+              setTaskConfigurationModel={setGitTasksConfigurationDataDto}
+            />
           </Col>
         </Row>
         <TaskConfigurationPanel
