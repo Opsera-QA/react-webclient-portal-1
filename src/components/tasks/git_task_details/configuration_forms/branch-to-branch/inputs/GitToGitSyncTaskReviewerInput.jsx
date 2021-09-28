@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import GitReviewerMultiSelectInput from "components/common/list_of_values_input/tools/git/GitReviewerMultiSelectInput";
 
-function GitToGitSyncTaskReviewerInput({model, setModel, disabled, service, toolId, workspace, repository, autoApproval}) {
+function GitToGitSyncTaskReviewerInput({model, setModel, disabled, service, toolId, workspace, repository, autoApprove}) {
   // TODO: Wire up dynamic requirements
   useEffect(() => {
     setRequired(true, 1);
@@ -19,7 +19,7 @@ function GitToGitSyncTaskReviewerInput({model, setModel, disabled, service, tool
     setModel({...newDataObject});
   };
 
-  const clearReviewer = (fieldName) => {
+  const clearReviewer = () => {
     let newDataObject = {...model};
     newDataObject.setData("reviewers", []);
     newDataObject.setData("reviewerNames", []);
@@ -33,7 +33,7 @@ function GitToGitSyncTaskReviewerInput({model, setModel, disabled, service, tool
     setModel({...newDataObject});
   };
 
-  if (autoApproval !== true) {
+  if (autoApprove !== true) {
     return null;
   }
 
@@ -61,7 +61,7 @@ GitToGitSyncTaskReviewerInput.propTypes = {
   toolId: PropTypes.string,
   workspace: PropTypes.string,
   repository: PropTypes.string,
-  autoApproval: PropTypes.string,
+  autoApprove: PropTypes.bool,
 };
 
 export default GitToGitSyncTaskReviewerInput;
