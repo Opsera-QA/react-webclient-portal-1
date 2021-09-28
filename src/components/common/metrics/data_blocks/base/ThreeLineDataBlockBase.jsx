@@ -1,11 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function DataBlockBase({ title, subtitle, className}) {
+function ThreeLineDataBlockBase({ title, subtitle, topText, className}) {
+  const getTopText = () => {
+    if (topText) {
+      return (
+        <div>
+          {topText}
+        </div>
+      );
+    }
+  };
+
+
   const getTitle = () => {
     if (title) {
       return (
-        <div className="">
+        <div>
           {title}
         </div>
       );
@@ -15,7 +26,7 @@ function DataBlockBase({ title, subtitle, className}) {
   const getSubtitle = () => {
     if (subtitle) {
       return (
-        <div className="">
+        <div>
           {subtitle}
         </div>
       );
@@ -24,8 +35,11 @@ function DataBlockBase({ title, subtitle, className}) {
 
   return (
     <div className={className}>
-      <div className={"p-2 text-center"}>
-        <div className="data-block">
+      <div className={"px-2 text-center"}>
+        <div className="mt-auto w-100 text-muted">
+          {getTopText()}
+        </div>
+        <div className="py-3 data-block">
           {getTitle()}
         </div>
         <div className="w-100 text-muted">
@@ -36,10 +50,11 @@ function DataBlockBase({ title, subtitle, className}) {
   );
 }
 
-DataBlockBase.propTypes = {
+ThreeLineDataBlockBase.propTypes = {
+  topText: PropTypes.any,
   title: PropTypes.any,
   subtitle: PropTypes.any,
   className: PropTypes.string
 };
 
-export default DataBlockBase;
+export default ThreeLineDataBlockBase;

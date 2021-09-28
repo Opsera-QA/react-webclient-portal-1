@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {useParams} from "react-router-dom";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import axios from "axios";
 import {faFileCertificate, faHourglass, faSearch} from "@fortawesome/pro-light-svg-icons";
@@ -7,20 +6,16 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
+import OverallReleaseDurationMetrics
+  from "components/insights/release_360/views/duration/OverallReleaseDurationMetrics";
+import OverallReleaseTraceabilityMetrics
+  from "components/insights/release_360/views/traceability/OverallReleaseTraceabilityMetrics";
+import OverallReleaseQualityMetrics from "components/insights/release_360/views/quality/OverallReleaseQualityMetrics";
 
 function Release360 () {
-  const { dashboardId } = useParams();
   const isMounted = useRef(false);
-  const [activeTab, setActiveTab] = useState("charts");
+  const [activeTab, setActiveTab] = useState("duration");
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  const handleTabClick = (tabSelection) => e => {
-    e.preventDefault();
-
-    if (isMounted?.current === true) {
-      setActiveTab(tabSelection);
-    }
-  };
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -36,6 +31,14 @@ function Release360 () {
       isMounted.current = false;
     };
   }, []);
+
+  const handleTabClick = (tabSelection) => e => {
+    e.preventDefault();
+
+    if (isMounted?.current === true) {
+      setActiveTab(tabSelection);
+    }
+  };
 
   const getTabContainer = () => {
     return (
@@ -68,12 +71,12 @@ function Release360 () {
   // TODO: Make sub components
   const getCurrentView = () => {
     switch (activeTab) {
-      // case "duration":
-      //   return (<MarketplaceCharts dashboardId={dashboardId} />);
-      // case "traceability":
-      //   return (<MarketplaceDashboardCatalog />);
-      // case "quality":
-      //   return (<MarketplaceDashboardCatalog />);
+      case "duration":
+        return (<OverallReleaseDurationMetrics />);
+      case "traceability":
+        return (<OverallReleaseTraceabilityMetrics />);
+      case "quality":
+        return (<OverallReleaseQualityMetrics />);
       default:
         return null;
     }

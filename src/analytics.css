@@ -1,3 +1,18 @@
+/* Metric Text Styling */
+.metric-success-text {
+    color: #00897b;
+}
+
+.metric-danger-text {
+    color: #E57373;
+}
+
+.metric-warning-text {
+    color: #F1AD0F;
+}
+
+/* End Metric Text Styling */
+
 /* Data Block Styling */
 .data-block {
     font-size: 2.43rem;
@@ -28,6 +43,11 @@
     color: white;
 }
 
-
+.data-block-box {
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
 
 /* End Data Block Styling */
