@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { faBracketsCurly, faDraftingCompass, faHexagon, faMicrochip, faUser } from "@fortawesome/pro-light-svg-icons";
-import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
-import NavigationTab from "components/common/tabs/navigation/NavigationTab";
+import { faBracketsCurly, faDraftingCompass, faMicrochip, faUser } from "@fortawesome/pro-light-svg-icons";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import PipelineCatalogLibrary from "components/workflow/catalog/PipelineCatalogLibrary";
 import cookieHelpers from "core/cookies/cookie-helpers";
 import PipelinesView from "components/workflow/pipelines/PipelinesView";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
-import CatalogHelpDocumentation from "../../common/help/documentation/pipelines/catalog/CatalogHelpDocumentation";
+import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 
 const unpackTab = (tab) => {
   if (tab != null) {
@@ -31,55 +28,8 @@ function Pipelines() {
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
     setActiveTab(tabSelection);
+    cookieHelpers.setCookie("pipelines", "selectedTab", tabSelection);
     history.push(`/workflow/${tabSelection}`);
-
-    if (tabSelection !== "catalog") {
-      cookieHelpers.setCookie("pipelines", "selectedTab", tabSelection);
-    }
-  };
-
-  const getCurrentView = () => {
-    switch (activeTab) {
-    case "catalog":
-      return <PipelineCatalogLibrary/>;
-    case "all":
-    case "owner":
-    case "sdlc":
-    case "ai-ml":
-    case "sfdc":
-      return getPipelinesView();
-    default:
-      return null;
-    }
-  };
-
-  const getCurrentBreadcrumbDestination = () => {
-    switch (activeTab) {
-    case "catalog":
-      return "catalog";
-    case "all":
-    case "owner":
-    case "sdlc":
-    case "ai-ml":
-    case "sfdc":
-      return "pipelines";
-    default:
-      return null;
-    }
-  };
-
-  const getPageDescription = () => {
-    switch (activeTab) {
-    case "catalog":
-      return "To begin building your pipeline, choose one of the pipeline templates provided in the Marketplace or Private Catalogs. ";
-    case "all":
-    case "owner":
-    case "sdlc":
-    case "ai-ml":
-    case "sfdc":
-    default:
-      return "Select a Pipeline to view details.";
-    }
   };
 
   const getPipelinesView = () => {
@@ -112,26 +62,14 @@ function Pipelines() {
     );
   };
 
-  const getNavigationTabContainer = () => {
-    return (
-      <NavigationTabContainer>
-        <NavigationTab activeTab={activeTab !== "catalog" ? "all" : activeTab} tabText={"Pipelines"}
-                       handleTabClick={handleTabClick} tabName={"all"} toolTipText={"Pipelines"} icon={faDraftingCompass}/>
-        <NavigationTab activeTab={activeTab} tabText={"Catalog"} handleTabClick={handleTabClick} tabName={"catalog"}
-                       toolTipText={"Catalog"} icon={faHexagon}/>
-      </NavigationTabContainer>
-    );
-  };
-
   return (
     <ScreenContainer
-      breadcrumbDestination={getCurrentBreadcrumbDestination()}
-      navigationTabContainer={getNavigationTabContainer()}
-      pageDescription={getPageDescription()}
-      hasTabContainer={activeTab !== "catalog"}
-      helpComponent={activeTab !== "catalog" ? undefined : <CatalogHelpDocumentation/>}
+      breadcrumbDestination={"pipelines"}
+      navigationTabContainer={<WorkflowSubNavigationBar currentTab={"pipelines"} />}
+      pageDescription={"Select a Pipeline to view details."}
+      hasTabContainer={true}
     >
-      {getCurrentView()}
+      {getPipelinesView()}
     </ScreenContainer>
   );
 

@@ -118,6 +118,7 @@ import UserManagement from "components/settings/users/UserManagement";
 import UserDetailView from "components/settings/users/details/UserDetailView";
 import SsoUserDetailView from "components/settings/users/sso_user_details/SsoUserDetailView";
 import AwsAccountRegistration from "components/user/aws_registration/AwsAccountRegistration";
+import PipelineCatalogLibrary from "components/workflow/catalog/PipelineCatalogLibrary";
 //import FreeTrialRegistration from "./components/free_trial/Registration";
 //import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 
@@ -282,6 +283,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
 
 
           <SecureRoute path="/pipeline" component={Pipeline} />
+          <SecureRoute path="/workflow/catalog" exact component={PipelineCatalogLibrary} />
           <SecureRoute path="/workflow/:tab?" exact component={Pipelines} />
           <SecureRoute path="/workflow/details/:id/:tab?" exact component={PipelineDetailView} />
 
