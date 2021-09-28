@@ -56,29 +56,30 @@ function GitReviewerMultiSelectInput({
   };
 
   const getNoReviewersMessage = () => {
-    if (!isLoading && (!reviewers || reviewers == null || reviewers.length === 0) && gitToolId !== "") {
+    if (!isLoading && (!Array.isArray(reviewers) || reviewers.length === 0) && gitToolId !== "") {
         return ("No Reviewers found for the details provided");
     }
   };
 
-  return (
-    <div>
-      <MultiSelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        setDataFunction={setDataFunction}
-        selectOptions={reviewers}
-        busy={isLoading}
-        placeholderText={getNoReviewersMessage()}
-        clearDataFunction={clearDataFunction}
-        valueField="reviewerName"
-        textField="reviewerName"
-        disabled={disabled || isLoading || reviewers.length === 0}            
-      />
-    </div>
-  );
+  if (visible === false) {
+    return null;
+  }
 
+  return (
+    <MultiSelectInputBase
+      fieldName={fieldName}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      setDataFunction={setDataFunction}
+      selectOptions={reviewers}
+      busy={isLoading}
+      placeholderText={getNoReviewersMessage()}
+      clearDataFunction={clearDataFunction}
+      valueField="reviewerName"
+      textField="reviewerName"
+      disabled={disabled || isLoading || reviewers.length === 0}
+    />
+  );
 }
 
 GitReviewerMultiSelectInput.propTypes = {    

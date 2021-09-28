@@ -45,17 +45,17 @@ function GitToGitSyncTaskConfigurationPanel({ taskModel, taskConfigurationModel,
   };
 
   const getTaskReviewerInput = () => {
-    if (taskConfigurationModel?.getData("autoApproval") === true) {
+    if (taskConfigurationModel?.getData("autoApprove") === true) {
       return (
         <Col lg={12}>
           <GitToGitSyncTaskReviewerInput
-            dataObject={taskConfigurationModel}
-            setDataObject={setTaskConfigurationModel}
+            model={taskConfigurationModel}
+            setModel={setTaskConfigurationModel}
             toolId={taskConfigurationModel?.getData("gitToolId")}
             workspace={taskConfigurationModel?.getData("workspace")}
             repository={taskConfigurationModel?.getData("repository")}
             service={taskConfigurationModel?.getData("service")}
-            autoApproval={taskConfigurationModel?.getData("autoApproval")}
+            autoApprove={taskConfigurationModel?.getData("autoApprove")}
           />
         </Col>
       );
