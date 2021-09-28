@@ -68,6 +68,7 @@ function SelectInputBase(
   return (
     <InputContainer className={className}>
       <InputLabel
+        model={dataObject}
         showLabel={showLabel}
         field={field}
         clearDataFunction={getClearDataFunction()}

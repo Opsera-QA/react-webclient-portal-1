@@ -1,6 +1,5 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {Form} from "dhx-suite-package";
 import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
@@ -48,7 +47,7 @@ function VanityTextInput({fieldName, className, dataObject, setDataObject, setDa
 
   return (
     <InputContainer className={className}>
-      <InputLabel showLabel={showLabel} field={field}/>
+      <InputLabel model={dataObject} showLabel={showLabel} field={field}/>
       <VanityTextInputBase
         setDataFunction={updateValue}
         data={dataObject?.getData(fieldName)}

@@ -17,7 +17,7 @@ function FileInputBase({ fieldName, dataObject, setDataObject, disabled }) {
 
   return (
     <InputContainer>
-      <InputLabel field={field} />
+      <InputLabel field={field} model={dataObject} />
       <input
         type={"file"}
         disabled={disabled}

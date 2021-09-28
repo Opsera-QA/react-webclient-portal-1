@@ -78,7 +78,7 @@ function TextInputWithButtonBase({
 
   return (
     <InputContainer>
-      <InputLabel field={field} extraActionButtons={extraActionButtons} />
+      <InputLabel model={dataObject} field={field} extraActionButtons={extraActionButtons} />
       <Row>
         <Col lg={8}>
           <input

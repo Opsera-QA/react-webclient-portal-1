@@ -78,7 +78,7 @@ function TextInputWithButtonAWSLambda({
 
   return (
     <InputContainer>
-      <InputLabel field={field} extraActionButtons={extraActionButtons} />
+      <InputLabel field={field} extraActionButtons={extraActionButtons} model={dataObject} />
       <Row>
         <div className="input-group mb-3 ml-3 mr-3">
           <input

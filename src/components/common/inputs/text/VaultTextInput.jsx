@@ -22,7 +22,7 @@ function VaultTextInput({fieldName, dataObject, setDataObject, disabled}) {
 
   return (
     <InputContainer>
-      <InputLabel field={field}/>
+      <InputLabel field={field} model={dataObject}/>
       <input
         type={"password"}
         disabled={disabled}

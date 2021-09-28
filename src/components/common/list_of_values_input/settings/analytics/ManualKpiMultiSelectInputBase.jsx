@@ -124,7 +124,7 @@ function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObj
 
   return (
     <InputContainer className={className ? className : undefined}>
-      <InputLabel field={field} clearDataFunction={getClearDataFunction()} />
+      <InputLabel field={field} clearDataFunction={getClearDataFunction()} model={dataObject} />
       <div className={"custom-multiselect-input"}>
         <Multiselect
           data={selectOptions}

@@ -13,7 +13,7 @@ function TagMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, s
 
   return (
     <InputContainer className={className}>
-      <InputLabel field={field} showLabel={showLabel}/>
+      <InputLabel field={field} showLabel={showLabel} model={dataObject}/>
       <TagMultiSelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}

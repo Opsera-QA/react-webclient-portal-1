@@ -81,7 +81,7 @@ function VanityComboBoxInput(
 
   return (
     <InputContainer className={className}>
-      <InputLabel showLabel={showLabel} field={field} clearDataFunction={getClearDataFunction()} />
+      <InputLabel showLabel={showLabel} field={field} clearDataFunction={getClearDataFunction()} model={dataObject} />
       <VanityComboBoxInputBase
         selectOptions={formatSelectOptions()}
         disabled={disabled}
