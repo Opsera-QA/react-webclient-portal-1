@@ -142,7 +142,7 @@ function GitToGitSyncTaskConfigurationPanel({ taskModel, taskConfigurationModel,
           setModel={setTaskConfigurationModel}
         />
       </Col>
-
+      {getPackageXmlPathInput()}
     </Row>
   );
 }
