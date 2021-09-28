@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import GitTasksSummaryCardContainer from "components/tasks/git_task_details/configuration_forms/GitTasksSummaryCardContainer";
+import TaskSummaryCardContainer from "components/tasks/git_task_details/configuration_forms/TaskSummaryCardContainer";
 
 function ECSServiceCreationTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
 
@@ -19,11 +19,11 @@ function ECSServiceCreationTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurat
   };
 
   if (isLoading) {
-    return <GitTasksSummaryCardContainer isLoading={isLoading} />;
+    return <TaskSummaryCardContainer isLoading={isLoading} />;
   }
 
   return (
-    <GitTasksSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
+    <TaskSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
       <div className="mb-2">
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"ecsClusterName"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"ecsServiceDesiredCount"} />
@@ -34,7 +34,7 @@ function ECSServiceCreationTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurat
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"ecsServiceLogGroup"} />
         {getDynamicFields()}
       </div>
-    </GitTasksSummaryCardContainer>
+    </TaskSummaryCardContainer>
   );
 }
 

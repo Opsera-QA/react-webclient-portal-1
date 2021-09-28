@@ -73,6 +73,7 @@ function SpinnakerStepConfiguration({ stepTool, parentCallback, closeEditorPanel
         model={spinnakerStepConfigurationDto}
         setModel={setSpinnakerStepConfigurationDataDto}
         spinnakerToolId={spinnakerStepConfigurationDto?.getData("spinnakerId")}
+        fieldName={"applicationName"}
       />
       <SpinnakerToolSelectInput
         fieldName={"pipelineName"}

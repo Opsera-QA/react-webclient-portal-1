@@ -6,7 +6,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ModalBase from "components/common/modal/ModalBase";
 import CloseButton from "components/common/buttons/CloseButton";
-import RunGitTaskButton from "components/common/buttons/git/RunGitTaskButton";
+import RunTaskButton from "components/common/buttons/tasks/RunTaskButton";
 import SFDCGitBranchInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitBranchInput";
 import SFDCNewBranchBoolInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCNewBranchBoolInput";
 import sfdcGitTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/sfdc-git-task-configuration-metadata";
@@ -28,7 +28,7 @@ import azureAksClusterTaskConfigurationMetadata
 import SfdcGitUpstreamBranchInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/inputs/SfdcGitUpstreamBranchInput";
 
-function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, loadData }) {
+function RunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, loadData }) {
   const [showHelp, setShowHelp] = useState(false);
   const [dataObj, setDataObj] = useState(undefined);
   const [canEdit, setCanEdit] = useState(false);
@@ -85,7 +85,7 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
     return (
       <>
         <CloseButton closeEditorCallback={handleClose} showUnsavedChangesMessage={false} />
-        <RunGitTaskButton gitTasksData={gitTasksData} setGitTasksData={setGitTasksData} gitTasksConfigurationDataDto={dataObj} loadData={loadData} handleClose={handleClose} />
+        <RunTaskButton gitTasksData={gitTasksData} setGitTasksData={setGitTasksData} gitTasksConfigurationDataDto={dataObj} loadData={loadData} handleClose={handleClose} />
       </>
     );
   };
@@ -166,7 +166,7 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
   );
 }
 
-GitRunTaskModal.propTypes = {
+RunTaskModal.propTypes = {
   gitTasksData: PropTypes.object,
   setActiveTab: PropTypes.func,
   setGitTasksData: PropTypes.func,
@@ -175,4 +175,4 @@ GitRunTaskModal.propTypes = {
   handleClose: PropTypes.func,
 };
 
-export default GitRunTaskModal;
+export default RunTaskModal;

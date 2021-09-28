@@ -2,18 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import GitTasksSummaryCardContainer from "components/tasks/git_task_details/configuration_forms/GitTasksSummaryCardContainer";
+import TaskSummaryCardContainer from "components/tasks/git_task_details/configuration_forms/TaskSummaryCardContainer";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 
-function BranchToBranchGitTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
+function BranchToBranchTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
 
   if (isLoading) {
-    return <GitTasksSummaryCardContainer isLoading={isLoading} />;
+    return <TaskSummaryCardContainer isLoading={isLoading} />;
   }
 
   return (
-    <GitTasksSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
+    <TaskSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
       <div className="mb-2">
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"service"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitCredential"} />
@@ -29,14 +29,14 @@ function BranchToBranchGitTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurati
         </FieldContainer>
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"reviewerNames"} />
       </div>
-    </GitTasksSummaryCardContainer>
+    </TaskSummaryCardContainer>
   );
 }
 
-BranchToBranchGitTaskTypeSummaryCard.propTypes = {
+BranchToBranchTaskTypeSummaryCard.propTypes = {
   gitTasksData: PropTypes.object,
   gitTaskConfigurationData: PropTypes.object,
   isLoading: PropTypes.bool,
 };
 
-export default BranchToBranchGitTaskTypeSummaryCard;
+export default BranchToBranchTaskTypeSummaryCard;

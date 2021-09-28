@@ -31,7 +31,7 @@ import {
 
 import pipelineActions from "components/workflow/pipeline-actions";
 import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
-import {jenkinsAgentArray} from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
+import {jenkinsAgentArray} from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },

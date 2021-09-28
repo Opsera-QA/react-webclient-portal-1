@@ -9,7 +9,7 @@ import taskActions from "components/tasks/task.actions";
 import axios from "axios";
 import workflowAuthorizedActions
 from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
-function GenerateCertButton({refreshData, recordDto, disable, size, showSuccessToasts, className, saveButtonText}) {
+function GenerateSalesforceCertificateButton({refreshData, recordDto, disable, size, showSuccessToasts, className, saveButtonText}) {
   const { getAccessToken, getUserRecord, setAccessRoles, getAccessRoleData } = useContext(AuthContext);
   let toastContext = useContext(DialogToastContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -98,7 +98,7 @@ function GenerateCertButton({refreshData, recordDto, disable, size, showSuccessT
   );
 }
 
-GenerateCertButton.propTypes = {
+GenerateSalesforceCertificateButton.propTypes = {
   recordDto: PropTypes.object,
   refreshData: PropTypes.func,
   disable: PropTypes.bool,
@@ -108,11 +108,11 @@ GenerateCertButton.propTypes = {
   saveButtonText: PropTypes.string
 };
 
-GenerateCertButton.defaultProps = {
+GenerateSalesforceCertificateButton.defaultProps = {
   disable: false,
   size: "md",
   showSuccessToasts: true,
   saveButtonText: "Generate Certificate"
 };
 
-export default GenerateCertButton;
+export default GenerateSalesforceCertificateButton;

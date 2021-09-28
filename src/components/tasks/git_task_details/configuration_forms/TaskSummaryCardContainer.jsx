@@ -4,7 +4,7 @@ import {Card} from "react-bootstrap";
 import {faTasksAlt} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
-function GitTasksSummaryCardContainer({ children, isLoading }) {
+function TaskSummaryCardContainer({ children, isLoading }) {
   const getCardBody = () => {
     if (isLoading) {
       return (<div className="m-3" />);
@@ -28,9 +28,9 @@ function GitTasksSummaryCardContainer({ children, isLoading }) {
   );
 }
 
-GitTasksSummaryCardContainer.propTypes = {
+TaskSummaryCardContainer.propTypes = {
   children: PropTypes.any,
   isLoading: PropTypes.bool
 };
 
-export default GitTasksSummaryCardContainer;
+export default TaskSummaryCardContainer;

@@ -61,6 +61,7 @@ const branchToBranchGitTaskConfigurationMetadata = {
       isRequired: true,
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
+      formText: "Source Branch cannot match Target Branch."
     },
     {
       label: "Target Branch",
@@ -68,6 +69,7 @@ const branchToBranchGitTaskConfigurationMetadata = {
       isRequired: true,
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
+      formText: "Target Branch cannot match Source Branch."
     },    
     {
       label: "Auto Approve",
@@ -84,10 +86,18 @@ const branchToBranchGitTaskConfigurationMetadata = {
     {
       label: "Delete Source Branch",
       id: "deleteSourceBranch"
-    }
-  ],
-  newObjectFields:
+    },
     {
+      label: "Include Package XML",
+      id: "includePackageXml"
+    },
+    {
+      label: "Package XML Reference Path",
+      id: "packageXmlReferencePath",
+      formText: "Specify where the Package xml needs to be copied or merged with existing Package XML.",
+    },
+  ],
+  newObjectFields: {
     type: "",
     jobType: "GIT_GIT_SYNC",
     toolConfigId: "",
@@ -109,13 +119,15 @@ const branchToBranchGitTaskConfigurationMetadata = {
     gitBranch: "",
     sourceBranch: "",
     defaultBranch: "",
-    dependencyType:"",    
+    dependencyType: "",
     accountUsername: "",
     autoApprove: false,
     reviewers: [],
     reviewerNames: [],
-    deleteSourceBranch: true
-    }
+    deleteSourceBranch: true,
+    includePackageXml: false,
+    packageXmlReferencePath: "",
+  }
 };
 
 export default branchToBranchGitTaskConfigurationMetadata;

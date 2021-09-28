@@ -6,37 +6,30 @@ import Row from "react-bootstrap/Row";
 import taskActions from "components/tasks/task.actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import GitTasksConfigurationPanel
-  from "components/tasks/git_task_details/configuration_forms/GitTasksConfigurationPanel";
+import TaskConfigurationPanel
+  from "components/tasks/git_task_details/configuration_forms/TaskConfigurationPanel";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TagManager from "components/common/inputs/tags/TagManager";
-import { Button } from "react-bootstrap";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import GitTaskSfdcPipelineWizardOverlay from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/GitTaskSfdcPipelineWizardOverlay";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlay,
-} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
-import GitTaskTypeSelectInput from "components/common/list_of_values_input/git_tasks/GitTaskTypeSelectInput";
 import AwsEcsClusterCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsEcsClusterCreationTaskHelpDocumentation";
 import TaskCreationHelpDocumentation from "components/common/help/documentation/tasks/TaskCreationHelpDocumentation";
 import AwsEcsServiceCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsEcsServiceCreationTaskHelpDocumentation";
-import SfdcOrgSyncTaskHelpDocumentation from "../../common/help/documentation/tasks/SfdcOrgSyncTaskHelpDocumentation";
-import AwsLambdaFunctionCreationTaskHelpDocumentation
-  from "../../common/help/documentation/tasks/AwsLambdaFunctionCreationTaskHelpDocumentation";
 import {TASK_TYPES} from "components/tasks/task.types";
 import AzureAksClusterCreationTaskHelpDocumentation
-  from "../../common/help/documentation/tasks/AzureAksClusterCreationTaskHelpDocumentation";
+  from "components/common/help/documentation/tasks/AzureAksClusterCreationTaskHelpDocumentation";
+import TasksTaskTypeSelectInput from "components/tasks/git_task_details/TasksTaskTypeSelectInput";
+import AwsLambdaFunctionCreationTaskHelpDocumentation
+  from "components/common/help/documentation/tasks/AwsLambdaFunctionCreationTaskHelpDocumentation";
+import SfdcOrgSyncTaskHelpDocumentation
+  from "components/common/help/documentation/tasks/SfdcOrgSyncTaskHelpDocumentation";
 
-function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }) {
+function TaskEditorPanel({ taskData, handleClose }) {
   const { getAccessToken, isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [gitTasksDataDto, setGitTasksDataDto] = useState(undefined);
-  const [gitTasksConfigurationDataDto, setGitTasksConfigurationDataDto] = useState(undefined);
+  const [taskModel, setTaskModel] = useState(undefined);
+  const [taskConfigurationModel, setTaskConfigurationModel] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -63,61 +56,24 @@ function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }
 
   const loadData = async () => {
     if (isMounted?.current === true) {
-      setGitTasksDataDto(gitTasksData);
+      setTaskModel(taskData);
     }
   };
 
   const createGitTask = async () => {
-    const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-    gitTasksDataDto.setData("configuration", configuration);
-    return await taskActions.createGitTaskV2(getAccessToken, cancelTokenSource, gitTasksDataDto);
+    const configuration = taskConfigurationModel ? taskConfigurationModel.getPersistData() : {};
+    taskModel.setData("configuration", configuration);
+    return await taskActions.createGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
   };
 
   const updateGitTask = async () => {
-    const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-    gitTasksDataDto.setData("configuration", configuration);
-    return await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksDataDto);
-  };
-
-  const handleRunTask = () => {
-    if (gitTasksData.getData("type") === "sync-sfdc-repo") {  
-      // open wizard views
-      toastContext.showOverlayPanel(<GitTaskSfdcPipelineWizardOverlay gitTasksData={gitTasksData}/>);
-      return;
-    }    
-    if (gitTasksData.getData("type") === "sync-branch-structure") {  
-      // open wizard views
-      console.log("Git branch task run triggered");
-      return;
-    }
-  };
-
-  const getExtraButtons = () => {
-    // TODO: Make run task button
-    if (runTask === true) {
-      return (
-        <Button variant="primary" onClick={handleRunTask}>
-          <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/> Run Task
-        </Button>
-      );
-    }
-  };
-
-  const getRunTaskText = () => {
-    if (runTask === true) {
-      return (
-        <div>
-          Listed below are all settings related to this task.
-          If you want to run the task, please confirm all settings and then click the Run button
-          at the bottom of the form. This will trigger the job which will take a few minutes to complete.
-          The status of this job will be updated in the Activity logs. Please consult those logs for all details on this action.
-        </div>
-      );
-    }
+    const configuration = taskConfigurationModel ? taskConfigurationModel.getPersistData() : {};
+    taskModel.setData("configuration", configuration);
+    return await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
   };
 
   const getHelpDocumentation = (setHelpIsShown) => {
-    switch (gitTasksDataDto?.getData("type")) {
+    switch (taskModel?.getData("type")) {
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
         return <AwsEcsClusterCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
@@ -138,10 +94,10 @@ function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }
   };
 
   const getDynamicFields = () => {
-    if (gitTasksDataDto?.isNew() && !isSassUser()) {
+    if (taskModel?.isNew() && !isSassUser()) {
       return (
         <Col lg={12} className="mb-4">
-          <RoleAccessInput dataObject={gitTasksDataDto} setDataObject={setGitTasksDataDto} fieldName={"roles"}/>
+          <RoleAccessInput dataObject={taskModel} setDataObject={setTaskModel} fieldName={"roles"}/>
         </Col>
       );
     }
@@ -150,44 +106,42 @@ function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }
   const getBody = () => {
     return (
       <>
-        {getRunTaskText()}
         <Row>
           <Col lg={6}>
-            <TextInputBase setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto} fieldName={"name"}/>
+            <TextInputBase setDataObject={setTaskModel} dataObject={taskModel} fieldName={"name"}/>
           </Col>
           <Col lg={6}>
-          <GitTaskTypeSelectInput
-            setGitTasksConfigurationDataDto={setGitTasksConfigurationDataDto}
-            dataObject={gitTasksDataDto}
-            setDataObject={setGitTasksDataDto}
-          />
+            <TasksTaskTypeSelectInput
+              model={taskModel}
+              setModel={setTaskModel}
+              setTaskConfigurationModel={setTaskConfigurationModel}
+            />
           </Col>
           {/* <Col lg={6}>
-          <ActivityToggleInput dataObject={gitTasksDataDto} setDataObject={setGitTasksDataDto} fieldName={"active"}/>
+          <ActivityToggleInput dataObject={taskModel} setDataObject={setGitTasksDataDto} fieldName={"active"}/>
         </Col> */}
-          
+
           <Col lg={12}>
-            <TagManager type={"task"} setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}/>
+            <TextInputBase setDataObject={setTaskModel} dataObject={taskModel}
+                           fieldName={"description"}/>
           </Col>
           <Col lg={12}>
-            <TextInputBase setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}
-                           fieldName={"description"}/>
+            <TagManager type={"task"} setDataObject={setTaskModel} dataObject={taskModel}/>
           </Col>
           {getDynamicFields()}
         </Row>
-        <GitTasksConfigurationPanel
-          gitTasksConfigurationData={gitTasksConfigurationDataDto}
-          gitTasksDataDto={gitTasksDataDto}
-          setGitTasksDataDto={setGitTasksDataDto}
-          setGitTasksConfigurationData={setGitTasksConfigurationDataDto}
-          taskType={gitTasksDataDto?.getData("type")}
+        <TaskConfigurationPanel
+          taskConfigurationModel={taskConfigurationModel}
+          taskModel={taskModel}
+          setTaskModel={setTaskModel}
+          setTaskConfigurationModel={setTaskConfigurationModel}
+          taskType={taskModel?.getData("type")}
         />
-        
       </>
     );
   };
 
-  if (gitTasksDataDto == null) {
+  if (taskModel == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
@@ -196,18 +150,16 @@ function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }
     <div>
       <EditorPanelContainer
         handleClose={handleClose}
-        recordDto={gitTasksDataDto}
+        recordDto={taskModel}
         createRecord={createGitTask}
         updateRecord={updateGitTask}
-        setRecordDto={setGitTasksDataDto}
-        showBooleanToggle={true}
+        setRecordDto={setTaskModel}
         getHelpComponent={getHelpDocumentation}
-        // extraButtons={getExtraButtons()}
         lenient={true}
         disable={
-          !gitTasksDataDto.checkCurrentValidity()
-          || (gitTasksConfigurationDataDto == null || !gitTasksConfigurationDataDto.checkCurrentValidity()) ||
-          gitTasksDataDto?.getData("status") === "running"
+          !taskModel.checkCurrentValidity()
+          || (taskConfigurationModel == null || !taskConfigurationModel.checkCurrentValidity()) ||
+          taskModel?.getData("status") === "running"
         }
       >
         {getBody()}
@@ -217,10 +169,8 @@ function TaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }
 }
 
 TaskEditorPanel.propTypes = {
-  gitTasksData: PropTypes.object,
-  setGitTasksData: PropTypes.func,
+  taskData: PropTypes.object,
   handleClose: PropTypes.func,
-  runTask: PropTypes.bool,
 };
 
 export default TaskEditorPanel;

@@ -69,7 +69,7 @@ function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleDa
         return (
           <TaskEditorPanel
             handleClose={toggleSummaryPanel}
-            gitTasksData={gitTasksData}
+            taskData={gitTasksData}
             setGitTasksData={setGitTasksData}
             loadData={loadData}
             runTask={runTask}
