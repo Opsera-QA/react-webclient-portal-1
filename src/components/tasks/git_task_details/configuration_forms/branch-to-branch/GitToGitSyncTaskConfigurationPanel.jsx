@@ -6,17 +6,22 @@ import branchToBranchGitTaskConfigurationMetadata
   from "components/tasks/git_task_details/configuration_forms/branch-to-branch/branch-to-branch-git-task-configuration";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import SFDCBitbucketWorkspaceInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCBitbucketWorkspaceInput";
-import SFDCGitRepositoryInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitRepositoryInput";
 import AgentLabelsSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import GitToGitSyncTaskReviewerInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskReviewerInput";
-import GitToGitSyncTaskSourceBranchInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskSourceBranchInput";
+import GitToGitSyncTaskReviewerMultiSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskReviewerMultiSelectInput";
+import GitToGitSyncTaskSourceBranchSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskSourceBranchSelectInput";
 import GitToGitSyncTaskDestinationBranchSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskDestinationBranchSelectInput";
 import GitToGitSyncTaskScmTypeSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskScmTypeSelectInput";
 import GitToGitSyncTaskScmToolSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskScmToolSelectInput";
 import GitToGitSyncTaskAutoApprovalToggleInput
   from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskAutoApprovalToggleInput";
+import GitToGitSyncTaskRepositorySelectInput
+  from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskRepositorySelectInput";
+import GitToGitSyncTaskBitbucketWorkspaceSelectInput
+  from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskBitbucketWorkspaceSelectInput";
+import GitToGitSyncTaskIncludePackageXmlToggleInput
+  from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskIncludePackageXmlToggleInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function GitToGitSyncTaskConfigurationPanel({ taskModel, taskConfigurationModel, setTaskConfigurationModel }) {
   useEffect(() => {loadData();}, []);
@@ -48,7 +53,7 @@ function GitToGitSyncTaskConfigurationPanel({ taskModel, taskConfigurationModel,
     if (taskConfigurationModel?.getData("autoApprove") === true) {
       return (
         <Col lg={12}>
-          <GitToGitSyncTaskReviewerInput
+          <GitToGitSyncTaskReviewerMultiSelectInput
             model={taskConfigurationModel}
             setModel={setTaskConfigurationModel}
             toolId={taskConfigurationModel?.getData("gitToolId")}
@@ -58,6 +63,18 @@ function GitToGitSyncTaskConfigurationPanel({ taskModel, taskConfigurationModel,
             autoApprove={taskConfigurationModel?.getData("autoApprove")}
           />
         </Col>
+      );
+    }
+  };
+
+  const getPackageXmlPathInput = () => {
+    if (taskConfigurationModel?.getData("includePackageXml") === true) {
+      return (
+        <TextInputBase
+          dataObject={taskConfigurationModel}
+          setDataObject={setTaskConfigurationModel}
+          fieldName={"packageXmlReferencePath"}
+        />
       );
     }
   };
@@ -78,19 +95,19 @@ function GitToGitSyncTaskConfigurationPanel({ taskModel, taskConfigurationModel,
         />
       </Col>        
       <Col lg={12}>
-        <SFDCBitbucketWorkspaceInput
-          dataObject={taskConfigurationModel}
-          setDataObject={setTaskConfigurationModel}
+        <GitToGitSyncTaskBitbucketWorkspaceSelectInput
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
         />
       </Col>
       <Col lg={12}>
-        <SFDCGitRepositoryInput
-          dataObject={taskConfigurationModel}
-          setDataObject={setTaskConfigurationModel}
+        <GitToGitSyncTaskRepositorySelectInput
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
         />
       </Col>
       <Col lg={12}>
-        <GitToGitSyncTaskSourceBranchInput
+        <GitToGitSyncTaskSourceBranchSelectInput
           model={taskConfigurationModel}
           setModel={setTaskConfigurationModel}
           targetBranch={taskConfigurationModel?.getData("gitBranch")}
@@ -104,7 +121,11 @@ function GitToGitSyncTaskConfigurationPanel({ taskModel, taskConfigurationModel,
         />
       </Col>
       <Col lg={12}>
-        <BooleanToggleInput dataObject={taskConfigurationModel} setDataObject={setTaskConfigurationModel} fieldName={"deleteSourceBranch"} />
+        <BooleanToggleInput
+          dataObject={taskConfigurationModel}
+          setDataObject={setTaskConfigurationModel}
+          fieldName={"deleteSourceBranch"}
+        />
       </Col>      
       {getAgentLabelsInput()}
       <Col lg={12}>
@@ -115,6 +136,13 @@ function GitToGitSyncTaskConfigurationPanel({ taskModel, taskConfigurationModel,
         />
       </Col>
       {getTaskReviewerInput()}
+      {/*<Col lg={12}>*/}
+      {/*  <GitToGitSyncTaskIncludePackageXmlToggleInput*/}
+      {/*    model={taskConfigurationModel}*/}
+      {/*    setModel={setTaskConfigurationModel}*/}
+      {/*  />*/}
+      {/*</Col>*/}
+      {/*{getPackageXmlPathInput()}*/}
     </Row>
   );
 }
