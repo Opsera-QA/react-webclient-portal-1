@@ -59,7 +59,7 @@ taskActions.getLovTasksListV2 = async (getAccessToken, cancelTokenSource, type, 
     params: {
       sort: "name",
       type: type,
-      status: "active",
+      active: "active",
       fields: fields,
     }
   };
