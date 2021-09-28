@@ -15,6 +15,8 @@ import GitToGitSyncTaskSourceBranchInput from "components/tasks/git_task_details
 import GitToGitSyncTaskDestinationBranchSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskDestinationBranchSelectInput";
 import GitToGitSyncTaskScmTypeSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskScmTypeSelectInput";
 import GitToGitSyncTaskScmToolSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskScmToolSelectInput";
+import GitToGitSyncTaskAutoApprovalToggleInput
+  from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskAutoApprovalToggleInput";
 
 function GitToGitSyncTaskConfigurationPanel({ taskModel, taskConfigurationModel, setTaskConfigurationModel }) {
   useEffect(() => {loadData();}, []);
@@ -36,6 +38,24 @@ function GitToGitSyncTaskConfigurationPanel({ taskModel, taskConfigurationModel,
             dataObject={taskConfigurationModel}
             setDataObject={setTaskConfigurationModel}
             fieldName={"agentLabels"}
+          />
+        </Col>
+      );
+    }
+  };
+
+  const getTaskReviewerInput = () => {
+    if (taskConfigurationModel?.getData("autoApproval") === true) {
+      return (
+        <Col lg={12}>
+          <GitToGitSyncTaskReviewerInput
+            dataObject={taskConfigurationModel}
+            setDataObject={setTaskConfigurationModel}
+            toolId={taskConfigurationModel?.getData("gitToolId")}
+            workspace={taskConfigurationModel?.getData("workspace")}
+            repository={taskConfigurationModel?.getData("repository")}
+            service={taskConfigurationModel?.getData("service")}
+            autoApproval={taskConfigurationModel?.getData("autoApproval")}
           />
         </Col>
       );
@@ -74,11 +94,13 @@ function GitToGitSyncTaskConfigurationPanel({ taskModel, taskConfigurationModel,
       </Col>      
       {getAgentLabelsInput()}
       <Col lg={12}>
-        {taskConfigurationModel.getData("gitToolId") && <BooleanToggleInput dataObject={taskConfigurationModel} setDataObject={setTaskConfigurationModel} fieldName={"autoApprove"} />}
+        <GitToGitSyncTaskAutoApprovalToggleInput
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
+          disabled={!taskConfigurationModel?.getData("gitToolId") || taskConfigurationModel?.getData("gitToolId")?.length === 0}
+        />
       </Col>
-      <Col lg={12}>
-        {taskConfigurationModel.getData("gitToolId") && taskConfigurationModel.getData("autoApprove") && <GitToGitSyncTaskReviewerInput dataObject={taskConfigurationModel} setDataObject={setTaskConfigurationModel} />}
-      </Col>
+      {getTaskReviewerInput()}
     </Row>
   );
 }
