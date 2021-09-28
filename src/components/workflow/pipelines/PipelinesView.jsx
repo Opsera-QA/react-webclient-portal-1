@@ -13,12 +13,15 @@ import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilte
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import PipelineCardView from "components/workflow/pipelines/PipelineCardView";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
+import {faBracketsCurly, faDraftingCompass, faMicrochip, faUser} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import pipelineSummaryMetadata
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import PipelineStatusFilter from "components/common/filters/pipelines/status/PipelineStatusFilter";
 import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
+import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
+import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
+import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 
 function PipelinesView({ currentTab, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -142,6 +145,55 @@ function PipelinesView({ currentTab, setActiveTab }) {
   const addPipeline = () => {
     setActiveTab("catalog");
   };
+
+  const getPipelineTypeTabs = () => {
+    return (
+      <VanitySetVerticalTabContainer className={"h-100"}>
+        <VanitySetVerticalTab
+          icon={faDraftingCompass}
+          tabText={"All Pipelines"}
+          tabName={""}
+          onSelect={onSelect}
+          activeTab={pipelineFilterModel?.getData("type")}
+        />
+        <VanitySetVerticalTab
+          icon={faUser}
+          tabText={"My Pipelines"}
+          tabName={"owner"}
+          onSelect={onSelect}
+          activeTab={pipelineFilterModel?.getData("type")}
+        />
+        <VanitySetVerticalTab
+          icon={faBracketsCurly}
+          tabText={"Software Development"}
+          tabName={"sdlc"}
+          onSelect={onSelect}
+          activeTab={pipelineFilterModel?.getData("type")}
+        />
+        <VanitySetVerticalTab
+          icon={faMicrochip}
+          tabText={"Machine Learning"}
+          tabName={"ai-ml"}
+          onSelect={onSelect}
+          activeTab={pipelineFilterModel?.getData("type")}
+        />
+        <VanitySetVerticalTab
+          icon={faSalesforce}
+          tabText={"Salesforce"}
+          tabName={"salesforce"}
+          onSelect={onSelect}
+          activeTab={pipelineFilterModel?.getData("type")}
+        />
+      </VanitySetVerticalTabContainer>
+    );
+  };
+
+  const onSelect = (tab) => {
+    pipelineFilterModel?.setData("category", tab);
+    pipelineFilterModel?.setData("type", "");
+    loadData(pipelineFilterModel);
+  };
+
 
   const getView = () => {
     if (isLoading) {
