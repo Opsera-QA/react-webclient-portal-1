@@ -21,7 +21,7 @@ function WebsitePathInput({ fieldName, dataObject, setDataObject, disabled }) {
   // TODO: When V2 of dto text input is implemented, put here
   return (
     <InputContainer>
-      <InputLabel field={field}/>
+      <InputLabel field={field} model={dataObject}/>
       <input
         disabled={disabled}
         type="text"

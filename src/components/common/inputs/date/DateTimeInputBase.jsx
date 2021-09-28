@@ -36,7 +36,7 @@ function DateTimeInputBase({ fieldName, dataObject, setDataObject, dropUp, setDa
 
   return (
     <InputContainer>
-      <InputLabel field={field}/>
+      <InputLabel field={field} model={dataObject} />
       <DateTimePicker
         date={showDate}
         min={minDate}

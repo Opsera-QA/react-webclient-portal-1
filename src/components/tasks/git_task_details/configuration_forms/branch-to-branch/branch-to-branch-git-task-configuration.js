@@ -77,11 +77,14 @@ const branchToBranchGitTaskConfigurationMetadata = {
     },
     {
       label: "Reviewers",
-      id: "reviewers"
+      id: "reviewers",
     },
     {
       label: "Reviewers",
-      id: "reviewerNames"
+      id: "reviewerNames",
+      isRequiredFunction: (model) => {
+        return model?.getData("autoApprove") === true;
+      },
     },
     {
       label: "Delete Source Branch",
@@ -94,7 +97,11 @@ const branchToBranchGitTaskConfigurationMetadata = {
     {
       label: "Package XML Reference Path",
       id: "packageXmlReferencePath",
-      formText: "Specify where the Package xml needs to be copied or merged with existing Package XML.",
+      regexDefinitionName: "pathField",
+      formText: "Specify where the Package XML needs to be copied or merged with existing Package XML.",
+      isRequiredFunction: (model) => {
+        return model?.getData("includePackageXml") === true;
+      },
     },
   ],
   newObjectFields: {

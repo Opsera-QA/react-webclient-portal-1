@@ -60,6 +60,7 @@ function TextInputBase(
   return (
     <InputContainer className={className}>
       <InputLabel
+        model={dataObject}
         showLabel={showLabel}
         field={field}
         linkTooltipText={linkTooltipText}

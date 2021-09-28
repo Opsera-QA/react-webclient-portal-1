@@ -10,23 +10,14 @@ import {useHistory, useParams} from "react-router-dom";
 import PipelineWorkflowView from "./workflow/PipelineWorkflowView";
 import PipelineSummaryPanel from "./PipelineSummaryPanel";
 import PipelineHelpers from "../../pipelineHelpers";
-import {
-  faBracketsCurly,
-  faDraftingCompass,
-  faHexagon,
-  faLayerGroup,
-  faMicrochip,
-} from "@fortawesome/pro-light-svg-icons";
-import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import pipelineActivityActions
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-actions";
-import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
-import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import axios from "axios";
 import pipelineActivityHelpers
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
+import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 
 const refreshInterval = 8000;
 
@@ -325,21 +316,6 @@ function PipelineDetailView() {
     }
   };
 
-  // TODO: Move to a common place for reuse
-  const getTypeIcon = (type) => {
-    switch (type) {
-    case "sfdc":
-      return faSalesforce;
-    case "sdlc":
-      return faBracketsCurly;
-    case "ai-ml":
-      return faMicrochip;
-    default:
-      return faDraftingCompass;
-    }
-  };
-
-
   const getNavigationTabs = () => {
     return (
       <div className="alternate-tabs">
@@ -425,19 +401,6 @@ function PipelineDetailView() {
     );
   };
 
-  const getNavigationTabContainer = () => {
-    return (
-      <NavigationTabContainer>
-        <NavigationTab activeTab={activeTab} tabText={"Pipelines"}
-                       handleTabClick={handleTabClick} tabName={"pipelines"} toolTipText={"Pipelines"} icon={faDraftingCompass}/>
-        <NavigationTab activeTab={activeTab} tabText={"Catalog"} handleTabClick={handleTabClick}
-                       tabName={"catalog"} toolTipText={"Template Catalog"} icon={faHexagon}/>
-        <NavigationTab activeTab={"viewer"} tabText={"Pipeline Viewer"}
-                       handleTabClick={handleTabClick} tabName={"viewer"} toolTipText={"Pipeline Viewer"} icon={faLayerGroup}/>
-      </NavigationTabContainer>
-    );
-  };
-
   if (!loading && (data.length === 0 || data.pipeline == null)) {
     return (<InfoDialog
       message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
@@ -446,7 +409,7 @@ function PipelineDetailView() {
 
   return (
     <div>
-      {getNavigationTabContainer()}
+      <WorkflowSubNavigationBar currentTab={"pipelineViewer"} />
       <div className="h4 mt-3 mb-2">{pipeline?.name}</div>
       {getNavigationTabs()}
       {getCurrentView()}

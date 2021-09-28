@@ -17,7 +17,7 @@ function TextAreaInput({ fieldName, dataObject, setDataObject, disabled }) {
 
   return (
     <InputContainer>
-      <InputLabel field={field}/>
+      <InputLabel model={dataObject} field={field}/>
       <textarea
         disabled={disabled}
         value={dataObject.getData(fieldName)} onChange={(event) => validateAndSetData(event.target.value)}

@@ -182,7 +182,7 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
 
   return (
     <InputContainer>
-      {!inline && <InputLabel field={field} className={inline ? "mt-1 mr-2" : undefined}/>}
+      {!inline && <InputLabel model={dataObject} field={field} className={inline ? "mt-1 mr-2" : undefined}/>}
       <div className={"custom-multiselect-input"}>
         <Multiselect
           data={[...tagOptions]}
