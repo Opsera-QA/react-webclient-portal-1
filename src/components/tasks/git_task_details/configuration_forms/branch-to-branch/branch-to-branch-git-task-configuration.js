@@ -125,7 +125,7 @@ const branchToBranchGitTaskConfigurationMetadata = {
     reviewers: [],
     reviewerNames: [],
     deleteSourceBranch: true,
-    includePackageXml: true,
+    includePackageXml: false,
     packageXmlReferencePath: "",
   }
 };

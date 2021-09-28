@@ -70,11 +70,13 @@ function GitToGitSyncTaskConfigurationPanel({ taskModel, taskConfigurationModel,
   const getPackageXmlPathInput = () => {
     if (taskConfigurationModel?.getData("includePackageXml") === true) {
       return (
-        <TextInputBase
-          dataObject={taskConfigurationModel}
-          setDataObject={setTaskConfigurationModel}
-          fieldName={"packageXmlReferencePath"}
-        />
+        <Col lg={12}>
+          <TextInputBase
+            dataObject={taskConfigurationModel}
+            setDataObject={setTaskConfigurationModel}
+            fieldName={"packageXmlReferencePath"}
+          />
+        </Col>
       );
     }
   };
