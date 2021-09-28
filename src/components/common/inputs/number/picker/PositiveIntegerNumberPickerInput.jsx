@@ -57,7 +57,7 @@ function PositiveIntegerNumberPickerInput({ fieldName, className, dataObject, se
 
   return (
     <InputContainer className={className ? className : "custom-number-input my-2"}>
-      <InputLabel field={field} showLabel={showLabel} />
+      <InputLabel field={field} showLabel={showLabel} model={dataObject} />
       <NumberPicker
         placeholder={placeholderText}
         disabled={disabled}

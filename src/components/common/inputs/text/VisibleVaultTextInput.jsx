@@ -84,7 +84,7 @@ function VisibleVaultTextInput({fieldName, dataObject, setDataObject, disabled, 
 
   return (
     <InputContainer>
-      <InputLabel field={field}/>
+      <InputLabel field={field} model={dataObject}/>
       <div className={"d-flex"}>
         <input
           type={hideIfNotShown === true && valueShown === false && !pullingValueFromVault ? "password" : undefined}

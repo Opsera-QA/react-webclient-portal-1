@@ -46,6 +46,14 @@ export const fieldValidation = (value, data, field) => {
     }
   }
 
+  // TODO: Still working on this so it may change
+  if (field.isRequiredFunction && field.isRequiredFunction(data) === true) {
+    console.log("isRequiredFunction is true");
+    if (value == null || value === "" || value === [] || value === {}) {
+      errorMessages.push(field.label + " is required.");
+    }
+  }
+
   if (field.isEmail === true) {
     if (!validateEmail(value))
     {

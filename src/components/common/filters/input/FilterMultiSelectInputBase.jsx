@@ -16,7 +16,7 @@ function FilterMultiSelectInputBase({ fieldName, dataObject, setDataObject, grou
   const getInputLabel = () => {
     if (!inline) {
       return (
-        <InputLabel field={field} className={inline ? "mt-1 mr-2" : undefined}/>
+        <InputLabel model={dataObject} field={field} className={inline ? "mt-1 mr-2" : undefined}/>
       );
     }
   };

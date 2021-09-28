@@ -37,7 +37,7 @@ function NumberPickerInputBase({ fieldName, dataObject, setDataObject, disabled,
 
   return (
     <InputContainer className={className ? className : "custom-number-input my-2"}>
-      <InputLabel field={field} showLabel={showLabel} />
+      <InputLabel field={field} showLabel={showLabel} model={dataObject} />
       <NumberPicker
         placeholder={placeholderText}
         disabled={disabled}

@@ -9,7 +9,7 @@ function RadioButtonInputContainer({ fieldName, dataObject, children, className}
 
   return (
     <InputContainer className={className ? className : "custom-radio-button-input my-2"}>
-      <InputLabel field={field} />
+      <InputLabel field={field} model={dataObject} />
       {children}
       <InfoText field={field} />
     </InputContainer>

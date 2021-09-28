@@ -26,7 +26,7 @@ function BitbucketTwoFactorCheckbox({dataObject, setDataObject, fieldName}) {
         onChange={() => triggerAuthenticationChange()}
         className="form-check-input mr-3"
       />
-      <InputLabel field={field}/>
+      <InputLabel field={field} model={dataObject}/>
     </div>
   );
 }

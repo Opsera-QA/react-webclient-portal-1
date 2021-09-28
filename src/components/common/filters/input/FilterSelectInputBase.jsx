@@ -19,7 +19,7 @@ function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, 
 
   return (
     <div className={className}>
-      <InputLabel showLabel={!inline} field={field} className={inline ? "mt-1 mr-2" : undefined}/>
+      <InputLabel model={dataObject} showLabel={!inline} field={field} className={inline ? "mt-1 mr-2" : undefined}/>
       <DropdownList
         data={selectOptions}
         valueField={valueField}

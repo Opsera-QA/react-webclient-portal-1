@@ -60,7 +60,7 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
   return (
     <InputContainer>
       <div className={"d-flex justify-content-between date-range-header"}>
-        <InputLabel field={field} />
+        <InputLabel field={field} model={dataObject} />
         <TooltipWrapper innerText={"Clear this Value"}>
           <span onClick={() => clearCalendar()} className="my-auto badge badge-danger clear-value-badge pointer">
             <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1" />
