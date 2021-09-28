@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import GitReviewerMultiSelectInput from "components/common/list_of_values_input/tools/git/GitReviewerMultiSelectInput";
 
-function BranchToBranchGitReviewerInput({dataObject, setDataObject, disabled}) {
+function GitToGitSyncTaskReviewerInput({dataObject, setDataObject, disabled}) {
 
     useEffect(() => {
         setRequired(true, 1);
@@ -51,10 +51,10 @@ function BranchToBranchGitReviewerInput({dataObject, setDataObject, disabled}) {
      );
 }
 
-BranchToBranchGitReviewerInput.propTypes = {
+GitToGitSyncTaskReviewerInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default BranchToBranchGitReviewerInput;
+export default GitToGitSyncTaskReviewerInput;

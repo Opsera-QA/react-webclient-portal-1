@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase
   from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
-function BranchToBranchScmToolSelectInput({model, setModel, disabled, toolIdentifier}) {
+function GitToGitSyncTaskScmToolSelectInput({model, setModel, disabled, toolIdentifier}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("gitToolId", selectedOption?._id);
@@ -45,7 +45,7 @@ function BranchToBranchScmToolSelectInput({model, setModel, disabled, toolIdenti
   return (
      <RoleRestrictedToolByIdentifierInputBase
        toolIdentifier={toolIdentifier}
-       toolFriendlyName={"SCM Tool"}
+       toolFriendlyName={"SCM"}
        fieldName={"gitToolId"}
        configurationRequired={true}
        model={model}
@@ -57,11 +57,11 @@ function BranchToBranchScmToolSelectInput({model, setModel, disabled, toolIdenti
   );
 }
 
-BranchToBranchScmToolSelectInput.propTypes = {
+GitToGitSyncTaskScmToolSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   toolIdentifier: PropTypes.string,
 };
 
-export default BranchToBranchScmToolSelectInput;
+export default GitToGitSyncTaskScmToolSelectInput;

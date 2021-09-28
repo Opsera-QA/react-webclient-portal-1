@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ScmToolIdentifierSelectInput
   from "components/common/list_of_values_input/tools/source_control/ScmToolIdentifierSelectInput";
 
-function BranchToBranchScmTypeSelectInput({model, setModel, disabled}) {
+function GitToGitSyncTaskScmTypeSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("service", selectedOption?.value);
@@ -56,10 +56,10 @@ function BranchToBranchScmTypeSelectInput({model, setModel, disabled}) {
   );
 }
 
-BranchToBranchScmTypeSelectInput.propTypes = {
+GitToGitSyncTaskScmTypeSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default BranchToBranchScmTypeSelectInput;
+export default GitToGitSyncTaskScmTypeSelectInput;

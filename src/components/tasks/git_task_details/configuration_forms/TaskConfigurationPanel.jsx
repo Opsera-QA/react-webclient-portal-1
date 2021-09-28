@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import SFDCGitTaskEditorPanel from "./sfdc-org-sync/SFDCGitTaskConfigurationPanel";
 import SFDXCertGenTaskTypeConfigurationPanel from "./sfdx-cert-gen/SFDXCertGenTaskTypeConfigurationPanel";
 import SFDCBranchStructuringTaskTypeConfigurationPanel from "./sfdc-branch-structure/SFDCBranchStructuringTaskTypeConfigurationPanel";
-import BranchToBranchGitTaskConfigurationPanel from "./branch-to-branch/BranchToBranchGitTaskConfigurationPanel";
+import GitToGitSyncTaskConfigurationPanel from "components/tasks/git_task_details/configuration_forms/branch-to-branch/GitToGitSyncTaskConfigurationPanel";
 import ECSCreationTaskConfigurationPanel from "./ecs-cluster-creation/ECSCreationTaskConfigurationPanel";
 import ECSServiceCreationTaskConfigurationPanel from "./ecs-service-creation/ECSServiceCreationTaskConfigurationPanel";
 import AwsLambdaConfigurationPanel from "./aws-lambda-creation/AwsLambdaConfigurationPanel";
@@ -39,7 +39,7 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
         ); 
       case TASK_TYPES.SYNC_GIT_BRANCHES:
         return (
-          <BranchToBranchGitTaskConfigurationPanel 
+          <GitToGitSyncTaskConfigurationPanel
             taskModel={taskModel}
             setTaskConfigurationModel={setTaskConfigurationModel}
             taskConfigurationModel={taskConfigurationModel}
