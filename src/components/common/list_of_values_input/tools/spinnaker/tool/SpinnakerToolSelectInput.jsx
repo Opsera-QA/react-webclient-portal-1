@@ -24,11 +24,15 @@ function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, spinna
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    setSpinnakerTools([]);
+
+    if (spinnakerToolId != null && spinnakerToolId !== "" && spinnakerApplicationName != null && spinnakerApplicationName !== "") {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
@@ -39,13 +43,8 @@ function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, spinna
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      setSpinnakerTools([]);
-
-      if (spinnakerToolId != null && spinnakerToolId !== "" && spinnakerApplicationName != null && spinnakerApplicationName !== "") {
-        await loadSpinnakerTools(cancelSource);
-      }
-    }
-    catch (error) {
+      await loadSpinnakerTools(cancelSource);
+    } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     }
     finally {
