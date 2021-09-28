@@ -105,7 +105,7 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
               setGitTasksData={setGitTasksData}
               loadData={loadData}
               actionAllowed={actionAllowed("run_task")}
-              taskType={actionAllowed("type")}
+              taskType={gitTasksData?.getData("type")}
             />
           </div>
         </div>
