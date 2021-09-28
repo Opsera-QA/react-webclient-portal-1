@@ -22,7 +22,7 @@ function GitToGitSyncTaskConfigurationPanel({ taskModel, taskConfigurationModel,
   useEffect(() => {loadData();}, []);
 
   const loadData = async () => {    
-    const configurationData = modelHelpers.getToolConfigurationModel(taskModel.getData("configuration"), branchToBranchGitTaskConfigurationMetadata);
+    const configurationData = modelHelpers.getToolConfigurationModel(taskModel?.getData("configuration"), branchToBranchGitTaskConfigurationMetadata);
     setTaskConfigurationModel({...configurationData});
   };
 
@@ -78,16 +78,30 @@ function GitToGitSyncTaskConfigurationPanel({ taskModel, taskConfigurationModel,
         />
       </Col>        
       <Col lg={12}>
-        <SFDCBitbucketWorkspaceInput dataObject={taskConfigurationModel} setDataObject={setTaskConfigurationModel} />
+        <SFDCBitbucketWorkspaceInput
+          dataObject={taskConfigurationModel}
+          setDataObject={setTaskConfigurationModel}
+        />
       </Col>
       <Col lg={12}>
-        <SFDCGitRepositoryInput dataObject={taskConfigurationModel} setDataObject={setTaskConfigurationModel} />
+        <SFDCGitRepositoryInput
+          dataObject={taskConfigurationModel}
+          setDataObject={setTaskConfigurationModel}
+        />
       </Col>
       <Col lg={12}>
-        <GitToGitSyncTaskSourceBranchInput dataObject={taskConfigurationModel} setDataObject={setTaskConfigurationModel} />
+        <GitToGitSyncTaskSourceBranchInput
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
+          targetBranch={taskConfigurationModel?.getData("gitBranch")}
+        />
       </Col>
       <Col lg={12}>
-        <GitToGitSyncTaskDestinationBranchSelectInput dataObject={taskConfigurationModel} setDataObject={setTaskConfigurationModel} />
+        <GitToGitSyncTaskDestinationBranchSelectInput
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
+          sourceBranch={taskConfigurationModel?.getData("sourceBranch")}
+        />
       </Col>
       <Col lg={12}>
         <BooleanToggleInput dataObject={taskConfigurationModel} setDataObject={setTaskConfigurationModel} fieldName={"deleteSourceBranch"} />
