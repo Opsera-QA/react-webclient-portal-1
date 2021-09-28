@@ -6,21 +6,22 @@ import {AuthContext} from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
 import axios from "axios";
 
-function GitReviewerMultiSelectInput({
-  gitToolId, 
-  visible, 
-  fieldName, 
-  dataObject, 
-  setDataObject, 
-  setDataFunction, 
-  clearDataFunction, 
-  disabled, 
-  service, 
-  workspace,
-  repository
-}) {
+function GitReviewerMultiSelectInput(
+  {
+    gitToolId,
+    visible,
+    fieldName,
+    dataObject,
+    setDataObject,
+    setDataFunction,
+    clearDataFunction,
+    disabled,
+    service,
+    workspace,
+    repository
+  }) {
   const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
+  const {getAccessToken} = useContext(AuthContext);
   const [reviewers, setReviewers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [allReviewers, setAllReviewers] = useState([]);
@@ -80,7 +81,7 @@ function GitReviewerMultiSelectInput({
       setAllReviewers(accounts);
       setReviewers(accounts
         .filter(acc => ((service === 'bitbucket' && acc.workspace === workspace && acc.repository === repository) || (service !== 'bitbucket' && acc.repository === repository))));
-    }    
+    }
   };
 
   const getNoReviewersMessage = () => {
@@ -89,7 +90,7 @@ function GitReviewerMultiSelectInput({
     }
 
     if (!isLoading && (!Array.isArray(reviewers) || reviewers.length === 0) && gitToolId !== "") {
-        return ("No Reviewers found for the details provided");
+      return ("No Reviewers found for the details provided");
     }
   };
 
