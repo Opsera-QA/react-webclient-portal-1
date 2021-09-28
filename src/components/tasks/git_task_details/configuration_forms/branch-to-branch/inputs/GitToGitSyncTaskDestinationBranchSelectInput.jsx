@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 import InlineErrorText from "components/common/status_notifications/inline/InlineErrorText";
 
-function BranchToBranchDestinationBranchInput({dataObject, setDataObject, disabled}) {
+function GitToGitSyncTaskDestinationBranchSelectInput({dataObject, setDataObject, disabled}) {
   
   const [validationError, setValidationError] = useState(false);
 
@@ -39,10 +39,10 @@ function BranchToBranchDestinationBranchInput({dataObject, setDataObject, disabl
     );
 }
 
-BranchToBranchDestinationBranchInput.propTypes = {
+GitToGitSyncTaskDestinationBranchSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default BranchToBranchDestinationBranchInput;
+export default GitToGitSyncTaskDestinationBranchSelectInput;
