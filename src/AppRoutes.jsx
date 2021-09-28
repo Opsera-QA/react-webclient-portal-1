@@ -119,6 +119,7 @@ import UserDetailView from "components/settings/users/details/UserDetailView";
 import SsoUserDetailView from "components/settings/users/sso_user_details/SsoUserDetailView";
 import AwsAccountRegistration from "components/user/aws_registration/AwsAccountRegistration";
 import PipelineCatalogLibrary from "components/workflow/catalog/PipelineCatalogLibrary";
+import Release360 from "components/insights/release_360/Release360";
 //import FreeTrialRegistration from "./components/free_trial/Registration";
 //import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 
@@ -236,6 +237,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/insights" exact component={Insights} />
           <SecureRoute path="/insights/dashboards/:id/:tab?" exact component={DashboardDetailView} />
           <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace} />
+          <SecureRoute path="/insights/release360" exact component={Release360} />
           <SecureRoute path="/insights/synopsis" component={InsightsSynopsis} />
 
 
