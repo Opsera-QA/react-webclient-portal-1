@@ -9,7 +9,7 @@ export const LETTER_GRADES = {
   E: "e"
 };
 
-function MetricLetterGrade({ letterGrade }) {
+function MetricLetterGradeText({ letterGrade }) {
   const getLetterGrade = () => {
     switch (letterGrade) {
       case LETTER_GRADES.A:
@@ -30,8 +30,8 @@ function MetricLetterGrade({ letterGrade }) {
   return (getLetterGrade());
 }
 
-MetricLetterGrade.propTypes = {
+MetricLetterGradeText.propTypes = {
   letterGrade: PropTypes.string,
 };
 
-export default MetricLetterGrade;
+export default MetricLetterGradeText;

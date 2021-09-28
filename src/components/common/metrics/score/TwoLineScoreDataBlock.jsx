@@ -1,22 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/TwoLineDataBlockBase";
-import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
+import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 
-function PercentageDataBlock({ percentage, subtitle, className}) {
+function TwoLineScoreDataBlock({ score, subtitle, className}) {
   return (
     <TwoLineDataBlockBase
       className={className}
-      title={<MetricPercentageText percentage={percentage} />}
+      title={<MetricScoreText score={score} />}
       subtitle={subtitle}
     />
   );
 }
 
-PercentageDataBlock.propTypes = {
-  percentage: PropTypes.number,
+TwoLineScoreDataBlock.propTypes = {
+  score: PropTypes.number,
   subtitle: PropTypes.any,
   className: PropTypes.string
 };
 
-export default PercentageDataBlock;
+export default TwoLineScoreDataBlock;

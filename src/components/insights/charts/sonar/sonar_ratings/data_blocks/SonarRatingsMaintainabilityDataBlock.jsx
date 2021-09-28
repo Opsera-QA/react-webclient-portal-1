@@ -4,11 +4,11 @@ import Model from "core/data_model/model";
 import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
 import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGrade";
+import {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGradeText";
 import HorizontalDataBlockContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlockContainer";
 import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import PercentageDataBlock from "components/common/metrics/percentage/PercentageDataBlock";
-import GradeDataBlock from "components/common/metrics/grade/GradeDataBlock";
+import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
 
 function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration, maintainabilityRating, technicalDebtRatio }) {
   const toastContext = useContext(DialogToastContext);
@@ -46,7 +46,7 @@ function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration,
 
   const getLeftDataBlock = () => {
     return (
-      <GradeDataBlock
+      <TwoLineGradeDataBlock
         letterGrade={getSonarMaintainabilityGrade(maintainabilityRating)}
         subtitle={"Maintainability"}
       />
