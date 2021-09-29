@@ -10,8 +10,8 @@ import SonarRatingsMaintainabilityDataBlock
   from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsMaintainabilityDataBlock";
 import SonarRatingsVulnerabilityDataBlock
   from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsVulnerabilityDataBlock";
-import HorizontalThreeDataBlockContainer
-  from "components/common/metrics/data_blocks/horizontal/HorizontalThreeDataBlockContainer";
+import ThreeStackedHorizontalMetricsContainer
+  from "components/common/metrics/data_blocks/horizontal/ThreeStackedHorizontalMetricsContainer";
 import SonarRatingsReliabilityDataBlock
   from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlock";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
@@ -78,7 +78,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
     }
 
     return (
-      <HorizontalThreeDataBlockContainer
+      <ThreeStackedHorizontalMetricsContainer
         topDataBlock={
           <SonarRatingsVulnerabilityDataBlock
             kpiConfiguration={kpiConfiguration}

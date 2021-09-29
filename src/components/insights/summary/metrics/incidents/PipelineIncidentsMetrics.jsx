@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import HorizontalThreeDataBlockContainer from "components/common/metrics/data_blocks/horizontal/HorizontalThreeDataBlockContainer";
+import ThreeStackedHorizontalMetricsContainer from "components/common/metrics/data_blocks/horizontal/ThreeStackedHorizontalMetricsContainer";
 import InsightsPipelinesOverviewHelpDocumentation from "components/common/help/documentation/insights/synopsis/InsightsPipelinesOverviewHelpDocumentation";
 import MetricContainer from "components/common/panels/insights/charts/MetricContainer";
 import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
@@ -19,7 +19,7 @@ function PipelineIncidentsMetrics({ dashboardData, toggleDynamicPanel, selectedD
     }
 
     return (
-      <HorizontalThreeDataBlockContainer
+      <ThreeStackedHorizontalMetricsContainer
         topDataBlock={
           <ServiceNowMeanTimeToResolutionDataBlock
             dashboardData={dashboardData}
