@@ -14,7 +14,7 @@
 /* End Metric Text Styling */
 
 /* Data Block Styling */
-.data-block {
+.data-block-focal-text {
     font-size: 2.43rem;
     font-weight: 500;
     font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -38,7 +38,7 @@
     transition: 0.3s;
 }
 
-.data-block-title {
+.data-block-container-title {
     background-color: #46415C;
     color: white;
 }

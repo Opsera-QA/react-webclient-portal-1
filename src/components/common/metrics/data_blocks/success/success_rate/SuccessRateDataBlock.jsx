@@ -4,12 +4,12 @@ import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/T
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
 
-function SuccessPercentageDataBlock({ className, successPercentage, qualityLevel, bottomText, onClickFunction }) {
+function SuccessRateDataBlock({ className, successPercentage, qualityLevel, bottomText, onClickFunction }) {
   return (
     <DataBlockBoxContainer className={className} onClickFunction={onClickFunction}>
       <ThreeLineDataBlockBase
         className={"p-2"}
-        topText={"Success Percentage"}
+        topText={"Success Rate"}
         middleText={<MetricPercentageText percentage={successPercentage} qualityLevel={qualityLevel} />}
         bottomText={bottomText}
       />
@@ -17,7 +17,7 @@ function SuccessPercentageDataBlock({ className, successPercentage, qualityLevel
   );
 }
 
-SuccessPercentageDataBlock.propTypes = {
+SuccessRateDataBlock.propTypes = {
   successPercentage: PropTypes.string,
   className: PropTypes.string,
   qualityLevel: PropTypes.string,
@@ -25,4 +25,4 @@ SuccessPercentageDataBlock.propTypes = {
   onClickFunction: PropTypes.func,
 };
 
-export default SuccessPercentageDataBlock;
+export default SuccessRateDataBlock;
