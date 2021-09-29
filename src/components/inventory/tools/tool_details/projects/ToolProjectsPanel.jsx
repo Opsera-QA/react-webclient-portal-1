@@ -12,7 +12,7 @@ function ToolProjectsPanel({ toolData, loadData, isLoading }) {
     case "jira":
       return <JiraProjectsPanel isLoading={isLoading} toolData={toolData} loadData={loadData}/>;
     case "argo":
-      return <ArgoProject isLoading={isLoading} toolData={toolData} loadData={loadData}/>;
+      return <ArgoProject isLoading={isLoading} toolData={toolData} toolActions={toolData?.getData("projects")} loadData={loadData}/>;
     default:
       return <LoadingDialog message={"Loading Tool Projects"} size={"sm"} />;
     }

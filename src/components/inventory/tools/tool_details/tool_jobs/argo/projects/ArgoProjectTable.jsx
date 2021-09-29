@@ -21,9 +21,8 @@ function ArgoProjectTable({ toolData, argoProjects, loadData, onRowSelect, isLoa
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "service")),
-      getTableTextColumn(getField(fields, "repositoryName")),
-      getTableTextColumn(getField(fields, "repositoryType")),
+      getTableTextColumn(getField(fields, "description")),
+      getTableTextColumn(getField(fields, "sourceRepos")),
     ],
     []
   );
