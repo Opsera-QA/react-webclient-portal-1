@@ -166,4 +166,21 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+chartsActions.getSecondaryInsightsData = async (
+  getAccessToken, 
+  cancelTokenSource, 
+  request,
+  queryData,
+  tableFilterDto
+) => {
+  const apiUrl = "/analytics/secondaryInsights";
+  const postBody = {
+    request: request,
+    page: tableFilterDto?.getData("currentPage"),
+    size: tableFilterDto?.getData("pageSize"),
+    queryData: queryData
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default chartsActions;
