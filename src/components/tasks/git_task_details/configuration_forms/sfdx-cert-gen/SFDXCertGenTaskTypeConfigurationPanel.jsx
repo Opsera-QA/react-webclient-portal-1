@@ -6,7 +6,7 @@ import sfdxCertGenTaskConfigurationMetadata
   from "components/tasks/git_task_details/configuration_forms/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import SFDCJenkinsToolInput from "../sfdc-org-sync/inputs/SFDCJenkinsToolInput";
+import SalesforceOrganizationSyncJenkinsToolSelectInput from "../sfdc-org-sync/inputs/SalesforceOrganizationSyncJenkinsToolSelectInput";
 import AgentLabelsSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
@@ -37,7 +37,7 @@ function SFDXCertGenTaskTypeConfigurationPanel({ gitTasksDataDto, gitTasksConfig
   return (
     <Row>
       <Col lg={12}>
-        <SFDCJenkinsToolInput  dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
+        <SalesforceOrganizationSyncJenkinsToolSelectInput  dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
         <TextInputBase dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"countryName"} />
         <TextInputBase dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"state"} />
         <TextInputBase dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"locality"} />

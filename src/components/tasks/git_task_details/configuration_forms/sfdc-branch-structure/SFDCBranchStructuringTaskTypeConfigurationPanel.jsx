@@ -6,20 +6,22 @@ import sfdcGitBranchTaskConfigurationMetadata
   from "components/tasks/git_task_details/configuration_forms/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import SFDCJenkinsToolInput from "../sfdc-org-sync/inputs/SFDCJenkinsToolInput";
-import SFDCJenkinsAccountInput from "../sfdc-org-sync/inputs/SFDCJenkinsAccountInput";
-import SFDCBitbucketWorkspaceInput from "../sfdc-org-sync/inputs/SFDCBitbucketWorkspaceInput";
-import SFDCGitRepositoryInput from "../sfdc-org-sync/inputs/SFDCGitRepositoryInput";
-import SFDCGitBranchInput from "../sfdc-org-sync/inputs/SFDCGitBranchInput";
+import SFDCJenkinsToolInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncJenkinsToolSelectInput";
+import SFDCJenkinsAccountInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsAccountSelectInput";
+import SFDCGitRepositoryInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskRepositorySelectInput";
+import SFDCGitBranchInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
 import SFDXToolInput from "./inputs/SFDXToolInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import AgentLabelsSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
-import GitBranchTypeSelectionInput from "../sfdc-org-sync/inputs/GitBranchTypeSelectionInput";
+import SalesforceOrganizationSyncTaskBranchTypeSelectInput
+  from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBranchTypeSelectInput";
+import SfdcBitbucketWorkspaceInput
+  from "components/tasks/git_task_details/configuration_forms/sfdc-branch-structure/inputs/SFDCBitbucketWorkspaceInput";
 
 function SFDCBranchStructuringTaskTypeConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   useEffect(() => {loadData();}, []);
 
-  const loadData = async () => {    
+  const loadData = async () => {
     const configurationData = modelHelpers.getToolConfigurationModel(gitTasksDataDto.getData("configuration"), sfdcGitBranchTaskConfigurationMetadata);
     setGitTasksConfigurationData({...configurationData});
   };
@@ -47,13 +49,13 @@ function SFDCBranchStructuringTaskTypeConfigurationPanel({ gitTasksDataDto, gitT
         <SFDXToolInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
       </Col>
       <Col lg={12}>
-        <GitBranchTypeSelectionInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
+        <SalesforceOrganizationSyncTaskBranchTypeSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
       </Col>
       <Col lg={12}>
         <SFDCJenkinsAccountInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} gitTasksDataDto={gitTasksDataDto} />
       </Col>
       <Col lg={12}>
-        <SFDCBitbucketWorkspaceInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
+        <SfdcBitbucketWorkspaceInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
       </Col>
       <Col lg={12}>
         <SFDCGitRepositoryInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />

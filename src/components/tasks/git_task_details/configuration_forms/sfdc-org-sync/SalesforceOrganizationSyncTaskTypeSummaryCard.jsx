@@ -5,7 +5,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TaskSummaryCardContainer from "components/tasks/git_task_details/configuration_forms/TaskSummaryCardContainer";
 import {Row, Col} from "react-bootstrap";
 
-function SFDCGitTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
+function SalesforceOrganizationSyncTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
   if (isLoading) {
     return <TaskSummaryCardContainer isLoading={isLoading} />;
   }
@@ -33,10 +33,10 @@ function SFDCGitTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, is
   );
 }
 
-SFDCGitTaskTypeSummaryCard.propTypes = {
+SalesforceOrganizationSyncTaskTypeSummaryCard.propTypes = {
   gitTasksData: PropTypes.object,
   gitTaskConfigurationData: PropTypes.object,
   isLoading: PropTypes.bool,
 };
 
-export default SFDCGitTaskTypeSummaryCard;
+export default SalesforceOrganizationSyncTaskTypeSummaryCard;

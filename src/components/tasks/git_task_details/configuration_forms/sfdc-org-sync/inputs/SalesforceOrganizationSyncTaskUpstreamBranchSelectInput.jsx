@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 
-function SfdcGitUpstreamBranchInput({dataObject, setDataObject, disabled}) {
+function SalesforceOrganizationSyncTaskUpstreamBranchSelectInput({dataObject, setDataObject, disabled, visible}) {
   const setBranch = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
     newDataObject.setData("upstreamBranch", selectedOption);
@@ -14,7 +14,6 @@ function SfdcGitUpstreamBranchInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("upstreamBranch", "");    
     setDataObject({...newDataObject});
   };
-  
 
   return (
      <GitBranchInput
@@ -28,14 +27,16 @@ function SfdcGitUpstreamBranchInput({dataObject, setDataObject, disabled}) {
        setDataObject={setDataObject}
        disabled={disabled}
        clearDataFunction={clearData}
+       visible={visible}
      />
   );
 }
 
-SfdcGitUpstreamBranchInput.propTypes = {
+SalesforceOrganizationSyncTaskUpstreamBranchSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
+  visible: PropTypes.bool,
 };
 
-export default SfdcGitUpstreamBranchInput;
+export default SalesforceOrganizationSyncTaskUpstreamBranchSelectInput;

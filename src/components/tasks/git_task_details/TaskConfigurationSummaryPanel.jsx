@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import salesforceOrganizationSyncTaskConfigurationMetadata
   from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
-import SFDCGitTaskTypeSummaryCard
-  from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/SFDCGitTaskTypeSummaryCard";
 import SFDCBranchStructuringTaskTypeSummaryCard from "./configuration_forms/sfdc-branch-structure/SFDCBranchStructuringTaskTypeSummaryCard";
 import sfdcGitBranchTaskConfigurationMetadata
   from "components/tasks/git_task_details/configuration_forms/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
@@ -27,13 +25,15 @@ import azureAksClusterTaskConfigurationMetadata
   from "./configuration_forms/azure-cluster-creation/azure-cluster-metadata";
 import {TASK_TYPES} from "components/tasks/task.types";
 import modelHelpers from "components/common/model/modelHelpers";
+import SalesforceOrganizationSyncTaskTypeSummaryCard
+  from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/SalesforceOrganizationSyncTaskTypeSummaryCard";
 
 function TaskConfigurationSummaryPanel({ taskModel }) {
   const getTaskTypeSummaryPanel = () => {
     switch (taskModel?.getData("type")) {
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
         return (
-          <SFDCGitTaskTypeSummaryCard
+          <SalesforceOrganizationSyncTaskTypeSummaryCard
             gitTaskConfigurationData={
               modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), salesforceOrganizationSyncTaskConfigurationMetadata)
             }

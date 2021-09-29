@@ -2,9 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import JenkinsAccountInput from "components/common/list_of_values_input/tools/jenkins/JenkinsAccountInput";
 
-function SfdcJenkinsAccountInput({dataObject, setDataObject, gitTasksDataDto, disabled}) {
+function SalesforceOrganizationSyncTaskJenkinsAccountSelectInput({dataObject, setDataObject, gitTasksDataDto, disabled}) {
   const setJenkinsAccount = (fieldName, selectedOption) => {
-
     let newDataObject = {...dataObject};
     newDataObject.setData("gitCredential", selectedOption.gitCredential);
     newDataObject.setData("gitToolId", selectedOption.toolId);
@@ -16,27 +15,10 @@ function SfdcJenkinsAccountInput({dataObject, setDataObject, gitTasksDataDto, di
     newDataObject.setData("repository", "");
     newDataObject.setData("projectId", "");
     newDataObject.setData("gitBranch", "");
-    newDataObject.setData("branch", "");
     newDataObject.setData("defaultBranch", "");
     newDataObject.setData("sourceBranch", "");
     newDataObject.setData("workspace", "");
     newDataObject.setData("workspaceName", "");
-    setDataObject({...newDataObject});
-  };
-
-  const clearData = () => {
-    let newDataObject = {...dataObject};
-    newDataObject.setData("gitCredential", "");
-    newDataObject.setData("gitToolId", "");
-    gitTasksDataDto.setData("tool_identifier", "");
-    newDataObject.setData("service", "");
-    newDataObject.setData("branch", "");
-    newDataObject.setData("gitUrl", "");
-    newDataObject.setData("sshUrl", "");
-    newDataObject.setData("repository", "");
-    newDataObject.setData("gitBranch", "");
-    newDataObject.setData("workspaceName", "");
-    newDataObject.setData("workspace", "");
     setDataObject({...newDataObject});
   };
 
@@ -49,16 +31,15 @@ function SfdcJenkinsAccountInput({dataObject, setDataObject, gitTasksDataDto, di
        setDataObject={setDataObject}
        setDataFunction={setJenkinsAccount}
        disabled={disabled}
-       clearDataFunction={clearData}
      />
   );
 }
 
-SfdcJenkinsAccountInput.propTypes = {
+SalesforceOrganizationSyncTaskJenkinsAccountSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   gitTasksDataDto: PropTypes.object,
 };
 
-export default SfdcJenkinsAccountInput;
+export default SalesforceOrganizationSyncTaskJenkinsAccountSelectInput;

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SalesforceOrganizationSyncConfigurationEditorPanel from "./sfdc-org-sync/SFDCGitTaskConfigurationPanel";
 import SFDXCertGenTaskTypeConfigurationPanel from "./sfdx-cert-gen/SFDXCertGenTaskTypeConfigurationPanel";
 import SFDCBranchStructuringTaskTypeConfigurationPanel from "./sfdc-branch-structure/SFDCBranchStructuringTaskTypeConfigurationPanel";
 import GitToGitSyncTaskConfigurationEditorPanel from "components/tasks/git_task_details/configuration_forms/branch-to-branch/GitToGitSyncTaskConfigurationEditorPanel";
@@ -9,13 +8,15 @@ import ECSServiceCreationTaskConfigurationPanel from "./ecs-service-creation/ECS
 import AwsLambdaConfigurationPanel from "./aws-lambda-creation/AwsLambdaConfigurationPanel";
 import AzureClusterConfigurationPanel from "./azure-cluster-creation/AzureClusterConfigurationPanel";
 import {TASK_TYPES} from "components/tasks/task.types";
+import SalesforceOrganizationSyncTaskConfigurationEditorPanel
+  from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/SalesforceOrganizationSyncTaskConfigurationEditorPanel";
 
 function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationModel, setTaskConfigurationModel, taskType }) {
   const getConfigurationPanel = () => {
     switch (taskType) {
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
         return (
-          <SalesforceOrganizationSyncConfigurationEditorPanel
+          <SalesforceOrganizationSyncTaskConfigurationEditorPanel
             gitTasksDataDto={taskModel}
             setGitTasksConfigurationData={setTaskConfigurationModel}
             gitTasksConfigurationData={taskConfigurationModel}
