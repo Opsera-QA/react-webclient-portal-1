@@ -17,6 +17,7 @@ import SfdcGitUpstreamBranchInput from "components/tasks/git_task_details/config
 import SFDCGitBranchTextInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitBranchTextInput";
 
 import AgentLabelsSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function SalesforceOrganizationSyncConfigurationEditorPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   useEffect(() => {loadData();}, []);
@@ -39,6 +40,20 @@ function SalesforceOrganizationSyncConfigurationEditorPanel({ gitTasksDataDto, g
       );
     }
   };
+
+  // const getPackageXmlPathInput = () => {
+  //   if (taskConfigurationModel?.getData("includePackageXml") === true) {
+  //     return (
+  //       <Col lg={12}>
+  //         <TextInputBase
+  //           dataObject={taskConfigurationModel}
+  //           setDataObject={setTaskConfigurationModel}
+  //           fieldName={"packageXmlReferencePath"}
+  //         />
+  //       </Col>
+  //     );
+  //   }
+  // };
 
   return (
     <Row>
@@ -77,6 +92,13 @@ function SalesforceOrganizationSyncConfigurationEditorPanel({ gitTasksDataDto, g
         </>
       }
       {getDynamicFields()}
+      {/*<Col lg={12}>*/}
+      {/*  <GitToGitSyncTaskIncludePackageXmlToggleInput*/}
+      {/*    model={taskConfigurationModel}*/}
+      {/*    setModel={setTaskConfigurationModel}*/}
+      {/*  />*/}
+      {/*</Col>*/}
+      {/*{getPackageXmlPathInput()}*/}
     </Row>
   );
 }

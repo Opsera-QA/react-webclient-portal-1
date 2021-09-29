@@ -19,8 +19,6 @@ import GitToGitSyncTaskRepositorySelectInput
   from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskRepositorySelectInput";
 import GitToGitSyncTaskBitbucketWorkspaceSelectInput
   from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskBitbucketWorkspaceSelectInput";
-import GitToGitSyncTaskIncludePackageXmlToggleInput
-  from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskIncludePackageXmlToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function GitToGitSyncTaskConfigurationEditorPanel({ taskModel, taskConfigurationModel, setTaskConfigurationModel }) {
@@ -61,20 +59,6 @@ function GitToGitSyncTaskConfigurationEditorPanel({ taskModel, taskConfiguration
             repository={taskConfigurationModel?.getData("repository")}
             service={taskConfigurationModel?.getData("service")}
             autoApprove={taskConfigurationModel?.getData("autoApprove")}
-          />
-        </Col>
-      );
-    }
-  };
-
-  const getPackageXmlPathInput = () => {
-    if (taskConfigurationModel?.getData("includePackageXml") === true) {
-      return (
-        <Col lg={12}>
-          <TextInputBase
-            dataObject={taskConfigurationModel}
-            setDataObject={setTaskConfigurationModel}
-            fieldName={"packageXmlReferencePath"}
           />
         </Col>
       );
@@ -138,13 +122,6 @@ function GitToGitSyncTaskConfigurationEditorPanel({ taskModel, taskConfiguration
         />
       </Col>
       {getTaskReviewerInput()}
-      {/*<Col lg={12}>*/}
-      {/*  <GitToGitSyncTaskIncludePackageXmlToggleInput*/}
-      {/*    model={taskConfigurationModel}*/}
-      {/*    setModel={setTaskConfigurationModel}*/}
-      {/*  />*/}
-      {/*</Col>*/}
-      {/*{getPackageXmlPathInput()}*/}
     </Row>
   );
 }
