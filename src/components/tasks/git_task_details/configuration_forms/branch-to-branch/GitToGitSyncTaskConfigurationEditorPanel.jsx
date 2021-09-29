@@ -19,8 +19,6 @@ import GitToGitSyncTaskRepositorySelectInput
   from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskRepositorySelectInput";
 import GitToGitSyncTaskBitbucketWorkspaceSelectInput
   from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskBitbucketWorkspaceSelectInput";
-import GitToGitSyncTaskIncludePackageXmlToggleInput
-  from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskIncludePackageXmlToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function GitToGitSyncTaskConfigurationEditorPanel({ taskModel, taskConfigurationModel, setTaskConfigurationModel }) {
