@@ -25,7 +25,7 @@ function TwoLineDataBlockBase({ title, subtitle, className}) {
   return (
     <div className={className}>
       <div className={"p-2 text-center"}>
-        <div className="data-block">
+        <div className="data-block-focal-text">
           {getTitle()}
         </div>
         <div className="w-100 text-muted">

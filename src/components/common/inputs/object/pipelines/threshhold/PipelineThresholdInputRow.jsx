@@ -17,7 +17,8 @@ function PipelineThresholdInputRow(
     disabledThresholdLevels,
     index,
     disabled,
-    updateThresholdRow,
+    updateThresholdCount,
+    updateThresholdLevel,
     deleteThresholdRow,
     count,
     level
@@ -33,7 +34,7 @@ function PipelineThresholdInputRow(
         disabled={disabled || disabledThresholdLevels}
         filter={"contains"}
         placeholder={"Select A Group"}
-        onChange={(newValue) => updateThresholdRow(index, "level", newValue?.value)}
+        onChange={(newValue) => updateThresholdLevel(newValue?.value)}
       />
     );
   };
@@ -57,7 +58,7 @@ function PipelineThresholdInputRow(
           </Col>
           <Col sm={6} className={"pl-1 pr-0"}>
             <StandalonePositiveIntegerNumberTextInput
-              setDataFunction={(newValue) => updateThresholdRow(newValue)}
+              setDataFunction={(newValue) => updateThresholdCount(newValue)}
               disabled={disabled}
               value={count}
             />
@@ -74,7 +75,8 @@ function PipelineThresholdInputRow(
 PipelineThresholdInputRow.propTypes = {
   disabledThresholdLevels: PropTypes.array,
   index: PropTypes.number,
-  updateThresholdRow: PropTypes.func,
+  updateThresholdCount: PropTypes.func,
+  updateThresholdLevel: PropTypes.func,
   deleteThresholdRow: PropTypes.func,
   disabled: PropTypes.bool,
   count: PropTypes.oneOfType([

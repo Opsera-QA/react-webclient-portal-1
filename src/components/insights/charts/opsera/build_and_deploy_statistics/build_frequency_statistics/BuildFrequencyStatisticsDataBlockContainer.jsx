@@ -10,12 +10,18 @@ import SuccessfulDeploymentsDataBlock
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
 import FailedDeploymentsDataBlock
   from "components/common/metrics/data_blocks/deployment/failed_deployments/FailedDeploymentsDataBlock";
-import SuccessRateDataBlock
-  from "components/common/metrics/data_blocks/success/success_rate/SuccessRateDataBlock";
 import Col from "react-bootstrap/Col";
+import AverageDailyDeploymentsDataBlock
+  from "components/common/metrics/data_blocks/deployment/average_daily/AverageDailyDeploymentsDataBlock";
+import AverageDeploymentDurationDataBlock
+  from "components/common/metrics/data_blocks/deployment/average_duration/AverageDeploymentDurationDataBlock";
+import AverageDailyBuildsDataBlock
+  from "components/common/metrics/data_blocks/build/average_daily/AverageDailyBuildsDataBlock";
+import AverageBuildDurationDataBlock
+  from "components/common/metrics/data_blocks/build/average_duration/AverageBuildDurationDataBlock";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function DeploymentStatisticsDataBlockContainer({ dashboardData, kpiConfiguration }) {
+function BuildFrequencyStatisticsDataBlockContainer({ dashboardData, kpiConfiguration }) {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = () => {
@@ -31,55 +37,42 @@ function DeploymentStatisticsDataBlockContainer({ dashboardData, kpiConfiguratio
 
   const getLeftDataBlock = () => {
     return (
-      <SuccessfulDeploymentsDataBlock
+      <AverageDailyBuildsDataBlock
         qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
-        successfulDeploymentCount={120}
-        bottomText={"10% increase"}
-      />
-    );
-  };
-
-  const getMiddleDataBlock = () => {
-    return (
-      <FailedDeploymentsDataBlock
-        qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
-        failedDeploymentCount={10}
-        bottomText={"20% decrease"}
+        averageDailyCount={1.25}
+        bottomText={"0.5% increase"}
       />
     );
   };
 
   const getRightDataBlock = () => {
     return (
-      <SuccessRateDataBlock
-        qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
-        successPercentage={98}
-        bottomText={"Goal 95%"}
+      <AverageBuildDurationDataBlock
+        qualityLevel={METRIC_QUALITY_LEVELS.DANGER}
+        averageDuration={"10 mins"}
+        bottomText={"20% increase"}
       />
     );
   };
 
   return (
     <HorizontalDataBlocksContainer
-      title={"Deployment Statistics"}
+      title={"Build Frequency Statistics"}
       // onClick={() => onRowSelect()}
     >
-      <Col sm={4} className={"p-2"}>
+      <Col sm={6} className={"p-2"}>
         {getLeftDataBlock()}
       </Col>
-      <Col sm={4} className={"p-2"}>
-        {getMiddleDataBlock()}
-      </Col>
-      <Col sm={4} className={"p-2"}>
+      <Col sm={6} className={"p-2"}>
         {getRightDataBlock()}
       </Col>
     </HorizontalDataBlocksContainer>
   );
 }
 
-DeploymentStatisticsDataBlockContainer.propTypes = {
+BuildFrequencyStatisticsDataBlockContainer.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
 };
 
-export default DeploymentStatisticsDataBlockContainer;
+export default BuildFrequencyStatisticsDataBlockContainer;

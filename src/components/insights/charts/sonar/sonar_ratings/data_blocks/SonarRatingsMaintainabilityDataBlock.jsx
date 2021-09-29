@@ -5,7 +5,7 @@ import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar
 import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGradeText";
-import ThreeHorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/ThreeHorizontalDataBlocksContainer";
+import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import PercentageDataBlock from "components/common/metrics/percentage/PercentageDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
@@ -47,45 +47,46 @@ function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration,
 
   const getLeftDataBlock = () => {
     return (
-      <Col sm={"25%"}>
-        <TwoLineGradeDataBlock
-          letterGrade={getSonarMaintainabilityGrade(maintainabilityRating)}
-          subtitle={"Maintainability"}
-        />
-      </Col>
+      <TwoLineGradeDataBlock
+        letterGrade={getSonarMaintainabilityGrade(maintainabilityRating)}
+        subtitle={"Maintainability"}
+      />
     );
   };
 
   const getMiddleDataBlock = () => {
     return (
-      <Col sm={"25%"}>
-        <PercentageDataBlock
-          percentage={technicalDebtRatio}
-          subtitle={"Technical Debt Ratio"}
-        />
-      </Col>
+      <PercentageDataBlock
+        percentage={technicalDebtRatio}
+        subtitle={"Technical Debt Ratio"}
+      />
     );
   };
 
   const getRightDataBlock = () => {
     return (
-      <Col sm={"50%"}>
-        <LegendDataBlock
-          firstItem={"Goal for Maintainability: A"}
-          secondItem={"Technical Debt Ratio: 0 - 5%"}
-        />
-      </Col>
+      <LegendDataBlock
+        firstItem={"Goal for Maintainability: A"}
+        secondItem={"Technical Debt Ratio: 0 - 5%"}
+      />
     );
   };
 
   return (
-    <ThreeHorizontalDataBlocksContainer
+    <HorizontalDataBlocksContainer
       title={"Sonar Ratings: Maintainability"}
       onClick={() => onRowSelect()}
-      leftDataBlock={getLeftDataBlock()}
-      middleDataBlock={getMiddleDataBlock()}
-      rightDataBlock={getRightDataBlock()}
-    />
+     >
+      <Col sm={4}>
+        {getLeftDataBlock()}
+      </Col>
+      <Col sm={4}>
+        {getMiddleDataBlock()}
+      </Col>
+      <Col sm={4}>
+        {getRightDataBlock()}
+      </Col>
+    </HorizontalDataBlocksContainer>
   );
 }
 

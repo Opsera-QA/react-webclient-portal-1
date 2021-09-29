@@ -13,7 +13,7 @@ function ThreeLineDataBlockBase({ middleText, bottomText, topText, className}) {
   };
 
 
-  const getTitle = () => {
+  const getMiddleText = () => {
     if (middleText) {
       return (
         <div>
@@ -39,8 +39,8 @@ function ThreeLineDataBlockBase({ middleText, bottomText, topText, className}) {
         <div className="mt-auto w-100 text-muted">
           {getTopText()}
         </div>
-        <div className="py-3 data-block">
-          {getTitle()}
+        <div className="py-3 data-block-focal-text">
+          {getMiddleText()}
         </div>
         <div className="w-100 text-muted">
           {getSubtitle()}

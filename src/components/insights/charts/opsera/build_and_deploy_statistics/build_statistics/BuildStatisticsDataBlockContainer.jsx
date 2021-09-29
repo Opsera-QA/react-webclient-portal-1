@@ -4,14 +4,18 @@ import Model from "core/data_model/model";
 import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
 import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGradeText";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
-import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
-import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
-import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
+import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
+import SuccessRateDataBlock
+  from "components/common/metrics/data_blocks/success/success_rate/SuccessRateDataBlock";
 import Col from "react-bootstrap/Col";
+import SuccessfulBuildsDataBlock
+  from "components/common/metrics/data_blocks/build/successful_builds/SuccessfulBuildsDataBlock";
+import FailedBuildsDataBlock
+  from "components/common/metrics/data_blocks/build/failed_builds/FailedBuildsDataBlock";
 
-function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, reliabilityRating, bugCount }) {
+// TODO: Pass in relevant data and don't use hardcoded data
+function BuildStatisticsDataBlockContainer({ dashboardData, kpiConfiguration }) {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = () => {
@@ -21,61 +25,44 @@ function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, rel
         dashboardData={dashboardData}
         kpiConfiguration={kpiConfiguration}
         chartModel={chartModel}
-        kpiIdentifier={"sonar-ratings-bugs"} />);
-  };
-
-  const getSonarReliabilityGrade = (rating) => {
-    if (rating <= 1) {
-      return LETTER_GRADES.A;
-    }
-    else if (rating <= 2) {
-      return LETTER_GRADES.B;
-    }
-    else if (rating <= 3) {
-      return LETTER_GRADES.C;
-    }
-    else if (rating <= 4) {
-      return LETTER_GRADES.D;
-    }
-    else if (rating <= 5) {
-      return LETTER_GRADES.E;
-    }
-    else {
-      return "ERROR";
-    }
+        kpiIdentifier={"sonar-ratings-debt-ratio"}
+      />);
   };
 
   const getLeftDataBlock = () => {
     return (
-      <TwoLineGradeDataBlock
-        letterGrade={getSonarReliabilityGrade(reliabilityRating)}
-        subtitle={"Reliability"}
+      <SuccessfulBuildsDataBlock
+        qualityLevel={METRIC_QUALITY_LEVELS.DANGER}
+        successfulBuildCount={100}
+        bottomText={"10% decrease"}
       />
     );
   };
 
   const getMiddleDataBlock = () => {
     return (
-      <TwoLineScoreDataBlock
-        score={bugCount}
-        subtitle={"Bugs"}
+      <FailedBuildsDataBlock
+        qualityLevel={METRIC_QUALITY_LEVELS.DANGER}
+        failedBuildCount={30}
+        bottomText={"20% increase"}
       />
     );
   };
 
   const getRightDataBlock = () => {
     return (
-      <LegendDataBlock
-        firstItem={"Goal for Reliability: A"}
-        // secondItem={"Fix X Bugs"}
+      <SuccessRateDataBlock
+        qualityLevel={METRIC_QUALITY_LEVELS.DANGER}
+        successPercentage={80}
+        bottomText={"Goal: 95%"}
       />
     );
   };
 
   return (
     <HorizontalDataBlocksContainer
-      title={"Sonar Ratings: Reliability"}
-      onClick={() => onRowSelect()}
+      title={"Build Statistics"}
+      // onClick={() => onRowSelect()}
     >
       <Col sm={4} className={"p-2"}>
         {getLeftDataBlock()}
@@ -90,11 +77,9 @@ function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, rel
   );
 }
 
-SonarRatingsReliabilityDataBlock.propTypes = {
+BuildStatisticsDataBlockContainer.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  reliabilityRating: PropTypes.number,
-  bugCount: PropTypes.number,
 };
 
-export default SonarRatingsReliabilityDataBlock;
+export default BuildStatisticsDataBlockContainer;
