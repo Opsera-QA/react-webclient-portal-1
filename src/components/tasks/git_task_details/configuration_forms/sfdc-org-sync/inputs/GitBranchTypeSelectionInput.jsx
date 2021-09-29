@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const branchTypes = [
-  {name: "Ant to SFDX Branch structure", value: "ant-to-sfdx"},
-  {name: "SFDX to Ant Branch Structure", value: "sfdx-to-ant"}
+  {text: "Ant to Salesforce DX Branch Structure", value: "ant-to-sfdx"},
+  {text: "Salesforce DX to Ant Branch Structure", value: "sfdx-to-ant"}
 ];
 
 function GitBranchTypeSelectionInput({ fieldName, dataObject, setDataObject, placeholderText, disabled, setDataFunction }) {

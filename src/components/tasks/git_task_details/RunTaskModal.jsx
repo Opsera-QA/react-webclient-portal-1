@@ -6,10 +6,10 @@ import modelHelpers from "components/common/model/modelHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ModalBase from "components/common/modal/ModalBase";
 import CloseButton from "components/common/buttons/CloseButton";
-import RunTaskButton from "components/common/buttons/tasks/RunTaskButton";
+import RunTaskButton from "components/common/buttons/tasks/run_task/RunTaskButton";
 import SFDCGitBranchInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitBranchInput";
 import SFDCNewBranchBoolInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCNewBranchBoolInput";
-import sfdcGitTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/sfdc-git-task-configuration-metadata";
+import salesforceOrganizationSyncTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
 import ec2ClusterCreationTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/ecs-cluster-creation/ecs-creation-git-task-configuration";
 import sfdxCertGenTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
 import branchToBranchGitTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/branch-to-branch/branch-to-branch-git-task-configuration";
@@ -49,7 +49,7 @@ function RunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, l
     let configurationData;
     switch (gitTasksData.getData("type")) {
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
-        configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), sfdcGitTaskConfigurationMetadata);
+        configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), salesforceOrganizationSyncTaskConfigurationMetadata);
         setDataObj({...configurationData});
         break;
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:

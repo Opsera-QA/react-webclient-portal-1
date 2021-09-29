@@ -1,5 +1,5 @@
-const sfdcGitTaskConfigurationMetadata = {
-  type: "SFDC Git Task Configuration",
+const salesforceOrganizationSyncTaskConfigurationMetadata = {
+  type: "Salesforce Organization Sync Task Configuration",
   fields: [
     {
       label: "Jenkins Tool",
@@ -117,36 +117,51 @@ const sfdcGitTaskConfigurationMetadata = {
       regexDefinitionName: "generalTextWithSpacesSlash",
       maxLength: 50
     },
+    {
+      label: "Include Package XML",
+      id: "includePackageXml"
+    },
+    {
+      label: "Package XML Reference Path",
+      id: "packageXmlReferencePath",
+      regexDefinitionName: "pathField",
+      formText: "Specify where the Package XML needs to be copied or merged with existing Package XML.",
+      isRequiredFunction: (model) => {
+        return model?.getData("includePackageXml") === true;
+      },
+    },
   ],
   newObjectFields:
     {
-    type: "",
-    jobType: "SFDC_GIT_SYNC",
-    toolConfigId: "",
-    autoScaleEnable: false,
-    toolName: "",
-    jobName: "",
-    agentLabels: "",
-    toolJobId: "",
-    projectId: "",
-    buildType: "ant",
-    gitToolId: "",
-    gitUrl: "",
-    sshUrl: "",
-    service: "",
-    gitCredential: "",
-    workspace: "",
-    workspaceName: "",
-    repository: "",
-    gitBranch: "",
-    defaultBranch: "",
-    dependencyType:"",
-    sfdcToolId: "",
-    sfdcToolName: "",
-    accountUsername: "",
-    isNewBranch: false,
-    upstreamBranch: ""
+      type: "",
+      jobType: "SFDC_GIT_SYNC",
+      toolConfigId: "",
+      autoScaleEnable: false,
+      toolName: "",
+      jobName: "",
+      agentLabels: "",
+      toolJobId: "",
+      projectId: "",
+      buildType: "ant",
+      gitToolId: "",
+      gitUrl: "",
+      sshUrl: "",
+      service: "",
+      gitCredential: "",
+      workspace: "",
+      workspaceName: "",
+      repository: "",
+      gitBranch: "",
+      defaultBranch: "",
+      dependencyType: "",
+      sfdcToolId: "",
+      sfdcToolName: "",
+      accountUsername: "",
+      isNewBranch: false,
+      upstreamBranch: "",
+      includePackageXml: false,
+      packageXmlReferencePath: "",
     }
 };
 
-export default sfdcGitTaskConfigurationMetadata;
+export default salesforceOrganizationSyncTaskConfigurationMetadata;
