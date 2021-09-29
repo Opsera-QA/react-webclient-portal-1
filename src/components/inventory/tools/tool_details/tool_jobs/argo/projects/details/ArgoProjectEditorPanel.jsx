@@ -14,6 +14,7 @@ import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete
 import ArgoRepositoryInput from "./inputs/ArgoRepositoryInput";
 import ArgoClusterNamespaceInput from "./inputs/ArgoClusterNamespaceInput";
 import ArgoGroupKindInput from "./inputs/ArgoGroupKindInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function ArgoProjectEditorPanel({ argoProjectData, toolData, repoId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -55,6 +56,7 @@ function ArgoProjectEditorPanel({ argoProjectData, toolData, repoId, handleClose
 
   const createProject = async () => {
     console.log(argoProjectModel);
+    console.log(argoProjectModel.checkCurrentValidity());
     // return await argoActions.createArgoProject(getAccessToken, cancelTokenSource, toolData?._id, argoProjectModel);
   };
 
@@ -138,6 +140,13 @@ function ArgoProjectEditorPanel({ argoProjectData, toolData, repoId, handleClose
               setDataObject={setArgoProjectModel}
               dataObject={argoProjectModel}
               fieldName={"namespaceResourceWhitelist"}
+            />
+          </Col>
+          <Col lg={12}>
+            <BooleanToggleInput 
+              setDataObject={setArgoProjectModel}
+              dataObject={argoProjectModel}
+              fieldName={"orphanedResources"}
             />
           </Col>
         </Row>

@@ -49,16 +49,15 @@ const argoProjectMetadata = {
       formText: "Namespace-scoped K8s API Groups and Kinfs which are prohibited from being deloyed"
     },
     {
-      label: "namespaceResourceWhitelist",
+      label: "Whitelisted Namespaced Resources",
       id: "namespaceResourceWhitelist",
       isRequired: true,
-      formText: "Name cannot contain spaces."
+      formText: "Namespace-scoped K8s API Groups and Kinds which are permitted to deploy"
     },
     {
-      label: "orphanedResources",
+      label: "Orphaned Resource Monitoring (Warn)",
       id: "orphanedResources",
-      isRequired: true,
-      formText: "Name cannot contain spaces."
+      formText: "Enables monitoring of top level resources in the application target namespace"
     },
   ],
   newObjectFields: {
@@ -66,11 +65,11 @@ const argoProjectMetadata = {
     gitToolId: "",
     sourceRepos: "",
     description: "",
-    destinations: [],
-    clusterResourceWhitelist: [],
-    namespaceResourceBlacklist: [],
-    namespaceResourceWhitelist: [],    
-    orphanedResources: {}
+    destinations: "",
+    clusterResourceWhitelist: "",
+    namespaceResourceBlacklist: "",
+    namespaceResourceWhitelist: "",    
+    orphanedResources: false
   }
 };
 

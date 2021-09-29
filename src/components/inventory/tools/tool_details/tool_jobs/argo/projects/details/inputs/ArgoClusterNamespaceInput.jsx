@@ -9,7 +9,7 @@ function ArgoClusterNamespaceInput({ dataObject, setDataObject, disabled, fieldN
       dataObject={dataObject}
       setDataObject={setDataObject}
       fieldName={fieldName}
-      allowIncompleteItems={true}
+      allowIncompleteItems={false}
       disabled={disabled}
     />
   );

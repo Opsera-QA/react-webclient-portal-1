@@ -9,7 +9,7 @@ function ArgoGroupKindInput({ dataObject, setDataObject, disabled, fieldName}) {
       dataObject={dataObject}
       setDataObject={setDataObject}
       fieldName={fieldName}
-      allowIncompleteItems={true}
+      allowIncompleteItems={false}
       disabled={disabled}
     />
   );
