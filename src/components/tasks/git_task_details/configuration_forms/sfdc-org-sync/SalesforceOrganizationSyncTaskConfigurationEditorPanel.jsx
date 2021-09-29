@@ -22,79 +22,111 @@ import SalesforceOrganizationSyncTaskJenkinsAccountSelectInput
   from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsAccountSelectInput";
 import SalesforceOrganizationSyncJenkinsToolSelectInput
   from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncJenkinsToolSelectInput";
+import SalesforceOrganizationSyncTaskIncludePackageXmlToggleInput
+  from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskIncludePackageXmlToggleInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
-function SalesforceOrganizationSyncTaskConfigurationEditorPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
+function SalesforceOrganizationSyncTaskConfigurationEditorPanel({ taskModel, taskConfigurationModel, setTaskConfigurationModel }) {
   useEffect(() => {loadData();}, []);
 
   const loadData = async () => {    
-    const configurationData = modelHelpers.getToolConfigurationModel(gitTasksDataDto.getData("configuration"), salesforceOrganizationSyncTaskConfigurationMetadata);
-    setGitTasksConfigurationData({...configurationData});
+    const configurationData = modelHelpers.getToolConfigurationModel(taskModel.getData("configuration"), salesforceOrganizationSyncTaskConfigurationMetadata);
+    setTaskConfigurationModel({...configurationData});
   };
 
-  if (gitTasksDataDto == null || gitTasksConfigurationData == null) {
+  if (taskModel == null || taskConfigurationModel == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
   const getDynamicFields = () => {
-    if(gitTasksConfigurationData.getData("autoScaleEnable") === true){
+    if(taskConfigurationModel.getData("autoScaleEnable") === true){
       return (
         <Col lg={12}>
-          <AgentLabelsSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"agentLabels"} />
+          <AgentLabelsSelectInput
+            dataObject={taskConfigurationModel}
+            setDataObject={setTaskConfigurationModel}
+            fieldName={"agentLabels"}
+          />
         </Col>
       );
     }
   };
 
-  // const getPackageXmlPathInput = () => {
-  //   if (taskConfigurationModel?.getData("includePackageXml") === true) {
-  //     return (
-  //       <Col lg={12}>
-  //         <TextInputBase
-  //           dataObject={taskConfigurationModel}
-  //           setDataObject={setTaskConfigurationModel}
-  //           fieldName={"packageXmlReferencePath"}
-  //         />
-  //       </Col>
-  //     );
-  //   }
-  // };
+  const getPackageXmlPathInput = () => {
+    if (taskConfigurationModel?.getData("includePackageXml") === true) {
+      return (
+        <Col lg={12}>
+          <TextInputBase
+            dataObject={taskConfigurationModel}
+            setDataObject={setTaskConfigurationModel}
+            fieldName={"packageXmlReferencePath"}
+          />
+        </Col>
+      );
+    }
+  };
 
   return (
     <Row>
       <Col lg={12}>
-        <SalesforceOrganizationSyncJenkinsToolSelectInput  dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
-      </Col>
-      <Col lg={12}>
-        <SalesforceOrganizationSyncSalesforceToolSelectInput
-          dataObject={gitTasksConfigurationData}
-          setDataObject={setGitTasksConfigurationData}
+        <SalesforceOrganizationSyncJenkinsToolSelectInput
+          dataObject={taskConfigurationModel}
+          setDataObject={setTaskConfigurationModel}
         />
       </Col>
       <Col lg={12}>
-        <SalesforceOrganizationSyncTaskJenkinsAccountSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} gitTasksDataDto={gitTasksDataDto} />
+        <SalesforceOrganizationSyncSalesforceToolSelectInput
+          dataObject={taskConfigurationModel}
+          setDataObject={setTaskConfigurationModel}
+        />
       </Col>
       <Col lg={12}>
-        <SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
+        <SalesforceOrganizationSyncTaskJenkinsAccountSelectInput
+          dataObject={taskConfigurationModel}
+          setDataObject={setTaskConfigurationModel}
+          gitTasksDataDto={taskModel}
+        />
       </Col>
       <Col lg={12}>
-        <SalesforceOrganizationSyncTaskRepositorySelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
+        <SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
+          dataObject={taskConfigurationModel}
+          setDataObject={setTaskConfigurationModel}
+        />
       </Col>
       <Col lg={12}>
-        <SalesforceOrganizationSyncTaskGitBranchSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} visible={!(gitTasksConfigurationData?.getData("isNewBranch"))}/>
+        <SalesforceOrganizationSyncTaskRepositorySelectInput
+          dataObject={taskConfigurationModel}
+          setDataObject={setTaskConfigurationModel}
+        />
       </Col>
       <Col lg={12}>
-        <SalesforceOrganizationSyncTaskNewBranchToggleInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
+        <SalesforceOrganizationSyncTaskGitBranchSelectInput
+          dataObject={taskConfigurationModel}
+          setDataObject={setTaskConfigurationModel}
+          visible={!(taskConfigurationModel?.getData("isNewBranch"))}
+        />
       </Col>
-      {gitTasksConfigurationData?.getData("isNewBranch") && 
+      <Col lg={12}>
+        <SalesforceOrganizationSyncTaskNewBranchToggleInput
+          dataObject={taskConfigurationModel}
+          setDataObject={setTaskConfigurationModel}
+        />
+      </Col>
+      {taskConfigurationModel?.getData("isNewBranch") &&
         <>
           <Col lg={12}>
             <SalesforceOrganizationSyncTaskGitBranchTextInput
               fieldName={"gitBranch"}
-              dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} visible={gitTasksConfigurationData?.getData("isNewBranch")}
+              dataObject={taskConfigurationModel}
+              setDataObject={setTaskConfigurationModel}
+              visible={taskConfigurationModel?.getData("isNewBranch")}
             />
           </Col>
           <Col lg={12}>
-            <SalesforceOrganizationSyncTaskUpstreamBranchSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
+            <SalesforceOrganizationSyncTaskUpstreamBranchSelectInput
+              dataObject={taskConfigurationModel}
+              setDataObject={setTaskConfigurationModel}
+            />
           </Col>
         </>
       }
@@ -111,9 +143,9 @@ function SalesforceOrganizationSyncTaskConfigurationEditorPanel({ gitTasksDataDt
 }
 
 SalesforceOrganizationSyncTaskConfigurationEditorPanel.propTypes = {
-  gitTasksDataDto: PropTypes.object,
-  gitTasksConfigurationData: PropTypes.object,
-  setGitTasksConfigurationData: PropTypes.func,
+  taskModel: PropTypes.object,
+  taskConfigurationModel: PropTypes.object,
+  setTaskConfigurationModel: PropTypes.func,
 };
 
 export default SalesforceOrganizationSyncTaskConfigurationEditorPanel;
