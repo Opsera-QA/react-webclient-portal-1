@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function ThreeLineDataBlockBase({ title, subtitle, topText, className}) {
+function ThreeLineDataBlockBase({ middleText, bottomText, topText, className}) {
   const getTopText = () => {
     if (topText) {
       return (
@@ -14,20 +14,20 @@ function ThreeLineDataBlockBase({ title, subtitle, topText, className}) {
 
 
   const getTitle = () => {
-    if (title) {
+    if (middleText) {
       return (
         <div>
-          {title}
+          {middleText}
         </div>
       );
     }
   };
 
   const getSubtitle = () => {
-    if (subtitle) {
+    if (bottomText) {
       return (
         <div>
-          {subtitle}
+          {bottomText}
         </div>
       );
     }
@@ -52,8 +52,8 @@ function ThreeLineDataBlockBase({ title, subtitle, topText, className}) {
 
 ThreeLineDataBlockBase.propTypes = {
   topText: PropTypes.any,
-  title: PropTypes.any,
-  subtitle: PropTypes.any,
+  middleText: PropTypes.any,
+  bottomText: PropTypes.any,
   className: PropTypes.string
 };
 
