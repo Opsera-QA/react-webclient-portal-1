@@ -7,6 +7,7 @@ export const branchTypes = [
   {text: "Salesforce DX to Ant Branch Structure", value: "sfdx-to-ant"}
 ];
 
+// TODO: Should this be moved to common?
 function SalesforceOrganizationSyncTaskBranchTypeSelectInput({ fieldName, dataObject, setDataObject, placeholderText, disabled, setDataFunction }) {
   return (
     <SelectInputBase
@@ -17,7 +18,7 @@ function SalesforceOrganizationSyncTaskBranchTypeSelectInput({ fieldName, dataOb
       placeholderText={placeholderText}
       setDataFunction={setDataFunction}
       valueField="value"
-      textField="name"
+      textField="text"
       disabled={disabled}
     />
   );
