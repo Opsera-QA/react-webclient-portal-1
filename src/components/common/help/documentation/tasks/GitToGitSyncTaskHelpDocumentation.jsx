@@ -6,7 +6,7 @@ import { getTaskTypeLabel, TASK_TYPES } from "../../../../tasks/task.types";
 function GitToGitSyncTaskHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer helpTopic={getTaskTypeLabel(TASK_TYPES.SYNC_GIT_BRANCHES)} closeHelpPanel={closeHelpPanel}>
-      <div className={"mb-1"}>The <b>{getTaskTypeLabel(TASK_TYPES.SYNC_GIT_BRANCHES)}</b> Task merges one source control management (SCM) branch into to another. This workflow requires a configured source control management(SCM) tool in Tool Registry. Once the task has been created, you must select the <b>Run Task</b> button to complete the task.</div>
+      <div className={"mb-1"}>The <b>{getTaskTypeLabel(TASK_TYPES.SYNC_GIT_BRANCHES)}</b> Task merges one source control management (SCM) branch into another. This workflow requires a configured source control management(SCM) tool in Tool Registry. Once the task has been created, you must select the <b>Run Task</b> button to complete the task.</div>
       <div className={"mt-2"}><h5>Task Setup Instructions:</h5></div>
       <ol>
         <li>Select <b>{getTaskTypeLabel(TASK_TYPES.SYNC_GIT_BRANCHES)}</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:
