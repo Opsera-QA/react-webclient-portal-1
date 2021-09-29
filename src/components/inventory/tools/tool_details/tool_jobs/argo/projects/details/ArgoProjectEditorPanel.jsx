@@ -54,11 +54,12 @@ function ArgoProjectEditorPanel({ argoProjectData, toolData, repoId, handleClose
   };
 
   const createProject = async () => {
-    // return await argoActions.createArgoProject(getAccessToken, cancelTokenSource, toolData?._id, argoRepositoryModel);
+    console.log(argoProjectModel);
+    // return await argoActions.createArgoProject(getAccessToken, cancelTokenSource, toolData?._id, argoProjectModel);
   };
 
   const updateProject = async () => {
-    // return await argoActions.updateArgoProject(getAccessToken, cancelTokenSource, toolData?._id, repoId, argoRepositoryModel);
+    // return await argoActions.updateArgoProject(getAccessToken, cancelTokenSource, toolData?._id, repoId, argoProjectModel);
   };
 
   const deleteProject = async () => {
@@ -130,6 +131,13 @@ function ArgoProjectEditorPanel({ argoProjectData, toolData, repoId, handleClose
               setDataObject={setArgoProjectModel}
               dataObject={argoProjectModel}
               fieldName={"namespaceResourceBlacklist"}
+            />
+          </Col>
+          <Col lg={12}>
+            <ArgoGroupKindInput
+              setDataObject={setArgoProjectModel}
+              dataObject={argoProjectModel}
+              fieldName={"namespaceResourceWhitelist"}
             />
           </Col>
         </Row>
