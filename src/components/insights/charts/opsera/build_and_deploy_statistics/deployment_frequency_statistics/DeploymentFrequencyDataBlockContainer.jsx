@@ -4,15 +4,16 @@ import Model from "core/data_model/model";
 import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
 import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import ThreeHorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/ThreeHorizontalDataBlocksContainer";
+import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import SuccessfulDeploymentsDataBlock
   from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/successful_deployments/SuccessfulDeploymentsDataBlock";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
 import FailedDeploymentsDataBlock
-  from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/failed_deployements/FailedDeploymentsDataBlock";
+  from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/failed_deployments/FailedDeploymentsDataBlock";
 import SuccessPercentageDataBlock
   from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/success_percentage/SuccessPercentageDataBlock";
+import Col from "react-bootstrap/Col";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function DeploymentFrequencyDataBlockContainer({ dashboardData, kpiConfiguration }) {
@@ -60,13 +61,20 @@ function DeploymentFrequencyDataBlockContainer({ dashboardData, kpiConfiguration
   };
 
   return (
-    <ThreeHorizontalDataBlocksContainer
+    <HorizontalDataBlocksContainer
       title={"Deployment Statistics"}
       // onClick={() => onRowSelect()}
-      leftDataBlock={getLeftDataBlock()}
-      middleDataBlock={getMiddleDataBlock()}
-      rightDataBlock={getRightDataBlock()}
-    />
+    >
+      <Col sm={4}>
+        {getLeftDataBlock()}
+      </Col>
+      <Col sm={4}>
+        {getMiddleDataBlock()}
+      </Col>
+      <Col sm={4}>
+        {getRightDataBlock()}
+      </Col>
+    </HorizontalDataBlocksContainer>
   );
 }
 
