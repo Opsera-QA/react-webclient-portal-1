@@ -54,7 +54,10 @@ const ansibleStepFormMetadata = {
       label: "Playbook File Path",
       id: "playbookFilePath",
     },
-    
+    {
+      label: "Playbook Command Arguments",
+      id: "commandArgs",
+    },
   ],
   newObjectFields: {
     toolConfigId: "",
@@ -70,7 +73,7 @@ const ansibleStepFormMetadata = {
     defaultBranch: "",
     playbookFileName : "",
     playbookFilePath : "",
-    
+    commandArgs: {},
   }
 };
 
