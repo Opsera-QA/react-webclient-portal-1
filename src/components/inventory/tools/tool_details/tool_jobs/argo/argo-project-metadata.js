@@ -2,13 +2,6 @@ const argoProjectMetadata = {
   type: "Argo Project",
   fields: [
     {
-      label: "Argo Tool",
-      id: "toolId",
-      isRequired: true,
-      maxLength: 24,
-      regexDefinitionName: "mongoId",
-    },
-    {
       label: "Name",
       id: "name",
       isRequired: true,
@@ -62,13 +55,12 @@ const argoProjectMetadata = {
   ],
   newObjectFields: {
     name: "",
-    gitToolId: "",
     sourceRepos: "",
     description: "",
-    destinations: "",
-    clusterResourceWhitelist: "",
-    namespaceResourceBlacklist: "",
-    namespaceResourceWhitelist: "",    
+    destinations: {},
+    clusterResourceWhitelist: {},
+    namespaceResourceBlacklist: {},
+    namespaceResourceWhitelist: {},    
     orphanedResources: false
   }
 };

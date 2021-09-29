@@ -57,15 +57,15 @@ function ArgoProjectEditorPanel({ argoProjectData, toolData, repoId, handleClose
   const createProject = async () => {
     console.log(argoProjectModel);
     console.log(argoProjectModel.checkCurrentValidity());
-    // return await argoActions.createArgoProject(getAccessToken, cancelTokenSource, toolData?._id, argoProjectModel);
+    return await argoActions.createArgoProject(getAccessToken, cancelTokenSource, toolData?._id, argoProjectModel);
   };
 
   const updateProject = async () => {
-    // return await argoActions.updateArgoProject(getAccessToken, cancelTokenSource, toolData?._id, repoId, argoProjectModel);
+    return await argoActions.updateArgoProject(getAccessToken, cancelTokenSource, toolData?._id, repoId, argoProjectModel);
   };
 
   const deleteProject = async () => {
-    // await argoActions.deleteArgoProject(getAccessToken, cancelTokenSource, toolData?._id, repoId);
+    await argoActions.deleteArgoProject(getAccessToken, cancelTokenSource, toolData?._id, repoId);
     handleClose();
   };
 
