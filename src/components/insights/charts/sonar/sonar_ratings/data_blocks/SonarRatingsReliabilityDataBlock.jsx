@@ -9,6 +9,7 @@ import ThreeHorizontalDataBlocksContainer from "components/common/metrics/data_b
 import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
+import Col from "react-bootstrap/Col";
 
 function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, reliabilityRating, bugCount }) {
   const toastContext = useContext(DialogToastContext);
@@ -46,28 +47,34 @@ function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, rel
 
   const getLeftDataBlock = () => {
     return (
-      <TwoLineGradeDataBlock
-        letterGrade={getSonarReliabilityGrade(reliabilityRating)}
-        subtitle={"Reliability"}
-      />
+      <Col sm={"25%"}>
+        <TwoLineGradeDataBlock
+          letterGrade={getSonarReliabilityGrade(reliabilityRating)}
+          subtitle={"Reliability"}
+        />
+      </Col>
     );
   };
 
   const getMiddleDataBlock = () => {
     return (
-      <TwoLineScoreDataBlock
-        score={bugCount}
-        subtitle={"Bugs"}
-      />
+      <Col sm={"25%"}>
+        <TwoLineScoreDataBlock
+          score={bugCount}
+          subtitle={"Bugs"}
+        />
+      </Col>
     );
   };
 
   const getRightDataBlock = () => {
     return (
-      <LegendDataBlock
-        firstItem={"Goal for Reliability: A"}
-        // secondItem={"Fix X Bugs"}
-      />
+      <Col sm={"50%"}>
+        <LegendDataBlock
+          firstItem={"Goal for Reliability: A"}
+          // secondItem={"Fix X Bugs"}
+        />
+      </Col>
     );
   };
 
