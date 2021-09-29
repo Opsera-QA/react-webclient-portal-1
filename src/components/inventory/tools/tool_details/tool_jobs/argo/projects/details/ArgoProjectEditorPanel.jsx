@@ -16,7 +16,7 @@ import ArgoClusterNamespaceInput from "./inputs/ArgoClusterNamespaceInput";
 import ArgoGroupKindInput from "./inputs/ArgoGroupKindInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function ArgoProjectEditorPanel({ argoProjectData, toolData, repoId, handleClose }) {
+function ArgoProjectEditorPanel({ argoProjectData, toolData, projId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [argoProjectModel, setArgoProjectModel] = useState(undefined);
@@ -61,11 +61,11 @@ function ArgoProjectEditorPanel({ argoProjectData, toolData, repoId, handleClose
   };
 
   const updateProject = async () => {
-    return await argoActions.updateArgoProject(getAccessToken, cancelTokenSource, toolData?._id, repoId, argoProjectModel);
+    return await argoActions.updateArgoProject(getAccessToken, cancelTokenSource, toolData?._id, projId, argoProjectModel);
   };
 
   const deleteProject = async () => {
-    await argoActions.deleteArgoProject(getAccessToken, cancelTokenSource, toolData?._id, repoId);
+    await argoActions.deleteArgoProject(getAccessToken, cancelTokenSource, toolData?._id, projId);
     handleClose();
   };
 
@@ -159,7 +159,7 @@ ArgoProjectEditorPanel.propTypes = {
   argoProjectData: PropTypes.object,
   toolData: PropTypes.object,
   loadData: PropTypes.func,
-  repoId: PropTypes.string,
+  projId: PropTypes.string,
   handleClose: PropTypes.func
 };
 
