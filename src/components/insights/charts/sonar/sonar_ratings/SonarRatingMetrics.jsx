@@ -16,7 +16,6 @@ import SonarRatingsReliabilityDataBlock
   from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlock";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 
-// TODO: Replace SonarRatings once verified
 function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
