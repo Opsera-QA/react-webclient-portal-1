@@ -125,7 +125,10 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
       label: "Package XML Reference Path",
       id: "packageXmlReferencePath",
       regexDefinitionName: "pathField",
-      formText: "Specify where the Package XML needs to be copied or merged with existing Package XML.",
+      formText: `
+      Specify where the Package XML needs to be copied or merged with existing Package XML. 
+      In order to have the Package XML updated in current directory, give the path as '.' (dot).
+      `,
       isRequiredFunction: (model) => {
         return model?.getData("includePackageXml") === true;
       },
