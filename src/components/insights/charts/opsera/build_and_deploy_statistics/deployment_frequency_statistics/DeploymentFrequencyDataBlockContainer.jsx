@@ -5,6 +5,7 @@ import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar
 import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import ThreeHorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/ThreeHorizontalDataBlocksContainer";
+import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import SuccessfulDeploymentsDataBlock
   from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/successful_deployments/SuccessfulDeploymentsDataBlock";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
@@ -14,7 +15,7 @@ import SuccessPercentageDataBlock
   from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/success_percentage/SuccessPercentageDataBlock";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function DeploymentStatisticsDataBlockContainer({ dashboardData, kpiConfiguration }) {
+function DeploymentFrequencyDataBlockContainer({ dashboardData, kpiConfiguration }) {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = () => {
@@ -69,9 +70,9 @@ function DeploymentStatisticsDataBlockContainer({ dashboardData, kpiConfiguratio
   );
 }
 
-DeploymentStatisticsDataBlockContainer.propTypes = {
+DeploymentFrequencyDataBlockContainer.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
 };
 
-export default DeploymentStatisticsDataBlockContainer;
+export default DeploymentFrequencyDataBlockContainer;

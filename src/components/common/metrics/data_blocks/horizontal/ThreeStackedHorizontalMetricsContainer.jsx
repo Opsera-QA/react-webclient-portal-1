@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function HorizontalThreeDataBlockContainer({topDataBlock, middleDataBlock, bottomDataBlock, className, height}) {
+function ThreeStackedHorizontalMetricsContainer({topDataBlock, middleDataBlock, bottomDataBlock, className, height}) {
   return (
     <div className={className} style={{height: height}}>
       <div className={"mb-1"}>
@@ -17,7 +17,7 @@ function HorizontalThreeDataBlockContainer({topDataBlock, middleDataBlock, botto
   );
 }
 
-HorizontalThreeDataBlockContainer.propTypes = {
+ThreeStackedHorizontalMetricsContainer.propTypes = {
   topDataBlock: PropTypes.any,
   middleDataBlock: PropTypes.any,
   bottomDataBlock: PropTypes.any,
@@ -25,4 +25,4 @@ HorizontalThreeDataBlockContainer.propTypes = {
   height: PropTypes.string,
 };
 
-export default HorizontalThreeDataBlockContainer;
+export default ThreeStackedHorizontalMetricsContainer;

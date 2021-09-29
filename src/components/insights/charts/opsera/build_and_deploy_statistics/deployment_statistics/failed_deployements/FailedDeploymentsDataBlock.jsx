@@ -4,25 +4,25 @@ import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/T
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 
-function SuccessfulDeploymentsDataBlock({ className, successfulDeploymentCount, qualityLevel, bottomText, onClickFunction }) {
+function FailedDeploymentsDataBlock({ className, failedDeploymentCount, qualityLevel, bottomText, onClickFunction }) {
   return (
     <DataBlockBoxContainer className={className} onClickFunction={onClickFunction}>
       <ThreeLineDataBlockBase
         className={"p-2"}
-        topText={"Successful Deployments"}
-        middleText={<MetricScoreText score={successfulDeploymentCount} qualityLevel={qualityLevel} />}
+        topText={"Failed Deployments"}
+        middleText={<MetricScoreText score={failedDeploymentCount} qualityLevel={qualityLevel} />}
         bottomText={bottomText}
       />
     </DataBlockBoxContainer>
   );
 }
 
-SuccessfulDeploymentsDataBlock.propTypes = {
-  successfulDeploymentCount: PropTypes.number,
+FailedDeploymentsDataBlock.propTypes = {
+  failedDeploymentCount: PropTypes.number,
   className: PropTypes.string,
   qualityLevel: PropTypes.string,
   bottomText: PropTypes.string,
   onClickFunction: PropTypes.func,
 };
 
-export default SuccessfulDeploymentsDataBlock;
+export default FailedDeploymentsDataBlock;
