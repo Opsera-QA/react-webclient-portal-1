@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SFDCGitTaskEditorPanel from "./sfdc-org-sync/SFDCGitTaskConfigurationPanel";
+import SalesforceOrganizationSyncTaskConfigurationEditorPanel from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/SalesforceOrganizationSyncTaskConfigurationEditorPanel";
 import SFDXCertGenTaskTypeConfigurationPanel from "./sfdx-cert-gen/SFDXCertGenTaskTypeConfigurationPanel";
-import GitToGitSyncTaskConfigurationPanel from "components/tasks/git_task_details/configuration_forms/branch-to-branch/GitToGitSyncTaskConfigurationPanel";
+import GitToGitSyncTaskConfigurationEditorPanel from "components/tasks/git_task_details/configuration_forms/branch-to-branch/GitToGitSyncTaskConfigurationEditorPanel";
 import ECSCreationTaskConfigurationPanel from "./ecs-cluster-creation/ECSCreationTaskConfigurationPanel";
 import ECSServiceCreationTaskConfigurationPanel from "./ecs-service-creation/ECSServiceCreationTaskConfigurationPanel";
 import AwsLambdaConfigurationPanel from "./aws-lambda-creation/AwsLambdaConfigurationPanel";
@@ -16,10 +16,10 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
     switch (taskType) {
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
         return (
-          <SFDCGitTaskEditorPanel 
-            gitTasksDataDto={taskModel}
-            setGitTasksConfigurationData={setTaskConfigurationModel}
-            gitTasksConfigurationData={taskConfigurationModel}
+          <SalesforceOrganizationSyncTaskConfigurationEditorPanel
+            taskModel={taskModel}
+            setTaskConfigurationModel={setTaskConfigurationModel}
+            taskConfigurationModel={taskConfigurationModel}
           />
         );
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
@@ -40,7 +40,7 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
         ); 
       case TASK_TYPES.SYNC_GIT_BRANCHES:
         return (
-          <GitToGitSyncTaskConfigurationPanel
+          <GitToGitSyncTaskConfigurationEditorPanel
             taskModel={taskModel}
             setTaskConfigurationModel={setTaskConfigurationModel}
             taskConfigurationModel={taskConfigurationModel}

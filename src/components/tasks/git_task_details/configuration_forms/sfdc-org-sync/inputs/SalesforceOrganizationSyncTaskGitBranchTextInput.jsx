@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
-function SFDCGitBranchTextInput({dataObject, setDataObject, disabled, visible}) {
+function SalesforceOrganizationSyncTaskGitBranchTextInput({dataObject, setDataObject, disabled, visible}) {
   const setBranch = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
     newDataObject.setData("gitBranch", selectedOption);
@@ -24,16 +24,16 @@ function SFDCGitBranchTextInput({dataObject, setDataObject, disabled, visible}) 
   );
 }
 
-SFDCGitBranchTextInput.propTypes = {
+SalesforceOrganizationSyncTaskGitBranchTextInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
 };
 
-SFDCGitBranchTextInput.defaultProps = {
+SalesforceOrganizationSyncTaskGitBranchTextInput.defaultProps = {
   visible: true,
 };
 
 
-export default SFDCGitBranchTextInput;
+export default SalesforceOrganizationSyncTaskGitBranchTextInput;

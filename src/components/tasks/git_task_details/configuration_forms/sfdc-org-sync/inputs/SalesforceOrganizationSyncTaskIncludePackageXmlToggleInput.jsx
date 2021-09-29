@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function GitToGitSyncTaskIncludePackageXmlToggleInput({model, setModel, disabled}) {
+function SalesforceOrganizationSyncTaskIncludePackageXmlToggleInput({model, setModel, disabled}) {
   return (
     <BooleanToggleInput
       dataObject={model}
@@ -13,10 +13,10 @@ function GitToGitSyncTaskIncludePackageXmlToggleInput({model, setModel, disabled
   );
 }
 
-GitToGitSyncTaskIncludePackageXmlToggleInput.propTypes = {
+SalesforceOrganizationSyncTaskIncludePackageXmlToggleInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default GitToGitSyncTaskIncludePackageXmlToggleInput;
+export default SalesforceOrganizationSyncTaskIncludePackageXmlToggleInput;

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function SFDCNewBranchBoolInput({dataObject, setDataObject, disabled}) {
+function SalesforceOrganizationSyncTaskNewBranchToggleInput({dataObject, setDataObject, disabled}) {
   const setNewBranch = (fieldName, value) => {
     let newDataObject = {...dataObject};
     newDataObject.setData("isNewBranch", value);
@@ -23,10 +23,10 @@ function SFDCNewBranchBoolInput({dataObject, setDataObject, disabled}) {
   );
 }
 
-SFDCNewBranchBoolInput.propTypes = {
+SalesforceOrganizationSyncTaskNewBranchToggleInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default SFDCNewBranchBoolInput;
+export default SalesforceOrganizationSyncTaskNewBranchToggleInput;

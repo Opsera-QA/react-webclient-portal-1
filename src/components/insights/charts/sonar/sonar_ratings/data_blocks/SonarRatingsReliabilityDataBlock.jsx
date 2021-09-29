@@ -5,10 +5,11 @@ import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar
 import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGradeText";
-import HorizontalDataBlockContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlockContainer";
+import ThreeHorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/ThreeHorizontalDataBlocksContainer";
 import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
+import Col from "react-bootstrap/Col";
 
 function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, reliabilityRating, bugCount }) {
   const toastContext = useContext(DialogToastContext);
@@ -46,33 +47,39 @@ function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, rel
 
   const getLeftDataBlock = () => {
     return (
-      <TwoLineGradeDataBlock
-        letterGrade={getSonarReliabilityGrade(reliabilityRating)}
-        subtitle={"Reliability"}
-      />
+      <Col sm={"25%"}>
+        <TwoLineGradeDataBlock
+          letterGrade={getSonarReliabilityGrade(reliabilityRating)}
+          subtitle={"Reliability"}
+        />
+      </Col>
     );
   };
 
   const getMiddleDataBlock = () => {
     return (
-      <TwoLineScoreDataBlock
-        score={bugCount}
-        subtitle={"Bugs"}
-      />
+      <Col sm={"25%"}>
+        <TwoLineScoreDataBlock
+          score={bugCount}
+          subtitle={"Bugs"}
+        />
+      </Col>
     );
   };
 
   const getRightDataBlock = () => {
     return (
-      <LegendDataBlock
-        firstItem={"Goal for Reliability: A"}
-        // secondItem={"Fix X Bugs"}
-      />
+      <Col sm={"50%"}>
+        <LegendDataBlock
+          firstItem={"Goal for Reliability: A"}
+          // secondItem={"Fix X Bugs"}
+        />
+      </Col>
     );
   };
 
   return (
-    <HorizontalDataBlockContainer
+    <ThreeHorizontalDataBlocksContainer
       title={"Sonar Ratings: Reliability"}
       onClick={() => onRowSelect()}
       leftDataBlock={getLeftDataBlock()}

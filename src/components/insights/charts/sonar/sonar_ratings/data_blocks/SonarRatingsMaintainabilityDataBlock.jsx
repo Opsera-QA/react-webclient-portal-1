@@ -5,10 +5,11 @@ import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar
 import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGradeText";
-import HorizontalDataBlockContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlockContainer";
+import ThreeHorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/ThreeHorizontalDataBlocksContainer";
 import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import PercentageDataBlock from "components/common/metrics/percentage/PercentageDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
+import Col from "react-bootstrap/Col";
 
 function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration, maintainabilityRating, technicalDebtRatio }) {
   const toastContext = useContext(DialogToastContext);
@@ -46,33 +47,39 @@ function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration,
 
   const getLeftDataBlock = () => {
     return (
-      <TwoLineGradeDataBlock
-        letterGrade={getSonarMaintainabilityGrade(maintainabilityRating)}
-        subtitle={"Maintainability"}
-      />
+      <Col sm={"25%"}>
+        <TwoLineGradeDataBlock
+          letterGrade={getSonarMaintainabilityGrade(maintainabilityRating)}
+          subtitle={"Maintainability"}
+        />
+      </Col>
     );
   };
 
   const getMiddleDataBlock = () => {
     return (
-      <PercentageDataBlock
-        percentage={technicalDebtRatio}
-        subtitle={"Technical Debt Ratio"}
-      />
+      <Col sm={"25%"}>
+        <PercentageDataBlock
+          percentage={technicalDebtRatio}
+          subtitle={"Technical Debt Ratio"}
+        />
+      </Col>
     );
   };
 
   const getRightDataBlock = () => {
     return (
-      <LegendDataBlock
-        firstItem={"Goal for Maintainability: A"}
-        secondItem={"Technical Debt Ratio: 0 - 5%"}
-      />
+      <Col sm={"50%"}>
+        <LegendDataBlock
+          firstItem={"Goal for Maintainability: A"}
+          secondItem={"Technical Debt Ratio: 0 - 5%"}
+        />
+      </Col>
     );
   };
 
   return (
-    <HorizontalDataBlockContainer
+    <ThreeHorizontalDataBlocksContainer
       title={"Sonar Ratings: Maintainability"}
       onClick={() => onRowSelect()}
       leftDataBlock={getLeftDataBlock()}

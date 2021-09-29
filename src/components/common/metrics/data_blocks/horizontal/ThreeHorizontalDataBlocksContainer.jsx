@@ -2,10 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Row} from "react-bootstrap";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import Col from "react-bootstrap/Col";
 
 // TODO: Styling is temporary based on SonarRatings until we figure out which direction to go
-function HorizontalDataBlockContainer({leftDataBlock, middleDataBlock, rightDataBlock, onClick, tooltipText, title}) {
+function ThreeHorizontalDataBlocksContainer({leftDataBlock, middleDataBlock, rightDataBlock, onClick, tooltipText, title}) {
   return (
     <TooltipWrapper innerText={tooltipText}>
       <div className={`${onClick ? "pointer " : ""}data-block-container m-1`} onClick={onClick}>
@@ -13,22 +12,16 @@ function HorizontalDataBlockContainer({leftDataBlock, middleDataBlock, rightData
           {title}
         </div>
         <Row className={"mx-1"}>
-          <Col sm={"25%"}>
-            {leftDataBlock}
-          </Col>
-          <Col sm={"25%"}>
-            {middleDataBlock}
-          </Col>
-          <Col sm={"50%"}>
-            {rightDataBlock}
-          </Col>
+          {leftDataBlock}
+          {middleDataBlock}
+          {rightDataBlock}
         </Row>
       </div>
     </TooltipWrapper>
   );
 }
 
-HorizontalDataBlockContainer.propTypes = {
+ThreeHorizontalDataBlocksContainer.propTypes = {
   leftDataBlock: PropTypes.any,
   middleDataBlock: PropTypes.any,
   rightDataBlock: PropTypes.any,
@@ -37,4 +30,4 @@ HorizontalDataBlockContainer.propTypes = {
   title: PropTypes.string,
 };
 
-export default HorizontalDataBlockContainer;
+export default ThreeHorizontalDataBlocksContainer;

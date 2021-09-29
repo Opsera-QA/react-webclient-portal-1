@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function SFDCHasUpstreamBoolInput({dataObject, setDataObject, disabled}) {
+function SalesforceOrganizationSyncTaskHasUpstreamBranchToggleInput({dataObject, setDataObject, disabled}) {
   const setHasUpstreamBranch = (fieldName, value) => {
     let newDataObject = {...dataObject};
     newDataObject.setData("hasUpstreamBranch", value);
@@ -22,10 +22,10 @@ function SFDCHasUpstreamBoolInput({dataObject, setDataObject, disabled}) {
   );
 }
 
-SFDCHasUpstreamBoolInput.propTypes = {
+SalesforceOrganizationSyncTaskHasUpstreamBranchToggleInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default SFDCHasUpstreamBoolInput;
+export default SalesforceOrganizationSyncTaskHasUpstreamBranchToggleInput;

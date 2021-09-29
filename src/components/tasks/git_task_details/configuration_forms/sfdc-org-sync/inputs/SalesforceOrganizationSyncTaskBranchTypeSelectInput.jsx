@@ -3,11 +3,12 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const branchTypes = [
-  {name: "Ant to SFDX Branch structure", value: "ant-to-sfdx"},
-  {name: "SFDX to Ant Branch Structure", value: "sfdx-to-ant"}
+  {text: "Ant to Salesforce DX Branch Structure", value: "ant-to-sfdx"},
+  {text: "Salesforce DX to Ant Branch Structure", value: "sfdx-to-ant"}
 ];
 
-function GitBranchTypeSelectionInput({ fieldName, dataObject, setDataObject, placeholderText, disabled, setDataFunction }) {
+// TODO: Should this be moved to common?
+function SalesforceOrganizationSyncTaskBranchTypeSelectInput({ fieldName, dataObject, setDataObject, placeholderText, disabled, setDataFunction }) {
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -17,13 +18,13 @@ function GitBranchTypeSelectionInput({ fieldName, dataObject, setDataObject, pla
       placeholderText={placeholderText}
       setDataFunction={setDataFunction}
       valueField="value"
-      textField="name"
+      textField="text"
       disabled={disabled}
     />
   );
 }
 
-GitBranchTypeSelectionInput.propTypes = {
+SalesforceOrganizationSyncTaskBranchTypeSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   placeholderText: PropTypes.string,
@@ -32,9 +33,9 @@ GitBranchTypeSelectionInput.propTypes = {
   disabled: PropTypes.bool,
 };
 
-GitBranchTypeSelectionInput.defaultProps = {
+SalesforceOrganizationSyncTaskBranchTypeSelectInput.defaultProps = {
   fieldName: "conversionType",
   placeholderText: "Select One",
 };
 
-export default GitBranchTypeSelectionInput;
+export default SalesforceOrganizationSyncTaskBranchTypeSelectInput;
