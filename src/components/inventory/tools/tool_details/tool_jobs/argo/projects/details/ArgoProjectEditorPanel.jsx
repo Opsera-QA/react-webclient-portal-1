@@ -11,6 +11,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
+import ArgoRepositoryInput from "./inputs/ArgoRepositoryInput";
 
 function ArgoProjectEditorPanel({ argoProjectData, toolData, repoId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -51,15 +52,15 @@ function ArgoProjectEditorPanel({ argoProjectData, toolData, repoId, handleClose
   };
 
   const createProject = async () => {
-    // return await argoActions.createArgoRepository(getAccessToken, cancelTokenSource, toolData?._id, argoRepositoryModel);
+    // return await argoActions.createArgoProject(getAccessToken, cancelTokenSource, toolData?._id, argoRepositoryModel);
   };
 
   const updateProject = async () => {
-    // return await argoActions.updateArgoRepository(getAccessToken, cancelTokenSource, toolData?._id, repoId, argoRepositoryModel);
+    // return await argoActions.updateArgoProject(getAccessToken, cancelTokenSource, toolData?._id, repoId, argoRepositoryModel);
   };
 
   const deleteProject = async () => {
-    // await argoActions.deleteArgoRepository(getAccessToken, cancelTokenSource, toolData?._id, repoId);
+    // await argoActions.deleteArgoProject(getAccessToken, cancelTokenSource, toolData?._id, repoId);
     handleClose();
   };
 
@@ -92,7 +93,23 @@ function ArgoProjectEditorPanel({ argoProjectData, toolData, repoId, handleClose
               disabled={!argoProjectData?.isNew()}
             />
           </Col>
-
+          <Col lg={12}>
+            <TextInputBase
+              setDataObject={setArgoProjectModel}
+              dataObject={argoProjectModel}
+              fieldName={"description"}
+              disabled={!argoProjectData?.isNew()}
+            />
+          </Col>
+          <Col lg={12}>
+            <ArgoRepositoryInput
+              setDataObject={setArgoProjectModel}
+              dataObject={argoProjectModel}
+              fieldName={"sourceRepos"}
+              argoToolId={toolData?._id}
+              disabled={!argoProjectData?.isNew()}
+            />
+          </Col>
         </Row>
       </div>
     </EditorPanelContainer>

@@ -21,7 +21,7 @@ function ToolProjectsPanel({ toolData, loadData, isLoading }) {
   return (
     <DetailPanelContainer>
       <div className="h6">Managed Projects Creation</div>
-      <MessageField message={`Create settings for custom project configuration to be used when configuring a Notification Policy.
+      <MessageField message={`Create settings for custom project configuration to be used.
           These settings can be entered once and reused across the Opsera platform.`}/>
       {getToolProjectsPanel()}
     </DetailPanelContainer>

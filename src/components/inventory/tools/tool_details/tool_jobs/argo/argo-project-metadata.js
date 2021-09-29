@@ -18,49 +18,23 @@ const argoProjectMetadata = {
       maxLength: 63
     },
     {
-      label: "SCM type",
-      id: "service",
-      isRequired: true
+      label: "Description",
+      id: "description",
+      lowercase: true,
+      maxLength: 1000,
+      regexDefinitionName: "expandedTextAndSymbolsWithSpaces",
     },
     {
-      label: "SCM Tool",
-      id: "gitToolId",
-      isRequired: true,
-      maxLength: 24,
-      regexDefinitionName: "mongoId",
-    },   
-    {
-      id: "gitUrl",
-    },
-    {
-      id: "sshUrl",
-    },
-    {
-      label: "Workspace/Project",
-      id: "workspace",
-      maxLength: 255,
-      regexDefinitionName: "generalTextWithSpacesSlash",
-    },
-    {
-      label: "Repository Name",
-      id: "repositoryName",
-      isRequired: true
-    },
-    {
-      label: "Repository Type",
-      id: "repositoryType",
+      label: "Source Repository",
+      id: "sourceRepos",
       isRequired: true
     },
   ],
   newObjectFields: {
     name: "",
     gitToolId: "",
-    service: "",
-    gitUrl: "",
-    sshUrl: "",
-    workspace: "",
-    repositoryName: "",
-    repositoryType: "git",
+    sourceRepos: "",
+    description: "",
   }
 };
 

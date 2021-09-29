@@ -66,4 +66,9 @@ argoActions.deleteArgoRepository = async (getAccessToken, cancelTokenSource, too
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+argoActions.getArgoRepositories = async (getAccessToken, cancelTokenSource, argoToolId) => {
+  const apiUrl = `/tools/${argoToolId}/argo/repositories`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 export default argoActions;
