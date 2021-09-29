@@ -90,6 +90,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
           <>
             <CustomTab icon={faBrowser} tabName={"applications"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Applications"} disabled={!authorizedAction("edit_tool_application_tabs", toolData?.data)}/>
             <CustomTab icon={faGit} tabName={"repositories"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Repositories"} disabled={!authorizedAction("edit_tool_application_tabs", toolData?.data)}/>
+            <CustomTab icon={faProjectDiagram} tabName={"projects"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Projects"} disabled={!authorizedAction("edit_tool_application_tabs", toolData?.data)}/>
             <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"}/>
           </>
         );
