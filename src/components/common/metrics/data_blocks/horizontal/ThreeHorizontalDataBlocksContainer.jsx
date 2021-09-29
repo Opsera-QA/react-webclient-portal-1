@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Row} from "react-bootstrap";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import Col from "react-bootstrap/Col";
 
 // TODO: Styling is temporary based on SonarRatings until we figure out which direction to go
 function ThreeHorizontalDataBlocksContainer({leftDataBlock, middleDataBlock, rightDataBlock, onClick, tooltipText, title}) {
@@ -13,15 +12,9 @@ function ThreeHorizontalDataBlocksContainer({leftDataBlock, middleDataBlock, rig
           {title}
         </div>
         <Row className={"mx-1"}>
-          <Col sm={"25%"}>
-            {leftDataBlock}
-          </Col>
-          <Col sm={"25%"}>
-            {middleDataBlock}
-          </Col>
-          <Col sm={"50%"}>
-            {rightDataBlock}
-          </Col>
+          {leftDataBlock}
+          {middleDataBlock}
+          {rightDataBlock}
         </Row>
       </div>
     </TooltipWrapper>
