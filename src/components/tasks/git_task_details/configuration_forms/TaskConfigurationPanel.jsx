@@ -17,9 +17,9 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
         return (
           <SalesforceOrganizationSyncTaskConfigurationEditorPanel
-            gitTasksDataDto={taskModel}
-            setGitTasksConfigurationData={setTaskConfigurationModel}
-            gitTasksConfigurationData={taskConfigurationModel}
+            taskModel={taskModel}
+            setTaskConfigurationModel={setTaskConfigurationModel}
+            taskConfigurationModel={taskConfigurationModel}
           />
         );
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
