@@ -7,7 +7,7 @@ export const branchTypes = [
   {text: "Salesforce DX to Ant Branch Structure", value: "sfdx-to-ant"}
 ];
 
-function GitBranchTypeSelectionInput({ fieldName, dataObject, setDataObject, placeholderText, disabled, setDataFunction }) {
+function SalesforceOrganizationSyncTaskBranchTypeSelectInput({ fieldName, dataObject, setDataObject, placeholderText, disabled, setDataFunction }) {
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -23,7 +23,7 @@ function GitBranchTypeSelectionInput({ fieldName, dataObject, setDataObject, pla
   );
 }
 
-GitBranchTypeSelectionInput.propTypes = {
+SalesforceOrganizationSyncTaskBranchTypeSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   placeholderText: PropTypes.string,
@@ -32,9 +32,9 @@ GitBranchTypeSelectionInput.propTypes = {
   disabled: PropTypes.bool,
 };
 
-GitBranchTypeSelectionInput.defaultProps = {
+SalesforceOrganizationSyncTaskBranchTypeSelectInput.defaultProps = {
   fieldName: "conversionType",
   placeholderText: "Select One",
 };
 
-export default GitBranchTypeSelectionInput;
+export default SalesforceOrganizationSyncTaskBranchTypeSelectInput;

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SalesforceOrganizationSyncConfigurationEditorPanel from "./sfdc-org-sync/SFDCGitTaskConfigurationPanel";
+import SalesforceOrganizationSyncTaskConfigurationEditorPanel from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/SalesforceOrganizationSyncTaskConfigurationEditorPanel";
 import SFDXCertGenTaskTypeConfigurationPanel from "./sfdx-cert-gen/SFDXCertGenTaskTypeConfigurationPanel";
 import GitToGitSyncTaskConfigurationEditorPanel from "components/tasks/git_task_details/configuration_forms/branch-to-branch/GitToGitSyncTaskConfigurationEditorPanel";
 import ECSCreationTaskConfigurationPanel from "./ecs-cluster-creation/ECSCreationTaskConfigurationPanel";
@@ -16,7 +16,7 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
     switch (taskType) {
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
         return (
-          <SalesforceOrganizationSyncConfigurationEditorPanel
+          <SalesforceOrganizationSyncTaskConfigurationEditorPanel
             gitTasksDataDto={taskModel}
             setGitTasksConfigurationData={setTaskConfigurationModel}
             gitTasksConfigurationData={taskConfigurationModel}

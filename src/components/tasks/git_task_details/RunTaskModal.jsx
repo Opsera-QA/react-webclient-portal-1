@@ -7,8 +7,8 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import ModalBase from "components/common/modal/ModalBase";
 import CloseButton from "components/common/buttons/CloseButton";
 import RunTaskButton from "components/common/buttons/tasks/run_task/RunTaskButton";
-import SFDCGitBranchInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitBranchInput";
-import SFDCNewBranchBoolInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCNewBranchBoolInput";
+import SalesforceOrganizationSyncTaskNewBranchToggleInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskNewBranchToggleInput";
+import SalesforceOrganizationSyncTaskUpstreamBranchSelectInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskUpstreamBranchSelectInput";
 import salesforceOrganizationSyncTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
 import ec2ClusterCreationTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/ecs-cluster-creation/ecs-creation-git-task-configuration";
 import sfdxCertGenTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
@@ -16,7 +16,7 @@ import branchToBranchGitTaskConfigurationMetadata from "components/tasks/git_tas
 import sfdcGitBranchTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
 import ec2ServiceCreationTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/ecs-service-creation/ecs-service-creation-git-task-configuration";
 import {AuthContext} from "contexts/AuthContext";
-import SFDCGitBranchTextInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitBranchTextInput";
+import SalesforceOrganizationSyncTaskGitBranchTextInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchTextInput";
 import workflowAuthorizedActions
 from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
@@ -27,6 +27,8 @@ import azureAksClusterTaskConfigurationMetadata
   from "components/tasks/git_task_details/configuration_forms/azure-cluster-creation/azure-cluster-metadata";
 import SfdcGitUpstreamBranchInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/inputs/SfdcGitUpstreamBranchInput";
+import SalesforceOrganizationSyncTaskGitBranchSelectInput
+  from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
 
 function RunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, loadData }) {
   const [showHelp, setShowHelp] = useState(false);
@@ -96,27 +98,27 @@ function RunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, l
         <div style={{minHeight: "400px"}}>
           <Row className={"m-3"}>
             <Col lg={12}>
-              <SFDCGitBranchInput
+              <SalesforceOrganizationSyncTaskGitBranchSelectInput
                 dataObject={dataObj}
                 setDataObject={setDataObj}
                 visible={!(dataObj?.getData("isNewBranch"))}/>
             </Col>
             <Col lg={12}>
-              <SFDCNewBranchBoolInput dataObject={dataObj} setDataObject={setDataObj}/>
+              <SalesforceOrganizationSyncTaskNewBranchToggleInput dataObject={dataObj} setDataObject={setDataObj}/>
             </Col>
             {dataObj?.getData("isNewBranch") &&
             <>
               <Col lg={12}>
-                <SFDCGitBranchTextInput
+                <SalesforceOrganizationSyncTaskGitBranchTextInput
                   fieldName={"gitBranch"}
                   dataObject={dataObj} setDataObject={setDataObj} visible={dataObj?.getData("isNewBranch")}
                 />
               </Col>
               {/* <Col lg={12}>
-                    <SFDCHasUpstreamBoolInput dataObject={dataObj} setDataObject={setDataObj} />
+                    <SalesforceOrganizationSyncTaskHasUpstreamBranchToggleInput dataObject={dataObj} setDataObject={setDataObj} />
                   </Col> */}
               <Col lg={12}>
-                <SfdcGitUpstreamBranchInput dataObject={dataObj} setDataObject={setDataObj}/>
+                <SalesforceOrganizationSyncTaskUpstreamBranchSelectInput dataObject={dataObj} setDataObject={setDataObj}/>
               </Col>
             </>
             }

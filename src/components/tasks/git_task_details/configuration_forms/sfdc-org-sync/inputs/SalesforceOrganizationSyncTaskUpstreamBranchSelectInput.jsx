@@ -2,16 +2,22 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 
-function SFDCGitBranchInput({dataObject, setDataObject, disabled, visible}) {
+function SalesforceOrganizationSyncTaskUpstreamBranchSelectInput({dataObject, setDataObject, disabled, visible}) {
   const setBranch = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
-    newDataObject.setData("gitBranch", selectedOption);
-    newDataObject.setData("defaultBranch", selectedOption);
+    newDataObject.setData("upstreamBranch", selectedOption);
     setDataObject({...newDataObject});
   };
+
+  const clearData = () => {
+    let newDataObject = {...dataObject};
+    newDataObject.setData("upstreamBranch", "");    
+    setDataObject({...newDataObject});
+  };
+
   return (
      <GitBranchInput
-       fieldName={"gitBranch"}
+       fieldName={"upstreamBranch"}
        service={dataObject.getData("service")}
        gitToolId={dataObject.getData("gitToolId")}
        workspace={dataObject.getData("workspace")}
@@ -20,20 +26,17 @@ function SFDCGitBranchInput({dataObject, setDataObject, disabled, visible}) {
        setDataFunction={setBranch}
        setDataObject={setDataObject}
        disabled={disabled}
+       clearDataFunction={clearData}
        visible={visible}
      />
   );
 }
 
-SFDCGitBranchInput.propTypes = {
+SalesforceOrganizationSyncTaskUpstreamBranchSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
 };
 
-SFDCGitBranchInput.defaultProps = {
-  visible: true,
-};
-
-export default SFDCGitBranchInput;
+export default SalesforceOrganizationSyncTaskUpstreamBranchSelectInput;

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import JenkinsAccountInput from "components/common/list_of_values_input/tools/jenkins/JenkinsAccountInput";
 
-function SFDCJenkinsAccountInput({dataObject, setDataObject, disabled, gitTasksDataDto }) {
+function SalesforceOrganizationSyncTaskJenkinsAccountSelectInput({dataObject, setDataObject, gitTasksDataDto, disabled}) {
   const setJenkinsAccount = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
     newDataObject.setData("gitCredential", selectedOption.gitCredential);
@@ -35,11 +35,11 @@ function SFDCJenkinsAccountInput({dataObject, setDataObject, disabled, gitTasksD
   );
 }
 
-SFDCJenkinsAccountInput.propTypes = {
+SalesforceOrganizationSyncTaskJenkinsAccountSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   gitTasksDataDto: PropTypes.object,
 };
 
-export default SFDCJenkinsAccountInput;
+export default SalesforceOrganizationSyncTaskJenkinsAccountSelectInput;
