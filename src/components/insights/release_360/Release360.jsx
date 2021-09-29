@@ -43,7 +43,7 @@ function Release360 () {
     }
   };
 
-  const getNoahSandbox = () => {
+  const getSandbox = () => {
     if (featureFlagHideItemInProd() === false) {
       return (
         <CustomTab
@@ -81,7 +81,7 @@ function Release360 () {
           handleTabClick={handleTabClick}
           tabName={"quality"}
         />
-        {getNoahSandbox()}
+        {getSandbox()}
       </CustomTabContainer>
     );
   };

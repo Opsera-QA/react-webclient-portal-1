@@ -5,17 +5,15 @@ import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar
 import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
-import SuccessfulDeploymentsDataBlock
-  from "components/common/metrics/data_blocks/deployment/successful_deployments/SuccessfulDeploymentsDataBlock";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
-import FailedDeploymentsDataBlock
-  from "components/common/metrics/data_blocks/deployment/failed_deployments/FailedDeploymentsDataBlock";
-import SuccessRateDataBlock
-  from "components/common/metrics/data_blocks/success/success_rate/SuccessRateDataBlock";
 import Col from "react-bootstrap/Col";
+import AverageDailyDeploymentsDataBlock
+  from "components/common/metrics/data_blocks/deployment/average_daily/AverageDailyDeploymentsDataBlock";
+import AverageDeploymentDurationDataBlock
+  from "components/common/metrics/data_blocks/deployment/average_duration/AverageDeploymentDurationDataBlock";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function DeploymentStatisticsDataBlockContainer({ dashboardData, kpiConfiguration }) {
+function DeploymentFrequencyStatisticsDataBlockContainer({ dashboardData, kpiConfiguration }) {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = () => {
@@ -31,55 +29,43 @@ function DeploymentStatisticsDataBlockContainer({ dashboardData, kpiConfiguratio
 
   const getLeftDataBlock = () => {
     return (
-      <SuccessfulDeploymentsDataBlock
-        qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
-        successfulDeploymentCount={120}
-        bottomText={"10% increase"}
-      />
-    );
-  };
-
-  const getMiddleDataBlock = () => {
-    return (
-      <FailedDeploymentsDataBlock
-        qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
-        failedDeploymentCount={10}
-        bottomText={"20% decrease"}
+      <AverageDailyDeploymentsDataBlock
+        qualityLevel={METRIC_QUALITY_LEVELS.DANGER}
+        averageDailyCount={.85}
+        bottomText={"15% decrease"}
       />
     );
   };
 
   const getRightDataBlock = () => {
     return (
-      <SuccessRateDataBlock
+      <AverageDeploymentDurationDataBlock
         qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
-        successPercentage={98}
-        bottomText={"Goal 95%"}
+        averageDuration={"4 mins"}
+        bottomText={"20% increase"}
       />
     );
   };
 
   return (
     <HorizontalDataBlocksContainer
-      title={"Deployment Statistics"}
+      className={"mb-3"}
+      title={"Deployment Frequency Statistics"}
       // onClick={() => onRowSelect()}
     >
-      <Col sm={4} className={"p-2"}>
+      <Col sm={6} className={"p-2"}>
         {getLeftDataBlock()}
       </Col>
-      <Col sm={4} className={"p-2"}>
-        {getMiddleDataBlock()}
-      </Col>
-      <Col sm={4} className={"p-2"}>
+      <Col sm={6} className={"p-2"}>
         {getRightDataBlock()}
       </Col>
     </HorizontalDataBlocksContainer>
   );
 }
 
-DeploymentStatisticsDataBlockContainer.propTypes = {
+DeploymentFrequencyStatisticsDataBlockContainer.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
 };
 
-export default DeploymentStatisticsDataBlockContainer;
+export default DeploymentFrequencyStatisticsDataBlockContainer;

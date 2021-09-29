@@ -5,18 +5,23 @@ import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar
 import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
-import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import SuccessfulDeploymentsDataBlock
-  from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/successful_deployments/SuccessfulDeploymentsDataBlock";
+  from "components/common/metrics/data_blocks/deployment/successful_deployments/SuccessfulDeploymentsDataBlock";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
 import FailedDeploymentsDataBlock
-  from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/failed_deployments/FailedDeploymentsDataBlock";
-import SuccessPercentageDataBlock
-  from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/success_percentage/SuccessPercentageDataBlock";
+  from "components/common/metrics/data_blocks/deployment/failed_deployments/FailedDeploymentsDataBlock";
 import Col from "react-bootstrap/Col";
+import AverageDailyDeploymentsDataBlock
+  from "components/common/metrics/data_blocks/deployment/average_daily/AverageDailyDeploymentsDataBlock";
+import AverageDeploymentDurationDataBlock
+  from "components/common/metrics/data_blocks/deployment/average_duration/AverageDeploymentDurationDataBlock";
+import AverageDailyBuildsDataBlock
+  from "components/common/metrics/data_blocks/build/average_daily/AverageDailyBuildsDataBlock";
+import AverageBuildDurationDataBlock
+  from "components/common/metrics/data_blocks/build/average_duration/AverageBuildDurationDataBlock";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function DeploymentFrequencyDataBlockContainer({ dashboardData, kpiConfiguration }) {
+function BuildFrequencyStatisticsDataBlockContainer({ dashboardData, kpiConfiguration }) {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = () => {
@@ -32,55 +37,42 @@ function DeploymentFrequencyDataBlockContainer({ dashboardData, kpiConfiguration
 
   const getLeftDataBlock = () => {
     return (
-      <SuccessfulDeploymentsDataBlock
+      <AverageDailyBuildsDataBlock
         qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
-        bottomText={"10% increase"}
-        successfulDeploymentCount={120}
-      />
-    );
-  };
-
-  const getMiddleDataBlock = () => {
-    return (
-      <FailedDeploymentsDataBlock
-        qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
-        bottomText={"20% decrease"}
-        successfulDeploymentCount={10}
+        averageDailyCount={1.25}
+        bottomText={"0.5% increase"}
       />
     );
   };
 
   const getRightDataBlock = () => {
     return (
-      <SuccessPercentageDataBlock
-        qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
-        successPercentage={98}
-        bottomText={"Goal 95%"}
+      <AverageBuildDurationDataBlock
+        qualityLevel={METRIC_QUALITY_LEVELS.DANGER}
+        averageDuration={"10 mins"}
+        bottomText={"20% increase"}
       />
     );
   };
 
   return (
     <HorizontalDataBlocksContainer
-      title={"Deployment Statistics"}
+      title={"Build Frequency Statistics"}
       // onClick={() => onRowSelect()}
     >
-      <Col sm={4}>
+      <Col sm={6} className={"p-2"}>
         {getLeftDataBlock()}
       </Col>
-      <Col sm={4}>
-        {getMiddleDataBlock()}
-      </Col>
-      <Col sm={4}>
+      <Col sm={6} className={"p-2"}>
         {getRightDataBlock()}
       </Col>
     </HorizontalDataBlocksContainer>
   );
 }
 
-DeploymentFrequencyDataBlockContainer.propTypes = {
+BuildFrequencyStatisticsDataBlockContainer.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
 };
 
-export default DeploymentFrequencyDataBlockContainer;
+export default BuildFrequencyStatisticsDataBlockContainer;

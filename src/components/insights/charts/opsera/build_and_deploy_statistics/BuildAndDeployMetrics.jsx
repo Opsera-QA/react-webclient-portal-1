@@ -9,6 +9,12 @@ import DeploymentStatisticsDataBlockContainer
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
+import BuildStatisticsDataBlockContainer
+  from "components/insights/charts/opsera/build_and_deploy_statistics/build_statistics/BuildStatisticsDataBlockContainer";
+import DeploymentFrequencyStatisticsDataBlockContainer
+  from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_frequency_statistics/DeploymentFrequencyStatisticsDataBlockContainer";
+import BuildFrequencyStatisticsDataBlockContainer
+  from "components/insights/charts/opsera/build_and_deploy_statistics/build_frequency_statistics/BuildFrequencyStatisticsDataBlockContainer";
 
 function BuildAndDeployMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -70,11 +76,20 @@ function BuildAndDeployMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
   const getChartBody = () => {
     return (
       <Row>
-        <Col sm={6}>
-          <DeploymentStatisticsDataBlockContainer
-          />
+        <Col lg={6} md={12}>
+          <DeploymentStatisticsDataBlockContainer />
         </Col>
-
+        <Col sm={1} />
+        <Col lg={5} md={12}>
+          <DeploymentFrequencyStatisticsDataBlockContainer />
+        </Col>
+        <Col sm={6}>
+          <BuildStatisticsDataBlockContainer />
+        </Col>
+        <Col sm={1} />
+        <Col sm={5}>
+          <BuildFrequencyStatisticsDataBlockContainer />
+        </Col>
       </Row>
     );
   };
