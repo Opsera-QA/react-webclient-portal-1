@@ -12,6 +12,8 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import ArgoRepositoryInput from "./inputs/ArgoRepositoryInput";
+import ArgoClusterNamespaceInput from "./inputs/ArgoClusterNamespaceInput";
+import ArgoGroupKindInput from "./inputs/ArgoGroupKindInput";
 
 function ArgoProjectEditorPanel({ argoProjectData, toolData, repoId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -108,6 +110,26 @@ function ArgoProjectEditorPanel({ argoProjectData, toolData, repoId, handleClose
               fieldName={"sourceRepos"}
               argoToolId={toolData?._id}
               disabled={!argoProjectData?.isNew()}
+            />
+          </Col>
+          <Col lg={12}>
+            <ArgoClusterNamespaceInput
+              setDataObject={setArgoProjectModel}
+              dataObject={argoProjectModel}
+            />
+          </Col>
+          <Col lg={12}>
+            <ArgoGroupKindInput
+              setDataObject={setArgoProjectModel}
+              dataObject={argoProjectModel}
+              fieldName={"clusterResourceWhitelist"}
+            />
+          </Col>
+          <Col lg={12}>
+            <ArgoGroupKindInput
+              setDataObject={setArgoProjectModel}
+              dataObject={argoProjectModel}
+              fieldName={"namespaceResourceBlacklist"}
             />
           </Col>
         </Row>

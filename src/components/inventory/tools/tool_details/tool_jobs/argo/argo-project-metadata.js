@@ -25,9 +25,40 @@ const argoProjectMetadata = {
       regexDefinitionName: "expandedTextAndSymbolsWithSpaces",
     },
     {
-      label: "Source Repository",
+      label: "Sources",
       id: "sourceRepos",
-      isRequired: true
+      isRequired: true,
+      formText: "Repositories where application manifests are permitted to be retrieved from"
+    },
+    {
+      label: "Destinations",
+      id: "destinations",
+      isRequired: true,
+      formText: "Cluster and namespace where applications are permitted to be deployed to"
+    },
+    {
+      label: "Whitelisted Cluster Resources",
+      id: "clusterResourceWhitelist",
+      isRequired: true,
+      formText: "Cluster-scoped K8s API groups and Kinds which are permitted to be deployed"
+    },
+    {
+      label: "Blacklisted Namespaced Resources",
+      id: "namespaceResourceBlacklist",
+      isRequired: true,
+      formText: "Namespace-scoped K8s API Groups and Kinfs which are prohibited from being deloyed"
+    },
+    {
+      label: "namespaceResourceWhitelist",
+      id: "namespaceResourceWhitelist",
+      isRequired: true,
+      formText: "Name cannot contain spaces."
+    },
+    {
+      label: "orphanedResources",
+      id: "orphanedResources",
+      isRequired: true,
+      formText: "Name cannot contain spaces."
     },
   ],
   newObjectFields: {
@@ -35,6 +66,11 @@ const argoProjectMetadata = {
     gitToolId: "",
     sourceRepos: "",
     description: "",
+    destinations: [],
+    clusterResourceWhitelist: [],
+    namespaceResourceBlacklist: [],
+    namespaceResourceWhitelist: [],    
+    orphanedResources: {}
   }
 };
 

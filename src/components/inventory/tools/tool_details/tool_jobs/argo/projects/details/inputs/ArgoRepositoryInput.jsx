@@ -4,7 +4,6 @@ import ArgoRepositorySelectInput from "components/common/list_of_values_input/to
 
 function ArgoRepositoryInput({dataObject, setDataObject, argoToolId, fieldName, disabled}) {
   const setRepository = (fieldName, selectedOption) => {
-    console.log(selectedOption);
     let newDataObject = {...dataObject};
     newDataObject.setData("sourceRepos", selectedOption?.repo);
     setDataObject({...newDataObject});
