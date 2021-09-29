@@ -4,7 +4,6 @@ import ModalLogs from "components/common/modal/modalLogs";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import SonarRatingsChartHelpDocumentation
   from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
 import SonarRatingsMaintainabilityDataBlock
@@ -15,8 +14,8 @@ import ThreeStackedHorizontalMetricsContainer
   from "components/common/metrics/data_blocks/horizontal/ThreeStackedHorizontalMetricsContainer";
 import SonarRatingsReliabilityDataBlock
   from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlock";
+import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 
-// TODO: Replace SonarRatings once verified
 function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -109,7 +108,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
 
   return (
     <div>
-      <ChartContainer
+      <VanityMetricContainer
         title={kpiConfiguration?.kpi_name}
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}

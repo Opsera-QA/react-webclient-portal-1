@@ -47,7 +47,7 @@ function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration,
 
   const getLeftDataBlock = () => {
     return (
-      <Col sm={"25%"}>
+      <Col sm={4}>
         <TwoLineGradeDataBlock
           letterGrade={getSonarMaintainabilityGrade(maintainabilityRating)}
           subtitle={"Maintainability"}
@@ -58,7 +58,7 @@ function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration,
 
   const getMiddleDataBlock = () => {
     return (
-      <Col sm={"25%"}>
+      <Col sm={4}>
         <PercentageDataBlock
           percentage={technicalDebtRatio}
           subtitle={"Technical Debt Ratio"}
@@ -69,7 +69,7 @@ function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration,
 
   const getRightDataBlock = () => {
     return (
-      <Col sm={"50%"}>
+      <Col sm={4}>
         <LegendDataBlock
           firstItem={"Goal for Maintainability: A"}
           secondItem={"Technical Debt Ratio: 0 - 5%"}

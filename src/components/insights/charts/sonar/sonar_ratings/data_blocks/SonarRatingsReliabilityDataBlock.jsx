@@ -47,7 +47,7 @@ function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, rel
 
   const getLeftDataBlock = () => {
     return (
-      <Col sm={"25%"}>
+      <Col sm={4}>
         <TwoLineGradeDataBlock
           letterGrade={getSonarReliabilityGrade(reliabilityRating)}
           subtitle={"Reliability"}
@@ -58,7 +58,7 @@ function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, rel
 
   const getMiddleDataBlock = () => {
     return (
-      <Col sm={"25%"}>
+      <Col sm={4}>
         <TwoLineScoreDataBlock
           score={bugCount}
           subtitle={"Bugs"}
@@ -69,7 +69,7 @@ function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, rel
 
   const getRightDataBlock = () => {
     return (
-      <Col sm={"50%"}>
+      <Col sm={4}>
         <LegendDataBlock
           firstItem={"Goal for Reliability: A"}
           // secondItem={"Fix X Bugs"}
