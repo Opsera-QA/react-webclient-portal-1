@@ -4,6 +4,7 @@ import BuildAndDeployMetrics from "components/insights/charts/opsera/build_and_d
 // TODO: This is a temporary spot to showcase in progress Metric UIs
 function MetricUiSandbox() {
   return (
+    <div className={"mt-2"}>
       <BuildAndDeployMetrics
       />
     </div>
