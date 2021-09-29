@@ -241,7 +241,7 @@ const LoginForm = ({ authClient }) => {
           if (token) {
             const accountResponse = await userActions.getAccountInformationWithEmailAddress(lookupAccountEmail, token);
             const { localAuth, accountName, idpIdentifier } = accountResponse.data;
-            if (localAuth && localAuth === "FALSE" && idpIdentifier !== "0") {
+            if (localAuth && localAuth === "FALSE") {
               setFederatedIdpEnabled(localAuth === "FALSE" && idpIdentifier !== "0");
               setUsername(lookupAccountEmail);
               setViewType("federated-login");
