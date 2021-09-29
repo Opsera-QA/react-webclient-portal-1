@@ -139,6 +139,9 @@ import ServiceNowMeanTimeBetweenFailuresBarChart from "./servicenow/bar_chart/me
 // Coverity KPIs
 import CoverityIssuesByCategory from "./coverity/CoverityIssuesByCategory/CoverityIssuesByCategory";
 
+// Jira-Github KPIs
+import ReqCreateToBranchCreation from "./github/req_create_to_branch_creation/ReqCreateToBranchCreation";
+
 import {
   getDateObjectFromKpiConfiguration,
   getTagsFromKpiConfiguration,
@@ -1091,6 +1094,19 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col xl={6} md={12} className="p-2">
             <GithubPendingMergeRequests
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      // Overall release duration KPIs
+      case "overall-release-duration":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <ReqCreateToBranchCreation
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
