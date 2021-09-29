@@ -12,6 +12,7 @@ import FailedDeploymentsDataBlock
   from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/failed_deployements/FailedDeploymentsDataBlock";
 import SuccessPercentageDataBlock
   from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/success_percentage/SuccessPercentageDataBlock";
+import Col from "react-bootstrap/Col";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function DeploymentStatisticsDataBlockContainer({ dashboardData, kpiConfiguration }) {
@@ -30,31 +31,37 @@ function DeploymentStatisticsDataBlockContainer({ dashboardData, kpiConfiguratio
 
   const getLeftDataBlock = () => {
     return (
-      <SuccessfulDeploymentsDataBlock
-        qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
-        bottomText={"10% increase"}
-        successfulDeploymentCount={120}
-      />
+      <Col sm={4} className={"p-2"}>
+        <SuccessfulDeploymentsDataBlock
+          qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
+          bottomText={"10% increase"}
+          successfulDeploymentCount={120}
+        />
+      </Col>
     );
   };
 
   const getMiddleDataBlock = () => {
     return (
-      <FailedDeploymentsDataBlock
-        qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
-        bottomText={"20% decrease"}
-        successfulDeploymentCount={10}
-      />
+      <Col sm={4} className={"p-2"}>
+        <FailedDeploymentsDataBlock
+          qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
+          failedDeploymentCount={10}
+          bottomText={"20% decrease"}
+        />
+      </Col>
     );
   };
 
   const getRightDataBlock = () => {
     return (
-      <SuccessPercentageDataBlock
-        qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
-        successPercentage={98}
-        bottomText={"Goal 95%"}
-      />
+      <Col sm={4} className={"p-2"}>
+        <SuccessPercentageDataBlock
+          qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
+          successPercentage={98}
+          bottomText={"Goal 95%"}
+        />
+      </Col>
     );
   };
 
