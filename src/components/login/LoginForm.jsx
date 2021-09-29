@@ -78,7 +78,7 @@ const LoginForm = ({ authClient }) => {
             }
           })
           .catch(function(err) {
-            console.error("[authClient.token.getWithoutPrompt]", err);
+            console.error("[authClient.token.getWithoutPrompt]", JSON.stringify(err, null, 2));
             //handleFallbackGetLoginWithPrompt(tokenOptions);
             handleFallbackSignInReactHook(sessionToken);
             //setErrorMessage(err.message);
@@ -87,7 +87,7 @@ const LoginForm = ({ authClient }) => {
       })
       .catch(error => {
         toastContext.removeAllBanners();
-        console.error("[authClient.signInWithCredentials]", error);
+        console.error("[authClient.signInWithCredentials]", JSON.stringify(error, null, 2));
         let errorMessage = "An error has occurred with your Okta account authentication.  Please close your browser and start over or report the issue to Opsera.";
         if (error.errorCode && error.errorSummary) {
           errorMessage = `Okta Login Error: [${error.errorCode}] ${error.errorSummary}`;
