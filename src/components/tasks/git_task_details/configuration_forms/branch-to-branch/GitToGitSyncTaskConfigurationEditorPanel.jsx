@@ -23,7 +23,7 @@ import GitToGitSyncTaskIncludePackageXmlToggleInput
   from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskIncludePackageXmlToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
-function GitToGitSyncTaskConfigurationPanel({ taskModel, taskConfigurationModel, setTaskConfigurationModel }) {
+function GitToGitSyncTaskConfigurationEditorPanel({ taskModel, taskConfigurationModel, setTaskConfigurationModel }) {
   useEffect(() => {loadData();}, []);
 
   const loadData = async () => {    
@@ -149,12 +149,12 @@ function GitToGitSyncTaskConfigurationPanel({ taskModel, taskConfigurationModel,
   );
 }
 
-GitToGitSyncTaskConfigurationPanel.propTypes = {
+GitToGitSyncTaskConfigurationEditorPanel.propTypes = {
   taskModel: PropTypes.object,
   taskConfigurationModel: PropTypes.object,
   setTaskConfigurationModel: PropTypes.func,
 };
 
-export default GitToGitSyncTaskConfigurationPanel;
+export default GitToGitSyncTaskConfigurationEditorPanel;
 
 

@@ -6,7 +6,7 @@ import { faPlay, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
-import GitTaskSfdcPipelineWizardOverlay from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/GitTaskSfdcPipelineWizardOverlay";
+import GitTaskSfdcPipelineWizardOverlay from "components/common/buttons/tasks/run_task/GitTaskSfdcPipelineWizardOverlay";
 import taskActions from "components/tasks/task.actions";
 import axios from "axios";
 

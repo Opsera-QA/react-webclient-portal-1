@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
-import sfdcGitTaskConfigurationMetadata
-  from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/sfdc-git-task-configuration-metadata";
+import salesforceOrganizationSyncTaskConfigurationMetadata
+  from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
 import SFDCGitTaskTypeSummaryCard
   from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/SFDCGitTaskTypeSummaryCard";
 import SFDCBranchStructuringTaskTypeSummaryCard from "./configuration_forms/sfdc-branch-structure/SFDCBranchStructuringTaskTypeSummaryCard";
@@ -35,7 +35,7 @@ function TaskConfigurationSummaryPanel({ taskModel }) {
         return (
           <SFDCGitTaskTypeSummaryCard
             gitTaskConfigurationData={
-              modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), sfdcGitTaskConfigurationMetadata)
+              modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), salesforceOrganizationSyncTaskConfigurationMetadata)
             }
             gitTasksData={taskModel}
           />
