@@ -103,6 +103,9 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
             <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
             className="menu-text">Insights</span></NavLink>
 
+
+          <div className="mt-3 mb-2 sub-header">Operations</div>
+
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>
@@ -111,11 +114,9 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
             <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
             className="menu-text">Tasks</span></NavLink>
 
-
-          <div className="mt-3 mb-2 sub-header">Operations</div>
-
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
-            <FontAwesomeIcon size="lg" icon={faArchive} fixedWidth/> <span className="menu-text">Logs</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faArchive} fixedWidth/> <span
+            className="menu-text">Logs</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/blueprint">
             <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
@@ -170,6 +171,9 @@ function SaasUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideIte
             <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
             className="menu-text">Insights</span></NavLink>
 
+
+          <div className="mt-3 mb-2 sub-header">Operations</div>
+
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>
@@ -177,10 +181,6 @@ function SaasUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideIte
           <NavLink className="nav-link" activeClassName="chosen" to="/task">
             <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
             className="menu-text">Tasks</span></NavLink>
-
-
-          <div className="mt-3 mb-2 sub-header">Operations</div>
-
 
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
             <FontAwesomeIcon size="lg" icon={faArchive} fixedWidth/> <span
@@ -235,6 +235,9 @@ function AccountAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
             className="menu-text">Insights</span></NavLink>
 
+
+          <div className="mt-3 mb-2 sub-header">Operations</div>
+
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>
@@ -242,9 +245,6 @@ function AccountAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFla
           <NavLink className="nav-link" activeClassName="chosen" to="/task">
             <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
             className="menu-text">Tasks</span></NavLink>
-
-
-          <div className="mt-3 mb-2 sub-header">Operations</div>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
             <FontAwesomeIcon size="lg" icon={faArchive} fixedWidth/> <span
@@ -298,6 +298,9 @@ function AccountPowerUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
             className="menu-text">Insights</span></NavLink>
 
+
+          <div className="mt-3 mb-2 sub-header">Operations</div>
+
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>
@@ -305,9 +308,6 @@ function AccountPowerUserNav({ accessRole, featureFlagHideItemInProd, featureFla
           <NavLink className="nav-link" activeClassName="chosen" to="/task">
             <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
             className="menu-text">Tasks</span></NavLink>
-
-
-          <div className="mt-3 mb-2 sub-header">Operations</div>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
             <FontAwesomeIcon size="lg" icon={faArchive} fixedWidth/> <span
@@ -362,6 +362,9 @@ function DefaultUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHide
             <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
             className="menu-text">Insights</span></NavLink>
 
+
+          <div className="mt-3 mb-2 sub-header">Operations</div>
+
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>
@@ -369,9 +372,6 @@ function DefaultUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHide
           <NavLink className="nav-link" activeClassName="chosen" to="/task">
             <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
             className="menu-text">Tasks</span></NavLink>
-
-
-          <div className="mt-3 mb-2 sub-header">Operations</div>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
             <FontAwesomeIcon size="lg" icon={faArchive} fixedWidth/> <span

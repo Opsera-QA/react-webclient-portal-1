@@ -1686,6 +1686,27 @@ div.data-blocks-ellipses {
     max-height: calc(100% - 48px);
 }
 
+/* Confirmation panel */
+.confirmation-overlay {
+    margin: auto;
+}
+
+.confirmation-overlay-panel {
+    position: fixed;
+    overflow-x: hidden;
+    z-index: 1500;
+    height: 100%;
+    top: calc(50vh - 300px);
+    left: calc(50vw - 300px);
+}
+
+.confirmation-overlay-panel-body {
+    overflow-y: auto;
+    min-height: 200px;
+    min-width: 600px;
+    max-height: calc(100% - 48px);
+}
+
 /* End Overlay Panel styling */
 
 /* Loading Input Icon Styling */

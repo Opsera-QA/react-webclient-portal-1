@@ -52,18 +52,16 @@ export const getTableTextColumn = (field, className, maxWidth = undefined, filte
   };
 };
 
-export const getLimitedTableTextColumn = (field, maxLength, maxWidth, className) => {
+export const getLimitedTableTextColumn = (field, maxLength, className) => {
   return {
     header: getColumnHeader(field),
     id: getColumnId(field),
-    class: className,
-    maxWidth: maxWidth,
+    class: className ? className : undefined,
+    tooltipTemplate: function (value) {
+      return `<div class="custom-tooltip"><span>${value}</span></div>`;
+    },
     template: function (text) {
       if (text != null) {
-        if (maxLength == null) {
-          return text;
-        }
-
         const truncatedString = truncateString(text, maxLength);
 
         if (truncatedString !== text) {
