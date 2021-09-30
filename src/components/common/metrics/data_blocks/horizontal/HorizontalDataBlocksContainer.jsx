@@ -12,7 +12,7 @@ function HorizontalDataBlocksContainer({children, onClick, tooltipText, title, c
           <div className={"data-block-container-title px-2 py-1"}>
             {title}
           </div>
-          <Row className={"mx-1"}>
+          <Row className={"m-1"}>
             {children}
           </Row>
         </div>
