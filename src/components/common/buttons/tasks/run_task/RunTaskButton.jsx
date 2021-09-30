@@ -9,6 +9,7 @@ import {AuthContext} from "contexts/AuthContext";
 import GitTaskSfdcPipelineWizardOverlay from "components/common/buttons/tasks/run_task/GitTaskSfdcPipelineWizardOverlay";
 import taskActions from "components/tasks/task.actions";
 import axios from "axios";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 function RunTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationDataDto, handleClose, disable, className, loadData }) {
   let toastContext = useContext(DialogToastContext);
@@ -33,21 +34,21 @@ function RunTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationData
   }, []);
 
   const checkValidity = () => {
-    if (gitTasksData.getData("type") === "sync-sfdc-repo") { 
+    if (gitTasksData?.getData("type") === "sync-sfdc-repo") {
       const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
       if(gitTasksConfigurationDataDto.checkCurrentValidity() && configuration?.isNewBranch && configuration?.upstreamBranch?.length < 1 ) {
         return true;
       } else {
-        return !gitTasksConfigurationDataDto.checkCurrentValidity();
+        return !gitTasksConfigurationDataDto?.checkCurrentValidity();
       }
     } else {
-      return !gitTasksConfigurationDataDto.checkCurrentValidity();
+      return !gitTasksConfigurationDataDto?.checkCurrentValidity();
     }
   };
 
   const handleRunGitTask = async () => {
-    if (gitTasksData.getData("type") === "sync-sfdc-repo") {  
-      try {
+    if (gitTasksData?.getData("type") === "sync-sfdc-repo") {
+       try {
         setIsLoading(true);
         const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
         gitTasksData.setData("configuration", configuration);
@@ -60,7 +61,7 @@ function RunTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationData
         setIsLoading(false);
       }
     }    
-    else if (gitTasksData.getData("type") === "sync-branch-structure") {    
+    else if (gitTasksData?.getData("type") === "sync-branch-structure") {
       // pipeline action call to trigger branch conversion
       try{
         setIsLoading(true);
@@ -72,7 +73,7 @@ function RunTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationData
         setIsLoading(false);
       }
     }
-    else if (gitTasksData.getData("type") === "sync-git-branches"){
+    else if (gitTasksData?.getData("type") === "sync-git-branches"){
       // call to trigger merge request
       try{
         setIsLoading(true);
@@ -93,7 +94,7 @@ function RunTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationData
         setIsLoading(false);
       }
     }
-    else if (gitTasksData.getData("type") === "ecs_cluster_creation"){
+    else if (gitTasksData?.getData("type") === "ecs_cluster_creation"){
       // call to trigger merge request
       try{
         setIsLoading(true);
@@ -127,6 +128,9 @@ function RunTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationData
     return ( <span><FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Run Task</span>);
   };
 
+  if (gitTasksData == null) {
+    return (<LoadingDialog size={"sm"} />);
+  }
 
   return (
     <div className={className}>
