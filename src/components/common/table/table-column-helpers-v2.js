@@ -58,7 +58,6 @@ export const getLimitedTableTextColumn = (field, maxLength, maxWidth, className)
     id: getColumnId(field),
     class: className,
     maxWidth: maxWidth,
-    tooltip: false,
     template: function (text) {
       if (text != null) {
         if (maxLength == null) {
