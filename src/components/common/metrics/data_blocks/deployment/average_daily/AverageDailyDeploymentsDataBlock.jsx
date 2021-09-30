@@ -8,7 +8,6 @@ function AverageDailyDeploymentsDataBlock({ className, averageDailyCount, qualit
   return (
     <DataBlockBoxContainer className={className} onClickFunction={onClickFunction}>
       <ThreeLineDataBlockBase
-        className={"p-2"}
         topText={"Average Daily Deployments"}
         middleText={<MetricScoreText score={averageDailyCount} qualityLevel={qualityLevel} />}
         bottomText={bottomText}

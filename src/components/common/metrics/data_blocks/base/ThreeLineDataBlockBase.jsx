@@ -35,14 +35,14 @@ function ThreeLineDataBlockBase({ middleText, bottomText, topText, className}) {
 
   return (
     <div className={className}>
-      <div className={"px-2 text-center"}>
-        <div className="mt-auto w-100 text-muted">
+      <div className={"text-center h-100"}>
+        <div className="w-100 text-muted data-block-title-text">
           {getTopText()}
         </div>
-        <div className="py-3 data-block-focal-text">
+        <div className="my-auto data-block-focal-text">
           {getMiddleText()}
         </div>
-        <div className="w-100 text-muted">
+        <div className="mt-auto text-muted">
           {getSubtitle()}
         </div>
       </div>

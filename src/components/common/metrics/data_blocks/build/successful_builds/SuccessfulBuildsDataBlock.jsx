@@ -8,7 +8,6 @@ function SuccessfulBuildsDataBlock({ className, successfulBuildCount, qualityLev
   return (
     <DataBlockBoxContainer className={className} onClickFunction={onClickFunction}>
       <ThreeLineDataBlockBase
-        className={"p-2"}
         topText={"Successful Builds"}
         middleText={<MetricScoreText score={successfulBuildCount} qualityLevel={qualityLevel} />}
         bottomText={bottomText}

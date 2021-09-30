@@ -75,19 +75,17 @@ function BuildAndDeployMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
 
   const getChartBody = () => {
     return (
-      <Row>
-        <Col lg={6} md={12}>
+      <Row className={"mx-0 p-2 justify-content-between"}>
+        <Col className={"px-0"} xl={7} lg={12}>
           <DeploymentStatisticsDataBlockContainer />
         </Col>
-        <Col sm={1} />
-        <Col lg={5} md={12}>
+        <Col className={"px-0"} xl={5} md={12}>
           <DeploymentFrequencyStatisticsDataBlockContainer />
         </Col>
-        <Col sm={6}>
+        <Col className={"px-0"} xl={7} lg={12}>
           <BuildStatisticsDataBlockContainer />
         </Col>
-        <Col sm={1} />
-        <Col sm={5}>
+        <Col className={"px-0"} xl={5} lg={12}>
           <BuildFrequencyStatisticsDataBlockContainer />
         </Col>
       </Row>

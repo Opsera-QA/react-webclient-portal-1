@@ -8,7 +8,6 @@ function SuccessRateDataBlock({ className, successPercentage, qualityLevel, bott
   return (
     <DataBlockBoxContainer className={className} onClickFunction={onClickFunction}>
       <ThreeLineDataBlockBase
-        className={"p-2"}
         topText={"Success Rate"}
         middleText={<MetricPercentageText percentage={successPercentage} qualityLevel={qualityLevel} />}
         bottomText={bottomText}
