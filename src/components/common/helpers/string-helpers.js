@@ -19,11 +19,11 @@ export function capitalizeFirstLetter(string, wordDelimiter = " ", noDataString)
 }
 
 export function truncateString(string, maxLength){
-  if (string == null) {
+  if (string == null || typeof string !== "string") {
     return "";
   }
 
-  return string.length <= maxLength ? string : string.slice(0, maxLength - 3) + "...";
+  return string.length <= maxLength ? string : string.slice(0, maxLength) + "...";
 }
 
 export function generateUUID() {
