@@ -8,7 +8,8 @@ import FilterContainer from "components/common/table/FilterContainer";
 import VanityTable from "components/common/table/VanityTable";
 import Model from "core/data_model/model";
 // import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
-import sonarPipelineDetailsFilterMetadata from "./sonar-pipeline-details-filter-metadata";
+import sonarPipelineDetailsFilterMetadata from "../sonar-pipeline-details-filter-metadata";
+import SonarPipelineTableMetadata from "../sonar-pipeline-table-metadata";
 import { getTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
@@ -25,30 +26,9 @@ function SonarPipelineWiseVulnerabilitiesDetails({ dataObject }) {
   const isMounted = useRef(false);
   const [error, setError] = useState(undefined);
 
-  const noDataMessage = "No Data is available for this pipeline at this time";
+  const noDataMessage = "Sonar Vulnerabilities report is currently unavailable at this time";
 
-  const fields = [
-    {
-      label: "Severity",
-      id: "severity",
-    },
-    {
-      label: "File Name",
-      id: "component",
-    },
-    {
-      label: "Line Number",
-      id: "line",
-    },
-    {
-      label: "Message",
-      id: "message",
-    },
-    {
-      label: "Remediation Effort",
-      id: "effort",
-    },      
-  ];
+  const fields = SonarPipelineTableMetadata.fields;
 
   const columns = useMemo(
     () => [
@@ -109,7 +89,7 @@ function SonarPipelineWiseVulnerabilitiesDetails({ dataObject }) {
         let newFilterDto = filterDto;
         newFilterDto.setData(
           "totalCount",
-          response?.data?.data[0]?.PipelineSonarVulnerabilitiesData?.data[0]?.count[0]
+          response?.data?.data[0]?.PipelineSonarVulnerabilitiesData?.data[0]?.count[0]?.count
         );
         setTableFilterDto({ ...newFilterDto });
       }
