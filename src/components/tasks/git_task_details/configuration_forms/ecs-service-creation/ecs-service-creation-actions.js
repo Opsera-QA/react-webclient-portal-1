@@ -66,4 +66,16 @@ ECSServiceCreationActions.getSubnets = async (dataObject, getAccessToken, cancel
   return [];
 };
 
+ECSServiceCreationActions.getLogGroups = async (dataObject, getAccessToken, cancelTokenSource) => {
+  let urlParams = {
+    toolId: dataObject?.getData("toolConfigId")
+  };
+  const apiUrl = `/tools/aws/v2/logGroups`;
+  let response = await baseActions.apiPostCallV2(getAccessToken,cancelTokenSource, apiUrl, urlParams);
+  if (response && response.status === 200) {
+    return response.data;
+  }
+  return [];
+};
+
 export default ECSServiceCreationActions;
