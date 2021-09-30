@@ -15,6 +15,10 @@ import DeploymentFrequencyStatisticsDataBlockContainer
   from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_frequency_statistics/DeploymentFrequencyStatisticsDataBlockContainer";
 import BuildFrequencyStatisticsDataBlockContainer
   from "components/insights/charts/opsera/build_and_deploy_statistics/build_frequency_statistics/BuildFrequencyStatisticsDataBlockContainer";
+import AllDeploymentStatisticsDataBlockContainer
+  from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/AllDeploymentStatisticsDataBlockContainer";
+import AllBuildStatisticsDataBlockContainer
+  from "components/insights/charts/opsera/build_and_deploy_statistics/build_statistics/AllBuildStatisticsDataBlockContainer";
 
 function BuildAndDeployMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -92,13 +96,26 @@ function BuildAndDeployMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
     );
   };
 
+  const getChartBodyAlt = () => {
+    return (
+      <Row className={"mx-0 p-2 justify-content-between"}>
+        <Col className={"px-0"} lg={12}>
+          <AllDeploymentStatisticsDataBlockContainer />
+        </Col>
+        <Col className={"px-0"} lg={12}>
+          <AllBuildStatisticsDataBlockContainer />
+        </Col>
+      </Row>
+    );
+  };
+
   return (
     <div>
       <VanityMetricContainer
         title={"Build and deploy metrics"}
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={getChartBody()}
+        chart={getChartBodyAlt()}
         // loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
