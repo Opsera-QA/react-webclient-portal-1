@@ -24,6 +24,8 @@ import AzureAksClusterCreationTaskHelpDocumentation
 import TasksTaskTypeSelectInput from "components/tasks/git_task_details/TasksTaskTypeSelectInput";
 import AwsLambdaFunctionCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsLambdaFunctionCreationTaskHelpDocumentation";
+import GitToGitSyncTaskHelpDocumentation
+  from "components/common/help/documentation/tasks/GitToGitSyncTaskHelpDocumentation";
 
 function TaskEditorPanel({ taskData, handleClose }) {
   const { getAccessToken, featureFlagHideItemInProd } = useContext(AuthContext);
@@ -83,8 +85,9 @@ function TaskEditorPanel({ taskData, handleClose }) {
         return <AwsLambdaFunctionCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.AZURE_CLUSTER_CREATION:
         return <AzureAksClusterCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-      case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
       case TASK_TYPES.SYNC_GIT_BRANCHES:
+        return <GitToGitSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
         break;
       default:
