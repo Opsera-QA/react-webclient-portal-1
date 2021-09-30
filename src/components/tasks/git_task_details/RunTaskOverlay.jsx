@@ -4,7 +4,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import modelHelpers from "components/common/model/modelHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
-import ModalBase from "components/common/modal/ModalBase";
 import CloseButton from "components/common/buttons/CloseButton";
 import RunTaskButton from "components/common/buttons/tasks/run_task/RunTaskButton";
 import SalesforceOrganizationSyncTaskNewBranchToggleInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskNewBranchToggleInput";
@@ -25,12 +24,13 @@ import SfdcOrgSyncPrerunHelpDocumentation
   from "components/common/help/documentation/tasks/SfdcOrgSyncPrerunHelpDocumentation";
 import azureAksClusterTaskConfigurationMetadata
   from "components/tasks/git_task_details/configuration_forms/azure-cluster-creation/azure-cluster-metadata";
-import SfdcGitUpstreamBranchInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/inputs/SfdcGitUpstreamBranchInput";
 import SalesforceOrganizationSyncTaskGitBranchSelectInput
   from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
+import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
+import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
+import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 
-function RunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, loadData }) {
+function RunTaskOverlay({ handleClose, gitTasksData, setGitTasksData, loadData }) {
   const [showHelp, setShowHelp] = useState(false);
   const [dataObj, setDataObj] = useState(undefined);
   const [canEdit, setCanEdit] = useState(false);
@@ -85,10 +85,12 @@ function RunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, l
 
   const getButtonContainer = () => {
     return (
-      <>
-        <CloseButton closeEditorCallback={handleClose} showUnsavedChangesMessage={false} />
-        <RunTaskButton gitTasksData={gitTasksData} setGitTasksData={setGitTasksData} gitTasksConfigurationDataDto={dataObj} loadData={loadData} handleClose={handleClose} />
-      </>
+      <Row className="mx-0 p-3 d-flex">
+        <div className="ml-auto d-flex">
+          <RunTaskButton gitTasksData={gitTasksData} setGitTasksData={setGitTasksData} gitTasksConfigurationDataDto={dataObj} loadData={loadData} handleClose={handleClose} className={"mr-2"} />
+          <CloseButton closeEditorCallback={handleClose} showUnsavedChangesMessage={false} />
+        </div>
+      </Row>
     );
   };
 
@@ -148,11 +150,13 @@ function RunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, l
   }
 
   return (
-    <ModalBase
-      showModal={showModal}
-      title="Opsera Task Confirmation"
-      handleClose={handleClose}
-      size={"xl"}
+    <ConfirmationOverlay
+      closePanel={handleClose}
+      showPanel={true}
+      titleText={`Opsera Task Confirmation`}
+      titleIcon={faQuestionCircle}
+      showToasts={true}
+      showCloseButton={false}
       buttonContainer={getButtonContainer()}
     >
       <OverlayPanelBodyContainer
@@ -164,17 +168,16 @@ function RunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData, l
         <div className={"mb-3 mx-3"}>Do you want to run {gitTasksData.getData("name")} task?</div>
         {getRunView()}
       </OverlayPanelBodyContainer>
-    </ModalBase>
+    </ConfirmationOverlay>
   );
 }
 
-RunTaskModal.propTypes = {
+RunTaskOverlay.propTypes = {
   gitTasksData: PropTypes.object,
   setActiveTab: PropTypes.func,
   setGitTasksData: PropTypes.func,
   loadData: PropTypes.func,
-  showModal: PropTypes.bool,
   handleClose: PropTypes.func,
 };
 
-export default RunTaskModal;
+export default RunTaskOverlay;
