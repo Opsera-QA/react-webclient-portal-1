@@ -3,14 +3,21 @@ import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TaskSummaryCardContainer from "components/tasks/git_task_details/configuration_forms/TaskSummaryCardContainer";
-import FieldContainer from "components/common/fields/FieldContainer";
-import FieldLabel from "components/common/fields/FieldLabel";
+import BooleanField from "components/common/fields/boolean/BooleanField";
 
-function BranchToBranchTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
+function GitToGitSyncTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
 
   if (isLoading) {
     return <TaskSummaryCardContainer isLoading={isLoading} />;
   }
+
+  const getReviewerNamesField = () => {
+    if (gitTaskConfigurationData?.getData("autoApprove") === true) {
+      return (
+        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"reviewerNames"} />
+      );
+    }
+  };
 
   return (
     <TaskSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
@@ -21,22 +28,18 @@ function BranchToBranchTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationD
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"repository"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"sourceBranch"} />        
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitBranch"} />
-        <FieldContainer className="mb-2">
-          <div className="w-100 d-flex">
-            <FieldLabel field={gitTaskConfigurationData.getFieldById("deleteSourceBranch")}/>
-            {gitTaskConfigurationData.getData("deleteSourceBranch") ? <span>True</span> : <span>False</span>}
-          </div>
-        </FieldContainer>
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"reviewerNames"} />
+        <BooleanField fieldName={"deleteSourceBranch"} dataObject={gitTaskConfigurationData} />
+        <BooleanField fieldName={"autoApprove"} dataObject={gitTaskConfigurationData} />
+        {getReviewerNamesField()}
       </div>
     </TaskSummaryCardContainer>
   );
 }
 
-BranchToBranchTaskTypeSummaryCard.propTypes = {
+GitToGitSyncTaskTypeSummaryCard.propTypes = {
   gitTasksData: PropTypes.object,
   gitTaskConfigurationData: PropTypes.object,
   isLoading: PropTypes.bool,
 };
 
-export default BranchToBranchTaskTypeSummaryCard;
+export default GitToGitSyncTaskTypeSummaryCard;

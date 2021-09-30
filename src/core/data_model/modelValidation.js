@@ -48,8 +48,12 @@ export const fieldValidation = (value, data, field) => {
 
   // TODO: Still working on this so it may change
   if (field.isRequiredFunction && field.isRequiredFunction(data) === true) {
-    console.log("isRequiredFunction is true");
-    if (value == null || value === "" || value === [] || value === {}) {
+    if (
+           value == null
+        || (typeof value === "string" && value.length === 0)
+        || (Array.isArray(value) && value.length === 0)
+        || value === {}
+      ) {
       errorMessages.push(field.label + " is required.");
     }
   }
