@@ -185,9 +185,9 @@ function ReqCreateToBranchCreation({ kpiConfiguration, setKpiConfiguration, dash
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
-        chartHelpComponent={(closeHelpPanel) => (
-          <OpseraDeploymentFrequencyHelpDocumentation closeHelpPanel={closeHelpPanel} />
-        )}
+        // chartHelpComponent={(closeHelpPanel) => (
+        //   <OpseraDeploymentFrequencyHelpDocumentation closeHelpPanel={closeHelpPanel} />
+        // )}
       />
       <ModalLogs
         header="Build Duration"
