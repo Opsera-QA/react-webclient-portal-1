@@ -1,14 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
+import ContainedThreeLineDataBlockBase
+  from "components/common/metrics/data_blocks/base/ContainedThreeLineDataBlockBase";
 
-function SuccessRateDataBlock({ className, successPercentage, qualityLevel, bottomText, onClickFunction }) {
+function SuccessRateContainedDataBlock({ className, successPercentage, qualityLevel, bottomText, onClickFunction }) {
   return (
     <DataBlockBoxContainer className={className} onClickFunction={onClickFunction}>
-      <ThreeLineDataBlockBase
-        topText={"Success Rate"}
+      <ContainedThreeLineDataBlockBase
+        titleText={"Success Rate"}
         middleText={<MetricPercentageText percentage={successPercentage} qualityLevel={qualityLevel} />}
         bottomText={bottomText}
       />
@@ -16,7 +17,7 @@ function SuccessRateDataBlock({ className, successPercentage, qualityLevel, bott
   );
 }
 
-SuccessRateDataBlock.propTypes = {
+SuccessRateContainedDataBlock.propTypes = {
   successPercentage: PropTypes.string,
   className: PropTypes.string,
   qualityLevel: PropTypes.string,
@@ -24,4 +25,4 @@ SuccessRateDataBlock.propTypes = {
   onClickFunction: PropTypes.func,
 };
 
-export default SuccessRateDataBlock;
+export default SuccessRateContainedDataBlock;

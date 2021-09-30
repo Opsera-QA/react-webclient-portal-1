@@ -1,14 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
+import ContainedThreeLineDataBlockBase
+  from "components/common/metrics/data_blocks/base/ContainedThreeLineDataBlockBase";
 
-function FailedDeploymentsDataBlock({ className, failedDeploymentCount, qualityLevel, bottomText, onClickFunction }) {
+function FailedDeploymentsContainedDataBlock({ className, failedDeploymentCount, qualityLevel, bottomText, onClickFunction }) {
   return (
     <DataBlockBoxContainer className={className} onClickFunction={onClickFunction}>
-      <ThreeLineDataBlockBase
-        topText={"Failed Deployments"}
+      <ContainedThreeLineDataBlockBase
+        titleText={"Failed Deployments"}
         middleText={<MetricScoreText score={failedDeploymentCount} qualityLevel={qualityLevel} />}
         bottomText={bottomText}
       />
@@ -16,7 +17,7 @@ function FailedDeploymentsDataBlock({ className, failedDeploymentCount, qualityL
   );
 }
 
-FailedDeploymentsDataBlock.propTypes = {
+FailedDeploymentsContainedDataBlock.propTypes = {
   failedDeploymentCount: PropTypes.number,
   className: PropTypes.string,
   qualityLevel: PropTypes.string,
@@ -24,4 +25,4 @@ FailedDeploymentsDataBlock.propTypes = {
   onClickFunction: PropTypes.func,
 };
 
-export default FailedDeploymentsDataBlock;
+export default FailedDeploymentsContainedDataBlock;

@@ -1,14 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import MetricTextBase from "components/common/metrics/text/MetricTextBase";
+import ContainedThreeLineDataBlockBase
+  from "components/common/metrics/data_blocks/base/ContainedThreeLineDataBlockBase";
 
-function AverageDeploymentDurationDataBlock({ className, averageDuration, qualityLevel, bottomText, onClickFunction }) {
+function AverageDeploymentDurationContainedDataBlock({ className, averageDuration, qualityLevel, bottomText, onClickFunction }) {
   return (
     <DataBlockBoxContainer className={className} onClickFunction={onClickFunction}>
-      <ThreeLineDataBlockBase
-        topText={"Average Deployment Duration"}
+      <ContainedThreeLineDataBlockBase
+        titleText={"Average Deployment Duration"}
         middleText={<MetricTextBase formattedText={averageDuration} qualityLevel={qualityLevel} />}
         bottomText={bottomText}
       />
@@ -16,7 +17,7 @@ function AverageDeploymentDurationDataBlock({ className, averageDuration, qualit
   );
 }
 
-AverageDeploymentDurationDataBlock.propTypes = {
+AverageDeploymentDurationContainedDataBlock.propTypes = {
   averageDuration: PropTypes.number,
   className: PropTypes.string,
   qualityLevel: PropTypes.string,
@@ -24,4 +25,4 @@ AverageDeploymentDurationDataBlock.propTypes = {
   onClickFunction: PropTypes.func,
 };
 
-export default AverageDeploymentDurationDataBlock;
+export default AverageDeploymentDurationContainedDataBlock;

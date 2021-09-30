@@ -3,25 +3,27 @@ import PropTypes from "prop-types";
 import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
+import ContainedThreeLineDataBlockBase
+  from "components/common/metrics/data_blocks/base/ContainedThreeLineDataBlockBase";
 
-function FailedDeploymentsDataBlock({ className, failedDeploymentCount, qualityLevel, bottomText, onClickFunction }) {
+function AverageDailyBuildsContainedDataBlock({ className, averageDailyCount, qualityLevel, bottomText, onClickFunction }) {
   return (
     <DataBlockBoxContainer className={className} onClickFunction={onClickFunction}>
-      <ThreeLineDataBlockBase
-        topText={"Failed Deployments"}
-        middleText={<MetricScoreText score={failedDeploymentCount} qualityLevel={qualityLevel} />}
+      <ContainedThreeLineDataBlockBase
+        titleText={"Average Daily Builds"}
+        middleText={<MetricScoreText score={averageDailyCount} qualityLevel={qualityLevel} />}
         bottomText={bottomText}
       />
     </DataBlockBoxContainer>
   );
 }
 
-FailedDeploymentsDataBlock.propTypes = {
-  failedDeploymentCount: PropTypes.number,
+AverageDailyBuildsContainedDataBlock.propTypes = {
+  averageDailyCount: PropTypes.number,
   className: PropTypes.string,
   qualityLevel: PropTypes.string,
   bottomText: PropTypes.string,
   onClickFunction: PropTypes.func,
 };
 
-export default FailedDeploymentsDataBlock;
+export default AverageDailyBuildsContainedDataBlock;

@@ -8,7 +8,6 @@ function AverageBuildDurationDataBlock({ className, averageDuration, qualityLeve
   return (
     <DataBlockBoxContainer className={className} onClickFunction={onClickFunction}>
       <ThreeLineDataBlockBase
-        className={"p-2"}
         topText={"Average Build Duration"}
         middleText={<MetricTextBase formattedText={averageDuration} qualityLevel={qualityLevel} />}
         bottomText={bottomText}
