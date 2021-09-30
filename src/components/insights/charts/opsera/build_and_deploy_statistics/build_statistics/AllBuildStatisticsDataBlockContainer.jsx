@@ -17,6 +17,8 @@ import AverageDailyBuildsContainedDataBlock
   from "components/common/metrics/data_blocks/build/average_daily/AverageDailyBuildsContainedDataBlock";
 import AverageBuildDurationContainedDataBlock
   from "components/common/metrics/data_blocks/build/average_duration/AverageBuildDurationContainedDataBlock";
+import FailureRateContainedDataBlock
+  from "components/common/metrics/data_blocks/failure/failure_rate/FailureRateContainedDataBlock";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function AllBuildStatisticsDataBlockContainer({ dashboardData, kpiConfiguration }) {
@@ -38,35 +40,42 @@ function AllBuildStatisticsDataBlockContainer({ dashboardData, kpiConfiguration 
       title={"Build Statistics"}
       // onClick={() => onRowSelect()}
     >
-      <Col className={"px-0"}>
+      <Col sm={4} className={"px-0"}>
         <SuccessfulBuildsContainedDataBlock
           qualityLevel={METRIC_QUALITY_LEVELS.DANGER}
           successfulBuildCount={100}
           bottomText={"10% decrease"}
         />
       </Col>
-      <Col className={"px-0"}>
-        <FailedBuildsContainedDataBlock
-          qualityLevel={METRIC_QUALITY_LEVELS.DANGER}
-          failedBuildCount={30}
-          bottomText={"20% increase"}
-        />
-      </Col>
-      <Col className={"px-0"}>
+      <Col sm={4} className={"px-0"}>
         <SuccessRateContainedDataBlock
           qualityLevel={METRIC_QUALITY_LEVELS.DANGER}
           successPercentage={80}
           bottomText={"Goal: 95%"}
         />
       </Col>
-      <Col className={"px-0"}>
+      <Col sm={4} className={"px-0"}>
         <AverageDailyBuildsContainedDataBlock
           qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
           averageDailyCount={1.25}
           bottomText={"0.5% increase"}
         />
       </Col>
-      <Col className={"px-0"}>
+      <Col sm={4} className={"px-0"}>
+        <FailedBuildsContainedDataBlock
+          qualityLevel={METRIC_QUALITY_LEVELS.DANGER}
+          failedBuildCount={30}
+          bottomText={"20% increase"}
+        />
+      </Col>
+      <Col sm={4} className={"px-0"}>
+        <FailureRateContainedDataBlock
+          qualityLevel={METRIC_QUALITY_LEVELS.DANGER}
+          failurePercentage={30}
+          bottomText={"Goal: 0%"}
+        />
+      </Col>
+      <Col sm={4} className={"px-0"}>
         <AverageBuildDurationContainedDataBlock
           qualityLevel={METRIC_QUALITY_LEVELS.DANGER}
           averageDuration={"10 mins"}

@@ -96,26 +96,13 @@ function BuildAndDeployMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
     );
   };
 
-  const getChartBodyAlt = () => {
-    return (
-      <Row className={"mx-0 p-2 justify-content-between"}>
-        <Col className={"px-0"} lg={12}>
-          <AllDeploymentStatisticsDataBlockContainer />
-        </Col>
-        <Col className={"px-0"} lg={12}>
-          <AllBuildStatisticsDataBlockContainer />
-        </Col>
-      </Row>
-    );
-  };
-
   return (
     <div>
       <VanityMetricContainer
         title={"Build and deploy metrics"}
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={getChartBodyAlt()}
+        chart={getChartBody()}
         // loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
