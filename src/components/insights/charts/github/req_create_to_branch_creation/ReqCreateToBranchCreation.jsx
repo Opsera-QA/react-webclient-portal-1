@@ -6,10 +6,10 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import Model from "../../../../../core/data_model/model";
-import DeploymentFrequencyInsightsTableMetadata from "./deployment-frequency-actionable-metadata.js";
+import RequirementToBranchCreationTableMetadata from "./Req-creation-to-branch-creation.js";
 import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import OpseraDeploymentFrequencyHelpDocumentation from "../../../../common/help/documentation/insights/charts/OpseraDeploymentFrequencyHelpDocumentation";
@@ -26,7 +26,7 @@ function ReqCreateToBranchCreation({ kpiConfiguration, setKpiConfiguration, dash
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
-    new Model({ ...genericChartFilterMetadata.newObjectFields }, DeploymentFrequencyInsightsTableMetadata, false)
+    new Model({ ...genericChartFilterMetadata.newObjectFields }, RequirementToBranchCreationTableMetadata, false)
   );
 
   useEffect(() => {
@@ -86,6 +86,16 @@ function ReqCreateToBranchCreation({ kpiConfiguration, setKpiConfiguration, dash
       setTableFilterDto({ ...newFilterDto });
 
       if (isMounted?.current === true && dataObject) {
+        // TODO: CONVERT IN NODE
+        // branchDataObject.averageReqCreationToBranchCreationSecs = (
+        //   (branchMetric.averageReqCreationToBranchCreationSecs % 3600) /
+        //   60
+        // ).toFixed(2);
+        // dataObject.averageReqCreationToCodeCommitTimeSecs = (
+        //   (codeMetric.averageReqCreationToCodeCommitTimeSecs % 3600) /
+        //   60
+        // ).toFixed(2);
+
         setBranchMetric(branchDataObject);
         setCodeMetric(dataObject);
       }
@@ -103,7 +113,6 @@ function ReqCreateToBranchCreation({ kpiConfiguration, setKpiConfiguration, dash
 
   const getChartBody = () => {
     if (branchMetric.length === 0 && codeMetric.length === 0) {
-      console.log("HERE");
       return null;
     }
 
@@ -118,19 +127,19 @@ function ReqCreateToBranchCreation({ kpiConfiguration, setKpiConfiguration, dash
     // };
 
     const onRowSelect = (stat) => {
-      //   const chartModel = new Model(
-      //     { ...DeploymentFrequencyInsightsTableMetadata.newObjectFields },
-      //     DeploymentFrequencyInsightsTableMetadata,
-      //     false
-      //   );
-      //   toastContext.showOverlayPanel(
-      //     <ChartDetailsOverlay
-      //       dashboardData={dashboardData}
-      //       kpiConfiguration={kpiConfiguration}
-      //       chartModel={chartModel}
-      //       kpiIdentifier={"opsera-deployment-frequency-stats" + "-" + stat}
-      //     />
-      //   );
+      const chartModel = new Model(
+        { ...RequirementToBranchCreationTableMetadata.newObjectFields },
+        RequirementToBranchCreationTableMetadata,
+        false
+      );
+      toastContext.showOverlayPanel(
+        <ChartDetailsOverlay
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+          chartModel={chartModel}
+          kpiIdentifier={"req-creation-to-branch-creation"}
+        />
+      );
     };
 
     return (
@@ -144,17 +153,17 @@ function ReqCreateToBranchCreation({ kpiConfiguration, setKpiConfiguration, dash
                     {branchMetric.averageReqCreationToBranchCreationSecs}
                   </div>
                 </div>
-                <div className="w-100 text-muted mb-1">Requirement Creation to Branch Creation(Secs)</div>
+                <div className="w-100 text-muted mb-1">Requirement Creation to Branch Creation (Mins)</div>
               </div>
             </Col>
             <Col>
               <div className="metric-box p-3 text-center">
                 <div className="box-metric">
                   <div className="green pointer" onClick={() => onRowSelect("successful")}>
-                    {codeMetric.averageReqCreationToCodeCommitTimeSecs}
+                    {codeMetric.averageReqCreationToCodeCommitTimeMins}
                   </div>
                 </div>
-                <div className="w-100 text-muted mb-1">Requirement Creation to Code Commit(Secs)</div>
+                <div className="w-100 text-muted mb-1">Requirement Creation to Last Code Commit (Mins)</div>
               </div>
             </Col>
           </Row>

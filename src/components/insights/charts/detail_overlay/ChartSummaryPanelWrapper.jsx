@@ -24,6 +24,8 @@ import CoverityHighIssuesSummaryPanel from "../coverity/CoverityIssuesByCategory
 import CoverityMediumIssuesSummaryPanel from "../coverity/CoverityIssuesByCategory/CoverityMediumIssuesSummaryPanel";
 import CoverityLowIssuesSummaryPanel from "../coverity/CoverityIssuesByCategory/CoverityLowIssuesSummaryPanel";
 
+import ReqCreationToBranchCreationSummaryPanel from "components/insights/charts/github/req_create_to_branch_creation/ReqCreationToBranchCreationSummaryPanel";
+
 function ChartSummaryPanelWrapper({
   chartModel,
   kpiIdentifier,
@@ -38,16 +40,20 @@ function ChartSummaryPanelWrapper({
       case "bitbucket-rejected-merge-requests":
         return <BitbucketRejectedMergeRequestsSummaryPanel chartModel={chartModel} setActiveTab={setActiveTab} />;
       case "opsera-deployment-frequency-stats-successful":
-        return ( <OpseraDeploymentFreqStatsSuccessSummaryPanel 
-          dashboardData={dashboardData}
-          kpiConfiguration={kpiConfiguration} 
-          setActiveTab={setActiveTab} />
-      );
-      case "opsera-deployment-frequency-stats-failed":
-        return ( <OpseraDeploymentFreqStatsFailureSummaryPanel
+        return (
+          <OpseraDeploymentFreqStatsSuccessSummaryPanel
             dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
-            setActiveTab={setActiveTab} />
+            setActiveTab={setActiveTab}
+          />
+        );
+      case "opsera-deployment-frequency-stats-failed":
+        return (
+          <OpseraDeploymentFreqStatsFailureSummaryPanel
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            setActiveTab={setActiveTab}
+          />
         );
       case "sfdc-backups-successful":
         return (
@@ -163,24 +169,13 @@ function ChartSummaryPanelWrapper({
         );
       case "sonar-ratings-bugs":
         return (
-          <SonarReliabilityRatingPipelinesTable
-            dashboardData={dashboardData}
-            kpiConfiguration={kpiConfiguration}
-          />
+          <SonarReliabilityRatingPipelinesTable dashboardData={dashboardData} kpiConfiguration={kpiConfiguration} />
         );
       case "sonar-ratings-vulnerabilities":
-        return (
-          <SonarSecurityRatingPipelinesTable
-            dashboardData={dashboardData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
+        return <SonarSecurityRatingPipelinesTable dashboardData={dashboardData} kpiConfiguration={kpiConfiguration} />;
       case "sonar-ratings-debt-ratio":
         return (
-          <SonarMaintainabilityRatingPipelinesTable
-            dashboardData={dashboardData}
-            kpiConfiguration={kpiConfiguration}
-          />
+          <SonarMaintainabilityRatingPipelinesTable dashboardData={dashboardData} kpiConfiguration={kpiConfiguration} />
         );
       // Coverity
       case "coverity-issues-high":
@@ -206,6 +201,16 @@ function ChartSummaryPanelWrapper({
       case "coverity-issues-low":
         return (
           <CoverityLowIssuesSummaryPanel
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+            pipelineName={pipelineName}
+          />
+        );
+      case "req-creation-to-branch-creation":
+        return (
+          <ReqCreationToBranchCreationSummaryPanel
             dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             chartModel={chartModel}
