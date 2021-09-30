@@ -8,7 +8,6 @@ function FailedDeploymentsDataBlock({ className, failedDeploymentCount, qualityL
   return (
     <DataBlockBoxContainer className={className} onClickFunction={onClickFunction}>
       <ThreeLineDataBlockBase
-        className={"p-2"}
         topText={"Failed Deployments"}
         middleText={<MetricScoreText score={failedDeploymentCount} qualityLevel={qualityLevel} />}
         bottomText={bottomText}

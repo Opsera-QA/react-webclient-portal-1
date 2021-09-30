@@ -49,7 +49,6 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ dashboardData, kpiCon
 
   return (
     <HorizontalDataBlocksContainer
-      className={"mb-3"}
       title={"Deployment Frequency Statistics"}
       // onClick={() => onRowSelect()}
     >
