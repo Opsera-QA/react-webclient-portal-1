@@ -90,19 +90,6 @@ const branchToBranchGitTaskConfigurationMetadata = {
       label: "Delete Source Branch",
       id: "deleteSourceBranch"
     },
-    {
-      label: "Include Package XML",
-      id: "includePackageXml"
-    },
-    {
-      label: "Package XML Reference Path",
-      id: "packageXmlReferencePath",
-      regexDefinitionName: "pathField",
-      formText: "Specify where the Package XML needs to be copied or merged with existing Package XML.",
-      isRequiredFunction: (model) => {
-        return model?.getData("includePackageXml") === true;
-      },
-    },
   ],
   newObjectFields: {
     type: "",
@@ -132,8 +119,6 @@ const branchToBranchGitTaskConfigurationMetadata = {
     reviewers: [],
     reviewerNames: [],
     deleteSourceBranch: true,
-    includePackageXml: false,
-    packageXmlReferencePath: "",
   }
 };
 

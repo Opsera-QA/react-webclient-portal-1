@@ -50,7 +50,7 @@ function PipelineThresholdInputBase({ fieldName, model, setModel, helpComponent,
     let newModel = {...model};
 
     if (newRoleList.length > field.maxItems) {
-      setErrorMessage("You have reached the maximum allowed number of role access items. Please remove one to add another.");
+      setErrorMessage("You have reached the maximum allowed number of Threshold rows. Please remove one to add another.");
       return;
     }
 
@@ -146,7 +146,8 @@ function PipelineThresholdInputBase({ fieldName, model, setModel, helpComponent,
                 disabledThresholdLevels={getDisabledThresholdLevels()}
                 count={threshold?.count}
                 level={threshold?.level}
-                updateThresholdRow={(newValue) => updateThresholdRow(index, "count", newValue)}
+                updateThresholdCount={(newValue) => updateThresholdRow(index, "count", newValue)}
+                updateThresholdLevel={(newValue) => updateThresholdRow(index, "level", newValue)}
               />
             </div>
           );

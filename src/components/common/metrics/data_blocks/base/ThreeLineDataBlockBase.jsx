@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function ThreeLineDataBlockBase({ title, subtitle, topText, className}) {
+function ThreeLineDataBlockBase({ middleText, bottomText, topText, className}) {
   const getTopText = () => {
     if (topText) {
       return (
@@ -13,21 +13,21 @@ function ThreeLineDataBlockBase({ title, subtitle, topText, className}) {
   };
 
 
-  const getTitle = () => {
-    if (title) {
+  const getMiddleText = () => {
+    if (middleText) {
       return (
         <div>
-          {title}
+          {middleText}
         </div>
       );
     }
   };
 
   const getSubtitle = () => {
-    if (subtitle) {
+    if (bottomText) {
       return (
         <div>
-          {subtitle}
+          {bottomText}
         </div>
       );
     }
@@ -35,14 +35,14 @@ function ThreeLineDataBlockBase({ title, subtitle, topText, className}) {
 
   return (
     <div className={className}>
-      <div className={"px-2 text-center"}>
-        <div className="mt-auto w-100 text-muted">
+      <div className={"text-center h-100"}>
+        <div className="w-100 text-muted data-block-title-text">
           {getTopText()}
         </div>
-        <div className="py-3 data-block">
-          {getTitle()}
+        <div className="my-auto data-block-focal-text">
+          {getMiddleText()}
         </div>
-        <div className="w-100 text-muted">
+        <div className="mt-auto text-muted">
           {getSubtitle()}
         </div>
       </div>
@@ -52,8 +52,8 @@ function ThreeLineDataBlockBase({ title, subtitle, topText, className}) {
 
 ThreeLineDataBlockBase.propTypes = {
   topText: PropTypes.any,
-  title: PropTypes.any,
-  subtitle: PropTypes.any,
+  middleText: PropTypes.any,
+  bottomText: PropTypes.any,
   className: PropTypes.string
 };
 

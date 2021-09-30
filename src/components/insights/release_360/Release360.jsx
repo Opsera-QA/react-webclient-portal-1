@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import axios from "axios";
 import {faFileCertificate, faHourglass, faSearch} from "@fortawesome/pro-light-svg-icons";
@@ -11,11 +11,14 @@ import OverallReleaseDurationMetrics
 import OverallReleaseTraceabilityMetrics
   from "components/insights/release_360/views/traceability/OverallReleaseTraceabilityMetrics";
 import OverallReleaseQualityMetrics from "components/insights/release_360/views/quality/OverallReleaseQualityMetrics";
+import {AuthContext} from "contexts/AuthContext";
+import MetricUiSandbox from "components/insights/release_360/views/sandbox/MetricUiSandbox";
 
 function Release360 () {
   const isMounted = useRef(false);
   const [activeTab, setActiveTab] = useState("duration");
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const { featureFlagHideItemInProd } = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -37,6 +40,20 @@ function Release360 () {
 
     if (isMounted?.current === true) {
       setActiveTab(tabSelection);
+    }
+  };
+
+  const getSandbox = () => {
+    if (featureFlagHideItemInProd() === false) {
+      return (
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Metric UI Sandbox"}
+          icon={faFileCertificate}
+          handleTabClick={handleTabClick}
+          tabName={"sandbox"}
+        />
+      );
     }
   };
 
@@ -64,6 +81,7 @@ function Release360 () {
           handleTabClick={handleTabClick}
           tabName={"quality"}
         />
+        {getSandbox()}
       </CustomTabContainer>
     );
   };
@@ -77,10 +95,16 @@ function Release360 () {
         return (<OverallReleaseTraceabilityMetrics />);
       case "quality":
         return (<OverallReleaseQualityMetrics />);
+      case "sandbox":
+        return (<MetricUiSandbox />);
       default:
         return null;
     }
   };
+
+  if (featureFlagHideItemInProd()) {
+    return null;
+  }
 
   return (
     <ScreenContainer

@@ -5,10 +5,11 @@ import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar
 import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGradeText";
-import HorizontalDataBlockContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlockContainer";
+import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import PercentageDataBlock from "components/common/metrics/percentage/PercentageDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
+import Col from "react-bootstrap/Col";
 
 function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration, maintainabilityRating, technicalDebtRatio }) {
   const toastContext = useContext(DialogToastContext);
@@ -72,13 +73,20 @@ function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration,
   };
 
   return (
-    <HorizontalDataBlockContainer
+    <HorizontalDataBlocksContainer
       title={"Sonar Ratings: Maintainability"}
       onClick={() => onRowSelect()}
-      leftDataBlock={getLeftDataBlock()}
-      middleDataBlock={getMiddleDataBlock()}
-      rightDataBlock={getRightDataBlock()}
-    />
+     >
+      <Col sm={4}>
+        {getLeftDataBlock()}
+      </Col>
+      <Col sm={4}>
+        {getMiddleDataBlock()}
+      </Col>
+      <Col sm={4}>
+        {getRightDataBlock()}
+      </Col>
+    </HorizontalDataBlocksContainer>
   );
 }
 

@@ -6,7 +6,7 @@ import sfdxCertGenTaskConfigurationMetadata
   from "components/tasks/git_task_details/configuration_forms/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import SFDCJenkinsToolInput from "../sfdc-org-sync/inputs/SFDCJenkinsToolInput";
+import SFDCJenkinsToolInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncJenkinsToolSelectInput";
 import AgentLabelsSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
