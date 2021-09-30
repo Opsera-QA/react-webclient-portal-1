@@ -96,14 +96,14 @@ function TwistlockStepConfiguration({ pipelineId, stepTool, stepId, closeEditorP
         plan={plan}
         stepId={stepId}
       />
-      {/*<TwistlockStepComplianceThresholdInput*/}
-      {/*  model={twistlockStepConfigurationDto}*/}
-      {/*  setModel={setTwistlockStepConfigurationDataDto}*/}
-      {/*/>*/}
-      {/*<TwistlockStepVulnerabilityThresholdInput*/}
-      {/*  model={twistlockStepConfigurationDto}*/}
-      {/*  setModel={setTwistlockStepConfigurationDataDto}*/}
-      {/*/>*/}
+      <TwistlockStepComplianceThresholdInput
+       model={twistlockStepConfigurationDto}
+       setModel={setTwistlockStepConfigurationDataDto}
+      />
+      <TwistlockStepVulnerabilityThresholdInput
+       model={twistlockStepConfigurationDto}
+       setModel={setTwistlockStepConfigurationDataDto}
+      />
     </PipelineStepEditorPanelContainer>
   );
 }
