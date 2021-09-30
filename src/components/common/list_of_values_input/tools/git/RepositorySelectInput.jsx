@@ -82,17 +82,16 @@ function RepositorySelectInput(
 
   const getRepositories = async (cancelSource = cancelTokenSource) => {
     const response  = await GitActionsHelper.searchRepositoriesV2(service, gitToolId, workspace, getAccessToken, cancelSource);
-    let repositoriesResponse = response?.data?.data;
+    let repositories = response?.data?.data;
 
-    if (Array.isArray(repositoriesResponse)) {
-      setRepositories(repositoriesResponse);
+    if (Array.isArray(repositories)) {
+      setRepositories(repositories);
 
       if (validateSavedData === true) {
         const existingRepository = dataObject?.getData(fieldName);
 
         if (existingRepository != null && existingRepository !== "") {
-          const existingRepositoryExists = repositoriesResponse.find((repository) => repository[valueField] === existingRepository[valueField]);
-
+          const existingRepositoryExists = repositories.find((repository) => repository[valueField] === existingRepository);
           if (existingRepositoryExists == null) {
             toastContext.showLoadingErrorDialog(
               "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list."
