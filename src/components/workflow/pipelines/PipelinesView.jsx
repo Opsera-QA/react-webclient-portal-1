@@ -23,11 +23,13 @@ import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import {faAws, faMicrosoft, faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import {faGitAlt} from "@fortawesome/free-brands-svg-icons/faGitAlt";
+import {useHistory} from "react-router-dom";
 
 function PipelinesView({ currentTab, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [pipelines, setPipelines] = useState([]);
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
   const [pipelineFilterModel, setPipelineFilterModel] = useState(undefined);
   const isMounted = useRef(false);
