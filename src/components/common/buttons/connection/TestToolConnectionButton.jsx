@@ -10,7 +10,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import ToolRegisteryConnectionLogModal from "components/common/modal/ToolRegisteryConnectionLogModal";
 import { isObject } from "@okta/okta-auth-js";
 
-function TestToolConnectionButton({ toolDataDto, disable, toolName }) {
+function TestToolConnectionButton({ toolDataDto, disabled, toolName }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isTesting, setIsTesting] = useState(false);
   const [successfulConnection, setSuccessfulConnection] = useState(false);
@@ -109,7 +109,12 @@ function TestToolConnectionButton({ toolDataDto, disable, toolName }) {
       <TooltipWrapper
         innerText={`This tool must be saved before testing connection.`}
       >
-        <Button size="sm" variant={getVariant()} disabled={isTesting || disable} onClick={() => testConnection()}>
+        <Button
+          size="sm"
+          variant={getVariant()}
+          disabled={isTesting === true || disabled === true}
+          onClick={() => testConnection()}
+        >
           {getLabel()}
         </Button>
       </TooltipWrapper>
@@ -128,12 +133,8 @@ function TestToolConnectionButton({ toolDataDto, disable, toolName }) {
 
 TestToolConnectionButton.propTypes = {
   toolDataDto: PropTypes.object,
-  disable: PropTypes.bool,
+  disabled: PropTypes.bool,
   toolName: PropTypes.string
-};
-
-TestToolConnectionButton.defaultProps = {
-  disable: false,
 };
 
 export default TestToolConnectionButton;

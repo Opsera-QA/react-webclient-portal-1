@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-import { faBracketsCurly, faDraftingCompass, faMicrochip, faUser } from "@fortawesome/pro-light-svg-icons";
+import React, {useContext, useEffect, useRef, useState} from "react";
+import {useParams} from "react-router-dom";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import cookieHelpers from "core/cookies/cookie-helpers";
-import PipelinesView from "components/workflow/pipelines/PipelinesView";
-import CustomTabContainer from "components/common/tabs/CustomTabContainer";
-import CustomTab from "components/common/tabs/CustomTab";
-import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
-import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
+import axios from "axios";
+import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
+import pipelineActions from "components/workflow/pipeline-actions";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import PipelineTableCardView from "components/workflow/pipelines/PipelineTableCardView";
 
 const unpackTab = (tab) => {
   if (tab != null) {
@@ -20,46 +19,111 @@ const unpackTab = (tab) => {
   }
 };
 
+// TODO: Put data pull inside here, make lower component <PipelineTableCardView /> or the like
 function Pipelines() {
   const { tab } = useParams();
-  const [activeTab, setActiveTab] = useState(unpackTab(tab));
-  const history = useHistory();
+  const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
+  const [pipelines, setPipelines] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [pipelineFilterModel, setPipelineFilterModel] = useState(undefined);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-  const handleTabClick = (tabSelection) => e => {
-    e.preventDefault();
-    setActiveTab(tabSelection);
-    cookieHelpers.setCookie("pipelines", "selectedTab", tabSelection);
-    history.push(`/workflow/${tabSelection}`);
-  };
-
-  const getPipelinesView = () => {
-    if (process.env.REACT_APP_STACK === "free-trial") {
-      return (<PipelinesView currentTab={activeTab} setActiveTab={setActiveTab}/>);
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
     }
 
-    return (
-      <DetailTabPanelContainer
-        detailView={<PipelinesView currentTab={activeTab} setActiveTab={setActiveTab}/>}
-        tabContainer={getPipelineTabContainer()}
-      />
-    );
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    getCookie(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [tab]);
+
+
+  const getCookie = async (cancelSource = cancelTokenSource) => {
+    setIsLoading(true);
+    const newTab = unpackTab(tab);
+    let newPipelineFilterModel = new PipelineFilterModel(getAccessToken, cancelTokenSource, loadData);
+    newPipelineFilterModel?.setData("type", newTab);
+    try {
+      let storedSortOption = cookieHelpers.getCookie("pipelines-v2", "sortOption");
+      let storedPageSize = cookieHelpers.getCookie("pipelines-v2", "pageSize");
+      let storedViewType = cookieHelpers.getCookie("pipelines-v2", "viewType");
+
+      if (isMounted?.current === true && storedSortOption != null) {
+        newPipelineFilterModel.setData("sortOption", JSON.parse(storedSortOption));
+      }
+
+      if (isMounted?.current === true && storedPageSize != null) {
+        newPipelineFilterModel.setData("pageSize", JSON.parse(storedPageSize));
+      }
+
+      if (isMounted?.current === true && storedViewType != null) {
+        newPipelineFilterModel.setData("viewType", JSON.parse(storedViewType));
+      }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        cookieHelpers.setCookie("pipelines-v2", "sortOption", JSON.stringify(newPipelineFilterModel.getData("sortOption")));
+        cookieHelpers.setCookie("pipelines-v2", "pageSize", JSON.stringify(newPipelineFilterModel.getData("pageSize")));
+        cookieHelpers.setCookie("pipelines-v2", "viewType", JSON.stringify(newPipelineFilterModel.getData("viewType")));
+        console.error("Error loading cookie. Setting to default");
+        console.error(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        await loadData(newPipelineFilterModel, cancelSource);
+      }
+    }
   };
 
-  const getPipelineTabContainer = () => {
-    return (
-      <CustomTabContainer>
-        <CustomTab activeTab={activeTab} tabText={"All Pipelines"} handleTabClick={handleTabClick} tabName={"all"}
-                   toolTipText={"All Pipelines"} icon={faDraftingCompass}/>
-        <CustomTab activeTab={activeTab} tabText={"My Pipelines"} handleTabClick={handleTabClick} tabName={"owner"}
-                   toolTipText={"My Pipelines"} icon={faUser}/>
-        <CustomTab activeTab={activeTab} tabText={"Software Development"} handleTabClick={handleTabClick}
-                   tabName={"sdlc"} toolTipText={"Software Development Pipelines"} icon={faBracketsCurly}/>
-        <CustomTab activeTab={activeTab} tabText={"Machine Learning"} handleTabClick={handleTabClick}
-                   tabName={"ai-ml"} toolTipText={"Machine Learning (AI) Pipelines"} icon={faMicrochip}/>
-        <CustomTab activeTab={activeTab} tabText={"SalesForce"} handleTabClick={handleTabClick}
-                   tabName={"sfdc"} toolTipText={"SalesForce Pipelines"} icon={faSalesforce}/>
-      </CustomTabContainer>
-    );
+  const saveCookies = (newPipelineFilterModel) => {
+    cookieHelpers.setCookie("pipelines-v2", "sortOption", JSON.stringify(newPipelineFilterModel.getData("sortOption")));
+    cookieHelpers.setCookie("pipelines-v2", "pageSize", JSON.stringify(newPipelineFilterModel.getData("pageSize")));
+    cookieHelpers.setCookie("pipelines-v2", "viewType", JSON.stringify(newPipelineFilterModel.getData("viewType")));
+  };
+
+  const loadData = async (newPipelineFilterModel = pipelineFilterModel, cancelSource = cancelTokenSource) => {
+    try {
+      if (isMounted?.current === true) {
+        setIsLoading(true);
+        setPipelines([]);
+        saveCookies(newPipelineFilterModel);
+      }
+
+      const pipelineFields = ["type", "_id", "name", "owner", "workflow.last_step", "workflow.run_count", "createdAt", "updatedAt"];
+      const response = await pipelineActions.getPipelinesV2(getAccessToken, cancelSource, newPipelineFilterModel, newPipelineFilterModel?.getData("type"), pipelineFields);
+      const pipelines = response?.data?.data;
+
+      if (isMounted?.current === true && Array.isArray(pipelines)) {
+        setPipelines([...pipelines]);
+        let newFilterDto = newPipelineFilterModel;
+        newFilterDto.setData("totalCount", response?.data?.count);
+        newFilterDto.setData("activeFilters", newFilterDto?.getActiveFilters());
+        setPipelineFilterModel({...newFilterDto});
+      }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        console.log(error.error);
+        toastContext.showLoadingErrorDialog(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
   };
 
   return (
@@ -69,7 +133,14 @@ function Pipelines() {
       pageDescription={"Select a Pipeline to view details."}
       hasTabContainer={true}
     >
-      {getPipelinesView()}
+      <PipelineTableCardView
+        pipelines={pipelines}
+        isLoading={isLoading}
+        pipelineFilterModel={pipelineFilterModel}
+        setPipelineFilterModel={setPipelineFilterModel}
+        loadData={loadData}
+        saveCookies={saveCookies}
+      />
     </ScreenContainer>
   );
 

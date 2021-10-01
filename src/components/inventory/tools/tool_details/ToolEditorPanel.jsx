@@ -80,7 +80,10 @@ function ToolEditorPanel({ toolData, handleClose }) {
           <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"name"}/>
         </Col>
         <Col lg={6}>
-          <RegistryToolIdentifierSelectInput dataObject={toolDataDto} setDataObject={setToolDataDto}/>
+          <RegistryToolIdentifierSelectInput
+            dataObject={toolDataDto}
+            setDataObject={setToolDataDto}
+          />
         </Col>
        
         <Col lg={6}>

@@ -6,7 +6,7 @@ import toolFilterMetadata from "components/inventory/tools/tool-filter-metadata"
 import toolsActions from "components/inventory/tools/tools-actions";
 import PropTypes from "prop-types";
 import cookieHelpers from "core/cookies/cookie-helpers";
-import ToolViews from "components/inventory/tools/ToolViews";
+import ToolTableCardView from "components/inventory/tools/ToolTableCardView";
 import axios from "axios";
 import ToolRegistryHelpDocumentation
   from "components/common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
@@ -109,7 +109,7 @@ function ToolInventory() {
         <ToolRegistryHelpDocumentation />
       }
     >
-      <ToolViews
+      <ToolTableCardView
         isLoading={isLoading}
         loadData={loadData}
         saveCookies={saveCookies}

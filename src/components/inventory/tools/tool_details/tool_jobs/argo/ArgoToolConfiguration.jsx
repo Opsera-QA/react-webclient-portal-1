@@ -32,7 +32,8 @@ function ArgoToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={argoConfigurationDto}
+      model={argoConfigurationDto}
+      setModel={setArgoConfigurationDto}
       persistRecord={saveArgoToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Argocd"}

@@ -30,7 +30,8 @@ function SpinnakerToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={spinnakerConfigurationDto}
+      model={spinnakerConfigurationDto}
+      setModel={setSpinnakerConfigurationDto}
       persistRecord={saveSpinnakerToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Spinnaker"}

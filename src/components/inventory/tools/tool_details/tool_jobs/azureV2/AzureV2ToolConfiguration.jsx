@@ -30,7 +30,8 @@ function AzureV2ToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={azureConfigurationDto}
+      model={azureConfigurationDto}
+      setModel={setAzureConfigurationDto}
       persistRecord={saveAzureToolConfiguration}
       toolData={toolData}
       // toolConnectionCheckName={"azure"}

@@ -9,6 +9,7 @@ import IconBase from "components/common/icons/IconBase";
 function SaveButtonBase(
   {
     recordDto,
+    setModel,
     updateRecord,
     disable,
     size,
@@ -34,7 +35,7 @@ function SaveButtonBase(
 
   const persistRecord = async () => {
     setIsSaving(true);
-    await persistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient, showIncompleteDataMessage);
+    await persistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient, showIncompleteDataMessage, setModel);
 
     if (isMounted.current === true) {
       setIsSaving(false);
@@ -77,6 +78,7 @@ SaveButtonBase.propTypes = {
   customLabel: PropTypes.string,
   showTypeOnLabel: PropTypes.bool,
   showIncompleteDataMessage: PropTypes.bool,
+  setModel: PropTypes.func,
 };
 
 SaveButtonBase.defaultProps = {

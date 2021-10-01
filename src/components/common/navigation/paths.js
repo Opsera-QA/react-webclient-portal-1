@@ -28,7 +28,7 @@ paths.siteNotificationManagement = paths.admin + "/site-notifications/table";
 paths.siteNotificationManager = paths.admin + "/site-notifications";
 paths.siteNotificationDetailView = paths.siteNotificationManagement + "/details/";
 
-paths.toolManagement = paths.admin + "/tools";
+paths.toolManagement = paths.admin + "/tools/categories";
 paths.toolCategoryDetailView = paths.toolManagement + "/types/details/";
 paths.toolIdentifierDetailView = paths.toolManagement + "/identifiers/details/";
 

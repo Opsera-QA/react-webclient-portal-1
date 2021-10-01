@@ -13,20 +13,24 @@ import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilte
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import PipelineCardView from "components/workflow/pipelines/PipelineCardView";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faBracketsCurly, faDraftingCompass, faMicrochip, faUser} from "@fortawesome/pro-light-svg-icons";
+import {faBracketsCurly, faDraftingCompass, faMicrochip, faTasks, faUser} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import pipelineSummaryMetadata
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import PipelineStatusFilter from "components/common/filters/pipelines/status/PipelineStatusFilter";
 import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
-import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
-import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
+import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
+import {faAws, faMicrosoft, faSalesforce} from "@fortawesome/free-brands-svg-icons";
+import {faGitAlt} from "@fortawesome/free-brands-svg-icons/faGitAlt";
+import {useHistory} from "react-router-dom";
 
+// TODO: This can be removed after the new TableCardView is approved by QA
 function PipelinesView({ currentTab, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [pipelines, setPipelines] = useState([]);
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
   const [pipelineFilterModel, setPipelineFilterModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -143,7 +147,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   };
 
   const addPipeline = () => {
-    setActiveTab("catalog");
+    history.push(`/workflow/catalog`);
   };
 
   const getPipelineTypeTabs = () => {
@@ -193,7 +197,6 @@ function PipelinesView({ currentTab, setActiveTab }) {
     pipelineFilterModel?.setData("type", "");
     loadData(pipelineFilterModel);
   };
-
 
   const getView = () => {
     if (isLoading) {

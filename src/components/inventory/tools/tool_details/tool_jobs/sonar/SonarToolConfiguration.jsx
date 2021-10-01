@@ -33,7 +33,8 @@ function SonarToolConfiguration( { toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={sonarConfigurationDto}
+      model={sonarConfigurationDto}
+      setModel={setSonarConfigurationDto}
       persistRecord={saveSonarToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Sonarqube"}
