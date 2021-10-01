@@ -10,7 +10,7 @@ import Model from "core/data_model/model";
 // import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import sonarPipelineDetailsFilterMetadata from "../sonar-pipeline-details-filter-metadata";
 import SonarPipelineTableMetadata from "../sonar-pipeline-table-metadata";
-import { getTableTextColumn } from "components/common/table/table-column-helpers-v2";
+import { getTableTextColumn, getLimitedTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
 
@@ -35,7 +35,7 @@ function SonarPipelineWiseVulnerabilitiesDetails({ dataObject }) {
       getTableTextColumn(getField(fields, "severity")),
       getTableTextColumn(getField(fields, "component")),
       getTableTextColumn(getField(fields, "line")),
-      getTableTextColumn(getField(fields, "message")),
+      getLimitedTableTextColumn(getField(fields, "message"), 40),
       getTableTextColumn(getField(fields, "effort")),      
     ],
     []
