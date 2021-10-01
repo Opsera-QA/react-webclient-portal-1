@@ -32,7 +32,8 @@ function NexusToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={nexusConfigurationDto}
+      model={nexusConfigurationDto}
+      setModel={setNexusConfigurationDto}
       persistRecord={saveNexusToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Nexus"}

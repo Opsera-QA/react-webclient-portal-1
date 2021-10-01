@@ -58,7 +58,8 @@ function GitlabToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={gitlabConfigurationDto}
+      model={gitlabConfigurationDto}
+      setModel={setGitlabConfigurationDto}
       persistRecord={saveGitlabToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Gitlab"}

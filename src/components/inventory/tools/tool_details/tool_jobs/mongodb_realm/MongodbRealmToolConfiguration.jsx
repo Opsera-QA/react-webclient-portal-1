@@ -32,7 +32,8 @@ function MongodbRealmToolConfiguration({ toolData }) {
   
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={mongodbRealmConfigurationDto}
+      model={mongodbRealmConfigurationDto}
+      setModel={setMongodbRealmConfigurationDto}
       persistRecord={saveMongodbRealmToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"mongodb_realm"}

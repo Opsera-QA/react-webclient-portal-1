@@ -36,7 +36,8 @@ function CoverityToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={coverityConfigurationDto}
+      model={coverityConfigurationDto}
+      setModel={setCoverityConfigurationDto}
       persistRecord={saveCoverityConfigurationDto}
       toolData={toolData}
       toolConnectionCheckName={"coverity"}
