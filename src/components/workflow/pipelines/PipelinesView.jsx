@@ -144,7 +144,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   };
 
   const addPipeline = () => {
-    setActiveTab("catalog");
+    history.push(`/workflow/catalog`);
   };
 
   const getPipelineTypeTabs = () => {
