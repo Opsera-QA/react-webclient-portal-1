@@ -131,13 +131,13 @@ function SalesforceOrganizationSyncTaskConfigurationEditorPanel({ taskModel, tas
         </>
       }
       {getDynamicFields()}
-      {/*<Col lg={12}>*/}
-      {/*  <SalesforceOrganizationSyncTaskIncludePackageXmlToggleInput*/}
-      {/*    model={taskConfigurationModel}*/}
-      {/*    setModel={setTaskConfigurationModel}*/}
-      {/*  />*/}
-      {/*</Col>*/}
-      {/*{getPackageXmlPathInput()}*/}
+      <Col lg={12}>
+        <SalesforceOrganizationSyncTaskIncludePackageXmlToggleInput
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
+        />
+      </Col>
+      {getPackageXmlPathInput()}
     </Row>
   );
 }
