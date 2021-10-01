@@ -15,7 +15,7 @@ import InlineToolIdentifierFilter from "components/common/filters/tools/tool_ide
 import {DialogToastContext} from "contexts/DialogToastContext";
 import toolMetadata from "components/inventory/tools/tool-metadata";
 
-function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, saveCookies, customerAccessRules, isMounted}) {
+function ToolTableCardView({toolFilterDto, setToolFilterDto, isLoading, loadData, data, saveCookies, customerAccessRules, isMounted}) {
   const toastContext = useContext(DialogToastContext);
 
   const createNewTool = () => {
@@ -106,7 +106,7 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
   );
 }
 
-ToolViews.propTypes = {
+ToolTableCardView.propTypes = {
   data: PropTypes.array,
   isLoading: PropTypes.bool,
   toolFilterDto: PropTypes.object,
@@ -118,4 +118,4 @@ ToolViews.propTypes = {
   isMounted: PropTypes.object
 };
 
-export default ToolViews;
+export default ToolTableCardView;

@@ -23,7 +23,7 @@ function TaskLinkButton({taskId, openInNewWindow, className, variant, closePanel
 
   return (
     <Button onClick={() => loadTool()} className={className ? className : "mb-2 small"} size={"sm"} variant={variant}>
-      <span className="my-auto"><FontAwesomeIcon icon={faTasks} className="pr-1" fixedWidth/>View</span>
+      <span className="my-auto"><FontAwesomeIcon icon={faTasks} className="mr-2" fixedWidth/>View</span>
     </Button>
   );
 }

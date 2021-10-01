@@ -23,7 +23,7 @@ function ToolLinkButton({toolId, loadToolInNewWindow, className, variant, closeP
 
   return (
     <Button onClick={() => loadTool()} className={className ? className : "mb-2 small"} size={"sm"} variant={variant}>
-      <span className="my-auto"><FontAwesomeIcon icon={faTools} className="pr-1" fixedWidth/>View</span>
+      <span className="my-auto"><FontAwesomeIcon icon={faTools} className="mr-2" fixedWidth/>View</span>
     </Button>
   );
 }

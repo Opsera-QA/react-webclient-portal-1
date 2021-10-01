@@ -5,6 +5,7 @@ import toolMetadata from "components/inventory/tools/tool-metadata";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ToolEditorPanel from "components/inventory/tools/tool_details/ToolEditorPanel";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
+import ToolIdentifierSelectionScreen from "components/inventory/tools/create_overlay/ToolIdentifierSelectionScreen";
 
 function NewToolOverlay({ loadData, isMounted }) {
   const toastContext = useContext(DialogToastContext);
@@ -22,11 +23,14 @@ function NewToolOverlay({ loadData, isMounted }) {
   const getView = () => {
     const toolIdentifier = toolData?.getData("tool_identifier");
 
-    // if (toolIdentifier == null || toolIdentifier === "") {
-    //   return (
-    //
-    //   );
-    // }
+    if (toolIdentifier == null || toolIdentifier === "") {
+      return (
+        <ToolIdentifierSelectionScreen
+          toolModel={toolData}
+          setToolModel={setToolData}
+        />
+      );
+    }
 
     return (
       <ToolEditorPanel
