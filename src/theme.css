@@ -1687,23 +1687,20 @@ div.data-blocks-ellipses {
 }
 
 /* Confirmation panel */
-.confirmation-overlay {
-    margin: auto;
-}
-
 .confirmation-overlay-panel {
     position: fixed;
     overflow-x: hidden;
     z-index: 1500;
     height: 100%;
     top: calc(50vh - 300px);
-    left: calc(50vw - 300px);
+    left: calc(50vw - 375px);
 }
 
 .confirmation-overlay-panel-body {
     overflow-y: auto;
     min-height: 200px;
-    min-width: 600px;
+    min-width: 750px;
+    max-width: 750px;
     max-height: calc(100% - 48px);
 }
 
