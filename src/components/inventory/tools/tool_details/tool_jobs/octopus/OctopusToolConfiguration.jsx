@@ -33,7 +33,8 @@ function OctopusToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={octopusConfigurationDto}
+      model={octopusConfigurationDto}
+      setModel={setOctopusConfigurationDto}
       persistRecord={saveOctopusToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Octopus"}

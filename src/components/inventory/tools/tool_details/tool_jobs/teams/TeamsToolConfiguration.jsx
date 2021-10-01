@@ -38,7 +38,8 @@ function TeamsToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={teamsConfigurationDto}
+      model={teamsConfigurationDto}
+      setModel={setTeamsConfigurationDto}
       persistRecord={saveTeamsToolConfiguration}
       toolData={toolData}
       // toolConnectionCheckName={"Teams"}

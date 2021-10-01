@@ -57,7 +57,8 @@ function GithubToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={githubConfigurationDto}
+      model={githubConfigurationDto}
+      setModel={setGithubConfigurationDto}
       persistRecord={saveGithubToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Github"}

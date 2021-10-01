@@ -7,16 +7,20 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import StrictSaveButton from "components/common/buttons/saving/StrictSaveButton";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 
-function ToolConfigurationEditorPanelContainer({children, isLoading, persistRecord, recordDto, toolConnectionCheckName, toolData}) {
+function ToolConfigurationEditorPanelContainer({children, isLoading, persistRecord, model, setModel, toolConnectionCheckName, toolData}) {
   const getToolConnectionCheckButton = () => {
     if (toolConnectionCheckName != null && toolData != null) {
      return (
-        <TestToolConnectionButton toolDataDto={toolData} toolName={toolConnectionCheckName} disable={recordDto.isNew() || recordDto.isChanged()}/>
+        <TestToolConnectionButton
+          toolDataDto={toolData}
+          toolName={toolConnectionCheckName}
+          disabled={model?.isNew() || model?.isChanged()}
+        />
      );
     }
   };
 
-  if (isLoading || recordDto == null) {
+  if (isLoading || model == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
@@ -30,7 +34,7 @@ function ToolConfigurationEditorPanelContainer({children, isLoading, persistReco
         <div>{children}</div>
         <div className="mr-3">
           <SaveButtonContainer>
-            <StrictSaveButton updateRecord={persistRecord} recordDto={recordDto} />
+            <StrictSaveButton updateRecord={persistRecord} recordDto={model} setModel={setModel} />
           </SaveButtonContainer>
           <RequiredFieldsMessage />
         </div>
@@ -46,7 +50,9 @@ ToolConfigurationEditorPanelContainer.propTypes = {
   persistRecord: PropTypes.func,
   recordDto: PropTypes.object,
   toolConnectionCheckName: PropTypes.string,
-  toolData: PropTypes.object
+  toolData: PropTypes.object,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
 };
 
 ToolConfigurationEditorPanelContainer.defaultProps = {
