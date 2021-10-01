@@ -81,7 +81,6 @@ function ToolEditorPanel({ toolData, handleClose }) {
         </Col>
         <Col lg={6}>
           <RegistryToolIdentifierSelectInput
-            disabled={toolDataDto?.isNew()}
             dataObject={toolDataDto}
             setDataObject={setToolDataDto}
           />
