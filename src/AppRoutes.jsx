@@ -47,7 +47,6 @@ import LdapGroupManagement from "./components/settings/ldap_groups/LdapGroupMana
 import LdapGroupDetailView from "./components/settings/ldap_groups/ldap_group_detail/LdapGroupDetailView";
 import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetailView";
 import TemplateDetailView from "./components/admin/template_editor/template_detail_view/TemplateDetailView";
-import ToolManagement from "./components/admin/tools/ToolManagement";
 import DataMappingManagement from "components/settings/data_mapping/DataMappingManagement";
 import ToolCategoryDetailView
   from "components/admin/tools/tool_category/tool_category_detail_view/ToolCategoryDetailView";
@@ -120,6 +119,8 @@ import SsoUserDetailView from "components/settings/users/sso_user_details/SsoUse
 import AwsAccountRegistration from "components/user/aws_registration/AwsAccountRegistration";
 import PipelineCatalogLibrary from "components/workflow/catalog/PipelineCatalogLibrary";
 import Release360 from "components/insights/release_360/Release360";
+import ToolCategoryManagement from "components/admin/tools/tool_category/ToolCategoryManagement";
+import ToolIdentifierManagement from "components/admin/tools/tool_identifier/ToolIdentifierManagement";
 //import FreeTrialRegistration from "./components/free_trial/Registration";
 //import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 
@@ -252,7 +253,8 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/admin/registered-users/:id" exact component={RegisteredUserDetailView} />
           {/* <SecureRoute path="/admin/system-status" component={SystemStatus} /> */}
           <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration} />
-          <SecureRoute path="/admin/tools/:tabKey?" exact component={ToolManagement} />
+          <SecureRoute path="/admin/tools/categories" exact component={ToolCategoryManagement} />
+          <SecureRoute path="/admin/tools/identifiers" exact component={ToolIdentifierManagement} />
           <SecureRoute path="/admin/tools/types/details/:toolTypeId" exact component={ToolCategoryDetailView} />
           <SecureRoute path="/admin/tools/identifiers/details/:toolIdentifierId" exact
                        component={ToolIdentifierDetailView} />

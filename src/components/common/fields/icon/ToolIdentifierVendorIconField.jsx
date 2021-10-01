@@ -5,7 +5,7 @@ import {getLargeVendorIconFromToolIdentifier} from "components/common/helpers/ic
 
 function ToolIdentifierVendorIconField({dataObject, fieldName, className}) {
   const getIcon = () => {
-    let icon = getLargeVendorIconFromToolIdentifier(process.env.REACT_APP_OPSERA_S3_STORAGE_URL, dataObject?.getData(fieldName));
+    let icon = getLargeVendorIconFromToolIdentifier(dataObject?.getData(fieldName));
 
     if (typeof icon === "string") {
       icon = (

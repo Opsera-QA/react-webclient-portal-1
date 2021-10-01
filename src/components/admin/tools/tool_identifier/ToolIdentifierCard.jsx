@@ -1,15 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ToolLinkButton from "components/common/buttons/inventory/ToolLinkButton";
 import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import DescriptionField from "components/common/fields/text/DescriptionField";
 import CreateAndUpdateDateFieldBase from "components/common/fields/date/CreateAndUpdateDateFieldBase";
-import {getLargeVendorIconFromToolIdentifier} from "components/common/helpers/icon-helpers";
+import {
+  getLargeVendorIconFromToolIdentifier
+} from "components/common/helpers/icon-helpers";
+import ToolIdentifierLinkButton from "components/common/buttons/admin/tool_identifier/ToolIdentifierLinkButton";
 
-function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
+function ToolIdentifierCard({ toolIdentifierModel, isLoading, loadTaskInNewWindow }) {
   const getTitleBar = () => {
-    let icon = getLargeVendorIconFromToolIdentifier(toolData?.getData("tool_identifier"));
+    let icon = getLargeVendorIconFromToolIdentifier(toolIdentifierModel?.getData("identifier"));
 
     if (typeof icon === "string") {
       icon = (
@@ -22,7 +24,7 @@ function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
     return (
       <IconTitleBar
         icon={icon}
-        title={`${toolData.getData("name")}`}
+        title={`${toolIdentifierModel?.getData("name")}`}
         isLoading={isLoading}
       />
     );
@@ -32,31 +34,31 @@ function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
   const getDescription = () => {
     return (
       <div className="description-height small pl-1">
-      <DescriptionField dataObject={toolData} fieldName={"description"} />
+      <DescriptionField dataObject={toolIdentifierModel} fieldName={"description"} />
     </div>
     );
   };
-
-
 
   if (isLoading) {
     return <IconCardContainerBase titleBar={getTitleBar()} isLoading={isLoading} />;
   }
 
   return (
-    <IconCardContainerBase titleBar={getTitleBar()} contentBody={getDescription()} isLoading={isLoading} className={"tool-registry-card"}>
+    <IconCardContainerBase
+      titleBar={getTitleBar()}
+      contentBody={getDescription()}
+      isLoading={isLoading}
+      className={"tool-registry-card"}
+    >
       <div className="date-and-button">
         <div className="small pl-1">
-          <CreateAndUpdateDateFieldBase
-            className={"mt-3 mb-1"}
-            model={toolData}
-          />
+          <CreateAndUpdateDateFieldBase className={"mt-3 mb-1"} model={toolIdentifierModel} />
         </div>
         <div>
-          <ToolLinkButton
-            toolId={toolData.getData("_id")}
+          <ToolIdentifierLinkButton
+            toolIdentifierId={toolIdentifierModel?.getData("_id")}
             className={"w-100 mt-1"}
-            loadToolInNewWindow={loadToolInNewWindow}
+            openInNewWindow={loadTaskInNewWindow}
             variant={"primary"}
           />
         </div>
@@ -65,10 +67,10 @@ function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
   );
 }
 
-RegistryToolCard.propTypes = {
-  toolData: PropTypes.object,
+ToolIdentifierCard.propTypes = {
+  toolIdentifierModel: PropTypes.object,
   isLoading: PropTypes.bool,
-  loadToolInNewWindow: PropTypes.bool
+  loadTaskInNewWindow: PropTypes.bool
 };
 
-export default RegistryToolCard;
+export default ToolIdentifierCard;

@@ -6,7 +6,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import ToolEditorPanel from "components/inventory/tools/tool_details/ToolEditorPanel";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 
-// TODO: Remove this one and wire up the one in create_overlay when complete
 function NewToolOverlay({ loadData, isMounted }) {
   const toastContext = useContext(DialogToastContext);
   const [toolData, setToolData] = useState(new Model({...toolMetadata.newObjectFields}, toolMetadata, true));
@@ -20,9 +19,27 @@ function NewToolOverlay({ loadData, isMounted }) {
     toastContext.clearOverlayPanel();
   };
 
+  const getView = () => {
+    const toolIdentifier = toolData?.getData("tool_identifier");
+
+    // if (toolIdentifier == null || toolIdentifier === "") {
+    //   return (
+    //
+    //   );
+    // }
+
+    return (
+      <ToolEditorPanel
+        setToolData={setToolData}
+        handleClose={closePanel}
+        toolData={toolData}
+      />
+    );
+  };
+
   return (
     <CreateCenterPanel closePanel={closePanel} objectType={toolMetadata.type} loadData={loadData}>
-      <ToolEditorPanel setToolData={setToolData} handleClose={closePanel} toolData={toolData}/>
+      {getView()}
     </CreateCenterPanel>
   );
 }
