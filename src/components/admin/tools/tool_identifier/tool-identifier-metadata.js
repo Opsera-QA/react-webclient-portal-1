@@ -53,6 +53,10 @@ const toolIdentifierMetadata = {
       id: "createdAt",
     },
     {
+      label: "Updated At",
+      id: "updatedAt",
+    },
+    {
       label: "Enabled in Tool Registry?",
       id: "enabledInRegistry"
     },
