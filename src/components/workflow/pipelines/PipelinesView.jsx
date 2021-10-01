@@ -25,6 +25,7 @@ import {faAws, faMicrosoft, faSalesforce} from "@fortawesome/free-brands-svg-ico
 import {faGitAlt} from "@fortawesome/free-brands-svg-icons/faGitAlt";
 import {useHistory} from "react-router-dom";
 
+// TODO: This can be removed after the new TableCardView is approved by QA
 function PipelinesView({ currentTab, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
