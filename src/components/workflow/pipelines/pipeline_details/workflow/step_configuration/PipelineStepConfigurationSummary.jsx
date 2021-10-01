@@ -373,7 +373,7 @@ function PipelineStepConfigurationSummary({
         return (
           <TwistlockPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            twistlockDataObject={getModelWrappedObject(twistlockPipelineStepFormMetadata)}
+            twistlockPipelineDataObject={getModelWrappedObject(twistlockPipelineStepFormMetadata)}
           />
         );
       case "s3":
