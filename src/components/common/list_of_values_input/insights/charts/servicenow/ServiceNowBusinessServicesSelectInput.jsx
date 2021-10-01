@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
+import LazyLoadMultiSelectInputBase from "components/common/inputs/select/LazyLoadMultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import pipelineStepNotificationActions from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
@@ -20,6 +20,7 @@ function ServiceNowBusinessServicesSelectInput({
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
+  const [toggleSelected, setToggleSelected] = useState(false);
   const [businessServices, setBusinessServices] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -41,11 +42,11 @@ function ServiceNowBusinessServicesSelectInput({
 
     setBusinessServices([]);
     if (serviceNowToolId !== "" && serviceNowToolId != null) {
-      loadBusinessServices(serviceNowToolId, source).catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
+      // loadBusinessServices(serviceNowToolId, source).catch((error) => {
+      //   if (isMounted?.current === true) {
+      //     throw error;
+      //   }
+      // });
     }
 
     return () => {
@@ -54,13 +55,14 @@ function ServiceNowBusinessServicesSelectInput({
     };
   }, [serviceNowToolId]);
 
-  const loadBusinessServices = async (serviceNowId, cancelSource = cancelTokenSource) => {
+  const loadBusinessServices = async () => {
     try {
       setIsLoading(true);
+      setToggleSelected(true);
       const response = await pipelineStepNotificationActions.getServiceNowBusinessServices(
-        serviceNowId,
+        serviceNowToolId,
         getAccessToken,
-        cancelSource
+        cancelTokenSource
       );
 
       if (response.data != null && response.data.message != null && Array.isArray(response.data.message)) {
@@ -88,7 +90,11 @@ function ServiceNowBusinessServicesSelectInput({
       return "A ServiceNow Tool must be selected before selecting a Business Service";
     }
 
-    if (!isLoading && serviceNowToolId !== "" && businessServices.length === 0) {
+    if (!isLoading && serviceNowToolId !== "" && businessServices.length === 0 && !toggleSelected) {
+      return "Click to load Business Services";
+    }
+
+    if (!isLoading && serviceNowToolId !== "" && businessServices.length === 0 && toggleSelected) {
       return "No Business Services found for selected ServiceNow account.";
     }
 
@@ -98,7 +104,7 @@ function ServiceNowBusinessServicesSelectInput({
   };
 
   return (
-    <MultiSelectInputBase
+    <LazyLoadMultiSelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
@@ -108,7 +114,8 @@ function ServiceNowBusinessServicesSelectInput({
       valueField={valueField}
       textField={textField}
       placeholderText={getPlaceholderText()}
-      disabled={disabled || isLoading || serviceNowToolId === "" || businessServices.length === 0}
+      onToggleFunction={loadBusinessServices}
+      disabled={disabled || serviceNowToolId === ""}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
     />
   );

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
+import LazyLoadMultiSelectInputBase from "components/common/inputs/select/LazyLoadMultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import pipelineStepNotificationActions from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
@@ -20,6 +20,7 @@ function ServiceNowServiceOfferingsSelectInput({
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
+  const [toggleSelected, setToggleSelected] = useState(false);
   const [serviceOfferings, setServiceOfferings] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -40,13 +41,13 @@ function ServiceNowServiceOfferingsSelectInput({
     isMounted.current = true;
 
     setServiceOfferings([]);
-    if (serviceNowToolId !== "" && serviceNowToolId != null) {
-      loadServiceOfferings(serviceNowToolId, source).catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
+    // if (serviceNowToolId !== "" && serviceNowToolId != null) {
+    //   loadServiceOfferings(serviceNowToolId, source).catch((error) => {
+    //     if (isMounted?.current === true) {
+    //       throw error;
+    //     }
+    //   });
+    // }
 
     return () => {
       source.cancel();
@@ -54,13 +55,14 @@ function ServiceNowServiceOfferingsSelectInput({
     };
   }, [serviceNowToolId]);
 
-  const loadServiceOfferings = async (serviceNowId, cancelSource = cancelTokenSource) => {
+  const loadServiceOfferings = async () => {
     try {
       setIsLoading(true);
+      setToggleSelected(true);
       const response = await pipelineStepNotificationActions.getServiceNowServiceOfferings(
-        serviceNowId,
+        serviceNowToolId,
         getAccessToken,
-        cancelSource
+        cancelTokenSource
       );
 
       if (response.data != null && response.data.message != null && Array.isArray(response.data.message)) {
@@ -88,7 +90,11 @@ function ServiceNowServiceOfferingsSelectInput({
       return "A ServiceNow Tool must be selected before selecting a Service Offering";
     }
 
-    if (!isLoading && serviceNowToolId !== "" && serviceOfferings.length === 0) {
+    if (!isLoading && serviceNowToolId !== "" && serviceOfferings.length === 0 && !toggleSelected) {
+      return "Click to load Service Offerings";
+    }
+
+    if (!isLoading && serviceNowToolId !== "" && serviceOfferings.length === 0 && toggleSelected) {
       return "No Service Offerings found for selected ServiceNow account.";
     }
 
@@ -98,7 +104,7 @@ function ServiceNowServiceOfferingsSelectInput({
   };
 
   return (
-    <MultiSelectInputBase
+    <LazyLoadMultiSelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
@@ -108,7 +114,8 @@ function ServiceNowServiceOfferingsSelectInput({
       valueField={valueField}
       textField={textField}
       placeholderText={getPlaceholderText()}
-      disabled={disabled || isLoading || serviceNowToolId === "" || serviceOfferings.length === 0}
+      onToggleFunction={loadServiceOfferings}
+      disabled={disabled || serviceNowToolId === ""}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
     />
   );

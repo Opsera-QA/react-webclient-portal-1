@@ -1,19 +1,34 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Multiselect } from 'react-widgets';
+import { Multiselect } from "react-widgets";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import DropdownList from "react-widgets/lib/DropdownList";
+// import DropdownList from "react-widgets/lib/DropdownList";
 
-function LazyLoadMultiSelectInputBase(
-  {
-    fieldName, dataObject, setDataObject, groupBy,
-    disabled, selectOptions, valueField, textField,
-    placeholderText, setDataFunction, busy, showClearValueButton,
-    clearDataFunction, className, showLabel, requireClearDataConfirmation,
-    clearDataDetails, linkTooltipText, detailViewLink, infoOverlay, onToggleFunction
-  }) {
+function LazyLoadMultiSelectInputBase({
+  fieldName,
+  dataObject,
+  setDataObject,
+  groupBy,
+  disabled,
+  selectOptions,
+  valueField,
+  textField,
+  placeholderText,
+  setDataFunction,
+  busy,
+  showClearValueButton,
+  clearDataFunction,
+  className,
+  showLabel,
+  requireClearDataConfirmation,
+  clearDataDetails,
+  linkTooltipText,
+  detailViewLink,
+  infoOverlay,
+  onToggleFunction,
+}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
 
@@ -29,28 +44,31 @@ function LazyLoadMultiSelectInputBase(
     newDataObject.setData(fieldName, parsedValues);
     let errors = newDataObject.isFieldValid(field.id);
 
-    if ( errors != null && errors !== true) {
+    if (errors != null && errors !== true) {
       setErrorMessage(errors[0]);
-    }
-    else {
+    } else {
       setErrorMessage("");
     }
 
-    setDataObject({...newDataObject});
+    setDataObject({ ...newDataObject });
   };
 
   const clearValue = () => {
     if (!setDataFunction) {
       validateAndSetData(field.id, []);
-    }
-    else if (clearDataFunction) {
+    } else if (clearDataFunction) {
       clearDataFunction();
     }
   };
 
   const getClearDataFunction = () => {
-    if (dataObject.getData(field.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
-      return (clearValue);
+    if (
+      dataObject.getData(field.id) !== "" &&
+      !disabled &&
+      showClearValueButton &&
+      (setDataFunction == null || clearDataFunction)
+    ) {
+      return clearValue;
     }
   };
 
@@ -62,11 +80,10 @@ function LazyLoadMultiSelectInputBase(
     let parsedValues = [];
 
     if (valueArray != null && valueArray.length > 0) {
-      valueArray.map(value => {
+      valueArray.map((value) => {
         if (typeof value === "string") {
           parsedValues.push(value);
-        }
-        else {
+        } else {
           parsedValues.push(value[valueField]);
         }
       });
@@ -101,14 +118,16 @@ function LazyLoadMultiSelectInputBase(
           filter="contains"
           groupBy={groupBy}
           onToggle={(test) => {
-            if (test === true) {
+            if (test === true && (!Array.isArray(selectOptions) || selectOptions?.length === 0)) {
               onToggleFunction();
             }
           }}
-          value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : [] }
+          value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : []}
           placeholder={placeholderText}
           disabled={disabled}
-          onChange={newValue => setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)}
+          onChange={(newValue) =>
+            setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)
+          }
         />
       </div>
       <InfoText errorMessage={errorMessage} field={field} />
@@ -120,10 +139,7 @@ LazyLoadMultiSelectInputBase.propTypes = {
   selectOptions: PropTypes.array,
   setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
-  groupBy: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func
-  ]),
+  groupBy: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   dataObject: PropTypes.object,
   valueField: PropTypes.string,
   textField: PropTypes.string,
@@ -133,10 +149,7 @@ LazyLoadMultiSelectInputBase.propTypes = {
   busy: PropTypes.bool,
   showClearValueButton: PropTypes.bool,
   clearDataFunction: PropTypes.func,
-  disabled: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.array
-  ]),
+  disabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   className: PropTypes.string,
   requireClearDataConfirmation: PropTypes.bool,
   showLabel: PropTypes.bool,
@@ -148,7 +161,7 @@ LazyLoadMultiSelectInputBase.propTypes = {
 };
 
 LazyLoadMultiSelectInputBase.defaultProps = {
-  showClearValueButton: true
+  showClearValueButton: true,
 };
 
 export default LazyLoadMultiSelectInputBase;
