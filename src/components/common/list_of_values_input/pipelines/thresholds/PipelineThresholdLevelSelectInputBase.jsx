@@ -10,9 +10,7 @@ export const THRESHOLD_LEVELS = [
   {text: "Total", value: "total"},
 ];
 
-
 function PipelineThresholdLevelSelectInputBase({ fieldName, model, setModel, isLoading, setDataFunction, disabled }) {
-
   return (
     <SelectInputBase
       fieldName={fieldName}
