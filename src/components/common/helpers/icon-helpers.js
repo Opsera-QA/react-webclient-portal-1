@@ -6,7 +6,6 @@ import React from "react";
 import {TASK_TYPES} from "components/tasks/task.types";
 
 export function getLargeVendorIconFromToolIdentifier (toolIdentifier, s3Bucket = process.env.REACT_APP_OPSERA_S3_STORAGE_URL) {
-  console.log("toolIdentifier: " + toolIdentifier);
   if (toolIdentifier == null) {
     return <></>;
   }
