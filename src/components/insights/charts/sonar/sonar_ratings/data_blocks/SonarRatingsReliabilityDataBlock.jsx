@@ -9,11 +9,38 @@ import HorizontalDataBlockContainer from "components/common/metrics/data_blocks/
 import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
-
+import Col from "react-bootstrap/Col";
+import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import { faTable } from "@fortawesome/pro-light-svg-icons";
+import SonarPipelineWiseReliabilityDetails from './SonarPipelineWiseReliabilityDetails';
 function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, reliabilityRating, bugCount }) {
   const toastContext = useContext(DialogToastContext);
 
-  const onRowSelect = () => {
+  const onRowSelect =()=>{    
+    toastContext.showOverlayPanel(
+      <FullScreenCenterOverlayContainer
+        closePanel={closePanel}
+        showPanel={true}
+        titleText={`Sonar Ratings: Reliability`}
+        showToasts={true}
+        titleIcon={faTable}
+        isLoading={false}
+        linkTooltipText={"View Full Blueprint"}
+      >
+        <div className={"p-3"}>
+        <SonarPipelineWiseReliabilityDetails 
+          dataObject={dashboardData} 
+         />
+        </div>        
+      </FullScreenCenterOverlayContainer>
+    );
+  };
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
+
+  const onRowSelect_old = () => {
     const chartModel = new Model({...SonarRatingsBugsActionableMetadata.newObjectFields}, SonarRatingsBugsActionableMetadata, false);
     toastContext.showOverlayPanel(
       <ChartDetailsOverlay
