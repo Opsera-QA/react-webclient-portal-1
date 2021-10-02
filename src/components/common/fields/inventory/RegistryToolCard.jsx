@@ -44,7 +44,12 @@ function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
   }
 
   return (
-    <IconCardContainerBase titleBar={getTitleBar()} contentBody={getDescription()} isLoading={isLoading} className={"tool-registry-card"}>
+    <IconCardContainerBase
+      titleBar={getTitleBar()}
+      contentBody={getDescription()}
+      isLoading={isLoading}
+      className={"vertical-selection-card"}
+    >
       <div className="date-and-button">
         <div className="small pl-1">
           <CreateAndUpdateDateFieldBase
