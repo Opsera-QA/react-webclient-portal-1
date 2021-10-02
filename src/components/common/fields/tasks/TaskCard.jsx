@@ -47,7 +47,7 @@ function TaskCard({ taskModel, isLoading, loadTaskInNewWindow }) {
       titleBar={getTitleBar()}
       contentBody={getDescription()}
       isLoading={isLoading}
-      className={"tool-registry-card"}
+      className={"vertical-selection-card"}
     >
       <div className="date-and-button">
         <div className="small pl-1">

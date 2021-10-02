@@ -48,7 +48,7 @@ function ToolIdentifierSelectionCard({ toolIdentifierModel, setDataFunction, isL
       titleBar={getTitleBar()}
       contentBody={getDescription()}
       isLoading={isLoading}
-      className={"tool-registry-card"}
+      className={"vertical-selection-card"}
     >
       <SelectToolIdentifierButton
         className={"w-100 mt-1"}
