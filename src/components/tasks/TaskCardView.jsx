@@ -1,25 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Col} from "react-bootstrap";
 import Model from "core/data_model/model";
-import Row from "react-bootstrap/Row";
 import TaskCard from "components/common/fields/tasks/TaskCard";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
+import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
 
 function TaskCardView({ taskData, taskFilterModel, loadData, isLoading, taskMetadata }) {
-  const getCards = () => {
-    if (!Array.isArray(taskData) || taskData.length === 0 || taskMetadata == null) {
-      return null;
-    }
-
+  const getTaskCard = (task) => {
     return (
-      <Row className={"mx-0 my-2"}>
-        {taskData.map((task, index) => (
-          <Col key={index} className={"my-2"}>
-            <TaskCard taskModel={new Model({ ...task }, taskMetadata, false)}/>
-          </Col>
-        ))}
-      </Row>
+      <TaskCard
+        taskModel={new Model({...task}, taskMetadata, false)}
+      />
     );
   };
 
@@ -28,8 +19,13 @@ function TaskCardView({ taskData, taskFilterModel, loadData, isLoading, taskMeta
       isLoading={isLoading}
       loadData={loadData}
       paginationModel={taskFilterModel}
-      className={"makeup-container-table"}
-      cards={getCards()}
+      className={"makeup-container-table m-2"}
+      cards={
+        <VerticalCardViewBase
+          getCardFunction={getTaskCard}
+          data={taskData}
+        />
+      }
     />
   );
 }
