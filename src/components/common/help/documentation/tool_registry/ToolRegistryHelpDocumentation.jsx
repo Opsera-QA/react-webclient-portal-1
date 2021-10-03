@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
+import PropTypes from "prop-types";
+import RoleAccessTable from "components/common/fields/access/table/RoleAccessTable";
 
-function ToolRegistryHelpDocumentation() {
+function ToolRegistryHelpDocumentation({registryToolRoleDefinitions}) {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -21,7 +23,7 @@ function ToolRegistryHelpDocumentation() {
           </ol>
           <div className={"mb-1"}><b>To view, edit or configure an existing tool:</b></div>
           <ol>
-            <li>Easily locate your tool with the <b>Filter by Tool</b> dropdown, search bar, or by using the filter icon: filter by <b>Status</b>, <b>Tool Owner</b>, or <b>Tag</b>.</li>
+            <li>Easily locate your tool with the <b>Filter by Tool</b> dropdown, search bar, or by using the filter icon: filter by <b>Active Status</b>, <b>Tool Owner</b>, or <b>Tag</b>.</li>
             <li>Select <b>View</b>.</li>
           </ol></div>
       </div>
@@ -34,8 +36,18 @@ function ToolRegistryHelpDocumentation() {
       showPanel={true}
       helpTopic={"Tool Registry"}
       helpDocumentation={getHelpDocumentation()}
-    />
+    >
+      {/*<div className={"my-2"}>*/}
+      {/*  <RoleAccessTable*/}
+      {/*    roleAccessDefinitions={registryToolRoleDefinitions}*/}
+      {/*  />*/}
+      {/*</div>*/}
+    </HelpOverlayBase>
   );
 }
+
+ToolRegistryHelpDocumentation.propTypes = {
+  registryToolRoleDefinitions: PropTypes.object,
+};
 
 export default React.memo(ToolRegistryHelpDocumentation);

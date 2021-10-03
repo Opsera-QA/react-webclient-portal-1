@@ -5,7 +5,7 @@ const toolFilterMetadata = {
   type: "Tool",
   fields: [
     {
-      label: "Status",
+      label: "Active Status",
       id: "status",
     },
     {
