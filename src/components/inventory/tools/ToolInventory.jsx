@@ -22,6 +22,8 @@ function ToolInventory() {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [customerAccessRules, setCustomerAccessRules] = useState(undefined);
+  const [registryToolRoleDefinitions, setRegistryToolRoleDefinitions] = useState(undefined);
+
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -91,6 +93,7 @@ function ToolInventory() {
 
     if (isMounted?.current === true && Array.isArray(toolArray)) {
       setToolRegistryList(toolArray);
+      setRegistryToolRoleDefinitions(response?.data?.roles);
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
@@ -107,7 +110,7 @@ function ToolInventory() {
         one centralized location.
       `}
       helpComponent={
-        <ToolRegistryHelpDocumentation />
+        <ToolRegistryHelpDocumentation registryToolRoleDefinitions={registryToolRoleDefinitions} />
       }
     >
       <ToolTableCardView
