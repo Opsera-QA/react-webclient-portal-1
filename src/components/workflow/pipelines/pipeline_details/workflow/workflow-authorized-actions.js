@@ -276,6 +276,33 @@ workflowAuthorizedActions.isActionAllowed = (customerAccessRules, action, owner,
     return true;
   }
 
+  // TODO: These are the defaults for compatibility, but we should probably just use the defined Access Roles sent from Node:
+  if (customerAccessRules.OpseraAdministrator) {
+    return true; //all actions are authorized to Opsera Administrator
+  }
+
+  if (customerAccessRules.Administrator) {
+    return true; //all actions are authorized to administrator
+  }
+
+  if (customerAccessRules.SassPowerUser) {
+    return true; //all  are authorized to Saas User
+  }
+
+  if (process.env.REACT_APP_STACK === "free-trial") {
+    return false; //all actions disabled for user?
+  }
+
+  if (owner && customerAccessRules.UserId === owner) {
+    return true; //owner can do all actions
+  }
+
+  //if no objectRole data passed, then allow actions
+  if (objectRoles && objectRoles.length === 0) {
+    return true;
+  }
+  // TODO: End of TODO
+
   if (customerAccessRules.OpseraAdministrator) {
     roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.OPSERA_ADMINISTRATOR);
   }
@@ -297,7 +324,8 @@ workflowAuthorizedActions.isActionAllowed = (customerAccessRules, action, owner,
   }
 
   const userObjectRole = calculateUserObjectRole(customerAccessRules.Email, customerAccessRules.Groups, objectRoles);
-  return roleAllowed || allowedRoles.includes(userObjectRole);
+  // TODO: By default Admins can do everything, if we want to stop allowing that, do it here:
+  return userObjectRole === "administrator" || roleAllowed || allowedRoles.includes(userObjectRole);
 };
 
 /**

@@ -97,7 +97,7 @@ function ToolIdentifierSelectionScreen({toolModel, setToolModel}) {
       body={getCardView()}
       metadata={toolIdentifierMetadata}
       titleIcon={faTools}
-      title={"Tools"}
+      title={"Select Which Tool to Create"}
       className={"m-3"}
     />
   );

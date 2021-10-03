@@ -85,11 +85,12 @@ function ToolInventory() {
   };
 
   const getToolRegistryList = async (filterDto = toolFilterDto, cancelSource = cancelTokenSource) => {
-    const response = await toolsActions.getRoleLimitedToolRegistryListV2(getAccessToken, cancelSource, filterDto);
+    const response = await toolsActions.getRoleLimitedToolRegistryListV3(getAccessToken, cancelSource, filterDto);
     saveCookies(filterDto);
+    const toolArray = response?.data?.data;
 
-    if (isMounted?.current === true && response?.data?.data) {
-      setToolRegistryList(response.data.data);
+    if (isMounted?.current === true && Array.isArray(toolArray)) {
+      setToolRegistryList(toolArray);
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
