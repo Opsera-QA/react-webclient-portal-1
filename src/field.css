@@ -158,7 +158,8 @@
 
 /* Summary Card Styling */
 .vertical-selection-card {
-    min-width: 240px;
+    min-width: 200px;
+    width: 240px;
 }
 
 .vertical-selection-card .title-icon {
