@@ -8,8 +8,6 @@ import ParametersView from "components/inventory/parameters/ParametersView";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import ParameterModel from "components/inventory/parameters/parameter.model";
 import ParameterFilterModel from "components/inventory/parameters/parameter.filter.model";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 import ParametersHelpDocumentation from "../../common/help/documentation/tool_registry/ParametersHelpDocumentation";
 import {isActionAllowed} from "components/common/helpers/role-helpers";

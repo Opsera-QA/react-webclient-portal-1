@@ -1,6 +1,3 @@
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
-
 export const ROLE_LEVELS = {
   OPSERA_ADMINISTRATORS: "OPSERA_ADMINISTRATORS",
   ADMINISTRATORS: "ADMINISTRATORS",
