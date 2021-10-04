@@ -37,6 +37,7 @@ function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading
 
   return (
     <CustomTable
+      nextGeneration={true}
       className="table-no-border"
       columns={columns}
       data={data}

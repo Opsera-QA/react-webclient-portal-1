@@ -129,7 +129,7 @@ ToolTableCardView.propTypes = {
   saveCookies: PropTypes.func,
   customerAccessRules: PropTypes.object,
   isMounted: PropTypes.object,
-  toolMetadata: PropTypes.func,
+  toolMetadata: PropTypes.object,
   roleDefinitions: PropTypes.object,
 };
 
