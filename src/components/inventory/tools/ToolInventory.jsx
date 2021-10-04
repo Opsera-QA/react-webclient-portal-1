@@ -124,6 +124,7 @@ function ToolInventory() {
         isMounted={isMounted}
         setToolFilterDto={setToolFilterModel}
         customerAccessRules={customerAccessRules}
+        roleDefinitions={registryToolRoleDefinitions}
       />
     </ScreenContainer>
   );
