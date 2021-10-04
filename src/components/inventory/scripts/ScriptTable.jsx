@@ -16,6 +16,7 @@ import {
 } from "components/common/table/column_definitions/model-table-column-definitions";
 import VanityPaginationContainer from "components/common/pagination/v2/VanityPaginationContainer";
 import VanityDataContainer from "components/common/containers/VanityDataContainer";
+import {isActionAllowed} from "components/common/helpers/role-helpers";
 
 
 function ScriptTable({ data, scriptMetadata, setScriptData, scriptData, loadData, isLoading, isMounted, getAccessToken, cancelTokenSource, scriptRoleDefinitions, scriptFilterModel }) {
@@ -92,7 +93,7 @@ function ScriptTable({ data, scriptMetadata, setScriptData, scriptData, loadData
   };
 
   const getAddRecordFunction = () => {
-    const addAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "create_script", undefined, undefined, scriptRoleDefinitions);
+    const addAllowed = isActionAllowed(userRoleAccess, "create_script", undefined, undefined, scriptRoleDefinitions);
 
     if (addAllowed === true) {
       return createScript;
