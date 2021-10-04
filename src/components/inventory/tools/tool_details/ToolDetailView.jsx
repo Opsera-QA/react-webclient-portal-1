@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import {useParams} from "react-router-dom";
 import ToolDetailPanel from "./ToolDetailPanel";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import toolMetadata from "components/inventory/tools/tool-metadata";
 import Model from "core/data_model/model";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
@@ -12,40 +11,49 @@ import DetailScreenContainer from "components/common/panels/detail_view_containe
 import toolsActions from "components/inventory/tools/tools-actions";
 import ActionBarTransferToolButton from "components/common/actions/buttons/tool/ActionBarTransferToolButton";
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
+import axios from "axios";
+import ToolModel from "components/inventory/tools/tool.model";
 
 function ToolDetailView() {
   const { id, tab } = useParams();
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [toolData, setToolData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
-  const [customerAccessRules, setCustomerAccessRules] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [toolMetadata, setToolMetadata] = useState(undefined);
+  const [toolRoleDefinitions, setToolRoleDefinitions] = useState(undefined);
+  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    initComponent().catch(error => {
-      throw { error };
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
     });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
-  const initComponent = async () => {
-    const userRecord = await getUserRecord(); //RBAC Logic
-    const rules = await setAccessRoles(userRecord);
-    setCustomerAccessRules(rules);
-  };
-
-
-  useEffect(() => {
-    getTool();
-  }, []);
-
-  const getTool = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await toolsActions.getRoleLimitedToolById(id, getAccessToken);
-
-      if (response?.data?.data) {
-        setToolData(new Model(response.data.data[0], toolMetadata, false));
-      }
+      const userRecord = await getUserRecord(); //RBAC Logic
+      const rules = await setAccessRoles(userRecord);
+      // setCustomerAccessRules(rules);
+      await getTool(cancelSource);
     } catch (error) {
       if (!error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
@@ -53,6 +61,20 @@ function ToolDetailView() {
     }
     finally {
       setIsLoading(false);
+    }
+  };
+
+  const getTool = async (cancelSource = cancelTokenSource) => {
+    const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, id);
+    const tool = response?.data?.data;
+
+    if (isMounted?.current === true && tool) {
+      const metadata = response?.data?.metadata;
+      const roleDefinitions = response?.data?.roles;
+      const toolModel = new ToolModel(tool, metadata, false, getAccessToken, cancelTokenSource, loadData);
+      setToolData(toolModel);
+      setToolMetadata(metadata);
+      setToolRoleDefinitions(roleDefinitions);
     }
   };
 
@@ -86,7 +108,15 @@ function ToolDetailView() {
       dataObject={toolData}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      detailPanel={<ToolDetailPanel toolData={toolData}  isLoading={isLoading} tab={tab} setToolData={setToolData} loadData={getTool}/>}
+      detailPanel={
+        <ToolDetailPanel
+          toolData={toolData}
+          isLoading={isLoading}
+          tab={tab}
+          setToolData={setToolData}
+          loadData={getTool}
+        />
+      }
     />
   );
 }

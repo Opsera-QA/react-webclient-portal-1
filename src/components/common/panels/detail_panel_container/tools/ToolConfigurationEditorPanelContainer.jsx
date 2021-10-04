@@ -14,7 +14,7 @@ function ToolConfigurationEditorPanelContainer({children, isLoading, persistReco
         <TestToolConnectionButton
           toolDataDto={toolData}
           toolName={toolConnectionCheckName}
-          disabled={model?.isNew() || model?.isChanged()}
+          disabled={model?.checkCurrentValidity() !== true || model?.isChanged()}
         />
      );
     }
