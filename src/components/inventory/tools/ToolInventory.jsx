@@ -22,6 +22,8 @@ function ToolInventory() {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [customerAccessRules, setCustomerAccessRules] = useState(undefined);
+  const [registryToolRoleDefinitions, setRegistryToolRoleDefinitions] = useState(undefined);
+  const [toolMetadata, setToolMetadata] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -85,11 +87,14 @@ function ToolInventory() {
   };
 
   const getToolRegistryList = async (filterDto = toolFilterDto, cancelSource = cancelTokenSource) => {
-    const response = await toolsActions.getRoleLimitedToolRegistryListV2(getAccessToken, cancelSource, filterDto);
+    const response = await toolsActions.getRoleLimitedToolRegistryListV3(getAccessToken, cancelSource, filterDto);
     saveCookies(filterDto);
+    const toolArray = response?.data?.data;
 
-    if (isMounted?.current === true && response?.data?.data) {
-      setToolRegistryList(response.data.data);
+    if (isMounted?.current === true && Array.isArray(toolArray)) {
+      setToolMetadata(response?.data?.metadata);
+      setToolRegistryList(toolArray);
+      setRegistryToolRoleDefinitions(response?.data?.roles);
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
@@ -106,7 +111,7 @@ function ToolInventory() {
         one centralized location.
       `}
       helpComponent={
-        <ToolRegistryHelpDocumentation />
+        <ToolRegistryHelpDocumentation registryToolRoleDefinitions={registryToolRoleDefinitions} />
       }
     >
       <ToolTableCardView
@@ -115,6 +120,8 @@ function ToolInventory() {
         saveCookies={saveCookies}
         data={toolRegistryList}
         toolFilterDto={toolFilterDto}
+        toolMetadata={toolMetadata}
+        isMounted={isMounted}
         setToolFilterDto={setToolFilterDto}
         customerAccessRules={customerAccessRules}
       />

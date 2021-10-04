@@ -157,17 +157,17 @@
 /* End Select input styling */
 
 /* Summary Card Styling */
-.tool-registry-card {
+.vertical-selection-card {
     min-width: 200px;
     width: 240px;
 }
 
-.tool-registry-card .title-icon {
+.vertical-selection-card .title-icon {
     height: 92px;
     max-width: 100%;
 }
 
-.tool-registry-card .title-fa-icon, .title-fa-icon {
+.vertical-selection-card .title-fa-icon, .title-fa-icon {
     font-size: 75px;
     margin-top: 15px;
 }
@@ -179,79 +179,79 @@
     padding-right: .5rem;
 }
 
-.tool-registry-card .small-title-icon {
+.vertical-selection-card .small-title-icon {
     margin-top: 30px;
 }
 
-.tool-registry-card .jira-icon {
+.vertical-selection-card .jira-icon {
     margin-top: 15%;
     margin-left: 10%;
     max-width: 75%;
 }
 
-.tool-registry-card .sonarqube-icon {
+.vertical-selection-card .sonarqube-icon {
     margin-top: 30px;
     max-width: 98%;
 }
 
-.tool-registry-card .junit-icon {
+.vertical-selection-card .junit-icon {
     margin-top: 10px;
     margin-left: 15px;
     max-width: 75%;
 }
 
-.tool-registry-card .xunit-icon {
+.vertical-selection-card .xunit-icon {
     margin-top: 25px;
     margin-left: 15px;
     max-width: 80%;
 }
 
-.tool-registry-card .teamcity-icon {
+.vertical-selection-card .teamcity-icon {
     margin-top: 10px;
     margin-left: 25px;
     max-width: 65%;
 }
 
-.tool-registry-card .twistlock-icon {
+.vertical-selection-card .twistlock-icon {
     margin-top: 20px;
     max-width: 98%;
 }
 
-.tool-registry-card .slack-icon {
+.vertical-selection-card .slack-icon {
     margin-top: 30px;
     max-width: 98%;
 }
 
-.tool-registry-card .selenium-icon {
+.vertical-selection-card .selenium-icon {
     margin-top: 20px;
     max-width: 98%;
 }
 
-.tool-registry-card .jenkins-icon {
+.vertical-selection-card .jenkins-icon {
     margin-top: 10px;
 }
 
-.tool-registry-card .bitbucket-icon {
+.vertical-selection-card .bitbucket-icon {
     margin-top: 10px;
 }
 
-.tool-registry-card .wrench {
+.vertical-selection-card .wrench {
     opacity: .8;
 }
 
-.tool-registry-card .icon-card-title {
+.vertical-selection-card .icon-card-title {
     font-size: 13px;
     color: #3D3B36;
     font-weight: bold;
 }
 
-.tool-registry-card .description-height {
+.vertical-selection-card .description-height {
     min-height: 50px;
     height: 100%;
     /*max-height: 90px;*/
 }
 
-.tool-registry-card .date-and-button {
+.vertical-selection-card .date-and-button {
     min-height: 69px;
 }
 

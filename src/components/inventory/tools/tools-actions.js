@@ -86,6 +86,7 @@ toolsActions.getTools = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+// TODO: Update to V3 and remove this and the related route
 toolsActions.getRoleLimitedToolRegistryListV2 = async (getAccessToken, cancelTokenSource, toolFilterDto) => {
   let sortOption = toolFilterDto.getData("sortOption");
 
@@ -103,6 +104,26 @@ toolsActions.getRoleLimitedToolRegistryListV2 = async (getAccessToken, cancelTok
   };
 
   const apiUrl = `/registry/configs`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+toolsActions.getRoleLimitedToolRegistryListV3 = async (getAccessToken, cancelTokenSource, toolFilterDto, fields) => {
+  const apiUrl = `/registry/configs/v2`;
+
+  const urlParams = {
+    params: {
+      sortOption: toolFilterDto.getFilterValue("sortOption"),
+      currentPage: toolFilterDto.getData("currentPage"),
+      pageSize: toolFilterDto.getData("pageSize"),
+      toolIdentifier: toolFilterDto.getFilterValue("toolIdentifier"),
+      tag: toolFilterDto.getFilterValue("tag"),
+      active: toolFilterDto.getFilterValue("status"),
+      search: toolFilterDto.getFilterValue("search"),
+      owner: toolFilterDto.getFilterValue("owner"),
+      fields: fields,
+    }
+  };
+
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
@@ -164,6 +185,11 @@ toolsActions.getRoleLimitedToolById = async (id, getAccessToken) => {
 
 toolsActions.getRoleLimitedToolByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/registry/configs/${id}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+toolsActions.getRoleLimitedToolByIdV3 = async (getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `/registry/configs/tool/${id}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
