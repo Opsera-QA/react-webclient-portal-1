@@ -42,6 +42,14 @@ const toolFilterMetadata = {
       id: "activeFilters",
     },
   ],
+  newObjectFields: {
+    pageSize: 50,
+    currentPage: 1,
+    sortOption: {text: "Sort: Name", value: "name"},
+    search: "",
+    activeFilters: [],
+    viewType: "card",
+  },
 };
 
 export class ToolFilterModel extends FilterModelBase {
@@ -96,19 +104,6 @@ export class ToolFilterModel extends FilterModelBase {
         {text: "Name", option: "name"},
         {text: "Last Updated", option: "lastupdated"},
       ]
-    );
-  };
-
-  getNewObjectFields = () => {
-    return (
-      {
-        pageSize: 50,
-        currentPage: 1,
-        sortOption: {text: "Sort: Name", value: "name"},
-        search: "",
-        activeFilters: [],
-        viewType: "card",
-      }
     );
   };
 }
