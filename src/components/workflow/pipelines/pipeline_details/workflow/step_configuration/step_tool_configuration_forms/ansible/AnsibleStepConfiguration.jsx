@@ -11,6 +11,7 @@ import AnsibleSCMToolSelectInput from "./inputs/AnsibleSCMToolSelectInput";
 import AnsibleGitRepositoryInput from "./inputs/AnsibleGitRepositoryInput";
 import AnsibleGitBranchInput from "./inputs/AnsibleGitBranchInput";
 import AnsibleSCMRepoFiles from "./inputs/AnsibleSCMRepoFiles";
+import JsonInput from "../../../../../../../common/inputs/object/JsonInput";
 
 function AnsibleStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -101,7 +102,13 @@ function AnsibleStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPan
             ? AnsibleStepConfigurationDto.getData("toolConfigId")
             : ""
         }
-      />
+        />
+        <JsonInput
+          className={"my-2"}
+          fieldName={"commandArgs"}
+          model={AnsibleStepConfigurationDto}
+          setModel={setAnsibleStepConfigurationDataDto}
+        />
     </PipelineStepEditorPanelContainer>
   );
 }
