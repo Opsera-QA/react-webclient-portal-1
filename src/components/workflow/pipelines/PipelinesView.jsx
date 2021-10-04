@@ -149,54 +149,6 @@ function PipelinesView({ currentTab, setActiveTab }) {
     history.push(`/workflow/catalog`);
   };
 
-  const getPipelineTypeTabs = () => {
-    return (
-      <VanitySetVerticalTabContainer className={"h-100"}>
-        <VanitySetVerticalTab
-          icon={faDraftingCompass}
-          tabText={"All Pipelines"}
-          tabName={""}
-          onSelect={onSelect}
-          activeTab={pipelineFilterModel?.getData("type")}
-        />
-        <VanitySetVerticalTab
-          icon={faUser}
-          tabText={"My Pipelines"}
-          tabName={"owner"}
-          onSelect={onSelect}
-          activeTab={pipelineFilterModel?.getData("type")}
-        />
-        <VanitySetVerticalTab
-          icon={faBracketsCurly}
-          tabText={"Software Development"}
-          tabName={"sdlc"}
-          onSelect={onSelect}
-          activeTab={pipelineFilterModel?.getData("type")}
-        />
-        <VanitySetVerticalTab
-          icon={faMicrochip}
-          tabText={"Machine Learning"}
-          tabName={"ai-ml"}
-          onSelect={onSelect}
-          activeTab={pipelineFilterModel?.getData("type")}
-        />
-        <VanitySetVerticalTab
-          icon={faSalesforce}
-          tabText={"Salesforce"}
-          tabName={"sfdc"}
-          onSelect={onSelect}
-          activeTab={pipelineFilterModel?.getData("type")}
-        />
-      </VanitySetVerticalTabContainer>
-    );
-  };
-
-  const onSelect = (tab) => {
-    pipelineFilterModel?.setData("category", tab);
-    pipelineFilterModel?.setData("type", "");
-    loadData(pipelineFilterModel);
-  };
-
   const getView = () => {
     if (isLoading) {
       return (<LoadingDialog size="md" message="Loading Pipelines..."/>);
