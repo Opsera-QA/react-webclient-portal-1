@@ -7,8 +7,6 @@ import ScriptsView from "components/inventory/scripts/ScriptsView";
 import scriptsActions from "components/inventory/scripts/scripts-actions";
 import ScriptModel from "components/inventory/scripts/script.model";
 import ScriptsFilterModel from "components/inventory/scripts/scripts.filter.model";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 import ScriptsHelpDocumentation from "../../common/help/documentation/tool_registry/ScriptsHelpDocumentation";
 import {isActionAllowed} from "components/common/helpers/role-helpers";

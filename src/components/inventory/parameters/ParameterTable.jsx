@@ -5,8 +5,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 import NewParameterOverlay from "components/inventory/parameters/NewParameterOverlay";
 import VanitySelectionTable from "components/common/table/VanitySelectionTable";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import {AuthContext} from "contexts/AuthContext";
 import {
   getEditableTextColumn, getTableBooleanIconColumn,

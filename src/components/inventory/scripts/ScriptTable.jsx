@@ -2,19 +2,15 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import FilterContainer from "components/common/table/FilterContainer";
 import {faFileCode} from "@fortawesome/pro-light-svg-icons";
 import NewScriptOverlay from "components/inventory/scripts/NewScriptOverlay";
 import VanitySelectionTable from "components/common/table/VanitySelectionTable";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import {AuthContext} from "contexts/AuthContext";
 import {
   getOwnerNameField,
   getScriptLanguageColumn,
   getTableTextColumn
 } from "components/common/table/column_definitions/model-table-column-definitions";
-import VanityPaginationContainer from "components/common/pagination/v2/VanityPaginationContainer";
 import VanityDataContainer from "components/common/containers/VanityDataContainer";
 import {isActionAllowed} from "components/common/helpers/role-helpers";
 
