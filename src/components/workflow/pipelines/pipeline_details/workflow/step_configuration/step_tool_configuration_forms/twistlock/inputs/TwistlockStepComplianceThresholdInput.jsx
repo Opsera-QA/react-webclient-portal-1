@@ -37,6 +37,7 @@ TwistlockStepComplianceThresholdInput.propTypes = {
 
 TwistlockStepComplianceThresholdInput.defaultProps = {
   fieldName: "thresholdCompliance",
+  visible: true,
 };
 
 export default TwistlockStepComplianceThresholdInput;
