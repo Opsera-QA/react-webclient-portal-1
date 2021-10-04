@@ -98,7 +98,6 @@ function ToolIdentifierTableCardView(
         addRecordFunction={createToolIdentifier}
         filterDto={toolIdentifierFilterModel}
         setFilterDto={setToolIdentifierFilterModel}
-        supportSearch={true}
         supportViewToggle={true}
         isLoading={isLoading}
         metadata={taskMetadata}
