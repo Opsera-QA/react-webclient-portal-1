@@ -17,12 +17,16 @@ const twistlockPipelineStepFormMetadata = {
       isRequired: true
     },
     {
+      label: "Enable Client Side thresholds",
+      id: "clientSideThreshold",
+    },
+    {
       label: "Vulnerability Threshold",
-      id: "threshold_vulnerability",
+      id: "thresholdVulnerability",
     },
     {
       label: "Compliance Threshold",
-      id: "threshold_compliance",
+      id: "thresholdCompliance",
     },
   ],
   newObjectFields: {
@@ -36,8 +40,9 @@ const twistlockPipelineStepFormMetadata = {
     agentLabels: "generic-linux",
     workspaceDeleteFlag: false,
     jobName: "",
-    threshold_vulnerability: [],
-    threshold_compliance: [],
+    clientSideThreshold: false,
+    thresholdVulnerability: [],
+    thresholdCompliance: [],
   }
 };
 
