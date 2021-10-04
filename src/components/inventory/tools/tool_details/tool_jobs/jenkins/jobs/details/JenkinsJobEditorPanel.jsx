@@ -118,7 +118,7 @@ function JenkinsJobEditorPanel({ handleClose, jenkinsJobModel, setJenkinsJobMode
       createRecord={createJob}
       updateRecord={updateJob}
       lenient={true}
-      disable={jenkinsJobModel?.isModelValid2() !== true || jenkinsJobConfigurationModel?.isModelValid2() !== true}
+      disable={jenkinsJobModel?.checkCurrentValidity() !== true || jenkinsJobConfigurationModel?.checkCurrentValidity() !== true}
       setRecordDto={setJenkinsJobModel}
       extraButtons={<StandaloneDeleteButtonWithConfirmationModal model={jenkinsJobModel} deleteDataFunction={deleteJob} />}
     >

@@ -5,7 +5,7 @@ import {tabAccessRestricted, tabDisabled} from "components/common/tooltip/popove
 import {Nav} from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
 
-function VanitySetVerticalTab({tabName, tabText, icon, visible, disabled, accessRestricted, tooltipText}) {
+function VanitySetVerticalTab({tabName, tabText, icon, visible, disabled, accessRestricted, tooltipText, handleTabClick, activeTab}) {
   const getTooltipText = () => {
     if (accessRestricted) {
       return (tabAccessRestricted);
@@ -26,9 +26,20 @@ function VanitySetVerticalTab({tabName, tabText, icon, visible, disabled, access
 
   return (
     <TooltipWrapper innerText={getTooltipText()}>
-      <Nav.Link key={tabName} eventKey={tabName} disabled={disabled || accessRestricted}>
-        <IconBase icon={icon} className={"mr-2"} />
-        <span className="d-none d-lg-inline">{tabText}</span>
+      <Nav.Link
+        key={tabName}
+        eventKey={tabName}
+        disabled={disabled || accessRestricted}
+        onSelect={handleTabClick}
+        className={"my-auto"}
+        active={activeTab != null ? activeTab === tabName : undefined}
+      >
+        <div>
+          <div className={"h-100 d-flex"}>
+            <IconBase icon={icon} className={"mr-2"} iconSize={"2x"} />
+            <div className="d-none d-lg-inline my-auto">{tabText}</div>
+          </div>
+        </div>
       </Nav.Link>
     </TooltipWrapper>
   );
@@ -42,6 +53,8 @@ VanitySetVerticalTab.propTypes = {
   tooltipText: PropTypes.string,
   disabled: PropTypes.bool,
   accessRestricted: PropTypes.bool,
+  handleTabClick: PropTypes.func,
+  activeTab: PropTypes.string,
 };
 
 export default VanitySetVerticalTab;

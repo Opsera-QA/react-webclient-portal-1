@@ -32,7 +32,8 @@ function CypressToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={cypressConfigurationDto}
+      model={cypressConfigurationDto}
+      setModel={setCypressConfigurationDto}
       persistRecord={saveCypressToolConfiguration}
       toolData={toolData}
     >

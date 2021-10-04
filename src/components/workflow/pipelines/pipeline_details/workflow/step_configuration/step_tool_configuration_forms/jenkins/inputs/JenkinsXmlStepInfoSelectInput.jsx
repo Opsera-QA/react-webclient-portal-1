@@ -2,7 +2,8 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function JenkinsXmlStepInfoSelectInput({ dataObject, fieldName, setDataObject, disabled, plan, stepId }) {
+// TODO: Rework
+function JenkinsXmlStepInfoSelectInput({ dataObject, fieldName, setDataObject, disabled, plan, stepId, jobType }) {
   const [listOfSteps, setListOfSteps] = useState([]);
 
   useEffect(() => {
@@ -15,7 +16,7 @@ function JenkinsXmlStepInfoSelectInput({ dataObject, fieldName, setDataObject, d
     return plan.slice(0, plan.findIndex((element) => element._id === stepId));
   };
 
-  if (dataObject == null || dataObject.getData("jobType") !== "SFDC PUSH ARTIFACTS") {
+  if (dataObject == null || jobType !== "SFDC PUSH ARTIFACTS") {
     return null;
   }
 
@@ -24,7 +25,7 @@ function JenkinsXmlStepInfoSelectInput({ dataObject, fieldName, setDataObject, d
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      placeholderText={"Select Build-Xml Step Info"}
+      placeholderText={"Select Build-XML Step Info"}
       selectOptions={listOfSteps}
       valueField="_id"
       textField="name"
@@ -40,7 +41,8 @@ JenkinsXmlStepInfoSelectInput.propTypes = {
   listOfSteps: PropTypes.any,
   stepId: PropTypes.string,
   plan: PropTypes.any,
-  fieldName: PropTypes.string
+  fieldName: PropTypes.string,
+  jobType: PropTypes.string,
 };
 
 JenkinsXmlStepInfoSelectInput.defaultProps = {

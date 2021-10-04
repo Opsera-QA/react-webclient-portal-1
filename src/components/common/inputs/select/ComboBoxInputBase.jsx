@@ -16,7 +16,7 @@ function ComboBoxInputBase({ fieldName, dataObject, setDataObject, groupBy, sele
 
   return (
     <InputContainer className="custom-select-input my-2">
-      <InputLabel field={field} />
+      <InputLabel field={field} model={dataObject} />
       <ComboBox
         data={selectOptions}
         valueField={valueField}

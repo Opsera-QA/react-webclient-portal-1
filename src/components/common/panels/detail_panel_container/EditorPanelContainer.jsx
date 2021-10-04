@@ -27,6 +27,7 @@ function EditorPanelContainer(
     disabledText,
     getHelpComponent,
     booleanToggleDisabled,
+    className,
   }) {
   const [helpIsShown, setHelpIsShown] = useState(false);
 
@@ -81,6 +82,32 @@ function EditorPanelContainer(
     }
   };
 
+  const getStyling = () => {
+    if (className) {
+      return (className);
+    }
+
+    if (showBooleanToggle === true) {
+      return ("mx-2 px-3 pb-3");
+    }
+
+    return ("mx-2 p-3");
+  };
+
+  const getActionBar = () => {
+    if (getBooleanToggle() != null || getHelpToggle() != null) {
+      return (
+        <div className={"mt-2 d-flex justify-content-between"} style={{paddingRight: "20px"}}>
+          <div />
+          <div className={"d-flex"}>
+            {getBooleanToggle()}
+            {getHelpToggle()}
+          </div>
+        </div>
+      );
+    }
+  };
+
   if (isLoading) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -99,14 +126,8 @@ function EditorPanelContainer(
 
   return (
     <div className="h-100">
-      <div className={"mt-2 d-flex justify-content-between"} style={{paddingRight: "20px"}}>
-        <div />
-        <div className={"d-flex"}>
-          {getBooleanToggle()}
-          {getHelpToggle()}
-        </div>
-      </div>
-      <div className={showBooleanToggle === true ? "mx-2 px-3 pb-3" : "mx-2 p-3"}>
+      {getActionBar()}
+      <div className={getStyling()}>
         <div>{children}</div>
         <div>
           <div>{getPersistButtonContainer()}</div>
@@ -136,6 +157,7 @@ EditorPanelContainer.propTypes = {
   disabledText: PropTypes.string,
   getHelpComponent: PropTypes.func,
   booleanToggleDisabled: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 EditorPanelContainer.defaultProps = {

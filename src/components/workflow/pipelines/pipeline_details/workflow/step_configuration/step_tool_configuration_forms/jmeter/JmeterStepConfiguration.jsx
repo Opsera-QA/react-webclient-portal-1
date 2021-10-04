@@ -141,7 +141,7 @@ function JmeterStepConfiguration({
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <StepConfigJenkinsToolInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} />
+      <StepConfigJenkinsToolInput model={jmeterStepConfigurationDto} setModel={setJmeterStepConfigurationDto} />
       <StepConfigJenkinsJobInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} typeFilter={""} />
       <StepConfigJenkinsAccountInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} />
       <StepConfigBitbucketWorkspaceInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} />

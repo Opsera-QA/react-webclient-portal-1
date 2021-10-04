@@ -127,27 +127,27 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
   };
 
   const validateRequiredFields = () => {
-    if (emailDto.getData("enabled") === true && !emailDto.isModelValid2()) {
+    if (emailDto.getData("enabled") === true && !emailDto.isModelValid()) {
       toastContext.showErrorDialog("Error: Cannot enable Email notification without all required fields filled out.");
       return false;
     }
 
-    if (jiraDto.getData("enabled") === true && !jiraDto.isModelValid2()) {
+    if (jiraDto.getData("enabled") === true && !jiraDto.isModelValid()) {
       toastContext.showErrorDialog("Error: Cannot enable Jira notification without all required fields filled out.");
       return false;
     }
 
-    if (teamsDto.getData("enabled") === true && !teamsDto.isModelValid2()) {
+    if (teamsDto.getData("enabled") === true && !teamsDto.isModelValid()) {
       toastContext.showErrorDialog("Error: Cannot enable Teams notification without tool selected.");
       return false;
     }
 
-    if (slackDto.getData("enabled") === true && !slackDto.isModelValid2()) {
+    if (slackDto.getData("enabled") === true && !slackDto.isModelValid()) {
       toastContext.showErrorDialog("Error: Cannot enable Slack notifications without all required fields filled out.");
       return false;
     }
     
-    if (serviceNowDto.getData("enabled") === true && !serviceNowDto.isModelValid2()) {
+    if (serviceNowDto.getData("enabled") === true && !serviceNowDto.isModelValid()) {
       toastContext.showErrorDialog("Error: Cannot enable ServiceNow notifications without all required fields filled out.");
       return false;
     }

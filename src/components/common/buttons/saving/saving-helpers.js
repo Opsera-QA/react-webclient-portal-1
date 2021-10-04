@@ -38,9 +38,9 @@ export async function persistNewRecordAndAddAnother(recordDto, toastContext, sho
 
 export async function persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient, showErrorToastsInline = true) {
   try {
-    let isModelValid = recordDto.isModelValid2();
+    let isModelValid = recordDto.isModelValid();
     if (!isModelValid && !lenient) {
-      let errors = recordDto.isModelValid();
+      let errors = recordDto.getErrors();
       console.error(JSON.stringify(errors));
 
       if (showErrorToastsInline) {
@@ -56,7 +56,7 @@ export async function persistNewRecord(recordDto, toastContext, showSuccessToast
 
     if (showSuccessToasts) {
       if (lenient && !isModelValid) {
-        toastContext.showIncompleteCreateSuccessResultDialog(recordDto.getType());
+        toastContext.showSavingIncompleteObjectSuccessResultToast(recordDto.getType());
       } else {
         toastContext.showCreateSuccessResultDialog(recordDto.getType());
       }
@@ -76,11 +76,11 @@ export async function persistNewRecord(recordDto, toastContext, showSuccessToast
   }
 }
 
-export async function persistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient) {
+export async function persistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient, showIncompleteDataMessage, setModel) {
   try {
-    let isModelValid = recordDto.isModelValid2();
+    let isModelValid = recordDto.isModelValid();
     if(!isModelValid && !lenient) {
-      let errors = recordDto.isModelValid();
+      let errors = recordDto.getErrors();
       console.error(JSON.stringify(errors));
       toastContext.showFormValidationErrorDialog(errors && errors.length > 0 ? errors[0] : undefined);
       return false;
@@ -89,13 +89,18 @@ export async function persistUpdatedRecord(recordDto, toastContext, showSuccessT
     let response = await updateRecord();
 
     if (showSuccessToasts) {
-      if (lenient && !isModelValid) {
-        toastContext.showIncompleteCreateSuccessResultDialog(recordDto.getType());
+      if (lenient && !isModelValid && showIncompleteDataMessage !== false) {
+        toastContext.showSavingIncompleteObjectSuccessResultToast(recordDto.getType());
       } else {
         toastContext.showUpdateSuccessResultDialog(recordDto.getType());
       }
     }
     recordDto.clearChangeMap();
+
+    if (setModel) {
+      setModel({...recordDto});
+    }
+
     return response;
   }
   catch (error) {
@@ -106,9 +111,9 @@ export async function persistUpdatedRecord(recordDto, toastContext, showSuccessT
 
 export async function modalPersistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient, handleClose) {
   try {
-    let isModelValid = recordDto.isModelValid2();
+    let isModelValid = recordDto.isModelValid();
     if(!isModelValid && !lenient) {
-      let errors = recordDto.isModelValid();
+      let errors = recordDto.getErrors();
       console.error(JSON.stringify(errors));
       toastContext.showInlineFormValidationError(errors && errors.length > 0 ? errors[0] : undefined);
       return false;
@@ -118,7 +123,7 @@ export async function modalPersistUpdatedRecord(recordDto, toastContext, showSuc
 
     if (showSuccessToasts) {
       if (lenient && !isModelValid) {
-        toastContext.showIncompleteCreateSuccessResultDialog(recordDto.getType());
+        toastContext.showSavingIncompleteObjectSuccessResultToast(recordDto.getType());
       } else {
         toastContext.showUpdateSuccessResultDialog(recordDto.getType());
       }

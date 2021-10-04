@@ -8,9 +8,15 @@ toolsActions.checkToolConnectivity = async (toolId, toolName, getAccessToken) =>
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+// TODO: Update all references to V2 and remove this
 toolsActions.deleteTool = async (dataObject, getAccessToken) => {
   const apiUrl = `/registry/${dataObject.getData("_id")}`;
   return baseActions.apiDeleteCall(getAccessToken, apiUrl);
+};
+
+toolsActions.deleteToolV2 = async (getAccessToken, cancelToken, toolModel) => {
+  const apiUrl = `/registry/${toolModel?.getData("_id")}`;
+  return baseActions.apiDeleteCallV2(getAccessToken, cancelToken, apiUrl);
 };
 
 toolsActions.deleteVaultRecordsForToolId = async (toolDataDto,getAccessToken) => {
@@ -22,6 +28,7 @@ toolsActions.deleteVaultRecordsForToolId = async (toolDataDto,getAccessToken) =>
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
+// TODO: Update all references to V2 and remove this
 toolsActions.deleteOwnerVaultRecordsForToolId = async (toolDataDto,getAccessToken) => {
   const apiUrl = `/vault/tool/delete`;
   let id = toolDataDto.getData("_id");
@@ -29,6 +36,14 @@ toolsActions.deleteOwnerVaultRecordsForToolId = async (toolDataDto,getAccessToke
     id : id
   };
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+toolsActions.deleteOwnerVaultRecordsForToolIdV2 = async (getAccessToken, cancelTokenSource, toolModel) => {
+  const apiUrl = `/vault/tool/delete`;
+  let postBody = {
+    id: toolModel?.getData("_id")
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 toolsActions.updateTool = async (toolDataDto, getAccessToken) => {
@@ -71,6 +86,7 @@ toolsActions.getTools = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+// TODO: Update to V3 and remove this and the related route
 toolsActions.getRoleLimitedToolRegistryListV2 = async (getAccessToken, cancelTokenSource, toolFilterDto) => {
   let sortOption = toolFilterDto.getData("sortOption");
 
@@ -88,6 +104,26 @@ toolsActions.getRoleLimitedToolRegistryListV2 = async (getAccessToken, cancelTok
   };
 
   const apiUrl = `/registry/configs`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+toolsActions.getRoleLimitedToolRegistryListV3 = async (getAccessToken, cancelTokenSource, toolFilterDto, fields) => {
+  const apiUrl = `/registry/configs/v2`;
+
+  const urlParams = {
+    params: {
+      sortOption: toolFilterDto.getFilterValue("sortOption"),
+      currentPage: toolFilterDto.getData("currentPage"),
+      pageSize: toolFilterDto.getData("pageSize"),
+      toolIdentifier: toolFilterDto.getFilterValue("toolIdentifier"),
+      tag: toolFilterDto.getFilterValue("tag"),
+      active: toolFilterDto.getFilterValue("status"),
+      search: toolFilterDto.getFilterValue("search"),
+      owner: toolFilterDto.getFilterValue("owner"),
+      fields: fields,
+    }
+  };
+
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
@@ -137,6 +173,11 @@ toolsActions.getFullToolById = async (id, getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+toolsActions.getFullToolByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `/registry/${id}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 toolsActions.getRoleLimitedToolById = async (id, getAccessToken) => {
   const apiUrl = `/registry/configs/${id}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
@@ -144,6 +185,11 @@ toolsActions.getRoleLimitedToolById = async (id, getAccessToken) => {
 
 toolsActions.getRoleLimitedToolByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/registry/configs/${id}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+toolsActions.getRoleLimitedToolByIdV3 = async (getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `/registry/configs/tool/${id}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

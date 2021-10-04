@@ -4,9 +4,10 @@ import TaskTypeFilter from "components/common/filters/tasks/type/TaskTypeFilter"
 
 function InlineTaskTypeFilter({ filterModel, setFilterModel, className, fieldName, loadData}) {
   const setDataFunction = (fieldName, value) => {
-    let newDataObject = filterModel;
-    newDataObject.setData(fieldName, value);
-    loadData(newDataObject);
+    let newModel = filterModel;
+    newModel.setData(fieldName, value);
+    newModel.setData("category", "");
+    loadData(newModel);
   };
 
   if (filterModel == null) {

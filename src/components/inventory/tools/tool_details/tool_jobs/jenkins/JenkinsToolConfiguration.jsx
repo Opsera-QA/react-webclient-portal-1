@@ -62,7 +62,8 @@ function JenkinsToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={jenkinsConfigurationDto}
+      model={jenkinsConfigurationDto}
+      setModel={setJenkinsConfigurationDto}
       persistRecord={saveJenkinsToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Jenkins"}

@@ -19,8 +19,8 @@ import PowershellGitBranchInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellGitBranchInput";
 import PowershellBitbucketWorkspaceInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellBitbucketWorkspaceInput";
-import AgentLabelsMultiSelectInput
-  from "../../../../../../../common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
+import AgentLabelsSelectInput
+  from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
 import WorkspaceDeleteToggleInput from "../command_line/inputs/WorkspaceDeleteToggleInput";
 
 function PowershellStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel }) {
@@ -96,7 +96,7 @@ function PowershellStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
       <PowershellBitbucketWorkspaceInput dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto} />
       <PowershellGitRepositoryInput dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto} />
       <PowershellGitBranchInput  dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto} />
-      {/* <AgentLabelsMultiSelectInput
+      {/* <AgentLabelsSelectInput
         dataObject={powershellStepConfigurationDto}
         fieldName={"agentLabels"}
         setDataObject={setPowershellStepConfigurationDataDto}

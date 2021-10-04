@@ -46,6 +46,18 @@ export const fieldValidation = (value, data, field) => {
     }
   }
 
+  // TODO: Still working on this so it may change
+  if (field.isRequiredFunction && field.isRequiredFunction(data) === true) {
+    if (
+           value == null
+        || (typeof value === "string" && value.length === 0)
+        || (Array.isArray(value) && value.length === 0)
+        || value === {}
+      ) {
+      errorMessages.push(field.label + " is required.");
+    }
+  }
+
   if (field.isEmail === true) {
     if (!validateEmail(value))
     {
@@ -92,11 +104,6 @@ export const fieldValidation = (value, data, field) => {
     errorMessages.push("Does not meet field requirements.");
   }
 
-  if (field.regexValidatorV2 != null && value !== "" && !matchesRegex(field.regexValidatorV2, value))
-  {
-    errorMessages.push(field.regexErrorText);
-  }
-
   if (field.regexDefinitionName != null && value !== "")
   {
     const definitionName = field.regexDefinitionName;
@@ -120,6 +127,12 @@ export const fieldValidation = (value, data, field) => {
       }
     }
   }
+
+  if (field?.minItems != null && value?.length < field?.minItems)
+  {
+    errorMessages.push(`You have selected ${value?.length} values, but the minimum allowed is ${field?.minItems}`);
+  }
+
 
   if (field.maxItems != null && value.length > field.maxItems)
   {

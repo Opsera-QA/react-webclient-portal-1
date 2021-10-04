@@ -21,16 +21,17 @@ import {
 import ToolApplicationsPanel from "./ToolAppliationsPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import ToolSummaryPanel from "./ToolSummaryPanel";
-import ToolPipelinesPanel from "./ToolPipelinesPanel";
+import ToolUsagePanel from "components/inventory/tools/tool_details/ToolUsagePanel";
 import ToolTaggingPanel from "./ToolTaggingPanel";
 import ToolProjectsPanel from "components/inventory/tools/tool_details/projects/ToolProjectsPanel";
 import { AuthContext } from "contexts/AuthContext";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
-import ToolVaultPanel from "./ToolVaultPanel";
+import ToolVaultPanel from "components/inventory/tools/tool_details/vault/ToolVaultPanel";
 import ToolRepositoriesPanel from "./ToolRepositoriesPanel";
 import ToolConfigurationSummaryPanel from "components/inventory/tools/tool_details/ToolConfigurationSummaryPanel";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
+import ToolVaultSummaryPanel from "components/inventory/tools/tool_details/vault/ToolVaultSummaryPanel";
 
 // TODO: This is in progress and needs to be cleaned up
 function ToolReadOnlyDetailPanel({ toolModel, loadData, isLoading, tab }) {
@@ -133,10 +134,10 @@ function ToolReadOnlyDetailPanel({ toolModel, loadData, isLoading, tab }) {
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Attributes"}/>
-        {/*{getVaultTab()}*/}
+        {getVaultTab()}
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"} disabled={!authorizedAction("edit_tool_connection", toolModel?.data)}/>
         {/*{getDynamicTabs()}*/}
-        {/*<CustomTab icon={faDraftingCompass} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>*/}
+        <CustomTab icon={faDraftingCompass} tabName={"usage"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
       </CustomTabContainer>
     );
   };
@@ -167,10 +168,10 @@ function ToolReadOnlyDetailPanel({ toolModel, loadData, isLoading, tab }) {
         return <ToolTaggingPanel toolData={toolModel} />;
       case "projects":
         return <ToolProjectsPanel toolData={toolModel} isLoading={isLoading} loadData={loadData} />;
-      case "pipelines":
-        return <ToolPipelinesPanel toolData={toolModel} />;
+      case "usage":
+        return <ToolUsagePanel toolData={toolModel} />;
       case "vault":
-        return <ToolVaultPanel toolData={toolModel} />;
+        return <ToolVaultSummaryPanel toolModel={toolModel} />;
       case "repositories":
         return <ToolRepositoriesPanel toolData={toolModel} />;
       default:

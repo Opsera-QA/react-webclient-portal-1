@@ -26,14 +26,16 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
     setToast(undefined);
   }, [editItem]);
 
+  // TODO: We should be handling this inside the step forms themselves
   const postData = async (pipeline, type) => {
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiUrl = `/pipelines/${pipeline._id}/update`;
     try {
-      await axiosApiService(accessToken).post(apiUrl, pipeline);
+      const response = await axiosApiService(accessToken).post(apiUrl, pipeline);
+      toastContext.showUpdateSuccessResultDialog(type);
       await fetchPlan();
-      toastContext.showUpdateSuccessResultDialog("Step Configuration");
+      return response;
     } catch (err) {
       setLoading(false);
       toastContext.showLoadingErrorDialog(err);
@@ -48,17 +50,17 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
   // TODO: Pull actual names
   const callbackFunctionTools = async (plan) => {
     pipeline.workflow.plan = plan;
-    await postData(pipeline, "Step Configuration Tool");
+    return await postData(pipeline, "Step Configuration");
   };
 
   const callbackConfigureStep = async (plan) => {
     pipeline.workflow.plan = plan;
-    await postData(pipeline, "Pipeline Step");
+    return await postData(pipeline, "Pipeline Step Setup");
   };
 
   const callbackFunctionSource = async (source) => {
     pipeline.workflow.source = source;
-    await postData(pipeline, "Source Repository");
+    return await postData(pipeline, "Source Repository");
   };
 
   const getTitleBar = (title) => {

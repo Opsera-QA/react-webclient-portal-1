@@ -57,7 +57,7 @@ export async function persistNewRecord(model, toastContext, showSuccessToasts, s
 
     if (showSuccessToasts) {
       if (model.isLenient() === true && !isModelValid) {
-        toastContext.showIncompleteCreateSuccessResultDialog(model.getType());
+        toastContext.showSavingIncompleteObjectSuccessResultToast(model.getType());
       } else {
         toastContext.showCreateSuccessResultDialog(model.getType());
       }
@@ -91,7 +91,7 @@ export async function persistUpdatedRecord(model, toastContext, showSuccessToast
 
     if (showSuccessToasts) {
       if (model.isLenient() === true && !isModelValid) {
-        toastContext.showIncompleteCreateSuccessResultDialog(model.getType());
+        toastContext.showSavingIncompleteObjectSuccessResultToast(model.getType());
       } else {
         toastContext.showUpdateSuccessResultDialog(model.getType());
       }

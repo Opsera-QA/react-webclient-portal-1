@@ -6,12 +6,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import adoptionPercentageMetadata
   from "components/settings/analytics_data_entry/detail_view/configuration_panels/adoption_percentage/adoption-percentage-metadata";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PipelineSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineSelectInput";
-import NumberInputBase from "components/common/inputs/text/NumberInputBase";
 import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeInputBase";
 import ManualKpiMultiSelectInputBase
   from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
+import NumberPickerInputBase from "components/common/inputs/number/picker/base/NumberPickerInputBase";
 
 function AdoptionPercentageConfiguration({ analyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
   useEffect(() => {loadData();}, []);
@@ -49,10 +48,10 @@ function AdoptionPercentageConfiguration({ analyticsDataEntryModel, kpiConfigura
         <ManualKpiMultiSelectInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"release"} type={"release"} />
       </Col>
       <Col lg={6}>
-        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_executed"} />
+        <NumberPickerInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_executed"} />
       </Col>
       <Col lg={6}>
-        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_manual"} />
+        <NumberPickerInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_manual"} />
       </Col>
     </Row>
   );

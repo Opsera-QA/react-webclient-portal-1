@@ -31,23 +31,23 @@ pipelineActions.getInUseTemplatesV2 = async (getAccessToken, cancelTokenSource) 
 };
 
 
-pipelineActions.getPipelinesV2 = async (getAccessToken, cancelTokenSource, pipelineFilterDto, type) => {
-  let sortOption = pipelineFilterDto.getData("sortOption");
-
+pipelineActions.getPipelinesV2 = async (getAccessToken, cancelTokenSource, pipelineFilterModel, type, fields) => {
   const urlParams = {
     params: {
-      sort: sortOption ? sortOption.value : null,
-      order: sortOption ? sortOption.order : null,
-      size: pipelineFilterDto.getData("pageSize"),
-      page: pipelineFilterDto.getData("currentPage"),
-      type: type !== 'all' && type !== null ? type : undefined,
-      search: pipelineFilterDto.getFilterValue("search"),
-      owner: pipelineFilterDto.getFilterValue("owner"),
-      tag:pipelineFilterDto.getFilterValue("tag")
+      sort: pipelineFilterModel?.getFilterValue("sortOption"),
+      size: pipelineFilterModel?.getFilterValue("pageSize"),
+      page: pipelineFilterModel?.getData("currentPage"),
+      type: type !== "all" && type !== "owner" ? type : undefined,
+      myPipelines: type === "owner",
+      search: pipelineFilterModel?.getFilterValue("search"),
+      owner: pipelineFilterModel?.getFilterValue("owner"),
+      tag: pipelineFilterModel?.getFilterValue("tag"),
+      status: pipelineFilterModel?.getFilterValue("status"),
+      fields: fields,
     },
   };
 
-  let apiUrl = `/pipelines`;
+  let apiUrl = `/pipelines/v2`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
@@ -86,18 +86,6 @@ pipelineActions.getPipelineStates = async (pipelineIds, getAccessToken) => {
 pipelineActions.getPipelineStateAtRun = async (pipelineId, runNumber, getAccessToken) => {
   let apiUrl = `/pipelines/state/${pipelineId}/${runNumber}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-pipelineActions.getAllPipelines = async (getAccessToken) => {
-  const urlParams = {
-    params: {
-      sort: "name",
-      order: 1
-    },
-  };
-
-  let apiUrl = `/pipelines`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
 // TODO: Refactor

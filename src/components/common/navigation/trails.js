@@ -5,7 +5,7 @@ import {
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
   faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey,
   faHexagon, faListAlt, faEye, faFileArchive, faUserChart, faRadar, faServer, faHandshake, faFileCode, faTasks,
-  faUserHardHat,
+  faUserHardHat, faCircle
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -512,6 +512,14 @@ const breadcrumbs = {
     linkText: "Marketplace",
     icon: faChartArea
   },
+  release360: {
+    parent: "insights",
+    name: "release360",
+    path: paths.release360,
+    title: "Release 360",
+    linkText: "Release 360",
+    icon: faCircle
+  },
   insightsSummary: {
     parent: "insights",
     name: "synopsis",
@@ -707,21 +715,29 @@ const breadcrumbs = {
     icon: faEnvelope
   },
 
-  //GIT Tasks
-  gitTasksManagement : {
+  // Tasks
+  taskManagement : {
     parent: undefined,
-    name: "gitTasksManagement",
-    path: paths.gitTasks,
+    name: "taskManagement",
+    path: paths.taskManagement,
     title: "Opsera Task Management",
     linkText: "Opsera Task Management",
     icon: faTasks
   },
-  gitTasksDetailView: {
-    parent: "gitTasksManagement",
-    name: "gitTasksDetailView",
-    path: paths.gitTasksDetailView,
-    title: "Task Details",
-    linkText: "Task Details",
+  taskActivityLogs : {
+    parent: undefined,
+    name: "taskManagement",
+    path: paths.taskActivityLogs,
+    title: "Opsera Task Activity Logs",
+    linkText: "Opsera Task Activity Logs",
+    icon: faClipboardList
+  },
+  taskManagementDetailView: {
+    parent: "taskManagement",
+    name: "taskManagementDetailView",
+    path: paths.taskManagementDetailView,
+    title: "Opsera Task Details",
+    linkText: "Opsera Task Details",
     icon: faTasks
   },
 

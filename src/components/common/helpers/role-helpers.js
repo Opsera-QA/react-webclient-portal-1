@@ -1,6 +1,3 @@
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
-
 export const ROLE_LEVELS = {
   OPSERA_ADMINISTRATORS: "OPSERA_ADMINISTRATORS",
   ADMINISTRATORS: "ADMINISTRATORS",
@@ -127,7 +124,7 @@ export const getAccessRoleRequirementMessage = (requirement) => {
 };
 
 export const getUserRoleLevel = (accessRoleData, objectRoles, dataObject) => {
-  const roleLevel = workflowAuthorizedActions.calculateRoleLevel(accessRoleData, objectRoles, dataObject);
+  const roleLevel = calculateRoleLevel(accessRoleData, objectRoles, dataObject);
   const prefix = "Your access role for this page is: ";
 
   switch (roleLevel) {
@@ -206,4 +203,219 @@ export const getAllowedRoles = (actionName, roleDefinitions) => {
 
 export const isAnLdapUser = (user, accessRole) => {
   return accessRole?.Type !== "sass-user" && user?.ldap?.domain != null;
+};
+
+/**
+ * Handles all authorization of actions.  It factors in the overall user roles and the individual object
+ * access roles. It will be customized based on roleDefinitions passed in.
+ *
+ * @param customerAccessRules
+ * @param action
+ * @param roleDefinitions
+ * @param owner
+ * @param objectRoles
+ * @returns {boolean}
+ *
+ *
+ */
+export const isActionAllowed = (customerAccessRules, action, owner, objectRoles, roleDefinitions) => {
+  if (customerAccessRules == null || roleDefinitions == null) {
+    return false;
+  }
+
+  let roleAllowed = false;
+  const allowedRoles = getAllowedRoles(action, roleDefinitions);
+
+  if (!Array.isArray(allowedRoles) || allowedRoles.length === 0) {
+    return false;
+  }
+
+  if (allowedRoles.includes(ACCESS_ROLES.NO_ACCESS_RULES)) {
+    return true;
+  }
+
+  // TODO: These are the defaults for compatibility, but we should probably just use the defined Access Roles sent from Node:
+  if (customerAccessRules.OpseraAdministrator) {
+    return true; //all actions are authorized to Opsera Administrator
+  }
+
+  if (customerAccessRules.Administrator) {
+    return true; //all actions are authorized to administrator
+  }
+
+  if (customerAccessRules.SassPowerUser) {
+    return true; //all  are authorized to Saas User
+  }
+
+  if (process.env.REACT_APP_STACK === "free-trial") {
+    return false; //all actions disabled for user?
+  }
+
+  if (owner && customerAccessRules.UserId === owner) {
+    return true; //owner can do all actions
+  }
+
+  //if no objectRole data passed, then allow actions
+  if (objectRoles && objectRoles.length === 0) {
+    return true;
+  }
+  // TODO: End of TODO
+
+  if (customerAccessRules.OpseraAdministrator) {
+    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.OPSERA_ADMINISTRATOR);
+  }
+
+  if (customerAccessRules.Administrator) {
+    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.ADMINISTRATOR);
+  }
+
+  if (customerAccessRules.SassPowerUser) {
+    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.SAAS_USER);
+  }
+
+  if (process.env.REACT_APP_STACK === "free-trial") {
+    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.FREE_TRIAL_USER);
+  }
+
+  if (owner && customerAccessRules.UserId === owner) {
+    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.OWNER);
+  }
+
+  const userObjectRole = calculateUserObjectRole(customerAccessRules.Email, customerAccessRules.Groups, objectRoles);
+  // TODO: By default Admins can do everything, if we want to stop allowing that, do it here:
+  return userObjectRole === "administrator" || roleAllowed || allowedRoles.includes(userObjectRole);
+};
+
+//compares the user email to the objectRoles data to see if the user has a specific role
+// (either directly or through group membership)
+export const calculateUserObjectRole = (userEmail, userGroups, objectRoles) => {
+  if (!objectRoles || objectRoles.length === 0 || !userEmail) {
+    return false;
+  }
+
+  //filter out only user records (groups null)
+  const userRoles = objectRoles.filter(function(item) {
+    if (!item.user || typeof item.user !== "string") {
+      return false;
+    }
+    return item.user.toLowerCase() === userEmail.toLowerCase();
+  });
+
+  if (userRoles.length > 0) {
+    return userRoles[0].role;
+  }
+
+  //filter out only user records (groups null)
+  const groupRoles = objectRoles.filter(function(item) {
+    return item.group;
+  });
+
+  let userGroupsRole = [];
+  groupRoles.forEach(function(item) {
+    if (userGroups && userGroups.includes(item.group)) {
+      userGroupsRole.push(item.role);
+    }
+  });
+
+  if (userGroupsRole.length === 1) {
+    return userGroupsRole[0];
+  }
+
+  if (userGroupsRole.length >= 1) {
+    if (userGroupsRole.includes("administrator")) {
+      return "administrator";
+    }
+    if (userGroupsRole.includes("secops")) {
+      return "secops";
+    }
+    if (userGroupsRole.includes("manager")) {
+      return "manager";
+    }
+    if (userGroupsRole.includes("user")) {
+      return "user";
+    }
+    return userGroupsRole[0];
+  }
+
+  return false;
+};
+
+export const calculateRoleLevel = (customerAccessRules, objectRoles, dataModel) => {
+  const userEmail = customerAccessRules.Email;
+  const userGroups = customerAccessRules.Groups;
+
+  if (!userEmail) {
+    return ACCESS_ROLES.UNAUTHORIZED;
+  }
+
+  if (!objectRoles || objectRoles.length === 0) {
+    return ACCESS_ROLES.NO_ACCESS_RULES;
+  }
+
+  if (dataModel?.getData("owner") === customerAccessRules.UserId) {
+    return ACCESS_ROLES.OWNER;
+  }
+
+  if (customerAccessRules.OpseraAdministrator) {
+    return ACCESS_ROLES.OPSERA_ADMINISTRATOR;
+  }
+
+  if (customerAccessRules.Administrator) {
+    return ACCESS_ROLES.ADMINISTRATOR;
+  }
+
+  if (customerAccessRules.SassPowerUser) {
+    return ACCESS_ROLES.SAAS_USER;
+  }
+
+  if (process.env.REACT_APP_STACK === "free-trial") {
+    return ACCESS_ROLES.FREE_TRIAL_USER;
+  }
+
+  //filter out only user records (groups null)
+  const userRoles = objectRoles.filter(function(item) {
+    if (!item.user || typeof item.user !== "string") {
+      return false;
+    }
+    return item.user.toLowerCase() === userEmail.toLowerCase();
+  });
+
+  if (userRoles.length > 0) {
+    return userRoles[0].role;
+  }
+
+  //filter out only user records (groups null)
+  const groupRoles = objectRoles.filter(function(item) {
+    return item.group;
+  });
+
+  let userGroupsRole = [];
+  groupRoles.forEach(function(item) {
+    if (userGroups && userGroups.includes(item.group)) {
+      userGroupsRole.push(item.role);
+    }
+  });
+
+  if (userGroupsRole.length === 1) {
+    return userGroupsRole[0];
+  }
+
+  if (userGroupsRole.length >= 1) {
+    if (userGroupsRole.includes("administrator")) {
+      return ACCESS_ROLES.ADMINISTRATOR;
+    }
+    if (userGroupsRole.includes("secops")) {
+      return ACCESS_ROLES.SECOPS;
+    }
+    if (userGroupsRole.includes("manager")) {
+      return ACCESS_ROLES.MANAGER;
+    }
+    if (userGroupsRole.includes("user")) {
+      return ACCESS_ROLES.USER;
+    }
+
+    return userGroupsRole[0];
+  }
+
+  return ACCESS_ROLES.READ_ONLY;
 };

@@ -145,8 +145,8 @@ function OverviewLanding() {
             </ul>
           </div>
 
-          <div className="h4 text-color mb-3">Welcome
-            back {userInfo && userInfo.firstName ? userInfo.firstName : null}!
+          <div className="h4 text-color mb-3">Welcome Back&nbsp;
+            {userInfo && userInfo.firstName ? userInfo.firstName : null}
           </div>
 
           <MyTagCloud />

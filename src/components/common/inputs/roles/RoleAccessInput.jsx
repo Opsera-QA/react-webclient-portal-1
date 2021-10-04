@@ -26,7 +26,7 @@ const roleTypes = [
 ];
 
 // TODO: Create RoleAccessInputRow that holds the actual inputs to clean this up.
-function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }) {
+function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, disabled }) {
   const {getUserRecord, getAccessToken, setAccessRoles, isSassUser} = useContext(AuthContext);
   const [userList, setUserList] = useState([]);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -266,6 +266,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
             name={`roleAccessType-${index}`}
             value={"group"}
             checked={role["roleAccessType"] === "group"}
+            disabled={disabled}
             onChange={() => updateProperty(role, "roleAccessType", "group")}
           />
           <span className={"mr-2"}>Group</span>
@@ -275,6 +276,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
             className="mr-2"
             type="radio"
             name={`roleAccessType-${index}`}
+            disabled={disabled}
             value={"user"}
             checked={role["roleAccessType"] === "user"}
             onChange={() => updateProperty(role, "roleAccessType", "user")}
@@ -319,7 +321,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
           value={role["user"]}
           busy={loadingUsers}
           filter={"contains"}
-          disabled={getDisabledUsers()}
+          disabled={disabled || getDisabledUsers()}
           placeholder={"Select A User"}
           onChange={(value) => updateProperty(role, "user", value["emailAddress"])}
         />
@@ -333,7 +335,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
         textField={"name"}
         value={role["group"]}
         busy={loadingGroups}
-        disabled={getDisabledGroups()}
+        disabled={disabled || getDisabledGroups()}
         filter={"contains"}
         placeholder={"Select A Group"}
         onChange={(value) => updateProperty(role, "group", value["name"])}
@@ -350,6 +352,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
         textField={"text"}
         value={role["role"]}
         filter={"contains"}
+        disabled={disabled}
         placeholder={"Select Role Type"}
         onChange={(value) => updateProperty(role, "role", value["value"])}
       />
@@ -357,11 +360,13 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
   };
 
   const getDeletePropertyButton = (index) => {
-    return (
-      <Button variant="link" onClick={() => deleteRole(index)}>
-        <span><FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/></span>
-      </Button>
-    );
+    if (disabled !== true) {
+      return (
+        <Button variant="link" onClick={() => deleteRole(index)}>
+          <span><FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/></span>
+        </Button>
+      );
+    }
   };
 
   const getPropertyRow = (role, index) => {
@@ -432,12 +437,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
 
   const getIncompleteRoleMessage = () => {
     if (!lastRoleComplete()) {
-      return (
-        <div className="w-100 pr-3 mb-1 text-muted small text-right">
-          <FontAwesomeIcon className="text-warning mr-1" icon={faExclamationTriangle} fixedWidth />
-          <span className="mt-1">Incomplete Roles Will Be Removed Upon Saving</span>
-        </div>
-      );
+      return (`Incomplete Roles Will Be Removed Upon Saving`);
     }
   };
 
@@ -476,8 +476,9 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
         titleText={"Roles"}
         errorMessage={errorMessage}
         type={"Role"}
-        addAllowed={lastRoleComplete()}
+        addAllowed={lastRoleComplete() && disabled !== true}
         helpComponent={getHelpComponent()}
+        incompleteRowMessage={getIncompleteRoleMessage()}
       >
         <div>
           <div className={"filter-bg-white"}>
@@ -487,7 +488,6 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
             {getFieldBody()}
           </div>
         </div>
-        {getIncompleteRoleMessage()}
       </PropertyInputContainer>
     </div>
   );
@@ -497,7 +497,8 @@ RoleAccessInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
-  helpComponent: PropTypes.object
+  helpComponent: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default RoleAccessInput;

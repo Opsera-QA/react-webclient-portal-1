@@ -70,7 +70,7 @@ const SfdcPipelineWizardGitFileSelector = ({ pipelineWizardModel, setPipelineWiz
       setGitWarningMessage("");
       await gitPolling(cancelSource, newFilterDto);
     } catch (error) {
-      toastContext.showInlineErrorMessage(error);
+      toastContext.showInlineErrorMessage(error, `Service Error Fetching Git File List From SFDC:`);
     }
     finally {
       if (isMounted?.current === true) {

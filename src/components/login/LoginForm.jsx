@@ -72,12 +72,13 @@ const LoginForm = ({ authClient }) => {
             setLoading(false);
             //history.push("/");
 
-            if (history.location.pathname === "/logout") {
+            if (history.location.pathname === "/logout" || history.location.pathname === "/login") {
               history.push("/");
+              history.go(0);
             }
           })
           .catch(function(err) {
-            console.log("Error on getWithoutPrompt, trying fallback", err);
+            console.error("[authClient.token.getWithoutPrompt]", err);
             //handleFallbackGetLoginWithPrompt(tokenOptions);
             handleFallbackSignInReactHook(sessionToken);
             //setErrorMessage(err.message);
@@ -86,8 +87,13 @@ const LoginForm = ({ authClient }) => {
       })
       .catch(error => {
         toastContext.removeAllBanners();
-        console.log("Found an error", error);
-        toastContext.showErrorDialog(error);
+        console.error("[authClient.signInWithCredentials]", error);
+        let errorMessage = "An error has occurred with your Okta account authentication.  Please close your browser and start over or report the issue to Opsera.";
+        if (error.errorCode && error.errorSummary) {
+          errorMessage = `Okta Login Error: [${error.errorCode}] ${error.errorSummary}`;
+        }
+
+        toastContext.showErrorDialog(errorMessage);
         setLoading(false);
       });
   };
@@ -240,8 +246,8 @@ const LoginForm = ({ authClient }) => {
           if (token) {
             const accountResponse = await userActions.getAccountInformationWithEmailAddress(lookupAccountEmail, token);
             const { localAuth, accountName, idpIdentifier } = accountResponse.data;
-            if (localAuth && localAuth === "FALSE" && idpIdentifier) {
-              setFederatedIdpEnabled(localAuth === "FALSE");
+            if (localAuth && localAuth === "FALSE") {
+              setFederatedIdpEnabled(localAuth === "FALSE" && idpIdentifier !== "0");
               setUsername(lookupAccountEmail);
               setViewType("federated-login");
               federatedOktaLogin(accountName, idpIdentifier, lookupAccountEmail);

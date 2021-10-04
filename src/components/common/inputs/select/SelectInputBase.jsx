@@ -43,8 +43,12 @@ function SelectInputBase(
   };
 
   const getClearDataFunction = () => {
-
-    if (dataObject?.getData(field?.id) !== "" && (disabled === false || lenientClearValueButton === true) && showClearValueButton !== false && (setDataFunction == null || clearDataFunction)) {
+    if (
+         dataObject?.getData(field?.id) !== ""
+      && (disabled === false || lenientClearValueButton === true)
+      && showClearValueButton !== false
+      && (setDataFunction == null || clearDataFunction)
+    ) {
       return clearValue;
     }
   };
@@ -64,6 +68,7 @@ function SelectInputBase(
   return (
     <InputContainer className={className}>
       <InputLabel
+        model={dataObject}
         showLabel={showLabel}
         field={field}
         clearDataFunction={getClearDataFunction()}

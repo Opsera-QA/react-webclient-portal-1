@@ -6,18 +6,20 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 
+// TODO: Rework
+const disallowedJobTypes = [
+  "SFDC VALIDATE PACKAGE XML",
+  "SFDC UNIT TESTING",
+  "SFDC DEPLOY",
+];
 
-
-function JenkinsWorkspaceProjectSelectInput({ fieldName, dataObject, setDataObject, disabled}) {
+function JenkinsWorkspaceProjectSelectInput({ fieldName, dataObject, setDataObject, disabled, service, gitToolId, jobType}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [workspacesList, setWorkspacesList] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const service =  dataObject.getData("service");
-  const gitToolId =  dataObject.getData("gitToolId");
-  const jobType =  dataObject.getData("jobType");
 
 
   useEffect(() => {
@@ -30,7 +32,7 @@ function JenkinsWorkspaceProjectSelectInput({ fieldName, dataObject, setDataObje
     isMounted.current = true;
 
     setWorkspacesList([]);
-    if (service === "bitbucket" && gitToolId?.length > 0) {
+    if (service === "bitbucket" && gitToolId != null && gitToolId !== "") {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -100,12 +102,15 @@ function JenkinsWorkspaceProjectSelectInput({ fieldName, dataObject, setDataObje
     setDataObject({...newDataObject});
   };
 
+  // TODO: Rework
   const valid = () => {
-   return service && service === "bitbucket" &&  gitToolId && 
-   jobType != "SFDC VALIDATE PACKAGE XML" && 
-   jobType != "SFDC UNIT TESTING" && 
-   jobType != "SFDC DEPLOY" 
-   && !dataObject.getData("isOrgToOrg");
+    return (
+      service === "bitbucket"
+      && gitToolId != null
+      && gitToolId !== ""
+      && !disallowedJobTypes.includes(jobType)
+      && dataObject.getData("isOrgToOrg") === false
+    );
   };
 
   if (dataObject == null || !valid()) {
@@ -122,7 +127,7 @@ function JenkinsWorkspaceProjectSelectInput({ fieldName, dataObject, setDataObje
       selectOptions={workspacesList}
       valueField="key"
       textField="name"
-      disabled={isLoading || disabled}
+      disabled={disabled}
       clearDataFunction={clearDataFunction}
       busy={isLoading}
     />
@@ -134,6 +139,9 @@ JenkinsWorkspaceProjectSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
+  service: PropTypes.string,
+  gitToolId: PropTypes.string,
+  jobType: PropTypes.string,
 };
 
 JenkinsWorkspaceProjectSelectInput.defaultProps = {

@@ -10,7 +10,7 @@ import {
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import NewTagOverlay from "components/settings/tags/NewTagOverlay";
-import StatusFilter from "components/common/filters/status/StatusFilter";
+import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTags} from "@fortawesome/pro-light-svg-icons";
 import InlineTagTypeFilter from "components/common/filters/tags/tag_type/InlineTagTypeFilter";
@@ -49,7 +49,7 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, i
     return (
       <>
         <TagTypeFilter filterModel={tagFilterDto} setFilterModel={setTagFilterDto} className={"mb-2"} />
-        <StatusFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
+        <ActiveFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
       </>
     );
   };

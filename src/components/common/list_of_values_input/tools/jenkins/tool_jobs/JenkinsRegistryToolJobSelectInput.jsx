@@ -1,0 +1,175 @@
+import React, {useContext, useEffect, useRef, useState} from "react";
+import PropTypes from "prop-types";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {AuthContext} from "contexts/AuthContext";
+import axios from "axios";
+import toolsActions from "components/inventory/tools/tools-actions";
+import {Link} from "react-router-dom";
+import InfoOverlayContainer from "components/common/inputs/info_text/InfoOverlayContainer";
+import {getJenkinsJobTypeLabelForValue} from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobTypeSelectInput";
+
+function JenkinsRegistryToolJobSelectInput({ jenkinsToolId, visible, typeFilter, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
+  const toastContext = useContext(DialogToastContext);
+  const { getAccessToken } = useContext(AuthContext);
+  const [jenkinsJobs, setJenkinsJobs] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+
+    setJenkinsJobs([]);
+    if (jenkinsToolId != null && jenkinsToolId !== "") {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [jenkinsToolId]);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+      await loadJenkinsJobs(cancelSource);
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  };
+
+  const loadJenkinsJobs = async (cancelSource = cancelTokenSource) => {
+    const response = await toolsActions.getFullToolByIdV2(getAccessToken, cancelSource, jenkinsToolId);
+    const jenkinsToolArray = response?.data;
+    const jenkinsJobs = jenkinsToolArray ? jenkinsToolArray[0]?.jobs : [];
+    const existingJobSelection = dataObject?.getData(fieldName);
+
+    if (Array.isArray(jenkinsJobs) && jenkinsJobs.length > 0) {
+      if (typeFilter) {
+        let filteredJobs = jenkinsJobs.filter((job) => {return job.type[0] === typeFilter;});
+
+        if (Array.isArray(filteredJobs) && existingJobSelection != null && existingJobSelection !== "") {
+          // TODO: We should probably pass in valueField and check based on that.
+          const existingJob = jenkinsJobs.find((x) => x._id === existingJobSelection);
+
+          if (existingJob == null) {
+            toastContext.showLoadingErrorDialog(
+              "Preselected job is no longer available. It may have been deleted. Please select another job from the list or recreate the job in Tool Registry."
+            );
+          }
+        }
+        setJenkinsJobs(filteredJobs);
+      } else {
+        setJenkinsJobs(jenkinsJobs);
+
+        if (existingJobSelection != null && existingJobSelection !== "") {
+          const existingJob = jenkinsJobs.find((x) => x._id === existingJobSelection);
+          if (existingJob == null) {
+            toastContext.showLoadingErrorDialog(
+              "Preselected job is no longer available. It may have been deleted. Please select another job from the list or recreate the job in Tool Registry."
+            );
+          }
+        } 
+      }
+    }
+  };
+
+  const getPlaceholderText = () => {
+    if (!isLoading && (jenkinsJobs == null || jenkinsJobs.length === 0 && jenkinsToolId !== "")) {
+      return (`No configured ${typeFilter ? typeFilter + " " : ""} Jenkins Jobs have been registered for this Jenkins tool.`);
+    }
+
+    return ("Select Jenkins Job");
+  };
+
+  // TODO: Make tool job overlay
+  const renderOverlayTrigger = () => {
+    const toolJobId = dataObject.getData("toolJobId");
+    const jenkinsJobIndex = jenkinsJobs.findIndex((x) => x._id === toolJobId);
+    const jenkinsJob = jenkinsJobIndex !== -1 ? jenkinsJobs[jenkinsJobIndex] : undefined;
+
+    if (jenkinsJob) {
+      return (
+        <InfoOverlayContainer title={"Jenkins Job Details"}>
+            <div>
+              <div className="text-muted mb-2">
+                Configuration details for this item are listed below. Tool and account specific settings are stored in
+                the
+                <Link to="/inventory/tools">Tool Registry</Link>. To add a new entry to a dropdown or update settings,
+                make those changes there.
+              </div>
+              {jenkinsJob?.configuration && (
+                <>
+                  {Object.entries(jenkinsJob?.configuration).map(function (a) {
+                    return (
+                      <div key={a}>
+                        {a[1] != null && a[1].length > 0 && (
+                          <>
+                            <span className="text-muted pr-1">{a[0]}: </span> {a[1]}
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
+                </>
+              )}
+            </div>
+        </InfoOverlayContainer>
+      );
+    }
+  };
+
+  if (visible === false) {
+    return <></>;
+  }
+
+  return (
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      setDataFunction={setDataFunction}
+      selectOptions={jenkinsJobs}
+      placeholderText={getPlaceholderText()}
+      busy={isLoading}
+      groupBy={(job) => getJenkinsJobTypeLabelForValue(job?.type)}
+      valueField="_id"
+      textField="name"
+      infoOverlay={renderOverlayTrigger()}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled || jenkinsToolId === ""}
+    />
+  );
+}
+
+JenkinsRegistryToolJobSelectInput.propTypes = {
+  jenkinsToolId: PropTypes.string,
+  fieldName: PropTypes.string,
+  dataObject: PropTypes.object,
+  setDataObject: PropTypes.func,
+  setDataFunction: PropTypes.func,
+  disabled: PropTypes.bool,
+  visible: PropTypes.bool,
+  typeFilter: PropTypes.string,
+  configurationRequired: PropTypes.bool,
+  clearDataFunction: PropTypes.func
+};
+
+export default JenkinsRegistryToolJobSelectInput;

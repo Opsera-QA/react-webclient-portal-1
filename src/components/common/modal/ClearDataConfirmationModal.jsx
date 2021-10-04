@@ -9,6 +9,11 @@ function ClearDataConfirmationModal({ showModal, setShowModal, furtherDetails, c
     setShowModal(false);
   };
 
+  const clearValue = () => {
+    setShowModal(false);
+    clearDataFunction();
+  };
+
   return (
     <Modal size="md" show={showModal} onHide={handleClose} backdrop="static" centered>
       <Modal.Header closeButton>
@@ -24,15 +29,15 @@ function ClearDataConfirmationModal({ showModal, setShowModal, furtherDetails, c
             </Col>
             <Col sm={11}>
               <div>Clearing this value will also clear out any dependent fields.</div>
-              <div>Do you still want to proceed?</div>
               <div>{furtherDetails}</div>
+              <div>Do you still want to proceed?</div>
             </Col>
           </Row>
         </div>
       </Modal.Body>
       <Modal.Footer>
         <Button size="sm" variant="secondary" onClick={handleClose}>Cancel</Button>
-        <Button size={"sm"} variant={"danger"} onClick={() => clearDataFunction()}>Clear Data</Button>
+        <Button size={"sm"} variant={"danger"} onClick={clearValue}>Clear Data</Button>
       </Modal.Footer>
     </Modal>
   );

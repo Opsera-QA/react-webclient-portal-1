@@ -103,7 +103,7 @@ import seleniumPipelineStepConfigurationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/selenium/seleniumPipelineStepConfigurationMetadata";
 import TwistlockPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/twistlock/TwistlockPipelineStepConfigurationSummaryPanel";
-import twistlockPipelineStepFormMetadata from "./step_tool_configuration_forms/twistlock/twistlock-stepForm-metadata";  
+import twistlockPipelineStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/twistlockPipelineStepForm.metadata";
 import S3PipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/s3/S3PipelineStepConfigurationSummaryPanel";
 import s3PipelineStepConfigurationMetadata
@@ -159,7 +159,8 @@ import AksServiceDeployStepSummary
 import aksStepFormMetadata from "./step_tool_configuration_forms/aks_service_deploy/aks-stepForm-metadata";
 import mongodbRealmStepFormMetadata from "./step_tool_configuration_forms/mongodb_realm/mongodb-realm-stepForm-metadata";
 import MongodbRealmStepConfigurationSummaryPanel from "./step_tool_configuration_forms/mongodb_realm/MongodbRealmStepConfigurationSummaryPanel";
-
+import AzureFunctionsStepConfigurationSummaryPanel from "./step_tool_configuration_forms/azure_functions/AzureFunctionsStepConfigurationSummaryPanel";
+import azureFunctionsStepFormMetadata from "./step_tool_configuration_forms/azure_functions/azureFunctions-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -371,7 +372,7 @@ function PipelineStepConfigurationSummary({
         return (
           <TwistlockPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            twistlockDataObject={getModelWrappedObject(twistlockPipelineStepFormMetadata)}
+            twistlockPipelineDataObject={getModelWrappedObject(twistlockPipelineStepFormMetadata)}
           />
         );
       case "s3":
@@ -472,6 +473,13 @@ function PipelineStepConfigurationSummary({
             aksDeployPipelineDataObject={getModelWrappedObject(aksStepFormMetadata)}
             />
         );
+      case "azure-functions":
+        return (
+          <AzureFunctionsStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            azureFunctionsPipelineDataObject={getModelWrappedObject(azureFunctionsStepFormMetadata)}
+            />
+        );
       case "mongodb_realm":
         return (
           <MongodbRealmStepConfigurationSummaryPanel
@@ -489,7 +497,7 @@ function PipelineStepConfigurationSummary({
   };
 
   return (
-    <div className={"step-configuration-summary"}>
+    <div className={"step-configuration-summary h-100"}>
       {getStepConfigurationSummary()}
     </div>
   );

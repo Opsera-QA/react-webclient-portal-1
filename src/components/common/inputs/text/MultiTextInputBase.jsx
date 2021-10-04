@@ -60,7 +60,7 @@ function MultiTextInputBase({ fieldName, dataObject, setDataObject, groupBy, dis
 
   return (
     <InputContainer className={className ? className : undefined}>
-      <InputLabel field={field} clearDataFunction={getClearDataFunction()} showLabel={showLabel} />
+      <InputLabel model={dataObject} field={field} clearDataFunction={getClearDataFunction()} showLabel={showLabel} />
       <div className={"custom-multiselect-input"}>
         <Multiselect
           data={selectOptions}

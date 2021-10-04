@@ -35,14 +35,15 @@ function SfdcPipelineWizardSubmitSfdcFilesButton({pipelineWizardModel, setPipeli
   const submitFilteredFiles = async () => {
     try {
       setIsSaving(true);
-      if (pipelineWizardModel.getData("isProfiles") === true) {
+
+      if (pipelineWizardModel.getData("fromFileUpload") === true) {
+        await generateXml();
+      }
+      else if (pipelineWizardModel.getData("isProfiles") === true) {
         await setSfdcProfileFilesList();
       }
       else {
-        if (pipelineWizardModel.getData("fromFileUpload") !== true) {
-          await sfdcPipelineActions.setSfdcFileListV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
-        }
-
+        await sfdcPipelineActions.setSfdcFileListV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
         await generateXml();
       }
     } catch (error) {
@@ -50,7 +51,9 @@ function SfdcPipelineWizardSubmitSfdcFilesButton({pipelineWizardModel, setPipeli
       toastContext.showInlineErrorMessage(error);
     }
     finally {
-      setIsSaving(false);
+      if (isMounted?.current === true) {
+        setIsSaving(false);
+      }
     }
   };
 

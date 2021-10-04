@@ -1,21 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import nexusStepFormMetadata from "./nexus-stepForm-metadata";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
-import _ from "lodash";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import NexusRepoSelectInput from "./inputs/NexusRepoSelectInput";
 import NexusRepoFormatSelectInput from "./inputs/NexusRepoFormatSelectInput";
 import NexusJenkinsToolInput from "./inputs/NexusJenkinsToolInput";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
-import NexusToolSelectInput from "./inputs/NexusToolSelectInput";
+import NexusStepNexusToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nexus/inputs/NexusStepNexusToolSelectInput";
 import NexusArtifactStepSelectInput from "./inputs/NexusArtifactStepSelectInput";
 import NexusStepTypeSelectInput from "./inputs/NexusStepTypeSelectInput";
 import NexusCustomVersionToggleInput from "./inputs/NexusCustomVersionToggleInput";
 
-function NexusStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEditorPanel, parentCallback, createJob, getToolsList }) {
+function NexusStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEditorPanel, parentCallback, createJob }) {
   const [isLoading, setIsLoading] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
   const [nexusStepConfigurationDto, setNexusStepConfigurationDataDto] = useState(undefined);
@@ -161,11 +160,10 @@ function NexusStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdito
       persistRecord={handleSaveStepConfig}
       isLoading={isLoading}
     >
-      <NexusToolSelectInput        
-        setDataObject={setNexusStepConfigurationDataDto}            
-        dataObject={nexusStepConfigurationDto}
-        getToolsList={getToolsList}
-      />      
+      <NexusStepNexusToolSelectInput
+        setModel={setNexusStepConfigurationDataDto}
+        model={nexusStepConfigurationDto}
+      />
       <NexusStepTypeSelectInput         
         setDataObject={setNexusStepConfigurationDataDto}            
         dataObject={nexusStepConfigurationDto}
@@ -202,8 +200,6 @@ NexusStepConfiguration.propTypes = {
   plan: PropTypes.array,
   stepId: PropTypes.string,
   parentCallback: PropTypes.func,
-  callbackSaveToVault: PropTypes.func,
-  getToolsList: PropTypes.func,
   createJob: PropTypes.func,
   pipelineId: PropTypes.string,
   closeEditorPanel: PropTypes.func,

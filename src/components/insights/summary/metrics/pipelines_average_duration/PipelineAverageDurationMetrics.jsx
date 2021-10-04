@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import HorizontalThreeDataBlockContainer from "components/common/metrics/data_blocks/horizontal/HorizontalThreeDataBlockContainer";
+import ThreeStackedHorizontalMetricsContainer from "components/common/metrics/data_blocks/horizontal/ThreeStackedHorizontalMetricsContainer";
 import MetricContainer from "components/common/panels/insights/charts/MetricContainer";
 import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
 import AveragePipelineDeploymentDurationMetric from "components/insights/summary/metrics/pipelines_average_duration/deployment_duration/AveragePipelineDeploymentDurationMetric";
@@ -15,7 +15,7 @@ function PipelineAverageDurationMetrics({ dashboardData, toggleDynamicPanel, sel
     }
 
     return (
-      <HorizontalThreeDataBlockContainer
+      <ThreeStackedHorizontalMetricsContainer
         topDataBlock={
           <AveragePipelineDeploymentDurationMetric
             dashboardData={dashboardData}

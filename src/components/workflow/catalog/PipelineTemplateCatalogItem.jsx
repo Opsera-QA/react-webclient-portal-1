@@ -92,7 +92,7 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
   const getEnabledBody = () => {
     return (
       <Col className="col-6 d-flex flex-nowrap">
-       <TooltipWrapper innerText={"Create a new template from this template"}>
+       <TooltipWrapper innerText={"Create a new Pipeline from this template"}>
         <Button variant="success" size="sm" className="mr-2 mt-2 text-nowrap" style={{minWidth: "128px", maxHeight: "34px"}} onClick={() => deployTemplate()}>            {loading ?
             <><FontAwesomeIcon icon={faSpinner} spin fixedWidth/> Working</> :
             <><FontAwesomeIcon icon={faPlus} className="d-xl-none mr-1" />  Create Pipeline </>

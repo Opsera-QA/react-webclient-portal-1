@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Col} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
-import CardView from "components/common/card/CardView";
-import PipelineItem from "components/workflow/pipelines/PipelineItem";
+import PipelineCard from "components/workflow/pipelines/PipelineItem";
 import Model from "core/data_model/model";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
+import VanitySetCardView from "components/common/card/VanitySetCardView";
 
-function PipelineCardView({ data, pipelineFilterDto, setPipelineFilterDto, loadData, isLoading }) {
+function PipelineCardView({ data, pipelineFilterModel, loadData, isLoading }) {
   const getCards = () => {
     if (!Array.isArray(data) || data.length === 0) {
       return null;
@@ -17,7 +17,7 @@ function PipelineCardView({ data, pipelineFilterDto, setPipelineFilterDto, loadD
       <Row className={"mx-0"}>
         {data.map((item, idx) => (
           <Col key={idx} xl={6} md={12} className="p-2">
-            <PipelineItem item={item} dataModel={new Model({...item}, pipelineMetadata, false)}/>
+            <PipelineCard item={item} dataModel={new Model({...item}, pipelineMetadata, false)}/>
           </Col>
         ))}
       </Row>
@@ -25,11 +25,10 @@ function PipelineCardView({ data, pipelineFilterDto, setPipelineFilterDto, loadD
   };
 
   return (
-    <CardView
+    <VanitySetCardView
       isLoading={isLoading}
       loadData={loadData}
-      setPaginationDto={setPipelineFilterDto}
-      paginationDto={pipelineFilterDto}
+      paginationModel={pipelineFilterModel}
       cards={getCards()}
     />
   );
@@ -37,8 +36,7 @@ function PipelineCardView({ data, pipelineFilterDto, setPipelineFilterDto, loadD
 
 PipelineCardView.propTypes = {
   data: PropTypes.array,
-  pipelineFilterDto: PropTypes.object,
-  setPipelineFilterDto: PropTypes.func,
+  pipelineFilterModel: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool
 };

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import PipelineWelcomeView from "./PipelineWelcomeView";
-import pipelineFilterMetadata from "./pipeline_details/workflow/pipeline-filter-metadata";
 import PipelinesTable from "./pipeline_details/PipelinesTable";
 import InformationDialog from "components/common/status_notifications/info";
 import {AuthContext} from "contexts/AuthContext";
@@ -11,7 +10,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import cookieHelpers from "core/cookies/cookie-helpers";
 import pipelineActions from "components/workflow/pipeline-actions";
 import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilter";
-import Model from "core/data_model/model";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import PipelineCardView from "components/workflow/pipelines/PipelineCardView";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -19,13 +17,17 @@ import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import pipelineSummaryMetadata
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
+import PipelineStatusFilter from "components/common/filters/pipelines/status/PipelineStatusFilter";
+import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
+import {useHistory} from "react-router-dom";
 
 function PipelinesView({ currentTab, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [data, setData] = useState([]);
+  const [pipelines, setPipelines] = useState([]);
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
-  const [pipelineFilterDto, setPipelineFilterDto] = useState(undefined);
+  const [pipelineFilterModel, setPipelineFilterModel] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -53,60 +55,62 @@ function PipelinesView({ currentTab, setActiveTab }) {
 
   const getCookie = async (cancelSource = cancelTokenSource) => {
     setIsLoading(true);
-    let newPipelineFilterDto = new Model({ ...pipelineFilterMetadata.newObjectFields }, pipelineFilterMetadata, false);
+    let newPipelineFilterModel = new PipelineFilterModel(getAccessToken, cancelTokenSource, loadData);
     try {
       let storedSortOption = cookieHelpers.getCookie("pipelines-v2", "sortOption");
       let storedPageSize = cookieHelpers.getCookie("pipelines-v2", "pageSize");
       let storedViewType = cookieHelpers.getCookie("pipelines-v2", "viewType");
 
       if (isMounted?.current === true && storedSortOption != null) {
-        newPipelineFilterDto.setData("sortOption", JSON.parse(storedSortOption));
+        newPipelineFilterModel.setData("sortOption", JSON.parse(storedSortOption));
       }
 
       if (isMounted?.current === true && storedPageSize != null) {
-        newPipelineFilterDto.setData("pageSize", JSON.parse(storedPageSize));
+        newPipelineFilterModel.setData("pageSize", JSON.parse(storedPageSize));
       }
 
       if (isMounted?.current === true && storedViewType != null) {
-        newPipelineFilterDto.setData("viewType", JSON.parse(storedViewType));
+        newPipelineFilterModel.setData("viewType", JSON.parse(storedViewType));
       }
     } catch (error) {
       if (isMounted?.current === true) {
-        cookieHelpers.setCookie("pipelines-v2", "sortOption", JSON.stringify(newPipelineFilterDto.getData("sortOption")));
-        cookieHelpers.setCookie("pipelines-v2", "pageSize", JSON.stringify(newPipelineFilterDto.getData("pageSize")));
-        cookieHelpers.setCookie("pipelines-v2", "viewType", JSON.stringify(newPipelineFilterDto.getData("viewType")));
+        cookieHelpers.setCookie("pipelines-v2", "sortOption", JSON.stringify(newPipelineFilterModel.getData("sortOption")));
+        cookieHelpers.setCookie("pipelines-v2", "pageSize", JSON.stringify(newPipelineFilterModel.getData("pageSize")));
+        cookieHelpers.setCookie("pipelines-v2", "viewType", JSON.stringify(newPipelineFilterModel.getData("viewType")));
         console.error("Error loading cookie. Setting to default");
         console.error(error);
       }
     } finally {
       if (isMounted?.current === true) {
-        await loadData(newPipelineFilterDto, cancelSource);
+        await loadData(newPipelineFilterModel, cancelSource);
       }
     }
   };
 
-  const saveCookies = (newPipelineFilterDto) => {
-    cookieHelpers.setCookie("pipelines-v2", "sortOption", JSON.stringify(newPipelineFilterDto.getData("sortOption")));
-    cookieHelpers.setCookie("pipelines-v2", "pageSize", JSON.stringify(newPipelineFilterDto.getData("pageSize")));
-    cookieHelpers.setCookie("pipelines-v2", "viewType", JSON.stringify(newPipelineFilterDto.getData("viewType")));
+  const saveCookies = (newPipelineFilterModel) => {
+    cookieHelpers.setCookie("pipelines-v2", "sortOption", JSON.stringify(newPipelineFilterModel.getData("sortOption")));
+    cookieHelpers.setCookie("pipelines-v2", "pageSize", JSON.stringify(newPipelineFilterModel.getData("pageSize")));
+    cookieHelpers.setCookie("pipelines-v2", "viewType", JSON.stringify(newPipelineFilterModel.getData("viewType")));
   };
 
-  const loadData = async (newPipelineFilterDto = pipelineFilterDto, cancelSource = cancelTokenSource) => {
+  const loadData = async (newPipelineFilterModel = pipelineFilterModel, cancelSource = cancelTokenSource) => {
     try {
       if (isMounted?.current === true) {
         setIsLoading(true);
-        setData([]);
-        saveCookies(newPipelineFilterDto);
+        setPipelines([]);
+        saveCookies(newPipelineFilterModel);
       }
 
-      const response = await pipelineActions.getPipelinesV2(getAccessToken, cancelSource, newPipelineFilterDto, currentTab);
+      const pipelineFields = ["type", "_id", "name", "owner", "workflow.last_step", "workflow.run_count", "createdAt", "updatedAt"];
+      const response = await pipelineActions.getPipelinesV2(getAccessToken, cancelSource, newPipelineFilterModel, currentTab, pipelineFields);
+      const pipelines = response?.data?.data;
 
-      if (isMounted?.current === true && response?.data) {
-        setData(response?.data);
-        let newFilterDto = newPipelineFilterDto;
-        newFilterDto.setData("totalCount", response.data.count);
-        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-        setPipelineFilterDto({...newFilterDto});
+      if (isMounted?.current === true && Array.isArray(pipelines)) {
+        setPipelines([...pipelines]);
+        let newFilterDto = newPipelineFilterModel;
+        newFilterDto.setData("totalCount", response?.data?.count);
+        newFilterDto.setData("activeFilters", newFilterDto?.getActiveFilters());
+        setPipelineFilterModel({...newFilterDto});
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -123,58 +127,54 @@ function PipelinesView({ currentTab, setActiveTab }) {
 
   const getDynamicFilter = () => {
     if (currentTab !== "owner") {
-      return (<LdapOwnerFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto} className={"mt-2"}/>);
+      return (<LdapOwnerFilter filterDto={pipelineFilterModel} setFilterDto={setPipelineFilterModel} className={"mt-2"}/>);
     }
   };
 
   const getDropdownFilters = () => {
     return (
       <>
-        <TagFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>
+        <PipelineStatusFilter filterModel={pipelineFilterModel} setFilterModel={setPipelineFilterModel} className={"mb-2"} />
+        <TagFilter filterDto={pipelineFilterModel} setFilterDto={setPipelineFilterModel}/>
         {getDynamicFilter()}
       </>
     );
   };
 
   const addPipeline = () => {
-    setActiveTab("catalog");
+    history.push(`/workflow/catalog`);
   };
 
   const getView = () => {
     if (isLoading) {
-      return (<LoadingDialog size="md" message="Loading pipelines..."/>);
+      return (<LoadingDialog size="md" message="Loading Pipelines..."/>);
     }
 
-    if (pipelineFilterDto?.getData("viewType") === "list") {
-      return (showList());
+    if (pipelineFilterModel?.getData("viewType") === "list") {
+      return (
+        <PipelinesTable
+          isLoading={isLoading}
+          paginationModel={pipelineFilterModel}
+          setPaginationModel={setPipelineFilterModel}
+          data={pipelines}
+          loadData={loadData}
+        />
+      );
     }
 
     return (
       <PipelineCardView
         isLoading={isLoading}
         loadData={loadData}
-        data={data?.response}
-        pipelineFilterDto={pipelineFilterDto}
-        setPipelineFilterDto={setPipelineFilterDto}
+        data={pipelines}
+        pipelineFilterModel={pipelineFilterModel}
       />
     );
   };
 
-  const showList = () => {
-    return (
-        <PipelinesTable
-          isLoading={isLoading}
-          paginationModel={pipelineFilterDto}
-          setPaginationModel={setPipelineFilterDto}
-          data={data?.response}
-          loadData={loadData}
-        />
-    );
-  };
-
   const getPipelinesBody = () => {
-    if (data && data.count === 0) {
-      const activeFilters = pipelineFilterDto?.getActiveFilters();
+    if (!Array.isArray(pipelines) && pipelines.length === 0) {
+      const activeFilters = pipelineFilterModel?.getActiveFilters();
       if (activeFilters && activeFilters.length > 0) {
         return (
           <div className="px-2 max-content-width mx-auto" style={{ minWidth: "505px" }}>
@@ -193,11 +193,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
     return (getView());
   };
 
-  if (data && data.count === 0 && currentTab === "owner" && (pipelineFilterDto?.getActiveFilters() == null || pipelineFilterDto?.getActiveFilters()?.length === 0) ) {
-    return (<><PipelineWelcomeView setActiveTab={setActiveTab}/></>);
-  }
-
-  if (!data && !isLoading) {
+  if (!Array.isArray(pipelines) && !isLoading) {
     return (
       <div className="px-2 max-content-width" style={{minWidth: "505px"}}>
         <div className="my-5">
@@ -207,12 +203,16 @@ function PipelinesView({ currentTab, setActiveTab }) {
     );
   }
 
+  if (Array.isArray(pipelines) && pipelines.count === 0 && currentTab === "owner" && (pipelineFilterModel?.getActiveFilters() == null || pipelineFilterModel?.getActiveFilters()?.length === 0) ) {
+    return (<><PipelineWelcomeView setActiveTab={setActiveTab}/></>);
+  }
+
   return (
     <div style={{minWidth: "505px"}}>
       <FilterContainer
         loadData={loadData}
-        filterDto={pipelineFilterDto}
-        setFilterDto={setPipelineFilterDto}
+        filterDto={pipelineFilterModel}
+        setFilterDto={setPipelineFilterModel}
         addRecordFunction={addPipeline}
         supportSearch={true}
         saveCookies={saveCookies}

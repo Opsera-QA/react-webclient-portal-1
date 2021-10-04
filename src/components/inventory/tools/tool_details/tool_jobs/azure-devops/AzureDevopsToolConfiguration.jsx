@@ -53,7 +53,8 @@ function AzureDevopsToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={azureDevopsConfigurationDto}
+      model={azureDevopsConfigurationDto}
+      setModel={setAzureDevopsConfigurationDto}
       persistRecord={saveAzureDevopsToolConfiguration}
       toolData={toolData}
     >

@@ -10,8 +10,8 @@ import { AuthContext } from "contexts/AuthContext";
 import DropdownList from "react-widgets/lib/DropdownList";
 import axios from "axios";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import gitTasksActions from "components/git/git-task-actions";
-import gitTasksFilterMetadata from "components/git/git-tasks-filter-metadata";
+import taskActions from "components/tasks/task.actions";
+import gitTasksFilterMetadata from "components/tasks/git-tasks-filter-metadata";
 import Model from "../../../../../../../../../core/data_model/model";
 
 function MultiTaskSelectInputBase({
@@ -105,7 +105,7 @@ function MultiTaskSelectInputBase({
       let newFilterDto = gitTasksFilterDto;
       newFilterDto.setData("type", "lambda_function_creation");
       setGitTasksFilterDto({ ...newFilterDto });
-      const results = await gitTasksActions.getGitTasksListV2(getAccessToken, cancelSource, gitTasksFilterDto);
+      const results = await taskActions.getTasksListV2(getAccessToken, cancelSource, gitTasksFilterDto);
       const taskListCopy = results?.data?.data;
       if (isMounted?.current === true && results?.data?.data) {
         setTaskList(taskListCopy);

@@ -6,7 +6,20 @@ import {persistUpdatedRecord} from "./saving-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 
-function SaveButtonBase({recordDto, updateRecord, disable, size, showSuccessToasts, lenient, className, customLabel, showTypeOnLabel}) {
+function SaveButtonBase(
+  {
+    recordDto,
+    setModel,
+    updateRecord,
+    disable,
+    size,
+    showSuccessToasts,
+    lenient,
+    className,
+    customLabel,
+    showTypeOnLabel,
+    showIncompleteDataMessage,
+  }) {
   let toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
   const isMounted = useRef(false);
@@ -22,7 +35,7 @@ function SaveButtonBase({recordDto, updateRecord, disable, size, showSuccessToas
 
   const persistRecord = async () => {
     setIsSaving(true);
-    await persistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient);
+    await persistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient, showIncompleteDataMessage, setModel);
 
     if (isMounted.current === true) {
       setIsSaving(false);
@@ -63,7 +76,9 @@ SaveButtonBase.propTypes = {
   lenient: PropTypes.bool,
   className: PropTypes.string,
   customLabel: PropTypes.string,
-  showTypeOnLabel: PropTypes.bool
+  showTypeOnLabel: PropTypes.bool,
+  showIncompleteDataMessage: PropTypes.bool,
+  setModel: PropTypes.func,
 };
 
 SaveButtonBase.defaultProps = {

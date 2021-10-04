@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 function SfdcWizardComponentTypeSelectionHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer
-      helpTopic={"SalesForce Pipeline Run: Component Type Selection"}
+      helpTopic={"Salesforce Pipeline Run: Component Type Selection"}
       closeHelpPanel={closeHelpPanel}
       confluenceLink={`https://opsera.atlassian.net/l/c/XbSETC14`}
     >
@@ -36,6 +36,9 @@ function SfdcWizardComponentTypeSelectionHelpDocumentation({closeHelpPanel}) {
               installed in.
             </li>
           </ul>
+        </li>
+        <li><b>Include Dependencies</b> - By default, all CustomObject dependencies are included while selecting components from the Git side.
+          By disabling this toggle, dependencies will be excluded unless explicitly selected.
         </li>
       </ul>
     </HelpDocumentationContainer>

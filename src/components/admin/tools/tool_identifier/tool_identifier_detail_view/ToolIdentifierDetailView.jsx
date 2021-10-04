@@ -12,10 +12,8 @@ import DetailScreenContainer from "components/common/panels/detail_view_containe
 import toolIdentifierMetadata from "components/admin/tools/tool_identifier/tool-identifier-metadata";
 import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
-import ActionBarTransferToolButton from "components/common/actions/buttons/tool/ActionBarTransferToolButton";
-import ActionBarDeleteToolButton from "components/common/actions/buttons/tool/ActionBarDeleteToolButton";
 import ActionBarOpseraAdminDeleteButton from "components/common/actions/buttons/ActionBarOpseraAdminDeleteButton";
-import toolsActions from "components/inventory/tools/tools-actions";
+import ToolManagementSubNavigationBar from "components/admin/tools/ToolManagementSubNavigationBar";
 
 function ToolIdentifierDetailView() {
   const {toolIdentifierId} = useParams();
@@ -110,6 +108,7 @@ function ToolIdentifierDetailView() {
       accessRoleData={accessRoleData}
       metadata={toolIdentifierMetadata}
       dataObject={toolIdentifierData}
+      navigationTabContainer={<ToolManagementSubNavigationBar activeTab={"toolIdentifierViewer"} />}
       isLoading={isLoading}
       actionBar={getActionBar()}
       detailPanel={<ToolIdentifierDetailPanel toolIdentifierData={toolIdentifierData} setToolIdentifierData={setToolIdentifierData}/>}

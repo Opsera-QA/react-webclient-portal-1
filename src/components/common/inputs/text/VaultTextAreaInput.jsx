@@ -30,7 +30,7 @@ function VaultTextAreaInput({fieldName, dataObject, setDataObject, disabled}) {
 
   return (
     <InputContainer>
-      <InputLabel field={field}/>
+      <InputLabel field={field} model={dataObject}/>
       <textarea
         style={{WebkitTextSecurity: 'disc'}}
         rows={3}

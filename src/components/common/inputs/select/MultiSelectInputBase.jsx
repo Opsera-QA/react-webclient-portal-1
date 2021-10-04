@@ -81,6 +81,7 @@ function MultiSelectInputBase(
   return (
     <InputContainer className={className ? className : undefined}>
       <InputLabel
+        model={dataObject}
         showLabel={showLabel}
         field={field}
         clearDataFunction={getClearDataFunction()}

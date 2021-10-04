@@ -1,14 +1,16 @@
 import React from "react";
 import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
 import PropTypes from "prop-types";
+import { TASK_TYPES } from "../../../../tasks/task.types";
+import { getTaskTypeLabel } from "../../../../tasks/task.types";
 
 function AwsEcsClusterCreationTaskHelpDocumentation({closeHelpPanel}) {
   return (
-    <HelpDocumentationContainer helpTopic={"AWS ECS Cluster Creation"} closeHelpPanel={closeHelpPanel}>
-      <div className={"mb-1"}>When creating an AWS ECS Cluster, it is important to know the correct values in order to create a cluster. It is a nuanced operation and the chances for failures are high unless the user is experienced with AWS infrastructure creation. There are 2 steps to cluster creation. Template creation is a prerequisite to creating the cluster. Once the template has been created, you must select <b>Run Task</b> for the first cluster to be created.</div>
+    <HelpDocumentationContainer helpTopic={getTaskTypeLabel(TASK_TYPES.AWS_CREATE_ECS_CLUSTER)} closeHelpPanel={closeHelpPanel}>
+      <div className={"mb-1"}>When creating an ECS Cluster, it is important to know the correct values to enter. It is a nuanced operation and prior knowledge is essential. There are 2 steps to cluster creation including template creation. Once the template is created, you must select <b>Run Task</b>. If the Activity Logs indicate that cluster creation is successful, the cluster has been created in AWS and the task can be linked to a pipeline step.</div>
       <div className={"mt-2"}><h5>Task Setup Instructions:</h5></div>
       <ol>
-        <li>Select <b>Create AWS ECS Cluster</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:
+        <li>Select <b>{getTaskTypeLabel(TASK_TYPES.AWS_CREATE_ECS_CLUSTER)}</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:
           <ul>
             <li><b>AWS Tool</b> - Select an established AWS tool from the Tool Registry.</li>
             <li><b>Cluster Template</b> - Select Networking/Fargate or EC2.</li>

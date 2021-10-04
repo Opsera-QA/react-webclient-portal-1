@@ -34,7 +34,8 @@ function AnsibleToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={ansibleConfigurationDto}
+      model={ansibleConfigurationDto}
+      setModel={setAnsibleConfigurationDto}
       persistRecord={saveAnsibleToolConfiguration}
       toolData={toolData}
       // toolConnectionCheckName={"Ansible"}

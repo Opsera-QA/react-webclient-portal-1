@@ -5,7 +5,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {
   nonProductionTaskTypes,
   productionTaskTypes
-} from "components/common/list_of_values_input/tasks/TaskTypeSelectInput";
+} from "components/common/list_of_values_input/tasks/TaskTypeSelectInputBase";
 
 function TaskTypeFilter({ filterModel, setFilterModel, setDataFunction, className, fieldName, inline}) {
   const { featureFlagHideItemInProd } = useContext(AuthContext);
@@ -21,6 +21,7 @@ function TaskTypeFilter({ filterModel, setFilterModel, setDataFunction, classNam
       inline={inline}
       setDataObject={setFilterModel}
       setDataFunction={setDataFunction}
+      groupBy={"category"}
       placeholderText={"Select Task Type"}
       dataObject={filterModel}
       selectOptions={featureFlagHideItemInProd() !== false ? productionTaskTypes : nonProductionTaskTypes}

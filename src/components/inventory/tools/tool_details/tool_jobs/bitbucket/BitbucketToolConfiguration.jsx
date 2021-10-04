@@ -71,7 +71,8 @@ function BitbucketToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={bitbucketConfigurationDto}
+      model={bitbucketConfigurationDto}
+      setModel={setBitbucketConfigurationDto}
       persistRecord={saveBitbucketToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Bitbucket"}

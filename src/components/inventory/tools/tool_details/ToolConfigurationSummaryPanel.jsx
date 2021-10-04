@@ -131,7 +131,7 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
       case "gitlab":
         return (
           <GitlabToolConfigurationSummaryPanel
-            githubToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, gitlabConnectionMetadata)}
+            gitlabToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, gitlabConnectionMetadata)}
           />
         );
       case "bitbucket":

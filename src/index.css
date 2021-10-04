@@ -4,6 +4,11 @@
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+.h4, .h5 {
+    letter-spacing: .6px;
+}
+
+
 .failure-text {
     color: red;
     font-weight: bold;
@@ -13,7 +18,7 @@
     color: #E57373;
 }
 
-.danger-red {
+.danger-red, .delete-icon {
     color: #dc3545;
 }
 
@@ -113,6 +118,7 @@ a:hover, .active, .link-text:hover {
 
 .title-text-header-1 {
     font-size: 1.25rem;
+    letter-spacing: .8px;
 }
 
 .title-text-header-2 {
@@ -656,6 +662,11 @@ a:hover, .active, .link-text:hover {
     padding: 1em;
     border-radius: 5px;
     z-index: 1200;
+}
+
+.tool-registry-dialog-block {
+    padding: 1em;
+    border-radius: 5px;
 }
 
 .pipeline-summary-dialog-block {

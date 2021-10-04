@@ -158,6 +158,7 @@ function UserManagement() {
       isLoading={!accessRoleData}
       roleRequirement={ROLE_LEVELS.POWER_USERS}
       accessRoleData={accessRoleData}
+      pageDescription={"Manage existing users as well as register new users for this account.  The new user form allows owners to create new user accounts with targeted group access. Users will receive an invitation email upon completion of the form."}
     >
       <div className="px-3">
         <TabPanelContainer currentView={getBody()} tabContainer={getTabContainer()} />

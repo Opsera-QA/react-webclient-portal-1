@@ -1,24 +1,23 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import JSONInput from "react-json-editor-ajrm";
 import locale from "react-json-editor-ajrm/locale/en";
-import InputContainer from "components/common/inputs/InputContainer";
-import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import ReactJson from "react-json-view";
+import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
+import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
+import JSONInput from "react-json-editor-ajrm";
 
-// TODO: Finish configuring when wired up
-function JsonInput({fieldName, dataObject, setDataObject, disabled}) {
+function JsonInput({fieldName, model, setModel, disabled, className, isLoading, customTitle,}) {
   const [errorMessage, setErrorMessage] = useState("");
-  const [field] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(model.getFieldById(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
-    let newDataObject = dataObject;
+    let newDataObject = model;
     try {
       let json = JSON.parse(value.json);
       newDataObject.setData(fieldName, json);
       setErrorMessage(newDataObject.getFieldError(fieldName));
-      setDataObject({...newDataObject});
+      setModel({...newDataObject});
     }
     catch (error)
     {
@@ -27,44 +26,63 @@ function JsonInput({fieldName, dataObject, setDataObject, disabled}) {
     }
   };
 
-  if (disabled) {
-    return (
-      <InputContainer className="custom-text-input my-2">
-        <InputLabel field={field}/>
+  // TODO: Verify we can't just use ReactJson when not disabled
+  const getBody = () => {
+    if (disabled === true) {
+      return (
         <ReactJson
           theme="light_mitsuketa_tribute"
           locale={locale}
           disabled={disabled}
           height="300px"
           width="100%"
-          src={dataObject.getData(fieldName)}
+          src={model.getData(fieldName)}
+          onChange={e => validateAndSetData(fieldName, e)}
         />
-        <InfoText field={field} errorMessage={errorMessage}/>
-      </InputContainer>
+      );
+    }
+
+    return (
+      <JSONInput
+        placeholder={model?.getData(fieldName)}
+        onChange={e => validateAndSetData(fieldName, e)}
+        theme="light_mitsuketa_tribute"
+        locale={locale}
+        height="300px"
+        width="100%"
+      />
     );
-  }
+  };
 
   return (
-    <InputContainer className="custom-text-input my-2">
-      <InputLabel field={field}/>
-        <JSONInput
-          placeholder={dataObject.getData(fieldName)}
-          onChange={e => validateAndSetData(fieldName, e)}
-          theme="light_mitsuketa_tribute"
-          locale={locale}
-          height="300px"
-          width="100%"
-        />
-      <InfoText field={field} errorMessage={errorMessage}/>
-    </InputContainer>
+    <div className={className}>
+      <div className="object-properties-input">
+        <div className="content-container">
+          <InputTitleBar
+            field={field}
+            icon={faBracketsCurly}
+            isLoading={isLoading}
+            customTitle={customTitle}
+          />
+          <div>
+            {getBody()}
+          </div>
+          <div className={"object-properties-footer"}/>
+        </div>
+        <InfoText field={field} errorMessage={errorMessage}/>
+      </div>
+    </div>
   );
 }
 
 JsonInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
-  disabled: PropTypes.bool
+  model: PropTypes.object,
+  setModel: PropTypes.func,
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
+  isLoading: PropTypes.bool,
+  customTitle: PropTypes.string,
 };
 
 export default JsonInput;

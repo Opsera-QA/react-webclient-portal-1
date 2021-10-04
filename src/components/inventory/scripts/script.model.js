@@ -2,7 +2,7 @@ import ModelBase, {DataState} from "core/data_model/model.base";
 import scriptsActions from "components/inventory/scripts/scripts-actions";
 
 export class ScriptModel extends ModelBase {
-  constructor(data, metaData, newModel, getAccessToken, cancelTokenSource, loadData, canUpdate = false, canDelete = false, setStateFunction) {
+  constructor(data, metaData, newModel, getAccessToken, cancelTokenSource, loadData, canUpdate = false, canDelete = false, canEditAccessRoles, setStateFunction) {
     super(data, metaData, newModel);
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
@@ -10,6 +10,7 @@ export class ScriptModel extends ModelBase {
     this.scriptPulled = false;
     this.updateAllowed = canUpdate;
     this.deleteAllowed = canDelete;
+    this.editAccssRolesAllowed = canEditAccessRoles;
     this.setStateFunction = setStateFunction;
   }
 

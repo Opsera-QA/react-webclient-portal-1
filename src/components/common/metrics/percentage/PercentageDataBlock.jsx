@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DataBlockBase from "components/common/metrics/data_blocks/DataBlockBase";
-import MetricPercentage from "components/common/metrics/percentage/MetricPercentage";
+import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/TwoLineDataBlockBase";
+import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
 
 function PercentageDataBlock({ percentage, subtitle, className}) {
   return (
-    <DataBlockBase
+    <TwoLineDataBlockBase
       className={className}
-      title={<MetricPercentage percentage={percentage} />}
+      title={<MetricPercentageText percentage={percentage} />}
       subtitle={subtitle}
     />
   );

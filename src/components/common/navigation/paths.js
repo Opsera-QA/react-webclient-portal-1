@@ -28,7 +28,7 @@ paths.siteNotificationManagement = paths.admin + "/site-notifications/table";
 paths.siteNotificationManager = paths.admin + "/site-notifications";
 paths.siteNotificationDetailView = paths.siteNotificationManagement + "/details/";
 
-paths.toolManagement = paths.admin + "/tools";
+paths.toolManagement = paths.admin + "/tools/categories";
 paths.toolCategoryDetailView = paths.toolManagement + "/types/details/";
 paths.toolIdentifierDetailView = paths.toolManagement + "/identifiers/details/";
 
@@ -60,6 +60,7 @@ paths.insights = "insights/dashboards";
 paths.dashboardDetails = paths.insights;
 paths.dashboardDetails = "analytics";
 paths.marketplace = paths.insights + "/marketplace";
+paths.release360 = paths.insights + "/release360";
 paths.insightsSummary = "insights/summary";
 
 // Settings Paths
@@ -110,8 +111,9 @@ paths.toolDetailView = paths.toolRegistry + "/details";
 paths.notificationManagement = "notifications";
 paths.notificationDetailView = paths.notificationDetailView + "/details";
 
-//GIT Tasks
-paths.gitTasks = "task";
-paths.gitTasksDetailView = paths.gitTasksDetailView + "/details";
+//Tasks
+paths.taskManagement = "task";
+paths.taskActivityLogs = "task/activity";
+paths.taskManagementDetailView = paths.tasks + "/details";
 
 export default paths;

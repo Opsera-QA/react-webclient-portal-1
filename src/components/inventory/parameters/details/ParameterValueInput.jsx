@@ -96,7 +96,7 @@ function ParameterValueTextInput({fieldName, model, parameterId, setModel, disab
 
   return (
     <InputContainer>
-      <InputLabel field={field}/>
+      <InputLabel field={field} model={model}/>
       <div className={"d-flex"}>
         <input
           type={valueShown === false && !model?.isChanged(fieldName) ? "password" : undefined}

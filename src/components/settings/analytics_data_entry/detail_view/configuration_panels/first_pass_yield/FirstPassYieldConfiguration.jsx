@@ -10,7 +10,7 @@ import PipelineSelectInput from "components/common/list_of_values_input/workflow
 import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeInputBase";
 import ManualKpiMultiSelectInputBase
   from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
-import PositiveIntegerNumberInput from "../../../../../common/inputs/number/PositiveIntegerNumberInput";
+import PositiveIntegerNumberPickerInput from "components/common/inputs/number/picker/PositiveIntegerNumberPickerInput";
 
 function FirstPassYieldConfiguration({ analyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
   useEffect(() => {loadData();}, []);
@@ -45,13 +45,13 @@ function FirstPassYieldConfiguration({ analyticsDataEntryModel, kpiConfiguration
         <ManualKpiMultiSelectInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"release"} type={"release"} />
       </Col>
       <Col lg={6}>
-        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_test_cases"} />
+        <PositiveIntegerNumberPickerInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_test_cases"} />
       </Col>
       <Col lg={6}>
-        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_passed"} />
+        <PositiveIntegerNumberPickerInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_passed"} />
       </Col>
       <Col lg={6}>
-        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_failed"} />
+        <PositiveIntegerNumberPickerInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_failed"} />
       </Col>
     </Row>
   );

@@ -46,7 +46,7 @@ function AdminTools() {
       pageDescription={"Listed below are administration tools for the platform."}
     >
       <Row className="ml-3">
-        <BreadcrumbPageLink breadcrumbDestination={"systemStatus"} />
+        {/* <BreadcrumbPageLink breadcrumbDestination={"systemStatus"} /> */}
         {/*<BreadcrumbPageLink breadcrumbDestination={"systemHealthCheck"} />*/}
         <BreadcrumbPageLink breadcrumbDestination={"deprecatedReports"} />
         <BreadcrumbPageLink breadcrumbDestination={"reportsRegistration"} />
@@ -56,7 +56,7 @@ function AdminTools() {
         <BreadcrumbPageLink breadcrumbDestination={"toolManagement"} />
         <BreadcrumbPageLink breadcrumbDestination={"deleteTools"} />
         <BreadcrumbPageLink breadcrumbDestination={"kpiManagement"} />
-        {!featureFlagHideItemInProd() && <BreadcrumbPageLink breadcrumbDestination={"pipelineStorageManagement"} />}
+        <BreadcrumbPageLink breadcrumbDestination={"pipelineStorageManagement"} />
         <BreadcrumbPageLink breadcrumbDestination={"templateManagement"} />
         <BreadcrumbPageLink breadcrumbDestination={"siteNotificationManager"} />
         <BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationManagement"} />

@@ -1,26 +1,27 @@
-import React from "react";
+import React, {useContext} from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {
-  faAnalytics,
   faChartArea,
-  faChartNetwork,
+  faChartNetwork, faCircle,
   faRadar,
   faUserChart
 } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import {AuthContext} from "contexts/AuthContext";
 
 function InsightsSubNavigationBar({currentTab}) {
+  const { featureFlagHideItemInProd } = useContext(AuthContext);
   const history = useHistory();
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
 
     switch (tabSelection) {
-      case "analytics":
+      /*case "analytics":
         history.push(`/insights/analytics`);
-        return;
+        return;*/
       case "marketplace":
         history.push(`/insights/marketplace`);
         return;
@@ -29,6 +30,9 @@ function InsightsSubNavigationBar({currentTab}) {
         return;
       case "synopsis":
         history.push(`/insights/synopsis`);
+        return;
+      case "release360":
+        history.push(`/insights/release360`);
         return;
     }
   };
@@ -50,12 +54,47 @@ function InsightsSubNavigationBar({currentTab}) {
     }
   };
 
+  // TODO: Move this into the return block below once it's ready to be released for all customers.
+  const getRelease360Tab = () => {
+    if (featureFlagHideItemInProd() === false) {
+      return (
+        <NavigationTab
+          icon={faCircle}
+          tabName={"release360"}
+          handleTabClick={handleTabClick}
+          activeTab={currentTab}
+          tabText={"Release 360"}
+        />
+      );
+    }
+  };
+
+
   return (
     <NavigationTabContainer>
-      <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleTabClick} activeTab={currentTab} tabText={"Dashboards"} />
-      <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleTabClick} activeTab={currentTab} tabText={"Marketplace"} />
-      <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleTabClick} activeTab={currentTab} tabText={"Analytics"} />
-      <NavigationTab icon={faRadar} tabName={"synopsis"} handleTabClick={handleTabClick} activeTab={currentTab} tabText={"Synopsis"} />
+      <NavigationTab
+        icon={faChartNetwork}
+        tabName={"dashboards"}
+        handleTabClick={handleTabClick}
+        activeTab={currentTab}
+        tabText={"Dashboards"}
+      />
+      <NavigationTab
+        icon={faChartArea}
+        tabName={"marketplace"}
+        handleTabClick={handleTabClick}
+        activeTab={currentTab}
+        tabText={"Marketplace"}
+      />
+      {/*<NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleTabClick} activeTab={currentTab} tabText={"Analytics"} />*/}
+      <NavigationTab
+        icon={faRadar}
+        tabName={"synopsis"}
+        handleTabClick={handleTabClick}
+        activeTab={currentTab}
+        tabText={"Synopsis"}
+      />
+      {getRelease360Tab()}
       {getActiveViewerTab()}
     </NavigationTabContainer>
   );

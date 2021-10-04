@@ -5,7 +5,7 @@ import {
   getStaticInfoColumn, getRoleAccessLevelColumn
 } from "components/common/table/table-column-helpers-v2";
 import {useHistory} from "react-router-dom";
-import gitTasksMetadata from "components/git/git-tasks-metadata";
+import gitTasksMetadata from "components/tasks/git-tasks-metadata";
 import VanityTable from "components/common/table/VanityTable";
 
 function ConsolidatedUserReportTaskAccessTable({ data, isLoading, paginationModel, setPaginationModel, loadData }) {

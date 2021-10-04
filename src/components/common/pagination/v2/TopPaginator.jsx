@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PageSort from "components/common/pagination/page_options/PageSort";
-import {getResultSummary} from "components/common/pagination/pagination-helpers";
 import PageSizeSelectInput from "components/common/pagination/page_options/PageSizeSelectInput";
+import PageSortSelectInput from "components/common/pagination/page_options/PageSortSelectInput";
+import ResultsSummary from "components/common/pagination/v2/ResultsSummary";
 
 function TopPaginator({paginationModel, loadData, isLoading}) {
   if (paginationModel == null) {
@@ -12,14 +12,12 @@ function TopPaginator({paginationModel, loadData, isLoading}) {
   return (
     <div className={"top-pagination py-2 w-100"}>
       <div className="px-2 d-flex">
-        <div className="small my-auto">{getResultSummary(paginationModel, isLoading)}</div>
+        <div className="my-auto small">
+          <ResultsSummary isLoading={isLoading} paginationModel={paginationModel} />
+        </div>
         <div className="d-flex ml-auto">
-          <div>
-            <PageSort paginationDto={paginationModel} loadData={loadData} isLoading={isLoading} />
-          </div>
-          <div className="ml-2">
-            <PageSizeSelectInput paginationModel={paginationModel} loadData={loadData} isLoading={isLoading} />
-          </div>
+          <PageSortSelectInput paginationModel={paginationModel} loadData={loadData} isLoading={isLoading} className={"ml-2"}/>
+          <PageSizeSelectInput paginationModel={paginationModel} loadData={loadData} isLoading={isLoading} className={'ml-2'}/>
         </div>
       </div>
     </div>

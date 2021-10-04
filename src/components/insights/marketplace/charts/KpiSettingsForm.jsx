@@ -62,9 +62,16 @@ import ServiceNowAssignmentGroupSelectInput from "components/common/list_of_valu
 import ServiceNowServiceOfferingsSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowServiceOfferingsSelectInput";
 import ServiceNowConfigurationItemsSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowConfigurationItemsSelectInput";
 import ServiceNowBusinessServicesSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowBusinessServicesSelectInput";
+import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
+import GenericChartSettingsHelpDocumentation
+  from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
+import StandaloneDeleteButtonWithConfirmationModal
+  from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
+import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 
-function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart, setKpis }) {
+function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData, index, closePanel, loadChart, setKpis, settingsHelpComponent }) {
   const { getAccessToken } = useContext(AuthContext);
+  const [helpIsShown, setHelpIsShown] = useState(false);
   const [kpiSettings, setKpiSettings] = useState(new Model(kpiConfiguration, kpiConfigurationMetadata, false));
   const [kpiConfigSettings, setKpiConfigSettings] = useState(
     modelHelpers.getDashboardSettingsModel(kpiConfiguration, kpiSettingsMetadata)
@@ -829,44 +836,82 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     setKpiSettings({ ...newKpiSettings });
     dashboardData.getData("configuration")[index] = kpiSettings.data;
     setKpiConfiguration(kpiSettings.data);
-    loadChart(dashboardData);
-    setView("chart");
-    return await dashboardsActions.update(dashboardData, getAccessToken);
+    await dashboardsActions.update(dashboardData, getAccessToken);
+
+    if (closePanel) {
+      closePanel();
+    }
   };
 
   const cancelKpiSettings = async () => {
-    setKpiSettings(dashboardData.getData("configuration")[index]);
-    setView("chart");
+    closePanel();
   };
 
   const deleteKpi = async () => {
-    dashboardData.getData("configuration").splice(index, 1);
-    setKpis(dashboardData.getData("configuration"));
-    setView("chart");
-    return await dashboardsActions.update(dashboardData, getAccessToken);
+    dashboardData?.getData("configuration").splice(index, 1);
+    setKpis(dashboardData?.getData("configuration"));
+    await dashboardsActions.update(dashboardData, getAccessToken);
+
+    if (closePanel) {
+      closePanel();
+    }
   };
 
+  const getHelpComponent = () => {
+    if (settingsHelpComponent) {
+      settingsHelpComponent(() => setHelpIsShown(false));
+    }
+
+    return (
+      <GenericChartSettingsHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />
+    );
+  };
+
+  const getDeleteButton = () => {
+    return (
+      <DeleteButtonWithInlineConfirmation
+        dataObject={kpiSettings}
+        deleteRecord={deleteKpi}
+      />
+    );
+  };
+
+  const getBody = () => {
+    if (kpiSettings?.getData) {
+      return (
+        <div className={"px-2 mb-5"}>
+          <TextInputBase className={"mb-2"} fieldName={"kpi_name"} dataObject={kpiSettings} setDataObject={setKpiSettings}/>
+          {kpiSettings?.getData("filters").map((filter, index) => (
+            <div key={index}>{getKpiFilters(filter)}</div>
+          ))}
+        </div>
+      );
+    }
+  };
+
+  if (kpiSettings == null) {
+    return (<></>);
+  }
+
   return (
-    <>
+    <OverlayPanelBodyContainer
+      helpComponent={getHelpComponent()}
+      helpIsShown={helpIsShown}
+      setHelpIsShown={setHelpIsShown}
+      hideCloseButton={true}
+    >
       <EditorPanelContainer
         showRequiredFieldsMessage={false}
         handleClose={cancelKpiSettings}
         updateRecord={saveKpiSettings}
         recordDto={kpiSettings}
         lenient={true}
+        className={"px-3 pb-3"}
+        extraButtons={getDeleteButton()}
       >
-        <TextInputBase fieldName={"kpi_name"} dataObject={kpiSettings} setDataObject={setKpiSettings} />
-        {kpiSettings.getData("filters").map((filter, index) => (
-          <div key={index}>{getKpiFilters(filter)}</div>
-        ))}
+        {getBody()}
       </EditorPanelContainer>
-      <ActionBarDeleteButton2
-        className={"p-2 m-1"}
-        relocationPath={`/insights/dashboards/${dashboardData.getData("_id")}`}
-        dataObject={kpiSettings}
-        handleDelete={deleteKpi}
-      />
-    </>
+    </OverlayPanelBodyContainer>
   );
 }
 
@@ -874,10 +919,11 @@ KpiSettingsForm.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
-  setView: PropTypes.func,
+  closePanel: PropTypes.func,
   setKpiConfiguration: PropTypes.func,
   setKpis: PropTypes.func,
   loadChart: PropTypes.func,
+  settingsHelpComponent: PropTypes.object,
 };
 
 export default KpiSettingsForm;

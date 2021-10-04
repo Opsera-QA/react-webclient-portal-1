@@ -34,18 +34,13 @@ function SfdcPipelineWizardSubmitFileTypeButton({pipelineWizardModel, setPipelin
   const submitFiles = async () => {
     try {
       setIsSaving(true);
-      if (pipelineWizardModel.getData("isProfiles") === true) {
-        toastContext.showInlineErrorMessage("Profile Migration with CSV/XML is not supported yet! Please check with Opsera Team.");
-      }
-      else {
-        if(isXml) {
-          await sfdcPipelineActions.setXmlFileComponentsV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
-          setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER);
-        }
-        else {
-          await sfdcPipelineActions.setCsvFileComponentsV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
-          setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER);
-        }
+
+      if (isXml) {
+        await sfdcPipelineActions.setXmlFileContentsV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+        setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER);
+      } else {
+        await sfdcPipelineActions.setUploadedCsvFileListV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+        setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER);
       }
     } catch (error) {
       console.error(error);

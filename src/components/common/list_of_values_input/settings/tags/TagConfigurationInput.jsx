@@ -211,12 +211,7 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
 
   const getIncompletePropertyMessage = () => {
     if (!lastPropertyComplete()) {
-      return (
-        <div className="w-100 pr-3 py-1 text-muted small text-right filter-bg-white">
-          <FontAwesomeIcon className="text-warning mr-1" icon={faExclamationTriangle} fixedWidth />
-          <span>{`Incomplete ${field?.label} Will Be Removed From Saved Tag`}</span>
-        </div>
-      );
+      return (`Incomplete ${field?.label} Will Be Removed From Saved Tag`);
     }
   };
 
@@ -233,12 +228,12 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
       errorMessage={errorMessage}
       addAllowed={lastPropertyComplete()}
       type={"property"}
+      incompleteRowMessage={getIncompletePropertyMessage()}
     >
       <div className={"filter-bg-white"}>
         {getHeaderBar()}
       </div>
       {getFieldBody()}
-      {getIncompletePropertyMessage()}
     </PropertyInputContainer>
   );
 }

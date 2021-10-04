@@ -6,13 +6,14 @@ import awsECSDeployStepFormMetadata from "./awsECSDeploy-stepForm-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DockerPushStepSelectInput from "./inputs/DockerPushStepSelectInput";
-import TaskSelectInput from "./inputs/TaskSelectInput";
 import DynamicNameToggleInput from "./inputs/DynamicNameToggleInput";
 import DeleteResourceToggle from "./inputs/DeleteResourceToggle";
+import AwsEcsTaskSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/aws_ecs_deploy/inputs/AwsEcsTaskSelectInput";
 
 function AwsEcsDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan, stepId, pipelineId }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [ecsServicesModel, setAWSECSDeployModel] = useState(undefined);
+  const [awsEcsDeployModel, setAwsEcsDeployModel] = useState(undefined);
   const [threshold, setThreshold] = useState(undefined);
 
   useEffect(() => {
@@ -26,13 +27,13 @@ function AwsEcsDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallb
       stepTool,
       awsECSDeployStepFormMetadata
     );
-    setAWSECSDeployModel(ecsServiceConfigurationData);
+    setAwsEcsDeployModel(ecsServiceConfigurationData);
     setIsLoading(false);
   };
 
   const callbackFunction = async () => {
     const item = {
-      configuration: ecsServicesModel.getPersistData(),
+      configuration: awsEcsDeployModel.getPersistData(),
       threshold: {
         type: threshold?.type,
         value: threshold?.value,
@@ -41,47 +42,46 @@ function AwsEcsDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallb
     parentCallback(item);
   };
 
-  if (isLoading || ecsServicesModel == null) {
+  if (isLoading || awsEcsDeployModel == null) {
     return <DetailPanelLoadingDialog />;
   }
 
   return (
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
-      recordDto={ecsServicesModel}
+      recordDto={awsEcsDeployModel}
       persistRecord={callbackFunction}
       isLoading={isLoading}
     >
       <DockerPushStepSelectInput
-        dataObject={ecsServicesModel}
-        setDataObject={setAWSECSDeployModel}
+        dataObject={awsEcsDeployModel}
+        setDataObject={setAwsEcsDeployModel}
         plan={plan}
         stepId={stepId}
       />
-      <TaskSelectInput dataObject={ecsServicesModel} setDataObject={setAWSECSDeployModel} />
+      <AwsEcsTaskSelectInput model={awsEcsDeployModel} setModel={setAwsEcsDeployModel} />
       <DynamicNameToggleInput
-        dataObject={ecsServicesModel}
-        setDataObject={setAWSECSDeployModel}
+        dataObject={awsEcsDeployModel}
+        setDataObject={setAwsEcsDeployModel}
         fieldName={"dynamicServiceName"}
         pipelineId={pipelineId}
       />
-      {ecsServicesModel && !ecsServicesModel?.getData("dynamicServiceName") && (
+      {awsEcsDeployModel && !awsEcsDeployModel?.getData("dynamicServiceName") && (
         <TextInputBase
-          dataObject={ecsServicesModel}
-          setDataObject={setAWSECSDeployModel}
+          dataObject={awsEcsDeployModel}
+          setDataObject={setAwsEcsDeployModel}
           fieldName={"ecsServiceName"}
         />
       )}
       <TextInputBase
-        dataObject={ecsServicesModel}
-        setDataObject={setAWSECSDeployModel}
+        dataObject={awsEcsDeployModel}
+        setDataObject={setAwsEcsDeployModel}
         fieldName={"ecsServiceContainerPort"}
       />
       <DeleteResourceToggle
-        dataObject={ecsServicesModel}
-        setDataObject={setAWSECSDeployModel}
-        fieldName={"ecsDeleteResource"}
-        disabled={true}
+        dataObject={awsEcsDeployModel}
+        setDataObject={setAwsEcsDeployModel}
+        fieldName={"ecsDeleteService"}
         pipelineId={pipelineId}
       />
     </PipelineStepEditorPanelContainer>

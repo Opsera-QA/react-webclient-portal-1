@@ -125,7 +125,8 @@ function SfdcToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={sfdcConfigurationDto}
+      model={sfdcConfigurationDto}
+      setModel={setSfdcConfigurationDto}
       persistRecord={saveSfdcToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Sfdc"}

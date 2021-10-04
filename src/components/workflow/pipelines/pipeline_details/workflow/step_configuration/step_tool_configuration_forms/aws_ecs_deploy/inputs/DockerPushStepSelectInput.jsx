@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
+// TODO: We need to make a base step select input and just pass in the step tool identifier
 function DockerStepSelectInput({
   fieldName,
   dataObject,

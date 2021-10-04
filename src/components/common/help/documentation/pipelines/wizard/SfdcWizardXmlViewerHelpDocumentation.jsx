@@ -5,7 +5,7 @@ import HelpDocumentationContainer from "components/common/help/HelpDocumentation
 function SfdcWizardXmlViewerHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer
-      helpTopic={"SalesForce Pipeline Run: XML Viewer"}
+      helpTopic={"Salesforce Pipeline Run: XML Viewer"}
       closeHelpPanel={closeHelpPanel}
       confluenceLink={`https://opsera.atlassian.net/l/c/XbSETC14`}
     >

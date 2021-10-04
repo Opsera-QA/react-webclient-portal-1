@@ -14,7 +14,7 @@ import notificationsActions from "components/notifications/notifications-actions
 import Model from "core/data_model/model";
 import notificationActivityLogFilterMetadata
   from "components/notifications/notification_details/activity_logs/notifications-activity-log-filter-metadata";
-import StatusFilter from "components/common/filters/status/StatusFilter";
+import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import NotificationTypeFilter from "components/common/filters/notifications/notification_type/NotificationTypeFilter";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -85,7 +85,7 @@ function NotificationActivityLogsTable({ notificationData, allLogs }) {
   const getDropdownFilters = () => {
     return (
       <>
-        <StatusFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} className={"mb-2"} />
+        <ActiveFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} className={"mb-2"} />
         <NotificationTypeFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} className={"mb-2"}/>
         <TagFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} />
       </>

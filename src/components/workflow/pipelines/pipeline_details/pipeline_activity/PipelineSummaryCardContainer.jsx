@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-solid-svg-icons";
 import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
 import CardContainerBase from "components/common/card_containers/CardContainerBase";
-import PipelineTypesField from "components/common/form_fields/pipelines/PipelineTypesField";
+import PipelineTypesField from "components/common/fields/pipelines/PipelineTypesField";
 
 function PipelineSummaryCardContainer({ children, isLoading, pipelineData }) {
   const getTitleBar = () => {

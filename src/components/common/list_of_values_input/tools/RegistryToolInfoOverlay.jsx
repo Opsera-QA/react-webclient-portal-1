@@ -8,31 +8,10 @@ import toolMetadata from "components/inventory/tools/tool-metadata";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 
-// TODO: Rework to use Summary panel for both the main tool view and also the configuration based off tool identifier like in the registry
-function RegistryToolInfoOverlay({tools, toolData, loadData, isLoading, selectedToolId, toolIdentifier}) {
+function RegistryToolInfoOverlay({tools, loadData, isLoading, selectedToolId}) {
   const getBody = () => {
-    if (toolData) {
-      return (
-        <>
-          <div className="text-muted mb-2">
-            Configuration details for this item are listed below. Tool and account specific settings are stored in the
-            <span> <Link to="/inventory/tools" target="_blank" rel="noopener noreferrer">Tool Registry</Link></span>.
-            <div>To add a new entry to a dropdown or update settings, make those changes there.</div>
-            <div><Link to={`/inventory/tools/details/${selectedToolId}`} target="_blank" rel="noopener noreferrer">Click here to view the selected Tool&apos;s details</Link></div>
-          </div>
-          <ToolInfoContainer toolData={toolData} toolIdentifier={toolIdentifier} />
-        </>
-      );
-    }
-
-    if (selectedToolId != null && selectedToolId !== "") {
-      return (
-        <div className="text-muted mb-2">
-          The selected Tool was not found when pulling available tools. Its Access Rules may have changed or it may have been deleted.
-          <span> <Link to="/inventory/tools" target="_blank" rel="noopener noreferrer">Tool Registry</Link></span>.
-          <div>To add a new entry to a dropdown or update settings, make those changes there.</div>
-        </div>
-      );
+    if (selectedToolId) {
+      return (<ToolInfoContainer toolId={selectedToolId} />);
     }
 
     return (
@@ -62,12 +41,10 @@ function RegistryToolInfoOverlay({tools, toolData, loadData, isLoading, selected
 }
 
 RegistryToolInfoOverlay.propTypes = {
-  toolData: PropTypes.object,
   tools: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   selectedToolId: PropTypes.string,
-  toolIdentifier: PropTypes.string,
 };
 
 export default RegistryToolInfoOverlay;

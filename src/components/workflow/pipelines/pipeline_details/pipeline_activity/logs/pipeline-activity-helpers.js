@@ -4,19 +4,6 @@ pipelineActivityHelpers.constructTree = (pipelineLogData) => {
   let newTree = [];
 
   if (Array.isArray(pipelineLogData) && pipelineLogData.length > 0) {
-    newTree.push({
-      id: "other_logs",
-      runNumber: "other_logs_query",
-      stepName: null,
-      value: "Secondary Logs",
-      items: [],
-      icon: {
-        "folder": "fal fa-layer-group opsera-primary",
-        "openFolder": "fal fa-layer-group opsera-yellow",
-        "file": "fal fa-layer-group opsera-primary"
-      }
-    });
-
     pipelineLogData.forEach((log) => {
       if (!log.run_count || log.step_name === "start pipeline") {
         return;
@@ -85,11 +72,63 @@ pipelineActivityHelpers.constructTree = (pipelineLogData) => {
   }
 
   if (newTree.length > 0) {
+    // Sort tree by run number
+    newTree.sort((treeItem1, treeItem2) => {
+      const runNumber1 = treeItem1?.runNumber;
+      const runNumber2 = treeItem2?.runNumber;
+
+      const parsedRunNumber1 = parseInt(runNumber1);
+      const parsedRunNumber2 = parseInt(runNumber2);
+
+      if (typeof parsedRunNumber1 !== "number" && typeof parsedRunNumber2 !== "number") {
+        return 0;
+      }
+
+      if (typeof parsedRunNumber1 !== "number") {
+        return 1;
+      }
+
+      if (typeof parsedRunNumber2 !== "number") {
+        return -1;
+      }
+
+      return parsedRunNumber2 - parsedRunNumber1;
+    });
+
     newTree[0].opened = true;
     newTree[0].selected = 1;
   }
 
   return newTree;
+};
+
+pipelineActivityHelpers.getSecondaryTree = () => {
+  return [
+    {
+      id: "latest",
+      runNumber: "latest",
+      stepName: null,
+      value: "Latest Logs",
+      items: [],
+      icon: {
+        "folder": "fal fa-layer-group opsera-primary",
+        "openFolder": "fal fa-layer-group opsera-yellow",
+        "file": "fal fa-layer-group opsera-primary"
+      }
+    },
+    {
+      id: "secondary",
+      runNumber: "secondary",
+      stepName: null,
+      value: "Secondary Logs",
+      items: [],
+      icon: {
+        "folder": "fal fa-layer-group opsera-primary",
+        "openFolder": "fal fa-layer-group opsera-yellow",
+        "file": "fal fa-layer-group opsera-primary"
+      }
+    },
+  ];
 };
 
 

@@ -17,7 +17,8 @@ sfdcPipelineActions.updateSelectedComponentTypesV2 = async (getAccessToken, canc
     fromDate: pipelineWizardModel.getData("fromDate"),
     toDate: pipelineWizardModel.getData("toDate"),
     includedComponentTypes: pipelineWizardModel.getData("includedComponentTypes"),
-    nameSpacePrefix: pipelineWizardModel.getData("namespacePrefix")
+    nameSpacePrefix: pipelineWizardModel.getData("namespacePrefix"),
+    excludeDependencies: pipelineWizardModel.getData("includeDependencies") === false,
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/update_selected_component_types`;
@@ -44,6 +45,20 @@ sfdcPipelineActions.getSfdcFilesV2 = async (getAccessToken, cancelTokenSource, p
 
 sfdcPipelineActions.getSelectedFileList = async (getAccessToken, cancelTokenSource, pipelineWizardModel, newFilterDto) => {
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/get_selected_file_list`;
+  const urlParams = {
+    params: {
+      page: newFilterDto ? newFilterDto.getData("currentPage") : 1,
+      size: newFilterDto ? newFilterDto.getData("pageSize") : 3000,
+      search: newFilterDto ? newFilterDto.getData("search") : "",
+      componentFilter: newFilterDto ? newFilterDto.getData("componentFilter") : "",
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+sfdcPipelineActions.getValidatedFileList = async (getAccessToken, cancelTokenSource, pipelineWizardModel, newFilterDto) => {
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/get_validated_file_list`;
   const urlParams = {
     params: {
       page: newFilterDto ? newFilterDto.getData("currentPage") : 1,
@@ -362,18 +377,20 @@ sfdcPipelineActions.getPackageXmlV2 = async (getAccessToken, cancelTokenSource, 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-sfdcPipelineActions.setXmlFileComponentsV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+sfdcPipelineActions.setXmlFileContentsV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const postBody = {
-    packageXml: pipelineWizardModel?.getData("xmlFileContent")
+    packageXml: pipelineWizardModel?.getData("xmlFileContent"),
+    excludeDependencies: pipelineWizardModel.getData("includeDependencies") === false,
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/set_xml_file_contents`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-sfdcPipelineActions.setCsvFileComponentsV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+sfdcPipelineActions.setUploadedCsvFileListV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const postBody = {
-    selectedFileList: pipelineWizardModel?.getData("csvFileContent")
+    selectedFileList: pipelineWizardModel?.getData("csvFileContent"),
+    excludeDependencies: pipelineWizardModel.getData("includeDependencies") === false,
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/set_csv_file_contents`;
@@ -387,6 +404,16 @@ sfdcPipelineActions.toggleSfdcCsvFilesValidation = async (getAccessToken, cancel
 
 sfdcPipelineActions.toggleSfdcXmlFilesValidation = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/toggle_sfdc_xml_upload_validation`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+sfdcPipelineActions.toggleProfileMigrationCsvFilesValidation = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/toggle_profile_migration_csv_upload_validation`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+sfdcPipelineActions.toggleProfileMigrationXmlFilesValidation = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/toggle_profile_migration_xml_upload_validation`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

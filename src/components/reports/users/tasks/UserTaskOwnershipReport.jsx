@@ -11,7 +11,7 @@ import axios from "axios";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 import OwnershipReportLdapUserSelectInput
   from "components/common/list_of_values_input/reports/user_reports/OwnershipReportLdapUserSelectInput";
-import gitTasksActions from "components/git/git-task-actions";
+import taskActions from "components/tasks/task.actions";
 import reportsFilterMetadata from "components/reports/reports-filter-metadata";
 
 function UserTaskOwnershipReport() {
@@ -61,7 +61,7 @@ function UserTaskOwnershipReport() {
         }
 
         setIsLoading(true);
-        const response = await gitTasksActions.getGitTasksListV2(getAccessToken, cancelSource, newFilterModel);
+        const response = await taskActions.getTasksListV2(getAccessToken, cancelSource, newFilterModel);
         const tasks = response?.data?.data;
 
         if (Array.isArray(tasks)) {

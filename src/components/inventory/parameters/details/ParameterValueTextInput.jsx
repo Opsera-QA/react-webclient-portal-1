@@ -58,7 +58,7 @@ function ParameterValueTextInput({fieldName, dataObject, parameterId, setDataObj
 
   return (
     <InputContainer>
-      <InputLabel field={field}/>
+      <InputLabel field={field} model={dataObject}/>
       <div className={isLoading ? "d-flex loading-input-wrapper" : ""}>
         <input
           disabled={disabled || isLoading}

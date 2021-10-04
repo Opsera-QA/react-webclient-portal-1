@@ -56,24 +56,34 @@
 }
 
 .makeup-tree-container-body {
-    max-height: calc(70vh - 42px);
+    min-height: calc(70vh - 49px);
+    height: calc(70vh - 49px);
+    max-height: calc(70vh - 49px);
     overflow-y: auto;
 }
 
 .makeup-tree-title {
+    min-height: 49px;
     font-weight: 500;
     line-height: 1.4;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     background-color: #F3F3F1;
     color: #3D3B36;
+    border: 1px solid #e4e4e4;
+    border-left: none;
+    border-right: none;
 }
 
 .makeup-tab-content-title {
+    min-height: 49px;
     font-weight: 500;
     line-height: 1.4;
     font-size: 1.2rem;
     background-color: #F3F3F1;
     color: #3D3B36;
+    border: 1px solid #e4e4e4;
+    border-left: none;
+    border-right: none;
 }
 
 .makeup-container-body {
@@ -82,13 +92,19 @@
     overflow-y: hidden;
 }
 
+.makeup-container-table {
+    min-height: calc(70vh - 82px - .5rem);
+}
+
 .makeup-container-tab-container {
     max-height: 100%;
     overflow-y: hidden;
 }
 
 .makeup-container-content-body {
-    max-height: calc(70vh - 82px - .5rem);
-    overflow-y: auto;
+    min-height: calc(70vh);
+    height: calc(70vh);
+    max-height: calc(70vh);
+    overflow-y: hidden;
 }
 /* End Makeup Container Styling */

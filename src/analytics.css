@@ -1,15 +1,72 @@
+/* Metric Text Styling */
+.metric-success-text {
+    color: #00897b;
+}
+
+.metric-danger-text {
+    color: #E57373;
+}
+
+.metric-warning-text {
+    color: #F1AD0F;
+}
+
+/* End Metric Text Styling */
+
 /* Data Block Styling */
-.data-block {
+.data-block-focal-text {
     font-size: 2.43rem;
     font-weight: 500;
     font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
     letter-spacing: 1px;
-    line-height: 1.2;
     display: inline-block;
-    vertical-align: middle;
-    min-width: 120px;
 }
+
+.data-block-title-text {
+    font-weight: bold;
+}
+
+@media (min-width: 1250px) {
+    .data-block-focal-text {
+        font-size: 2.43rem;
+    }
+
+    .data-block-title-text {
+        font-size: .9rem;
+    }
+}
+
+@media (max-width: 1250px) {
+    .data-block-focal-text {
+        font-size: 2.43rem;
+    }
+
+    .data-block-title-text {
+        font-size: .8rem;
+    }
+}
+
+@media (max-width: 1000px) {
+    .data-block-focal-text {
+        font-size: 2.25rem;
+    }
+
+    .data-block-title-text {
+        font-size: .75rem;
+    }
+}
+
+@media (max-width: 800px) {
+    .data-block-focal-text {
+        font-size: 2rem;
+    }
+
+    .data-block-title-text {
+        font-size: .7rem;
+    }
+}
+
 
 .data-block-container {
     background: white;
@@ -23,11 +80,16 @@
     transition: 0.3s;
 }
 
-.data-block-title {
+.data-block-container-title {
     background-color: #46415C;
     color: white;
 }
 
-
+.data-block-box {
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
 
 /* End Data Block Styling */

@@ -11,7 +11,7 @@ import PipelineStepEditorPanelContainer
 import mongodbRealmStepFormMetadata from "./mongodb-realm-stepForm-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import MongodbRealmToolInput from "./inputs/MongodbRealmToolInput";
+import RoleRestrictedMongoDbRealmToolSelectInput from "components/common/list_of_values_input/tools/mongodb_realm/RoleRestrictedMongoDbRealmToolSelectInput";
 import MongodbRealmSchemaMapInput from "./inputs/MongodbRealmSchemaMapInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import _ from "lodash";
@@ -123,8 +123,8 @@ function MongodbRealmStepConfiguration({
           isStrict={true}
           disableSaveButton={disableSaveButton()}
         >
-          <StepConfigJenkinsToolInput dataObject={mongodbRealmStepConfigurationDto} setDataObject={setMongodbRealmStepConfigurationDto} />
-          <MongodbRealmToolInput model={mongodbRealmStepConfigurationDto} setModel={setMongodbRealmStepConfigurationDto} fieldName="mongoToolId" />
+          <StepConfigJenkinsToolInput model={mongodbRealmStepConfigurationDto} setModel={setMongodbRealmStepConfigurationDto} />
+          <RoleRestrictedMongoDbRealmToolSelectInput model={mongodbRealmStepConfigurationDto} setModel={setMongodbRealmStepConfigurationDto} fieldName="mongoToolId" />
           <TextInputBase dataObject={mongodbRealmStepConfigurationDto} setDataObject={setMongodbRealmStepConfigurationDto} fieldName="applicationName" />
           <StepConfigJenkinsAccountInput dataObject={mongodbRealmStepConfigurationDto} setDataObject={setMongodbRealmStepConfigurationDto} />
           <StepConfigBitbucketWorkspaceInput dataObject={mongodbRealmStepConfigurationDto} setDataObject={setMongodbRealmStepConfigurationDto} />

@@ -54,7 +54,6 @@ import AzureDevopsStepConfiguration
 import JenkinsStepConfiguration
    from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
 import KafkaConnectStepConfiguration from "./step_tool_configuration_forms/kafka_connect/KafkaConnectStepConfiguration";
-//import JenkinsStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration-old";
 import AwsEcsDeployStepConfiguration
   from "./step_tool_configuration_forms/aws_ecs_deploy/AwsEcsDeployStepConfiguration";
 import AwsLambdaDeployStepConfiguration
@@ -65,6 +64,7 @@ import AksServiceDeployStepConfiguration
   from "./step_tool_configuration_forms/aks_service_deploy/AksServiceDeployStepConfiguration";
 import MongodbRealmStepConfiguration from "./step_tool_configuration_forms/mongodb_realm/MongodbRealmStepConfiguration";
 import AnsibleStepConfiguration from "./step_tool_configuration_forms/ansible/AnsibleStepConfiguration";
+import AzureFunctionsStepConfiguration from "./step_tool_configuration_forms/azure_functions/AzureFunctionsStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -104,9 +104,9 @@ function StepToolConfiguration({
     plan[stepArrayIndex].tool.configuration = tool.configuration;
     plan[stepArrayIndex].tool.threshold = tool.threshold;
     plan[stepArrayIndex].tool.job_type = tool.job_type;
-    console.log("configuration: " + JSON.stringify(tool.configuration));
-    console.log("plan: " + JSON.stringify(plan));
-    await parentCallback(plan);
+    // console.log("configuration: " + JSON.stringify(tool.configuration));
+    // console.log("plan: " + JSON.stringify(plan));
+    return await parentCallback(plan);
     // setStepTool({});
   };
 
@@ -415,20 +415,6 @@ function StepToolConfiguration({
     switch (toolName) {
       case "jenkins":
         return (
-          // <JenkinsStepConfiguration
-          //   pipelineId={pipeline._id}
-          //   plan={pipeline.workflow.plan}
-          //   stepId={stepId}
-          //   stepTool={stepTool}
-          //   parentCallback={callbackFunction}
-          //   callbackSaveToVault={saveToVault}
-          //   callbackGetFromVault={getFromVault}
-          //   callbackDeleteFromVault={deleteFromVaultUsingVaultKey}
-          //   createJob={createJob}
-          //   setToast={setToast}
-          //   setShowToast={setShowToast}
-          //   closeEditorPanel={closeEditorPanel}
-          // />
           <JenkinsStepConfiguration
             stepTool={stepTool}
             plan={pipeline?.workflow?.plan}
@@ -457,14 +443,10 @@ function StepToolConfiguration({
         return (
           <XUnitStepConfiguration
             pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
             stepId={stepId}
             stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
             createJob={createJob}
-            setShowToast={setShowToast}
-            setToast={setToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );
       case "sonar":
@@ -742,12 +724,8 @@ function StepToolConfiguration({
             stepId={stepId}
             stepTool={stepTool}
             parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
             closeEditorPanel={closeEditorPanel}
             createJob={createJob}
-            getToolsList={getToolsList}
-            setToast={setToast}
-            setShowToast={setShowToast}
           />
         );
       case "octopus":
@@ -1017,6 +995,7 @@ function StepToolConfiguration({
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );
       case "azure_aks_deploy":
@@ -1031,6 +1010,22 @@ function StepToolConfiguration({
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );            
+      case "azure-functions":
+        return (
+          <AzureFunctionsStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );            
       case "mongodb_realm":
@@ -1061,7 +1056,7 @@ function StepToolConfiguration({
         getConfigurationTool(editItem.tool_name.toLowerCase())
       ) : null}
 
-      <div className="text-muted small mt-2">Tools and Accounts can be saved in <Link to="/inventory/tools">Tool Registry</Link>.</div>
+      <div className="text-muted small my-2">Tools and Accounts can be saved in <Link to="/inventory/tools">Tool Registry</Link>.</div>
     </div>
   );
 }

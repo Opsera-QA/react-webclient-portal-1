@@ -4,7 +4,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import pipelineActions from "components/workflow/pipeline-actions";
-import DtoSelectInput from "../../../../input/dto_input/dto-select-input";
 
 function ProjectMappingWorkspaceSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, toolId}) {
   const toastContext = useContext(DialogToastContext);

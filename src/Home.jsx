@@ -5,7 +5,7 @@ import OverviewLanding from "./components/landing/Overview";
 function Home() {
   const { authState } = useOktaAuth();
 
-  if (authState.isAuthenticated) {
+  if (authState && authState.isAuthenticated) {
     return <OverviewLanding/>;
   }
 

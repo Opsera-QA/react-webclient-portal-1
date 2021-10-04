@@ -1,15 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ToolLinkButton from "components/common/buttons/inventory/ToolLinkButton";
 import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import DescriptionField from "components/common/fields/text/DescriptionField";
 import CreateAndUpdateDateFieldBase from "components/common/fields/date/CreateAndUpdateDateFieldBase";
-import {getLargeVendorIconFromToolIdentifier} from "components/common/helpers/icon-helpers";
+import {getLargeVendorIconComponentFromTaskType} from "components/common/helpers/icon-helpers";
+import TaskLinkButton from "components/common/buttons/task/TaskLinkButton";
+import TaskTypeField from "components/common/fields/tasks/TaskTypeField";
 
-function TaskCard({ taskData, isLoading, loadToolInNewWindow }) {
+function TaskCard({ taskModel, isLoading, loadTaskInNewWindow }) {
   const getTitleBar = () => {
-    let icon = getLargeVendorIconFromToolIdentifier(process.env.REACT_APP_OPSERA_S3_STORAGE_URL, taskData?.getData("tool_identifier"));
+    let icon = getLargeVendorIconComponentFromTaskType(taskModel?.getData("type"));
 
     if (typeof icon === "string") {
       icon = (
@@ -22,7 +23,7 @@ function TaskCard({ taskData, isLoading, loadToolInNewWindow }) {
     return (
       <IconTitleBar
         icon={icon}
-        title={`${taskData.getData("name")}`}
+        title={`${taskModel?.getData("name")}`}
         isLoading={isLoading}
       />
     );
@@ -32,7 +33,7 @@ function TaskCard({ taskData, isLoading, loadToolInNewWindow }) {
   const getDescription = () => {
     return (
       <div className="description-height small pl-1">
-      <DescriptionField dataObject={taskData} fieldName={"description"} />
+      <DescriptionField dataObject={taskModel} fieldName={"description"} />
     </div>
     );
   };
@@ -42,16 +43,22 @@ function TaskCard({ taskData, isLoading, loadToolInNewWindow }) {
   }
 
   return (
-    <IconCardContainerBase titleBar={getTitleBar()} contentBody={getDescription()} isLoading={isLoading} className={"tool-registry-card"}>
+    <IconCardContainerBase
+      titleBar={getTitleBar()}
+      contentBody={getDescription()}
+      isLoading={isLoading}
+      className={"vertical-selection-card"}
+    >
       <div className="date-and-button">
         <div className="small pl-1">
-          <CreateAndUpdateDateFieldBase className={"mt-3 mb-1"} model={taskData} />
+          <TaskTypeField model={taskModel} fieldName={"type"} showLabel={false} />
+          <CreateAndUpdateDateFieldBase className={"mt-3 mb-1"} model={taskModel} />
         </div>
         <div>
-          <ToolLinkButton
-            toolId={taskData?.getData("_id")}
+          <TaskLinkButton
+            taskId={taskModel?.getData("_id")}
             className={"w-100 mt-1"}
-            loadToolInNewWindow={loadToolInNewWindow}
+            openInNewWindow={loadTaskInNewWindow}
             variant={"primary"}
           />
         </div>
@@ -61,9 +68,9 @@ function TaskCard({ taskData, isLoading, loadToolInNewWindow }) {
 }
 
 TaskCard.propTypes = {
-  taskData: PropTypes.object,
+  taskModel: PropTypes.object,
   isLoading: PropTypes.bool,
-  loadToolInNewWindow: PropTypes.bool
+  loadTaskInNewWindow: PropTypes.bool
 };
 
 export default TaskCard;

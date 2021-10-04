@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import GitRepositoryInput from "components/common/list_of_values_input/tools/git/GitRepositoryInput";
+import RepositorySelectInput from "components/common/list_of_values_input/tools/git/RepositorySelectInput";
 
 function TerraformGitRepositorySelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
@@ -13,7 +13,7 @@ function TerraformGitRepositorySelectInput({model, setModel, disabled}) {
   };
 
   return (
-     <GitRepositoryInput
+     <RepositorySelectInput
        fieldName={"gitRepository"}
        service={model?.getData("type")}
        gitToolId={model?.getData("gitToolId")}

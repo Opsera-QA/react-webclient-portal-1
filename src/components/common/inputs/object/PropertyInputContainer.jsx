@@ -4,20 +4,29 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Row from "react-bootstrap/Row";
 import {Button} from "react-bootstrap";
-import {faPlus} from "@fortawesome/pro-light-svg-icons";
+import {faExclamationTriangle, faPlus} from "@fortawesome/pro-light-svg-icons";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 
-function PropertyInputContainer({ children, isLoading, titleIcon, titleText, field, errorMessage, addProperty, type, addAllowed, helpComponent }) {
+function PropertyInputContainer({ children, isLoading, titleIcon, titleText, field, errorMessage, addProperty, type, addAllowed, helpComponent, incompleteRowMessage }) {
   const getAddPropertyButton = () => {
     if (addProperty) {
       return (
-        <Row className={"mx-0"}>
-          <div className="ml-auto m-2 d-flex">
-            <Button variant="secondary" disabled={!addAllowed} onClick={() => addProperty()} size="sm">
-              <span className="text-white"><FontAwesomeIcon className="text-white mr-2" icon={faPlus} fixedWidth />Add {type}</span>
-            </Button>
-          </div>
-        </Row>
+        <div className="ml-auto m-2 d-flex">
+          <Button variant="secondary" disabled={!addAllowed} onClick={() => addProperty()} size="sm">
+            <span className="text-white"><FontAwesomeIcon className="text-white mr-2" icon={faPlus} fixedWidth />Add {type}</span>
+          </Button>
+        </div>
+      );
+    }
+  };
+
+  const getIncompleteRowBlock = () => {
+    if (incompleteRowMessage != null) {
+      return (
+        <div className="w-100 m-2 text-muted small">
+          <FontAwesomeIcon className="text-warning mr-1" icon={faExclamationTriangle} fixedWidth/>
+          <span className="mt-1">Incomplete Threshold Rows Will Be Removed Upon Saving</span>
+        </div>
       );
     }
   };
@@ -32,7 +41,14 @@ function PropertyInputContainer({ children, isLoading, titleIcon, titleText, fie
           customTitle={titleText}
           />
         {children}
-        <div>{getAddPropertyButton()}</div>
+        <Row className={"d-flex justify-content-between mx-0"}>
+          <div className={"mt-auto"}>
+            {getIncompleteRowBlock()}
+          </div>
+          <div>
+            {getAddPropertyButton()}
+          </div>
+        </Row>
       </div>
       <InfoText field={field} errorMessage={errorMessage}/>
     </div>
@@ -49,7 +65,8 @@ PropertyInputContainer.propTypes = {
   addProperty: PropTypes.func,
   addAllowed: PropTypes.bool,
   helpComponent: PropTypes.any,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  incompleteRowMessage: PropTypes.string,
 };
 
 export default PropertyInputContainer;

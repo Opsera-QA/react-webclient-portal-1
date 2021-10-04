@@ -7,6 +7,9 @@ import PipelineCatalog from "components/workflow/catalog/PipelineCatalog";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import PipelineCatalogCustomTab from "components/workflow/catalog/PipelineCatalogCustomTab";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import CatalogHelpDocumentation from "components/common/help/documentation/pipelines/catalog/CatalogHelpDocumentation";
+import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 
 function PipelineCatalogLibrary() {
   const { setAccessRoles, getAccessToken, getUserRecord } = useContext(AuthContext);
@@ -119,9 +122,16 @@ function PipelineCatalogLibrary() {
   };
 
   return (
-    <div className={"px-3"}>
-      <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
-    </div>
+    <ScreenContainer
+      breadcrumbDestination={"catalog"}
+      navigationTabContainer={<WorkflowSubNavigationBar currentTab={"catalog"} />}
+      pageDescription={"To begin building your pipeline, choose one of the pipeline templates provided in the Marketplace or Private Catalogs."}
+      helpComponent={<CatalogHelpDocumentation/>}
+    >
+      <div className={"px-3"}>
+        <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
+      </div>
+    </ScreenContainer>
   );
 }
 

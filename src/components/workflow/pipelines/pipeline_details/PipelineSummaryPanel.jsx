@@ -127,7 +127,7 @@ function PipelineSummaryPanel({
   };
 
 
-  const handleViewClick = (param) => {
+  const handleViewClick = () => {
     toastContext.showOverlayPanel(<PipelineDetailsOverviewOverlay pipeline={pipeline} />);
   };
 
@@ -448,10 +448,10 @@ function PipelineSummaryPanel({
         </div>
       </div>
 
-      <div className="mb-3 flat-top-content-block p-3">
+      <div className="pr-1">
         <Row>
           <Col sm={9}>
-            <div className="d-flex pb-3 title-text-header-2">
+            <div className="d-flex title-text-header-2">
               {editTitle ?
                 <>
                   <div className="flex-fill p-2">
@@ -627,9 +627,6 @@ function PipelineSummaryPanel({
                                 button="Confirm"
                                 handleCancelModal={() => setShowDeleteModal(false)}
                                 handleConfirmModal={() => deleteItem(modalDeleteId)} /> : null}
-
-      <ModalActivityLogsDialog header="Pipeline Details" size="lg" jsonData={modalMessage} show={showModal}
-                               setParentVisibility={setShowModal} />
 
       {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
                                 handleCancelModal={() => setInfoModal({ ...infoModal, show: false })} />}

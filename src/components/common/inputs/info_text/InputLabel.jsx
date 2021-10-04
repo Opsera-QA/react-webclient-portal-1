@@ -7,6 +7,7 @@ import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
 function InputLabel(
   {
     field,
+    model,
     clearDataFunction,
     requireClearDataConfirmation,
     linkTooltipText,
@@ -19,9 +20,15 @@ function InputLabel(
     linkIcon,
     ellipsisTooltipText,
   }) {
+  const getRequiredAsterisk = () => {
+    if (field?.isRequired || (model && field?.isRequiredFunction && field?.isRequiredFunction(model) === true)) {
+      return (<span className="danger-red">*</span>);
+    }
+  };
+
   const getFormattedLabel = () => {
     return (
-      <label><span>{field?.label}{field?.isRequired ? <span className="danger-red">*</span> : null}</span></label>
+      <label><span>{field?.label}{getRequiredAsterisk()}</span></label>
     );
   };
 
@@ -49,7 +56,7 @@ function InputLabel(
           <ClearDataIcon
             requireConfirmation={requireClearDataConfirmation}
             clearValueFunction={clearDataFunction}
-            clearDataDetails={clearDataDetails}
+            furtherDetails={clearDataDetails}
             className={"ml-2"}
           />
           {extraActionButtons}
@@ -61,6 +68,7 @@ function InputLabel(
 
 InputLabel.propTypes = {
   field: PropTypes.object,
+  model: PropTypes.object,
   className: PropTypes.string,
   showLabel: PropTypes.bool,
   infoOverlay: PropTypes.any,

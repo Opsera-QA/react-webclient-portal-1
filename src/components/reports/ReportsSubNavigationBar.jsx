@@ -13,7 +13,7 @@ import {AuthContext} from "contexts/AuthContext";
 
 function ReportsSubNavigationBar({currentTab}) {
   const history = useHistory();
-  const { isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
+  const { isSassUser } = useContext(AuthContext);
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
@@ -75,7 +75,7 @@ function ReportsSubNavigationBar({currentTab}) {
   };
 
   const getDynamicUserTab = () => {
-    if (!featureFlagHideItemInProd() && isSassUser() === false) {
+    if (isSassUser() === false) {
       return (
         <NavigationTab
           activeTab={currentTab}

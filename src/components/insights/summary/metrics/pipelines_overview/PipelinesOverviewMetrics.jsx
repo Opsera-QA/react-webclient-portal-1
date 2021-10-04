@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import HorizontalThreeDataBlockContainer
-  from "components/common/metrics/data_blocks/horizontal/HorizontalThreeDataBlockContainer";
+import ThreeStackedHorizontalMetricsContainer
+  from "components/common/metrics/data_blocks/horizontal/ThreeStackedHorizontalMetricsContainer";
 import ExecutedPipelineTotalMetric
   from "components/insights/summary/metrics/pipelines_overview/total_executed/ExecutedPipelineTotalMetric";
 import SuccessfulPipelineRunTotalMetric
@@ -9,7 +9,7 @@ import SuccessfulPipelineRunTotalMetric
 import TotalPipelinesFailed
   from "components/insights/summary/metrics/pipelines_overview/total_failed/FailedPipelineRunTotalMetric";
 import InsightsPipelinesOverviewHelpDocumentation
-  from "components/common/help/documentation/insights/Synopsis/InsightsPipelinesOverviewHelpDocumentation";
+  from "components/common/help/documentation/insights/synopsis/InsightsPipelinesOverviewHelpDocumentation";
 import MetricContainer from "components/common/panels/insights/charts/MetricContainer";
 import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
 
@@ -21,7 +21,7 @@ function PipelinesOverviewMetrics({ dashboardData, toggleDynamicPanel, selectedD
     }
 
     return (
-      <HorizontalThreeDataBlockContainer
+      <ThreeStackedHorizontalMetricsContainer
         topDataBlock={
           <ExecutedPipelineTotalMetric
             dashboardData={dashboardData}

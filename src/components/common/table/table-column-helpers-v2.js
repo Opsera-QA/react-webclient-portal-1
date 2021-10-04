@@ -5,23 +5,11 @@ import {
   getScriptLanguageDisplayText,
 } from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
-import PipelineTypesField from "components/common/form_fields/pipelines/PipelineTypesField";
-import Model from "core/data_model/model";
-import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
-import {
-  faBracketsCurly, faCheckCircle,
-  faDraftingCompass,
-  faExclamationCircle,
-  faMicrochip, faPause, faSpinner, faStop,
-  faTimesCircle
-} from "@fortawesome/pro-light-svg-icons";
-import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
-import PipelineStatus from "components/workflow/pipelines/PipelineStatus";
+import {getTaskTypeLabel} from "components/tasks/task.types";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-
+import {THRESHOLD_LEVELS} from "components/common/list_of_values_input/pipelines/thresholds/PipelineThresholdLevelSelectInputBase";
 export const FILTER_TYPES = {
   SEARCH_FILTER: "inputFilter",
   SELECT_FILTER: "selectFilter",
@@ -60,8 +48,32 @@ export const getTableTextColumn = (field, className, maxWidth = undefined, filte
   return {
     header: header,
     id: getColumnId(field),
-    class: className ? className : undefined,
+    class: className,
     maxWidth: maxWidth
+  };
+};
+
+export const getLimitedTableTextColumn = (field, maxLength, className) => {
+  return {
+    header: getColumnHeader(field),
+    id: getColumnId(field),
+    class: className ? className : undefined,
+    tooltipTemplate: function (value) {
+      return `<div class="custom-tooltip"><span>${value}</span></div>`;
+    },
+    template: function (text) {
+      if (text != null) {
+        const truncatedString = truncateString(text, maxLength);
+
+        if (truncatedString !== text) {
+          return (truncatedString);
+        }
+
+        return text;
+      }
+
+      return "";
+    },
   };
 };
 
@@ -157,7 +169,56 @@ export const getPipelineActivityStatusColumn = (field, className) => {
       return (
         `<span>
           <i class="fal ${getPipelineStatusIconCss(text)} cell-icon vertical-align-item"></i>
-          <span class="ml-1">${text}</span>
+          <span class="ml-1">${capitalizeFirstLetter(text)}</span>
+        </span>`
+      );
+    },
+    class: className ? className : undefined
+  };
+};
+
+export const getPipelineThresholdLevelColumn = (field, className) => {
+  let header = getColumnHeader(field);
+
+  return {
+    header: header,
+    id: getColumnId(field),
+    template: function (text) {
+      if (text != null && text !== "") {
+        const formattedText = THRESHOLD_LEVELS.find((thresholdLevel) => thresholdLevel?.value === text)?.text;
+
+        if (formattedText) {
+          return formattedText;
+        }
+      }
+
+      return "";
+    },
+    class: className ? className : undefined
+  };
+};
+
+export const getTaskStatusColumn = (field, className) => {
+  let header = getColumnHeader(field);
+
+  return {
+    header: header,
+    id: getColumnId(field),
+    width: 105,
+    template: function (text) {
+      if (text == null || text === "") {
+        return (
+          `<span>
+          <i class="fal fa-play-circle green cell-icon vertical-align-item"></i>
+          <span class="ml-1">Created</span>
+        </span>`
+        );
+      }
+
+      return (
+        `<span>
+          <i class="fal ${getPipelineStatusIconCss(text)} cell-icon vertical-align-item"></i>
+          <span class="ml-1">${capitalizeFirstLetter(text)}</span>
         </span>`
       );
     },
@@ -178,6 +239,7 @@ export const getPipelineStatusIconCss = (value) => {
       return ("fa-stop-circle red");
     case "running":
     case "processing event":
+    case "created":
       return ("fa-play-circle green");
     case "queued":
       return ("fa-pause-circle green");
@@ -251,6 +313,18 @@ export const getPipelineTypeColumn = (field, className) => {
     class: className
   };
 };
+
+export const getTaskTypeColumn = (field, className) => {
+  return {
+    header: getColumnHeader(field),
+    id: getColumnId(field),
+    template: function (text) {
+      return getTaskTypeLabel(text);
+    },
+    class: className ? className : "no-wrap-inline"
+  };
+};
+
 
 export const getPipelineRunCountColumn = (field, className) => {
   return {

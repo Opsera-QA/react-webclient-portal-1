@@ -82,7 +82,7 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
           {getValueInput()}
         </Col>
         <Col md={12} lg={parameterModel?.isNew() ? 8 : 7} className={"my-2"}>
-          <RoleAccessInput disabled={parameterModel?.canUpdate() !== true} dataObject={parameterModel} setDataObject={setParameterModel} fieldName={"roles"} />
+          <RoleAccessInput disabled={parameterModel?.canEditAccessRoles() !== true} dataObject={parameterModel} setDataObject={setParameterModel} fieldName={"roles"} />
         </Col>
       </Row>
     </VanityEditorPanelContainer>

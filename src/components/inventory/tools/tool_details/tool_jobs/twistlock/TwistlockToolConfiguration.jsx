@@ -33,7 +33,8 @@ function TwistlockToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={twistlockConfigurationDto}
+      model={twistlockConfigurationDto}
+      setModel={setTwistlockConfigurationDto}
       persistRecord={saveTwistlockToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"twistlock"}

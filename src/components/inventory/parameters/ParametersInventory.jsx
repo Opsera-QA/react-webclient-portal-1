@@ -8,11 +8,9 @@ import ParametersView from "components/inventory/parameters/ParametersView";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import ParameterModel from "components/inventory/parameters/parameter.model";
 import ParameterFilterModel from "components/inventory/parameters/parameter.filter.model";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
-import ToolRegistryHelpDocumentation from "../../common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
 import ParametersHelpDocumentation from "../../common/help/documentation/tool_registry/ParametersHelpDocumentation";
+import {isActionAllowed} from "components/common/helpers/role-helpers";
 
 function ParametersInventory() {
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
@@ -77,9 +75,10 @@ function ParametersInventory() {
         let modelWrappedArray = [];
 
         parameters.forEach((parameter) => {
-          const deleteAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "delete_parameter", parameter.owner, parameter.roles, roleDefinitions);
-          const updateAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "update_parameter", parameter.owner, parameter.roles, roleDefinitions);
-          const newModel = {...new ParameterModel({...parameter}, newParameterMetadata, false, getAccessToken, cancelTokenSource, loadData, updateAllowed, deleteAllowed)};
+          const deleteAllowed = isActionAllowed(userRoleAccess, "delete_parameter", parameter.owner, parameter.roles, roleDefinitions);
+          const updateAllowed = isActionAllowed(userRoleAccess, "update_parameter", parameter.owner, parameter.roles, roleDefinitions);
+          const canEditAccessRoles = isActionAllowed(userRoleAccess, "edit_access_roles", parameter.owner, parameter.roles, roleDefinitions);
+          const newModel = {...new ParameterModel({...parameter}, newParameterMetadata, false, getAccessToken, cancelTokenSource, loadData, updateAllowed, deleteAllowed, canEditAccessRoles)};
 
           modelWrappedArray.push(newModel);
         });
@@ -94,6 +93,12 @@ function ParametersInventory() {
     }
   };
 
+  const getHelpComponent = () => {
+    if (!isLoading) {
+      return (<ParametersHelpDocumentation parameterRoleDefinitions={parameterRoleDefinitions} />);
+    }
+  };
+
   return (
     <ScreenContainer
       navigationTabContainer={<InventorySubNavigationBar currentTab={"parameters"} />}
@@ -101,9 +106,7 @@ function ParametersInventory() {
       pageDescription={`
         Parameters allow the user to store sensitive information in the vault in order to reference it later in the pipeline step.
       `}
-      helpComponent={
-        <ParametersHelpDocumentation />
-      }
+      helpComponent={getHelpComponent()}
     >
       <ParametersView
         isLoading={isLoading}

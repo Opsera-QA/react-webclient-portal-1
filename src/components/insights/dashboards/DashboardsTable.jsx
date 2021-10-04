@@ -1,8 +1,9 @@
-import React, {useContext, useMemo, useState} from "react";
+import React, {useContext, useMemo, useState, useRef} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {useHistory} from "react-router-dom";
 import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import {
   getTableDateColumn,
@@ -10,7 +11,7 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
-import StatusFilter from "components/common/filters/status/StatusFilter";
+import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import DashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/DashboardTypeFilter";
 import FavoritesFilter from "components/common/filters/dashboards/favorites/FavoritesFilter";
 import NewDashboardModal from "components/insights/dashboards/NewDashboardModal";
@@ -18,8 +19,8 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faChartNetwork} from "@fortawesome/pro-light-svg-icons";
 import InlineDashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/InlineDashboardTypeFilter";
 
-function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadData, isLoading}) {
-  const [showCreateDashboardModal, setShowCreateDashboardModal] = useState(false);
+function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadData, isLoading, isMounted}) {
+  const toastContext = useContext(DialogToastContext);
   let history = useHistory();
   const fields = dashboardMetadata.fields;
 
@@ -39,13 +40,13 @@ function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadD
   };
 
   const createNewDashboard = () => {
-    setShowCreateDashboardModal(true);
+    toastContext.showOverlayPanel(<NewDashboardModal loadData={loadData} isMounted={isMounted} />);
   };
 
   const getDropdownFilters = () => {
     return (
       <>
-        <StatusFilter filterDto={dashboardFilterDto} setFilterDto={setDashboardFilterDto} className="mb-2" />
+        <ActiveFilter filterDto={dashboardFilterDto} setFilterDto={setDashboardFilterDto} className="mb-2" />
         <FavoritesFilter filterModel={dashboardFilterDto} setFilterModel={setDashboardFilterDto}/>
       </>
     );
@@ -88,7 +89,6 @@ function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadD
         dropdownFilters={getDropdownFilters()}
         inlineFilters={getInlineFilters()}
       />
-      <NewDashboardModal loadData={loadData} setShowModal={setShowCreateDashboardModal} showModal={showCreateDashboardModal}/>
     </div>
   );
 }
@@ -97,6 +97,7 @@ DashboardsTable.propTypes = {
   data: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
+  isMounted: PropTypes.object,
   dashboardFilterDto: PropTypes.object,
   activeDashboardFilterDto: PropTypes.object,
   setDashboardFilterDto: PropTypes.func,

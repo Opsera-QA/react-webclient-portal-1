@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import {axiosApiService} from "api/apiService";
-import PipelineActivityLogTable
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTable";
+import PipelineActivityLogTreeTable
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTreeTable";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import "../../workflows.css";
@@ -10,26 +10,14 @@ import {useHistory, useParams} from "react-router-dom";
 import PipelineWorkflowView from "./workflow/PipelineWorkflowView";
 import PipelineSummaryPanel from "./PipelineSummaryPanel";
 import PipelineHelpers from "../../pipelineHelpers";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-  faBracketsCurly, faDiceD20,
-  faDraftingCompass,
-  faHexagon,
-  faLayerGroup,
-  faMicrochip,
-} from "@fortawesome/pro-light-svg-icons";
-import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import Model from "../../../../core/data_model/model";
 import pipelineActivityActions
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-actions";
-import pipelineActivityFilterMetadata
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-filter-metadata";
-import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
-import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import axios from "axios";
 import pipelineActivityHelpers
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
+import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 
 const refreshInterval = 8000;
 
@@ -41,6 +29,8 @@ function PipelineDetailView() {
   const [data, setData] = useState({});
   const [pipeline, setPipeline] = useState({});
   const [activityData, setActivityData] = useState([]);
+  const [latestActivityLogs, setLatestActivityLogs] = useState([]);
+  const [secondaryActivityLogs, setSecondaryActivityLogs] = useState([]);
   //const [stepStatus, setStepStatus] = useState({});
   const [loading, setLoading] = useState(false);
   const [softLoading, setSoftLoading] = useState(false);
@@ -50,7 +40,7 @@ function PipelineDetailView() {
   const [editItem, setEditItem] = useState(false);
   const [ownerName, setOwnerName] = useState(undefined);
   const [refreshCount, setRefreshCount] = useState(0);
-  const [pipelineActivityFilterDto, setPipelineActivityFilterDto] = useState(new Model(pipelineActivityFilterMetadata.newObjectFields, pipelineActivityFilterMetadata, false));
+  const [pipelineActivityFilterModel, setPipelineActivityFilterModel] = useState(new PipelineFilterModel());
   const history = useHistory();
   const [pipelineActivityMetadata, setPipelineActivityMetadata] = useState(undefined);
   const [pipelineActivityTreeData, setPipelineActivityTreeData] = useState([]);
@@ -198,7 +188,7 @@ function PipelineDetailView() {
       return;
     }
 
-    const pipelineStatus = analyzePipelineStatus(pipeline);
+    const pipelineStatus = pipeline?.workflow?.last_step?.status;
 
     if (pipelineStatus === "stopped" || !pipelineStatus) {
       console.log("Pipeline stopped, no need to schedule refresh. Status: ", pipelineStatus);
@@ -212,22 +202,14 @@ function PipelineDetailView() {
       await fetchData();
       if (staleRefreshCount % 3 === 0) {
         console.log("divisible by 3 refresh: getting activity logs");
-        await getActivityLogs(pipelineActivityFilterDto, true);
+        await getActivityLogs(pipelineActivityFilterModel, true);
       }
     }, refreshInterval);
     setRefreshTimer(refreshTimer);
   };
 
-  const analyzePipelineStatus = (pipeline) => {
-    if (!pipeline || Object.entries(pipeline).length === 0) {
-      return;
-    }
-    const { workflow } = pipeline;
-    return workflow.last_step !== undefined && workflow.last_step.hasOwnProperty("status") ? workflow.last_step.status : false;
-  };
-
   // TODO: Find way to put refresh inside table itself
-  const getActivityLogs = async (filterDto = pipelineActivityFilterDto, silentLoading = false, cancelSource = cancelTokenSource) => {
+  const getActivityLogs = async (newFilterModel = pipelineActivityFilterModel, silentLoading = false, cancelSource = cancelTokenSource) => {
     if (activeTab !== "summary" || logsIsLoading) {
       return;
     }
@@ -238,13 +220,24 @@ function PipelineDetailView() {
       }
 
       // TODO: if search term applies ignore run count and reconstruct tree?
-      const treeResponse = await pipelineActivityActions.getPipelineActivityLogTree(getAccessToken, cancelSource, id, filterDto);
+      const treeResponse = await pipelineActivityActions.getPipelineActivityLogTree(getAccessToken, cancelSource, id, newFilterModel);
       const pipelineTree = pipelineActivityHelpers.constructTree(treeResponse?.data?.data);
       setPipelineActivityTreeData([...pipelineTree]);
+      setActivityData([]);
+      setSecondaryActivityLogs([]);
+      setLatestActivityLogs([]);
 
       if (Array.isArray(pipelineTree) && pipelineTree.length > 0) {
-        await pullLogData(pipelineTree, filterDto, cancelSource);
+        await pullLogData(pipelineTree, newFilterModel, cancelSource);
       }
+      else {
+        newFilterModel?.setData("totalCount", 0);
+        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
+        setPipelineActivityFilterModel({...newFilterModel});
+      }
+
+      await getLatestActivityLogs(newFilterModel, cancelSource);
+      await getSecondaryActivityLogs(newFilterModel, cancelSource);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
       console.log(error.message);
@@ -253,48 +246,64 @@ function PipelineDetailView() {
     }
   };
 
-  const pullLogData = async (pipelineTree = pipelineActivityTreeData, filterDto = pipelineActivityFilterDto, cancelSource = cancelTokenSource, silentLoading = false) => {
-
+  const pullLogData = async (pipelineTree = pipelineActivityTreeData, filterDto = pipelineActivityFilterModel, cancelSource = cancelTokenSource, silentLoading = false) => {
     try {
-      // create run count query based on tree -- tree is 0 index based
-      const startIndex = 20 * currentLogTreePage;
-      let runCountArray = [];
-      let otherLogsQuery = false;
-
       if (!silentLoading) {
         setLogsIsLoading(true);
       }
-
-      for (let i = startIndex; i < startIndex + 20 && i < pipelineTree.length; i++) {
-        let runCount = pipelineTree[i].runNumber;
-
-        if (runCount === "other_logs_query") {
-          otherLogsQuery = true;
-        }
-        else if (runCount) {
-          runCountArray.push(runCount);
-        }
-      }
-
-      const response = await pipelineActivityActions.getPipelineActivityLogsV3(getAccessToken, cancelSource, id, runCountArray, filterDto, otherLogsQuery);
-      const pipelineActivityData = response?.data?.data;
-
-      if (Array.isArray(pipelineActivityData)) {
-        setActivityData([...pipelineActivityData]);
-        setPipelineActivityMetadata(response?.data?.metadata);
-
-        // TODO: Remove pagination.
-        const newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", data?.count);
-        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-        setPipelineActivityFilterDto({...newFilterDto});
-      }
+      await getActivityLogsBasedOnTree(pipelineTree, filterDto, cancelSource);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
       console.log(error.message);
     }
     finally {
       setLogsIsLoading(false);
+    }
+  };
+
+  const getActivityLogsBasedOnTree = async (pipelineTree = pipelineActivityTreeData, filterDto = pipelineActivityFilterModel, cancelSource = cancelTokenSource,) => {
+    // create run count query based on tree -- tree is 0 index based
+    const startIndex = 20 * currentLogTreePage;
+    let runCountArray = [];
+
+    for (let i = startIndex; i < startIndex + 20 && i < pipelineTree.length; i++) {
+      let runCount = pipelineTree[i].runNumber;
+
+      if (runCount) {
+        runCountArray.push(runCount);
+      }
+    }
+
+    const response = await pipelineActivityActions.getPipelineActivityLogsV3(getAccessToken, cancelSource, id, runCountArray, filterDto);
+    const pipelineActivityData = response?.data?.data;
+
+    if (Array.isArray(pipelineActivityData)) {
+      setActivityData([...pipelineActivityData]);
+      setPipelineActivityMetadata(response?.data?.metadata);
+
+      // TODO: Remove pagination.
+      const newFilterDto = filterDto;
+      newFilterDto.setData("totalCount", data?.count);
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+      setPipelineActivityFilterModel({...newFilterDto});
+    }
+  };
+
+  const getLatestActivityLogs = async (filterDto = pipelineActivityFilterModel, cancelSource = cancelTokenSource,) => {
+    const response = await pipelineActivityActions.getLatestPipelineActivityLogsV3(getAccessToken, cancelSource, id, filterDto);
+    const pipelineActivityData = response?.data?.data;
+
+    if (Array.isArray(pipelineActivityData)) {
+      setLatestActivityLogs([...pipelineActivityData]);
+    }
+  };
+
+  const getSecondaryActivityLogs = async (filterDto = pipelineActivityFilterModel, cancelSource = cancelTokenSource,) => {
+    const response = await pipelineActivityActions.getSecondaryPipelineActivityLogsV3(getAccessToken, cancelSource, id, filterDto);
+    const pipelineActivityData = response?.data?.data;
+
+    if (Array.isArray(pipelineActivityData)) {
+      setSecondaryActivityLogs([...pipelineActivityData]);
     }
   };
 
@@ -307,21 +316,6 @@ function PipelineDetailView() {
     }
   };
 
-  // TODO: Move to a common place for reuse
-  const getTypeIcon = (type) => {
-    switch (type) {
-    case "sfdc":
-      return faSalesforce;
-    case "sdlc":
-      return faBracketsCurly;
-    case "ai-ml":
-      return faMicrochip;
-    default:
-      return faDraftingCompass;
-    }
-  };
-
-
   const getNavigationTabs = () => {
     return (
       <div className="alternate-tabs">
@@ -332,13 +326,11 @@ function PipelineDetailView() {
           </li>*/}
           <li className="nav-item">
             <a className={"nav-link " + (activeTab === "summary" ? "active" : "")} href="#"
-               onClick={handleTabClick("summary")}><FontAwesomeIcon
-              icon={getTypeIcon(pipeline["type"] ? pipeline["type"][0] : "default")} className="mr-2"/>Summary</a>
+               onClick={handleTabClick("summary")}>Summary</a>
           </li>
           <li className="nav-item">
             <a className={"nav-link " + (activeTab === "model" ? "active" : "")} href="#"
-               onClick={handleTabClick("model")}><FontAwesomeIcon icon={faDiceD20}
-                                                                  className="mr-2"/>Workflow</a>
+               onClick={handleTabClick("model")}>Workflow</a>
           </li>
           {/*<li className="nav-item">*/}
           {/*  <a className={"nav-link " + (activeTab === "editor" ? "active" : "")} href="#"*/}
@@ -375,7 +367,7 @@ function PipelineDetailView() {
 
     return (
       <div>
-        <div className="max-content-width-1080 content-block-no-height pb-2" style={{ width: "80vw" }}>
+        <div className="max-content-width-1080 content-block-no-height p-2 mb-2" style={{ width: "80vw", border: "1px solid #d2d2d2", borderRadius: "0" }}>
           <PipelineSummaryPanel
             pipeline={pipeline}
             setPipeline={setPipeline}
@@ -391,48 +383,21 @@ function PipelineDetailView() {
           />
         </div>
         <div className="max-content-width-1875">
-          <PipelineActivityLogTable
+          <PipelineActivityLogTreeTable
             pipeline={pipeline}
             pipelineLogData={activityData}
             isLoading={logsIsLoading}
-            loadData={pullLogData}
-            pipelineActivityFilterDto={pipelineActivityFilterDto}
-            setPipelineActivityFilterDto={setPipelineActivityFilterDto}
+            loadData={getActivityLogs}
+            pipelineActivityFilterDto={pipelineActivityFilterModel}
+            setPipelineActivityFilterDto={setPipelineActivityFilterModel}
             pipelineActivityMetadata={pipelineActivityMetadata}
             pipelineActivityTreeData={pipelineActivityTreeData}
             setCurrentLogTreePage={setCurrentLogTreePage}
+            latestActivityLogs={latestActivityLogs}
+            secondaryActivityLogs={secondaryActivityLogs}
           />
         </div>
       </div>
-    );
-  };
-
-  const getPipelineTitle = () => {
-    if (loading) {
-      //return (<span><FontAwesomeIcon icon={faSpinner} className="mr-2" spin/>Loading Pipeline</span>)
-      //return (<div><FontAwesomeIcon icon={faSpinner} className="mr-2" spin/></div>);
-      return (<></>);
-    }
-
-    return (
-      <span>
-        <FontAwesomeIcon icon={getTypeIcon(pipeline["type"] ? pipeline["type"][0] : "default")} className="mr-2"/>
-        {pipeline?.name}
-      </span>
-    );
-  };
-
-
-  const getNavigationTabContainer = () => {
-    return (
-      <NavigationTabContainer>
-        <NavigationTab activeTab={activeTab} tabText={"Pipelines"}
-                       handleTabClick={handleTabClick} tabName={"pipelines"} toolTipText={"Pipelines"} icon={faDraftingCompass}/>
-        <NavigationTab activeTab={activeTab} tabText={"Catalog"} handleTabClick={handleTabClick}
-                       tabName={"catalog"} toolTipText={"Template Catalog"} icon={faHexagon}/>
-        <NavigationTab activeTab={"viewer"} tabText={"Pipeline Viewer"}
-                       handleTabClick={handleTabClick} tabName={"viewer"} toolTipText={"Pipeline Viewer"} icon={faLayerGroup}/>
-      </NavigationTabContainer>
     );
   };
 
@@ -444,8 +409,8 @@ function PipelineDetailView() {
 
   return (
     <div>
-      {getNavigationTabContainer()}
-      <div className="h4 mt-2 mb-4">{getPipelineTitle()}</div>
+      <WorkflowSubNavigationBar currentTab={"pipelineViewer"} />
+      <div className="h4 mt-3 mb-2">{pipeline?.name}</div>
       {getNavigationTabs()}
       {getCurrentView()}
     </div>

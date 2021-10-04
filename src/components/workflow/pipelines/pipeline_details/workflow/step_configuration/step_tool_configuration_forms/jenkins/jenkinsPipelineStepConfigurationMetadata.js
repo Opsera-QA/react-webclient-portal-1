@@ -101,7 +101,6 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Build Arguments",
       id: "buildArgs",
-      formText:"Enter runtime build arguments as a JSON Object",
     },
     {
       label: "Jenkins Agent",
@@ -110,6 +109,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label:"Output File Name",	
       id:"outputFileName",
+      formText: "File name with extension is expected.",
       maxLength:50,
     },
     {	
@@ -133,7 +133,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "dockerSecrets",
     },
     {
-      label: "Want to use a Custom Script",
+      label: "Specify Script File Path",
       id: "customScript",
     },
     {
@@ -182,8 +182,42 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id:"isManualRollBackBranch"
     },
     {
-      label:"Jenkins - Job Type",
+      label:"Jenkins Job Type",
       id:"job_type",
+      isRequired: true,
+    },
+    {
+      label: "Dependency",
+      id: "dependencyType",
+      // isRequired: true
+    },
+    {
+      id: "dependencies",
+      // isRequired: true
+    },
+    {
+      label: "Create New Backup Branch",
+      id: "isNewBranch",
+    },
+    {
+      label: "Delete Workspace Before Building",
+      id: "workspaceDeleteFlag",
+    },
+    {
+      label: "Use Upstream Branch",
+      id: "hasUpstreamBranch",
+      formText: `
+        Configure an upstream/source branch. The files will be overwritten when pushing the artifacts. 
+        If no upstream branch is configured, then the new Artifact branch is created as an Orphan branch, 
+        having only the artifact files and no commit history.
+      `,
+    },
+    {
+      label: "Runtime Arguments",
+      id: "runtimeArguments",
+      regexDefinitionName: "argumentList",
+      formText: "A newline-separated list of Runtime Arguments",
+      maxLength: 500
     }
   ],
   newObjectFields: {
@@ -235,6 +269,9 @@ const jenkinsPipelineStepConfigurationMetadata = {
     dynamicTag: false,
     dockerTagType:[],
     dockerDynamicTagName:"",
+    runtimeArguments: "",
+    dependencies: {},
+    dependencyType:"",
   }
 };
 

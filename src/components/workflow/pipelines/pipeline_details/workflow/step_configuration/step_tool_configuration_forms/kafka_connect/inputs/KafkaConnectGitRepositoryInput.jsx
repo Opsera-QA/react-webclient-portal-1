@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import GitRepositoryInput from "components/common/list_of_values_input/tools/git/GitRepositoryInput";
+import RepositorySelectInput from "components/common/list_of_values_input/tools/git/RepositorySelectInput";
 
 function KafkaConnectGitRepositoryInput({dataObject, setDataObject, disabled}) {
   const setRepository = (fieldName, selectedOption) => {
@@ -14,7 +14,7 @@ function KafkaConnectGitRepositoryInput({dataObject, setDataObject, disabled}) {
   };
 
   return (
-     <GitRepositoryInput
+     <RepositorySelectInput
        fieldName={"repository"}
        service={dataObject.getData("service")}
        gitToolId={dataObject.getData("gitToolId")}
