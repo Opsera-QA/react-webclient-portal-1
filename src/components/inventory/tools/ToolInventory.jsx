@@ -95,7 +95,7 @@ function ToolInventory() {
       const roleDefinitions = response?.data?.roles;
       setToolMetadata(roleDefinitions);
       setToolRegistryList(toolArray);
-      setRegistryToolRoleDefinitions(response?.data?.roles);
+      setRegistryToolRoleDefinitions(roleDefinitions);
       newFilterModel.setData("totalCount", response?.data?.count);
       newFilterModel.setData("activeFilters", newFilterModel?.getActiveFilters());
       setToolFilterModel({ ...newFilterModel });

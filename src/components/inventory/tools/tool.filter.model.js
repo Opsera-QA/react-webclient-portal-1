@@ -3,7 +3,7 @@ import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
 const toolFilterMetadata = {
   idProperty: "_id",
-  type: "Tool Filter",
+  type: "Tool",
   fields: [
     {
       label: "Active Status",
