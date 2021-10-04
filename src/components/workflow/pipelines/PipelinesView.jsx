@@ -183,7 +183,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
         <VanitySetVerticalTab
           icon={faSalesforce}
           tabText={"Salesforce"}
-          tabName={"salesforce"}
+          tabName={"sfdc"}
           onSelect={onSelect}
           activeTab={pipelineFilterModel?.getData("type")}
         />
