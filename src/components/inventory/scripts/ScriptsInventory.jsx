@@ -7,10 +7,9 @@ import ScriptsView from "components/inventory/scripts/ScriptsView";
 import scriptsActions from "components/inventory/scripts/scripts-actions";
 import ScriptModel from "components/inventory/scripts/script.model";
 import ScriptsFilterModel from "components/inventory/scripts/scripts.filter.model";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 import ScriptsHelpDocumentation from "../../common/help/documentation/tool_registry/ScriptsHelpDocumentation";
+import {isActionAllowed} from "components/common/helpers/role-helpers";
 
 function ScriptsInventory() {
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
@@ -78,9 +77,9 @@ function ScriptsInventory() {
         let modelWrappedArray = [];
 
         scripts.forEach((script) => {
-          const deleteAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "delete_script", script.owner, script.roles, newScriptRoleDefinitions);
-          const updateAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "update_script", script.owner, script.roles, newScriptRoleDefinitions);
-          const canEditAccessRoles = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "edit_access_roles", script.owner, script.roles, newScriptRoleDefinitions);
+          const deleteAllowed = isActionAllowed(userRoleAccess, "delete_script", script.owner, script.roles, newScriptRoleDefinitions);
+          const updateAllowed = isActionAllowed(userRoleAccess, "update_script", script.owner, script.roles, newScriptRoleDefinitions);
+          const canEditAccessRoles = isActionAllowed(userRoleAccess, "edit_access_roles", script.owner, script.roles, newScriptRoleDefinitions);
           const newModel = {...new ScriptModel({...script}, newScriptMetadata, false, getAccessToken, cancelTokenSource, loadData, updateAllowed, deleteAllowed, canEditAccessRoles)};
 
           modelWrappedArray.push(newModel);

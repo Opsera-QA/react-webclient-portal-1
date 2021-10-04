@@ -5,24 +5,38 @@ import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import NewToolOverlay from "components/inventory/tools/NewToolOverlay";
 import PropTypes from "prop-types";
 import ToolCardView from "components/inventory/tools/ToolCardView";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
 import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilter";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import InlineToolIdentifierFilter from "components/common/filters/tools/tool_identifier/InlineToolIdentifierFilter";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import {isActionAllowed} from "components/common/helpers/role-helpers";
 
-function ToolTableCardView({toolFilterDto, setToolFilterDto, toolMetadata, isLoading, loadData, data, saveCookies, customerAccessRules, isMounted}) {
+function ToolTableCardView(
+  {
+    toolFilterDto,
+    setToolFilterDto,
+    toolMetadata,
+    isLoading,
+    loadData,
+    data,
+    saveCookies,
+    customerAccessRules,
+    roleDefinitions,
+    isMounted
+  }) {
   const toastContext = useContext(DialogToastContext);
 
   const createNewTool = () => {
     toastContext.showOverlayPanel(<NewToolOverlay loadData={loadData} isMounted={isMounted}/>);
   };
 
-  const authorizedAction = (action, owner, objectRoles) => {
-    return workflowAuthorizedActions.toolRegistryItems(customerAccessRules, action, owner, objectRoles);
+  const getCreateNewToolFunction = () => {
+    const canCreate = isActionAllowed(customerAccessRules, "create_tool", undefined, undefined, roleDefinitions);
+    if (canCreate === true) {
+     return createNewTool;
+    }
   };
 
   const getDropdownFilters = () => {
@@ -89,7 +103,7 @@ function ToolTableCardView({toolFilterDto, setToolFilterDto, toolMetadata, isLoa
         loadData={loadData}
         filterDto={toolFilterDto}
         setFilterDto={setToolFilterDto}
-        addRecordFunction={authorizedAction("create_tool") ? createNewTool : null}
+        addRecordFunction={getCreateNewToolFunction()}
         supportSearch={true}
         saveCookies={saveCookies}
         supportViewToggle={true}
@@ -115,7 +129,8 @@ ToolTableCardView.propTypes = {
   saveCookies: PropTypes.func,
   customerAccessRules: PropTypes.object,
   isMounted: PropTypes.object,
-  toolMetadata: PropTypes.func,
+  toolMetadata: PropTypes.object,
+  roleDefinitions: PropTypes.object,
 };
 
 export default ToolTableCardView;
