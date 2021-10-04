@@ -52,7 +52,7 @@ function PipelineVerticalTabContainer({ isLoading, pipelineFilterModel }) {
       <VanitySetVerticalTab
         icon={faSalesforce}
         tabText={"Salesforce"}
-        tabName={"salesforce"}
+        tabName={"sfdc"}
         disabled={isLoading}
         handleTabClick={handleTabClick}
         activeTab={pipelineFilterModel?.getData("type")}
