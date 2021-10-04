@@ -23,7 +23,7 @@ function ToolInventory() {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [customerAccessRules, setCustomerAccessRules] = useState(undefined);
   const [registryToolRoleDefinitions, setRegistryToolRoleDefinitions] = useState(undefined);
-
+  const [toolMetadata, setToolMetadata] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -92,6 +92,7 @@ function ToolInventory() {
     const toolArray = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(toolArray)) {
+      setToolMetadata(response?.data?.metadata);
       setToolRegistryList(toolArray);
       setRegistryToolRoleDefinitions(response?.data?.roles);
       let newFilterDto = filterDto;
@@ -119,6 +120,8 @@ function ToolInventory() {
         saveCookies={saveCookies}
         data={toolRegistryList}
         toolFilterDto={toolFilterDto}
+        toolMetadata={toolMetadata}
+        isMounted={isMounted}
         setToolFilterDto={setToolFilterDto}
         customerAccessRules={customerAccessRules}
       />
