@@ -37,6 +37,7 @@ const dataObject2 =
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
   const [error, setError] = useState(undefined);
+  const [footerData, setFooterData] = useState(undefined);
 
   const noDataMessage = "Sonar Vulnerabilities report is currently unavailable at this time";
 
@@ -111,7 +112,27 @@ const dataObject2 =
                     "major" : 0.0,
                     "critical" : 0.0,
                     "info" : 0.0
-                }
+                },
+                {
+                  "total_effort" : 1,
+                  "project" : "Cypress-Example",
+                  "runCount" : 52,
+                  "highTrend":'red',
+                  "minor" : 1.0,
+                  "major" : 0.0,
+                  "critical" : 0.0,
+                  "info" : 0.0
+              },
+              {
+                "total_effort" : 1,
+                "project" : "Cypress-Example",
+                "runCount" : 52,
+                "highTrend":'red',
+                "minor" : 1.0,
+                "major" : 0.0,
+                "critical" : 0.0,
+                "info" : 0.0
+            }
             ],
             "totalDebtData" : [ 
                 {
@@ -140,10 +161,11 @@ const dataObject2 =
         setPipelineVulnerabilityData(sonarIssues);
         let newFilterDto = filterDto;
         newFilterDto.setData(
-          "totalCount",2
+          "totalCount",sonarIssues.length
          // response?.data?.data[0]?.PipelineSonarVulnerabilitiesData?.data[0]?.count[0]?.count
         );
         setTableFilterDto({ ...newFilterDto });
+        setFooterData(response?.data?.totalDebtData[0]);
       }
     /*} catch (error) {
       if (isMounted?.current === true) {
@@ -170,6 +192,7 @@ const dataObject2 =
           body={getTable()}          
           className={"px-2 pb-2"}
         />
+        {getFooterDetails()}
       </>
     );
   };
@@ -203,6 +226,34 @@ const dataObject2 =
         </Col>
       </Row>
     );
+  };
+
+  const getFooterDetails =()=>{
+    if(!footerData){
+      return null;
+    }
+    return(<>
+          <Row className="px-5">
+            <Col className="text-right">
+              Total Debt for Remediating Critical Issues : {footerData?.critical} 
+            </Col>
+          </Row>
+          <Row className="px-5">
+            <Col className="text-right">
+              Total Debt for Remediating Major Issues : {footerData?.major} 
+            </Col>
+          </Row>
+          <Row className="px-5">
+            <Col className="text-right">
+              Total Debt for Remediating Minor Issues : {footerData?.minor} 
+            </Col>
+          </Row>
+          <Row className="px-5">
+            <Col className="text-right">
+              Total Debt for Remediating Info Issues : {footerData?.info} 
+            </Col>
+          </Row>
+          </>);
   };
 
   const getTable = () => {    
