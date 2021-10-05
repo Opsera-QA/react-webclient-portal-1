@@ -1,5 +1,6 @@
 import ModelBase from "core/data_model/model.base";
 import toolsActions from "components/inventory/tools/tools-actions";
+import {isActionAllowed} from "components/common/helpers/role-helpers";
 
 export class ToolModel extends ModelBase {
   constructor(
@@ -9,19 +10,20 @@ export class ToolModel extends ModelBase {
     getAccessToken,
     cancelTokenSource,
     loadData,
-    canUpdate = false,
-    canDelete = false,
-    canEditAccessRoles = false,
+    customerAccessRules,
+    roleDefinitions,
     setStateFunction
   ) {
     super(data, metaData, newModel);
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
     this.loadData = loadData;
-    this.updateAllowed = canUpdate;
-    this.deleteAllowed = canDelete;
-    this.editAccssRolesAllowed = canEditAccessRoles;
     this.setStateFunction = setStateFunction;
+    this.customerAccessRules = customerAccessRules;
+    this.roleDefinitions = roleDefinitions;
+    this.updateAllowed = this.canPerformAction("update_tool");
+    this.deleteAllowed = this.canPerformAction("delete_tool");
+    this.editAccessRolesAllowed = this.canPerformAction("edit_access_roles");
   }
 
   createModel = async () => {
@@ -62,11 +64,15 @@ export class ToolModel extends ModelBase {
       this.getAccessToken,
       this.cancelTokenSource,
       this.loadData,
-      this.updateAllowed,
-      this.deleteAllowed,
+      this.customerAccessRules,
+      this.roleDefinitions,
       this.setStateFunction
     );
   };
+
+  canPerformAction = (action) => {
+    return isActionAllowed(this.customerAccessRules, action, this.getData("owner"), this.getData("roles"), this.roleDefinitions);
+  }
 }
 
 export default ToolModel;

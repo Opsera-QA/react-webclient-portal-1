@@ -3,7 +3,6 @@ import {useParams} from "react-router-dom";
 import ToolDetailPanel from "./ToolDetailPanel";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import Model from "core/data_model/model";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarDeleteToolButton from "components/common/actions/buttons/tool/ActionBarDeleteToolButton";
@@ -21,7 +20,6 @@ function ToolDetailView() {
   const [toolData, setToolData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [toolMetadata, setToolMetadata] = useState(undefined);
-  const [toolRoleDefinitions, setToolRoleDefinitions] = useState(undefined);
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -50,9 +48,6 @@ function ToolDetailView() {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const userRecord = await getUserRecord(); //RBAC Logic
-      const rules = await setAccessRoles(userRecord);
-      // setCustomerAccessRules(rules);
       await getTool(cancelSource);
     } catch (error) {
       if (!error?.error?.message?.includes(404)) {
@@ -71,10 +66,11 @@ function ToolDetailView() {
     if (isMounted?.current === true && tool) {
       const metadata = response?.data?.metadata;
       const roleDefinitions = response?.data?.roles;
-      const toolModel = new ToolModel(tool, metadata, false, getAccessToken, cancelTokenSource, loadData);
+      const userRecord = await getUserRecord(); //RBAC Logic
+      const customerAccessRules = await setAccessRoles(userRecord);
+      const toolModel = new ToolModel(tool, metadata, false, getAccessToken, cancelTokenSource, loadData, customerAccessRules, roleDefinitions);
       setToolData(toolModel);
       setToolMetadata(metadata);
-      setToolRoleDefinitions(roleDefinitions);
     }
   };
 
