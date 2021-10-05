@@ -29,7 +29,13 @@ function ToolTableCardView(
   const toastContext = useContext(DialogToastContext);
 
   const createNewTool = () => {
-    toastContext.showOverlayPanel(<NewToolOverlay loadData={loadData} isMounted={isMounted} toolMetadata={toolMetadata}/>);
+    toastContext.showOverlayPanel(
+      <NewToolOverlay
+        loadData={loadData}
+        isMounted={isMounted}
+        toolMetadata={toolMetadata}
+      />
+    );
   };
 
   const getCreateNewToolFunction = () => {

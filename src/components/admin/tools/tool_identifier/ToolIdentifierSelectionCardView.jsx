@@ -19,7 +19,6 @@ function ToolIdentifierSelectionCardView({ toolIdentifiers, loadData, isLoading,
     <VanitySetCardView
       isLoading={isLoading}
       loadData={loadData}
-      className={"makeup-container-table m-2"}
       cards={
         <VerticalCardViewBase
           data={toolIdentifiers}
