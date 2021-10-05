@@ -2,11 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import RegistryToolCard from "components/common/fields/inventory/RegistryToolCard";
 import Model from "core/data_model/model";
-import toolMetadata from "components/inventory/tools/tool-metadata";
 import CardView from "components/common/card/CardView";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
 
-function ToolCardView({ data, toolFilterDto, setToolFilterDto, loadData, isLoading }) {
+function ToolCardView({ data, toolFilterDto, toolMetadata, setToolFilterDto, loadData, isLoading }) {
   const getRegistryToolCard = (tool) => {
     return (
       <RegistryToolCard
@@ -14,6 +13,10 @@ function ToolCardView({ data, toolFilterDto, setToolFilterDto, loadData, isLoadi
       />
     );
   };
+
+  if (toolMetadata == null) {
+    return null;
+  }
 
   return (
     <CardView
@@ -36,7 +39,8 @@ ToolCardView.propTypes = {
   toolFilterDto: PropTypes.object,
   setToolFilterDto: PropTypes.func,
   loadData: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  toolMetadata: PropTypes.object,
 };
 
 export default ToolCardView;

@@ -11,7 +11,6 @@ import ToolRegistryHelpDocumentation
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 import ToolFilterModel from "components/inventory/tools/tool.filter.model";
-import {isActionAllowed} from "components/common/helpers/role-helpers";
 
 function ToolInventory() {
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
@@ -93,7 +92,8 @@ function ToolInventory() {
 
     if (isMounted?.current === true && Array.isArray(toolArray)) {
       const roleDefinitions = response?.data?.roles;
-      setToolMetadata(roleDefinitions);
+      const metadata = response?.data?.metadata;
+      setToolMetadata(metadata);
       setToolRegistryList(toolArray);
       setRegistryToolRoleDefinitions(roleDefinitions);
       newFilterModel.setData("totalCount", response?.data?.count);
@@ -118,7 +118,7 @@ function ToolInventory() {
         isLoading={isLoading}
         loadData={loadData}
         saveCookies={saveCookies}
-        data={toolRegistryList}
+        tools={toolRegistryList}
         toolFilterDto={toolFilterModel}
         toolMetadata={toolMetadata}
         isMounted={isMounted}
