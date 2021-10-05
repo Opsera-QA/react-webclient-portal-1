@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import jiraStepApprovalMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/jira/jiraStepApprovalMetadata";
 import jiraStepNotificationMetadata

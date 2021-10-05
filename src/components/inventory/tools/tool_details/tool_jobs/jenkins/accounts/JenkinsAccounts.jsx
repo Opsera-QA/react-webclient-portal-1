@@ -7,7 +7,6 @@ import Model from "core/data_model/model";
 
 
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import NewJenkinsAccountModal from "./NewJenkinsAccountModal";
 import jenkinsCreateAccountMetadata from "./jenkins-create-account-metadata";
 

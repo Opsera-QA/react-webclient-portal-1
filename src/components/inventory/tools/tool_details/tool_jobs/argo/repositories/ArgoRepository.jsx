@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import ArgoRepositoryTable from "./ArgoRepositoryTable";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import ArgoRepositoryOverlay
   from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/ArgoRepositoryOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";

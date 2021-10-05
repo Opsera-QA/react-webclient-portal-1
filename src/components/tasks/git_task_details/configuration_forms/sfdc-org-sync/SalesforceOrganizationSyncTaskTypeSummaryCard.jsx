@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TaskSummaryCardContainer from "components/tasks/git_task_details/configuration_forms/TaskSummaryCardContainer";
 import {Row, Col} from "react-bootstrap";

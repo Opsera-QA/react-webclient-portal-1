@@ -1,7 +1,6 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import LoadingDialog from "../../../../../../../common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";

@@ -1,7 +1,6 @@
 import React, { useEffect, useContext, useState, useRef } from "react";
 import { Col, Button, Card } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import Loading from "../../../../../../../common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
