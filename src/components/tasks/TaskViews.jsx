@@ -10,14 +10,11 @@ import InlineTaskTypeFilter from "components/common/filters/tasks/type/InlineTas
 import TaskTable from "components/tasks/TaskTable";
 import NewTaskOverlay from "components/tasks/NewTaskOverlay";
 import TaskCardView from "components/tasks/TaskCardView";
-import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
-import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {faAws, faMicrosoft, faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import {faGitAlt} from "@fortawesome/free-brands-svg-icons/faGitAlt";
 import TaskTypeFilter from "components/common/filters/tasks/type/TaskTypeFilter";
 import TaskStatusFilter from "components/common/filters/tasks/status/TaskStatusFilter";
+import TaskVerticalTabContainer from "components/tasks/TaskVerticalTabContainer";
 
 function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData, isMounted, taskMetadata}) {
   const toastContext = useContext(DialogToastContext);
@@ -89,59 +86,16 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
     );
   };
 
-  const getTaskTypeTabs = () => {
-    return (
-      <VanitySetVerticalTabContainer className={"h-100"}>
-        <VanitySetVerticalTab
-          icon={faTasks}
-          tabText={"All"}
-          tabName={""}
-          onSelect={onSelect}
-          activeTab={taskFilterModel?.getData("category")}
-        />
-        <VanitySetVerticalTab
-          icon={faAws}
-          tabText={"AWS"}
-          tabName={"aws"}
-          onSelect={onSelect}
-          activeTab={taskFilterModel?.getData("category")}
-        />
-        <VanitySetVerticalTab
-          icon={faMicrosoft}
-          tabText={"Azure"}
-          tabName={"azure"}
-          onSelect={onSelect}
-          activeTab={taskFilterModel?.getData("category")}
-        />
-        <VanitySetVerticalTab
-          icon={faGitAlt}
-          tabText={"Git"}
-          tabName={"git"}
-          onSelect={onSelect}
-          activeTab={taskFilterModel?.getData("category")}
-        />
-        <VanitySetVerticalTab
-          icon={faSalesforce}
-          tabText={"Salesforce"}
-          tabName={"salesforce"}
-          onSelect={onSelect}
-          activeTab={taskFilterModel?.getData("category")}
-        />
-      </VanitySetVerticalTabContainer>
-    );
-  };
-
-  const onSelect = (tab) => {
-    taskFilterModel?.setData("category", tab);
-    taskFilterModel?.setData("type", "");
-    loadData(taskFilterModel);
-  };
 
   const getTableCardView = () => {
     return (
       <Row className={"mx-0"}>
         <Col sm={2} className={"px-0"}>
-          {getTaskTypeTabs()}
+          <TaskVerticalTabContainer
+            isLoading={isLoading}
+            loadData={loadData}
+            taskFilterModel={taskFilterModel}
+          />
         </Col>
         <Col sm={10} className={"px-0"}>
           <TableCardView
