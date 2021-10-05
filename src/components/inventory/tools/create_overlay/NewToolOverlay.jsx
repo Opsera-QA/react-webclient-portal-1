@@ -1,13 +1,12 @@
 import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import toolMetadata from "components/inventory/tools/tool-metadata";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ToolEditorPanel from "components/inventory/tools/tool_details/ToolEditorPanel";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import ToolIdentifierSelectionScreen from "components/inventory/tools/create_overlay/ToolIdentifierSelectionScreen";
 
-function NewToolOverlay({ loadData, isMounted }) {
+function NewToolOverlay({ loadData, isMounted, toolMetadata }) {
   const toastContext = useContext(DialogToastContext);
   const [toolData, setToolData] = useState(new Model({...toolMetadata.newObjectFields}, toolMetadata, true));
 
@@ -42,7 +41,7 @@ function NewToolOverlay({ loadData, isMounted }) {
   };
 
   return (
-    <CreateCenterPanel closePanel={closePanel} objectType={toolMetadata.type} loadData={loadData}>
+    <CreateCenterPanel closePanel={closePanel} objectType={toolMetadata?.type} loadData={loadData}>
       {getView()}
     </CreateCenterPanel>
   );
@@ -51,6 +50,7 @@ function NewToolOverlay({ loadData, isMounted }) {
 NewToolOverlay.propTypes = {
   isMounted: PropTypes.object,
   loadData: PropTypes.func,
+  toolMetadata: PropTypes.object,
 };
 
 export default NewToolOverlay;
