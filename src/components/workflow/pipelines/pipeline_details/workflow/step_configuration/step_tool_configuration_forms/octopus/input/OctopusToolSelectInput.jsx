@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+import RoleRestrictedOctopusToolSelectInput
+  from "components/common/list_of_values_input/tools/octopus/RoleRestrictedOctopusToolSelectInput";
 
 function OctopusToolSelectInput({className, fieldName, model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
@@ -19,11 +20,8 @@ function OctopusToolSelectInput({className, fieldName, model, setModel, disabled
   };
 
   return (
-    <RoleRestrictedToolByIdentifierInputBase
-      toolIdentifier={"octopus"}
-      toolFriendlyName={"Octopus"}
+    <RoleRestrictedOctopusToolSelectInput
       fieldName={fieldName}
-      placeholderText={"Select Octopus Tool"}
       configurationRequired={true}
       textField={(tool) => getTextField(tool)}
       model={model}
