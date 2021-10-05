@@ -73,7 +73,6 @@ function ServiceNowMeanTimeToResolutionBarChart({
         dashboardTags
       );
       let dataObject = response?.data?.data[0]?.serviceNowMTTR?.data[0]?.docs;
-      console.log("dataObject", dataObject);
       assignStandardColors(dataObject, true);
       if (dataObject && dataObject.length) {
         dataObject.forEach((data) => (data.Count = data?.number_of_incidents));
