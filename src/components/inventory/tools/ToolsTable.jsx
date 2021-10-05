@@ -45,7 +45,6 @@ function ToolsTable({ data, toolMetadata, isMounted, toolFilterDto, setToolFilte
   };
 
   if (toolMetadata == null) {
-    console.log("toolMetadata is null");
     return null;
   }
 
