@@ -6,6 +6,7 @@ import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 const APPLICATION_SUPPORTED_TOOL_IDENTIFIERS = [
   "argo",
   "octopus",
+  "azure",
 ];
 
 function ToolApplicationsTab({ toolModel, handleTabClick, activeTab }) {
