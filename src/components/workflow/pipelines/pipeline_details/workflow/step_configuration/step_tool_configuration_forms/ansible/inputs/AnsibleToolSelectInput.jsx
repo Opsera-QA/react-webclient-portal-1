@@ -8,8 +8,9 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faTools } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
+import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
-function AnsibleToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_prop }) {
+function AnsibleToolSelectInput({ fieldName, dataObject, setDataObject, disabled, tool_prop, className }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [ansibleList, setAnsibleList] = useState([]);
@@ -58,20 +59,6 @@ function AnsibleToolSelectInput({ fieldName, dataObject, setDataObject, disabled
     }
   };
 
-  const getInfoText = () => {
-    if (dataObject.getData(fieldName) !== "") {
-      return (
-        <Link to={`/inventory/tools/details/${dataObject.getData(fieldName)}`}>
-          <span>
-            <FontAwesomeIcon icon={faTools} className="pr-1" />
-            View Or Edit this Tool&apos;s Registry settings
-          </span>
-        </Link>
-      );
-    }
-    return "Select a tool to continue";
-  };
-
   const fetchAnsibleDetails = async (cancelSource) => {
     setIsAnsibleSearching(true);
     try {
@@ -100,22 +87,26 @@ function AnsibleToolSelectInput({ fieldName, dataObject, setDataObject, disabled
       setIsAnsibleSearching(false);
     }
   };
+  const getTextField = (tool) => {
+    const toolUrl = tool?.configuration?.toolURL || "No Ansible URL Assigned";
+    const toolName = tool?.name; 
+
+    return (`${toolName} (${toolUrl})`);
+  };
 
   return (
-    <div>
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        selectOptions={ansibleList ? ansibleList : []}
-        busy={isAnsibleSearching}
-        valueField={valueField}
-        textField={textField}
-        placeholderText={placeholder}
-        disabled={disabled || isAnsibleSearching || (ansibleList == null || ansibleList.length === 0)}
-      />
-      <small className="text-muted ml-3">{getInfoText()}</small>
-    </div>
+    <RoleRestrictedToolByIdentifierInputBase
+      toolIdentifier={"ansible"}
+      toolFriendlyName={"Ansible"}
+      fieldName={fieldName}
+      placeholderText={"Select Ansible Tool"}
+      configurationRequired={true}
+      textField={(tool) => getTextField(tool)}
+      model={dataObject}
+      setModel={setDataObject}
+      disabled={disabled}
+      className={className}
+    />
   );
 }
 
@@ -124,14 +115,11 @@ AnsibleToolSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
-  textField: PropTypes.string,
-  valueField: PropTypes.string,
   tool_prop: PropTypes.string,
+  className: PropTypes.string,
 };
 
 AnsibleToolSelectInput.defaultProps = {
-  valueField: "id",
-  textField: "name",
   fieldName: "toolConfigId",
 };
 

@@ -62,7 +62,8 @@ function AnsibleSCMRepoFilesSelectInput({
       dataObject.setData("playbookFileName", "");
       setPlaceholder("No Files Found");
       console.error(error);
-      toastContext.showServiceUnavailableDialog();
+      //toastContext.showServiceUnavailableDialog();
+      toastContext.showErrorDialog(error);
     }
   };
 
