@@ -1,7 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
-
 import SfdcToolConfiguration from "components/inventory/tools/tool_details/tool_jobs/sfdc/SfdcToolConfiguration";
 import ArgoToolConfiguration from "./tool_jobs/argo/ArgoToolConfiguration";
 import JenkinsToolConfiguration from "./tool_jobs/jenkins/JenkinsToolConfiguration";

@@ -1,7 +1,6 @@
 import React, {useEffect, useContext, useState, useRef} from "react";
 import { Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";

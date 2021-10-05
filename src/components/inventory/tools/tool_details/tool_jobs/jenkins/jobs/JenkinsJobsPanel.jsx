@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import JenkinsJobsTable from "./JenkinsJobsTable";
 import JenkinsJobEditorPanel from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/JenkinsJobEditorPanel";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import modelHelpers from "components/common/model/modelHelpers";
 import JenkinsJobMetadata from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/jenkins-job-metadata";
 

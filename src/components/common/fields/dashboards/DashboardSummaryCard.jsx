@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import {faChartNetwork} from "@fortawesome/pro-light-svg-icons";
 import CardContainerBase from "components/common/card_containers/CardContainerBase";
 import TagField from "components/common/fields/multiple_items/TagField";
