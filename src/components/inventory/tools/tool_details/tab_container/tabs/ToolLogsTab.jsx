@@ -8,6 +8,7 @@ const LOG_SUPPORTED_TOOL_IDENTIFIERS = [
   "octopus",
   "sfdc-configurator",
   "argo",
+  "azure",
 ];
 
 function ToolLogsTab({ toolModel, handleTabClick, activeTab }) {
