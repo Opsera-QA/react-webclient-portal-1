@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import InfoContainer from "components/common/containers/InfoContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
-import Model from "core/data_model/model";
 import ToolReadOnlyDetailPanel from "components/inventory/tools/tool_details/ToolReadOnlyDetailPanel";
 import toolsActions from "components/inventory/tools/tools-actions";
 import axios from "axios";
@@ -10,6 +9,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {Link} from "react-router-dom";
+import ToolModel from "components/inventory/tools/tool.model";
 
 function ToolInfoContainer({ toolId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -48,7 +48,7 @@ function ToolInfoContainer({ toolId }) {
 
       if (isMounted?.current === true && tool) {
         const metadata = response?.data?.metadata;
-        setToolModel(new Model(tool, metadata, false));
+        setToolModel(new ToolModel(tool, metadata, false, getAccessToken, cancelTokenSource));
       }
     } catch (error) {
       if (!error?.error?.message?.includes(404)) {
