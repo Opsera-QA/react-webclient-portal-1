@@ -29,6 +29,7 @@ export class ModelBase {
     this.updateAllowed = false;
     this.deleteAllowed = false;
     this.editAccssRolesAllowed = false;
+    this.roleDefinitions = {};
   }
 
   initializeObjectProperties = (metaData) => {
@@ -126,6 +127,9 @@ export class ModelBase {
     console.error("No getManagementScreenLink function was wired up");
   };
 
+  getRoleDefinitions = () => {
+    return this.roleDefinitions;
+  };
 
   isLenient = () => {
     return false;
@@ -471,6 +475,9 @@ export class ModelBase {
     return this.canUpdate() === true && this.editAccssRolesAllowed === true;
   };
 
+  canPerformAction = () => {
+    return false;
+  };
 }
 
 export default ModelBase;
