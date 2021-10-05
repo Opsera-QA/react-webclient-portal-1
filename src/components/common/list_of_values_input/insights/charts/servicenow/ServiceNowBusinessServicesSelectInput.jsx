@@ -12,7 +12,6 @@ function ServiceNowBusinessServicesSelectInput({
   fieldName,
   dataObject,
   setDataObject,
-  setDataFunction,
   disabled,
   serviceNowToolId,
 }) {
@@ -25,10 +24,36 @@ function ServiceNowBusinessServicesSelectInput({
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-  const validateAndSetData = (fieldName, value) => {
+  const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
-    newDataObject.setData(fieldName, value);
+    let parsedValues = parseValues(valueArray);
+    newDataObject.setData(fieldName, parsedValues);
     setDataObject({ ...newDataObject });
+  };
+
+  const parseValues = (valueArray) => {
+    if (valueField == null) {
+      return valueArray;
+    }
+
+    let parsedValues = [];
+
+    if (valueArray != null && valueArray.length > 0) {
+      valueArray.map((value) => {
+        if (typeof value === "string") {
+          parsedValues.push(value);
+        } else {
+          const obj = {
+            sys_id: value["sys_id"],
+            name: value["name"],
+          };
+
+          parsedValues.push(obj);
+        }
+      });
+    }
+
+    return parsedValues;
   };
 
   useEffect(() => {
@@ -41,13 +66,13 @@ function ServiceNowBusinessServicesSelectInput({
     isMounted.current = true;
 
     setBusinessServices([]);
-    if (serviceNowToolId !== "" && serviceNowToolId != null) {
-      // loadBusinessServices(serviceNowToolId, source).catch((error) => {
-      //   if (isMounted?.current === true) {
-      //     throw error;
-      //   }
-      // });
-    }
+    // if (serviceNowToolId !== "" && serviceNowToolId != null) {
+    // loadBusinessServices(serviceNowToolId, source).catch((error) => {
+    //   if (isMounted?.current === true) {
+    //     throw error;
+    //   }
+    // });
+    // }
 
     return () => {
       source.cancel();
@@ -109,7 +134,7 @@ function ServiceNowBusinessServicesSelectInput({
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={businessServices}
-      setDataFunction={setDataFunction}
+      setDataFunction={validateAndSetData}
       busy={isLoading}
       valueField={valueField}
       textField={textField}

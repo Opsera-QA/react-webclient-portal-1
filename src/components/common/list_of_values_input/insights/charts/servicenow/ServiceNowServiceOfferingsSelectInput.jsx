@@ -12,7 +12,6 @@ function ServiceNowServiceOfferingsSelectInput({
   fieldName,
   dataObject,
   setDataObject,
-  setDataFunction,
   disabled,
   serviceNowToolId,
 }) {
@@ -25,10 +24,36 @@ function ServiceNowServiceOfferingsSelectInput({
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-  const validateAndSetData = (fieldName, value) => {
+  const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
-    newDataObject.setData(fieldName, value);
+    let parsedValues = parseValues(valueArray);
+    newDataObject.setData(fieldName, parsedValues);
     setDataObject({ ...newDataObject });
+  };
+
+  const parseValues = (valueArray) => {
+    if (valueField == null) {
+      return valueArray;
+    }
+
+    let parsedValues = [];
+
+    if (valueArray != null && valueArray.length > 0) {
+      valueArray.map((value) => {
+        if (typeof value === "string") {
+          parsedValues.push(value);
+        } else {
+          const obj = {
+            sys_id: value["sys_id"],
+            name: value["name"],
+          };
+
+          parsedValues.push(obj);
+        }
+      });
+    }
+
+    return parsedValues;
   };
 
   useEffect(() => {
@@ -109,7 +134,7 @@ function ServiceNowServiceOfferingsSelectInput({
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={serviceOfferings}
-      setDataFunction={setDataFunction}
+      setDataFunction={validateAndSetData}
       busy={isLoading}
       valueField={valueField}
       textField={textField}
