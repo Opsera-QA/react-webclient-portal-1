@@ -8,8 +8,10 @@ import {faTools} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import ToolIdentifierSelectionCardView from "components/admin/tools/tool_identifier/ToolIdentifierSelectionCardView";
 import toolIdentifierMetadata from "components/admin/tools/tool_identifier/tool-identifier-metadata";
+import CloseButton from "components/common/buttons/CloseButton";
+import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 
-function ToolIdentifierSelectionScreen({toolModel, setToolModel}) {
+function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
@@ -80,13 +82,15 @@ function ToolIdentifierSelectionScreen({toolModel, setToolModel}) {
 
   const getCardView = () => {
     return (
-      <ToolIdentifierSelectionCardView
-        toolIdentifiers={toolIdentifiers}
-        setDataFunction={setDataFunction}
-        toolIdentifierMetadata={toolIdentifierMetadata}
-        isLoading={isLoading}
-        loadData={loadData}
-      />
+      <div className={"scroll-y full-screen-overlay-selection-container"}>
+        <ToolIdentifierSelectionCardView
+          toolIdentifiers={toolIdentifiers}
+          setDataFunction={setDataFunction}
+          toolIdentifierMetadata={toolIdentifierMetadata}
+          isLoading={isLoading}
+          loadData={loadData}
+        />
+      </div>
     );
   };
 
@@ -97,8 +101,8 @@ function ToolIdentifierSelectionScreen({toolModel, setToolModel}) {
       body={getCardView()}
       metadata={toolIdentifierMetadata}
       titleIcon={faTools}
-      title={"Select Which Tool to Create"}
-      className={"m-3"}
+      title={"Select Which Tool You Would Like to Create"}
+      className={"mx-2 mt-2"}
     />
   );
 }
@@ -106,6 +110,7 @@ function ToolIdentifierSelectionScreen({toolModel, setToolModel}) {
 ToolIdentifierSelectionScreen.propTypes = {
   toolModel: PropTypes.object,
   setToolModel: PropTypes.func,
+  closePanel: PropTypes.func,
 };
 
 export default ToolIdentifierSelectionScreen;

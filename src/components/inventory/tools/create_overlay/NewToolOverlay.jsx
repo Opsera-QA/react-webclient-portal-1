@@ -5,6 +5,8 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import ToolEditorPanel from "components/inventory/tools/tool_details/ToolEditorPanel";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import ToolIdentifierSelectionScreen from "components/inventory/tools/create_overlay/ToolIdentifierSelectionScreen";
+import Row from "react-bootstrap/Row";
+import CancelButton from "components/common/buttons/CancelButton";
 
 function NewToolOverlay({ loadData, isMounted, toolMetadata }) {
   const toastContext = useContext(DialogToastContext);
@@ -24,10 +26,20 @@ function NewToolOverlay({ loadData, isMounted, toolMetadata }) {
 
     if (toolIdentifier == null || toolIdentifier === "") {
       return (
-        <ToolIdentifierSelectionScreen
-          toolModel={toolData}
-          setToolModel={setToolData}
-        />
+        <div>
+          <div className={"full-screen-overlay-panel-body-with-buttons"}>
+            <ToolIdentifierSelectionScreen
+              toolModel={toolData}
+              setToolModel={setToolData}
+              closePanel={closePanel}
+            />
+          </div>
+          <Row className={"mx-0"}>
+            <div className={"ml-auto"}>
+              <CancelButton className={"mt-1 mx-2 mb-2"} closeEditorCallback={closePanel} />
+            </div>
+          </Row>
+        </div>
       );
     }
 
@@ -41,7 +53,12 @@ function NewToolOverlay({ loadData, isMounted, toolMetadata }) {
   };
 
   return (
-    <CreateCenterPanel closePanel={closePanel} objectType={toolMetadata?.type} loadData={loadData}>
+    <CreateCenterPanel
+      closePanel={closePanel}
+      objectType={toolMetadata?.type}
+      loadData={loadData}
+      showCloseButton={true}
+    >
       {getView()}
     </CreateCenterPanel>
   );
