@@ -20,7 +20,7 @@ function ToolTableCardView(
     toolMetadata,
     isLoading,
     loadData,
-    data,
+    tools,
     saveCookies,
     customerAccessRules,
     roleDefinitions,
@@ -66,7 +66,8 @@ function ToolTableCardView(
       <ToolCardView
         isLoading={isLoading}
         loadData={loadData}
-        data={data}
+        data={tools}
+        toolMetadata={toolMetadata}
         toolFilterDto={toolFilterDto}
         setToolFilterDto={setToolFilterDto}
       />
@@ -78,7 +79,9 @@ function ToolTableCardView(
       <ToolsTable
         isLoading={isLoading}
         loadData={loadData}
-        data={data}
+        data={tools}
+        isMounted={isMounted}
+        toolMetadata={toolMetadata}
         toolFilterDto={toolFilterDto}
         setToolFilterDto={setToolFilterDto}
       />
@@ -89,7 +92,7 @@ function ToolTableCardView(
     return (
       <TableCardView
         filterDto={toolFilterDto}
-        data={data}
+        data={tools}
         isLoading={isLoading}
         loadData={loadData}
         cardView={getCardView()}
@@ -120,7 +123,7 @@ function ToolTableCardView(
 }
 
 ToolTableCardView.propTypes = {
-  data: PropTypes.array,
+  tools: PropTypes.array,
   isLoading: PropTypes.bool,
   toolFilterDto: PropTypes.object,
   setToolFilterDto: PropTypes.func,
