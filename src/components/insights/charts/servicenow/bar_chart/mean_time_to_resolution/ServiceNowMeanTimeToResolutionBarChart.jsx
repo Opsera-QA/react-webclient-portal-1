@@ -175,7 +175,7 @@ ServiceNowMeanTimeToResolutionBarChart.propTypes = {
   bars: PropTypes.any,
   xScale: PropTypes.any,
   yScale: PropTypes.any,
-  showSettingsToggle:PropTypes.bool
+  showSettingsToggle: PropTypes.bool,
 };
 
 export default ServiceNowMeanTimeToResolutionBarChart;
