@@ -1,9 +1,6 @@
 import { AuthContext } from "contexts/AuthContext";
 import React, {useContext, useEffect, useRef, useState} from "react";
-import Model from "core/data_model/model";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import toolFilterMetadata from "components/inventory/tools/tool-filter-metadata";
-import PropTypes from "prop-types";
 import axios from "axios";
 import toolManagementActions from "components/admin/tools/tool-management-actions";
 import ToolCategoryTable from "components/admin/tools/tool_category/ToolCategoryTable";
@@ -16,7 +13,6 @@ function ToolCategoryManagement() {
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [toolTypes, setToolTypes] = useState([]);
-  const [toolIdentifierFilterModel, setToolIdentifierFilterModel] = useState(new Model({ ...toolFilterMetadata.newObjectFields }, toolFilterMetadata, false));
   const isMounted = useRef(false);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -93,8 +89,6 @@ function ToolCategoryManagement() {
         data={toolTypes}
         isLoading={isLoading}
         loadData={loadData}
-        toolIdentifierFilterModel={toolIdentifierFilterModel}
-        setToolIdentifierFilterModel={setToolIdentifierFilterModel}
       />
     </ScreenContainer>
   );

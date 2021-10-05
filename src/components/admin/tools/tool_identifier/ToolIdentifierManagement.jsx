@@ -1,8 +1,6 @@
 import { AuthContext } from "contexts/AuthContext";
 import React, {useContext, useEffect, useRef, useState} from "react";
-import Model from "core/data_model/model";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import toolFilterMetadata from "components/inventory/tools/tool-filter-metadata";
 import PropTypes from "prop-types";
 import axios from "axios";
 import toolManagementActions from "components/admin/tools/tool-management-actions";
@@ -10,13 +8,14 @@ import ToolIdentifierTableCardView from "components/admin/tools/tool_identifier/
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ToolManagementSubNavigationBar from "components/admin/tools/ToolManagementSubNavigationBar";
+import ToolFilterModel from "components/inventory/tools/tool.filter.model";
 
 function ToolIdentifierManagement() {
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
-  const [toolIdentifierFilterModel, setToolIdentifierFilterModel] = useState(new Model({ ...toolFilterMetadata.newObjectFields }, toolFilterMetadata, false));
+  const [toolIdentifierFilterModel, setToolIdentifierFilterModel] = useState(new ToolFilterModel());
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
