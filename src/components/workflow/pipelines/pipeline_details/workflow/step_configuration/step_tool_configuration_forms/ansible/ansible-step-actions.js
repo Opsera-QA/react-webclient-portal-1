@@ -2,30 +2,23 @@ import baseActions from "../../../../../../../../utils/actionsBase";
 
 const AnsibleStepActions = {};
 
-AnsibleStepActions.getSCMRepoFiles = async (dataObject, getAccessToken, cancelTokenSource) => {
+AnsibleStepActions.getScmRepositoryFiles = async (getAccessToken, cancelTokenSource, playbookFilePath, defaultBranch, gitToolId, projectId, workspace, service) => {
   const apiUrl = `/tools/scm/getFilesUnderPath`;
   const postBody = {
-    branch: dataObject?.getData("defaultBranch"),
-    filePath: dataObject?.getData("playbookFilePath"),
-    gitToolId: dataObject?.getData("gitToolId"),
-    projectId: dataObject?.getData("repoId"),
-    workspace: dataObject?.getData("workspace"),
-    service: dataObject?.getData("service"),
+    branch: defaultBranch,
+    filePath: playbookFilePath,
+    gitToolId: gitToolId,
+    projectId: projectId,
+    workspace: workspace,
+    service: service,
   };
-  let response = await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-  if (response && response.status === 200) {
-    return response.data;
-  }
-  return [];
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  
 };
 
-AnsibleStepActions.getConfigurations = async (id, getAccessToken, cancelTokenSource) => {
+AnsibleStepActions.getConfigurations = async (getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/tools/ansible/configurations/${id}`;
-  let response = await baseActions.apiGetCallV2(getAccessToken,cancelTokenSource, apiUrl);
-  if (response && response.status === 200) {
-    return response.data;
-  }
-  return [];
+  return await baseActions.apiGetCallV2(getAccessToken,cancelTokenSource, apiUrl);
 };
 
 export default AnsibleStepActions;

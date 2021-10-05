@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function AnsibleSCMToolTypeSelectInput({dataObject, setDataObject, isLoading, disabled}) {
+function AnsibleStepScmToolTypeSelectInput({dataObject, setDataObject, isLoading, disabled}) {
   
   const handleDTOChange = async (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
@@ -51,7 +51,7 @@ function AnsibleSCMToolTypeSelectInput({dataObject, setDataObject, isLoading, di
   );
 }
 
-AnsibleSCMToolTypeSelectInput.propTypes = {
+AnsibleStepScmToolTypeSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
@@ -59,4 +59,4 @@ AnsibleSCMToolTypeSelectInput.propTypes = {
   className: PropTypes.string
 };
 
-export default AnsibleSCMToolTypeSelectInput;
+export default AnsibleStepScmToolTypeSelectInput;

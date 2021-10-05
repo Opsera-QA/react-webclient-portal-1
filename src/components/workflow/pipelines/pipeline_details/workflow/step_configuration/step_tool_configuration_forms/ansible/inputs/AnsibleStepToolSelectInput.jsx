@@ -10,13 +10,13 @@ import { faSpinner, faTools } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
-function AnsibleToolSelectInput({ fieldName, dataObject, setDataObject, disabled, tool_prop, className }) {
+function AnsibleStepToolSelectInput({ fieldName, dataObject, setDataObject, disabled, tool_prop, className }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [ansibleList, setAnsibleList] = useState([]);
   const [isAnsibleSearching, setIsAnsibleSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Ansible Connect Instance");
+  const [placeholderText, setPlaceholderText] = useState("Select a Ansible Connect Instance");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -80,7 +80,7 @@ function AnsibleToolSelectInput({ fieldName, dataObject, setDataObject, disabled
         setAnsibleList(filteredList);
       }
     } catch (error) {
-      setPlaceholder("No Ansible Tool Found");
+      setPlaceholderText("No Ansible Tool Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     } finally {
@@ -99,7 +99,7 @@ function AnsibleToolSelectInput({ fieldName, dataObject, setDataObject, disabled
       toolIdentifier={"ansible"}
       toolFriendlyName={"Ansible"}
       fieldName={fieldName}
-      placeholderText={"Select Ansible Tool"}
+      placeholderText={placeholderText}
       configurationRequired={true}
       textField={(tool) => getTextField(tool)}
       model={dataObject}
@@ -110,7 +110,7 @@ function AnsibleToolSelectInput({ fieldName, dataObject, setDataObject, disabled
   );
 }
 
-AnsibleToolSelectInput.propTypes = {
+AnsibleStepToolSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
@@ -119,8 +119,8 @@ AnsibleToolSelectInput.propTypes = {
   className: PropTypes.string,
 };
 
-AnsibleToolSelectInput.defaultProps = {
+AnsibleStepToolSelectInput.defaultProps = {
   fieldName: "toolConfigId",
 };
 
-export default AnsibleToolSelectInput;
+export default AnsibleStepToolSelectInput;

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 
-function AnsibleGitBranchInput({dataObject, setDataObject, disabled}) {
+function AnsibleStepGitBranchInput({dataObject, setDataObject, disabled}) {
   const setBranch = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
     // newDataObject.setData("branch", selectedOption);
@@ -24,10 +24,10 @@ function AnsibleGitBranchInput({dataObject, setDataObject, disabled}) {
   );
 }
 
-AnsibleGitBranchInput.propTypes = {
+AnsibleStepGitBranchInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default AnsibleGitBranchInput;
+export default AnsibleStepGitBranchInput;

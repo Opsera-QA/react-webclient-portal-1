@@ -5,12 +5,12 @@ import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
 import ansibleStepFormMetadata  from "./ansible-stepForm-metadata";
-import AnsibleToolSelectInput from "./inputs/AnsibleToolSelectInput";
-import AnsibleSCMToolTypeSelectInput from "./inputs/AnsibleSCMToolTypeSelectInput";
-import AnsibleSCMToolSelectInput from "./inputs/AnsibleSCMToolSelectInput";
-import AnsibleGitRepositoryInput from "./inputs/AnsibleGitRepositoryInput";
-import AnsibleGitBranchInput from "./inputs/AnsibleGitBranchInput";
-import AnsibleSCMRepoFiles from "./inputs/AnsibleSCMRepoFiles";
+import AnsibleStepToolSelectInput from "./inputs/AnsibleStepToolSelectInput";
+import AnsibleStepScmToolTypeSelectInput from "./inputs/AnsibleSteopScmToolTypeSelectInput";
+import AnsibleStepScmToolSelectInput from "./inputs/AnsibleStepScmToolSelectInput";
+import AnsibleStepGitRepositoryInput from "./inputs/AnsibleStepGitRepositoryInput";
+import AnsibleStepGitBranchInput from "./inputs/AnsibleStepGitBranchInput";
+import AnsibleStepScmRepositoryFileSelectInput from "./inputs/AnsibleStepScmRepositoryFileSelectInput";
 import JsonInput from "../../../../../../../common/inputs/object/JsonInput";
 
 function AnsibleStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPanel, parentCallback }) {
@@ -63,24 +63,24 @@ function AnsibleStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPan
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <AnsibleToolSelectInput
+      <AnsibleStepToolSelectInput
         dataObject={AnsibleStepConfigurationDto}
         setDataObject={setAnsibleStepConfigurationDataDto}
       />
-      <AnsibleSCMToolTypeSelectInput
+      <AnsibleStepScmToolTypeSelectInput
         dataObject={AnsibleStepConfigurationDto}
         setDataObject={setAnsibleStepConfigurationDataDto}
       />
-      <AnsibleSCMToolSelectInput
+      <AnsibleStepScmToolSelectInput
         dataObject={AnsibleStepConfigurationDto}
         setDataObject={setAnsibleStepConfigurationDataDto}
         disabled={AnsibleStepConfigurationDto.getData("service").length === 0}
       />
-      <AnsibleGitRepositoryInput
-        dataObject={AnsibleStepConfigurationDto}
-        setDataObject={setAnsibleStepConfigurationDataDto}
+      <AnsibleStepGitRepositoryInput
+        model={AnsibleStepConfigurationDto}
+        setModel={setAnsibleStepConfigurationDataDto}
       />
-      <AnsibleGitBranchInput
+      <AnsibleStepGitBranchInput
         dataObject={AnsibleStepConfigurationDto}
         setDataObject={setAnsibleStepConfigurationDataDto}
       />
@@ -89,9 +89,9 @@ function AnsibleStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPan
         setDataObject={setAnsibleStepConfigurationDataDto}  
         fieldName={"playbookFilePath"}
       />
-      <AnsibleSCMRepoFiles
-        setDataObject={setAnsibleStepConfigurationDataDto}
-        dataObject={AnsibleStepConfigurationDto}
+      <AnsibleStepScmRepositoryFileSelectInput
+        setModel={setAnsibleStepConfigurationDataDto}
+        model={AnsibleStepConfigurationDto}
         disabled={
           AnsibleStepConfigurationDto && AnsibleStepConfigurationDto.getData("playbookFilePath")
             ? AnsibleStepConfigurationDto.getData("playbookFilePath").length === 0
