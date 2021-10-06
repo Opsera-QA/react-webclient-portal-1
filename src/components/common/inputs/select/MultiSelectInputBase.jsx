@@ -101,7 +101,7 @@ function MultiSelectInputBase(
           groupBy={groupBy}
           value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : [] }
           placeholder={placeholderText}
-          disabled={disabled}
+          disabled={disabled || !Array.isArray(selectOptions) || selectOptions?.length === 0 || busy}
           onChange={newValue => setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)}
         />
       </div>
