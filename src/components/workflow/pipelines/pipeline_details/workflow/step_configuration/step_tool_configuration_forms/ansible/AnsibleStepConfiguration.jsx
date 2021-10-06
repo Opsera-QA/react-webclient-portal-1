@@ -4,16 +4,16 @@ import PipelineStepEditorPanelContainer from "components/common/panels/detail_pa
 import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
-import ansibleStepMetadata  from "./ansible-step-metadata";
+import ansibleStepMetadata  from "./ansible.step.metadata";
 import AnsibleStepToolSelectInput from "./inputs/AnsibleStepToolSelectInput";
-import AnsibleStepScmToolTypeSelectInput from "./inputs/AnsibleSteopScmToolTypeSelectInput";
-import AnsibleStepScmToolSelectInput from "./inputs/AnsibleStepScmToolSelectInput";
+import AnsibleStepScmServiceTypeSelectInput from "./inputs/AnsibleStepScmServiceTypeSelectInput";
+import AnsibleStepScmToolIdentifierSelectInput from "./inputs/AnsibleStepScmToolIdentifierSelectInput";
 import AnsibleStepGitRepositoryInput from "./inputs/AnsibleStepGitRepositoryInput";
 import AnsibleStepGitBranchInput from "./inputs/AnsibleStepGitBranchInput";
 import AnsibleStepScmRepositoryFileSelectInput from "./inputs/AnsibleStepScmRepositoryFileSelectInput";
 import JsonInput from "../../../../../../../common/inputs/object/JsonInput";
 
-function AnsibleStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPanel, parentCallback }) {
+function AnsibleStepConfiguration({ stepTool, stepId, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
   const [AnsibleStepConfigurationDto, setAnsibleStepConfigurationDataDto] = useState(undefined);
   const [thresholdVal, setThresholdValue] = useState("");
@@ -67,11 +67,11 @@ function AnsibleStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPan
         model={AnsibleStepConfigurationDto}
         setModel={setAnsibleStepConfigurationDataDto}
       />
-      <AnsibleStepScmToolTypeSelectInput
-        dataObject={AnsibleStepConfigurationDto}
-        setDataObject={setAnsibleStepConfigurationDataDto}
+      <AnsibleStepScmServiceTypeSelectInput
+        model={AnsibleStepConfigurationDto}
+        setModel={setAnsibleStepConfigurationDataDto}
       />
-      <AnsibleStepScmToolSelectInput
+      <AnsibleStepScmToolIdentifierSelectInput
         model={AnsibleStepConfigurationDto}
         setModel={setAnsibleStepConfigurationDataDto}
         disabled={AnsibleStepConfigurationDto.getData("service").length === 0}
@@ -92,32 +92,21 @@ function AnsibleStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPan
       <AnsibleStepScmRepositoryFileSelectInput
         setModel={setAnsibleStepConfigurationDataDto}
         model={AnsibleStepConfigurationDto}
-        disabled={
-          AnsibleStepConfigurationDto && AnsibleStepConfigurationDto.getData("playbookFilePath")
-            ? AnsibleStepConfigurationDto.getData("playbookFilePath").length === 0
-            : true
-        }
-        tool_prop={
-          AnsibleStepConfigurationDto && AnsibleStepConfigurationDto.getData("toolConfigId")
-            ? AnsibleStepConfigurationDto.getData("toolConfigId")
-            : ""
-        }
-        />
-        <JsonInput
-          className={"my-2"}
-          fieldName={"commandArgs"}
-          model={AnsibleStepConfigurationDto}
-          setModel={setAnsibleStepConfigurationDataDto}
-        />
+      />
+      <JsonInput
+        className={"my-2"}
+        fieldName={"commandArgs"}
+        model={AnsibleStepConfigurationDto}
+        setModel={setAnsibleStepConfigurationDataDto}
+      />
     </PipelineStepEditorPanelContainer>
   );
 }
 
 AnsibleStepConfiguration.propTypes = {
-  pipelineId: PropTypes.string,
-  stepId: PropTypes.string,
   parentCallback: PropTypes.func,
   stepTool: PropTypes.object,
+  stepId: PropTypes.string,
   closeEditorPanel: PropTypes.func,
 };
 

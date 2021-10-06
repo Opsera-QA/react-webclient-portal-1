@@ -7,7 +7,7 @@ import pipelineActions from "../../../../../../../pipeline-actions";
 import axios from "axios";
 import PipelineActions from "../../../../../../../pipeline-actions";
 
-function AnsibleStepScmToolSelectInput({model, setModel, disabled}) {
+function AnsibleStepScmToolIdentifierSelectInput({model, setModel, disabled}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -97,14 +97,14 @@ function AnsibleStepScmToolSelectInput({model, setModel, disabled}) {
   );
 }
 
-AnsibleStepScmToolSelectInput.propTypes = {
+AnsibleStepScmToolIdentifierSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string
 };
 
-AnsibleStepScmToolSelectInput.defaultProps = {
+AnsibleStepScmToolIdentifierSelectInput.defaultProps = {
   disabled : false
 };
-export default AnsibleStepScmToolSelectInput;
+export default AnsibleStepScmToolIdentifierSelectInput;

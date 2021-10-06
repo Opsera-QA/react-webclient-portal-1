@@ -3,24 +3,29 @@ import PropTypes from "prop-types";
 import RepositorySelectInput from "../../../../../../../../common/list_of_values_input/tools/git/RepositorySelectInput";
 
 function AnsibleStepGitRepositoryInput({model, setModel, disabled}) {
-  const setRepository = (fieldName, selectedOption) => {
-    let newDataObject = {...model};
-    newDataObject.setData("repository", selectedOption.name);
-    newDataObject.setData("repoId", selectedOption.id);
-    newDataObject.setData("projectId", selectedOption.id);
-    newDataObject.setData("sshUrl", selectedOption.sshUrl || "");
-    newDataObject.setData("gitUrl", selectedOption.httpUrl || "");
-    setModel({...newDataObject});
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newModelObject = {...model};
+    console.log(selectedOption,'**********');
+    newModelObject.setData("repository", selectedOption.name);
+    newModelObject.setData("repoId", selectedOption.id);
+    newModelObject.setData("projectId", selectedOption.id);
+    newModelObject.setData("sshUrl", selectedOption.sshUrl || "");
+    newModelObject.setData("gitUrl", selectedOption.httpUrl || "");
+    setModel({...newModelObject});
   };
   const clearDataFunction=(fieldName)=>{
-    let newDataObject = {...model};
-    newDataObject.setData("repository", '');
-    newDataObject.setData("repoId", '');
-    newDataObject.setData("projectId", '');
-    newDataObject.setData("sshUrl", '');
-    newDataObject.setData("gitUrl", '');
-    setModel({...newDataObject});
+    let newModelObject = {...model};
+    newModelObject.setData("repository", '');
+    newModelObject.setData("repoId", '');
+    newModelObject.setData("projectId", '');
+    newModelObject.setData("sshUrl", '');
+    newModelObject.setData("gitUrl", '');
+    setModel({...newModelObject});
   };
+
+  if(!model.getData("service") || !model.getData("gitToolId")) {
+    return null;
+  }
 
   return (
      <RepositorySelectInput
@@ -31,7 +36,7 @@ function AnsibleStepGitRepositoryInput({model, setModel, disabled}) {
        dataObject={model}
        setDataObject={setModel}
        clearDataFunction={clearDataFunction}
-       setDataFunction={setRepository}
+       setDataFunction={setDataFunction}
        disabled={disabled}
      />
   );

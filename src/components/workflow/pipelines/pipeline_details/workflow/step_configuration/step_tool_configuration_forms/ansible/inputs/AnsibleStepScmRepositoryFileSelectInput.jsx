@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
-import AnsibleStepActions from "../ansible-step-actions";
+import AnsibleStepActions from "../ansible.step.actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faSync } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
@@ -87,13 +87,15 @@ function AnsibleStepScmRepositoryFileSelectInput({
       const result = await AnsibleStepActions.getScmRepositoryFiles(getAccessToken, cancelTokenSource, playbookFilePath, defaultBranch, gitToolId, projectId, workspace, service);
       const response = result?.data?.message;
       const status = result?.status;
-      if (response && status === 200) {
-        if (response.length === 0) {
+      if (response && status === 200 && response.status === 200) {
+        
+        if (response.length === 0 ) {
           model.setData("playbookFileName", "");
           setPlaceholderText("No Files Found");
         }else {  
           setPlaceholderText("Select a File");
         }
+        
         setRepoFiles(response);       
         return;
       }
@@ -117,7 +119,6 @@ function AnsibleStepScmRepositoryFileSelectInput({
   //     );
   //   }
   // };
-  
   return (
     <div>
       <SelectInputBase
@@ -129,7 +130,7 @@ function AnsibleStepScmRepositoryFileSelectInput({
         textField={textField}
         valueField={valueField}
         placeholderText={placeholderText}
-        disabled={disabled || (repoFiles == null || repoFiles.length === 0)}
+        disabled={repoFiles == null || repoFiles.length === 0}
       />
       {/* <div onClick={() => loadData()} className="text-muted ml-3 dropdown-data-fetch">
         {getInfoText()}
@@ -151,6 +152,7 @@ AnsibleStepScmRepositoryFileSelectInput.defaultProps = {
   valueField: "name",
   textField: "name",
   fieldName: "playbookFileName",
+  
 };
 
 export default AnsibleStepScmRepositoryFileSelectInput;

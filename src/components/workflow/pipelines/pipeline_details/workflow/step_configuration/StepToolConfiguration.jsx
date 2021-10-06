@@ -689,17 +689,10 @@ function StepToolConfiguration({
         case "ansible":
           return (
             <AnsibleStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
+              stepTool={stepTool}
+              stepId={stepId}
+              parentCallback={callbackFunction}
+              callbackSaveToVault={saveToVault}
             />
           );
       case "sfdc-configurator":

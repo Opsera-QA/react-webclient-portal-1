@@ -10,7 +10,7 @@ import { faSpinner, faTools } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
-function AnsibleStepToolSelectInput({ fieldName, model, setModel, disabled, tool_prop, className }) {
+function AnsibleStepToolSelectInput({ fieldName, model, setModel, disabled, className }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [ansibleList, setAnsibleList] = useState([]);
@@ -20,41 +20,41 @@ function AnsibleStepToolSelectInput({ fieldName, model, setModel, disabled, tool
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-    if (!disabled) {
-      loadData(source).catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
+  // useEffect(() => {
+  //   if (cancelTokenSource) {
+  //     cancelTokenSource.cancel();
+  //   }
+  //   const source = axios.CancelToken.source();
+  //   setCancelTokenSource(source);
+  //   isMounted.current = true;
+  //   if (!disabled) {
+  //     loadData(source).catch((error) => {
+  //       if (isMounted?.current === true) {
+  //         throw error;
+  //       }
+  //     });
+  //   }
+  //   return () => {
+  //     source.cancel();
+  //     isMounted.current = false;
+  //   };
+  // }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      await fetchAnsibleDetails(cancelSource);
-    } catch (error) {
-      if (isMounted?.current === true) {
-        console.error(error);
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
+  // const loadData = async (cancelSource = cancelTokenSource) => {
+  //   try {
+  //     setIsLoading(true);
+  //     await fetchAnsibleDetails(cancelSource);
+  //   } catch (error) {
+  //     if (isMounted?.current === true) {
+  //       console.error(error);
+  //       toastContext.showLoadingErrorDialog(error);
+  //     }
+  //   } finally {
+  //     if (isMounted?.current === true) {
+  //       setIsLoading(false);
+  //     }
+  //   }
+  // };
 
   const fetchAnsibleDetails = async (cancelSource) => {
     setIsAnsibleSearching(true);
@@ -112,7 +112,6 @@ AnsibleStepToolSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
-  tool_prop: PropTypes.string,
   className: PropTypes.string,
 };
 
