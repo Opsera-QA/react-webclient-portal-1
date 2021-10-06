@@ -36,7 +36,7 @@ function NewToolOverlay({ loadData, isMounted, toolMetadata }) {
           </div>
           <Row className={"mx-0"}>
             <div className={"ml-auto"}>
-              <CancelButton className={"mt-1 mx-2 mb-2"} closeEditorCallback={closePanel} />
+              <CancelButton size={"md"} className={"mx-2 mb-2"} cancelFunction={closePanel} />
             </div>
           </Row>
         </div>
