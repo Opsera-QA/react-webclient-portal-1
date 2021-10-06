@@ -7,7 +7,7 @@ import pipelineActions from "../../../../../../../pipeline-actions";
 import axios from "axios";
 import PipelineActions from "../../../../../../../pipeline-actions";
 
-function AnsibleStepScmToolSelectInput({dataObject, setDataObject, disabled}) {
+function AnsibleStepScmToolSelectInput({model, setModel, disabled}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,12 +37,12 @@ function AnsibleStepScmToolSelectInput({dataObject, setDataObject, disabled}) {
       source.cancel();
       isMounted.current = false;
     };
-  }, [dataObject?.data?.service, disabled]);
+  }, [model?.data?.service, disabled]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getToolsList(dataObject?.data?.service, cancelSource);
+      await getToolsList(model?.data?.service, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -85,8 +85,8 @@ function AnsibleStepScmToolSelectInput({dataObject, setDataObject, disabled}) {
   return (
      <SelectInputBase
        fieldName={"gitToolId"}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
+       dataObject={model}
+       setDataObject={setModel}
        selectOptions={SCMList ? SCMList : []}
        valueField={"id"}
        textField={"name"}
@@ -98,8 +98,8 @@ function AnsibleStepScmToolSelectInput({dataObject, setDataObject, disabled}) {
 }
 
 AnsibleStepScmToolSelectInput.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string
 };

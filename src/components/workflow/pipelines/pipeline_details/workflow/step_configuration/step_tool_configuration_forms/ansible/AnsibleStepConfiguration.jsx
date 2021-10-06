@@ -72,8 +72,8 @@ function AnsibleStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPan
         setDataObject={setAnsibleStepConfigurationDataDto}
       />
       <AnsibleStepScmToolSelectInput
-        dataObject={AnsibleStepConfigurationDto}
-        setDataObject={setAnsibleStepConfigurationDataDto}
+        model={AnsibleStepConfigurationDto}
+        setModel={setAnsibleStepConfigurationDataDto}
         disabled={AnsibleStepConfigurationDto.getData("service").length === 0}
       />
       <AnsibleStepGitRepositoryInput
