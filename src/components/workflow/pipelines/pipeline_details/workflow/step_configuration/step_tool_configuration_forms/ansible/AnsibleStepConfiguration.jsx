@@ -64,8 +64,8 @@ function AnsibleStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPan
       isLoading={isLoading}
     >
       <AnsibleStepToolSelectInput
-        dataObject={AnsibleStepConfigurationDto}
-        setDataObject={setAnsibleStepConfigurationDataDto}
+        model={AnsibleStepConfigurationDto}
+        setModel={setAnsibleStepConfigurationDataDto}
       />
       <AnsibleStepScmToolTypeSelectInput
         dataObject={AnsibleStepConfigurationDto}

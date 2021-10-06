@@ -117,7 +117,7 @@ function AnsibleStepScmRepositoryFileSelectInput({
   //     );
   //   }
   // };
-console.log(repoFiles,'*****88repoFiles;');
+  
   return (
     <div>
       <SelectInputBase

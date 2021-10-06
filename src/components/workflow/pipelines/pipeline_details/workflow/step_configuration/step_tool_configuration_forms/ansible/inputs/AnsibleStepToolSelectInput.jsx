@@ -10,7 +10,7 @@ import { faSpinner, faTools } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
-function AnsibleStepToolSelectInput({ fieldName, dataObject, setDataObject, disabled, tool_prop, className }) {
+function AnsibleStepToolSelectInput({ fieldName, model, setModel, disabled, tool_prop, className }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [ansibleList, setAnsibleList] = useState([]);
@@ -24,11 +24,9 @@ function AnsibleStepToolSelectInput({ fieldName, dataObject, setDataObject, disa
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
-
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-
     if (!disabled) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
@@ -36,7 +34,6 @@ function AnsibleStepToolSelectInput({ fieldName, dataObject, setDataObject, disa
         }
       });
     }
-
     return () => {
       source.cancel();
       isMounted.current = false;
@@ -87,10 +84,10 @@ function AnsibleStepToolSelectInput({ fieldName, dataObject, setDataObject, disa
       setIsAnsibleSearching(false);
     }
   };
+
   const getTextField = (tool) => {
     const toolUrl = tool?.configuration?.toolURL || "No Ansible URL Assigned";
     const toolName = tool?.name; 
-
     return (`${toolName} (${toolUrl})`);
   };
 
@@ -102,8 +99,8 @@ function AnsibleStepToolSelectInput({ fieldName, dataObject, setDataObject, disa
       placeholderText={placeholderText}
       configurationRequired={true}
       textField={(tool) => getTextField(tool)}
-      model={dataObject}
-      setModel={setDataObject}
+      model={model}
+      setModel={setModel}
       disabled={disabled}
       className={className}
     />
@@ -112,8 +109,8 @@ function AnsibleStepToolSelectInput({ fieldName, dataObject, setDataObject, disa
 
 AnsibleStepToolSelectInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   tool_prop: PropTypes.string,
   className: PropTypes.string,
