@@ -81,8 +81,8 @@ function AnsibleStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPan
         setModel={setAnsibleStepConfigurationDataDto}
       />
       <AnsibleStepGitBranchInput
-        dataObject={AnsibleStepConfigurationDto}
-        setDataObject={setAnsibleStepConfigurationDataDto}
+        model={AnsibleStepConfigurationDto}
+        setModel={setAnsibleStepConfigurationDataDto}
       />
       <TextInputBase
         dataObject={AnsibleStepConfigurationDto}
