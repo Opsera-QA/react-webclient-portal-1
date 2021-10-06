@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import ToolsTable from "components/inventory/tools/ToolsTable";
 import TableCardView from "components/common/table/TableCardView";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
-import NewToolOverlay from "components/inventory/tools/NewToolOverlay";
+import NewToolOverlay from "components/inventory/tools/create_overlay/NewToolOverlay";
 import PropTypes from "prop-types";
 import ToolCardView from "components/inventory/tools/ToolCardView";
 import FilterContainer from "components/common/table/FilterContainer";
