@@ -37,6 +37,7 @@ OctopusStepActions.getVersions = async (id,spaceId, feedId,ecrPushStepId,pipelin
   return [];
 };
 
+// TODO: Update References to V2 and remove this. Don't use this going forward
 OctopusStepActions.getEnvironments = async (id,spaceId, getAccessToken) => {
   const apiUrl = `/tools/octopus/environments/${id}/octopus/${spaceId}`;
   let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
@@ -45,6 +46,12 @@ OctopusStepActions.getEnvironments = async (id,spaceId, getAccessToken) => {
   }
   return [];
 };
+
+OctopusStepActions.getEnvironmentsV2 = async (getAccessToken, cancelTokenSource, id, spaceId) => {
+  const apiUrl = `/tools/octopus/environments/${id}/octopus/${spaceId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 
 OctopusStepActions.getTenants = async (id,spaceId, projectId,environmentId, getAccessToken) => {
   const accessToken = await getAccessToken();
