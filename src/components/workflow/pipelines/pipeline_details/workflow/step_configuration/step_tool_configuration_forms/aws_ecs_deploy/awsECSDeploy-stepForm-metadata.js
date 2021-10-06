@@ -46,7 +46,7 @@ const awsECSDeployStepFormMetadata = {
     ecsServiceName: "",
     namePretext: "",
     dynamicServiceName: false,
-    ecsDeleteService: true
+    ecsDeleteService: false
   }
 };
 
