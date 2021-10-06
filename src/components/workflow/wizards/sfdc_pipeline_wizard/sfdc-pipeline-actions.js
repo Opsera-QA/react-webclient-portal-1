@@ -441,6 +441,11 @@ sfdcPipelineActions.getInvalidFileList = async (getAccessToken, cancelTokenSourc
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+sfdcPipelineActions.getComponentNameCountListV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel.getData("recordId")}/get_component_name_count_list`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 sfdcPipelineActions.getPackageXmlFromRun = async (getAccessToken, cancelTokenSource, pipelineId, stepId, runNumber) => {
   const response = await pipelineActivityActions.getPipelineActivityLogsByRunNumber(getAccessToken, cancelTokenSource, pipelineId, undefined, runNumber, undefined, "console output");
   const logs = response?.data?.data;
