@@ -1,4 +1,4 @@
-const ansibleStepFormMetadata = {
+const ansibleStepMetadata = {
   type: "Ansible Tool Configuration",
   fields: [
     {
@@ -77,4 +77,4 @@ const ansibleStepFormMetadata = {
   }
 };
 
-export default ansibleStepFormMetadata;
+export default ansibleStepMetadata;

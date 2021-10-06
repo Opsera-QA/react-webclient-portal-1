@@ -13,12 +13,12 @@ AnsibleStepActions.getScmRepositoryFiles = async (getAccessToken, cancelTokenSou
     service: service,
   };
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-  
+
 };
 
 AnsibleStepActions.getConfigurations = async (getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/tools/ansible/configurations/${id}`;
-  return await baseActions.apiGetCallV2(getAccessToken,cancelTokenSource, apiUrl);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 export default AnsibleStepActions;

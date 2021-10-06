@@ -4,7 +4,7 @@ import PipelineStepEditorPanelContainer from "components/common/panels/detail_pa
 import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
-import ansibleStepFormMetadata  from "./ansible-stepForm-metadata";
+import ansibleStepMetadata  from "./ansible-step-metadata";
 import AnsibleStepToolSelectInput from "./inputs/AnsibleStepToolSelectInput";
 import AnsibleStepScmToolTypeSelectInput from "./inputs/AnsibleSteopScmToolTypeSelectInput";
 import AnsibleStepScmToolSelectInput from "./inputs/AnsibleStepScmToolSelectInput";
@@ -28,7 +28,7 @@ function AnsibleStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPan
     let { threshold } = stepTool;
     let ansibleConfigurationData = modelHelpers.getPipelineStepConfigurationModel(
       stepTool,
-      ansibleStepFormMetadata
+      ansibleStepMetadata
     );
 
     setAnsibleStepConfigurationDataDto(ansibleConfigurationData);
