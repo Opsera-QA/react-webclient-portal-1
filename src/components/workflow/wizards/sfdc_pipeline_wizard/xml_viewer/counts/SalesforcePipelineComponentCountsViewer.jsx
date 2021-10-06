@@ -6,6 +6,8 @@ import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizar
 import {AuthContext} from "contexts/AuthContext";
 import SalesforcePipelineWizardComponentCountTable
   from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/counts/SalesforcePipelineWizardComponentCountTable";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const SalesforcePipelineComponentCountsViewer = ({pipelineWizardModel, setPipelineWizardModel}) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -68,11 +70,15 @@ const SalesforcePipelineComponentCountsViewer = ({pipelineWizardModel, setPipeli
   };
 
   return (
-    <SalesforcePipelineWizardComponentCountTable
-      loadData={loadData}
-      isLoading={isLoading}
-      componentCounts={componentCounts}
-    />
+    <Row>
+      <Col lg={6}>
+        <SalesforcePipelineWizardComponentCountTable
+          loadData={loadData}
+          isLoading={isLoading}
+          componentCounts={componentCounts}
+        />
+      </Col>
+    </Row>
   );
 };
 
