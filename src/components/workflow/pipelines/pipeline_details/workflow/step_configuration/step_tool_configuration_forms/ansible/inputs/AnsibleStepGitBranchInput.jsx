@@ -9,6 +9,13 @@ function AnsibleStepGitBranchInput({model, setModel, disabled}) {
     newDataObject.setData("defaultBranch", selectedOption);
     setModel({...newDataObject});
   };
+
+  const clearDataFunction=(fieldName)=>{
+    let newDataObject = {...model};
+    newDataObject.setData("defaultBranch", '');
+    setModel({...newDataObject});
+  };
+
   return (
      <GitBranchInput
        fieldName={"defaultBranch"}
@@ -18,6 +25,7 @@ function AnsibleStepGitBranchInput({model, setModel, disabled}) {
        repoId={model.getData("repoId")}
        dataObject={model}
        setDataFunction={setBranch}
+       clearDataFunction={clearDataFunction}
        setDataObject={setModel}
        disabled={disabled}
      />

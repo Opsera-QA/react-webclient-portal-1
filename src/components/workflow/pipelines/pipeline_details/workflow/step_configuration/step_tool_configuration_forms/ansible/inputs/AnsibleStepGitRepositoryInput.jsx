@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-  import RepositorySelectInput from "../../../../../../../../common/list_of_values_input/tools/git/RepositorySelectInput";
+import RepositorySelectInput from "../../../../../../../../common/list_of_values_input/tools/git/RepositorySelectInput";
 
 function AnsibleStepGitRepositoryInput({model, setModel, disabled}) {
   const setRepository = (fieldName, selectedOption) => {
