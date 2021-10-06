@@ -4,8 +4,6 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
 import AnsibleStepActions from "../ansible.step.actions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  faSync } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import { isEmpty } from "lodash";
 
@@ -13,7 +11,6 @@ function AnsibleStepScmRepositoryFileSelectInput({
   fieldName,
   model,
   setModel,
-  disabled,
   textField,
   valueField,
 }) {
@@ -64,7 +61,7 @@ function AnsibleStepScmRepositoryFileSelectInput({
         }
       });
     }
-  },[defaultBranch, gitToolId, projectId, workspace, service]);
+  },[defaultBranch, gitToolId, projectId, service]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try { 
@@ -87,8 +84,7 @@ function AnsibleStepScmRepositoryFileSelectInput({
       const result = await AnsibleStepActions.getScmRepositoryFiles(getAccessToken, cancelTokenSource, playbookFilePath, defaultBranch, gitToolId, projectId, workspace, service);
       const response = result?.data?.message;
       const status = result?.status;
-      if (response && status === 200 && response.status === 200) {
-        
+      if (response && status === 200 &&  result?.data?.status === 200) {
         if (response.length === 0 ) {
           model.setData("playbookFileName", "");
           setPlaceholderText("No Files Found");
@@ -109,16 +105,6 @@ function AnsibleStepScmRepositoryFileSelectInput({
     }
   };
 
-  // const getInfoText = () => {
-  //   if (model.getData("playbookFilePath").length > 0) {
-  //     return (
-  //       <small>
-  //         <FontAwesomeIcon icon={faSync} className="pr-1" />
-  //         Click here to fetch file list
-  //       </small>
-  //     );
-  //   }
-  // };
   return (
     <div>
       <SelectInputBase
@@ -132,9 +118,6 @@ function AnsibleStepScmRepositoryFileSelectInput({
         placeholderText={placeholderText}
         disabled={repoFiles == null || repoFiles.length === 0}
       />
-      {/* <div onClick={() => loadData()} className="text-muted ml-3 dropdown-data-fetch">
-        {getInfoText()}
-      </div> */}
     </div>
   );
 }
@@ -143,7 +126,6 @@ AnsibleStepScmRepositoryFileSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
-  disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
 };

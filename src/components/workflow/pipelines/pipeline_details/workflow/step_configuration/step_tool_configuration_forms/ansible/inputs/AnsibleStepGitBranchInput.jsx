@@ -10,7 +10,7 @@ function AnsibleStepGitBranchInput({model, setModel, disabled}) {
     setModel({...newDataObject});
   };
 
-  if(!model.getData("service") || !model.getData("gitToolId") || !model.getData("workspace") || !model.getData("repoId")) {
+  if(!model.getData("service") || !model.getData("gitToolId") ||  !model.getData("repoId")) {
     return null;
   }
 
