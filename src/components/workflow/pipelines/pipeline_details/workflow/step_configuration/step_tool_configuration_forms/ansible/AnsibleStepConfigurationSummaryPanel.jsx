@@ -21,13 +21,13 @@ function AnsibleStepConfigurationSummaryPanel({ ansibleDataObject, pipelineData,
           <ToolNameField model={ansibleDataObject} fieldName={"toolConfigId"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansibleDataObject} fieldName={"gitToolId"}/>
+          <ToolNameField dataObject={ansibleDataObject} fieldName={"gitToolId"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansibleDataObject} fieldName={"repoId"}/>
+          <ToolNameField dataObject={ansibleDataObject} fieldName={"repoId"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansibleDataObject} fieldName={"projectId"}/>
+          <ToolNameField dataObject={ansibleDataObject} fieldName={"projectId"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={ansibleDataObject} fieldName={"service"}/>
@@ -55,8 +55,7 @@ function AnsibleStepConfigurationSummaryPanel({ ansibleDataObject, pipelineData,
         </Col>
         <Col lg={6}>
           <JsonField dataObject={ansibleDataObject} fieldName={"commandArgs"}/>
-        </Col>
-        
+        </Col>        
       </Row>
     </PipelineStepSummaryPanelContainer>
   );
