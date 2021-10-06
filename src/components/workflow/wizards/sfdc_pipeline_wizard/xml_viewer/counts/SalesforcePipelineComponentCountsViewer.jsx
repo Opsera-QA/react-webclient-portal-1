@@ -78,6 +78,7 @@ const SalesforcePipelineComponentCountsViewer = ({pipelineWizardModel, setPipeli
 
 SalesforcePipelineComponentCountsViewer.propTypes = {
   pipelineWizardModel: PropTypes.object,
+  setPipelineWizardModel: PropTypes.func,
 };
 
 export default SalesforcePipelineComponentCountsViewer;
