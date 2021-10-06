@@ -64,6 +64,7 @@ function MarketplaceCharts ({ dashboardId }) {
   const getMarketKpiData = async (filterModel = marketplaceFilterDto, cancelSource = cancelTokenSource) => {
     const kpiResponse = await KpiActions.getKpisV2(getAccessToken, cancelSource, filterModel);
     const kpis = kpiResponse?.data?.data;
+    console.log("kpiResponse: " + JSON.stringify(kpiResponse));
 
     if (isMounted?.current === true && kpiResponse && kpis) {
       setKpis(kpis);

@@ -16,8 +16,8 @@ import {AuthContext} from "contexts/AuthContext";
 function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabled, pipelineId, listOfSteps }) {
   const { featureFlagHideItemInProd } = useContext(AuthContext);
   const getTenantInput = () => {
-    if (dataObject?.getData("tenantedDeploymentMode")?.toLowerCase() === "tenanted" || dataObject?.getData("tenantedDeploymentMode")?.toLowerCase() === "tenantedoruntenanted") {
-      if (featureFlagHideItemInProd() !== false) {
+    if (["tenanted", "tenantedoruntenanted"].includes(dataObject?.getData("tenantedDeploymentMode")?.toLowerCase())) {
+      // if (featureFlagHideItemInProd() !== false) {
         return (
           <OctopusTenantSelectInput
             fieldName={"tenantId"}
@@ -26,7 +26,7 @@ function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabl
             disabled={dataObject && dataObject.getData("projectGroupId").length === 0}
           />
         );
-      }
+      // }
 
       // return (
       //
