@@ -13,6 +13,7 @@ const SalesforcePipelineComponentCountsViewer = ({pipelineWizardModel, setPipeli
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [componentCounts, setComponentCounts] = useState([]);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -61,6 +62,7 @@ const SalesforcePipelineComponentCountsViewer = ({pipelineWizardModel, setPipeli
       toastContext.showInlineErrorMessage("Error Pulling Component Counts");
     }
 
+    setComponentCounts(componentNameCountArray);
     pipelineWizardModel.setData("componentNameCounts", componentNameCountArray);
     setPipelineWizardModel({...pipelineWizardModel});
   };
@@ -68,9 +70,10 @@ const SalesforcePipelineComponentCountsViewer = ({pipelineWizardModel, setPipeli
   return (
     <SalesforcePipelineWizardComponentCountTable
       loadData={loadData}
-      isLoading={isLoading} gitFiles={}
+      isLoading={isLoading}
+      componentCounts={componentCounts}
     />
-  )
+  );
 };
 
 SalesforcePipelineComponentCountsViewer.propTypes = {

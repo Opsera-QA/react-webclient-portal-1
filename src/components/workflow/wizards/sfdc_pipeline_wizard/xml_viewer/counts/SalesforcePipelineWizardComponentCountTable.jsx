@@ -32,14 +32,14 @@ const SalesforcePipelineWizardComponentCountTable = ({ loadData, componentCounts
   };
 
   return (
-      <FilterContainer
-        loadData={loadData}
-        isLoading={isLoading}
-        title={"Component Counts"}
-        titleIcon={faTally}
-        body={getComponentCountsTable()}
-        showBorder={false}
-      />
+    <FilterContainer
+      loadData={loadData}
+      isLoading={isLoading}
+      title={"Component Counts"}
+      titleIcon={faTally}
+      body={getComponentCountsTable()}
+      showBorder={false}
+    />
   );
 };
 
@@ -47,8 +47,6 @@ SalesforcePipelineWizardComponentCountTable.propTypes = {
   isLoading: PropTypes.bool,
   componentCounts: PropTypes.arrayOf(PropTypes.object),
   loadData: PropTypes.func,
-  setPipelineWizardModel: PropTypes.func,
-  pipelineWizardModel: PropTypes.object
 };
 
 export default SalesforcePipelineWizardComponentCountTable;
