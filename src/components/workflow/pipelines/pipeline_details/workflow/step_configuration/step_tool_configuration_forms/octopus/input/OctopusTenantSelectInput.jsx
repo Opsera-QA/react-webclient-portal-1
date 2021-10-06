@@ -6,6 +6,7 @@ import SelectInputBase from 'components/common/inputs/select/SelectInputBase';
 import OctopusStepActions from '../octopus-step-actions';
 import axios from 'axios';
 
+// TODO: Refactor and move to common when refactoring Octopus form
 const OctopusTenantSelectInput = ({ fieldName, dataObject, setDataObject, disabled, textField, valueField }) => {
 
     const toastContext = useContext(DialogToastContext);
