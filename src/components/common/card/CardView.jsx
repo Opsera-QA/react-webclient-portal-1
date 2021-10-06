@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 
 function CardView({ cards, isLoading, paginationDto, setPaginationDto, loadData, noDataMessage, className }) {
-  if (!isLoading && cards == null) {
+  if (!isLoading && (!Array.isArray(cards) || cards.length === 0)) {
     return <div className="info-text text-center p-5">{noDataMessage}</div>;
   }
 
