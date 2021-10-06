@@ -5,7 +5,8 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
 import AnsibleStepActions from "../ansible.step.actions";
 import axios from "axios";
-import { isEmpty } from "lodash";
+import { isEmpty } from "lodash";import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {  faSync } from "@fortawesome/pro-light-svg-icons";
 
 function AnsibleStepScmRepositoryFileSelectInput({
   fieldName,
@@ -104,6 +105,16 @@ function AnsibleStepScmRepositoryFileSelectInput({
       toastContext.showErrorDialog(error);
     }
   };
+  const getInfoText = () => {
+    if (model.getData("playbookFilePath").length > 0) {
+      return (
+        <small>
+          <FontAwesomeIcon icon={faSync} className="pr-1" />
+          Click here to fetch file list
+        </small>
+      );
+    }
+  };
 
   return (
     <div>
@@ -118,6 +129,9 @@ function AnsibleStepScmRepositoryFileSelectInput({
         placeholderText={placeholderText}
         disabled={repoFiles == null || repoFiles.length === 0}
       />
+       <div onClick={() => loadData()} className="text-muted ml-3 dropdown-data-fetch">
+        {getInfoText()}
+      </div>
     </div>
   );
 }
