@@ -2,10 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import RepositorySelectInput from "../../../../../../../../common/list_of_values_input/tools/git/RepositorySelectInput";
 
-function AnsibleStepGitRepositoryInput({model, setModel, disabled}) {
+function AnsibleStepGitRepositorySelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModelObject = {...model};
-    console.log(selectedOption,'**********');
     newModelObject.setData("repository", selectedOption.name);
     newModelObject.setData("repoId", selectedOption.id);
     newModelObject.setData("projectId", selectedOption.id);
@@ -23,16 +22,16 @@ function AnsibleStepGitRepositoryInput({model, setModel, disabled}) {
     setModel({...newModelObject});
   };
 
-  if(!model.getData("service") || !model.getData("gitToolId")) {
+  if(!model) {
     return null;
   }
 
   return (
      <RepositorySelectInput
        fieldName={"repository"}
-       service={model.getData("service")}
-       gitToolId={model.getData("gitToolId")}
-       workspace={model.getData("workspace")}
+       service={model?.getData("service")}
+       gitToolId={model?.getData("gitToolId")}
+       workspace={model?.getData("workspace")}
        dataObject={model}
        setDataObject={setModel}
        clearDataFunction={clearDataFunction}
@@ -42,10 +41,10 @@ function AnsibleStepGitRepositoryInput({model, setModel, disabled}) {
   );
 }
 
-AnsibleStepGitRepositoryInput.propTypes = {
+AnsibleStepGitRepositorySelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default AnsibleStepGitRepositoryInput;
+export default AnsibleStepGitRepositorySelectInput;

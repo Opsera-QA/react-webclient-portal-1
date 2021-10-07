@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import ScmToolIdentifierSelectInput
   from "components/common/list_of_values_input/tools/source_control/ScmToolIdentifierSelectInput";
-function AnsibleStepScmServiceTypeSelectInput({model, setModel, disabled}) {
+
+  function AnsibleStepScmServiceTypeSelectInput({model, setModel, disabled}) {
   
   const setDataFunction = async (fieldName, selectedOption) => {
     let newDataObject = {...model};
@@ -13,8 +13,6 @@ function AnsibleStepScmServiceTypeSelectInput({model, setModel, disabled}) {
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");
-    newDataObject.setData("workspace", "");
-    newDataObject.setData("workspaceName", "");
     newDataObject.setData("gitBranch", "");
     setModel({...newDataObject});
     return;
@@ -27,11 +25,8 @@ function AnsibleStepScmServiceTypeSelectInput({model, setModel, disabled}) {
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");
-    newDataObject.setData("workspace", "");
-    newDataObject.setData("workspaceName", "");
     newDataObject.setData("gitBranch", "");
     setModel({...newDataObject});
-    return;
   };
 
   return (
@@ -43,18 +38,6 @@ function AnsibleStepScmServiceTypeSelectInput({model, setModel, disabled}) {
       fieldName={"service"}
       disabled={disabled}
     />
-    // <SelectInputBase
-    //   fieldName={"service"}
-    //   dataObject={model}
-    //   setDataObject={setModel}
-    //   selectOptions={SCM_TOOL_LIST}
-    //   valueField={"value"}
-    //   textField={"name"}
-    //   placeholderText={"Select a SCM Tool Type"}
-    //   setDataFunction={handleDTOChange}
-    //   disabled={disabled}
-    //   busy={isLoading}
-    // />
   );
 }
 

@@ -8,8 +8,8 @@ import ansibleStepMetadata  from "./ansible.step.metadata";
 import AnsibleStepToolSelectInput from "./inputs/AnsibleStepToolSelectInput";
 import AnsibleStepScmServiceTypeSelectInput from "./inputs/AnsibleStepScmServiceTypeSelectInput";
 import AnsibleStepScmToolIdentifierSelectInput from "./inputs/AnsibleStepScmToolIdentifierSelectInput";
-import AnsibleStepGitRepositoryInput from "./inputs/AnsibleStepGitRepositoryInput";
-import AnsibleStepGitBranchInput from "./inputs/AnsibleStepGitBranchInput";
+import AnsibleStepGitRepositorySelectInput from "./inputs/AnsibleStepGitRepositorySelectInput";
+import AnsibleStepGitBranchSelectInput from "./inputs/AnsibleStepGitBranchSelectInput";
 import AnsibleStepScmRepositoryFileSelectInput from "./inputs/AnsibleStepScmRepositoryFileSelectInput";
 import JsonInput from "../../../../../../../common/inputs/object/JsonInput";
 
@@ -76,11 +76,11 @@ function AnsibleStepConfiguration({ stepTool, stepId, closeEditorPanel, parentCa
         setModel={setAnsibleStepConfigurationDataDto}
         disabled={AnsibleStepConfigurationDto.getData("service").length === 0}
       />
-      <AnsibleStepGitRepositoryInput
+      <AnsibleStepGitRepositorySelectInput
         model={AnsibleStepConfigurationDto}
         setModel={setAnsibleStepConfigurationDataDto}
       />
-      <AnsibleStepGitBranchInput
+      <AnsibleStepGitBranchSelectInput
         model={AnsibleStepConfigurationDto}
         setModel={setAnsibleStepConfigurationDataDto}
       />
