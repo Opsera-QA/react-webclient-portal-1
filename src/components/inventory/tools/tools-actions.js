@@ -63,9 +63,6 @@ toolsActions.updateToolV2 = async (getAccessToken, cancelTokenSource, toolModel)
     ...toolModel.getPersistData()
   };
 
-  console.log("id: " + JSON.stringify(id));
-  console.log("apiUrl: " + JSON.stringify(apiUrl));
-
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
