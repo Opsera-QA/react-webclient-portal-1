@@ -13,6 +13,7 @@ import TwistlockStepComplianceThresholdInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/inputs/TwistlockStepComplianceThresholdInput";
 import TwistlockStepVulnerabilityThresholdInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/inputs/TwistlockStepVulnerabilityThresholdInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function TwistlockStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPanel, parentCallback, plan, createJob}) {
   const [isLoading, setIsLoading] = useState(false);
@@ -96,14 +97,21 @@ function TwistlockStepConfiguration({ pipelineId, stepTool, stepId, closeEditorP
         plan={plan}
         stepId={stepId}
       />
-      {/*<TwistlockStepComplianceThresholdInput*/}
-      {/*  model={twistlockStepConfigurationDto}*/}
-      {/*  setModel={setTwistlockStepConfigurationDataDto}*/}
-      {/*/>*/}
-      {/*<TwistlockStepVulnerabilityThresholdInput*/}
-      {/*  model={twistlockStepConfigurationDto}*/}
-      {/*  setModel={setTwistlockStepConfigurationDataDto}*/}
-      {/*/>*/}
+      <BooleanToggleInput
+        dataObject={twistlockStepConfigurationDto}
+        setDataObject={setTwistlockStepConfigurationDataDto}
+        fieldName={"clientSideThreshold"}
+      />
+      <TwistlockStepComplianceThresholdInput
+       model={twistlockStepConfigurationDto}
+       setModel={setTwistlockStepConfigurationDataDto}
+       visible={twistlockStepConfigurationDto.getData("clientSideThreshold")}
+      />
+      <TwistlockStepVulnerabilityThresholdInput
+       model={twistlockStepConfigurationDto}
+       setModel={setTwistlockStepConfigurationDataDto}
+       visible={twistlockStepConfigurationDto.getData("clientSideThreshold")}
+      />
     </PipelineStepEditorPanelContainer>
   );
 }
