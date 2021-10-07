@@ -110,6 +110,8 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
   const updateEnvironment = (index, newValue) => {
     let newPropertyList = rows;
     newPropertyList[index].environmentId = newValue;
+    newPropertyList[index].id = "";
+    newPropertyList[index].name = "";
     validateAndSetData(newPropertyList);
   };
 
@@ -119,7 +121,6 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
     const name = newTenant?.name;
     newPropertyList[index].id = id;
     newPropertyList[index].name = name;
-    console.log("received new newTenant value: " + JSON.stringify(newTenant));
     validateAndSetData(newPropertyList);
   };
 
@@ -138,6 +139,7 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
           return (
             <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
               <OctopusTenantInputRow
+                rows={rows}
                 environmentList={environmentList}
                 disabled={disabled}
                 deleteRow={() => deleteRow(index)}

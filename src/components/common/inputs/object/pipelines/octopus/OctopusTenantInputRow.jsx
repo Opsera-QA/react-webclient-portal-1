@@ -13,6 +13,7 @@ import OctopusTenantStandaloneSelectInput
 
 function OctopusTenantInputRow(
   {
+    rows,
     model,
     disabled,
     updateEnvironment,
@@ -31,6 +32,20 @@ function OctopusTenantInputRow(
         </Button>
       );
     }
+  };
+
+  const getDisabledTenants = () => {
+    const disabledTenants = [];
+
+    if (Array.isArray(rows) && rows.length > 0) {
+      rows.forEach((row) => {
+        if (row?.environmentId === environmentId) {
+          disabledTenants.push(row.id);
+        }
+      });
+    }
+
+    return disabledTenants;
   };
 
   return (
@@ -56,7 +71,7 @@ function OctopusTenantInputRow(
               environmentId={environmentId}
               spaceId={model?.getData("spaceId")}
               projectId={model?.getData("projectId")}
-              disabled={disabled}
+              disabled={disabled || getDisabledTenants()}
               value={tenantId}
             />
           </Col>
@@ -79,6 +94,7 @@ OctopusTenantInputRow.propTypes = {
   tenantId: PropTypes.string,
   environmentList: PropTypes.array,
   model: PropTypes.object,
+  rows: PropTypes.array,
 };
 
 export default OctopusTenantInputRow;
