@@ -11,13 +11,14 @@ import OctopusSpecifyDepVarsToggle from "../input/OctopusSpecifyDepVarsToggle";
 import OctopusDeploymentVariables from "../input/OctopusDeploymentVariables";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {AuthContext} from "contexts/AuthContext";
+import OctopusTenantInputBase from "components/common/inputs/object/pipelines/octopus/OctopusTenantInputBase";
 
 // TODO: Refactor soon
 function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabled, pipelineId, listOfSteps }) {
   const { featureFlagHideItemInProd } = useContext(AuthContext);
   const getTenantInput = () => {
     if (["tenanted", "tenantedoruntenanted"].includes(dataObject?.getData("tenantedDeploymentMode")?.toLowerCase())) {
-      // if (featureFlagHideItemInProd() !== false) {
+      if (featureFlagHideItemInProd() !== false) {
         return (
           <OctopusTenantSelectInput
             fieldName={"tenantId"}
@@ -26,11 +27,15 @@ function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabl
             disabled={dataObject && dataObject.getData("projectGroupId").length === 0}
           />
         );
-      // }
+      }
 
-      // return (
-      //
-      // );
+      return (
+        <OctopusTenantInputBase
+          model={dataObject}
+          setModel={setDataObject}
+          environmentList={dataObject?.getData("environmentList")}
+        />
+      );
     }
   };
 
