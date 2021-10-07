@@ -66,6 +66,7 @@ function  ExistingOctopusApplicationModal({
     <CreateModal
       handleCancelModal={handleClose}
       objectType={`Octopus ${capitalizeFirstLetter(type)}`}
+      objectMethod={appID ? "update" : "create"}
       showModal={showModal}
       loadData={loadData}
     >
