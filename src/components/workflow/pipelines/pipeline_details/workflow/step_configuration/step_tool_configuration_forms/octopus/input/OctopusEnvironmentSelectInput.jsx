@@ -6,6 +6,7 @@ import OctopusStepActions
   from "../../../../../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
 
+// TODO: Clean up, make generic, and put in /common/list_of_value_inputs
 function OctopusEnvironmentNameSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_prop}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);

@@ -11,6 +11,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TagManager from "components/common/inputs/tags/TagManager";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import axios from "axios";
+import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 
 function ToolEditorPanel({ toolData, handleClose }) {
   const { getAccessToken, isSassUser } = useContext(AuthContext);
@@ -66,8 +67,9 @@ function ToolEditorPanel({ toolData, handleClose }) {
   };
 
   return (
-    <EditorPanelContainer
-      recordDto={toolDataDto}
+    <VanityEditorPanelContainer
+      model={toolDataDto}
+      setModel={setToolDataDto}
       createRecord={createTool}
       updateRecord={updateTool}
       setRecordDto={setToolDataDto}
@@ -80,7 +82,10 @@ function ToolEditorPanel({ toolData, handleClose }) {
           <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"name"}/>
         </Col>
         <Col lg={6}>
-          <RegistryToolIdentifierSelectInput dataObject={toolDataDto} setDataObject={setToolDataDto}/>
+          <RegistryToolIdentifierSelectInput
+            dataObject={toolDataDto}
+            setDataObject={setToolDataDto}
+          />
         </Col>
        
         <Col lg={6}>
@@ -97,7 +102,7 @@ function ToolEditorPanel({ toolData, handleClose }) {
         </Col>
         {getDynamicFields()}
       </Row>
-    </EditorPanelContainer>
+    </VanityEditorPanelContainer>
   );
 }
 

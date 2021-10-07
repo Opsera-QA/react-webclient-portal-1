@@ -2,13 +2,14 @@ import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGradeText";
-import HorizontalDataBlockContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlockContainer";
+import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import PercentageDataBlock from "components/common/metrics/percentage/PercentageDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import { faTable } from "@fortawesome/pro-light-svg-icons";
 import SonarPipelineWiseMaintainabilityDetails from './SonarPipelineWiseMaintainabilityDetails';
+import Col from "react-bootstrap/Col";
 function SonarRatingsMaintainabilityDataBlock({ maintainabilityRating, technicalDebtRatio }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -84,13 +85,20 @@ function SonarRatingsMaintainabilityDataBlock({ maintainabilityRating, technical
   };
 
   return (
-    <HorizontalDataBlockContainer
+    <HorizontalDataBlocksContainer
       title={"Sonar Ratings: Maintainability"}
       onClick={() => onRowSelect()}
-      leftDataBlock={getLeftDataBlock()}
-      middleDataBlock={getMiddleDataBlock()}
-      rightDataBlock={getRightDataBlock()}
-    />
+     >
+      <Col sm={4}>
+        {getLeftDataBlock()}
+      </Col>
+      <Col sm={4}>
+        {getMiddleDataBlock()}
+      </Col>
+      <Col sm={4}>
+        {getRightDataBlock()}
+      </Col>
+    </HorizontalDataBlocksContainer>
   );
 }
 

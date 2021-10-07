@@ -11,6 +11,7 @@ import DashboardsTable from "components/insights/dashboards/DashboardsTable";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import AnalyticsProfileSettings from "components/settings/analytics/activateAnalyticsCard";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
+import InsightsHelpDocumentation from "../../common/help/documentation/insights/InsightsHelpDocumentation";
 
 function Insights() {
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
@@ -133,6 +134,9 @@ function Insights() {
         configured logs repositories below.
       `}
       breadcrumbDestination={"insights"}
+      helpComponent={
+        <InsightsHelpDocumentation/>
+      }
     >
       {getInsightsView()}
     </ScreenContainer>

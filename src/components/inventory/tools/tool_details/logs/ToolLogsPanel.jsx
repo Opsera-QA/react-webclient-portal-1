@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import { AuthContext } from "contexts/AuthContext";
 import ToolLogsTable from "components/inventory/tools/tool_details/logs/ToolLogsTable";
 import axios from "axios";

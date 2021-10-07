@@ -2,13 +2,14 @@ import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGradeText";
-import HorizontalDataBlockContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlockContainer";
+import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import { faTable } from "@fortawesome/pro-light-svg-icons";
 import SonarPipelineWiseReliabilityDetails from './SonarPipelineWiseReliabilityDetails';
+import Col from "react-bootstrap/Col";
 function SonarRatingsReliabilityDataBlock({ reliabilityRating, bugCount }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -83,13 +84,20 @@ function SonarRatingsReliabilityDataBlock({ reliabilityRating, bugCount }) {
   };
 
   return (
-    <HorizontalDataBlockContainer
+    <HorizontalDataBlocksContainer
       title={"Sonar Ratings: Reliability"}
       onClick={() => onRowSelect()}
-      leftDataBlock={getLeftDataBlock()}
-      middleDataBlock={getMiddleDataBlock()}
-      rightDataBlock={getRightDataBlock()}
-    />
+    >
+      <Col sm={4} className={"p-2"}>
+        {getLeftDataBlock()}
+      </Col>
+      <Col sm={4} className={"p-2"}>
+        {getMiddleDataBlock()}
+      </Col>
+      <Col sm={4} className={"p-2"}>
+        {getRightDataBlock()}
+      </Col>
+    </HorizontalDataBlocksContainer>
   );
 }
 

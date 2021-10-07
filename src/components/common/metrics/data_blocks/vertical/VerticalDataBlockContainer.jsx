@@ -7,7 +7,7 @@ function VerticalDataBlockContainer({leftDataBlock, middleDataBlock, rightDataBl
   return (
     <TooltipWrapper innerText={tooltipText}>
       <div className={`${onClick ? "pointer " : ""}data-block-container`} onClick={onClick}>
-        <div className={"data-block-title px-2 py-1"}>
+        <div className={"data-block-container-title px-2 py-1"}>
           {title}
         </div>
         <div>{leftDataBlock}</div>

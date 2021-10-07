@@ -8,8 +8,14 @@ function TwistlockStepComplianceThresholdInput(
     fieldName,
     model,
     setModel,
-    disabled
+    disabled,
+    visible
   }) {
+      
+  if (!visible) {
+    return null;
+  }
+
   return (
     <PipelineThresholdInputBase
       fieldName={fieldName}
@@ -26,10 +32,12 @@ TwistlockStepComplianceThresholdInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
+  visible: PropTypes.bool,
 };
 
 TwistlockStepComplianceThresholdInput.defaultProps = {
-  fieldName: "threshold_compliance",
+  fieldName: "thresholdCompliance",
+  visible: true,
 };
 
 export default TwistlockStepComplianceThresholdInput;

@@ -80,24 +80,24 @@ function OverallReleaseDurationMetrics() {
           <ThreeLineDataBlockBase
             className={"p-2"}
             topText={"Successful Builds"}
-            title={<MetricScoreText score={120} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
-            subtitle={"6% Decrease"}
+            middleText={<MetricScoreText score={120} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
+            bottomText={"6% Decrease"}
           />
         </DataBlockBoxContainer>
         <DataBlockBoxContainer className={"mr-2"}>
           <ThreeLineDataBlockBase
             className={"p-2"}
             topText={"Failed Builds"}
-            title={<MetricScoreText score={52} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
-            subtitle={"24% Increase"}
+            middleText={<MetricScoreText score={52} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
+            bottomText={"24% Increase"}
           />
         </DataBlockBoxContainer>
         <DataBlockBoxContainer className={"mr-2"}>
           <ThreeLineDataBlockBase
             topText={"Success Percentage"}
             className={"p-2"}
-            title={<MetricPercentageText percentage={88} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
-            subtitle={"Goal: 95%"}
+            middleText={<MetricPercentageText percentage={88} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
+            bottomText={"Goal: 95%"}
           />
         </DataBlockBoxContainer>
       </div>

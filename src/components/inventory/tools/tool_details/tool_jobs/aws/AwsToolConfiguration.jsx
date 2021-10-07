@@ -35,7 +35,8 @@ function AwsToolConfiguration({ toolData }) {
   
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={awsConfigurationDto}
+      model={awsConfigurationDto}
+      setModel={setAwsConfigurationDto}
       persistRecord={saveAwsToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"aws"}

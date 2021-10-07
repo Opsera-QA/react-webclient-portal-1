@@ -38,7 +38,8 @@ function ServiceNowToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={serviceNowConfigurationDto}
+      model={serviceNowConfigurationDto}
+      setModel={setServiceNowConfigurationDto}
       persistRecord={saveServiceNowToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"servicenow"}

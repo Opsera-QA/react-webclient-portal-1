@@ -33,7 +33,8 @@ function AnchoreScanToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={anchoreScanConfigurationDto}
+      model={anchoreScanConfigurationDto}
+      setModel={setAnchoreScanConfigurationDto}
       persistRecord={saveAnchoreScanToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Anchore"}

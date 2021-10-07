@@ -89,7 +89,7 @@ function PlatformInventory () {
             <span className="formLabel mt-1">Application: </span>
             {renderForm ?
               <DropdownList
-                className="application-select"
+                style={{marginLeft: "auto", width: "85%"}}
                 data={data}
                 valueField='name'
                 busy={isLoading}

@@ -1,7 +1,6 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";

@@ -279,6 +279,24 @@ const octopusStepFormMetadata = {
         id: "tenantId",        
       },
       {
+        label: "Environment Configurations",
+        id: "environmentList",
+        formText: `
+          This feature is currently limited to a maximum of 10 environments.  
+          If you have a need to exceed that limit, please contact Opsera with details on specific requirements.
+        `,
+        maxItems: 10,
+      },
+      {
+        label: "Tenant Configurations",
+        id: "tenantList",
+        formText: `
+          This feature is currently limited to a maximum of 10 tenants.  
+          If you have a need to exceed that limit, please contact Opsera with details on specific requirements.
+        `,
+        maxItems: 10,
+      },
+      {
         id: "deploymentProcessId"
       },
       {
@@ -346,7 +364,9 @@ const octopusStepFormMetadata = {
         projectGroupId: "",
         channelId: "",
         projectType: "OPSERA_MANAGED",
-        tenantId: "",     
+        tenantId: "",
+        environmentList: [],
+        tenantList: [],
       }
   };
   

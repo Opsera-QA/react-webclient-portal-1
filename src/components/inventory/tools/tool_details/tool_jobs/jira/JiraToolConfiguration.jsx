@@ -34,7 +34,8 @@ function JiraToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={jiraConfigurationDto}
+      model={jiraConfigurationDto}
+      setModel={setJiraConfigurationDto}
       persistRecord={saveJiraToolConfiguration}
       toolData={toolData}
       // toolConnectionCheckName={"Jira"}

@@ -5,14 +5,13 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 import NewParameterOverlay from "components/inventory/parameters/NewParameterOverlay";
 import VanitySelectionTable from "components/common/table/VanitySelectionTable";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import {AuthContext} from "contexts/AuthContext";
 import {
   getEditableTextColumn, getTableBooleanIconColumn,
   getTableTextColumn
 } from "components/common/table/column_definitions/model-table-column-definitions";
 import VanityDataContainer from "components/common/containers/VanityDataContainer";
+import {isActionAllowed} from "components/common/helpers/role-helpers";
 
 function ParameterTable({ data, parameterMetadata, setParameterData, parameterData, loadData, isLoading, isMounted, getAccessToken, cancelTokenSource, parameterRoleDefinitions, parameterFilterModel }) {
   const toastContext = useContext(DialogToastContext);
@@ -89,7 +88,7 @@ function ParameterTable({ data, parameterMetadata, setParameterData, parameterDa
   };
 
   const getAddRecordFunction = () => {
-    const addAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "create_parameter", undefined, undefined, parameterRoleDefinitions);
+    const addAllowed = isActionAllowed(userRoleAccess, "create_parameter", undefined, undefined, parameterRoleDefinitions);
 
     if (addAllowed === true) {
       return createParameter;

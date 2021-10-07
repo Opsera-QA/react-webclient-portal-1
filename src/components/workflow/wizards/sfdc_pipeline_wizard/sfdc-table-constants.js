@@ -1,4 +1,5 @@
 // TODO: Use regular metadata
+//  We should have separate sets per table
 const sfdcTableConstants = {};
 
 sfdcTableConstants.fields = [
@@ -33,6 +34,10 @@ sfdcTableConstants.fields = [
   {
     label: "Commit Id",
     id: "commitID"
+  },
+  {
+    label: "Count",
+    id: "componentCount"
   }
 ];
 

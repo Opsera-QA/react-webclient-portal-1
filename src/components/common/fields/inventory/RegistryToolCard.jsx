@@ -9,7 +9,7 @@ import {getLargeVendorIconFromToolIdentifier} from "components/common/helpers/ic
 
 function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
   const getTitleBar = () => {
-    let icon = getLargeVendorIconFromToolIdentifier(process.env.REACT_APP_OPSERA_S3_STORAGE_URL, toolData?.getData("tool_identifier"));
+    let icon = getLargeVendorIconFromToolIdentifier(toolData?.getData("tool_identifier"));
 
     if (typeof icon === "string") {
       icon = (
@@ -44,7 +44,12 @@ function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
   }
 
   return (
-    <IconCardContainerBase titleBar={getTitleBar()} contentBody={getDescription()} isLoading={isLoading} className={"tool-registry-card"}>
+    <IconCardContainerBase
+      titleBar={getTitleBar()}
+      contentBody={getDescription()}
+      isLoading={isLoading}
+      className={"vertical-selection-card"}
+    >
       <div className="date-and-button">
         <div className="small pl-1">
           <CreateAndUpdateDateFieldBase

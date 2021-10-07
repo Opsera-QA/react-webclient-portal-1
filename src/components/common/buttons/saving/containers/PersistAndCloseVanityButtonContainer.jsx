@@ -26,7 +26,7 @@ function PersistAndCloseVanityButtonContainer({ model, setModel, handleClose, di
       return (
         <CloseEditorButton
           closeEditorCallback={handleClose}
-          className={model.isNew() ? "mt-auto mx-1" : undefined}
+          className={"ml-2"}
           dataModel={model}
         />
       );

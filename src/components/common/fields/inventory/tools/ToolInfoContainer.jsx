@@ -2,8 +2,6 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import InfoContainer from "components/common/containers/InfoContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
-import Model from "core/data_model/model";
-import toolMetadata from "components/inventory/tools/tool-metadata";
 import ToolReadOnlyDetailPanel from "components/inventory/tools/tool_details/ToolReadOnlyDetailPanel";
 import toolsActions from "components/inventory/tools/tools-actions";
 import axios from "axios";
@@ -11,6 +9,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {Link} from "react-router-dom";
+import ToolModel from "components/inventory/tools/tool.model";
 
 function ToolInfoContainer({ toolId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -44,10 +43,12 @@ function ToolInfoContainer({ toolId }) {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await toolsActions.getRoleLimitedToolByIdV2(getAccessToken, cancelSource, toolId);
+      const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, toolId);
+      const tool = response?.data?.data;
 
-      if (isMounted?.current === true && response?.data?.data) {
-        setToolModel(new Model(response.data.data[0], toolMetadata, false));
+      if (isMounted?.current === true && tool) {
+        const metadata = response?.data?.metadata;
+        setToolModel(new ToolModel(tool, metadata, false, getAccessToken, cancelTokenSource));
       }
     } catch (error) {
       if (!error?.error?.message?.includes(404)) {
@@ -91,7 +92,6 @@ function ToolInfoContainer({ toolId }) {
     return (<LoadingDialog size={"sm"} message={"Loading Tool Data"} />);
   }
 
-  // TODO: Merge this in once OPL-1459 is approved
   return (
     <InfoContainer
       titleIcon={faTools}

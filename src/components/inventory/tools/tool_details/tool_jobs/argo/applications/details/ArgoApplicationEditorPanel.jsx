@@ -1,7 +1,6 @@
 import React, {useEffect, useContext, useState, useRef} from "react";
 import { Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import Row from "react-bootstrap/Row";
 import argoActions from "../../argo-actions";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
