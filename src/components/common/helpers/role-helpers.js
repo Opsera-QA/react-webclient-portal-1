@@ -235,15 +235,15 @@ export const isActionAllowed = (customerAccessRules, action, owner, objectRoles,
   }
 
   // TODO: These are the defaults for compatibility, but we should probably just use the defined Access Roles sent from Node:
-  if (customerAccessRules.OpseraAdministrator) {
+  if (customerAccessRules?.OpseraAdministrator) {
     return true; //all actions are authorized to Opsera Administrator
   }
 
-  if (customerAccessRules.Administrator) {
+  if (customerAccessRules?.Administrator) {
     return true; //all actions are authorized to administrator
   }
 
-  if (customerAccessRules.SassPowerUser) {
+  if (customerAccessRules?.SassPowerUser) {
     return true; //all  are authorized to Saas User
   }
 
@@ -251,25 +251,26 @@ export const isActionAllowed = (customerAccessRules, action, owner, objectRoles,
     return false; //all actions disabled for user?
   }
 
-  if (owner && customerAccessRules.UserId === owner) {
+  if (owner && customerAccessRules?.UserId === owner) {
     return true; //owner can do all actions
   }
 
+  // TODO: This will break deletion/transfer rules so is not currently supported
   //if no objectRole data passed, then allow actions
-  if (objectRoles && objectRoles.length === 0) {
-    return true;
-  }
+  // if (objectRoles && objectRoles.length === 0) {
+  //   return true;
+  // }
   // TODO: End of TODO
 
-  if (customerAccessRules.OpseraAdministrator) {
+  if (customerAccessRules?.OpseraAdministrator) {
     roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.OPSERA_ADMINISTRATOR);
   }
 
-  if (customerAccessRules.Administrator) {
+  if (customerAccessRules?.Administrator) {
     roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.ADMINISTRATOR);
   }
 
-  if (customerAccessRules.SassPowerUser) {
+  if (customerAccessRules?.SassPowerUser) {
     roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.SAAS_USER);
   }
 
@@ -277,7 +278,7 @@ export const isActionAllowed = (customerAccessRules, action, owner, objectRoles,
     roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.FREE_TRIAL_USER);
   }
 
-  if (owner && customerAccessRules.UserId === owner) {
+  if (owner && customerAccessRules?.UserId === owner) {
     roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.OWNER);
   }
 

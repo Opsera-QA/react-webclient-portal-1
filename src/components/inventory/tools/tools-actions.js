@@ -46,6 +46,7 @@ toolsActions.deleteOwnerVaultRecordsForToolIdV2 = async (getAccessToken, cancelT
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+// TODO: All references to this need to be updated to V2, Do not use this.
 toolsActions.updateTool = async (toolDataDto, getAccessToken) => {
   const postBody = {
     ...toolDataDto.getPersistData()
@@ -55,12 +56,16 @@ toolsActions.updateTool = async (toolDataDto, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
-toolsActions.updateToolV2 = async (getAccessToken, cancelTokenSource, toolDataDto) => {
-  const postBody = {
-    ...toolDataDto.getPersistData()
-  };
-  let id = toolDataDto.getData("_id");
+toolsActions.updateToolV2 = async (getAccessToken, cancelTokenSource, toolModel) => {
+  const id = toolModel?.getData("_id");
   const apiUrl = `/registry/${id}/update`;
+  const postBody = {
+    ...toolModel.getPersistData()
+  };
+
+  console.log("id: " + JSON.stringify(id));
+  console.log("apiUrl: " + JSON.stringify(apiUrl));
+
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
