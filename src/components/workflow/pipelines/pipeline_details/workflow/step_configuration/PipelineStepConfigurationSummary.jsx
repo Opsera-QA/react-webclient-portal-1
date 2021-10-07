@@ -161,6 +161,8 @@ import mongodbRealmStepFormMetadata from "./step_tool_configuration_forms/mongod
 import MongodbRealmStepConfigurationSummaryPanel from "./step_tool_configuration_forms/mongodb_realm/MongodbRealmStepConfigurationSummaryPanel";
 import AzureFunctionsStepConfigurationSummaryPanel from "./step_tool_configuration_forms/azure_functions/AzureFunctionsStepConfigurationSummaryPanel";
 import azureFunctionsStepFormMetadata from "./step_tool_configuration_forms/azure_functions/azureFunctions-stepForm-metadata";
+import AnsibleStepConfigurationSummaryPanel from "./step_tool_configuration_forms/ansible/AnsibleStepConfigurationSummaryPanel";
+import ansibleStepMetadata from "./step_tool_configuration_forms/ansible/ansible.step.metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -186,6 +188,13 @@ function PipelineStepConfigurationSummary({
             anchoreDataObject={getModelWrappedObject(anchoreScanStepConfigurationMetadata)}
           />
         );
+        case "ansible":
+          return (
+            <AnsibleStepConfigurationSummaryPanel
+              pipelineData={pipelineData}
+              ansibleDataObject={getModelWrappedObject(ansibleStepMetadata)}
+            />
+          );
       case "approval":
         return (
           <ApprovalGatePipelineStepConfigurationSummaryPanel

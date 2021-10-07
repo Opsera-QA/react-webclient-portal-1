@@ -42,11 +42,12 @@ function AnsibleToolConfiguration({ toolData }) {
     >
       <Row>
         <Col sm={12}>
-          <TextInputBase dataObject={ansibleConfigurationDto} setDataObject={setAnsibleConfigurationDto} fieldName={"url"} />
+          <TextInputBase dataObject={ansibleConfigurationDto} setDataObject={setAnsibleConfigurationDto} fieldName={"hostName"} />
           <TextInputBase dataObject={ansibleConfigurationDto} setDataObject={setAnsibleConfigurationDto} fieldName={"port"} />
-          <TextInputBase dataObject={ansibleConfigurationDto} setDataObject={setAnsibleConfigurationDto} fieldName={"accountUsername"} />
-          <VaultTextInput dataObject={ansibleConfigurationDto} setDataObject={setAnsibleConfigurationDto} fieldName={"accountPassword"} />
-          <VaultTextAreaInput dataObject={ansibleConfigurationDto} setDataObject={setAnsibleConfigurationDto} fieldName={"secretPrivateKey"} />
+          <TextInputBase dataObject={ansibleConfigurationDto} setDataObject={setAnsibleConfigurationDto} fieldName={"userName"} />
+          <TextInputBase dataObject={ansibleConfigurationDto} setDataObject={setAnsibleConfigurationDto} fieldName={"pubKeyPath"} />
+          {/* <VaultTextInput dataObject={ansibleConfigurationDto} setDataObject={setAnsibleConfigurationDto} fieldName={"accountPassword"} />
+          <VaultTextAreaInput dataObject={ansibleConfigurationDto} setDataObject={setAnsibleConfigurationDto} fieldName={"secretPrivateKey"} /> */}
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>

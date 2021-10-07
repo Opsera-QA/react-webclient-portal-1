@@ -63,6 +63,7 @@ import AzureAcrPushStepConfiguration from "./step_tool_configuration_forms/azure
 import AksServiceDeployStepConfiguration
   from "./step_tool_configuration_forms/aks_service_deploy/AksServiceDeployStepConfiguration";
 import MongodbRealmStepConfiguration from "./step_tool_configuration_forms/mongodb_realm/MongodbRealmStepConfiguration";
+import AnsibleStepConfiguration from "./step_tool_configuration_forms/ansible/AnsibleStepConfiguration";
 import AzureFunctionsStepConfiguration from "./step_tool_configuration_forms/azure_functions/AzureFunctionsStepConfiguration";
 
 function StepToolConfiguration({
@@ -685,6 +686,15 @@ function StepToolConfiguration({
             closeEditorPanel={closeEditorPanel}
           />
         );
+        case "ansible":
+          return (
+            <AnsibleStepConfiguration
+              stepTool={stepTool}
+              stepId={stepId}
+              parentCallback={callbackFunction}
+              callbackSaveToVault={saveToVault}
+            />
+          );
       case "sfdc-configurator":
         return (
           <SFDCStepConfiguration

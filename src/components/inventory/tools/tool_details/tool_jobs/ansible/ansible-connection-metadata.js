@@ -2,8 +2,8 @@ const ansibleConnectionMetadata = {
   type: "Ansible Tool Configuration",
   fields: [
     {
-      label: "Server URL",
-      id: "url",
+      label: "Host Name",
+      id: "hostName",
       isRequired: true
     },
     {
@@ -14,10 +14,10 @@ const ansibleConnectionMetadata = {
     },
     {
       label: "User Name",
-      id: "accountUsername",
+      id: "userName",
       isRequired: true
     },
-    {
+    /* {
       label: "Password",
       id: "accountPassword",
       isRequired: true
@@ -26,14 +26,19 @@ const ansibleConnectionMetadata = {
       label:"Private Key",
       id:'secretPrivateKey',
       isRequired: true
+    }, */
+    {
+      label:"Ansible Public Key Path",
+      id:"pubKeyPath"
     }
 ],
   newObjectFields: {
-    url: "",
+    hostName: "",
     port: "",
-    accountUsername: "",
-    accountPassword: "",
-    secretPrivateKey: ""
+    userName: "",
+    pubKeyPath:"",
+    // accountPassword: "",
+    // secretPrivateKey: ""
   }
 };
 
