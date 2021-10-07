@@ -8,7 +8,7 @@ import RequiredFieldsMessage from "../../../../../../common/fields/editor/Requir
 
 function NewJenkinsAccountModal({ toolData, setShowModal, showModal, loadData, jenkinsAccountDataDto, credentialId }) {
   const [jenkinsAccountData, setJenkinsAccountData] = useState(undefined);
-  console.log(jenkinsAccountDataDto);
+  // console.log(jenkinsAccountDataDto);
 
   useEffect(() => {
     if (jenkinsAccountDataDto !== undefined) {
@@ -27,6 +27,7 @@ function NewJenkinsAccountModal({ toolData, setShowModal, showModal, loadData, j
     <CreateModal
       handleCancelModal={handleClose}
       objectType={"Jenkins Account"}
+      objectMethod={credentialId ? "update" : "create"}
       showModal={showModal}
       loadData={loadData}
     >
