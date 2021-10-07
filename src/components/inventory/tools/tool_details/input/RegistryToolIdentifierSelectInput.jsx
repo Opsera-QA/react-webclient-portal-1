@@ -37,7 +37,7 @@ function RegistryToolIdentifierSelectInput({ dataObject, setDataObject, fieldNam
       clearDataFunction={clearDataFunction}
       clearDataDetails={getClearDataDetails()}
       disabled={
-        disabled || (!dataObject?.isNew() && dataObject.getData(fieldName) !== "" && !dataObject.isChanged(fieldName))
+        disabled || (dataObject?.isNew() || (dataObject.getData(fieldName) !== "" && !dataObject.isChanged(fieldName)))
       }
     />
   );
