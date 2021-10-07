@@ -32,7 +32,7 @@ function InsightsHelpDocumentation() {
               <div><b>Persona</b> - Select developer, manager or executive.</div>
               <div><b>Visibility</b> - Select private if you wish for the dashboard to only be available to you or &lsquo;My Organization&lsquo; if you wish to make the pipeline accessible to users within your organization.</div>
               <div><b>Description</b> - Write a description for your dashboard.</div>
-              <div><b>Tags</b> - Tags elected will be applied to all charts in the dashboard. You can edit, remove, or add KPI-specific tags in Dashboard Viewer once the dashboard has been created.</div>
+              <div><b>Tags</b> - Tags selected will be applied to all charts in the dashboard. You can edit, remove, or add KPI-specific tags in Dashboard Viewer once the dashboard has been created.</div>
             </div>
           </div>
           <div className={"ml-4"}>Select the <b>Create</b> button and the dashboard will now be accessible in My Dashboards.</div>
