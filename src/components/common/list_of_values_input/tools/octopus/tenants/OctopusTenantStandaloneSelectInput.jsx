@@ -8,7 +8,18 @@ import OctopusStepActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
 
 // TODO: Refactor when refactoring Octopus step
-const OctopusTenantStandaloneSelectInput = ({octopusToolId, spaceId, projectId, environmentId, disabled, value, textField, valueField, setDataFunction }) => {
+const OctopusTenantStandaloneSelectInput = (
+  {
+    octopusToolId,
+    spaceId,
+    projectId,
+    environmentId,
+    disabled,
+    value,
+    textField,
+    valueField,
+    setDataFunction
+  }) => {
   const toastContext = useContext(DialogToastContext);
   const {getAccessToken} = useContext(AuthContext);
   const [placeholderText, setPlaceholderText] = useState("Select a Tenant");
