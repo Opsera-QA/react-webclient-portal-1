@@ -25,7 +25,7 @@ function PropertyInputContainer({ children, isLoading, titleIcon, titleText, fie
       return (
         <div className="w-100 m-2 text-muted small">
           <FontAwesomeIcon className="text-warning mr-1" icon={faExclamationTriangle} fixedWidth/>
-          <span className="mt-1">Incomplete Threshold Rows Will Be Removed Upon Saving</span>
+          <span className="mt-1">{incompleteRowMessage}</span>
         </div>
       );
     }
