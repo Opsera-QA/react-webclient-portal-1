@@ -61,10 +61,11 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
 
     if (Array.isArray(newRowList) && newRowList.length > 0) {
       newRowList.map((item) => {
-        const level = item?.level;
-        const count = item?.count;
+        const id = item?.id;
+        const name = item?.name;
+        const environmentId = item?.environmentId;
 
-        if (level === "" || count === "") {
+        if (id === "" || name === "" || environmentId === "") {
           return;
         }
 
