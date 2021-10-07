@@ -49,10 +49,14 @@ function CreateModal({ children, objectType, objectMethod,  showModal, handleCan
   );
 }
 
+CreateModal.defaultProps = {
+  objectMethod: "create"
+};
 
 CreateModal.propTypes = {
   children: PropTypes.any,
   objectType: PropTypes.string,
+  objectMethod: PropTypes.string,
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
   handleConfirmModal: PropTypes.func,
