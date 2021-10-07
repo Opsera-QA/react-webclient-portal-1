@@ -4,7 +4,7 @@ import LazyLoadMultiSelectInputBase from "components/common/inputs/select/LazyLo
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import pipelineStepNotificationActions from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
-// import { DialogToastContext } from "contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 function ServiceNowConfigurationItemsSelectInput({
   valueField,
@@ -15,7 +15,7 @@ function ServiceNowConfigurationItemsSelectInput({
   disabled,
   serviceNowToolId,
 }) {
-  // const toastContext = useContext(DialogToastContext);
+  const toastContext = useContext(DialogToastContext);
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -95,10 +95,11 @@ function ServiceNowConfigurationItemsSelectInput({
       }
     } catch (error) {
       if (isMounted?.current === true) {
-        // toastContext.showErrorDialog(
-        //   "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry."
-        // );
+        toastContext.showErrorDialog(
+          "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry."
+        );
       }
+      console.error(error);
     } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
@@ -140,7 +141,7 @@ function ServiceNowConfigurationItemsSelectInput({
       textField={textField}
       placeholderText={getPlaceholderText()}
       onToggleFunction={loadConfigurationItems}
-      disabled={disabled || serviceNowToolId === ""}
+      disabled={disabled || serviceNowToolId === "" || !serviceNowToolId}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
     />
   );
