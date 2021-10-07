@@ -128,7 +128,7 @@ function SonarPipelineWiseMaintainibilityDetails() {
         <FilterContainer
           isLoading={isLoading}
           showBorder={false}
-          title={`Technical Debt Ratio`}
+          title={`Technical Debt Ratio Report`}
           titleIcon={faDraftingCompass}
           body={getTable()}          
           className={"px-2 pb-2"}
@@ -158,8 +158,14 @@ function SonarPipelineWiseMaintainibilityDetails() {
         </Col>
         <Col>
           <div className="metric-box p-3 text-center">
-            <div className="font-weight-bold">{issueTypeData?.minor}</div>
+            <div className="font-weight-bold">{issueTypeData?.major}</div>
             <div className="w-100 text-muted mb-1">Major</div>
+          </div>
+        </Col>
+        <Col>
+          <div className="metric-box p-3 text-center">
+            <div className="font-weight-bold">{issueTypeData?.minor}</div>
+            <div className="w-100 text-muted mb-1">Minor</div>
           </div>
         </Col>
         <Col>
