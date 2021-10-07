@@ -110,24 +110,19 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
 
   const updateEnvironment = (index, newValue) => {
     let newPropertyList = rows;
-
-    if (newPropertyList[index]?.environmentId !== newValue) {
-      newPropertyList[index].environmentId = newValue;
-      validateAndSetData(newPropertyList);
-    }
+    console.log("received new environment value: " + JSON.stringify(newValue));
+    newPropertyList[index].environmentId = newValue;
+    validateAndSetData(newPropertyList);
   };
 
   const updateTenant = (index, newTenant) => {
     let newPropertyList = rows;
-
     const id = newTenant?.id;
     const name = newTenant?.name;
-
-    if (id != null && name != null) {
-      newPropertyList[index].id = id;
-      newPropertyList[index].name = name;
-      validateAndSetData(newPropertyList);
-    }
+    newPropertyList[index].id = id;
+    newPropertyList[index].name = name;
+    console.log("received new newTenant value: " + JSON.stringify(newTenant));
+    validateAndSetData(newPropertyList);
   };
 
   const getFieldBody = () => {
