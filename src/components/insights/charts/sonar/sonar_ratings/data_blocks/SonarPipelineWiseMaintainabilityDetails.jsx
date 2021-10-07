@@ -128,7 +128,7 @@ function SonarPipelineWiseMaintainibilityDetails() {
         <FilterContainer
           isLoading={isLoading}
           showBorder={false}
-          title={`Maintainibility Report`}
+          title={`Technical Debt Ratio`}
           titleIcon={faDraftingCompass}
           body={getTable()}          
           className={"px-2 pb-2"}
