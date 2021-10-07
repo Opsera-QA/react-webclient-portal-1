@@ -96,7 +96,7 @@ function SonarPipelineWiseMaintainibilityDetails() {
         undefined,
       );
       if (isMounted?.current === true && response?.status === 200) {
-        const sonarMaintainability = response?.data?.data[0]?.sonarMaintainabilities?.data[0]?.projectData;
+        const sonarMaintainability = response?.data?.data[0]?.sonarCodeSmells?.data[0]?.projectData;
         await setMaintainibilityData(sonarMaintainability.map(maintainibility=>({
               ...maintainibility,
               status : calculateTrend(maintainibility)
@@ -104,8 +104,8 @@ function SonarPipelineWiseMaintainibilityDetails() {
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", sonarMaintainability.length);
         setModel({ ...newFilterDto });
-        setIssueTypeData( response?.data?.data[0]?.sonarMaintainabilities?.data[0]?.typeData[0]);
-        setFooterData(response?.data?.data[0]?.sonarMaintainabilities?.data[0]?.debtData[0]);
+        setIssueTypeData( response?.data?.data[0]?.sonarCodeSmells?.data[0]?.typeData[0]);
+        setFooterData(response?.data?.data[0]?.sonarCodeSmells?.data[0]?.debtData[0]);
       }
     } catch (error) {      
       if (isMounted?.current === true) {
