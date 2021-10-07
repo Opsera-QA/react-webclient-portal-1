@@ -9,11 +9,12 @@ const sonarPipelineDetailsFilterMetadata = {
       {
         label: "Total Count",
         id: "totalCount",
-      },      
+      },    
     ],
     newObjectFields: {
-      pageSize: 50,
+      pageSize: 5,
       currentPage: 1, 
+      totalCount:0
     },    
   };
   

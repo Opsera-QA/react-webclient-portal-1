@@ -199,6 +199,22 @@ function SonarPipelineWiseReliabilityDetails() {
           </Row>
           </>);
   };
+    
+  const getPaginationOptions = () => {
+    return {
+      pageSize: model.getData("pageSize"),
+      totalCount: model.getData("totalCount"),
+      currentPage: model.getData("currentPage"),
+      gotoPageFn: gotoPage,
+    };
+  };
+  
+  const gotoPage = (pageNumber, pageSize) => {
+    let newModel = {...model};
+    newModel.setData("currentPage", pageNumber);
+    newModel.setData("pageSize", pageSize);
+    setModel({...newModel});
+  };
   
   const getTable = () => {    
     return (
@@ -207,8 +223,7 @@ function SonarPipelineWiseReliabilityDetails() {
         columns={columns}
         data={bugsData}
         noDataMessage={noDataMessage}
-        paginationModel={model}
-        setPaginationModel={setModel}
+        paginationOptions={getPaginationOptions()}
         loadData={loadData}
       />      
     );
