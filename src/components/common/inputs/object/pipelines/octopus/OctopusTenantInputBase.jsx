@@ -191,10 +191,6 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
     }
   };
 
-  const getThresholdMessage = () => {
-    return (`If a Threshold level is not assigned, any hits at that level will be ignored.`);
-  };
-
   if (field == null) {
     return <></>;
   }
@@ -221,7 +217,6 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
           </div>
         </div>
       </PropertyInputContainer>
-      <InfoText customMessage={getThresholdMessage()} />
     </div>
   );
 }
