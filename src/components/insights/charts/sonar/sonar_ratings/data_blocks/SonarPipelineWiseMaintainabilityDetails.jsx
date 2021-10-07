@@ -21,7 +21,7 @@ function SonarPipelineWiseMaintainibilityDetails() {
   const [maintainibilityData, setMaintainibilityData] = useState([]);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
-  // const [error, setError] = useState(undefined);
+  const [error, setError] = useState(undefined);
   const [footerData, setFooterData] = useState(undefined);
   const [issueTypeData, setIssueTypeData]=useState(undefined);
 
@@ -110,7 +110,7 @@ function SonarPipelineWiseMaintainibilityDetails() {
     } catch (error) {      
       if (isMounted?.current === true) {
         console.error(error);
-        // setError(error);
+        setError(error);
       }
     } finally {
       if (isMounted?.current === true) {
