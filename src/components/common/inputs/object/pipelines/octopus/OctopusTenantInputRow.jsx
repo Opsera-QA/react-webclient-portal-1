@@ -51,7 +51,7 @@ function OctopusTenantInputRow(
           </Col>
           <Col sm={6} className={"pl-1 pr-0"}>
             <OctopusTenantStandaloneSelectInput
-              setDataFunction={updateTenant}
+              setDataFunction={(newValue) => updateTenant(newValue)}
               octopusToolId={model?.getData("octopusToolId")}
               environmentId={environmentId}
               spaceId={model?.getData("spaceId")}
