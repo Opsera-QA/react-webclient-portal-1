@@ -37,11 +37,11 @@ function ToolRegistryHelpDocumentation({registryToolRoleDefinitions}) {
       helpTopic={"Tool Registry"}
       helpDocumentation={getHelpDocumentation()}
     >
-      <div className={"my-2"}>
-        <RoleAccessTable
-          roleAccessDefinitions={registryToolRoleDefinitions}
-        />
-      </div>
+      {/*<div className={"my-2"}>*/}
+      {/*  <RoleAccessTable*/}
+      {/*    roleAccessDefinitions={registryToolRoleDefinitions}*/}
+      {/*  />*/}
+      {/*</div>*/}
     </HelpOverlayBase>
   );
 }
