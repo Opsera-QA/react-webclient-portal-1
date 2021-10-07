@@ -99,6 +99,7 @@ function ServiceNowAssignmentGroupSelectInput({
           "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry."
         );
       }
+      console.error(error);
     } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
