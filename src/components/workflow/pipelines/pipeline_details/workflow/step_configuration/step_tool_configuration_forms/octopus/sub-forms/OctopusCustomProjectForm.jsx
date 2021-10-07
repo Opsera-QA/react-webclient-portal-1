@@ -31,6 +31,7 @@ function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabl
 
       return (
         <OctopusTenantInputBase
+          fieldName={"tenantList"}
           model={dataObject}
           setModel={setDataObject}
           environmentList={dataObject?.getData("environmentList")}
