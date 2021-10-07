@@ -27,11 +27,6 @@ const OctopusTenantStandaloneSelectInput = ({octopusToolId, spaceId, projectId, 
     isMounted.current = true;
     setTenants([]);
 
-    console.log("octopusToolId: " + JSON.stringify(octopusToolId));
-    console.log("spaceId: " + JSON.stringify(spaceId));
-    console.log("projectId: " + JSON.stringify(projectId));
-    console.log("environmentId: " + JSON.stringify(environmentId));
-
     if (
          octopusToolId !== "" && octopusToolId != null
       && spaceId !== "" && spaceId != null
