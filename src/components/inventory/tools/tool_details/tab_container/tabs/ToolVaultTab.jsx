@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
-import { faAbacus,} from "@fortawesome/pro-light-svg-icons";
+import {faKey,} from "@fortawesome/pro-light-svg-icons";
 
 const VAULT_SUPPORTED_TOOL_IDENTIFIERS = [
   "jenkins",
@@ -18,11 +18,11 @@ function ToolVaultTab({ toolModel, handleTabClick, activeTab }) {
 
   return (
     <CustomTab
-      icon={faAbacus}
-      tabName={"jobs"}
+      icon={faKey}
+      tabName={"vault"}
       handleTabClick={handleTabClick}
       activeTab={activeTab}
-      tabText={"Jobs"}
+      tabText={"Vault"}
       disabled={!toolModel?.canPerformAction("update_tool_vault")}
     />
   );
