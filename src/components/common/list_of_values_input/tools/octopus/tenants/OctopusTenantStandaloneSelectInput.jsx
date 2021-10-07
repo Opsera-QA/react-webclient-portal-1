@@ -17,7 +17,6 @@ const OctopusTenantStandaloneSelectInput = ({octopusToolId, spaceId, projectId, 
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
 
-
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -28,24 +27,30 @@ const OctopusTenantStandaloneSelectInput = ({octopusToolId, spaceId, projectId, 
     isMounted.current = true;
     setTenants([]);
 
+    console.log("octopusToolId: " + JSON.stringify(octopusToolId));
+    console.log("spaceId: " + JSON.stringify(spaceId));
+    console.log("projectId: " + JSON.stringify(projectId));
+    console.log("environmentId: " + JSON.stringify(environmentId));
+
     if (
          octopusToolId !== "" && octopusToolId != null
       && spaceId !== "" && spaceId != null
       && projectId !== "" && projectId != null
       && environmentId !== "" && environmentId != null
-    )
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    ) {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
       isMounted.current = false;
     };
 
-  }, []);
+  }, [octopusToolId, spaceId, projectId, environmentId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
