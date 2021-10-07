@@ -53,7 +53,7 @@ function OctopusTenantInputRow(
             <OctopusTenantStandaloneSelectInput
               setDataFunction={updateTenant}
               octopusToolId={model?.getData("octopusToolId")}
-              environmentId={model?.getData("environmentId")}
+              environmentId={environmentId}
               spaceId={model?.getData("spaceId")}
               projectId={model?.getData("projectId")}
               disabled={disabled}
