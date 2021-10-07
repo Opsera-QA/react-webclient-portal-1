@@ -426,14 +426,14 @@ export const kpiServiceNowAssignmentGroupsFilterMetadata = {
 };
 
 export const kpiServiceNowServiceOfferingsFilterMetadata = {
-  type: "Service Now Service Offering",
+  type: "Service Now Service Offerings",
   fields: [
     {
       label: "Type",
       id: "type",
     },
     {
-      label: "Service Now Service Offering",
+      label: "Service Now Service Offerings",
       id: "value",
     },
   ],
