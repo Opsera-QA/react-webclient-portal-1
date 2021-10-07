@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { Multiselect } from 'react-widgets';
 import InputLabel from "components/common/inputs/info_text/InputLabel";
@@ -11,10 +11,28 @@ function MultiSelectInputBase(
     disabled, selectOptions, valueField, textField,
     placeholderText, setDataFunction, busy, showClearValueButton,
     clearDataFunction, className, showLabel, requireClearDataConfirmation,
-    clearDataDetails, linkTooltipText, detailViewLink, infoOverlay
+    clearDataDetails, linkTooltipText, detailViewLink, infoOverlay,
+    formatDataFunction,
   }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
+
+  // TODO: Implement
+  // useEffect(() => {
+  //   setOptions([]);
+  //   if (Array.isArray(selectOptions)) {
+  //     if (formatDataFunction && selectOptions?.length > 0) {
+  //       const formattedOptions = formatDataFunction(selectOptions);
+  //
+  //       if (Array.isArray(formattedOptions)) {
+  //         setOptions(formattedOptions);
+  //       }
+  //     }
+  //     else {
+  //       setOptions(selectOptions);
+  //     }
+  //   }
+  // }, [selectOptions]);
 
   const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
@@ -101,7 +119,7 @@ function MultiSelectInputBase(
           groupBy={groupBy}
           value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : [] }
           placeholder={placeholderText}
-          disabled={disabled}
+          disabled={disabled || !Array.isArray(selectOptions) || selectOptions?.length === 0 || busy}
           onChange={newValue => setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)}
         />
       </div>
@@ -137,7 +155,8 @@ MultiSelectInputBase.propTypes = {
   clearDataDetails: PropTypes.any,
   linkTooltipText: PropTypes.string,
   detailViewLink: PropTypes.string,
-  infoOverlay: PropTypes.any
+  infoOverlay: PropTypes.any,
+  formatDataFunction: PropTypes.func,
 };
 
 MultiSelectInputBase.defaultProps = {

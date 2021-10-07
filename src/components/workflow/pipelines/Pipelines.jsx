@@ -9,6 +9,7 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import PipelineTableCardView from "components/workflow/pipelines/PipelineTableCardView";
+import PipelinesHelpDocumentation from "../../common/help/documentation/pipelines/PipelinesHelpDocumentation";
 
 const unpackTab = (tab) => {
   if (tab != null) {
@@ -132,6 +133,9 @@ function Pipelines() {
       navigationTabContainer={<WorkflowSubNavigationBar currentTab={"pipelines"} />}
       pageDescription={"Select a Pipeline to view details."}
       hasTabContainer={true}
+      helpComponent={
+        <PipelinesHelpDocumentation/>
+      }
     >
       <PipelineTableCardView
         pipelines={pipelines}

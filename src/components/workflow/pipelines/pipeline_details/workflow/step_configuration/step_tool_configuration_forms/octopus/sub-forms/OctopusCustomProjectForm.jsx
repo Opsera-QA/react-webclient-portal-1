@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import OctopusProjectGroupSelectInput from "../input/OctopusProjectGroupSelectInput";
 import OctopusProjectSelectInput from "../input/OctopusProjectSelectInput";
@@ -10,8 +10,36 @@ import OctopusVersionSelectInput from "../input/OctopusVersionSelectInput";
 import OctopusSpecifyDepVarsToggle from "../input/OctopusSpecifyDepVarsToggle";
 import OctopusDeploymentVariables from "../input/OctopusDeploymentVariables";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import {AuthContext} from "contexts/AuthContext";
+import OctopusTenantInputBase from "components/common/inputs/object/pipelines/octopus/OctopusTenantInputBase";
 
+// TODO: Refactor soon
 function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabled, pipelineId, listOfSteps }) {
+  const { featureFlagHideItemInProd } = useContext(AuthContext);
+  const getTenantInput = () => {
+    if (["tenanted", "tenantedoruntenanted"].includes(dataObject?.getData("tenantedDeploymentMode")?.toLowerCase())) {
+      if (featureFlagHideItemInProd() !== false) {
+        return (
+          <OctopusTenantSelectInput
+            fieldName={"tenantId"}
+            dataObject={dataObject}
+            setDataObject={setDataObject}
+            disabled={dataObject && dataObject.getData("projectGroupId").length === 0}
+          />
+        );
+      }
+
+      return (
+        <OctopusTenantInputBase
+          fieldName={"tenantList"}
+          model={dataObject}
+          setModel={setDataObject}
+          environmentList={dataObject?.getData("environmentList")}
+        />
+      );
+    }
+  };
+
   return (
     <>      
       <OctopusProjectGroupSelectInput
@@ -32,14 +60,7 @@ function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabl
         setDataObject={setDataObject}
         disabled={dataObject && dataObject.getData("projectId").length === 0}
       />
-      {dataObject && dataObject.getData("tenantedDeploymentMode") && (dataObject.getData("tenantedDeploymentMode").toLowerCase() === "tenanted" || dataObject.getData("tenantedDeploymentMode").toLowerCase() === "tenantedoruntenanted")  && (
-        <OctopusTenantSelectInput
-          fieldName={"tenantId"}
-          dataObject={dataObject}
-          setDataObject={setDataObject}
-          disabled={dataObject && dataObject.getData("projectGroupId").length === 0}
-        />
-      )}
+      {getTenantInput()}
       <OctopusFeedSelectInput
         fieldName={"octopusFeedId"}
         dataObject={dataObject}
