@@ -9,6 +9,7 @@ import {capitalizeFirstLetter, truncateString} from "components/common/helpers/s
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import {getTaskTypeLabel} from "components/tasks/task.types";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import {THRESHOLD_LEVELS} from "components/common/list_of_values_input/pipelines/thresholds/PipelineThresholdLevelSelectInputBase";
 export const FILTER_TYPES = {
   SEARCH_FILTER: "inputFilter",
   SELECT_FILTER: "selectFilter",
@@ -47,7 +48,7 @@ export const getTableTextColumn = (field, className, maxWidth = undefined, filte
   return {
     header: header,
     id: getColumnId(field),
-    class: className ? className : undefined,
+    class: className,
     maxWidth: maxWidth
   };
 };
@@ -171,6 +172,27 @@ export const getPipelineActivityStatusColumn = (field, className) => {
           <span class="ml-1">${capitalizeFirstLetter(text)}</span>
         </span>`
       );
+    },
+    class: className ? className : undefined
+  };
+};
+
+export const getPipelineThresholdLevelColumn = (field, className) => {
+  let header = getColumnHeader(field);
+
+  return {
+    header: header,
+    id: getColumnId(field),
+    template: function (text) {
+      if (text != null && text !== "") {
+        const formattedText = THRESHOLD_LEVELS.find((thresholdLevel) => thresholdLevel?.value === text)?.text;
+
+        if (formattedText) {
+          return formattedText;
+        }
+      }
+
+      return "";
     },
     class: className ? className : undefined
   };

@@ -43,7 +43,7 @@ function RegisterSourceRepositoryHookButton({ model, disable, pipeline, branch, 
       setFailedConnection(false);
 
       await savePipelineFunction();
-      const response = await SourceRepositoryActions.registerHook(getAccessToken, cancelTokenSource, pipeline?.owner, pipeline?.pipelineId, model);
+      const response = await SourceRepositoryActions.registerHook(getAccessToken, cancelTokenSource, pipeline?.owner, pipeline?._id, model);
 
       if (response && response.data != null && response.data.status === 200) {
         setSuccessfulConnection(true);

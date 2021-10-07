@@ -89,7 +89,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   dashboardOrgs,
   pipelineName,
   currentDate,
-  dateRange
+  dateRange,
+  actionableInsightsQueryData
 ) => {
   const apiUrl = "/analytics/metrics",
     date = getDateObjectFromKpiConfiguration(kpiConfiguration),
@@ -161,25 +162,9 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     serviceNowServiceOfferings: serviceNowServiceOfferings,
     serviceNowConfigurationItems: serviceNowConfigurationItems,
     serviceNowBusinessServices: serviceNowBusinessServices,
+    actionableInsightsQueryData: actionableInsightsQueryData
   };
 
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-chartsActions.getSecondaryInsightsData = async (
-  getAccessToken, 
-  cancelTokenSource, 
-  request,
-  queryData,
-  tableFilterDto
-) => {
-  const apiUrl = "/analytics/secondaryInsights";
-  const postBody = {
-    request: request,
-    page: tableFilterDto?.getData("currentPage"),
-    size: tableFilterDto?.getData("pageSize"),
-    queryData: queryData
-  };
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
+import LazyLoadMultiSelectInputBase from "components/common/inputs/select/LazyLoadMultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import pipelineStepNotificationActions from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
-// import { DialogToastContext } from "contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 function ServiceNowAssignmentGroupSelectInput({
   valueField,
@@ -12,22 +12,48 @@ function ServiceNowAssignmentGroupSelectInput({
   fieldName,
   dataObject,
   setDataObject,
-  setDataFunction,
   disabled,
   serviceNowToolId,
 }) {
-  // const toastContext = useContext(DialogToastContext);
+  const toastContext = useContext(DialogToastContext);
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
+  const [toggleSelected, setToggleSelected] = useState(false);
   const [groups, setGroups] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-  const validateAndSetData = (fieldName, value) => {
+  const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
-    newDataObject.setData(fieldName, value);
+    let parsedValues = parseValues(valueArray);
+    newDataObject.setData(fieldName, parsedValues);
     setDataObject({ ...newDataObject });
+  };
+
+  const parseValues = (valueArray) => {
+    if (valueField == null) {
+      return valueArray;
+    }
+
+    let parsedValues = [];
+
+    if (valueArray != null && valueArray.length > 0) {
+      valueArray.map((value) => {
+        if (typeof value === "string") {
+          parsedValues.push(value);
+        } else {
+          const obj = {
+            sys_id: value["sys_id"],
+            name: value["name"],
+          };
+
+          parsedValues.push(obj);
+        }
+      });
+    }
+
+    return parsedValues;
   };
 
   useEffect(() => {
@@ -40,13 +66,13 @@ function ServiceNowAssignmentGroupSelectInput({
     isMounted.current = true;
 
     setGroups([]);
-    if (serviceNowToolId !== "" && serviceNowToolId != null) {
-      loadGroups(serviceNowToolId, source).catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
+    // if (serviceNowToolId !== "" && serviceNowToolId != null) {
+    //   loadGroups(serviceNowToolId, source).catch((error) => {
+    //     if (isMounted?.current === true) {
+    //       throw error;
+    //     }
+    //   });
+    // }
 
     return () => {
       source.cancel();
@@ -54,13 +80,14 @@ function ServiceNowAssignmentGroupSelectInput({
     };
   }, [serviceNowToolId]);
 
-  const loadGroups = async (serviceNowId, cancelSource = cancelTokenSource) => {
+  const loadGroups = async () => {
     try {
       setIsLoading(true);
+      setToggleSelected(true);
       const response = await pipelineStepNotificationActions.getServiceNowGroups(
-        serviceNowId,
+        serviceNowToolId,
         getAccessToken,
-        cancelSource
+        cancelTokenSource
       );
 
       if (response.data != null && response.data.message != null && Array.isArray(response.data.message)) {
@@ -68,10 +95,11 @@ function ServiceNowAssignmentGroupSelectInput({
       }
     } catch (error) {
       if (isMounted?.current === true) {
-        // toastContext.showErrorDialog(
-        //   "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry."
-        // );
+        toastContext.showErrorDialog(
+          "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry."
+        );
       }
+      console.error(error);
     } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
@@ -88,7 +116,11 @@ function ServiceNowAssignmentGroupSelectInput({
       return "A ServiceNow Tool must be selected before selecting a Assignment Group";
     }
 
-    if (!isLoading && serviceNowToolId !== "" && groups.length === 0) {
+    if (!isLoading && serviceNowToolId !== "" && groups.length === 0 && !toggleSelected) {
+      return "Click to load Assignment Groups";
+    }
+
+    if (!isLoading && serviceNowToolId !== "" && groups.length === 0 && toggleSelected) {
       return "No Assignment Groups found for selected ServiceNow account.";
     }
 
@@ -98,17 +130,18 @@ function ServiceNowAssignmentGroupSelectInput({
   };
 
   return (
-    <MultiSelectInputBase
+    <LazyLoadMultiSelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={groups}
-      setDataFunction={setDataFunction}
+      setDataFunction={validateAndSetData}
       busy={isLoading}
       valueField={valueField}
       textField={textField}
       placeholderText={getPlaceholderText()}
-      disabled={disabled || isLoading || serviceNowToolId === "" || groups.length === 0}
+      onToggleFunction={loadGroups}
+      disabled={disabled || serviceNowToolId === "" || !serviceNowToolId}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
     />
   );

@@ -5,12 +5,11 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
-import VanityTable from "components/common/table/VanityTable";
+import CustomTable from "components/common/table/CustomTable";
 import Model from "core/data_model/model";
-// import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import sonarPipelineDetailsFilterMetadata from "../sonar-pipeline-details-filter-metadata";
 import SonarPipelineTableMetadata from "../sonar-pipeline-table-metadata";
-import { getTableTextColumn } from "components/common/table/table-column-helpers-v2";
+import { getTableTextColumn, getLimitedTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
 
@@ -35,7 +34,7 @@ function SonarPipelineWiseVulnerabilitiesDetails({ dataObject }) {
       getTableTextColumn(getField(fields, "severity")),
       getTableTextColumn(getField(fields, "component")),
       getTableTextColumn(getField(fields, "line")),
-      getTableTextColumn(getField(fields, "message")),
+      getLimitedTableTextColumn(getField(fields, "message"), 40),
       getTableTextColumn(getField(fields, "effort")),      
     ],
     []
@@ -62,19 +61,26 @@ function SonarPipelineWiseVulnerabilitiesDetails({ dataObject }) {
     };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {    
     try {
       setIsLoading(true);
-      const response = await chartsActions.getSecondaryInsightsData(
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "getPipelineSonarVulnerabilitiesData",
+        undefined,
+        undefined,        
+        filterDto,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
         {
           pipelineId: dataObject?.pipelineId, 
           projectName: dataObject?.projectName, 
           runCount: dataObject?.run_count
         },
-        filterDto
       );
 
       if (isMounted?.current === true && response?.status === 200) {
@@ -93,7 +99,7 @@ function SonarPipelineWiseVulnerabilitiesDetails({ dataObject }) {
         );
         setTableFilterDto({ ...newFilterDto });
       }
-    } catch (error) {
+    } catch (error) {      
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
@@ -160,15 +166,16 @@ function SonarPipelineWiseVulnerabilitiesDetails({ dataObject }) {
   };
 
   const getTable = () => {    
-    return (
-      <VanityTable
+    return (      
+      <CustomTable
         isLoading={isLoading}
         columns={columns}
         data={pipelineVulnerabilityData}
         noDataMessage={noDataMessage}
-        paginationModel={tableFilterDto}
-        setPaginationModel={setTableFilterDto}
+        paginationDto={tableFilterDto}
+        setPaginationDto={setTableFilterDto}
         loadData={loadData}
+        scrollOnLoad={false}        
       />      
     );
   };

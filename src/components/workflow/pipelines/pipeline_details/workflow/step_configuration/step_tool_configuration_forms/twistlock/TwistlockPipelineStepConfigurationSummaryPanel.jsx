@@ -6,14 +6,15 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
+import PipelineThresholdFieldCard from "components/common/fields/pipelines/PipelineThresholdFieldCard";
 
-function TwistlockPipelineStepConfigurationSummaryPanel({ twistlockPipelineDataObject, pipelineData, setActiveTab }) {
+function TwistlockPipelineStepConfigurationSummaryPanel({ twistlockPipelineDataObject, pipelineData }) {
   if (twistlockPipelineDataObject == null) {
     return <LoadingDialog size="sm" />;
   }
 
   return (
-    <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
+    <PipelineStepSummaryPanelContainer pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
           <ToolNameField model={twistlockPipelineDataObject} fieldName={"toolConfigId"}/>
@@ -23,7 +24,14 @@ function TwistlockPipelineStepConfigurationSummaryPanel({ twistlockPipelineDataO
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={twistlockPipelineDataObject} fieldName={"buildStepId"}/>
-        </Col>        
+        </Col>
+        <Col lg={6} />
+        <Col lg={6}>
+          <PipelineThresholdFieldCard model={twistlockPipelineDataObject} fieldName={"threshold_compliance"} />
+        </Col>
+        <Col lg={6}>
+          <PipelineThresholdFieldCard model={twistlockPipelineDataObject} fieldName={"threshold_vulnerability"} />
+        </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
   );
@@ -32,7 +40,6 @@ function TwistlockPipelineStepConfigurationSummaryPanel({ twistlockPipelineDataO
 TwistlockPipelineStepConfigurationSummaryPanel.propTypes = {
   twistlockPipelineDataObject: PropTypes.object,
   pipelineData: PropTypes.object,
-  setActiveTab: PropTypes.func
 };
 
 

@@ -2,8 +2,6 @@ import React, {useState, useEffect, useContext} from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { axiosApiService } from "api/apiService";
-import "components/inventory/tools/tools.css";
-
 import {platformList} from "./jenkins-create-account-metadata";
 import DropdownList from "react-widgets/lib/DropdownList";
 import {AuthContext} from "../../../../../../../contexts/AuthContext";

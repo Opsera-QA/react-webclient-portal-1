@@ -32,7 +32,8 @@ function JFrogToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={JFrogConfigurationDto}
+      model={JFrogConfigurationDto}
+      setModel={JFrogConfigurationDto}
       persistRecord={saveJFrogToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"jfrog"}

@@ -3,7 +3,6 @@ import OctopusApplicationsTable from "./OctopusApplicationsTable";
 import ExistingOctopusApplicationModal from "./OctopusApplicationModal";
 
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import octopusApplicationsMetadata from "../octopus-environment-metadata";
 import Model from "core/data_model/model";
 

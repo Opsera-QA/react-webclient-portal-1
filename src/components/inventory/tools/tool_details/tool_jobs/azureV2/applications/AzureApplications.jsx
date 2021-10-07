@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import AzureApplicationsTable from "./AzureApplicationsTable";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import AzureApplicationOverlay
   from "components/inventory/tools/tool_details/tool_jobs/azureV2/applications/AzureApplicationOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";

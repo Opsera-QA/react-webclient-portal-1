@@ -36,7 +36,7 @@ function RunTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationData
   const checkValidity = () => {
     if (gitTasksData?.getData("type") === "sync-sfdc-repo") {
       const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-      if(gitTasksConfigurationDataDto.checkCurrentValidity() && configuration?.isNewBranch && configuration?.upstreamBranch?.length < 1 ) {
+      if(gitTasksConfigurationDataDto && gitTasksConfigurationDataDto.checkCurrentValidity() && configuration?.isNewBranch && configuration?.upstreamBranch?.length < 1 ) {
         return true;
       } else {
         return !gitTasksConfigurationDataDto?.checkCurrentValidity();
@@ -57,6 +57,7 @@ function RunTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationData
         toastContext.showLoadingErrorDialog(error);
         setIsLoading(false);
       } finally {
+        handleClose();
         toastContext.showOverlayPanel(<GitTaskSfdcPipelineWizardOverlay gitTasksData={gitTasksData}/>);  
         setIsLoading(false);
       }
@@ -70,6 +71,7 @@ function RunTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationData
         toastContext.showLoadingErrorDialog(error);
         setIsLoading(false);
       } finally {
+        handleClose();
         setIsLoading(false);
       }
     }
@@ -91,6 +93,7 @@ function RunTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationData
 
         setIsLoading(false);
       } finally {
+        handleClose();
         setIsLoading(false);
       }
     }
@@ -115,10 +118,10 @@ function RunTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationData
         }
         setIsLoading(false);
       } finally {
+        handleClose();
         setIsLoading(false);
       }
     }
-    handleClose();
   };
 
   const getLabel = () => {

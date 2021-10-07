@@ -12,6 +12,7 @@ import DetailScreenContainer from "components/common/panels/detail_view_containe
 import axios from "axios";
 import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import ToolManagementSubNavigationBar from "components/admin/tools/ToolManagementSubNavigationBar";
 
 function ToolCategoryDetailView() {
   const {toolTypeId} = useParams();
@@ -107,6 +108,7 @@ function ToolCategoryDetailView() {
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       dataObject={toolCategoryData}
+      navigationTabContainer={<ToolManagementSubNavigationBar activeTab={"toolCategoryViewer"} />}
       isLoading={isLoading}
       actionBar={getActionBar()}
       detailPanel={<ToolCategoryDetailPanel toolCategoryData={toolCategoryData} setToolCategoryData={setToolCategoryData}/>}

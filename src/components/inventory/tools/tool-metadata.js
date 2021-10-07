@@ -1,5 +1,7 @@
 import regexDefinitions from "utils/regexDefinitions";
 
+// TODO: This shouldn't be used anymore, use the new route and pull from Node.
+//  It's only left in for backwards compatibility until I have time to update all references
 const toolMetadata = {
   idProperty: "_id",
   type: "Tool",

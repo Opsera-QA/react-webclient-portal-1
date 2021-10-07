@@ -29,7 +29,7 @@ const awsECSDeployStepFormMetadata = {
     },
     {
       label: "Delete Existing Resource Before Deployment?",
-      id: "ecsDeleteResource",
+      id: "ecsDeleteService",
     },
     {
       label: "Dynamic Name Prefix",
@@ -46,7 +46,7 @@ const awsECSDeployStepFormMetadata = {
     ecsServiceName: "",
     namePretext: "",
     dynamicServiceName: false,
-    ecsDeleteResource: false
+    ecsDeleteService: false
   }
 };
 

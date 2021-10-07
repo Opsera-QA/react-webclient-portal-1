@@ -1,7 +1,6 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
 import PipelineSummaryField from "components/common/fields/pipelines/PipelineSummaryField";
 

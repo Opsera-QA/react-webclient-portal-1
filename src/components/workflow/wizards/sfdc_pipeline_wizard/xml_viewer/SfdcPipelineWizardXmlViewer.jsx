@@ -10,14 +10,17 @@ import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizar
 
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
-import UnitTestClassesViewer from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/UnitTestClassesViewer";
-import PackageXmlViewer from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/PackageXmlViewer";
-import {faCode} from "@fortawesome/pro-light-svg-icons";
+import UnitTestClassesViewer from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/unit_test/UnitTestClassesViewer";
+import PackageXmlViewer from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/xml/PackageXmlViewer";
+import {faCode, faTally} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import CancelButton from "components/common/buttons/CancelButton";
 import IconBase from "components/common/icons/IconBase";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
+import SalesforcePipelineComponentCountsViewer
+  from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/counts/SalesforcePipelineComponentCountsViewer";
 
+// TODO: This should be refactored and cleaned up.
 const SfdcPipelineWizardXmlViewer = (
   {
     pipelineWizardModel,
@@ -75,7 +78,6 @@ const SfdcPipelineWizardXmlViewer = (
     }
   };
 
-  // TODO: Follow current standards
   const loadXmlData = async (cancelSource = cancelTokenSource) => {
     const response = await sfdcPipelineActions.getPackageXmlV2(getAccessToken, cancelSource, pipelineWizardModel);
 
@@ -126,7 +128,6 @@ const SfdcPipelineWizardXmlViewer = (
 
   const triggerGitTask = async () => {
     let createJobResponse;
-    // TODO: call a new MS to create and trigger
     try {
       setIsSaving(true);
       createJobResponse = await sfdcPipelineActions.triggerGitTaskV3(getAccessToken, cancelTokenSource, pipelineWizardModel.getData("gitTaskId"));
@@ -173,24 +174,68 @@ const SfdcPipelineWizardXmlViewer = (
   };
 
   const getView = () => {
-    if (activeTab === "pxml") {
-      return (<PackageXmlViewer isLoading={isLoading} isSaving={isSaving} pipelineWizardModel={pipelineWizardModel} />);
-    } else if (activeTab === "utc") {
-      return (<UnitTestClassesViewer pipelineWizardModel={pipelineWizardModel} />);
+    switch (activeTab) {
+      case "pxml":
+        return (
+          <PackageXmlViewer
+            isLoading={isLoading}
+            isSaving={isSaving}
+            pipelineWizardModel={pipelineWizardModel}
+          />
+        );
+      case "utc":
+        return (
+          <UnitTestClassesViewer
+            pipelineWizardModel={pipelineWizardModel}
+          />
+        );
+      case "counts":
+        return (
+          <SalesforcePipelineComponentCountsViewer
+            pipelineWizardModel={pipelineWizardModel}
+            setPipelineWizardModel={setPipelineWizardModel}
+          />
+        );
+    }
+  };
+
+  const getUnitTestClassTab = () => {
+    if (pipelineWizardModel?.getArrayData("unitTestSteps").length > 0) {
+      return (
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Unit Test Classes"}
+          handleTabClick={handleTabClick}
+          tabName={"utc"}
+          toolTipText={"Unit Test Classes"}
+          icon={faCode}
+        />
+      );
     }
   };
 
   const getTabContainer = () => {
-    if (pipelineWizardModel?.getArrayData("unitTestSteps").length > 0) {
-      return (
-        <CustomTabContainer>
-          <CustomTab activeTab={activeTab} tabText={"Package XML"} handleTabClick={handleTabClick} tabName={"pxml"}
-                     toolTipText={"Package XML"} icon={faCheck} />
-          <CustomTab activeTab={activeTab} tabText={"Unit Test Classes"} handleTabClick={handleTabClick} tabName={"utc"}
-                     toolTipText={"Unit Test Classes"} icon={faCode} />
-        </CustomTabContainer>
-      );
-    }
+    return (
+      <CustomTabContainer>
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Package XML"}
+          handleTabClick={handleTabClick}
+          tabName={"pxml"}
+          toolTipText={"Package XML"}
+          icon={faCheck}
+        />
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Component Counts"}
+          handleTabClick={handleTabClick}
+          tabName={"counts"}
+          toolTipText={"Component Counts"}
+          icon={faTally}
+        />
+        {getUnitTestClassTab()}
+      </CustomTabContainer>
+    );
   };
 
   return (

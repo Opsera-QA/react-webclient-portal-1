@@ -1616,7 +1616,7 @@ div.data-blocks-ellipses {
     width: 75%;
     left: 12.5%;
     right: 12.5%;
-    margin: 10px auto auto;
+    margin: 10px auto;
 }
 
 .full-width-center-overlay {
@@ -1642,6 +1642,13 @@ div.data-blocks-ellipses {
     /* full-height - (10px x 2 top + bottom margins - title height - button panel height) */
     height: calc(100vh - 20px - 48px - 63px);
     max-height: calc(100vh - 20px - 48px - 63px);
+}
+
+.full-screen-overlay-selection-container {
+    overflow-y: auto;
+    /* full-height - (10px x 2 top + bottom margins - title height - button panel height - filter container taken space) */
+    height: calc(100vh - 20px - 48px - 63px - 85px);
+    max-height: calc(100vh - 20px - 48px - 63px - 85px);
 }
 
 .full-screen-overlay-tab-panel-body-with-buttons {
@@ -1687,23 +1694,20 @@ div.data-blocks-ellipses {
 }
 
 /* Confirmation panel */
-.confirmation-overlay {
-    margin: auto;
-}
-
 .confirmation-overlay-panel {
     position: fixed;
     overflow-x: hidden;
     z-index: 1500;
     height: 100%;
     top: calc(50vh - 300px);
-    left: calc(50vw - 300px);
+    left: calc(50vw - 375px);
 }
 
 .confirmation-overlay-panel-body {
     overflow-y: auto;
     min-height: 200px;
-    min-width: 600px;
+    min-width: 750px;
+    max-width: 750px;
     max-height: calc(100% - 48px);
 }
 

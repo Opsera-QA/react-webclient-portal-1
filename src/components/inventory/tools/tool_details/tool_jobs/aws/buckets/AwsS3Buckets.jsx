@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import AwsS3BucketsTable from "./AwsS3BucketsTable";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import awsActions from "../aws-actions";

@@ -46,6 +46,7 @@ toolsActions.deleteOwnerVaultRecordsForToolIdV2 = async (getAccessToken, cancelT
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+// TODO: All references to this need to be updated to V2, Do not use this.
 toolsActions.updateTool = async (toolDataDto, getAccessToken) => {
   const postBody = {
     ...toolDataDto.getPersistData()
@@ -55,12 +56,13 @@ toolsActions.updateTool = async (toolDataDto, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
-toolsActions.updateToolV2 = async (getAccessToken, cancelTokenSource, toolDataDto) => {
-  const postBody = {
-    ...toolDataDto.getPersistData()
-  };
-  let id = toolDataDto.getData("_id");
+toolsActions.updateToolV2 = async (getAccessToken, cancelTokenSource, toolModel) => {
+  const id = toolModel?.getData("_id");
   const apiUrl = `/registry/${id}/update`;
+  const postBody = {
+    ...toolModel.getPersistData()
+  };
+
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
@@ -86,6 +88,7 @@ toolsActions.getTools = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+// TODO: Update to V3 and remove this and the related route
 toolsActions.getRoleLimitedToolRegistryListV2 = async (getAccessToken, cancelTokenSource, toolFilterDto) => {
   let sortOption = toolFilterDto.getData("sortOption");
 
@@ -103,6 +106,26 @@ toolsActions.getRoleLimitedToolRegistryListV2 = async (getAccessToken, cancelTok
   };
 
   const apiUrl = `/registry/configs`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+toolsActions.getRoleLimitedToolRegistryListV3 = async (getAccessToken, cancelTokenSource, toolFilterDto, fields) => {
+  const apiUrl = `/registry/configs/v2`;
+
+  const urlParams = {
+    params: {
+      sortOption: toolFilterDto.getFilterValue("sortOption"),
+      currentPage: toolFilterDto.getData("currentPage"),
+      pageSize: toolFilterDto.getData("pageSize"),
+      toolIdentifier: toolFilterDto.getFilterValue("toolIdentifier"),
+      tag: toolFilterDto.getFilterValue("tag"),
+      active: toolFilterDto.getFilterValue("status"),
+      search: toolFilterDto.getFilterValue("search"),
+      owner: toolFilterDto.getFilterValue("owner"),
+      fields: fields,
+    }
+  };
+
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
@@ -164,6 +187,11 @@ toolsActions.getRoleLimitedToolById = async (id, getAccessToken) => {
 
 toolsActions.getRoleLimitedToolByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/registry/configs/${id}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+toolsActions.getRoleLimitedToolByIdV3 = async (getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `/registry/configs/tool/${id}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

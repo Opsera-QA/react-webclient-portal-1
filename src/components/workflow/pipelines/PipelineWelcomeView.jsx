@@ -3,10 +3,17 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlay} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import PropTypes from "prop-types";
+import {useHistory} from "react-router-dom";
 
-function PipelineWelcomeView ({ setActiveTab }) {
+function PipelineWelcomeView () {
+  const history = useHistory();
+
+  const goToPipelineCatalog = () => {
+    history.push(`/workflow/catalog`);
+  };
+
   return (
-    <div className="pb-3">
+    <div className="mx-3">
       <div className="h5 mb-3 mt-4">Welcome to Opsera&apos;s Declarative Pipelines!</div>
 
       <div className="row mx-n2 mt-1 pl-2">
@@ -28,7 +35,7 @@ function PipelineWelcomeView ({ setActiveTab }) {
         <div className="col-md px-2 landing-content-module">
           <div className="text-muted mb-3">
             At this time you do not have any pipelines configured for this section.  Please visit the Catalog in order to add a workflow template to your pipeline.</div>
-            <Button variant="success" className="px-2" onClick={() => setActiveTab("catalog")}>
+            <Button variant="success" className="px-2" onClick={() => goToPipelineCatalog("catalog")}>
               <FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Get Started!</Button>
         </div>
       </div>

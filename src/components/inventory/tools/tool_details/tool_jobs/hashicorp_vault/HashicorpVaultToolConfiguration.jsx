@@ -56,7 +56,8 @@ function HashicorpVaultToolConfiguration({ toolData }) {
     <>
       {getWarningDialogs()}
     <ToolConfigurationEditorPanelContainer
-      recordDto={hashicorpVaultConfigurationDto}
+      model={hashicorpVaultConfigurationDto}
+      setModel={setHashicorpVaultConfigurationDto}
       persistRecord={saveHashicorpVaultToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"vault"}

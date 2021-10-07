@@ -33,7 +33,8 @@ function KafkaConnectToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={kafkaConnectConfigurationDto}
+      model={kafkaConnectConfigurationDto}
+      setModel={setKafkaConnectConfigurationDto}
       persistRecord={saveKafkaConnectToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"kafka_connect"}

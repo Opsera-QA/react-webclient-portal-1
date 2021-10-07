@@ -1,7 +1,6 @@
 import React, {useEffect, useContext, useState, useRef} from "react";
 import { Col, Button } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import Row from "react-bootstrap/Row";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import azureActions from "../../azure-actions";

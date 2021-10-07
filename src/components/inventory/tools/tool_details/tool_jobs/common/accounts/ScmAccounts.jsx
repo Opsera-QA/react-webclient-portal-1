@@ -2,7 +2,6 @@ import React, {useContext, useState} from "react";
 import ScmAccountsTable from "./ScmAccountsTable";
 import Model from "core/data_model/model";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import NewScmAccountOverlay from './NewScmAccountModal';
 import scmCreateAccountMetadata from './scm-create-account-metadata';
 import FilterContainer from "components/common/table/FilterContainer";

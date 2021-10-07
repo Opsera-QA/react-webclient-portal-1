@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import PipelineSummaryCardContainer
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCardContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";

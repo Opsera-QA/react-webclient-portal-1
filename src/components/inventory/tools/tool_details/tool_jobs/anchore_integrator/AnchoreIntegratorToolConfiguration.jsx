@@ -33,7 +33,8 @@ function AnchoreIntegratorToolConfiguration({ toolData }) {
 
   return (
     <ToolConfigurationEditorPanelContainer
-      recordDto={anchoreIntegratorConfigurationDto}
+      model={anchoreIntegratorConfigurationDto}
+      setModel={setAnchoreIntegratorConfigurationDto}
       persistRecord={saveAnchoreIntegratorToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Anchore"}
