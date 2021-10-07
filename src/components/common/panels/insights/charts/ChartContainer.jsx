@@ -181,7 +181,7 @@ function ChartContainer(
         Array.isArray(dashboardTags) && dashboardTags.length > 0 && useDashboardTags) {
       return (
         <div>
-        <div className={"m-1 p-2"}>{"Dashboard & Metric Tags Applied"}</div>
+        <div className={"m-1 p-2"}>{"Dashboard & KPI Tags Applied"}</div>
         <CustomBadgeContainer>
           {finalTags.map((item, index) => {
             if (typeof item !== "string")
@@ -197,7 +197,7 @@ function ChartContainer(
     if (Array.isArray(tags) && tags.length > 0 && useKpiTags) {
       return (
         <div>
-        <div className={"m-1 p-2"}>{"Metric Tags Applied"}</div>
+        <div className={"m-1 p-2"}>{"KPI Tags Applied"}</div>
         <CustomBadgeContainer>
           {tags.map((item, index) => {
             if (typeof item !== "string")
