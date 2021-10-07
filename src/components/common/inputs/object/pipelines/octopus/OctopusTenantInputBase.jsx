@@ -140,7 +140,7 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
               <OctopusTenantInputRow
                 environmentList={environmentList}
                 disabled={disabled}
-                deleteThresholdRow={() => deleteRow(index)}
+                deleteRow={() => deleteRow(index)}
                 environmentId={row?.environmentId}
                 tenantId={row?.id}
                 updateTenant={(newValue) => updateTenant(index, newValue)}
