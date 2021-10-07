@@ -164,7 +164,15 @@ function ChartContainer(
   const getTagBadges = () => {
     const tags = kpiConfiguration?.filters[kpiConfiguration?.filters?.findIndex((obj) => obj.type === "tags")]?.value;
     const dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters?.findIndex((obj) => obj.type === "tags")]?.value;
-    const totalTags = [...tags, ...dashboardTags];
+    let totalTags;
+
+    if (Array.isArray(dashboardTags) && dashboardTags.length > 0) {
+      totalTags = [...tags, ...dashboardTags];
+    }
+    else {
+      totalTags = [...tags];
+    }
+
     const finalTags = totalTags.filter((item, pos) => totalTags.indexOf(item) === pos);
     const useKpiTags = kpiConfiguration?.settings?.useKpiTags !== false;
     const useDashboardTags = kpiConfiguration?.settings?.useDashboardTags !== false;
