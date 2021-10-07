@@ -1,6 +1,6 @@
 const SonarPipelineTableMetadata = {
   idProperty: "_id",
-  type: "Opsera Pipeline Sonar Report",
+  type: "Sonar Pipeline Table Report",
   fields: [
     {
       label: "Project Name",

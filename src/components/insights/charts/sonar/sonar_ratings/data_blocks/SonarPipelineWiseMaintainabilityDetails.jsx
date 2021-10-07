@@ -4,32 +4,29 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import FilterContainer from "components/common/table/FilterContainer";
 import Model from "core/data_model/model";
-import sonarPipelineDetailsFilterMetadata from "../sonar-pipeline-details-filter-metadata";
-import SonarPipelineTableMetadata from "../sonar-pipeline-table-metadata";
+import sonarPipelineDetailsFilterMetadata from "../sonar.pipeline.details.filter.metadata";
+import SonarPipelineTableMetadata from "../sonar.pipeline.table.metadata";
 import { getChartTrendStatusColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
 import CustomTable from "components/common/table/CustomTable";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
-
-
-function SonarPipelineWiseVulnerabilitiesDetails({dataObject}) {
-
+import chartsActions from "components/insights/charts/charts-actions";
+function SonarPipelineWiseMaintainibilityDetails() {
   const { getAccessToken } = useContext(AuthContext);
-  const [tableFilterDto, setTableFilterDto] = useState(
+  const [model, setModel] = useState(
     new Model({...sonarPipelineDetailsFilterMetadata.newObjectFields}, sonarPipelineDetailsFilterMetadata, false)
   );
   const [isLoading, setIsLoading] = useState(false);
-  const [pipelineVulnerabilityData, setPipelineVulnerabilityData] = useState([]);
+  const [maintainibilityData, setMaintainibilityData] = useState([]);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
-  const [error, setError] = useState(undefined);
+  // const [error, setError] = useState(undefined);
   const [footerData, setFooterData] = useState(undefined);
-  const [metrics, setMetrics] = useState([]);
   const [issueTypeData, setIssueTypeData]=useState(undefined);
 
 
-  const noDataMessage = "Sonar Vulnerabilities report is currently unavailable at this time";
+  const noDataMessage = "Sonar Maintainibility report is currently unavailable at this time";
 
   const fields = SonarPipelineTableMetadata.fields;
 
@@ -69,100 +66,51 @@ function SonarPipelineWiseVulnerabilitiesDetails({dataObject}) {
     };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
+  const calculateTrend = (maintainibility)=>{
+    if(maintainibility.currentScanIssuesCount || !maintainibility.previousScanIssuesCount ){
+      return '-';
+    } else if (maintainibility.currentScanIssuesCount > maintainibility.previousScanIssuesCount ){
+      return 'green';
+    } else if (maintainibility.currentScanIssuesCount < maintainibility.previousScanIssuesCount) {
+      return 'red';
+    } else {
+      return 'neutral';
+    }
+  };
+
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = model) => {    
     try {
       setIsLoading(true);
-      const response ={data:
-        {
-            "issueTypeData" : [ 
-                {
-                    "minor" : 28.0,
-                    "major" : 36.0,
-                    "critical" : 32.0,
-                    "info" : 2.0,
-                    "maintainibilites":23.0,
-                }
-            ],
-            "projectData" : [ 
-                {
-                    "total_effort" : 651,
-                    "status":'green',
-                    "project" : "Node-Analytics-Services",
-                    "runCount" : 54,
-                    "minor" : 27.0,
-                    "major" : 36.0,
-                    "critical" : 32.0,
-                    "info" : 2.0
-                }, 
-                {
-                    "total_effort" : 1,
-                    "project" : "Cypress-Example",
-                    "runCount" : 52,
-                    "status":'red',
-                    "minor" : 1.0,
-                    "major" : 0.0,
-                    "critical" : 0.0,
-                    "info" : 0.0
-                },
-                {
-                  "total_effort" : 1,
-                  "project" : "Cypress-Example",
-                  "runCount" : 52,
-                  "status":'red',
-                  "minor" : 1.0,
-                  "major" : 0.0,
-                  "critical" : 0.0,
-                  "info" : 0.0
-              },
-              {
-                "total_effort" : 1,
-                "project" : "Cypress-Example",
-                "runCount" : 52,
-                "status":'red',
-                "minor" : 1.0,
-                "major" : 0.0,
-                "critical" : 0.0,
-                "info" : 0.0
-            }
-            ],
-            "totalDebtData" : [ 
-                {
-                    "minor" : 90,
-                    "major" : 440,
-                    "critical" : 122,
-                    "info" : 0
-                }
-            ]
-        }
-        };
-    /*await chartsActions.getSecondaryInsightsData(
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "getPipelineSonarVulnerabilitiesData",
-        {
-          pipelineId: dataObject?.pipelineId, 
-          projectName: dataObject?.projectName, 
-          runCount: dataObject?.run_count
-        },
-        filterDto
-      );*/
-
-      //if (isMounted?.current === true && response?.status === 200) {
-        const sonarIssues = response?.data?.projectData;
-        setPipelineVulnerabilityData(sonarIssues);
+        "sonarRatingsCodeSmellsActionableInsights",
+        undefined,
+        undefined,        
+        filterDto,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+      );
+      if (isMounted?.current === true && response?.status === 200) {
+        const sonarMaintainability = response?.data?.data[0]?.sonarMaintainabilities?.data[0]?.projectData;
+        await setMaintainibilityData(sonarMaintainability.map(maintainibility=>({
+              ...maintainibility,
+              status : calculateTrend(maintainibility)
+            })));
         let newFilterDto = filterDto;
-        newFilterDto.setData(
-          "totalCount",sonarIssues.length
-         // response?.data?.data[0]?.PipelineSonarVulnerabilitiesData?.data[0]?.count[0]?.count
-        );
-        setTableFilterDto({ ...newFilterDto });
-        setMetrics(sonarIssues);
-        setIssueTypeData(response?.data?.issueTypeData[0]);
-        setFooterData(response?.data?.totalDebtData[0]);
-    } catch (error) {
+        newFilterDto.setData("totalCount", sonarMaintainability.length);
+        setModel({ ...newFilterDto });
+        setIssueTypeData( response?.data?.data[0]?.sonarMaintainabilities?.data[0]?.typeData[0]);
+        setFooterData(response?.data?.data[0]?.sonarMaintainabilities?.data[0]?.debtData[0]);
+      }
+    } catch (error) {      
       if (isMounted?.current === true) {
         console.error(error);
-        setError(error);
+        // setError(error);
       }
     } finally {
       if (isMounted?.current === true) {
@@ -170,6 +118,7 @@ function SonarPipelineWiseVulnerabilitiesDetails({dataObject}) {
       }
     }
   };
+
 
   const getBody = () => {
 
@@ -179,7 +128,7 @@ function SonarPipelineWiseVulnerabilitiesDetails({dataObject}) {
         <FilterContainer
           isLoading={isLoading}
           showBorder={false}
-          title={`Maintainability Report`}
+          title={`Maintainibility Report`}
           titleIcon={faDraftingCompass}
           body={getTable()}          
           className={"px-2 pb-2"}
@@ -197,7 +146,7 @@ function SonarPipelineWiseVulnerabilitiesDetails({dataObject}) {
       <Row className="py-3 px-5">
         <Col>
           <div className="metric-box p-3 text-center">
-            <div className="font-weight-bold">{issueTypeData?.maintainibilites}</div>
+            <div className="font-weight-bold">{issueTypeData?.total}</div>
             <div className="w-100 text-muted mb-1">Maintainibility</div>
           </div>
         </Col>
@@ -256,10 +205,10 @@ function SonarPipelineWiseVulnerabilitiesDetails({dataObject}) {
       <CustomTable
         isLoading={isLoading}
         columns={columns}
-        data={metrics}
+        data={maintainibilityData}
         noDataMessage={noDataMessage}
-        paginationModel={tableFilterDto}
-        setPaginationModel={setTableFilterDto}
+        paginationModel={model}
+        setPaginationModel={setModel}
         loadData={loadData}
       />      
     );
@@ -273,8 +222,8 @@ function SonarPipelineWiseVulnerabilitiesDetails({dataObject}) {
 
 }
 
-SonarPipelineWiseVulnerabilitiesDetails.propTypes = {
+SonarPipelineWiseMaintainibilityDetails.propTypes = {
   dataObject: PropTypes.object,
 };
 
-export default SonarPipelineWiseVulnerabilitiesDetails;
+export default SonarPipelineWiseMaintainibilityDetails;

@@ -81,24 +81,18 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
       <HorizontalThreeDataBlockContainer
         topDataBlock={
           <SonarRatingsVulnerabilityDataBlock
-            kpiConfiguration={kpiConfiguration}
-            dashboardData={dashboardData}
             securityRating={sonarRatingsMetric?.security_rating}
             vulnerabilityCount={sonarRatingsMetric?.vulnerabilities}
           />
         }
         middleDataBlock={
           <SonarRatingsReliabilityDataBlock
-            kpiConfiguration={kpiConfiguration}
-            dashboardData={dashboardData}
             reliabilityRating={sonarRatingsMetric?.reliability_rating}
             bugCount={sonarRatingsMetric?.bugs}
           />
         }
         bottomDataBlock={
           <SonarRatingsMaintainabilityDataBlock
-            dashboardData={dashboardData}
-            kpiConfiguration={kpiConfiguration}
             maintainabilityRating={sonarRatingsMetric?.maintainability_rating}
             technicalDebtRatio={sonarRatingsMetric.technical_debt_ratio}
           />

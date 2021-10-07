@@ -1,19 +1,15 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import Model from "core/data_model/model";
-import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
-import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGradeText";
 import HorizontalDataBlockContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlockContainer";
 import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
-import Col from "react-bootstrap/Col";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import { faTable } from "@fortawesome/pro-light-svg-icons";
 import SonarPipelineWiseReliabilityDetails from './SonarPipelineWiseReliabilityDetails';
-function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, reliabilityRating, bugCount }) {
+function SonarRatingsReliabilityDataBlock({ reliabilityRating, bugCount }) {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect =()=>{    
@@ -28,9 +24,7 @@ function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, rel
         linkTooltipText={"View Full Blueprint"}
       >
         <div className={"p-3"}>
-        <SonarPipelineWiseReliabilityDetails 
-          dataObject={dashboardData} 
-         />
+          <SonarPipelineWiseReliabilityDetails />
         </div>        
       </FullScreenCenterOverlayContainer>
     );
@@ -38,16 +32,6 @@ function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, rel
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
-  };
-
-  const onRowSelect_old = () => {
-    const chartModel = new Model({...SonarRatingsBugsActionableMetadata.newObjectFields}, SonarRatingsBugsActionableMetadata, false);
-    toastContext.showOverlayPanel(
-      <ChartDetailsOverlay
-        dashboardData={dashboardData}
-        kpiConfiguration={kpiConfiguration}
-        chartModel={chartModel}
-        kpiIdentifier={"sonar-ratings-bugs"} />);
   };
 
   const getSonarReliabilityGrade = (rating) => {
@@ -110,8 +94,6 @@ function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, rel
 }
 
 SonarRatingsReliabilityDataBlock.propTypes = {
-  kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
   reliabilityRating: PropTypes.number,
   bugCount: PropTypes.number,
 };

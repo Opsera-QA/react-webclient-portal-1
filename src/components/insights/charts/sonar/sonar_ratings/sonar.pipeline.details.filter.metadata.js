@@ -1,6 +1,6 @@
 const sonarPipelineDetailsFilterMetadata = {
     idProperty: "_id",
-    type: "Sonar Vulnerabilities Filter Metadata",
+    type: "Sonar Pipeline Details Filter Metadata",
     fields: [      
       {
         label: "Page Size",

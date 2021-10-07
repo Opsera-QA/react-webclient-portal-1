@@ -1,19 +1,15 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import Model from "core/data_model/model";
-import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
-import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGradeText";
 import HorizontalDataBlockContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlockContainer";
 import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import PercentageDataBlock from "components/common/metrics/percentage/PercentageDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
-import Col from "react-bootstrap/Col";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import { faTable } from "@fortawesome/pro-light-svg-icons";
 import SonarPipelineWiseMaintainabilityDetails from './SonarPipelineWiseMaintainabilityDetails';
-function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration, maintainabilityRating, technicalDebtRatio }) {
+function SonarRatingsMaintainabilityDataBlock({ maintainabilityRating, technicalDebtRatio }) {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect =()=>{    
@@ -28,9 +24,7 @@ function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration,
         linkTooltipText={"View Full Blueprint"}
       >
         <div className={"p-3"}>
-        <SonarPipelineWiseMaintainabilityDetails 
-          dataObject={dashboardData} 
-         />
+          <SonarPipelineWiseMaintainabilityDetails />
         </div>        
       </FullScreenCenterOverlayContainer>
     );
@@ -39,16 +33,6 @@ function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration,
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
-  };
-
-  const onRowSelect_old = () => { 
-    const chartModel = new Model({...SonarRatingsBugsActionableMetadata.newObjectFields}, SonarRatingsBugsActionableMetadata, false);
-    toastContext.showOverlayPanel(
-      <ChartDetailsOverlay
-        dashboardData={dashboardData}
-        kpiConfiguration={kpiConfiguration}
-        chartModel={chartModel}
-        kpiIdentifier={"sonar-ratings-debt-ratio"} />);
   };
 
   const getSonarMaintainabilityGrade = (rating) => {
@@ -111,8 +95,6 @@ function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration,
 }
 
 SonarRatingsMaintainabilityDataBlock.propTypes = {
-  kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
   maintainabilityRating: PropTypes.number,
   technicalDebtRatio: PropTypes.number,
 };
