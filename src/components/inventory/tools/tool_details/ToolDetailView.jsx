@@ -83,9 +83,8 @@ function ToolDetailView() {
         <div className="d-flex">
           <ActionBarTransferToolButton
             className={"ml-3"}
-            toolData={toolData}
+            toolModel={toolData}
             loadTool={getTool}
-            toolDataObject={toolData}
           />
           <ActionBarDeleteToolButton
             className={"ml-3"}

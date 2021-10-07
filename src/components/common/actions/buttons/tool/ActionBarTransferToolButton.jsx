@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faShareAlt} from "@fortawesome/pro-light-svg-icons";
@@ -10,47 +10,67 @@ import ActionBarPopoverButton from "components/common/actions/buttons/ActionBarP
 import toolsActions from "components/inventory/tools/tools-actions";
 import LdapUserSelectInput from "components/common/list_of_values_input/users/LdapUserSelectInput";
 import CancelButton from "components/common/buttons/CancelButton";
-import Model from "core/data_model/model";
+import axios from "axios";
 
-function ActionBarTransferToolButton({ toolData, loadTool, className }) {
-  const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
+function ActionBarTransferToolButton({ toolModel, loadTool, className }) {
+  const { getAccessToken, isSassUser } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [toolCopy, setToolCopy] = useState(new Model({...toolData.data}, toolData.getMetaData(), false));
+  const [toolCopy, setToolCopy] = useState(undefined);
   const [transferringOwner, setTransferringOwner] = useState(false);
-  const [canTransferTool, setCanTransferTool] = useState(undefined);
+  const [canTransferTool, setCanTransferTool] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
-  }, []);
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [toolModel]);
 
   const loadData = async () => {
     try {
       setIsLoading(true);
-      const user = await getUserRecord();
-      const {ldap} = user;
-      const userRoleAccess = await setAccessRoles(user);
 
-      if (userRoleAccess && userRoleAccess?.Type !== "sass-user" && ldap.domain != null)
-      {
+      if (toolModel?.canPerformAction("update_tool_owner") === true) {
+        setToolCopy(toolModel?.clone());
         setCanTransferTool(true);
       }
     }
     catch (error) {
-      console.error("Could not validate credentials.");
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
   const changeToolOwner = async () => {
     try {
       setTransferringOwner(true);
-      await toolsActions.updateTool(toolCopy, getAccessToken);
+      await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, toolCopy);
       toastContext.showUpdateSuccessResultDialog("Tool Owner");
-      await loadTool();
       document.body.click();
+      await loadTool();
     }
     catch (error) {
       toastContext.showUpdateFailureResultDialog("Tool Owner", error);
@@ -63,7 +83,12 @@ function ActionBarTransferToolButton({ toolData, loadTool, className }) {
   const popoverContent = (
       <div>
         <div className="pb-2">
-          <LdapUserSelectInput fieldName={"owner"} model={toolCopy} setModel={setToolCopy} showClearValueButton={false} />
+          <LdapUserSelectInput
+            fieldName={"owner"}
+            model={toolCopy}
+            setModel={setToolCopy}
+            showClearValueButton={false}
+          />
         </div>
         <div className="d-flex justify-content-between">
           <div className="w-50 mr-1">
@@ -79,7 +104,7 @@ function ActionBarTransferToolButton({ toolData, loadTool, className }) {
       </div>
     );
 
-  if (canTransferTool == null || canTransferTool !== true) {
+  if (isSassUser() !== false || toolCopy == null || canTransferTool !== true) {
     return null;
   }
 
@@ -97,7 +122,7 @@ function ActionBarTransferToolButton({ toolData, loadTool, className }) {
 }
 
 ActionBarTransferToolButton.propTypes = {
-  toolData: PropTypes.object,
+  toolModel: PropTypes.object,
   loadTool: PropTypes.func,
   className: PropTypes.string
 };

@@ -471,6 +471,11 @@ export class ModelBase {
     return this.deleteAllowed === true;
   };
 
+  // TODO: Implement
+  // isOwner = () => {
+  //
+  // };
+
   canEditAccessRoles = () => {
     return this.canUpdate() === true && this.editAccssRolesAllowed === true;
   };
