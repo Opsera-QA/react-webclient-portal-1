@@ -4,13 +4,24 @@ import OctopusEnvironmentMultiSelectInput
   from "components/common/list_of_values_input/tools/octopus/environments/OctopusEnvironmentMultiSelectInput";
 
 function OctopusStepOctopusEnvironmentMultiSelectInput({ fieldName, model, setModel, disabled}) {
-  const formatDataFunction = (environments) => {
-    return environments?.map((environment) => {
+  const setDataFunction = async (fieldName, newArray) => {
+    const newModel = {...model};
+
+    const mappedArray = newArray?.map((environment) => {
       return {
-        environmentName: environment.name,
-        environmentId: environment.id,
+        name: environment.name,
+        id: environment.id,
       };
     });
+
+    newModel.setData(fieldName, mappedArray);
+    setModel({ ...newModel });
+  };
+
+  const clearDataFunction = () => {
+    const newModel = {...model};
+    newModel.setDefaultValue(fieldName);
+    setModel({...newModel});
   };
 
   return (
@@ -20,10 +31,11 @@ function OctopusStepOctopusEnvironmentMultiSelectInput({ fieldName, model, setMo
       fieldName={fieldName}
       model={model}
       setModel={setModel}
-      valueField={"environmentId"}
-      textField={"environmentName"}
+      valueField={"id"}
+      textField={"name"}
       disabled={disabled}
-      formatDataFunction={formatDataFunction}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
     />
   );
 }
@@ -33,11 +45,6 @@ OctopusStepOctopusEnvironmentMultiSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
-  textField: PropTypes.string,
-  valueField: PropTypes.string,
-  octopusToolId: PropTypes.string,
-  spaceId: PropTypes.string,
-  formattedDataFunction: PropTypes.func,
 };
 
 export default OctopusStepOctopusEnvironmentMultiSelectInput;

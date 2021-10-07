@@ -7,7 +7,20 @@ import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInp
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 
-function OctopusEnvironmentMultiSelectInput({ fieldName, model, setModel, disabled, formatDataFunction, textField, valueField, octopusToolId, spaceId, setDataFunction}) {
+function OctopusEnvironmentMultiSelectInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    disabled,
+    formatDataFunction,
+    textField,
+    valueField,
+    octopusToolId,
+    spaceId,
+    setDataFunction,
+    clearDataFunction
+  }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [octopusEnvironments, setOctopusEnvironments] = useState([]);
@@ -60,17 +73,7 @@ function OctopusEnvironmentMultiSelectInput({ fieldName, model, setModel, disabl
     const environments = response?.data?.data;
 
     if (Array.isArray(environments)) {
-      // TODO: Should we make formatDataFunction a part of the base component? I think so...
-      if (formatDataFunction) {
-        const formattedEnvironments = formatDataFunction([...environments]);
-
-        if (Array.isArray(formattedEnvironments)) {
-          setOctopusEnvironments(formattedEnvironments);
-        }
-      }
-      else {
-        setOctopusEnvironments(environments);
-      }
+      setOctopusEnvironments(environments);
     }
   };
 
@@ -81,6 +84,8 @@ function OctopusEnvironmentMultiSelectInput({ fieldName, model, setModel, disabl
       dataObject={model}
       setDataObject={setModel}
       selectOptions={octopusEnvironments}
+      formatDataFunction={formatDataFunction}
+      clearDataFunction={clearDataFunction}
       busy={isLoading}
       valueField={valueField}
       textField={textField}
@@ -101,6 +106,7 @@ OctopusEnvironmentMultiSelectInput.propTypes = {
   spaceId: PropTypes.string,
   formatDataFunction: PropTypes.func,
   setDataFunction: PropTypes.func,
+  clearDataFunction: PropTypes.func,
 };
 
 OctopusEnvironmentMultiSelectInput.defaultProps = {

@@ -326,7 +326,6 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
         disabled={isFormUpdate || (octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0)}
       />
       { getFormFields() }
-      
     </PipelineStepEditorPanelContainer>
   );
 }
