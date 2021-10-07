@@ -5,7 +5,6 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import axios from "axios";
-import InfoText from "components/common/inputs/info_text/InfoText";
 import OctopusTenantInputRow from "components/common/inputs/object/pipelines/octopus/OctopusTenantInputRow";
 
 function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, disabled, className, environmentList }) {
@@ -110,7 +109,6 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
 
   const updateEnvironment = (index, newValue) => {
     let newPropertyList = rows;
-    console.log("received new environment value: " + JSON.stringify(newValue));
     newPropertyList[index].environmentId = newValue;
     validateAndSetData(newPropertyList);
   };
