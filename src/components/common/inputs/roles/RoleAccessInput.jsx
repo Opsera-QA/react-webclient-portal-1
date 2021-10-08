@@ -462,6 +462,13 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
     `);
   };
 
+  const getRolesSubMessage = () => {
+    return (`
+      Please note, if a user selected above is already a member of the Site Administrators or Site Power Users groups, 
+      that privilege will supersede these settings where applicable.
+    `);
+  };
+
   if (field == null || isSassUser() === true) {
     return <></>;
   }
@@ -489,6 +496,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
           </div>
         </div>
       </PropertyInputContainer>
+      <InfoText customMessage={getRolesSubMessage()} />
     </div>
   );
 }
