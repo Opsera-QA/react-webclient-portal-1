@@ -4,10 +4,8 @@ import ExistingOctopusApplicationModal from "./OctopusApplicationModal";
 import PropTypes from "prop-types";
 import octopusApplicationsMetadata from "../octopus-environment-metadata";
 import Model from "core/data_model/model";
-import tagEditorMetadata from "components/settings/tags/tags-metadata";
-import {faTags} from "@fortawesome/pro-light-svg-icons";
-import FilterContainer from "components/common/table/FilterContainer";
 
+// TODO: Pass in applications
 function OctopusToolApplicationsPanel({ toolData, loadData, isLoading }) {
   const [octopusApplicationData, setOctopusApplicationData] = useState(undefined);
   const [showCreateOctopusApplicationModal, setShowCreateOctopusApplicationModal] = useState(false);
@@ -50,6 +48,7 @@ function OctopusToolApplicationsPanel({ toolData, loadData, isLoading }) {
           isLoading={isLoading}
           toolData={toolData}
           loadData={loadData}
+          applications={toolData?.getData("actions")}
           selectedRow={(rowData) => selectedJobRow(rowData)}
           octopusApplicationData={octopusApplicationData}
         />

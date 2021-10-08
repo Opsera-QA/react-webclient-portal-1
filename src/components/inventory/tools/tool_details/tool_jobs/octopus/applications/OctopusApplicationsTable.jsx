@@ -4,16 +4,19 @@ import CustomTable from "components/common/table/CustomTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Dropdown } from "react-bootstrap";
-import { getTableBooleanIconColumn, getTableTextColumn } from "../../../../../../common/table/table-column-helpers";
-import octopusApplicationsMetadata from "../octopus-environment-metadata";
 import ExistingOctopusApplicationModal from "./OctopusApplicationModal";
-import { format } from "date-fns";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
+import {octopusApplicationsMetadata} from "components/inventory/tools/tool_details/tool_jobs/octopus/octopus-applications-metadata";
+import {
+  getTableBooleanIconColumn,
+  getTableDateTimeColumn,
+  getTableTextColumn
+} from "components/common/table/table-column-helpers";
 
 // TODO: Revisit this and wire up new overlay
-function OctopusApplicationsTable({ toolData, loadData, selectedRow, isLoading }) {
+function OctopusApplicationsTable({ toolData, applications, loadData, selectedRow, isLoading }) {
   const [type, setType] = useState(undefined);
   let fields = octopusApplicationsMetadata.fields;
   const [showCreateOctopusModal, setShowCreateOctopusModal] = useState(false);
@@ -34,20 +37,12 @@ function OctopusApplicationsTable({ toolData, loadData, selectedRow, isLoading }
     }    
   };
 
-  // TODO: What is this for?
-  let data = [];
-  if (toolData?.getArrayData("actions")?.length > 0) {
-    toolData.getData("actions").forEach(function (item) {
-      data.push({...item.configuration, updatedAt: format(new Date(item.updatedAt), "yyyy-MM-dd', 'hh:mm a")});
-    });
-  }
-
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "spaceName")),
-      getTableTextColumn(getField(fields, "type")),
-      getTableTextColumn(getField(fields, "updatedAt")),
+      getTableTextColumn(getField(fields, "configuration.spaceName")),
+      getTableTextColumn(getField(fields, "configuration.type")),
+      getTableDateTimeColumn(getField(fields, "updatedAt")),
       getTableBooleanIconColumn(getField(fields, "active")),
     ],
     []
@@ -71,7 +66,7 @@ function OctopusApplicationsTable({ toolData, loadData, selectedRow, isLoading }
     return (
       <CustomTable
         columns={columns}
-        data={data}
+        data={applications}
         onRowSelect={selectedRow}
         isLoading={isLoading}
         // initialState={initialState}
@@ -120,6 +115,7 @@ function OctopusApplicationsTable({ toolData, loadData, selectedRow, isLoading }
 
 OctopusApplicationsTable.propTypes = {
   toolData: PropTypes.object,
+  applications: PropTypes.array,
   loadData: PropTypes.func,
   selectedRow: PropTypes.func,
   isLoading: PropTypes.bool,
