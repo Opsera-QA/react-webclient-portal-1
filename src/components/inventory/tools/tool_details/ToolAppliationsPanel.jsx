@@ -1,6 +1,6 @@
 import React from "react";
 import ArgoApplications from "./tool_jobs/argo/applications/ArgoApplications";
-import OctopusApplications from "./tool_jobs/octopus/applications/OctopusApplications";
+import OctopusToolApplicationsPanel from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/OctopusToolApplicationsPanel";
 import PropTypes from "prop-types";
 import AzureApplications from "./tool_jobs/azureV2/applications/AzureApplications";
 
@@ -17,7 +17,13 @@ function ToolApplicationsPanel({ toolData, setToolData, loadData, isLoading }) {
           />
         );
       case "octopus":
-        return <OctopusApplications isLoading={isLoading} toolData={toolData} loadData={loadData} />;
+        return (
+          <OctopusToolApplicationsPanel
+            isLoading={isLoading}
+            toolData={toolData}
+            loadData={loadData}
+          />
+        );
       case "azure":
         return (
           <AzureApplications
