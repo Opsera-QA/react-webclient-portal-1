@@ -33,10 +33,9 @@ function  ExistingOctopusApplicationModal({
     else {
       setOctopusApplicationData(new Model({...metadata.newObjectFields}, metadata, false));
     }
-  }, []);
+  }, [octopusApplicationDataObj]);
 
   const getMetadata = (type) => {
-    console.log("type: " + JSON.stringify(type));
     switch (type) {
       case "environment":
         return OctopusEnvironmentMetadata;
