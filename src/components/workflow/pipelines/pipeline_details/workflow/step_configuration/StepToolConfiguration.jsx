@@ -59,11 +59,8 @@ import JFrogMavenStepConfiguration
 import AwsLambdaDeployStepConfiguration
   from "./step_tool_configuration_forms/aws_lambda_publish/AwsLambdaDeployStepConfiguration";
 import MongodbRealmStepConfiguration from "./step_tool_configuration_forms/mongodb_realm/MongodbRealmStepConfiguration";
-
 import AksServiceDeployStepConfiguration
   from "./step_tool_configuration_forms/aks_service_deploy/AksServiceDeployStepConfiguration";
-import LegacyJenkinsStepConfiguration
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/LegacyJenkinsStepConfiguration";
 import AzureFunctionsStepConfiguration from "./step_tool_configuration_forms/azure_functions/AzureFunctionsStepConfiguration";
 import JenkinsStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
