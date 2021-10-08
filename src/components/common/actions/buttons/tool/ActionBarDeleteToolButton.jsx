@@ -10,11 +10,9 @@ import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 import DestructiveDeleteModal from "components/common/modal/DestructiveDeleteModal";
 import axios from "axios";
 
-// TODO: Every load of the tool page loads these relevant pipelines, but the tab runs a separate query.
-//  Make sure to pull the relevant pipeline call inside the detail view instead and pass to both the delete button and the pipelines tab
 function ActionBarDeleteToolButton({ toolModel, className }) {
   const toastContext = useContext(DialogToastContext);
-  const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
   const history = useHistory();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -42,15 +40,12 @@ function ActionBarDeleteToolButton({ toolModel, className }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [toolModel]);
 
   const loadData = async () => {
-    const userRecord = await getUserRecord(); //RBAC Logic
-    const rules = await setAccessRoles(userRecord);
-    const isAdministrator = rules?.OpseraAdministrator || rules?.Administrator;
-    const isOwner = toolModel?.getData("owner") === userRecord?._id;
-
-    setCanDelete(isAdministrator || isOwner);
+    if (toolModel?.canPerformAction("delete_tool") === true) {
+      setCanDelete(true);
+    }
   };
 
   const deleteObject = async () => {
