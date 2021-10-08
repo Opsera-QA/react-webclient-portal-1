@@ -162,8 +162,11 @@ function ChartContainer(
   };
 
   const getTagBadges = () => {
-    const tags = kpiConfiguration?.filters[kpiConfiguration?.filters?.findIndex((obj) => obj.type === "tags")]?.value;
-    const dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters?.findIndex((obj) => obj.type === "tags")]?.value;
+    let kpiConfigTags = kpiConfiguration?.filters[kpiConfiguration?.filters?.findIndex((obj) => obj.type === "tags")]?.value;
+    let kpiConfigDashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters?.findIndex((obj) => obj.type === "tags")]?.value;
+
+    const tags = kpiConfigTags && Array.isArray(kpiConfigTags) ? kpiConfigTags : [];
+    const dashboardTags = kpiConfigDashboardTags && Array.isArray(kpiConfigDashboardTags) ? kpiConfigDashboardTags : []; 
     let totalTags;
 
     if (Array.isArray(dashboardTags) && dashboardTags.length > 0) {
