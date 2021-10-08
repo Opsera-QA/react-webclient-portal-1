@@ -4,19 +4,26 @@ import ExistingOctopusApplicationModal from "./OctopusApplicationModal";
 import PropTypes from "prop-types";
 import octopusApplicationsMetadata from "../octopus-environment-metadata";
 import Model from "core/data_model/model";
+import tagEditorMetadata from "components/settings/tags/tags-metadata";
+import {faTags} from "@fortawesome/pro-light-svg-icons";
+import FilterContainer from "components/common/table/FilterContainer";
 
 function OctopusToolApplicationsPanel({ toolData, loadData, isLoading }) {
   const [octopusApplicationData, setOctopusApplicationData] = useState(undefined);
   const [showCreateOctopusApplicationModal, setShowCreateOctopusApplicationModal] = useState(false);
-  const [applicationId, setApplicationID] = useState(undefined);
+  const [applicationId, setApplicationId] = useState(undefined);
 
   const selectedJobRow = (rowData) => {
-    let newDataObject = toolData.getData("actions")[rowData.index];
-    setApplicationID(newDataObject._id);
-    setOctopusApplicationData(
-      new Model(toolData.getData("actions")[rowData.index].configuration, octopusApplicationsMetadata, false)
-    );
-    setShowCreateOctopusApplicationModal(true);
+    const currentApplications = toolData?.getData("actions");
+    const applicationIndex = rowData?.index;
+
+    if (Array.isArray(currentApplications) && currentApplications.length > 0 && typeof applicationIndex === "number") {
+      const application = currentApplications[applicationIndex];
+      const newApplicationModel =  new Model(application, octopusApplicationsMetadata, false);
+      setApplicationId(application?._id);
+      setOctopusApplicationData({...newApplicationModel});
+      setShowCreateOctopusApplicationModal(true);
+    }
   };
 
   // TODO: Convert to overlay

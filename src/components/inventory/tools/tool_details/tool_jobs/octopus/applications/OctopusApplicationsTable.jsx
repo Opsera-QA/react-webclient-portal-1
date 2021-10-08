@@ -9,22 +9,14 @@ import octopusApplicationsMetadata from "../octopus-environment-metadata";
 import ExistingOctopusApplicationModal from "./OctopusApplicationModal";
 import { format } from "date-fns";
 import {getField} from "components/common/metadata/metadata-helpers";
+import {faBrowser} from "@fortawesome/pro-light-svg-icons";
+import FilterContainer from "components/common/table/FilterContainer";
 
 // TODO: Revisit this and wire up new overlay
 function OctopusApplicationsTable({ toolData, loadData, selectedRow, isLoading }) {
   const [type, setType] = useState(undefined);
   let fields = octopusApplicationsMetadata.fields;
   const [showCreateOctopusModal, setShowCreateOctopusModal] = useState(false);
-
-  const initialState = {
-    pageIndex: 0,
-    sortBy: [
-      {
-        id: "updatedAt",
-        desc: true
-      }
-    ]
-  };
 
   const createOctopusApplication = (newType) => {
     switch (newType) {
@@ -75,6 +67,18 @@ function OctopusApplicationsTable({ toolData, loadData, selectedRow, isLoading }
     }
   };
 
+  const getOctopusApplicationsTable = () => {
+    return (
+      <CustomTable
+        columns={columns}
+        data={data}
+        onRowSelect={selectedRow}
+        isLoading={isLoading}
+        // initialState={initialState}
+      />
+    );
+  };
+
   if (toolData == null) {
     return null;
   }
@@ -82,7 +86,7 @@ function OctopusApplicationsTable({ toolData, loadData, selectedRow, isLoading }
   return (
     <>
       {toolData && toolData.data.configuration && (
-        <div className="my-1 text-right">
+        <div className="mt-1 text-right">
           <Dropdown>
             <Dropdown.Toggle variant="primary" id="dropdown-basic">
               <FontAwesomeIcon icon={faPlus} className="mr-1" /> Create
@@ -98,12 +102,16 @@ function OctopusApplicationsTable({ toolData, loadData, selectedRow, isLoading }
           <br />
         </div>
       )}
-      <CustomTable
-        columns={columns}
-        data={data}
-        onRowSelect={selectedRow}
+      <FilterContainer
+        // loadData={loadData}
+        // addRecordFunction={createTag}
+        // supportSearch={true}
+        showBorder={false}
         isLoading={isLoading}
-        initialState={initialState}
+        body={getOctopusApplicationsTable()}
+        metadata={octopusApplicationsMetadata}
+        titleIcon={faBrowser}
+        title={"Octopus Applications"}
       />
       {getModal()}
     </>
