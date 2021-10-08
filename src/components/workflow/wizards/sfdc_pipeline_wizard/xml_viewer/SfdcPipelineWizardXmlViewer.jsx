@@ -225,14 +225,14 @@ const SfdcPipelineWizardXmlViewer = (
           toolTipText={"Package XML"}
           icon={faCheck}
         />
-        {/*<CustomTab*/}
-        {/*  activeTab={activeTab}*/}
-        {/*  tabText={"Component Counts"}*/}
-        {/*  handleTabClick={handleTabClick}*/}
-        {/*  tabName={"counts"}*/}
-        {/*  toolTipText={"Component Counts"}*/}
-        {/*  icon={faTally}*/}
-        {/*/>*/}
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Component Counts"}
+          handleTabClick={handleTabClick}
+          tabName={"counts"}
+          toolTipText={"Component Counts"}
+          icon={faTally}
+        />
         {getUnitTestClassTab()}
       </CustomTabContainer>
     );
