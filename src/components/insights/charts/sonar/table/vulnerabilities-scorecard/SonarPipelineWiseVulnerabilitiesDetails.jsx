@@ -86,10 +86,12 @@ function SonarPipelineWiseVulnerabilitiesDetails({ dataObject }) {
       if (isMounted?.current === true && response?.status === 200) {
         const sonarIssues = response?.data?.data[0]?.PipelineSonarVulnerabilitiesData?.data[0]?.sonarIssues;
         setPipelineVulnerabilityData(sonarIssues.map(issue => {
-          const splitIssue = issue.component.split(":");
-          if(splitIssue.length == 2){
-            issue.component = splitIssue[1];
-          }
+          if(issue.component){
+            const splitIssue = issue.component.split(":");
+            if(splitIssue.length == 2){
+              issue.component = splitIssue[1];
+            }
+          }          
           return issue;
         }));
         let newFilterDto = filterDto;
