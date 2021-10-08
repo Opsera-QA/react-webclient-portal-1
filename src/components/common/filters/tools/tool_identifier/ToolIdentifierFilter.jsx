@@ -57,11 +57,16 @@ function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunct
     const toolResponse = await toolManagementActions.getToolIdentifiersV2(getAccessToken, cancelSource, "active", true);
     const toolIdentifiers = toolResponse?.data;
 
-    if (Array.isArray(toolIdentifiers) && toolIdentifiers.length > 0) {
+    // TODO: Rewrite this to not construct objects
+    if (isMounted?.current === true && Array.isArray(toolIdentifiers) && toolIdentifiers.length > 0) {
       const toolIdentifierOptions = [];
 
       toolIdentifiers.map((toolIdentifier, index) => {
-        toolIdentifierOptions.push({text: `${toolIdentifier["name"]}`, value: `${toolIdentifier["identifier"]}`});
+        toolIdentifierOptions.push({
+          text: `${toolIdentifier["name"]}`,
+          value: `${toolIdentifier["identifier"]}`,
+          tool_type: `${toolIdentifier["tool_type_name"]}`,
+        });
       });
 
       if (isMounted?.current === true) {
@@ -81,6 +86,7 @@ function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunct
       fieldName={fieldName}
       inline={inline}
       disabled={loadingData}
+      groupBy={"tool_type"}
       setDataObject={setFilterDto}
       dataObject={filterDto}
       setDataFunction={setDataFunction}
