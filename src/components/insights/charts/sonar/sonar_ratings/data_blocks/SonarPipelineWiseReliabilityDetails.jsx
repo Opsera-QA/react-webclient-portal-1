@@ -6,17 +6,22 @@ import FilterContainer from "components/common/table/FilterContainer";
 import Model from "core/data_model/model";
 import sonarPipelineDetailsFilterMetadata from "../sonar.pipeline.details.filter.metadata";
 import SonarPipelineTableMetadata from "../sonar.pipeline.table.metadata";
-import { getChartTrendStatusColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
+import { getChartTrendStatusColumn, getTableTextColumn, getTableTextColumnWithoutField } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
 import CustomTable from "components/common/table/CustomTable";
-import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
+import { faDraftingCompass, faExternalLink } from "@fortawesome/pro-light-svg-icons";
 import chartsActions from "components/insights/charts/charts-actions";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
 function SonarPipelineWiseReliabilityDetails() {
   const { getAccessToken } = useContext(AuthContext);
   const [model, setModel] = useState(
     new Model({...sonarPipelineDetailsFilterMetadata.newObjectFields}, sonarPipelineDetailsFilterMetadata, false)
   );
+  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [bugsData, setBugsData] = useState([]);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -40,7 +45,7 @@ function SonarPipelineWiseReliabilityDetails() {
       getTableTextColumn(getField(fields, "minor")),
       getTableTextColumn(getField(fields, "info")),   
       getTableTextColumn(getField(fields, "total_effort")),   
-
+      getTableTextColumnWithoutField('Actions','_blueprint')
     ],
     []
   );
@@ -97,9 +102,11 @@ function SonarPipelineWiseReliabilityDetails() {
       );
       if (isMounted?.current === true && response?.status === 200) {
         const sonarBugs = response?.data?.data[0]?.sonarBugs?.data[0]?.projectData;
-        await setBugsData(sonarBugs.map(bug=>({
+        await setBugsData(sonarBugs.map((bug,index)=>({
               ...bug,
-              status : calculateTrend(bug)
+              status : calculateTrend(bug),
+              pipelineId: '60ae84a54fa0c75fc683ad2b',
+              "_blueprint": index == 0 ? <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2"/> : null,
             })));
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", sonarBugs.length);
@@ -221,6 +228,12 @@ function SonarPipelineWiseReliabilityDetails() {
     newModel.setData("pageSize", pageSize);
     setModel({...newModel});
   };
+
+  const onRowSelect = (rowData) => {
+    if (rowData.id == 0) {
+      toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount} />);
+    }
+  };
   
   const getTable = () => {    
     return (
@@ -231,6 +244,7 @@ function SonarPipelineWiseReliabilityDetails() {
         noDataMessage={noDataMessage}
         paginationOptions={getPaginationOptions()}
         loadData={loadData}
+        onRowSelect={onRowSelect}
       />      
     );
   };
