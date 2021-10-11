@@ -17,7 +17,7 @@ function OctopusToolApplicationsPanel({ toolData, loadData, isLoading }) {
 
     if (Array.isArray(currentApplications) && currentApplications.length > 0 && typeof applicationIndex === "number") {
       const application = currentApplications[applicationIndex];
-      const newApplicationModel =  new Model(application, octopusApplicationsMetadata, false);
+      const newApplicationModel =  new Model(application?.configuration, octopusApplicationsMetadata, false);
       setApplicationId(application?._id);
       setOctopusApplicationData({...newApplicationModel});
       setShowCreateOctopusApplicationModal(true);
