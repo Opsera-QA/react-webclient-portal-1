@@ -168,6 +168,14 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
         <Row>
           <Col lg={12}>
             <TextInputBase
+              dataObject={octopusApplicationDataDto}
+              setDataObject={setOctopusApplicationDataDto}
+              fieldName={"name"}
+              disabled={appID}
+            />
+          </Col>
+          <Col lg={12}>
+            <TextInputBase
               setDataObject={setOctopusApplicationDataDto}
               dataObject={octopusApplicationDataDto}
               fieldName={"description"}
@@ -193,6 +201,14 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
       return (
         <div>
           <Row>
+            <Col lg={12}>
+              <TextInputBase
+                dataObject={octopusApplicationDataDto}
+                setDataObject={setOctopusApplicationDataDto}
+                fieldName={"name"}
+                disabled={appID}
+              />
+            </Col>
             <Col lg={12}>
               <TextInputBase
                 setDataObject={setOctopusApplicationDataDto}
@@ -281,6 +297,14 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
       return (
         <div>
           <Row>
+            <Col lg={12}>
+              <TextInputBase
+                dataObject={octopusApplicationDataDto}
+                setDataObject={setOctopusApplicationDataDto}
+                fieldName={"name"}
+                disabled={appID}
+              />
+            </Col>
             <Col lg={12}>
               <SpaceNameSelectInput
                 fieldName={"spaceName"}
@@ -510,6 +534,14 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
       return (
         <Row>
           <Col lg={12}>
+            <TextInputBase
+              dataObject={octopusApplicationDataDto}
+              setDataObject={setOctopusApplicationDataDto}
+              fieldName={"name"}
+              disabled={appID}
+            />
+          </Col>
+          <Col lg={12}>
             <SpaceNameSelectInput
               fieldName={"spaceName"}
               dataObject={octopusApplicationDataDto}
@@ -581,16 +613,6 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
           <TestConnectionButton toolDataDto={octopusApplicationDataDto} />
           )}
       </div>
-      <Row>
-        <Col lg={12}>
-          <TextInputBase
-            dataObject={octopusApplicationDataDto}
-            setDataObject={setOctopusApplicationDataDto}
-            fieldName={"name"}
-            disabled={appID != null}
-          />
-        </Col>
-      </Row>
       {getEnvironmentEditorFields()}
       {getAccountEditorFields()}
       {getTargetEditorFields()}
