@@ -36,7 +36,7 @@ function OctopusApplicationWrapper(
       setOctopusApplicationData(new Model({...data}, metadata, false));
     }
     else {
-      setOctopusApplicationData(new Model({...metadata.newObjectFields}, metadata, false));
+      setOctopusApplicationData(new Model({...metadata.newObjectFields}, metadata, true));
     }
   }, [octopusApplicationDataObj]);
 
