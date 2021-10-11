@@ -17,6 +17,11 @@ const SonarPipelineTableMetadata = {
     {
       label: "Critical",
       id: "critical",
+      className:'red',
+      Cell: function parseStatus(row) {
+        console.log(row,'****');
+        return '123';
+      },
     },
     {
       label: "Major",

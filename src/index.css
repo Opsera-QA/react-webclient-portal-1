@@ -17,6 +17,15 @@
 .red {
     color: #E57373;
 }
+.border-red {
+    border-color:#E57373;
+}
+.orange {
+    color:#ff6000;
+}
+.border-orange {
+    border-color:#ff6000;
+}
 
 .danger-red, .delete-icon {
     color: #dc3545;
@@ -25,9 +34,15 @@
 .yellow {
     color: #CF940C;
 }
+.border-yellow { 
+    border-color: #CF940C;
+}
 
 .green {
     color: #00897b;
+}
+.border-green {
+    border-color: #00897b;
 }
 
 /*Official Opsera Color Pallette*/
