@@ -6,7 +6,7 @@ import OctopusTargetMetadata from "../octopus-target-metadata";
 import OctopusFeedMetadata from "../octopus-feed-metadata";
 import OctopusTomcatMetadata from "../octopus-tomcat-metadata";
 import Model from "core/data_model/model";
-import OctopusApplicationEditorPanel from "./details/OctopusEditorPanel";
+import OctopusApplicationEditorPanel from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/OctopusApplicationEditorPanel";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import CreateModal from "components/common/modal/CreateModal";
 
@@ -33,10 +33,9 @@ function  ExistingOctopusApplicationModal({
     else {
       setOctopusApplicationData(new Model({...metadata.newObjectFields}, metadata, false));
     }
-  }, []);
+  }, [octopusApplicationDataObj]);
 
   const getMetadata = (type) => {
-    console.log("type: " + JSON.stringify(type));
     switch (type) {
       case "environment":
         return OctopusEnvironmentMetadata;

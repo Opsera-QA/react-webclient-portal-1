@@ -19,9 +19,6 @@ import EnvironmentNameSelectInput from "./input/EnvironmentSelectInput";
 import AccountSelectInput from "./input/AccountSelectInput";
 import AWSToolSelectInput from "./input/AWSToolSelectInput";
 import ClusterSelectInput from "./input/ClusterSelectInput";
-import FeedTypeSelectInput from "./input/FeedTypeSelectInput";
-import NexusSelectInput from "./input/NexusSelectInput";
-import NexusRepoSelectInput from "./input/NexusRepoSelectInput";
 import TestConnectionButton from "./input/TestConnectionButton";
 import EditWarningModalToolRegistry from "components/common/modal/EditWarningModalToolRegistry";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
@@ -31,10 +28,10 @@ import axios from "axios";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import pipelineActions from "components/workflow/pipeline-actions";
-import OctopusFeedEditorForm from "./sub_forms/OctopusFeedEditorForm";
 import AzureToolConfigIdSelectInput from "./input/AzureToolConfigIdSelectInput";
 import AzureClusterSelectInput from "./input/AzureClusterSelectInput";
 import AzureResourceGroupSelectInput from "./input/AzureResourceGroupSelectInput";
+import OctopusFeedEditorForm from "./sub_forms/OctopusFeedEditorForm";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -64,7 +61,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [octopusApplicationData]);
 
   const loadData = async () => {
     try {
@@ -130,8 +127,8 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   };
 
   const updateApplication = async () => {
-    if(type === "tomcat"){        
-      await saveTomcatPasswordToVault();      
+    if(type === "tomcat"){
+      await saveTomcatPasswordToVault();
     }
     return await OctopusActions.updateOctopusApplication(octopusApplicationDataDto, type, getAccessToken, appID);
   };
@@ -154,8 +151,8 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
     setIsValidatingConfig(true);
     const response =  await OctopusActions.validateIisConfig(octopusApplicationDataDto, getAccessToken, cancelSource);
     let newDataObject = octopusApplicationDataDto;
-    if(response.data.status === 200){      
-      newDataObject.setData("healthStatus", response.data.message.healthStatus);      
+    if(response.data.status === 200){
+      newDataObject.setData("healthStatus", response.data.message.healthStatus);
     } else {
       newDataObject.setData("healthStatus", "Not Healthy");
       toastContext.showLoadingErrorDialog(response.data.message);
@@ -164,53 +161,45 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
     setIsValidatingConfig(false);
   };
 
-  if (isLoading || octopusApplicationDataDto === null || octopusApplicationDataDto === undefined) {
-    return <Loading size="sm" />;
-  }
+  // TODO: Make sub form
+  const getEnvironmentEditorFields = () => {
+    if (type === "environment") {
+      return (
+        <Row>
+          <Col lg={12}>
+            <TextInputBase
+              setDataObject={setOctopusApplicationDataDto}
+              dataObject={octopusApplicationDataDto}
+              fieldName={"name"}
+              disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
+            />
+          </Col>
+          <Col lg={12}>
+            <TextInputBase
+              setDataObject={setOctopusApplicationDataDto}
+              dataObject={octopusApplicationDataDto}
+              fieldName={"description"}
+              disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
+            />
+          </Col>
+          <Col lg={12}>
+            <SpaceNameSelectInput
+              fieldName={"spaceName"}
+              dataObject={octopusApplicationDataDto}
+              setDataObject={setOctopusApplicationDataDto}
+              disabled={appID ? true : false}
+              tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
+            />
+          </Col>
+        </Row>
+      );
+    }
+  };
 
-  return (
-    <>
-      <div className="scroll-y full-height">
-          <div className="d-flex justify-content-between px-2">
-            <div className="text-muted pt-1 pb-3">
-              Enter the required configuration information below. These settings will be used for Octopus {type ? type.charAt(0).toUpperCase() + type.slice(1) + " Creation" : ""}.
-            </div>
-            <div>
-              {appID && octopusApplicationDataDto.getData("id") && type && (type !== "environment") && (
-              <TestConnectionButton toolDataDto={octopusApplicationDataDto} />
-              )}
-            </div>
-          </div>
-        {octopusApplicationDataDto && type && type === "environment" && !isLoading && (
-          <Row>
-            <Col lg={12}>
-              <TextInputBase
-                setDataObject={setOctopusApplicationDataDto}
-                dataObject={octopusApplicationDataDto}
-                fieldName={"name"}
-                disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
-              />
-            </Col>
-            <Col lg={12}>
-              <TextInputBase
-                setDataObject={setOctopusApplicationDataDto}
-                dataObject={octopusApplicationDataDto}
-                fieldName={"description"}
-                disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
-              />
-            </Col>
-            <Col lg={12}>
-              <SpaceNameSelectInput
-                fieldName={"spaceName"}
-                dataObject={octopusApplicationDataDto}
-                setDataObject={setOctopusApplicationDataDto}
-                disabled={appID ? true : false}
-                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
-              />
-            </Col>
-          </Row>
-        )}
-        {octopusApplicationDataDto && type && type === "account" && !isLoading && (
+  const getAccountEditorFields = () => {
+    if (type === "account") {
+      return (
+        <div>
           <Row>
             <Col lg={12}>
               <TextInputBase
@@ -266,22 +255,22 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               </Col>
             )}
             {octopusApplicationDataDto &&
-              octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
-                <Col lg={12}>
-                  <AWSToolSelectInput
-                    fieldName={"awsToolConfigId"}
-                    dataObject={octopusApplicationDataDto}
-                    setDataObject={setOctopusApplicationDataDto}
-                    disabled={
-                      (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) ||
-                      appID
-                        ? true
-                        : false
-                    }
-                    tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("cloudType") : ""}
-                  />
-                </Col>
-              )}
+            octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
+              <Col lg={12}>
+                <AWSToolSelectInput
+                  fieldName={"awsToolConfigId"}
+                  dataObject={octopusApplicationDataDto}
+                  setDataObject={setOctopusApplicationDataDto}
+                  disabled={
+                    (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) ||
+                    appID
+                      ? true
+                      : false
+                  }
+                  tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("cloudType") : ""}
+                />
+              </Col>
+            )}
             <Col lg={12}>
               <EnvironmentNameSelectInput
                 fieldName={"environmentIds"}
@@ -297,8 +286,16 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               />
             </Col>
           </Row>
-        )}
-        {octopusApplicationDataDto && type && type === "target" && !isLoading && (
+        </div>
+      );
+    }
+  };
+
+
+  const getTargetEditorFields = () => {
+    if (type === "target") {
+      return (
+        <div>
           <Row>
             <Col lg={12}>
               <TextInputBase
@@ -318,7 +315,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               />
             </Col>
             {octopusApplicationDataDto &&
-              octopusApplicationDataDto.getData("cloudType") !== "TentaclePassive" && (
+            octopusApplicationDataDto.getData("cloudType") !== "TentaclePassive" && (
               <Col lg={12}>
                 <AccountSelectInput
                   fieldName={"accountId"}
@@ -348,22 +345,22 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               />
             </Col>
             {octopusApplicationDataDto &&
-              octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
-                <Col lg={12}>
-                  <AWSToolSelectInput
-                    fieldName={"awsToolConfigId"}
-                    dataObject={octopusApplicationDataDto}
-                    setDataObject={setOctopusApplicationDataDto}
-                    disabled={
-                      (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) ||
-                      appID
-                        ? true
-                        : false
-                    }
-                    tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("cloudType") : ""}
-                  />
-                </Col>
-              )}
+            octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
+              <Col lg={12}>
+                <AWSToolSelectInput
+                  fieldName={"awsToolConfigId"}
+                  dataObject={octopusApplicationDataDto}
+                  setDataObject={setOctopusApplicationDataDto}
+                  disabled={
+                    (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) ||
+                    appID
+                      ? true
+                      : false
+                  }
+                  tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("cloudType") : ""}
+                />
+              </Col>
+            )}
             {octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType") === "AzureServicePrincipal" && (
               <>
                 <Col lg={12}>
@@ -439,13 +436,13 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               </>
             )}
             {octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType") === "TentaclePassive" && (
-                <OctopusThumbprintDisplay 
-                  className="my-2" 
-                  dataObject={octopusApplicationDataDto} 
-                  setDataObject={setOctopusApplicationDataDto}
-                  toolData={toolData} 
-                />
-              )
+              <OctopusThumbprintDisplay
+                className="my-2"
+                dataObject={octopusApplicationDataDto}
+                setDataObject={setOctopusApplicationDataDto}
+                toolData={toolData}
+              />
+            )
             }
             <Col lg={12}>
               <EnvironmentNameSelectInput
@@ -462,181 +459,166 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               />
             </Col>
             {octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType") === "TentaclePassive" && (
-                <>
-                  <Col lg={12}>
-                    <TextInputBase
-                      setDataObject={setOctopusApplicationDataDto}
-                      dataObject={octopusApplicationDataDto}
-                      fieldName={"hostName"}
-                      disabled={false}
-                    />
-                  </Col>
-                  <Col lg={12}>
-                    <TextInputBase
-                      setDataObject={setOctopusApplicationDataDto}
-                      dataObject={octopusApplicationDataDto}
-                      fieldName={"port"}
-                      disabled={false}
-                    />
-                  </Col>
-                  <Col lg={12} className="my-2">
-                    <TextFieldBase dataObject={octopusApplicationDataDto} fieldName={"healthStatus"}/>
-                    <small className="form-text text-muted">
-                      Validate IIS configuration to get the latest health status
-                    </small>
-                  </Col>
-                  <Col lg={12} className="mt-2">
-                    <Button 
-                      size="sm" 
-                      variant="primary" 
-                      onClick={() => validateIisConfig(cancelTokenSource)}
-                      disabled={octopusApplicationDataDto.getData("hostName") === "" || octopusApplicationDataDto.getData("port") === ""}
-                    >
-                      {isValidatingConfig ? (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Validate IIS Configuration</span>) : 'Validate IIS Configuration'}
-                    </Button>
-                  </Col>                                                      
-                </>
-              )
-            } 
-            {octopusApplicationDataDto &&
-              octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
+              <>
                 <Col lg={12}>
-                  <ClusterSelectInput
-                    fieldName={"clusterName"}
-                    dataObject={octopusApplicationDataDto}
+                  <TextInputBase
                     setDataObject={setOctopusApplicationDataDto}
-                    disabled={
-                      (octopusApplicationDataDto &&
-                        octopusApplicationDataDto.getData("awsToolConfigId").length === 0) ||
-                      appID
-                        ? true
-                        : false
-                    }
-                    tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("awsToolConfigId") : ""}
+                    dataObject={octopusApplicationDataDto}
+                    fieldName={"hostName"}
+                    disabled={false}
                   />
                 </Col>
-              )}
+                <Col lg={12}>
+                  <TextInputBase
+                    setDataObject={setOctopusApplicationDataDto}
+                    dataObject={octopusApplicationDataDto}
+                    fieldName={"port"}
+                    disabled={false}
+                  />
+                </Col>
+                <Col lg={12} className="my-2">
+                  <TextFieldBase dataObject={octopusApplicationDataDto} fieldName={"healthStatus"}/>
+                  <small className="form-text text-muted">
+                    Validate IIS configuration to get the latest health status
+                  </small>
+                </Col>
+                <Col lg={12} className="mt-2">
+                  <Button
+                    size="sm"
+                    variant="primary"
+                    onClick={() => validateIisConfig(cancelTokenSource)}
+                    disabled={octopusApplicationDataDto.getData("hostName") === "" || octopusApplicationDataDto.getData("port") === ""}
+                  >
+                    {isValidatingConfig ? (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Validate IIS Configuration</span>) : 'Validate IIS Configuration'}
+                  </Button>
+                </Col>
+              </>
+            )
+            }
+            {octopusApplicationDataDto &&
+            octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
+              <Col lg={12}>
+                <ClusterSelectInput
+                  fieldName={"clusterName"}
+                  dataObject={octopusApplicationDataDto}
+                  setDataObject={setOctopusApplicationDataDto}
+                  disabled={
+                    (octopusApplicationDataDto &&
+                      octopusApplicationDataDto.getData("awsToolConfigId").length === 0) ||
+                    appID
+                      ? true
+                      : false
+                  }
+                  tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("awsToolConfigId") : ""}
+                />
+              </Col>
+            )}
           </Row>
-        )}
-        {octopusApplicationDataDto && type && type === "feed" && !isLoading && (
-          // <Row>
-          //   <Col lg={12}>
-          //     <TextInputBase
-          //       setDataObject={setOctopusApplicationDataDto}
-          //       dataObject={octopusApplicationDataDto}
-          //       fieldName={"name"}
-          //       disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
-          //     />
-          //   </Col>
-          //   <Col lg={12}>
-          //     <SpaceNameSelectInput
-          //       fieldName={"spaceName"}
-          //       dataObject={octopusApplicationDataDto}
-          //       setDataObject={setOctopusApplicationDataDto}
-          //       disabled={appID ? true : false}
-          //       tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
-          //     />
-          //   </Col>
-          //   <Col lg={12}>
-          //     <NexusSelectInput
-          //       fieldName={"nexusToolId"}
-          //       dataObject={octopusApplicationDataDto}
-          //       setDataObject={setOctopusApplicationDataDto}
-          //       disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
-          //       tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
-          //     />
-          //   </Col>
-          //   <Col lg={12}>
-          //     <NexusRepoSelectInput
-          //       fieldName={"nexusRepository"}
-          //       dataObject={octopusApplicationDataDto}
-          //       setDataObject={setOctopusApplicationDataDto}
-          //       disabled={
-          //         (octopusApplicationDataDto &&
-          //           octopusApplicationDataDto.getData("nexusToolId") &&
-          //           octopusApplicationDataDto.getData("nexusToolId").length === 0) ||
-          //         (appID && !octopusApplicationDataDto.getData("id"))
-          //           ? true
-          //           : false
-          //       }
-          //       tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("nexusToolId") : ""}
-          //     />
-          //   </Col>
-          //   <Col lg={12}>
-          //     <FeedTypeSelectInput
-          //       fieldName={"feedType"}
-          //       dataObject={octopusApplicationDataDto}
-          //       setDataObject={setOctopusApplicationDataDto}
-          //       disabled={
-          //         (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) ||
-          //         (appID && !octopusApplicationDataDto.getData("id"))
-          //           ? true
-          //           : false
-          //       }
-          //       tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
-          //     />
-          //   </Col>
-          // </Row>
-          <OctopusFeedEditorForm 
-            dataObject={octopusApplicationDataDto}
-            setDataObject={setOctopusApplicationDataDto}
-            appID={appID}
-          />
-        )}
-        {octopusApplicationDataDto && type && type === "tomcat" && !isLoading && (
-          <Row>
-            <Col lg={12}>
-              <TextInputBase 
-                dataObject={octopusApplicationDataDto} 
-                setDataObject={setOctopusApplicationDataDto} 
-                fieldName={"name"} 
-                disabled={appID} 
-              />              
-            </Col>
-            <Col lg={12}>
-              <SpaceNameSelectInput
-                fieldName={"spaceName"}
-                dataObject={octopusApplicationDataDto}
-                setDataObject={setOctopusApplicationDataDto}
-                disabled={false}
-                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
-              />
-            </Col>
-            <Col lg={12}>
-              <TextInputBase 
-                dataObject={octopusApplicationDataDto} 
-                setDataObject={setOctopusApplicationDataDto} 
-                fieldName={"managerUrl"}
-                disabled={false} 
-              />              
-            </Col>
-            <Col lg={12}>              
-              <TextInputBase 
-                dataObject={octopusApplicationDataDto} 
-                setDataObject={setOctopusApplicationDataDto} 
-                fieldName={"userName"} 
-                disabled={false} 
-              />
-            </Col>
-            <Col lg={12}>              
-              <VaultTextInput 
-                dataObject={octopusApplicationDataDto} 
-                setDataObject={setOctopusApplicationDataDto} 
-                fieldName={"password"}                 
-              />
-            </Col>
-          </Row>
-        )}
+        </div>
+      );
+    }
+  };
+
+  const getFeedEditorForm = () => {
+    if (type === "feed") {
+      return (
+        <OctopusFeedEditorForm
+          dataObject={octopusApplicationDataDto}
+          setDataObject={setOctopusApplicationDataDto}
+          appID={appID}
+        />
+      );
+    }
+  };
+
+  const getTomcatEditorFields = () => {
+    if (type === "tomcat") {
+      return (
         <Row>
-          {appID && octopusApplicationDataDto && (octopusApplicationDataDto.getData("id") || type === "tomcat") && (
-            <div className="mr-auto ml-2 mt-3 px-3">
-              <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>
-                <FontAwesomeIcon icon={faTrash} className="danger-red" /> Delete{" "}
-                {type.charAt(0).toUpperCase() + type.slice(1)}
-              </Button>
-              <br />
-            </div>
-          )}
+          <Col lg={12}>
+            <TextInputBase
+              dataObject={octopusApplicationDataDto}
+              setDataObject={setOctopusApplicationDataDto}
+              fieldName={"name"}
+              disabled={appID}
+            />
+          </Col>
+          <Col lg={12}>
+            <SpaceNameSelectInput
+              fieldName={"spaceName"}
+              dataObject={octopusApplicationDataDto}
+              setDataObject={setOctopusApplicationDataDto}
+              disabled={false}
+              tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
+            />
+          </Col>
+          <Col lg={12}>
+            <TextInputBase
+              dataObject={octopusApplicationDataDto}
+              setDataObject={setOctopusApplicationDataDto}
+              fieldName={"managerUrl"}
+              disabled={false}
+            />
+          </Col>
+          <Col lg={12}>
+            <TextInputBase
+              dataObject={octopusApplicationDataDto}
+              setDataObject={setOctopusApplicationDataDto}
+              fieldName={"userName"}
+              disabled={false}
+            />
+          </Col>
+          <Col lg={12}>
+            <VaultTextInput
+              dataObject={octopusApplicationDataDto}
+              setDataObject={setOctopusApplicationDataDto}
+              fieldName={"password"}
+            />
+          </Col>
+        </Row>
+      );
+    }
+  };
+
+  const getDeleteTomcatButton = () => {
+    if (type === "tomcat") {
+      return (
+        <div className="mr-auto ml-2 mt-3 px-3">
+          <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>
+            <FontAwesomeIcon icon={faTrash} className="danger-red"/> Delete{" "}
+            {type.charAt(0).toUpperCase() + type.slice(1)}
+          </Button>
+          <br/>
+        </div>
+      );
+    }
+  };
+
+
+  if (isLoading || octopusApplicationDataDto === null || octopusApplicationDataDto === undefined) {
+    return <Loading size="sm" />;
+  }
+
+  return (
+    <>
+      <div className="scroll-y full-height">
+        <div className="d-flex justify-content-between px-2">
+          <div className="text-muted pt-1 pb-3">
+            Enter the required configuration information below. These settings will be used for Octopus {type ? type.charAt(0).toUpperCase() + type.slice(1) + " Creation" : ""}.
+          </div>
+          <div>
+            {appID && octopusApplicationDataDto.getData("id") && type && (type !== "environment") && (
+              <TestConnectionButton toolDataDto={octopusApplicationDataDto} />
+            )}
+          </div>
+        </div>
+        {getEnvironmentEditorFields()}
+        {getAccountEditorFields()}
+        {getTargetEditorFields()}
+        {getFeedEditorForm()}
+        {getTomcatEditorFields()}
+        <Row className={"d-flex"}>
+          {getDeleteTomcatButton()}
           <div className="ml-auto mt-3 px-3">
             <SaveButtonBase
               updateRecord={appID ? updateApplicationCaller : createApplication}
