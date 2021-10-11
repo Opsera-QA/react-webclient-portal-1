@@ -11,6 +11,7 @@ import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer"
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ChartSettingsOverlay from "components/insights/marketplace/charts/ChartSettingsOverlay";
+import { addDays, isSameDay } from "date-fns";
 
 function ChartContainer(
   {
@@ -32,7 +33,6 @@ function ChartContainer(
   const [view, setView] = useState("chart");
   const [helpIsShown, setHelpIsShown] = useState(false);
   const isMounted = useRef(false);
-
   useEffect(() => {
     isMounted.current = true;
 
@@ -109,10 +109,12 @@ function ChartContainer(
 
     return (
       <div className="d-flex justify-content-between">
-        <div>
-          <FontAwesomeIcon icon={getChartIconFromKpiConfiguration(kpiConfiguration)} fixedWidth className="mr-1"/>
-          {kpiConfiguration?.kpi_name}
-        </div>
+        <div className={"d-flex"}>
+          <div>
+            <FontAwesomeIcon icon={getChartIconFromKpiConfiguration(kpiConfiguration)} fixedWidth className="mr-1"/>
+            {kpiConfiguration?.kpi_name + getDate()}
+          </div>
+      </div>
         <div className={"d-flex"}>
           {getHelpToggle()}
           {getSettingsToggle()}
@@ -160,12 +162,45 @@ function ChartContainer(
   };
 
   const getTagBadges = () => {
-    const tags = kpiConfiguration?.filters[kpiConfiguration?.filters?.findIndex((obj) => obj.type === "tags")]?.value;
+    let kpiConfigTags = kpiConfiguration?.filters[kpiConfiguration?.filters?.findIndex((obj) => obj.type === "tags")]?.value;
+    let kpiConfigDashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters?.findIndex((obj) => obj.type === "tags")]?.value;
+
+    const tags = kpiConfigTags && Array.isArray(kpiConfigTags) ? kpiConfigTags : [];
+    const dashboardTags = kpiConfigDashboardTags && Array.isArray(kpiConfigDashboardTags) ? kpiConfigDashboardTags : []; 
+    let totalTags;
+
+    if (Array.isArray(dashboardTags) && dashboardTags.length > 0) {
+      totalTags = [...tags, ...dashboardTags];
+    }
+    else {
+      totalTags = [...tags];
+    }
+
+    const finalTags = totalTags.filter((item, pos) => totalTags.indexOf(item) === pos);
     const useKpiTags = kpiConfiguration?.settings?.useKpiTags !== false;
     const useDashboardTags = kpiConfiguration?.settings?.useDashboardTags !== false;
 
+    if (Array.isArray(tags) && tags.length > 0 && useKpiTags &&
+        Array.isArray(dashboardTags) && dashboardTags.length > 0 && useDashboardTags) {
+      return (
+        <div>
+        <div className={"m-1 p-2"}>{"Dashboard & KPI Tags Applied"}</div>
+        <CustomBadgeContainer>
+          {finalTags.map((item, index) => {
+            if (typeof item !== "string")
+              return (
+                <CustomBadge key={index} className={"mx-1 mb-1"} icon={faTag} badgeText={`${item.type}: ${item.value}`}/>
+              );
+          })}
+        </CustomBadgeContainer>
+        </div>
+      );
+    }
+
     if (Array.isArray(tags) && tags.length > 0 && useKpiTags) {
       return (
+        <div>
+        <div className={"m-1 p-2"}>{"KPI Tags Applied"}</div>
         <CustomBadgeContainer>
           {tags.map((item, index) => {
             if (typeof item !== "string")
@@ -174,12 +209,32 @@ function ChartContainer(
               );
           })}
         </CustomBadgeContainer>
+        </div>
       );
     }
-    
-    if (useDashboardTags) {
-      return <div className={"m-1 p-2"}>Dashboard Tags Applied</div>;
+    if (Array.isArray(dashboardTags) && dashboardTags.length > 0 && useDashboardTags) {
+      return (
+      <div>
+      <div className={"m-1 p-2"}>{"Dashboard Tags Applied"}</div>
+      <CustomBadgeContainer>
+          {dashboardTags.map((item, index) => {
+            if (typeof item !== "string")
+              return (
+                <CustomBadge key={index} className={"mx-1 mb-1"} icon={faTag} badgeText={`${item.type}: ${item.value}`}/>
+              );
+          })}
+        </CustomBadgeContainer>
+      </div>
+      );
     }
+  };
+
+  const getDate = () => {
+    const date = kpiConfiguration?.filters[kpiConfiguration?.filters?.findIndex((obj) => obj.type === "date")]?.value;
+    return (
+        date ? isSameDay(new Date(date.startDate), new Date(date.endDate)) ? " for " + new Date(date.startDate).toDateString().split(' ').slice(1).join(' ') : " from " + new Date(date.startDate).toDateString().split(' ').slice(1).join(' ') + " to " + new Date(date.endDate).toDateString().split(' ').slice(1).join(' ') : 
+        " from " + addDays(new Date(), -90).toDateString().split(' ').slice(1).join(' ') + " to " + new Date().toDateString().split(' ').slice(1).join(' ')
+      );
   };
 
   return (
