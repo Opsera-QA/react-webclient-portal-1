@@ -19,6 +19,7 @@ import { faTable } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import SonarPipelineWiseVulnerabilitiesDetails from "./SonarPipelineWiseVulnerabilitiesDetails";
+import { useHistory } from "react-router-dom";
 
 function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = SonarVulnerabilitiesMetricScorecardMetaData.fields;
@@ -31,6 +32,9 @@ function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfigura
   const [tableFilterDto, setTableFilterDto] = useState(
     new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
   );
+
+  const history = useHistory();
+
   let toastContext = useContext(DialogToastContext);
 
   const noDataMessage = "No Data is available for this chart at this time";
@@ -49,24 +53,24 @@ function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfigura
   );
 
   const onRowSelect = (rowData) => {
-    // history.push(`/blueprint/${rowData.original.pipelineId}/${rowData.original.run_count}`);
-    toastContext.showOverlayPanel(
-      <FullScreenCenterOverlayContainer
-        closePanel={closePanel}
-        showPanel={true}
-        titleText={`Sonar Vulnerabilities`}
-        showToasts={true}
-        titleIcon={faTable}
-        isLoading={false}
-        linkTooltipText={"View Full Blueprint"}
-      >
-        <div className={"p-3"}>
-          <SonarPipelineWiseVulnerabilitiesDetails 
-            dataObject={rowData?.original}            
-          />
-        </div>        
-      </FullScreenCenterOverlayContainer>
-    );
+    history.push(`/blueprint/${rowData.original.pipelineId}/${rowData.original.run_count}`);
+    // toastContext.showOverlayPanel(
+    //   <FullScreenCenterOverlayContainer
+    //     closePanel={closePanel}
+    //     showPanel={true}
+    //     titleText={`Sonar Vulnerabilities`}
+    //     showToasts={true}
+    //     titleIcon={faTable}
+    //     isLoading={false}
+    //     linkTooltipText={"View Full Blueprint"}
+    //   >
+    //     <div className={"p-3"}>
+    //       <SonarPipelineWiseVulnerabilitiesDetails 
+    //         dataObject={rowData?.original}            
+    //       />
+    //     </div>        
+    //   </FullScreenCenterOverlayContainer>
+    // );
   };
 
   const closePanel = () => {
