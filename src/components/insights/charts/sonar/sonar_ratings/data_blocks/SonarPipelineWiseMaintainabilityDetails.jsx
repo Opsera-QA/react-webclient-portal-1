@@ -105,6 +105,7 @@ function SonarPipelineWiseMaintainibilityDetails() {
         await setMaintainibilityData(sonarMaintainability.map((maintainibility,index)=>({
               ...maintainibility,
               status : calculateTrend(maintainibility),
+              // TODO: remove the hard coded pipelineId value replaces with the api response
               pipelineId: '60ae84a54fa0c75fc683ad2b',
               "_blueprint":  <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2"/> ,
             })));
