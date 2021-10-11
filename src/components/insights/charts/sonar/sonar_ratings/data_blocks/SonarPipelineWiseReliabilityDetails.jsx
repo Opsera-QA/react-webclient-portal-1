@@ -188,9 +188,9 @@ function SonarPipelineWiseReliabilityDetails() {
           <Col>
             <div className="metric-box p-3 text-center ">
               <div className="box-metric">
-                <div className="font-weight-bold green">{issueTypeData?.info}</div>
+                <div className="font-weight-bold black">{issueTypeData?.info}</div>
               </div>
-              <div className="w-100  mb-1 green">Info</div>
+              <div className="w-100  mb-1 black">Info</div>
             </div>
           </Col>
         </Row>
