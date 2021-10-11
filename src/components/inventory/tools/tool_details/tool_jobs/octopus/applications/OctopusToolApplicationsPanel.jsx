@@ -10,7 +10,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import octopusActions from "components/inventory/tools/tool_details/tool_jobs/octopus/octopus-actions";
 
-// TODO: Pass in applications
 function OctopusToolApplicationsPanel({ toolData }) {
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
   const [octopusApplications, setOctopusApplications] = useState([]);
@@ -86,6 +85,7 @@ function OctopusToolApplicationsPanel({ toolData }) {
         <OctopusApplicationWrapper
           type={octopusApplicationData?.getData("type")}
           toolData={toolData}
+          isMounted={isMounted}
           loadData={loadData}
           appID={applicationId}
           octopusApplicationDataObj={octopusApplicationData}
@@ -99,6 +99,7 @@ function OctopusToolApplicationsPanel({ toolData }) {
         isLoading={isLoading}
         toolData={toolData}
         loadData={loadData}
+        isMounted={isMounted}
         applications={octopusApplications}
         onRowSelect={onRowSelect}
         octopusApplicationData={octopusApplicationData}

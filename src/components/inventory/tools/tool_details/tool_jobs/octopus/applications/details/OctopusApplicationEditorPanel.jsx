@@ -569,7 +569,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
       isLoading={isLoading}
       recordDto={octopusApplicationDataDto}
       updateRecord={appID ? updateApplicationCaller : createApplication}
-      createRecord={updateApplication}
+      createRecord={createApplication}
       setRecordDto={setOctopusApplicationDataDto}
       extraButtons={getDeleteTomcatButton()}
     >
