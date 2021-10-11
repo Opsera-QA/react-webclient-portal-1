@@ -68,7 +68,7 @@ export const usersMetadata = {
       id: "groups",
     },
     {
-      label: "Local Authentication Provider (Opsera Okta)",
+      label: "Local Authentication Form (Opsera Okta)",
       id: "localAuth",
       formText: "Indicates if the customer is using federated authentication or Opsera Okta (local)"
     },

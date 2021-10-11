@@ -15,7 +15,6 @@ function ActionBarToggleHelpButton({ toggleHelp, helpIsShown, size, visible, cla
   return (
     <ActionBarButton
       action={toggleHelpPanel}
-      iconClasses={"dark-grey"}
       icon={helpIsShown ? faTimes : faQuestionCircle}
       popoverText={helpIsShown ? "Hide Help" : `Show Help`}
       size={size}

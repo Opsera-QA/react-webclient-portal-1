@@ -1,10 +1,9 @@
-import React, { useMemo, useState } from "react";
+import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Dropdown } from "react-bootstrap";
-import ExistingOctopusApplicationModal from "./OctopusApplicationModal";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -14,27 +13,24 @@ import {
   getTableDateTimeColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import NewOctopusApplicationOverlay
+  from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/create_overlay/NewOctopusApplicationOverlay";
 
-// TODO: Revisit this and wire up new overlay
-function OctopusApplicationsTable({ toolData, applications, loadData, selectedRow, isLoading }) {
-  const [type, setType] = useState(undefined);
+function OctopusApplicationsTable({ toolData, isMounted, applications, loadData, onRowSelect, isLoading }) {
+  const toastContext = useContext(DialogToastContext);
   let fields = octopusApplicationsMetadata.fields;
-  const [showCreateOctopusModal, setShowCreateOctopusModal] = useState(false);
 
-  const createOctopusApplication = (newType) => {
-    switch (newType) {
-      case "environment":
-      case "account":
-      case "target":
-      case "feed":
-      case "tomcat":
-        setType(newType);
-        setShowCreateOctopusModal(true);
-        break;
-      default:
-        setShowCreateOctopusModal(false);
-        setType(undefined);
-    }    
+  // TODO: Remove type after creating splash screen
+  const createOctopusApplication = (type) => {
+    toastContext.showOverlayPanel(
+      <NewOctopusApplicationOverlay
+        loadData={loadData}
+        isMounted={isMounted}
+        type={type}
+        toolData={toolData}
+      />
+    );
   };
 
   const columns = useMemo(
@@ -48,26 +44,12 @@ function OctopusApplicationsTable({ toolData, applications, loadData, selectedRo
     []
   );
 
-  const getModal = () => {
-    if (showCreateOctopusModal) {
-      return (
-        <ExistingOctopusApplicationModal
-          type={type}
-          toolData={toolData}
-          loadData={loadData}
-          setShowModal={setShowCreateOctopusModal}
-          showModal={showCreateOctopusModal}
-        />
-      );
-    }
-  };
-
   const getOctopusApplicationsTable = () => {
     return (
       <CustomTable
         columns={columns}
         data={applications}
-        onRowSelect={selectedRow}
+        onRowSelect={onRowSelect}
         isLoading={isLoading}
         // initialState={initialState}
       />
@@ -78,27 +60,26 @@ function OctopusApplicationsTable({ toolData, applications, loadData, selectedRo
     return null;
   }
 
+  // TODO: Remove this create button, replace with standard flow.
   return (
     <>
-      {toolData && toolData.data.configuration && (
-        <div className="mt-1 text-right">
-          <Dropdown>
-            <Dropdown.Toggle variant="primary" id="dropdown-basic">
-              <FontAwesomeIcon icon={faPlus} className="mr-1" /> Create
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => createOctopusApplication("environment")}>Environment</Dropdown.Item>
-              <Dropdown.Item onClick={() => createOctopusApplication("account")}>Account</Dropdown.Item>
-              <Dropdown.Item onClick={() => createOctopusApplication("target")}>Target</Dropdown.Item>
-              <Dropdown.Item onClick={() => createOctopusApplication("feed")}>External Feed</Dropdown.Item>
-              <Dropdown.Item onClick={() => createOctopusApplication("tomcat")}>Tomcat Manager</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-          <br />
-        </div>
-      )}
+      <div className="mt-1 text-right">
+        <Dropdown>
+          <Dropdown.Toggle variant="primary" id="dropdown-basic">
+            <FontAwesomeIcon icon={faPlus} className="mr-1"/> Create
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={() => createOctopusApplication("environment")}>Environment</Dropdown.Item>
+            <Dropdown.Item onClick={() => createOctopusApplication("account")}>Account</Dropdown.Item>
+            <Dropdown.Item onClick={() => createOctopusApplication("target")}>Target</Dropdown.Item>
+            <Dropdown.Item onClick={() => createOctopusApplication("feed")}>External Feed</Dropdown.Item>
+            <Dropdown.Item onClick={() => createOctopusApplication("tomcat")}>Tomcat Manager</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+        <br/>
+      </div>
       <FilterContainer
-        // loadData={loadData}
+        loadData={loadData}
         // addRecordFunction={createTag}
         // supportSearch={true}
         showBorder={false}
@@ -108,7 +89,6 @@ function OctopusApplicationsTable({ toolData, applications, loadData, selectedRo
         titleIcon={faBrowser}
         title={"Octopus Applications"}
       />
-      {getModal()}
     </>
   );
 }
@@ -117,8 +97,9 @@ OctopusApplicationsTable.propTypes = {
   toolData: PropTypes.object,
   applications: PropTypes.array,
   loadData: PropTypes.func,
-  selectedRow: PropTypes.func,
+  onRowSelect: PropTypes.func,
   isLoading: PropTypes.bool,
+  isMounted: PropTypes.bool,
 };
 
 export default OctopusApplicationsTable;
