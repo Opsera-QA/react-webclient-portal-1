@@ -160,7 +160,7 @@ function SonarPipelineWiseMaintainibilityDetails() {
           </div>
         </Col>
         <Col>
-          <div className="metric-box p-3 text-center border-red" >
+          <div className="metric-box p-3 text-center" >
             <div className="box-metric">
               <div className="font-weight-bold red">{issueTypeData?.critical}</div>
             </div>
@@ -168,7 +168,7 @@ function SonarPipelineWiseMaintainibilityDetails() {
           </div>
         </Col>
         <Col>
-          <div className="metric-box p-3 text-center border-orange">
+          <div className="metric-box p-3 text-center ">
             <div className="box-metric">
               <div className="font-weight-bold orange">{issueTypeData?.major}</div>
             </div>
@@ -176,7 +176,7 @@ function SonarPipelineWiseMaintainibilityDetails() {
           </div>
         </Col>
         <Col>
-          <div className="metric-box p-3 text-center border-yellow">
+          <div className="metric-box p-3 text-center ">
             <div className="box-metric">
               <div className="font-weight-bold yellow">{issueTypeData?.minor}</div>
             </div>
@@ -184,7 +184,7 @@ function SonarPipelineWiseMaintainibilityDetails() {
           </div>
         </Col>
         <Col>
-          <div className="metric-box p-3 text-center border-green">
+          <div className="metric-box p-3 text-center">
             <div className="box-metric">
               <div className="font-weight-bold green">{issueTypeData?.info}</div>
             </div>
