@@ -40,10 +40,10 @@ function SonarPipelineWiseReliabilityDetails() {
       getTableTextColumn(getField(fields, "project")),
       getTableTextColumn(getField(fields, "runCount")),
       getChartTrendStatusColumn(getField(fields, "status")),
-      getTableTextColumn(getField(fields, "critical")),
-      getTableTextColumn(getField(fields, "major")),
-      getTableTextColumn(getField(fields, "minor")),
-      getTableTextColumn(getField(fields, "info")),   
+      getTableTextColumn(getField(fields, "critical"),'red'),
+      getTableTextColumn(getField(fields, "major"),'orange'),
+      getTableTextColumn(getField(fields, "minor"),'yellow'),
+      getTableTextColumn(getField(fields, "info"),'green'),   
       getTableTextColumn(getField(fields, "total_effort")),   
       getTableTextColumnWithoutField('Actions','_blueprint')
     ],
@@ -106,7 +106,7 @@ function SonarPipelineWiseReliabilityDetails() {
               ...bug,
               status : calculateTrend(bug),
               pipelineId: '60ae84a54fa0c75fc683ad2b',
-              "_blueprint": index == 0 ? <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2"/> : null,
+              "_blueprint": <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2"/>,
             })));
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", sonarBugs.length);
@@ -150,38 +150,50 @@ function SonarPipelineWiseReliabilityDetails() {
       return null;
     }
     return (
-      <Row className="py-3 px-5">
-        <Col>
-          <div className="metric-box p-3 text-center">
-            <div className="font-weight-bold">{issueTypeData?.total}</div>
-            <div className="w-100 text-muted mb-1">Bugs</div>
-          </div>
-        </Col>
-        <Col>
-          <div className="metric-box p-3 text-center">
-            <div className="font-weight-bold">{issueTypeData?.critical}</div>
-            <div className="w-100 text-muted mb-1">Critical</div>
-          </div>
-        </Col>
-        <Col>
-          <div className="metric-box p-3 text-center">
-            <div className="font-weight-bold">{issueTypeData?.major}</div>
-            <div className="w-100 text-muted mb-1">Major</div>
-          </div>
-        </Col>
-        <Col>
-          <div className="metric-box p-3 text-center">
-            <div className="font-weight-bold">{issueTypeData?.minor}</div>
-            <div className="w-100 text-muted mb-1">Minor</div>
-          </div>
-        </Col>
-        <Col>
-          <div className="metric-box p-3 text-center">
-            <div className="font-weight-bold">{issueTypeData?.info}</div>
-            <div className="w-100 text-muted mb-1">Info</div>
-          </div>
-        </Col>
-      </Row>
+      
+        <Row className="py-3 px-5">
+          <Col>
+            <div className="metric-box p-3 text-center">
+              <div className="box-metric">
+                <div className="font-weight-bold">{issueTypeData?.total}</div>
+              </div>
+              <div className="w-100 text-muted mb-1">Bugs</div>
+            </div>
+          </Col>
+          <Col>
+            <div className="metric-box p-3 text-center border-red" >
+              <div className="box-metric">
+                <div className="font-weight-bold red">{issueTypeData?.critical}</div>
+              </div>
+              <div className="w-100  mb-1 red">Critical</div>
+            </div>
+          </Col>
+          <Col>
+            <div className="metric-box p-3 text-center border-orange">
+              <div className="box-metric">
+                <div className="font-weight-bold orange">{issueTypeData?.major}</div>
+              </div>
+              <div className="w-100  mb-1 orange">Major</div>
+            </div>
+          </Col>
+          <Col>
+            <div className="metric-box p-3 text-center border-yellow">
+              <div className="box-metric">
+                <div className="font-weight-bold yellow">{issueTypeData?.minor}</div>
+              </div>
+              <div className="w-100  mb-1 yellow">Minor</div>
+            </div>
+          </Col>
+          <Col>
+            <div className="metric-box p-3 text-center border-green">
+              <div className="box-metric">
+                <div className="font-weight-bold green">{issueTypeData?.info}</div>
+              </div>
+              <div className="w-100  mb-1 green ">Info</div>
+            </div>
+          </Col>
+        </Row>
+      
     );
   };
 
