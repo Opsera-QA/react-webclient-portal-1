@@ -15,7 +15,7 @@ import {isActionAllowed} from "components/common/helpers/role-helpers";
 function ParametersInventory() {
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [parameterList, setParameterList] = useState([]);
   const [parameterMetadata, setParameterMetadata] = useState(undefined);
   const [parameterRoleDefinitions, setParameterRoleDefinitions] = useState(undefined);
@@ -46,7 +46,7 @@ function ParametersInventory() {
 
   const loadData = async (filterDto = parameterFilterModel, cancelSource = cancelTokenSource) => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       await getParameters(filterDto, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
@@ -55,7 +55,7 @@ function ParametersInventory() {
       }
     } finally {
       if (isMounted?.current === true) {
-        setLoading(false);
+        setIsLoading(false);
       }
     }
   };

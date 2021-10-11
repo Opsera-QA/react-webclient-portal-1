@@ -61,7 +61,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
       source.cancel();
       isMounted.current = false;
     };
-  }, [octopusApplicationData]);
+  }, [octopusApplicationData, type]);
 
   const loadData = async () => {
     try {
