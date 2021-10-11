@@ -98,7 +98,7 @@ function OctopusApplicationsTable({ toolData, applications, loadData, selectedRo
         </div>
       )}
       <FilterContainer
-        // loadData={loadData}
+        loadData={loadData}
         // addRecordFunction={createTag}
         // supportSearch={true}
         showBorder={false}
