@@ -38,6 +38,16 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
         }
       }
 
+      // TODO: Replace top detail view link check with this once everywhere is updated
+      if (searchString.match(mongoIdRegex) && filterDto?.getDetailViewLink && filterDto?.getDetailViewLink() != null) {
+        const link = filterDto?.getDetailViewLink(searchString);
+
+        if (link !== null) {
+          history.push(link);
+          return;
+        }
+      }
+
       setIsSearching(true);
       newFilterDto.setData("currentPage", 1);
 

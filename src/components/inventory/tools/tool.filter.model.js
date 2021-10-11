@@ -96,6 +96,10 @@ export class ToolFilterModel extends FilterModelBase {
     return true;
   };
 
+  getDetailViewLink = (toolId) => {
+    return `/inventory/tools/details/${toolId}`;
+  };
+
   getSortOptions = () => {
     return (
       [
