@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import OctopusEnvironmentMetadata from "../octopus-environment-metadata";
 import OctopusAccountMetadata from "../octopus-account-metadata";
@@ -6,19 +6,24 @@ import OctopusTargetMetadata from "../octopus-target-metadata";
 import OctopusFeedMetadata from "../octopus-feed-metadata";
 import OctopusTomcatMetadata from "../octopus-tomcat-metadata";
 import Model from "core/data_model/model";
-import OctopusApplicationEditorPanel from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/OctopusApplicationEditorPanel";
+import OctopusApplicationEditorPanel
+  from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/OctopusApplicationEditorPanel";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import CreateModal from "components/common/modal/CreateModal";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
-function  ExistingOctopusApplicationModal({
-  loadData,
-  toolData,
-  octopusApplicationDataObj,
-  setShowModal,
-  showModal,
-  appID,
-  type,
-}) {
+// TODO: Make irrelevant by using editor panel in line once sub forms are made and fixed
+function OctopusApplicationWrapper(
+  {
+    loadData,
+    toolData,
+    octopusApplicationDataObj,
+    appID,
+    type,
+    isMounted,
+    handleClose,
+  }) {
+  const toastContext = useContext(DialogToastContext);
   const [octopusApplicationData, setOctopusApplicationData] = useState(undefined);
 
   useEffect(() => {
@@ -52,45 +57,44 @@ function  ExistingOctopusApplicationModal({
     }
   };
 
-  const handleClose = () => {
-    loadData();
-    setShowModal(false);
+  const closePanel = () => {
+    if (isMounted?.current === true) {
+      loadData();
+    }
+
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+
+    if (handleClose) {
+      handleClose();
+    }
   };
 
-  if (type == null) {
+
+  if (type == null || octopusApplicationData == null) {
     return null;
   }
 
   return (
-    <CreateModal
-      handleCancelModal={handleClose}
-      objectType={`Octopus ${capitalizeFirstLetter(type)}`}
-      objectMethod={appID ? "update" : "create"}
-      showModal={showModal}
+    <OctopusApplicationEditorPanel
+      octopusApplicationData={octopusApplicationData}
+      type={type}
+      toolData={toolData}
       loadData={loadData}
-    >
-      {octopusApplicationData && (
-        <OctopusApplicationEditorPanel
-          octopusApplicationData={octopusApplicationData}
-          type={type}
-          toolData={toolData}
-          loadData={loadData}
-          handleClose={handleClose}
-          appID={appID}
-        />
-      )}
-    </CreateModal>
+      handleClose={closePanel}
+      appID={appID}
+    />
   );
 }
 
-ExistingOctopusApplicationModal.propTypes = {
+OctopusApplicationWrapper.propTypes = {
   toolData: PropTypes.object,
   octopusApplicationDataObj: PropTypes.object,
-  showModal: PropTypes.bool,
   loadData: PropTypes.func,
-  setShowModal: PropTypes.func,
   appID: PropTypes.string,
   type: PropTypes.string,
+  isMounted: PropTypes.object,
+  handleClose: PropTypes.func,
 };
 
-export default ExistingOctopusApplicationModal;
+export default OctopusApplicationWrapper;
