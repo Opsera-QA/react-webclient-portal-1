@@ -62,6 +62,7 @@ import MongodbRealmStepConfiguration from "./step_tool_configuration_forms/mongo
 import AksServiceDeployStepConfiguration
   from "./step_tool_configuration_forms/aks_service_deploy/AksServiceDeployStepConfiguration";
 import AzureFunctionsStepConfiguration from "./step_tool_configuration_forms/azure_functions/AzureFunctionsStepConfiguration";
+import AnsibleStepConfiguration from "./step_tool_configuration_forms/ansible/AnsibleStepConfiguration";
 import JenkinsStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
 
@@ -703,6 +704,16 @@ function StepToolConfiguration({
             closeEditorPanel={closeEditorPanel}
           />
         );
+        case "ansible":
+          return (
+            <AnsibleStepConfiguration
+              stepTool={stepTool}
+              stepId={stepId}
+              parentCallback={callbackFunction}
+              callbackSaveToVault={saveToVault}
+              closeEditorPanel={closeEditorPanel}
+            />
+          );
       case "sfdc-configurator":
         return (
           <SFDCStepConfiguration
