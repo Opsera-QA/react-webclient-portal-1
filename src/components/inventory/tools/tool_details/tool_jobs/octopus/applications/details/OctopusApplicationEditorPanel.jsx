@@ -33,6 +33,7 @@ import AzureClusterSelectInput from "./input/AzureClusterSelectInput";
 import AzureResourceGroupSelectInput from "./input/AzureResourceGroupSelectInput";
 import OctopusFeedEditorForm from "./sub_forms/OctopusFeedEditorForm";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import {getOctopusApplicationTypeLabel} from "components/common/list_of_values_input/tools/octopus/applications/type/octopus.application.types";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -589,6 +590,15 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
     }
   };
 
+  const getCreateMessage = () => {
+    if (octopusApplicationDataDto?.isNew()) {
+      return (
+        <div className="text-muted pb-3">
+          Enter the required configuration information below. These settings will be used for Octopus {getOctopusApplicationTypeLabel(type)} Application Creation.
+        </div>
+      );
+    }
+  };
 
   if (isLoading || octopusApplicationDataDto === null || octopusApplicationDataDto === undefined) {
     return <Loading size="sm" />;
@@ -604,10 +614,9 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
       createRecord={createApplication}
       setRecordDto={setOctopusApplicationDataDto}
       extraButtons={getDeleteTomcatButton()}
+      className={""}
     >
-      <div className="text-muted pt-1 pb-3">
-        Enter the required configuration information below. These settings will be used for Octopus {type ? type.charAt(0).toUpperCase() + type.slice(1) + " Creation" : ""}.
-      </div>
+      {getCreateMessage()}
       <div>
         {appID && octopusApplicationDataDto.getData("id") && type && (type !== "environment") && (
           <TestConnectionButton toolDataDto={octopusApplicationDataDto} />
