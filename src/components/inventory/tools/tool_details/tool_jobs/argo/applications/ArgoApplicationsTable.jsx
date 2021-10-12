@@ -1,6 +1,6 @@
 import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
-import argoApplicationsMetadata from "../argo-application-metadata";
+import argoApplicationsMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/applications/argo-application-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
