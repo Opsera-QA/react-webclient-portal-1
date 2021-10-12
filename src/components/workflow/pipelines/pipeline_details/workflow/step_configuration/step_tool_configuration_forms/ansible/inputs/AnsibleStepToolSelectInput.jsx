@@ -11,7 +11,6 @@ function AnsibleStepToolSelectInput({ fieldName, model, setModel, disabled, clas
       fieldName={fieldName}
       placeholderText={"Select a Ansible Connect Instance"}
       configurationRequired={true}
-      // textField={(tool) => getTextField(tool)}
       model={model}
       setModel={setModel}
       disabled={disabled}
