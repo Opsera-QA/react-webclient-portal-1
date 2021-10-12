@@ -693,6 +693,7 @@ function StepToolConfiguration({
               stepId={stepId}
               parentCallback={callbackFunction}
               callbackSaveToVault={saveToVault}
+              closeEditorPanel={closeEditorPanel}
             />
           );
       case "sfdc-configurator":
