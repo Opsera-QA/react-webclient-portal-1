@@ -10,18 +10,13 @@ function ToolApplicationsPanel({ toolData, setToolData, loadData, isLoading }) {
       case "argo":
         return (
           <ArgoToolApplicationsPanel
-            toolActions={toolData?.getData("actions")}
-            isLoading={isLoading}
             toolData={toolData}
-            loadData={loadData}
           />
         );
       case "octopus":
         return (
           <OctopusToolApplicationsPanel
-            isLoading={isLoading}
             toolData={toolData}
-            loadData={loadData}
           />
         );
       case "azure":

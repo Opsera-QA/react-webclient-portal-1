@@ -2,6 +2,11 @@ import baseActions from "utils/actionsBase";
 
 const argoActions = {};
 
+argoActions.getArgoToolApplicationsV2 = async (getAccessToken, cancelTokenSource, toolID) => {
+  const apiUrl = `/tools/${toolID}/argo/v2/tool-applications`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 argoActions.createArgoApplicationV2 = async (getAccessToken, cancelTokenSource, toolId, argoApplicationModel) => {
   const apiUrl = `/tools/${toolId}/argo/v2/create`;
   const postBody = {

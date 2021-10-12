@@ -1,3 +1,4 @@
+// TODO: Would it be better to make fieldDefinitions and attach types and labels together?
 export const OCTOPUS_APPLICATION_TYPES = {
   ACCOUNT: "account",
   ENVIRONMENT: "environment",
