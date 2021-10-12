@@ -27,6 +27,7 @@ import KafkaConnectToolConfiguration from "./tool_jobs/kafka_connect/KafkaConnec
 import CoverityToolConfiguration from "./tool_jobs/coverity/CoverityToolConfiguration";
 import TwistlockToolConfiguration from "./tool_jobs/twistlock/TwistlockToolConfiguration";
 import MongodbRealmToolConfiguration from "./tool_jobs/mongodb_realm/MongodbRealmToolConfiguration";
+import AnsibleToolConfiguration from "./tool_jobs/ansible/AnsibleToolConfiguration";
 
 function ToolConfigurationPanel({ toolData }) {
   const getConfiguration = () => {
@@ -55,6 +56,8 @@ function ToolConfigurationPanel({ toolData }) {
         return <AnchoreScanToolConfiguration toolData={toolData} />;
       case "anchore-integrator":
         return <AnchoreIntegratorToolConfiguration toolData={toolData} />;
+      case "ansible":
+        return <AnsibleToolConfiguration toolData={toolData} />;
       case "sonar":
         return <SonarToolConfiguration toolData={toolData} />;
       case "aws_account":
