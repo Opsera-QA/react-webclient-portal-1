@@ -2,10 +2,8 @@ import React from "react";
 import { useTable, usePagination, useSortBy } from "react-table";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSortUp, faSortDown, faPlus, faSpinner } from "@fortawesome/pro-light-svg-icons";
+import { faSortUp, faSortDown, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import Pagination from "components/common/pagination";
-import DtoBottomPagination from "../pagination/DtoBottomPagination";
-import DtoTopPagination from "../pagination/DtoTopPagination";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 

@@ -2,13 +2,26 @@ import React from "react";
 import PropTypes from "prop-types";
 import DropdownList from "react-widgets/lib/DropdownList";
 
-function StandaloneSelectInputBase(
+function StandaloneSelectInput(
   {
-    groupBy, selectOptions, valueField, textField, placeholderText,
-    busy, disabled, onSearch, value, setDataFunction
-}) {
+    groupBy,
+    selectOptions,
+    valueField,
+    textField,
+    placeholderText,
+    busy,
+    disabled,
+    onSearch,
+    value,
+    setDataFunction,
+    onCreate,
+    allowCreate,
+    className,
+    onToggle,
+  }) {
   return (
     <DropdownList
+      className={className}
       data={selectOptions}
       valueField={valueField}
       textField={textField}
@@ -16,15 +29,18 @@ function StandaloneSelectInputBase(
       value={value}
       filter={"contains"}
       busy={busy}
+      onCreate={onCreate}
+      onToggle={onToggle}
       placeholder={placeholderText}
       onChange={(newValue) => setDataFunction(newValue)}
       disabled={disabled || !Array.isArray(selectOptions) || selectOptions.length === 0}
       onSearch={onSearch}
+      allowCreate={allowCreate}
     />
   );
 }
 
-StandaloneSelectInputBase.propTypes = {
+StandaloneSelectInput.propTypes = {
   selectOptions: PropTypes.array.isRequired,
   groupBy: PropTypes.oneOfType([
     PropTypes.string,
@@ -43,12 +59,16 @@ StandaloneSelectInputBase.propTypes = {
     PropTypes.bool,
     PropTypes.array
   ]),
-  value: PropTypes.string,
+  value: PropTypes.any,
   onSearch: PropTypes.func,
+  onCreate: PropTypes.func,
+  allowCreate: PropTypes.bool,
+  className: PropTypes.string,
+  onToggle: PropTypes.func,
 };
 
-StandaloneSelectInputBase.defaultProps = {
+StandaloneSelectInput.defaultProps = {
   placeholderText: "Select One"
 };
 
-export default StandaloneSelectInputBase;
+export default StandaloneSelectInput;
