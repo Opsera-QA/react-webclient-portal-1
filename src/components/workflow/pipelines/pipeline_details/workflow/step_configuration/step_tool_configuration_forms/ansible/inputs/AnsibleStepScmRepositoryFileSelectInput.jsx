@@ -28,7 +28,7 @@ function AnsibleStepScmRepositoryFileSelectInput({
   const projectId = model.getData("repoId");
   const workspace = model.getData("workspace");
   const service = model.getData("service");
-
+  
   useEffect(() => {
     
       if (cancelTokenSource) {
@@ -37,7 +37,8 @@ function AnsibleStepScmRepositoryFileSelectInput({
       const source = axios.CancelToken.source();
       setCancelTokenSource(source);
       isMounted.current = true;
-      if(!isEmpty(defaultBranch) && !isEmpty(gitToolId) && !isEmpty(projectId)  && !isEmpty(service)){
+      
+      if(!isEmpty(defaultBranch) && !isEmpty(gitToolId) && !isEmpty(projectId)  && !isEmpty(service) && !isEmpty(playbookFilePath)){
         loadData(source).catch((error) => {
           if (isMounted?.current === true) {
             throw error;
@@ -53,7 +54,7 @@ function AnsibleStepScmRepositoryFileSelectInput({
 
   
   useEffect(() => {
-    if(!isEmpty(defaultBranch) && !isEmpty(gitToolId) && !isEmpty(projectId) && !isEmpty(service)){
+    if(!isEmpty(defaultBranch) && !isEmpty(gitToolId) && !isEmpty(projectId) && !isEmpty(service) && !isEmpty(playbookFilePath)){
       const source = axios.CancelToken.source();
       setCancelTokenSource(source);
       loadData().catch((error) => {
@@ -62,7 +63,7 @@ function AnsibleStepScmRepositoryFileSelectInput({
         }
       });
     }
-  },[defaultBranch, gitToolId, projectId, service]);
+  },[defaultBranch, gitToolId, projectId, service,playbookFilePath]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try { 
