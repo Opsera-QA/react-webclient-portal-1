@@ -1,11 +1,11 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import ArgoApplicationsTable from "./ArgoApplicationsTable";
 import PropTypes from "prop-types";
 import ArgoApplicationOverlay
   from "components/inventory/tools/tool_details/tool_jobs/argo/applications/ArgoApplicationOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function ArgoApplications({ toolData, loadData, isLoading, toolActions }) {
+function ArgoToolApplicationsPanel({ toolData, loadData, isLoading, toolActions }) {
   const toastContext = useContext(DialogToastContext);
   const [argoApplications, setArgoApplications] = useState([]);
 
@@ -51,10 +51,10 @@ function ArgoApplications({ toolData, loadData, isLoading, toolActions }) {
   );
 }
 
-ArgoApplications.propTypes = {
+ArgoToolApplicationsPanel.propTypes = {
   toolData: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   toolActions: PropTypes.array
 };
-export default ArgoApplications;
+export default ArgoToolApplicationsPanel;

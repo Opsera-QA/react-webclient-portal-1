@@ -1,5 +1,5 @@
 import React from "react";
-import ArgoApplications from "./tool_jobs/argo/applications/ArgoApplications";
+import ArgoToolApplicationsPanel from "components/inventory/tools/tool_details/tool_jobs/argo/applications/ArgoToolApplicationsPanel";
 import OctopusToolApplicationsPanel from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/OctopusToolApplicationsPanel";
 import PropTypes from "prop-types";
 import AzureApplications from "./tool_jobs/azureV2/applications/AzureApplications";
@@ -9,7 +9,7 @@ function ToolApplicationsPanel({ toolData, setToolData, loadData, isLoading }) {
     switch (toolIdentifier) {
       case "argo":
         return (
-          <ArgoApplications
+          <ArgoToolApplicationsPanel
             toolActions={toolData?.getData("actions")}
             isLoading={isLoading}
             toolData={toolData}
