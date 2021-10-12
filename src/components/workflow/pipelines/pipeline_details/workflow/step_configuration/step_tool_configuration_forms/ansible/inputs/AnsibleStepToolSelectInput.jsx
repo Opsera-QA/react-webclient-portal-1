@@ -4,11 +4,11 @@ import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_v
 function AnsibleStepToolSelectInput({ fieldName, model, setModel, disabled, className }) {
 
   const getTextField = (tool) => {
-    const toolUrl = tool?.configuration?.toolURL || "No Ansible URL Assigned";
+    const hostName = tool?.configuration?.hostName || "No Ansible URL Assigned";
     const toolName = tool?.name; 
-    return (`${toolName} (${toolUrl})`);
+    return (`${toolName} (${hostName})`);
   };
-
+  
   return (
     <RoleRestrictedToolByIdentifierInputBase
       toolIdentifier={"ansible"}

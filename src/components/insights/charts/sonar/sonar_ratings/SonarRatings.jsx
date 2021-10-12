@@ -7,13 +7,13 @@ import chartsActions from "components/insights/charts/charts-actions";
 import SonarRatingsChartHelpDocumentation
   from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
 import SonarRatingsMaintainabilityDataBlock
-  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsMaintainabilityDataBlock";
+  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsMaintainabilityDataBlock_reverted";
 import SonarRatingsVulnerabilityDataBlock
-  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsVulnerabilityDataBlock";
+  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsVulnerabilityDataBlock_reverted";
 import HorizontalThreeDataBlockContainer
   from "components/common/metrics/data_blocks/horizontal/HorizontalThreeDataBlockContainer";
 import SonarRatingsReliabilityDataBlock
-  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlock";
+  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlock_reverted";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 
 // TODO: Replace SonarRatings once verified

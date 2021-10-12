@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import OctopusApplicationsTable from "./OctopusApplicationsTable";
-import ExistingOctopusApplicationModal from "./OctopusApplicationModal";
+import OctopusApplicationWrapper from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/OctopusApplicationWrapper";
 import PropTypes from "prop-types";
 import octopusApplicationsMetadata from "../octopus-environment-metadata";
 import Model from "core/data_model/model";
@@ -10,15 +10,14 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import octopusActions from "components/inventory/tools/tool_details/tool_jobs/octopus/octopus-actions";
 
-// TODO: Pass in applications
 function OctopusToolApplicationsPanel({ toolData }) {
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
   const [octopusApplications, setOctopusApplications] = useState([]);
   const [octopusApplicationData, setOctopusApplicationData] = useState(undefined);
-  const [showCreateOctopusApplicationModal, setShowCreateOctopusApplicationModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const toastContext = useContext(DialogToastContext);
   const [applicationId, setApplicationId] = useState(undefined);
+  // TODO: Replace with actual filter model for this area OR make generic one
   const [parameterFilterModel, setParameterFilterModel] = useState(new ParameterFilterModel());
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -74,56 +73,49 @@ function OctopusToolApplicationsPanel({ toolData }) {
     }
   };
 
-  const selectedJobRow = (rowData) => {
-    const currentApplications = toolData?.getData("actions");
-    const applicationIndex = rowData?.index;
-
-    if (Array.isArray(currentApplications) && currentApplications.length > 0 && typeof applicationIndex === "number") {
-      const application = currentApplications[applicationIndex];
-      const newApplicationModel =  new Model(application?.configuration, octopusApplicationsMetadata, false);
-      setApplicationId(application?._id);
-      setOctopusApplicationData({...newApplicationModel});
-      setShowCreateOctopusApplicationModal(true);
-    }
+  const onRowSelect = (rowData) => {
+    const application = rowData?.original;
+    const newApplicationModel = new Model(application?.configuration, octopusApplicationsMetadata, false);
+    setApplicationId(application?._id);
+    setOctopusApplicationData({...newApplicationModel});
   };
 
-  // TODO: Convert to overlay
-  const getApplicationModel = () => {
+  const getView = () => {
     if (octopusApplicationData != null) {
       return (
-        <ExistingOctopusApplicationModal
-          type={octopusApplicationData.getData("type")}
+        <OctopusApplicationWrapper
+          type={octopusApplicationData?.getData("type")}
           toolData={toolData}
+          isMounted={isMounted}
           loadData={loadData}
-          setShowModal={setShowCreateOctopusApplicationModal}
-          octopusApplicationDataObj={octopusApplicationData}
-          showModal={showCreateOctopusApplicationModal}
           appID={applicationId}
+          octopusApplicationDataObj={octopusApplicationData}
+          handleClose={() => setOctopusApplicationData(undefined)}
         />
       );
     }
+
+    return (
+      <OctopusApplicationsTable
+        isLoading={isLoading}
+        toolData={toolData}
+        loadData={loadData}
+        isMounted={isMounted}
+        applications={octopusApplications}
+        onRowSelect={onRowSelect}
+        octopusApplicationData={octopusApplicationData}
+      />
+    );
   };
 
   return (
-    <>
-      <div>
-        <OctopusApplicationsTable
-          isLoading={isLoading}
-          toolData={toolData}
-          loadData={loadData}
-          applications={octopusApplications}
-          selectedRow={(rowData) => selectedJobRow(rowData)}
-          octopusApplicationData={octopusApplicationData}
-        />
-      </div>
-      {getApplicationModel()}
-    </>
+    <div>
+      {getView()}
+    </div>
   );
 }
 
 OctopusToolApplicationsPanel.propTypes = {
   toolData: PropTypes.object,
-  loadData: PropTypes.func,
-  isLoading: PropTypes.bool,
 };
 export default OctopusToolApplicationsPanel;
