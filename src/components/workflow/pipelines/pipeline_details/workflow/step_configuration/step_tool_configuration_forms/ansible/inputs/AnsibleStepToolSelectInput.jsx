@@ -3,12 +3,7 @@ import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 function AnsibleStepToolSelectInput({ fieldName, model, setModel, disabled, className }) {
 
-  const getTextField = (tool) => {
-    const hostName = tool?.configuration?.hostName || "No Ansible URL Assigned";
-    const toolName = tool?.name; 
-    return (`${toolName} (${hostName})`);
-  };
-
+  
   return (
     <RoleRestrictedToolByIdentifierInputBase
       toolIdentifier={"ansible"}
@@ -16,7 +11,6 @@ function AnsibleStepToolSelectInput({ fieldName, model, setModel, disabled, clas
       fieldName={fieldName}
       placeholderText={"Select a Ansible Connect Instance"}
       configurationRequired={true}
-      textField={(tool) => getTextField(tool)}
       model={model}
       setModel={setModel}
       disabled={disabled}
