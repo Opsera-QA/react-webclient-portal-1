@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
-import argoApplicationsMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/argo-application-metadata";
+import argoApplicationsMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/applications/argo-application-metadata";
 import ArgoApplicationEditorPanel
   from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/ArgoApplicationEditorPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";

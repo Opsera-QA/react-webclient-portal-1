@@ -1216,6 +1216,10 @@ div.data-blocks-ellipses {
 /* End Breadcrumb trail styling */
 
 /* Action Bar styling */
+.action-bar-icon {
+    color: #6c757d;
+}
+
 .action-bar-icon:hover {
     color: #3D3B36;
 }
