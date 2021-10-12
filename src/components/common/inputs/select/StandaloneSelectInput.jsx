@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import DropdownList from "react-widgets/lib/DropdownList";
 
-function StandaloneSelectInputBase(
+function StandaloneSelectInput(
   {
     groupBy, selectOptions, valueField, textField, placeholderText,
     busy, disabled, onSearch, value, setDataFunction
@@ -24,7 +24,7 @@ function StandaloneSelectInputBase(
   );
 }
 
-StandaloneSelectInputBase.propTypes = {
+StandaloneSelectInput.propTypes = {
   selectOptions: PropTypes.array.isRequired,
   groupBy: PropTypes.oneOfType([
     PropTypes.string,
@@ -47,8 +47,8 @@ StandaloneSelectInputBase.propTypes = {
   onSearch: PropTypes.func,
 };
 
-StandaloneSelectInputBase.defaultProps = {
+StandaloneSelectInput.defaultProps = {
   placeholderText: "Select One"
 };
 
-export default StandaloneSelectInputBase;
+export default StandaloneSelectInput;
