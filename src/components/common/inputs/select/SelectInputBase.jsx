@@ -87,7 +87,7 @@ function SelectInputBase(
         groupBy={groupBy}
         value={findCurrentValue()}
         busy={busy}
-        placeholder={placeholderText}
+        placeholderText={placeholderText}
         setDataFunction={(newValue) => updateValue(newValue)}
         disabled={disabled}
         onSearch={onSearch}

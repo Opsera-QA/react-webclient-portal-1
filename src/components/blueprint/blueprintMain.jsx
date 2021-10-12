@@ -1,12 +1,10 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import {useParams} from "react-router-dom";
-import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { ApiService } from "api/apiService";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ErrorDialog from "components/common/status_notifications/error";
-import DropdownList from "react-widgets/lib/DropdownList";
 import { Form, Button, Row, Col, Tooltip, OverlayTrigger } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDraftingCompass, faDownload} from "@fortawesome/pro-light-svg-icons";
@@ -17,6 +15,7 @@ import BlueprintSearchResult from "./BlueprintSearchResult";
 import simpleNumberLocalizer from "react-widgets-simple-number";
 import NumberPicker from "react-widgets/lib/NumberPicker";
 import { useHistory } from "react-router-dom";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 
 let runCountFetch = {};
@@ -360,16 +359,15 @@ function OPBlueprint(props) {
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col md={5} className="py-1">
-                <DropdownList
-                  placeholder={"Select Opsera Pipeline"}
-                  data={filterOptions}
+                <StandaloneSelectInput
+                  placeholderText={"Select Opsera Pipeline"}
+                  selectOptions={filterOptions}
                   busy={disabledForm ? false : Object.keys(filterOptions).length == 0 ? true : false}
                   disabled={Object.keys(filterOptions).length == 0 ? true : false}
                   valueField="value"
                   textField="label"
-                  filter="contains"
                   value={multiFilter.length === 0 ? null : multiFilter}
-                  onChange={pipelineSelect}
+                  setDataFunction={pipelineSelect}
                 />
               </Col>
               <Col md={4} className="py-1">
