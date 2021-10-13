@@ -34,6 +34,7 @@ import CustomBadge from "components/common/badges/CustomBadge";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
 import {getTaskTypeLabel} from "components/tasks/task.types";
 import {getColumnHeader, getColumnId, getPipelineStatusIconCss} from "components/common/table/table-column-helpers-v2";
+import PipelineStateField, {getPipelineStateField} from "components/common/fields/pipelines/state/PipelineStateField";
 
 export const getCustomTableHeader = (field) => {
   return field ? field.label : "";
@@ -494,59 +495,16 @@ export const getPipelineTypeColumn = (field, className) => {
   };
 };
 
-export const getTablePipelineStatusColumn = (field, className) => {
+export const getCustomTablePipelineStateColumnDefinition = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
-    Cell: function parseStatus(pipeline) {
-      let pipelineStatus = pipelineHelpers.getPipelineStatus(pipeline.row.original);
+    Cell: function parseStatus(tableRow) {
+      const pipelineState = tableRow.row.original[field?.id];
 
-      switch (pipelineStatus) {
-      case "failed":
-        return (
-          <div className="red">
-            <PipelineStatus className="red"
-                            innerText={"An error has occurred in this pipeline.  See activity logs for details."}
-                            icon={faTimesCircle} statusText={"Failed"} tableColumn={true}/>
-          </div>
-        );
-        case "error":
-          return (
-            <div className="red">
-              <PipelineStatus className="red"
-                              innerText={"An error has occurred in this pipeline.  See activity logs for details."}
-                              icon={faExclamationCircle} statusText={"Failed"} tableColumn={true}/>
-            </div>
-          );
-      case "running":
-        return (
-          <div className="green">
-            <PipelineStatus innerText={"A pipeline operation is currently in progress."} icon={faSpinner}
-                            statusText={"Running"} tableColumn={true}/>
-          </div>
-        );
-      case "paused":
-        return (
-          <div className="yellow">
-            <PipelineStatus innerText={"The pipeline operation is currently paused."} icon={faPause}
-                            statusText={"Paused"} tableColumn={true}/>
-          </div>
-        );
-      case "success":
-        return (
-          <div className="green">
-            <PipelineStatus innerText={"The most recent run of this pipeline was successful."} icon={faCheckCircle}
-                            statusText={"Successful"} tableColumn={true}/>
-          </div>
-        );
-      default:
-        return (
-          <PipelineStatus innerText={"This pipeline is not currently running."} icon={faStop}
-                          statusText={"Stopped"} tableColumn={true}/>
-        );
-      }
+      return (getPipelineStateField(pipelineState));
     },
-    class: className ? className :  "text-left"
+    class: className
   };
 };
 
