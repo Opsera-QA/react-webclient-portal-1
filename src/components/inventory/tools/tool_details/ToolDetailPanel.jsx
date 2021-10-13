@@ -95,6 +95,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
           </>
         );
       case "octopus":
+      case "azure":
         return (
           <>
             <CustomTab icon={faBrowser} tabName={"applications"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Applications"} disabled={!authorizedAction("edit_tool_application_tabs", toolData?.data)}/>
