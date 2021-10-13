@@ -20,7 +20,6 @@ const unpackTab = (tab) => {
   }
 };
 
-// TODO: Put data pull inside here, make lower component <PipelineTableCardView /> or the like
 function Pipelines() {
   const { tab } = useParams();
   const { getAccessToken } = useContext(AuthContext);
@@ -132,7 +131,6 @@ function Pipelines() {
       breadcrumbDestination={"pipelines"}
       navigationTabContainer={<WorkflowSubNavigationBar currentTab={"pipelines"} />}
       pageDescription={"Select a Pipeline to view details."}
-      hasTabContainer={true}
       helpComponent={
         <PipelinesHelpDocumentation/>
       }
