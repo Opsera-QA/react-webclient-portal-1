@@ -24,6 +24,7 @@ function ToolCardView({ data, toolFilterDto, toolMetadata, setToolFilterDto, loa
       loadData={loadData}
       setPaginationDto={setToolFilterDto}
       paginationDto={toolFilterDto}
+      nextGeneration={true}
       cards={
         <VerticalCardViewBase
           data={data}

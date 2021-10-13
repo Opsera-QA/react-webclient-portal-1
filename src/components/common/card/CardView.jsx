@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 
-function CardView({ cards, isLoading, paginationDto, setPaginationDto, loadData, noDataMessage, className }) {
+function CardView({ cards, isLoading, paginationDto, setPaginationDto, loadData, noDataMessage, className, nextGeneration }) {
   if (!isLoading && cards == null) {
     return <div className="info-text text-center p-5">{noDataMessage}</div>;
   }
@@ -14,6 +14,7 @@ function CardView({ cards, isLoading, paginationDto, setPaginationDto, loadData,
         setFilterDto={setPaginationDto}
         filterDto={paginationDto}
         isLoading={isLoading}
+        nextGeneration={nextGeneration}
       >
         <div className={className}>
           {cards}
@@ -31,7 +32,8 @@ CardView.propTypes = {
   setPaginationDto: PropTypes.func,
   loadData: PropTypes.func,
   noDataMessage: PropTypes.string,
-  className:PropTypes.string
+  className:PropTypes.string,
+  nextGeneration: PropTypes.bool,
 };
 
 CardView.defaultProps = {
