@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import TaskSummaryCardContainer from "components/tasks/git_task_details/configuration_forms/TaskSummaryCardContainer";
+import TaskSummaryCardContainer from "components/tasks/details/tasks/TaskSummaryCardContainer";
 
 function AwsLambdaTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
 

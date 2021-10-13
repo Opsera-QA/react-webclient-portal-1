@@ -3,22 +3,22 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import branchToBranchGitTaskConfigurationMetadata
-  from "components/tasks/git_task_details/configuration_forms/branch-to-branch/branch-to-branch-git-task-configuration";
+  from "components/tasks/details/tasks/branch-to-branch/branch-to-branch-git-task-configuration";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import AgentLabelsSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import GitToGitSyncTaskReviewerMultiSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskReviewerMultiSelectInput";
-import GitToGitSyncTaskSourceBranchSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskSourceBranchSelectInput";
-import GitToGitSyncTaskDestinationBranchSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskDestinationBranchSelectInput";
-import GitToGitSyncTaskScmTypeSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskScmTypeSelectInput";
-import GitToGitSyncTaskScmToolSelectInput from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskScmToolSelectInput";
+import GitToGitSyncTaskReviewerMultiSelectInput from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskReviewerMultiSelectInput";
+import GitToGitSyncTaskSourceBranchSelectInput from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskSourceBranchSelectInput";
+import GitToGitSyncTaskDestinationBranchSelectInput from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskDestinationBranchSelectInput";
+import GitToGitSyncTaskScmTypeSelectInput from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskScmTypeSelectInput";
+import GitToGitSyncTaskScmToolSelectInput from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskScmToolSelectInput";
 import GitToGitSyncTaskAutoApprovalToggleInput
-  from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskAutoApprovalToggleInput";
+  from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskAutoApprovalToggleInput";
 import GitToGitSyncTaskRepositorySelectInput
-  from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskRepositorySelectInput";
+  from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskRepositorySelectInput";
 import GitToGitSyncTaskBitbucketWorkspaceSelectInput
-  from "components/tasks/git_task_details/configuration_forms/branch-to-branch/inputs/GitToGitSyncTaskBitbucketWorkspaceSelectInput";
+  from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskBitbucketWorkspaceSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function GitToGitSyncTaskConfigurationEditorPanel({ taskModel, taskConfigurationModel, setTaskConfigurationModel }) {

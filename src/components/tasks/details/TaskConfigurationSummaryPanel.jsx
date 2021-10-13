@@ -2,29 +2,29 @@ import React from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import salesforceOrganizationSyncTaskConfigurationMetadata
-  from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
+  from "components/tasks/details/tasks/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
 import SalesforceOrganizationSyncTaskTypeSummaryCard
-  from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/SalesforceOrganizationSyncTaskTypeSummaryCard";
-import SFDCBranchStructuringTaskTypeSummaryCard from "./configuration_forms/sfdc-branch-structure/SFDCBranchStructuringTaskTypeSummaryCard";
+  from "components/tasks/details/tasks/sfdc-org-sync/SalesforceOrganizationSyncTaskTypeSummaryCard";
+import SFDCBranchStructuringTaskTypeSummaryCard from "./tasks/sfdc-branch-structure/SFDCBranchStructuringTaskTypeSummaryCard";
 import sfdcGitBranchTaskConfigurationMetadata
-  from "components/tasks/git_task_details/configuration_forms/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
-import branchToBranchGitTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/branch-to-branch/branch-to-branch-git-task-configuration";
-import GitToGitSyncTaskTypeSummaryCard from "components/tasks/git_task_details/configuration_forms/branch-to-branch/GitToGitSyncTaskTypeSummaryCard";
-import sfdxCertGenTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
-import SFDXCertGenTaskTypeSummaryCard from "./configuration_forms/sfdx-cert-gen/SFDXCertGenTaskTypeSummaryCard";
-import ECSCreationTaskTypeSummaryCard from "./configuration_forms/ecs-cluster-creation/ECSCreationTaskTypeSummaryCard";
+  from "components/tasks/details/tasks/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
+import branchToBranchGitTaskConfigurationMetadata from "components/tasks/details/tasks/branch-to-branch/branch-to-branch-git-task-configuration";
+import GitToGitSyncTaskTypeSummaryCard from "components/tasks/details/tasks/branch-to-branch/GitToGitSyncTaskTypeSummaryCard";
+import sfdxCertGenTaskConfigurationMetadata from "components/tasks/details/tasks/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
+import SFDXCertGenTaskTypeSummaryCard from "./tasks/sfdx-cert-gen/SFDXCertGenTaskTypeSummaryCard";
+import ECSCreationTaskTypeSummaryCard from "./tasks/ecs-cluster-creation/ECSCreationTaskTypeSummaryCard";
 import ec2ClusterCreationTaskConfigurationMetadata
-  from "./configuration_forms/ecs-cluster-creation/ecs-creation-git-task-configuration";
+  from "./tasks/ecs-cluster-creation/ecs-creation-git-task-configuration";
 import ECSServiceCreationTaskTypeSummaryCard
-  from "./configuration_forms/ecs-service-creation/ECSServiceCreationTaskTypeSummaryCard";
+  from "./tasks/ecs-service-creation/ECSServiceCreationTaskTypeSummaryCard";
 import ec2ServiceCreationTaskConfigurationMetadata
-  from "./configuration_forms/ecs-service-creation/ecs-service-creation-git-task-configuration";
-import AwsLambdaTaskTypeSummaryCard from "./configuration_forms/aws-lambda-creation/AwsLambdaSummaryPanel";
+  from "./tasks/ecs-service-creation/ecs-service-creation-git-task-configuration";
+import AwsLambdaTaskTypeSummaryCard from "./tasks/aws-lambda-creation/AwsLambdaSummaryPanel";
 import awsLambdaFunctionTaskConfigurationMetadata
-  from "./configuration_forms/aws-lambda-creation/aws-lambda-metadata";
-import AzureClusterSummaryPanel from "./configuration_forms/azure-cluster-creation/AzureClusterSummaryPanel";
+  from "./tasks/aws-lambda-creation/aws-lambda-metadata";
+import AzureClusterSummaryPanel from "./tasks/azure-cluster-creation/AzureClusterSummaryPanel";
 import azureAksClusterTaskConfigurationMetadata
-  from "./configuration_forms/azure-cluster-creation/azure-cluster-metadata";
+  from "./tasks/azure-cluster-creation/azure-cluster-metadata";
 import {TASK_TYPES} from "components/tasks/task.types";
 import modelHelpers from "components/common/model/modelHelpers";
 

@@ -12,11 +12,11 @@ import TaskTypeField from "components/common/fields/tasks/TaskTypeField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import TagsInlineInputBase from "components/common/inline_inputs/tags/TagsInlineInputBase";
-import TaskRoleAccessInput from "components/tasks/git_task_details/TaskRoleAccessInput";
+import TaskRoleAccessInput from "components/tasks/details/TaskRoleAccessInput";
 import TaskRunButton from "components/common/buttons/tasks/TaskRunButton";
 import ECSActionButtons from "components/tasks/ECSActionButtons";
 import AKSActionButtons from "components/tasks/AKSActionButtons";
-import TaskConfigurationSummaryPanel from "components/tasks/git_task_details/TaskConfigurationSummaryPanel";
+import TaskConfigurationSummaryPanel from "components/tasks/details/TaskConfigurationSummaryPanel";
 
 function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const { getAccessToken } = useContext(AuthContext);

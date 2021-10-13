@@ -7,7 +7,7 @@ import taskActions from "components/tasks/task.actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TaskConfigurationPanel
-  from "components/tasks/git_task_details/configuration_forms/TaskConfigurationPanel";
+  from "components/tasks/details/tasks/TaskConfigurationPanel";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TagManager from "components/common/inputs/tags/TagManager";
 import axios from "axios";
@@ -20,7 +20,7 @@ import AwsEcsServiceCreationTaskHelpDocumentation
 import {TASK_TYPES} from "components/tasks/task.types";
 import AzureAksClusterCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AzureAksClusterCreationTaskHelpDocumentation";
-import TasksTaskTypeSelectInput from "components/tasks/git_task_details/TasksTaskTypeSelectInput";
+import TasksTaskTypeSelectInput from "components/tasks/details/TasksTaskTypeSelectInput";
 import AwsLambdaFunctionCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsLambdaFunctionCreationTaskHelpDocumentation";
 import SfdcOrgSyncTaskHelpDocumentation

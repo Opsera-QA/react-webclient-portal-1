@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import TaskDetailPanel from "components/tasks/git_task_details/TaskDetailPanel";
+import TaskDetailPanel from "components/tasks/details/TaskDetailPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";

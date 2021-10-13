@@ -6,16 +6,16 @@ import modelHelpers from "components/common/model/modelHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import CloseButton from "components/common/buttons/CloseButton";
 import RunTaskButton from "components/common/buttons/tasks/run_task/RunTaskButton";
-import SalesforceOrganizationSyncTaskNewBranchToggleInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskNewBranchToggleInput";
-import SalesforceOrganizationSyncTaskUpstreamBranchSelectInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskUpstreamBranchSelectInput";
-import salesforceOrganizationSyncTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
-import ec2ClusterCreationTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/ecs-cluster-creation/ecs-creation-git-task-configuration";
-import sfdxCertGenTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
-import branchToBranchGitTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/branch-to-branch/branch-to-branch-git-task-configuration";
-import sfdcGitBranchTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
-import ec2ServiceCreationTaskConfigurationMetadata from "components/tasks/git_task_details/configuration_forms/ecs-service-creation/ecs-service-creation-git-task-configuration";
+import SalesforceOrganizationSyncTaskNewBranchToggleInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskNewBranchToggleInput";
+import SalesforceOrganizationSyncTaskUpstreamBranchSelectInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskUpstreamBranchSelectInput";
+import salesforceOrganizationSyncTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
+import ec2ClusterCreationTaskConfigurationMetadata from "components/tasks/details/tasks/ecs-cluster-creation/ecs-creation-git-task-configuration";
+import sfdxCertGenTaskConfigurationMetadata from "components/tasks/details/tasks/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
+import branchToBranchGitTaskConfigurationMetadata from "components/tasks/details/tasks/branch-to-branch/branch-to-branch-git-task-configuration";
+import sfdcGitBranchTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
+import ec2ServiceCreationTaskConfigurationMetadata from "components/tasks/details/tasks/ecs-service-creation/ecs-service-creation-git-task-configuration";
 import {AuthContext} from "contexts/AuthContext";
-import SalesforceOrganizationSyncTaskGitBranchTextInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchTextInput";
+import SalesforceOrganizationSyncTaskGitBranchTextInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchTextInput";
 import workflowAuthorizedActions
 from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
@@ -23,9 +23,9 @@ import {TASK_TYPES} from "components/tasks/task.types";
 import SfdcOrgSyncPrerunHelpDocumentation
   from "components/common/help/documentation/tasks/SfdcOrgSyncPrerunHelpDocumentation";
 import azureAksClusterTaskConfigurationMetadata
-  from "components/tasks/git_task_details/configuration_forms/azure-cluster-creation/azure-cluster-metadata";
+  from "components/tasks/details/tasks/azure-cluster-creation/azure-cluster-metadata";
 import SalesforceOrganizationSyncTaskGitBranchSelectInput
-  from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
+  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
 import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";

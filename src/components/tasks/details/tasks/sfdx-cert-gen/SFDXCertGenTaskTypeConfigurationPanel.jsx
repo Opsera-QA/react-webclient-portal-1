@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import sfdxCertGenTaskConfigurationMetadata
-  from "components/tasks/git_task_details/configuration_forms/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
+  from "components/tasks/details/tasks/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import SFDCJenkinsToolInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncJenkinsToolSelectInput";
+import SFDCJenkinsToolInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncJenkinsToolSelectInput";
 import AgentLabelsSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
