@@ -3,20 +3,20 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import sfdcGitBranchTaskConfigurationMetadata
-  from "components/tasks/git_task_details/configuration_forms/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
+  from "components/tasks/details/tasks/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import SFDCJenkinsToolInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncJenkinsToolSelectInput";
-import SFDCJenkinsAccountInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsAccountSelectInput";
-import SFDCGitRepositoryInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskRepositorySelectInput";
-import SFDCGitBranchInput from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
+import SFDCJenkinsToolInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncJenkinsToolSelectInput";
+import SFDCJenkinsAccountInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsAccountSelectInput";
+import SFDCGitRepositoryInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskRepositorySelectInput";
+import SFDCGitBranchInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
 import SFDXToolInput from "./inputs/SFDXToolInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import AgentLabelsSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
 import SalesforceOrganizationSyncTaskBranchTypeSelectInput
-  from "components/tasks/git_task_details/configuration_forms/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBranchTypeSelectInput";
+  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBranchTypeSelectInput";
 import SfdcBitbucketWorkspaceInput
-  from "components/tasks/git_task_details/configuration_forms/sfdc-branch-structure/inputs/SFDCBitbucketWorkspaceInput";
+  from "components/tasks/details/tasks/sfdc-branch-structure/inputs/SFDCBitbucketWorkspaceInput";
 
 function SFDCBranchStructuringTaskTypeConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   useEffect(() => {loadData();}, []);

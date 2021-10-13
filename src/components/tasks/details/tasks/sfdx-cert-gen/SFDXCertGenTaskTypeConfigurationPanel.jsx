@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import sfdxCertGenTaskConfigurationMetadata
-  from "components/tasks/git_task_details/configuration_forms/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
+  from "components/tasks/details/tasks/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SalesforceOrganizationSyncJenkinsToolSelectInput from "../sfdc-org-sync/inputs/SalesforceOrganizationSyncJenkinsToolSelectInput";

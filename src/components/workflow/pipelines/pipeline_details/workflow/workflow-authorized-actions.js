@@ -155,6 +155,7 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, o
  * duplicate_pipeline_btn, delete_pipeline_btn,
  *
  */
+// TODO: Remove once QA Verifies the role definitions are correct
 workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owner, objectRoles) => {
   if (customerAccessRules == null) {
     return false;
@@ -256,6 +257,7 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
  *
  *
  */
+// TODO: Remove once QA Verifies the role definitions are correct
 workflowAuthorizedActions.gitItems = (customerAccessRules, action, owner, objectRoles) => {
   if (customerAccessRules == null) {
     return false;
