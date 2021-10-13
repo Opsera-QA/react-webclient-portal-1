@@ -91,7 +91,7 @@ import ToolCountsReport from "components/reports/tools/counts/ToolCountsReport";
 import UserSettings from "components/user/user_settings/UserSettings";
 import AccessTokenDetailView from "components/user/user_settings/access_tokens/details/AccessTokenDetailView";
 import DetailedToolReport from "./components/reports/tools/detailedReport/DetailedToolReport";
-import TaskDetailView from "components/tasks/git_task_details/TaskDetailView";
+import TaskDetailView from "components/tasks/details/TaskDetailView";
 import TagsUsedInDashboardsReport from "components/reports/tags/dashboards/TagsUsedInDashboardReport";
 import OrganizationManagement from "components/settings/organizations/OrganizationManagement";
 import OrganizationDetailView from "components/settings/organizations/organization_detail_view/OrganizationDetailView";
