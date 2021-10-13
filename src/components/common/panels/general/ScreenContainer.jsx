@@ -19,7 +19,6 @@ function ScreenContainer(
     navigationTabContainer,
     accessRoleData,
     roleRequirement,
-    hasTabContainer,
     titleActionBar,
     helpComponent
   }) {
@@ -74,20 +73,6 @@ function ScreenContainer(
   };
 
   const getBody = () => {
-    if (hasTabContainer === true) {
-      return (
-        <div className="detail-container-body">
-          {toastContext.getInlineBanner()}
-          {getPageDescription()}
-          <div className="shaded-container">
-            <div className="mt-2">
-              {getScreenBody()}
-            </div>
-          </div>
-        </div>
-      );
-    }
-
     return (
       <div className="screen-container-body shaded-container">
         {toastContext.getInlineBanner()}
@@ -154,7 +139,6 @@ ScreenContainer.propTypes = {
   titleActionBar: PropTypes.object,
   accessRoleData: PropTypes.object,
   roleRequirement: PropTypes.string,
-  hasTabContainer: PropTypes.bool,
   helpComponent: PropTypes.object
 };
 
