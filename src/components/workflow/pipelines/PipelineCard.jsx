@@ -6,18 +6,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 import React from "react";
 import PipelineActionBar from "./PipelineActionBar";
-import PipelineStatus from "./PipelineStatus";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import {
-  faDraftingCompass, faBracketsCurly, faMicrochip, faFlag, faPause,
+  faDraftingCompass, faBracketsCurly, faMicrochip, faFlag,
   faSearch,
-  faSpinner, faStop,
-  faTimesCircle, faCheckCircle,
 } from "@fortawesome/pro-light-svg-icons";
 import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
+import {getPipelineStateFieldBase} from "components/common/fields/pipelines/state/PipelineStateField";
 
-const PipelineItem = ({ item, dataModel }) => {
+const PipelineCard = ({ pipeline, pipelineModel }) => {
   let history = useHistory();
 
   const handleDetailsClick = param => e => {
@@ -26,7 +24,7 @@ const PipelineItem = ({ item, dataModel }) => {
   };
 
   const getPendingApprovalField = () => {
-    let pendingApproval = PipelineHelpers.getPendingApprovalStep(item);
+    let pendingApproval = PipelineHelpers.getPendingApprovalStep(pipeline);
 
     if (pendingApproval) {
       return (
@@ -38,48 +36,17 @@ const PipelineItem = ({ item, dataModel }) => {
   };
 
   const getPipelineStatusField = () => {
-    let pipelineStatus = PipelineHelpers.getPipelineStatus(item);
+    let pipelineStatus = pipeline?.state;
 
-    switch (pipelineStatus) {
-    case "failed":
-      return (
-        <div className="red">
-          <PipelineStatus className="red"
-                          innerText={"An error has occurred in this pipeline.  See activity logs for details."}
-                          icon={faTimesCircle} statusText={"Failed"}/>
-        </div>
-      );
-    case "running":
-      return (
-        <div className="green">
-          <PipelineStatus innerText={"A pipeline operation is currently in progress."} icon={faSpinner}
-                          statusText={"Running"}/>
-        </div>
-      );
-    case "paused":
-      return (
-        <div className="yellow">
-          <PipelineStatus innerText={"The pipeline operation is currently paused."} icon={faPause}
-                          statusText={"Paused"}/>
-        </div>
-      );
-    case "success":
-      return (
-        <div className="green">
-          <PipelineStatus innerText={"The most recent run of this pipeline was successful."} icon={faCheckCircle}
-                          statusText={"Successful"}/>
-        </div>
-      );
-    default:
-      return (
-        <PipelineStatus innerText={"This pipeline is not currently running."} icon={faStop}
-                        statusText={"Stopped"}/>
-      );
-    }
+    return (
+      <div className={"text-muted d-flex justify-content-end"}>
+        {getPipelineStateFieldBase(pipelineStatus)}
+      </div>
+    );
   };
 
   const getFormattedDescription = () => {
-    let description = item.description;
+    let description = pipeline?.description;
 
     if (description && description.length > 275) {
       return description.slice(0, 275).split(" ").slice(0, -1).join(" ") + "...";
@@ -90,7 +57,8 @@ const PipelineItem = ({ item, dataModel }) => {
 
   // TODO: Deal with multiple categories when we get there
   const getFirstCategory = () => {
-    const { type } = item;
+    const type = pipeline?.type;
+
     if (!type) {
       return (
         <TooltipWrapper innerText={"No Pipeline Type Assigned"}>
@@ -133,10 +101,10 @@ const PipelineItem = ({ item, dataModel }) => {
         <Card.Title className="pb-0">
           <div className="d-flex pipeline-card-title p-2">
             <div>
-              {item.name}
+              {pipeline?.name}
             </div>
             <div className="d-flex ml-auto mt-1 mr-1 text-muted small upper-case-first">
-              <PipelineSubscriptionIcon pipelineModel={dataModel} className={"mr-2"} />
+              <PipelineSubscriptionIcon pipelineModel={pipelineModel} className={"mr-2"} />
               {getFirstCategory()}
               {getPendingApprovalField()}
             </div>
@@ -145,30 +113,30 @@ const PipelineItem = ({ item, dataModel }) => {
         </Card.Title>
         <Card.Body className="pt-0 pb-2 pipeline-card-text">
           <Row>
-            <Col className="py-1"><span className="text-muted mr-1">ID:</span> {item._id}</Col>
+            <Col className="py-1"><span className="text-muted mr-1">ID:</span> {pipeline?._id}</Col>
             <Col className="py-1 small">
               {getPipelineStatusField()}
             </Col>
           </Row>
           <Row>
-            <Col className="py-1"><span className="text-muted mr-1">Owner:</span> {item.owner_name}</Col>
+            <Col className="py-1"><span className="text-muted mr-1">Owner:</span> {pipeline?.owner_name}</Col>
             <Col className="py-1">
-              <span className="text-muted mr-1">Run Count:</span> {item.workflow.run_count}
+              <span className="text-muted mr-1">Run Count:</span> {pipeline?.workflow?.run_count}
             </Col>
           </Row>
           <Row>
             <Col className="py-1">
               <span className="text-muted mr-2 pb-1">Created:</span><span
-              className="">{item.updatedAt && format(new Date(item.createdAt), "yyyy-MM-dd'")}</span>
+              className="">{pipeline?.updatedAt && format(new Date(pipeline?.createdAt), "yyyy-MM-dd'")}</span>
             </Col>
             <Col className="py-1">
-              {item.workflow.last_run?.completed ?
+              {pipeline?.workflow?.last_run?.completed ?
                 <><span className="text-muted mr-2 pb-1">Last Run:</span><span
-                  className="">{format(new Date(item.workflow.last_run.completed), "yyyy-MM-dd'")}</span>
+                  className="">{format(new Date(pipeline?.workflow?.last_run?.completed), "yyyy-MM-dd'")}</span>
                 </>
                 :
                 <><span className="text-muted mr-2 pb-1">Updated:</span><span
-                  className="">{item.updatedAt && format(new Date(item.updatedAt), "yyyy-MM-dd'")}</span>
+                  className="">{pipeline?.updatedAt && format(new Date(pipeline?.updatedAt), "yyyy-MM-dd'")}</span>
                 </>
               }
             </Col>
@@ -180,50 +148,26 @@ const PipelineItem = ({ item, dataModel }) => {
           </Row>
 
           <Row>
-            <Col className="pt-3"></Col>
+            <Col />
             <Col className="text-right p-2">
               <Button variant="primary" size="sm" className="w-50"
-                      onClick={handleDetailsClick(item._id)}>
+                      onClick={handleDetailsClick(pipeline?._id)}>
                 <FontAwesomeIcon icon={faSearch} className="mr-1"/>View</Button>
             </Col>
           </Row>
-
-          {/*
-
-          <div className="text-right">
-                {item.workflow.schedule?.start_date &&
-                <div className="small">
-                  <span className="text-muted mr-2 pb-1">
-                    <FontAwesomeIcon icon={faClock} size="sm" fixedWidth className="mr-1"/> Scheduled: </span>
-                  {format(new Date(item.workflow.schedule.start_date), "yyyy-MM-dd', 'hh:mm a")}</div>
-                }
-                {item.workflow.last_run?.completed ?
-                  <div className="small"><span className="text-muted mr-2 pb-1">Last Run:</span><span
-                    className="">{format(new Date(item.workflow.last_run.completed), "yyyy-MM-dd', 'hh:mm a")}</span>
-                  </div>
-                  :
-                  <div className="small"><span className="text-muted mr-2 pb-1">Updated:</span><span
-                    className="">{item.updatedAt && format(new Date(item.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</span>
-                  </div>
-                }
-                <div className="small"><span className="text-muted mr-2 pb-1">Created:</span><span
-                  className="">{item.updatedAt && format(new Date(item.createdAt), "yyyy-MM-dd', 'hh:mm a")}</span>
-                </div>
-              </div>
-          */}
         </Card.Body>
         <Card.Footer>
           {/*TODO: Note, if you want the action icons to show up, pass in functions related and wire them up*/}
-          <PipelineActionBar item={item} handleViewClick={handleDetailsClick}/>
+          <PipelineActionBar pipeline={pipeline} handleViewClick={handleDetailsClick}/>
         </Card.Footer>
       </Card>
     </>
   );
 };
 
-PipelineItem.propTypes = {
-  item: PropTypes.object,
-  dataModel: PropTypes.object
+PipelineCard.propTypes = {
+  pipeline: PropTypes.object,
+  pipelineModel: PropTypes.object
 };
 
-export default PipelineItem;
+export default PipelineCard;

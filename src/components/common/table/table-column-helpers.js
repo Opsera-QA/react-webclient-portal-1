@@ -4,9 +4,8 @@ import { Form } from "react-bootstrap";
 import {
   faCheckCircle,
   faCircle, faOctagon,
-  faPause, faPauseCircle, faPlayCircle, faSearchPlus,
+  faPauseCircle, faPlayCircle, faSearchPlus,
   faSpinner,
-  faStop,
   faStopCircle,
   faTimesCircle, faTrash, faPlay, faTag, faExclamationCircle
 } from "@fortawesome/pro-light-svg-icons";
@@ -20,8 +19,6 @@ import PauseCircle from "../../common/icons/table/PauseCircle";
 import React from "react";
 import Model from "core/data_model/model";
 import PipelineTypesField from "components/common/fields/pipelines/PipelineTypesField";
-import PipelineStatus from "components/workflow/pipelines/PipelineStatus";
-import pipelineHelpers from "components/workflow/pipelineHelpers";
 import DashboardFavoritesIcon from "components/common/icons/dashboards/DashboardFavoritesIcon";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import {Button} from "react-bootstrap";
@@ -33,8 +30,7 @@ import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer"
 import CustomBadge from "components/common/badges/CustomBadge";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
 import {getTaskTypeLabel} from "components/tasks/task.types";
-import {getColumnHeader, getColumnId, getPipelineStatusIconCss} from "components/common/table/table-column-helpers-v2";
-import PipelineStateField, {getPipelineStateField} from "components/common/fields/pipelines/state/PipelineStateField";
+import { getPipelineStateFieldBase} from "components/common/fields/pipelines/state/PipelineStateField";
 
 export const getCustomTableHeader = (field) => {
   return field ? field.label : "";
@@ -502,7 +498,7 @@ export const getCustomTablePipelineStateColumnDefinition = (field, className) =>
     Cell: function parseStatus(tableRow) {
       const pipelineState = tableRow.row.original[field?.id];
 
-      return (getPipelineStateField(pipelineState));
+      return (getPipelineStateFieldBase(pipelineState));
     },
     class: className
   };

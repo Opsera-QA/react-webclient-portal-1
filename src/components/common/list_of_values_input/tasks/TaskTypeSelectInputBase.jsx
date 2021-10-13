@@ -37,6 +37,7 @@ export const nonProductionTaskTypes = [
   {text: TASK_TYPE_LABELS.SYNC_SALESFORCE_BRANCH_STRUCTURE, value: TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE, category: "Salesforce"},
   {text: TASK_TYPE_LABELS.SALESFORCE_CERTIFICATE_GENERATION, value: TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION, category: "Salesforce"},
   {text: TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO, value: TASK_TYPES.SYNC_SALESFORCE_REPO, category: "Salesforce"},
+  {text: TASK_TYPE_LABELS.SALESFORCE_BULK_MIGRATION, value: TASK_TYPES.SALESFORCE_BULK_MIGRATION, category: "Salesforce"},
 ];
 
 function TaskTypeSelectInputBase({ fieldName, model, setModel, isLoading, setDataFunction, disabled }) {

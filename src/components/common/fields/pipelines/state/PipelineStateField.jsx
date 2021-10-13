@@ -7,7 +7,7 @@ import PausedPipelineStateFieldBase from "components/common/fields/pipelines/sta
 import SuccessPipelineStateFieldBase from "components/common/fields/pipelines/state/SuccessPipelineStateFieldBase";
 import StoppedPipelineStateFieldBase from "components/common/fields/pipelines/state/StoppedPipelineStateFieldBase";
 
-export const getPipelineStateField = (pipelineState) => {
+export const getPipelineStateFieldBase = (pipelineState) => {
   switch (pipelineState) {
     case "failed":
       return (<FailedPipelineStateFieldBase />);
@@ -28,7 +28,7 @@ function PipelineStateField({ fieldName, dataObject }) {
   return (
     <div className="d-flex">
       <FieldLabel field={field} />
-      <span>{getPipelineStateField(dataObject.getData(fieldName))}</span>
+      <span>{getPipelineStateFieldBase(dataObject.getData(fieldName))}</span>
     </div>
   );
 }
