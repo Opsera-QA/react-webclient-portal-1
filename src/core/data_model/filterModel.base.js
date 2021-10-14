@@ -142,7 +142,7 @@ export class FilterModelBase {
 
   getSortOption = () => {
     let filter = this.getData("sortOption");
-    return filter?.option ? filter?.option : filter;
+    return filter?.option ? filter?.option : this.getFilterValue(filter);
   };
 }
 
