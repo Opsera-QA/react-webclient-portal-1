@@ -1,4 +1,4 @@
-const salesforceOrganizationSyncTaskConfigurationMetadata = {
+const salesforceBulkMigrationTaskConfigurationMetadata = {
   type: "Salesforce Organization Sync Task Configuration",
   fields: [
     {
@@ -134,37 +134,37 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
       },
     },
   ],
-  newObjectFields: {
-    type: "",
-    jobType: "SFDC_GIT_SYNC",
-    toolConfigId: "",
-    autoScaleEnable: false,
-    toolJobName: "",
-    toolName: "",
-    jobName: "",
-    agentLabels: "",
-    toolJobId: "",
-    projectId: "",
-    buildType: "ant",
-    gitToolId: "",
-    gitUrl: "",
-    sshUrl: "",
-    service: "",
-    gitCredential: "",
-    workspace: "",
-    workspaceName: "",
-    repository: "",
-    gitBranch: "",
-    defaultBranch: "",
-    dependencyType: "",
-    sfdcToolId: "",
-    sfdcToolName: "",
-    accountUsername: "",
-    isNewBranch: false,
-    upstreamBranch: "",
-    includePackageXml: false,
-    packageXmlReferencePath: "",
-  }
+  newObjectFields:
+    {
+      type: "",
+      jobType: "SFDC_GIT_SYNC",
+      toolConfigId: "",
+      autoScaleEnable: false,
+      toolName: "",
+      jobName: "",
+      agentLabels: "",
+      toolJobId: "",
+      projectId: "",
+      buildType: "ant",
+      gitToolId: "",
+      gitUrl: "",
+      sshUrl: "",
+      service: "",
+      gitCredential: "",
+      workspace: "",
+      workspaceName: "",
+      repository: "",
+      gitBranch: "",
+      defaultBranch: "",
+      dependencyType: "",
+      sfdcToolId: "",
+      sfdcToolName: "",
+      accountUsername: "",
+      isNewBranch: false,
+      upstreamBranch: "",
+      includePackageXml: false,
+      packageXmlReferencePath: "",
+    }
 };
 
-export default salesforceOrganizationSyncTaskConfigurationMetadata;
+export default salesforceBulkMigrationTaskConfigurationMetadata;

@@ -2,14 +2,11 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
-import salesforceOrganizationSyncTaskConfigurationMetadata
-  from "components/tasks/details/tasks/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SalesforceOrganizationSyncTaskNewBranchToggleInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskNewBranchToggleInput";
 import SalesforceOrganizationSyncTaskUpstreamBranchSelectInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskUpstreamBranchSelectInput";
 import SalesforceOrganizationSyncTaskGitBranchTextInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchTextInput";
-import AgentLabelsSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
 import SalesforceOrganizationSyncSalesforceToolSelectInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncSalesforceToolSelectInput";
 import SalesforceOrganizationSyncTaskGitBranchSelectInput
@@ -22,49 +19,28 @@ import SalesforceOrganizationSyncTaskJenkinsAccountSelectInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsAccountSelectInput";
 import SalesforceOrganizationSyncJenkinsToolSelectInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncJenkinsToolSelectInput";
-import SalesforceOrganizationSyncTaskIncludePackageXmlToggleInput
-  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskIncludePackageXmlToggleInput";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
+import salesforceBulkMigrationTaskConfigurationMetadata
+  from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
 
-function SalesforceOrganizationSyncTaskConfigurationEditorPanel({ taskModel, taskConfigurationModel, setTaskConfigurationModel }) {
-  useEffect(() => {loadData();}, []);
+function SalesforceBulkMigrationTaskConfigurationEditorPanel(
+  {
+    taskModel,
+    taskConfigurationModel,
+    setTaskConfigurationModel
+  }) {
 
-  const loadData = async () => {    
-    const configurationData = modelHelpers.getToolConfigurationModel(taskModel.getData("configuration"), salesforceOrganizationSyncTaskConfigurationMetadata);
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = () => {
+    const configurationData = modelHelpers.getToolConfigurationModel(taskModel.getData("configuration"), salesforceBulkMigrationTaskConfigurationMetadata);
     setTaskConfigurationModel({...configurationData});
   };
 
   if (taskModel == null || taskConfigurationModel == null) {
     return (<LoadingDialog size="sm"/>);
   }
-
-  const getDynamicFields = () => {
-    if(taskConfigurationModel.getData("autoScaleEnable") === true){
-      return (
-        <Col lg={12}>
-          <AgentLabelsSelectInput
-            dataObject={taskConfigurationModel}
-            setDataObject={setTaskConfigurationModel}
-            fieldName={"agentLabels"}
-          />
-        </Col>
-      );
-    }
-  };
-
-  const getPackageXmlPathInput = () => {
-    if (taskConfigurationModel?.getData("includePackageXml") === true) {
-      return (
-        <Col lg={12}>
-          <TextInputBase
-            dataObject={taskConfigurationModel}
-            setDataObject={setTaskConfigurationModel}
-            fieldName={"packageXmlReferencePath"}
-          />
-        </Col>
-      );
-    }
-  };
 
   return (
     <Row>
@@ -130,24 +106,16 @@ function SalesforceOrganizationSyncTaskConfigurationEditorPanel({ taskModel, tas
           </Col>
         </>
       }
-      {getDynamicFields()}
-      <Col lg={12}>
-        <SalesforceOrganizationSyncTaskIncludePackageXmlToggleInput
-          model={taskConfigurationModel}
-          setModel={setTaskConfigurationModel}
-        />
-      </Col>
-      {getPackageXmlPathInput()}
     </Row>
   );
 }
 
-SalesforceOrganizationSyncTaskConfigurationEditorPanel.propTypes = {
+SalesforceBulkMigrationTaskConfigurationEditorPanel.propTypes = {
   taskModel: PropTypes.object,
   taskConfigurationModel: PropTypes.object,
   setTaskConfigurationModel: PropTypes.func,
 };
 
-export default SalesforceOrganizationSyncTaskConfigurationEditorPanel;
+export default SalesforceBulkMigrationTaskConfigurationEditorPanel;
 
 
