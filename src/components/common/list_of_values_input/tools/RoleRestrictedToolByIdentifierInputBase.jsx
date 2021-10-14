@@ -16,6 +16,7 @@ function RoleRestrictedToolByIdentifierInputBase({ toolIdentifier, toolFriendlyN
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [toolMetadata, setToolMetadata] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -62,6 +63,7 @@ function RoleRestrictedToolByIdentifierInputBase({ toolIdentifier, toolFriendlyN
     const tools = response?.data?.data;
 
     if (Array.isArray(tools)) {
+      setToolMetadata(response?.data?.metadata);
       if (configurationRequired) {
         const filteredTools = tools?.filter((tool) => {return tool.configuration != null && Object.entries(tool.configuration).length > 0; });
         setTools(filteredTools);
@@ -107,6 +109,7 @@ function RoleRestrictedToolByIdentifierInputBase({ toolIdentifier, toolFriendlyN
           selectedToolId={model?.getData(fieldName)}
           tools={tools}
           loadData={loadData}
+          toolMetadata={toolMetadata}
           isLoading={isLoading}
           toolIdentifier={toolIdentifier}
         />

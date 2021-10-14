@@ -15,6 +15,7 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [toolMetadata, setToolMetadata] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -59,6 +60,7 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
     const tools = response?.data?.data;
 
     if (Array.isArray(tools)) {
+      setToolMetadata(response?.data?.metadata);
       if (configurationRequired) {
         const filteredTools = tools?.filter((tool) => {return tool.configuration != null && Object.entries(tool.configuration).length > 0; });
         setTools(filteredTools);
@@ -122,6 +124,7 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
           <RegistryToolInfoOverlay
             selectedToolId={model?.getData(fieldName)}
             tools={tools}
+            toolMetadata={toolMetadata}
             loadData={loadData}
             isLoading={isLoading}
           />
