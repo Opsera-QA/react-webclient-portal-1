@@ -10,7 +10,8 @@ import { getChartTrendStatusColumn, getTableTextColumn, getTableTextColumnWithou
 import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
 import CustomTable from "components/common/table/CustomTable";
-import { faDraftingCompass, faExternalLink } from "@fortawesome/pro-light-svg-icons";
+import { faDraftingCompass, faExternalLink, faExclamationTriangle, faExclamation, faSirenOn, faInfoCircle, faRadiationAlt, faBug} from "@fortawesome/pro-light-svg-icons";
+
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
@@ -155,44 +156,49 @@ function SonarPipelineWiseReliabilityDetails() {
         <Row className="py-3 px-5">
           <Col>
             <div className="metric-box p-3 text-center">
-              <div className="box-metric">
+              <div className="box-metric d-flex flex-row" style={{alignItems: 'center', justifyContent: 'center'}}>
+                <FontAwesomeIcon icon={faBug} fixedWidth className="mr-2"/>
                 <div className="font-weight-bold">{issueTypeData?.total}</div>
               </div>
               <div className="w-100 text-muted mb-1">Bugs</div>
             </div>
           </Col>
           <Col>
-            <div className="metric-box p-3 text-center" >
-              <div className="box-metric">
-                <div className="font-weight-bold red">{issueTypeData?.critical}</div>
-              </div>
-              <div className="w-100  mb-1 red">Critical</div>
+          <div className="metric-box p-3 text-center" >
+            <div className="box-metric d-flex flex-row" style={{alignItems: 'center', justifyContent: 'center'}}>
+              <FontAwesomeIcon icon={faSirenOn} fixedWidth className="mr-2 danger-red"/>
+              <div className="font-weight-bold danger-red">{issueTypeData?.critical}</div>
             </div>
-          </Col>
-          <Col>
-            <div className="metric-box p-3 text-center">
-              <div className="box-metric">
-                <div className="font-weight-bold orange">{issueTypeData?.major}</div>
-              </div>
-              <div className="w-100  mb-1 orange">Major</div>
+            <div className="w-100  mb-1 danger-red">Critical</div>
+          </div>
+        </Col>
+        <Col>
+          <div className="metric-box p-3 text-center ">
+            <div className="box-metric d-flex flex-row" style={{alignItems: 'center', justifyContent: 'center'}}>
+              <FontAwesomeIcon icon={faExclamationTriangle} fixedWidth className="mr-2 orange"/>
+              <div className="font-weight-bold orange">{issueTypeData?.major}</div>
             </div>
-          </Col>
-          <Col>
-            <div className="metric-box p-3 text-center">
-              <div className="box-metric">
-                <div className="font-weight-bold yellow">{issueTypeData?.minor}</div>
-              </div>
-              <div className="w-100  mb-1 yellow">Minor</div>
+            <div className="w-100  mb-1 orange">Major</div>
+          </div>
+        </Col>
+        <Col>
+          <div className="metric-box p-3 text-center">
+            <div className="box-metric d-flex flex-row" style={{alignItems: 'center', justifyContent: 'center'}}>
+              <FontAwesomeIcon icon={faExclamation} fixedWidth className="mr-2 yellow"/>
+              <div className="font-weight-bold yellow">{issueTypeData?.minor}</div>
             </div>
-          </Col>
-          <Col>
-            <div className="metric-box p-3 text-center ">
-              <div className="box-metric">
-                <div className="font-weight-bold black">{issueTypeData?.info}</div>
-              </div>
-              <div className="w-100  mb-1 black">Info</div>
+            <div className="w-100  mb-1 yellow">Minor</div>
+          </div>
+        </Col>
+        <Col>
+          <div className="metric-box info-text p-1 text-center">
+            <div className="box-metric d-flex flex-row" style={{alignItems: 'center', justifyContent: 'center'}}>
+              <FontAwesomeIcon icon={faInfoCircle} fixedWidth className="mr-2 info-text"/>
+              <div className="font-weight-bold info-text">{issueTypeData?.info}</div>
             </div>
-          </Col>
+            <div className="w-100  mb-1 info-text">Info</div>
+          </div>
+        </Col>
         </Row>
       
     );
@@ -205,22 +211,22 @@ function SonarPipelineWiseReliabilityDetails() {
     return(<>
           <Row className="px-5">
             <Col className="text-right">
-              Total Debt for Remediating Critical Issues : {footerData?.critical} 
+              Total remediation for Critical Bugs : {footerData?.critical} 
             </Col>
           </Row>
           <Row className="px-5">
             <Col className="text-right">
-              Total Debt for Remediating Major Issues : {footerData?.major} 
+              Total remediation for Major Bugs : {footerData?.major} 
             </Col>
           </Row>
           <Row className="px-5">
             <Col className="text-right">
-              Total Debt for Remediating Minor Issues : {footerData?.minor} 
+              Total remediation for Minor Bugs : {footerData?.minor} 
             </Col>
           </Row>
           <Row className="px-5">
             <Col className="text-right">
-              Total Debt for Remediating Info Issues : {footerData?.info} 
+              Total remediation for Info Bugs : {footerData?.info} 
             </Col>
           </Row>
           </>);
