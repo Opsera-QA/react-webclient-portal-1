@@ -104,7 +104,7 @@ const PipelineCard = ({ pipeline, pipelineModel }) => {
               {pipeline?.name}
             </div>
             <div className="d-flex ml-auto mt-1 mr-1 text-muted small upper-case-first">
-              <PipelineSubscriptionIcon pipelineModel={pipelineModel} className={"mr-2"} />
+              <PipelineSubscriptionIcon pipelineId={pipelineModel?.getData("_id")} className={"mr-2"} />
               {getFirstCategory()}
               {getPendingApprovalField()}
             </div>

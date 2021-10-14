@@ -19,7 +19,7 @@ function PipelineCardView({ data, pipelineFilterModel, loadData, isLoading }) {
           <Col key={idx} xl={6} md={12} className="p-2">
             <PipelineCard
               pipeline={pipeline}
-              dataModel={new Model({...pipeline}, pipelineMetadata, false)}
+              pipelineModel={new Model({...pipeline}, pipelineMetadata, false)}
             />
           </Col>
         ))}
