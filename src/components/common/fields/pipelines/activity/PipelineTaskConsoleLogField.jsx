@@ -6,26 +6,71 @@ function PipelineTaskConsoleLogField({fieldName, dataObject}) {
   // TODO: Replace with Model Wrapped Object
   const [apiResponse] = useState(dataObject[fieldName]);
 
+  const parseObject = (object, topLevel) => {
+    const parsedArray = [];
+    const objectKeys = Object.keys(object);
+
+    if (Array.isArray(objectKeys) && objectKeys.length > 0) {
+      for (const key of objectKeys) {
+        parsedArray.push(parseData(object[key], topLevel));
+      }
+    }
+
+    return parsedArray;
+  };
+
+  const parseData = (data, topLevel) => {
+    if (typeof data === "string") {
+      return (
+        <div className="console-text my-3">
+          {data}
+        </div>
+      );
+    }
+
+    if (typeof data === "object") {
+      if (topLevel === true) {
+        return (
+          <div className="my-3">
+            {parseObject(data)}
+          </div>
+        );
+      }
+
+      return (
+        <div className={"my-3"}>
+          {parseObject(data)}
+        </div>
+      );
+    }
+
+    // Fallback
+    return (
+      <div className="console-text my-3">
+        {JSON.stringify(data)}
+      </div>
+    );
+  };
+
   const getBody = () => {
     if (typeof (apiResponse) === "string") {
       return (
-        <div className="console-text m-3">
+        <div className="console-text my-3">
           {apiResponse}
         </div>
       );
     }
 
     return (
-      <div className="m-3">
-        {Object.keys(apiResponse).map((row, key) => {
-          return <div key={key} className="console-text mb-1">
-            {typeof (apiResponse[row]) === "string" ?
-              apiResponse[row] :
-              <div className="m-3">{JSON.stringify(apiResponse[row])}</div>
-            }
-          </div>;
-        })}
-
+      <div className="my-3">
+        {parseObject(apiResponse, true).map((row, key) => {
+          return (
+            <div key={key}>
+              {row}
+            </div>
+          );
+        })
+        }
       </div>
     );
   };
