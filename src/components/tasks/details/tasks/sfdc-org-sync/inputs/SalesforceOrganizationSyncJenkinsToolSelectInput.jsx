@@ -6,7 +6,7 @@ import RoleRestrictedJenkinsToolSelectInput
 function SalesforceOrganizationSyncJenkinsToolSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
-    newModel.setData("toolConfigId", selectedOption?.id);
+    newModel.setData("toolConfigId", selectedOption?._id);
     newModel.setData("toolName", selectedOption?.name);
     newModel.setData("autoScaleEnable", selectedOption?.configuration?.autoScaleEnable);
     newModel.setDefaultValue("toolJobName");
