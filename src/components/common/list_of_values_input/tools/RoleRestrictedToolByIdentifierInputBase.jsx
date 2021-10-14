@@ -110,8 +110,10 @@ function RoleRestrictedToolByIdentifierInputBase({ toolIdentifier, toolFriendlyN
           tools={tools}
           loadData={loadData}
           toolMetadata={toolMetadata}
+          isMounted={isMounted}
           isLoading={isLoading}
-          toolIdentifier={toolIdentifier}
+          setDataFunction={setDataFunction}
+          fieldName={fieldName}
         />
       );
     }

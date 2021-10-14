@@ -6,10 +6,30 @@ import ToolInfoContainer from "components/common/fields/inventory/tools/ToolInfo
 import ToolsTable from "components/inventory/tools/ToolsTable";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
+import TableCardView from "components/common/table/TableCardView";
 
-function RegistryToolInfoOverlay({tools, toolMetadata, loadData, isLoading, selectedToolId}) {
+function RegistryToolInfoOverlay({tools, fieldName, toolMetadata, isMounted, loadData, isLoading, selectedToolId, setDataFunction}) {
+  // TODO: This is a workaround until the tool info overlay is complete
+  const rowClickFunction = (selectedTool) => {
+    setDataFunction(fieldName, selectedTool);
+    document.body.click();
+  };
+
+  const getToolsTable = () => {
+    return (
+      <ToolsTable
+        loadData={loadData}
+        isMounted={isMounted}
+        data={tools}
+        toolMetadata={toolMetadata}
+        isLoading={isLoading}
+        rowClickFunction={rowClickFunction}
+      />
+    );
+  };
+
   const getBody = () => {
-    if (selectedToolId) {
+    if (isMounted?.current === true && selectedToolId) {
       return (
         <ToolInfoContainer
           toolId={selectedToolId}
@@ -30,9 +50,10 @@ function RegistryToolInfoOverlay({tools, toolMetadata, loadData, isLoading, sele
           loadData={loadData}
           titleIcon={faTools}
           body={
-            <ToolsTable
+            <TableCardView
               data={tools}
-              toolMetadata={toolMetadata}
+              tableView={getToolsTable()}
+              isLoading={isLoading}
             />
           }
           title={"Tools"}
@@ -54,6 +75,9 @@ RegistryToolInfoOverlay.propTypes = {
   isLoading: PropTypes.bool,
   selectedToolId: PropTypes.string,
   toolMetadata: PropTypes.object,
+  isMounted: PropTypes.object,
+  setDataFunction: PropTypes.func,
+  fieldName: PropTypes.string,
 };
 
 export default RegistryToolInfoOverlay;
