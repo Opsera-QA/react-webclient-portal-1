@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Row, Col, Pagination } from "react-bootstrap";
-import DropdownList from "react-widgets/lib/DropdownList";
 
 import "./pagination.css";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 //import "./pagination.scss";  "node-sass": "^4.14.1",
 
 export const sortOptionList = [
@@ -19,6 +19,7 @@ export const getSortOptionByText = (text) => {
   return sortOptionList.find(sortOption => sortOption.text === text);
 };
 
+// TODO: This needs to be deleted
 function PaginationComponent(props) {
   const [currentPage, setCurrentPage] = useState(props.currentPage || 1);
   const location = props.location || "bottom";
@@ -83,12 +84,12 @@ function PaginationComponent(props) {
             <>
               <Col></Col>
               <Col className="justify-content-right">
-                <DropdownList
-                  data={sortOptionList} 
+                <StandaloneSelectInput
+                  selectOptions={sortOptionList}
                   valueField='value'
                   textField={sortObject => sortObject.text }
                   defaultValue={sortOption}
-                  onChange={updateSortOption}             
+                  setDataFunction={updateSortOption}
                 />
               </Col>
             </>
@@ -114,12 +115,12 @@ function PaginationComponent(props) {
                 </Pagination>  
               </Col>
               <Col className="justify-content-right">
-                <DropdownList
-                  data={pageSizeList} 
+                <StandaloneSelectInput
+                  selectOptions={pageSizeList}
                   valueField='value'
                   textField={item => item + " results per page"}
                   defaultValue={pageSize}
-                  onChange={updatePageSize}             
+                  setDataFunction={updatePageSize}
                 /></Col>
             </> }
         </Row> : null }

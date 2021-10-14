@@ -4,7 +4,7 @@ import Model from "core/data_model/model";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import gitTasksMetadata from "components/tasks/git-tasks-metadata";
-import TaskEditorPanel from "components/tasks/git_task_details/TaskEditorPanel";
+import TaskEditorPanel from "components/tasks/details/TaskEditorPanel";
 
 function NewTaskOverlay({ loadData, isMounted } ) {
   const toastContext = useContext(DialogToastContext);

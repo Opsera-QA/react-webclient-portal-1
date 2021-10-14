@@ -8,7 +8,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import RunTaskOverlay from "components/tasks/git_task_details/RunTaskOverlay";
+import RunTaskOverlay from "components/tasks/details/RunTaskOverlay";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import TaskActivityView from './TaskActivityView';
 import taskActions from "components/tasks/task.actions";

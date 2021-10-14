@@ -3,7 +3,6 @@ import {Button} from "react-bootstrap";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import DropdownList from "react-widgets/lib/DropdownList";
 import {ldapOrganizationMetaData} from "components/admin/accounts/ldap/organizations/ldap-organizations-metadata";
 import {ldapIdpAccountsMetaData} from "../idp_accounts/ldap-idp-account-metadata";
 import {
@@ -19,6 +18,7 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import {AuthContext} from "contexts/AuthContext";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 function LdapCustomerOnboardEditorPanel() {
   const { getAccessToken } = useContext(AuthContext);
@@ -196,12 +196,11 @@ function LdapCustomerOnboardEditorPanel() {
               <Col lg={12}>
                 <div className="p-2">
                   <label className="mt-0"><span>Opsera Customer Record<span className="danger-red">*</span></span></label>
-                  <DropdownList
-                    data={opseraUserList}
+                  <StandaloneSelectInput
+                    selectOptions={opseraUserList}
                     valueField='value'
                     textField='text'
                     disabled={true}
-                    filter='contains'
                     groupBy={user => capitalizeFirstLetter(user.id.organizationName, "-", "No Organization Name")}
                     // defaultValue={currentOpseraUser}
                     // onChange={handleOpseraUserChange}
@@ -263,8 +262,8 @@ function LdapCustomerOnboardEditorPanel() {
                 <div className="custom-select-input m-2">
                   <label className="mt-0"><span>Opsera Customer Record<span
                     className="danger-red">*</span></span></label>
-                  <DropdownList
-                    data={opseraUserList}
+                  <StandaloneSelectInput
+                    selectOptions={opseraUserList}
                     valueField='value'
                     textField='text'
                     filter='contains'

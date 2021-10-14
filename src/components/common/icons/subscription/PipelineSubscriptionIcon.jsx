@@ -5,7 +5,7 @@ import axios from "axios";
 import SubscriptionIcon from "components/common/icons/subscription/SubscriptionIcon";
 import pipelineActions from "components/workflow/pipeline-actions";
 
-function PipelineSubscriptionIcon({ pipelineModel, showText, className }) {
+function PipelineSubscriptionIcon({ pipelineId, showText, className }) {
   const { getAccessToken, featureFlagHideItemInProd, featureFlagHideItemInTest } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(undefined);
@@ -51,7 +51,7 @@ function PipelineSubscriptionIcon({ pipelineModel, showText, className }) {
   };
 
   const isPipelineSubscribed = async (cancelSource = cancelTokenSource) => {
-    const response = await pipelineActions.isSubscribed(getAccessToken, cancelSource, pipelineModel?.getData("_id"));
+    const response = await pipelineActions.isSubscribed(getAccessToken, cancelSource, pipelineId);
 
     if (isMounted?.current === true && response?.data) {
       setIsSubscribed(response.data === true);
@@ -60,11 +60,11 @@ function PipelineSubscriptionIcon({ pipelineModel, showText, className }) {
 
   const handleTagSubscription = async () => {
     if (isSubscribed === true) {
-      const response = await pipelineActions.unsubscribeFromPipeline(getAccessToken, cancelTokenSource, pipelineModel?.getData("_id"));
+      const response = await pipelineActions.unsubscribeFromPipeline(getAccessToken, cancelTokenSource, pipelineId);
       setIsSubscribed(response?.status !== 200);
     }
     else {
-      const response = await pipelineActions.subscribeToPipeline(getAccessToken, cancelTokenSource, pipelineModel?.getData("_id"));
+      const response = await pipelineActions.subscribeToPipeline(getAccessToken, cancelTokenSource, pipelineId);
       setIsSubscribed(response?.data === true);
     }
   };
@@ -85,7 +85,7 @@ function PipelineSubscriptionIcon({ pipelineModel, showText, className }) {
 }
 
 PipelineSubscriptionIcon.propTypes = {
-  pipelineModel: PropTypes.object,
+  pipelineId: PropTypes.string,
   showText: PropTypes.bool,
   className: PropTypes.string
 };

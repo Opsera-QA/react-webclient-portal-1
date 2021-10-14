@@ -7,10 +7,10 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import DropdownList from "react-widgets/lib/DropdownList";
 import {THRESHOLD_LEVELS} from "components/common/list_of_values_input/pipelines/thresholds/PipelineThresholdLevelSelectInputBase";
 import StandalonePositiveIntegerNumberTextInput
   from "components/common/inputs/text/number/integer/StandalonePositiveIntegerNumberTextInput";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 function PipelineThresholdInputRow(
   {
@@ -26,14 +26,13 @@ function PipelineThresholdInputRow(
 
   const getThresholdLevelInput = () => {
     return (
-      <DropdownList
-        data={THRESHOLD_LEVELS}
+      <StandaloneSelectInput
+        selectOptions={THRESHOLD_LEVELS}
         valueField={"value"}
         textField={"text"}
         value={level}
         disabled={disabled || disabledThresholdLevels}
-        filter={"contains"}
-        placeholder={"Select A Group"}
+        placeholder={"Select A Threshold Level"}
         onChange={(newValue) => updateThresholdLevel(newValue?.value)}
       />
     );

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import DropdownList from "react-widgets/lib/DropdownList";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, setDataFunction, valueField, textField, filter, placeholderText, busy, className, inline, disabled}) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
@@ -20,8 +20,8 @@ function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, 
   return (
     <div className={className}>
       <InputLabel model={dataObject} showLabel={!inline} field={field} className={inline ? "mt-1 mr-2" : undefined}/>
-      <DropdownList
-        data={selectOptions}
+      <StandaloneSelectInput
+        selectOptions={selectOptions}
         valueField={valueField}
         textField={textField}
         filter={filter}
@@ -30,8 +30,8 @@ function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, 
         value={dataObject?.getData(fieldName)}
         disabled={disabled || busy}
         busy={busy}
-        placeholder={placeholderText}
-        onChange={(data) => setDataFunction ? setDataFunction(fieldName, data) : validateAndSetData(fieldName, data)}
+        placeholderText={placeholderText}
+        setDataFunction={(data) => setDataFunction ? setDataFunction(fieldName, data) : validateAndSetData(fieldName, data)}
       />
     </div>
   );

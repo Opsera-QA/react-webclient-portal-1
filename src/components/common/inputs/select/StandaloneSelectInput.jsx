@@ -4,11 +4,24 @@ import DropdownList from "react-widgets/lib/DropdownList";
 
 function StandaloneSelectInput(
   {
-    groupBy, selectOptions, valueField, textField, placeholderText,
-    busy, disabled, onSearch, value, setDataFunction
-}) {
+    groupBy,
+    selectOptions,
+    valueField,
+    textField,
+    placeholderText,
+    busy,
+    disabled,
+    onSearch,
+    value,
+    setDataFunction,
+    onCreate,
+    allowCreate,
+    className,
+    onToggle,
+  }) {
   return (
     <DropdownList
+      className={className}
       data={selectOptions}
       valueField={valueField}
       textField={textField}
@@ -16,10 +29,13 @@ function StandaloneSelectInput(
       value={value}
       filter={"contains"}
       busy={busy}
+      onCreate={onCreate}
+      onToggle={onToggle}
       placeholder={placeholderText}
       onChange={(newValue) => setDataFunction(newValue)}
       disabled={disabled || !Array.isArray(selectOptions) || selectOptions.length === 0}
       onSearch={onSearch}
+      allowCreate={allowCreate}
     />
   );
 }
@@ -43,8 +59,12 @@ StandaloneSelectInput.propTypes = {
     PropTypes.bool,
     PropTypes.array
   ]),
-  value: PropTypes.string,
+  value: PropTypes.any,
   onSearch: PropTypes.func,
+  onCreate: PropTypes.func,
+  allowCreate: PropTypes.bool,
+  className: PropTypes.string,
+  onToggle: PropTypes.func,
 };
 
 StandaloneSelectInput.defaultProps = {

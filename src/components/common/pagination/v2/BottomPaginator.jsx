@@ -2,9 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Pagination} from "react-bootstrap";
 import {getResultSummary} from "components/common/pagination/pagination-helpers";
+import ResultsSummary from "components/common/pagination/v2/ResultsSummary";
 
 // TODO: Should we use the new paginator?
-function BottomPaginator({ paginationModel, loadData, isLoading }) {
+function BottomPaginator({ paginationModel, nextGeneration, loadData, isLoading }) {
   const setPage = (page) => {
     if (page === paginationModel.getData("currentPage")) {
       return;
@@ -52,6 +53,15 @@ function BottomPaginator({ paginationModel, loadData, isLoading }) {
     );
   };
 
+  const getResultSummaryField = () => {
+    // TODO: This is a workaround until everything is up to date with current standards
+    if (nextGeneration === true) {
+      return (<ResultsSummary isLoading={isLoading} paginationModel={paginationModel} />);
+    }
+
+    return (getResultSummary(paginationModel, isLoading));
+  };
+
   if (!paginationModel || paginationModel?.getData("totalCount") == null) {
     return null;
   }
@@ -59,7 +69,7 @@ function BottomPaginator({ paginationModel, loadData, isLoading }) {
   return (
     <div className="bottom-pagination">
       <div className="pagination-block small d-flex justify-content-between px-2">
-        <div className="my-auto results-summary">{getResultSummary(paginationModel, isLoading)}</div>
+        <div className="my-auto results-summary">{getResultSummaryField()}</div>
         <div className="my-auto">
           {getPaginator()}
         </div>
@@ -73,6 +83,7 @@ BottomPaginator.propTypes = {
   paginationModel: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
+  nextGeneration: PropTypes.bool,
 };
 
 export default BottomPaginator;

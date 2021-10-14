@@ -4,7 +4,6 @@ import { Multiselect } from "react-widgets";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
-// import DropdownList from "react-widgets/lib/DropdownList";
 
 function LazyLoadMultiSelectInputBase({
   fieldName,

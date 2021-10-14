@@ -100,7 +100,7 @@ OctopusApplicationsTable.propTypes = {
   loadData: PropTypes.func,
   onRowSelect: PropTypes.func,
   isLoading: PropTypes.bool,
-  isMounted: PropTypes.bool,
+  isMounted: PropTypes.object,
 };
 
 export default OctopusApplicationsTable;
