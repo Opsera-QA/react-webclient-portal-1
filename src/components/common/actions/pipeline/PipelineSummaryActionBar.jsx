@@ -8,13 +8,13 @@ import ActionBarPublishPipelineButton from "./buttons/ActionBarPublishPipelineBu
 import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import PipelinesHelpDocumentation from "components/common/help/documentation/pipelines/PipelinesHelpDocumentation";
+import PipelinesSummaryHelpDocumentation from "../../help/documentation/pipelines/PipelinesSummaryHelpDocumentation";
 
 function PipelineSummaryActionBar({pipelineModel, canTransferPipeline, handleDuplicateClick, handleDeleteClick, handleViewClick, handlePublishClick, pipeline, loadPipeline}) {
   const toastContext = useContext(DialogToastContext);
 
   const toggleHelp = () => {
-    toastContext.showOverlayPanel(<PipelinesHelpDocumentation />);
+    toastContext.showOverlayPanel(<PipelinesSummaryHelpDocumentation />);
   };
 
   return (
