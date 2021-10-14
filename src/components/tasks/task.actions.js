@@ -36,8 +36,8 @@ taskActions.getTasksListV2 = async (getAccessToken, cancelTokenSource, taskFilte
   const urlParams = {
     params: {
       sort: taskFilterModel?.getFilterValue("sortOption"),
-      page: taskFilterModel?.getData("currentPage"),
-      size: taskFilterModel?.getData("pageSize"),
+      page: taskFilterModel?.getFilterValue("currentPage"),
+      size: taskFilterModel?.getFilterValue("pageSize"),
       tag: taskFilterModel?.getFilterValue("tag"),
       type: taskFilterModel?.getFilterValue("type"),
       status: taskFilterModel?.getFilterValue("status"),

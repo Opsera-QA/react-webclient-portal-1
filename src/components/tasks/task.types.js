@@ -65,6 +65,6 @@ export const getTaskTypeLabel = (taskType) => {
     case TASK_TYPES.AZURE_CLUSTER_CREATION:
       return TASK_TYPE_LABELS.AZURE_CLUSTER_CREATION;
     default:
-      return "";
+      return taskType;
   }
 };

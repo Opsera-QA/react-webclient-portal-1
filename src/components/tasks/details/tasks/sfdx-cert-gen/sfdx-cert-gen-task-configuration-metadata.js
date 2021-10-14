@@ -86,8 +86,9 @@ const sfdxCertGenTaskConfigurationMetadata = {
       id: "expiryDate",
     },
   ],
-  newObjectFields:
-    {
+  // TODO: THis adds unnecessary fields in the select inputs.
+  //  We should make specific inputs for this task and remove the ones here that are irrelevant
+  newObjectFields: {
     toolConfigId: "",
     autoScaleEnable: false,
     toolName: "",
@@ -100,8 +101,21 @@ const sfdxCertGenTaskConfigurationMetadata = {
     unitName: "",
     commonName: "",
     email: "",
-    expiryDate : new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
-    }
+    expiryDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+
+    // TODO: I think these aren't meant to be here but they're set by select inputs:
+    toolJobName: "",
+    toolJobId: "",
+    gitToolId: "",
+    gitUrl: "",
+    sshUrl: "",
+    gitCredential: "",
+    projectId: "",
+    repository: "",
+    gitBranch: "",
+    workspace: "",
+    workspaceName: "",
+  },
 };
 
 export default sfdxCertGenTaskConfigurationMetadata;
