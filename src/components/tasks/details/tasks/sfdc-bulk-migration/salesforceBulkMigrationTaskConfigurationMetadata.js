@@ -1,4 +1,4 @@
-const salesforceOrganizationSyncTaskConfigurationMetadata = {
+const salesforceBulkMigrationTaskConfigurationMetadata = {
   type: "Salesforce Organization Sync Task Configuration",
   fields: [
     {
@@ -140,7 +140,6 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
       jobType: "SFDC_GIT_SYNC",
       toolConfigId: "",
       autoScaleEnable: false,
-      toolJobName: "",
       toolName: "",
       jobName: "",
       agentLabels: "",
@@ -168,4 +167,4 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
     }
 };
 
-export default salesforceOrganizationSyncTaskConfigurationMetadata;
+export default salesforceBulkMigrationTaskConfigurationMetadata;

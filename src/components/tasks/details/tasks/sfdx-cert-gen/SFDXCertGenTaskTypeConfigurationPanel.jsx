@@ -37,7 +37,11 @@ function SFDXCertGenTaskTypeConfigurationPanel({ gitTasksDataDto, gitTasksConfig
   return (
     <Row>
       <Col lg={12}>
-        <SalesforceOrganizationSyncJenkinsToolSelectInput  dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
+        {/*TODO: Make Certificate Generation specific input not setting all these fields that are irrelevant*/}
+        <SalesforceOrganizationSyncJenkinsToolSelectInput
+          model={gitTasksConfigurationData}
+          setModel={setGitTasksConfigurationData}
+        />
         <TextInputBase dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"countryName"} />
         <TextInputBase dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"state"} />
         <TextInputBase dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"locality"} />
