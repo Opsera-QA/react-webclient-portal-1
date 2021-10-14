@@ -4,14 +4,17 @@ import InfoOverlayContainer from "components/common/inputs/info_text/InfoOverlay
 import {Link} from "react-router-dom";
 import ToolInfoContainer from "components/common/fields/inventory/tools/ToolInfoContainer";
 import ToolsTable from "components/inventory/tools/ToolsTable";
-import toolMetadata from "components/inventory/tools/tool-metadata";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 
-function RegistryToolInfoOverlay({tools, loadData, isLoading, selectedToolId}) {
+function RegistryToolInfoOverlay({tools, toolMetadata, loadData, isLoading, selectedToolId}) {
   const getBody = () => {
     if (selectedToolId) {
-      return (<ToolInfoContainer toolId={selectedToolId} />);
+      return (
+        <ToolInfoContainer
+          toolId={selectedToolId}
+        />
+      );
     }
 
     return (
@@ -26,7 +29,12 @@ function RegistryToolInfoOverlay({tools, loadData, isLoading, selectedToolId}) {
           metadata={toolMetadata}
           loadData={loadData}
           titleIcon={faTools}
-          body={<ToolsTable data={tools} />}
+          body={
+            <ToolsTable
+              data={tools}
+              toolMetadata={toolMetadata}
+            />
+          }
           title={"Tools"}
         />
       </div>
@@ -45,6 +53,7 @@ RegistryToolInfoOverlay.propTypes = {
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   selectedToolId: PropTypes.string,
+  toolMetadata: PropTypes.object,
 };
 
 export default RegistryToolInfoOverlay;

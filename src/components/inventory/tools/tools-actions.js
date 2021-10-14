@@ -207,10 +207,11 @@ toolsActions.getRoleLimitedTools = async (getAccessToken, cancelTokenSource, fie
 };
 
 toolsActions.getRoleLimitedToolsByIdentifier = async (getAccessToken, cancelTokenSource, toolIdentifier, fields) => {
-  const apiUrl = `/registry/configs/tools/${toolIdentifier}`;
+  const apiUrl = `/registry/configs/v2`;
   const urlParams = {
     params: {
       fields: fields,
+      toolIdentifier: toolIdentifier,
     }
   };
 

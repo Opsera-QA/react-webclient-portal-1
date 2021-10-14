@@ -32,8 +32,6 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
     usePagination
   );
 
-  const defaultNoDataMessage = "No data is currently available";
-
   const setColumnClass = (id, columnDefinitions) => {
     let response = "";
     if (columnDefinitions && id){
@@ -148,7 +146,7 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
   };
 
   const getTableBody = () => {
-    if (isLoading && (data == null || data.length === 0)) {
+    if (isLoading && (!Array.isArray(data) || data.length === 0)) {
       return (
         <tr>
           <td colSpan="100%" className="info-text text-center p-3">{tableLoading()}</td>
@@ -156,17 +154,22 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
       );
     }
 
+    if (!isLoading && (!Array.isArray(rows) || rows.length === 0)) {
+      return (
+        <tr>
+          <td colSpan="100%" className="info-text text-center p-5">
+            {noDataMessage}
+          </td>
+        </tr>
+      );
+    }
+
     return (
       <>
-        {rows.map((row, i) => {
-          return getTableRow(row, i);
-        })
-        }
-        {!isLoading && rows.length === 0 &&
-        <tr>
-          <td colSpan="100%"
-              className="info-text text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td>
-        </tr>
+        {
+          rows.map((row, i) => {
+            return getTableRow(row, i);
+          })
         }
       </>
     );
@@ -179,7 +182,14 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
     }
 
     return (
-        <div>{paginationOptions && !isLoading && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}</div>
+      <div>
+        <Pagination
+          total={paginationOptions.totalCount}
+          currentPage={paginationOptions.currentPage}
+          pageSize={paginationOptions.pageSize}
+          onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)}
+        />
+      </div>
     );
   };
 
@@ -250,6 +260,7 @@ CustomTable.defaultProps = {
   data: [],
   isLoading: false,
   tableTitle: "",
+  noDataMessage: "No data is currently available",
   className: "table-content-block",
   noFooter: false,
   scrollOnLoad: true
