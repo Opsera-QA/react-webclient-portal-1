@@ -6,10 +6,11 @@ import sfdxCertGenTaskConfigurationMetadata
   from "components/tasks/details/tasks/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import SalesforceOrganizationSyncJenkinsToolSelectInput from "../sfdc-org-sync/inputs/SalesforceOrganizationSyncJenkinsToolSelectInput";
 import AgentLabelsSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
+import SalesforceOrganizationSyncTaskJenkinsToolSelectInput
+  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsToolSelectInput";
 
 function SFDXCertGenTaskTypeConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
 
@@ -38,7 +39,7 @@ function SFDXCertGenTaskTypeConfigurationPanel({ gitTasksDataDto, gitTasksConfig
     <Row>
       <Col lg={12}>
         {/*TODO: Make Certificate Generation specific input not setting all these fields that are irrelevant*/}
-        <SalesforceOrganizationSyncJenkinsToolSelectInput
+        <SalesforceOrganizationSyncTaskJenkinsToolSelectInput
           model={gitTasksConfigurationData}
           setModel={setGitTasksConfigurationData}
         />
