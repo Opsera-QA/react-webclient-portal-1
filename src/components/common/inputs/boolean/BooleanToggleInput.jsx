@@ -5,7 +5,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
 function BooleanToggleInput({ fieldName, dataObject, setDataObject, setDataFunction, disabled }) {
-    const [field] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(dataObject?.getFieldById(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
@@ -21,6 +21,10 @@ function BooleanToggleInput({ fieldName, dataObject, setDataObject, setDataFunct
       validateAndSetData(fieldName, newValue);
     }
   };
+
+  if (field == null) {
+    return null;
+  }
 
   return (
     <InputContainer>

@@ -10,10 +10,20 @@ import AzureClusterConfigurationPanel from "./azure-cluster-creation/AzureCluste
 import {TASK_TYPES} from "components/tasks/task.types";
 import SalesforceOrganizationSyncTaskConfigurationEditorPanel
   from "components/tasks/details/tasks/sfdc-org-sync/SalesforceOrganizationSyncTaskConfigurationEditorPanel";
+import SalesforceBulkMigrationTaskConfigurationEditorPanel
+  from "components/tasks/details/tasks/sfdc-bulk-migration/SalesforceBulkMigrationTaskConfigurationEditorPanel";
 
 function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationModel, setTaskConfigurationModel, taskType }) {
   const getConfigurationPanel = () => {
     switch (taskType) {
+      case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+        return (
+          <SalesforceBulkMigrationTaskConfigurationEditorPanel
+            taskConfigurationModel={taskConfigurationModel}
+            setTaskConfigurationModel={setTaskConfigurationModel}
+            taskModel={taskModel}
+          />
+        );
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
         return (
           <SalesforceOrganizationSyncTaskConfigurationEditorPanel
