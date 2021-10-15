@@ -93,9 +93,9 @@ function SalesforceBulkMigrationTaskConfigurationEditorPanel(
           <Col lg={12}>
             <SalesforceOrganizationSyncTaskGitBranchTextInput
               fieldName={"gitBranch"}
-              dataObject={taskConfigurationModel}
-              setDataObject={setTaskConfigurationModel}
-              visible={taskConfigurationModel?.getData("isNewBranch")}
+              model={taskConfigurationModel}
+              setModel={setTaskConfigurationModel}
+              visible={taskConfigurationModel?.getData("isNewBranch") === true}
             />
           </Col>
           <Col lg={12}>
