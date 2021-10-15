@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import RoleRestrictedJenkinsToolSelectInput
   from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
 
-function SalesforceOrganizationSyncJenkinsToolSelectInput({model, setModel, disabled}) {
+function SalesforceOrganizationSyncTaskJenkinsToolSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("toolConfigId", selectedOption?._id);
@@ -55,10 +55,10 @@ function SalesforceOrganizationSyncJenkinsToolSelectInput({model, setModel, disa
   );
 }
 
-SalesforceOrganizationSyncJenkinsToolSelectInput.propTypes = {
+SalesforceOrganizationSyncTaskJenkinsToolSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default SalesforceOrganizationSyncJenkinsToolSelectInput;
+export default SalesforceOrganizationSyncTaskJenkinsToolSelectInput;

@@ -101,9 +101,9 @@ function RunTaskOverlay({ handleClose, gitTasksData, setGitTasksData, loadData }
           <Row className={"m-3"}>
             <Col lg={12}>
               <SalesforceOrganizationSyncTaskGitBranchSelectInput
-                dataObject={dataObj}
-                setDataObject={setDataObj}
-                visible={!(dataObj?.getData("isNewBranch"))}/>
+                model={dataObj}
+                setModel={setDataObj}
+                visible={dataObj?.getData("isNewBranch") !== true}/>
             </Col>
             <Col lg={12}>
               <SalesforceOrganizationSyncTaskNewBranchToggleInput dataObject={dataObj} setDataObject={setDataObj}/>
@@ -113,14 +113,16 @@ function RunTaskOverlay({ handleClose, gitTasksData, setGitTasksData, loadData }
               <Col lg={12}>
                 <SalesforceOrganizationSyncTaskGitBranchTextInput
                   fieldName={"gitBranch"}
-                  dataObject={dataObj} setDataObject={setDataObj} visible={dataObj?.getData("isNewBranch")}
+                  model={dataObj}
+                  setModel={setDataObj}
+                  visible={dataObj?.getData("isNewBranch") === true}
                 />
               </Col>
-              {/* <Col lg={12}>
-                    <SalesforceOrganizationSyncTaskHasUpstreamBranchToggleInput dataObject={dataObj} setDataObject={setDataObj} />
-                  </Col> */}
               <Col lg={12}>
-                <SalesforceOrganizationSyncTaskUpstreamBranchSelectInput dataObject={dataObj} setDataObject={setDataObj}/>
+                <SalesforceOrganizationSyncTaskUpstreamBranchSelectInput
+                  model={dataObj}
+                  setModel={setDataObj}
+                />
               </Col>
             </>
             }

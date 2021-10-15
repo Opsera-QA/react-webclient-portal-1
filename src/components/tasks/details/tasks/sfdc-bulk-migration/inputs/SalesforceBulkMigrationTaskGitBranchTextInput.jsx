@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
-function SalesforceOrganizationSyncTaskGitBranchTextInput({model, setModel, disabled, visible}) {
+function SalesforceBulkMigrationTaskGitBranchTextInput({model, setModel, disabled, visible}) {
   const setDataFunction = (fieldName, value) => {
     let newModel = {...model};
     newModel.setData("gitBranch", value);
@@ -24,11 +24,11 @@ function SalesforceOrganizationSyncTaskGitBranchTextInput({model, setModel, disa
   );
 }
 
-SalesforceOrganizationSyncTaskGitBranchTextInput.propTypes = {
+SalesforceBulkMigrationTaskGitBranchTextInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
 };
 
-export default SalesforceOrganizationSyncTaskGitBranchTextInput;
+export default SalesforceBulkMigrationTaskGitBranchTextInput;

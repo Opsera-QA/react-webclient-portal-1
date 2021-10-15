@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 
-function SalesforceOrganizationSyncTaskGitBranchSelectInput({model, setModel, disabled, visible}) {
+function SalesforceBulkMigrationTaskGitBranchSelectInput({model, setModel, disabled, visible}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("gitBranch", selectedOption);
@@ -34,11 +34,11 @@ function SalesforceOrganizationSyncTaskGitBranchSelectInput({model, setModel, di
   );
 }
 
-SalesforceOrganizationSyncTaskGitBranchSelectInput.propTypes = {
+SalesforceBulkMigrationTaskGitBranchSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
 };
 
-export default SalesforceOrganizationSyncTaskGitBranchSelectInput;
+export default SalesforceBulkMigrationTaskGitBranchSelectInput;

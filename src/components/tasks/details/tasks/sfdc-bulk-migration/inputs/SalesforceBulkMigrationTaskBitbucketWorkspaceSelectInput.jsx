@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import BitbucketWorkspaceInput from "components/common/list_of_values_input/tools/bitbucket/BitbucketWorkspaceInput";
 
-function SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput({model, setModel, disabled}) {
+function SalesforceBulkMigrationTaskBitbucketWorkspaceSelectInput({model, setModel, disabled}) {
   const setWorkspace = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("workspace", selectedOption?.key);
@@ -34,10 +34,10 @@ function SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput({model, set
   );
 }
 
-SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput.propTypes = {
+SalesforceBulkMigrationTaskBitbucketWorkspaceSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput;
+export default SalesforceBulkMigrationTaskBitbucketWorkspaceSelectInput;

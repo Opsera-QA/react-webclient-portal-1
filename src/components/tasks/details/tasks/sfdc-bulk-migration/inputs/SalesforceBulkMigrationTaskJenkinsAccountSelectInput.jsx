@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import JenkinsAccountInput from "components/common/list_of_values_input/tools/jenkins/JenkinsAccountInput";
 
-function SalesforceOrganizationSyncTaskJenkinsAccountSelectInput({model, setModel, taskModel, disabled}) {
+function SalesforceBulkMigrationTaskJenkinsAccountSelectInput({model, setModel, taskModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("gitCredential", selectedOption?.gitCredential);
@@ -55,11 +55,11 @@ function SalesforceOrganizationSyncTaskJenkinsAccountSelectInput({model, setMode
   );
 }
 
-SalesforceOrganizationSyncTaskJenkinsAccountSelectInput.propTypes = {
+SalesforceBulkMigrationTaskJenkinsAccountSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   taskModel: PropTypes.object,
 };
 
-export default SalesforceOrganizationSyncTaskJenkinsAccountSelectInput;
+export default SalesforceBulkMigrationTaskJenkinsAccountSelectInput;

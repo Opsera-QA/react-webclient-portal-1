@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function SalesforceOrganizationSyncTaskNewBranchToggleInput({model, setModel, disabled}) {
+function SalesforceBulkMigrationTaskNewBranchToggleInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, value) => {
     let newModel = {...model};
     newModel.setData("isNewBranch", value);
@@ -25,10 +25,10 @@ function SalesforceOrganizationSyncTaskNewBranchToggleInput({model, setModel, di
   );
 }
 
-SalesforceOrganizationSyncTaskNewBranchToggleInput.propTypes = {
+SalesforceBulkMigrationTaskNewBranchToggleInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default SalesforceOrganizationSyncTaskNewBranchToggleInput;
+export default SalesforceBulkMigrationTaskNewBranchToggleInput;

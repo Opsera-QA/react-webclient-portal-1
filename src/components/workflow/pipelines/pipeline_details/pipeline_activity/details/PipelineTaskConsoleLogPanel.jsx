@@ -3,14 +3,17 @@ import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import PipelineTaskConsoleLogField from "components/common/fields/pipelines/activity/PipelineTaskConsoleLogField";
+import StandaloneConsoleLogField from "components/common/fields/pipelines/activity/StandaloneConsoleLogField";
 
 function PipelineTaskConsoleLogPanel({ pipelineTaskData }) {
   return (
     <SummaryPanelContainer>
       <Row>
         <Col md={12}>
-          <PipelineTaskConsoleLogField dataObject={pipelineTaskData} />
+          <StandaloneConsoleLogField
+            dataObject={pipelineTaskData}
+            apiResponse={pipelineTaskData["api_response"]}
+          />
         </Col>
       </Row>
     </SummaryPanelContainer>
