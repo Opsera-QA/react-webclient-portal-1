@@ -101,9 +101,9 @@ function SalesforceOrganizationSyncTaskConfigurationEditorPanel({ taskModel, tas
       </Col>
       <Col lg={12}>
         <SalesforceOrganizationSyncTaskGitBranchSelectInput
-          dataObject={taskConfigurationModel}
-          setDataObject={setTaskConfigurationModel}
-          visible={!(taskConfigurationModel?.getData("isNewBranch"))}
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
+          visible={taskConfigurationModel?.getData("isNewBranch") !== true}
         />
       </Col>
       <Col lg={12}>
