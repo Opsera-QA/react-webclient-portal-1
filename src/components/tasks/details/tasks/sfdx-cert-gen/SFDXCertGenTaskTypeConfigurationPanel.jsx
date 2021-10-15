@@ -9,8 +9,8 @@ import Col from "react-bootstrap/Col";
 import AgentLabelsSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
-import SalesforceOrganizationSyncJenkinsToolSelectInput
-  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncJenkinsToolSelectInput";
+import SalesforceOrganizationSyncTaskJenkinsToolSelectInput
+  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsToolSelectInput";
 
 function SFDXCertGenTaskTypeConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
 
@@ -39,7 +39,7 @@ function SFDXCertGenTaskTypeConfigurationPanel({ gitTasksDataDto, gitTasksConfig
     <Row>
       <Col lg={12}>
         {/*TODO: Make Certificate Generation specific input not setting all these fields that are irrelevant*/}
-        <SalesforceOrganizationSyncJenkinsToolSelectInput
+        <SalesforceOrganizationSyncTaskJenkinsToolSelectInput
           model={gitTasksConfigurationData}
           setModel={setGitTasksConfigurationData}
         />

@@ -1,5 +1,5 @@
-const salesforceBulkMigrationTaskConfigurationMetadata = {
-  type: "Salesforce Organization Sync Task Configuration",
+export const salesforceBulkMigrationTaskConfigurationMetadata = {
+  type: "Salesforce Bulk Migration Task Configuration",
   fields: [
     {
       label: "Jenkins Tool",
@@ -14,7 +14,7 @@ const salesforceBulkMigrationTaskConfigurationMetadata = {
       isRequired: true,
       maxLength: 100,
       regexDefinitionName: "generalTextWithSpacesSlash",
-    },  
+    },
     {
       label: "Auto Scaling",
       id: "autoScaleEnable"
@@ -24,7 +24,7 @@ const salesforceBulkMigrationTaskConfigurationMetadata = {
       id: "agentLabels",
       regexDefinitionName: "generalTextWithoutSpacesPeriod",
       maxLength: 50
-    },  
+    },
     {
       label: "Jenkins Job Name",
       id: "jobName",
@@ -38,7 +38,7 @@ const salesforceBulkMigrationTaskConfigurationMetadata = {
       maxLength: 10,
       lowercase: true,
       regexDefinitionName: "alphabetic",
-    },    
+    },
     {
       label: "Account",
       id: "gitCredential",
@@ -51,7 +51,7 @@ const salesforceBulkMigrationTaskConfigurationMetadata = {
       isRequired: true,
       maxLength: 24,
       regexDefinitionName: "mongoId",
-    },        
+    },
     {
       id: "projectId",
       maxLength: 100,
@@ -60,7 +60,7 @@ const salesforceBulkMigrationTaskConfigurationMetadata = {
     {
       id: "gitUrl",
     },
-    
+
     {
       id: "sshUrl",
     },
@@ -71,7 +71,7 @@ const salesforceBulkMigrationTaskConfigurationMetadata = {
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
-    
+
     {
       label: "Workspace",
       id: "workspace",
@@ -134,37 +134,40 @@ const salesforceBulkMigrationTaskConfigurationMetadata = {
       },
     },
   ],
-  newObjectFields:
-    {
-      type: "",
-      jobType: "SFDC_GIT_SYNC",
-      toolConfigId: "",
-      autoScaleEnable: false,
-      toolName: "",
-      jobName: "",
-      agentLabels: "",
-      toolJobId: "",
-      projectId: "",
-      buildType: "ant",
-      gitToolId: "",
-      gitUrl: "",
-      sshUrl: "",
-      service: "",
-      gitCredential: "",
-      workspace: "",
-      workspaceName: "",
-      repository: "",
-      gitBranch: "",
-      defaultBranch: "",
-      dependencyType: "",
-      sfdcToolId: "",
-      sfdcToolName: "",
-      accountUsername: "",
-      isNewBranch: false,
-      upstreamBranch: "",
-      includePackageXml: false,
-      packageXmlReferencePath: "",
-    }
+  newObjectFields: {
+    type: "",
+    jobType: "SFDC_GIT_SYNC",
+    toolConfigId: "",
+    autoScaleEnable: false,
+    toolJobName: "",
+    toolName: "",
+    jobName: "",
+    agentLabels: "",
+    toolJobId: "",
+    projectId: "",
+    buildType: "ant",
+    gitToolId: "",
+    gitUrl: "",
+    sshUrl: "",
+    service: "",
+    gitCredential: "",
+    workspace: "",
+    workspaceName: "",
+    repository: "",
+    branch: "",
+    gitBranch: "",
+    sourceBranch: "",
+    autoApprove: false,
+    defaultBranch: "",
+    dependencyType: "",
+    sfdcToolId: "",
+    sfdcToolName: "",
+    accountUsername: "",
+    isNewBranch: false,
+    upstreamBranch: "",
+    includePackageXml: false,
+    packageXmlReferencePath: "",
+    reviewers: [],
+    reviewerNames: [],
+  },
 };
-
-export default salesforceBulkMigrationTaskConfigurationMetadata;

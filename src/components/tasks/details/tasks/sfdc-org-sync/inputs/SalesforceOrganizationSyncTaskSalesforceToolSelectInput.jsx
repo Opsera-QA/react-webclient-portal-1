@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import RoleRestrictedSalesforceConfiguratorToolSelectInput
   from "components/common/list_of_values_input/tools/salesforce/sfdc-configurator/RoleRestrictedSalesforceConfiguratorToolSelectInput";
 
-function SalesforceOrganizationSyncSalesforceToolSelectInput({model, setModel, disabled}) {
+function SalesforceOrganizationSyncTaskSalesforceToolSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("sfdcToolId", selectedOption?._id);
@@ -32,10 +32,10 @@ function SalesforceOrganizationSyncSalesforceToolSelectInput({model, setModel, d
   );
 }
 
-SalesforceOrganizationSyncSalesforceToolSelectInput.propTypes = {
+SalesforceOrganizationSyncTaskSalesforceToolSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default SalesforceOrganizationSyncSalesforceToolSelectInput;
+export default SalesforceOrganizationSyncTaskSalesforceToolSelectInput;

@@ -4,23 +4,25 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import SalesforceOrganizationSyncTaskNewBranchToggleInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskNewBranchToggleInput";
-import SalesforceOrganizationSyncTaskUpstreamBranchSelectInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskUpstreamBranchSelectInput";
-import SalesforceOrganizationSyncTaskGitBranchTextInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchTextInput";
-import SalesforceOrganizationSyncSalesforceToolSelectInput
-  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncSalesforceToolSelectInput";
-import SalesforceOrganizationSyncTaskGitBranchSelectInput
-  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
-import SalesforceOrganizationSyncTaskRepositorySelectInput
-  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskRepositorySelectInput";
-import SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
-  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput";
-import SalesforceOrganizationSyncTaskJenkinsAccountSelectInput
-  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsAccountSelectInput";
-import SalesforceOrganizationSyncJenkinsToolSelectInput
-  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncJenkinsToolSelectInput";
-import salesforceBulkMigrationTaskConfigurationMetadata
-  from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
+import SalesforceBulkMigrationTaskJenkinsToolSelectInput
+  from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskJenkinsToolSelectInput";
+import SalesforceBulkMigrationTaskSalesforceToolSelectInput
+  from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskSalesforceToolSelectInput";
+import SalesforceBulkMigrationTaskJenkinsAccountSelectInput
+  from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskJenkinsAccountSelectInput";
+import SalesforceBulkMigrationTaskBitbucketWorkspaceSelectInput
+  from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskBitbucketWorkspaceSelectInput";
+import SalesforceBulkMigrationTaskRepositorySelectInput
+  from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskRepositorySelectInput";
+import SalesforceBulkMigrationTaskNewBranchToggleInput
+  from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskNewBranchToggleInput";
+import SalesforceBulkMigrationTaskGitBranchTextInput
+  from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskGitBranchTextInput";
+import SalesforceBulkMigrationTaskUpstreamBranchSelectInput
+  from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskUpstreamBranchSelectInput";
+import SalesforceBulkMigrationTaskGitBranchSelectInput
+  from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskGitBranchSelectInput";
+import {salesforceBulkMigrationTaskConfigurationMetadata} from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
 
 function SalesforceBulkMigrationTaskConfigurationEditorPanel(
   {
@@ -38,60 +40,12 @@ function SalesforceBulkMigrationTaskConfigurationEditorPanel(
     setTaskConfigurationModel({...configurationData});
   };
 
-  if (taskModel == null || taskConfigurationModel == null) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
-  return (
-    <Row>
-      <Col lg={12}>
-        <SalesforceOrganizationSyncJenkinsToolSelectInput
-          model={taskConfigurationModel}
-          setModel={setTaskConfigurationModel}
-        />
-      </Col>
-      <Col lg={12}>
-        <SalesforceOrganizationSyncSalesforceToolSelectInput
-          model={taskConfigurationModel}
-          setModel={setTaskConfigurationModel}
-        />
-      </Col>
-      <Col lg={12}>
-        <SalesforceOrganizationSyncTaskJenkinsAccountSelectInput
-          model={taskConfigurationModel}
-          setModel={setTaskConfigurationModel}
-          taskModel={taskModel}
-        />
-      </Col>
-      <Col lg={12}>
-        <SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
-          model={taskConfigurationModel}
-          setModel={setTaskConfigurationModel}
-        />
-      </Col>
-      <Col lg={12}>
-        <SalesforceOrganizationSyncTaskRepositorySelectInput
-          model={taskConfigurationModel}
-          setModel={setTaskConfigurationModel}
-        />
-      </Col>
-      <Col lg={12}>
-        <SalesforceOrganizationSyncTaskGitBranchSelectInput
-          model={taskConfigurationModel}
-          setModel={setTaskConfigurationModel}
-          visible={taskConfigurationModel?.getData("isNewBranch") !== true}
-        />
-      </Col>
-      <Col lg={12}>
-        <SalesforceOrganizationSyncTaskNewBranchToggleInput
-          dataObject={taskConfigurationModel}
-          setDataObject={setTaskConfigurationModel}
-        />
-      </Col>
-      {taskConfigurationModel?.getData("isNewBranch") &&
+  const getDynamicFields = () => {
+    if (taskConfigurationModel?.getData("isNewBranch") === true) {
+      return (
         <>
           <Col lg={12}>
-            <SalesforceOrganizationSyncTaskGitBranchTextInput
+            <SalesforceBulkMigrationTaskGitBranchTextInput
               fieldName={"gitBranch"}
               model={taskConfigurationModel}
               setModel={setTaskConfigurationModel}
@@ -99,13 +53,70 @@ function SalesforceBulkMigrationTaskConfigurationEditorPanel(
             />
           </Col>
           <Col lg={12}>
-            <SalesforceOrganizationSyncTaskUpstreamBranchSelectInput
+            <SalesforceBulkMigrationTaskUpstreamBranchSelectInput
               model={taskConfigurationModel}
               setModel={setTaskConfigurationModel}
             />
           </Col>
         </>
-      }
+      );
+    }
+
+    return (
+      <Col lg={12}>
+        <SalesforceBulkMigrationTaskGitBranchSelectInput
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
+          visible={taskConfigurationModel?.getData("isNewBranch") !== true}
+        />
+      </Col>
+    );
+  };
+
+  if (taskModel == null || taskConfigurationModel == null) {
+    return (<LoadingDialog size="sm"/>);
+  }
+
+  return (
+    <Row>
+      <Col lg={12}>
+        <SalesforceBulkMigrationTaskJenkinsToolSelectInput
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
+        />
+      </Col>
+      <Col lg={12}>
+        <SalesforceBulkMigrationTaskSalesforceToolSelectInput
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
+        />
+      </Col>
+      <Col lg={12}>
+        <SalesforceBulkMigrationTaskJenkinsAccountSelectInput
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
+          taskModel={taskModel}
+        />
+      </Col>
+      <Col lg={12}>
+        <SalesforceBulkMigrationTaskBitbucketWorkspaceSelectInput
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
+        />
+      </Col>
+      <Col lg={12}>
+        <SalesforceBulkMigrationTaskRepositorySelectInput
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
+        />
+      </Col>
+      <Col lg={12}>
+        <SalesforceBulkMigrationTaskNewBranchToggleInput
+          dataObject={taskConfigurationModel}
+          setDataObject={setTaskConfigurationModel}
+        />
+      </Col>
+      {getDynamicFields()}
     </Row>
   );
 }
