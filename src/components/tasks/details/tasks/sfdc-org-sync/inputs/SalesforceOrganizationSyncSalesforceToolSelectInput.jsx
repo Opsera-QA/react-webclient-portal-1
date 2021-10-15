@@ -1,34 +1,40 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineToolInput from "components/common/list_of_values_input/workflow/pipelines/PipelineToolInput";
+import RoleRestrictedSalesforceConfiguratorToolSelectInput
+  from "components/common/list_of_values_input/tools/salesforce/sfdc-configurator/RoleRestrictedSalesforceConfiguratorToolSelectInput";
 
-function SalesforceOrganizationSyncSalesforceToolSelectInput({dataObject, setDataObject, disabled}) {
+function SalesforceOrganizationSyncSalesforceToolSelectInput({model, setModel, disabled}) {
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newModel = {...model};
+    newModel.setData("sfdcToolId", selectedOption?._id);
+    newModel.setData("accountUsername",selectedOption.configuration.accountUsername);
+    newModel.setData("sfdcToolName", selectedOption.name);
+    setModel({...newModel});
+  };
 
-  const setSfdcTool = (fieldName, selectedOption) => {
-    let newDataObject = {...dataObject};
-    newDataObject.setData("sfdcToolId", selectedOption.id);
-    newDataObject.setData("accountUsername",selectedOption.configuration.accountUsername);
-    newDataObject.setData("sfdcToolName", selectedOption.name);
-    setDataObject({...newDataObject});
+  const clearDataFunction = () => {
+    let newModel = {...model};
+    newModel.setDefaultValue("sfdcToolId");
+    newModel.setDefaultValue("accountUsername");
+    newModel.setDefaultValue("sfdcToolName");
+    setModel({...newModel});
   };
 
   return (
-     <PipelineToolInput
-       toolType={"sfdc-configurator"}
-       toolFriendlyName={"SFDC"}
-       fieldName={"sfdcToolName"}
-       configurationRequired={true}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       setDataFunction={setSfdcTool}
+     <RoleRestrictedSalesforceConfiguratorToolSelectInput
+       fieldName={"sfdcToolId"}
+       model={model}
+       setModel={setModel}
+       setDataFunction={setDataFunction}
+       clearDataFunction={clearDataFunction}
        disabled={disabled}
      />
   );
 }
 
 SalesforceOrganizationSyncSalesforceToolSelectInput.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
