@@ -154,6 +154,7 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
     workspace: "",
     workspaceName: "",
     repository: "",
+    branch: "",
     gitBranch: "",
     sourceBranch: "",
     autoApprove: false,
