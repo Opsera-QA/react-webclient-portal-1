@@ -13,7 +13,7 @@ function ToolDetailHelpDocumentation() {
   const getHelpDocumentation = () => {
     return (
       <div>
-        <div>Register, track and configure your tool. Each tool contains tabs unique to its configuration needs. The following list of commonly used tab details:</div>
+        <div>Register, track and configure your tool. Each tool contains tabs unique to its configuration needs. View the following list of commonly used tab details:</div>
           <div className={"mt-2"}>
             <ul style={{listStyleType: "none"}}>
               <li><b>Summary</b> - Includes information added upon tool creation such as Tool Name, Tool Identifier, Cost Center, Tags, Classification, Description and user Access Roles.</li>
