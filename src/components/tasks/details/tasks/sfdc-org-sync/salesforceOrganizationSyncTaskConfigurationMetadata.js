@@ -155,6 +155,8 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
     workspaceName: "",
     repository: "",
     gitBranch: "",
+    sourceBranch: "",
+    autoApprove: false,
     defaultBranch: "",
     dependencyType: "",
     sfdcToolId: "",
@@ -164,7 +166,9 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
     upstreamBranch: "",
     includePackageXml: false,
     packageXmlReferencePath: "",
-  }
+    reviewers: [],
+    reviewerNames: [],
+  },
 };
 
 export default salesforceOrganizationSyncTaskConfigurationMetadata;
