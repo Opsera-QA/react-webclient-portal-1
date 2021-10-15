@@ -108,8 +108,8 @@ function SalesforceOrganizationSyncTaskConfigurationEditorPanel({ taskModel, tas
       </Col>
       <Col lg={12}>
         <SalesforceOrganizationSyncTaskNewBranchToggleInput
-          dataObject={taskConfigurationModel}
-          setDataObject={setTaskConfigurationModel}
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
         />
       </Col>
       {taskConfigurationModel?.getData("isNewBranch") &&
