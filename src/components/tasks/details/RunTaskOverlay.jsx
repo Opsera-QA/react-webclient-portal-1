@@ -118,11 +118,11 @@ function RunTaskOverlay({ handleClose, gitTasksData, setGitTasksData, loadData }
                   visible={dataObj?.getData("isNewBranch") === true}
                 />
               </Col>
-              {/* <Col lg={12}>
-                    <SalesforceOrganizationSyncTaskHasUpstreamBranchToggleInput dataObject={dataObj} setDataObject={setDataObj} />
-                  </Col> */}
               <Col lg={12}>
-                <SalesforceOrganizationSyncTaskUpstreamBranchSelectInput dataObject={dataObj} setDataObject={setDataObj}/>
+                <SalesforceOrganizationSyncTaskUpstreamBranchSelectInput
+                  model={dataObj}
+                  setModel={setDataObj}
+                />
               </Col>
             </>
             }

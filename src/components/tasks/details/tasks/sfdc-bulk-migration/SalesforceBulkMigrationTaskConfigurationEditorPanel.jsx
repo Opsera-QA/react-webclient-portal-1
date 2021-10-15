@@ -100,8 +100,8 @@ function SalesforceBulkMigrationTaskConfigurationEditorPanel(
           </Col>
           <Col lg={12}>
             <SalesforceOrganizationSyncTaskUpstreamBranchSelectInput
-              dataObject={taskConfigurationModel}
-              setDataObject={setTaskConfigurationModel}
+              model={taskConfigurationModel}
+              setModel={setTaskConfigurationModel}
             />
           </Col>
         </>
