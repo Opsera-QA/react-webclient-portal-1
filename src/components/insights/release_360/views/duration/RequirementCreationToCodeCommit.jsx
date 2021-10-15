@@ -39,9 +39,9 @@ function RequirementCreationToCodeCommit() {
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "requirementCreationToCodeCommit"
+        "gitlabRequirementCreationToCodeCommit"
       );
-      let dataObject = response?.data ? response?.data?.data[0]?.requirementCreationToCodeCommit?.data : [];
+      let dataObject = response?.data ? response?.data?.data[0]?.gitlabRequirementCreationToCodeCommit?.data : [];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);

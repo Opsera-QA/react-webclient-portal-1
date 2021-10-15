@@ -39,11 +39,11 @@ function RequirementCreationToBranchCreationDataBlock() {
       const branchResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "requirementCreationToBranchCreation"
+        "gitlabRequirementCreationToBranchCreation"
       );
 
       let branchDataObject = branchResponse?.data
-        ? branchResponse?.data?.data[0]?.requirementCreationToBranchCreation?.data
+        ? branchResponse?.data?.data[0]?.gitlabRequirementCreationToBranchCreation?.data
         : [];
 
       if (isMounted?.current === true && branchDataObject) {
