@@ -58,10 +58,11 @@ export const salesforceBulkMigrationTaskConfigurationMetadata = {
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
     {
+      label: "Git URL",
       id: "gitUrl",
     },
-
     {
+      label: "SSH URL",
       id: "sshUrl",
     },
     {

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SalesforceOrganizationSyncTaskConfigurationEditorPanel from "components/tasks/details/tasks/sfdc-org-sync/SalesforceOrganizationSyncTaskConfigurationEditorPanel";
 import SFDXCertGenTaskTypeConfigurationPanel from "./sfdx-cert-gen/SFDXCertGenTaskTypeConfigurationPanel";
 import GitToGitSyncTaskConfigurationEditorPanel from "components/tasks/details/tasks/branch-to-branch/GitToGitSyncTaskConfigurationEditorPanel";
 import ECSCreationTaskConfigurationPanel from "./ecs-cluster-creation/ECSCreationTaskConfigurationPanel";
@@ -10,10 +9,22 @@ import AzureClusterConfigurationPanel from "./azure-cluster-creation/AzureCluste
 import {TASK_TYPES} from "components/tasks/task.types";
 import SFDCBranchStructuringTaskTypeConfigurationPanel
   from "components/tasks/details/tasks/sfdc-branch-structure/SFDCBranchStructuringTaskTypeConfigurationPanel";
+import SalesforceOrganizationSyncTaskConfigurationEditorPanel
+  from "components/tasks/details/tasks/sfdc-org-sync/SalesforceOrganizationSyncTaskConfigurationEditorPanel";
+import SalesforceBulkMigrationTaskConfigurationEditorPanel
+  from "components/tasks/details/tasks/sfdc-bulk-migration/SalesforceBulkMigrationTaskConfigurationEditorPanel";
 
 function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationModel, setTaskConfigurationModel, taskType }) {
   const getConfigurationPanel = () => {
     switch (taskType) {
+      case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+        return (
+          <SalesforceBulkMigrationTaskConfigurationEditorPanel
+            taskConfigurationModel={taskConfigurationModel}
+            setTaskConfigurationModel={setTaskConfigurationModel}
+            taskModel={taskModel}
+          />
+        );
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
         return (
           <SalesforceOrganizationSyncTaskConfigurationEditorPanel
