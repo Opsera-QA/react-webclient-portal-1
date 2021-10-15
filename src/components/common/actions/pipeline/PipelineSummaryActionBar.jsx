@@ -8,13 +8,13 @@ import ActionBarPublishPipelineButton from "./buttons/ActionBarPublishPipelineBu
 import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import PipelinesHelpDocumentation from "components/common/help/documentation/pipelines/PipelinesHelpDocumentation";
+import PipelinesSummaryHelpDocumentation from "../../help/documentation/pipelines/PipelinesSummaryHelpDocumentation";
 
 function PipelineSummaryActionBar({pipelineModel, canTransferPipeline, handleDuplicateClick, handleDeleteClick, handleViewClick, handlePublishClick, pipeline, loadPipeline}) {
   const toastContext = useContext(DialogToastContext);
 
   const toggleHelp = () => {
-    toastContext.showOverlayPanel(<PipelinesHelpDocumentation />);
+    toastContext.showOverlayPanel(<PipelinesSummaryHelpDocumentation />);
   };
 
   return (
@@ -24,7 +24,7 @@ function PipelineSummaryActionBar({pipelineModel, canTransferPipeline, handleDup
       {handlePublishClick && <div className="ml-3"><ActionBarPublishPipelineButton handlePublishClick={handlePublishClick} itemId={pipeline._id} /></div>}
       {handleDuplicateClick && <div className="ml-3"><ActionBarDuplicateButton handleDuplicateClick={handleDuplicateClick} itemName={"Pipeline"} itemId={pipeline._id} /></div>}
       {canTransferPipeline && pipeline.account != null && <div className="ml-3"><ActionBarTransferPipelineButton loadPipeline={loadPipeline} pipeline={pipeline} itemId={pipeline._id} /></div>}
-      {/*<ActionBarToggleHelpButton className={"ml-3 action-bar-icon pointer"} toggleHelp={toggleHelp} />*/}
+      <ActionBarToggleHelpButton className={"ml-3 action-bar-icon pointer"} toggleHelp={toggleHelp} />
       {handleDeleteClick && <div className="ml-3"><ActionBarDeleteButton handleDeleteClick={handleDeleteClick} itemId={pipeline._id} itemName={"Pipeline"} /></div>}
     </div>
   );
