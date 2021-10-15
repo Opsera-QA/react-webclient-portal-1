@@ -89,8 +89,8 @@ function SalesforceOrganizationSyncTaskConfigurationEditorPanel({ taskModel, tas
       </Col>
       <Col lg={12}>
         <SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
-          dataObject={taskConfigurationModel}
-          setDataObject={setTaskConfigurationModel}
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
         />
       </Col>
       <Col lg={12}>
