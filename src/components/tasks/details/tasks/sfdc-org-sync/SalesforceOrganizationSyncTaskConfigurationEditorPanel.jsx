@@ -82,9 +82,9 @@ function SalesforceOrganizationSyncTaskConfigurationEditorPanel({ taskModel, tas
       </Col>
       <Col lg={12}>
         <SalesforceOrganizationSyncTaskJenkinsAccountSelectInput
-          dataObject={taskConfigurationModel}
-          setDataObject={setTaskConfigurationModel}
-          gitTasksDataDto={taskModel}
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
+          taskModel={taskModel}
         />
       </Col>
       <Col lg={12}>
