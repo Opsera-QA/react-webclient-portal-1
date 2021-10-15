@@ -12,6 +12,7 @@ import ActionBarTransferToolButton from "components/common/actions/buttons/tool/
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 import axios from "axios";
 import ToolModel from "components/inventory/tools/tool.model";
+import ToolDetailHelpDocumentation from "../../../common/help/documentation/tool_registry/ToolDetailHelpDocumentation";
 
 function ToolDetailView() {
   const { id, tab } = useParams();
@@ -95,6 +96,12 @@ function ToolDetailView() {
     );
   };
 
+  const getHelpComponent = () => {
+    if (!isLoading) {
+      return (<ToolDetailHelpDocumentation/>);
+    }
+  };
+
   return (
     <DetailScreenContainer
       navigationTabContainer={<InventorySubNavigationBar currentTab={"toolViewer"} />}
@@ -103,6 +110,7 @@ function ToolDetailView() {
       dataObject={toolData}
       isLoading={isLoading}
       actionBar={getActionBar()}
+      helpComponent={getHelpComponent()}
       detailPanel={
         <ToolDetailPanel
           toolData={toolData}
