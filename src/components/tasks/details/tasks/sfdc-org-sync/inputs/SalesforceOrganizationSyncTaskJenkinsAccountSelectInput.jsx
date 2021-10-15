@@ -10,15 +10,15 @@ function SalesforceOrganizationSyncTaskJenkinsAccountSelectInput({model, setMode
     newModel.setData("service", selectedOption?.service);
     // save the tool identifier to the parent obj
     taskModel.setData("tool_identifier", selectedOption?.service);
-    newModel.setData("gitUrl", "");
-    newModel.setData("sshUrl", "");
-    newModel.setData("repository", "");
-    newModel.setData("projectId", "");
-    newModel.setData("gitBranch", "");
-    newModel.setData("defaultBranch", "");
-    newModel.setData("sourceBranch", "");
-    newModel.setData("workspace", "");
-    newModel.setData("workspaceName", "");
+    newModel.setDefaultValue("gitUrl");
+    newModel.setDefaultValue("sshUrl",);
+    newModel.setDefaultValue("repository");
+    newModel.setDefaultValue("projectId");
+    newModel.setDefaultValue("gitBranch");
+    newModel.setDefaultValue("defaultBranch");
+    newModel.setDefaultValue("sourceBranch");
+    newModel.setDefaultValue("workspace");
+    newModel.setDefaultValue("workspaceName");
     setModel({...newModel});
   };
 
