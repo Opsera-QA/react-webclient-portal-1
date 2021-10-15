@@ -113,7 +113,9 @@ function RunTaskOverlay({ handleClose, gitTasksData, setGitTasksData, loadData }
               <Col lg={12}>
                 <SalesforceOrganizationSyncTaskGitBranchTextInput
                   fieldName={"gitBranch"}
-                  dataObject={dataObj} setDataObject={setDataObj} visible={dataObj?.getData("isNewBranch")}
+                  model={dataObj}
+                  setModel={setDataObj}
+                  visible={dataObj?.getData("isNewBranch") === true}
                 />
               </Col>
               {/* <Col lg={12}>
