@@ -15,6 +15,7 @@ function StandaloneSelectInput(
     onSearch,
     value,
     setDataFunction,
+    defaultValue,
     onCreate,
     allowCreate,
     className,
@@ -42,6 +43,7 @@ function StandaloneSelectInput(
       value={value}
       filter={"contains"}
       busy={busy}
+      defaultValue={defaultValue}
       onCreate={onCreate}
       onToggle={onToggle}
       placeholder={getPlaceholderText()}
@@ -79,6 +81,7 @@ StandaloneSelectInput.propTypes = {
   className: PropTypes.string,
   onToggle: PropTypes.func,
   noDataText: PropTypes.string,
+  defaultValue: PropTypes.any,
 };
 
 StandaloneSelectInput.defaultProps = {
