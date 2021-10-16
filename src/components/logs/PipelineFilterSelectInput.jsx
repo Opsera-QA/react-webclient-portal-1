@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import {Col} from "react-bootstrap";
-import DropdownList from "react-widgets/lib/DropdownList";
 import pipelineActions from "components/workflow/pipeline-actions";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 // TODO: Refactor into two separate SelectInputBase components
 function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange, stepFilter, setStepFilter }) {
@@ -108,34 +108,33 @@ function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange,
     <>
     <Col className="custom-select-input my-2">
       <label><span>Pipeline</span></label>
-      <DropdownList
-          data={pipelineFilters}
-          busy={isLoading}
-          disabled={disabledPipelines}
-          valueField="value"
-          textField="label"
-          filter="contains"
-          value={pipelineFilter}
-          placeholder={"Select Pipeline Name"}
-          onChange={opseraPipelineSelectChange}
-        />
+      {/* eslint-disable-next-line react/jsx-no-undef */}
+      <StandaloneSelectInput
+        selectOptions={pipelineFilters}
+        busy={isLoading}
+        disabled={disabledPipelines}
+        valueField={"value"}
+        textField={"label"}
+        value={pipelineFilter}
+        placeholderText={"Select Pipeline Name"}
+        setDataFunction={opseraPipelineSelectChange}
+      />
       <small className="text-muted form-text">
         <div>Pipelines with no runs are visible in the dropdown but disabled.</div>
       </small>
       </Col>
       <Col className="custom-select-input my-2">
       <label><span>Step</span></label>
-        <DropdownList
-          data={pipelineFilter.steps}
+        <StandaloneSelectInput
+          selectOptions={pipelineFilter.steps}
           busy={Object.keys(pipelineFilters).length === 0}
           disabled={Object.keys(pipelineFilter).length === 0}
           // disabled={true}
-          valueField="value"
-          textField="label"
-          filter="contains"
+          valueField={"value"}
+          textField={"label"}
           value={stepFilter}
-          placeholder={"Select Step"}
-          onChange={setStepFilter}
+          placeholderText={"Select Step"}
+          setDataFunction={setStepFilter}
         />
       </Col>
     </>

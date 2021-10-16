@@ -9,7 +9,6 @@ import "react-widgets/dist/css/react-widgets.css";
 import "./theme.css";
 import "./field.css";
 import "./container.css";
-import "./analytics.css";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 
