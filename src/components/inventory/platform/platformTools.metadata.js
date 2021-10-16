@@ -1,4 +1,4 @@
-const platformMetadata = {
+const platformToolsMetadata = {
   idProperty: "_id",
   fields: [
     {
@@ -38,4 +38,4 @@ const platformMetadata = {
   ]
 };
 
-export default platformMetadata;
+export default platformToolsMetadata;

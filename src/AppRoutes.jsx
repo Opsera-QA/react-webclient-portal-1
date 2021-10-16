@@ -103,7 +103,7 @@ import PipelineStorageDetailView
 import ParametersInventory from "components/inventory/parameters/ParametersInventory";
 import ToolInventory from "components/inventory/tools/ToolInventory";
 import ScriptsInventory from "components/inventory/scripts/ScriptsInventory";
-import PlatformInventory from "components/inventory/platform/platformInventory";
+import PlatformInventory from "components/inventory/platform/PlatformInventory";
 import TagReportsScreen from "components/reports/tags/TagReportsScreen";
 import PipelineReportsScreen from "components/reports/pipelines/PipelineReportsScreen";
 import ToolReportsScreen from "components/reports/tools/ToolReportsScreen";
