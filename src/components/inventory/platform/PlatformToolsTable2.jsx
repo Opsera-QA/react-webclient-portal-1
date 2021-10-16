@@ -7,7 +7,7 @@ import FilterContainer from "components/common/table/FilterContainer";
 import { faTools} from "@fortawesome/pro-light-svg-icons";
 import {getField} from "components/common/metadata/metadata-helpers";
 
-function PlatformToolsTable({ platformApplication, applicationTools, isLoading }) {
+function PlatformToolsTable2({ platformApplication, applicationTools, isLoading }) {
   const fields = platformToolsMetadata.fields;
 
   const columns = useMemo(
@@ -54,10 +54,10 @@ function PlatformToolsTable({ platformApplication, applicationTools, isLoading }
   );
 }
 
-PlatformToolsTable.propTypes = {
+PlatformToolsTable2.propTypes = {
   platformApplication: PropTypes.string,
   applicationTools: PropTypes.array,
   isLoading: PropTypes.bool
 };
 
-export default PlatformToolsTable;
+export default PlatformToolsTable2;

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import PlatformToolsTable from "components/inventory/platform/PlatformToolsTable.jsx";
+import PlatformToolsTable2 from "components/inventory/platform/PlatformToolsTable2.jsx";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 import Model from "core/data_model/model";
@@ -25,7 +25,7 @@ function PlatformInventory () {
           />
         </Col>
         <Col xs={12}>
-          <PlatformToolsTable
+          <PlatformToolsTable2
             platformApplication={platformModel?.getData("applicationId")}
             applicationTools={platformModel?.getData("toolsList")}
           />
