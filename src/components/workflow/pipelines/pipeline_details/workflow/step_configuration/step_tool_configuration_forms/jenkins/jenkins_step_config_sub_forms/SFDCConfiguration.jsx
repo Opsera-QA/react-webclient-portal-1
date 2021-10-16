@@ -8,7 +8,6 @@ import {
   faSpinner,
   faEllipsisH
 } from "@fortawesome/free-solid-svg-icons";
-import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../../contexts/DialogToastContext";
 import { axiosApiService } from "../../../../../../../../../api/apiService";
@@ -19,6 +18,7 @@ import {
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import pipelineActions from "components/workflow/pipeline-actions.js";
 import SFDCUnitTestModal from "./SFDCUnitTestModal";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 const UNIT_TEST_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -34,6 +34,7 @@ const PROD_UNIT_TEST_OPTIONS = [
   { value: "RunSpecifiedTests", label: "Run Specified Tests" },
 ];
 
+// TODO: This needs to be refactored to follow new standards
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
 function SFDCConfiguration({  
@@ -218,13 +219,13 @@ function SFDCConfiguration({
                     <>
                       {renderForm && sfdcList && sfdcList.length > 0 ? (
                         <>
-                          <DropdownList
-                            data={sfdcList}
+                          <StandaloneSelectInput
+                            selectOptions={sfdcList}
                             value={sfdcList[sfdcList.findIndex((x) => x.id === formData.sfdcToolId)]}
                             valueField="id"
                             textField="name"
                             filter="contains"
-                            onChange={handleSFDCChange}
+                            setDataFunction={handleSFDCChange}
                           />
                         </>
                       ) : (
@@ -287,13 +288,13 @@ function SFDCConfiguration({
                   <>
                     {renderForm && sfdcList && sfdcList.length > 0 ? (
                       <>
-                        <DropdownList
-                          data={sfdcList}
+                        <StandaloneSelectInput
+                          selectOptions={sfdcList}
                           value={sfdcList[sfdcList.findIndex((x) => x.id === formData.sfdcDestToolId)]}
                           valueField="id"
                           textField="name"
                           filter="contains"
-                          onChange={handleDestinationSFDCChange}
+                          setDataFunction={handleDestinationSFDCChange}
                         />
                         {formData.destAccountUsername && formData.destAccountUsername.length > 0 && (
                           <div className="text-right pt-2">
@@ -349,14 +350,14 @@ function SFDCConfiguration({
                 <Form.Label className="w-100">
                     Unit Test Type*
                 </Form.Label>
-                <DropdownList
-                  data={UNIT_TEST_OPTIONS}
+                <StandaloneSelectInput
+                  selectOptions={UNIT_TEST_OPTIONS}
                   value={UNIT_TEST_OPTIONS[UNIT_TEST_OPTIONS.findIndex((x) => x.value === formData.sfdcUnitTestType)]}
                   valueField="id"
                   textField="label"
                   filter="contains"
-                  placeholder="Please select type of unit test"
-                  onChange={handleUnitTestChange}
+                  placeholderText="Please select type of unit test"
+                  setDataFunction={handleUnitTestChange}
                 />
               </Form.Group>
 
@@ -388,14 +389,14 @@ function SFDCConfiguration({
                 <Form.Label className="w-100">
                     Unit Test Type
                 </Form.Label>
-                <DropdownList
-                  data={PROD_UNIT_TEST_OPTIONS}
+                <StandaloneSelectInput
+                  selectOptions={PROD_UNIT_TEST_OPTIONS}
                   value={PROD_UNIT_TEST_OPTIONS[PROD_UNIT_TEST_OPTIONS.findIndex((x) => x.value === formData.sfdcUnitTestType)]}
                   valueField="id"
                   textField="label"
                   filter="contains"
-                  placeholder="Please select type of unit test"
-                  onChange={handleUnitTestChange}
+                  placeholderText="Please select type of unit test"
+                  setDataFunction={handleUnitTestChange}
                 />
                 <Form.Text className="text-muted">
                 Note: TestLevel of NoTestRun cannot be used in production organizations

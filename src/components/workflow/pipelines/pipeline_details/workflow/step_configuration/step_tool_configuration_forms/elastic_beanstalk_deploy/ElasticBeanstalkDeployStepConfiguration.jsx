@@ -12,11 +12,11 @@ import { faSave,
   faTimes,
   faEllipsisH,
   faTools } from "@fortawesome/free-solid-svg-icons";
-import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
 import {getErrorDialog, getMissingRequiredFieldsErrorDialog} from "../../../../../../../common/toasts/toasts";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 const PLATFORM_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -50,6 +50,7 @@ const INITIAL_DATA = {
 };
 
 
+// TODO: This needs to be refactored to follow new standards
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
 function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCallback, callbackSaveToVault, setToast, setShowToast }) {
@@ -349,8 +350,8 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
               <>
                 {renderForm && awsList && awsList.length > 0 ? (
                   <>
-                    <DropdownList
-                      data={awsList}
+                    <StandaloneSelectInput
+                      selectOptions={awsList}
                       value={
                         awsList[
                           awsList.findIndex(
@@ -360,8 +361,7 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
                       }
                       valueField="id"
                       textField="name"
-                      filter="contains"
-                      onChange={handleAWSChange}
+                      setDataFunction={handleAWSChange}
                     />
                   </>
                 ) : (
@@ -403,7 +403,7 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
       <Form.Group controlId="platform">
         <Form.Label>Platform*</Form.Label>
         {renderForm ?
-          <DropdownList
+          <StandaloneSelectInput
             data={PLATFORM_OPTIONS}
             valueField='id'
             textField='label'
@@ -432,13 +432,13 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
       <Form.Group controlId="s3Step">
         <Form.Label>S3 Step Info :</Form.Label>
         {renderForm && listOfSteps ?
-          <DropdownList
-            data={listOfSteps} 
+          <StandaloneSelectInput
+            selectOptions={listOfSteps}
             value={formData.s3StepId ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.s3StepId)] : listOfSteps[0]}
             valueField='_id'
             textField='name'
             defaultValue={formData.s3StepId ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.s3StepId)] : listOfSteps[0]}
-            onChange={handleS3StepChange}             
+            setDataFunction={handleS3StepChange}
           /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
       </Form.Group>
 

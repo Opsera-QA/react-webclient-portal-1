@@ -17,7 +17,6 @@ import {
   faEllipsisH,
   faTools,
 } from "@fortawesome/free-solid-svg-icons";
-import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
@@ -31,6 +30,7 @@ import {
 import pipelineActions from "components/workflow/pipeline-actions";
 import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
 import {jenkinsAgentArray} from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -718,8 +718,8 @@ function SonarStepConfiguration({
             <>
               {renderForm && jenkinsList && jenkinsList.length > 0 ? (
                 <>
-                  <DropdownList
-                    data={jenkinsList}
+                  <StandaloneSelectInput
+                    selectOptions={jenkinsList}
                     value={
                       jenkinsList[
                         jenkinsList.findIndex(
@@ -731,7 +731,7 @@ function SonarStepConfiguration({
                     textField="name"
                     placeholder="Please select an account"
                     filter="contains"
-                    onChange={handleJenkinsChange}
+                    setDataFunction={handleJenkinsChange}
                   />
                 </>
               ) : (
@@ -773,16 +773,16 @@ function SonarStepConfiguration({
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Job Type*</Form.Label>
           {jobType !== undefined ? (
-            <DropdownList
-              data={JOB_OPTIONS}
+            <StandaloneSelectInput
+              selectOptions={JOB_OPTIONS}
               valueField="id"
               textField="label"
               value={
                 JOB_OPTIONS[JOB_OPTIONS.findIndex((x) => x.value === jobType)]
               }
               filter="contains"
-              placeholder="Please select an account"
-              onChange={handleJobTypeChange}
+              placeholderText="Please select an account"
+              setDataFunction={handleJobTypeChange}
             />
           ) : null}
         </Form.Group>
@@ -845,8 +845,8 @@ function SonarStepConfiguration({
                       </div>
                     )}
                     {jobsList !== undefined && jobsList.length > 0 ? (
-                      <DropdownList
-                        data={jobsList}
+                      <StandaloneSelectInput
+                        selectOptions={jobsList}
                         valueField="id"
                         textField="name"
                         value={
@@ -856,7 +856,7 @@ function SonarStepConfiguration({
                             ]
                         }
                         filter="contains"
-                        onChange={handleJobChange}
+                        setDataFunction={handleJobChange}
                       />
                     ) : null}
                   </Form.Group>
@@ -865,8 +865,8 @@ function SonarStepConfiguration({
                       Jenkins Agent
                     </Form.Label>
                   
-                    <DropdownList
-                      data={jenkinsAgentArray}
+                    <StandaloneSelectInput
+                      selectOptions={jenkinsAgentArray}
                       groupBy="env"
                       valueField="agentLabel"
                       textField="name"
@@ -874,7 +874,7 @@ function SonarStepConfiguration({
                         jenkinsAgentArray.findIndex((x) => x.agentLabel === formData.agentLabels)
                       ]}
                       filter="contains"
-                      onChange={(item)=> setFormData({...formData, agentLabels: item.agentLabel }) }
+                      setDataFunction={(item)=> setFormData({...formData, agentLabels: item.agentLabel }) }
                     />
                   </Form.Group> */}
                   </>
@@ -917,8 +917,8 @@ function SonarStepConfiguration({
                   <>
                     {renderForm && sonarList && sonarList.length > 0 ? (
                       <>
-                        <DropdownList
-                          data={sonarList}
+                        <StandaloneSelectInput
+                          selectOptions={sonarList}
                           value={
                             sonarList[
                               sonarList.findIndex(
@@ -929,7 +929,7 @@ function SonarStepConfiguration({
                           valueField="id"
                           textField="name"
                           filter="contains"
-                          onChange={handleSonarChange}
+                          setDataFunction={handleSonarChange}
                         />
                         <br></br>
                         <Form.Group controlId="projectKey">
@@ -1005,8 +1005,8 @@ function SonarStepConfiguration({
                   </div>
                 )}
                 {accountsList !== undefined && accountsList.length > 0 ? (
-                  <DropdownList
-                    data={accountsList}
+                  <StandaloneSelectInput
+                    selectOptions={accountsList}
                     valueField="gitCredential"
                     textField="gitCredential"
                     defaultValue={
@@ -1018,7 +1018,7 @@ function SonarStepConfiguration({
                         ]
                     }
                     filter="contains"
-                    onChange={handleAccountChange}
+                    setDataFunction={handleAccountChange}
                   />
                 ) : null}
               </Form.Group>
@@ -1040,8 +1040,8 @@ function SonarStepConfiguration({
                 ) : (
                   <>
                     {workspacesList ? (
-                      <DropdownList
-                        data={workspacesList}
+                      <StandaloneSelectInput
+                        selectOptions={workspacesList}
                         value={
                           workspacesList[
                             workspacesList.findIndex(
@@ -1052,7 +1052,7 @@ function SonarStepConfiguration({
                         valueField="key"
                         textField="name"
                         filter="contains"
-                        onChange={handleWorkspacesChange}
+                        setDataFunction={handleWorkspacesChange}
                       />
                     ) : (
                       <FontAwesomeIcon
@@ -1088,8 +1088,8 @@ function SonarStepConfiguration({
                 ) : (
                   <>
                     {repoList ? (
-                      <DropdownList
-                        data={repoList}
+                      <StandaloneSelectInput
+                        selectOptions={repoList}
                         value={
                           repoList[
                             repoList.findIndex(
@@ -1100,7 +1100,7 @@ function SonarStepConfiguration({
                         valueField="value"
                         textField="name"
                         filter="contains"
-                        onChange={handleRepoChange}
+                        setDataFunction={handleRepoChange}
                       />
                     ) : (
                       <FontAwesomeIcon
@@ -1133,8 +1133,8 @@ function SonarStepConfiguration({
                 ) : (
                   <>
                     {branchList ? (
-                      <DropdownList
-                        data={branchList}
+                      <StandaloneSelectInput
+                        selectOptions={branchList}
                         value={
                           branchList[
                             branchList.findIndex((x) => x.value === formData.branch)
@@ -1143,7 +1143,7 @@ function SonarStepConfiguration({
                         valueField="value"
                         textField="name"
                         filter="contains"
-                        onChange={handleBranchChange}
+                        setDataFunction={handleBranchChange}
                       />
                     ) : (
                       <FontAwesomeIcon

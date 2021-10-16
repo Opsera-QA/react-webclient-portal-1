@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Form, Button, OverlayTrigger, Popover } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faSpinner, faExclamationCircle, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
-import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
@@ -13,6 +12,7 @@ import {
   getMissingRequiredFieldsErrorDialog,
   getServiceUnavailableDialog
 } from "../../../../../../../common/toasts/toasts";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 const SERVICE_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -374,13 +374,13 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
           ) :(
             <>
               {renderForm && jenkinsList && jenkinsList.length > 1 ? <>
-                <DropdownList
-                  data={jenkinsList}
+                <StandaloneSelectInput
+                  selectOptions={jenkinsList}
                   value={formData.toolConfigId ? jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)] : jenkinsList[0]}
                   valueField='id'
                   textField='name'
                   defaultValue={formData.toolConfigId ? jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)] : jenkinsList[0]}
-                  onChange={handleJenkinsChange}             
+                  setDataFunction={handleJenkinsChange}
                 /> 
                 <div className="text-right pt-2">
                   <OverlayTrigger trigger="click" rootClose placement="left" overlay={popover}>
@@ -414,12 +414,12 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Platform*</Form.Label>
           {formData.service !== undefined ?
-            <DropdownList
-              data={SERVICE_OPTIONS}
+            <StandaloneSelectInput
+              selectOptions={SERVICE_OPTIONS}
               valueField='id'
               textField='label'
               defaultValue={formData.service ? SERVICE_OPTIONS[SERVICE_OPTIONS.findIndex(x => x.value === formData.service)] : SERVICE_OPTIONS[0]}
-              onChange={handleServiceChange}             
+              setDataFunction={handleServiceChange}
             /> : null }
         </Form.Group>
         
@@ -433,13 +433,13 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
           ) :(
             <>
               {accountList && accountList.length > 1 ? 
-                <DropdownList
-                  data={accountList} 
+                <StandaloneSelectInput
+                  selectOptions={accountList}
                   value={formData.accountId ? accountList[accountList.findIndex(x => x.id === formData.accountId)] : accountList[0]}
                   valueField='id'
                   textField='name'
                   defaultValue={formData.accountId ? accountList[accountList.findIndex(x => x.id === formData.accountId)] : accountList[0]}
-                  onChange={handleAccountChange}             
+                  setDataFunction={handleAccountChange}
                 /> : 
                 <>
                   <div className="form-text text-muted p-2">
@@ -475,13 +475,13 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
           ) :(
             <>
               {repoList ?
-                <DropdownList
-                  data={repoList} 
+                <StandaloneSelectInput
+                  selectOptions={repoList}
                   value={formData.repository ? repoList[repoList.findIndex(x => x.value === formData.repository)] : repoList[0]}
                   valueField='value'
                   textField='name'
                   defaultValue={formData.repository ? repoList[repoList.findIndex(x => x.name === formData.repository)] : repoList[0]}
-                  onChange={handleRepoChange}             
+                  setDataFunction={handleRepoChange}
                 /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> }
             </>
           )}
