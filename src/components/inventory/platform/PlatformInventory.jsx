@@ -26,7 +26,8 @@ function PlatformInventory () {
         </Col>
         <Col xs={12}>
           <PlatformToolsTable
-            platformApplication={platformModel?.getData("application")}
+            platformApplication={platformModel?.getData("applicationId")}
+            applicationTools={platformModel?.getData("toolsList")}
           />
         </Col>
       </Row>
