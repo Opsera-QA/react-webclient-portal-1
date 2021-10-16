@@ -6,17 +6,15 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "../../../core/data_model/model";
 import axios from "axios";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
-import DeleteToolMetadata from "./delete-tool-metadata";
+import {deleteToolsMetadata} from "components/settings/delete_tools/deleteTools.metadata";
 import PropTypes from "prop-types";
-import ApplicationListInput from "./inputs/ApplicationListInput";
-import deleteToolsActions from "components/settings/delete_tools/settings-delete-tools-action.js";
+import DeleteToolsPlatformApplicationSelectInput from "components/settings/delete_tools/inputs/DeleteToolsPlatformApplicationSelectInput";
 import DeleteToolsTable from "components/settings/delete_tools/DeleteToolsTable";
+import platformActions from "components/inventory/platform/platform.actions";
+
 function DeleteTools() {
   const toastContext = useContext(DialogToastContext);
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
-  
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [deleteToolDto, setDeleteToolDto] = useState(undefined);
@@ -79,12 +77,13 @@ function DeleteTools() {
     }
     setAccessRoleData(userRoleAccess);
     setDeleteToolDto(
-      new Model({ ...DeleteToolMetadata.newObjectFields }, DeleteToolMetadata, true)
+      new Model({ ...deleteToolsMetadata.newObjectFields }, deleteToolsMetadata, true)
     );
  };
 
+  // TODO: I think this can be removed. We don't need to pull this data if it's set by the select input
  const loadApplicationTools = async (cancelSource = cancelTokenSource) => {
-  const response = await deleteToolsActions.getAllApplicationsV2(getAccessToken, cancelSource);
+  const response = await platformActions.getApplicationsV2(getAccessToken, cancelSource);
   if (isMounted?.current === true && response?.data) { 
     let application = response.data.find(ele => ele._id  === deleteToolDto.getData("applicationId"));
     // console.log(application);
@@ -109,11 +108,9 @@ function DeleteTools() {
       <div className="px-2 pb-2">
         <Row className="ml-auto mt-3">
           <Col lg={12}>
-            <ApplicationListInput
-             fieldName={"gitBranch"}
-             dataObject={deleteToolDto}
-             setDataObject={setDeleteToolDto}
-            //  disabled={disabled}
+            <DeleteToolsPlatformApplicationSelectInput
+             model={deleteToolDto}
+             setModel={setDeleteToolDto}
             />
           </Col>
         </Row>
@@ -122,20 +119,11 @@ function DeleteTools() {
     );
   };
 
-  if (!accessRoleData) {
-    return (
-      <ScreenContainer
-        breadcrumbDestination={"deleteTools"}
-        pageDescription={"This tool enables administrators to select a registered application, view the active tools and then delete them from the platform. This will perform a complete end to end removal of all instances related to an application."}
-        isLoading={true}
-      />
-    );
-  }
-
   return (
     <ScreenContainer
       breadcrumbDestination={"deleteTools"}
-      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
+      isLoading={!accessRoleData}
+      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator && !accessRoleData?.SassPowerUser}
       pageDescription={"This tool enables administrators to select a registered application, view the active tools and then delete them from the platform. This will perform a complete end to end removal of all instances related to an application."}
     >
       {getBody()}
