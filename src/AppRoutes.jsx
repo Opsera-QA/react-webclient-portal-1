@@ -103,7 +103,7 @@ import PipelineStorageDetailView
 import ParametersInventory from "components/inventory/parameters/ParametersInventory";
 import ToolInventory from "components/inventory/tools/ToolInventory";
 import ScriptsInventory from "components/inventory/scripts/ScriptsInventory";
-import PlatformInventory2 from "components/inventory/platform/PlatformInventory2";
+import PlatformInventory from "components/inventory/platform/PlatformInventory";
 import TagReportsScreen from "components/reports/tags/TagReportsScreen";
 import PipelineReportsScreen from "components/reports/pipelines/PipelineReportsScreen";
 import ToolReportsScreen from "components/reports/tools/ToolReportsScreen";
@@ -187,7 +187,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
 
           <SecureRoute path="/inventory" exact component={Inventory} />
           <SecureRoute path="/inventory/tools" exact component={ToolInventory} />
-          <SecureRoute path="/inventory/platform" exact component={PlatformInventory2} />
+          <SecureRoute path="/inventory/platform" exact component={PlatformInventory} />
           <SecureRoute path="/inventory/parameters" exact component={ParametersInventory} />
           <SecureRoute path="/inventory/scripts" exact component={ScriptsInventory} />
           <SecureRoute path="/inventory/tools/details/:id/:tab?" exact component={ToolDetailView} />
