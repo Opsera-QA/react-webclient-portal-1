@@ -7,9 +7,9 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import DropdownList from "react-widgets/lib/DropdownList";
 import OctopusTenantStandaloneSelectInput
   from "components/common/list_of_values_input/tools/octopus/tenants/OctopusTenantStandaloneSelectInput";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 function OctopusTenantInputRow(
   {
@@ -53,15 +53,14 @@ function OctopusTenantInputRow(
       <Col sm={11}>
         <Row className={"pl-2"}>
           <Col sm={6} className={"pl-0 pr-1"}>
-            <DropdownList
-              data={environmentList}
+            <StandaloneSelectInput
+              selectOptions={environmentList}
               valueField={"id"}
               textField={"name"}
               value={environmentId}
-              disabled={disabled || !Array.isArray(environmentList) || environmentList.length === 0}
-              filter={"contains"}
-              placeholder={"Select an Environment"}
-              onChange={(newValue) => updateEnvironment(newValue?.id)}
+              disabled={disabled}
+              placeholderText={"Select an Environment"}
+              setDataFunction={(newValue) => updateEnvironment(newValue?.id)}
             />
           </Col>
           <Col sm={6} className={"pl-1 pr-0"}>

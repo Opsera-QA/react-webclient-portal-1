@@ -3,19 +3,18 @@ import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-  faExclamationTriangle,
   faIdCard,
   faTimes,
 } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import DropdownList from "react-widgets/lib/DropdownList";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import axios from "axios";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 const roleTypes = [
   {text: "Administrator", value: "administrator"},
@@ -314,47 +313,43 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
   const getAssigneeInput = (role) => {
     if (role["roleAccessType"] === "user") {
       return (
-        <DropdownList
-          data={userList}
+        <StandaloneSelectInput
+          selectOptions={userList}
           valueField={"emailAddress"}
           textField={(item) => item != null && typeof item === "object" ? `${item.name} (${item.emailAddress})` : item}
           value={role["user"]}
           busy={loadingUsers}
-          filter={"contains"}
           disabled={disabled || getDisabledUsers()}
-          placeholder={"Select A User"}
-          onChange={(value) => updateProperty(role, "user", value["emailAddress"])}
+          placeholderText={"Select A User"}
+          setDataFunction={(value) => updateProperty(role, "user", value["emailAddress"])}
         />
       );
     }
 
     return (
-      <DropdownList
-        data={groupList}
+      <StandaloneSelectInput
+        selectOptions={groupList}
         valueField={"name"}
         textField={"name"}
         value={role["group"]}
         busy={loadingGroups}
         disabled={disabled || getDisabledGroups()}
-        filter={"contains"}
-        placeholder={"Select A Group"}
-        onChange={(value) => updateProperty(role, "group", value["name"])}
+        placeholderText={"Select A Group"}
+        setDataFunction={(value) => updateProperty(role, "group", value["name"])}
       />
     );
   };
 
   const getRoleTypeInput = (role) => {
     return (
-      <DropdownList
-        className=""
-        data={roleTypes}
+      <StandaloneSelectInput
+        selectOptions={roleTypes}
         valueField={"value"}
         textField={"text"}
         value={role["role"]}
-        filter={"contains"}
         disabled={disabled}
-        placeholder={"Select Role Type"}
-        onChange={(value) => updateProperty(role, "role", value["value"])}
+        placeholderText={"Select Role Type"}
+        setDataFunction={(value) => updateProperty(role, "role", value["value"])}
       />
     );
   };
