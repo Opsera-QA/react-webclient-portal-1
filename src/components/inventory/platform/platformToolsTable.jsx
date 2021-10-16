@@ -3,19 +3,22 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import platformToolsMetadata from "components/inventory/platform/platformTools.metadata";
 import {getTableDateColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
+import FilterContainer from "components/common/table/FilterContainer";
+import { faTools} from "@fortawesome/pro-light-svg-icons";
+import {getField} from "components/common/metadata/metadata-helpers";
 
-function PlatformToolsTable({ platformApplication, isLoading }) {
+function PlatformToolsTable({ platformApplication, applicationTools, isLoading }) {
   const fields = platformToolsMetadata.fields;
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "name";})),
-      getTableTextColumn(fields.find(field => { return field.id === "port";})),
-      getTableTextColumn(fields.find(field => { return field.id === "toolStatus";})),
-      getTableTextColumn(fields.find(field => { return field.id === "versionNumber";})),
-      getTableDateColumn(fields.find(field => { return field.id === "installationDate";})),
-      getTableTextColumn(fields.find(field => { return field.id === "toolURL";})),
-      getTableTextColumn(fields.find(field => { return field.id === "dnsName";})),
+      getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "port")),
+      getTableTextColumn(getField(fields, "toolStatus")),
+      getTableTextColumn(getField(fields, "versionNumber")),
+      getTableDateColumn(getField(fields, "installationDate")),
+      getTableTextColumn(getField(fields, "toolURL")),
+      getTableTextColumn(getField(fields, "dnsName")),
     ],
     []
   );
@@ -28,18 +31,32 @@ function PlatformToolsTable({ platformApplication, isLoading }) {
     return ("Select a Platform Application to view its Tools.");
   };
 
+  const getPlatformToolsTable = () => {
+    return (
+      <CustomTable
+        columns={columns}
+        data={applicationTools}
+        isLoading={isLoading}
+        noDataMessage={getNoDataMessage()}
+      />
+    );
+  };
+
   return (
-    <CustomTable
-      columns={columns}
-      data={platformApplication?.tools}
+    <FilterContainer
       isLoading={isLoading}
-      noDataMessage={getNoDataMessage()}
+      showBorder={false}
+      body={getPlatformToolsTable()}
+      metadata={platformToolsMetadata}
+      titleIcon={faTools}
+      title={"Tools"}
     />
   );
 }
 
 PlatformToolsTable.propTypes = {
-  platformApplication: PropTypes.object,
+  platformApplication: PropTypes.string,
+  applicationTools: PropTypes.array,
   isLoading: PropTypes.bool
 };
 

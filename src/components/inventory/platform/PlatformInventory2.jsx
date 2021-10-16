@@ -9,7 +9,7 @@ import {platformMetadata} from "components/inventory/platform/platform.metadata"
 import PlatformInventoryPlatformApplicationSelectInput
   from "components/inventory/platform/inputs/PlatformInventoryPlatformApplicationSelectInput";
 
-function PlatformInventory () {
+function PlatformInventory2 () {
   const [platformModel, setPlatformModel] = useState(new Model(platformMetadata.newObjectFields, platformMetadata, true));
 
   return (
@@ -26,7 +26,8 @@ function PlatformInventory () {
         </Col>
         <Col xs={12}>
           <PlatformToolsTable
-            platformApplication={platformModel?.getData("application")}
+            platformApplication={platformModel?.getData("applicationId")}
+            applicationTools={platformModel?.getData("toolsList")}
           />
         </Col>
       </Row>
@@ -34,6 +35,6 @@ function PlatformInventory () {
   );
 }
 
-PlatformInventory.propTypes = {};
+PlatformInventory2.propTypes = {};
 
-export default PlatformInventory;
+export default PlatformInventory2;
