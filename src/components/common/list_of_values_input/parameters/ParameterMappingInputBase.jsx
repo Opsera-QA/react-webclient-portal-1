@@ -8,7 +8,6 @@ import Col from "react-bootstrap/Col";
 import { DialogToastContext } from "../../../../contexts/DialogToastContext";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import parametersActions from "../../../inventory/parameters/parameters-actions";
-import DropdownList from "react-widgets/lib/DropdownList";
 import axios from "axios";
 import ReactJson from "react-json-view";
 import InfoText from "../../inputs/info_text/InfoText";

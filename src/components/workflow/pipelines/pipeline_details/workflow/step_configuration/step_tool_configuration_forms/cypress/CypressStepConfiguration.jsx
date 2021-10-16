@@ -17,7 +17,6 @@ import {
   faEllipsisH,
   faTools,
 } from "@fortawesome/free-solid-svg-icons";
-import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
@@ -31,6 +30,7 @@ import {
 import pipelineActions from "components/workflow/pipeline-actions";
 import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
 import {jenkinsAgentArray} from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -72,6 +72,7 @@ const INITIAL_DATA = {
   // agentLabels : "",
 };
 
+// TODO: This needs to be refactored to follow new standards
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
 function CypressStepConfiguration({
@@ -665,8 +666,8 @@ function CypressStepConfiguration({
             <>
               {renderForm && jenkinsList && jenkinsList.length > 0 ? (
                 <>
-                  <DropdownList
-                    data={jenkinsList}
+                  <StandaloneSelectInput
+                    selectOptions={jenkinsList}
                     value={
                       jenkinsList[
                         jenkinsList.findIndex(
@@ -674,11 +675,10 @@ function CypressStepConfiguration({
                         )
                         ]
                     }
-                    valueField="id"
-                    textField="name"
-                    placeholder="Please select an account"
-                    filter="contains"
-                    onChange={handleJenkinsChange}
+                    valueField={"id"}
+                    textField={"name"}
+                    placeholderText={"Please select an account"}
+                    setDataFunction={handleJenkinsChange}
                   />
                 </>
               ) : (
@@ -712,16 +712,15 @@ function CypressStepConfiguration({
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Job Type*</Form.Label>
           {jobType !== undefined ? (
-            <DropdownList
-              data={JOB_OPTIONS}
-              valueField="id"
-              textField="label"
+            <StandaloneSelectInput
+              selectOptions={JOB_OPTIONS}
+              valueField={"id"}
+              textField={"label"}
               value={
                 JOB_OPTIONS[JOB_OPTIONS.findIndex((x) => x.value === jobType)]
               }
-              filter="contains"
-              placeholder="Please select an account"
-              onChange={handleJobTypeChange}
+              placeholderText="Please select an account"
+              setDataFunction={handleJobTypeChange}
             />
           ) : null}
         </Form.Group>
@@ -785,18 +784,17 @@ function CypressStepConfiguration({
                   </div>
                 )}
                 {jobsList !== undefined && jobsList.length > 0 ? (
-                  <DropdownList
-                    data={jobsList}
-                    valueField="id"
-                    textField="name"
+                  <StandaloneSelectInput
+                    selectOptions={jobsList}
+                    valueField={"id"}
+                    textField={"name"}
                     value={
                       jobsList && jobsList.length > 0 &&
                       jobsList[
                         jobsList.findIndex((x) => x._id === formData.toolJobId)
                         ]
                     }
-                    filter="contains"
-                    onChange={handleJobChange}
+                    setDataFunction={handleJobChange}
                   />
                 ) : null}
               </Form.Group>
@@ -805,8 +803,8 @@ function CypressStepConfiguration({
                   Jenkins Agent
                 </Form.Label>
 
-                <DropdownList
-                  data={jenkinsAgentArray}
+                <StandaloneSelectInput
+                  selectOptions={jenkinsAgentArray}
                   groupBy="env"
                   valueField="agentLabel"
                   textField="name"
@@ -814,7 +812,7 @@ function CypressStepConfiguration({
                     jenkinsAgentArray.findIndex((x) => x.agentLabel === formData.agentLabels)
                   ]}
                   filter="contains"
-                  onChange={(item)=> setFormData({...formData, agentLabels: item.agentLabel }) }
+                  setDataFunction={(item)=> setFormData({...formData, agentLabels: item.agentLabel }) }
                 />
               </Form.Group> */}
               </>
@@ -860,8 +858,8 @@ function CypressStepConfiguration({
               </div>
             )}
             {accountsList !== undefined && accountsList.length > 0 ? (
-              <DropdownList
-                data={accountsList}
+              <StandaloneSelectInput
+                selectOptions={accountsList}
                 valueField="gitCredential"
                 textField="gitCredential"
                 defaultValue={
@@ -872,8 +870,7 @@ function CypressStepConfiguration({
                     )
                     ]
                 }
-                filter="contains"
-                onChange={handleAccountChange}
+                setDataFunction={handleAccountChange}
               />
             ) : null}
           </Form.Group>
@@ -896,8 +893,8 @@ function CypressStepConfiguration({
             ) : (
               <>
                 {workspacesList ? (
-                  <DropdownList
-                    data={workspacesList}
+                  <StandaloneSelectInput
+                    selectOptions={workspacesList}
                     value={
                       workspacesList[
                         workspacesList.findIndex(
@@ -907,8 +904,7 @@ function CypressStepConfiguration({
                     }
                     valueField="key"
                     textField="name"
-                    filter="contains"
-                    onChange={handleWorkspacesChange}
+                    setDataFunction={handleWorkspacesChange}
                   />
                 ) : (
                   <FontAwesomeIcon
@@ -944,8 +940,8 @@ function CypressStepConfiguration({
             ) : (
               <>
                 {repoList ? (
-                  <DropdownList
-                    data={repoList}
+                  <StandaloneSelectInput
+                    selectOptions={repoList}
                     value={
                       repoList[
                         repoList.findIndex(
@@ -955,8 +951,7 @@ function CypressStepConfiguration({
                     }
                     valueField="value"
                     textField="name"
-                    filter="contains"
-                    onChange={handleRepoChange}
+                    setDataFunction={handleRepoChange}
                   />
                 ) : (
                   <FontAwesomeIcon
@@ -989,8 +984,8 @@ function CypressStepConfiguration({
             ) : (
               <>
                 {branchList ? (
-                  <DropdownList
-                    data={branchList}
+                  <StandaloneSelectInput
+                    selectOptions={branchList}
                     value={
                       branchList[
                         branchList.findIndex((x) => x.value === formData.branch)
@@ -998,8 +993,7 @@ function CypressStepConfiguration({
                     }
                     valueField="value"
                     textField="name"
-                    filter="contains"
-                    onChange={handleBranchChange}
+                    setDataFunction={handleBranchChange}
                   />
                 ) : (
                   <FontAwesomeIcon
