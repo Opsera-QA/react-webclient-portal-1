@@ -7,12 +7,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
-import DropdownList from "react-widgets/lib/DropdownList";
 import axios from "axios";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import taskActions from "components/tasks/task.actions";
 import gitTasksFilterMetadata from "components/tasks/git-tasks-filter-metadata";
 import Model from "../../../../../../../../../core/data_model/model";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 function MultiTaskSelectInputBase({
   dataObject,
@@ -227,28 +227,26 @@ function MultiTaskSelectInputBase({
       <div className="my-2">
         <Row>
           <Col sm={5} className={"my-1 ml-2"}>
-            <DropdownList
-              data={taskList ? taskList : []}
+            <StandaloneSelectInput
+              selectOptions={taskList ? taskList : []}
               valueField={"_id"}
               textField={"name"}
               value={taskName}
-              filter={"contains"}
               busy={isTaskSearching}
-              placeholder={lambdaPlaceholder}
-              onChange={(data) => setTaskData(data)}
+              placeholderText={lambdaPlaceholder}
+              setDataFunction={(data) => setTaskData(data)}
               disabled={isLoading || (!isLoading && (taskList == null || taskList.length === 0))}
             />
           </Col>
           <Col sm={5} className={"my-1 ml-2"}>
-            <DropdownList
-              data={s3List ? s3List : []}
+            <StandaloneSelectInput
+              selectOptions={s3List ? s3List : []}
               valueField={"_id"}
               textField={"name"}
               value={stepName}
-              filter={"contains"}
               busy={isS3Searching}
-              placeholder={s3PlaceHolder}
-              onChange={(data) => setStepData(data)}
+              placeholderText={s3PlaceHolder}
+              setDataFunction={(data) => setStepData(data)}
               disabled={isLoading || (!isLoading && (s3List == null || s3List.length === 0))}
             />
           </Col>
