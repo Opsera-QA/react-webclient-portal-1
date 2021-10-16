@@ -6,7 +6,6 @@ import SummaryChartsView from "./views/pipeline/buildView_developer";
 import ReliabilityMetricsCharts from "./views/reliability/ReliabilityMetricsView";
 import CodeCoverageMetricsView from "./views/sonarCodeCoverageView";
 import InfoDialog from "../common/status_notifications/info";
-import "./analytics.css";
 import "./charts/charts.css";
 import DeploymentFrequencyLineChart from "./charts/DeploymentFrequencyLineChart.jsx";
 import JiraIssuesCreatedByDateLineChart from "./charts/JiraIssuesCreatedByDateLineChart.jsx";
