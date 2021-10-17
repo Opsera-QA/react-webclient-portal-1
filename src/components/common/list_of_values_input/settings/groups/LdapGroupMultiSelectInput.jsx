@@ -4,7 +4,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import axios from "axios";
-import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
 function LdapGroupMultiSelectInput({ fieldName, model, setModel, setDataFunction, disabled }) {
   const {getUserRecord, getAccessToken, setAccessRoles, isSassUser} = useContext(AuthContext);

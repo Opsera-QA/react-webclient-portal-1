@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
-import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 
 function SfdcRuleComponentTypeMultiSelectInput({fieldName, className, dataObject, setDataObject, disabled, showLabel, fetchAttribute, pipelineWizardModel}) {

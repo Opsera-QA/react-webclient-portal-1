@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import OctopusStepActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
-import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 

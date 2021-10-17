@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 import axios from "axios";
-import MultiSelectInputBase from "../../../../../common/inputs/select/MultiSelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import ECSCreationActions from "../ecs-service-creation-actions";
 
 function SubnetSelectInput({

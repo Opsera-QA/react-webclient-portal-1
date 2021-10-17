@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {matchesRegex} from "utils/helpers";
-import simpleNumberLocalizer from "react-widgets-simple-number";
 import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
@@ -11,7 +10,6 @@ import StandaloneNumberPickerInput from "components/common/inputs/number/picker/
 function PositiveIntegerNumberPickerInput({ fieldName, className, dataObject, setDataObject, disabled, placeholderText, showLabel, minimum, maximum }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
-  simpleNumberLocalizer();
 
   useEffect(() => {
   }, [dataObject]);

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
 // TODO: Note: Because the inner value of the value field is "value",
 //  we need to name the value field something else. Keep this in mind, going forward

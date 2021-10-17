@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
-import { Multiselect } from 'react-widgets';
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 
 function MultiSelectInputBase(
   {
@@ -92,6 +92,17 @@ function MultiSelectInputBase(
     return parsedValues;
   };
 
+  const updateValue = (newValue) => {
+    if (setDataFunction) {
+      setDataFunction(field?.id, newValue);
+    }
+    else {
+      const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
+      validateAndSetData(field?.id, parsedValue);
+    }
+  };
+
+
   if (field == null) {
     return null;
   }
@@ -109,21 +120,18 @@ function MultiSelectInputBase(
         clearDataDetails={clearDataDetails}
         infoOverlay={infoOverlay}
       />
-      <div className={"custom-multiselect-input"}>
-        <Multiselect
-          data={selectOptions}
-          valueField={valueField}
-          textField={textField}
-          busy={busy}
-          filter="contains"
-          groupBy={groupBy}
-          value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : [] }
-          placeholder={placeholderText}
-          disabled={disabled || !Array.isArray(selectOptions) || selectOptions?.length === 0 || busy}
-          onChange={newValue => setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)}
-        />
-      </div>
-      <InfoText errorMessage={errorMessage} field={field} />
+      <StandaloneMultiSelectInput
+        selectOptions={selectOptions}
+        valueField={valueField}
+        textField={textField}
+        busy={busy}
+        groupBy={groupBy}
+        value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : []}
+        placeholderText={placeholderText}
+        disabled={disabled}
+        setDataFunction={updateValue}
+      />
+      <InfoText errorMessage={errorMessage} field={field}/>
     </InputContainer>
   );
 }
