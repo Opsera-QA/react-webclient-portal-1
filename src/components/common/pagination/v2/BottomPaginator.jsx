@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import {Pagination} from "react-bootstrap";
 import {getResultSummary} from "components/common/pagination/pagination-helpers";
 import ResultsSummary from "components/common/pagination/v2/ResultsSummary";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 // TODO: Should we use the new paginator?
 function BottomPaginator({ paginationModel, nextGeneration, loadData, isLoading }) {
@@ -16,8 +18,8 @@ function BottomPaginator({ paginationModel, nextGeneration, loadData, isLoading 
   };
 
   const getTotalPages = () => {
-    let pageSize = paginationModel.getData("pageSize");
-    let totalCount = paginationModel.getData("totalCount");
+    let pageSize = paginationModel.getFilterValue("pageSize");
+    let totalCount = paginationModel.getFilterValue("totalCount");
     return Math.ceil(totalCount / pageSize);
   };
 
@@ -68,13 +70,15 @@ function BottomPaginator({ paginationModel, nextGeneration, loadData, isLoading 
 
   return (
     <div className="bottom-pagination">
-      <div className="pagination-block small d-flex justify-content-between px-2">
-        <div className="my-auto results-summary">{getResultSummaryField()}</div>
-        <div className="my-auto">
+      <Row className="pagination-block small d-flex justify-content-between px-2 py-1">
+        <Col xs={4} className="my-auto results-summary">
+          {getResultSummaryField()}
+        </Col>
+        <Col xs={4} className="my-auto">
           {getPaginator()}
-        </div>
-        <div className="results-summary" />
-      </div>
+        </Col>
+        <Col xs={4} />
+      </Row>
     </div>
   );
 }

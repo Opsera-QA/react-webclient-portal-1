@@ -45,8 +45,6 @@ import NUnitStepConfiguration from "./step_tool_configuration_forms/nunit/NUnitS
 import JFrogDockerStepConfiguration
   from "./step_tool_configuration_forms/jfrog_artifactory_docker/JFrogDockerStepConfiguration";
 import TerrascanStepConfiguration from "./step_tool_configuration_forms/terrascan/TerrascanStepConfiguration";
-import AzureDevopsToolConfiguration
-  from "../../../../../inventory/tools/tool_details/tool_jobs/azure-devops/AzureDevopsToolConfiguration";
 import AzureDevopsStepConfiguration
   from "./step_tool_configuration_forms/azure_devops/AzureDevopsStepToolConfiguration";
 import KafkaConnectStepConfiguration from "./step_tool_configuration_forms/kafka_connect/KafkaConnectStepConfiguration";
@@ -414,20 +412,6 @@ function StepToolConfiguration({
     switch (toolName) {
       case "jenkins":
         return (
-          // <LegacyJenkinsStepConfiguration
-          //   pipelineId={pipeline._id}
-          //   plan={pipeline.workflow.plan}
-          //   stepId={stepId}
-          //   stepTool={stepTool}
-          //   parentCallback={callbackFunction}
-          //   callbackSaveToVault={saveToVault}
-          //   callbackGetFromVault={getFromVault}
-          //   callbackDeleteFromVault={deleteFromVaultUsingVaultKey}
-          //   createJob={createJob}
-          //   setToast={setToast}
-          //   setShowToast={setShowToast}
-          //   closeEditorPanel={closeEditorPanel}
-          // />
           <JenkinsStepConfiguration
             stepTool={stepTool}
             plan={pipeline?.workflow?.plan}
