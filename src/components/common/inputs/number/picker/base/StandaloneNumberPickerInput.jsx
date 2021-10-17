@@ -7,7 +7,17 @@ export const formatTypes = {
   percent: '%'
 };
 
-function StandaloneNumberPickerInputBase({ value, disabled, placeholderText, formatType, setDataFunction, minimum, maximum }) {
+function StandaloneNumberPickerInput(
+  {
+    value,
+    disabled,
+    placeholderText,
+    formatType,
+    setDataFunction,
+    minimum,
+    maximum,
+    handleKeyPressFunction
+  }) {
   simpleNumberLocalizer();
 
   if (setDataFunction == null) {
@@ -20,6 +30,7 @@ function StandaloneNumberPickerInputBase({ value, disabled, placeholderText, for
       disabled={disabled}
       value={value}
       className="max-content-width"
+      onKeyDown={handleKeyPressFunction}
       onChange={(newValue) => setDataFunction(newValue)}
       min={typeof minimum === "number" ? minimum : undefined}
       max={typeof maximum === "number" ? maximum : undefined}
@@ -28,7 +39,7 @@ function StandaloneNumberPickerInputBase({ value, disabled, placeholderText, for
   );
 }
 
-StandaloneNumberPickerInputBase.propTypes = {
+StandaloneNumberPickerInput.propTypes = {
   placeholderText: PropTypes.string,
   value: PropTypes.number,
   disabled: PropTypes.bool,
@@ -36,6 +47,7 @@ StandaloneNumberPickerInputBase.propTypes = {
   setDataFunction: PropTypes.func.isRequired,
   minimum: PropTypes.number,
   maximum: PropTypes.number,
+  handleKeyPressFunction: PropTypes.func,
 };
 
-export default StandaloneNumberPickerInputBase;
+export default StandaloneNumberPickerInput;
