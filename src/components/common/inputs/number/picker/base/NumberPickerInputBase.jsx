@@ -5,10 +5,6 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneNumberPickerInput from "components/common/inputs/number/picker/base/StandaloneNumberPickerInput";
 
-export const formatTypes = {
-  percent: '%'
-};
-
 function NumberPickerInputBase(
   {
     fieldName,
@@ -21,7 +17,7 @@ function NumberPickerInputBase(
     showLabel,
     minimum,
     maximum,
-    className
+    className,
   }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import organizationActions from "components/settings/organizations/organization-actions";
-import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
 function OrganizationMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction, className, clearDataFunction, showLabel}) {
   const { getAccessToken } = useContext(AuthContext);
