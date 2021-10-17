@@ -1300,6 +1300,8 @@ div.data-blocks-ellipses {
 
 .bottom-pagination .results-summary {
     min-width: 150px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .pagination-container .bottom-pagination {
