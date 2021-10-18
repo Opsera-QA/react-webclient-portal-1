@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from "react";
-import {Row, Col, InputGroup, Button} from "react-bootstrap";
+import {Row, Col} from "react-bootstrap";
 import {AuthContext} from "contexts/AuthContext";
 import accountsActions from "components/admin/accounts/accounts-actions.js";
 import PropTypes from "prop-types";
@@ -11,13 +11,13 @@ import WarningDialog from "components/common/status_notifications/WarningDialog"
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import MessageField from "components/common/fields/text/MessageField";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
-import MembersPanel from "components/settings/ldap_groups/ldap_group_detail/membership_manager/user_panel/MembersPanel";
+import MembersPanel from "components/common/inputs/user/membership/manager/user_panel/MembersPanel";
 import NonMembersPanel
-  from "components/settings/ldap_groups/ldap_group_detail/membership_manager/user_panel/NonMembersPanel";
+  from "components/common/inputs/user/membership/manager/user_panel/NonMembersPanel";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/pro-light-svg-icons";
 
-function LdapGroupMembershipManagementPanel({ldapGroupData, ldapUsers, orgDomain, setActiveTab, loadData, authorizedActions}) {
+function LdapGroupMembershipManagementPanel({ldapGroupData, type, ldapUsers, orgDomain, setActiveTab, loadData, authorizedActions}) {
   const toastContext = useContext(DialogToastContext);
   const {getAccessToken} = useContext(AuthContext);
   const [members, setMembers] = useState([]);
@@ -77,7 +77,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, ldapUsers, orgDomain
         return acc;
       }, []);
       await accountsActions.syncMembership(orgDomain, ldapGroupData.getData("name"), emailList, getAccessToken);
-      toastContext.showUpdateSuccessResultDialog("Group Membership");
+      toastContext.showUpdateSuccessResultDialog(`${type} Membership`);
       setShowUnsavedChangesMessage(false);
       loadData();
     }
@@ -160,13 +160,13 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, ldapUsers, orgDomain
   return (
     <DetailPanelContainer>
       <Row className="mx-2">
-        <div><h5>Add or remove people from the {ldapGroupData.getData("name")} group</h5></div>
+        <div><h5>Add or remove people from the {ldapGroupData.getData("name")} {type}</h5></div>
       </Row>
       <Row>
         <MessageField
           message={` 
-            Manage group membership below by adding items from the left column into the right or removing members from the right column.  
-            Changes must be saved before being complete.  Group membership changes take effect after the user logs back in.
+            Manage ${type} membership below by adding items from the left column into the right or removing members from the right column.  
+            Changes must be saved before being complete. ${type} membership changes take effect after the User logs back in.
           `} />
       </Row>
       <Row>
@@ -215,7 +215,12 @@ LdapGroupMembershipManagementPanel.propTypes = {
   getGroup: PropTypes.func,
   setActiveTab: PropTypes.func,
   loadData: PropTypes.func,
-  authorizedActions: PropTypes.array
+  authorizedActions: PropTypes.array,
+  type: PropTypes.string,
+};
+
+LdapGroupMembershipManagementPanel.defaultProps = {
+  type: "Group",
 };
 
 export default LdapGroupMembershipManagementPanel;

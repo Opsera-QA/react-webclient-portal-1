@@ -2,14 +2,14 @@ import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import NewLdapGroupModal from "components/settings/ldap_groups/NewLdapGroupModal";
+import NewLdapGroupModal from "components/settings/ldap_groups/NewLdapGroupOverlay";
 import {
   getCountColumnWithoutField,
   getTableBooleanIconColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
-import {ldapGroupMetaData} from "components/settings/ldap_groups/ldap-groups-metadata";
+import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faUserFriends} from "@fortawesome/pro-light-svg-icons";
 
@@ -18,6 +18,7 @@ function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, l
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
   const history = useHistory();
 
+  // TODO: This should be static
   const getDynamicColumn = () => {
     if (useMembers) {
       return (getCountColumnWithoutField("Members", "members"));
@@ -30,7 +31,6 @@ function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, l
     () => [
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "externalSyncGroup")),
-      getTableTextColumn(getField(fields, "groupType"), "upper-case-first"),
       getDynamicColumn(),
       getTableBooleanIconColumn(getField(fields, "isSync"))
     ],

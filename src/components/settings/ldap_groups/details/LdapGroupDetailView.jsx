@@ -1,13 +1,12 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
-import {useParams} from "react-router-dom";
-import {faUserFriends} from "@fortawesome/pro-light-svg-icons";
+import {useHistory, useParams} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
-import {ldapGroupMetaData} from "components/settings/ldap_groups/ldap-groups-metadata";
+import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
-import LdapGroupDetailPanel from "components/settings/ldap_groups/ldap_group_detail/LdapGroupDetailPanel";
+import LdapGroupDetailPanel from "components/settings/ldap_groups/details/LdapGroupDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
@@ -18,6 +17,7 @@ import axios from "axios";
 const roleGroups = ["Administrators", "PowerUsers", "Users"];
 
 function LdapGroupDetailView() {
+  const history = useHistory();
   const {groupName, orgDomain} = useParams();
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});
@@ -112,16 +112,15 @@ function LdapGroupDetailView() {
       let authorizedActions;
 
       if (roleGroups.includes(groupName)) {
-        authorizedActions = await accountsActions.getAllowedRoleGroupActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-        setAuthorizedActions(authorizedActions);
+        history.push(`/settings/${orgDomain}/role-groups/${groupName}`);
+        return;
       }
-      else {
-        authorizedActions = await accountsActions.getAllowedGroupActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-        setAuthorizedActions(authorizedActions);
 
-        if (!groupName.startsWith("_dept")) {
-          setCanDelete(authorizedActions.includes("delete_group"));
-        }
+      authorizedActions = await accountsActions.getAllowedGroupActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
+      setAuthorizedActions(authorizedActions);
+
+      if (!groupName.startsWith("_dept")) {
+        setCanDelete(authorizedActions.includes("delete_group"));
       }
 
       if (authorizedActions.includes("get_group_details")) {
@@ -160,6 +159,7 @@ function LdapGroupDetailView() {
       metadata={ldapGroupMetaData}
       dataObject={ldapGroupData}
       isLoading={isLoading}
+      // navigationTabContainer={<GroupManagementSubNavigationBar activeTab={"groupViewer"} />}
       actionBar={getActionBar()}
       accessDenied={!authorizedActions.includes("get_group_details") && !isLoading}
       detailPanel={

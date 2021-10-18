@@ -1,15 +1,16 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import {useHistory, useParams} from "react-router-dom";
-import LdapGroupsTable from "./LdapGroupsTable";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import axios from "axios";
-import GroupManagementSubNavigationBar from "components/settings/ldap_groups/GroupManagementSubNavigationBar";
+import LdapGroupsTable from "components/settings/ldap_groups/LdapGroupsTable";
+import SiteRoleManagementSubNavigationBar from "components/settings/ldap_site_roles/SiteRoleManagementSubNavigationBar";
+import SiteRolesTable from "components/settings/ldap_site_roles/SiteRolesTable";
 
-function LdapGroupManagement() {
+function SiteRoleManagement() {
   const history = useHistory();
   const {orgDomain} = useParams();
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -20,8 +21,14 @@ function LdapGroupManagement() {
   const [existingGroupNames, setExistingGroupNames] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const [authorizedActions, setAuthorizedActions] = useState([]);
+  const [activeTab, setActiveTab] = useState("userGroups");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  const handleTabClick = (tabSelection) => e => {
+    e.preventDefault();
+    setActiveTab(tabSelection);
+  };
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -88,7 +95,7 @@ function LdapGroupManagement() {
     if (isMounted?.current === true && userRoleAccess) {
       setCurrentUserEmail(user?.email);
       if (orgDomain == null || (ldap?.domain !== orgDomain && !userRoleAccess?.OpseraAdministrator)) {
-        history.push(`/settings/${ldap.domain}/groups`);
+        history.push(`/settings/${ldap.domain}/site-roles`);
       }
 
       setAccessRoleData(userRoleAccess);
@@ -102,25 +109,23 @@ function LdapGroupManagement() {
     }
   };
 
-  const parseUsersGroups = () => {
-    return Array.isArray(groupList) && groupList.filter((group) => {return group.groupType === "user";});
+  const parseAdminGroups = () => {
+    return Array.isArray(groupList) && groupList.filter((group) => {return group.groupType !== "user";});
   };
 
   return (
     <ScreenContainer
       isLoading={!accessRoleData}
-      navigationTabContainer={<GroupManagementSubNavigationBar activeTab={"groups"} />}
-      breadcrumbDestination={"ldapGroupManagement"}
+      navigationTabContainer={<SiteRoleManagementSubNavigationBar activeTab={"siteRoles"} />}
+      breadcrumbDestination={"ldapSiteRolesManagement"}
       accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.POWER_USERS}
+      roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
     >
-      <LdapGroupsTable
+      <SiteRolesTable
         isLoading={isLoading}
-        groupData={parseUsersGroups()}
+        groupData={parseAdminGroups()}
         loadData={loadData}
         orgDomain={orgDomain}
-        authorizedActions={authorizedActions}
-        existingGroupNames={existingGroupNames}
         currentUserEmail={currentUserEmail}
       />
     </ScreenContainer>
@@ -128,4 +133,4 @@ function LdapGroupManagement() {
 }
 
 
-export default LdapGroupManagement;
+export default SiteRoleManagement;

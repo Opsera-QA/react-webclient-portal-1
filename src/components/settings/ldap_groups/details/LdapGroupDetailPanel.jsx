@@ -9,7 +9,7 @@ import CustomTab from "components/common/tabs/CustomTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import LdapGroupMembershipManagementPanel
-  from "components/settings/ldap_groups/ldap_group_detail/membership_manager/LdapGroupMembershipManagementPanel";
+  from "components/common/inputs/user/membership/manager/LdapGroupMembershipManagementPanel";
 
 function LdapGroupDetailPanel({currentUserEmail, ldapGroupData, setLdapGroupData, ldapUsers, orgDomain, loadData, authorizedActions }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -29,7 +29,13 @@ function LdapGroupDetailPanel({currentUserEmail, ldapGroupData, setLdapGroupData
     return (
       <CustomTabContainer>
         <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <CustomTab icon={faIdCard} tabName={"manage"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Manage Members"} />
+        <CustomTab
+          icon={faIdCard}
+          tabName={"manage"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Manage Members"}
+        />
       </CustomTabContainer>
     );
   };
@@ -37,17 +43,47 @@ function LdapGroupDetailPanel({currentUserEmail, ldapGroupData, setLdapGroupData
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <LdapGroupSummaryPanel ldapGroupData={ldapGroupData} domain={orgDomain} setActiveTab={setActiveTab} loadData={loadData} />;
+        return (
+          <LdapGroupSummaryPanel
+            ldapGroupData={ldapGroupData}
+            domain={orgDomain}
+            setActiveTab={setActiveTab}
+            loadData={loadData}
+          />
+        );
       case "manage":
-        return (<LdapGroupMembershipManagementPanel orgDomain={orgDomain} setActiveTab={setActiveTab} ldapGroupData={ldapGroupData} authorizedActions={authorizedActions} ldapUsers={ldapUsers} loadData={loadData}/>);
+        return (
+          <LdapGroupMembershipManagementPanel
+            orgDomain={orgDomain}
+            setActiveTab={setActiveTab}
+            ldapGroupData={ldapGroupData}
+            authorizedActions={authorizedActions}
+            ldapUsers={ldapUsers}
+            loadData={loadData}
+          />
+          );
       case "settings":
-        return <LdapGroupEditorPanel handleClose={toggleSummaryPanel} currentUserEmail={currentUserEmail} authorizedActions={authorizedActions} setLdapGroupData={setLdapGroupData} ldapGroupData={ldapGroupData} orgDomain={orgDomain} />;
+        return (
+          <LdapGroupEditorPanel
+            handleClose={toggleSummaryPanel}
+            currentUserEmail={currentUserEmail}
+            authorizedActions={authorizedActions}
+            setLdapGroupData={setLdapGroupData}
+            ldapGroupData={ldapGroupData}
+            orgDomain={orgDomain}
+          />
+        );
       default:
         return null;
     }
   };
 
-  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
+  return (
+    <DetailTabPanelContainer
+      detailView={getCurrentView()}
+      tabContainer={getTabContainer()}
+    />
+  );
 }
 
 LdapGroupDetailPanel.propTypes = {
