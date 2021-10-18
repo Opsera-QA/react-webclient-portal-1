@@ -53,10 +53,11 @@ function SonarPipelineWiseReliabilityDetails() {
       getTableTextColumn(getField(fields, "project")),
       getTableTextColumn(getField(fields, "runCount")),
       getChartTrendStatusColumn(getField(fields, "status")),
-      getTableTextColumn(getField(fields, "critical"), "red"),
-      getTableTextColumn(getField(fields, "major"), "orange"),
-      getTableTextColumn(getField(fields, "minor"), "yellow"),
-      getTableTextColumn(getField(fields, "info"), "green"),
+      getTableTextColumn(getField(fields, "critical"),'red'),
+      getTableTextColumn(getField(fields, "blocker"),'red'),
+      getTableTextColumn(getField(fields, "major"),'opsera-yellow'),
+      getTableTextColumn(getField(fields, "minor"),'green'),
+      getTableTextColumn(getField(fields, "info"),'info-text'), 
       getTableTextColumn(getField(fields, "total_effort")),
       getTableTextColumnWithoutField("Actions", "_blueprint"),
     ],
@@ -119,6 +120,7 @@ function SonarPipelineWiseReliabilityDetails() {
           sonarBugs.map((bug, index) => ({
             ...bug,
             status: calculateTrend(bug),
+            blocker: 10,
             // TODO: remove the hard coded pipelineId value replaces with the api response
             pipelineId: "60ae84a54fa0c75fc683ad2b",
             _blueprint: <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2" />,
@@ -167,7 +169,7 @@ function SonarPipelineWiseReliabilityDetails() {
       <Row className="py-3 px-5">
         <Col>
           <div className="metric-box p-3 text-center">
-            <div style={{position: 'absolute' }}>
+            <div style={{position: 'absolute' , fontSize: '1.25rem'}}>
               <FontAwesomeIcon icon={faBug} fixedWidth className="mr-2" />
             </div>
             <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
@@ -178,57 +180,57 @@ function SonarPipelineWiseReliabilityDetails() {
         </Col>
         <Col>
           <div className="metric-box p-3 text-center">
-            <div style={{position: 'absolute', left: '20px' }}>
-              <FontAwesomeIcon icon={faSirenOn} fixedWidth className="mr-2 danger-red" />
+            <div style={{position: 'absolute', fontSize: '1.25rem' }}>
+              <FontAwesomeIcon icon={faSirenOn} fixedWidth className="mr-2 red" />
             </div>
             <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className="font-weight-bold danger-red">{issueTypeData?.critical}</div>
+              <div className="font-weight-bold red">{issueTypeData?.critical}</div>
             </div>
-            <div className="w-100 text-muted mb-1">Critical</div>
+            <div className="w-100 red mb-1">Critical</div>
           </div>
         </Col>
         <Col>
           <div className="metric-box p-3 text-center">
-            <div style={{position: 'absolute' }}>
-              <FontAwesomeIcon icon={faBan} fixedWidth className="mr-2 danger-red" />
+            <div style={{position: 'absolute', fontSize: '1.25rem' }}>
+              <FontAwesomeIcon icon={faBan} fixedWidth className="mr-2 red" />
             </div>
             <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className="font-weight-bold danger-red">12</div>
+              <div className="font-weight-bold red">12</div>
             </div>
-            <div className="w-100 text-muted mb-1 ">Blocker</div>
+            <div className="w-100 red mb-1 ">Blocker</div>
           </div>
         </Col>
         <Col>
           <div className="metric-box p-3 text-center ">
-            <div style={{position: 'absolute' }}>
-              <FontAwesomeIcon icon={faExclamationTriangle} fixedWidth className="mr-2 yellow" />
+            <div style={{position: 'absolute', fontSize: '1.25rem' }}>
+              <FontAwesomeIcon icon={faExclamationTriangle} fixedWidth className="mr-2 opsera-yellow" />
             </div>
             <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className="font-weight-bold yellow">{issueTypeData?.major}</div>
+              <div className="font-weight-bold opsera-yellow">{issueTypeData?.major}</div>
             </div>
-            <div className="w-100 text-muted mb-1 ">Major</div>
+            <div className="w-100 opsera-yellow mb-1 ">Major</div>
           </div>
         </Col>
         <Col>
           <div className="metric-box p-3 text-center">
-            <div style={{position: 'absolute' }}>
+            <div style={{position: 'absolute', fontSize: '1.25rem' }}>
               <FontAwesomeIcon icon={faExclamation} fixedWidth className="mr-2 green" />
             </div>
             <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
               <div className="font-weight-bold green">{issueTypeData?.minor}</div>
             </div>
-            <div className="w-100 text-muted mb-1 ">Minor</div>
+            <div className="w-100 green mb-1 ">Minor</div>
           </div>
         </Col>
         <Col>
-          <div className="metric-box  p-3 text-center">
-            <div style={{position: 'absolute' }}>
-              <FontAwesomeIcon icon={faInfoCircle} fixedWidth className="mr-2" />
+          <div className="metric-box text-center">
+            <div style={{position: 'absolute', fontSize: '1.5rem' }}>
+              <FontAwesomeIcon icon={faInfoCircle} fixedWidth className="info-text" />
             </div>
             <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className="font-weight-bold">{issueTypeData?.info}</div>
+              <div className="font-weight-bold info-text">{issueTypeData?.info}</div>
             </div>
-            <div className="w-100 text-muted mb-1">Info</div>
+            <div className="w-100 info-text mb-1">Info</div>
           </div>
         </Col>
       </Row>

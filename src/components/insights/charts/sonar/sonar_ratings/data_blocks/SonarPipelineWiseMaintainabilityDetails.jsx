@@ -10,7 +10,7 @@ import { getChartTrendStatusColumn, getTableTextColumn, getTableTextColumnWithou
 import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
 import CustomTable from "components/common/table/CustomTable";
-import { faDraftingCompass, faExternalLink, faExclamationTriangle, faExclamation, faSirenOn, faInfoCircle, faRadiationAlt} from "@fortawesome/pro-light-svg-icons";
+import { faDraftingCompass, faExternalLink, faExclamationTriangle, faExclamation, faSirenOn, faInfoCircle, faRadiationAlt, faBan} from "@fortawesome/pro-light-svg-icons";
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
@@ -39,8 +39,9 @@ function SonarPipelineWiseMaintainibilityDetails() {
       getTableTextColumn(getField(fields, "project")),
       getTableTextColumn(getField(fields, "runCount")),
       getChartTrendStatusColumn(getField(fields, "status")),
-      getTableTextColumn(getField(fields, "critical"),'danger-red'),
-      getTableTextColumn(getField(fields, "major"),'orange'),
+      getTableTextColumn(getField(fields, "critical"),'red'),
+      getTableTextColumn(getField(fields, "blocker"),'red'),
+      getTableTextColumn(getField(fields, "major"),'opsera-yellow'),
       getTableTextColumn(getField(fields, "minor"),'green'),
       getTableTextColumn(getField(fields, "info"),'info-text'),    
       getTableTextColumn(getField(fields, "total_effort")), 
@@ -105,6 +106,7 @@ function SonarPipelineWiseMaintainibilityDetails() {
         await setMaintainibilityData(sonarMaintainability.map((maintainibility,index)=>({
               ...maintainibility,
               status : calculateTrend(maintainibility),
+              blocker: 10,
               // TODO: remove the hard coded pipelineId value replaces with the api response
               pipelineId: '60ae84a54fa0c75fc683ad2b',
               "_blueprint":  <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2"/> ,
@@ -162,39 +164,58 @@ function SonarPipelineWiseMaintainibilityDetails() {
           </div>
         </Col>
         <Col>
-          <div className="metric-box p-3 text-center" >
-            <div className="box-metric d-flex flex-row" style={{alignItems: 'center', justifyContent: 'center'}}>
-              <FontAwesomeIcon icon={faSirenOn} fixedWidth className="mr-2 danger-red"/>
-              <div className="font-weight-bold danger-red">{issueTypeData?.critical}</div>
+          <div className="metric-box p-3 text-center">
+            <div style={{position: 'absolute', fontSize: '1.25rem' }}>
+              <FontAwesomeIcon icon={faSirenOn} fixedWidth className="mr-2 red" />
             </div>
-            <div className="w-100  mb-1 danger-red">Critical</div>
-          </div>
-        </Col>
-        <Col>
-          <div className="metric-box p-3 text-center ">
-            <div className="box-metric d-flex flex-row" style={{alignItems: 'center', justifyContent: 'center'}}>
-              <FontAwesomeIcon icon={faExclamationTriangle} fixedWidth className="mr-2 orange"/>
-              <div className="font-weight-bold orange">{issueTypeData?.major}</div>
+            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
+              <div className="font-weight-bold red">{issueTypeData?.critical}</div>
             </div>
-            <div className="w-100  mb-1 orange">Major</div>
+            <div className="w-100 red mb-1">Critical</div>
           </div>
         </Col>
         <Col>
           <div className="metric-box p-3 text-center">
-            <div className="box-metric d-flex flex-row" style={{alignItems: 'center', justifyContent: 'center'}}>
-              <FontAwesomeIcon icon={faExclamation} fixedWidth className="mr-2 yellow"/>
-              <div className="font-weight-bold yellow">{issueTypeData?.minor}</div>
+            <div style={{position: 'absolute', fontSize: '1.25rem' }}>
+              <FontAwesomeIcon icon={faBan} fixedWidth className="mr-2 red" />
             </div>
-            <div className="w-100  mb-1 yellow">Minor</div>
+            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
+              <div className="font-weight-bold red">12</div>
+            </div>
+            <div className="w-100 red mb-1 ">Blocker</div>
           </div>
         </Col>
         <Col>
-          <div className="metric-box info-text p-1 text-center">
-            <div className="box-metric d-flex flex-row" style={{alignItems: 'center', justifyContent: 'center'}}>
-              <FontAwesomeIcon icon={faInfoCircle} fixedWidth className="mr-2 info-text"/>
+          <div className="metric-box p-3 text-center ">
+            <div style={{position: 'absolute', fontSize: '1.25rem' }}>
+              <FontAwesomeIcon icon={faExclamationTriangle} fixedWidth className="mr-2 opsera-yellow" />
+            </div>
+            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
+              <div className="font-weight-bold opsera-yellow">{issueTypeData?.major}</div>
+            </div>
+            <div className="w-100 opsera-yellow mb-1 ">Major</div>
+          </div>
+        </Col>
+        <Col>
+          <div className="metric-box p-3 text-center">
+            <div style={{position: 'absolute', fontSize: '1.25rem' }}>
+              <FontAwesomeIcon icon={faExclamation} fixedWidth className="mr-2 green" />
+            </div>
+            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
+              <div className="font-weight-bold green">{issueTypeData?.minor}</div>
+            </div>
+            <div className="w-100 green mb-1 ">Minor</div>
+          </div>
+        </Col>
+        <Col>
+          <div className="metric-box text-center">
+            <div style={{position: 'absolute', fontSize: '1.5rem' }}>
+              <FontAwesomeIcon icon={faInfoCircle} fixedWidth className="info-text" />
+            </div>
+            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
               <div className="font-weight-bold info-text">{issueTypeData?.info}</div>
             </div>
-            <div className="w-100  mb-1 info-text">Info</div>
+            <div className="w-100 info-text mb-1">Info</div>
           </div>
         </Col>
       </Row>

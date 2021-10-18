@@ -19,6 +19,10 @@ const SonarPipelineTableMetadata = {
       id: "critical",
     },
     {
+      label: "Blocker",
+      id: "blocker",
+    },
+    {
       label: "Major",
       id: "major",
     },
