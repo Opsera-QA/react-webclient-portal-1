@@ -1,33 +1,30 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
-import {useHistory, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
-import LdapGroupDetailPanel from "components/settings/ldap_groups/details/LdapGroupDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
-import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import axios from "axios";
+import SiteRoleManagementSubNavigationBar from "components/settings/ldap_site_roles/SiteRoleManagementSubNavigationBar";
+import SiteRoleDetailPanel from "components/settings/ldap_site_roles/details/SiteRoleDetailPanel";
 
 // TODO: Can we get an API Call to get role group names associated with an organization?
 const roleGroups = ["Administrators", "PowerUsers", "Users"];
 
-function LdapGroupDetailView() {
-  const history = useHistory();
+function SiteRoleDetailView() {
   const {groupName, orgDomain} = useParams();
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const [ldapUsers, setLdapUsers] = useState([]);
   const [ldapGroupData, setLdapGroupData] = useState(undefined);
-  const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [authorizedActions, setAuthorizedActions] = useState([]);
-  const [canDelete, setCanDelete] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -50,12 +47,13 @@ function LdapGroupDetailView() {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [groupName]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       await getRoles(cancelSource);
+      setIsLoading(false);
     }
     catch (error) {
       if (isMounted.current === true && !error?.error?.message?.includes(404)) {
@@ -90,41 +88,29 @@ function LdapGroupDetailView() {
     }
   };
 
-  const getLdapUsers = async (domain, cancelSource = cancelTokenSource) => {
-    if (domain != null) {
-      const response = await accountsActions.getLdapUsersWithDomainV2(getAccessToken, cancelSource, domain);
-      let ldapUsers = response?.data;
+  const getLdapUsers = async (cancelSource = cancelTokenSource) => {
+    const response = await accountsActions.getLdapUsersWithDomainV2(getAccessToken, cancelSource, orgDomain);
+    let ldapUsers = response?.data;
 
-      if (isMounted.current === true && ldapUsers) {
-        setLdapUsers(ldapUsers);
-      }
+    if (isMounted.current === true && ldapUsers) {
+      setLdapUsers(ldapUsers);
     }
   };
 
   const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
-    let {ldap} = user;
-    setCurrentUserEmail(user.email);
+    const ldap = user?.ldap;
     const userRoleAccess = await setAccessRoles(user);
 
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
       let authorizedActions;
 
-      if (roleGroups.includes(groupName)) {
-        history.push(`/settings/${orgDomain}/role-groups/${groupName}`);
-        return;
-      }
-
-      authorizedActions = await accountsActions.getAllowedGroupActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
+      authorizedActions = await accountsActions.getAllowedRoleGroupActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
       setAuthorizedActions(authorizedActions);
 
-      if (!groupName.startsWith("_dept")) {
-        setCanDelete(authorizedActions.includes("delete_group"));
-      }
-
       if (authorizedActions.includes("get_group_details")) {
-        await getLdapUsers(orgDomain, cancelSource);
+        await getLdapUsers(cancelSource);
         await getGroup(cancelSource);
       }
     }
@@ -139,18 +125,11 @@ function LdapGroupDetailView() {
       return (
         <ActionBarContainer>
           <div>
-            <ActionBarBackButton path={`/settings/${orgDomain}/groups`} />
-          </div>
-          <div>
-            {canDelete && <ActionBarDeleteButton2 relocationPath={`/settings/${orgDomain}/groups`} dataObject={ldapGroupData} handleDelete={deleteGroup}/>}
+            <ActionBarBackButton path={`/settings/${orgDomain}/site-roles`} />
           </div>
         </ActionBarContainer>
       );
     }
-  };
-
-  const deleteGroup = () => {
-    return accountsActions.deleteGroup(orgDomain, ldapGroupData, getAccessToken);
   };
 
   return (
@@ -159,16 +138,14 @@ function LdapGroupDetailView() {
       metadata={ldapGroupMetaData}
       dataObject={ldapGroupData}
       isLoading={isLoading}
-      // navigationTabContainer={<GroupManagementSubNavigationBar activeTab={"groupViewer"} />}
+      navigationTabContainer={<SiteRoleManagementSubNavigationBar activeTab={"siteRoleViewer"}/>}
       actionBar={getActionBar()}
       accessDenied={!authorizedActions.includes("get_group_details") && !isLoading}
       detailPanel={
-        <LdapGroupDetailPanel
+        <SiteRoleDetailPanel
           orgDomain={orgDomain}
           ldapGroupData={ldapGroupData}
           ldapUsers={ldapUsers}
-          currentUserEmail={currentUserEmail}
-          setLdapGroupData={setLdapGroupData}
           loadData={getRoles}
           authorizedActions={authorizedActions}
         />
@@ -177,4 +154,4 @@ function LdapGroupDetailView() {
   );
 }
 
-export default LdapGroupDetailView;
+export default SiteRoleDetailView;

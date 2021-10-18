@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function LdapGroupPermissionsField({ dataObject }) {
+function SiteRolePermissionsField({ dataObject }) {
   const getGroupPermissionText = () => {
     switch (dataObject?.getData("externalSyncGroup")) {
       case "Admin":
@@ -37,10 +37,10 @@ function LdapGroupPermissionsField({ dataObject }) {
   );
 }
 
-LdapGroupPermissionsField.propTypes = {
+SiteRolePermissionsField.propTypes = {
   dataObject: PropTypes.object,
 };
 
 
 
-export default LdapGroupPermissionsField;
+export default SiteRolePermissionsField;

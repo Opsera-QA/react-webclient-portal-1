@@ -5,6 +5,7 @@ import LdapUsersTable from "components/settings/ldap_users/LdapUsersTable";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import BooleanField from "components/common/fields/boolean/BooleanField";
+import SiteRolePermissionsField from "components/settings/ldap_site_roles/details/SiteRolePermissionsField";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 
 function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData, setActiveTab }) {
@@ -33,8 +34,15 @@ function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData, setActiveTab }
         <Col lg={6}>
           <TextFieldBase dataObject={ldapGroupData} fieldName={"ownerEmail"}/>
         </Col>
+        <Col lg={12}>
+          <SiteRolePermissionsField dataObject={ldapGroupData} />
+        </Col>
       </Row>
-      <LdapUsersTable loadData={loadData} orgDomain={domain} userData={ldapGroupData.getData("members")} />
+      <LdapUsersTable
+        loadData={loadData}
+        orgDomain={domain}
+        userData={ldapGroupData.getData("members")}
+      />
     </SummaryPanelContainer>
   );
 }
