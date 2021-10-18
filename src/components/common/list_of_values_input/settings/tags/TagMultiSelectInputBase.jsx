@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import { Multiselect } from 'react-widgets';
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 
 function TagMultiSelectInputBase({ fieldName, dataObject, setDataObject, disabled, setDataFunction, className}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -115,19 +115,20 @@ function TagMultiSelectInputBase({ fieldName, dataObject, setDataObject, disable
   if (field == null) {
     return null;
   }
+
   return (
     <div className={className}>
       <div className={"custom-multiselect-input"}>
-        <Multiselect
-          data={[...tagOptions]}
+        <StandaloneMultiSelectInput
+          selectOptions={[...tagOptions]}
           textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + data["value"]}
           filter={"contains"}
           groupBy={"type"}
           busy={isLoading}
           value={[...dataObject?.getArrayData(fieldName)]}
-          placeholder={getPlaceholderText()}
+          placeholderText={getPlaceholderText()}
           disabled={disabled || isLoading}
-          onChange={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
+          setDataFunction={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
         />
       </div>
     </div>

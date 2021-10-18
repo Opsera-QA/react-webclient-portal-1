@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import Moment from "moment";
 import momentLocalizer from "react-widgets-moment";
 import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import StandaloneDatePickerInput from "components/common/inputs/date/StandaloneDateTimeInput";
 
 function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFunction, disabled, showDate, showTime, minDate, maxDate, dropUp }) {
-  const [field, setField] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   Moment.locale("en");
   momentLocalizer();
@@ -34,19 +34,22 @@ function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFuncti
     setErrorMessage(newDataObject.getFieldError(fieldName));
   };
 
+  if (field == null) {
+    return null;
+  }
+
   return (
     <InputContainer>
       <InputLabel field={field} model={dataObject} />
-      <DateTimePicker
-        date={showDate}
-        min={minDate}
-        max={maxDate}
-        time={showTime}
+      <StandaloneDatePickerInput
+        showDate={showDate}
+        minDate={minDate}
+        maxDate={maxDate}
+        showTime={showTime}
         disabled={disabled}
         dropUp={dropUp}
-        value={new Date(dataObject.getData(fieldName))}
-        onChange={(value) => validateAndSetData(value)}
-        defaultValue={new Date()}
+        value={new Date(dataObject?.getData(fieldName))}
+        setDataFunction={validateAndSetData}
       />
       <InfoText field={field} errorMessage={errorMessage}/>
     </InputContainer>
