@@ -8,15 +8,15 @@ import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlo
 // import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 // import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
 // import { METRIC_QUALITY_LEVELS } from "components/common/metrics/text/MetricTextBase";
-import RequirementCreationToBranchCreationDataBlock from "./RequirementCreationToBranchCreationDataBlock";
-import RequirementCreationToCodeCommit from "./RequirementCreationToCodeCommit";
-import CodeCommitToE1Deploy from "./CodeCommitToE1Deploy";
-import CodeCommitToE2Deploy from "./CodeCommitToE2Deploy";
-import CodeCommitToE3Deploy from "./CodeCommitToE3Deploy";
+import RequirementCreationToBranchCreationDataBlock from "./RequirementCreationToBranchCreationDataBlock/RequirementCreationToBranchCreation";
+import RequirementCreationToCodeCommit from "./RequirementCreationToCodeCommitDataBlock/RequirementCreationToCodeCommit";
+import CodeCommitToE1Deploy from "./CodeCommitToE1DeployDataBlock/CodeCommitToE1Deploy";
+import CodeCommitToE2Deploy from "./CodeCommitToE2DeployDataBlock/CodeCommitToE2Deploy";
+import CodeCommitToE3Deploy from "./CodeCommitToE3DeployDataBlock/CodeCommitToE3Deploy";
 
 function OverallReleaseDurationMetrics() {
   const toastContext = useContext(DialogToastContext);
-  const [metrics, setMetrics] = useState([]);
+  // const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);

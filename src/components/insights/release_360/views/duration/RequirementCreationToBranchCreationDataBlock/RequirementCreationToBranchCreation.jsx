@@ -7,7 +7,7 @@ import { METRIC_QUALITY_LEVELS } from "components/common/metrics/text/MetricText
 import { AuthContext } from "contexts/AuthContext";
 import chartsActions from "components/insights/charts/charts-actions";
 
-function RequirementCreationToBranchCreationDataBlock() {
+function RequirementCreationToBranchCreation() {
   const { getAccessToken } = useContext(AuthContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
@@ -59,7 +59,7 @@ function RequirementCreationToBranchCreationDataBlock() {
   return (
     <ThreeLineDataBlockBase
       className={"p-2"}
-      topText={"Requirement to Branch"}
+      topText={"Requirement to Branch Creation"}
       middleText={
         <MetricScoreText
           score={branchMetric.averageReqCreationToBranchCreationSecs}
@@ -71,6 +71,6 @@ function RequirementCreationToBranchCreationDataBlock() {
   );
 }
 
-RequirementCreationToBranchCreationDataBlock.propTypes = {};
+RequirementCreationToBranchCreation.propTypes = {};
 
-export default RequirementCreationToBranchCreationDataBlock;
+export default RequirementCreationToBranchCreation;
