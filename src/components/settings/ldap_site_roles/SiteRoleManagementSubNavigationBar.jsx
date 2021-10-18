@@ -30,7 +30,7 @@ function SiteRoleManagementSubNavigationBar({activeTab}) {
             tabName={"siteRoleViewer"}
             handleTabClick={handleTabClick}
             activeTab={activeTab}
-            tabText={"Site Roles Detail View"}
+            tabText={"Site Role Viewer"}
           />
         );
       default:
