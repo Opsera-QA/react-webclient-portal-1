@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import LdapGroupEditorPanel from "./ldap_group_detail/LdapGroupEditorPanel";
-import Model from "../../../core/data_model/model";
-import {ldapGroupMetaData} from "./ldap-groups-metadata";
-import CreateModal from "../../common/modal/CreateModal";
+import LdapGroupEditorPanel from "./details/LdapGroupEditorPanel";
+import Model from "core/data_model/model";
+import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
+import CreateModal from "components/common/modal/CreateModal";
 
-function NewLdapUserModal({ orgDomain, authorizedActions, currentUserEmail, setShowModal, showModal, loadData, existingGroupNames }) {
+function NewLdapGroupOverlay({ orgDomain, authorizedActions, currentUserEmail, setShowModal, showModal, loadData, existingGroupNames }) {
   const [ldapGroupData, setLdapGroupData] = useState(undefined);
 
   useEffect(() => {
@@ -19,19 +19,19 @@ function NewLdapUserModal({ orgDomain, authorizedActions, currentUserEmail, setS
 
   return (
     <CreateModal handleCancelModal={handleClose} objectType={"Group"} showModal={showModal} loadData={loadData}>
-        <LdapGroupEditorPanel
-          authorizedActions={authorizedActions}
-          currentUserEmail={currentUserEmail}
-          ldapGroupData={ldapGroupData}
-          handleClose={handleClose}
-          orgDomain={orgDomain}
-          existingGroupNames={existingGroupNames}
-        />
+      <LdapGroupEditorPanel
+        authorizedActions={authorizedActions}
+        currentUserEmail={currentUserEmail}
+        ldapGroupData={ldapGroupData}
+        handleClose={handleClose}
+        orgDomain={orgDomain}
+        existingGroupNames={existingGroupNames}
+      />
     </CreateModal>
   );
 }
 
-NewLdapUserModal.propTypes = {
+NewLdapGroupOverlay.propTypes = {
   orgDomain: PropTypes.string,
   authorizedActions: PropTypes.array,
   currentUserEmail: PropTypes.string,
@@ -41,6 +41,6 @@ NewLdapUserModal.propTypes = {
   existingGroupNames: PropTypes.array
 };
 
-export default NewLdapUserModal;
+export default NewLdapGroupOverlay;
 
 
