@@ -10,8 +10,6 @@ function SalesforceBulkMigrationTaskTypeSummaryCard({ taskModel, taskConfigurati
     return <TaskSummaryCardContainer isLoading={isLoading} />;
   }
 
-  console.log("taskConfigurationModel: " + JSON.stringify(taskConfigurationModel?.getPersistData()));
-  
   return (
     <TaskSummaryCardContainer taskModelDto={taskModel} isLoading={isLoading}>
       <Row className="mx-0 mb-2">
