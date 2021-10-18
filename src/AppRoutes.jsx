@@ -119,6 +119,7 @@ import Release360 from "components/insights/release_360/Release360";
 import ToolCategoryManagement from "components/admin/tools/tool_category/ToolCategoryManagement";
 import ToolIdentifierManagement from "components/admin/tools/tool_identifier/ToolIdentifierManagement";
 import SiteRoleManagement from "components/settings/ldap_site_roles/SiteRoleManagement";
+import SiteRoleDetailView from "components/settings/ldap_site_roles/details/SiteRoleDetailView";
 //import FreeTrialRegistration from "./components/free_trial/Registration";
 //import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 
@@ -296,7 +297,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
                        component={LdapGroupDetailView} />
           <SecureRoute path="/settings/:orgDomain?/site-roles/" exact component={SiteRoleManagement} />
           <SecureRoute path="/settings/:orgDomain/site-roles/details/:groupName" exact
-                       component={LdapGroupDetailView} />
+                       component={SiteRoleDetailView} />
           <SecureRoute path="/settings/organizations/" exact component={OrganizationManagement} />
           <SecureRoute path="/settings/organizations/details/:id" exact component={OrganizationDetailView} />
           <SecureRoute path="/settings/analytics-data-entries/" exact component={AnalyticsDataEntryManagement} />

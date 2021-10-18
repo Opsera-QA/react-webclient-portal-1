@@ -8,6 +8,7 @@ import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import axios from "axios";
 import LdapGroupsTable from "components/settings/ldap_groups/LdapGroupsTable";
 import SiteRoleManagementSubNavigationBar from "components/settings/ldap_site_roles/SiteRoleManagementSubNavigationBar";
+import SiteRolesTable from "components/settings/ldap_site_roles/SiteRolesTable";
 
 function SiteRoleManagement() {
   const history = useHistory();
@@ -120,7 +121,7 @@ function SiteRoleManagement() {
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
     >
-      <LdapGroupsTable
+      <SiteRolesTable
         isLoading={isLoading}
         groupData={parseAdminGroups()}
         loadData={loadData}

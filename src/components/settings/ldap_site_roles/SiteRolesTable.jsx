@@ -12,7 +12,7 @@ import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metad
 import FilterContainer from "components/common/table/FilterContainer";
 import {faServer} from "@fortawesome/pro-light-svg-icons";
 
-function LdapSiteRolesTable({ groupData, orgDomain, isLoading, loadData }) {
+function SiteRolesTable({ groupData, orgDomain, isLoading, loadData }) {
   let fields = ldapGroupMetaData.fields;
   const history = useHistory();
 
@@ -26,8 +26,8 @@ function LdapSiteRolesTable({ groupData, orgDomain, isLoading, loadData }) {
     []
   );
 
-  const onRowSelect = (rowData, type) => {
-    history.push(`/settings/${orgDomain}/groups/details/${rowData.original.name}`);
+  const onRowSelect = (rowData) => {
+    history.push(`/settings/${orgDomain}/site-roles/details/${rowData.original.name}`);
   };
 
   const getGroupsTable = () => {
@@ -54,7 +54,7 @@ function LdapSiteRolesTable({ groupData, orgDomain, isLoading, loadData }) {
   );
 }
 
-LdapSiteRolesTable.propTypes = {
+SiteRolesTable.propTypes = {
   groupData: PropTypes.array,
   orgDomain: PropTypes.string,
   isLoading: PropTypes.bool,
@@ -65,4 +65,4 @@ LdapSiteRolesTable.propTypes = {
   existingGroupNames: PropTypes.array
 };
 
-export default LdapSiteRolesTable;
+export default SiteRolesTable;
