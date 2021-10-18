@@ -9,7 +9,7 @@ import CustomTab from "components/common/tabs/CustomTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import LdapGroupMembershipManagementPanel
-  from "components/settings/ldap_groups/details/membership_manager/LdapGroupMembershipManagementPanel";
+  from "components/common/inputs/user/membership/manager/LdapGroupMembershipManagementPanel";
 
 function LdapGroupDetailPanel({currentUserEmail, ldapGroupData, setLdapGroupData, ldapUsers, orgDomain, loadData, authorizedActions }) {
   const [activeTab, setActiveTab] = useState("summary");

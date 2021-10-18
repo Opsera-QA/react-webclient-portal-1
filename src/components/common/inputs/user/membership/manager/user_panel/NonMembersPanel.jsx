@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import UserCard from "components/settings/ldap_groups/details/membership_manager/user_panel/UserCard";
+import UserCard from "components/common/inputs/user/membership/manager/user_panel/UserCard";
 import {faArrowRight, faPlusCircle, faUsers} from "@fortawesome/pro-light-svg-icons";
 import ClientSideBottomPaginator from "components/common/pagination/client_side/ClientSideBottomPaginator";
 import {Button} from "react-bootstrap";
