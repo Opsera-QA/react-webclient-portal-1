@@ -60,21 +60,18 @@ function ToolInfoContainer({ toolId }) {
     }
   };
 
-  const getBody = () => {
+  const getInfoText = () => {
     if (toolModel) {
       return (
-        <div>
-          <div className="text-muted mb-2">
-            Configuration details for this item are listed below. Tool and account specific settings are stored in the
-            <span> <Link to="/inventory/tools" target="_blank" rel="noopener noreferrer">Tool Registry</Link></span>.
-            <div>To add a new entry to a dropdown or update settings, make those changes there.</div>
-            <div>
-              <Link to={`/inventory/tools/details/${toolId}`} target="_blank" rel="noopener noreferrer">
-                Click here to view the selected Tool&apos;s details
-              </Link>
-            </div>
+        <div className="text-muted mb-2">
+          Configuration details for this item are listed below. Tool and account specific settings are stored in the
+          <span> <Link to="/inventory/tools" target="_blank" rel="noopener noreferrer">Tool Registry</Link></span>.
+          <div>To add a new entry to a dropdown or update settings, make those changes there.</div>
+          <div>
+            <Link to={`/inventory/tools/details/${toolId}`} target="_blank" rel="noopener noreferrer">
+              Click here to view the selected Tool&apos;s details
+            </Link>
           </div>
-          <ToolReadOnlyDetailPanel toolModel={toolModel} />
         </div>
       );
     }
@@ -88,17 +85,30 @@ function ToolInfoContainer({ toolId }) {
     );
   };
 
+  const getBody = () => {
+    if (toolModel) {
+      return (
+        <ToolReadOnlyDetailPanel
+          toolModel={toolModel}
+        />
+      );
+    }
+  };
+
   if (isLoading) {
     return (<LoadingDialog size={"sm"} message={"Loading Tool Data"} />);
   }
 
   return (
-    <InfoContainer
-      titleIcon={faTools}
-      titleText={`${toolModel?.getData("name")}`}
-    >
-      {getBody()}
-    </InfoContainer>
+    <div>
+      {getInfoText()}
+      <InfoContainer
+        titleIcon={faTools}
+        titleText={`${toolModel?.getData("name")}`}
+      >
+        {getBody()}
+      </InfoContainer>
+    </div>
   );
 }
 
