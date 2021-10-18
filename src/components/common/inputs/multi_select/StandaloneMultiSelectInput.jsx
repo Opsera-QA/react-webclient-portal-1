@@ -15,6 +15,7 @@ function StandaloneMultiSelectInput(
     busy,
     createOptionFunction,
     allowCreate,
+    onToggleFunction,
   }) {
 
   return (
@@ -27,6 +28,7 @@ function StandaloneMultiSelectInput(
         filter={"contains"}
         allowCreate={allowCreate}
         groupBy={groupBy}
+        onToggleFunction={onToggleFunction}
         value={value}
         onCreate={createOptionFunction}
         placeholder={placeholderText}
@@ -54,7 +56,11 @@ StandaloneMultiSelectInput.propTypes = {
     PropTypes.array
   ]),
   createOptionFunction: PropTypes.func,
-  allowCreate: PropTypes.bool,
+  allowCreate: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string,
+  ]),
+  onToggleFunction: PropTypes.func,
 };
 
 export default StandaloneMultiSelectInput;
