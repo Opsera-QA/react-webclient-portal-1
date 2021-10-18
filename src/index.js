@@ -10,6 +10,7 @@ import "./theme.css";
 import "./field.css";
 import "./container.css";
 import "./index.css";
+import "./analytics.css";
 import * as serviceWorker from "./serviceWorker";
 
 if (typeof window["TextEncoder"] !== "function") {
