@@ -7,7 +7,7 @@ import {AuthContext} from "contexts/AuthContext";
 import SpinnakerStepActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/spinnaker/spinnaker-step-actions";
 
-function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, spinnakerApplicationName, fieldName, model, setModel, setDataFunction, disabled, clearDataFunction}) {
+function SpinnakerPipelineSelectInput({className, spinnakerToolId, spinnakerApplicationName, fieldName, model, setModel, setDataFunction, disabled, clearDataFunction}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [spinnakerTools, setSpinnakerTools] = useState([]);
@@ -57,9 +57,9 @@ function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, spinna
       const response = await SpinnakerStepActions.getSpinnakerToolsV2(getAccessToken, cancelSource, spinnakerToolId, spinnakerApplicationName);
 
       console.log("response: " + JSON.stringify(response));
-      const applications = response?.data?.data;
-      if (Array.isArray(applications)) {
-        setSpinnakerTools(applications);
+      const pipelines = response?.data?.spinnakerPipelines;
+      if (Array.isArray(pipelines)) {
+        setSpinnakerTools(pipelines);
       }
     } catch (error) {
       console.error(error);
@@ -69,7 +69,7 @@ function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, spinna
 
   const getPlaceholderText = () => {
     if (!isLoading && (spinnakerTools == null || spinnakerTools.length === 0)) {
-      return ("Spinnaker Tool information is missing or unavailable!");
+      return ("Spinnaker pipelines information is missing or unavailable!");
     }
 
     return ("Select Spinnaker Tool");
@@ -93,7 +93,7 @@ function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, spinna
   );
 }
 
-SpinnakerApplicationNameSelectInput.propTypes = {
+SpinnakerPipelineSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
@@ -105,4 +105,4 @@ SpinnakerApplicationNameSelectInput.propTypes = {
   spinnakerApplicationName: PropTypes.string,
 };
 
-export default SpinnakerApplicationNameSelectInput;
+export default SpinnakerPipelineSelectInput;
