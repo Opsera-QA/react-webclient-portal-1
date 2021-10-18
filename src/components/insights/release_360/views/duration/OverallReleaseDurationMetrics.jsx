@@ -10,6 +10,9 @@ import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlo
 // import { METRIC_QUALITY_LEVELS } from "components/common/metrics/text/MetricTextBase";
 import RequirementCreationToBranchCreationDataBlock from "./RequirementCreationToBranchCreationDataBlock";
 import RequirementCreationToCodeCommit from "./RequirementCreationToCodeCommit";
+import CodeCommitToE1Deploy from "./CodeCommitToE1Deploy";
+import CodeCommitToE2Deploy from "./CodeCommitToE2Deploy";
+import CodeCommitToE3Deploy from "./CodeCommitToE3Deploy";
 
 function OverallReleaseDurationMetrics() {
   const toastContext = useContext(DialogToastContext);
@@ -93,6 +96,15 @@ function OverallReleaseDurationMetrics() {
             middleText={<MetricScoreText score={52} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
             bottomText={"24% Increase"}
           /> */}
+        </DataBlockBoxContainer>
+        <DataBlockBoxContainer className={"mr-2"}>
+          <CodeCommitToE1Deploy></CodeCommitToE1Deploy>
+        </DataBlockBoxContainer>
+        <DataBlockBoxContainer className={"mr-2"}>
+          <CodeCommitToE2Deploy></CodeCommitToE2Deploy>
+        </DataBlockBoxContainer>
+        <DataBlockBoxContainer className={"mr-2"}>
+          <CodeCommitToE3Deploy></CodeCommitToE3Deploy>
         </DataBlockBoxContainer>
         {/* <DataBlockBoxContainer className={"mr-2"}>
           <ThreeLineDataBlockBase
