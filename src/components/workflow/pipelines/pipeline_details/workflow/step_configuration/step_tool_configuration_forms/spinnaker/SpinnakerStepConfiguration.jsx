@@ -8,8 +8,8 @@ import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import SpinnakerApplicationNameSelectInput
   from "components/common/list_of_values_input/tools/spinnaker/application/SpinnakerApplicationNameSelectInput";
-import SpinnakerToolSelectInput
-  from "components/common/list_of_values_input/tools/spinnaker/tool/SpinnakerToolSelectInput";
+import SpinnakerPipelineSelectInput
+  from "components/common/list_of_values_input/tools/spinnaker/tool/SpinnakerPipelineSelectInput";
 
 function SpinnakerStepConfiguration({ stepTool, parentCallback, closeEditorPanel }) {
 
@@ -75,7 +75,7 @@ function SpinnakerStepConfiguration({ stepTool, parentCallback, closeEditorPanel
         spinnakerToolId={spinnakerStepConfigurationDto?.getData("spinnakerId")}
         fieldName={"applicationName"}
       />
-      <SpinnakerToolSelectInput
+      <SpinnakerPipelineSelectInput
         fieldName={"pipelineName"}
         model={spinnakerStepConfigurationDto}
         setModel={setSpinnakerStepConfigurationDataDto}
