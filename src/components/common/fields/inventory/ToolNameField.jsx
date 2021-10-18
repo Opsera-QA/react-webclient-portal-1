@@ -83,18 +83,22 @@ function ToolNameField({ model, fieldName, className, handleClose }) {
       return toolName;
     }
 
-    return `Tool name could not be found with ID: [${model?.getData(fieldName)}]. The Tool may have been deleted.`;
+    return (`
+      Tool name could not be found with ID: [${model?.getData(fieldName)}]. 
+      The Tool may have been deleted or its access rules may have changed.
+    `);
   };
 
   const getToolInfoOverlay = () => {
     const toolId = model?.getData(fieldName);
 
-    if (toolId != null && toolId !== "") {
+    if (toolId != null && toolId !== "" && toolName) {
       return (
         <RegistryToolInfoOverlay
-          selectedToolId={model?.getData(fieldName)}
+          selectedToolId={toolId}
           loadData={loadData}
           isLoading={isLoading}
+          isMounted={isMounted}
         />
       );
     }

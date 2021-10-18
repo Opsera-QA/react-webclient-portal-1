@@ -47,6 +47,7 @@ export const salesforceBulkMigrationTaskConfigurationMetadata = {
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
     {
+      label: "Source Repository Tool",
       id: "gitToolId",
       isRequired: true,
       maxLength: 24,

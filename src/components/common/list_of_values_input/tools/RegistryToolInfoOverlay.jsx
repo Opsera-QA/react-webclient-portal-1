@@ -29,7 +29,7 @@ function RegistryToolInfoOverlay({tools, fieldName, toolMetadata, isMounted, loa
   };
 
   const getBody = () => {
-    if (isMounted?.current === true && selectedToolId) {
+    if (selectedToolId) {
       return (
         <ToolInfoContainer
           toolId={selectedToolId}
@@ -61,6 +61,10 @@ function RegistryToolInfoOverlay({tools, fieldName, toolMetadata, isMounted, loa
       </div>
     );
   };
+
+  if (isMounted?.current !== true) {
+    return null;
+  }
 
   return (
     <InfoOverlayContainer title={"Tool Details"}>
