@@ -94,11 +94,11 @@ function MultiSelectInputBase(
 
   const updateValue = (newValue) => {
     if (setDataFunction) {
+      // TODO: Should we also handle parsing values here?
       setDataFunction(field?.id, newValue);
     }
     else {
-      const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
-      validateAndSetData(field?.id, parsedValue);
+      validateAndSetData(field?.id, newValue);
     }
   };
 

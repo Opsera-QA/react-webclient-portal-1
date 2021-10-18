@@ -28,7 +28,7 @@ function StandaloneMultiSelectInput(
         filter={"contains"}
         allowCreate={allowCreate}
         groupBy={groupBy}
-        onToggleFunction={onToggleFunction}
+        onToggle={onToggleFunction}
         value={value}
         onCreate={createOptionFunction}
         placeholder={placeholderText}
@@ -47,7 +47,10 @@ StandaloneMultiSelectInput.propTypes = {
   ]),
   value: PropTypes.any,
   valueField: PropTypes.string,
-  textField: PropTypes.string,
+  textField: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]),
   placeholderText: PropTypes.string,
   setDataFunction: PropTypes.func,
   busy: PropTypes.bool,

@@ -27,8 +27,17 @@ function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData, v
       <div className="d-flex">
         <div><RoleAccessField dataObject={dataObject} fieldName={fieldName} noDataMessage={noDataMessage} /></div>
         <div className="edit-button d-flex">
-          <EditIcon className={"ml-2 mt-2 text-muted"} editFunction={showEditor} disabled={disabled} tooltipBody={"Edit Access Rules"} />
-          <LaunchHelpIcon helpComponent={helpComponent} className={"mt-2 ml-2 text-muted"} />
+          <EditIcon
+            className={"ml-2 mt-2 text-muted"}
+            editFunction={showEditor}
+            disabled={disabled}
+            tooltipBody={"Edit Access Rules"}
+          />
+          <LaunchHelpIcon
+            visible={disabled !== true}
+            helpComponent={helpComponent}
+            className={"mt-2 ml-2 text-muted"}
+          />
         </div>
       </div>
       <EditRolesModal
