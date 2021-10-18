@@ -1,5 +1,5 @@
 const JenkinsSfdcJobMetadata = {
-  type: "Jenkins SFDC Job",
+  type: "Jenkins Salesforce Job",
   fields: [
     {
       label: "Build Step",

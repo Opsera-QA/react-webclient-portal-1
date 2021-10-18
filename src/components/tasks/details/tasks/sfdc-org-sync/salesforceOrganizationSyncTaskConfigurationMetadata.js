@@ -93,14 +93,14 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
       regexDefinitionName: "gitBranchName",
     },
     {
-      label: "SFDC Account",
+      label: "Salesforce Account",
       id: "sfdcToolId",
       isRequired: true,
       maxLength: 24,
       regexDefinitionName: "mongoId",
     },
     {
-      label: "SFDC Account",
+      label: "Salesforce Account",
       id: "sfdcToolName",
       isRequired: true,
       maxLength: 255,
