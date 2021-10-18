@@ -11,9 +11,9 @@ import WarningDialog from "components/common/status_notifications/WarningDialog"
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import MessageField from "components/common/fields/text/MessageField";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
-import MembersPanel from "components/settings/ldap_groups/ldap_group_detail/membership_manager/user_panel/MembersPanel";
+import MembersPanel from "components/settings/ldap_groups/details/membership_manager/user_panel/MembersPanel";
 import NonMembersPanel
-  from "components/settings/ldap_groups/ldap_group_detail/membership_manager/user_panel/NonMembersPanel";
+  from "components/settings/ldap_groups/details/membership_manager/user_panel/NonMembersPanel";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/pro-light-svg-icons";
 

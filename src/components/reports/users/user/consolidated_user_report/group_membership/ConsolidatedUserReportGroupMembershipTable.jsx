@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from "react";
 import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
-import {ldapGroupMetaData} from "components/settings/ldap_groups/ldap-groups-metadata";
+import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faUserFriends, faSearch} from "@fortawesome/pro-light-svg-icons";
 import {getTableTextColumn, getStaticInfoColumn} from "components/common/table/table-column-helpers-v2";

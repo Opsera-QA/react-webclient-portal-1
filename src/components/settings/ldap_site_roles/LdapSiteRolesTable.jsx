@@ -4,43 +4,28 @@ import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import NewLdapGroupModal from "components/settings/ldap_groups/NewLdapGroupOverlay";
 import {
-  getCountColumnWithoutField,
   getTableBooleanIconColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faUserFriends} from "@fortawesome/pro-light-svg-icons";
+import {faServer} from "@fortawesome/pro-light-svg-icons";
 
-function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, loadData, currentUserEmail, useMembers, existingGroupNames }) {
+function LdapSiteRolesTable({ groupData, orgDomain, isLoading, loadData }) {
   let fields = ldapGroupMetaData.fields;
-  const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
   const history = useHistory();
-
-  // TODO: This should be static
-  const getDynamicColumn = () => {
-    if (useMembers) {
-      return (getCountColumnWithoutField("Members", "members"));
-    }
-
-    return getTableTextColumn(getField(fields, "memberCount"));
-  };
 
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "externalSyncGroup")),
-      getDynamicColumn(),
+      getTableTextColumn(getField(fields, "memberCount")),
       getTableBooleanIconColumn(getField(fields, "isSync"))
     ],
     []
   );
 
-  const createGroup = () => {
-    setShowCreateGroupModal(true);
-  };
-  
   const onRowSelect = (rowData, type) => {
     history.push(`/settings/${orgDomain}/groups/details/${rowData.original.name}`);
   };
@@ -58,30 +43,18 @@ function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, l
   };
 
   return (
-    <div className="px-2 pb-2">
-      <FilterContainer
-        loadData={loadData}
-        addRecordFunction={!useMembers && authorizedActions ? createGroup : undefined}
-        isLoading={isLoading}
-        body={getGroupsTable()}
-        titleIcon={faUserFriends}
-        title={"Groups"}
-        type={"Group"}
-      />
-      <NewLdapGroupModal
-        loadData={loadData}
-        authorizedActions={authorizedActions}
-        orgDomain={orgDomain}
-        showModal={showCreateGroupModal}
-        currentUserEmail={currentUserEmail}
-        setShowModal={setShowCreateGroupModal}
-        existingGroupNames={existingGroupNames}
-      />
-    </div>
+    <FilterContainer
+      loadData={loadData}
+      isLoading={isLoading}
+      body={getGroupsTable()}
+      titleIcon={faServer}
+      title={"Site Roles & Departments"}
+      className={"px-2 pb-2"}
+    />
   );
 }
 
-LdapGroupsTable.propTypes = {
+LdapSiteRolesTable.propTypes = {
   groupData: PropTypes.array,
   orgDomain: PropTypes.string,
   isLoading: PropTypes.bool,
@@ -92,4 +65,4 @@ LdapGroupsTable.propTypes = {
   existingGroupNames: PropTypes.array
 };
 
-export default LdapGroupsTable;
+export default LdapSiteRolesTable;

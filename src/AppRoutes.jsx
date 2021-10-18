@@ -41,7 +41,7 @@ import LdapUserManagement from "./components/settings/ldap_users/LdapUserManagem
 import LdapUserDetailView from "./components/settings/ldap_users/users_detail_view/LdapUserDetailView";
 import AccountSettingsView from "./components/settings/AccountSettings";
 import LdapGroupManagement from "./components/settings/ldap_groups/LdapGroupManagement";
-import LdapGroupDetailView from "./components/settings/ldap_groups/ldap_group_detail/LdapGroupDetailView";
+import LdapGroupDetailView from "./components/settings/ldap_groups/details/LdapGroupDetailView";
 import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetailView";
 import TemplateDetailView from "./components/admin/template_editor/template_detail_view/TemplateDetailView";
 import DataMappingManagement from "components/settings/data_mapping/DataMappingManagement";
@@ -118,6 +118,7 @@ import PipelineCatalogLibrary from "components/workflow/catalog/PipelineCatalogL
 import Release360 from "components/insights/release_360/Release360";
 import ToolCategoryManagement from "components/admin/tools/tool_category/ToolCategoryManagement";
 import ToolIdentifierManagement from "components/admin/tools/tool_identifier/ToolIdentifierManagement";
+import SiteRoleManagement from "components/settings/ldap_site_roles/SiteRoleManagement";
 //import FreeTrialRegistration from "./components/free_trial/Registration";
 //import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 
@@ -292,6 +293,9 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/settings/delete" component={DeleteTools} />
           <SecureRoute path="/settings/:orgDomain?/groups/" exact component={LdapGroupManagement} />
           <SecureRoute path="/settings/:orgDomain/groups/details/:groupName" exact
+                       component={LdapGroupDetailView} />
+          <SecureRoute path="/settings/:orgDomain?/site-roles/" exact component={SiteRoleManagement} />
+          <SecureRoute path="/settings/:orgDomain/site-roles/details/:groupName" exact
                        component={LdapGroupDetailView} />
           <SecureRoute path="/settings/organizations/" exact component={OrganizationManagement} />
           <SecureRoute path="/settings/organizations/details/:id" exact component={OrganizationDetailView} />

@@ -345,6 +345,24 @@ const breadcrumbs = {
     icon: faUserFriends
   },
 
+  // LDAP Site Roles Administration
+  ldapSiteRolesManagement: {
+    parent: "accountSettings",
+    name: "ldapSiteRolesManagement",
+    path: paths.ldapSiteRoleManagement,
+    title: "Site Roles & Departments Management",
+    linkText: "Site Roles & Departments",
+    icon: faServer
+  },
+  ldapSiteRoleDetailView: {
+    parent: "ldapSiteRolesManagement",
+    name: "ldapSiteRoleDetailView",
+    path: paths.ldapSiteRoleDetailView,
+    title: "Site Role Details",
+    linkText: "Site Role Details",
+    icon: faServer
+  },
+
   // Tag Management
   tagManagement: {
     parent: "accountSettings",

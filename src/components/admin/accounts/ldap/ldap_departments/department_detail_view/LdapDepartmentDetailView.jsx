@@ -5,7 +5,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import departmentActions from "components/admin/accounts/ldap/ldap_departments/department-functions";
 import ldapDepartmentMetaData from "components/admin/accounts/ldap/ldap_departments/ldap-department-metadata";
-import {ldapGroupMetaData} from "components/settings/ldap_groups/ldap-groups-metadata";
+import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
