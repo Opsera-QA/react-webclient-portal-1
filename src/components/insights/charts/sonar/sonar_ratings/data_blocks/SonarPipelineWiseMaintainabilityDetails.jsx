@@ -15,6 +15,8 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import "./sonar-ratings-pipeline-details.css";
+
 function SonarPipelineWiseMaintainibilityDetails() {
   const { getAccessToken } = useContext(AuthContext);
   const [model, setModel] = useState(
@@ -165,7 +167,7 @@ function SonarPipelineWiseMaintainibilityDetails() {
         </Col>
         <Col>
           <div className="metric-box p-3 text-center">
-            <div style={{position: 'absolute', fontSize: '1.25rem' }}>
+            <div className="box-icon">
               <FontAwesomeIcon icon={faSirenOn} fixedWidth className="mr-2 red" />
             </div>
             <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
@@ -176,7 +178,7 @@ function SonarPipelineWiseMaintainibilityDetails() {
         </Col>
         <Col>
           <div className="metric-box p-3 text-center">
-            <div style={{position: 'absolute', fontSize: '1.25rem' }}>
+            <div className="box-icon">
               <FontAwesomeIcon icon={faBan} fixedWidth className="mr-2 red" />
             </div>
             <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
@@ -187,7 +189,7 @@ function SonarPipelineWiseMaintainibilityDetails() {
         </Col>
         <Col>
           <div className="metric-box p-3 text-center ">
-            <div style={{position: 'absolute', fontSize: '1.25rem' }}>
+            <div className="box-icon">
               <FontAwesomeIcon icon={faExclamationTriangle} fixedWidth className="mr-2 opsera-yellow" />
             </div>
             <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
@@ -198,7 +200,7 @@ function SonarPipelineWiseMaintainibilityDetails() {
         </Col>
         <Col>
           <div className="metric-box p-3 text-center">
-            <div style={{position: 'absolute', fontSize: '1.25rem' }}>
+            <div className="box-icon">
               <FontAwesomeIcon icon={faExclamation} fixedWidth className="mr-2 green" />
             </div>
             <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
@@ -208,14 +210,14 @@ function SonarPipelineWiseMaintainibilityDetails() {
           </div>
         </Col>
         <Col>
-          <div className="metric-box text-center">
-            <div style={{position: 'absolute', fontSize: '1.5rem' }}>
-              <FontAwesomeIcon icon={faInfoCircle} fixedWidth className="info-text" />
+          <div className="metric-box p-3 text-center">
+            <div className="box-icon">
+              <FontAwesomeIcon icon={faInfoCircle} fixedWidth  />
             </div>
             <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className="font-weight-bold info-text">{issueTypeData?.info}</div>
+              <div className="font-weight-bold">{issueTypeData?.info}</div>
             </div>
-            <div className="w-100 info-text mb-1">Info</div>
+            <div className="w-100  mb-1">Info</div>
           </div>
         </Col>
       </Row>
@@ -228,22 +230,22 @@ function SonarPipelineWiseMaintainibilityDetails() {
     }
     return(<>
           <Row className="px-5">
-            <Col className="text-right">
+            <Col className="footer-records">
               Total remediation for Critical Code Smells : {footerData?.critical} 
             </Col>
           </Row>
           <Row className="px-5">
-            <Col className="text-right">
+            <Col className="footer-records">
               Total remediation for Major Code Smells : {footerData?.major} 
             </Col>
           </Row>
           <Row className="px-5">
-            <Col className="text-right">
+            <Col className="footer-records">
               Total remediation for Minor Code Smells : {footerData?.minor} 
             </Col>
           </Row>
           <Row className="px-5">
-            <Col className="text-right">
+            <Col className="footer-records">
               Total remediation for Info Code Smells : {footerData?.info} 
             </Col>
           </Row>
