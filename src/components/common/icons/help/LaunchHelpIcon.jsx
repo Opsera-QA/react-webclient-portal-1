@@ -6,7 +6,7 @@ import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
 // TODO: Remove iconClassName if unnecessary after refactoring PipelineWorkflowItem.jsx
-function LaunchHelpIcon({ helpComponent, helpText, className, size, iconClassName }) {
+function LaunchHelpIcon({ helpComponent, helpText, className, size, iconClassName, visible }) {
   const toastContext = useContext(DialogToastContext);
 
   const launchHelp = () => {
@@ -19,7 +19,7 @@ function LaunchHelpIcon({ helpComponent, helpText, className, size, iconClassNam
     }
   };
 
-  if (helpComponent == null) {
+  if (helpComponent == null || visible === false) {
     return null;
   }
 
@@ -46,7 +46,8 @@ LaunchHelpIcon.propTypes = {
   className: PropTypes.string,
   iconClassName: PropTypes.string,
   helpText: PropTypes.string,
-  size: PropTypes.string
+  size: PropTypes.string,
+  visible: PropTypes.bool,
 };
 
 export default LaunchHelpIcon;
