@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import { Multiselect } from 'react-widgets';
 import tagEditorMetadata from "components/settings/tags/tags-metadata";
 import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
@@ -11,6 +10,7 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 
 function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setDataFunction, allowCreate, inline, allowedTypes, getDisabledTags, placeholderText}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -184,19 +184,18 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
     <InputContainer>
       {!inline && <InputLabel model={dataObject} field={field} className={inline ? "mt-1 mr-2" : undefined}/>}
       <div className={"custom-multiselect-input"}>
-        <Multiselect
-          data={[...tagOptions]}
+        <StandaloneMultiSelectInput
+          selectOptions={[...tagOptions]}
           textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + capitalizeFirstLetter(data["value"])}
-          filter={"contains"}
           allowCreate={allowCreate}
           groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}
           className={inline ? `inline-filter-input inline-select-filter` : undefined}
           busy={isLoading}
-          onCreate={(value) => handleCreate(value)}
+          createOptionFunction={(value) => handleCreate(value)}
           value={[...dataObject?.getArrayData(fieldName)]}
-          placeholder={errorMessage ? errorMessage : placeholderText}
+          placeholderText={errorMessage ? errorMessage : placeholderText}
           disabled={disabled || isLoading || (getDisabledTags && getDisabledTags(tagOptions))}
-          onChange={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
+          setDataFunction={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
         />
       </div>
       <InfoText field={field} errorMessage={errorMessage}/>

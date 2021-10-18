@@ -26,7 +26,6 @@ import RegisteredUserDetailView
   from "./components/admin/registered_users/registered_user_details/RegisteredUserDetailView";
 import ManageSystems from "./components/admin/manage_systems/ManageSystems";
 import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
-import SystemStatus from "./components/admin/status/SystemStatus";
 import Registration from "./components/landing/Registration";
 import TagEditor from "./components/settings/tags/TagManagement";
 import TagDetailView from "./components/settings/tags/tags_detail_view/TagDetailView";
@@ -38,8 +37,6 @@ import LdapOrganizationDetailView
   from "./components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationDetailView";
 import LdapCustomerOnboardView from "./components/admin/accounts/ldap/customer_onboard/LdapCustomerOnboard";
 import ApiConnectionDemo from "components/admin/api_demo/ApiConnectionDemo";
-import CommonTableDemo from "./components/common/samples/tableImplementation";
-import CustomerSystemStatus from "./components/settings/customer_system_status/CustomerSystemStatus";
 import LdapUserManagement from "./components/settings/ldap_users/LdapUserManagement";
 import LdapUserDetailView from "./components/settings/ldap_users/users_detail_view/LdapUserDetailView";
 import AccountSettingsView from "./components/settings/AccountSettings";
@@ -106,7 +103,7 @@ import PipelineStorageDetailView
 import ParametersInventory from "components/inventory/parameters/ParametersInventory";
 import ToolInventory from "components/inventory/tools/ToolInventory";
 import ScriptsInventory from "components/inventory/scripts/ScriptsInventory";
-import PlatformInventory from "components/inventory/platform/platformInventory";
+import PlatformInventory from "components/inventory/platform/PlatformInventory";
 import TagReportsScreen from "components/reports/tags/TagReportsScreen";
 import PipelineReportsScreen from "components/reports/pipelines/PipelineReportsScreen";
 import ToolReportsScreen from "components/reports/tools/ToolReportsScreen";
@@ -251,7 +248,6 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/admin/manage_systems" component={ManageSystems} />
           <SecureRoute path="/admin/registered-users" exact component={RegisteredUsersManagement} />
           <SecureRoute path="/admin/registered-users/:id" exact component={RegisteredUserDetailView} />
-          {/* <SecureRoute path="/admin/system-status" component={SystemStatus} /> */}
           <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration} />
           <SecureRoute path="/admin/tools/categories" exact component={ToolCategoryManagement} />
           <SecureRoute path="/admin/tools/identifiers" exact component={ToolIdentifierManagement} />
@@ -311,7 +307,6 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
 
           <SecureRoute path="/settings/tags" exact component={TagEditor} />
           <SecureRoute path="/settings/tags/:id" exact component={TagDetailView} />
-          {/* <SecureRoute path="/settings/customer-system-status" exact component={CustomerSystemStatus} /> */}
           <SecureRoute path="/settings/analytics-profile" exact component={AnalyticsProfileSettings} />
           <SecureRoute path="/settings/data_mapping" exact component={DataMappingManagement} />
           <SecureRoute path="/settings/data_mapping/projects/details/:projectMappingId" exact
@@ -320,7 +315,6 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
                        component={UsersMappingDetailView} />
 
           <SecureRoute path="/admin/demo/api" component={ApiConnectionDemo} />
-          <SecureRoute path="/demo/table" component={CommonTableDemo} />
 
           {/*{getFreeTrialRoutes()}*/}
         </div>

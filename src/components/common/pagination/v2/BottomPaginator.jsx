@@ -3,11 +3,13 @@ import PropTypes from "prop-types";
 import {Pagination} from "react-bootstrap";
 import {getResultSummary} from "components/common/pagination/pagination-helpers";
 import ResultsSummary from "components/common/pagination/v2/ResultsSummary";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 // TODO: Should we use the new paginator?
 function BottomPaginator({ paginationModel, nextGeneration, loadData, isLoading }) {
   const setPage = (page) => {
-    if (page === paginationModel.getData("currentPage")) {
+    if (page === paginationModel.getFilterValue("currentPage")) {
       return;
     }
 
@@ -16,14 +18,14 @@ function BottomPaginator({ paginationModel, nextGeneration, loadData, isLoading 
   };
 
   const getTotalPages = () => {
-    let pageSize = paginationModel.getData("pageSize");
-    let totalCount = paginationModel.getData("totalCount");
+    let pageSize = paginationModel.getFilterValue("pageSize");
+    let totalCount = paginationModel.getFilterValue("totalCount");
     return Math.ceil(totalCount / pageSize);
   };
 
   const getPaginationItems = () => {
     let paginationItems = [];
-    let currentPage = paginationModel.getData("currentPage");
+    let currentPage = paginationModel.getFilterValue("currentPage");
     let startingPage = currentPage - 2 >= 1 ? currentPage - 2 : 1;
 
     for (let pageNumber = startingPage; pageNumber < startingPage + 5 && pageNumber <= getTotalPages(); pageNumber++) {
@@ -34,20 +36,24 @@ function BottomPaginator({ paginationModel, nextGeneration, loadData, isLoading 
   };
 
   const getPaginator = () => {
-    if (paginationModel.getData("totalCount") <= paginationModel.getData("pageSize") ) {
+    const totalCount = paginationModel?.getFilterValue("totalCount");
+    const pageSize = paginationModel?.getFilterValue("pageSize");
+    const currentPage = paginationModel?.getFilterValue("currentPage");
+
+    if (totalCount <= pageSize) {
       return null;
     }
 
-    const paginationDisabled = isLoading || paginationModel == null || paginationModel.getData("totalCount") == null || paginationModel.getData("totalCount") <= paginationModel.getData("pageSize");
-    const onFirstPage = paginationModel?.getData("currentPage") === 1;
-    const onLastPage = paginationModel?.getData("currentPage") === getTotalPages();
+    const paginationDisabled = isLoading || paginationModel == null || totalCount == null || totalCount <= pageSize;
+    const onFirstPage = currentPage === 1;
+    const onLastPage = currentPage === getTotalPages();
 
     return (
         <Pagination disabled={paginationDisabled} className="justify-content-center my-1">
           <Pagination.Item disabled={onFirstPage || paginationDisabled} onClick={() => setPage(1)}>First</Pagination.Item>
-          <Pagination.Item disabled={onFirstPage || paginationDisabled} onClick={() => setPage(paginationModel?.getData("currentPage") - 1)}>Previous</Pagination.Item>
+          <Pagination.Item disabled={onFirstPage || paginationDisabled} onClick={() => setPage(currentPage - 1)}>Previous</Pagination.Item>
           {getPaginationItems()}
-          <Pagination.Item disabled={onLastPage || paginationDisabled} onClick={() => setPage(paginationModel?.getData("currentPage") + 1)}>Next</Pagination.Item>
+          <Pagination.Item disabled={onLastPage || paginationDisabled} onClick={() => setPage(currentPage + 1)}>Next</Pagination.Item>
           <Pagination.Item disabled={onLastPage || paginationDisabled} onClick={() => setPage(getTotalPages())}>Last</Pagination.Item>
         </Pagination>
     );
@@ -62,19 +68,21 @@ function BottomPaginator({ paginationModel, nextGeneration, loadData, isLoading 
     return (getResultSummary(paginationModel, isLoading));
   };
 
-  if (!paginationModel || paginationModel?.getData("totalCount") == null) {
+  if (!paginationModel || paginationModel?.getFilterValue("totalCount") == null) {
     return null;
   }
 
   return (
     <div className="bottom-pagination">
-      <div className="pagination-block small d-flex justify-content-between px-2">
-        <div className="my-auto results-summary">{getResultSummaryField()}</div>
-        <div className="my-auto">
+      <Row className="pagination-block small d-flex justify-content-between px-2">
+        <Col xs={4} className="my-auto results-summary">
+          {getResultSummaryField()}
+        </Col>
+        <Col xs={4} className="my-auto">
           {getPaginator()}
-        </div>
-        <div className="results-summary" />
-      </div>
+        </Col>
+        <Col xs={4} />
+      </Row>
     </div>
   );
 }

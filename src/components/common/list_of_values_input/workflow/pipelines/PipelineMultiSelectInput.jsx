@@ -9,7 +9,7 @@ import Model from "../../../../../core/data_model/model";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
-import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import axios from 'axios';
 
 function PipelineMultiSelectInput({ currentPipelineId, visible, fieldName, dataObject, setDataObject, disabled}) {

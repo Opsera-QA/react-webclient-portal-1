@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
 function AccountRoleMultiSelectInput({ fieldName, dataObject, setDataObject, setDataFunction, disabled}) {
   const [isLoading, setIsLoading] = useState(false);

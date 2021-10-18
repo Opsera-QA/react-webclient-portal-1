@@ -1,15 +1,12 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import { Multiselect } from 'react-widgets';
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTimes} from "@fortawesome/pro-light-svg-icons";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import analyticsActions from "components/settings/analytics/analytics-settings-actions";
+import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 
 function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObject, groupBy, disabled, placeholderText, setDataFunction, busy, showClearValueButton, clearDataFunction, className}) {
   const [errorMessage, setErrorMessage] = useState("");
@@ -126,17 +123,16 @@ function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObj
     <InputContainer className={className ? className : undefined}>
       <InputLabel field={field} clearDataFunction={getClearDataFunction()} model={dataObject} />
       <div className={"custom-multiselect-input"}>
-        <Multiselect
-          data={selectOptions}
+        <StandaloneMultiSelectInput
+          selectOptions={selectOptions}
           busy={busy || isLoading}
           allowCreate={"onFilter"}
-          onCreate={(value) => handleCreate(value)}
-          filter="contains"
+          createOptionFunction={(value) => handleCreate(value)}
           groupBy={groupBy}
           value={dataObject.getArrayData(fieldName) ? [...dataObject.getArrayData(fieldName)] : [] }
-          placeholder={placeholderText}
+          placeholderText={placeholderText}
           disabled={disabled}
-          onChange={newValue => setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)}
+          setDataFunction={newValue => setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)}
         />
       </div>
       <InfoText errorMessage={errorMessage} field={field} />

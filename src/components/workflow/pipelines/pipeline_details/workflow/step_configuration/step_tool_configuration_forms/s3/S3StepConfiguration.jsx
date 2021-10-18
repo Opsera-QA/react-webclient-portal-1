@@ -17,13 +17,13 @@ import {
   faEllipsisH,
   faTools,
 } from "@fortawesome/free-solid-svg-icons";
-import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
 import ErrorDialog from "../../../../../../../common/status_notifications/error";
 import JUnitStepConfiguration from "../junit/JUnitStepConfiguration";
 import {getErrorDialog, getMissingRequiredFieldsErrorDialog} from "../../../../../../../common/toasts/toasts";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 
 //This must match the form below and the data object expected.  Each tools' data object is different
@@ -342,8 +342,8 @@ function S3StepConfiguration({
               <>
                 {renderForm && awsList && awsList.length > 0 ? (
                   <>
-                    <DropdownList
-                      data={awsList}
+                    <StandaloneSelectInput
+                      selectOptions={awsList}
                       value={
                         awsList[
                           awsList.findIndex(
@@ -354,7 +354,7 @@ function S3StepConfiguration({
                       valueField="id"
                       textField="name"
                       filter="contains"
-                      onChange={handleAWSChange}
+                      setDataFunction={handleAWSChange}
                     />
                   </>
                 ) : (
@@ -391,14 +391,14 @@ function S3StepConfiguration({
           <Form.Group controlId="s3bucketStep">
             <Form.Label>Bucket Access*</Form.Label>
             {BUCKET_ACCESS ? (
-              <DropdownList
+              <StandaloneSelectInput
                 data={BUCKET_ACCESS}
                 value={
                   formData.bucketAccess ? formData.bucketAccess : "private"
                 }
                 valueField="value"
                 textField="name"
-                onChange={handleBucketAccessChange}
+                setDataFunction={handleBucketAccessChange}
               />
             ) : (
               <FontAwesomeIcon
@@ -413,7 +413,7 @@ function S3StepConfiguration({
             <Form.Group controlId="s3Step">
             <Form.Label>Build Step Info*</Form.Label>
             {listOfSteps ? (
-              <DropdownList
+              <StandaloneSelectInput
                 data={listOfSteps}
                 value={
                   formData.buildStepId
@@ -435,7 +435,7 @@ function S3StepConfiguration({
                       ]
                     : listOfSteps[0]
                 }
-                onChange={handleBuildStepChange}
+                setDataFunction={handleBuildStepChange}
               />
             ) : (
               <FontAwesomeIcon
