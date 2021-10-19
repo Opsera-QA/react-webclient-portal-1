@@ -15,6 +15,8 @@ import AzureAcrPushPipelineStepConfigurationHelp
   from "../../../../common/help/documentation/pipelines/step_configuration/AzureAcrPushPipelineStepConfigurationHelp";
 import OctopusDeployStepConfigurationHelp
   from "../../../../common/help/documentation/pipelines/step_configuration/OctopusDeployStepConfigurationHelp";
+import AnsibleStepConfigurationHelp
+  from "../../../../common/help/documentation/pipelines/step_configuration/AnsibleStepConfigurationHelp";
 
 function StepToolHelpIcon({type, tool, className, iconClassName}) {
   // TODO: Alphabetize when adding new help panels
@@ -32,6 +34,8 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
         return <AzureAcrPushPipelineStepConfigurationHelp/>;
       case "octopus":
         return <OctopusDeployStepConfigurationHelp/>;
+      case "ansible":
+        return <AnsibleStepConfigurationHelp/>;
       case "jenkins":
       case "junit":
       case "xunit":
