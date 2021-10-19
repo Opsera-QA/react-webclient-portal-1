@@ -97,6 +97,8 @@ function RepositorySelectInput(
               "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list."
             );
           }
+        } else {
+          toastContext.showSystemErrorBanner(repositoriesResponse);
         }
       }
     }
