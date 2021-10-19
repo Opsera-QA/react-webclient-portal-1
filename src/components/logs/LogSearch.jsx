@@ -10,7 +10,6 @@ import { faCalendar } from "@fortawesome/pro-light-svg-icons";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { DateRangePicker } from "react-date-range";
-import DropdownList from "react-widgets/lib/DropdownList";
 import LogSearchResult from "./LogSearchResult";
 import BlueprintSearchResult from "./BlueprintSearchResult";
 import CommitSearchResult from "./CommitSearchResult";
@@ -28,6 +27,7 @@ import Model from "core/data_model/model";
 import JenkinsJobSelectInput from "components/common/list_of_values_input/settings/data_tagging/projects/JenkinsJobSelectInput";
 import ProjectMappingToolSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 // TODO: This entire form needs to be completely refactored
 function LogSearch({tools, sideBySide}) {
@@ -425,15 +425,14 @@ function LogSearch({tools, sideBySide}) {
     // if (filterType === "blueprint") {
     //   return (
     //     <Col md={3} className="py-1">
-    //       <DropdownList
-    //         data={filterOptions}
+    //       <SelectInputBase
+    //         selectOptions={filterOptions}
     //         busy={Object.keys(filterOptions).length === 0}
     //         disabled={Object.keys(filterOptions).length === 0}
     //         className="basic-single"
-    //         valueField='value'
-    //         textField='label'
-    //         filter='contains'
-    //         placeholder={"Select Job Name"}
+    //         valueField={'value'}
+    //         textField={'label'}
+    //         placeholderText={"Select Job Name"}
     //         value={jobFilter}
     //         onChange={setJobFilter}
     //         onToggle={fetchFilterData}
@@ -443,19 +442,20 @@ function LogSearch({tools, sideBySide}) {
     // }
   };
 
+  // TODO: Make standard inputs
   const getSearchFields = () => {
     return (
       <Row className={"mx-0 py-2"}>
         <Col className="custom-select-input my-2">
           <label><span>Search Index</span><span className="danger-red">*</span></label>          
-          <DropdownList
-            data={Array.isArray(tools) ? tools : []}
+          <StandaloneSelectInput
+            selectOptions={Array.isArray(tools) ? tools : []}
             defaultValue={Array.isArray(tools) ? tools[0] : []}
             className="basic-single"
             valueField="value"
             textField="label"
             filter="contains"
-            onChange={handleSelectChange}
+            setDataFunction={handleSelectChange}
           />
         </Col>
         {getDynamicFields()}

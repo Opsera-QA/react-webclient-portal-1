@@ -2,32 +2,41 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 
-function SalesforceOrganizationSyncTaskGitBranchSelectInput({dataObject, setDataObject, disabled, visible}) {
-  const setBranch = (fieldName, selectedOption) => {
-    let newDataObject = {...dataObject};
-    newDataObject.setData("gitBranch", selectedOption);
-    newDataObject.setData("defaultBranch", selectedOption);
-    setDataObject({...newDataObject});
+function SalesforceOrganizationSyncTaskGitBranchSelectInput({model, setModel, disabled, visible}) {
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newModel = {...model};
+    newModel.setData("gitBranch", selectedOption);
+    newModel.setData("defaultBranch", selectedOption);
+    setModel({...newModel});
   };
+  
+  const clearDataFunction = () => {
+    let newModel = {...model};
+    newModel.setDefaultValue("gitBranch");
+    newModel.setDefaultValue("defaultBranch");
+    setModel({...newModel});
+  };
+
   return (
-     <GitBranchInput
-       fieldName={"gitBranch"}
-       service={dataObject.getData("service")}
-       gitToolId={dataObject.getData("gitToolId")}
-       workspace={dataObject.getData("workspace")}
-       repoId={dataObject.getData("projectId")}
-       dataObject={dataObject}
-       setDataFunction={setBranch}
-       setDataObject={setDataObject}
-       disabled={disabled}
-       visible={visible}
-     />
+    <GitBranchInput
+      fieldName={"gitBranch"}
+      service={model?.getData("service")}
+      gitToolId={model?.getData("gitToolId")}
+      workspace={model?.getData("workspace")}
+      repoId={model?.getData("projectId")}
+      dataObject={model}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      setDataObject={setModel}
+      disabled={disabled}
+      visible={visible}
+    />
   );
 }
 
 SalesforceOrganizationSyncTaskGitBranchSelectInput.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
 };

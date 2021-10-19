@@ -19,7 +19,7 @@ function SfdcPipelineWizardUploadComponentTypesRadioInput({ fieldName, pipelineW
             setDataObject={setPipelineWizardModel}
             disabled={disabled}
             value={"sfdc"}
-            label={<div><strong>From SFDC</strong></div>}
+            label={<div><strong>From Salesforce</strong></div>}
           />
           <div className={"mx-3"}/>
           <RadioButtonOption

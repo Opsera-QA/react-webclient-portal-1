@@ -2,44 +2,64 @@ import React from "react";
 import PropTypes from "prop-types";
 import JenkinsAccountInput from "components/common/list_of_values_input/tools/jenkins/JenkinsAccountInput";
 
-function SalesforceOrganizationSyncTaskJenkinsAccountSelectInput({dataObject, setDataObject, gitTasksDataDto, disabled}) {
-  const setJenkinsAccount = (fieldName, selectedOption) => {
-    let newDataObject = {...dataObject};
-    newDataObject.setData("gitCredential", selectedOption.gitCredential);
-    newDataObject.setData("gitToolId", selectedOption.toolId);
-    newDataObject.setData("service", selectedOption.service);
+function SalesforceOrganizationSyncTaskJenkinsAccountSelectInput({model, setModel, taskModel, disabled}) {
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newModel = {...model};
+    newModel.setData("gitCredential", selectedOption?.gitCredential);
+    newModel.setData("gitToolId", selectedOption?.toolId);
+    newModel.setData("service", selectedOption?.service);
     // save the tool identifier to the parent obj
-    gitTasksDataDto.setData("tool_identifier", selectedOption.service);
-    newDataObject.setData("gitUrl", "");
-    newDataObject.setData("sshUrl", "");
-    newDataObject.setData("repository", "");
-    newDataObject.setData("projectId", "");
-    newDataObject.setData("gitBranch", "");
-    newDataObject.setData("defaultBranch", "");
-    newDataObject.setData("sourceBranch", "");
-    newDataObject.setData("workspace", "");
-    newDataObject.setData("workspaceName", "");
-    setDataObject({...newDataObject});
+    taskModel.setData("tool_identifier", selectedOption?.service);
+    newModel.setDefaultValue("gitUrl");
+    newModel.setDefaultValue("sshUrl",);
+    newModel.setDefaultValue("repository");
+    newModel.setDefaultValue("projectId");
+    newModel.setDefaultValue("gitBranch");
+    newModel.setDefaultValue("defaultBranch");
+    newModel.setDefaultValue("sourceBranch");
+    newModel.setDefaultValue("workspace");
+    newModel.setDefaultValue("workspaceName");
+    setModel({...newModel});
+  };
+
+  const clearDataFunction = () => {
+    let newModel = {...model};
+    newModel.setDefaultValue("gitCredential");
+    newModel.setDefaultValue("gitToolId");
+    newModel.setDefaultValue("service");
+    // save the tool identifier to the parent obj
+    taskModel.setDefaultValue("tool_identifier");
+    newModel.setDefaultValue("gitUrl");
+    newModel.setDefaultValue("sshUrl");
+    newModel.setDefaultValue("repository");
+    newModel.setDefaultValue("projectId");
+    newModel.setDefaultValue("gitBranch");
+    newModel.setDefaultValue("defaultBranch");
+    newModel.setDefaultValue("sourceBranch");
+    newModel.setDefaultValue("workspace");
+    newModel.setDefaultValue("workspaceName");
+    setModel({...newModel});
   };
 
   return (
      <JenkinsAccountInput
        fieldName={"gitCredential"}
-       jenkinsId={dataObject?.getData("toolConfigId")}
+       jenkinsId={model?.getData("toolConfigId")}
        requireConfiguration={true}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       setDataFunction={setJenkinsAccount}
+       dataObject={model}
+       setDataObject={setModel}
+       setDataFunction={setDataFunction}
+       clearDataFunction={clearDataFunction}
        disabled={disabled}
      />
   );
 }
 
 SalesforceOrganizationSyncTaskJenkinsAccountSelectInput.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
-  gitTasksDataDto: PropTypes.object,
+  taskModel: PropTypes.object,
 };
 
 export default SalesforceOrganizationSyncTaskJenkinsAccountSelectInput;

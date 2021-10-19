@@ -10,8 +10,8 @@ import SalesforceOrganizationSyncTaskNewBranchToggleInput from "components/tasks
 import SalesforceOrganizationSyncTaskUpstreamBranchSelectInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskUpstreamBranchSelectInput";
 import SalesforceOrganizationSyncTaskGitBranchTextInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchTextInput";
 import AgentLabelsSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
-import SalesforceOrganizationSyncSalesforceToolSelectInput
-  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncSalesforceToolSelectInput";
+import SalesforceOrganizationSyncTaskSalesforceToolSelectInput
+  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskSalesforceToolSelectInput";
 import SalesforceOrganizationSyncTaskGitBranchSelectInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
 import SalesforceOrganizationSyncTaskRepositorySelectInput
@@ -20,8 +20,8 @@ import SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput";
 import SalesforceOrganizationSyncTaskJenkinsAccountSelectInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsAccountSelectInput";
-import SalesforceOrganizationSyncJenkinsToolSelectInput
-  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncJenkinsToolSelectInput";
+import SalesforceOrganizationSyncTaskJenkinsToolSelectInput
+  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsToolSelectInput";
 import SalesforceOrganizationSyncTaskIncludePackageXmlToggleInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskIncludePackageXmlToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
@@ -69,47 +69,47 @@ function SalesforceOrganizationSyncTaskConfigurationEditorPanel({ taskModel, tas
   return (
     <Row>
       <Col lg={12}>
-        <SalesforceOrganizationSyncJenkinsToolSelectInput
+        <SalesforceOrganizationSyncTaskJenkinsToolSelectInput
           model={taskConfigurationModel}
           setModel={setTaskConfigurationModel}
         />
       </Col>
       <Col lg={12}>
-        <SalesforceOrganizationSyncSalesforceToolSelectInput
-          dataObject={taskConfigurationModel}
-          setDataObject={setTaskConfigurationModel}
+        <SalesforceOrganizationSyncTaskSalesforceToolSelectInput
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
         />
       </Col>
       <Col lg={12}>
         <SalesforceOrganizationSyncTaskJenkinsAccountSelectInput
-          dataObject={taskConfigurationModel}
-          setDataObject={setTaskConfigurationModel}
-          gitTasksDataDto={taskModel}
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
+          taskModel={taskModel}
         />
       </Col>
       <Col lg={12}>
         <SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
-          dataObject={taskConfigurationModel}
-          setDataObject={setTaskConfigurationModel}
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
         />
       </Col>
       <Col lg={12}>
         <SalesforceOrganizationSyncTaskRepositorySelectInput
-          dataObject={taskConfigurationModel}
-          setDataObject={setTaskConfigurationModel}
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
         />
       </Col>
       <Col lg={12}>
         <SalesforceOrganizationSyncTaskGitBranchSelectInput
-          dataObject={taskConfigurationModel}
-          setDataObject={setTaskConfigurationModel}
-          visible={!(taskConfigurationModel?.getData("isNewBranch"))}
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
+          visible={taskConfigurationModel?.getData("isNewBranch") !== true}
         />
       </Col>
       <Col lg={12}>
         <SalesforceOrganizationSyncTaskNewBranchToggleInput
-          dataObject={taskConfigurationModel}
-          setDataObject={setTaskConfigurationModel}
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
         />
       </Col>
       {taskConfigurationModel?.getData("isNewBranch") &&
@@ -117,15 +117,15 @@ function SalesforceOrganizationSyncTaskConfigurationEditorPanel({ taskModel, tas
           <Col lg={12}>
             <SalesforceOrganizationSyncTaskGitBranchTextInput
               fieldName={"gitBranch"}
-              dataObject={taskConfigurationModel}
-              setDataObject={setTaskConfigurationModel}
-              visible={taskConfigurationModel?.getData("isNewBranch")}
+              model={taskConfigurationModel}
+              setModel={setTaskConfigurationModel}
+              visible={taskConfigurationModel?.getData("isNewBranch") === true}
             />
           </Col>
           <Col lg={12}>
             <SalesforceOrganizationSyncTaskUpstreamBranchSelectInput
-              dataObject={taskConfigurationModel}
-              setDataObject={setTaskConfigurationModel}
+              model={taskConfigurationModel}
+              setModel={setTaskConfigurationModel}
             />
           </Col>
         </>

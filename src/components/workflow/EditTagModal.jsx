@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
 import TempTagManagerInput from "../common/input/temp-tag-manager-input";
 
-
+// TODO: Update to new overlay
 function EditTagModal({visible, onHide, onClick, data}) {
     const [tags, setTags] = useState(data);
 
@@ -15,7 +15,11 @@ function EditTagModal({visible, onHide, onClick, data}) {
         </Modal.Header>
         <Modal.Body>
           <div className="pipeline-tag-modal-body">
-            <TempTagManagerInput data={tags} type={"pipeline"} setData={setTags} label={"Pipeline Tags"} />
+            <TempTagManagerInput
+              data={tags}
+              setDataFunction={setTags}
+              label={"Pipeline Tags"}
+            />
           </div>
         </Modal.Body>
         <Modal.Footer>

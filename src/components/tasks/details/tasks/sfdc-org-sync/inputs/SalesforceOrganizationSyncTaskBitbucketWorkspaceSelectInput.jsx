@@ -2,41 +2,41 @@ import React from "react";
 import PropTypes from "prop-types";
 import BitbucketWorkspaceInput from "components/common/list_of_values_input/tools/bitbucket/BitbucketWorkspaceInput";
 
-function SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput({dataObject, setDataObject, disabled}) {
+function SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput({model, setModel, disabled}) {
   const setWorkspace = (fieldName, selectedOption) => {
-    let newDataObject = {...dataObject};
-    newDataObject.setData("workspace", selectedOption.key);
-    newDataObject.setData("workspaceName", selectedOption.name);
-    setDataObject({...newDataObject});
+    let newModel = {...model};
+    newModel.setData("workspace", selectedOption?.key);
+    newModel.setData("workspaceName", selectedOption?.name);
+    setModel({...newModel});
   };
 
   const clearData = () => {
-    let newDataObject = {...dataObject};
-    newDataObject.setData("workspace", "");
-    newDataObject.setData("workspaceName", "");
-    setDataObject({...newDataObject});
+    let newModel = {...model};
+    newModel.setDefaultValue("workspace");
+    newModel.setData("workspaceName");
+    setModel({...newModel});
   };
 
-  if (dataObject.getData("service") !== "bitbucket") {
+  if (model?.getData("service") !== "bitbucket") {
     return <></>;
   }
 
   return (
-     <BitbucketWorkspaceInput
-       fieldName={"workspace"}
-       gitToolId={dataObject.getData("gitToolId")}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       setDataFunction={setWorkspace}
-       disabled={disabled}
-       clearDataFunction={clearData}
-     />
+    <BitbucketWorkspaceInput
+      fieldName={"workspace"}
+      gitToolId={model?.getData("gitToolId")}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setWorkspace}
+      disabled={disabled}
+      clearDataFunction={clearData}
+    />
   );
 }
 
 SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 

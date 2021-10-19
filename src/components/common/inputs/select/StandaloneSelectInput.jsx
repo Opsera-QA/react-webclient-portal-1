@@ -9,16 +9,30 @@ function StandaloneSelectInput(
     valueField,
     textField,
     placeholderText,
+    noDataText,
     busy,
     disabled,
     onSearch,
     value,
     setDataFunction,
+    defaultValue,
     onCreate,
     allowCreate,
     className,
     onToggle,
   }) {
+  const getPlaceholderText = () => {
+    if (!Array.isArray(selectOptions)) {
+      return ("Error with data format!");
+    }
+
+    if (noDataText != null && selectOptions.length === 0) {
+      return (noDataText);
+    }
+
+    return (placeholderText);
+  };
+
   return (
     <DropdownList
       className={className}
@@ -29,9 +43,10 @@ function StandaloneSelectInput(
       value={value}
       filter={"contains"}
       busy={busy}
+      defaultValue={defaultValue}
       onCreate={onCreate}
       onToggle={onToggle}
-      placeholder={placeholderText}
+      placeholder={getPlaceholderText()}
       onChange={(newValue) => setDataFunction(newValue)}
       disabled={disabled || !Array.isArray(selectOptions) || selectOptions.length === 0}
       onSearch={onSearch}
@@ -65,6 +80,8 @@ StandaloneSelectInput.propTypes = {
   allowCreate: PropTypes.bool,
   className: PropTypes.string,
   onToggle: PropTypes.func,
+  noDataText: PropTypes.string,
+  defaultValue: PropTypes.any,
 };
 
 StandaloneSelectInput.defaultProps = {

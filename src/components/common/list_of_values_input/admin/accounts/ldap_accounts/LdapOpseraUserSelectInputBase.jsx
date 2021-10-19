@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import accountsActions from "components/admin/accounts/accounts-actions";
-import DropdownList from "react-widgets/lib/DropdownList";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import InputContainer from "components/common/inputs/InputContainer";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 function LdapOpseraUserSelectInputBase({ dataObject, setDataObject, setDataFunction}) {
   const toastContext = useContext(DialogToastContext);
@@ -87,15 +87,14 @@ function LdapOpseraUserSelectInputBase({ dataObject, setDataObject, setDataFunct
   return (
     <InputContainer>
       <label className="mt-0"><span>Opsera Customer Record<span className="danger-red">*</span></span></label>
-      <DropdownList
-        data={opseraUserList}
+      <StandaloneSelectInput
+        selectOptions={opseraUserList}
         valueField={"value"}
         textField={"text"}
-        filter='contains'
         busy={isLoading}
         groupBy={user => capitalizeFirstLetter(user.id.organizationName, "-", "No Organization Name")}
         defaultValue={currentOpseraUser}
-        onChange={handleOpseraUserChange}
+        setDataFunction={handleOpseraUserChange}
       />
     </InputContainer>
   );

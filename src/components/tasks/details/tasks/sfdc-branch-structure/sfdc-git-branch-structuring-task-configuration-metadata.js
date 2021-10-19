@@ -112,7 +112,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       regexDefinitionName: "mongoId",
     },
     {
-      label: "SFDC Account",
+      label: "Salesforce Account",
       id: "sfdcToolName",
       isRequired: true,
       maxLength: 255,

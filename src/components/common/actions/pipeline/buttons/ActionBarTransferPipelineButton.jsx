@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faShareAlt} from "@fortawesome/pro-light-svg-icons";
 import Button from "react-bootstrap/Button";
-import DropdownList from "react-widgets/lib/DropdownList";
 import CancelButton from "components/common/buttons/CancelButton";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -11,6 +10,7 @@ import accountsActions from "components/admin/accounts/accounts-actions";
 import pipelineActions from "components/workflow/pipeline-actions";
 import ActionBarPopoverButton from "components/common/actions/buttons/ActionBarPopoverButton";
 import PopoverContainer from "components/common/tooltip/PopoverContainer";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -65,15 +65,14 @@ function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
   const popoverContent = (
       <div>
         <div className="pb-2">
-          <DropdownList
-            data={userList}
+          <StandaloneSelectInput
+            selectOptions={userList}
             valueField="_id"
             value={user}
             busy={isLoading}
             disabled={isLoading}
             textField={data => data != null ? `${data["firstName"]} ${data["lastName"]} (${data["email"]})` : ``}
-            filter='contains'
-            onChange={(data) => setUser(data)}
+            setDataFunction={(data) => setUser(data)}
           />
         </div>
         <div className="d-flex justify-content-between">

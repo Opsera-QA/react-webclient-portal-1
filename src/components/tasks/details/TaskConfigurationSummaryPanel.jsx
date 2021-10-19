@@ -27,6 +27,9 @@ import azureAksClusterTaskConfigurationMetadata
   from "./tasks/azure-cluster-creation/azure-cluster-metadata";
 import {TASK_TYPES} from "components/tasks/task.types";
 import modelHelpers from "components/common/model/modelHelpers";
+import SalesforceBulkMigrationTaskTypeSummaryCard
+  from "components/tasks/details/tasks/sfdc-bulk-migration/SalesforceBulkMigrationTaskTypeSummaryCard";
+import {salesforceBulkMigrationTaskConfigurationMetadata} from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
 
 function TaskConfigurationSummaryPanel({ taskModel }) {
   const getTaskTypeSummaryPanel = () => {
@@ -47,6 +50,15 @@ function TaskConfigurationSummaryPanel({ taskModel }) {
               modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), sfdcGitBranchTaskConfigurationMetadata)
             }
             gitTasksData={taskModel}
+          />
+        );
+      case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+        return (
+          <SalesforceBulkMigrationTaskTypeSummaryCard
+            taskConfigurationModel={
+              modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), salesforceBulkMigrationTaskConfigurationMetadata)
+            }
+            taskModel={taskModel}
           />
         );
       case TASK_TYPES.SYNC_GIT_BRANCHES:

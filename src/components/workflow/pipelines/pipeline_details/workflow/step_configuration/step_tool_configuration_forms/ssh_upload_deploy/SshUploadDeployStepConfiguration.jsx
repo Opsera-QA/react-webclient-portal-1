@@ -9,14 +9,13 @@ import {
   faSave,
   faSpinner,
   faExclamationCircle,
-  faExclamationTriangle,
 } from "@fortawesome/free-solid-svg-icons";
-import DropdownList from "react-widgets/lib/DropdownList";
 
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
 import {getErrorDialog, getMissingRequiredFieldsErrorDialog} from "../../../../../../../common/toasts/toasts";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 
 const INITIAL_DATA = {
@@ -339,8 +338,8 @@ function SshUploadDeployStepConfiguration({ data, pipelineId, stepId, parentCall
           ) : (
             <>
               {jenkinsList && jenkinsList.length > 0 ? (
-                <DropdownList
-                  data={jenkinsList}
+                <StandaloneSelectInput
+                  selectOptions={jenkinsList}
                   value={
                     formData.toolConfigId
                       ? jenkinsList[
@@ -350,8 +349,8 @@ function SshUploadDeployStepConfiguration({ data, pipelineId, stepId, parentCall
                         ]
                       : jenkinsList[0]
                   }
-                  valueField="id"
-                  textField="name"
+                  valueField={"id"}
+                  textField={"name"}
                   defaultValue={
                     formData.toolConfigId
                       ? jenkinsList[
@@ -361,7 +360,7 @@ function SshUploadDeployStepConfiguration({ data, pipelineId, stepId, parentCall
                         ]
                       : jenkinsList[0]
                   }
-                  onChange={handleJenkinsChange}
+                  setDataFunction={handleJenkinsChange}
                 />
               ) : (
                 <>

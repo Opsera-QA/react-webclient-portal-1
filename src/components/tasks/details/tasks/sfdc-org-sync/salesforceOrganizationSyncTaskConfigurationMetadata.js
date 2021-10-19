@@ -93,14 +93,14 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
       regexDefinitionName: "gitBranchName",
     },
     {
-      label: "SFDC Account",
+      label: "Salesforce Account",
       id: "sfdcToolId",
       isRequired: true,
       maxLength: 24,
       regexDefinitionName: "mongoId",
     },
     {
-      label: "SFDC Account",
+      label: "Salesforce Account",
       id: "sfdcToolName",
       isRequired: true,
       maxLength: 255,
@@ -154,7 +154,10 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
     workspace: "",
     workspaceName: "",
     repository: "",
+    branch: "",
     gitBranch: "",
+    sourceBranch: "",
+    autoApprove: false,
     defaultBranch: "",
     dependencyType: "",
     sfdcToolId: "",
@@ -164,7 +167,9 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
     upstreamBranch: "",
     includePackageXml: false,
     packageXmlReferencePath: "",
-  }
+    reviewers: [],
+    reviewerNames: [],
+  },
 };
 
 export default salesforceOrganizationSyncTaskConfigurationMetadata;
