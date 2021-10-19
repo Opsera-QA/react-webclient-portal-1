@@ -5,7 +5,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import GitActionsHelper
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
-import axios from "axios";
+  import axios from "axios";
 
 // TODO: Clean up this component. Change "gitToolId" to "toolId", make validateSavedData default to true after all use cases are tested.
 function RepositorySelectInput(
@@ -75,23 +75,23 @@ function RepositorySelectInput(
     }
     finally {
       if(isMounted?.current === true){
-        setIsLoading(false);
+      setIsLoading(false);
       }
     }
   };
 
   const getRepositories = async (cancelSource = cancelTokenSource) => {
     const response  = await GitActionsHelper.searchRepositoriesV2(service, gitToolId, workspace, getAccessToken, cancelSource);
-    let repositoriesResponse = response?.data?.data;
+    let repositories = response?.data?.data;
 
-    if (Array.isArray(repositoriesResponse)) {
-      setRepositories(repositoriesResponse);
+    if (Array.isArray(repositories)) {
+      setRepositories(repositories);
 
       if (validateSavedData === true) {
         const existingRepository = dataObject?.getData(fieldName);
 
         if (existingRepository != null && existingRepository !== "") {
-          const existingRepositoryExists = repositoriesResponse.find((repository) => repository[valueField] === existingRepository);
+          const existingRepositoryExists = repositories.find((repository) => repository[valueField] === existingRepository);
 
           if (existingRepositoryExists == null) {
             toastContext.showLoadingErrorDialog(
@@ -100,6 +100,8 @@ function RepositorySelectInput(
           }
         }
       }
+    } else {
+      toastContext.showSystemErrorBanner(repositories);
     }
   };
 
