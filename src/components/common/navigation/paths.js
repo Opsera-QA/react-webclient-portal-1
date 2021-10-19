@@ -35,9 +35,6 @@ paths.toolIdentifierDetailView = paths.toolManagement + "/identifiers/details/";
 paths.ldapOrganizationManagement = paths.admin + "/organizations";
 paths.ldapOrganizationDetailView = paths.admin + "/organizations";
 
-paths.ldapDepartmentManagement = paths.admin + "/departments";
-paths.ldapDepartmentDetailView = paths.admin + "/departments";
-
 paths.ldapOrganizationAccountManagement = paths.admin + "/organization-accounts";
 paths.ldapOrganizationDetailView = paths.admin + "/organization-accounts";
 
@@ -74,6 +71,8 @@ paths.ldapGroupManagement = paths.accountSettings + "/groups";
 paths.ldapGroupDetailView = paths.ldapGroupManagement;
 paths.ldapSiteRoleManagement = paths.accountSettings + "/site-roles";
 paths.ldapSiteRoleDetailView = paths.ldapSiteRoleManagement;
+paths.ldapDepartmentManagement = paths.accountSettings + "/departments";
+paths.ldapDepartmentDetailView = paths.ldapDepartmentManagement;
 paths.tagManagement = paths.accountSettings + "/tags";
 paths.deleteTools = paths.accountSettings + "/delete/";
 paths.tagDetailView = paths.tagManagement + "/details/";

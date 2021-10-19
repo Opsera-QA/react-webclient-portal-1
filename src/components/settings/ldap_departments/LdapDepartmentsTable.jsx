@@ -2,10 +2,10 @@ import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import ldapDepartmentMetaData from "./ldap-department-metadata";
+import ldapDepartmentMetaData from "components/settings/ldap_departments/ldap-department-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
-import NewLdapDepartmentModal from "components/admin/accounts/ldap/ldap_departments/NewLdapDepartmentModal";
+import NewLdapDepartmentModal from "components/settings/ldap_departments/NewLdapDepartmentModal";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faBuilding} from "@fortawesome/pro-light-svg-icons";
 

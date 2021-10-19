@@ -6,11 +6,11 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import CustomTab from "components/common/tabs/CustomTab";
 import LdapDepartmentSummaryPanel
-  from "components/admin/accounts/ldap/ldap_departments/department_detail_view/LdapDepartmentSummaryPanel";
+  from "components/settings/ldap_departments/details/LdapDepartmentSummaryPanel";
 import LdapDepartmentMembershipPanel
-  from "components/admin/accounts/ldap/ldap_departments/department_detail_view/LdapDepartmentMembershipPanel";
+  from "components/settings/ldap_departments/details/LdapDepartmentMembershipPanel";
 import LdapDepartmentEditorPanel
-  from "components/admin/accounts/ldap/ldap_departments/department_detail_view/LdapDepartmentEditorPanel";
+  from "components/settings/ldap_departments/details/LdapDepartmentEditorPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
 function LdapDepartmentDetailPanel({ ldapDepartmentData, loadData, setLdapDepartmentData, ldapDepartmentGroupData, orgDomain, authorizedActions }) {

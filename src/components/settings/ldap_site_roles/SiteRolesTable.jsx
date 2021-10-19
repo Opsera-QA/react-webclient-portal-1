@@ -48,7 +48,7 @@ function SiteRolesTable({ groupData, orgDomain, isLoading, loadData }) {
       isLoading={isLoading}
       body={getGroupsTable()}
       titleIcon={faServer}
-      title={"Site Roles & Departments"}
+      title={"Site Roles"}
       className={"px-2 pb-2"}
     />
   );

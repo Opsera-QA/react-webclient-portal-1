@@ -6,7 +6,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import axios from "axios";
-import LdapGroupsTable from "components/settings/ldap_groups/LdapGroupsTable";
 import SiteRoleManagementSubNavigationBar from "components/settings/ldap_site_roles/SiteRoleManagementSubNavigationBar";
 import SiteRolesTable from "components/settings/ldap_site_roles/SiteRolesTable";
 
@@ -16,19 +15,11 @@ function SiteRoleManagement() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const {getUserRecord, setAccessRoles, getAccessToken} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [groupList, setGroupList] = useState([]);
+  const [siteRoles, setSiteRoles] = useState([]);
   const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
-  const [existingGroupNames, setExistingGroupNames] = useState([]);
   const toastContext = useContext(DialogToastContext);
-  const [authorizedActions, setAuthorizedActions] = useState([]);
-  const [activeTab, setActiveTab] = useState("userGroups");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  const handleTabClick = (tabSelection) => e => {
-    e.preventDefault();
-    setActiveTab(tabSelection);
-  };
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -73,12 +64,11 @@ function SiteRoleManagement() {
     if (ldapDomain != null) {
       try {
         let response = await accountsActions.getLdapGroupsWithDomainV2(getAccessToken, cancelSource, ldapDomain);
+        const groups = response?.data;
 
-        if (response?.data) {
-          let existingGroups = response?.data;
-          const existingGroupNames = existingGroups.map((group) => {return group.name.toLowerCase();});
-          setExistingGroupNames(existingGroupNames);
-          setGroupList(existingGroups);
+        if (Array.isArray(groups)) {
+          const filteredRoles = groups.filter((group) => {return group?.groupType === "Role";});
+          setSiteRoles(filteredRoles);
         }
       } catch (error) {
         toastContext.showLoadingErrorDialog(error);
@@ -101,16 +91,11 @@ function SiteRoleManagement() {
       setAccessRoleData(userRoleAccess);
 
       let authorizedActions = await accountsActions.getAllowedGroupActions(userRoleAccess, ldap?.organization, getUserRecord, getAccessToken);
-      setAuthorizedActions(authorizedActions);
 
       if (userRoleAccess?.OpseraAdministrator || authorizedActions?.includes("get_groups")) {
         await getGroupsByDomain(orgDomain, cancelSource);
       }
     }
-  };
-
-  const parseAdminGroups = () => {
-    return Array.isArray(groupList) && groupList.filter((group) => {return group.groupType !== "user";});
   };
 
   return (
@@ -123,7 +108,7 @@ function SiteRoleManagement() {
     >
       <SiteRolesTable
         isLoading={isLoading}
-        groupData={parseAdminGroups()}
+        groupData={siteRoles}
         loadData={loadData}
         orgDomain={orgDomain}
         currentUserEmail={currentUserEmail}
