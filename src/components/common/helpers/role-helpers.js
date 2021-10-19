@@ -107,17 +107,17 @@ export const getAccessRolePermissionMessage = (accessRole) => {
 export const getAccessRoleRequirementMessage = (requirement) => {
   switch (requirement) {
     case ROLE_LEVELS.OPSERA_ADMINISTRATORS:
-      return "Only Opsera Administrators can access this.";
+      return "Only Opsera Administrators can access this screen.";
     case ROLE_LEVELS.ADMINISTRATORS:
-      return "You must have a Site Administrator role to access this.";
+      return "You must have a Site Administrator role to access this screen.";
     case ROLE_LEVELS.POWER_USERS:
-      return "You must have a Power User role to access this.";
+      return "You must have a Power User role to access this screen.";
     case ROLE_LEVELS.POWER_USERS_AND_SASS:
-      return "You must have a Power User role to access this.";
+      return "You must have a Power User role to access this screen.";
     case ROLE_LEVELS.USERS:
-      return "Any level User can access this.";
+      return "Any level User can access this screen.";
     case ROLE_LEVELS.USERS_AND_SASS:
-      return "Any level User can access this.";
+      return "Any level User can access this screen.";
     default:
       return "UNKNOWN ROLE REQUIREMENTS";
   }
