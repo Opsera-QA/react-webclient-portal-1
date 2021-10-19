@@ -92,6 +92,7 @@ function RepositorySelectInput(
 
         if (existingRepository != null && existingRepository !== "") {
           const existingRepositoryExists = repositories.find((repository) => repository[valueField] === existingRepository);
+
           if (existingRepositoryExists == null) {
             toastContext.showLoadingErrorDialog(
               "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list."
@@ -99,9 +100,8 @@ function RepositorySelectInput(
           }
         }
       }
-    }
-    else {
-      toastContext.showSystemErrorBanner(response);
+    } else {
+      toastContext.showSystemErrorBanner(repositories);
     }
   };
 
