@@ -17,7 +17,7 @@ import OctopusDeployStepConfigurationHelp
   from "../../../../common/help/documentation/pipelines/step_configuration/OctopusDeployStepConfigurationHelp";
 import PipelineSourceRepositoryHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/PipelineSourceRepositoryHelpDocumentation";
-import AnsibleStepConfigurationHelpDocumentation
+import AnsibleStepConfigurationHelp
   from "../../../../common/help/documentation/pipelines/step_configuration/PipelineSourceRepositoryHelpDocumentation";
 
 function StepToolHelpIcon({type, tool, className, iconClassName}) {
