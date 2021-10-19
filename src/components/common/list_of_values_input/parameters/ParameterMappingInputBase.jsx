@@ -8,10 +8,10 @@ import Col from "react-bootstrap/Col";
 import { DialogToastContext } from "../../../../contexts/DialogToastContext";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import parametersActions from "../../../inventory/parameters/parameters-actions";
-import DropdownList from "react-widgets/lib/DropdownList";
 import axios from "axios";
 import ReactJson from "react-json-view";
 import InfoText from "../../inputs/info_text/InfoText";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 const SAMPLE_DATA = {
   subnet_list: [
@@ -185,15 +185,14 @@ function ParameterMappingInputBase({
       <div className="p-2">
         <Row>
           <Col sm={5}>
-            <DropdownList
-              data={parametersList ? parametersList : []}
+            <StandaloneSelectInput
+              selectOptions={parametersList ? parametersList : []}
               valueField={"_id"}
               textField={"name"}
               value={parameterName}
-              filter={"contains"}
               busy={isParametersSearching}
-              placeholder={placeholder}
-              onChange={(data) => setParameterData(data)}
+              placeholderText={placeholder}
+              setDataFunction={(data) => setParameterData(data)}
               disabled={isLoading || (!isLoading && (parametersList == null || parametersList.length === 0))}
             />
           </Col>

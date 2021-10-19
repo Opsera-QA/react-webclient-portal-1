@@ -2,8 +2,8 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
-import LdapDepartmentsTable from "components/admin/accounts/ldap/ldap_departments/LdapDepartmentsTable";
-import departmentActions from "components/admin/accounts/ldap/ldap_departments/department-functions";
+import LdapDepartmentsTable from "components/settings/ldap_departments/LdapDepartmentsTable";
+import departmentActions from "components/settings/ldap_departments/department-functions";
 import {AuthContext} from "contexts/AuthContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 

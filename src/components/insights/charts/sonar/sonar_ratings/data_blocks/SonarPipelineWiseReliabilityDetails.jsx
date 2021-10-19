@@ -6,17 +6,22 @@ import FilterContainer from "components/common/table/FilterContainer";
 import Model from "core/data_model/model";
 import sonarPipelineDetailsFilterMetadata from "../sonar.pipeline.details.filter.metadata";
 import SonarPipelineTableMetadata from "../sonar.pipeline.table.metadata";
-import { getChartTrendStatusColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
+import { getChartTrendStatusColumn, getTableTextColumn, getTableTextColumnWithoutField } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
 import CustomTable from "components/common/table/CustomTable";
-import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
+import { faDraftingCompass, faExternalLink } from "@fortawesome/pro-light-svg-icons";
 import chartsActions from "components/insights/charts/charts-actions";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
 function SonarPipelineWiseReliabilityDetails() {
   const { getAccessToken } = useContext(AuthContext);
   const [model, setModel] = useState(
     new Model({...sonarPipelineDetailsFilterMetadata.newObjectFields}, sonarPipelineDetailsFilterMetadata, false)
   );
+  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [bugsData, setBugsData] = useState([]);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -35,12 +40,12 @@ function SonarPipelineWiseReliabilityDetails() {
       getTableTextColumn(getField(fields, "project")),
       getTableTextColumn(getField(fields, "runCount")),
       getChartTrendStatusColumn(getField(fields, "status")),
-      getTableTextColumn(getField(fields, "critical")),
-      getTableTextColumn(getField(fields, "major")),
-      getTableTextColumn(getField(fields, "minor")),
-      getTableTextColumn(getField(fields, "info")),   
+      getTableTextColumn(getField(fields, "critical"),'red'),
+      getTableTextColumn(getField(fields, "major"),'orange'),
+      getTableTextColumn(getField(fields, "minor"),'yellow'),
+      getTableTextColumn(getField(fields, "info"),'green'),   
       getTableTextColumn(getField(fields, "total_effort")),   
-
+      getTableTextColumnWithoutField('Actions','_blueprint')
     ],
     []
   );
@@ -97,9 +102,12 @@ function SonarPipelineWiseReliabilityDetails() {
       );
       if (isMounted?.current === true && response?.status === 200) {
         const sonarBugs = response?.data?.data[0]?.sonarBugs?.data[0]?.projectData;
-        await setBugsData(sonarBugs.map(bug=>({
+        await setBugsData(sonarBugs.map((bug,index)=>({
               ...bug,
-              status : calculateTrend(bug)
+              status : calculateTrend(bug),
+              // TODO: remove the hard coded pipelineId value replaces with the api response
+              pipelineId: '60ae84a54fa0c75fc683ad2b',
+              "_blueprint": <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2"/>,
             })));
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", sonarBugs.length);
@@ -143,38 +151,50 @@ function SonarPipelineWiseReliabilityDetails() {
       return null;
     }
     return (
-      <Row className="py-3 px-5">
-        <Col>
-          <div className="metric-box p-3 text-center">
-            <div className="font-weight-bold">{issueTypeData?.total}</div>
-            <div className="w-100 text-muted mb-1">Bugs</div>
-          </div>
-        </Col>
-        <Col>
-          <div className="metric-box p-3 text-center">
-            <div className="font-weight-bold">{issueTypeData?.critical}</div>
-            <div className="w-100 text-muted mb-1">Critical</div>
-          </div>
-        </Col>
-        <Col>
-          <div className="metric-box p-3 text-center">
-            <div className="font-weight-bold">{issueTypeData?.major}</div>
-            <div className="w-100 text-muted mb-1">Major</div>
-          </div>
-        </Col>
-        <Col>
-          <div className="metric-box p-3 text-center">
-            <div className="font-weight-bold">{issueTypeData?.minor}</div>
-            <div className="w-100 text-muted mb-1">Minor</div>
-          </div>
-        </Col>
-        <Col>
-          <div className="metric-box p-3 text-center">
-            <div className="font-weight-bold">{issueTypeData?.info}</div>
-            <div className="w-100 text-muted mb-1">Info</div>
-          </div>
-        </Col>
-      </Row>
+      
+        <Row className="py-3 px-5">
+          <Col>
+            <div className="metric-box p-3 text-center">
+              <div className="box-metric">
+                <div className="font-weight-bold">{issueTypeData?.total}</div>
+              </div>
+              <div className="w-100 text-muted mb-1">Bugs</div>
+            </div>
+          </Col>
+          <Col>
+            <div className="metric-box p-3 text-center" >
+              <div className="box-metric">
+                <div className="font-weight-bold red">{issueTypeData?.critical}</div>
+              </div>
+              <div className="w-100  mb-1 red">Critical</div>
+            </div>
+          </Col>
+          <Col>
+            <div className="metric-box p-3 text-center">
+              <div className="box-metric">
+                <div className="font-weight-bold orange">{issueTypeData?.major}</div>
+              </div>
+              <div className="w-100  mb-1 orange">Major</div>
+            </div>
+          </Col>
+          <Col>
+            <div className="metric-box p-3 text-center">
+              <div className="box-metric">
+                <div className="font-weight-bold yellow">{issueTypeData?.minor}</div>
+              </div>
+              <div className="w-100  mb-1 yellow">Minor</div>
+            </div>
+          </Col>
+          <Col>
+            <div className="metric-box p-3 text-center ">
+              <div className="box-metric">
+                <div className="font-weight-bold black">{issueTypeData?.info}</div>
+              </div>
+              <div className="w-100  mb-1 black">Info</div>
+            </div>
+          </Col>
+        </Row>
+      
     );
   };
 
@@ -221,6 +241,12 @@ function SonarPipelineWiseReliabilityDetails() {
     newModel.setData("pageSize", pageSize);
     setModel({...newModel});
   };
+
+  const onRowSelect = (rowData) => {
+    if (rowData.id == 0) {
+      toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount} />);
+    }
+  };
   
   const getTable = () => {    
     return (
@@ -231,6 +257,7 @@ function SonarPipelineWiseReliabilityDetails() {
         noDataMessage={noDataMessage}
         paginationOptions={getPaginationOptions()}
         loadData={loadData}
+        onRowSelect={onRowSelect}
       />      
     );
   };

@@ -1,11 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import DropdownList from "react-widgets/lib/DropdownList";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import {getOrganizationList} from "components/admin/accounts/ldap/organizations/organization-functions";
 import {useHistory} from "react-router-dom";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
+// TODO: Refactor if ever used
 function LdapOrganizationSelectInput({ currentOrganizationDomain, location}) {
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
@@ -61,16 +62,15 @@ function LdapOrganizationSelectInput({ currentOrganizationDomain, location}) {
 
   return (
     <div className="custom-select-input">
-      <DropdownList
-        data={organizationList}
+      <StandaloneSelectInput
+        selectOptions={organizationList}
         value={currentOrganizationDomain}
         busy={isLoading}
-        filter="contains"
-        valueField='id'
-        textField='text'
-        placeholder="Select an Organization Account"
+        valueField={'id'}
+        textField={'text'}
+        placeholderText={"Select an Organization Account"}
         groupBy={org => org["groupId"]}
-        onChange={handleOrganizationChange}
+        setDataFunction={handleOrganizationChange}
       />
     </div>
   );

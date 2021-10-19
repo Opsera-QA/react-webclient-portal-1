@@ -4,7 +4,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import OctopusStepActions
   from "../../../../../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
-import MultiSelectInputBase from "../../../../../../../../common/inputs/select/MultiSelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
 function OctopusTargetRolesSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_prop}) {
   const toastContext = useContext(DialogToastContext);

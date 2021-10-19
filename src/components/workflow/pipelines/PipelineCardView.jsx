@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Col} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
-import PipelineCard from "components/workflow/pipelines/PipelineItem";
+import PipelineCard from "components/workflow/pipelines/PipelineCard";
 import Model from "core/data_model/model";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
@@ -15,9 +15,12 @@ function PipelineCardView({ data, pipelineFilterModel, loadData, isLoading }) {
 
     return (
       <Row className={"mx-0"}>
-        {data.map((item, idx) => (
+        {data.map((pipeline, idx) => (
           <Col key={idx} xl={6} md={12} className="p-2">
-            <PipelineCard item={item} dataModel={new Model({...item}, pipelineMetadata, false)}/>
+            <PipelineCard
+              pipeline={pipeline}
+              pipelineModel={new Model({...pipeline}, pipelineMetadata, false)}
+            />
           </Col>
         ))}
       </Row>

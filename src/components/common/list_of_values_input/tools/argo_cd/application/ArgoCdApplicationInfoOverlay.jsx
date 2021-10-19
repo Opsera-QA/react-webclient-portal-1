@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import InfoOverlayContainer, {getInfoOverlay} from "components/common/inputs/info_text/InfoOverlayContainer";
 import ArgoApplicationsTable
   from "components/inventory/tools/tool_details/tool_jobs/argo/applications/ArgoApplicationsTable";
-import argoApplicationsMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/argo-application-metadata";
+import argoApplicationsMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/applications/argo-application-metadata";
 import Model from "core/data_model/model";
 import ArgoApplicationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/ArgoApplicationSummaryPanel";

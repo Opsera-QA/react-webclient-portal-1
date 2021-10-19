@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { DialogToastContext } from 'contexts/DialogToastContext';
 import { AuthContext } from 'contexts/AuthContext';
 import axios from 'axios';
-import DropdownList from "react-widgets/lib/DropdownList";
 import OctopusStepActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 // TODO: Refactor when refactoring Octopus step
 const OctopusTenantStandaloneSelectInput = (
@@ -85,16 +85,15 @@ const OctopusTenantStandaloneSelectInput = (
   };
 
   return (
-    <DropdownList
-      data={tenants}
+    <StandaloneSelectInput
+      selectOptions={tenants}
       valueField={valueField}
       busy={isLoading}
       textField={textField}
       value={value}
       disabled={disabled || !Array.isArray(tenants) || tenants.length === 0}
-      filter={"contains"}
-      placeholder={placeholderText}
-      onChange={(newValue) => setDataFunction(newValue)}
+      placeholderText={placeholderText}
+      setDataFunction={(newValue) => setDataFunction(newValue)}
     />
   );
 };

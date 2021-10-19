@@ -45,7 +45,7 @@ const toolFilterMetadata = {
   newObjectFields: {
     pageSize: 50,
     currentPage: 1,
-    sortOption: {text: "Sort: Name", value: "name"},
+    sortOption: {text: "Name", option: "name"},
     search: "",
     activeFilters: [],
     viewType: "card",
@@ -94,6 +94,10 @@ export class ToolFilterModel extends FilterModelBase {
 
   canSort = () => {
     return true;
+  };
+
+  getDetailViewLink = (toolId) => {
+    return `/inventory/tools/details/${toolId}`;
   };
 
   getSortOptions = () => {

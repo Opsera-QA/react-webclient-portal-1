@@ -4,7 +4,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const JENKINS_JOBS_SFDC_OPTIONS = [
   {
-    name: "SFDC Create XML Package",
+    name: "Salesforce Create XML Package",
     value: "SFDC CREATE PACKAGE XML",
   },
   {
@@ -12,23 +12,23 @@ const JENKINS_JOBS_SFDC_OPTIONS = [
     value: "SFDC PROFILE DEPLOY",
   },
   {
-    name: "SFDC Validate XML Package",
+    name: "Salesforce Validate XML Package",
     value: "SFDC VALIDATE PACKAGE XML",
   },
   {
-    name: "SFDC Backup",
+    name: "Salesforce Backup",
     value: "SFDC BACK UP",
   },
   {
-    name: "SFDC Deploy",
+    name: "Salesforce Deploy",
     value: "SFDC DEPLOY",
   },
   {
-    name: "SDFC Unit Test",
+    name: "Salesforce Unit Test",
     value: "SFDC UNIT TESTING",
   },
   {
-    name: "SDFC Push Artifacts",
+    name: "Salesforce Push Artifacts",
     value: "SFDC PUSH ARTIFACTS",
   },
 ];

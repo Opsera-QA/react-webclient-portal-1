@@ -1,18 +1,10 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext";
 import { axiosApiService } from "../../api/apiService";
 import ErrorDialog from "../common/status_notifications/error";
-import DropdownList from "react-widgets/lib/DropdownList";
-// import PipelineDashboard from "../../components/dashboard/Pipeline";
-// import SecOpsDashboard from "../../components/dashboard/SecOps";
-// import TestingDashboard from "../../components/dashboard/Testing";
 import LogsDashboard from "components/dashboard/LogsDashboard";
-import LoadingDialog from "../common/status_notifications/loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faQuestion } from "@fortawesome/free-solid-svg-icons";
-
 import PipelineDashboard_v2 from "../../components/dashboard/v2/Pipeline";
 import SecOpsDashboard_v2 from "../../components/dashboard/v2/SecOps";
 import QualityDashboard from "../../components/dashboard/v2/Quality";
@@ -20,13 +12,12 @@ import OperationsDashboard from "../../components/dashboard/v2/Operations";
 import PlanningDashboard from "../../components/dashboard/v2/Planning";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { Alert, OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
+import { OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
-import ConfigurationsForm from "../analytics/configurationsForm";
 import LoadingView from "../common/status_notifications/loading";
 import AnalyticsProfileSettings from "../settings/analytics/activateAnalyticsCard";
-import { DialogToastContext } from "../../contexts/DialogToastContext";
-import CustomTable from "components/common/table/CustomTable";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 const INDICES = [
   "jenkins",
@@ -344,10 +335,9 @@ function DashboardHome() {
               </Col>
               <Col sm={2}>
                 <OverlayTrigger placement="top" delay={{ show: 250, hide: 250 }} overlay={renderTooltip}>
-                  <DropdownList
-                    filter
+                  <StandaloneSelectInput
                     disabled={selection === "operations_v2"}
-                    data={DATELABELS}
+                    selectOptions={DATELABELS}
                     className="max-content-width"
                     valueComponent={ValueInput}
                     textField="label"
@@ -358,7 +348,7 @@ function DashboardHome() {
                         ? DATELABELS.find((o) => o.value.start === date.start && o.value.end === date.end)
                         : DATELABELS[5]
                     }
-                    onChange={handleDateChange}
+                    setDataFunction={handleDateChange}
                   />
                 </OverlayTrigger>
               </Col>
@@ -375,26 +365,26 @@ function DashboardHome() {
                     }
                   >
                     <span>
-                      <DropdownList
-                        data={PERSONAS}
+                      <StandaloneSelectInput
+                        selectOptions={PERSONAS}
                         className="basic-single mr-2"
                         valueField="value"
                         textField="label"
                         disabled={personaDisabled}
                         defaultValue={persona ? PERSONAS.find((o) => o.value === persona) : PERSONAS[0]}
-                        onChange={handleSelectPersonaChange}
+                        setDataFunction={handleSelectPersonaChange}
                       />
                     </span>
                   </OverlayTrigger>
                 ) : (
-                  <DropdownList
-                    data={PERSONAS}
+                  <StandaloneSelectInput
+                    selectOptions={PERSONAS}
                     className="basic-single mr-2"
                     valueField="value"
                     textField="label"
                     disabled={personaDisabled}
                     defaultValue={persona ? PERSONAS.find((o) => o.value === persona) : PERSONAS[0]}
-                    onChange={handleSelectPersonaChange}
+                    setDataFunction={handleSelectPersonaChange}
                   />
                 )}
               </Col>

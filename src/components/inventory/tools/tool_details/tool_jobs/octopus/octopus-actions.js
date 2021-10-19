@@ -1,7 +1,12 @@
-import { axiosApiService } from "../../../../../../api/apiService";
-import baseActions from "../../../../../../utils/actionsBase";
+import baseActions from "utils/actionsBase";
+import {axiosApiService} from "api/apiService";
 
 const octopusActions = {};
+
+octopusActions.getOctopusApplicationsV2 = async (getAccessToken, cancelTokenSource, toolID) => {
+  const apiUrl = `tools/${toolID}/octopus/v2/applications`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
 
 octopusActions.deleteOctopusApplication = async (toolID, type, getAccessToken, appID, octopusApplicationDto) => {
   const postBody = {

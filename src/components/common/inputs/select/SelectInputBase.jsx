@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import DropdownList from "react-widgets/lib/DropdownList";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 function SelectInputBase(
   {
@@ -80,17 +80,16 @@ function SelectInputBase(
         linkIcon={linkIcon}
         ellipsisTooltipText={ellipsisTooltipText}
       />
-      <DropdownList
-        data={selectOptions}
+      <StandaloneSelectInput
+        selectOptions={selectOptions}
         valueField={valueField}
         textField={textField}
         groupBy={groupBy}
         value={findCurrentValue()}
-        filter={"contains"}
         busy={busy}
-        placeholder={placeholderText}
-        onChange={(newValue) => updateValue(newValue)}
-        disabled={disabled || !Array.isArray(selectOptions) || selectOptions.length === 0}
+        placeholderText={placeholderText}
+        setDataFunction={(newValue) => updateValue(newValue)}
+        disabled={disabled}
         onSearch={onSearch}
       />
       <InfoText field={field} errorMessage={errorMessage} />

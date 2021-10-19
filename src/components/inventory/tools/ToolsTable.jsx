@@ -10,7 +10,7 @@ import {
 import {useHistory} from "react-router-dom";
 import {getField} from "components/common/metadata/metadata-helpers";
 
-function ToolsTable({ data, toolMetadata, isMounted, toolFilterDto, setToolFilterDto, loadData, isLoading }) {
+function ToolsTable({ data, toolMetadata, isMounted, toolFilterDto, setToolFilterDto, loadData, isLoading, rowClickFunction, }) {
   let history = useHistory();
   const [columns, setColumns] = useState([]);
 
@@ -40,8 +40,14 @@ function ToolsTable({ data, toolMetadata, isMounted, toolFilterDto, setToolFilte
     }
   };
 
+  // TODO: This is temporary until I finish the tool info overlay
   const onRowSelect = (rowData) => {
-    history.push(`/inventory/tools/details/${rowData.original._id}`);
+    if (rowClickFunction) {
+      rowClickFunction(rowData?.original);
+    }
+    else {
+      history.push(`/inventory/tools/details/${rowData.original._id}`);
+    }
   };
 
   if (toolMetadata == null) {
@@ -72,6 +78,7 @@ ToolsTable.propTypes = {
   setToolFilterDto: PropTypes.func,
   toolMetadata: PropTypes.object,
   isMounted: PropTypes.object,
+  rowClickFunction: PropTypes.func,
 };
 
 export default ToolsTable;

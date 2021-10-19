@@ -151,7 +151,7 @@
 }
 
 .rw-popup-container {
-    z-index: 1200;
+    z-index: 1600 !important;
 }
 
 /* End Select input styling */

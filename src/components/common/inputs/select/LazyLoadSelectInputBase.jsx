@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import DropdownList from "react-widgets/lib/DropdownList";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 function LazyLoadSelectInputBase(
   {
@@ -80,21 +80,20 @@ function LazyLoadSelectInputBase(
         linkIcon={linkIcon}
         ellipsisTooltipText={ellipsisTooltipText}
       />
-      <DropdownList
-        data={selectOptions}
+      <StandaloneSelectInput
+        selectOptions={selectOptions}
         valueField={valueField}
         textField={textField}
         groupBy={groupBy}
         value={findCurrentValue()}
-        filter={"contains"}
         busy={busy}
         onToggle={(test) => {
           if (test === true) {
             onToggleFunction();
           }
         }}
-        placeholder={placeholderText}
-        onChange={(newValue) => updateValue(newValue)}
+        placeholderText={placeholderText}
+        setDataFunction={(newValue) => updateValue(newValue)}
         disabled={disabled}
         onSearch={onSearch}
       />

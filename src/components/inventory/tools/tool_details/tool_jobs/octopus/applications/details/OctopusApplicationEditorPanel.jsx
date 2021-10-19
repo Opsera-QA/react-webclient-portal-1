@@ -32,6 +32,8 @@ import AzureToolConfigIdSelectInput from "./input/AzureToolConfigIdSelectInput";
 import AzureClusterSelectInput from "./input/AzureClusterSelectInput";
 import AzureResourceGroupSelectInput from "./input/AzureResourceGroupSelectInput";
 import OctopusFeedEditorForm from "./sub_forms/OctopusFeedEditorForm";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import {getOctopusApplicationTypeLabel} from "components/common/list_of_values_input/tools/octopus/applications/type/octopus.application.types";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -44,7 +46,6 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   const isMounted = useRef(false);
   const [isValidatingConfig, setIsValidatingConfig] = useState(false);
   const [azureConfig,setAzureConfig]=useState(null);
-  const [applicationData, setApplicationData]=useState(null);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -61,7 +62,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
       source.cancel();
       isMounted.current = false;
     };
-  }, [octopusApplicationData]);
+  }, [octopusApplicationData, type]);
 
   const loadData = async () => {
     try {
@@ -161,17 +162,17 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
     setIsValidatingConfig(false);
   };
 
-  // TODO: Make sub form
+  // TODO: Make sub forms
   const getEnvironmentEditorFields = () => {
     if (type === "environment") {
       return (
         <Row>
           <Col lg={12}>
             <TextInputBase
-              setDataObject={setOctopusApplicationDataDto}
               dataObject={octopusApplicationDataDto}
+              setDataObject={setOctopusApplicationDataDto}
               fieldName={"name"}
-              disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
+              disabled={appID}
             />
           </Col>
           <Col lg={12}>
@@ -203,10 +204,10 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
           <Row>
             <Col lg={12}>
               <TextInputBase
-                setDataObject={setOctopusApplicationDataDto}
                 dataObject={octopusApplicationDataDto}
+                setDataObject={setOctopusApplicationDataDto}
                 fieldName={"name"}
-                disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
+                disabled={appID}
               />
             </Col>
             <Col lg={12}>
@@ -299,10 +300,10 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
           <Row>
             <Col lg={12}>
               <TextInputBase
-                setDataObject={setOctopusApplicationDataDto}
                 dataObject={octopusApplicationDataDto}
+                setDataObject={setOctopusApplicationDataDto}
                 fieldName={"name"}
-                disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
+                disabled={appID}
               />
             </Col>
             <Col lg={12}>
@@ -465,7 +466,6 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                     setDataObject={setOctopusApplicationDataDto}
                     dataObject={octopusApplicationDataDto}
                     fieldName={"hostName"}
-                    disabled={false}
                   />
                 </Col>
                 <Col lg={12}>
@@ -473,7 +473,6 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                     setDataObject={setOctopusApplicationDataDto}
                     dataObject={octopusApplicationDataDto}
                     fieldName={"port"}
-                    disabled={false}
                   />
                 </Col>
                 <Col lg={12} className="my-2">
@@ -548,7 +547,6 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               fieldName={"spaceName"}
               dataObject={octopusApplicationDataDto}
               setDataObject={setOctopusApplicationDataDto}
-              disabled={false}
               tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
             />
           </Col>
@@ -557,7 +555,6 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               dataObject={octopusApplicationDataDto}
               setDataObject={setOctopusApplicationDataDto}
               fieldName={"managerUrl"}
-              disabled={false}
             />
           </Col>
           <Col lg={12}>
@@ -565,7 +562,6 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               dataObject={octopusApplicationDataDto}
               setDataObject={setOctopusApplicationDataDto}
               fieldName={"userName"}
-              disabled={false}
             />
           </Col>
           <Col lg={12}>
@@ -581,7 +577,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   };
 
   const getDeleteTomcatButton = () => {
-    if (type === "tomcat") {
+    if (type === "tomcat" && appID) {
       return (
         <div className="mr-auto ml-2 mt-3 px-3">
           <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>
@@ -594,6 +590,15 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
     }
   };
 
+  const getCreateMessage = () => {
+    if (octopusApplicationDataDto?.isNew()) {
+      return (
+        <div className="text-muted pb-3">
+          Enter the required configuration information below. These settings will be used for Octopus {getOctopusApplicationTypeLabel(type)} Application Creation.
+        </div>
+      );
+    }
+  };
 
   if (isLoading || octopusApplicationDataDto === null || octopusApplicationDataDto === undefined) {
     return <Loading size="sm" />;
@@ -601,37 +606,28 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
 
   return (
     <>
-      <div className="scroll-y full-height">
-        <div className="d-flex justify-content-between px-2">
-          <div className="text-muted pt-1 pb-3">
-            Enter the required configuration information below. These settings will be used for Octopus {type ? type.charAt(0).toUpperCase() + type.slice(1) + " Creation" : ""}.
-          </div>
-          <div>
-            {appID && octopusApplicationDataDto.getData("id") && type && (type !== "environment") && (
-              <TestConnectionButton toolDataDto={octopusApplicationDataDto} />
-            )}
-          </div>
-        </div>
-        {getEnvironmentEditorFields()}
-        {getAccountEditorFields()}
-        {getTargetEditorFields()}
-        {getFeedEditorForm()}
-        {getTomcatEditorFields()}
-        <Row className={"d-flex"}>
-          {getDeleteTomcatButton()}
-          <div className="ml-auto mt-3 px-3">
-            <SaveButtonBase
-              updateRecord={appID ? updateApplicationCaller : createApplication}
-              setRecordDto={setOctopusApplicationDataDto}
-              setData={setOctopusApplicationDataDto}
-              createRecord={createApplication}
-              recordDto={octopusApplicationDataDto}
-              handleClose={handleClose}
-              showSuccessToasts={false}
-            />
-          </div>
-        </Row>
+    <EditorPanelContainer
+      handleClose={handleClose}
+      isLoading={isLoading}
+      recordDto={octopusApplicationDataDto}
+      updateRecord={appID ? updateApplicationCaller : createApplication}
+      createRecord={createApplication}
+      setRecordDto={setOctopusApplicationDataDto}
+      extraButtons={getDeleteTomcatButton()}
+      className={""}
+    >
+      {getCreateMessage()}
+      <div>
+        {appID && octopusApplicationDataDto.getData("id") && type && (type !== "environment") && (
+          <TestConnectionButton toolDataDto={octopusApplicationDataDto} />
+          )}
       </div>
+      {getEnvironmentEditorFields()}
+      {getAccountEditorFields()}
+      {getTargetEditorFields()}
+      {getFeedEditorForm()}
+      {getTomcatEditorFields()}
+    </EditorPanelContainer>
       <DeleteModal
         showModal={showDeleteModal}
         setShowModal={setShowDeleteModal}

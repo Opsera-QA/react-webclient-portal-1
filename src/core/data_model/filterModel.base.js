@@ -139,6 +139,11 @@ export class FilterModelBase {
   getNewInstance = () => {
     return new FilterModelBase(this.metaData);
   };
+
+  getSortOption = () => {
+    let filter = this.getData("sortOption");
+    return filter?.option ? filter?.option : this.getFilterValue(filter);
+  };
 }
 
 export default FilterModelBase;

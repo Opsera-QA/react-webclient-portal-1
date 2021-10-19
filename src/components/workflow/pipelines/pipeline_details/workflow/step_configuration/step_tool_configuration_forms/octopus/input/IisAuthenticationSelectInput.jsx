@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import MultiSelectInputBase from "../../../../../../../../common/inputs/select/MultiSelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
 const authenticationType = [
   {name: "Anonymous Authentication", value: "EnableAnonymousAuthentication"},

@@ -2,10 +2,8 @@ import React from "react";
 import { useTable, usePagination, useSortBy } from "react-table";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSortUp, faSortDown, faPlus, faSpinner } from "@fortawesome/pro-light-svg-icons";
+import { faSortUp, faSortDown, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import Pagination from "components/common/pagination";
-import DtoBottomPagination from "../pagination/DtoBottomPagination";
-import DtoTopPagination from "../pagination/DtoTopPagination";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 
@@ -33,8 +31,6 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
     useSortBy,
     usePagination
   );
-
-  const defaultNoDataMessage = "No data is currently available";
 
   const setColumnClass = (id, columnDefinitions) => {
     let response = "";
@@ -150,7 +146,7 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
   };
 
   const getTableBody = () => {
-    if (isLoading && (data == null || data.length === 0)) {
+    if (isLoading && (!Array.isArray(data) || data.length === 0)) {
       return (
         <tr>
           <td colSpan="100%" className="info-text text-center p-3">{tableLoading()}</td>
@@ -158,17 +154,22 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
       );
     }
 
+    if (!isLoading && (!Array.isArray(rows) || rows.length === 0)) {
+      return (
+        <tr>
+          <td colSpan="100%" className="info-text text-center p-5">
+            {noDataMessage}
+          </td>
+        </tr>
+      );
+    }
+
     return (
       <>
-        {rows.map((row, i) => {
-          return getTableRow(row, i);
-        })
-        }
-        {!isLoading && rows.length === 0 &&
-        <tr>
-          <td colSpan="100%"
-              className="info-text text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td>
-        </tr>
+        {
+          rows.map((row, i) => {
+            return getTableRow(row, i);
+          })
         }
       </>
     );
@@ -181,7 +182,14 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
     }
 
     return (
-        <div>{paginationOptions && !isLoading && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}</div>
+      <div>
+        <Pagination
+          total={paginationOptions.totalCount}
+          currentPage={paginationOptions.currentPage}
+          pageSize={paginationOptions.pageSize}
+          onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)}
+        />
+      </div>
     );
   };
 
@@ -252,6 +260,7 @@ CustomTable.defaultProps = {
   data: [],
   isLoading: false,
   tableTitle: "",
+  noDataMessage: "No data is currently available",
   className: "table-content-block",
   noFooter: false,
   scrollOnLoad: true

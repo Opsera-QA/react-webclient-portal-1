@@ -2,11 +2,11 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
+  getCustomTablePipelineStateColumnDefinition,
   getPipelineTypeColumn,
   getTableDateColumn,
-  getTablePipelineStatusColumn,
   getTableTextColumn
-} from "../../../common/table/table-column-helpers";
+} from "components/common/table/table-column-helpers";
 import pipelineMetadata from "./pipeline-metadata";
 import {useHistory} from "react-router-dom";
 
@@ -28,7 +28,7 @@ function PipelinesTable({ data, isLoading, paginationModel, setPaginationModel, 
       getTableTextColumn(fields.find(field => { return field.id === "_id";})),
       getTableTextColumn(fields.find(field => { return field.id === "name";})),
       getTableTextColumn(fields.find(field => { return field.id === "owner_name";})),
-      getTablePipelineStatusColumn(fields.find(field => { return field.id === "workflow.last_run";})),
+      getCustomTablePipelineStateColumnDefinition(fields.find(field => { return field.id === "state";})),
       getTableTextColumn(fields.find(field => { return field.id === "workflow.run_count";})),
       getTableDateColumn(fields.find(field => { return field.id === "createdAt";})),
       getTableDateColumn(fields.find(field => { return field.id === "updatedAt";})),

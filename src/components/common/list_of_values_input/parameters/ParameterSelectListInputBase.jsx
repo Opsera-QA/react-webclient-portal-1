@@ -8,9 +8,9 @@ import Col from "react-bootstrap/Col";
 import { DialogToastContext } from "../../../../contexts/DialogToastContext";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import parametersActions from "../../../inventory/parameters/parameters-actions";
-import DropdownList from "react-widgets/lib/DropdownList";
 import axios from "axios";
 import InfoText from "../../inputs/info_text/InfoText";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 function ParameterSelectListInputBase({
   dataObject,
@@ -177,15 +177,14 @@ function ParameterSelectListInputBase({
       <div className="my-2">
         <Row>
           <Col sm={10} className={"my-1 ml-2"}>
-            <DropdownList
-              data={parametersList ? parametersList : []}
+            <StandaloneSelectInput
+              selectOptions={parametersList ? parametersList : []}
               valueField={"_id"}
               textField={"name"}
               value={parameterName}
-              filter={"contains"}
               busy={isParametersSearching}
-              placeholder={placeholder}
-              onChange={(data) => setParameterData(data)}
+              placeholderText={placeholder}
+              setDataFunction={(data) => setParameterData(data)}
               disabled={isLoading || (!isLoading && (parametersList == null || parametersList.length === 0))}
             />
           </Col>

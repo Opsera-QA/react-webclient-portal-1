@@ -5,11 +5,11 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBracketsCurly, faExclamationTriangle, faTimes} from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {Combobox} from "react-widgets";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import {AuthContext} from "contexts/AuthContext";
 import regexDefinitions from "utils/regexDefinitions";
+import StandaloneComboBoxInput from "components/common/inputs/combo_box/StandaloneComboBoxInput";
 
 function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -144,15 +144,13 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
         <Col sm={11}>
           <Row>
             <Col sm={6} className={"pl-2 pr-1"}>
-              <Combobox
-                data={adminTagsActions.configurationOptions}
+              <StandaloneComboBoxInput
+                selectOptions={adminTagsActions.configurationOptions}
                 valueField={"id"}
                 textField={"label"}
                 value={property["name"]}
-                filter={"contains"}
-                suggest={true}
-                placeholder={"Select or Type a New Property"}
-                onChange={(value) => updateProperty(property, "name", value.id ? value.id : value)}
+                placeholderText={"Select or Type a New Property"}
+                setDataFunction={(value) => updateProperty(property, "name", value.id ? value.id : value)}
               />
             </Col>
             <Col sm={6} className={"pl-1 pr-0"}>

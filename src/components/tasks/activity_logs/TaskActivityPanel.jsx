@@ -6,7 +6,7 @@ import axios from "axios";
 import taskActivityHelpers
   from "components/tasks/activity_logs/task-activity-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import TaskActivityLogs from "components/tasks/git_task_details/TaskActivityLogs";
+import TaskActivityLogs from "components/tasks/details/TaskActivityLogs";
 import {TaskActivityFilterModel} from "components/tasks/activity_logs/task-activity.filter.model";
 import taskActions from "components/tasks/task.actions";
 

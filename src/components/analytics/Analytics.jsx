@@ -6,7 +6,6 @@ import SummaryChartsView from "./views/pipeline/buildView_developer";
 import ReliabilityMetricsCharts from "./views/reliability/ReliabilityMetricsView";
 import CodeCoverageMetricsView from "./views/sonarCodeCoverageView";
 import InfoDialog from "../common/status_notifications/info";
-import "./analytics.css";
 import "./charts/charts.css";
 import DeploymentFrequencyLineChart from "./charts/DeploymentFrequencyLineChart.jsx";
 import JiraIssuesCreatedByDateLineChart from "./charts/JiraIssuesCreatedByDateLineChart.jsx";
@@ -21,7 +20,6 @@ import JMeterResponseTimeLineChart from "./charts/JmeterResponseTimeLineChart";
 import JMeterResultsTable from "./metrics/jmeterResultsTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";
-import DropdownList from "react-widgets/lib/DropdownList";
 import SourceCodeView from "./views/SourceCode/SourceCodeView_developer";
 import OperationsView from "./views/opserations_analytics/operationsViewAnalytics_developer";
 import AnalyticsProfileSettings from "../settings/analytics/activateAnalyticsCard";
@@ -29,6 +27,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import {AuthContext} from "contexts/AuthContext";
 import {axiosApiService} from "api/apiService";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 const INDICES = [
   "jenkins",
@@ -322,9 +321,8 @@ function Analytics() {
               </Col>
               <Col sm={3}>
                 <OverlayTrigger placement="top" delay={{ show: 250, hide: 250 }} overlay={renderTooltip}>
-                  <DropdownList
-                    filter
-                    data={DATELABELS}
+                  <StandaloneSelectInput
+                    selectOptions={DATELABELS}
                     className="max-content-width"
                     valueComponent={ValueInput}
                     textField="label"
@@ -335,7 +333,7 @@ function Analytics() {
                         ? DATELABELS.find((o) => o.value.start === date.start && o.value.end === date.end)
                         : DATELABELS[5]
                     }
-                    onChange={handleDateChange}
+                    setDataFunction={handleDateChange}
                   />
                 </OverlayTrigger>
               </Col>

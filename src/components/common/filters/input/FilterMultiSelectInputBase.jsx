@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
-import {Multiselect} from "react-widgets";
+import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 
 function FilterMultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, setDataFunction, valueField, textField, filter, placeholderText, busy, className, inline, disabled}) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
@@ -28,18 +28,17 @@ function FilterMultiSelectInputBase({ fieldName, dataObject, setDataObject, grou
   return (
     <div className={className}>
       {getInputLabel()}
-      <Multiselect
-        data={selectOptions}
+      <StandaloneMultiSelectInput
+        selectOptions={selectOptions}
         valueField={valueField}
         textField={textField}
         className={inline ? `inline-filter-input inline-select-filter` : undefined}
         busy={busy}
-        filter="contains"
         groupBy={groupBy}
         value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : [] }
-        placeholder={placeholderText}
+        placeholderText={placeholderText}
         disabled={disabled}
-        onChange={newValue => setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)}
+        setDataFunction={newValue => setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)}
       />
     </div>
   );

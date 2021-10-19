@@ -73,9 +73,9 @@ export const ldapOrganizationAccountMetaData = {
       formText: "Not implemented yet"
     },
     {
-      label: "Local Authentication Provider (Opsera Okta)",
+      label: "Local Authentication Form (Opsera Okta)",
       id: "localAuth",
-      formText: "Indicates if the customer is using federated authentication or Opsera Okta (local)"
+      formText: "Indicates if the customer is using the local registration form (with Opsera Okta) OR the Okta Widget which supports both federated authentication or Opsera Okta.  Must be disabled with a IdpIdentifier other than 0 for federation to work.  If disabled and IdpIdentifier is 0, it uses Okta Widget with local auth (Opsera Okta)"
     },
     {
       label: "Saml Enabled?",

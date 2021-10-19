@@ -12,7 +12,7 @@ function VanityPaginationContainer({ isLoading, paginationModel, loadData, child
     <div className="pagination-container">
       <TopPaginator paginationModel={paginationModel} isLoading={isLoading} loadData={loadData} />
       {children}
-      <BottomPaginator loadData={loadData} isLoading={isLoading} paginationModel={paginationModel} />
+      <BottomPaginator nextGeneration={true} loadData={loadData} isLoading={isLoading} paginationModel={paginationModel} />
     </div>
   );
 }
