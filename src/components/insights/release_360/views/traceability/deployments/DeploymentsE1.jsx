@@ -12,7 +12,7 @@ import { defaultConfig, getColorByData, assignStandardColors, capitalizeLegend,
 import ChartTooltip from '../../../ChartTooltip';
 import { useHistory } from "react-router-dom";
 
-function OpseraBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function DeploymentsE1({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const history = useHistory();
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -47,8 +47,8 @@ function OpseraBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, da
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "totalBuilds", kpiConfiguration, dashboardTags);
-      let dataObject = response?.data ? response?.data?.data[0]?.totalBuilds?.data : [];
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "totalDeploymentCounts", kpiConfiguration, dashboardTags);
+      let dataObject = response?.data ? response?.data?.data[0]?.totalDeploymentCounts?.data : [];
       assignStandardColors(dataObject, true);
       capitalizeLegend(dataObject, ["time"]);
 
@@ -69,61 +69,22 @@ function OpseraBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, da
     }
   };
 
-  const onRowSelect = (rowData) => {
-    history.push(`/blueprint/${rowData.data._id.pipelineId}/${rowData.data._id.run}`);
-  };
-
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
 
     return (
-      <div className="new-chart mb-3" style={{height: "300px"}}>
-        <ResponsiveBar
-          data={metrics}
-          {...defaultConfig("Duration (Minutes)", "Pipeline Run",
-            false, false, "wholeNumbers", "cutoffString")}
-          {...config(getColorByData)}
-          {...adjustBarWidth(metrics)}
-          onClick={(data) => onRowSelect(data)}
-          tooltip={({ data, value, color }) => <ChartTooltip
-            titles = {["Pipeline ID", "Duration"]}
-            values = {[data.pipelineId, `${value} minutes`]}
-            style = {false}
-            color = {color} />}
-        />
-      </div>
+      metrics
     );
   };
 
   return (
-    <div>
-      <ChartContainer
-        title={kpiConfiguration?.kpi_name}
-        kpiConfiguration={kpiConfiguration}
-        setKpiConfiguration={setKpiConfiguration}
-        chart={getChartBody()}
-        loadChart={loadData}
-        dashboardData={dashboardData}
-        index={index}
-        error={error}
-        setKpis={setKpis}
-        isLoading={isLoading}
-      />
-      <ModalLogs
-        header="Build Duration"
-        size="lg"
-        jsonMessage={metrics}
-        dataType="bar"
-        show={showModal}
-        setParentVisibility={setShowModal}
-      />
-    </div>
+    getChartBody()
   );
 }
 
-OpseraBuildDurationBarChart.propTypes = {
+DeploymentsE1.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -131,4 +92,4 @@ OpseraBuildDurationBarChart.propTypes = {
   setKpis: PropTypes.func
 };
 
-export default OpseraBuildDurationBarChart;
+export default DeploymentsE1;

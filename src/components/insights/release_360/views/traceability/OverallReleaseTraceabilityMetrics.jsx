@@ -133,7 +133,7 @@ function OverallReleaseTraceabilityMetrics() {
           <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
             <ThreeLineDataBlockBase
               className={"p-4"}
-              topText={"Total Builds"}
+              topText={"Builds"}
               middleText={<MetricScoreText score={150} />}
               bottomText={<MetricScoreText score={89 +"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
               showBorder={true}
@@ -142,7 +142,7 @@ function OverallReleaseTraceabilityMetrics() {
           <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
             <ThreeLineDataBlockBase
               className={"p-4"}
-              topText={"Total Scans"}
+              topText={"Security"}
               middleText={<MetricScoreText score={66} />}
               bottomText={<MetricScoreText score={90 +"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS} />}
               showBorder={true}
@@ -150,7 +150,7 @@ function OverallReleaseTraceabilityMetrics() {
           </DataBlockBoxContainer>
           <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
             <ThreeLineDataBlockBase
-              topText={"Total Tests"}
+              topText={"Testing"}
               className={"p-4"}
               middleText={<MetricScoreText score={101} />}
               bottomText={<MetricScoreText score={77 +"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
@@ -159,7 +159,7 @@ function OverallReleaseTraceabilityMetrics() {
           </DataBlockBoxContainer>
           <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
             <ThreeLineDataBlockBase
-              topText={"Total Deploys"}
+              topText={"Deployments"}
               className={"p-4"}
               middleText={<MetricScoreText score={145} />}
               bottomText={<MetricScoreText score={93 +"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS} />}
@@ -181,7 +181,7 @@ function OverallReleaseTraceabilityMetrics() {
           <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
             <ThreeLineDataBlockBase
               className={"p-4"}
-              topText={"Total Builds"}
+              topText={"Builds"}
               middleText={<MetricScoreText score={201} />}
               bottomText={<MetricScoreText score={79+"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
               showBorder={true}
@@ -190,7 +190,7 @@ function OverallReleaseTraceabilityMetrics() {
           <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
             <ThreeLineDataBlockBase
               className={"p-4"}
-              topText={"Total Scans"}
+              topText={"Security"}
               middleText={<MetricScoreText score={78} />}
               bottomText={<MetricScoreText score={91 +"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS} />}
               showBorder={true}
@@ -198,7 +198,7 @@ function OverallReleaseTraceabilityMetrics() {
           </DataBlockBoxContainer>
           <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
             <ThreeLineDataBlockBase
-              topText={"Total Tests"}
+              topText={"Testing"}
               className={"p-4"}
               middleText={<MetricScoreText score={112} />}
               bottomText={<MetricScoreText score={87 +"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
@@ -207,7 +207,7 @@ function OverallReleaseTraceabilityMetrics() {
           </DataBlockBoxContainer>
           <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
             <ThreeLineDataBlockBase
-              topText={"Total Deploys"}
+              topText={"Deployments"}
               className={"p-4"}
               middleText={<MetricScoreText score={167}  />}
               bottomText={<MetricScoreText score={95 +"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS} />}
