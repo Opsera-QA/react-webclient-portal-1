@@ -134,7 +134,7 @@ function SiteRoleDetailView() {
 
   return (
     <DetailScreenContainer
-      breadcrumbDestination={"ldapGroupDetailView"}
+      breadcrumbDestination={"ldapSiteRoleDetailView"}
       metadata={ldapGroupMetaData}
       dataObject={ldapGroupData}
       isLoading={isLoading}
