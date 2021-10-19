@@ -6,7 +6,7 @@ import {ldapUsersMetaData} from "./ldap-users-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import NewLdapUserModal from "components/settings/ldap_users/NewLdapUserModal";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faSitemap} from "@fortawesome/pro-light-svg-icons";
+import {faUser} from "@fortawesome/pro-light-svg-icons";
 
 function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loadData }) {
   const [showCreateUserModal, setShowCreateUserModal] = useState(false);
@@ -55,7 +55,7 @@ function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loa
         addRecordFunction={authorizedActions?.includes("create_user") ? createUser : null}
         isLoading={isLoading}
         body={getUsersTable()}
-        titleIcon={faSitemap}
+        titleIcon={faUser}
         title={"Users"}
         type={"User"}
       />
