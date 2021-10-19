@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import StandaloneConsoleLogField from "components/common/fields/pipelines/activity/StandaloneConsoleLogField";
+import PipelineConsoleLogField from "components/common/fields/log/PipelineConsoleLogField";
 
 function TaskActivityConsoleLogPanel({ gitTaskActivityData }) {
   return (
     <SummaryPanelContainer>
       <Row>
         <Col md={12}>
-          <StandaloneConsoleLogField
+          <PipelineConsoleLogField
             apiResponse={gitTaskActivityData["api_response"]}
             dataObject={gitTaskActivityData}
           />

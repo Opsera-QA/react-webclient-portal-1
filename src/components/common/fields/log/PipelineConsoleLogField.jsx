@@ -1,11 +1,10 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {format} from "date-fns";
-import FieldTitleBar from "components/common/fields/FieldTitleBar";
-import {faLaptopCode} from "@fortawesome/pro-light-svg-icons";
-import InputContainer from "components/common/inputs/InputContainer";
+import StandaloneConsoleLogsDisplayer from "components/common/fields/log/StandaloneConsoleLogsDisplayer";
 
-function StandaloneConsoleLogField({dataObject, apiResponse}) {
+// TODO: This needs to be tailored to Pipeline Field
+function PipelineConsoleLogField({dataObject, apiResponse}) {
   const isMounted = useRef(false);
   const [consoleLogs, setConsoleLogs] = useState([]);
   const [parsedLogs, setParsedLogs] = useState([]);
@@ -101,7 +100,7 @@ function StandaloneConsoleLogField({dataObject, apiResponse}) {
   };
 
   const getBody = () => {
-    if (Array.isArray(parsedLogs) && parsedLogs.length > 0)
+    if (Array.isArray(parsedLogs) && parsedLogs.length > 0) {
       return (
         parsedLogs.map((row, key) => {
           return (
@@ -110,45 +109,6 @@ function StandaloneConsoleLogField({dataObject, apiResponse}) {
             </div>
           );
         })
-      );
-  };
-
-  const getConsoleLogBody = () => {
-    if (!Array.isArray(consoleLogs) && consoleLogs.length === 0) {
-      return (getConsoleLogContainer("Error parsing console log"));
-    }
-
-    return (
-      consoleLogs.map((row) => {
-        if (typeof row === "string") {
-          return (getConsoleLogContainer(row));
-        }
-
-        const id = row?.id;
-        const log = row?.log;
-
-        return (getConsoleLogContainer(log, id));
-      })
-    );
-  };
-
-  // TODO: make component
-  const getConsoleLogContainer = (consoleLog, title = "Console Log") => {
-    if (consoleLog) {
-      return (
-        <InputContainer className={""}>
-          <div className="object-properties-input">
-            <div className="content-container">
-              <FieldTitleBar customTitle={title} icon={faLaptopCode}/>
-              <div style={{height: "500px", maxHeight: "500px", overflowY: "auto"}}>
-                <div className="console-text">
-                  {consoleLog}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className={"object-properties-footer"}/>
-        </InputContainer>
       );
     }
   };
@@ -165,15 +125,17 @@ function StandaloneConsoleLogField({dataObject, apiResponse}) {
         {getBody()}
       </div>
       <div className={"my-2"}>
-        {getConsoleLogBody()}
+        <StandaloneConsoleLogsDisplayer
+          consoleLogs={consoleLogs}
+        />
       </div>
     </div>
   );
 }
 
-StandaloneConsoleLogField.propTypes = {
+PipelineConsoleLogField.propTypes = {
   apiResponse: PropTypes.any,
   dataObject: PropTypes.object,
 };
 
-export default StandaloneConsoleLogField;
+export default PipelineConsoleLogField;
