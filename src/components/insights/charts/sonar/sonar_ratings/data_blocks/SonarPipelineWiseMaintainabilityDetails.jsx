@@ -157,9 +157,11 @@ function SonarPipelineWiseMaintainibilityDetails() {
     return (
       <Row className="py-3 px-5">
         <Col>
-          <div className="metric-box p-3 text-center">
-            <div className="box-metric d-flex flex-row" style={{alignItems: 'center', justifyContent: 'center'}}>
-              <FontAwesomeIcon icon={faRadiationAlt} fixedWidth className="mr-2"/>
+        <div className="metric-box p-3 text-center">
+            <div style={{position: 'absolute' , fontSize: '1.25rem'}}>
+              <FontAwesomeIcon icon={faRadiationAlt} fixedWidth className="mr-2" />
+            </div>
+            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
               <div className="font-weight-bold">{issueTypeData?.total}</div>
             </div>
             <div className="w-100 text-muted mb-1">Code Smells</div>
@@ -229,22 +231,22 @@ function SonarPipelineWiseMaintainibilityDetails() {
       return null;
     }
     return(<>
-          <Row className="px-5">
+          <Row className="px-2">
             <Col className="footer-records">
               Total remediation for Critical Code Smells : {footerData?.critical} 
             </Col>
           </Row>
-          <Row className="px-5">
+          <Row className="px-2">
             <Col className="footer-records">
               Total remediation for Major Code Smells : {footerData?.major} 
             </Col>
           </Row>
-          <Row className="px-5">
+          <Row className="px-2">
             <Col className="footer-records">
               Total remediation for Minor Code Smells : {footerData?.minor} 
             </Col>
           </Row>
-          <Row className="px-5">
+          <Row className="px-2">
             <Col className="footer-records">
               Total remediation for Info Code Smells : {footerData?.info} 
             </Col>
