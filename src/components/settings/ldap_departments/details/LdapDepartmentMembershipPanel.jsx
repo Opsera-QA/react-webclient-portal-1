@@ -91,7 +91,7 @@ function LdapDepartmentMembershipPanel({ ldapDepartmentData, ldapDepartmentGroup
     <LdapGroupMembershipManagementPanel
       orgDomain={orgDomain}
       setActiveTab={setActiveTab}
-      ldapGroupData={ldapDepartmentData}
+      ldapGroupData={ldapDepartmentGroupData}
       authorizedActions={authorizedActions}
       ldapUsers={ldapUsers}
       loadData={loadData}
