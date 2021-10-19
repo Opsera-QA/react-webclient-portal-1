@@ -15,7 +15,7 @@ function PipelineStepSetupHelpDocumentation() {
           <div className={"ml-2"}>This is the initial <b>Step Setup</b>.
             This setup defines the tool associated with the step. Each step is unique based on the tool it is orchestrating.
             It requires unique settings and configurations typically defined in the Tool Registry.
-            \A pipeline relies on settings in Tool Registry, Script Library and Custom Parameters to bring together the necessary functionality per tool.
+            A pipeline relies on settings in Tool Registry, Script Library and Custom Parameters to bring together the necessary functionality per tool.
             Once this form is saved, selections can be configured in <b>Step Configuration</b>.
             Please ensure you understand the overall needs of the selected tool before attempting to configure a step.
           </div>

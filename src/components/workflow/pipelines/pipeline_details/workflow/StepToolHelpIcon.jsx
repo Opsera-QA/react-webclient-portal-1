@@ -15,6 +15,8 @@ import AzureAcrPushPipelineStepConfigurationHelp
   from "../../../../common/help/documentation/pipelines/step_configuration/AzureAcrPushPipelineStepConfigurationHelp";
 import OctopusDeployStepConfigurationHelp
   from "../../../../common/help/documentation/pipelines/step_configuration/OctopusDeployStepConfigurationHelp";
+import PipelineSourceRepositoryHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/PipelineSourceRepositoryHelpDocumentation";
 import AnsibleStepConfigurationHelp
   from "../../../../common/help/documentation/pipelines/step_configuration/AnsibleStepConfigurationHelp";
 
@@ -84,7 +86,7 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
 
   const getHelpComponent = () => {
     if (type === "source") {
-      return null;
+      return <PipelineSourceRepositoryHelpDocumentation/>;
     }
 
     if (type === "notification") {
