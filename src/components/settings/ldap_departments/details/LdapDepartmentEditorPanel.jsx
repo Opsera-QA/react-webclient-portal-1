@@ -4,7 +4,7 @@ import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import departmentActions from "components/admin/accounts/ldap/ldap_departments/department-functions";
+import departmentActions from "components/settings/ldap_departments/department-functions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";

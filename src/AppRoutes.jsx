@@ -55,9 +55,9 @@ import LdapOrganizationAccountDetailView
   from "./components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountDetailView";
 import LdapOrganizationAccountManagement
   from "./components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagement";
-import LdapDepartmentManagement from "./components/admin/accounts/ldap/ldap_departments/LdapDepartmentManagement";
+import LdapDepartmentManagement from "./components/settings/ldap_departments/LdapDepartmentManagement";
 import LdapDepartmentDetailView
-  from "./components/admin/accounts/ldap/ldap_departments/department_detail_view/LdapDepartmentDetailView";
+  from "./components/settings/ldap_departments/details/LdapDepartmentDetailView";
 import Reports from "./components/reports/Reports";
 import Reports_Old from "./components/reports/Reports_Old";
 import Marketplace from "components/insights/marketplace/Marketplace";
@@ -279,6 +279,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
                        component={LdapOrganizationAccountDetailView} />
           <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView} />
 
+          {/*TODO: Remove after fully migrating*/}
           <SecureRoute path="/admin/:orgDomain?/departments" exact component={LdapDepartmentManagement} />
           <SecureRoute path="/admin/:orgDomain/departments/details/:departmentName" exact
                        component={LdapDepartmentDetailView} />
@@ -298,6 +299,9 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/settings/:orgDomain?/site-roles/" exact component={SiteRoleManagement} />
           <SecureRoute path="/settings/:orgDomain/site-roles/details/:groupName" exact
                        component={SiteRoleDetailView} />
+          <SecureRoute path="/settings/:orgDomain?/departments" exact component={LdapDepartmentManagement} />
+          <SecureRoute path="/settings/:orgDomain/departments/details/:departmentName" exact
+                       component={LdapDepartmentDetailView} />
           <SecureRoute path="/settings/organizations/" exact component={OrganizationManagement} />
           <SecureRoute path="/settings/organizations/details/:id" exact component={OrganizationDetailView} />
           <SecureRoute path="/settings/analytics-data-entries/" exact component={AnalyticsDataEntryManagement} />
