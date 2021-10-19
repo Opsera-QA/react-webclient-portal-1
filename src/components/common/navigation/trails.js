@@ -351,8 +351,8 @@ const breadcrumbs = {
     parent: "accountSettings",
     name: "ldapSiteRolesManagement",
     path: paths.ldapSiteRoleManagement,
-    title: "Site Roles & Departments Management",
-    linkText: "Site Roles & Departments",
+    title: "Site Roles Management",
+    linkText: "Site Roles",
     icon: faServer
   },
   ldapSiteRoleDetailView: {
@@ -362,6 +362,24 @@ const breadcrumbs = {
     title: "Site Role Details",
     linkText: "Site Role Details",
     icon: faServer
+  },
+
+  // LDAP Departments Administration
+  ldapDepartmentManagement: {
+    parent: "settings",
+    name: "ldapDepartmentManagement",
+    path: paths.ldapDepartmentManagement,
+    title: "Departments",
+    linkText: "Departments",
+    icon: faBuilding
+  },
+  ldapDepartmentDetailView: {
+    parent: "ldapDepartmentManagement",
+    name: "ldapDepartmentDetailView",
+    path: paths.ldapDepartmentDetailView,
+    title: "Department Details",
+    linkText: "Department Details",
+    icon: faBuilding
   },
 
   // Tag Management
@@ -416,23 +434,6 @@ const breadcrumbs = {
     title: "Organization Details",
     linkText: "Organization Details",
     icon: faSitemap
-  },
-
-  ldapDepartmentManagement: {
-    parent: "admin",
-    name: "ldapDepartmentManagement",
-    path: paths.ldapDepartmentManagement,
-    title: "Department Management",
-    linkText: "Department Management",
-    icon: faBuilding
-  },
-  ldapDepartmentDetailView: {
-    parent: "ldapDepartmentManagement",
-    name: "ldapDepartmentDetailView",
-    path: paths.ldapDepartmentDetailView,
-    title: "Department Details",
-    linkText: "Department Details",
-    icon: faBuilding
   },
 
   // Ldap Organization Account Administration

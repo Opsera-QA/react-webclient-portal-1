@@ -47,14 +47,6 @@ function ToolEditorPanel({ toolData, handleClose }) {
     setIsLoading(false);
   };
 
-  const createTool = async () => {
-    return await toolsActions.createToolV2(getAccessToken, cancelTokenSource, toolDataDto);
-  };
-
-  const updateTool = async () => {
-    return await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, toolDataDto);
-  };
-
   const getDynamicFields = () => {
     if (toolData?.isNew() && !isSassUser()) {
       return (
@@ -70,8 +62,6 @@ function ToolEditorPanel({ toolData, handleClose }) {
     <VanityEditorPanelContainer
       model={toolDataDto}
       setModel={setToolDataDto}
-      createRecord={createTool}
-      updateRecord={updateTool}
       setRecordDto={setToolDataDto}
       isLoading={isLoading}
       showBooleanToggle={true}
@@ -87,7 +77,6 @@ function ToolEditorPanel({ toolData, handleClose }) {
             setDataObject={setToolDataDto}
           />
         </Col>
-       
         <Col lg={6}>
           <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"costCenter"}/>
         </Col>

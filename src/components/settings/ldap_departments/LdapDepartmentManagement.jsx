@@ -2,14 +2,16 @@ import React, {useState, useEffect, useContext, useRef} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import Model from "core/data_model/model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import departmentFilterMetadata from "components/admin/accounts/ldap/ldap_departments/department-filter-metadata";
-import departmentActions from "components/admin/accounts/ldap/ldap_departments/department-functions";
+import departmentFilterMetadata from "components/settings/ldap_departments/department-filter-metadata";
+import departmentActions from "components/settings/ldap_departments/department-functions";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import LdapDepartmentsTable from "components/admin/accounts/ldap/ldap_departments/LdapDepartmentsTable";
+import LdapDepartmentsTable from "components/settings/ldap_departments/LdapDepartmentsTable";
 import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import {useHistory, useParams} from "react-router-dom";
+import LdapDepartmentManagementSubNavigationBar
+  from "components/settings/ldap_departments/LdapDepartmentManagementSubNavigationBar";
 
 function LdapDepartmentManagement() {
   const history = useHistory();
@@ -96,6 +98,7 @@ function LdapDepartmentManagement() {
       breadcrumbDestination={"ldapDepartmentManagement"}
       accessDenied={!authorizedActions?.includes("get_departments")}
       accessRoleData={accessRoleData}
+      navigationTabContainer={<LdapDepartmentManagementSubNavigationBar activeTab={"departments"} />}
       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
       >
       <LdapDepartmentsTable

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 import GitUpstreamBranchInput from "components/common/list_of_values_input/tools/git/GitUpstreamBranchInput";
 import GitBranchManualRollBackBranchInput from "components/common/list_of_values_input/tools/git/GitBranchManualRollBackBranchInput";
-import { Form } from "react-bootstrap";
 import CheckboxInput from "components/common/inputs/boolean/CheckboxInput";
 
 const disallowedJobTypes = [
@@ -24,7 +23,6 @@ function JenkinsStepConfigurationBranchEditorPanel(
     workspace,
     repoId,
   }) {
-  const [branchList, setBranchList] = useState([]);
   const toolJobType = dataObject.getData("toolJobType");
 
   // TODO: Is this necessary?
@@ -48,11 +46,14 @@ function JenkinsStepConfigurationBranchEditorPanel(
     else if (jobType === "SFDC PUSH ARTIFACTS") {
       return (
         <GitUpstreamBranchInput
-          dataObject={dataObject}
-          setDataObject={setDataObject}
-          options={branchList}
-          clearDataFunction={clearDataFunction}
-        />
+        dataObject={dataObject}
+        setDataObject={setDataObject}
+        service={service}
+        gitToolId={gitToolId}
+        workspace={workspace}
+        repoId={repoId}
+        clearDataFunction={clearDataFunction}
+      />
       );
     }
     else {
@@ -67,7 +68,6 @@ function JenkinsStepConfigurationBranchEditorPanel(
           setDataFunction={setDataFunction}
           setDataObject={setDataObject}
           disabled={disabled}
-          setBranchList={setBranchList}
           clearDataFunction={clearDataFunction}
         />
       );

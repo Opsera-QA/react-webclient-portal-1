@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import departmentActions from "components/admin/accounts/ldap/ldap_departments/department-functions";
-import ldapDepartmentMetaData from "components/admin/accounts/ldap/ldap_departments/ldap-department-metadata";
+import departmentActions from "components/settings/ldap_departments/department-functions";
+import ldapDepartmentMetaData from "components/settings/ldap_departments/ldap-department-metadata";
 import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
@@ -12,9 +12,11 @@ import ActionBarBackButton from "components/common/actions/buttons/ActionBarBack
 import ActionBarDestructiveDeleteButton from "components/common/actions/buttons/ActionBarDestructiveDeleteButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import LdapDepartmentDetailPanel
-  from "components/admin/accounts/ldap/ldap_departments/department_detail_view/LdapDepartmentDetailPanel";
+  from "components/settings/ldap_departments/details/LdapDepartmentDetailPanel";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import axios from "axios";
+import LdapDepartmentManagementSubNavigationBar
+  from "components/settings/ldap_departments/LdapDepartmentManagementSubNavigationBar";
 
 function LdapDepartmentDetailView() {
   const {departmentName, orgDomain} = useParams();
@@ -108,7 +110,7 @@ function LdapDepartmentDetailView() {
       return (
         <ActionBarContainer>
           <div>
-            <ActionBarBackButton path={"/admin/departments"} />
+            <ActionBarBackButton path={`/settings/${orgDomain}/departments`} />
           </div>
           <div>
             <ActionBarDestructiveDeleteButton
@@ -131,6 +133,7 @@ function LdapDepartmentDetailView() {
       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
       dataObject={ldapDepartmentData}
       isLoading={isLoading}
+      navigationTabContainer={<LdapDepartmentManagementSubNavigationBar activeTab={"departmentViewer"} />}
       actionBar={getActionBar()}
       detailPanel={
         <LdapDepartmentDetailPanel

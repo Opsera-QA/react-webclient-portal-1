@@ -67,6 +67,7 @@ const OctopusProjectGroupSelectInput = ({ fieldName, dataObject, setDataObject, 
         if(dataObject.getData("projectType") && dataObject.getData("projectType") === "CUSTOM"){
             newDataObject.setData("projectId", "");
         }
+      newDataObject.setData("tenantList", []);
         setDataObject({...newDataObject});
     };
 

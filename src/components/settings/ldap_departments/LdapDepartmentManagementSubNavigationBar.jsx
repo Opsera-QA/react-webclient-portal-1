@@ -2,10 +2,10 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faArrowLeft, faServer} from "@fortawesome/pro-light-svg-icons";
+import {faArrowLeft, faBuilding} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 
-function SiteRoleManagementSubNavigationBar({activeTab}) {
+function LdapDepartmentManagementSubNavigationBar({activeTab}) {
   const history = useHistory();
 
   const handleTabClick = (tabSelection) => e => {
@@ -15,22 +15,22 @@ function SiteRoleManagementSubNavigationBar({activeTab}) {
       case "accountSettings":
         history.push(`/settings`);
         return;
-      case "siteRoles":
-        history.push(`/settings/site-roles`);
+      case "departments":
+        history.push(`/settings/departments`);
         return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-      case "siteRoleViewer":
+      case "departmentViewer":
         return (
           <NavigationTab
-            icon={faServer}
-            tabName={"siteRoleViewer"}
+            icon={faBuilding}
+            tabName={"departmentViewer"}
             handleTabClick={handleTabClick}
             activeTab={activeTab}
-            tabText={"Site Role Viewer"}
+            tabText={"Department Viewer"}
           />
         );
       default:
@@ -48,19 +48,19 @@ function SiteRoleManagementSubNavigationBar({activeTab}) {
         tabText={"Back to Account Settings"}
       />
       <NavigationTab
-        icon={faServer}
-        tabName={"siteRoles"}
+        icon={faBuilding}
+        tabName={"departments"}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
-        tabText={"Site Roles"}
+        tabText={"Departments"}
       />
       {getActiveViewerTab()}
     </NavigationTabContainer>
   );
 }
 
-SiteRoleManagementSubNavigationBar.propTypes = {
+LdapDepartmentManagementSubNavigationBar.propTypes = {
   activeTab: PropTypes.string,
 };
 
-export default SiteRoleManagementSubNavigationBar;
+export default LdapDepartmentManagementSubNavigationBar;

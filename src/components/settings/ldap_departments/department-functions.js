@@ -1,5 +1,5 @@
-import {axiosApiService} from "../../../../../api/apiService";
-import baseActions from "../../../../../utils/actionsBase";
+import {axiosApiService} from "api/apiService";
+import baseActions from "utils/actionsBase";
 
 const departmentActions = {};
 

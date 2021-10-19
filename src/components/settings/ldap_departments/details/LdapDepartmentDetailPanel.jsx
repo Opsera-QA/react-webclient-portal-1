@@ -6,12 +6,14 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import CustomTab from "components/common/tabs/CustomTab";
 import LdapDepartmentSummaryPanel
-  from "components/admin/accounts/ldap/ldap_departments/department_detail_view/LdapDepartmentSummaryPanel";
+  from "components/settings/ldap_departments/details/LdapDepartmentSummaryPanel";
 import LdapDepartmentMembershipPanel
-  from "components/admin/accounts/ldap/ldap_departments/department_detail_view/LdapDepartmentMembershipPanel";
+  from "components/settings/ldap_departments/details/LdapDepartmentMembershipPanel";
 import LdapDepartmentEditorPanel
-  from "components/admin/accounts/ldap/ldap_departments/department_detail_view/LdapDepartmentEditorPanel";
+  from "components/settings/ldap_departments/details/LdapDepartmentEditorPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
+import LdapGroupMembershipManagementPanel
+  from "components/common/inputs/user/membership/manager/LdapGroupMembershipManagementPanel";
 
 function LdapDepartmentDetailPanel({ ldapDepartmentData, loadData, setLdapDepartmentData, ldapDepartmentGroupData, orgDomain, authorizedActions }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -38,13 +40,21 @@ function LdapDepartmentDetailPanel({ ldapDepartmentData, loadData, setLdapDepart
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <LdapDepartmentSummaryPanel ldapDepartmentData={ldapDepartmentData} setActiveTab={setActiveTab} />;
+        return (
+          <LdapDepartmentSummaryPanel
+            ldapDepartmentData={ldapDepartmentData}
+            setActiveTab={setActiveTab}
+            orgDomain={orgDomain}
+          />
+        );
       case "membership":
+        // TODO: Rework department membership panel and hook up here
         return (
           <LdapDepartmentMembershipPanel
             ldapDepartmentData={ldapDepartmentData}
             ldapDepartmentGroupData={ldapDepartmentGroupData}
             orgDomain={orgDomain}
+            setActiveTab={setActiveTab}
           />
         );
       case "settings":
