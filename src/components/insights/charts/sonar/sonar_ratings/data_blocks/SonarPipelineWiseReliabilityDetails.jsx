@@ -244,16 +244,16 @@ function SonarPipelineWiseReliabilityDetails() {
     }
     return (
       <>
-        <Row className="px-5">
+        <Row className="px-2">
           <Col className="footer-records">Total remediation for Critical Bugs : {footerData?.critical}</Col>
         </Row>
-        <Row className="px-5">
+        <Row className="px-2">
           <Col className="footer-records">Total remediation for Major Bugs : {footerData?.major}</Col>
         </Row>
-        <Row className="px-5">
+        <Row className="px-2">
           <Col className="footer-records">Total remediation for Minor Bugs : {footerData?.minor}</Col>
         </Row>
-        <Row className="px-5">
+        <Row className="px-2">
           <Col className="footer-records">Total remediation for Info Bugs : {footerData?.info}</Col>
         </Row>
       </>
