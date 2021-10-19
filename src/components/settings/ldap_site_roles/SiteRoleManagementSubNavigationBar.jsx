@@ -52,7 +52,7 @@ function SiteRoleManagementSubNavigationBar({activeTab}) {
         tabName={"siteRoles"}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
-        tabText={"Site Roles & Departments"}
+        tabText={"Site Roles"}
       />
       {getActiveViewerTab()}
     </NavigationTabContainer>

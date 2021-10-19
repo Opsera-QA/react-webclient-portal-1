@@ -13,7 +13,6 @@ import axios from "axios";
 import SiteRoleManagementSubNavigationBar from "components/settings/ldap_site_roles/SiteRoleManagementSubNavigationBar";
 import SiteRoleDetailPanel from "components/settings/ldap_site_roles/details/SiteRoleDetailPanel";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
-import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 // TODO: Can we get an API Call to get role group names associated with an organization?
 const roleGroups = ["Administrators", "PowerUsers", "Users"];
