@@ -18,7 +18,7 @@ import OctopusDeployStepConfigurationHelp
 import PipelineSourceRepositoryHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/PipelineSourceRepositoryHelpDocumentation";
 import AnsibleStepConfigurationHelp
-  from "../../../../common/help/documentation/pipelines/step_configuration/PipelineSourceRepositoryHelpDocumentation";
+  from "../../../../common/help/documentation/pipelines/step_configuration/AnsibleStepConfigurationHelp";
 
 function StepToolHelpIcon({type, tool, className, iconClassName}) {
   // TODO: Alphabetize when adding new help panels
