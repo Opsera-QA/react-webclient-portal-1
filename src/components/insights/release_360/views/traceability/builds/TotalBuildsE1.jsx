@@ -16,7 +16,7 @@ function TotalBuildsE1({ dashboardData, environment }) {
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  console.log(dashboardData);
+
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();

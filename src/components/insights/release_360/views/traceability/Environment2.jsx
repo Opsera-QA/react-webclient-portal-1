@@ -7,12 +7,11 @@ import DeploymentsE1 from "./deployments/DeploymentsE1";
 import HorizontalDataBlocksContainer
   from "../../../../common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 
-function Environment2() {
-  let BuildData = <TotalBuildsE1 environment= {"e2"}></TotalBuildsE1>;
-  let ScansData = <TotalScansE1  environment= {"e2"}></TotalScansE1>;
-  let TestData = <TotalTestsE1 environment= {"e2"} ></TotalTestsE1>;
-  let DeploymentData =
-    <DeploymentsE1 environment= {"e2"}  ></DeploymentsE1>;
+function Environment2({dashboardData}) {
+  let BuildData = <TotalBuildsE1 dashboardData={dashboardData} environment= {"e2"}></TotalBuildsE1>;
+  let ScansData = <TotalScansE1  dashboardData={dashboardData} environment= {"e2"}></TotalScansE1>;
+  let TestData = <TotalTestsE1  dashboardData={dashboardData} environment= {"e2"} ></TotalTestsE1>;
+  let DeploymentData = <DeploymentsE1 dashboardData ={dashboardData} environment= {"e2"}  ></DeploymentsE1>;
   return (
     <HorizontalDataBlocksContainer
       title={"E2 Summary"}
@@ -28,6 +27,7 @@ function Environment2() {
 }
 
 Environment2.propTypes = {
+  dashboardData: PropTypes.object,
   environment: PropTypes.string
 };
 

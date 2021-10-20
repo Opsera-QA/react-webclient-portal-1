@@ -7,7 +7,7 @@ import DeploymentsE1 from "./deployments/DeploymentsE1";
 import HorizontalDataBlocksContainer
   from "../../../../common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 
-function Environment1({kpiConfiguration, dashboardData}) {
+function Environment1({ dashboardData}) {
   let BuildData = <TotalBuildsE1 dashboardData={dashboardData} environment= {"e1"}></TotalBuildsE1>;
   let ScansData = <TotalScansE1 dashboardData={dashboardData} environment= {"e1"}></TotalScansE1>;
   let TestData = <TotalTestsE1 dashboardData={dashboardData} environment= {"e1"} ></TotalTestsE1>;
@@ -27,7 +27,6 @@ function Environment1({kpiConfiguration, dashboardData}) {
 }
   
   Environment1.propTypes = {
-    kpiConfiguration: PropTypes.object,
     dashboardData: PropTypes.object,
     environment: PropTypes.string
   };

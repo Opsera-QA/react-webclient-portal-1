@@ -8,7 +8,7 @@ import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/Dat
 import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import MetricScoreText from "../../../../../common/metrics/score/MetricScoreText";
 
-function TotalTestsE1({ environment }) {
+function TotalTestsE1({ dashboardData, environment }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -36,13 +36,13 @@ function TotalTestsE1({ environment }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      //let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.getEnvironmentMetrics(getAccessToken, cancelSource, "totalTests", environment);
+      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      const response = await chartsActions.getEnvironmentMetrics(getAccessToken, cancelSource, "totalTests", environment, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0] : [];
 
       if (isMounted?.current === true && dataObject) {
@@ -94,7 +94,7 @@ function TotalTestsE1({ environment }) {
 
 TotalTestsE1.propTypes = {
   // kpiConfiguration: PropTypes.object,
-  // dashboardData: PropTypes.object,
+  dashboardData: PropTypes.object,
   environment: PropTypes.string
 };
 
