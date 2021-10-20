@@ -255,11 +255,12 @@ export const isActionAllowed = (customerAccessRules, action, owner, objectRoles,
     return true; //owner can do all actions
   }
 
-  // TODO: We should remove this
-  // if no objectRole data passed, then allow actions
+  // TODO: Should we remove this altogether and force role requirements?
+  // if allowAllIfNoRolesAssigned is true and no objectRole data passed, then allow ALL actions
   if (allowAllIfNoRolesAssigned === true && (!Array.isArray(objectRoles) || objectRoles.length === 0)) {
     return true;
   }
+  // END TODOs
 
   if (customerAccessRules?.OpseraAdministrator) {
     roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.OPSERA_ADMINISTRATOR);
@@ -271,6 +272,10 @@ export const isActionAllowed = (customerAccessRules, action, owner, objectRoles,
 
   if (customerAccessRules?.SassPowerUser) {
     roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.SAAS_USER);
+  }
+
+  if (customerAccessRules?.PowerUser) {
+    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.POWER_USER);
   }
 
   if (process.env.REACT_APP_STACK === "free-trial") {
