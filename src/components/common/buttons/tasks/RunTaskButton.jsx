@@ -20,7 +20,7 @@ const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_SALESFORCE_REPO,
 ];
 
-function TaskRunButton({gitTasksData, setGitTasksData, disable, className, loadData, actionAllowed, taskType }) {
+function RunTaskButton({gitTasksData, setGitTasksData, disable, className, loadData, actionAllowed, taskType }) {
   const [isCanceling, setIsCanceling] = useState(false);
   const [taskStarting, setTaskStarting] = useState(false);
   const {getAccessToken} = useContext(AuthContext);
@@ -131,7 +131,7 @@ function TaskRunButton({gitTasksData, setGitTasksData, disable, className, loadD
   );
 }
 
-TaskRunButton.propTypes = {
+RunTaskButton.propTypes = {
   gitTasksData: PropTypes.object,
   setGitTasksData: PropTypes.func,
   loadData: PropTypes.func,
@@ -141,4 +141,4 @@ TaskRunButton.propTypes = {
   taskType: PropTypes.string,
 };
 
-export default TaskRunButton;
+export default RunTaskButton;

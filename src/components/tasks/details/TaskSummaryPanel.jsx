@@ -13,7 +13,7 @@ import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import TagsInlineInputBase from "components/common/inline_inputs/tags/TagsInlineInputBase";
 import TaskRoleAccessInput from "components/tasks/details/TaskRoleAccessInput";
-import TaskRunButton from "components/common/buttons/tasks/TaskRunButton";
+import RunTaskButton from "components/common/buttons/tasks/RunTaskButton";
 import ECSActionButtons from "components/tasks/ECSActionButtons";
 import AKSActionButtons from "components/tasks/AKSActionButtons";
 import TaskConfigurationSummaryPanel from "components/tasks/details/TaskConfigurationSummaryPanel";
@@ -100,7 +100,7 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
       <Row className={"mx-0 w-100 my-2"}>
         <div className={"mx-auto"}>
           <div className={"mx-auto"}>
-            <TaskRunButton
+            <RunTaskButton
               gitTasksData={gitTasksData}
               setGitTasksData={setGitTasksData}
               loadData={loadData}
