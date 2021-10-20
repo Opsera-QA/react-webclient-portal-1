@@ -24,8 +24,6 @@ import CoverityHighIssuesSummaryPanel from "../coverity/CoverityIssuesByCategory
 import CoverityMediumIssuesSummaryPanel from "../coverity/CoverityIssuesByCategory/CoverityMediumIssuesSummaryPanel";
 import CoverityLowIssuesSummaryPanel from "../coverity/CoverityIssuesByCategory/CoverityLowIssuesSummaryPanel";
 
-import ReqCreationToBranchCreationSummaryPanel from "components/insights/charts/github/req_create_to_branch_creation/ReqCreationToBranchCreationSummaryPanel";
-
 function ChartSummaryPanelWrapper({
   chartModel,
   kpiIdentifier,
@@ -201,16 +199,6 @@ function ChartSummaryPanelWrapper({
       case "coverity-issues-low":
         return (
           <CoverityLowIssuesSummaryPanel
-            dashboardData={dashboardData}
-            kpiConfiguration={kpiConfiguration}
-            chartModel={chartModel}
-            setActiveTab={setActiveTab}
-            pipelineName={pipelineName}
-          />
-        );
-      case "req-creation-to-branch-creation":
-        return (
-          <ReqCreationToBranchCreationSummaryPanel
             dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             chartModel={chartModel}
