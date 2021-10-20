@@ -137,7 +137,7 @@ pipelineHelpers.getUserNameById = async (userId, accessTokenFn) => {
 pipelineHelpers.displayPipelineType = (typeArray) => {
   switch (typeArray[0]) {
   case "sfdc":
-    return "SalesForce";
+    return "Salesforce";
   case "ai-ml":
     return "Machine Learning (AI)";
   case "sdlc":
@@ -150,7 +150,7 @@ pipelineHelpers.displayPipelineType = (typeArray) => {
 pipelineHelpers.displayPipelineValueComponent = ({ typeArray }) => {
   switch (typeArray[0]) {
   case "sfdc":
-    return "SalesForce";
+    return "Salesforce";
   case "ai-ml":
     return "Machine Learning (AI)";
   case "sdlc":
@@ -210,13 +210,13 @@ pipelineHelpers.getRegistryPopover = (data) => {
 
 pipelineHelpers.PIPELINE_TYPES = [
   { id: "", name: "No Value", groupId: "Pipeline Types" },
-  { id: "sfdc", name: "SalesForce", groupId: "Pipeline Types" },
+  { id: "sfdc", name: "Salesforce", groupId: "Pipeline Types" },
   { id: "sdlc", name: "Software Development", groupId: "Pipeline Types" },
   { id: "ai-ml", name: "Machine Learning (AI)", groupId: "Pipeline Types" },
 ];
 
 pipelineHelpers.PIPELINE_TYPES_ = [
-  { value: "sfdc", text: "SalesForce", groupId: "Pipeline Types" },
+  { value: "sfdc", text: "Salesforce", groupId: "Pipeline Types" },
   { value: "sdlc", text: "Software Development", groupId: "Pipeline Types" },
   { value: "ai-ml", text: "Machine Learning (AI)", groupId: "Pipeline Types" },
 ];

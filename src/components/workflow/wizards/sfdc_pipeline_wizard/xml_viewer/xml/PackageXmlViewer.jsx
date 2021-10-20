@@ -47,7 +47,7 @@ const PackageXmlViewer = ({isSaving, isLoading, pipelineWizardModel}) => {
 
   return (
     <div className="flex-container-content mt-4">
-      <div className="h5">SalesForce Pipeline Run: XML Viewer</div>
+      <div className="h5">Salesforce Pipeline Run: XML Viewer</div>
       <div className="text-muted mb-2">Please confirm that you want to proceed with this operation.</div>
       {getBody()}
     </div>

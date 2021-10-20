@@ -112,7 +112,7 @@ const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipeli
 
   return (
     <div>
-      <div className="h5">SalesForce Pipeline Run: File Selection for {pipelineWizardModel?.getArrayData("selectedComponentTypes")?.length} Components</div>
+      <div className="h5">Salesforce Pipeline Run: File Selection for {pipelineWizardModel?.getArrayData("selectedComponentTypes")?.length} Components</div>
       <div className="text-muted mb-2">
         Select which files will have changes impacted in this pipeline run by using filter rules.
       </div>
