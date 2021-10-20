@@ -99,7 +99,10 @@ const OctopusTenantStandaloneSelectInput = (
 };
 
 OctopusTenantStandaloneSelectInput.propTypes = {
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array,
+  ]),
   textField: PropTypes.string,
   valueField: PropTypes.string,
   octopusToolId: PropTypes.string,

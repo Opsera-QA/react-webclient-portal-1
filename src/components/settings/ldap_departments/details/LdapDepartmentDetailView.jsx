@@ -110,7 +110,7 @@ function LdapDepartmentDetailView() {
       return (
         <ActionBarContainer>
           <div>
-            {/*<ActionBarBackButton path={"/admin/departments"} />*/}
+            <ActionBarBackButton path={`/settings/${orgDomain}/departments`} />
           </div>
           <div>
             <ActionBarDestructiveDeleteButton

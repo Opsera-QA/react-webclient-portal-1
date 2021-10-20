@@ -4,13 +4,22 @@ import { Form } from "react-bootstrap";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
-function CheckboxInput({ fieldName, model, setModel, disabled }) {
+function CheckboxInput({ fieldName, model, setModel, setDataFunction, disabled }) {
     const [field] = useState(model?.getFieldById(fieldName));
 
   const validateAndSetData = (value) => {
     let newDataObject = model;
     newDataObject.setData(field.id, !!value);
     setModel({...newDataObject});
+  };
+
+  const updateValue = (newValue) => {
+    if (setDataFunction) {
+      setDataFunction(fieldName, newValue);
+    }
+    else {
+      validateAndSetData(fieldName, newValue);
+    }
   };
 
   if (field == null) {
@@ -26,7 +35,7 @@ function CheckboxInput({ fieldName, model, setModel, disabled }) {
         disabled={disabled}
         label={model?.getLabel(fieldName)}
         onChange={() => {
-          validateAndSetData(!model?.getData(fieldName));
+          updateValue(!model?.getData(fieldName));
         }}
       />
       <InfoText field={field} errorMessage={null}/>
@@ -37,6 +46,7 @@ function CheckboxInput({ fieldName, model, setModel, disabled }) {
 CheckboxInput.propTypes = {
   disabled: PropTypes.bool,
   setModel: PropTypes.func,
+  setDataFunction: PropTypes.func,
   fieldName: PropTypes.string,
   model: PropTypes.object,
 };

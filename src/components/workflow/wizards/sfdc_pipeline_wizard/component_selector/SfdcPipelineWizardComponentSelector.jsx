@@ -26,7 +26,7 @@ const SfdcPipelineWizardComponentSelector = ({ pipelineWizardModel, setPipelineW
 
   return (
     <div>
-      <div className="h5">SalesForce Pipeline Run: Component Type Selection</div>
+      <div className="h5">Salesforce Pipeline Run: Component Type Selection</div>
       <div className="text-muted">Select which component types to include in this pipeline run.</div>
       <Row className="my-3">
         <Col sm={12} lg={6}>

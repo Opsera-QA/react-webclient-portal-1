@@ -22,7 +22,7 @@ const UnitTestClassesViewer = ({pipelineWizardModel}) => {
 
   return (
     <div className="flex-container-content mt-4">
-      <div className="h5">SalesForce Pipeline Run: Unit Test Classes</div>
+      <div className="h5">Salesforce Pipeline Run: Unit Test Classes</div>
       <div>
         <Row className={"w-100"}>
           {getUnitTestSteps()}

@@ -7,6 +7,9 @@ import TitleBar from "components/common/fields/TitleBar";
 import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
 import {meetsRequirements} from "components/common/helpers/role-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import InlineLoadingDialog from "components/common/status_notifications/loading/InlineLoadingDialog";
+import ScreenContainerBodyLoadingDialog
+  from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
 
 function ScreenContainer(
   {
@@ -64,21 +67,19 @@ function ScreenContainer(
     );
   };
 
-  const getScreenBody = () => {
+  const getBody = () => {
     if (isLoading) {
-      return <div className="content-block-loading m-3"/>;
+      return (
+        <ScreenContainerBodyLoadingDialog />
+      );
     }
 
-    return (children);
-  };
-
-  const getBody = () => {
     return (
-      <div className="screen-container-body shaded-container">
+      <div>
         {toastContext.getInlineBanner()}
         {getPageDescription()}
         <div className="mt-2">
-          {getScreenBody()}
+          {children}
         </div>
       </div>
     );
@@ -119,14 +120,15 @@ function ScreenContainer(
             helpComponent={helpComponent}
           />
         </div>
-        {getBody()}
+        <div className={"screen-container-body"}>
+          {getBody()}
+        </div>
         {getRoleRequirementField()}
         <div className="content-block-footer"/>
       </div>
     </div>
   );
 }
-
 
 ScreenContainer.propTypes = {
   breadcrumbDestination: PropTypes.string,

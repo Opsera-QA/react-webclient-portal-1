@@ -7,6 +7,9 @@ import {getBreadcrumb} from "components/common/navigation/trails";
 import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
 import {meetsRequirements} from "components/common/helpers/role-helpers";
 import AccessRoleLevelField from "components/common/fields/access/AccessRoleLevelField";
+import InlineLoadingDialog from "components/common/status_notifications/loading/InlineLoadingDialog";
+import ScreenContainerBodyLoadingDialog
+  from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
 
 function VanitySetDetailScreenContainer(
   {
@@ -54,12 +57,21 @@ function VanitySetDetailScreenContainer(
     );
   };
 
-  const getDetailBody = () => {
+  const getBody = () => {
     if (isLoading) {
-      return <div className="content-block-loading m-3" />;
+      return (
+        <ScreenContainerBodyLoadingDialog />
+      );
     }
 
-    return (detailPanel);
+    return (
+      <div>
+        {getActionBar()}
+        <div>
+          {detailPanel}
+         </div>
+      </div>
+    );
   };
 
   const getActionBar = () => {
@@ -122,10 +134,7 @@ function VanitySetDetailScreenContainer(
           {getTitleBar()}
         </div>
         <div className="detail-container-body">
-          {getActionBar()}
-          <div className="shaded-container">
-            {getDetailBody()}
-          </div>
+          {getBody()}
         </div>
         {getAccessBasedField()}
         <div className="content-block-footer"/>
