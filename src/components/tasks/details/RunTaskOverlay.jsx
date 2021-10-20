@@ -17,7 +17,7 @@ import ec2ServiceCreationTaskConfigurationMetadata from "components/tasks/detail
 import {AuthContext} from "contexts/AuthContext";
 import SalesforceOrganizationSyncTaskGitBranchTextInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchTextInput";
 import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import {TASK_TYPES} from "components/tasks/task.types";
 import SfdcOrgSyncPrerunHelpDocumentation
@@ -28,10 +28,11 @@ import SalesforceOrganizationSyncTaskGitBranchSelectInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
 import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
+import {salesforceBulkMigrationTaskConfigurationMetadata} from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
 
 function RunTaskOverlay({ handleClose, gitTasksData, setGitTasksData, loadData }) {
   const [showHelp, setShowHelp] = useState(false);
-  const [dataObj, setDataObj] = useState(undefined);
+  const [taskConfigurationModel, setTaskConfigurationModel] = useState(undefined);
   const [canEdit, setCanEdit] = useState(false);
   const { getAccessRoleData } = useContext(AuthContext);
 
@@ -48,38 +49,38 @@ function RunTaskOverlay({ handleClose, gitTasksData, setGitTasksData, loadData }
 
   const loadConfig = () => {
     let configurationData;
+    const configuration = gitTasksData?.getData("configuration");
     switch (gitTasksData.getData("type")) {
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
-        configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), salesforceOrganizationSyncTaskConfigurationMetadata);
-        setDataObj({...configurationData});
+        configurationData = modelHelpers.parseObjectIntoModel(configuration, salesforceOrganizationSyncTaskConfigurationMetadata);
         break;
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-        configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), sfdxCertGenTaskConfigurationMetadata);
-        setDataObj({...configurationData});
+        configurationData = modelHelpers.parseObjectIntoModel(configuration, sfdxCertGenTaskConfigurationMetadata);
         break;
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-        configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), sfdcGitBranchTaskConfigurationMetadata);
-        setDataObj({...configurationData});
+        configurationData = modelHelpers.parseObjectIntoModel(configuration, sfdcGitBranchTaskConfigurationMetadata);
+        break;
+      case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+        configurationData = modelHelpers.parseObjectIntoModel(configuration, salesforceBulkMigrationTaskConfigurationMetadata);
         break;
       case TASK_TYPES.SYNC_GIT_BRANCHES:
-        configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), branchToBranchGitTaskConfigurationMetadata);
-        setDataObj({...configurationData});
+        configurationData = modelHelpers.parseObjectIntoModel(configuration, branchToBranchGitTaskConfigurationMetadata);
         break;
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
-        configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), ec2ClusterCreationTaskConfigurationMetadata);
-        setDataObj({...configurationData});
+        configurationData = modelHelpers.parseObjectIntoModel(configuration, ec2ClusterCreationTaskConfigurationMetadata);
         break;
       case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
-        configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), ec2ServiceCreationTaskConfigurationMetadata);
-        setDataObj({...configurationData});
+        configurationData = modelHelpers.parseObjectIntoModel(configuration, ec2ServiceCreationTaskConfigurationMetadata);
         break;
       case TASK_TYPES.AZURE_CLUSTER_CREATION:
-        configurationData = modelHelpers.getToolConfigurationModel(gitTasksData.getData("configuration"), azureAksClusterTaskConfigurationMetadata);
-        setDataObj({...configurationData});
+        configurationData = modelHelpers.parseObjectIntoModel(configuration, azureAksClusterTaskConfigurationMetadata);
         break;
       default:
-        setDataObj(undefined);
+        setTaskConfigurationModel(null);
+        return;
     }
+
+    setTaskConfigurationModel({...configurationData});
   };
 
   const getButtonContainer = () => {
@@ -89,7 +90,7 @@ function RunTaskOverlay({ handleClose, gitTasksData, setGitTasksData, loadData }
           <TriggerTaskRunButton
             gitTasksData={gitTasksData}
             setGitTasksData={setGitTasksData}
-            gitTasksConfigurationDataDto={dataObj}
+            gitTasksConfigurationDataDto={taskConfigurationModel}
             loadData={loadData}
             handleClose={handleClose}
             className={"mr-2"}
@@ -110,27 +111,27 @@ function RunTaskOverlay({ handleClose, gitTasksData, setGitTasksData, loadData }
           <Row className={"m-3"}>
             <Col lg={12}>
               <SalesforceOrganizationSyncTaskGitBranchSelectInput
-                model={dataObj}
-                setModel={setDataObj}
-                visible={dataObj?.getData("isNewBranch") !== true}/>
+                model={taskConfigurationModel}
+                setModel={setTaskConfigurationModel}
+                visible={taskConfigurationModel?.getData("isNewBranch") !== true}/>
             </Col>
             <Col lg={12}>
-              <SalesforceOrganizationSyncTaskNewBranchToggleInput dataObject={dataObj} setDataObject={setDataObj}/>
+              <SalesforceOrganizationSyncTaskNewBranchToggleInput dataObject={taskConfigurationModel} setDataObject={setTaskConfigurationModel}/>
             </Col>
-            {dataObj?.getData("isNewBranch") &&
+            {taskConfigurationModel?.getData("isNewBranch") &&
             <>
               <Col lg={12}>
                 <SalesforceOrganizationSyncTaskGitBranchTextInput
                   fieldName={"gitBranch"}
-                  model={dataObj}
-                  setModel={setDataObj}
-                  visible={dataObj?.getData("isNewBranch") === true}
+                  model={taskConfigurationModel}
+                  setModel={setTaskConfigurationModel}
+                  visible={taskConfigurationModel?.getData("isNewBranch") === true}
                 />
               </Col>
               <Col lg={12}>
                 <SalesforceOrganizationSyncTaskUpstreamBranchSelectInput
-                  model={dataObj}
-                  setModel={setDataObj}
+                  model={taskConfigurationModel}
+                  setModel={setTaskConfigurationModel}
                 />
               </Col>
             </>
@@ -144,7 +145,7 @@ function RunTaskOverlay({ handleClose, gitTasksData, setGitTasksData, loadData }
   const getHelpComponent = () => {
     switch (gitTasksData?.getData("type")) {
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
-        return (<SfdcOrgSyncPrerunHelpDocumentation closeHelpPanel={() => setShowHelp(false)} /> );
+        return (<SfdcOrgSyncPrerunHelpDocumentation closeHelpPanel={() => setShowHelp(false)}/>);
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
