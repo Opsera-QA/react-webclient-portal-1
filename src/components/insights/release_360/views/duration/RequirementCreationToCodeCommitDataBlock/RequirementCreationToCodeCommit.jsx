@@ -127,7 +127,7 @@ function RequirementCreationToCodeCommit() {
     { id: "gitlabBranch", label: "Gitlab Branch" },
     { id: "jiraIssueCreationTime", label: "Jira Issue Creation Time" },
     { id: "lastCommitTime", label: "Last Commit Time" },
-    { id: "daysDifference", label: "Days Difference" },
+    { id: "daysDifference", label: "Duration (in Days)" },
   ];
 
   const columns = useMemo(
@@ -145,14 +145,14 @@ function RequirementCreationToCodeCommit() {
     <ThreeLineDataBlockBase
       onClickFunction={(thisData) => onRowSelect(thisData)}
       className={"p-2"}
-      topText={"Requirement to Code Commit (days)"}
+      topText={"Requirement to Code Commit"}
       middleText={
         <MetricScoreText
           score={metrics.averageReqCreationToCodeCommitTimeMins}
           qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
         />
       }
-      //   bottomText={"7% Decrease"}
+      bottomText={"Average in Days"}
     />
   );
 }

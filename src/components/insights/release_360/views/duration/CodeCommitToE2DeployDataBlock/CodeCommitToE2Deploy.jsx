@@ -124,10 +124,9 @@ function CodeCommitToE2Deploy() {
 
   const fields = [
     { id: "jiraIssueKey", label: "Jira Issue Key" },
-    // { id: "gitlabBranch", label: "Gitlab Branch" },
     { id: "unitTestingStageIssueUpdated", label: "Code Commit Time" },
     { id: "qaTestingStageIssueUpdated", label: "E2 Deploy Time" },
-    { id: "codeCommitToEnvDeploy", label: "Days Difference" },
+    { id: "codeCommitToEnvDeploy", label: "Duration (in Days)" },
   ];
 
   const columns = useMemo(
@@ -149,7 +148,7 @@ function CodeCommitToE2Deploy() {
       middleText={
         <MetricScoreText score={metrics.avgCodeCommitToEnvDeploy} qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS} />
       }
-      //   bottomText={"7% Decrease"}
+      bottomText={"Average in Days"}
     />
   );
 }

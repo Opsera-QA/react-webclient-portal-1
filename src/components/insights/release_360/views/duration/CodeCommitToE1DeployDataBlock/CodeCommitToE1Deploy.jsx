@@ -124,16 +124,14 @@ function CodeCommitToE1Deploy() {
 
   const fields = [
     { id: "jiraIssueKey", label: "Jira Issue Key" },
-    // { id: "gitlabBranch", label: "Gitlab Branch" },
     { id: "unitTestingStageIssueUpdated", label: "Code Commit Time" },
     { id: "peerReviewStageIssueUpdated", label: "E1 Deploy Time" },
-    { id: "codeCommitToEnvDeploy", label: "Days Difference" },
+    { id: "codeCommitToEnvDeploy", label: "Duration (in Days)" },
   ];
 
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "jiraIssueKey")),
-      // getTableTextColumn(getField(fields, "gitlabBranch")),
       getTableDateTimeColumn(getField(fields, "unitTestingStageIssueUpdated")),
       getTableDateTimeColumn(getField(fields, "peerReviewStageIssueUpdated")),
       getTableTextColumn(getField(fields, "codeCommitToEnvDeploy")),
@@ -149,7 +147,7 @@ function CodeCommitToE1Deploy() {
       middleText={
         <MetricScoreText score={metrics.avgCodeCommitToEnvDeploy} qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS} />
       }
-      //   bottomText={"7% Decrease"}
+      bottomText={"Average in Days"}
     />
   );
 }
