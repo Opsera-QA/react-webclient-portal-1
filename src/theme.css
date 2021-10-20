@@ -1480,7 +1480,6 @@ div.data-blocks-ellipses {
     padding: 2px;
     z-index: 3000;
     width: 600px;
-    border-radius: 5px;
 }
 
 .error-toast {
@@ -1490,10 +1489,8 @@ div.data-blocks-ellipses {
     border: 2px solid #dc3545;
     border-left: 8px solid #dc3545;
     font-size: 15px;
-    padding: 1px;
     width: 600px;
     z-index: 3000;
-    border-radius: 5px;
 }
 
 .information-toast {
@@ -1505,7 +1502,6 @@ div.data-blocks-ellipses {
     padding: 1px;
     width: 600px;
     z-index: 3000;
-    border-radius: 5px;
 }
 
 .information-toast-close-button {
@@ -1520,7 +1516,6 @@ div.data-blocks-ellipses {
     padding: 1px;
     width: 600px;
     z-index: 3000;
-    border-radius: 5px;
 }
 
 .warning-toast-close-button {
