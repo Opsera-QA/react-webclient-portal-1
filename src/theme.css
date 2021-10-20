@@ -1002,8 +1002,11 @@ a.nav-link {
     height: 1.5em;
 }
 
-.content-card-1 .content-block-footer-text-container {
+.content-block-footer-text-container {
     font-size: .8rem;
+    max-height: 35px;
+    height: 35px;
+    min-height: 35px;
 }
 
 .content-card-1 .content-block-body .content-image {
@@ -1715,3 +1718,10 @@ div.data-blocks-ellipses {
     line-height: 1.5;
 }
 /* End Loading Input Icon Styling */
+
+/* Loading Dialog Styling */
+.loading-dialog {
+    font-size: 1.3em;
+}
+
+/* End Loading Dialog Styling */

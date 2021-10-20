@@ -8,7 +8,7 @@ import Model from "core/data_model/model";
 import sfdcPipelineWizardMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-wizard-metadata";
 import SalesforceBulkMigrationWizardInitializationScreen
   from "components/workflow/wizards/salesforce_bulk_migration/initialization_screen/SalesforceBulkMigrationWizardInitializationScreen";
-import SalesforceBulkMigrationWizardComponentSelector
+import SalesforceBulkMigrationWizardComponentSelectionScreen
   from "components/workflow/wizards/salesforce_bulk_migration/component_selector/SalesforceBulkMigrationWizardComponentSelector";
 
 export const BULK_MIGRATION_WIZARD_SCREENS = {
@@ -59,7 +59,7 @@ const SalesforceBulkMigrationWizard = ({ handleClose, taskModel }) => {
         );
       case BULK_MIGRATION_WIZARD_SCREENS.COMPONENT_SELECTION_SCREEN:
         return (
-          <SalesforceBulkMigrationWizardComponentSelector
+          <SalesforceBulkMigrationWizardComponentSelectionScreen
             pipelineWizardModel={wizardModel}
             setPipelineWizardModel={setWizardModel}
             setPipelineWizardScreen={setBulkMigrationWizardScreen}
