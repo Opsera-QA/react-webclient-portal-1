@@ -146,6 +146,7 @@ function RunTaskOverlay({ handleClose, gitTasksData, setGitTasksData, loadData }
     switch (gitTasksData?.getData("type")) {
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
         return (<SfdcOrgSyncPrerunHelpDocumentation closeHelpPanel={() => setShowHelp(false)}/>);
+      case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
