@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import modelHelpers from "components/common/model/modelHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import CloseButton from "components/common/buttons/CloseButton";
-import RunTaskButton from "components/common/buttons/tasks/run_task/RunTaskButton";
+import TriggerTaskButton from "components/common/buttons/tasks/run_task/TriggerTaskButton";
 import SalesforceOrganizationSyncTaskNewBranchToggleInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskNewBranchToggleInput";
 import SalesforceOrganizationSyncTaskUpstreamBranchSelectInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskUpstreamBranchSelectInput";
 import salesforceOrganizationSyncTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
@@ -86,7 +86,7 @@ function RunTaskOverlay({ handleClose, gitTasksData, setGitTasksData, loadData }
     return (
       <Row className="mx-0 p-3 d-flex">
         <div className="ml-auto d-flex">
-          <RunTaskButton
+          <TriggerTaskButton
             gitTasksData={gitTasksData}
             setGitTasksData={setGitTasksData}
             gitTasksConfigurationDataDto={dataObj}

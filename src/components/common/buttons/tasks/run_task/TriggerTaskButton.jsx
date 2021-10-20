@@ -11,7 +11,7 @@ import axios from "axios";
 import LoadingDialog from "components/common/status_notifications/loading";
 import IconBase from "components/common/icons/IconBase";
 
-function RunTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationDataDto, handleClose, disable, className, loadData }) {
+function TriggerTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationDataDto, handleClose, disable, className, loadData }) {
   let toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -149,7 +149,7 @@ function RunTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationData
   );
 }
 
-RunTaskButton.propTypes = {
+TriggerTaskButton.propTypes = {
   gitTasksData: PropTypes.object,
   loadData: PropTypes.func,
   disable: PropTypes.bool,
@@ -159,4 +159,4 @@ RunTaskButton.propTypes = {
   handleClose: PropTypes.func
 };
 
-export default RunTaskButton;
+export default TriggerTaskButton;
