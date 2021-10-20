@@ -29,14 +29,21 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [environmentList]);
 
   const unpackData = () => {
     let currentData = model.getData(fieldName);
     let unpackedData = [];
 
     if (Array.isArray(currentData) && currentData.length > 0) {
-      unpackedData = currentData;
+      unpackedData = currentData.filter((tenant) => {
+        const environmentId = tenant?.environmentId;
+        const foundEnvironment = environmentList.find((environment) => {
+          return environment.id === environmentId;
+        });
+        return foundEnvironment != null;
+      });
+
     } else {
       unpackedData.push({id: "", name: "", environmentId: ""});
     }
@@ -223,7 +230,7 @@ OctopusTenantInputBase.propTypes = {
   helpComponent: PropTypes.object,
   disabled: PropTypes.bool,
   className: PropTypes.string,
-  environmentList: PropTypes.string,
+  environmentList: PropTypes.array,
 };
 
 export default OctopusTenantInputBase;
