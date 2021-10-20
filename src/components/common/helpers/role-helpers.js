@@ -218,7 +218,7 @@ export const isAnLdapUser = (user, accessRole) => {
  *
  *
  */
-export const isActionAllowed = (customerAccessRules, action, owner, objectRoles, roleDefinitions) => {
+export const isActionAllowed = (customerAccessRules, action, owner, objectRoles, roleDefinitions, allowAllIfNoRolesAssigned) => {
   if (customerAccessRules == null || roleDefinitions == null) {
     return false;
   }
@@ -255,12 +255,11 @@ export const isActionAllowed = (customerAccessRules, action, owner, objectRoles,
     return true; //owner can do all actions
   }
 
-  // TODO: This will break deletion/transfer rules so is not currently supported
-  //if no objectRole data passed, then allow actions
-  // if (objectRoles && objectRoles.length === 0) {
-  //   return true;
-  // }
-  // TODO: End of TODO
+  // TODO: We should remove this
+  // if no objectRole data passed, then allow actions
+  if (allowAllIfNoRolesAssigned === true && (!Array.isArray(objectRoles) || objectRoles.length === 0)) {
+    return true;
+  }
 
   if (customerAccessRules?.OpseraAdministrator) {
     roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.OPSERA_ADMINISTRATOR);
