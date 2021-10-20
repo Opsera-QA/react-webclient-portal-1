@@ -1,23 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import { Form } from "react-bootstrap";
+import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 import CheckboxInput from "components/common/inputs/boolean/CheckboxInput";
 
 // TODO: Rework component
-function GitUpstreamBranchInput({ dataObject, setDataObject, options }) {
-
-  const clearUpstreamBranchChange = (fieldName) => {
-    let newDataObject = { ...dataObject };
-    newDataObject.setData(fieldName, "");
-    setDataObject({ ...newDataObject });
-  };
-  const handleHasUpstreamBranch = (value) => {
-    let newDataObject = { ...dataObject };
-    newDataObject.setData("hasUpstreamBranch", value);
-    setDataObject({ ...newDataObject });
-  };
+function GitUpstreamBranchInput({ dataObject, setDataObject, gitToolId, service, workspace, repoId }) {
 
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = { ...dataObject };
@@ -38,15 +26,14 @@ function GitUpstreamBranchInput({ dataObject, setDataObject, options }) {
   const getUpstreamBranchField = () => {
     if (dataObject?.getData("hasUpstreamBranch") === true) {
       return (
-        <SelectInputBase
+        <GitBranchInput
           fieldName={"upstreamBranch"}
+          service={service}
+          gitToolId={gitToolId}
+          workspace={workspace}
+          repoId={repoId}
           dataObject={dataObject}
           setDataObject={setDataObject}
-          placeholderText={"Select"}
-          selectOptions={options}
-          valueField="name"
-          textField="name"
-          clearDataFunction={clearUpstreamBranchChange}
         />
       );
     }
@@ -72,23 +59,33 @@ function GitUpstreamBranchInput({ dataObject, setDataObject, options }) {
     }
 
     return (
-      <SelectInputBase
+      <GitBranchInput
         fieldName={"branch"}
+        service={service}
+        gitToolId={gitToolId}
+        workspace={workspace}
+        repoId={repoId}
         dataObject={dataObject}
-        setDataObject={setDataObject}
         setDataFunction={setDataFunction}
-        selectOptions={options}
-        valueField="name"
-        textField="name"
+        setDataObject={setDataObject}
         clearDataFunction={clearDataFunction}
-      />
+        />
     );
+  };
+
+  const setIsNewBranchFunction = (fieldName, selectedOption) => {
+    let newDataObject = { ...dataObject };
+    newDataObject.setData("isNewBranch", !!selectedOption);
+    newDataObject.setData("hasUpstreamBranch", false);
+    newDataObject.setData("upstreamBranch", "");
+    setDataObject({ ...newDataObject });
   };
 
   return (
     <div>
       <CheckboxInput
         fieldName={"isNewBranch"}
+        setDataFunction={setIsNewBranchFunction}
         model={dataObject}
         setModel={setDataObject}
       />
@@ -100,7 +97,11 @@ function GitUpstreamBranchInput({ dataObject, setDataObject, options }) {
 GitUpstreamBranchInput.propTypes = {
   options: PropTypes.object,
   dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  setDataObject: PropTypes.func, 
+  repoId: PropTypes.string,
+  service: PropTypes.string,
+  gitToolId: PropTypes.string,
+  workspace: PropTypes.string,
 };
 
 export default GitUpstreamBranchInput;
