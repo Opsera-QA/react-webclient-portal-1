@@ -1,8 +1,7 @@
 import React, {useState, useContext, useRef, useEffect} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faPlay, faSpinner } from "@fortawesome/pro-light-svg-icons";
+import { faPlay } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
@@ -10,6 +9,7 @@ import GitTaskSfdcPipelineWizardOverlay from "components/common/buttons/tasks/ru
 import taskActions from "components/tasks/task.actions";
 import axios from "axios";
 import LoadingDialog from "components/common/status_notifications/loading";
+import IconBase from "components/common/icons/IconBase";
 
 function RunTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationDataDto, handleClose, disable, className, loadData }) {
   let toastContext = useContext(DialogToastContext);
@@ -46,6 +46,7 @@ function RunTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationData
     }
   };
 
+  // TODO: This should be separate buttons OR passed into this component from a wrapper component for each type
   const handleRunGitTask = async () => {
     if (gitTasksData?.getData("type") === "sync-sfdc-repo") {
        try {
@@ -126,9 +127,9 @@ function RunTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationData
 
   const getLabel = () => {
     if (isLoading) {
-      return ( <span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Running Task</span>);
+      return ("Running Task");
     }
-    return ( <span><FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Run Task</span>);
+    return ("Run Task");
   };
 
   if (gitTasksData == null) {
@@ -142,7 +143,7 @@ function RunTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationData
         disabled={gitTasksData?.getData("status") === "running" || disable || isLoading || checkValidity() }
         onClick={() => {handleRunGitTask(true);}}
       >
-        {getLabel()}
+        <span><IconBase icon={faPlay} isLoading={isLoading} className="mr-2" fixedWidth/>{getLabel()}</span>
       </Button>
     </div>
   );

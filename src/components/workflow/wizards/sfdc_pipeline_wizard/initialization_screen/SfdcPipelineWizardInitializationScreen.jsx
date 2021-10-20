@@ -433,7 +433,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
 
     return (
       <div>
-        <div className="h5">SalesForce Pipeline Run: Initialization</div>
+        <div className="h5">Salesforce Pipeline Run: Initialization</div>
         {getTabContainer()}
         <div className="my-3">
           {getView()}

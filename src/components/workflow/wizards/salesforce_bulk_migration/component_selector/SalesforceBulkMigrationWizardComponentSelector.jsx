@@ -19,7 +19,7 @@ import {faStepBackward} from "@fortawesome/free-solid-svg-icons";
 import SfdcPipelineWizardIncludeDependenciesToggle
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
 
-const SfdcPipelineWizardComponentSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) => {
+const SalesforceBulkMigrationWizardComponentSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) => {
   if (pipelineWizardModel == null) {
     return null;
   }
@@ -68,11 +68,11 @@ const SfdcPipelineWizardComponentSelector = ({ pipelineWizardModel, setPipelineW
   );
 };
 
-SfdcPipelineWizardComponentSelector.propTypes = {
+SalesforceBulkMigrationWizardComponentSelector.propTypes = {
   setPipelineWizardScreen: PropTypes.func,
   handleClose: PropTypes.func,
   pipelineWizardModel: PropTypes.object,
   setPipelineWizardModel: PropTypes.func
 };
 
-export default SfdcPipelineWizardComponentSelector;
+export default SalesforceBulkMigrationWizardComponentSelector;

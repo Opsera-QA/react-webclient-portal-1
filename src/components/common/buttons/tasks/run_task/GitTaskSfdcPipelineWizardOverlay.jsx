@@ -40,7 +40,7 @@ function GitTaskSfdcPipelineWizardOverlay({ gitTasksData }) {
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
-      titleText={`SalesForce Git Task Configuration`}
+      titleText={`Salesforce Git Task Configuration`}
       titleIcon={faFileInvoice}
       showToasts={true}
       isLoading={isLoading}

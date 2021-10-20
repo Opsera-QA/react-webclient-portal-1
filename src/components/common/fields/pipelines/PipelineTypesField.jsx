@@ -15,7 +15,7 @@ function PipelineTypesField({ fieldName, dataObject }) {
 
     switch (type[0]) {
       case "sfdc":
-        return ("SalesForce");
+        return ("Salesforce");
       case "ai-ml":
         return ("Machine Learning (AI)");
       case "sdlc":

@@ -86,8 +86,18 @@ function RunTaskOverlay({ handleClose, gitTasksData, setGitTasksData, loadData }
     return (
       <Row className="mx-0 p-3 d-flex">
         <div className="ml-auto d-flex">
-          <RunTaskButton gitTasksData={gitTasksData} setGitTasksData={setGitTasksData} gitTasksConfigurationDataDto={dataObj} loadData={loadData} handleClose={handleClose} className={"mr-2"} />
-          <CloseButton closeEditorCallback={handleClose} showUnsavedChangesMessage={false} />
+          <RunTaskButton
+            gitTasksData={gitTasksData}
+            setGitTasksData={setGitTasksData}
+            gitTasksConfigurationDataDto={dataObj}
+            loadData={loadData}
+            handleClose={handleClose}
+            className={"mr-2"}
+          />
+          <CloseButton
+            closeEditorCallback={handleClose}
+            showUnsavedChangesMessage={false}
+          />
         </div>
       </Row>
     );
