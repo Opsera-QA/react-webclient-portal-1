@@ -1,23 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Button, Row} from "react-bootstrap";
-import SfdcComponentListInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcComponentListInput";
+import { Row} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import CancelButton from "components/common/buttons/CancelButton";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
-import SfdcPipelineWizardFileSelectionDateTimeRange
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardFileSelectionDateTimeRange";
-import SfdcPipelineWizardIncludedComponentTypesRadioInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludedComponentTypesRadioInput";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
-import SfdcPipelineWizardSubmitComponentTypesButton
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardSubmitComponentTypesButton";
-import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faStepBackward} from "@fortawesome/free-solid-svg-icons";
-import SfdcPipelineWizardIncludeDependenciesToggle
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
+import SalesforceBulkMigrationWizardComponentListInput
+  from "components/workflow/wizards/salesforce_bulk_migration/component_selector/SalesforceBulkMigrationWizardComponentListInput";
+import {BULK_MIGRATION_WIZARD_SCREENS} from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationWizard";
+import BackButton from "components/common/buttons/back/BackButton";
+import SalesforceBulkMigrationWizardSubmitComponentTypesButton
+  from "components/workflow/wizards/salesforce_bulk_migration/component_selector/SalesforceBulkMigrationWizardSubmitComponentTypesButton";
 
 const SalesforceBulkMigrationWizardComponentSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) => {
   if (pipelineWizardModel == null) {
@@ -26,43 +18,31 @@ const SalesforceBulkMigrationWizardComponentSelector = ({ pipelineWizardModel, s
 
   return (
     <div>
-      <div className="h5">Salesforce Pipeline Run: Component Type Selection</div>
-      <div className="text-muted">Select which component types to include in this pipeline run.</div>
+      <div className="h5">Salesforce Bulk Migration Wizard: Component Type Selection</div>
+      <div className="text-muted">Select which component types to include in the bulk migration.</div>
       <Row className="my-3">
-        <Col sm={12} lg={6}>
-          <TextInputBase fieldName={"namespacePrefix"} setDataObject={setPipelineWizardModel} dataObject={pipelineWizardModel} />
-        </Col>
-        <Col sm={12} lg={6}>
-          <SfdcPipelineWizardIncludedComponentTypesRadioInput
+        <Col xs={12}>
+          <SalesforceBulkMigrationWizardComponentListInput
             pipelineWizardModel={pipelineWizardModel}
             setPipelineWizardModel={setPipelineWizardModel}
+            selectedComponents={[...pipelineWizardModel.getArrayData("selectedComponentTypes")]}
           />
         </Col>
       </Row>
-      <SfdcComponentListInput
-        pipelineWizardModel={pipelineWizardModel}
-        setPipelineWizardModel={setPipelineWizardModel}
-        selectedComponents={[...pipelineWizardModel.getArrayData("selectedComponentTypes")]}
-      />
-      <SfdcPipelineWizardIncludeDependenciesToggle
-        pipelineWizardModel={pipelineWizardModel}
-        setPipelineWizardModel={setPipelineWizardModel}
-      />
-      <div className={"my-3"}>
-        <SfdcPipelineWizardFileSelectionDateTimeRange
-          pipelineWizardModel={pipelineWizardModel}
-          setPipelineWizardModel={setPipelineWizardModel}
-        />
-      </div>
       <SaveButtonContainer>
-        <Button variant="secondary" size="sm" className="mr-2" onClick={() => {setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);}}>
-          <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>Back
-        </Button>
-        <SfdcPipelineWizardSubmitComponentTypesButton
+        <BackButton
+          className={"mr-2"}
+          backButtonFunction={() => {setPipelineWizardScreen(BULK_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN);}}
+        />
+        <SalesforceBulkMigrationWizardSubmitComponentTypesButton
           pipelineWizardModel={pipelineWizardModel}
           setPipelineWizardScreen={setPipelineWizardScreen}
         />
-        <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
+        <CancelButton
+          className={"ml-2"}
+          showUnsavedChangesMessage={false}
+          cancelFunction={handleClose}
+        />
       </SaveButtonContainer>
     </div>
   );
