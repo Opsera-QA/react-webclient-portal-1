@@ -1,19 +1,14 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
-import { ResponsiveBar } from "@nivo/bar";
-import config from "./opseraBuildDurationBarChartConfigs";
-import ModalLogs from "components/common/modal/modalLogs";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors, capitalizeLegend,
-  adjustBarWidth } from '../../../charts-views';
-import ChartTooltip from '../../../ChartTooltip';
-import { useHistory } from "react-router-dom";
+import { METRIC_QUALITY_LEVELS } from "../../../../../common/metrics/text/MetricTextBase";
+import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
+import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
+import MetricScoreText from "../../../../../common/metrics/score/MetricScoreText";
 
-function DeploymentsE1({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
-  const history = useHistory();
+function DeploymentsE1({environment}) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -41,16 +36,14 @@ function DeploymentsE1({ kpiConfiguration, setKpiConfiguration, dashboardData, i
       source.cancel();
       isMounted.current = false;
     };
-  }, [JSON.stringify(dashboardData)]);
+  }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "totalDeploymentCounts", kpiConfiguration, dashboardTags);
+      //let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      const response = await chartsActions.getEnvironmentMetrics(getAccessToken, cancelSource, "totalDeploymentCounts", environment);
       let dataObject = response?.data ? response?.data?.data[0]?.totalDeploymentCounts?.data : [];
-      assignStandardColors(dataObject, true);
-      capitalizeLegend(dataObject, ["time"]);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -74,8 +67,23 @@ function DeploymentsE1({ kpiConfiguration, setKpiConfiguration, dashboardData, i
       return null;
     }
 
+    let color;
+    let successRate = (metrics[0].successfulDeployments/metrics[0].TotalDeployments).toFixed(3);
+    if(successRate > 89){
+      color = METRIC_QUALITY_LEVELS.SUCCESS;
+    }
+    else { color = METRIC_QUALITY_LEVELS.DANGER; }
+
     return (
-      metrics
+      <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
+        <ThreeLineDataBlockBase
+          topText={"Testing"}
+          className={"p-4"}
+          middleText={<MetricScoreText score={metrics[0].TotalDeployments} />}
+          bottomText={<MetricScoreText score={successRate +"% Passed"} qualityLevel={color} />}
+          showBorder={true}
+        />
+      </DataBlockBoxContainer>
     );
   };
 
@@ -85,11 +93,9 @@ function DeploymentsE1({ kpiConfiguration, setKpiConfiguration, dashboardData, i
 }
 
 DeploymentsE1.propTypes = {
-  kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
-  index: PropTypes.number,
-  setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func
+  // kpiConfiguration: PropTypes.object,
+  // dashboardData: PropTypes.object,
+  environment: PropTypes.string
 };
 
 export default DeploymentsE1;

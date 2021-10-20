@@ -78,6 +78,17 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
+chartsActions.getEnvironmentMetrics = async (getAccessToken, cancelTokenSource,request, environment) => {
+  const apiUrl = "/analytics/metrics";
+
+  const postBody = {
+    request: request,
+    environment: environment,
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 chartsActions.parseConfigurationAndGetChartMetrics = async (
   getAccessToken,
   cancelTokenSource,
@@ -90,7 +101,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   pipelineName,
   currentDate,
   dateRange,
-  actionableInsightsQueryData
+  actionableInsightsQueryData,
 ) => {
   const apiUrl = "/analytics/metrics",
     date = getDateObjectFromKpiConfiguration(kpiConfiguration),
