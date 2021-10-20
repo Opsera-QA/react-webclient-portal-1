@@ -78,7 +78,7 @@ function AksResourceGroupSelectInput({
     }
 
     if (result?.length === 0) {
-      setPlaceholderText("No clusters found with this azure configuration");
+      setPlaceholderText("No resource groups found with this azure configuration");
       setErrorMessage("No Resource Groups found");
     }
   };
