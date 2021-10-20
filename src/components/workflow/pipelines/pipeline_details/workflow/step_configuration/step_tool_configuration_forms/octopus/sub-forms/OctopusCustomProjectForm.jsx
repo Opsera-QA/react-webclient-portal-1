@@ -34,6 +34,7 @@ function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabl
           fieldName={"tenantList"}
           model={dataObject}
           setModel={setDataObject}
+          tenantList={dataObject?.getData("tenantList")}
           environmentList={dataObject?.getData("environmentList")}
         />
       );
@@ -41,7 +42,7 @@ function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabl
   };
 
   return (
-    <>      
+    <>
       <OctopusProjectGroupSelectInput
         fieldName={"projectGroupId"}
         dataObject={dataObject}
@@ -86,7 +87,7 @@ function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabl
             filter={"contains"}
             selectOptions={listOfSteps ? listOfSteps : []}
             fieldName={"ecrPushStepId"}
-            disabled={listOfSteps.length === 0 || dataObject.getData("environmentName").length === 0}
+            disabled={listOfSteps.length === 0}
           />    
           <RollbackToggleInput
             dataObject={dataObject}
