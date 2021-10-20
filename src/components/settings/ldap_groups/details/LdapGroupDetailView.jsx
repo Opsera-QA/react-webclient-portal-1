@@ -112,7 +112,7 @@ function LdapGroupDetailView() {
       let authorizedActions;
 
       if (roleGroups.includes(groupName)) {
-        history.push(`/settings/${orgDomain}/role-groups/${groupName}`);
+        history.push(`/settings/${orgDomain}/role-groups/details/${groupName}`);
         return;
       }
 
