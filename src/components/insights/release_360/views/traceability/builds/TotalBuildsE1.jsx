@@ -69,7 +69,7 @@ function TotalBuildsE1({ environment }) {
     console.log("metrics", metrics);
 
     let color;
-    let successRate = (100*metrics[0].successfulBuilds/metrics[0].TotalBuilds).toFixed(2);
+    let successRate = metrics[0]?.TotalBuilds === 0 ? 0 : (100*metrics[0].successfulBuilds/metrics[0].TotalBuilds).toFixed(0);
     if(successRate > 89){
       color = METRIC_QUALITY_LEVELS.SUCCESS;
     }

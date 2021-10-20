@@ -68,7 +68,7 @@ function DeploymentsE1({environment}) {
     }
 
     let color;
-    let successRate = (100*metrics[0].successfulDeployments/metrics[0].TotalDeployments).toFixed(2);
+    let successRate = metrics[0]?.TotalDeployments === 0 ? 0 : (100*metrics[0].successfulDeployments/metrics[0].TotalDeployments).toFixed(0);
     if(successRate > 89){
       color = METRIC_QUALITY_LEVELS.SUCCESS;
     }

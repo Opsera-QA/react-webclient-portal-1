@@ -68,7 +68,7 @@ function TotalTestsE1({ environment }) {
     }
 
     let color;
-    let successRate = (100*metrics[0].successfulTests/metrics[0].TotalTests).toFixed(2);
+    let successRate = metrics[0]?.TotalTests === 0 ? 0 : (100*metrics[0].successfulTests/metrics[0].TotalTests).toFixed(0);
     if(successRate > 89){
       color = METRIC_QUALITY_LEVELS.SUCCESS;
     }

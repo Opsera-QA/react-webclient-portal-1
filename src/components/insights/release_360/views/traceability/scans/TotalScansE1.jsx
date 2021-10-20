@@ -68,7 +68,7 @@ function TotalScansE1({ environment }) {
       }
 
       let color;
-      let successRate = (100*metrics[0].successfulScans/metrics[0].TotalScans).toFixed(2);
+      let successRate = metrics[0]?.TotalScans === 0 ? 0 : (100*metrics[0].successfulScans/metrics[0].TotalScans).toFixed(0);
       if(successRate > 89){
         color = METRIC_QUALITY_LEVELS.SUCCESS;
       }
