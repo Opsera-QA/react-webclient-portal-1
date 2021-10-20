@@ -8,6 +8,13 @@ import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
+import AutomationPercentagePieChart from 'components/insights/charts/qa_metrics/AutomationPercentagePieChart';
+import KpiActions from 'components/admin/kpi_editor/kpi-editor-actions';
+import {AuthContext} from "contexts/AuthContext";
+import kpiFilterMetadata from 'components/admin/kpi_editor/kpi-filter-metadata';
+import Model from "core/data_model/model";
+import AdoptionPercentagePieChart from 'components/insights/charts/qa_metrics/AdoptionTestPercentagePieChart';
+
 
 function OverallReleaseQualityMetrics() {
   const toastContext = useContext(DialogToastContext);
@@ -15,6 +22,17 @@ function OverallReleaseQualityMetrics() {
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const { getAccessToken } = useContext(AuthContext);
+  const [filterModel, setFiterModel]= useState(undefined);
+  const [kpiList, setKpiList] = useState(undefined);
+  const [kpiConfig, setKpiConfig] = useState(undefined);
+  const [marketplaceFilterDto, setMarketplaceFilterDto] = useState(undefined);
+  // const [dashboardFilterDto, setDashboardFilterDto] = useState(new Model({...dashboardFilterMetadata.newObjectFields}, dashboardFilterMetadata, false));
+  const [kpiFilterDto, setKpiFilterDto] = useState(
+    new Model({ ...kpiFilterMetadata.newObjectFields }, kpiFilterMetadata, false)
+  );
+  
+  
   
   useEffect(() => {
     if (cancelTokenSource) {
@@ -45,7 +63,8 @@ function OverallReleaseQualityMetrics() {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      // await getOverallReleaseQualityMetrics(cancelSource);
+       await getOverallReleaseQualityMetrics(cancelSource);
+      // await getDashboard
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -59,24 +78,46 @@ function OverallReleaseQualityMetrics() {
       }
     }
   };
+  // const getDashboard = async (cancelSource = cancelTokenSource) => {
+  //   const response = await dashboardsActions.getDashboardByIdV2(getAccessToken, cancelSource, id);
 
-  // const getOverallReleaseQualityMetrics = async (cancelSource = cancelTokenSource) => {
-    // const kpiResponse = await KpiActions.getKpisV2(getAccessToken, cancelSource, filterModel);
-    // const kpis = kpiResponse?.data?.data;
-    //
-    // if (isMounted?.current === true && kpiResponse && kpis) {
-    //   setKpis(kpis);
-    //   let newFilterDto = filterModel;
-    //   newFilterDto.setData("totalCount", kpiResponse?.data?.count);
-    //   newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-    //   setMarketplaceFilterDto({...newFilterDto});
-    // }
+  //   if (isMounted.current === true && response?.data) {
+  //     setDashboardData(new Model(response.data, dashboardMetadata, false));
+      
+  //   }
   // };
+
+  const getOverallReleaseQualityMetrics = async (cancelSource = cancelTokenSource) => {
+    // const response = await KpiActions.getKpiById(getAccessToken,cancelSource,"automation-percentage");
+    
+    
+    const response = await KpiActions.getKpisV2(getAccessToken, cancelSource, kpiFilterDto);
+    console.log(response?.data?.data.find(item=>item.identifier =='automation-percentage'),' *** 123 list');
+  
+     if (isMounted?.current === true && response?.data?.data) {
+    setKpiConfig(response?.data?.data.find(item=>item.identifier =='automation-percentage'));
+
+    //   setKpiList(response.data.data);
+    //   let newFilterDto = kpiFilterDto;
+    //   newFilterDto.setData("totalCount", response.data.count);
+    //   newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+    //   setKpiFilterDto({ ...newFilterDto });
+     }
+  };
+console.log(kpiList,'*** ;list');
 
   const getMetricBlocks = () => {
     return (
       <div className={"d-flex"}>
         <DataBlockBoxContainer className={"mr-2"}>
+          <AutomationPercentagePieChart
+            kpiConfiguration={{kpi_name: "Automation Percentage", filters: []}}
+            
+          />
+          <AdoptionPercentagePieChart
+            kpiConfiguration={{kpi_name: "Adoption Percentage", filters: []}}
+          />
+          
           <ThreeLineDataBlockBase
             className={"p-2"}
             topText={"Successful Builds"}

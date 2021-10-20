@@ -1259,6 +1259,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
       case "automation-percentage":
+        console.log(kpiConfig,' ** index',dashboardData);
         return (
           <Col md={12} className="p-2">
             <AutomationPercentagePieChart
