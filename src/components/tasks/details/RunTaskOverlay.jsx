@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import modelHelpers from "components/common/model/modelHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import CloseButton from "components/common/buttons/CloseButton";
-import RunTaskButton from "components/common/buttons/tasks/run_task/RunTaskButton";
+import TriggerTaskRunButton from "components/common/buttons/tasks/run_task/TriggerTaskRunButton";
 import SalesforceOrganizationSyncTaskNewBranchToggleInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskNewBranchToggleInput";
 import SalesforceOrganizationSyncTaskUpstreamBranchSelectInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskUpstreamBranchSelectInput";
 import salesforceOrganizationSyncTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
@@ -27,7 +27,6 @@ import azureAksClusterTaskConfigurationMetadata
 import SalesforceOrganizationSyncTaskGitBranchSelectInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
 import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
-import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 
 function RunTaskOverlay({ handleClose, gitTasksData, setGitTasksData, loadData }) {
@@ -87,8 +86,18 @@ function RunTaskOverlay({ handleClose, gitTasksData, setGitTasksData, loadData }
     return (
       <Row className="mx-0 p-3 d-flex">
         <div className="ml-auto d-flex">
-          <RunTaskButton gitTasksData={gitTasksData} setGitTasksData={setGitTasksData} gitTasksConfigurationDataDto={dataObj} loadData={loadData} handleClose={handleClose} className={"mr-2"} />
-          <CloseButton closeEditorCallback={handleClose} showUnsavedChangesMessage={false} />
+          <TriggerTaskRunButton
+            gitTasksData={gitTasksData}
+            setGitTasksData={setGitTasksData}
+            gitTasksConfigurationDataDto={dataObj}
+            loadData={loadData}
+            handleClose={handleClose}
+            className={"mr-2"}
+          />
+          <CloseButton
+            closeEditorCallback={handleClose}
+            showUnsavedChangesMessage={false}
+          />
         </div>
       </Row>
     );

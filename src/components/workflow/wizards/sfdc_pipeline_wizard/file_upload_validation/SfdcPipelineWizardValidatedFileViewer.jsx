@@ -32,7 +32,7 @@ const SfdcPipelineWizardValidatedFileViewer = ({ pipelineWizardModel, setPipelin
 
   return (
     <div>
-      <div className="h5">SalesForce Pipeline Run: Validated File Viewer</div>
+      <div className="h5">Salesforce Pipeline Run: Validated File Viewer</div>
       <div className="text-muted mb-2">
         View validation results for the uploaded file.
       </div>

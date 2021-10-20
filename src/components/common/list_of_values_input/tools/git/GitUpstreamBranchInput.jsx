@@ -73,10 +73,19 @@ function GitUpstreamBranchInput({ dataObject, setDataObject, gitToolId, service,
     );
   };
 
+  const setIsNewBranchFunction = (fieldName, selectedOption) => {
+    let newDataObject = { ...dataObject };
+    newDataObject.setData("isNewBranch", !!selectedOption);
+    newDataObject.setData("hasUpstreamBranch", false);
+    newDataObject.setData("upstreamBranch", "");
+    setDataObject({ ...newDataObject });
+  };
+
   return (
     <div>
-      <CheckboxInput
+      <CheckboxInput 
         fieldName={"isNewBranch"}
+        setDataFunction={setIsNewBranchFunction}
         model={dataObject}
         setModel={setDataObject}
       />

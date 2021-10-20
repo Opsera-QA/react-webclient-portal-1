@@ -185,7 +185,7 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
     <div className="ml-5 mr-5">
       <div className="flex-container">
         <div className="flex-container-content">
-          <div className="h5">SalesForce Pipeline Run: Unit Test Selection View</div>
+          <div className="h5">Salesforce Pipeline Run: Unit Test Selection View</div>
           <div className="text-muted mb-2">Apex Classes with @isTest annotation will be part of selection for Selective Unit Testing.</div>
 
           <div className="m-2">
