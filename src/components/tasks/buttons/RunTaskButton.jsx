@@ -2,30 +2,25 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlay, faSpinner, faTerminal, faStop} from "@fortawesome/pro-light-svg-icons";
-import {useHistory} from "react-router-dom";
+import {faPlay} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
-import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import RunTaskOverlay from "components/tasks/details/RunTaskOverlay";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import taskActions from "components/tasks/task.actions";
 import {TASK_TYPES} from "components/tasks/task.types";
 import TaskActivityView from "components/tasks/TaskActivityView";
+import CancelTaskButton from "components/tasks/buttons/CancelTaskButton";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_GIT_BRANCHES,
   TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE,
   TASK_TYPES.SYNC_SALESFORCE_REPO,
+  TASK_TYPES.SALESFORCE_BULK_MIGRATION,
 ];
 
-// TODO: Delete after verifying /tasks/buttons/RunTaskButton and wiring that one up instead
 function RunTaskButton({gitTasksData, setGitTasksData, disable, className, loadData, actionAllowed, taskType }) {
-  const [isCanceling, setIsCanceling] = useState(false);
   const [taskStarting, setTaskStarting] = useState(false);
-  const {getAccessToken} = useContext(AuthContext);
-  const history = useHistory();
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
   const [showToolActivity, setShowToolActivity] = useState(false);
@@ -46,17 +41,6 @@ function RunTaskButton({gitTasksData, setGitTasksData, disable, className, loadD
     };
   }, []);
 
-  const handleCancelRunTask = async () => {
-    setIsCanceling(true);
-    // TODO: call cancel job api to jenkins integrator
-    let newGitTasksData = gitTasksData;
-      newGitTasksData.setData("status", "stopped");
-    await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newGitTasksData);
-    toastContext.showInformationToast("Task has been stopped", 10);
-    setIsCanceling(false);
-    history.push(`/task`);
-  };
-
   const handleClose = () => {
     toastContext.clearOverlayPanel();
     // TODO: This should be passed to modal
@@ -66,27 +50,12 @@ function RunTaskButton({gitTasksData, setGitTasksData, disable, className, loadD
   const getButton = () => {
     if (gitTasksData?.getData("status") === "running") {
       return (
-        <div className="p-3">
-          <TooltipWrapper innerText={actionAllowed === false ? "Your Access Role Level Prevents Stopping Tasks" : null}>
-            <Button variant="danger" onClick={handleCancelRunTask} disabled={isCanceling || disable || actionAllowed !== true}>
-              {isCanceling ?
-                <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/> :
-                <FontAwesomeIcon icon={faStop} fixedWidth className="mr-1"/>
-              } Cancel Task
-            </Button>
-            {gitTasksData.getData("type") === "sync-sfdc-repo" && 
-               <Button variant="secondary" className="m-2" style={{ cursor: "pointer" }}
-               onClick={() => {
-                 setShowToolActivity(true);
-               }}  >
-                  View Logs
-              <FontAwesomeIcon icon={faTerminal}
-                className="white mx-1" fixedWidth
-              />
-            </Button>
-            }
-          </TooltipWrapper>
-        </div>
+        <CancelTaskButton
+          className={"p-3"}
+          taskModel={gitTasksData}
+          taskType={gitTasksData?.getData("type")}
+          actionAllowed={actionAllowed}
+        />
       );
     }
 
@@ -100,8 +69,8 @@ function RunTaskButton({gitTasksData, setGitTasksData, disable, className, loadD
       >
         <TooltipWrapper innerText={actionAllowed !== true ? "Your Access Role Level Prevents Running Tasks" : null}>
           {gitTasksData?.getData("status") === "running" ?
-            (<span><IconBase isLoading={true} className={"mr-1"}/>Running Task</span>)
-            : (<span><FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Run Task</span>)}
+            (<span><IconBase isLoading={true} className={"mr-2"}/>Running Task</span>)
+            : (<span><FontAwesomeIcon icon={faPlay} className="mr-2" fixedWidth/>Run Task</span>)}
         </TooltipWrapper>
       </Button>
     );

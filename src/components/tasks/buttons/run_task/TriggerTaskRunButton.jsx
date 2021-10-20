@@ -5,12 +5,13 @@ import { faPlay } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
-import GitTaskSfdcPipelineWizardOverlay from "components/common/buttons/tasks/run_task/GitTaskSfdcPipelineWizardOverlay";
+import GitTaskSfdcPipelineWizardOverlay from "components/tasks/buttons/run_task/GitTaskSfdcPipelineWizardOverlay";
 import taskActions from "components/tasks/task.actions";
 import axios from "axios";
 import LoadingDialog from "components/common/status_notifications/loading";
 import IconBase from "components/common/icons/IconBase";
 
+// TODO: THis should be separated into multiple buttons based on task.
 function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurationDataDto, handleClose, disable, className, loadData }) {
   let toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
