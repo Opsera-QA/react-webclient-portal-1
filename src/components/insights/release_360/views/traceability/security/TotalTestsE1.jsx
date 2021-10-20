@@ -43,7 +43,6 @@ function TotalTestsE1({ environment }) {
       setIsLoading(true);
       //let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.getEnvironmentMetrics(getAccessToken, cancelSource, "totalTests", environment);
-      console.log("resp", response);
       let dataObject = response?.data ? response?.data?.data[0] : [];
 
       if (isMounted?.current === true && dataObject) {
@@ -67,10 +66,9 @@ function TotalTestsE1({ environment }) {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
-    console.log("metrics", metrics);
 
     let color;
-    let successRate = (metrics[0].successfulTests/metrics[0].TotalTests).toFixed(3);
+    let successRate = (100*metrics[0].successfulTests/metrics[0].TotalTests).toFixed(2);
     if(successRate > 89){
       color = METRIC_QUALITY_LEVELS.SUCCESS;
     }

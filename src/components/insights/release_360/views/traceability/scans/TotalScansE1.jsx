@@ -43,7 +43,7 @@ function TotalScansE1({ environment }) {
       setIsLoading(true);
       //let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.getEnvironmentMetrics(getAccessToken, cancelSource, "totalScans", environment);
-      let dataObject = response?.data ? response?.data?.data[0]?.totalScans?.data : [];
+      let dataObject = response?.data ? response?.data?.data[0]: [];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -68,7 +68,7 @@ function TotalScansE1({ environment }) {
       }
 
       let color;
-      let successRate = (metrics[0].successfulScans/metrics[0].TotalScans).toFixed(3);
+      let successRate = (100*metrics[0].successfulScans/metrics[0].TotalScans).toFixed(2);
       if(successRate > 89){
         color = METRIC_QUALITY_LEVELS.SUCCESS;
       }
@@ -77,7 +77,7 @@ function TotalScansE1({ environment }) {
       return (
         <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
           <ThreeLineDataBlockBase
-            topText={"Testing"}
+            topText={"Scans"}
             className={"p-4"}
             middleText={<MetricScoreText score={metrics[0].TotalScans} />}
             bottomText={<MetricScoreText score={successRate +"% Passed"} qualityLevel={color} />}
