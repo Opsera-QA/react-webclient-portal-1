@@ -8,6 +8,8 @@ import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
+import HorizontalDataBlocksContainer
+  from "../../../../common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 
 function OverallReleaseTraceabilityMetrics() {
   const toastContext = useContext(DialogToastContext);
@@ -73,34 +75,147 @@ function OverallReleaseTraceabilityMetrics() {
     // }
   // };
 
-  const getMetricBlocks = () => {
+  const getMetricBlocks1 = () => {
     return (
+      <HorizontalDataBlocksContainer
+        title={"E1 Summary"}
+        // onClick={() => onRowSelect()}
+      >
       <div className={"d-flex"}>
-        <DataBlockBoxContainer className={"mr-2"}>
+        <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
           <ThreeLineDataBlockBase
-            className={"p-2"}
-            topText={"Successful Builds"}
-            middleText={<MetricScoreText score={120} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
-            bottomText={"6% Decrease"}
+            className={"p-4"}
+            topText={"Builds"}
+            middleText={<MetricScoreText score={120} />}
+            bottomText={<MetricScoreText score={78 +"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
+            showBorder={true}
           />
         </DataBlockBoxContainer>
-        <DataBlockBoxContainer className={"mr-2"}>
+        <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
           <ThreeLineDataBlockBase
-            className={"p-2"}
-            topText={"Failed Builds"}
-            middleText={<MetricScoreText score={52} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
-            bottomText={"24% Increase"}
+            className={"p-4"}
+            topText={"Security"}
+            middleText={<MetricScoreText score={52} />}
+            bottomText={<MetricScoreText score={91 +"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS} />}
+            showBorder={true}
           />
         </DataBlockBoxContainer>
-        <DataBlockBoxContainer className={"mr-2"}>
+        <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
           <ThreeLineDataBlockBase
-            topText={"Success Percentage"}
-            className={"p-2"}
-            middleText={<MetricPercentageText percentage={88} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
-            bottomText={"Goal: 95%"}
+            topText={"Testing"}
+            className={"p-4"}
+            middleText={<MetricScoreText score={88} />}
+            bottomText={<MetricScoreText score={88 +"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
+            showBorder={true}
+          />
+        </DataBlockBoxContainer>
+        <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
+          <ThreeLineDataBlockBase
+            topText={"Deployments"}
+            className={"p-4"}
+            middleText={<MetricScoreText score={138} />}
+            bottomText={<MetricScoreText score={92 +"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS} />}
+            showBorder={true}
           />
         </DataBlockBoxContainer>
       </div>
+      </HorizontalDataBlocksContainer>
+    );
+  };
+
+  const getMetricBlocks2 = () => {
+    return (
+      <HorizontalDataBlocksContainer
+        title={"E2 Summary"}
+        // onClick={() => onRowSelect()}
+      >
+        <div className={"d-flex"}>
+          <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
+            <ThreeLineDataBlockBase
+              className={"p-4"}
+              topText={"Builds"}
+              middleText={<MetricScoreText score={150} />}
+              bottomText={<MetricScoreText score={89 +"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
+              showBorder={true}
+            />
+          </DataBlockBoxContainer>
+          <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
+            <ThreeLineDataBlockBase
+              className={"p-4"}
+              topText={"Security"}
+              middleText={<MetricScoreText score={66} />}
+              bottomText={<MetricScoreText score={90 +"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS} />}
+              showBorder={true}
+            />
+          </DataBlockBoxContainer>
+          <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
+            <ThreeLineDataBlockBase
+              topText={"Testing"}
+              className={"p-4"}
+              middleText={<MetricScoreText score={101} />}
+              bottomText={<MetricScoreText score={77 +"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
+              showBorder={true}
+            />
+          </DataBlockBoxContainer>
+          <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
+            <ThreeLineDataBlockBase
+              topText={"Deployments"}
+              className={"p-4"}
+              middleText={<MetricScoreText score={145} />}
+              bottomText={<MetricScoreText score={93 +"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS} />}
+              showBorder={true}
+            />
+          </DataBlockBoxContainer>
+        </div>
+      </HorizontalDataBlocksContainer>
+    );
+  };
+
+  const getMetricBlocks3 = () => {
+    return (
+      <HorizontalDataBlocksContainer
+        title={"E3 Summary"}
+        // onClick={() => onRowSelect()}
+      >
+        <div className={"d-flex"}>
+          <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
+            <ThreeLineDataBlockBase
+              className={"p-4"}
+              topText={"Builds"}
+              middleText={<MetricScoreText score={201} />}
+              bottomText={<MetricScoreText score={79+"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
+              showBorder={true}
+            />
+          </DataBlockBoxContainer>
+          <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
+            <ThreeLineDataBlockBase
+              className={"p-4"}
+              topText={"Security"}
+              middleText={<MetricScoreText score={78} />}
+              bottomText={<MetricScoreText score={91 +"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS} />}
+              showBorder={true}
+            />
+          </DataBlockBoxContainer>
+          <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
+            <ThreeLineDataBlockBase
+              topText={"Testing"}
+              className={"p-4"}
+              middleText={<MetricScoreText score={112} />}
+              bottomText={<MetricScoreText score={87 +"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
+              showBorder={true}
+            />
+          </DataBlockBoxContainer>
+          <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
+            <ThreeLineDataBlockBase
+              topText={"Deployments"}
+              className={"p-4"}
+              middleText={<MetricScoreText score={167}  />}
+              bottomText={<MetricScoreText score={95 +"% Passed"} qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS} />}
+              showBorder={true}
+            />
+          </DataBlockBoxContainer>
+        </div>
+      </HorizontalDataBlocksContainer>
     );
   };
 
@@ -110,7 +225,9 @@ function OverallReleaseTraceabilityMetrics() {
 
   return (
     <div className={"mt-2"}>
-      {getMetricBlocks()}
+      {getMetricBlocks1()}
+      {getMetricBlocks2()}
+      {getMetricBlocks3()}
     </div>
   );
 }
