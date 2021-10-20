@@ -71,7 +71,7 @@ export class ToolModel extends ModelBase {
   };
 
   canPerformAction = (action) => {
-    return isActionAllowed(this.customerAccessRules, action, this.getData("owner"), this.getData("roles"), this.roleDefinitions);
+    return isActionAllowed(this.customerAccessRules, action, this.getData("owner"), this.getData("roles"), this.roleDefinitions, true);
   }
 }
 

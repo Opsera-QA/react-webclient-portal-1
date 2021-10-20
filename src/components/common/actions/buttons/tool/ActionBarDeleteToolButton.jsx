@@ -16,7 +16,6 @@ function ActionBarDeleteToolButton({ toolModel, className }) {
   const history = useHistory();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [canDelete, setCanDelete] = useState(false);
   const [relevantPipelines, setRelevantPipelines] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -30,23 +29,12 @@ function ActionBarDeleteToolButton({ toolModel, className }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
     return () => {
       source.cancel();
       isMounted.current = false;
     };
   }, [toolModel]);
 
-  const loadData = async () => {
-    if (toolModel?.canPerformAction("delete_tool") === true) {
-      setCanDelete(true);
-    }
-  };
 
   const deleteObject = async () => {
     try {
@@ -110,7 +98,7 @@ function ActionBarDeleteToolButton({ toolModel, className }) {
     );
   };
 
-  if (canDelete !== true) {
+  if (toolModel?.canPerformAction("delete_tool") !== true) {
     return <></>;
   }
 
