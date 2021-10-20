@@ -6,7 +6,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import salesforceBulkMigrationWizardActions
   from "components/workflow/wizards/salesforce_bulk_migration/salesforceBulkMigrationWizard.actions";
 
@@ -83,8 +82,16 @@ function SalesforceBulkMigrationWizardSubmitComponentTypesButton({pipelineWizard
   return (
     <div className={className}>
       <div className={"d-flex"}>
-        <Button size={size} variant="success" disabled={!checkValidity() || disable} onClick={() => updateSelectedComponentTypes()}>
-          <span><IconBase isLoading={isSaving} icon={icon} fixedWidth className="mr-2"/>{getLabel()}</span>
+        <Button
+          size={size}
+          variant="success"
+          disabled={!checkValidity() || disable}
+          onClick={() => updateSelectedComponentTypes()}
+        >
+          <span>
+            <IconBase isLoading={isSaving} icon={icon} fixedWidth className="mr-2"/>
+            {getLabel()}
+          </span>
         </Button>
       </div>
     </div>

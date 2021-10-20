@@ -42,7 +42,7 @@ const SalesforceBulkMigrationWizardInitializationScreen = ({ pipelineWizardModel
   const loadData = async () => {
     try {
       setIsLoading(true);
-      let newPipelineWizardRecord = loadGitTaskInformation(pipelineWizardModel, taskModel);
+      let newPipelineWizardRecord = loadGitTaskInformation(pipelineWizardModel);
       setPipelineWizardModel({...newPipelineWizardRecord});
     }
     catch (error) {
@@ -56,16 +56,16 @@ const SalesforceBulkMigrationWizardInitializationScreen = ({ pipelineWizardModel
     }
   };
 
-  const loadGitTaskInformation = (newPipelineWizardModel, gitTaskData) => {
-    const gitTaskId = gitTaskData.getData("_id");
-    const sfdcToolId = gitTaskData.getData("configuration")?.sfdcToolId;
-    const gitToolId = gitTaskData.getData("configuration")?.gitToolId;
-    const sfdcDestToolId = gitTaskData.getData("configuration")?.sfdcDestToolId;
-    const accountUsername = gitTaskData.getData("configuration")?.accountUsername;
-    const gitBranch = gitTaskData.getData("configuration")?.gitBranch;
+  const loadGitTaskInformation = (newPipelineWizardModel) => {
+    const taskId = taskModel.getData("_id");
+    const sfdcToolId = taskModel.getData("configuration")?.sfdcToolId;
+    const gitToolId = taskModel.getData("configuration")?.gitToolId;
+    const sfdcDestToolId = taskModel.getData("configuration")?.sfdcDestToolId;
+    const accountUsername = taskModel.getData("configuration")?.accountUsername;
+    const gitBranch = taskModel.getData("configuration")?.gitBranch;
 
 
-    if (gitTaskId == null || gitTaskId === "") {
+    if (taskId == null || taskId === "") {
       setError("Could not find Task");
     }
 
@@ -77,29 +77,23 @@ const SalesforceBulkMigrationWizardInitializationScreen = ({ pipelineWizardModel
     newPipelineWizardModel.setData("gitBranch", gitBranch);
     newPipelineWizardModel.setData("fromGitTasks", true);
     newPipelineWizardModel.setData("sfdcDestToolId", sfdcDestToolId);
-    newPipelineWizardModel.setData("gitTaskId", gitTaskId);
+    newPipelineWizardModel.setData("gitTaskId", taskId);
     newPipelineWizardModel.setData("sfdcToolId", sfdcToolId);
     newPipelineWizardModel.setData("gitToolId", gitToolId);
     setPipelineWizardModel({...newPipelineWizardModel});
     return newPipelineWizardModel;
   };
 
-  const createNewBulkMigrationRecord = async (newPipelineWizardModel = pipelineWizardModel, moveToNextScreen) => {
+  const createNewBulkMigrationRecord = async () => {
     try {
-      if (moveToNextScreen === true) {
-        setCreatingNewRecord(true);
-      }
-
-      const response = await salesforceBulkMigrationWizardActions.createNewRecordV2(getAccessToken, cancelTokenSource, newPipelineWizardModel);
+      setCreatingNewRecord(true);
+      const response = await salesforceBulkMigrationWizardActions.createNewRecordV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
       const newRecord = response?.data;
 
-      if (newRecord) {
-        newPipelineWizardModel.setData("recordId", newRecord._id);
-        setPipelineWizardModel({...newPipelineWizardModel});
-      }
-
-      if (moveToNextScreen === true) {
-        setPipelineWizardScreen(BULK_MIGRATION_WIZARD_SCREENS.COMPONENT_SELECTOR);
+      if (isMounted?.current === true && newRecord != null) {
+        pipelineWizardModel?.setData("recordId", newRecord._id);
+        setPipelineWizardModel({...pipelineWizardModel});
+        setPipelineWizardScreen(BULK_MIGRATION_WIZARD_SCREENS.COMPONENT_SELECTION_SCREEN);
       }
     }
     catch (error) {
@@ -131,7 +125,7 @@ const SalesforceBulkMigrationWizardInitializationScreen = ({ pipelineWizardModel
             size={"sm"}
             variant="primary"
             disabled={isLoading}
-            onClick={() => createNewBulkMigrationRecord()}
+            onClick={createNewBulkMigrationRecord}
           >
             <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Instance</span>
           </Button>
