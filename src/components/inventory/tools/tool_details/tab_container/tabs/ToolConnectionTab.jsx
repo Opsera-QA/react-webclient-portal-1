@@ -11,7 +11,7 @@ function ToolConnectionTab({ toolModel, handleTabClick, activeTab }) {
       handleTabClick={handleTabClick}
       activeTab={activeTab}
       tabText={"Connection"}
-      disabled={!toolModel.canPerformAction("update_tool_connection")}
+      accessRestricted={!toolModel.canPerformAction("update_tool_connection")}
     />
   );
 }
