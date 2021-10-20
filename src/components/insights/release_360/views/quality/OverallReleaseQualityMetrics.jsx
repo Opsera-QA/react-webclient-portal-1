@@ -9,7 +9,7 @@ import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/T
 import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
 
-function OverallReleaseQualityMetrics() {
+function OverallReleaseQualityMetrics({dashboardData}) {
   const toastContext = useContext(DialogToastContext);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -116,7 +116,8 @@ function OverallReleaseQualityMetrics() {
 }
 
 OverallReleaseQualityMetrics.propTypes = {
-  dashboardId: PropTypes.string
+  dashboardId: PropTypes.string,
+  dashboardData: PropTypes.object,
 };
 
 export default OverallReleaseQualityMetrics;

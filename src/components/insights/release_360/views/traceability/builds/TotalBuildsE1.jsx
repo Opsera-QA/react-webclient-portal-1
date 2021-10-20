@@ -8,7 +8,7 @@ import MetricScoreText from "../../../../../common/metrics/score/MetricScoreText
 import { METRIC_QUALITY_LEVELS } from "../../../../../common/metrics/text/MetricTextBase";
 import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 
-function TotalBuildsE1({ environment }) {
+function TotalBuildsE1({ dashboardData, environment }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -16,7 +16,7 @@ function TotalBuildsE1({ environment }) {
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
+  console.log(dashboardData);
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -36,13 +36,13 @@ function TotalBuildsE1({ environment }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      //let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.getEnvironmentMetrics(getAccessToken, cancelSource, "totalBuilds", environment);
+      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      const response = await chartsActions.getEnvironmentMetrics(getAccessToken, cancelSource, "totalBuilds", environment, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0] : [];
 
       if (isMounted?.current === true && dataObject) {
@@ -66,7 +66,6 @@ function TotalBuildsE1({ environment }) {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
-    console.log("metrics", metrics);
 
     let color;
     let successRate = metrics[0]?.TotalBuilds === 0 ? 0 : (100*metrics[0].successfulBuilds/metrics[0].TotalBuilds).toFixed(0);
@@ -95,7 +94,7 @@ function TotalBuildsE1({ environment }) {
 
 TotalBuildsE1.propTypes = {
   // kpiConfiguration: PropTypes.object,
-  // dashboardData: PropTypes.object,
+  dashboardData: PropTypes.object,
   environment: PropTypes.string
 };
 

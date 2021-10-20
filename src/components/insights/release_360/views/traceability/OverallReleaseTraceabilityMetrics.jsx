@@ -7,13 +7,13 @@ import Environment1 from "./Environment1";
 import Environment2 from "./Environment2";
 import Environment3 from "./Environment3";
 
-function OverallReleaseTraceabilityMetrics() {
+function OverallReleaseTraceabilityMetrics({dashboardData}) {
   const toastContext = useContext(DialogToastContext);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  
+
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -33,7 +33,7 @@ function OverallReleaseTraceabilityMetrics() {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [JSON.stringify(dashboardData)]);
 
   // TODO: If these are separate data pulls,
   //  put the pulls inside the relevant data block components to keep concerns properly separated.
@@ -77,9 +77,9 @@ function OverallReleaseTraceabilityMetrics() {
 
   return (
     <div className={"mt-2"}>
-      {<Environment1 ></Environment1>}
-      {<Environment2 ></Environment2>}
-      {<Environment3 ></Environment3>}
+      {<Environment1 dashboardData={dashboardData}></Environment1>}
+      {<Environment2 dashboardData={dashboardData}></Environment2>}
+      {<Environment3 dashboardData={dashboardData}></Environment3>}
     </div>
   );
 }
