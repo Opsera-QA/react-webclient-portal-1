@@ -5,6 +5,7 @@ import {AuthContext} from "contexts/AuthContext";
 import BreadcrumbPageLink from "components/common/links/BreadcrumbPageLink";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
+import BreadcrumbPageLinkCard from "components/common/card/link/BreadcrumbPageLinkCard";
 
 function AccountSettings() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -95,6 +96,26 @@ function AccountSettings() {
     }
   };
 
+  const v2Test = () => {
+    return (
+      <>
+        <BreadcrumbPageLinkCard breadcrumbDestination={"analyticsDataEntryManagement"} />
+        <BreadcrumbPageLinkCard breadcrumbDestination={"analyticsProfile"}/>
+        {/* <BreadcrumbPageLinkCard breadcrumbDestination={"customerSystemStatus"} visible={!envIsProd}/> */}
+        <BreadcrumbPageLinkCard breadcrumbDestination={"dataMappingManagement"}/>
+        <BreadcrumbPageLinkCard breadcrumbDestination={"deleteTools"} />
+        <BreadcrumbPageLinkCard breadcrumbDestination={"ldapDepartmentManagement"} visible={!isSassUser()}/>
+        <BreadcrumbPageLinkCard breadcrumbDestination={"ldapGroupManagement"}  visible={!isSassUser()}/>
+        <BreadcrumbPageLinkCard breadcrumbDestination={"myUserRecord"} visible={!isSassUser()} />
+        <BreadcrumbPageLinkCard breadcrumbDestination={"organizationManagement"} visible={!isSassUser()}/>
+        {/*<BreadcrumbPageLinkCard breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
+        <BreadcrumbPageLinkCard breadcrumbDestination={"ldapSiteRolesManagement"} visible={!isSassUser()}/>
+        <BreadcrumbPageLinkCard breadcrumbDestination={"tagManagement"}/>
+        <BreadcrumbPageLinkCard breadcrumbDestination={"userManagement"} visible={!isSassUser()}/>
+      </>
+    );
+  };
+
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -106,6 +127,11 @@ function AccountSettings() {
       accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator && !accessRoleData?.SassPowerUser}
       isLoading={isLoading}
     >
+      {/*TODO: For future enhancement*/}
+      {/*<div className={"px-2"}>*/}
+      {/*  {v2Test()}*/}
+      {/*</div>*/}
+
       <Row className="ml-3">
         {getRolePageLinks()}
       </Row>
