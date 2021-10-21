@@ -140,7 +140,7 @@ function CodeCommitToE1Deploy({ dashboardData }) {
   };
 
   const fields = [
-    { id: "jiraIssueKey", label: "Jira Issue Key" },
+    { id: "jiraIssueKey", label: "Issue Key" },
     { id: "codeCommitToE1DeployDays", label: "Code commit to E1 Deploy (Days)" },
     { id: "codeCommitToE2DeployDays", label: "Code commit to E2 Deploy (Days)" },
     { id: "codeCommitToE3DeployDays", label: "Code commit to E3 Deploy (Days)" },

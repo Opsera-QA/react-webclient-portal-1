@@ -140,7 +140,7 @@ function CodeCommitToE2Deploy({ dashboardData }) {
   };
 
   const fields = [
-    { id: "jiraIssueKey", label: "Jira Issue Key" },
+    { id: "jiraIssueKey", label: "Issue Key" },
     { id: "unitTestingStageIssueUpdated", label: "Code Commit Time" },
     { id: "qaTestingStageIssueUpdated", label: "E2 Deploy Time" },
     { id: "codeCommitToEnvDeploy", label: "Duration (in Days)" },

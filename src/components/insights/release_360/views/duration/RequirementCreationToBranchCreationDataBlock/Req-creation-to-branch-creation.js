@@ -3,7 +3,7 @@ const RequirementToBranchCreationTableMetadata = {
   type: "Requirement To Branch Creation",
   fields: [
     {
-      label: "Jira Issue Key",
+      label: "Issue Key",
       id: "jiraIssueKey",
     },
     {

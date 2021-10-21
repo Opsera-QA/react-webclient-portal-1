@@ -137,7 +137,7 @@ function RequirementCreationToCodeCommit({ dashboardData }) {
   };
 
   const fields = [
-    { id: "jiraIssueKey", label: "Jira Issue Key" },
+    { id: "jiraIssueKey", label: "Issue Key" },
     { id: "gitlabBranch", label: "Gitlab Branch" },
     { id: "jiraIssueCreationTime", label: "Jira Issue Creation Time" },
     { id: "lastCommitTime", label: "Last Commit Time" },
