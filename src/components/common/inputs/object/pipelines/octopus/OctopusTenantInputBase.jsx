@@ -7,7 +7,7 @@ import PropertyInputContainer from "components/common/inputs/object/PropertyInpu
 import axios from "axios";
 import OctopusTenantInputRow from "components/common/inputs/object/pipelines/octopus/OctopusTenantInputRow";
 
-function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, disabled, className, environmentList }) {
+function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, disabled, className, environmentList, tenantList }) {
   const [field] = useState(model.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [rows, setRows] = useState([]);
@@ -30,6 +30,12 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
       isMounted.current = false;
     };
   }, [environmentList]);
+
+  useEffect(() => {
+    if (Array.isArray(tenantList) && tenantList.length === 0) {
+      setRows([{id: "", name: "", environmentId: ""}]);
+    }
+  }, [tenantList]);
 
   const unpackData = () => {
     let currentData = model.getData(fieldName);
@@ -231,6 +237,7 @@ OctopusTenantInputBase.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,
   environmentList: PropTypes.array,
+  tenantList: PropTypes.array,
 };
 
 export default OctopusTenantInputBase;

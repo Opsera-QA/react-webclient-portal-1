@@ -404,20 +404,33 @@ export class ModelBase {
     return this.metaData;
   };
 
-  getMaxLength = (field) => {
-    return this.metaData[field].maxLength;
+  getMaxLength = (fieldName) => {
+    const field = this.getFieldById(fieldName);
+    return field?.maxLength;
   };
 
-  getMinLength = (field) => {
-    return this.metaData[field].minLength;
+  getMinLength = (fieldName) => {
+    const field = this.getFieldById(fieldName);
+    return field?.minLength;
   };
 
-  getId = (field) => {
-    return this.metaData[field].id;
+  getMinItems = (fieldName) => {
+    const field = this.getFieldById(fieldName);
+    return field?.minItems;
+  };
+
+  getMaxItems = (fieldName) => {
+    const field = this.getFieldById(fieldName);
+    return field?.maxItems;
+  };
+
+  getId = (fieldName) => {
+    const field = this.getFieldById(fieldName);
+    return field?.id;
   };
 
   getFields = () => {
-    return this.metaData.fields;
+    return this.metaData?.fields;
   };
 
   getType = () => {
@@ -442,7 +455,8 @@ export class ModelBase {
   };
 
   getFieldById = (id) => {
-    return this.metaData?.fields?.find(field => {return field.id === id; });
+    const fields = this.getFields();
+    return fields?.find(field => {return field.id === id; });
   };
 
   getDefaultValue = (fieldName) => {
