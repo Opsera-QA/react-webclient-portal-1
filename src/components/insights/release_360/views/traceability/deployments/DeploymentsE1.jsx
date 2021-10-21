@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
@@ -7,6 +7,18 @@ import { METRIC_QUALITY_LEVELS } from "../../../../../common/metrics/text/Metric
 import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import MetricScoreText from "../../../../../common/metrics/score/MetricScoreText";
+import VanityTable from "../../../../../common/table/VanityTable";
+import FilterContainer from "../../../../../common/table/FilterContainer";
+import { faDraftingCompass, faTable } from "@fortawesome/pro-light-svg-icons";
+import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
+import { getTableTextColumn } from "../../../../../common/table/table-column-helpers-v2";
+import { getField } from "../../../../../common/metadata/metadata-helpers";
+import { getTableDateTimeColumn } from "../../../../../common/table/column_definitions/model-table-column-definitions";
+import Model from "../../../../../../core/data_model/model";
+import genericChartFilterMetadata from "../../../../charts/generic_filters/genericChartFilterMetadata";
+import TotalDeploymentsTableMetadata from "./total-deployments-metadata";
+import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
+import { getChartPipelineStatusColumn } from "../../../../../common/table/table-column-helpers";
 
 function DeploymentsE1({ dashboardData, environment}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -16,6 +28,10 @@ function DeploymentsE1({ dashboardData, environment}) {
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [tableFilterDto, setTableFilterDto] = useState(
+    new Model({ ...genericChartFilterMetadata.newObjectFields }, TotalDeploymentsTableMetadata, false)
+  );
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -44,7 +60,11 @@ function DeploymentsE1({ dashboardData, environment}) {
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
       const response = await chartsActions.getEnvironmentMetrics(getAccessToken, cancelSource, "totalDeploymentCounts", environment, dashboardTags, dashboardOrgs);
+console.log("response", response);     
       let dataObject = response?.data ? response?.data?.data[0] : [];
+      //data.data[0][0].steps
+      console.log("dataobj", dataObject);
+      //[0].steps
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -62,6 +82,82 @@ function DeploymentsE1({ dashboardData, environment}) {
       }
     }
   };
+  
+  //console.log("test", metrics[0].steps);
+
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
+
+  const getTable = () => {
+    return (
+      <VanityTable
+        // isLoading={isLoading}
+        columns={columns}
+        data={metrics[0]?.steps}
+        noDataMessage={"No Insights are available for this chart at this time"}
+        paginationModel={tableFilterDto}
+        setPaginationModel={setTableFilterDto}
+        loadData={loadData}
+        scrollOnLoad={false}
+        onRowSelect={onRowSelect}
+      />
+    );
+  };
+
+  const getBody = () => {
+    let newFilterDto = tableFilterDto;
+    console.log("metrics", metrics[0][0].steps);
+    newFilterDto.setData("totalCount", metrics[0][0]?.steps?.length);
+    setTableFilterDto({ ...newFilterDto });
+
+    return (
+      <FilterContainer
+        // isLoading={isLoading}
+        showBorder={false}
+        title={`Deployment Insights`}
+        titleIcon={faDraftingCompass}
+        body={getTable()}
+        className={"px-2 pb-2"}
+      />
+    );
+  };
+
+  const onRowSelect = () => {
+    toastContext.showOverlayPanel(
+      <FullScreenCenterOverlayContainer
+        closePanel={closePanel}
+        showPanel={true}
+        titleText={`Deployments Insights`}
+        showToasts={true}
+        titleIcon={faTable}
+        isLoading={false}
+        linkTooltipText={"View Full Blueprint"}
+      >
+        <div className={"p-3"}>{getBody()}</div>
+      </FullScreenCenterOverlayContainer>
+    );
+  };
+
+  const fields = [
+    { id: "pipeline_name", label: "Pipeline Name" },
+    { id: "run_count", label: "Run Count" },
+    { id: "status", label: "Status" },
+    { id: "timestamp", label: "Timestamp" },
+  ];
+
+  const columns = useMemo(
+    () => [
+      getTableTextColumn(getField(fields, "pipeline_name")),
+      getTableTextColumn(getField(fields, "run_count")),
+      getChartPipelineStatusColumn(getField(fields, "status")),
+      getTableDateTimeColumn(getField(fields, "timestamp")),
+    ],
+    []
+  );
+
+
 
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
@@ -78,6 +174,7 @@ function DeploymentsE1({ dashboardData, environment}) {
     return (
       <DataBlockBoxContainer className={"mr-2"} showBorder={true}>
         <ThreeLineDataBlockBase
+          onClickFunction={(thisData) => onRowSelect(thisData)}
           topText={"Deployments"}
           className={"p-4"}
           middleText={<MetricScoreText score={metrics[0].TotalDeployments} />}

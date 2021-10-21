@@ -6,6 +6,12 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import Environment1 from "./Environment1";
 import Environment2 from "./Environment2";
 import Environment3 from "./Environment3";
+import DataBlockBoxContainer from "../../../../common/metrics/data_blocks/DataBlockBoxContainer";
+import { Col, Row } from "react-bootstrap";
+import GitlabMostActiveContributors from "components/insights/charts/gitlab/table/most_active_contributors/GitlabMostActiveContributors";
+import GitlabMergeRequestsPushesAndComments from "components/insights/charts/gitlab/calendar_chart/merge_requests_pushes_and_comments/GitlabMergeRequestsPushesAndComments";
+import GitlabTotalCommitsByProjectChart
+  from "../../../charts/gitlab/pie_chart/total_commits_by_project/GitlabTotalCommitsByProjectChart";
 
 function OverallReleaseTraceabilityMetrics({dashboardData}) {
   const toastContext = useContext(DialogToastContext);
@@ -75,11 +81,60 @@ function OverallReleaseTraceabilityMetrics({dashboardData}) {
     return (<LoadingDialog message={"Loading Metrics"} />);
   }
 
+  const filters = {
+    filters: [{
+      "type": "date",
+      "value": {
+        "startDate": "2020-10-20T20:07:35.041Z",
+        "endDate": "2021-10-20T20:07:35.041Z",
+        "key": "selection"
+      }
+    }]
+  };
+
+  const getMetricBlocks = () => {
+    return (
+      <div className={"d-flex"}>
+        <DataBlockBoxContainer className={"mr-2"}>
+          <Row className="p-1">
+            <Col>
+              <GitlabMostActiveContributors
+                kpiConfiguration={{
+                  kpi_name: "Gitlab Most Active Contributors", ...filters
+                }}
+                showSettingsToggle={false}
+              />
+            </Col>
+            <Col>
+              <GitlabTotalCommitsByProjectChart
+                kpiConfiguration={{
+                  kpi_name: "Gitlab Total Commits By Project", ...filters
+                }}
+                showSettingsToggle={false}
+              />
+            </Col>
+          </Row>
+          <Row className="p-1">
+            <Col>
+              <GitlabMergeRequestsPushesAndComments
+                kpiConfiguration={{
+                  kpi_name: "Gitlab Merge Requests, Pushes, and Comments", ...filters
+                }}
+                showSettingsToggle={false}
+              />
+            </Col>
+          </Row>
+        </DataBlockBoxContainer>
+      </div>
+    );
+  };
+
   return (
     <div className={"mt-2"}>
       {<Environment1 dashboardData={dashboardData}></Environment1>}
       {<Environment2 dashboardData={dashboardData}></Environment2>}
       {<Environment3 dashboardData={dashboardData}></Environment3>}
+      {getMetricBlocks()}
     </div>
   );
 }
