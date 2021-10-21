@@ -53,8 +53,11 @@ function RequirementCreationToCodeCommit({ dashboardData }) {
 
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
-      let dateRange = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "date")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      let dateRange =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "date")]?.value;
       const response = await chartsActions.getEnvironmentMetrics(
         getAccessToken,
         cancelSource,
@@ -156,7 +159,9 @@ function RequirementCreationToCodeCommit({ dashboardData }) {
       topText={"Requirement to Code Commit"}
       middleText={
         <MetricScoreText
-          score={metrics.averageReqCreationToCodeCommitTimeMins}
+          score={
+            metrics.averageReqCreationToCodeCommitTimeMins ? metrics.averageReqCreationToCodeCommitTimeMins : "N/A"
+          }
           qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
         />
       }

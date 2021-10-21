@@ -53,8 +53,11 @@ function CodeCommitToE3Deploy({ dashboardData }) {
 
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
-      let dateRange = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "date")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      let dateRange =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "date")]?.value;
       const response = await chartsActions.getEnvironmentMetrics(
         getAccessToken,
         cancelSource,
@@ -156,7 +159,10 @@ function CodeCommitToE3Deploy({ dashboardData }) {
       className={"p-2"}
       topText={"Code Commit to E3 Deploy"}
       middleText={
-        <MetricScoreText score={metrics.avgCodeCommitToEnvDeploy} qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS} />
+        <MetricScoreText
+          score={metrics.avgCodeCommitToEnvDeploy ? metrics.avgCodeCommitToEnvDeploy : "N/A"}
+          qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
+        />
       }
       bottomText={"Average in Days"}
     />

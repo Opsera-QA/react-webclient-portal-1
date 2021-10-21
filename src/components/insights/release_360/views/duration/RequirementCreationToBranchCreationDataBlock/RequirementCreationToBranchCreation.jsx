@@ -53,8 +53,11 @@ function RequirementCreationToBranchCreation({ dashboardData }) {
 
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
-      let dateRange = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "date")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      let dateRange =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "date")]?.value;
       const branchResponse = await chartsActions.getEnvironmentMetrics(
         getAccessToken,
         cancelSource,
@@ -163,7 +166,11 @@ function RequirementCreationToBranchCreation({ dashboardData }) {
       topText={"Requirement to Branch Creation"}
       middleText={
         <MetricScoreText
-          score={branchMetric.averageReqCreationToBranchCreationSecs}
+          score={
+            branchMetric.averageReqCreationToBranchCreationSecs
+              ? branchMetric.averageReqCreationToBranchCreationSecs
+              : "N/A"
+          }
           qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
         />
       }
