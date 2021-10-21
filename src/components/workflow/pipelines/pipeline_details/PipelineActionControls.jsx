@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, {useContext, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
@@ -21,6 +21,8 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
 import WorkflowAuthorizedActions from "./workflow/workflow-authorized-actions";
 import pipelineHelpers from "../../pipelineHelpers";
+import axios from "axios";
+import pipelineActions from "../../pipeline-actions";
 
 
 const delayCheckInterval = 10000;
@@ -51,6 +53,25 @@ function PipelineActionControls({
   });
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [hasQueuedRequest, setHasQueuedRequest] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  // TODO: This should be combined with the workflowStatus use effect but don't want to break anything.
+  //  After we have time to verify adding this doesn't break it, let's combine them.
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
 
   const authorizedAction = (action, owner) => {
     let objectRoles = pipeline?.roles;
@@ -58,7 +79,11 @@ function PipelineActionControls({
   };
 
   useEffect(() => {
-    loadData(pipeline);
+    loadData(pipeline).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
     if (workflowStatus === "paused") {
       setStatusMessage("This pipeline is currently paused.");
       setStatusMessageBody("A paused pipeline requires either approval or review of the logs in order to proceed.");
@@ -70,33 +95,30 @@ function PipelineActionControls({
   }, [workflowStatus, JSON.stringify(pipeline.workflow)]);
 
 
-  const loadData = (pipeline) => {
-    if (pipeline.workflow === undefined) {
+  const loadData = async (pipeline) => {
+    // TODO: With the below check this is unnecessary-- leaving in for now but something to look at later
+    if (pipeline?.workflow === undefined) {
       return;
     }
-    if (pipeline.workflow.last_step === undefined) {
+
+    if (pipeline?.workflow?.last_step === undefined) {
       setWorkflowStatus("stopped");
       return;
     }
 
-    let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
+    // TODO: This should probably be able to be replaced with pipeline?.workflow?.last_step?.status || false
+    let status = pipeline?.workflow?.last_step?.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
 
     //check for queued requests
     if (status === "running") {
-      //wire up GET API call to:
-      //const apiUrl = `/pipelines/${id}/queue`;
-
-      //set this value to true or false based on if records are returned.  An empty array will be returned if nothing
-      // is queued so then the value would be false
-      setHasQueuedRequest(true);
+      await checkPipelineQueueStatus();
     }
 
-
-    if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
+    if (status === "stopped" && pipeline?.workflow?.last_step?.running && pipeline?.workflow?.last_step?.running?.paused) {
       setWorkflowStatus("paused");
 
       //if step set currently running is an approval step, flag that
-      if (pipeline.workflow?.last_step?.running?.step_id) {
+      if (pipeline?.workflow?.last_step?.running?.step_id) {
         const runningStep = pipelineHelpers.getStepIndexFromPlan(pipeline.workflow.plan, pipeline.workflow?.last_step?.running?.step_id);
         setIsApprovalGate(pipeline.workflow.plan[runningStep].tool?.tool_identifier === "approval");
       }
@@ -105,6 +127,20 @@ function PipelineActionControls({
     }
 
     setWorkflowStatus(status);
+  };
+
+  const checkPipelineQueueStatus = async () => {
+    const queuedRequest = await pipelineActions.getQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
+
+    if (typeof queuedRequest === "object" && Object.keys(queuedRequest)?.length > 0) {
+      setHasQueuedRequest(true);
+    }
+  };
+
+  const deletePipelineQueueRequest = async () => {
+    const queuedRequest = await pipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
+
+    // TODO: Handle Logic
   };
 
   // button handlers
