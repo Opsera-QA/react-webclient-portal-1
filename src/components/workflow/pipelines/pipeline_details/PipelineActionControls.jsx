@@ -23,7 +23,8 @@ import WorkflowAuthorizedActions from "./workflow/workflow-authorized-actions";
 import pipelineHelpers from "../../pipelineHelpers";
 import axios from "axios";
 import pipelineActions from "../../pipeline-actions";
-
+import CancelPipelineQueueConfirmationOverlay
+  from "components/workflow/pipelines/pipeline_details/queuing /cancellation/CancelPipelineQueueConfirmationOverlay";
 
 const delayCheckInterval = 10000;
 
@@ -52,7 +53,7 @@ function PipelineActionControls({
     pipelineOrientation: "",
   });
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
-  const [hasQueuedRequest, setHasQueuedRequest] = useState(true); //TODO: when development done, please set default value to false
+  const [hasQueuedRequest, setHasQueuedRequest] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -136,20 +137,6 @@ function PipelineActionControls({
     const queuedRequest = await pipelineActions.getQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
     const isQueued = typeof queuedRequest === "object" && Object.keys(queuedRequest)?.length > 0;
     setHasQueuedRequest(isQueued);
-  };
-
-  const deletePipelineQueueRequest = async () => {
-
-    //TODO: Wire up this to onclick even OverlayTrigger line 505 (the clock button).  The idea is that the tooltip tells the user
-    // that there is an item in the queue.  If they click on it, I'd like a modal (delete confirmation essentially) to open
-    // BUT it's not directly a delete confirmation.  I want the modal to be informational.  The wording should match what is in the
-    // tooltip for that button.  Then wire up two buttons:  Close or "Cancel Queue Request"
-    // clicking cancel queue request will then call the next line of code.  So however you want to structure that, I think
-    // it will work for now.
-
-    //const queuedRequest = await pipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
-    setHasQueuedRequest(false);
-    // TODO: Handle Logic
   };
 
   // button handlers
@@ -313,6 +300,15 @@ function PipelineActionControls({
     );
   };
 
+  const showCancelQueueOverlay = () => {
+    toastContext.showOverlayPanel(
+      <CancelPipelineQueueConfirmationOverlay
+        pipeline={pipeline}
+        setHasQueuedRequest={setHasQueuedRequest}
+      />
+    );
+  };
+
   const handlePipelineStartWizardClose = () => {
     //console.log("closing wizard");
     toastContext.clearOverlayPanel();
@@ -390,6 +386,7 @@ function PipelineActionControls({
     }
   };
 
+  // TODO: Make base button components for these in the future
   return (
     <>
       <div className="d-flex flex-fill">
@@ -515,7 +512,7 @@ function PipelineActionControls({
               <Button variant="secondary"
                       size="sm"
                       onClick={() => {
-                        deletePipelineQueueRequest();
+                        showCancelQueueOverlay();
                       }}>
                 <FontAwesomeIcon icon={faClock} fixedWidth/></Button>
             </OverlayTrigger>

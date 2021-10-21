@@ -1,12 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationCircle, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import {cannotBeUndone} from "components/common/tooltip/popover-text";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import IconBase from "components/common/icons/IconBase";
 
-function DeleteButton({deleteRecord, dataObject, disabled, size, icon, className}) {
+function DeleteButton({deleteRecord, dataObject, disabled, size, icon, className, buttonText}) {
   const [isDeleting, setIsDeleting] = useState(false);
   const isMounted = useRef(false);
 
@@ -28,18 +28,25 @@ function DeleteButton({deleteRecord, dataObject, disabled, size, icon, className
   };
 
   const getLabel = () => {
-    if (isDeleting) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>{`Deleting ${dataObject.getType()}`}</span>);
+    if (buttonText) {
+      return buttonText;
     }
 
-    return (<span><FontAwesomeIcon icon={icon} fixedWidth className="mr-2"/>{`Delete ${dataObject.getType()}`}</span>);
+    if (isDeleting) {
+      return (`Deleting ${dataObject.getType()}`);
+    }
+
+    return (`Delete ${dataObject.getType()}`);
   };
 
   return (
     <div className={className}>
       <TooltipWrapper innerText={cannotBeUndone}>
         <Button size={size} variant="danger" disabled={isDeleting || disabled} onClick={() => persistRecord()}>
-          {getLabel()}
+          <span>
+            <IconBase isLoading={isDeleting} icon={icon} fixedWidth className="mr-2"/>
+            {getLabel()}
+          </span>
         </Button>
       </TooltipWrapper>
     </div>
@@ -52,11 +59,12 @@ DeleteButton.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   size: PropTypes.string,
-  icon: PropTypes.object
+  icon: PropTypes.object,
+  buttonText: PropTypes.string,
 };
 
-
 DeleteButton.defaultProps = {
+  // TODO: Change to md for default
   size: "sm",
   icon: faExclamationCircle
 };
