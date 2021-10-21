@@ -156,7 +156,7 @@ function OverallReleaseQualityMetrics() {
               <FirstPassYieldPieChart
 
                 kpiConfiguration={{
-                  kpi_name: "First pass Yield QA  ", ...filters
+                  kpi_name: "First pass Yield QA", ...filters
                 }}
                 showSettingsToggle={false}
               />
@@ -164,7 +164,7 @@ function OverallReleaseQualityMetrics() {
             <Col>
               <SonarRatingMetrics
                 kpiConfiguration={{
-                  kpi_name: "DSonar rating", ...filters
+                  kpi_name: "Sonar ratings", ...filters
                 }}
                 showSettingsToggle={false}
               />
