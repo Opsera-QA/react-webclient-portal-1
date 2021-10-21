@@ -33,7 +33,7 @@ function PipelineThresholdInputRow(
         value={level}
         disabled={disabled || disabledThresholdLevels}
         placeholder={"Select A Threshold Level"}
-        onChange={(newValue) => updateThresholdLevel(newValue?.value)}
+        setDataFunction={(newValue) => updateThresholdLevel(newValue?.value)}
       />
     );
   };
