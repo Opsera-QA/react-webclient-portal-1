@@ -1729,11 +1729,18 @@ div.data-blocks-ellipses {
 .page-link-card {
     background-color: #FFF;
     color: #000000;
-    /*font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;*/
-    /*border: 2px solid #1989F9;*/
-    /*border-left: 8px solid #1989F9;*/
+    border-left: 8px solid #FFF;
     padding: 2px;
     min-height: 50px;
+}
+
+.page-link-card:hover {
+    cursor: pointer;
+    border-left: 8px solid #46415C; /* Opsera Secondary Color */
+}
+
+.page-link-card-title-text {
+    font-size: 1.25em;
 }
 
 .page-link-card-divider {
