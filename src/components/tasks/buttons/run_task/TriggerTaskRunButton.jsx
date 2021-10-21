@@ -61,7 +61,7 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
       );
       setIsLoading(false);
     }
-    else if (gitTasksData?.getData("type") === "sync-sfdc-repo") {
+    else if (gitTasksData?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_REPO) {
        try {
         setIsLoading(true);
         const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
@@ -76,7 +76,7 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
         setIsLoading(false);
       }
     }    
-    else if (gitTasksData?.getData("type") === "sync-branch-structure") {
+    else if (gitTasksData?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE) {
       // pipeline action call to trigger branch conversion
       try{
         setIsLoading(true);
@@ -89,7 +89,7 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
         setIsLoading(false);
       }
     }
-    else if (gitTasksData?.getData("type") === "sync-git-branches"){
+    else if (gitTasksData?.getData("type") === TASK_TYPES.SYNC_GIT_BRANCHES){
       // call to trigger merge request
       try{
         setIsLoading(true);
@@ -111,7 +111,7 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
         setIsLoading(false);
       }
     }
-    else if (gitTasksData?.getData("type") === "ecs_cluster_creation"){
+    else if (gitTasksData?.getData("type") === TASK_TYPES.AWS_CREATE_ECS_CLUSTER){
       // call to trigger merge request
       try{
         setIsLoading(true);

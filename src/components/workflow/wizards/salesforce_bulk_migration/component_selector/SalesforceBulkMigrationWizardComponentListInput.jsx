@@ -122,6 +122,7 @@ const SalesforceBulkMigrationWizardComponentListInput = ({ pipelineWizardModel, 
     <Row>
       <Col lg={6}>
         <ListInputBase
+          height={"70vh"}
           fieldName={"selectedComponentTypes"}
           selectOptions={componentTypes}
           dataObject={pipelineWizardModel}
@@ -140,6 +141,7 @@ const SalesforceBulkMigrationWizardComponentListInput = ({ pipelineWizardModel, 
       </Col>
       <Col lg={6}>
         <ListInputBase
+          height={"70vh"}
           customTitle={"Selected Component Types"}
           fieldName={"selectedComponentTypes"}
           selectOptions={getSelectedOptions()}

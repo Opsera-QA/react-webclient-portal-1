@@ -8,7 +8,7 @@ import CancelButton from "components/common/buttons/CancelButton";
 import {Button} from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
 import {faSync} from "@fortawesome/pro-light-svg-icons";
-import {BULK_MIGRATION_WIZARD_SCREENS} from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationWizard";
+import {SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS} from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationWizard";
 import salesforceBulkMigrationWizardActions
   from "components/workflow/wizards/salesforce_bulk_migration/salesforceBulkMigrationWizard.actions";
 
@@ -93,7 +93,7 @@ const SalesforceBulkMigrationWizardInitializationScreen = ({ pipelineWizardModel
       if (isMounted?.current === true && newRecord != null) {
         pipelineWizardModel?.setData("recordId", newRecord._id);
         setPipelineWizardModel({...pipelineWizardModel});
-        setPipelineWizardScreen(BULK_MIGRATION_WIZARD_SCREENS.COMPONENT_SELECTION_SCREEN);
+        setPipelineWizardScreen(SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.COMPONENT_SELECTION_SCREEN);
       }
     }
     catch (error) {

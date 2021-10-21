@@ -8,6 +8,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import salesforceBulkMigrationWizardActions
   from "components/workflow/wizards/salesforce_bulk_migration/salesforceBulkMigrationWizard.actions";
+import {SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS} from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationWizard";
 
 function SalesforceBulkMigrationWizardSubmitComponentTypesButton({pipelineWizardModel, setPipelineWizardScreen, disable, size, className, icon}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -30,23 +31,13 @@ function SalesforceBulkMigrationWizardSubmitComponentTypesButton({pipelineWizard
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [pipelineWizardModel]);
 
   const updateSelectedComponentTypes = async () => {
     try {
       setIsSaving(true);
-      const result = await salesforceBulkMigrationWizardActions.updateSelectedComponentTypesV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
-      // TODO: Wire up confirmation screen
-
-        // if (pipelineWizardModel.getData("fromGitTasks") === true) {
-        //   setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.GIT_TASKS_FILE_SELECTOR);
-        // }
-        // else if (pipelineWizardModel.getData("isOrgToOrg") === true) {
-        //   setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.ORG_TO_ORG_FILE_SELECTOR);
-        // }
-        // else {
-        //   setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.STANDARD_FILE_SELECTOR);
-        // }
+      await salesforceBulkMigrationWizardActions.updateSelectedComponentTypesV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+      setPipelineWizardScreen(SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN);
     } catch (error) {
       console.error(error);
       toastContext.showInlineErrorMessage(error);
@@ -65,6 +56,8 @@ function SalesforceBulkMigrationWizardSubmitComponentTypesButton({pipelineWizard
     if (pipelineWizardModel.getArrayData("selectedComponentTypes").length === 0) {
       return false;
     }
+
+    return true;
   };
 
   if (pipelineWizardModel == null) {
