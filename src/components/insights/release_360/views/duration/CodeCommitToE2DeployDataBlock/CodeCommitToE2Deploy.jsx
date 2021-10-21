@@ -54,14 +54,15 @@ function CodeCommitToE2Deploy({ dashboardData }) {
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
-      console.log(dashboardOrgs);
+      let dateRange = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "date")]?.value;
       const response = await chartsActions.getEnvironmentMetrics(
         getAccessToken,
         cancelSource,
         "codeCommitToE2Deploy",
         null,
         dashboardTags,
-        dashboardOrgs
+        dashboardOrgs,
+        dateRange
       );
       let dataObject = response?.data ? response?.data?.data[0]?.codeCommitToE2Deploy?.data[0] : [];
 
