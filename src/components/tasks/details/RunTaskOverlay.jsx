@@ -178,7 +178,7 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
         setHelpIsShown={setShowHelp}
         hideCloseButton={true}
       >
-        <div className={"mb-3 mx-3"}>Do you want to run {taskModel?.getData("name")} task?</div>
+        <div className={"mb-3 mx-3"}>Do you want to run this Task: {taskModel?.getData("name")}?</div>
         {getRunView()}
       </OverlayPanelBodyContainer>
     </ConfirmationOverlay>
