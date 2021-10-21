@@ -1,23 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
-import AzureDevopsPipelineStepConfigurationHelp
+import AzureDevopsPipelineStepConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/AzureDevopsPipelineStepConfigurationHelpDocumentation";
 import PipelineStepSetupHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/PipelineStepSetupHelpDocumentation";
-import DockerEcrPushStepConfigurationHelp
+import DockerEcrPushStepConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/DockerEcrPushStepConfigurationHelpDocumentation";
-import AwsEcsDeployStepConfigurationHelp
+import AwsEcsDeployStepConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/AwsEcsDeployStepConfigurationHelpDocumentation";
-import AzureAksDeployPipelineStepConfigurationHelp
+import AzureAksDeployPipelineStepConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/AzureAksDeployPipelineStepConfigurationHelpDocumentation";
-import AzureAcrPushPipelineStepConfigurationHelp
+import AzureAcrPushPipelineStepConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/AzureAcrPushPipelineStepConfigurationHelpDocumentation";
-import OctopusDeployStepConfigurationHelp
+import OctopusDeployStepConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/OctopusDeployStepConfigurationHelpDocumentation";
 import PipelineSourceRepositoryHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/PipelineSourceRepositoryHelpDocumentation";
-import AnsibleStepConfigurationHelp
+import AnsibleStepConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/AnsibleStepConfigurationHelpDocumentation";
 
 function StepToolHelpIcon({type, tool, className, iconClassName}) {
@@ -25,19 +25,19 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
   const getToolHelpPanel = () => {
     switch (tool) {
       case "azure-devops":
-        return <AzureDevopsPipelineStepConfigurationHelp/>;
+        return <AzureDevopsPipelineStepConfigurationHelpDocumentation/>;
       case "docker-push":
-        return <DockerEcrPushStepConfigurationHelp/>;
+        return <DockerEcrPushStepConfigurationHelpDocumentation/>;
       case "aws_ecs_deploy":
-        return <AwsEcsDeployStepConfigurationHelp/>;
+        return <AwsEcsDeployStepConfigurationHelpDocumentation/>;
       case "azure_aks_deploy":
-        return <AzureAksDeployPipelineStepConfigurationHelp/>;
+        return <AzureAksDeployPipelineStepConfigurationHelpDocumentation/>;
       case "azure_acr_push":
-        return <AzureAcrPushPipelineStepConfigurationHelp/>;
+        return <AzureAcrPushPipelineStepConfigurationHelpDocumentation/>;
       case "octopus":
-        return <OctopusDeployStepConfigurationHelp/>;
+        return <OctopusDeployStepConfigurationHelpDocumentation/>;
       case "ansible":
-        return <AnsibleStepConfigurationHelp/>;
+        return <AnsibleStepConfigurationHelpDocumentation/>;
       case "jenkins":
       case "junit":
       case "xunit":
