@@ -15,7 +15,7 @@ import ChartTooltip from "../ChartTooltip";
 import { Col, Container, Row } from "react-bootstrap";
 import DataBlockWrapper from "../../../common/data_boxes/DataBlockWrapper";
 
-function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis, showSettingsToggle }) {
   console.log(dashboardData, ' ** dashboard data');
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -141,6 +141,7 @@ function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, d
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        showSettingsToggle={showSettingsToggle}
       />
       <ModalLogs
         header="Unit Test Data Stats"
@@ -159,6 +160,8 @@ AutomationPercentagePieChart.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func};
+  setKpis: PropTypes.func,
+  showSettingsToggle: PropTypes.bool
+};
 
 export default AutomationPercentagePieChart;

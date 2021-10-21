@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useContext, useRef} from 'react';
-import {DialogToastContext} from "contexts/DialogToastContext";
+import React, { useState, useEffect, useContext, useRef } from 'react';
+import { DialogToastContext } from "contexts/DialogToastContext";
 import axios from "axios";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -7,14 +7,18 @@ import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlo
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
-import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
+import { METRIC_QUALITY_LEVELS } from "components/common/metrics/text/MetricTextBase";
 import AutomationPercentagePieChart from 'components/insights/charts/qa_metrics/AutomationPercentagePieChart';
 import KpiActions from 'components/admin/kpi_editor/kpi-editor-actions';
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import kpiFilterMetadata from 'components/admin/kpi_editor/kpi-filter-metadata';
 import Model from "core/data_model/model";
 import AdoptionPercentagePieChart from 'components/insights/charts/qa_metrics/AdoptionTestPercentagePieChart';
-
+import ManualQaTestPieChart from 'components/insights/charts/qa_metrics/CummulativeOpenDefectsPieChart';
+import FirstPassYieldPieChart from 'components/insights/charts/qa_metrics/FirstPassYieldPieChart';
+import DefectRemovalEfficiencyPieChart from 'components/insights/charts/qa_metrics/DefectRemovalEfficiencyPieChart';
+import SonarRatingMetrics from 'components/insights/charts/sonar/sonar_ratings/SonarRatingMetrics';
+import { Col, Row } from 'react-bootstrap';
 
 function OverallReleaseQualityMetrics() {
   const toastContext = useContext(DialogToastContext);
@@ -23,17 +27,16 @@ function OverallReleaseQualityMetrics() {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const { getAccessToken } = useContext(AuthContext);
-  const [filterModel, setFiterModel]= useState(undefined);
+  const [filterModel, setFiterModel] = useState(undefined);
   const [kpiList, setKpiList] = useState(undefined);
   const [kpiConfig, setKpiConfig] = useState(undefined);
   const [marketplaceFilterDto, setMarketplaceFilterDto] = useState(undefined);
-  // const [dashboardFilterDto, setDashboardFilterDto] = useState(new Model({...dashboardFilterMetadata.newObjectFields}, dashboardFilterMetadata, false));
   const [kpiFilterDto, setKpiFilterDto] = useState(
     new Model({ ...kpiFilterMetadata.newObjectFields }, kpiFilterMetadata, false)
   );
-  
-  
-  
+
+
+
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -63,8 +66,7 @@ function OverallReleaseQualityMetrics() {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-       await getOverallReleaseQualityMetrics(cancelSource);
-      // await getDashboard
+      // await getOverallReleaseQualityMetrics(cancelSource);
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -78,69 +80,99 @@ function OverallReleaseQualityMetrics() {
       }
     }
   };
-  // const getDashboard = async (cancelSource = cancelTokenSource) => {
-  //   const response = await dashboardsActions.getDashboardByIdV2(getAccessToken, cancelSource, id);
 
-  //   if (isMounted.current === true && response?.data) {
-  //     setDashboardData(new Model(response.data, dashboardMetadata, false));
-      
-  //   }
+
+  // const getOverallReleaseQualityMetrics = async (cancelSource = cancelTokenSource) => {
+  // const response = await KpiActions.getKpiById(getAccessToken,cancelSource,"automation-percentage");
+
+
+  // const response = await KpiActions.getKpisV2(getAccessToken, cancelSource, kpiFilterDto);
+
+  //if (isMounted?.current === true && response?.data?.data) {
+  // setKpiConfig(response?.data?.data.find(item => item.identifier == 'automation-percentage'));
+
+  //   setKpiList(response.data.data);
+  //   let newFilterDto = kpiFilterDto;
+  //   newFilterDto.setData("totalCount", response.data.count);
+  //   newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+  //   setKpiFilterDto({ ...newFilterDto });
+  // }
   // };
 
-  const getOverallReleaseQualityMetrics = async (cancelSource = cancelTokenSource) => {
-    // const response = await KpiActions.getKpiById(getAccessToken,cancelSource,"automation-percentage");
-    
-    
-    const response = await KpiActions.getKpisV2(getAccessToken, cancelSource, kpiFilterDto);
-    console.log(response?.data?.data.find(item=>item.identifier =='automation-percentage'),' *** 123 list');
-  
-     if (isMounted?.current === true && response?.data?.data) {
-    setKpiConfig(response?.data?.data.find(item=>item.identifier =='automation-percentage'));
-
-    //   setKpiList(response.data.data);
-    //   let newFilterDto = kpiFilterDto;
-    //   newFilterDto.setData("totalCount", response.data.count);
-    //   newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-    //   setKpiFilterDto({ ...newFilterDto });
-     }
+  const filters = {
+    filters: [{
+      "type": "date",
+      "value": {
+        "startDate": "2020-10-20T20:07:35.041Z",
+        "endDate": "2021-10-20T20:07:35.041Z",
+        "key": "selection"
+      }
+    }]
   };
-console.log(kpiList,'*** ;list');
 
   const getMetricBlocks = () => {
     return (
       <div className={"d-flex"}>
         <DataBlockBoxContainer className={"mr-2"}>
-          <AutomationPercentagePieChart
-            kpiConfiguration={{kpi_name: "Automation Percentage", filters: []}}
-            
-          />
-          <AdoptionPercentagePieChart
-            kpiConfiguration={{kpi_name: "Adoption Percentage", filters: []}}
-          />
-          
-          <ThreeLineDataBlockBase
-            className={"p-2"}
-            topText={"Successful Builds"}
-            middleText={<MetricScoreText score={120} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
-            bottomText={"6% Decrease"}
-          />
+          <Row className="p-1">
+            <Col>
+              <AutomationPercentagePieChart
+                kpiConfiguration={{
+                  kpi_name: "Automation Percentage", ...filters
+                }}
+                showSettingsToggle={false}
+              />
+            </Col>
+            <Col>
+              <AdoptionPercentagePieChart
+                kpiConfiguration={{
+                  kpi_name: "Adoption Percentage", ...filters
+                }}
+                showSettingsToggle={false}
+              />
+            </Col>
+          </Row>
+          <Row className="p-1">
+            <Col>
+              <ManualQaTestPieChart
+                kpiConfiguration={{
+                  kpi_name: "Cumulative Open Defects Configuration", ...filters
+                }}
+                showSettingsToggle={false}
+              />
+            </Col>
+            <Col>
+              <DefectRemovalEfficiencyPieChart
+                kpiConfiguration={{
+                  kpi_name: "Defect Removal Efficiency", ...filters
+                }}
+                showSettingsToggle={false}
+              />
+            </Col>
+
+          </Row>
+          <Row className="p-1">
+            <Col>
+              <FirstPassYieldPieChart
+
+                kpiConfiguration={{
+                  kpi_name: "First pass Yield QA  ", ...filters
+                }}
+                showSettingsToggle={false}
+              />
+            </Col>
+            <Col>
+              <SonarRatingMetrics
+                kpiConfiguration={{
+                  kpi_name: "DSonar rating", ...filters
+                }}
+                showSettingsToggle={false}
+              />
+            </Col>
+          </Row>
+
         </DataBlockBoxContainer>
-        <DataBlockBoxContainer className={"mr-2"}>
-          <ThreeLineDataBlockBase
-            className={"p-2"}
-            topText={"Failed Builds"}
-            middleText={<MetricScoreText score={52} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
-            bottomText={"24% Increase"}
-          />
-        </DataBlockBoxContainer>
-        <DataBlockBoxContainer className={"mr-2"}>
-          <ThreeLineDataBlockBase
-            topText={"Success Percentage"}
-            className={"p-2"}
-            middleText={<MetricPercentageText percentage={88} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
-            bottomText={"Goal: 95%"}
-          />
-        </DataBlockBoxContainer>
+
       </div>
     );
   };
