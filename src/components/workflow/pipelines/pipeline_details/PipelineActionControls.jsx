@@ -14,7 +14,7 @@ import {
   faSpinner,
   faStopCircle,
   faHistory,
-  faFlag, faRedo, faInfoCircle,
+  faFlag, faRedo, faInfoCircle, faClock
 } from "@fortawesome/pro-light-svg-icons";
 import "../../workflows.css";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -23,7 +23,8 @@ import WorkflowAuthorizedActions from "./workflow/workflow-authorized-actions";
 import pipelineHelpers from "../../pipelineHelpers";
 import axios from "axios";
 import pipelineActions from "../../pipeline-actions";
-
+import CancelPipelineQueueConfirmationOverlay
+  from "components/workflow/pipelines/pipeline_details/queuing /cancellation/CancelPipelineQueueConfirmationOverlay";
 
 const delayCheckInterval = 10000;
 
@@ -131,16 +132,8 @@ function PipelineActionControls({
 
   const checkPipelineQueueStatus = async () => {
     const queuedRequest = await pipelineActions.getQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
-
-    if (typeof queuedRequest === "object" && Object.keys(queuedRequest)?.length > 0) {
-      setHasQueuedRequest(true);
-    }
-  };
-
-  const deletePipelineQueueRequest = async () => {
-    const queuedRequest = await pipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
-
-    // TODO: Handle Logic
+    const isQueued = typeof queuedRequest === "object" && Object.keys(queuedRequest)?.length > 0;
+    setHasQueuedRequest(isQueued);
   };
 
   // button handlers
@@ -152,6 +145,7 @@ function PipelineActionControls({
     await fetchActivityLogs();
     setResetPipeline(false);
     setStartPipeline(false);
+    // await checkPipelineQueueStatus();
   };
 
   const handleStopWorkflowClick = async (pipelineId) => {
@@ -162,6 +156,7 @@ function PipelineActionControls({
     await fetchActivityLogs();
     setResetPipeline(false);
     setStartPipeline(false);
+    // await checkPipelineQueueStatus();
   };
 
   const handleApprovalClick = () => {
@@ -192,6 +187,7 @@ function PipelineActionControls({
   const handleRefreshClick = async () => {
     await fetchData();
     await fetchActivityLogs();
+    // await checkPipelineQueueStatus();
   };
 
   //action functions
@@ -301,6 +297,15 @@ function PipelineActionControls({
     );
   };
 
+  const showCancelQueueOverlay = () => {
+    toastContext.showOverlayPanel(
+      <CancelPipelineQueueConfirmationOverlay
+        pipeline={pipeline}
+        setHasQueuedRequest={setHasQueuedRequest}
+      />
+    );
+  };
+
   const handlePipelineStartWizardClose = () => {
     console.log("closing wizard");
     toastContext.clearOverlayPanel();
@@ -378,6 +383,7 @@ function PipelineActionControls({
     }
   };
 
+  // TODO: Make base button components for these in the future
   return (
     <>
       <div className="d-flex flex-fill">
@@ -490,6 +496,21 @@ function PipelineActionControls({
                 <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>}
               <span className="d-none d-md-inline">Reset</span></Button>
           </OverlayTrigger>}
+
+          {/*{*/}
+          {/*  hasQueuedRequest &&*/}
+          {/*  <OverlayTrigger*/}
+          {/*    placement="top"*/}
+          {/*    delay={{ show: 250, hide: 400 }}*/}
+          {/*    overlay={renderTooltip({ message: "A queued request to start this pipeline is pending.  Upon successful completion of this run, the pipeline will restart." })}>*/}
+          {/*    <Button variant="secondary"*/}
+          {/*            size="sm"*/}
+          {/*            onClick={() => {*/}
+          {/*              showCancelQueueOverlay();*/}
+          {/*            }}>*/}
+          {/*      <FontAwesomeIcon icon={faClock} fixedWidth/></Button>*/}
+          {/*  </OverlayTrigger>*/}
+          {/*}*/}
 
           <OverlayTrigger
             placement="top"

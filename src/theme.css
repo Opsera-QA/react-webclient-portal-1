@@ -1686,10 +1686,14 @@ div.data-blocks-ellipses {
 
 .confirmation-overlay-panel-body {
     overflow-y: auto;
-    min-height: 200px;
+    min-height: 75px;
     min-width: 750px;
     max-width: 750px;
     max-height: calc(100% - 48px);
+}
+
+.confirmation-overlay-panel-body-text {
+    font-size: 1.2em;
 }
 
 /* End Overlay Panel styling */
