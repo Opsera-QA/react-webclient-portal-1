@@ -13,6 +13,7 @@ import RequirementCreationToCodeCommit from "./RequirementCreationToCodeCommitDa
 import CodeCommitToE1Deploy from "./CodeCommitToE1DeployDataBlock/CodeCommitToE1Deploy";
 import CodeCommitToE2Deploy from "./CodeCommitToE2DeployDataBlock/CodeCommitToE2Deploy";
 import CodeCommitToE3Deploy from "./CodeCommitToE3DeployDataBlock/CodeCommitToE3Deploy";
+import CodeCommitToE1E2E3Deploy from "./CodeCommitToE1E2E3DeployDataBlock/CodeCommitToE1E2E3Deploy";
 
 function OverallReleaseDurationMetrics({ dashboardData }) {
   const toastContext = useContext(DialogToastContext);
@@ -106,6 +107,10 @@ function OverallReleaseDurationMetrics({ dashboardData }) {
         <DataBlockBoxContainer className={"mr-2"}>
           <CodeCommitToE3Deploy dashboardData={dashboardData}></CodeCommitToE3Deploy>
         </DataBlockBoxContainer>
+        <DataBlockBoxContainer className={"mr-2"}>
+          <CodeCommitToE1E2E3Deploy dashboardData={dashboardData}></CodeCommitToE1E2E3Deploy>
+        </DataBlockBoxContainer>
+
         {/* <DataBlockBoxContainer className={"mr-2"}>
           <ThreeLineDataBlockBase
             topText={"Success Percentage"}
