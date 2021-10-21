@@ -30,6 +30,15 @@ pipelineActions.getInUseTemplatesV2 = async (getAccessToken, cancelTokenSource) 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+pipelineActions.getQueuedPipelineRequestV2 = async (getAccessToken, cancelTokenSource, id) => {
+  let apiUrl = `/pipelines/${id}/queue`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+pipelineActions.deleteQueuedPipelineRequestV2 = async (getAccessToken, cancelTokenSource, id) => {
+  let apiUrl = `/pipelines/${id}/queue`;
+  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
 
 pipelineActions.getPipelinesV2 = async (getAccessToken, cancelTokenSource, pipelineFilterModel, type, fields) => {
   const urlParams = {
