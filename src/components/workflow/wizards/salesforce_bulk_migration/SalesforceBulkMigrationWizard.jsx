@@ -9,7 +9,9 @@ import sfdcPipelineWizardMetadata from "components/workflow/wizards/sfdc_pipelin
 import SalesforceBulkMigrationWizardInitializationScreen
   from "components/workflow/wizards/salesforce_bulk_migration/initialization_screen/SalesforceBulkMigrationWizardInitializationScreen";
 import SalesforceBulkMigrationWizardComponentSelectionScreen
-  from "components/workflow/wizards/salesforce_bulk_migration/component_selector/SalesforceBulkMigrationWizardComponentSelector";
+  from "components/workflow/wizards/salesforce_bulk_migration/component_selector/SalesforceBulkMigrationWizardComponentSelectionScreen";
+import SalesforceBulkMigrationWizardConfirmationScreen
+  from "components/workflow/wizards/salesforce_bulk_migration/confirmation_screen/SalesforceBulkMigrationWizardConfirmationScreen";
 
 export const SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
@@ -60,6 +62,15 @@ const SalesforceBulkMigrationWizard = ({ handleClose, taskModel }) => {
       case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.COMPONENT_SELECTION_SCREEN:
         return (
           <SalesforceBulkMigrationWizardComponentSelectionScreen
+            pipelineWizardModel={wizardModel}
+            setPipelineWizardModel={setWizardModel}
+            setPipelineWizardScreen={setBulkMigrationWizardScreen}
+            handleClose={handleClose}
+          />
+        );
+      case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN:
+        return (
+          <SalesforceBulkMigrationWizardConfirmationScreen
             pipelineWizardModel={wizardModel}
             setPipelineWizardModel={setWizardModel}
             setPipelineWizardScreen={setBulkMigrationWizardScreen}
