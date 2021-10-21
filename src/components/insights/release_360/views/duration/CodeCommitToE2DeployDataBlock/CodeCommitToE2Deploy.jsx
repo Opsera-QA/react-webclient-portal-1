@@ -1,5 +1,5 @@
 import { React, useEffect, useState, useRef, useContext, useMemo } from "react";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import axios from "axios";
 import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
@@ -18,7 +18,7 @@ import { getTableDateTimeColumn } from "components/common/table/column_definitio
 import FilterContainer from "components/common/table/FilterContainer";
 import VanityTable from "components/common/table/VanityTable";
 
-function CodeCommitToE2Deploy() {
+function CodeCommitToE2Deploy({ dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
@@ -45,21 +45,28 @@ function CodeCommitToE2Deploy() {
     });
 
     return () => {};
-  }, []);
+  }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
 
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "codeCommitToE2Deploy"
+        "codeCommitToE2Deploy",
+        null,
+        dashboardTags
       );
       let dataObject = response?.data ? response?.data?.data[0]?.codeCommitToE2Deploy?.data[0] : [];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+      } else {
+        setMetrics([]);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -153,6 +160,8 @@ function CodeCommitToE2Deploy() {
   );
 }
 
-CodeCommitToE2Deploy.propTypes = {};
+CodeCommitToE2Deploy.propTypes = {
+  dashboardData: PropTypes.object,
+};
 
 export default CodeCommitToE2Deploy;

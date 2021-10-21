@@ -80,7 +80,7 @@ function OverallReleaseDurationMetrics({ dashboardData }) {
     return (
       <div className={"d-flex"}>
         <DataBlockBoxContainer className={"mr-2"}>
-          <RequirementCreationToBranchCreation></RequirementCreationToBranchCreation>
+          <RequirementCreationToBranchCreation dashboardData={dashboardData}></RequirementCreationToBranchCreation>
           {/* <ThreeLineDataBlockBase
             className={"p-2"}
             topText={"Successful Builds"}
@@ -89,7 +89,7 @@ function OverallReleaseDurationMetrics({ dashboardData }) {
           /> */}
         </DataBlockBoxContainer>
         <DataBlockBoxContainer className={"mr-2"}>
-          <RequirementCreationToCodeCommit></RequirementCreationToCodeCommit>
+          <RequirementCreationToCodeCommit dashboardData={dashboardData}></RequirementCreationToCodeCommit>
           {/* <ThreeLineDataBlockBase
             className={"p-2"}
             topText={"Failed Builds"}
@@ -98,13 +98,13 @@ function OverallReleaseDurationMetrics({ dashboardData }) {
           /> */}
         </DataBlockBoxContainer>
         <DataBlockBoxContainer className={"mr-2"}>
-          <CodeCommitToE1Deploy></CodeCommitToE1Deploy>
+          <CodeCommitToE1Deploy dashboardData={dashboardData}></CodeCommitToE1Deploy>
         </DataBlockBoxContainer>
         <DataBlockBoxContainer className={"mr-2"}>
-          <CodeCommitToE2Deploy></CodeCommitToE2Deploy>
+          <CodeCommitToE2Deploy dashboardData={dashboardData}></CodeCommitToE2Deploy>
         </DataBlockBoxContainer>
         <DataBlockBoxContainer className={"mr-2"}>
-          <CodeCommitToE3Deploy></CodeCommitToE3Deploy>
+          <CodeCommitToE3Deploy dashboardData={dashboardData}></CodeCommitToE3Deploy>
         </DataBlockBoxContainer>
         {/* <DataBlockBoxContainer className={"mr-2"}>
           <ThreeLineDataBlockBase
