@@ -3,19 +3,17 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
-import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
-import MetricScoreText from "components/common/metrics/score/MetricScoreText";
-import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
-import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
-import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
+import Environment1 from "./Environment1";
+import Environment2 from "./Environment2";
+import Environment3 from "./Environment3";
 
-function OverallReleaseTraceabilityMetrics() {
+function OverallReleaseTraceabilityMetrics({dashboardData}) {
   const toastContext = useContext(DialogToastContext);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  
+
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -35,7 +33,7 @@ function OverallReleaseTraceabilityMetrics() {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [JSON.stringify(dashboardData)]);
 
   // TODO: If these are separate data pulls,
   //  put the pulls inside the relevant data block components to keep concerns properly separated.
@@ -73,50 +71,23 @@ function OverallReleaseTraceabilityMetrics() {
     // }
   // };
 
-  const getMetricBlocks = () => {
-    return (
-      <div className={"d-flex"}>
-        <DataBlockBoxContainer className={"mr-2"}>
-          <ThreeLineDataBlockBase
-            className={"p-2"}
-            topText={"Successful Builds"}
-            middleText={<MetricScoreText score={120} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
-            bottomText={"6% Decrease"}
-          />
-        </DataBlockBoxContainer>
-        <DataBlockBoxContainer className={"mr-2"}>
-          <ThreeLineDataBlockBase
-            className={"p-2"}
-            topText={"Failed Builds"}
-            middleText={<MetricScoreText score={52} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
-            bottomText={"24% Increase"}
-          />
-        </DataBlockBoxContainer>
-        <DataBlockBoxContainer className={"mr-2"}>
-          <ThreeLineDataBlockBase
-            topText={"Success Percentage"}
-            className={"p-2"}
-            middleText={<MetricPercentageText percentage={88} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}
-            bottomText={"Goal: 95%"}
-          />
-        </DataBlockBoxContainer>
-      </div>
-    );
-  };
-
   if (isLoading === true) {
     return (<LoadingDialog message={"Loading Metrics"} />);
   }
 
   return (
     <div className={"mt-2"}>
-      {getMetricBlocks()}
+      {<Environment1 dashboardData={dashboardData}></Environment1>}
+      {<Environment2 dashboardData={dashboardData}></Environment2>}
+      {<Environment3 dashboardData={dashboardData}></Environment3>}
     </div>
   );
 }
 
 OverallReleaseTraceabilityMetrics.propTypes = {
-  dashboardId: PropTypes.string
+  dashboardId: PropTypes.string,
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
 };
 
 export default OverallReleaseTraceabilityMetrics;

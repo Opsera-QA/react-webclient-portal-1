@@ -14,7 +14,7 @@ import CodeCommitToE1Deploy from "./CodeCommitToE1DeployDataBlock/CodeCommitToE1
 import CodeCommitToE2Deploy from "./CodeCommitToE2DeployDataBlock/CodeCommitToE2Deploy";
 import CodeCommitToE3Deploy from "./CodeCommitToE3DeployDataBlock/CodeCommitToE3Deploy";
 
-function OverallReleaseDurationMetrics() {
+function OverallReleaseDurationMetrics({ dashboardData }) {
   const toastContext = useContext(DialogToastContext);
   // const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -127,6 +127,7 @@ function OverallReleaseDurationMetrics() {
 
 OverallReleaseDurationMetrics.propTypes = {
   dashboardId: PropTypes.string,
+  dashboardData: PropTypes.object,
 };
 
 export default OverallReleaseDurationMetrics;
