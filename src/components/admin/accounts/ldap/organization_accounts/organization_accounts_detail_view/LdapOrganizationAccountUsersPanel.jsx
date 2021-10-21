@@ -10,14 +10,14 @@ function LdapOrganizationAccountUsersPanel({ ldapOrganizationAccountData, author
   }
 
   return (
-    <SummaryPanelContainer>
+    <div className={"mt-2"}>
       <LdapUsersTable
         orgDomain={ldapOrganizationAccountData["orgDomain"]}
         userData={ldapOrganizationAccountData.getData("users")}
         authorizedActions={authorizedActions?.includes("update_organization_account") ? ["create_user", "update_user"] : []}
         loadData={loadData}
       />
-    </SummaryPanelContainer>
+    </div>
   );
 }
 
