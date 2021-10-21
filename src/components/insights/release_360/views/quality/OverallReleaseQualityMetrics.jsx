@@ -136,7 +136,7 @@ function OverallReleaseQualityMetrics({dashboardData}) {
             <Col>
               <ManualQaTestPieChart
                 kpiConfiguration={{
-                  kpi_name: "Cumulative Open Defects Configuration", ...filters
+                  kpi_name: "Cumulative Open Defects", ...filters
                 }}
                 showSettingsToggle={false}
               />
@@ -156,7 +156,7 @@ function OverallReleaseQualityMetrics({dashboardData}) {
               <FirstPassYieldPieChart
 
                 kpiConfiguration={{
-                  kpi_name: "First pass Yield QA", ...filters
+                  kpi_name: "First Pass Yield", ...filters
                 }}
                 showSettingsToggle={false}
               />
@@ -164,7 +164,7 @@ function OverallReleaseQualityMetrics({dashboardData}) {
             <Col>
               <SonarRatingMetrics
                 kpiConfiguration={{
-                  kpi_name: "Sonar ratings", ...filters
+                  kpi_name: "Sonar Ratings", ...filters
                 }}
                 showSettingsToggle={false}
               />
