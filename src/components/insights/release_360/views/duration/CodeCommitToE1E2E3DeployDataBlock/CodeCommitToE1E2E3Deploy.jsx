@@ -134,20 +134,20 @@ function CodeCommitToE1Deploy({ dashboardData }) {
 
   const fields = [
     { id: "jiraIssueKey", label: "Jira Issue Key" },
-    { id: "unitTestingStageIssueUpdated", label: "Stage 1" },
-    { id: "peerReviewStageIssueUpdated", label: "Stage 2" },
-    { id: "qaTestingStageIssueUpdated", label: "Stage 3" },
-    { id: "productDeploymentStageIssueUpdated", label: "Stage 4" },
+    { id: "codeCommitToE1DeployDays", label: "Code commit to E1 Deploy (Days)" },
+    { id: "codeCommitToE2DeployDays", label: "Code commit to E2 Deploy (Days)" },
+    { id: "codeCommitToE3DeployDays", label: "Code commit to E3 Deploy (Days)" },
+    // { id: "productDeploymentStageIssueUpdated", label: "Stage 4" },
     // { id: "codeCommitToEnvDeploy", label: "Duration (in Days)" },
   ];
 
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "jiraIssueKey")),
-      getTableDateTimeColumn(getField(fields, "unitTestingStageIssueUpdated")),
-      getTableDateTimeColumn(getField(fields, "peerReviewStageIssueUpdated")),
-      getTableDateTimeColumn(getField(fields, "qaTestingStageIssueUpdated")),
-      getTableDateTimeColumn(getField(fields, "productDeploymentStageIssueUpdated")),
+      getTableTextColumn(getField(fields, "codeCommitToE1DeployDays")),
+      getTableTextColumn(getField(fields, "codeCommitToE2DeployDays")),
+      getTableTextColumn(getField(fields, "codeCommitToE3DeployDays")),
+      // getTableDateTimeColumn(getField(fields, "productDeploymentStageIssueUpdated")),
       // getTableTextColumn(getField(fields, "codeCommitToEnvDeploy")),
     ],
     []

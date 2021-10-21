@@ -259,7 +259,7 @@ function Release360 () {
           handleTabClick={handleTabClick}
           tabName={"quality"}
         />
-        {getSandbox()}
+        {/* {getSandbox()} */}
       </CustomTabContainer>
     );
   };
