@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
 
-function DockerEcrPushStepConfigurationHelp() {
+function DockerEcrPushStepConfigurationHelpDocumentation() {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -51,4 +51,4 @@ function DockerEcrPushStepConfigurationHelp() {
     />
   );
 }
-export default React.memo(DockerEcrPushStepConfigurationHelp);
+export default React.memo(DockerEcrPushStepConfigurationHelpDocumentation);

@@ -2,23 +2,23 @@ import React from "react";
 import PropTypes from "prop-types";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 import AzureDevopsPipelineStepConfigurationHelp
-  from "../../../../common/help/documentation/pipelines/step_configuration/AzureDevopsPipelineStepConfigurationHelp";
+  from "../../../../common/help/documentation/pipelines/step_configuration/AzureDevopsPipelineStepConfigurationHelpDocumentation";
 import PipelineStepSetupHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/PipelineStepSetupHelpDocumentation";
 import DockerEcrPushStepConfigurationHelp
-  from "../../../../common/help/documentation/pipelines/step_configuration/DockerEcrPushStepConfigurationHelp";
+  from "../../../../common/help/documentation/pipelines/step_configuration/DockerEcrPushStepConfigurationHelpDocumentation";
 import AwsEcsDeployStepConfigurationHelp
-  from "../../../../common/help/documentation/pipelines/step_configuration/AwsEcsDeployStepConfigurationHelp";
+  from "../../../../common/help/documentation/pipelines/step_configuration/AwsEcsDeployStepConfigurationHelpDocumentation";
 import AzureAksDeployPipelineStepConfigurationHelp
-  from "../../../../common/help/documentation/pipelines/step_configuration/AzureAksDeployPipelineStepConfigurationHelp";
+  from "../../../../common/help/documentation/pipelines/step_configuration/AzureAksDeployPipelineStepConfigurationHelpDocumentation";
 import AzureAcrPushPipelineStepConfigurationHelp
-  from "../../../../common/help/documentation/pipelines/step_configuration/AzureAcrPushPipelineStepConfigurationHelp";
+  from "../../../../common/help/documentation/pipelines/step_configuration/AzureAcrPushPipelineStepConfigurationHelpDocumentation";
 import OctopusDeployStepConfigurationHelp
-  from "../../../../common/help/documentation/pipelines/step_configuration/OctopusDeployStepConfigurationHelp";
+  from "../../../../common/help/documentation/pipelines/step_configuration/OctopusDeployStepConfigurationHelpDocumentation";
 import PipelineSourceRepositoryHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/PipelineSourceRepositoryHelpDocumentation";
 import AnsibleStepConfigurationHelp
-  from "../../../../common/help/documentation/pipelines/step_configuration/AnsibleStepConfigurationHelp";
+  from "../../../../common/help/documentation/pipelines/step_configuration/AnsibleStepConfigurationHelpDocumentation";
 
 function StepToolHelpIcon({type, tool, className, iconClassName}) {
   // TODO: Alphabetize when adding new help panels

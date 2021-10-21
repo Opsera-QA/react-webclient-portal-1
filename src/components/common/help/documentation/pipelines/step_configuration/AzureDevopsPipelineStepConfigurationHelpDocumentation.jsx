@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import HelpOverlayBase from "../../../../overlays/center/help/HelpOverlayBase";
 import { DialogToastContext } from "contexts/DialogToastContext";
 
-function AzureDevopsPipelineStepConfigurationHelp() {
+function AzureDevopsPipelineStepConfigurationHelpDocumentation() {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -33,4 +33,4 @@ function AzureDevopsPipelineStepConfigurationHelp() {
   );
 }
 
-export default React.memo(AzureDevopsPipelineStepConfigurationHelp);
+export default React.memo(AzureDevopsPipelineStepConfigurationHelpDocumentation);
