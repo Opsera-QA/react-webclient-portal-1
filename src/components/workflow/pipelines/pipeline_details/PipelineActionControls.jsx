@@ -23,7 +23,7 @@ import WorkflowAuthorizedActions from "./workflow/workflow-authorized-actions";
 import pipelineHelpers from "../../pipelineHelpers";
 
 
-const delayCheckInterval = 12000;
+const delayCheckInterval = 10000;
 
 function PipelineActionControls({
   pipeline,
@@ -50,6 +50,7 @@ function PipelineActionControls({
     pipelineOrientation: "",
   });
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
+  const [hasQueuedRequest, setHasQueuedRequest] = useState(false);
 
   const authorizedAction = (action, owner) => {
     let objectRoles = pipeline?.roles;
@@ -79,6 +80,18 @@ function PipelineActionControls({
     }
 
     let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
+
+    //check for queued requests
+    if (status === "running") {
+      //wire up GET API call to:
+      //const apiUrl = `/pipelines/${id}/queue`;
+
+      //set this value to true or false based on if records are returned.  An empty array will be returned if nothing
+      // is queued so then the value would be false
+      setHasQueuedRequest(true);
+    }
+
+
     if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
       setWorkflowStatus("paused");
 
