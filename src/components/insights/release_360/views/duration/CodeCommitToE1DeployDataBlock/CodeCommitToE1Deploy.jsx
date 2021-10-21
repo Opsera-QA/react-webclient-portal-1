@@ -53,13 +53,14 @@ function CodeCommitToE1Deploy({ dashboardData }) {
 
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+      let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
+      const response = await chartsActions.getEnvironmentMetrics(
         getAccessToken,
         cancelSource,
         "codeCommitToE1Deploy",
         null,
-        dashboardTags
+        dashboardTags,
+        dashboardOrgs
       );
       let dataObject = response?.data ? response?.data?.data[0]?.codeCommitToE1Deploy?.data[0] : [];
 

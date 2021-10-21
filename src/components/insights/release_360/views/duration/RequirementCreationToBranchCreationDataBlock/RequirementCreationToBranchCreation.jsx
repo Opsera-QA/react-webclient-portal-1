@@ -53,13 +53,14 @@ function RequirementCreationToBranchCreation({ dashboardData }) {
 
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-
+      let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
       const branchResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "gitlabRequirementCreationToBranchCreation",
         null,
-        dashboardTags
+        dashboardTags,
+        dashboardOrgs
       );
 
       let branchDataObject = branchResponse?.data

@@ -134,14 +134,14 @@ function Release360 () {
               className={"mx-2"}
               dashboardData={dashboardData}
             />
-            {/* <DashboardFilterOrganizationInput
+            <DashboardFilterOrganizationInput
               className={"mx-2"}
               dataObject={dashboardFilterTagsModel}
               setDataObject={setDashboardFilterTagsModel}
               dashboardData={dashboardData}
               fieldName={"organizations"}
               loadData={loadData}
-            /> */}
+            />
           </div>
         </ActionBarContainer>
       </div>

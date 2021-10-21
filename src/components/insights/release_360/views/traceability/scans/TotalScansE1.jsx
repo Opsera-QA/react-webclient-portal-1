@@ -42,7 +42,8 @@ function TotalScansE1({ dashboardData, environment }) {
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.getEnvironmentMetrics(getAccessToken, cancelSource, "totalScans", environment, dashboardTags);
+      let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
+      const response = await chartsActions.getEnvironmentMetrics(getAccessToken, cancelSource, "totalScans", environment, dashboardTags, dashboardOrgs);
       let dataObject = response?.data ? response?.data?.data[0]: [];
 
       if (isMounted?.current === true && dataObject) {

@@ -78,13 +78,14 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
-chartsActions.getEnvironmentMetrics = async (getAccessToken, cancelTokenSource,request, environment, dashboardTags) => {
+chartsActions.getEnvironmentMetrics = async (getAccessToken, cancelTokenSource,request, environment, dashboardTags, dashboardOrgs) => {
   const apiUrl = "/analytics/metrics";
 
   const postBody = {
     request: request,
     environment: environment,
-    tags: dashboardTags?.length > 0 ? dashboardTags : null
+    tags: dashboardTags?.length > 0 ? dashboardTags : null,
+    dashboardOrgs: dashboardOrgs
     // tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
   };
 
