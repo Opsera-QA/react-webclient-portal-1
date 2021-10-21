@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import LdapUsersTable from "components/settings/ldap_users/LdapUsersTable";
 
