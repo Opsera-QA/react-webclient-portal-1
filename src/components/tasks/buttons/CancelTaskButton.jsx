@@ -19,6 +19,7 @@ const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SALESFORCE_BULK_MIGRATION,
 ];
 
+// TODO: This should be broken into two buttons, one for cancel and one for logs
 function CancelTaskButton({taskModel, disable, className, actionAllowed, taskType }) {
   const [isCanceling, setIsCanceling] = useState(false);
   const {getAccessToken} = useContext(AuthContext);
