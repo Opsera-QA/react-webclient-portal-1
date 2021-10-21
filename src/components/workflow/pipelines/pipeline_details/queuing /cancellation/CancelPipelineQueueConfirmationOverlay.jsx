@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
+import {faClock} from "@fortawesome/pro-light-svg-icons";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import Row from "react-bootstrap/Row";
 import TriggerTaskRunButton from "components/tasks/buttons/run_task/TriggerTaskRunButton";
@@ -78,8 +78,8 @@ function CancelPipelineQueueConfirmationOverlay({ pipeline, setHasQueuedRequest 
     <ConfirmationOverlay
       closePanel={handleClose}
       showPanel={true}
-      titleText={`Cancel Pipeline Queue Request?`}
-      titleIcon={faQuestionCircle}
+      titleText={`Pipeline Queue`}
+      titleIcon={faClock}
       showToasts={true}
       showCloseButton={false}
       buttonContainer={getButtonContainer()}
@@ -88,8 +88,9 @@ function CancelPipelineQueueConfirmationOverlay({ pipeline, setHasQueuedRequest 
         hideCloseButton={true}
       >
         <div className={"mb-3 mx-3"}>
-          <div>A queued request to start this Pipeline is pending. Upon successful completion of this run, the Pipeline will restart.</div>
-          <div className={"mt-2"}>Do you want to cancel the queue request for this Pipeline?</div>
+          <div>Opsera Pipelines support queuing of runs when the pipeline is currently in progress.  A queued request to
+            start this Pipeline is currently pending. Upon successful completion of the curren run, this pipeline will restart.</div>
+          <div className={"mt-3 small"}>Canceling this queue request will clear the pending run request and end the pipeline after this run.</div>
         </div>
       </OverlayPanelBodyContainer>
     </ConfirmationOverlay>
