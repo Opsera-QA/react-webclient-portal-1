@@ -19,7 +19,8 @@ const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SALESFORCE_BULK_MIGRATION,
 ];
 
-function RunTaskButton({gitTasksData, setGitTasksData, disable, className, loadData, actionAllowed, taskType }) {
+// TODO: This should be broken into two buttons and this should be renamed as the container
+function RunTaskButton({taskModel, setTaskModel, disable, className, loadData, actionAllowed, taskType }) {
   const [taskStarting, setTaskStarting] = useState(false);
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
@@ -48,12 +49,12 @@ function RunTaskButton({gitTasksData, setGitTasksData, disable, className, loadD
   };
 
   const getButton = () => {
-    if (gitTasksData?.getData("status") === "running") {
+    if (taskModel?.getData("status") === "running") {
       return (
         <CancelTaskButton
           className={"p-3"}
-          taskModel={gitTasksData}
-          taskType={gitTasksData?.getData("type")}
+          taskModel={taskModel}
+          taskType={taskModel?.getData("type")}
           actionAllowed={actionAllowed}
         />
       );
@@ -62,13 +63,13 @@ function RunTaskButton({gitTasksData, setGitTasksData, disable, className, loadD
     return (
       <Button
         variant={"success"}
-        disabled={gitTasksData?.getData("status") === "running" || disable || taskStarting || actionAllowed !== true}
+        disabled={taskModel?.getData("status") === "running" || disable || taskStarting || actionAllowed !== true}
         onClick={() => {
           showTaskRunOverlay();
         }}
       >
         <TooltipWrapper innerText={actionAllowed !== true ? "Your Access Role Level Prevents Running Tasks" : null}>
-          {gitTasksData?.getData("status") === "running" ?
+          {taskModel?.getData("status") === "running" ?
             (<span><IconBase isLoading={true} className={"mr-2"}/>Running Task</span>)
             : (<span><FontAwesomeIcon icon={faPlay} className="mr-2" fixedWidth/>Run Task</span>)}
         </TooltipWrapper>
@@ -80,8 +81,8 @@ function RunTaskButton({gitTasksData, setGitTasksData, disable, className, loadD
     toastContext.showOverlayPanel(
       <RunTaskOverlay
         handleClose={handleClose}
-        gitTasksData={gitTasksData}
-        setGitTasksData={setGitTasksData}
+        taskModel={taskModel}
+        setTaskModel={setTaskModel}
         loadData={loadData}
       />
     );
@@ -96,7 +97,7 @@ function RunTaskButton({gitTasksData, setGitTasksData, disable, className, loadD
       {/*TODO: Make sure button is not clickable until form is valid*/}
       {getButton()}
       {showToolActivity && <TaskActivityView 
-        gitTasksData={gitTasksData}
+        gitTasksData={taskModel}
         handleClose={() => setShowToolActivity(false)} />
       }
     </div>
@@ -104,10 +105,10 @@ function RunTaskButton({gitTasksData, setGitTasksData, disable, className, loadD
 }
 
 RunTaskButton.propTypes = {
-  gitTasksData: PropTypes.object,
+  taskModel: PropTypes.object,
   loadData: PropTypes.func,
   disable: PropTypes.bool,
-  setGitTasksData: PropTypes.func,
+  setTaskModel: PropTypes.func,
   className: PropTypes.string,
   actionAllowed: PropTypes.bool,
   taskType: PropTypes.string,

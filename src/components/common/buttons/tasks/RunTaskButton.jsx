@@ -109,8 +109,8 @@ function RunTaskButton({gitTasksData, setGitTasksData, disable, className, loadD
     toastContext.showOverlayPanel(
       <RunTaskOverlay
         handleClose={handleClose}
-        gitTasksData={gitTasksData}
-        setGitTasksData={setGitTasksData}
+        taskModel={gitTasksData}
+        setTaskModel={setGitTasksData}
         loadData={loadData}
       />
     );
