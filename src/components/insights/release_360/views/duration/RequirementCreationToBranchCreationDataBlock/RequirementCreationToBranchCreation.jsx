@@ -17,6 +17,8 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import { getTableDateTimeColumn } from "components/common/table/column_definitions/model-table-column-definitions";
 import FilterContainer from "components/common/table/FilterContainer";
 import VanityTable from "components/common/table/VanityTable";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 
 function RequirementCreationToBranchCreation({ dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -78,6 +80,7 @@ function RequirementCreationToBranchCreation({ dashboardData }) {
 
       if (isMounted?.current === true && branchDataObject) {
         setBranchMetric(branchDataObject);
+        setIsLoading(false);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -167,11 +170,15 @@ function RequirementCreationToBranchCreation({ dashboardData }) {
       middleText={
         <MetricScoreText
           score={
-            branchMetric.averageReqCreationToBranchCreationSecs
-              ? branchMetric.averageReqCreationToBranchCreationSecs
-              : "N/A"
+            isLoading === true ? (
+              <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1" />
+            ) : branchMetric.averageReqCreationToBranchCreationSecs ? (
+              branchMetric.averageReqCreationToBranchCreationSecs
+            ) : (
+              "N/A"
+            )
           }
-          qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
+          qualityLevel={METRIC_QUALITY_LEVELS.DEFAULT}
         />
       }
       bottomText={"Average in Days"}

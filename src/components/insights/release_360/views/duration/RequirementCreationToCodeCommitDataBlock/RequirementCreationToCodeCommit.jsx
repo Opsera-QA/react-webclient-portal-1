@@ -17,6 +17,8 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import { getTableDateTimeColumn } from "components/common/table/column_definitions/model-table-column-definitions";
 import FilterContainer from "components/common/table/FilterContainer";
 import VanityTable from "components/common/table/VanityTable";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 
 function RequirementCreationToCodeCommit({ dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -71,6 +73,7 @@ function RequirementCreationToCodeCommit({ dashboardData }) {
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+        setIsLoading(false);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -160,9 +163,15 @@ function RequirementCreationToCodeCommit({ dashboardData }) {
       middleText={
         <MetricScoreText
           score={
-            metrics.averageReqCreationToCodeCommitTimeMins ? metrics.averageReqCreationToCodeCommitTimeMins : "N/A"
+            isLoading === true ? (
+              <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1" />
+            ) : metrics.averageReqCreationToCodeCommitTimeMins ? (
+              metrics.averageReqCreationToCodeCommitTimeMins
+            ) : (
+              "N/A"
+            )
           }
-          qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
+          qualityLevel={METRIC_QUALITY_LEVELS.DEFAULT}
         />
       }
       bottomText={"Average in Days"}

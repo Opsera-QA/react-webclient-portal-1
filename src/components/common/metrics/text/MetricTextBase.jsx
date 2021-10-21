@@ -5,6 +5,7 @@ export const METRIC_QUALITY_LEVELS = {
   SUCCESS: "success",
   WARNING: "warning",
   DANGER: "danger",
+  DEFAULT: "default",
 };
 
 function MetricTextBase({ formattedText, qualityLevel }) {
@@ -16,6 +17,8 @@ function MetricTextBase({ formattedText, qualityLevel }) {
         return "metric-warning-text";
       case METRIC_QUALITY_LEVELS.DANGER:
         return "metric-danger-text";
+      case METRIC_QUALITY_LEVELS.DEFAULT:
+        return "metric-default-text";
     }
   };
 
@@ -23,11 +26,7 @@ function MetricTextBase({ formattedText, qualityLevel }) {
     return null;
   }
 
-  return (
-    <span className={getQualityBasedClassName()}>
-      {formattedText}
-    </span>
-  );
+  return <span className={getQualityBasedClassName()}>{formattedText}</span>;
 }
 
 MetricTextBase.propTypes = {

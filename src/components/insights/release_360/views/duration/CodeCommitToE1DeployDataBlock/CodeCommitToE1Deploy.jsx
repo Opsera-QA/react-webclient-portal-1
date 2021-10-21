@@ -17,6 +17,8 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import { getTableDateTimeColumn } from "components/common/table/column_definitions/model-table-column-definitions";
 import FilterContainer from "components/common/table/FilterContainer";
 import VanityTable from "components/common/table/VanityTable";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 
 function CodeCommitToE1Deploy({ dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -71,8 +73,10 @@ function CodeCommitToE1Deploy({ dashboardData }) {
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+        setIsLoading(false);
       } else {
         setMetrics([]);
+        setIsLoading(false);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -159,8 +163,16 @@ function CodeCommitToE1Deploy({ dashboardData }) {
       topText={"Code Commit to E1 Deploy"}
       middleText={
         <MetricScoreText
-          score={metrics.avgCodeCommitToEnvDeploy ? metrics.avgCodeCommitToEnvDeploy : "N/A"}
-          qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
+          score={
+            isLoading === true ? (
+              <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1" />
+            ) : metrics.avgCodeCommitToEnvDeploy ? (
+              metrics.avgCodeCommitToEnvDeploy
+            ) : (
+              "N/A"
+            )
+          }
+          qualityLevel={METRIC_QUALITY_LEVELS.DEFAULT}
         />
       }
       bottomText={"Average in Days"}
