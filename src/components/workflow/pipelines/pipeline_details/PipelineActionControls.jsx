@@ -14,7 +14,7 @@ import {
   faSpinner,
   faStopCircle,
   faHistory,
-  faFlag, faRedo, faInfoCircle,
+  faFlag, faRedo, faInfoCircle, faClock
 } from "@fortawesome/pro-light-svg-icons";
 import "../../workflows.css";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -52,7 +52,7 @@ function PipelineActionControls({
     pipelineOrientation: "",
   });
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
-  const [hasQueuedRequest, setHasQueuedRequest] = useState(false);
+  const [hasQueuedRequest, setHasQueuedRequest] = useState(true); //TODO: when development done, please set default value to false
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -127,19 +127,28 @@ function PipelineActionControls({
     }
 
     setWorkflowStatus(status);
+
+    //TODO: Enable line 132 ONLY for testing to render the page in a running mode, when done, make sure line 129 is enabled AND the last line of the function.
+    //setWorkflowStatus("running");
   };
 
   const checkPipelineQueueStatus = async () => {
     const queuedRequest = await pipelineActions.getQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
-
-    if (typeof queuedRequest === "object" && Object.keys(queuedRequest)?.length > 0) {
-      setHasQueuedRequest(true);
-    }
+    const isQueued = typeof queuedRequest === "object" && Object.keys(queuedRequest)?.length > 0;
+    setHasQueuedRequest(isQueued);
   };
 
   const deletePipelineQueueRequest = async () => {
-    const queuedRequest = await pipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
 
+    //TODO: Wire up this to onclick even OverlayTrigger line 505 (the clock button).  The idea is that the tooltip tells the user
+    // that there is an item in the queue.  If they click on it, I'd like a modal (delete confirmation essentially) to open
+    // BUT it's not directly a delete confirmation.  I want the modal to be informational.  The wording should match what is in the
+    // tooltip for that button.  Then wire up two buttons:  Close or "Cancel Queue Request"
+    // clicking cancel queue request will then call the next line of code.  So however you want to structure that, I think
+    // it will work for now.
+
+    //const queuedRequest = await pipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
+    setHasQueuedRequest(false);
     // TODO: Handle Logic
   };
 
@@ -152,6 +161,7 @@ function PipelineActionControls({
     await fetchActivityLogs();
     setResetPipeline(false);
     setStartPipeline(false);
+    await checkPipelineQueueStatus();
   };
 
   const handleStopWorkflowClick = async (pipelineId) => {
@@ -162,6 +172,7 @@ function PipelineActionControls({
     await fetchActivityLogs();
     setResetPipeline(false);
     setStartPipeline(false);
+    await checkPipelineQueueStatus();
   };
 
   const handleApprovalClick = () => {
@@ -192,6 +203,7 @@ function PipelineActionControls({
   const handleRefreshClick = async () => {
     await fetchData();
     await fetchActivityLogs();
+    await checkPipelineQueueStatus();
   };
 
   //action functions
@@ -283,10 +295,10 @@ function PipelineActionControls({
 
 
   const launchPipelineStartWizard = (pipelineOrientation, pipelineType, pipelineId) => {
-    console.log("launching wizard");
-    console.log("pipelineOrientation ", pipelineOrientation);
-    console.log("pipelineType ", pipelineType);
-    console.log("pipelineId ", pipelineId);
+    //console.log("launching wizard");
+    //console.log("pipelineOrientation ", pipelineOrientation);
+    //console.log("pipelineType ", pipelineType);
+    //console.log("pipelineId ", pipelineId);
 
     toastContext.showOverlayPanel(
       <PipelineStartWizard
@@ -302,7 +314,7 @@ function PipelineActionControls({
   };
 
   const handlePipelineStartWizardClose = () => {
-    console.log("closing wizard");
+    //console.log("closing wizard");
     toastContext.clearOverlayPanel();
   };
 
@@ -474,22 +486,42 @@ function PipelineActionControls({
               <span className="d-none d-md-inline">Resume</span></Button>
           </OverlayTrigger>}
 
-          {workflowStatus !== "running" &&
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Reset current pipeline run state." })}>
-            <Button variant="danger"
-                    className="btn-default"
-                    size="sm"
-                    onClick={() => {
-                      handleResetWorkflowClick(pipeline._id);
-                    }}
-                    disabled={!authorizedAction("reset_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline}>
-              {resetPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> :
-                <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>}
-              <span className="d-none d-md-inline">Reset</span></Button>
-          </OverlayTrigger>}
+          {
+            workflowStatus !== "running" &&
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip({ message: "Reset current pipeline run state." })}>
+              <Button variant="danger"
+                      className="btn-default"
+                      size="sm"
+                      onClick={() => {
+                        handleResetWorkflowClick(pipeline._id);
+                      }}
+                      disabled={!authorizedAction("reset_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline}>
+                {resetPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> :
+                  <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>}
+                <span className="d-none d-md-inline">Reset</span></Button>
+            </OverlayTrigger>
+          }
+
+
+          {
+            hasQueuedRequest &&
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip({ message: "A queued request to start this pipeline is pending.  Upon successful completion of this run, the pipeline will restart." })}>
+              <Button variant="secondary"
+                      size="sm"
+                      onClick={() => {
+                        deletePipelineQueueRequest();
+                      }}>
+                <FontAwesomeIcon icon={faClock} fixedWidth/></Button>
+            </OverlayTrigger>
+          }
+
+
 
           <OverlayTrigger
             placement="top"
