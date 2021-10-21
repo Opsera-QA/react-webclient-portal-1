@@ -66,7 +66,7 @@ function OctopusOpseraManagedProjectForm({
         filter={"contains"}
         selectOptions={listOfSteps ? listOfSteps : []}
         fieldName={"ecrPushStepId"}
-        disabled={listOfSteps.length === 0 || dataObject.getData("environmentName").length === 0}
+        disabled={listOfSteps.length === 0}
       />
       <OctopusTargetRolesSelectInput
         fieldName={"octopusTargetRoles"}
