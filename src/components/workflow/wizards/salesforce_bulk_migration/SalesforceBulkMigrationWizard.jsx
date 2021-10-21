@@ -11,7 +11,7 @@ import SalesforceBulkMigrationWizardInitializationScreen
 import SalesforceBulkMigrationWizardComponentSelectionScreen
   from "components/workflow/wizards/salesforce_bulk_migration/component_selector/SalesforceBulkMigrationWizardComponentSelector";
 
-export const BULK_MIGRATION_WIZARD_SCREENS = {
+export const SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
   COMPONENT_SELECTION_SCREEN: "COMPONENT_SELECTION_SCREEN",
   CONFIRMATION_SCREEN: "COMPONENT_SELECTOR",
@@ -19,7 +19,7 @@ export const BULK_MIGRATION_WIZARD_SCREENS = {
 
 const SalesforceBulkMigrationWizard = ({ handleClose, taskModel }) => {
   const [error, setError] = useState("");
-  const [bulkMigrationWizardScreen, setBulkMigrationWizardScreen] = useState(BULK_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN);
+  const [bulkMigrationWizardScreen, setBulkMigrationWizardScreen] = useState(SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN);
   const [wizardModel, setWizardModel] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -46,7 +46,7 @@ const SalesforceBulkMigrationWizard = ({ handleClose, taskModel }) => {
 
   const getBody = () => {
     switch (bulkMigrationWizardScreen) {
-      case BULK_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+      case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN:
         return (
           <SalesforceBulkMigrationWizardInitializationScreen
             pipelineWizardModel={wizardModel}
@@ -57,7 +57,7 @@ const SalesforceBulkMigrationWizard = ({ handleClose, taskModel }) => {
             setError={setError}
           />
         );
-      case BULK_MIGRATION_WIZARD_SCREENS.COMPONENT_SELECTION_SCREEN:
+      case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.COMPONENT_SELECTION_SCREEN:
         return (
           <SalesforceBulkMigrationWizardComponentSelectionScreen
             pipelineWizardModel={wizardModel}
@@ -71,13 +71,13 @@ const SalesforceBulkMigrationWizard = ({ handleClose, taskModel }) => {
 
   const getHelpComponent = () => {
     switch (bulkMigrationWizardScreen) {
-      // case BULK_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+      // case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN:
       //   return (
       //     <SfdcWizardInitializationHelpDocumentation
       //       closeHelpPanel={() => setHelpIsShown(false)}
       //     />
       //   );
-      // case BULK_MIGRATION_WIZARD_SCREENS.COMPONENT_SELECTOR:
+      // case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.COMPONENT_SELECTOR:
       //   return (
       //     <SfdcWizardComponentTypeSelectionHelpDocumentation
       //       closeHelpPanel={() => setHelpIsShown(false)}
