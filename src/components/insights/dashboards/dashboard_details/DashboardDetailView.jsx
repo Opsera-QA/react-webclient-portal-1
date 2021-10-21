@@ -82,8 +82,10 @@ function DashboardDetailView() {
 
     if (isMounted.current === true && response?.data) {
       setDashboardData(new Model(response.data, dashboardMetadata, false));
+      
     }
   };
+  console.log(dashboardData,' *** 234234234234234');
 
   const handleDelete = async () => {
     return await dashboardsActions.delete(dashboardData, getAccessToken);

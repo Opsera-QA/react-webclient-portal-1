@@ -16,7 +16,7 @@ import SonarRatingsReliabilityDataBlock
   from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlock_reverted";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 
-function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis, showSettingsToggle }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [sonarRatingsMetric, setSonarRatingsMetric] = useState(undefined);
@@ -120,6 +120,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
         setKpis={setKpis}
         isLoading={isLoading}
         chartHelpComponent={(closeHelpPanel) => <SonarRatingsChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
+        showSettingsToggle={showSettingsToggle}
       />
       <ModalLogs
         header="Build Duration"
@@ -138,7 +139,8 @@ SonarRatingMetrics.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func
+  setKpis: PropTypes.func,
+  showSettingsToggle: PropTypes.bool,
 };
 
 export default SonarRatingMetrics;
