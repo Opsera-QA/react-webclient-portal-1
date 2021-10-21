@@ -54,7 +54,7 @@ function CodeCommitToE3Deploy({ dashboardData }) {
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+      const response = await chartsActions.getEnvironmentMetrics(
         getAccessToken,
         cancelSource,
         "codeCommitToE3Deploy",
