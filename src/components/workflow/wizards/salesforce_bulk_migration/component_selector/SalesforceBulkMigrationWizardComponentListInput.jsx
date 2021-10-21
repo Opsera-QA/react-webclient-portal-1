@@ -2,13 +2,14 @@ import React, {useContext, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
-import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import axios from "axios";
 import ListInputBase from "components/common/inputs/list/ListInputBase";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import salesforceBulkMigrationWizardActions
+  from "components/workflow/wizards/salesforce_bulk_migration/salesforceBulkMigrationWizard.actions";
 
 const SalesforceBulkMigrationWizardComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -44,8 +45,7 @@ const SalesforceBulkMigrationWizardComponentListInput = ({ pipelineWizardModel, 
       setIsLoading(true);
 
       if (pipelineWizardModel.getData("sfdcToolId")) {
-        const response = await sfdcPipelineActions.getComponentTypesV2(getAccessToken, cancelSource, pipelineWizardModel);
-
+        const response = await salesforceBulkMigrationWizardActions.getComponentTypesV2(getAccessToken, cancelSource, pipelineWizardModel);
         if (isMounted?.current === true && Array.isArray(response?.data)) {
           setComponentTypes(response?.data);
         }
@@ -122,6 +122,7 @@ const SalesforceBulkMigrationWizardComponentListInput = ({ pipelineWizardModel, 
     <Row>
       <Col lg={6}>
         <ListInputBase
+          height={"70vh"}
           fieldName={"selectedComponentTypes"}
           selectOptions={componentTypes}
           dataObject={pipelineWizardModel}
@@ -140,6 +141,7 @@ const SalesforceBulkMigrationWizardComponentListInput = ({ pipelineWizardModel, 
       </Col>
       <Col lg={6}>
         <ListInputBase
+          height={"70vh"}
           customTitle={"Selected Component Types"}
           fieldName={"selectedComponentTypes"}
           selectOptions={getSelectedOptions()}

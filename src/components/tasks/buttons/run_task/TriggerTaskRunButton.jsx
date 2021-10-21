@@ -10,6 +10,9 @@ import taskActions from "components/tasks/task.actions";
 import axios from "axios";
 import LoadingDialog from "components/common/status_notifications/loading";
 import IconBase from "components/common/icons/IconBase";
+import {TASK_TYPES} from "components/tasks/task.types";
+import SalesforceBulkMigrationTaskWizardOverlay
+  from "components/tasks/buttons/run_task/SalesforceBulkMigrationTaskWizardOverlay";
 
 // TODO: THis should be separated into multiple buttons based on task.
 function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurationDataDto, handleClose, disable, className, loadData }) {
@@ -49,7 +52,16 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
 
   // TODO: This should be separate buttons OR passed into this component from a wrapper component for each type
   const handleRunGitTask = async () => {
-    if (gitTasksData?.getData("type") === "sync-sfdc-repo") {
+    if (gitTasksData?.getData("type") === TASK_TYPES.SALESFORCE_BULK_MIGRATION) {
+      handleClose();
+      toastContext.showOverlayPanel(
+        <SalesforceBulkMigrationTaskWizardOverlay
+          taskModel={gitTasksData}
+        />
+      );
+      setIsLoading(false);
+    }
+    else if (gitTasksData?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_REPO) {
        try {
         setIsLoading(true);
         const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
@@ -64,7 +76,7 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
         setIsLoading(false);
       }
     }    
-    else if (gitTasksData?.getData("type") === "sync-branch-structure") {
+    else if (gitTasksData?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE) {
       // pipeline action call to trigger branch conversion
       try{
         setIsLoading(true);
@@ -77,7 +89,7 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
         setIsLoading(false);
       }
     }
-    else if (gitTasksData?.getData("type") === "sync-git-branches"){
+    else if (gitTasksData?.getData("type") === TASK_TYPES.SYNC_GIT_BRANCHES){
       // call to trigger merge request
       try{
         setIsLoading(true);
@@ -99,7 +111,7 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
         setIsLoading(false);
       }
     }
-    else if (gitTasksData?.getData("type") === "ecs_cluster_creation"){
+    else if (gitTasksData?.getData("type") === TASK_TYPES.AWS_CREATE_ECS_CLUSTER){
       // call to trigger merge request
       try{
         setIsLoading(true);

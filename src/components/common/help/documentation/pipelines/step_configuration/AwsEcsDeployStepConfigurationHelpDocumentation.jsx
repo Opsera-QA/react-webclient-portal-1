@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
 
-function AwsEcsDeployStepConfigurationHelp() {
+function AwsEcsDeployStepConfigurationHelpDocumentation() {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -50,4 +50,4 @@ function AwsEcsDeployStepConfigurationHelp() {
     />
   );
 }
-export default React.memo(AwsEcsDeployStepConfigurationHelp);
+export default React.memo(AwsEcsDeployStepConfigurationHelpDocumentation);

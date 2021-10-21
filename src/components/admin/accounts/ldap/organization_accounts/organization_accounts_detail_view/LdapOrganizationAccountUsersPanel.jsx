@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import LdapUsersTable from "components/settings/ldap_users/LdapUsersTable";
 
@@ -10,14 +9,14 @@ function LdapOrganizationAccountUsersPanel({ ldapOrganizationAccountData, author
   }
 
   return (
-    <SummaryPanelContainer>
+    <div className={"mt-2"}>
       <LdapUsersTable
         orgDomain={ldapOrganizationAccountData["orgDomain"]}
         userData={ldapOrganizationAccountData.getData("users")}
         authorizedActions={authorizedActions?.includes("update_organization_account") ? ["create_user", "update_user"] : []}
         loadData={loadData}
       />
-    </SummaryPanelContainer>
+    </div>
   );
 }
 

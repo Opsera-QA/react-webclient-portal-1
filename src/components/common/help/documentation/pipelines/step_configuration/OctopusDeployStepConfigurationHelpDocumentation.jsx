@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
 
-function OctopusDeployStepConfigurationHelp() {
+function OctopusDeployStepConfigurationHelpDocumentation() {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -49,4 +49,4 @@ function OctopusDeployStepConfigurationHelp() {
     />
   );
 }
-export default React.memo(OctopusDeployStepConfigurationHelp);
+export default React.memo(OctopusDeployStepConfigurationHelpDocumentation);

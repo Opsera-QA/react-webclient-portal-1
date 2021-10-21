@@ -2,13 +2,12 @@ import React, { useContext, useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { DialogToastContext } from 'contexts/DialogToastContext';
 import { AuthContext } from 'contexts/AuthContext';
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from 'axios';
 import OctopusStepActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
-import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
-// TODO: Refactor when refactoring Octopus step
-const OctopusTenantStandaloneSelectInput = (
+const OctopusTenantSelectInput = (
   {
     octopusToolId,
     spaceId,
@@ -39,7 +38,7 @@ const OctopusTenantStandaloneSelectInput = (
     setTenants([]);
 
     if (
-         octopusToolId !== "" && octopusToolId != null
+      octopusToolId !== "" && octopusToolId != null
       && spaceId !== "" && spaceId != null
       && projectId !== "" && projectId != null
       && environmentId !== "" && environmentId != null
@@ -85,7 +84,7 @@ const OctopusTenantStandaloneSelectInput = (
   };
 
   return (
-    <StandaloneSelectInput
+    <SelectInputBase
       selectOptions={tenants}
       valueField={valueField}
       busy={isLoading}
@@ -98,7 +97,7 @@ const OctopusTenantStandaloneSelectInput = (
   );
 };
 
-OctopusTenantStandaloneSelectInput.propTypes = {
+OctopusTenantSelectInput.propTypes = {
   disabled: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.array,
@@ -113,9 +112,9 @@ OctopusTenantStandaloneSelectInput.propTypes = {
   value: PropTypes.string,
 };
 
-OctopusTenantStandaloneSelectInput.defaultProps = {
+OctopusTenantSelectInput.defaultProps = {
   valueField: "id",
   textField: "name"
 };
 
-export default OctopusTenantStandaloneSelectInput;
+export default OctopusTenantSelectInput;
