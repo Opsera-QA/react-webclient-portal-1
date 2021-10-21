@@ -75,6 +75,7 @@ const SalesforceBulkMigrationWizard = ({ handleClose, taskModel }) => {
             setPipelineWizardModel={setWizardModel}
             setPipelineWizardScreen={setBulkMigrationWizardScreen}
             handleClose={handleClose}
+            setError={setError}
           />
         );
     }
@@ -105,14 +106,6 @@ const SalesforceBulkMigrationWizard = ({ handleClose, taskModel }) => {
     );
   }
 
-  if (error && error !== "") {
-    return (
-      <div className="mt-5">
-        <ErrorDialog error={error} />
-      </div>
-    );
-  }
-
   return (
     <OverlayPanelBodyContainer
       helpComponent={getHelpComponent()}
@@ -121,6 +114,9 @@ const SalesforceBulkMigrationWizard = ({ handleClose, taskModel }) => {
       hideCloseButton={true}
       isLoading={wizardModel?.getData("recordId")?.length === ""}
     >
+      <div>
+        <ErrorDialog error={error} />
+      </div>
       <div className={"m-3"}>
         {getBody()}
       </div>

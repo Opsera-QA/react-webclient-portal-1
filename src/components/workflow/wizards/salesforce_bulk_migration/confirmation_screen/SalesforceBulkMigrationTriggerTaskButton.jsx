@@ -9,7 +9,7 @@ import IconBase from "components/common/icons/IconBase";
 import salesforceBulkMigrationWizardActions
   from "components/workflow/wizards/salesforce_bulk_migration/salesforceBulkMigrationWizard.actions";
 
-const SalesforceBulkMigrationTriggerTaskButton = ({pipelineWizardModel, handleClose, setError,}) => {
+const SalesforceBulkMigrationTriggerTaskButton = ({pipelineWizardModel, handleClose, setError}) => {
   const { getAccessToken } = useContext(AuthContext);
   const [isTriggeringTask, setIsTriggeringTask] = useState(false);
   const toastContext = useContext(DialogToastContext);
@@ -36,18 +36,19 @@ const SalesforceBulkMigrationTriggerTaskButton = ({pipelineWizardModel, handleCl
     try {
       setIsTriggeringTask(true);
       createJobResponse = await salesforceBulkMigrationWizardActions.triggerTaskV2(getAccessToken, cancelTokenSource, pipelineWizardModel.getData("gitTaskId"));
-    } catch (error) {
-      console.log("Error posting to API: ", error);
-      setError(error);
-      createJobResponse = error;
-    }
 
-    if (createJobResponse?.data?.message?.status === "EXECUTED") {
-      toastContext.showInformationToast("A request to start this Task has been submitted. It will begin shortly.", 20);
-      handleClose();
-    } else {
-      if (setError) {
-        setError(createJobResponse && createJobResponse.data && createJobResponse.data.message);
+      if (createJobResponse?.data?.message?.status === "EXECUTED") {
+        toastContext.showInformationToast("A request to start this Task has been submitted. It will begin shortly.", 20);
+        handleClose();
+      } else {
+        setError(createJobResponse?.data?.message);
+      }
+    } catch (error) {
+      setError(error);
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setIsTriggeringTask(false);
       }
     }
   };

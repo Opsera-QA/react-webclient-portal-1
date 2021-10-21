@@ -11,7 +11,14 @@ import SalesforceBulkMigrationTriggerTaskButton
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import ListInputBase from "components/common/inputs/list/ListInputBase";
 
-const SalesforceBulkMigrationWizardConfirmationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) => {
+const SalesforceBulkMigrationWizardConfirmationScreen = (
+  {
+    pipelineWizardModel,
+    setPipelineWizardModel,
+    setPipelineWizardScreen,
+    handleClose,
+    setError,
+  }) => {
   const getFormattedComponentTypes = () => {
     let componentTypes = [];
     const selectedComponentTypes = pipelineWizardModel?.getArrayData("selectedComponentTypes");
@@ -59,6 +66,7 @@ const SalesforceBulkMigrationWizardConfirmationScreen = ({ pipelineWizardModel, 
         <SalesforceBulkMigrationTriggerTaskButton
           pipelineWizardModel={pipelineWizardModel}
           handleClose={handleClose}
+          setError={setError}
         />
         <CancelButton
           className={"ml-2"}
@@ -74,7 +82,8 @@ SalesforceBulkMigrationWizardConfirmationScreen.propTypes = {
   setPipelineWizardScreen: PropTypes.func,
   handleClose: PropTypes.func,
   pipelineWizardModel: PropTypes.object,
-  setPipelineWizardModel: PropTypes.func
+  setPipelineWizardModel: PropTypes.func,
+  setError: PropTypes.func,
 };
 
 export default SalesforceBulkMigrationWizardConfirmationScreen;
