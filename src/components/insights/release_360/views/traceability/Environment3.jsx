@@ -11,8 +11,7 @@ function Environment3({dashboardData}) {
   let BuildData = <TotalBuildsE1 dashboardData={dashboardData} environment= {"e3"}></TotalBuildsE1>;
   let ScansData = <TotalScansE1  dashboardData={dashboardData} environment= {"e3"}></TotalScansE1>;
   let TestData = <TotalTestsE1 dashboardData={dashboardData} environment= {"e3"} ></TotalTestsE1>;
-  let DeploymentData =
-    <DeploymentsE1 environment= {"e3"}  ></DeploymentsE1>;
+  let DeploymentData = <DeploymentsE1 dashboardData={dashboardData} environment= {"e3"}  ></DeploymentsE1>;
   return (
     <HorizontalDataBlocksContainer
       title={"E3 Summary"}
