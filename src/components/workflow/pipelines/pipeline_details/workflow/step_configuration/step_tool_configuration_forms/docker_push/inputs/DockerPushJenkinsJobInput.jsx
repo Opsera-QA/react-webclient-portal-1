@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import JenkinsJobInput from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsJobInput";
+import JenkinsJobSelectInput from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsJobSelectInput";
 
 function DockerPushJenkinsJobInput({dataObject, setDataObject, disabled}) {
   const setJenkinsJob = (fieldName, selectedOption) => {    
@@ -22,7 +22,7 @@ function DockerPushJenkinsJobInput({dataObject, setDataObject, disabled}) {
     setDataObject({...newDataObject});
   };
   return (
-     <JenkinsJobInput
+     <JenkinsJobSelectInput
        fieldName={"toolJobName"}
        jenkinsId={dataObject?.getData("toolConfigId")}
        typeFilter={"DOCKER PUSH"}

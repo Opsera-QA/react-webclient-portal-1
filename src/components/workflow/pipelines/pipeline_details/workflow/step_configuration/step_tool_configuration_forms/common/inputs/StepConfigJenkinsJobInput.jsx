@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import JenkinsJobInput from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsJobInput";
+import JenkinsJobSelectInput from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsJobSelectInput";
 
 const StepConfigJenkinsJobInput = ({dataObject, setDataObject, disabled, typeFilter}) => {
     const setJenkinsJob = (fieldName, selectedOption) => {
@@ -35,7 +35,7 @@ const StepConfigJenkinsJobInput = ({dataObject, setDataObject, disabled, typeFil
     };
 
     return (
-        <JenkinsJobInput
+        <JenkinsJobSelectInput
             fieldName={"toolJobName"}
             jenkinsId={dataObject?.getData("toolConfigId")}
             typeFilter={typeFilter}

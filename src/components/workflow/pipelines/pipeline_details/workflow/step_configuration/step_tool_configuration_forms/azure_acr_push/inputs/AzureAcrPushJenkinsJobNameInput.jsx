@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import JenkinsJobInput from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsJobInput";
+import JenkinsJobSelectInput from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsJobSelectInput";
 
 function AzureAcrPushJenkinsJobNameInput({dataObject, setDataObject, disabled}) {
 
@@ -25,7 +25,7 @@ function AzureAcrPushJenkinsJobNameInput({dataObject, setDataObject, disabled}) 
   };
   
   return (
-     <JenkinsJobInput
+     <JenkinsJobSelectInput
        fieldName={"toolJobName"}
        jenkinsId={dataObject?.getData("toolConfigId")}
        typeFilter={"AZURE_DOCKER_PUSH"}
