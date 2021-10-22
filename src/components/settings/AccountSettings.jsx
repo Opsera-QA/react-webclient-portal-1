@@ -67,7 +67,6 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"deleteTools"} />
           <BreadcrumbPageLink breadcrumbDestination={"ldapDepartmentManagement"} visible={!isSassUser()}/>
           <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}  visible={!isSassUser()}/>
-          <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"} visible={!isSassUser()} />
           <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"} visible={!isSassUser()}/>
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
           <BreadcrumbPageLink breadcrumbDestination={"ldapSiteRolesManagement"} visible={!isSassUser()}/>
