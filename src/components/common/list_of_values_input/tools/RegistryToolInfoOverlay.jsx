@@ -11,7 +11,9 @@ import TableCardView from "components/common/table/TableCardView";
 function RegistryToolInfoOverlay({tools, fieldName, toolMetadata, isMounted, loadData, isLoading, selectedToolId, setDataFunction}) {
   // TODO: This is a workaround until the tool info overlay is complete
   const rowClickFunction = (selectedTool) => {
-    setDataFunction(fieldName, selectedTool);
+    if (setDataFunction) {
+      setDataFunction(fieldName, selectedTool);
+    }
     document.body.click();
   };
 
