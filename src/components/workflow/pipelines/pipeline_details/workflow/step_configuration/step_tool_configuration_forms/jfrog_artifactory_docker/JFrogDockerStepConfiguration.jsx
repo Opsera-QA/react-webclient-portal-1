@@ -3,7 +3,7 @@ import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadi
 import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
-import JfrogToolInput from "./inputs/JfrogToolInput";
+import JfrogStepJfrogToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_docker/inputs/JfrogStepJfrogToolSelectInput";
 import JfrogJenkinsToolInput from "./inputs/JFrogJenkinsToolSelectInput";
 import JFrogJenkinsJobInput from "./inputs/JfrogJenkinsJobInput";
 import JFrogBuildStepSelectInput from "./inputs/JFrogBuildStepSelectInput";
@@ -96,7 +96,10 @@ function JFrogDockerStepConfiguration({ pipelineId, stepTool, stepId, createJob,
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <JfrogToolInput dataObject={jfrogStepConfigurationDto} setDataObject={setJFrogStepConfigurationDataDto} />
+      <JfrogStepJfrogToolSelectInput
+        model={jfrogStepConfigurationDto}
+        setModel={setJFrogStepConfigurationDataDto}
+      />
       <JfrogJenkinsToolInput dataObject={jfrogStepConfigurationDto} setDataObject={setJFrogStepConfigurationDataDto} />
       <JFrogJenkinsJobInput
         dataObject={jfrogStepConfigurationDto}
