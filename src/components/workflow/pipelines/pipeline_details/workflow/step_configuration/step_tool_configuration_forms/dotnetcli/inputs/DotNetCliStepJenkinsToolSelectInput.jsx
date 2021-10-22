@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import RoleRestrictedJenkinsToolSelectInput
   from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
 
-function DotNetJenkinsToolSelectInput({dataObject, setDataObject, disabled}) {
+function DotNetCliStepJenkinsToolSelectInput({dataObject, setDataObject, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
-    newDataObject.setData("toolConfigId", selectedOption?._id);
-    newDataObject.setData("toolName",selectedOption?.name);
+    newDataObject.setData("toolConfigId", selectedOption._id);
+    newDataObject.setData("toolName",selectedOption.name);
     newDataObject.setData("toolJobName", "");
     newDataObject.setData("toolJobId", "");
     newDataObject.setData("jobType", "");
@@ -23,21 +23,21 @@ function DotNetJenkinsToolSelectInput({dataObject, setDataObject, disabled}) {
   };
 
   return (
-     <RoleRestrictedJenkinsToolSelectInput
-       fieldName={"toolConfigId"}
-       configurationRequired={true}
-       model={dataObject}
-       setModel={setDataObject}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-     />
+    <RoleRestrictedJenkinsToolSelectInput
+      fieldName={"toolConfigId"}
+      configurationRequired={true}
+      model={dataObject}
+      setModel={setDataObject}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+    />
   );
 }
 
-DotNetJenkinsToolSelectInput.propTypes = {
+DotNetCliStepJenkinsToolSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default DotNetJenkinsToolSelectInput;
+export default DotNetCliStepJenkinsToolSelectInput;
