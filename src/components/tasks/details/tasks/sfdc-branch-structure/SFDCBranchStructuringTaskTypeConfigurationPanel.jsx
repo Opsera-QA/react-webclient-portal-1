@@ -10,7 +10,7 @@ import SFDCJenkinsToolInput from "components/tasks/details/tasks/sfdc-org-sync/i
 import SFDCJenkinsAccountInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsAccountSelectInput";
 import SFDCGitRepositoryInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskRepositorySelectInput";
 import SFDCGitBranchInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
-import SFDXToolInput from "./inputs/SFDXToolInput";
+import SalesforceBranchStructuringTaskSalesforceConfiguratorToolSelectInput from "components/tasks/details/tasks/sfdc-branch-structure/inputs/SalesforceBranchStructuringTaskSalesforceConfiguratorToolSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import AgentLabelsSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
 import SalesforceOrganizationSyncTaskBranchTypeSelectInput
@@ -46,7 +46,10 @@ function SFDCBranchStructuringTaskTypeConfigurationPanel({ gitTasksDataDto, gitT
         <SFDCJenkinsToolInput  dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
       </Col>
       <Col lg={12}>
-        <SFDXToolInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
+        <SalesforceBranchStructuringTaskSalesforceConfiguratorToolSelectInput
+          model={gitTasksConfigurationData}
+          setModel={setGitTasksConfigurationData}
+        />
       </Col>
       <Col lg={12}>
         <SalesforceOrganizationSyncTaskBranchTypeSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
