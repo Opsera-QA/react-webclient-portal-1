@@ -52,7 +52,7 @@ function GroupManagementSubNavigationBar({activeTab}) {
         tabName={"groups"}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
-        tabText={"User Groups"}
+        tabText={"Groups"}
       />
       {getActiveViewerTab()}
     </NavigationTabContainer>
