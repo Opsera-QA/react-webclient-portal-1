@@ -32,7 +32,7 @@ CancelButton.propTypes = {
 };
 
 CancelButton.defaultProps = {
-  size: "md",
+  size: "sm",
   buttonText: "Cancel",
 };
 
