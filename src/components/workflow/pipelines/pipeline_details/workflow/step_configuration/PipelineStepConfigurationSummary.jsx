@@ -163,7 +163,9 @@ import AzureFunctionsStepConfigurationSummaryPanel from "./step_tool_configurati
 import azureFunctionsStepFormMetadata from "./step_tool_configuration_forms/azure_functions/azureFunctions-stepForm-metadata";
 import AnsibleStepConfigurationSummaryPanel from "./step_tool_configuration_forms/ansible/AnsibleStepConfigurationSummaryPanel";
 import ansibleStepMetadata from "./step_tool_configuration_forms/ansible/ansible.step.metadata";
-
+import dotnetCliStepFormMetadata from "./step_tool_configuration_forms/dotnetcli/dotnet-cli-stepForm-metadata";
+import DotNetCliPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/dotnetcli/DotNetCliPipelineStepConfigurationSummaryPanel";
 function PipelineStepConfigurationSummary({
   pipelineData,
 }) {
@@ -347,6 +349,13 @@ function PipelineStepConfigurationSummary({
           <DotNetPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             dotNetPipelineDataObject={getModelWrappedObject(dotnetStepFormMetadata)}
+          />
+        );
+      case "dotnet-cli":
+        return (
+          <DotNetCliPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            dotNetCliPipelineDataObject={getModelWrappedObject(dotnetCliStepFormMetadata)}
           />
         );
       case "nunit":
