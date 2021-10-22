@@ -18,8 +18,6 @@ import ProjectMappingToolSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
 import ProjectMappingProjectSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingProjectSelectInput";
-import JenkinsJobSelectInput
-  from "../../../../common/list_of_values_input/settings/data_tagging/projects/JenkinsJobSelectInput";
 import SonarProjectSelectInput
   from "../../../../common/list_of_values_input/settings/data_tagging/projects/SonarProjectSelectInput";
 import TagManager from "components/common/inputs/tags/TagManager";
