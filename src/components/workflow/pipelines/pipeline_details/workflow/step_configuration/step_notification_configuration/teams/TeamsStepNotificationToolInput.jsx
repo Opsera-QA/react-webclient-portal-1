@@ -1,12 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineToolInput from "../../../../../../../common/list_of_values_input/workflow/pipelines/PipelineToolInput";
+import RoleRestrictedMicrosoftTeamsToolSelectInput
+  from "components/common/list_of_values_input/tools/teams/RoleRestrictedMicrosoftTeamsToolSelectInput";
 
 function TeamsStepNotificationToolInput({visible, dataObject, setDataObject, disabled}) {
-  if (!visible) {
-    return <></>;
-  }
-
   const getPlaceholderText = () => {
     if (dataObject.getData("enabled") !== true) {
       return "Notifications must be enabled before selecting Microsoft Teams Tool.";
@@ -14,15 +11,13 @@ function TeamsStepNotificationToolInput({visible, dataObject, setDataObject, dis
   };
 
   return (
-    <PipelineToolInput
-      toolType={"teams"}
-      toolFriendlyName={"Microsoft Teams"}
+    <RoleRestrictedMicrosoftTeamsToolSelectInput
       fieldName={"toolId"}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      model={dataObject}
+      setModel={setDataObject}
       placeholderText={getPlaceholderText()}
       visible={visible}
-      disabled={disabled || dataObject.getData("enabled") === false}
+      disabled={disabled || dataObject?.getData("enabled") === false}
    />
   );
 }
