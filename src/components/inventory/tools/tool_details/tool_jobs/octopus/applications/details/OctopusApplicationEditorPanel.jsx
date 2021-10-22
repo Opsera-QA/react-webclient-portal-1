@@ -17,7 +17,7 @@ import WebAppNameSelectInput from "./input/WebAppNameSelectInput";
 import SpaceNameSelectInput from "./input/SpaceNameSelectInput";
 import EnvironmentNameSelectInput from "./input/EnvironmentSelectInput";
 import AccountSelectInput from "./input/AccountSelectInput";
-import AWSToolSelectInput from "./input/AWSToolSelectInput";
+import RoleRestrictedAwsAccountToolSelectInput from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 import ClusterSelectInput from "./input/ClusterSelectInput";
 import TestConnectionButton from "./input/TestConnectionButton";
 import EditWarningModalToolRegistry from "components/common/modal/EditWarningModalToolRegistry";
@@ -258,17 +258,16 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
             {octopusApplicationDataDto &&
             octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
               <Col lg={12}>
-                <AWSToolSelectInput
+                <RoleRestrictedAwsAccountToolSelectInput
                   fieldName={"awsToolConfigId"}
-                  dataObject={octopusApplicationDataDto}
-                  setDataObject={setOctopusApplicationDataDto}
+                  model={octopusApplicationDataDto}
+                  setModel={setOctopusApplicationDataDto}
                   disabled={
                     (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) ||
                     appID
                       ? true
                       : false
                   }
-                  tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("cloudType") : ""}
                 />
               </Col>
             )}
@@ -348,7 +347,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
             {octopusApplicationDataDto &&
             octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
               <Col lg={12}>
-                <AWSToolSelectInput
+                <RoleRestrictedAwsAccountToolSelectInput
                   fieldName={"awsToolConfigId"}
                   dataObject={octopusApplicationDataDto}
                   setDataObject={setOctopusApplicationDataDto}

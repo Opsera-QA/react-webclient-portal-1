@@ -16,8 +16,8 @@ import DockerPushNewRepoToggleInput
 import _ from "lodash";
 import DockerPushAwsRepoInput from "./inputs/DockerPushAwsRepoInput";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import AWSToolSelectInput
-  from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/AWSToolSelectInput";
+import RoleRestrictedAwsAccountToolSelectInput
+  from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 
 function DockerPushStepConfiguration({ pipelineId, plan, stepTool, stepId, createJob, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -118,10 +118,10 @@ function DockerPushStepConfiguration({ pipelineId, plan, stepTool, stepId, creat
         model={dockerPushStepConfigurationDto}
         setModel={setDockerPushStepConfigurationDataDto}
       />
-      <AWSToolSelectInput
+      <RoleRestrictedAwsAccountToolSelectInput
         fieldName={"awsToolConfigId"}
-        dataObject={dockerPushStepConfigurationDto}
-        setDataObject={setDockerPushStepConfigurationDataDto}
+        model={dockerPushStepConfigurationDto}
+        setModel={setDockerPushStepConfigurationDataDto}
         disabled={
           (dockerPushStepConfigurationDto && dockerPushStepConfigurationDto.getData("toolConfigId") && dockerPushStepConfigurationDto.getData("toolConfigId").length === 0) 
             ? true
