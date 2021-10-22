@@ -11,7 +11,25 @@ import RegistryToolInfoOverlay from "components/common/list_of_values_input/tool
 import toolsActions from "components/inventory/tools/tools-actions";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
-function RoleRestrictedToolByIdentifierInputBase({ toolIdentifier, toolFriendlyName, placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className, fields, textField, valueField}) {
+function RoleRestrictedToolByIdentifierInputBase(
+  {
+    toolIdentifier,
+    toolFriendlyName,
+    placeholderText,
+    visible,
+    fieldName,
+    model,
+    setModel,
+    setDataFunction,
+    clearDataFunction,
+    disabled,
+    configurationRequired,
+    className,
+    fields,
+    textField,
+    valueField,
+    filterDataFunction,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
@@ -64,7 +82,12 @@ function RoleRestrictedToolByIdentifierInputBase({ toolIdentifier, toolFriendlyN
 
     if (Array.isArray(tools)) {
       setToolMetadata(response?.data?.metadata);
-      if (configurationRequired) {
+      if (filterDataFunction) {
+        const filteredTools = filterDataFunction(tools);
+        // TODO: This is a safeguard temporarily but won't be forever
+        setTools(Array.isArray(filteredTools) ? filteredTools : []);
+      }
+      else if (configurationRequired) {
         const filteredTools = tools?.filter((tool) => {return tool.configuration != null && Object.entries(tool.configuration).length > 0; });
         setTools(filteredTools);
       }
@@ -167,6 +190,7 @@ RoleRestrictedToolByIdentifierInputBase.propTypes = {
   fields: PropTypes.array,
   textField: PropTypes.any,
   valueField: PropTypes.string,
+  filterDataFunction: PropTypes.func,
 };
 
 RoleRestrictedToolByIdentifierInputBase.defaultProps = {
