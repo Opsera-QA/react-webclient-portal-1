@@ -11,7 +11,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import ArgoRepositoryScmTypeSelectInput from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/details/inputs/ArgoRepositoryScmTypeSelectInput";
-import SCMToolInput from "./inputs/SCMToolInput";
+import ArgoRepositorySourceControlToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/details/inputs/ArgoRepositorySourceControlToolSelectInput";
 import ArgoBitbucketWorkspaceInput from "./inputs/ArgoBitbucketWorkspaceInput";
 import ArgoGitRepositoryInput from "./inputs/ArgoGitRepositoryInput";
 
@@ -103,9 +103,9 @@ function ArgoRepositoryEditorPanel({ argoRepositoryData, toolData, repoId, handl
             />
           </Col>
           <Col lg={12}>
-            <SCMToolInput
-              setDataObject={setArgoRepositoryModel}
-              dataObject={argoRepositoryModel}
+            <ArgoRepositorySourceControlToolSelectInput
+              setModel={setArgoRepositoryModel}
+              model={argoRepositoryModel}
               disabled={!argoRepositoryData?.isNew()}
             />
           </Col>
