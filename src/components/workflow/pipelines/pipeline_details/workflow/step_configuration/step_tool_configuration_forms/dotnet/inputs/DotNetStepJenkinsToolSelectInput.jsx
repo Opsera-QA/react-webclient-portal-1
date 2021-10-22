@@ -23,14 +23,14 @@ function DotNetStepJenkinsToolSelectInput({dataObject, setDataObject, disabled})
   };
 
   return (
-     <RoleRestrictedJenkinsToolSelectInput
-       fieldName={"toolConfigId"}
-       configurationRequired={true}
-       model={dataObject}
-       setModel={setDataObject}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-     />
+    <RoleRestrictedJenkinsToolSelectInput
+      fieldName={"toolConfigId"}
+      configurationRequired={true}
+      model={dataObject}
+      setModel={setDataObject}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+    />
   );
 }
 
