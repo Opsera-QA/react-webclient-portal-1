@@ -307,9 +307,6 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/settings/analytics-data-entries/" exact component={AnalyticsDataEntryManagement} />
           <SecureRoute path="/settings/analytics-data-entries/details/:id" exact
                        component={AnalyticsDataEntryDetailView} />
-          <SecureRoute path="/settings/:orgDomain?/users/" exact component={LdapUserManagement} />
-          <SecureRoute path="/settings/:orgDomain/users/details/:userEmail" exact
-                       component={LdapUserDetailView} />
           <SecureRoute path="/settings/user-management/" exact component={UserManagement} />
           <SecureRoute path="/settings/user-management/active/:userEmail/details" exact component={UserDetailView} />
           <SecureRoute path="/settings/user-management/pending/:userId/details" exact component={SsoUserDetailView} />
