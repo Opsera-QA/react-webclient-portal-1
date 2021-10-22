@@ -8,7 +8,7 @@ import ebsStepFormMetadata
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import EBSCreateDomainToggleInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSCreateDomainToggleInput";
-import AWSToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/AWSToolSelectInput";
+import RoleRestrictedAwsAccountToolSelectInput from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import JsonInput from "components/common/inputs/object/JsonInput";
@@ -123,10 +123,10 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <AWSToolSelectInput
+      <RoleRestrictedAwsAccountToolSelectInput
         fieldName={"awsToolConfigId"}
-        dataObject={ebsStepConfigurationDto}
-        setDataObject={setEBSStepConfigurationDataDto}
+        model={ebsStepConfigurationDto}
+        setModel={setEBSStepConfigurationDataDto}
       />
       <EBSBucketInput
           fieldName={"bucketName"}
