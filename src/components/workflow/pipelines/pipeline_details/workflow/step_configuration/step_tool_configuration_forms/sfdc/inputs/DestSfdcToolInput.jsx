@@ -1,17 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineToolInput from "components/common/list_of_values_input/workflow/pipelines/PipelineToolInput";
+import RoleRestrictedSalesforceConfiguratorToolSelectInput
+  from "components/common/list_of_values_input/tools/salesforce/sfdc-configurator/RoleRestrictedSalesforceConfiguratorToolSelectInput";
 
 function DestSfdcToolInput({dataObject, setDataObject, disabled}) {
-  const setDestSfdcTool = (fieldName, selectedOption) => {
+  const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
-    newDataObject.setData("sfdcDestToolId", selectedOption.id);
-    newDataObject.setData("destAccountUsername",selectedOption.configuration.accountUsername);
-    newDataObject.setData("sfdcDestToolName", selectedOption.name);
+    newDataObject.setData("sfdcDestToolId", selectedOption?._id);
+    newDataObject.setData("destAccountUsername",selectedOption?.configuration?.accountUsername);
+    newDataObject.setData("sfdcDestToolName", selectedOption?.name);
     setDataObject({...newDataObject});
   };
 
-  const clearToolData = () => {
+  const clearDataFunction = () => {
     let newDataObject = {...dataObject};
     newDataObject.setData("sfdcDestToolId", "");
     newDataObject.setData("destAccountUsername", "");
@@ -20,16 +21,13 @@ function DestSfdcToolInput({dataObject, setDataObject, disabled}) {
   };
 
   return (
-     <PipelineToolInput
-       toolType={"sfdc-configurator"}
-       toolFriendlyName={"SFDC"}
+     <RoleRestrictedSalesforceConfiguratorToolSelectInput
        fieldName={"sfdcDestToolId"}
-       configurationRequired={true}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       setDataFunction={setDestSfdcTool}
+       model={dataObject}
+       setModel={setDataObject}
+       setDataFunction={setDataFunction}
        disabled={disabled}
-       clearDataFunction={clearToolData}
+       clearDataFunction={clearDataFunction}
      />
   );
 }
