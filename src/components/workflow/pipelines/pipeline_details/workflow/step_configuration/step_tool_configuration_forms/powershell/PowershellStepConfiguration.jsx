@@ -8,8 +8,8 @@ import powershellStepFormMetadata
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PowershellStepJenkinsToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellStepJenkinsToolSelectInput";
-import PowershellJenkinsJobInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellJenkinsJobInput";
+import PowershellStepJenkinsJobSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellStepJenkinsJobSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import PowershellJenkinsAccountInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellJenkinsAccountInput";
@@ -94,7 +94,10 @@ function PowershellStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
         model={powershellStepConfigurationDto}
         setModel={setPowershellStepConfigurationDataDto}
       />
-      <PowershellJenkinsJobInput dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto}/>
+      <PowershellStepJenkinsJobSelectInput
+        model={powershellStepConfigurationDto}
+        setModel={setPowershellStepConfigurationDataDto}
+      />
       <PowershellJenkinsAccountInput dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto} />
       <PowershellBitbucketWorkspaceInput dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto} />
       <PowershellGitRepositoryInput dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto} />
