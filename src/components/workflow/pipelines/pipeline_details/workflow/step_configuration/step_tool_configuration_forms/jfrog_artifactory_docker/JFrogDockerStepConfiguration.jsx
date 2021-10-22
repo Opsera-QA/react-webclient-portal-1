@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
 import JfrogStepJfrogToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_docker/inputs/JfrogStepJfrogToolSelectInput";
 import JfrogStepJenkinsToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_docker/inputs/JfrogStepJenkinsToolSelectInput";
-import JFrogJenkinsJobInput from "./inputs/JfrogJenkinsJobInput";
+import JfrogDockerStepJenkinsJobSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_docker/inputs/JfrogDockerStepJenkinsJobSelectInput";
 import JFrogBuildStepSelectInput from "./inputs/JFrogBuildStepSelectInput";
 import JfrogRepoSelectInput from "./inputs/JfrogRepoSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
@@ -104,9 +104,9 @@ function JFrogDockerStepConfiguration({ pipelineId, stepTool, stepId, createJob,
         model={jfrogStepConfigurationDto}
         setModel={setJFrogStepConfigurationDataDto}
       />
-      <JFrogJenkinsJobInput
-        dataObject={jfrogStepConfigurationDto}
-        setDataObject={setJFrogStepConfigurationDataDto}
+      <JfrogDockerStepJenkinsJobSelectInput
+        model={jfrogStepConfigurationDto}
+        setModel={setJFrogStepConfigurationDataDto}
         disabled={jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("toolConfigId")?.length === 0}
       />
       <JFrogBuildStepSelectInput
