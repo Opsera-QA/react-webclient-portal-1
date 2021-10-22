@@ -23,7 +23,7 @@ const StepConfigJenkinsJobInput = ({dataObject, setDataObject, disabled, typeFil
     setDataObject({...newDataObject});
   };
 
-  const clearJenkinsJob = () => {
+  const clearDataFunction = () => {
     let newDataObject = {...dataObject};
     newDataObject.setData("toolJobId", "");
     newDataObject.setData("toolJobName", "");
@@ -45,7 +45,7 @@ const StepConfigJenkinsJobInput = ({dataObject, setDataObject, disabled, typeFil
       model={dataObject}
       setModel={setDataObject}
       setDataFunction={setDataFunction}
-      clearDataFunction={clearJenkinsJob}
+      clearDataFunction={clearDataFunction}
       disabled={disabled}
     />
   );
