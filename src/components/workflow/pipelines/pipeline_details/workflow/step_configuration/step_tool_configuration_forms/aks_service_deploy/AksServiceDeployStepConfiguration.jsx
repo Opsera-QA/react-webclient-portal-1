@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "../../../../../../../common/inputs/text/TextInputBase";
 import aksStepFormMetadata from "./aks-stepForm-metadata";
-import AzureToolSelectInput from "./inputs/AzureToolSelectInput";
+import AksDeployStepAzureToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/aks_service_deploy/inputs/AksDeployStepAzureToolSelectInput";
 import AzureCredentialIdSelectInput
   from "./inputs/AzureCredentialIdSelectInput";
 import AksClusterSelectInput from "./inputs/AksClusterSelectInput";
@@ -59,7 +59,7 @@ function AksServiceDeployStepConfiguration({ stepTool, closeEditorPanel, parentC
       persistRecord={callbackFunction}
       isLoading={isLoading}
     >
-      <AzureToolSelectInput
+      <AksDeployStepAzureToolSelectInput
         dataObject={aksModel}
         setDataObject={setAksModel}
         setAzureConfig={setAzureConfig}

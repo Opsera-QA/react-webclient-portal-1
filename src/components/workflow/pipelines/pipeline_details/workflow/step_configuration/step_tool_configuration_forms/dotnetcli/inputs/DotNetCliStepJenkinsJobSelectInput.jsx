@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import JenkinsJobInput from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsJobInput";
+import JenkinsRegistryToolJobSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 
-function DotNetJenkinsJobInput({dataObject, setDataObject, disabled}) {
-  const setJenkinsJob = (fieldName, selectedOption) => {
-    console.log(selectedOption);
+function DotNetCliStepJenkinsJobSelectInput({dataObject, setDataObject, disabled}) {
+  const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
     newDataObject.setData("toolJobName", selectedOption.name);
     newDataObject.setData("toolJobId", selectedOption._id);
@@ -17,23 +17,23 @@ function DotNetJenkinsJobInput({dataObject, setDataObject, disabled}) {
   };
 
   return (
-     <JenkinsJobInput
-       fieldName={"toolJobName"}
-       jenkinsId={dataObject?.getData("toolConfigId")}
-       typeFilter={"BUILD"}
-       configurationRequired={true}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       setDataFunction={setJenkinsJob}
-       disabled={disabled}
-     />
+    <JenkinsRegistryToolJobSelectInput
+      fieldName={"toolJobId"}
+      jenkinsToolId={dataObject?.getData("toolConfigId")}
+      typeFilter={"BUILD"}
+      configurationRequired={true}
+      model={dataObject}
+      setModel={setDataObject}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+    />
   );
 }
 
-DotNetJenkinsJobInput.propTypes = {
+DotNetCliStepJenkinsJobSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default DotNetJenkinsJobInput;
+export default DotNetCliStepJenkinsJobSelectInput;

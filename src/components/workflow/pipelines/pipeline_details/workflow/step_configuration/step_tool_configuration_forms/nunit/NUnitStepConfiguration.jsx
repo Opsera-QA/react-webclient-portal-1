@@ -8,8 +8,8 @@ import nunitStepFormMetadata
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import NUnitStepJenkinsToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/NUnitStepJenkinsToolSelectInput";
-import NUnitJenkinsJobInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/NUnitJenkinsJobInput";
+import NUnitStepJenkinsJobSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/NUnitStepJenkinsJobSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import NUnitJenkinsAccountInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/NUnitJenkinsAccountInput";
@@ -94,7 +94,10 @@ function NUnitStepConfiguration({ pipelineId, stepTool, stepId, createJob, close
         model={nunitStepConfigurationDto}
         setModel={setNUnitStepConfigurationDataDto}
       />
-      <NUnitJenkinsJobInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto}/>
+      <NUnitStepJenkinsJobSelectInput
+        model={nunitStepConfigurationDto}
+        setModel={setNUnitStepConfigurationDataDto}
+      />
       <NUnitJenkinsAccountInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} />
       <NUnitBitbucketWorkspaceInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} />
       <NUnitGitRepositoryInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} />

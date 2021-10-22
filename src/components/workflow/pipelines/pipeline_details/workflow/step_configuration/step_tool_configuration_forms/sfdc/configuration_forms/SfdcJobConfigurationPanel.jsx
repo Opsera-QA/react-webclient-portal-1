@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SfdcJenkinsJobInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/inputs/SfdcJenkinsJobInput";
+import SfdcStepJenkinsJobSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/inputs/SfdcStepJenkinsJobSelectInput";
 import SfdcPackageJobEditorPanel from "./create_package_xml_job/SfdcPackageJobConfigurationPanel";
 import SfdcProfileMigrationJobEditorPanel from "./profile_migration_job/SfdcProfileMigrationJobConfigurationPanel";
 import SfdcValidatePackageXmlJobEditorPanel from "./validate_package/SfdcValidatePackageConfigPanel";
@@ -70,7 +70,10 @@ function SfdcJobConfigurationPanel({ sfdcStepConfigurationDto, setSfdcStepConfig
   return (
     <div>
       <div>
-        <SfdcJenkinsJobInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
+        <SfdcStepJenkinsJobSelectInput
+          model={sfdcStepConfigurationDto}
+          setModel={setSfdcStepConfigurationDataDto}
+        />
       </div>
       {getConfigurationPanel()}
     </div>

@@ -2,7 +2,7 @@ const terrascanStepFormMetadata = {
   type: "Terrascan Tool Configuration",
   fields: [
     {
-      label: "Select Jenkins Tool",
+      label: "Jenkins Tool",
       id: "toolConfigId",
       isRequired: true
     },
@@ -22,7 +22,7 @@ const terrascanStepFormMetadata = {
       id: "jobName",
     },
     {
-      label: "Jenkins Job Id",
+      label: "Jenkins Job",
       id: "toolJobId",
       isRequired: true
     },

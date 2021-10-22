@@ -18,12 +18,12 @@ import ProjectMappingToolSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
 import ProjectMappingProjectSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingProjectSelectInput";
-import JenkinsJobSelectInput
-  from "../../../../common/list_of_values_input/settings/data_tagging/projects/JenkinsJobSelectInput";
 import SonarProjectSelectInput
   from "../../../../common/list_of_values_input/settings/data_tagging/projects/SonarProjectSelectInput";
 import TagManager from "components/common/inputs/tags/TagManager";
 import axios from "axios";
+import JenkinsRegistryToolJobSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 
 function ProjectMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -77,10 +77,11 @@ function ProjectMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
     if (projectMappingDto.getData("tool_identifier") === "jenkins") {
       return (
         <Col lg={12}>
-          <JenkinsJobSelectInput
-            dataObject={projectMappingDto}
-            setDataObject={setProjectMappingDto}
-            tool_prop={projectMappingDto.getData("tool_id")}
+          <JenkinsRegistryToolJobSelectInput
+            model={projectMappingDto}
+            setModel={setProjectMappingDto}
+            fieldName={"key"}
+            jenkinsToolId={projectMappingDto?.getData("tool_id")}
           />
         </Col>
       );

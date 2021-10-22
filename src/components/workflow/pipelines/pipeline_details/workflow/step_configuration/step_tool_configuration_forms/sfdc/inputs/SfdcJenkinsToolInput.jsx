@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineToolInput from "components/common/list_of_values_input/workflow/pipelines/PipelineToolInput";
+import RoleRestrictedJenkinsToolSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
 
 function SfdcJenkinsToolInput({dataObject, setDataObject, disabled}) {
-  const setJenkinsTool = (fieldName, selectedOption) => {
+  const setDataFunction = (fieldName, selectedOption) => {
 
     let newDataObject = {...dataObject};
-    newDataObject.setData("toolConfigId", selectedOption.id);
-    newDataObject.setData("toolName",selectedOption.name);
+    newDataObject.setData("toolConfigId", selectedOption?._id);
+    newDataObject.setData("toolName",selectedOption?.name);
     // newDataObject.setData("jenkinsUrl", selectedOption?.configuration?.jenkinsUrl);
     // newDataObject.setData("jenkinsPort", selectedOption?.configuration?.jenkinsPort);
     // newDataObject.setData("jUserId", selectedOption?.configuration?.jUserId);
@@ -35,14 +36,11 @@ function SfdcJenkinsToolInput({dataObject, setDataObject, disabled}) {
   };
 
   return (
-     <PipelineToolInput
-       toolType={"jenkins"}
-       toolFriendlyName={"Jenkins"}
+     <RoleRestrictedJenkinsToolSelectInput
        fieldName={"toolConfigId"}
-       configurationRequired={true}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       setDataFunction={setJenkinsTool}
+       model={dataObject}
+       setModel={setDataObject}
+       setDataFunction={setDataFunction}
        disabled={disabled}
      />
   );

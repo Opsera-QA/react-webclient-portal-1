@@ -6,10 +6,10 @@ import PropTypes from "prop-types";
 import dockerPushStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/dockerpush-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import DockerPushJenkinsToolInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushJenkinsToolInput";
-import DockerPushJenkinsJobInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushJenkinsJobInput";
+import DockerPushStepJenkinsToolSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushStepJenkinsToolSelectInput";
+import DockerPushStepJenkinsJobSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushStepJenkinsJobSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import DockerPushNewRepoToggleInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushNewRepoToggleInput";
@@ -110,8 +110,14 @@ function DockerPushStepConfiguration({ pipelineId, plan, stepTool, stepId, creat
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <DockerPushJenkinsToolInput dataObject={dockerPushStepConfigurationDto} setDataObject={setDockerPushStepConfigurationDataDto} />
-      <DockerPushJenkinsJobInput dataObject={dockerPushStepConfigurationDto} setDataObject={setDockerPushStepConfigurationDataDto} />
+      <DockerPushStepJenkinsToolSelectInput
+        model={dockerPushStepConfigurationDto}
+        setModel={setDockerPushStepConfigurationDataDto}
+      />
+      <DockerPushStepJenkinsJobSelectInput
+        model={dockerPushStepConfigurationDto}
+        setModel={setDockerPushStepConfigurationDataDto}
+      />
       <AWSToolSelectInput
         fieldName={"awsToolConfigId"}
         dataObject={dockerPushStepConfigurationDto}

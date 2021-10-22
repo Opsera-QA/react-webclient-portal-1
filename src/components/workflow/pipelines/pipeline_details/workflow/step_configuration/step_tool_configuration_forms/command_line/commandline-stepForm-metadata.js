@@ -2,7 +2,7 @@ const commandLineStepFormMetadata = {
   type: "Command Line Tool Configuration",
   fields: [
     {
-      label: "Select Jenkins Tool",
+      label: "Jenkins Tool",
       id: "toolConfigId",
       isRequired: true
     },
@@ -16,13 +16,12 @@ const commandLineStepFormMetadata = {
       id: "toolJobName",
       isRequired: true
     },
-    
     {
       // label: "Jenkins Job Name",
       id: "jobName",
     },
     {
-      // label: "Jenkins Job Id",
+      label: "Jenkins Job",
       id: "toolJobId",
       isRequired: true
     },

@@ -11,7 +11,7 @@ import OctopusActions from "../../octopus-actions";
 import DeleteModal from "components/common/modal/DeleteModal";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import CloudProviderSelectInput from "./input/CloudProviderSelectInput";
-import AzureToolSelectInput from "./input/AzureToolSelectInput";
+import OctopusApplicationAzureAccountToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/OctopusApplicationAzureAccountToolSelectInput";
 import CommunicationStyleSelectInput from "./input/CommunicationStyleSelectInput";
 import WebAppNameSelectInput from "./input/WebAppNameSelectInput";
 import SpaceNameSelectInput from "./input/SpaceNameSelectInput";
@@ -242,7 +242,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
             </Col>
             {octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType") === "AzureServicePrincipal" && (
               <Col lg={12}>
-                <AzureToolSelectInput
+                <OctopusApplicationAzureAccountToolSelectInput
                   fieldName={"azureToolConfigId"}
                   dataObject={octopusApplicationDataDto}
                   setDataObject={setOctopusApplicationDataDto}

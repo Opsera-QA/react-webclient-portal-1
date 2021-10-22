@@ -22,7 +22,7 @@ const sfdcStepFormMetadata = {
         id: "jobName",
       },
       {
-        // label: "Jenkins Job Id",
+        label: "Jenkins Job",
         id: "toolJobId",
         isRequired: true
       },
