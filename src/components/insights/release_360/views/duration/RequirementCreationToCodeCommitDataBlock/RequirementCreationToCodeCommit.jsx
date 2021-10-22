@@ -17,6 +17,8 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import { getTableDateTimeColumn } from "components/common/table/column_definitions/model-table-column-definitions";
 import FilterContainer from "components/common/table/FilterContainer";
 import VanityTable from "components/common/table/VanityTable";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 
 function RequirementCreationToCodeCommit({ dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -53,19 +55,25 @@ function RequirementCreationToCodeCommit({ dashboardData }) {
 
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      let dateRange =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "date")]?.value;
       const response = await chartsActions.getEnvironmentMetrics(
         getAccessToken,
         cancelSource,
         "gitlabRequirementCreationToCodeCommit",
         null,
         dashboardTags,
-        dashboardOrgs
+        dashboardOrgs,
+        dateRange
       );
       let dataObject = response?.data ? response?.data?.data[0]?.gitlabRequirementCreationToCodeCommit?.data : [];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+        setIsLoading(false);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -129,7 +137,7 @@ function RequirementCreationToCodeCommit({ dashboardData }) {
   };
 
   const fields = [
-    { id: "jiraIssueKey", label: "Jira Issue Key" },
+    { id: "jiraIssueKey", label: "Issue Key" },
     { id: "gitlabBranch", label: "Gitlab Branch" },
     { id: "jiraIssueCreationTime", label: "Jira Issue Creation Time" },
     { id: "lastCommitTime", label: "Last Commit Time" },
@@ -154,8 +162,16 @@ function RequirementCreationToCodeCommit({ dashboardData }) {
       topText={"Requirement to Code Commit"}
       middleText={
         <MetricScoreText
-          score={metrics.averageReqCreationToCodeCommitTimeMins}
-          qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
+          score={
+            isLoading === true ? (
+              <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1" />
+            ) : metrics.averageReqCreationToCodeCommitTimeMins ? (
+              metrics.averageReqCreationToCodeCommitTimeMins
+            ) : (
+              "N/A"
+            )
+          }
+          qualityLevel={METRIC_QUALITY_LEVELS.DEFAULT}
         />
       }
       bottomText={"Average in Days"}

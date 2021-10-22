@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
 
-function AnsibleStepConfigurationHelp() {
+function AnsibleStepConfigurationHelpDocumentation() {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -43,4 +43,4 @@ function AnsibleStepConfigurationHelp() {
     />
   );
 }
-export default React.memo(AnsibleStepConfigurationHelp);
+export default React.memo(AnsibleStepConfigurationHelpDocumentation);

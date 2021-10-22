@@ -9,7 +9,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, gradationalColors } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
-function GitlabMergeRequestsPushesAndComments({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function GitlabMergeRequestsPushesAndComments({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis , showSettingsToggle}) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -100,6 +100,7 @@ function GitlabMergeRequestsPushesAndComments({ kpiConfiguration, setKpiConfigur
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        showSettingsToggle={showSettingsToggle}
       />
       <ModalLogs
         header="Merge Requests and Pushes"
@@ -118,7 +119,8 @@ GitlabMergeRequestsPushesAndComments.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func
+  setKpis: PropTypes.func,
+  showSettingsToggle: PropTypes.bool
 };
 
 export default GitlabMergeRequestsPushesAndComments;

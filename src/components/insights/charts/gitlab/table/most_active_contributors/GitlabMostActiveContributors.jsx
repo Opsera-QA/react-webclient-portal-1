@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis, showSettingsToggle }) {
   const fields = gitlabMostActiveContributorsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -129,6 +129,7 @@ function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        showSettingsToggle={showSettingsToggle}
       />
     </div>
   );
@@ -140,6 +141,7 @@ GitlabMostActiveContributors.propTypes = {
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
   setKpis: PropTypes.func,
+  showSettingsToggle: PropTypes.bool
 };
 
 export default GitlabMostActiveContributors;

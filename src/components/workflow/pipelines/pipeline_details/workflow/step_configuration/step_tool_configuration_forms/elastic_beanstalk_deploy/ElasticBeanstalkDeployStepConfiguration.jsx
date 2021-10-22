@@ -408,7 +408,7 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
             valueField='id'
             textField='label'
             defaultValue={formData.platform ? PLATFORM_OPTIONS[PLATFORM_OPTIONS.findIndex(x => x.value === formData.platform)] : PLATFORM_OPTIONS[0]}
-            onChange={handlePlatformChange}             
+            setDataFunction={handlePlatformChange}
           /> : null }
       </Form.Group>
 

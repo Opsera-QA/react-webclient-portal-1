@@ -1,95 +1,98 @@
 /* Metric Text Styling */
 .metric-success-text {
-    color: #00897b;
+  color: #00897b;
 }
 
 .metric-danger-text {
-    color: #E57373;
+  color: #e57373;
 }
 
 .metric-warning-text {
-    color: #F1AD0F;
+  color: #f1ad0f;
+}
+
+.metric-default-text {
+  color: #334152;
 }
 
 /* End Metric Text Styling */
 
 /* Data Block Styling */
 .data-block-focal-text {
-    font-size: 2.43rem;
-    font-weight: 500;
-    font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
+  font-size: 2.43rem;
+  font-weight: 500;
+  font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
-    letter-spacing: 1px;
-    display: inline-block;
+  letter-spacing: 1px;
+  display: inline-block;
 }
 
 .data-block-title-text {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 @media (min-width: 1250px) {
-    .data-block-focal-text {
-        font-size: 2.43rem;
-    }
+  .data-block-focal-text {
+    font-size: 2.43rem;
+  }
 
-    .data-block-title-text {
-        font-size: .9rem;
-    }
+  .data-block-title-text {
+    font-size: 0.9rem;
+  }
 }
 
 @media (max-width: 1250px) {
-    .data-block-focal-text {
-        font-size: 2.43rem;
-    }
+  .data-block-focal-text {
+    font-size: 2.43rem;
+  }
 
-    .data-block-title-text {
-        font-size: .8rem;
-    }
+  .data-block-title-text {
+    font-size: 0.8rem;
+  }
 }
 
 @media (max-width: 1000px) {
-    .data-block-focal-text {
-        font-size: 2.25rem;
-    }
+  .data-block-focal-text {
+    font-size: 2.25rem;
+  }
 
-    .data-block-title-text {
-        font-size: .75rem;
-    }
+  .data-block-title-text {
+    font-size: 0.75rem;
+  }
 }
 
 @media (max-width: 800px) {
-    .data-block-focal-text {
-        font-size: 2rem;
-    }
+  .data-block-focal-text {
+    font-size: 2rem;
+  }
 
-    .data-block-title-text {
-        font-size: .7rem;
-    }
+  .data-block-title-text {
+    font-size: 0.7rem;
+  }
 }
 
-
 .data-block-container {
-    background: white;
-    background-clip: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
+  background: white;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
 }
 
 .data-block-container:hover {
-    box-shadow: 0 2px 2px 0 rgba(46,41,60,0.2);
-    transition: 0.3s;
+  box-shadow: 0 2px 2px 0 rgba(46, 41, 60, 0.2);
+  transition: 0.3s;
 }
 
 .data-block-container-title {
-    background-color: #46415C;
-    color: white;
+  background-color: #46415c;
+  color: white;
 }
 
 .data-block-box {
-    background-color: #fff;
-    background-clip: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
 }
 
 /* End Data Block Styling */

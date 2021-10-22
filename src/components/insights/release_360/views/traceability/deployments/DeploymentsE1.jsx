@@ -18,7 +18,7 @@ import Model from "../../../../../../core/data_model/model";
 import genericChartFilterMetadata from "../../../../charts/generic_filters/genericChartFilterMetadata";
 import TotalDeploymentsTableMetadata from "./total-deployments-metadata";
 import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
-import { getChartPipelineStatusColumn } from "../../../../../common/table/table-column-helpers";
+import { getChartPipelineStatusColumn } from "../../../../../common/table/table-column-helpers-v2";
 
 function DeploymentsE1({ dashboardData, environment}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -60,11 +60,7 @@ function DeploymentsE1({ dashboardData, environment}) {
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
       const response = await chartsActions.getEnvironmentMetrics(getAccessToken, cancelSource, "totalDeploymentCounts", environment, dashboardTags, dashboardOrgs);
-console.log("response", response);     
       let dataObject = response?.data ? response?.data?.data[0] : [];
-      //data.data[0][0].steps
-      console.log("dataobj", dataObject);
-      //[0].steps
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -83,8 +79,6 @@ console.log("response", response);
     }
   };
   
-  //console.log("test", metrics[0].steps);
-
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
@@ -108,8 +102,7 @@ console.log("response", response);
 
   const getBody = () => {
     let newFilterDto = tableFilterDto;
-    console.log("metrics", metrics[0][0].steps);
-    newFilterDto.setData("totalCount", metrics[0][0]?.steps?.length);
+    newFilterDto.setData("totalCount", metrics[0]?.steps?.length);
     setTableFilterDto({ ...newFilterDto });
 
     return (
@@ -156,9 +149,7 @@ console.log("response", response);
     ],
     []
   );
-
-
-
+  
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;

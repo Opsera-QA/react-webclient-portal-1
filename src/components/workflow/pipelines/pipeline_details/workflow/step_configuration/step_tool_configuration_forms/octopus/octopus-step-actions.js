@@ -239,7 +239,7 @@ OctopusStepActions.getProjectsV2 = async (id, spaceId, projectGroupId, getAccess
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-OctopusStepActions.getTenantsV2 = async (id, spaceId, projectId, environmentId, getAccessToken, cancelTokenSource) => {  
+OctopusStepActions.getTenantsV2 = async (getAccessToken, cancelTokenSource, id, spaceId, projectId, environmentId) => {
   const apiUrl = `/tools/octopus/tenants/${id}/octopus/${spaceId}/${projectId}/${environmentId}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };

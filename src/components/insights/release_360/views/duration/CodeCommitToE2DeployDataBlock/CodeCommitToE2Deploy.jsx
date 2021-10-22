@@ -17,6 +17,8 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import { getTableDateTimeColumn } from "components/common/table/column_definitions/model-table-column-definitions";
 import FilterContainer from "components/common/table/FilterContainer";
 import VanityTable from "components/common/table/VanityTable";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 
 function CodeCommitToE2Deploy({ dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -53,22 +55,28 @@ function CodeCommitToE2Deploy({ dashboardData }) {
 
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
-      console.log(dashboardOrgs);
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      let dateRange =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "date")]?.value;
       const response = await chartsActions.getEnvironmentMetrics(
         getAccessToken,
         cancelSource,
         "codeCommitToE2Deploy",
         null,
         dashboardTags,
-        dashboardOrgs
+        dashboardOrgs,
+        dateRange
       );
       let dataObject = response?.data ? response?.data?.data[0]?.codeCommitToE2Deploy?.data[0] : [];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+        setIsLoading(false);
       } else {
         setMetrics([]);
+        setIsLoading(false);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -132,7 +140,7 @@ function CodeCommitToE2Deploy({ dashboardData }) {
   };
 
   const fields = [
-    { id: "jiraIssueKey", label: "Jira Issue Key" },
+    { id: "jiraIssueKey", label: "Issue Key" },
     { id: "unitTestingStageIssueUpdated", label: "Code Commit Time" },
     { id: "qaTestingStageIssueUpdated", label: "E2 Deploy Time" },
     { id: "codeCommitToEnvDeploy", label: "Duration (in Days)" },
@@ -155,7 +163,18 @@ function CodeCommitToE2Deploy({ dashboardData }) {
       className={"p-2"}
       topText={"Code Commit to E2 Deploy"}
       middleText={
-        <MetricScoreText score={metrics.avgCodeCommitToEnvDeploy} qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS} />
+        <MetricScoreText
+          score={
+            isLoading === true ? (
+              <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1" />
+            ) : metrics.avgCodeCommitToEnvDeploy ? (
+              metrics.avgCodeCommitToEnvDeploy
+            ) : (
+              "N/A"
+            )
+          }
+          qualityLevel={METRIC_QUALITY_LEVELS.DEFAULT}
+        />
       }
       bottomText={"Average in Days"}
     />

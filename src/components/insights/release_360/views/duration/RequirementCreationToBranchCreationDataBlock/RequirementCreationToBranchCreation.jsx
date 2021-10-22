@@ -17,6 +17,8 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import { getTableDateTimeColumn } from "components/common/table/column_definitions/model-table-column-definitions";
 import FilterContainer from "components/common/table/FilterContainer";
 import VanityTable from "components/common/table/VanityTable";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 
 function RequirementCreationToBranchCreation({ dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -53,14 +55,19 @@ function RequirementCreationToBranchCreation({ dashboardData }) {
 
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      let dateRange =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "date")]?.value;
       const branchResponse = await chartsActions.getEnvironmentMetrics(
         getAccessToken,
         cancelSource,
         "gitlabRequirementCreationToBranchCreation",
         null,
         dashboardTags,
-        dashboardOrgs
+        dashboardOrgs,
+        dateRange
       );
 
       let branchDataObject = branchResponse?.data
@@ -73,6 +80,7 @@ function RequirementCreationToBranchCreation({ dashboardData }) {
 
       if (isMounted?.current === true && branchDataObject) {
         setBranchMetric(branchDataObject);
+        setIsLoading(false);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -136,7 +144,7 @@ function RequirementCreationToBranchCreation({ dashboardData }) {
   };
 
   const fields = [
-    { id: "jiraIssueKey", label: "Jira Issue Key" },
+    { id: "jiraIssueKey", label: "Issue Key" },
     { id: "gitlabBranch", label: "Gitlab Branch" },
     { id: "jiraIssueCreationTime", label: "Jira Issue Creation Time" },
     { id: "branchCreationTime", label: "Branch Creation Time" },
@@ -161,8 +169,16 @@ function RequirementCreationToBranchCreation({ dashboardData }) {
       topText={"Requirement to Branch Creation"}
       middleText={
         <MetricScoreText
-          score={branchMetric.averageReqCreationToBranchCreationSecs}
-          qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
+          score={
+            isLoading === true ? (
+              <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1" />
+            ) : branchMetric.averageReqCreationToBranchCreationSecs ? (
+              branchMetric.averageReqCreationToBranchCreationSecs
+            ) : (
+              "N/A"
+            )
+          }
+          qualityLevel={METRIC_QUALITY_LEVELS.DEFAULT}
         />
       }
       bottomText={"Average in Days"}

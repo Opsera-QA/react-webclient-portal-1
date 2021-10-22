@@ -58,9 +58,6 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
   };
 
   const validateAndSetData = (newRowList) => {
-    setRows([...newRowList]);
-    let newModel = {...model};
-
     if (Array.isArray(newRowList) && newRowList?.length > field.maxItems) {
       setErrorMessage(`
         This feature is currently limited to a maximum of 10 tenants. 
@@ -68,6 +65,9 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
       `);
       return;
     }
+
+    setRows([...newRowList]);
+    let newModel = {...model};
 
     let newArray = [];
 
@@ -105,7 +105,7 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
   };
 
   const addRow = () => {
-    let newList = rows;
+    let newList = [...rows];
 
     if (lastRowComplete()) {
       let newRow = {id: "", name: "", environmentId: ""};

@@ -14,9 +14,11 @@ import FullScreenCenterOverlayContainer from "components/common/overlays/center/
 import { getTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import { faDraftingCompass, faTable } from "@fortawesome/pro-light-svg-icons";
 import { getField } from "components/common/metadata/metadata-helpers";
-import { getTableDateTimeColumn } from "components/common/table/column_definitions/model-table-column-definitions";
+// import { getTableDateTimeColumn } from "components/common/table/column_definitions/model-table-column-definitions";
 import FilterContainer from "components/common/table/FilterContainer";
 import VanityTable from "components/common/table/VanityTable";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 
 function CodeCommitToE1Deploy({ dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -53,21 +55,28 @@ function CodeCommitToE1Deploy({ dashboardData }) {
 
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      let dateRange =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "date")]?.value;
       const response = await chartsActions.getEnvironmentMetrics(
         getAccessToken,
         cancelSource,
         "codeCommitToE1E2E3Deploy",
         null,
         dashboardTags,
-        dashboardOrgs
+        dashboardOrgs,
+        dateRange
       );
       let dataObject = response?.data ? response?.data?.data[0]?.codeCommitToE1E2E3Deploy?.data : [];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+        setIsLoading(false);
       } else {
         setMetrics([]);
+        setIsLoading(false);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -131,21 +140,21 @@ function CodeCommitToE1Deploy({ dashboardData }) {
   };
 
   const fields = [
-    { id: "jiraIssueKey", label: "Jira Issue Key" },
-    { id: "unitTestingStageIssueUpdated", label: "Stage 1" },
-    { id: "peerReviewStageIssueUpdated", label: "Stage 2" },
-    { id: "qaTestingStageIssueUpdated", label: "Stage 3" },
-    { id: "productDeploymentStageIssueUpdated", label: "Stage 4" },
+    { id: "jiraIssueKey", label: "Issue Key" },
+    { id: "codeCommitToE1DeployDays", label: "Code commit to E1 Deploy (Days)" },
+    { id: "codeCommitToE2DeployDays", label: "Code commit to E2 Deploy (Days)" },
+    { id: "codeCommitToE3DeployDays", label: "Code commit to E3 Deploy (Days)" },
+    // { id: "productDeploymentStageIssueUpdated", label: "Stage 4" },
     // { id: "codeCommitToEnvDeploy", label: "Duration (in Days)" },
   ];
 
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "jiraIssueKey")),
-      getTableDateTimeColumn(getField(fields, "unitTestingStageIssueUpdated")),
-      getTableDateTimeColumn(getField(fields, "peerReviewStageIssueUpdated")),
-      getTableDateTimeColumn(getField(fields, "qaTestingStageIssueUpdated")),
-      getTableDateTimeColumn(getField(fields, "productDeploymentStageIssueUpdated")),
+      getTableTextColumn(getField(fields, "codeCommitToE1DeployDays")),
+      getTableTextColumn(getField(fields, "codeCommitToE2DeployDays")),
+      getTableTextColumn(getField(fields, "codeCommitToE3DeployDays")),
+      // getTableDateTimeColumn(getField(fields, "productDeploymentStageIssueUpdated")),
       // getTableTextColumn(getField(fields, "codeCommitToEnvDeploy")),
     ],
     []
@@ -157,7 +166,18 @@ function CodeCommitToE1Deploy({ dashboardData }) {
       className={"p-2"}
       topText={"Code Commit to E1 -> E2 -> E3 Deploy"}
       middleText={
-        <MetricScoreText score={metrics.avgCodeCommitToEnvDeploy} qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS} />
+        <MetricScoreText
+          score={
+            isLoading === true ? (
+              <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1" />
+            ) : metrics.avgCodeCommitToEnvDeploy ? (
+              metrics.avgCodeCommitToEnvDeploy
+            ) : (
+              "N/A"
+            )
+          }
+          qualityLevel={METRIC_QUALITY_LEVELS.DEFAULT}
+        />
       }
       bottomText={"Average in Days"}
     />

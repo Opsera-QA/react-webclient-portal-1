@@ -9,7 +9,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColorByData, assignStandardColors,
          shortenPieChartLegend } from '../../../charts-views';
-function GitlabTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function GitlabTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis , showSettingsToggle}) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -95,6 +95,7 @@ function GitlabTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        showSettingsToggle={showSettingsToggle}
       />
       <ModalLogs
         header="Commits By Project"
@@ -113,6 +114,7 @@ GitlabTotalCommitsByProjectChart.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func};
+  setKpis: PropTypes.func,
+  showSettingsToggle: PropTypes.bool};
 
 export default GitlabTotalCommitsByProjectChart;

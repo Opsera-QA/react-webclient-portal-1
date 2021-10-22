@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
-import LdapGroupsTable from "components/settings/ldap_groups/LdapGroupsTable";
+import SiteRolesTable from "components/settings/ldap_site_roles/SiteRolesTable";
 
-function LdapOrganizationAccountGroupsPanel({ ldapOrganizationAccountData, authorizedActions, loadData, currentUser }) {
+function LdapOrganizationAccountSiteRolesPanel({ ldapOrganizationAccountData, loadData }) {
   if (ldapOrganizationAccountData == null) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -13,29 +13,27 @@ function LdapOrganizationAccountGroupsPanel({ ldapOrganizationAccountData, autho
 
     if (Array.isArray(groups) && groups.length > 0) {
       return groups?.filter((group) => {
-        return group?.groupType === "user";
+        return group?.groupType === "Role";
       });
     }
   };
 
   return (
     <div className={"mt-2"}>
-      <LdapGroupsTable
+      <SiteRolesTable
         orgDomain={ldapOrganizationAccountData["orgDomain"]}
         groupData={getGroups()}
-        currentUserEmail={currentUser?.email}
         loadData={loadData}
-        authorizedActions={authorizedActions?.includes("update_organization_account") ? ["create_group", "update_group"] : []}
       />
     </div>
   );
 }
 
-LdapOrganizationAccountGroupsPanel.propTypes = {
+LdapOrganizationAccountSiteRolesPanel.propTypes = {
   ldapOrganizationAccountData: PropTypes.object,
   authorizedActions: PropTypes.array,
   loadData: PropTypes.func,
   currentUser: PropTypes.object
 };
 
-export default LdapOrganizationAccountGroupsPanel;
+export default LdapOrganizationAccountSiteRolesPanel;

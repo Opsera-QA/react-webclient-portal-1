@@ -12,6 +12,8 @@ import AzureCredentialIdSelectInput
 import AksClusterSelectInput from "./inputs/AksClusterSelectInput";
 import DynamicNameToggleInput from "./inputs/DynamicNameToggleInput";
 import DockerPushStepSelectInput from "./inputs/DockerPushStepSelectInput";
+import AzureResourceGroupSelect from "./inputs/AzureResourceGroupSelect";
+import ResourceGroupToggleInput from "./inputs/ResourceGroupToggleInput";
 
 function AksServiceDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan, stepId, pipelineId }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -89,6 +91,23 @@ function AksServiceDeployStepConfiguration({ stepTool, closeEditorPanel, parentC
           fieldName={"aksServiceName"}
         />
       )}
+        <ResourceGroupToggleInput
+        dataObject={aksModel}
+        setDataObject={setAksModel}
+        fieldName={"useCustomResourceGroup"}
+        pipelineId={pipelineId}
+        />
+      {aksModel && aksModel?.getData("useCustomResourceGroup") && (
+        <AzureResourceGroupSelect
+        dataObject={aksModel}
+        setDataObject={setAksModel}
+        azureToolConfigId={aksModel?.getData("azureToolConfigId")}
+        azureApplication={aksModel?.getData("azureCredentialId")}
+        azureConfig={azureConfig}
+        applicationData={applicationData}
+        />
+      )
+      }
       <TextInputBase
         dataObject={aksModel}
         setDataObject={setAksModel}
