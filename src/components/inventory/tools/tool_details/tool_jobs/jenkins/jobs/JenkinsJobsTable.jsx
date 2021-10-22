@@ -86,7 +86,7 @@ function JenkinsJobsTable({ toolData, loadData, onRowSelect, isLoading }) {
   return (
     <FilterContainer
       showBorder={false}
-      loadData={loadData}
+      // loadData={loadData}
       addRecordFunction={createJenkinsJob}
       body={getJenkinsJobsTable()}
       isLoading={isLoading}
