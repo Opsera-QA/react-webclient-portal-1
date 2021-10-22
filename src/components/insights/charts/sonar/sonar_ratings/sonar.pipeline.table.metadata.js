@@ -36,7 +36,7 @@ const SonarPipelineTableMetadata = {
     },
     {
       label: "Remediation Effort (in minutes)",
-      id: "total_effort",
+      id: "effort",
     },
   ],
   newObjectFields: {},

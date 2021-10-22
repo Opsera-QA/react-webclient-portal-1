@@ -12,6 +12,7 @@ import SonarPipelineWiseMaintainabilityDetails from './SonarPipelineWiseMaintain
 import Col from "react-bootstrap/Col";
 function SonarRatingsMaintainabilityDataBlock({ maintainabilityRating, technicalDebtRatio }) {
   const toastContext = useContext(DialogToastContext);
+  console.log(maintainabilityRating, technicalDebtRatio ,' ***');
 
   const onRowSelect =()=>{    
     toastContext.showOverlayPanel(

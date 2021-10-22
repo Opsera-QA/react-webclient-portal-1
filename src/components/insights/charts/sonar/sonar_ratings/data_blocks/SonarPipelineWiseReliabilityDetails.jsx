@@ -59,7 +59,7 @@ function SonarPipelineWiseReliabilityDetails() {
       getTableTextColumn(getField(fields, "major"),'opsera-yellow'),
       getTableTextColumn(getField(fields, "minor"),'green'),
       getTableTextColumn(getField(fields, "info"),'info-text'), 
-      getTableTextColumn(getField(fields, "total_effort")),
+      getTableTextColumn(getField(fields, "effort")),
       getTableTextColumnWithoutField("Actions", "_blueprint"),
     ],
     []
@@ -121,9 +121,6 @@ function SonarPipelineWiseReliabilityDetails() {
           sonarBugs.map((bug, index) => ({
             ...bug,
             status: calculateTrend(bug),
-            blocker: 10,
-            // TODO: remove the hard coded pipelineId value replaces with the api response
-            pipelineId: "60ae84a54fa0c75fc683ad2b",
             _blueprint: <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2" />,
           }))
         );
@@ -196,7 +193,7 @@ function SonarPipelineWiseReliabilityDetails() {
               <FontAwesomeIcon icon={faBan} fixedWidth className="mr-2 red" />
             </div>
             <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className="font-weight-bold red">12</div>
+              <div className="font-weight-bold red">{issueTypeData?.blocker}</div>
             </div>
             <div className="w-100 red mb-1 ">Blocker</div>
           </div>
@@ -238,26 +235,17 @@ function SonarPipelineWiseReliabilityDetails() {
     );
   };
 
-  const getFooterDetails = () => {
-    if (!footerData) {
+  const getFooterDetails =()=>{
+    if(!footerData){
       return null;
     }
-    return (
-      <>
-        <Row className="px-2">
-          <Col className="footer-records">Total remediation for Critical Bugs : {footerData?.critical}</Col>
-        </Row>
-        <Row className="px-2">
-          <Col className="footer-records">Total remediation for Major Bugs : {footerData?.major}</Col>
-        </Row>
-        <Row className="px-2">
-          <Col className="footer-records">Total remediation for Minor Bugs : {footerData?.minor}</Col>
-        </Row>
-        <Row className="px-2">
-          <Col className="footer-records">Total remediation for Info Bugs : {footerData?.info}</Col>
-        </Row>
-      </>
-    );
+    return(
+          <Row className="px-2">
+            <Col className="footer-records">
+              Total remediation Efforts : {footerData?.totalEffort ? `${footerData?.totalEffort} minutes` : '0 minutes'} 
+            </Col>
+          </Row>          
+        );
   };
 
   const getPaginationOptions = () => {
@@ -277,11 +265,9 @@ function SonarPipelineWiseReliabilityDetails() {
   };
 
   const onRowSelect = (rowData) => {
-    if (rowData.id == 0) {
       toastContext.showOverlayPanel(
         <BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount} />
       );
-    }
   };
 
   const getTable = () => {
