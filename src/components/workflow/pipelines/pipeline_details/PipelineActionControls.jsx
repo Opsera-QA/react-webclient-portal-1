@@ -24,7 +24,7 @@ import pipelineHelpers from "../../pipelineHelpers";
 import axios from "axios";
 import pipelineActions from "../../pipeline-actions";
 import CancelPipelineQueueConfirmationOverlay
-  from "components/workflow/pipelines/pipeline_details/queuing /cancellation/CancelPipelineQueueConfirmationOverlay";
+  from "components/workflow/pipelines/pipeline_details/queuing/cancellation/CancelPipelineQueueConfirmationOverlay";
 
 const delayCheckInterval = 10000;
 
