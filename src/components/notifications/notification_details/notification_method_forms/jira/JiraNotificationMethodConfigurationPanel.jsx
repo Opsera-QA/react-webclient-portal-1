@@ -6,9 +6,7 @@ import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import jiraNotificationMetadata from "components/notifications/notification_details/notification_method_forms/jira/jiraNotificationMetadata";
-import JiraInput from "components/notifications/notification_details/notification_method_forms/jira/JiraInput";
-import JiraToolProjectSummaryCard
-  from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraToolProjectSummaryCard";
+import JiraNotificationJiraToolSelectInput from "components/notifications/notification_details/notification_method_forms/jira/JiraNotificationJiraToolSelectInput";
 
 function JiraNotificationMethodConfigurationPanel({ notificationDataDto, notificationMethodDataDto, setNotificationMethodDataDto }) {
   useEffect(() => {loadData();}, []);
@@ -34,7 +32,10 @@ function JiraNotificationMethodConfigurationPanel({ notificationDataDto, notific
   return (
     <div className="mb-4">
       {getJiraMessage()}
-      <JiraInput dataObject={notificationMethodDataDto} setDataObject={setNotificationMethodDataDto} />
+      <JiraNotificationJiraToolSelectInput
+        model={notificationMethodDataDto}
+        setModel={setNotificationMethodDataDto}
+      />
     </div>
   );
 }
