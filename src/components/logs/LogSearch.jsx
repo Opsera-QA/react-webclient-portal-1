@@ -24,10 +24,11 @@ import ExportLogSearchButton from "components/common/buttons/export/log_search/E
 import {getAllResultsForExport} from "components/common/buttons/export/exportHelpers";
 import projectTagsMetadata from "components/settings/data_mapping/projects/tagging-project-metadata";
 import Model from "core/data_model/model";
-import JenkinsJobSelectInput from "components/common/list_of_values_input/settings/data_tagging/projects/JenkinsJobSelectInput";
 import ProjectMappingToolSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import JenkinsRegistryToolJobSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 
 // TODO: This entire form needs to be completely refactored
 function LogSearch({tools, sideBySide}) {
@@ -415,10 +416,11 @@ function LogSearch({tools, sideBySide}) {
           />
         </Col>
         <Col>
-        <JenkinsJobSelectInput
-            dataObject={jenkinsProjectDto}
-            setDataObject={setJenkinsProjectDto}
-            tool_prop={jenkinsProjectDto.getData("tool_id")}
+          <JenkinsRegistryToolJobSelectInput
+            model={jenkinsProjectDto}
+            setModel={setJenkinsProjectDto}
+            fieldName={"key"}
+            jenkinsToolId={jenkinsProjectDto?.getData("tool_id")}
           />
         </Col>
         </>
