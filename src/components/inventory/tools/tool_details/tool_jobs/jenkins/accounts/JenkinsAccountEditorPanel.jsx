@@ -70,8 +70,8 @@ function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData, setJenkinsAcc
           </Col>
           <Col lg={12}>
             <JenkinsAccountToolSelectInput
-              dataObject={jenkinsAccountData}
-              setDataObject={setJenkinsAccountData}
+              model={jenkinsAccountData}
+              setModel={setJenkinsAccountData}
               disabled={
                 (credentialId && jenkinsAccountData && !jenkinsAccountData.getData("credentialsId")) ||
                 (!credentialId && jenkinsAccountData && jenkinsAccountData.getData("toolId"))
