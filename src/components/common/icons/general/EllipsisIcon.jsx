@@ -13,7 +13,11 @@ function EllipsisIcon({ overlay, className, size, placement, maxWidth, tooltipTe
 
   const getPopover = () => {
     return (
-      <Popover id={`input-popover`} style={{ width: "1000px", maxWidth: maxWidth }}>
+      <Popover
+        id={`input-popover`}
+        style={{ width: "1000px", maxWidth: maxWidth }}
+        className={"info-overlay"}
+      >
         {overlay}
       </Popover>
     );

@@ -171,7 +171,10 @@ function ProjectMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
           <ProjectMappingToolIdentifierSelectInput dataObject={projectMappingDto} setDataObject={setProjectMappingDto} />
         </Col>
         <Col lg={12}>
-          <ProjectMappingToolSelectInput dataObject={projectMappingDto} setDataObject={setProjectMappingDto} />
+          <ProjectMappingToolSelectInput
+            model={projectMappingDto}
+            setModel={setProjectMappingDto}
+          />
         </Col>
         {getDynamicFields()}
         <Col lg={12}>
