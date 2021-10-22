@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TextInputBase from "../../../../common/inputs/text/TextInputBase";
 import azureAksClusterTaskConfigurationMetadata from "./azure-cluster-metadata";
-import AzureToolSelectInput from "./inputs/AzureToolSelectInput";
+import AzureClusterAzureToolSelectInput from "components/tasks/details/tasks/azure-cluster-creation/inputs/AzureClusterAzureToolSelectInput";
 import AzureCredentialIdSelectInput from "./inputs/AzureCredentialIdSelectInput";
 import AzureRegionSelectInput from "./inputs/AzureRegionSelectInput";
 import AzureMachineTypeSelectInput from "./inputs/AzureMachineTypeSelectInput";
@@ -35,7 +35,7 @@ function AzureClusterConfigurationPanel({ gitTasksDataDto, gitTasksConfiguration
   return (
     <Row>
       <Col lg={12}>
-        <AzureToolSelectInput
+        <AzureClusterAzureToolSelectInput
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
           setAzureConfig={setAzureConfig}
