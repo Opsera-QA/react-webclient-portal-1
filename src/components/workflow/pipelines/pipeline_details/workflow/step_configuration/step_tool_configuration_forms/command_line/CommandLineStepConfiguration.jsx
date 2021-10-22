@@ -7,8 +7,8 @@ import PropTypes from "prop-types";
 import commandLineStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/commandline-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import CommandLineJenkinsToolInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineJenkinsToolInput";
+import CommandLineStepJenkinsToolSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineStepJenkinsToolSelectInput";
 import CommandLineJenkinsJobInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineJenkinsJobInput";
 import modelHelpers from "components/common/model/modelHelpers";
@@ -126,7 +126,10 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <CommandLineJenkinsToolInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
+      <CommandLineStepJenkinsToolSelectInput
+        model={commandLineStepConfigurationDto}
+        setModel={setCommandLineStepConfigurationDataDto}
+      />
       <CommandLineJenkinsJobInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
       <CommandLineJenkinsAccountInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
       <CommandLineBitbucketWorkspaceInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
