@@ -10,12 +10,11 @@ import SpinnakerApplicationNameSelectInput
   from "components/common/list_of_values_input/tools/spinnaker/application/SpinnakerApplicationNameSelectInput";
 import SpinnakerPipelineSelectInput
   from "components/common/list_of_values_input/tools/spinnaker/tool/SpinnakerPipelineSelectInput";
+import modelHelpers from "components/common/model/modelHelpers";
 
 function SpinnakerStepConfiguration({ stepTool, parentCallback, closeEditorPanel }) {
-
   const [isLoading, setIsLoading] = useState(false);
-
-  const [spinnakerStepConfigurationDto, setSpinnakerStepConfigurationDataDto] = useState(undefined);
+  const [spinnakerStepModel, setSpinnakerStepModel] = useState(undefined);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
 
@@ -33,23 +32,18 @@ function SpinnakerStepConfiguration({ stepTool, parentCallback, closeEditorPanel
     const configuration = step?.configuration;
     const threshold = step?.threshold;
 
-    if (configuration != null) {
-      setSpinnakerStepConfigurationDataDto(new Model(configuration, spinnakerStepFormMetadata, false));
-
-      if (threshold != null) {
-        setThresholdType(threshold?.type);
-        setThresholdValue(threshold?.value);
-      }
-    } else {
-      setSpinnakerStepConfigurationDataDto(
-        new Model({ ...spinnakerStepFormMetadata.newObjectFields }, spinnakerStepFormMetadata, false)
-      );
+    if (threshold != null) {
+      setThresholdType(threshold?.type);
+      setThresholdValue(threshold?.value);
     }
+
+    const newModel = modelHelpers.parseObjectIntoModel(configuration, spinnakerStepFormMetadata);
+    setSpinnakerStepModel({...newModel});
   };
 
   const callbackFunction = async () => {
     const item = {
-      configuration: spinnakerStepConfigurationDto.getPersistData(),
+      configuration: spinnakerStepModel.getPersistData(),
       threshold: {
         type: thresholdType,
         value: thresholdVal,
@@ -61,26 +55,26 @@ function SpinnakerStepConfiguration({ stepTool, parentCallback, closeEditorPanel
   return (
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
-      recordDto={spinnakerStepConfigurationDto}
+      recordDto={spinnakerStepModel}
       persistRecord={callbackFunction}
       isLoading={isLoading}
     >
       <SpinnakerStepSpinnakerToolSelectInput
-        model={spinnakerStepConfigurationDto}
-        setModel={setSpinnakerStepConfigurationDataDto}
+        model={spinnakerStepModel}
+        setModel={setSpinnakerStepModel}
       />
       <SpinnakerApplicationNameSelectInput
-        model={spinnakerStepConfigurationDto}
-        setModel={setSpinnakerStepConfigurationDataDto}
-        spinnakerToolId={spinnakerStepConfigurationDto?.getData("spinnakerId")}
+        model={spinnakerStepModel}
+        setModel={setSpinnakerStepModel}
+        spinnakerToolId={spinnakerStepModel?.getData("spinnakerId")}
         fieldName={"applicationName"}
       />
       <SpinnakerPipelineSelectInput
         fieldName={"pipelineName"}
-        model={spinnakerStepConfigurationDto}
-        setModel={setSpinnakerStepConfigurationDataDto}
-        spinnakerToolId={spinnakerStepConfigurationDto?.getData("spinnakerId")}
-        spinnakerApplicationName={spinnakerStepConfigurationDto?.getData("applicationName")}
+        model={spinnakerStepModel}
+        setModel={setSpinnakerStepModel}
+        spinnakerToolId={spinnakerStepModel?.getData("spinnakerId")}
+        spinnakerApplicationName={spinnakerStepModel?.getData("applicationName")}
       />
     </PipelineStepEditorPanelContainer>
   );
