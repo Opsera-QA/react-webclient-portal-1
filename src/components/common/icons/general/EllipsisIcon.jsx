@@ -36,7 +36,7 @@ function EllipsisIcon({ overlay, className, size, placement, maxWidth, tooltipTe
             icon={faEllipsisHAlt}
             className={"pointer"}
             iconSize={size}
-            onClick={handleClick}
+            onClickFunction={handleClick}
           />
       </span>
       </TooltipWrapper>
