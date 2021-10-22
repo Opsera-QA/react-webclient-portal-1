@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect, useRef} from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
@@ -13,8 +13,8 @@ import {
   faSync,
   faSpinner,
   faStopCircle,
-  faHistory,
-  faFlag, faRedo, faInfoCircle, faClock
+  faRedo,
+  faFlag, faInfoCircle, faRepeat1, faClock,
 } from "@fortawesome/pro-light-svg-icons";
 import "../../workflows.css";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -25,16 +25,17 @@ import axios from "axios";
 import pipelineActions from "../../pipeline-actions";
 import CancelPipelineQueueConfirmationOverlay
   from "components/workflow/pipelines/pipeline_details/queuing/cancellation/CancelPipelineQueueConfirmationOverlay";
+import commonActions from "../../../common/common.actions";
 
-const delayCheckInterval = 10000;
+const delayCheckInterval = 8000;
 
 function PipelineActionControls({
-  pipeline,
-  customerAccessRules,
-  disabledActionState,
-  fetchData,
-  fetchActivityLogs,
-}) {
+          pipeline,
+          customerAccessRules,
+          disabledActionState,
+          fetchData,
+          fetchActivityLogs,
+        }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [workflowStatus, setWorkflowStatus] = useState(false);
@@ -54,8 +55,20 @@ function PipelineActionControls({
   });
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [hasQueuedRequest, setHasQueuedRequest] = useState(false);
+  const [queueingEnabled, setQueueingEnabled] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+
+  /***
+   * Used to get status of Pipeline Queuing Flag specifically
+   * @returns {Promise<*>}
+   */
+  const getFeatureFlags = async () => {
+    const response = await commonActions.getFeatureFlagsV2(getAccessToken, cancelTokenSource);
+    return response?.data;
+  };
+
 
   // TODO: This should be combined with the workflowStatus use effect but don't want to break anything.
   //  After we have time to verify adding this doesn't break it, let's combine them.
@@ -85,6 +98,7 @@ function PipelineActionControls({
         throw error;
       }
     });
+
     if (workflowStatus === "paused") {
       setStatusMessage("This pipeline is currently paused.");
       setStatusMessageBody("A paused pipeline requires either approval or review of the logs in order to proceed.");
@@ -115,6 +129,10 @@ function PipelineActionControls({
       await checkPipelineQueueStatus();
     }
 
+    if (status !== "running" && hasQueuedRequest) {
+      delayRefresh();
+    }
+
     if (status === "stopped" && pipeline?.workflow?.last_step?.running && pipeline?.workflow?.last_step?.running?.paused) {
       setWorkflowStatus("paused");
 
@@ -128,15 +146,17 @@ function PipelineActionControls({
     }
 
     setWorkflowStatus(status);
-
-    //TODO: Enable line 132 ONLY for testing to render the page in a running mode, when done, make sure line 129 is enabled AND the last line of the function.
-    //setWorkflowStatus("running");
   };
 
   const checkPipelineQueueStatus = async () => {
-    const queuedRequest = await pipelineActions.getQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
-    const isQueued = typeof queuedRequest === "object" && Object.keys(queuedRequest)?.length > 0;
-    setHasQueuedRequest(isQueued);
+    const { orchestration } = await getFeatureFlags();
+    setQueueingEnabled(orchestration?.enableQueuing);
+
+    if (orchestration?.enableQueuing) {
+      const queuedRequest = await pipelineActions.getQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
+      const isQueued = typeof queuedRequest?.data === "object" && Object.keys(queuedRequest?.data)?.length > 0;
+      setHasQueuedRequest(isQueued);
+    }
   };
 
   // button handlers
@@ -159,6 +179,7 @@ function PipelineActionControls({
     await fetchActivityLogs();
     setResetPipeline(false);
     setStartPipeline(false);
+    await pipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipelineId);
     await checkPipelineQueueStatus();
   };
 
@@ -233,6 +254,24 @@ function PipelineActionControls({
     }, delayCheckInterval);
   }
 
+  /***
+   * Used primiarily to call run API again to register a queued start request.  Unlike normal runPipeline, it doesn't impact
+   * refresh patterns on the page
+   * @param pipelineId
+   * @returns {Promise<void>}
+   */
+  async function runPipelineLight(pipelineId) {
+    toastContext.showInformationToast("A request to re-start this pipeline has been added to the queue.  Upon successful completion of this pipeline run, the pipeline will start again.", 20);
+
+    await PipelineActions.run(pipelineId, {}, getAccessToken)
+      .catch(err => {
+        console.error(err);
+        toastContext.showLoadingErrorDialog(err.error);
+      });
+
+    setHasQueuedRequest(true);
+  }
+
   async function startNewPipelineRun(pipelineId) {
     setStartPipeline(true);
     toastContext.showInformationToast("A request to start this pipeline from the start has been submitted.  Resetting pipeline status and then the pipeline will begin momentarily.", 20);
@@ -296,7 +335,7 @@ function PipelineActionControls({
         handleClose={handlePipelineStartWizardClose}
         handlePipelineWizardRequest={handlePipelineWizardRequest}
         refreshPipelineActivityData={fetchActivityLogs}
-      />
+      />,
     );
   };
 
@@ -305,7 +344,7 @@ function PipelineActionControls({
       <CancelPipelineQueueConfirmationOverlay
         pipeline={pipeline}
         setHasQueuedRequest={setHasQueuedRequest}
-      />
+      />,
     );
   };
 
@@ -397,7 +436,7 @@ function PipelineActionControls({
             placement="top"
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip({ message: statusMessageBody })}>
-            <FontAwesomeIcon icon={faInfoCircle} fixedWidth className="mr-1" style={{ cursor: "help" }}/>
+            <FontAwesomeIcon icon={faInfoCircle} fixedWidth className="mr-1" style={{ cursor: "help" }} />
           </OverlayTrigger>
           {statusMessage}
         </div>
@@ -406,11 +445,11 @@ function PipelineActionControls({
         <div className="text-right btn-group btn-group-sized">
           {workflowStatus === "running" &&
           <>
-            <Button variant="dark"
+            <Button variant="outline-dark"
                     className="btn-default"
                     size="sm"
                     disabled>
-              <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
+              <FontAwesomeIcon icon={faSpinner} spin className="mr-1" /> Running</Button>
             <Button variant="danger"
                     className="btn-default"
                     size="sm"
@@ -419,8 +458,8 @@ function PipelineActionControls({
                     }}
                     disabled={!authorizedAction("stop_pipeline_btn", pipeline.owner)}>
               {stopPipeline ?
-                <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> :
-                <FontAwesomeIcon icon={faStopCircle} className="mr-1"/>}
+                <FontAwesomeIcon icon={faSpinner} spin className="mr-1" /> :
+                <FontAwesomeIcon icon={faStopCircle} className="mr-1" />}
               Stop
             </Button>
           </>}
@@ -438,13 +477,13 @@ function PipelineActionControls({
                         handleApprovalClick();
                       }}
                       disabled={!authorizedAction("approve_step_btn", pipeline.owner)}>
-                {approval ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> :
-                  <FontAwesomeIcon icon={faFlag} className="mr-1" fixedWidth/>}Approve</Button>
+                {approval ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth /> :
+                  <FontAwesomeIcon icon={faFlag} className="mr-1" fixedWidth />}Approve</Button>
             </OverlayTrigger>
           </>}
 
-          {(workflowStatus === "stopped" || !workflowStatus) &&
-          <>
+          {
+            (workflowStatus === "stopped" || !workflowStatus) &&
             <OverlayTrigger
               placement="top"
               delay={{ show: 250, hide: 400 }}
@@ -455,12 +494,27 @@ function PipelineActionControls({
                       onClick={() => {
                         handleRunPipelineClick(pipeline._id);
                       }}
-                      disabled={!authorizedAction("start_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline}>
-                {startPipeline ? <><FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> Starting</> :
-                  <><FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/> Start Pipeline</>}
+                      disabled={!authorizedAction("start_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline || hasQueuedRequest}>
+                {startPipeline ? <><FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1" /> Starting</> :
+                  <><FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1" /> Start Pipeline</>}
               </Button>
             </OverlayTrigger>
-          </>}
+          }
+
+          {
+            (queueingEnabled && !hasQueuedRequest) && (workflowStatus === "paused" || workflowStatus === "running") &&
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip({ message: "Request a re-start of this pipeline after the successful completion of the current run." })}>
+                <Button variant="success"
+                        size="sm"
+                        onClick={() => {
+                          runPipelineLight(pipeline._id);
+                        }}>
+                  <FontAwesomeIcon icon={faRepeat1} fixedWidth /> Repeat Once</Button>
+              </OverlayTrigger>
+          }
 
           {((workflowStatus === "paused" && !isApprovalGate) ||
             (workflowStatus === "stopped" &&
@@ -478,8 +532,8 @@ function PipelineActionControls({
                       handleResumeWorkflowClick(pipeline._id);
                     }}
                     disabled={!authorizedAction("start_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline}>
-              {startPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> :
-                <FontAwesomeIcon icon={faRedo} fixedWidth className="mr-1"/>}
+              {startPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1" /> :
+                <FontAwesomeIcon icon={faRedo} fixedWidth className="mr-1" />}
               <span className="d-none d-md-inline">Resume</span></Button>
           </OverlayTrigger>}
 
@@ -489,16 +543,16 @@ function PipelineActionControls({
               placement="top"
               delay={{ show: 250, hide: 400 }}
               overlay={renderTooltip({ message: "Reset current pipeline run state." })}>
-              <Button variant="danger"
+              <Button variant="secondary"
                       className="btn-default"
                       size="sm"
                       onClick={() => {
                         handleResetWorkflowClick(pipeline._id);
                       }}
                       disabled={!authorizedAction("reset_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline}>
-                {resetPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> :
-                  <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>}
-                <span className="d-none d-md-inline">Reset</span></Button>
+                {resetPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1" /> :
+                  <FontAwesomeIcon icon={faRedo} fixedWidth className="mr-1" />}
+                <span className="d-none d-md-inline">Reset Pipeline</span></Button>
             </OverlayTrigger>
           }
 
@@ -514,22 +568,21 @@ function PipelineActionControls({
                       onClick={() => {
                         showCancelQueueOverlay();
                       }}>
-                <FontAwesomeIcon icon={faClock} fixedWidth/></Button>
+                <FontAwesomeIcon icon={faClock} fixedWidth /> Queued Request</Button>
             </OverlayTrigger>
           }
-
 
 
           <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Refresh pipeline status" })}>
+            overlay={renderTooltip({ message: "Refresh view" })}>
             <Button variant="secondary"
                     size="sm"
                     onClick={() => {
                       handleRefreshClick();
                     }}>
-              <FontAwesomeIcon icon={faSync} fixedWidth/></Button>
+              <FontAwesomeIcon icon={faSync} fixedWidth /></Button>
           </OverlayTrigger>
 
         </div>
@@ -539,20 +592,20 @@ function PipelineActionControls({
       <ApprovalModal pipelineId={pipeline._id}
                      visible={showApprovalModal}
                      setVisible={setShowApprovalModal}
-                     handleApprovalActivity={handleApprovalActivity}/>}
+                     handleApprovalActivity={handleApprovalActivity} />}
 
       {infoModal.show &&
       <Modal header={infoModal.header}
              message={infoModal.message}
              button={infoModal.button}
-             handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}/>}
+             handleCancelModal={() => setInfoModal({ ...infoModal, show: false })} />}
 
       {freetrialWizardModal.show &&
       <FreeTrialPipelineWizard pipelineId={freetrialWizardModal.pipelineId}
                                templateId={freetrialWizardModal.templateId}
                                pipelineOrientation={freetrialWizardModal.pipelineOrientation}
                                autoRun={true}
-                               handleClose={handleCloseFreeTrialDeploy}/>}
+                               handleClose={handleCloseFreeTrialDeploy} />}
     </>);
 }
 
