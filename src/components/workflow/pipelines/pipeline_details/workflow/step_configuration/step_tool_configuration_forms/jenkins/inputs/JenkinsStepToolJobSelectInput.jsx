@@ -65,9 +65,9 @@ function JenkinsStepToolJobSelectInput({ fieldName, model, setModel, disabled, j
   return (
     <JenkinsRegistryToolJobSelectInput
       fieldName={fieldName}
-      dataObject={model}
+      model={model}
       setDataFunction={setDataFunction}
-      setDataObject={setModel}
+      setModel={setModel}
       disabled={disabled}
       jenkinsToolId={jenkinsToolId}
     />

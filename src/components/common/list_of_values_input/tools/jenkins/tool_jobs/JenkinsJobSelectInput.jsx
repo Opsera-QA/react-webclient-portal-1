@@ -7,7 +7,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 
-function JenkinsJobInput({ jenkinsId, visible, typeFilter, fieldName, placeholderText, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, configurationRequired}) {
+function JenkinsJobSelectInput({ jenkinsId, visible, typeFilter, fieldName, placeholderText, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, configurationRequired}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [jenkinsTools, setJenkinsTools] = useState([]);
@@ -103,7 +103,7 @@ function JenkinsJobInput({ jenkinsId, visible, typeFilter, fieldName, placeholde
   );
 }
 
-JenkinsJobInput.propTypes = {
+JenkinsJobSelectInput.propTypes = {
   jenkinsId: PropTypes.string,
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
@@ -117,4 +117,4 @@ JenkinsJobInput.propTypes = {
   clearDataFunction: PropTypes.func
 };
 
-export default JenkinsJobInput;
+export default JenkinsJobSelectInput;

@@ -27,7 +27,7 @@ const dotnetCliStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Jenkins Job Id",
+      label: "Jenkins Job",
       id: "toolJobId",
       isRequired: true
     },
