@@ -103,7 +103,7 @@ function JenkinsRegistryToolJobSelectInput(
   };
 
   const getPlaceholderText = () => {
-    if (!isLoading && (jenkinsJobs == null || jenkinsJobs.length === 0 && jenkinsToolId !== "")) {
+    if (!isLoading && (jenkinsJobs == null || jenkinsJobs.length === 0 && jenkinsToolId != null && jenkinsToolId !== "")) {
       return (`No configured ${typeFilter ? typeFilter + " " : ""} Jenkins Jobs have been registered for this Jenkins tool.`);
     }
 

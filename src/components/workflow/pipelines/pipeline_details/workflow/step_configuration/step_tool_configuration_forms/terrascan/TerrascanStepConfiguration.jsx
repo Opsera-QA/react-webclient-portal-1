@@ -7,8 +7,8 @@ import terrascanStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/terrascan-stepForm-metadata";
 import TerrascanJenkinsToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanJenkinsToolSelectInput";
-import TerrascanJenkinsJobInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanJenkinsJobInput";
+import TerrascanStepJenkinsJobSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanStepJenkinsJobSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import TerrascanJenkinsAccountInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanJenkinsAccountInput";
@@ -96,7 +96,10 @@ function TerrascanStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
         model={terrascanStepConfigurationDto}
         setModel={setTerrascanStepConfigurationDataDto}
       />
-      <TerrascanJenkinsJobInput dataObject={terrascanStepConfigurationDto} setDataObject={setTerrascanStepConfigurationDataDto} />
+      <TerrascanStepJenkinsJobSelectInput
+        model={terrascanStepConfigurationDto}
+        setModel={setTerrascanStepConfigurationDataDto}
+      />
       <TerrascanJenkinsAccountInput dataObject={terrascanStepConfigurationDto} setDataObject={setTerrascanStepConfigurationDataDto} />
       <TerrascanBitbucketWorkspaceInput dataObject={terrascanStepConfigurationDto} setDataObject={setTerrascanStepConfigurationDataDto} />
       <TerrascanGitRepositoryInput dataObject={terrascanStepConfigurationDto} setDataObject={setTerrascanStepConfigurationDataDto} />
