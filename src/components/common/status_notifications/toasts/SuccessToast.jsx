@@ -31,7 +31,7 @@ function SuccessToast({ successMessage, removeToast, autoCloseLength, id }) {
         <IconBase
           icon={faTimes}
           className="pointer green"
-          onClick={() => { clearSuccess();}}
+          onClickFunction={() => { clearSuccess();}}
         />
       </div>
     );
