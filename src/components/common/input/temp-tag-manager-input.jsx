@@ -1,14 +1,14 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import { Multiselect } from 'react-widgets';
-import {AuthContext} from "../../../contexts/AuthContext";
 import tagEditorMetadata from "components/settings/tags/tags-metadata";
 import adminTagsActions from "../../settings/tags/admin-tags-actions";
 import Model from "../../../core/data_model/model";
 import LoadingDialog from "../status_notifications/loading";
+import {AuthContext} from "contexts/AuthContext";
+import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 
 // TODO: Don't use this besides in pipeline summary editors. It's a temp component until I can wire up my new ones
-function TempTagManagerInput({ label, type, data, setData, disabled, filter, placeholderText, allowCreate, groupBy}) {
+function TempTagManagerInput({ label, data, setDataFunction, disabled, filter, placeholderText, allowCreate, groupBy}) {
   const { getAccessToken } = useContext(AuthContext);
   const [tagOptions, setTagOptions] = useState([]);
   const [componentLoading, setComponentLoading] = useState(true);
@@ -33,7 +33,7 @@ function TempTagManagerInput({ label, type, data, setData, disabled, filter, pla
         newTags.push(tagOption);
       }
     });
-    setData(newTags);
+    setDataFunction(newTags);
   };
 
   const getTags = async () => {
@@ -64,12 +64,12 @@ function TempTagManagerInput({ label, type, data, setData, disabled, filter, pla
   };
 
   const getExistingTag = (newTag) => {
-    return tagOptions.find(tag => tag.type === type && tag.value === newTag);
+    return tagOptions.find(tag => tag.type === "pipeline" && tag.value === newTag);
   };
 
   const tagAlreadySelected = (newTag) => {
     let currentValues = data;
-    return currentValues != null && currentValues.length !== 0 && currentValues.find(tag => tag.type === type && tag.value === newTag) != null;
+    return currentValues != null && currentValues.length !== 0 && currentValues.find(tag => tag.type === "pipeline" && tag.value === newTag) != null;
   };
 
   const handleCreate = async (newValue) => {
@@ -82,7 +82,7 @@ function TempTagManagerInput({ label, type, data, setData, disabled, filter, pla
       if (!tagSelected)
       {
         currentValues.push(existingTag);
-        setData(currentValues);
+        setDataFunction(currentValues);
       }
       return;
     }
@@ -93,55 +93,40 @@ function TempTagManagerInput({ label, type, data, setData, disabled, filter, pla
     newValue = newValue.toLowerCase();
 
     let currentOptions = [...tagOptions];
-    let newTag = {type: type, value: newValue, active: true, configuration: {}};
-    let newTagOption = {type: type, value: newValue};
+    let newTag = {type: "pipeline", value: newValue, active: true, configuration: {}};
+    let newTagOption = {type: "pipeline", value: newValue};
     let newTagDto = new Model(newTag, tagEditorMetadata, true);
     await saveNewTag(newTagDto);
     currentValues.push(newTagOption);
     currentOptions.push(newTagOption);
     setTagOptions(currentOptions);
-    setData(currentValues);
+    setDataFunction(currentValues);
   };
 
-  if (componentLoading) {
-    return <LoadingDialog size="sm"/>;
-  }
-
-  if (type == null)
-  {
-    return (<div className="danger-red">Error for tag manager input: You forgot to wire up type!</div>);
-  }
-  else {
-    return (
-      type &&
-      <>
-        <div className="form-group custom-multiselect-input m-2">
-          <label><span>{label}</span></label>
-          <Multiselect
-            data={[...tagOptions]}
-            textField={data => data["type"] + ": " + data["value"]}
-            filter={filter}
-            allowCreate={allowCreate}
-            groupBy={groupBy}
-            busy={componentLoading}
-            onCreate={value => handleCreate(value)}
-            containerClassName={"tag-input"}
-            value={[...data]}
-            placeholder={placeholderText}
-            disabled={disabled}
-            onChange={tags => setData(tags)}
-          />
-        </div>
-      </>
-    );
-  }
+  return (
+    <div className="form-group m-2">
+      <label><span>{label}</span></label>
+      <StandaloneMultiSelectInput
+        selectOptions={[...tagOptions]}
+        textField={data => data["type"] + ": " + data["value"]}
+        filter={filter}
+        allowCreate={allowCreate}
+        groupBy={groupBy}
+        busy={componentLoading}
+        createOptionFunction={handleCreate}
+        value={[...data]}
+        placeholderText={placeholderText}
+        disabled={disabled}
+        setDataFunction={setDataFunction}
+      />
+    </div>
+  );
 }
 
 TempTagManagerInput.propTypes = {
   label: PropTypes.string,
   selectOptions: PropTypes.array,
   data: PropTypes.object,
-  setData: PropTypes.func,
   fieldName: PropTypes.string,
   groupBy: PropTypes.string,
   filter: PropTypes.string,
@@ -153,7 +138,6 @@ TempTagManagerInput.propTypes = {
 };
 
 TempTagManagerInput.defaultProps = {
-  filter: "contains",
   allowCreate: "onFilter",
   disabled: false,
   groupBy: "type"

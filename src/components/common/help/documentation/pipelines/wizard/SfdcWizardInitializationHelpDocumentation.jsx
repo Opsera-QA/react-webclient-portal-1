@@ -26,7 +26,7 @@ function SfdcWizardInitializationHelpDocumentation({closeHelpPanel}) {
           <li>The maximum file size supported is 500 KB</li>
         </ol>
         <li>Drop the CSV file directly into the upload box or click on the upload box to make a file selection.</li>
-        <li>Select the Source Org: <b>From SFDC</b> or <b>From GIT</b>.</li>
+        <li>Select the Source Org: <b>From Salesforce</b> or <b>From Git</b>.</li>
         <li>Select <b>Process File</b> and a table with data will be generated. Confirm that the information is accurate then select <b>Proceed with Selected File</b>.</li>
       </ul>
     </HelpDocumentationContainer>

@@ -59,7 +59,7 @@ const SfdcPipelineWizardOriginOrganizationFilesTable = ({ pipelineWizardModel, s
       await sfdcPolling(cancelSource, newFilterModel);
     }
     catch (error) {
-      toastContext.showInlineErrorMessage("Error pulling SFDC Files. Check logs for more details.");
+      toastContext.showInlineErrorMessage("Error pulling Salesforce Files. Check logs for more details.");
       console.error(error);
     }
     finally {
@@ -89,7 +89,7 @@ const SfdcPipelineWizardOriginOrganizationFilesTable = ({ pipelineWizardModel, s
 
     if (isMounted?.current === true && data) {
       if (data?.error) {
-        toastContext.showInlineErrorMessage("SFDC Fetch Error : " + data.sfdcErrorMessage);
+        toastContext.showInlineErrorMessage("Salesforce Fetch Error : " + data.sfdcErrorMessage);
       }
 
       if (data.warning) {

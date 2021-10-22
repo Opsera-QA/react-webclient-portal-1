@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // TODO: Wire up functions
-function PipelineActionBar({item, handleShareClick, handleScheduleClick, handleHelpClick, handleSettingsClick, handleRedoClick, handleDeleteClick, handleUnlinkClick}) {
+function PipelineActionBar({pipeline, handleShareClick, handleScheduleClick, handleHelpClick, handleSettingsClick, handleRedoClick, handleDeleteClick, handleUnlinkClick}) {
 
   // TODO: Be sure to add pointer and enable hover color when wiring up functions
   return (
@@ -41,7 +41,7 @@ function PipelineActionBar({item, handleShareClick, handleScheduleClick, handleH
 }
 
 PipelineActionBar.propTypes = {
-  item: PropTypes.object,
+  pipeline: PropTypes.object,
   handleShareClick: PropTypes.func,
   handleScheduleClick: PropTypes.func,
   handleHelpClick: PropTypes.func,

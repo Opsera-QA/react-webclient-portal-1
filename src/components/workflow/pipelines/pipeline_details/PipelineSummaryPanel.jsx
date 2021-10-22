@@ -11,7 +11,6 @@ import {
   faUser,
   faUserFriends,
 } from "@fortawesome/pro-light-svg-icons";
-import DropdownList from "react-widgets/lib/DropdownList";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import EditRolesModal from "components/workflow/EditRolesModal";
 import Model from "core/data_model/model";
@@ -24,7 +23,6 @@ import InformationDialog from "components/common/status_notifications/info";
 import PipelineActionControls from "components/workflow/pipelines/pipeline_details/PipelineActionControls";
 import PipelineSummaryActionBar from "components/common/actions/pipeline/PipelineSummaryActionBar";
 import PipelineSummaryMessages from "components/workflow/pipelines/pipeline_details/pipelineSummaryMessage";
-import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
 import EditTagModal from "components/workflow/EditTagModal";
 import pipelineActions from "components/workflow/pipeline-actions";
 import Modal from "components/common/modal/modal";
@@ -33,6 +31,7 @@ import CustomBadge from "components/common/badges/CustomBadge";
 import PipelineScheduledTasksOverlay from "components/workflow/pipelines/scheduler/PipelineScheduledTasksOverlay";
 import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
 import PipelineDetailsOverviewOverlay from "components/workflow/pipelines/overview/PipelineDetailsOverviewOverlay";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -540,12 +539,12 @@ function PipelineSummaryPanel({
             {editType &&
             <div className="d-flex mt-1">
               <div className="w-75">
-                <DropdownList
-                  data={pipelineHelpers.PIPELINE_TYPES}
+                <StandaloneSelectInput
+                  selectOptions={pipelineHelpers.PIPELINE_TYPES}
                   defaultValue={pipeline.type[0]}
-                  valueField="id"
-                  textField="name"
-                  onChange={e => {
+                  valueField={"id"}
+                  textField={"name"}
+                  setDataFunction={e => {
                     let type = formData.type;
                     type[0] = e.id;
                     setFormData({ ...formData, type: type });

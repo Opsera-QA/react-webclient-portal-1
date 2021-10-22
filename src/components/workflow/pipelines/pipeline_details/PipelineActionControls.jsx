@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, {useContext, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
@@ -14,16 +14,19 @@ import {
   faSpinner,
   faStopCircle,
   faHistory,
-  faFlag, faRedo, faInfoCircle,
+  faFlag, faRedo, faInfoCircle, faClock
 } from "@fortawesome/pro-light-svg-icons";
 import "../../workflows.css";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
 import WorkflowAuthorizedActions from "./workflow/workflow-authorized-actions";
 import pipelineHelpers from "../../pipelineHelpers";
+import axios from "axios";
+import pipelineActions from "../../pipeline-actions";
+import CancelPipelineQueueConfirmationOverlay
+  from "components/workflow/pipelines/pipeline_details/queuing /cancellation/CancelPipelineQueueConfirmationOverlay";
 
-
-const delayCheckInterval = 12000;
+const delayCheckInterval = 10000;
 
 function PipelineActionControls({
   pipeline,
@@ -50,6 +53,26 @@ function PipelineActionControls({
     pipelineOrientation: "",
   });
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
+  const [hasQueuedRequest, setHasQueuedRequest] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  // TODO: This should be combined with the workflowStatus use effect but don't want to break anything.
+  //  After we have time to verify adding this doesn't break it, let's combine them.
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
 
   const authorizedAction = (action, owner) => {
     let objectRoles = pipeline?.roles;
@@ -57,7 +80,11 @@ function PipelineActionControls({
   };
 
   useEffect(() => {
-    loadData(pipeline);
+    loadData(pipeline).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
     if (workflowStatus === "paused") {
       setStatusMessage("This pipeline is currently paused.");
       setStatusMessageBody("A paused pipeline requires either approval or review of the logs in order to proceed.");
@@ -69,21 +96,30 @@ function PipelineActionControls({
   }, [workflowStatus, JSON.stringify(pipeline.workflow)]);
 
 
-  const loadData = (pipeline) => {
-    if (pipeline.workflow === undefined) {
+  const loadData = async (pipeline) => {
+    // TODO: With the below check this is unnecessary-- leaving in for now but something to look at later
+    if (pipeline?.workflow === undefined) {
       return;
     }
-    if (pipeline.workflow.last_step === undefined) {
+
+    if (pipeline?.workflow?.last_step === undefined) {
       setWorkflowStatus("stopped");
       return;
     }
 
-    let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
-    if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
+    // TODO: This should probably be able to be replaced with pipeline?.workflow?.last_step?.status || false
+    let status = pipeline?.workflow?.last_step?.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
+
+    //check for queued requests
+    if (status === "running") {
+      await checkPipelineQueueStatus();
+    }
+
+    if (status === "stopped" && pipeline?.workflow?.last_step?.running && pipeline?.workflow?.last_step?.running?.paused) {
       setWorkflowStatus("paused");
 
       //if step set currently running is an approval step, flag that
-      if (pipeline.workflow?.last_step?.running?.step_id) {
+      if (pipeline?.workflow?.last_step?.running?.step_id) {
         const runningStep = pipelineHelpers.getStepIndexFromPlan(pipeline.workflow.plan, pipeline.workflow?.last_step?.running?.step_id);
         setIsApprovalGate(pipeline.workflow.plan[runningStep].tool?.tool_identifier === "approval");
       }
@@ -92,6 +128,15 @@ function PipelineActionControls({
     }
 
     setWorkflowStatus(status);
+
+    //TODO: Enable line 132 ONLY for testing to render the page in a running mode, when done, make sure line 129 is enabled AND the last line of the function.
+    //setWorkflowStatus("running");
+  };
+
+  const checkPipelineQueueStatus = async () => {
+    const queuedRequest = await pipelineActions.getQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
+    const isQueued = typeof queuedRequest === "object" && Object.keys(queuedRequest)?.length > 0;
+    setHasQueuedRequest(isQueued);
   };
 
   // button handlers
@@ -103,6 +148,7 @@ function PipelineActionControls({
     await fetchActivityLogs();
     setResetPipeline(false);
     setStartPipeline(false);
+    await checkPipelineQueueStatus();
   };
 
   const handleStopWorkflowClick = async (pipelineId) => {
@@ -113,6 +159,7 @@ function PipelineActionControls({
     await fetchActivityLogs();
     setResetPipeline(false);
     setStartPipeline(false);
+    await checkPipelineQueueStatus();
   };
 
   const handleApprovalClick = () => {
@@ -143,6 +190,7 @@ function PipelineActionControls({
   const handleRefreshClick = async () => {
     await fetchData();
     await fetchActivityLogs();
+    await checkPipelineQueueStatus();
   };
 
   //action functions
@@ -234,10 +282,10 @@ function PipelineActionControls({
 
 
   const launchPipelineStartWizard = (pipelineOrientation, pipelineType, pipelineId) => {
-    console.log("launching wizard");
-    console.log("pipelineOrientation ", pipelineOrientation);
-    console.log("pipelineType ", pipelineType);
-    console.log("pipelineId ", pipelineId);
+    //console.log("launching wizard");
+    //console.log("pipelineOrientation ", pipelineOrientation);
+    //console.log("pipelineType ", pipelineType);
+    //console.log("pipelineId ", pipelineId);
 
     toastContext.showOverlayPanel(
       <PipelineStartWizard
@@ -252,8 +300,17 @@ function PipelineActionControls({
     );
   };
 
+  const showCancelQueueOverlay = () => {
+    toastContext.showOverlayPanel(
+      <CancelPipelineQueueConfirmationOverlay
+        pipeline={pipeline}
+        setHasQueuedRequest={setHasQueuedRequest}
+      />
+    );
+  };
+
   const handlePipelineStartWizardClose = () => {
-    console.log("closing wizard");
+    //console.log("closing wizard");
     toastContext.clearOverlayPanel();
   };
 
@@ -329,6 +386,7 @@ function PipelineActionControls({
     }
   };
 
+  // TODO: Make base button components for these in the future
   return (
     <>
       <div className="d-flex flex-fill">
@@ -425,22 +483,42 @@ function PipelineActionControls({
               <span className="d-none d-md-inline">Resume</span></Button>
           </OverlayTrigger>}
 
-          {workflowStatus !== "running" &&
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Reset current pipeline run state." })}>
-            <Button variant="danger"
-                    className="btn-default"
-                    size="sm"
-                    onClick={() => {
-                      handleResetWorkflowClick(pipeline._id);
-                    }}
-                    disabled={!authorizedAction("reset_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline}>
-              {resetPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> :
-                <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>}
-              <span className="d-none d-md-inline">Reset</span></Button>
-          </OverlayTrigger>}
+          {
+            workflowStatus !== "running" &&
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip({ message: "Reset current pipeline run state." })}>
+              <Button variant="danger"
+                      className="btn-default"
+                      size="sm"
+                      onClick={() => {
+                        handleResetWorkflowClick(pipeline._id);
+                      }}
+                      disabled={!authorizedAction("reset_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline}>
+                {resetPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> :
+                  <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>}
+                <span className="d-none d-md-inline">Reset</span></Button>
+            </OverlayTrigger>
+          }
+
+
+          {
+            hasQueuedRequest &&
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip({ message: "A queued request to start this pipeline is pending.  Upon successful completion of this run, the pipeline will restart." })}>
+              <Button variant="secondary"
+                      size="sm"
+                      onClick={() => {
+                        showCancelQueueOverlay();
+                      }}>
+                <FontAwesomeIcon icon={faClock} fixedWidth/></Button>
+            </OverlayTrigger>
+          }
+
+
 
           <OverlayTrigger
             placement="top"

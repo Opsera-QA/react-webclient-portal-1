@@ -3,17 +3,24 @@ import PropTypes from "prop-types";
 import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import NumberPicker from "react-widgets/lib/NumberPicker";
-import simpleNumberLocalizer from "react-widgets-simple-number";
+import StandaloneNumberPickerInput from "components/common/inputs/number/picker/base/StandaloneNumberPickerInput";
 
-export const formatTypes = {
-  percent: '%'
-};
-
-function NumberPickerInputBase({ fieldName, dataObject, setDataObject, disabled, placeholderText, formatType, setDataFunction, showLabel, minimum, maximum, className, precision }) {
-  const [field, setField] = useState(dataObject?.getFieldById(fieldName));
+function NumberPickerInputBase(
+  {
+    fieldName,
+    dataObject,
+    setDataObject,
+    disabled,
+    placeholderText,
+    formatType,
+    setDataFunction,
+    showLabel,
+    minimum,
+    maximum,
+    className,
+  }) {
+  const [field] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
-  simpleNumberLocalizer();
 
   const validateAndSetData = (newValue) => {
     let newDataObject = dataObject;
@@ -38,15 +45,14 @@ function NumberPickerInputBase({ fieldName, dataObject, setDataObject, disabled,
   return (
     <InputContainer className={className ? className : "custom-number-input my-2"}>
       <InputLabel field={field} showLabel={showLabel} model={dataObject} />
-      <NumberPicker
-        placeholder={placeholderText}
+      <StandaloneNumberPickerInput
+        placeholderText={placeholderText}
         disabled={disabled}
-        value={dataObject.getData(fieldName)}
-        className="max-content-width"
-        onChange={(newValue) => updateValue(newValue)}
-        min={typeof minimum === "number" ? minimum : field?.minNumber}
-        max={typeof maximum === "number" ? maximum : field?.maxNumber}
-        format={ formatType && formatTypes[formatType] != null ? formatTypes[formatType] : undefined}
+        value={dataObject?.getData(fieldName)}
+        setDataFunction={updateValue}
+        minimum={typeof minimum === "number" ? minimum : field?.minNumber}
+        maximum={typeof maximum === "number" ? maximum : field?.maxNumber}
+        formatType={formatType}
       />
       <InfoText field={field} errorMessage={errorMessage}/>
     </InputContainer>

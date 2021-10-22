@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Multiselect } from "react-widgets";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
-// import DropdownList from "react-widgets/lib/DropdownList";
+import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 
 function LazyLoadMultiSelectInputBase({
   fieldName,
@@ -110,22 +109,22 @@ function LazyLoadMultiSelectInputBase({
         infoOverlay={infoOverlay}
       />
       <div className={"custom-multiselect-input"}>
-        <Multiselect
-          data={selectOptions}
+        <StandaloneMultiSelectInput
+          selectOptions={selectOptions}
           valueField={valueField}
           textField={textField}
           busy={busy}
           filter="contains"
           groupBy={groupBy}
-          onToggle={(test) => {
+          onToggleFunction={(test) => {
             if (test === true && (!Array.isArray(selectOptions) || selectOptions?.length === 0)) {
               onToggleFunction();
             }
           }}
           value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : []}
-          placeholder={placeholderText}
+          placeholderText={placeholderText}
           disabled={disabled}
-          onChange={(newValue) =>
+          setDataFunction={(newValue) =>
             setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)
           }
         />

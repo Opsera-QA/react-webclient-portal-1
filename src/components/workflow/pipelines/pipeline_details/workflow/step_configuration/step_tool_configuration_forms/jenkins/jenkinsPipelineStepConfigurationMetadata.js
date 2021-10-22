@@ -145,7 +145,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "commands",
     },
     {
-      label:"Specify SalesForce Credentials",
+      label:"Specify Salesforce Credentials",
       id:"sfdcToolId",
       isRequired: true,
     },
@@ -155,7 +155,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       formText:"Note: TestLevel of NoTestRun cannot be used in production organizations"
     },
     {
-      label:"Destination SalesForce Credentials",
+      label:"Destination Salesforce Credentials",
       id:"sfdcDestToolId",
       isRequired: true
     },

@@ -40,8 +40,8 @@ function JenkinsDestinationSalesForceCredentialsInput({ dataObject, setDataObjec
   const footer = () => {
     return (<div className="form-text text-muted p-2">
       <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
-		  No accounts have been registered for SalesForce. Please go to
-      <Link to="/inventory/tools">Tool Registry</Link> and add a SalesForce (SFDC) Account entry
+		  No accounts have been registered for Salesforce. Please go to
+      <Link to="/inventory/tools">Tool Registry</Link> and add a Salesforce (SFDC) Account entry
 		  in order to proceed.
     </div>);
   };

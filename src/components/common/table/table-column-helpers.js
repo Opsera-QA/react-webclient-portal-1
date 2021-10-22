@@ -4,9 +4,8 @@ import { Form } from "react-bootstrap";
 import {
   faCheckCircle,
   faCircle, faOctagon,
-  faPause, faPauseCircle, faPlayCircle, faSearchPlus,
+  faPauseCircle, faPlayCircle, faSearchPlus,
   faSpinner,
-  faStop,
   faStopCircle,
   faTimesCircle, faTrash, faPlay, faTag, faExclamationCircle
 } from "@fortawesome/pro-light-svg-icons";
@@ -20,8 +19,6 @@ import PauseCircle from "../../common/icons/table/PauseCircle";
 import React from "react";
 import Model from "core/data_model/model";
 import PipelineTypesField from "components/common/fields/pipelines/PipelineTypesField";
-import PipelineStatus from "components/workflow/pipelines/PipelineStatus";
-import pipelineHelpers from "components/workflow/pipelineHelpers";
 import DashboardFavoritesIcon from "components/common/icons/dashboards/DashboardFavoritesIcon";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import {Button} from "react-bootstrap";
@@ -33,13 +30,13 @@ import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer"
 import CustomBadge from "components/common/badges/CustomBadge";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
 import {getTaskTypeLabel} from "components/tasks/task.types";
-import {getColumnHeader, getColumnId, getPipelineStatusIconCss} from "components/common/table/table-column-helpers-v2";
+import { getPipelineStateFieldBase} from "components/common/fields/pipelines/state/PipelineStateField";
 
-const getTableHeader = (field) => {
+export const getCustomTableHeader = (field) => {
   return field ? field.label : "";
 };
 
-const getTableAccessor = (field) => {
+export const getCustomTableAccessor = (field) => {
   return field ? field.id : "";
 };
 
@@ -53,15 +50,15 @@ export const getTableTextColumnWithoutField = (header, accessor) => {
 export const getTableTextColumn = (field, className) => {
   if (className) {
     return {
-      Header: getTableHeader(field),
-      accessor: getTableAccessor(field),
+      Header: getCustomTableHeader(field),
+      accessor: getCustomTableAccessor(field),
       class: className
     };
   }
 
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     class: className ? className : undefined
   };
 };
@@ -75,8 +72,8 @@ export const getOwnerNameField = (headerText = "Owner Name") => {
 
 export const getLimitedTableTextColumn = (field, maxLength, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     class: className ? className : undefined,
     Cell: function parseText(row) {
       const value = row?.value;
@@ -98,8 +95,8 @@ export const getLimitedTableTextColumn = (field, maxLength, className) => {
 
 export const getStringifiedArrayColumn = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function stringifyArray(row) {
       const array = row?.value;
 
@@ -115,8 +112,8 @@ export const getStringifiedArrayColumn = (field, className) => {
 
 export const getTaskTypeColumn = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function formatTaskTypeLabel(row) {
       return getTaskTypeLabel(row?.value);
     },
@@ -126,8 +123,8 @@ export const getTaskTypeColumn = (field, className) => {
 
 export const getTaskStatusColumn = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     width: 105,
     Cell: function getTaskStatus(row) {
       const taskStatus = row?.value;
@@ -153,8 +150,8 @@ export const getTaskStatusColumn = (field, className) => {
 
 export const getLimitedStringifiedArrayColumn = (field, maxLength, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function stringifyArray(row) {
       const array = row?.value;
 
@@ -177,8 +174,8 @@ export const getLimitedStringifiedArrayColumn = (field, maxLength, className) =>
 
 export const getNameValueArrayColumn = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function stringifyArray(row) {
       const array = row?.value;
 
@@ -196,8 +193,8 @@ export const getNameValueArrayColumn = (field, className) => {
 
 export const getRoleArrayColumn = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function stringifyArray(row) {
       const array = row?.value;
 
@@ -215,8 +212,8 @@ export const getRoleArrayColumn = (field, className) => {
 
 export const getContactArrayColumn = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function stringifyArray(row) {
       const array = row?.value;
 
@@ -234,8 +231,8 @@ export const getContactArrayColumn = (field, className) => {
 
 export const getLimitedContactArrayColumn = (field, maxLength, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function stringifyArray(row) {
       const array = row?.value;
 
@@ -263,8 +260,8 @@ export const getLimitedContactArrayColumn = (field, maxLength, className) => {
 
 export const getTagColumn = (field, maxShown = 2, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function stringifyArray(row) {
       const array = row?.value;
 
@@ -317,8 +314,8 @@ export const getTagColumn = (field, maxShown = 2, className) => {
 
 export const getTagArrayColumn = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function stringifyArray(row) {
       const array = row?.value;
 
@@ -336,8 +333,8 @@ export const getTagArrayColumn = (field, className) => {
 
 export const getLimitedTagArrayColumn = (field, maxLength, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function stringifyArray(row) {
       const array = row?.value;
 
@@ -365,8 +362,8 @@ export const getLimitedTagArrayColumn = (field, maxLength, className) => {
 
 export const getTableLeaderColumn = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function parseLeader(row) {
       return row.value ? `${row.value.name} (${row.value.email})` : "";
     },
@@ -376,8 +373,8 @@ export const getTableLeaderColumn = (field, className) => {
 
 export const getTableDateColumn = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function parseDate(row) {
       return row.value ? format(new Date(row.value), "yyyy-MM-dd") : "";
     },
@@ -387,8 +384,8 @@ export const getTableDateColumn = (field, className) => {
 
 export const getTableDateTimeColumn = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function parseDateTime(row) {
       return row.value ? format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a") : "";
     },
@@ -410,8 +407,8 @@ export const getTableDateAndTimeUntilValueColumn = (header, id, fakeColumn = "fa
 
 export const getPipelineActivityStatusColumn = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function parseStatus(row) {
       if (row?.value == null || row?.value === "") {
         return (
@@ -486,7 +483,7 @@ export const getAssociatedPipelineStatusIcon = (pipelineStatus) => {
 export const getPipelineTypeColumn = (field, className) => {
   return {
     Header: "",
-    accessor: getTableAccessor(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function parseType(workflow) {
       return <PipelineTypesField fieldName={field.id} dataObject={new Model(workflow.row.original, pipelineMetadata, false)} />;
     },
@@ -494,66 +491,23 @@ export const getPipelineTypeColumn = (field, className) => {
   };
 };
 
-export const getTablePipelineStatusColumn = (field, className) => {
+export const getCustomTablePipelineStateColumnDefinition = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
-    Cell: function parseStatus(pipeline) {
-      let pipelineStatus = pipelineHelpers.getPipelineStatus(pipeline.row.original);
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    Cell: function parseStatus(tableRow) {
+      const pipelineState = tableRow.row.original[field?.id];
 
-      switch (pipelineStatus) {
-      case "failed":
-        return (
-          <div className="red">
-            <PipelineStatus className="red"
-                            innerText={"An error has occurred in this pipeline.  See activity logs for details."}
-                            icon={faTimesCircle} statusText={"Failed"} tableColumn={true}/>
-          </div>
-        );
-        case "error":
-          return (
-            <div className="red">
-              <PipelineStatus className="red"
-                              innerText={"An error has occurred in this pipeline.  See activity logs for details."}
-                              icon={faExclamationCircle} statusText={"Failed"} tableColumn={true}/>
-            </div>
-          );
-      case "running":
-        return (
-          <div className="green">
-            <PipelineStatus innerText={"A pipeline operation is currently in progress."} icon={faSpinner}
-                            statusText={"Running"} tableColumn={true}/>
-          </div>
-        );
-      case "paused":
-        return (
-          <div className="yellow">
-            <PipelineStatus innerText={"The pipeline operation is currently paused."} icon={faPause}
-                            statusText={"Paused"} tableColumn={true}/>
-          </div>
-        );
-      case "success":
-        return (
-          <div className="green">
-            <PipelineStatus innerText={"The most recent run of this pipeline was successful."} icon={faCheckCircle}
-                            statusText={"Successful"} tableColumn={true}/>
-          </div>
-        );
-      default:
-        return (
-          <PipelineStatus innerText={"This pipeline is not currently running."} icon={faStop}
-                          statusText={"Stopped"} tableColumn={true}/>
-        );
-      }
+      return (getPipelineStateFieldBase(pipelineState));
     },
-    class: className ? className :  "text-left"
+    class: className
   };
 };
 
 export const getChartPipelineStatusColumn = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function parseStatus(row) {
       let status = typeof row?.value === "string" ? row.value.toLowerCase() : status;
       switch (status) {
@@ -576,8 +530,8 @@ export const getChartPipelineStatusColumn = (field, className) => {
 
 export const getChartTrendStatusColumn = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function parseStatus(row) {
       let status = typeof row?.value === "string" ? row.value.toLowerCase() : status;
       switch (status) {
@@ -599,8 +553,8 @@ export const getChartTrendStatusColumn = (field, className) => {
 
 export const getTableFavoriteColumn = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function getFavoritesIcon(row) {
       return <DashboardFavoritesIcon key={row.row.original._id} dashboard={row.row.original} dashboardsActions={dashboardsActions} />;
     },
@@ -656,8 +610,8 @@ export const getDeletePlatformToolTableButtonColumn = (accessor = "row", headerT
 };
 export const getTableBooleanIconColumn = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function getStatusIcon(row) {
       return row.value ? <div><FontAwesomeIcon icon={faCheckCircle} className="green ml-2" /></div> :  <div><FontAwesomeIcon icon={faTimesCircle} className="red ml-2" /></div>;
     },
@@ -667,8 +621,8 @@ export const getTableBooleanIconColumn = (field, className) => {
 
 export const getGitTasksStatusColumn = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function parseStatus(row) {
       return (        
         <div>{getPipelineStatusIcon(row)}</div>        
@@ -692,8 +646,8 @@ export const getTableInfoIconColumn = (showInformationFunction, accessor = "row"
 // This just takes the data field and returns the count inside the array
 export const getTableArrayCountColumn = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function getCount(row) {
       return row.value.length;
     },
@@ -714,8 +668,8 @@ export const getCountColumnWithoutField = (header, accessor, className) => {
 
 export const getRoleAccessLevelColumn = (field, className) => {
   return {
-    Header: getTableHeader(field),
-    accessor: getTableAccessor(field),
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
     Cell: function getRoleAccessLevel(row) {
       const roles = row?.data[row?.row?.index]?.roles;
       const text = row?.value;

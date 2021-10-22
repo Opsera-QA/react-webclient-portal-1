@@ -3,12 +3,11 @@ import PropTypes from "prop-types";
 import {Form, Button, Row} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faSpinner, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
-import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
-import ErrorDialog from "../../../../../../../common/status_notifications/error";
 import {getErrorDialog, getMissingRequiredFieldsErrorDialog} from "../../../../../../../common/toasts/toasts";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -195,21 +194,21 @@ function AnchoreScanStepConfiguration({ stepTool, pipelineId, plan, stepId, pare
           ) : (
             <>
               {renderForm && cypressList && cypressList.length > 1 ? (
-                <DropdownList
-                  data={cypressList}
+                <StandaloneSelectInput
+                  selectOptions={cypressList}
                   value={
                     formData.anchoreToolConfigId
                       ? cypressList[cypressList.findIndex((x) => x.id === formData.anchoreToolConfigId)]
                       : cypressList[0]
                   }
-                  valueField="id"
-                  textField="name"
+                  valueField={"id"}
+                  textField={"name"}
                   defaultValue={
                     formData.anchoreToolConfigId
                       ? cypressList[cypressList.findIndex((x) => x.id === formData.anchoreToolConfigId)]
                       : cypressList[0]
                   }
-                  onChange={handleCypressChange}
+                  setDataFunction={handleCypressChange}
                 />
               ) : (
                 <>
@@ -256,21 +255,21 @@ function AnchoreScanStepConfiguration({ stepTool, pipelineId, plan, stepId, pare
                 <Form.Group controlId="s3Step">
                   <Form.Label>ECR Push Step*</Form.Label>
                   {listOfSteps ? (
-                    <DropdownList
-                      data={listOfSteps}
+                    <StandaloneSelectInput
+                      selectOptions={listOfSteps}
                       value={
                         formData.ecrPushStepId
                           ? listOfSteps[listOfSteps.findIndex((x) => x._id === formData.ecrPushStepId)]
                           : listOfSteps[0]
                       }
-                      valueField="_id"
-                      textField="name"
+                      valueField={"_id"}
+                      textField={"name"}
                       defaultValue={
                         formData.ecrPushStepId
                           ? listOfSteps[listOfSteps.findIndex((x) => x._id === formData.ecrPushStepId)]
                           : listOfSteps[0]
                       }
-                      onChange={handleECRStepChange}
+                      setDataFunction={handleECRStepChange}
                     />
                   ) : (
                     <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth />

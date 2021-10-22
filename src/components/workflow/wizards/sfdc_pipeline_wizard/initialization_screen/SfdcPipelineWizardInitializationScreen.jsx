@@ -66,7 +66,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     }
     catch (error) {
       console.error(error);
-      setError("Could not initialize SFDC Pipeline Wizard");
+      setError("Could not initialize Salesforce Pipeline Wizard");
     }
     finally {
       if (isMounted?.current === true) {
@@ -89,7 +89,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     }
 
     if (sfdcToolId == null || sfdcToolId === "") {
-      setError("No SFDC Tool is associated with this Git Task");
+      setError("No Salesforce Tool is associated with this Task");
     }
 
     newPipelineWizardModel.setData("accountUsername", accountUsername);
@@ -135,7 +135,10 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     }
 
     if (stepId == null || sfdcToolId == null) {
-      setError("Could not find SFDC Jenkins step needed to run the Pipeline Wizard. Please edit the workflow and add the SFDC Ant Job setting in order to run this pipeline.");
+      setError(`
+        Could not find Salesforce Jenkins step needed to run the Pipeline Wizard. 
+        Please edit the workflow and add the SFDC Ant Job setting in order to run this pipeline.
+      `);
     }
 
     if (runCount != null) {
@@ -169,7 +172,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       }
     }
     catch (error) {
-      console.error("Could not verify if tool is SFDX");
+      console.error("Could not verify if Tool is Salesforce DX");
     }
   };
 
@@ -207,7 +210,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     }
     catch (error) {
       console.error(error);
-      setError("Could not create new SFDC Pipeline Wizard record");
+      setError("Could not create new Salesforce Pipeline Wizard record");
     }
     finally {
       if (isMounted?.current === true) {
@@ -278,7 +281,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   const getBody = () => {
     if (isLoading || pipelineWizardModel == null) {
       return (
-        <LoadingDialog message={"Initializing SFDC Pipeline Wizard"} size={"sm"} />
+        <LoadingDialog message={"Initializing Salesforce Pipeline Wizard"} size={"sm"} />
       );
     }
 
@@ -287,7 +290,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
         <div>
           <div>
             {`
-          The SFDC Pipeline Run Wizard was previously initiated on ${format(new Date(existingRecord?.createdAt), "yyyy-MM-dd', 'hh:mm a")} by 
+          The Salesforce Pipeline Run Wizard was previously initiated on ${format(new Date(existingRecord?.createdAt), "yyyy-MM-dd', 'hh:mm a")} by 
           ${existingRecord?.owner_name || "ERROR PULLING OWNER'S NAME"} but was not completed.
           `}
           </div>
@@ -298,7 +301,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
             {`If you continue, you will be able to adjust all parameters that were previously applied.`}
           </div>
           <div className={"mt-2"}>
-            {`Please note, using the SFDC Pipeline Run Wizard at the same time as someone else for the same use case will lead to unintended side effects.`}
+            {`Please note, using the Salesforce Pipeline Run Wizard at the same time as someone else for the same use case will lead to unintended side effects.`}
           </div>
           <SaveButtonContainer>
             <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading}
@@ -349,7 +352,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
         tabText={"Use Past Run's XML"}
         handleTabClick={handleTabClick}
         tabName={"past_run"}
-        toolTipText={"Deploy using a past pipeline run's Package XML"}
+        toolTipText={"Deploy using a past Pipeline run's Package XML"}
         icon={faSync}
       />
     );
@@ -368,7 +371,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
               tabText={"Manual Pipeline Wizard Run"}
               handleTabClick={handleTabClick}
               tabName={"manual"}
-              toolTipText={"Use SFDC Component Selection Deployment"}
+              toolTipText={"Use Salesforce Component Selection Deployment"}
               icon={faSalesforce}
             />
             {getDynamicTab()}
@@ -377,7 +380,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
               tabText={"XML/File Upload Process"}
               handleTabClick={handleTabClick}
               tabName={"automatic"}
-              toolTipText={"Deploy using XML or an Excel file"}
+              toolTipText={"Deploy using an XML or CSV file"}
               icon={faFileCode}
             />
           </CustomTabContainer>
@@ -424,13 +427,13 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   const getMainView = () => {
     if (creatingNewRecord) {
       return (
-        <LoadingDialog message={"Starting a new SFDC Pipeline Wizard Instance"} size={"sm"} />
+        <LoadingDialog message={"Starting a new Salesforce Pipeline Wizard Instance"} size={"sm"} />
       );
     }
 
     return (
       <div>
-        <div className="h5">SalesForce Pipeline Run: Initialization</div>
+        <div className="h5">Salesforce Pipeline Run: Initialization</div>
         {getTabContainer()}
         <div className="my-3">
           {getView()}

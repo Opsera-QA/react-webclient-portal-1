@@ -1,37 +1,43 @@
 import React from "react";
 import PropTypes from "prop-types";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
-import AzureDevopsPipelineStepConfigurationHelp
-  from "../../../../common/help/documentation/pipelines/step_configuration/AzureDevopsPipelineStepConfigurationHelp";
+import AzureDevopsPipelineStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/AzureDevopsPipelineStepConfigurationHelpDocumentation";
 import PipelineStepSetupHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/PipelineStepSetupHelpDocumentation";
-import DockerEcrPushStepConfigurationHelp
-  from "../../../../common/help/documentation/pipelines/step_configuration/DockerEcrPushStepConfigurationHelp";
-import AwsEcsDeployStepConfigurationHelp
-  from "../../../../common/help/documentation/pipelines/step_configuration/AwsEcsDeployStepConfigurationHelp";
-import AzureAksDeployPipelineStepConfigurationHelp
-  from "../../../../common/help/documentation/pipelines/step_configuration/AzureAksDeployPipelineStepConfigurationHelp";
-import AzureAcrPushPipelineStepConfigurationHelp
-  from "../../../../common/help/documentation/pipelines/step_configuration/AzureAcrPushPipelineStepConfigurationHelp";
-import OctopusDeployStepConfigurationHelp
-  from "../../../../common/help/documentation/pipelines/step_configuration/OctopusDeployStepConfigurationHelp";
+import DockerEcrPushStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/DockerEcrPushStepConfigurationHelpDocumentation";
+import AwsEcsDeployStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/AwsEcsDeployStepConfigurationHelpDocumentation";
+import AzureAksDeployPipelineStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/AzureAksDeployPipelineStepConfigurationHelpDocumentation";
+import AzureAcrPushPipelineStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/AzureAcrPushPipelineStepConfigurationHelpDocumentation";
+import OctopusDeployStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/OctopusDeployStepConfigurationHelpDocumentation";
+import PipelineSourceRepositoryHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/PipelineSourceRepositoryHelpDocumentation";
+import AnsibleStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/AnsibleStepConfigurationHelpDocumentation";
 
 function StepToolHelpIcon({type, tool, className, iconClassName}) {
   // TODO: Alphabetize when adding new help panels
   const getToolHelpPanel = () => {
     switch (tool) {
       case "azure-devops":
-        return <AzureDevopsPipelineStepConfigurationHelp/>;
+        return <AzureDevopsPipelineStepConfigurationHelpDocumentation/>;
       case "docker-push":
-        return <DockerEcrPushStepConfigurationHelp/>;
+        return <DockerEcrPushStepConfigurationHelpDocumentation/>;
       case "aws_ecs_deploy":
-        return <AwsEcsDeployStepConfigurationHelp/>;
+        return <AwsEcsDeployStepConfigurationHelpDocumentation/>;
       case "azure_aks_deploy":
-        return <AzureAksDeployPipelineStepConfigurationHelp/>;
+        return <AzureAksDeployPipelineStepConfigurationHelpDocumentation/>;
       case "azure_acr_push":
-        return <AzureAcrPushPipelineStepConfigurationHelp/>;
+        return <AzureAcrPushPipelineStepConfigurationHelpDocumentation/>;
       case "octopus":
-        return <OctopusDeployStepConfigurationHelp/>;
+        return <OctopusDeployStepConfigurationHelpDocumentation/>;
+      case "ansible":
+        return <AnsibleStepConfigurationHelpDocumentation/>;
       case "jenkins":
       case "junit":
       case "xunit":
@@ -80,7 +86,7 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
 
   const getHelpComponent = () => {
     if (type === "source") {
-      return null;
+      return <PipelineSourceRepositoryHelpDocumentation/>;
     }
 
     if (type === "notification") {

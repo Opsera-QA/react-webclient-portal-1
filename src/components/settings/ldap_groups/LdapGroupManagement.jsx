@@ -5,11 +5,9 @@ import LdapGroupsTable from "./LdapGroupsTable";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import {faServer, faUsers} from "@fortawesome/pro-light-svg-icons";
-import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
-import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import axios from "axios";
+import GroupManagementSubNavigationBar from "components/settings/ldap_groups/GroupManagementSubNavigationBar";
 
 function LdapGroupManagement() {
   const history = useHistory();
@@ -22,14 +20,8 @@ function LdapGroupManagement() {
   const [existingGroupNames, setExistingGroupNames] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const [authorizedActions, setAuthorizedActions] = useState([]);
-  const [activeTab, setActiveTab] = useState("userGroups");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  const handleTabClick = (tabSelection) => e => {
-    e.preventDefault();
-    setActiveTab(tabSelection);
-  };
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -114,63 +106,23 @@ function LdapGroupManagement() {
     return Array.isArray(groupList) && groupList.filter((group) => {return group.groupType === "user";});
   };
 
-  const parseAdminGroups = () => {
-    return Array.isArray(groupList) && groupList.filter((group) => {return group.groupType !== "user";});
-  };
-
-  const getCurrentView = () => {
-    switch (activeTab) {
-      case "userGroups":
-        return (
-          <LdapGroupsTable
-            isLoading={isLoading}
-            groupData={parseUsersGroups()}
-            loadData={loadData}
-            orgDomain={orgDomain}
-            authorizedActions={authorizedActions}
-            existingGroupNames={existingGroupNames}
-            currentUserEmail={currentUserEmail}
-          />
-        );
-      case "adminGroups":
-        return (
-          <LdapGroupsTable
-            isLoading={isLoading}
-            groupData={parseAdminGroups()}
-            loadData={loadData}
-            orgDomain={orgDomain}
-            currentUserEmail={currentUserEmail}
-          />
-        );
-      default:
-        return null;
-    }
-  };
-
-  const getNavigationTabContainer = () => {
-    return (
-      <NavigationTabContainer>
-        <NavigationTab icon={faUsers} tabName={"userGroups"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"User Groups"} />
-        <NavigationTab
-          icon={faServer}
-          tabName={"adminGroups"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          disabled={accessRoleData && (!accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator)}
-          tabText={"Site Roles & Departments"} />
-      </NavigationTabContainer>
-    );
-  };
-
   return (
     <ScreenContainer
       isLoading={!accessRoleData}
-      navigationTabContainer={getNavigationTabContainer()}
+      navigationTabContainer={<GroupManagementSubNavigationBar activeTab={"groups"} />}
       breadcrumbDestination={"ldapGroupManagement"}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.POWER_USERS}
     >
-      {getCurrentView()}
+      <LdapGroupsTable
+        isLoading={isLoading}
+        groupData={parseUsersGroups()}
+        loadData={loadData}
+        orgDomain={orgDomain}
+        authorizedActions={authorizedActions}
+        existingGroupNames={existingGroupNames}
+        currentUserEmail={currentUserEmail}
+      />
     </ScreenContainer>
   );
 }

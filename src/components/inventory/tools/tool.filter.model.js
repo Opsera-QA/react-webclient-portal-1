@@ -45,7 +45,7 @@ const toolFilterMetadata = {
   newObjectFields: {
     pageSize: 50,
     currentPage: 1,
-    sortOption: {text: "Sort: Name", value: "name"},
+    sortOption: {text: "Name", option: "name"},
     search: "",
     activeFilters: [],
     viewType: "card",

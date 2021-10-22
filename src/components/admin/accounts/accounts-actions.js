@@ -2,6 +2,8 @@ import baseActions from "utils/actionsBase";
 
 const accountsActions = {};
 
+// TODO: We need to rewrite this entire file to be role definitions instead
+
 // TODO: We should remove the way I handled permissions to align with the new standards.
 accountsActions.isOrganizationAccountOwner = (user) => {
   const {ldap} = user;
@@ -94,7 +96,7 @@ accountsActions.getAllowedDepartmentActions = async (customerAccessRules, organi
   const {ldap} = user;
   const userOrganization = ldap["organization"];
   if (customerAccessRules.OpseraAdministrator) {
-    return ["get_departments", "get_department_details", "create_department", "update_department"];
+    return ["get_departments", "get_department_details", "create_department", "update_department", "update_group_membership"];
   }
   else if (userOrganization !== organizationName) {
     // User from another organization not allowed to do anything with another org, unless they are an Opsera administrator
@@ -104,11 +106,8 @@ accountsActions.getAllowedDepartmentActions = async (customerAccessRules, organi
   let orgAccountOwner = await accountsActions.isOrganizationAccountOwner(user);
   let orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
 
-  if (orgOwner) {
-    return ["get_departments", "get_department_details", "create_department", "update_department"];
-  }
-  else if (orgAccountOwner || customerAccessRules.Administrator) {
-    return ["get_departments", "get_department_details", "create_department", "update_department"];
+  if (orgOwner || orgAccountOwner || customerAccessRules.Administrator) {
+    return ["get_departments", "get_department_details", "create_department", "update_department", "update_group_membership"];
   }
   else {
     return [];

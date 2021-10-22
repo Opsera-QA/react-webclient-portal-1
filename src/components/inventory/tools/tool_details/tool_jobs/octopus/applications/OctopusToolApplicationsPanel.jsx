@@ -17,6 +17,7 @@ function OctopusToolApplicationsPanel({ toolData }) {
   const [isLoading, setIsLoading] = useState(false);
   const toastContext = useContext(DialogToastContext);
   const [applicationId, setApplicationId] = useState(undefined);
+  // TODO: Replace with actual filter model for this area OR make generic one
   const [parameterFilterModel, setParameterFilterModel] = useState(new ParameterFilterModel());
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -116,7 +117,5 @@ function OctopusToolApplicationsPanel({ toolData }) {
 
 OctopusToolApplicationsPanel.propTypes = {
   toolData: PropTypes.object,
-  loadData: PropTypes.func,
-  isLoading: PropTypes.bool,
 };
 export default OctopusToolApplicationsPanel;

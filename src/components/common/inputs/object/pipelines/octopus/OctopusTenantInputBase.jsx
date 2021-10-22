@@ -7,7 +7,7 @@ import PropertyInputContainer from "components/common/inputs/object/PropertyInpu
 import axios from "axios";
 import OctopusTenantInputRow from "components/common/inputs/object/pipelines/octopus/OctopusTenantInputRow";
 
-function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, disabled, className, environmentList }) {
+function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, disabled, className, environmentList, tenantList }) {
   const [field] = useState(model.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [rows, setRows] = useState([]);
@@ -29,14 +29,27 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [environmentList]);
+
+  useEffect(() => {
+    if (Array.isArray(tenantList) && tenantList.length === 0) {
+      setRows([{id: "", name: "", environmentId: ""}]);
+    }
+  }, [tenantList]);
 
   const unpackData = () => {
     let currentData = model.getData(fieldName);
     let unpackedData = [];
 
     if (Array.isArray(currentData) && currentData.length > 0) {
-      unpackedData = currentData;
+      unpackedData = currentData.filter((tenant) => {
+        const environmentId = tenant?.environmentId;
+        const foundEnvironment = environmentList.find((environment) => {
+          return environment.id === environmentId;
+        });
+        return foundEnvironment != null;
+      });
+
     } else {
       unpackedData.push({id: "", name: "", environmentId: ""});
     }
@@ -45,9 +58,6 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
   };
 
   const validateAndSetData = (newRowList) => {
-    setRows([...newRowList]);
-    let newModel = {...model};
-
     if (Array.isArray(newRowList) && newRowList?.length > field.maxItems) {
       setErrorMessage(`
         This feature is currently limited to a maximum of 10 tenants. 
@@ -55,6 +65,9 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
       `);
       return;
     }
+
+    setRows([...newRowList]);
+    let newModel = {...model};
 
     let newArray = [];
 
@@ -92,7 +105,7 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
   };
 
   const addRow = () => {
-    let newList = rows;
+    let newList = [...rows];
 
     if (lastRowComplete()) {
       let newRow = {id: "", name: "", environmentId: ""};
@@ -223,7 +236,8 @@ OctopusTenantInputBase.propTypes = {
   helpComponent: PropTypes.object,
   disabled: PropTypes.bool,
   className: PropTypes.string,
-  environmentList: PropTypes.string,
+  environmentList: PropTypes.array,
+  tenantList: PropTypes.array,
 };
 
 export default OctopusTenantInputBase;

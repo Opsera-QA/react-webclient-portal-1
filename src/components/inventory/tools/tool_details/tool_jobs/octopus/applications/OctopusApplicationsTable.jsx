@@ -16,6 +16,7 @@ import {
 import {DialogToastContext} from "contexts/DialogToastContext";
 import NewOctopusApplicationOverlay
   from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/create_overlay/NewOctopusApplicationOverlay";
+import {octopusCustomTableColumnDefinitions} from "components/common/table/column_definitions/tools/octopus/octopus.customTable.columnDefinitions";
 
 function OctopusApplicationsTable({ toolData, isMounted, applications, loadData, onRowSelect, isLoading }) {
   const toastContext = useContext(DialogToastContext);
@@ -37,7 +38,7 @@ function OctopusApplicationsTable({ toolData, isMounted, applications, loadData,
     () => [
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "configuration.spaceName")),
-      getTableTextColumn(getField(fields, "configuration.type")),
+      octopusCustomTableColumnDefinitions.getOctopusApplicationTypeColumnDefinition(getField(fields, "configuration.type")),
       getTableDateTimeColumn(getField(fields, "updatedAt")),
       getTableBooleanIconColumn(getField(fields, "active")),
     ],
@@ -99,7 +100,7 @@ OctopusApplicationsTable.propTypes = {
   loadData: PropTypes.func,
   onRowSelect: PropTypes.func,
   isLoading: PropTypes.bool,
-  isMounted: PropTypes.bool,
+  isMounted: PropTypes.object,
 };
 
 export default OctopusApplicationsTable;

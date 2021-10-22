@@ -48,8 +48,8 @@ const SfdcPipelineWizardGitTasksFileSelector = ({ pipelineWizardModel, setPipeli
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error("Service Error Pulling File List from SalesForce: " + error);
-        toastContext.showInlineErrorMessage("Service Error Pulling File List from SalesForce: " + error);
+        console.error("Service Error Pulling File List from Salesforce: " + error);
+        toastContext.showInlineErrorMessage("Service Error Pulling File List from SalefForce: " + error);
       }
     }
     finally {
@@ -66,8 +66,8 @@ const SfdcPipelineWizardGitTasksFileSelector = ({ pipelineWizardModel, setPipeli
     console.log("in pullGitTaskFiles result: " + JSON.stringify(result));
     if (result?.data?.status === 500) {
       const message = result?.data?.message;
-      console.error("Service Error Pulling File List from SalesForce: " + message);
-      toastContext.showInlineErrorMessage("Service Error Pulling File List from SalesForce: " + message);
+      console.error("Service Error Pulling File List from Salesforce: " + message);
+      toastContext.showInlineErrorMessage("Service Error Pulling File List from Salesforce: " + message);
     }
     else {
       setFilesPulled(true);
@@ -103,12 +103,12 @@ const SfdcPipelineWizardGitTasksFileSelector = ({ pipelineWizardModel, setPipeli
   }
 
   if (!filesPulled) {
-    return <ErrorDialog message={"Service Error Pulling File List from SalesForce"} />;
+    return <ErrorDialog message={"Service Error Pulling File List from Salesforce"} />;
   }
 
   return (
     <div>
-      <div className="h5">SalesForce Pipeline Run: File Selection for {pipelineWizardModel?.getArrayData("selectedComponentTypes")?.length} Components</div>
+      <div className="h5">Salesforce Pipeline Run: File Selection for {pipelineWizardModel?.getArrayData("selectedComponentTypes")?.length} Components</div>
       <div className="text-muted mb-2">
         Select which files will have changes impacted in this pipeline run by using filter rules.
       </div>
