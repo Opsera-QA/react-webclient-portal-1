@@ -13,6 +13,7 @@ const dotnetFrameworkVersions = [
   {name : ".Net Framework Version 3.5", value: "3.5"},
   {name : ".Net Framework Version 4.7.1", value: "4.7.1"},
   {name : ".Net Framework Version 4.7.2", value: "4.7.2"},
+  {name : ".Net Framework Version 4.8", value: "4.8"},
 ];
 
 function DotNetCliSdkVersionSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField}) {

@@ -21,8 +21,6 @@ import DotNetGitBranchInput
 import DotNetBitbucketWorkspaceInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetBitbucketWorkspaceInput";
 import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
-import ScriptLibrarySelectInput
-  from "components/common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
 import ParameterSelectListInputBase
   from "components/common/list_of_values_input/parameters/ParameterSelectListInputBase";
 import DotNetCliTypeSelectInput from "./inputs/DotNetCliTypeSelectInput";
@@ -110,7 +108,7 @@ function DotNetCliStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       <TextAreaInput 
         dataObject={dotNetCliStepConfigurationDto}                         
         setDataObject={setDotNetCliStepConfigurationDataDto}
-        fieldName={"commandLineArguments"} 
+        fieldName={"commands"} 
       />
       <ParameterSelectListInputBase
         dataObject={dotNetCliStepConfigurationDto}
@@ -120,13 +118,6 @@ function DotNetCliStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
         type={"Parameter"}
         regexValidationRequired={false}
         titleText={"Parameter Selection"}
-      />
-      <ScriptLibrarySelectInput
-        fieldName={"scriptId"}
-        dataObject={dotNetCliStepConfigurationDto}
-        setDataObject={setDotNetCliStepConfigurationDataDto}
-        busy={isLoading}
-        disabled={isLoading}
       />
       <TextInputBase setDataObject={setDotNetCliStepConfigurationDataDto} dataObject={dotNetCliStepConfigurationDto} fieldName={"outputPath"} />
       <TextInputBase setDataObject={setDotNetCliStepConfigurationDataDto} dataObject={dotNetCliStepConfigurationDto} fieldName={"outputFileName"} />

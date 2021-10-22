@@ -20,6 +20,10 @@ const JENKINS_BUILD_OPTIONS = [
       value: "msbuild",
     },
     {
+      name: ".NET",
+      value: "dotnet",
+    },
+    {
       name: "Python",
       value: "python",
     },

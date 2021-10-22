@@ -139,16 +139,8 @@ const dotnetCliStepFormMetadata = {
       formText: "File name with extension is expected.",
     },
     {
-      label: "Command Line Arguments (Job Level)",
-      id: "commandLineArgs"
-    },
-    {
       label: "Command Line Arguments",
-      id: "commandLineArguments"
-    },
-    {
-      label: "Opsera Script Library",
-      id: "scriptId"
+      id: "commands"
     },
     {
       label: "Parameters",
@@ -191,9 +183,7 @@ const dotnetCliStepFormMetadata = {
     workspaceDeleteFlag: false,
     outputPath: "",
     outputFileName: "",
-    commandLineArgs: "",
-    scriptId: "",
-    commandLineArguments: "",
+    commands: "",
     customParameters: [],
     dotnetType: "",
     dotnetSdkVersion : "",

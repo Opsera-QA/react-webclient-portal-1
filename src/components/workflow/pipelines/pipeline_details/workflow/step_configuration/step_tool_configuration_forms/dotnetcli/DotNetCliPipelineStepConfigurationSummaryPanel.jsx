@@ -34,9 +34,6 @@ function DotNetCliPipelineStepConfigurationSummaryPanel({ dotNetCliPipelineDataO
           <TextFieldBase dataObject={dotNetCliPipelineDataObject} fieldName={"scriptFilePath"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={dotNetCliPipelineDataObject} fieldName={"scriptFileName"}/>
-        </Col>
-        <Col lg={6}>
           <TextFieldBase dataObject={dotNetCliPipelineDataObject} fieldName={"jobName"} />
         </Col>
         <Col lg={6}>
