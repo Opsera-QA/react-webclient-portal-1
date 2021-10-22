@@ -56,11 +56,10 @@ function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, spinna
   const loadSpinnakerTools = async (cancelSource = cancelTokenSource) => {
     try {
       const response = await SpinnakerStepActions.getSpinnakerToolsV2(getAccessToken, cancelSource, spinnakerToolId, spinnakerApplicationName);
+      const pipelines = response?.data?.spinnakerPipelines;
 
-      console.log("response: " + JSON.stringify(response));
-      const applications = response?.data?.data;
-      if (Array.isArray(applications)) {
-        setSpinnakerTools(applications);
+      if (Array.isArray(pipelines)) {
+        setSpinnakerTools(pipelines);
       }
     } catch (error) {
       console.error(error);
