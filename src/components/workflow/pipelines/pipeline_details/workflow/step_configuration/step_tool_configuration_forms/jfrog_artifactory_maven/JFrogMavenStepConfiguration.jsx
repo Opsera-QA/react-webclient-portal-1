@@ -3,7 +3,7 @@ import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadi
 import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
-import JfrogMavenToolInput from "./inputs/JfrogMavenToolInput";
+import JfrogMavenStepJfrogArtifactoryMavenToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_maven/inputs/JfrogMavenStepJfrogArtifactoryMavenToolSelectInput";
 import JFrogMavenBuildStepSelectInput from "./inputs/JFrogMavenBuildStepSelectInput";
 import JfrogMavenRepoSelectInput from "./inputs/JfrogMavenRepoSelectInput";
 import jfrogMavenStepFormMetadata from "./jfrog-maven-stepForm-metadata";
@@ -30,7 +30,7 @@ function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
     }
   }, [plan, stepId]);
 
-  const formatStepOptions = (plan, stepId) => {    
+  const formatStepOptions = (plan, stepId) => {
     let STEP_OPTIONS = plan.slice(
       0,
       plan.findIndex((element) => element._id === stepId)
@@ -88,7 +88,10 @@ function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
       persistRecord={handleSaveStepConfig}
       isLoading={isLoading}
     >
-      <JfrogMavenToolInput dataObject={jfrogStepConfigurationDto} setDataObject={setJFrogStepConfigurationDataDto} />
+      <JfrogMavenStepJfrogArtifactoryMavenToolSelectInput
+        model={jfrogStepConfigurationDto}
+        setModel={setJFrogStepConfigurationDataDto}
+      />
       <JFrogMavenStepTypeSelectInput dataObject={jfrogStepConfigurationDto} setDataObject={setJFrogStepConfigurationDataDto} />
       <JfrogMavenRepoSelectInput
         fieldName={"repositoryName"}
