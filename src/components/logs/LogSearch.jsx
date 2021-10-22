@@ -409,7 +409,10 @@ function LogSearch({tools, sideBySide}) {
       return (
         <>
         <Col>
-          <ProjectMappingToolSelectInput dataObject={jenkinsProjectDto} setDataObject={setJenkinsProjectDto} disabled={false}/>
+          <ProjectMappingToolSelectInput
+            model={jenkinsProjectDto}
+            setModel={setJenkinsProjectDto}
+          />
         </Col>
         <Col>
         <JenkinsJobSelectInput

@@ -60,6 +60,7 @@ function CancelPipelineQueueConfirmationOverlay({ pipeline, setHasQueuedRequest 
           <CloseButton
             closeEditorCallback={handleClose}
             showUnsavedChangesMessage={false}
+            size={"md"}
           />
         </div>
       </Row>

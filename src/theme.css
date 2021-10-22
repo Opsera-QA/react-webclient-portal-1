@@ -1656,6 +1656,10 @@ div.data-blocks-ellipses {
     background-color: rgba(0,0,0,0.7);
 }
 
+.info-overlay {
+    z-index: 5000;
+}
+
 .overlay-panel {
     position: fixed;
     overflow-x: hidden;

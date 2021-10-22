@@ -26,7 +26,7 @@ import slackStepNotificationMetadata from "./slack/slackStepNotificationMetadata
 import emailStepNotificationMetadata from "./email/emailStepNotificationMetadata";
 import jiraStepApprovalMetadata from "./jira/jiraStepApprovalMetadata";
 import SlackStepNotificationToolInput from "./slack/SlackStepNotificationToolInput";
-import ServiceNowStepNotificationToolInput from "./servicenow/ServiceNowStepNotificationToolInput";
+import ServiceNowStepNotificationToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/servicenow/ServiceNowStepNotificationToolSelectInput";
 import JiraStepNotificationProjectUserInput from "./jira/JiraStepNotificationProjectUserInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ServiceNowUserSelectInput from "./servicenow/ServiceNowUserSelectInput";
@@ -287,7 +287,10 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
           <Link to="/inventory/tools"><FontAwesomeIcon icon={faClipboardList} className="mx-1"/>Tool Registry</Link> page in order to use this feature.
         </small>
         <NotificationLevelInput dataObject={serviceNowDto} setDataObject={setServiceNowDto} fieldName={"event"} />
-        <ServiceNowStepNotificationToolInput setDataObject={setServiceNowDto} dataObject={serviceNowDto} />
+        <ServiceNowStepNotificationToolSelectInput
+          setModel={setServiceNowDto}
+          model={serviceNowDto}
+        />
         {/* <ServiceNowUserSelectInput serviceNowId={serviceNowDto.getData("toolId")} setDataObject={setServiceNowDto} dataObject={serviceNowDto} /> */}
         <ServiceNowGroupSelectInput serviceNowId={serviceNowDto.getData("toolId")} setDataObject={setServiceNowDto} dataObject={serviceNowDto} />
       </div>

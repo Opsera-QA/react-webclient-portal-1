@@ -6,20 +6,35 @@ import FilterContainer from "components/common/table/FilterContainer";
 import Model from "core/data_model/model";
 import sonarPipelineDetailsFilterMetadata from "../sonar.pipeline.details.filter.metadata";
 import SonarPipelineTableMetadata from "../sonar.pipeline.table.metadata";
-import { getChartTrendStatusColumn, getTableTextColumn, getTableTextColumnWithoutField } from "components/common/table/table-column-helpers";
+import {
+  getChartTrendStatusColumn,
+  getTableTextColumn,
+  getTableTextColumnWithoutField,
+} from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
 import CustomTable from "components/common/table/CustomTable";
-import { faDraftingCompass, faExternalLink } from "@fortawesome/pro-light-svg-icons";
+import {
+  faDraftingCompass,
+  faExternalLink,
+  faExclamationTriangle,
+  faExclamation,
+  faSirenOn,
+  faInfoCircle,
+  faBan,
+  faBug,
+} from "@fortawesome/pro-light-svg-icons";
+
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./sonar-ratings-pipeline-details.css";
 
 function SonarPipelineWiseReliabilityDetails() {
   const { getAccessToken } = useContext(AuthContext);
   const [model, setModel] = useState(
-    new Model({...sonarPipelineDetailsFilterMetadata.newObjectFields}, sonarPipelineDetailsFilterMetadata, false)
+    new Model({ ...sonarPipelineDetailsFilterMetadata.newObjectFields }, sonarPipelineDetailsFilterMetadata, false)
   );
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,10 +43,9 @@ function SonarPipelineWiseReliabilityDetails() {
   const isMounted = useRef(false);
   const [error, setError] = useState(undefined);
   const [footerData, setFooterData] = useState(undefined);
-  const [issueTypeData, setIssueTypeData]=useState(undefined);
+  const [issueTypeData, setIssueTypeData] = useState(undefined);
 
-
-  const noDataMessage = "Sonar Maintainibility report is currently unavailable at this time";
+  const noDataMessage = "Sonar Bugs report is currently unavailable at this time";
 
   const fields = SonarPipelineTableMetadata.fields;
 
@@ -41,11 +55,12 @@ function SonarPipelineWiseReliabilityDetails() {
       getTableTextColumn(getField(fields, "runCount")),
       getChartTrendStatusColumn(getField(fields, "status")),
       getTableTextColumn(getField(fields, "critical"),'red'),
-      getTableTextColumn(getField(fields, "major"),'orange'),
-      getTableTextColumn(getField(fields, "minor"),'yellow'),
-      getTableTextColumn(getField(fields, "info"),'green'),   
-      getTableTextColumn(getField(fields, "total_effort")),   
-      getTableTextColumnWithoutField('Actions','_blueprint')
+      getTableTextColumn(getField(fields, "blocker"),'red'),
+      getTableTextColumn(getField(fields, "major"),'opsera-yellow'),
+      getTableTextColumn(getField(fields, "minor"),'green'),
+      getTableTextColumn(getField(fields, "info"),'info-text'), 
+      getTableTextColumn(getField(fields, "effort")),
+      getTableTextColumnWithoutField("Actions", "_blueprint"),
     ],
     []
   );
@@ -71,19 +86,19 @@ function SonarPipelineWiseReliabilityDetails() {
     };
   }, []);
 
-  const calculateTrend = (bug)=>{
-    if(bug.currentScanIssuesCount || !bug.previousScanIssuesCount ){
-      return '-';
-    } else if (bug.currentScanIssuesCount > bug.previousScanIssuesCount ){
-      return 'green';
+  const calculateTrend = (bug) => {
+    if (bug.currentScanIssuesCount || !bug.previousScanIssuesCount) {
+      return "-";
+    } else if (bug.currentScanIssuesCount > bug.previousScanIssuesCount) {
+      return "green";
     } else if (bug.currentScanIssuesCount < bug.previousScanIssuesCount) {
-      return 'red';
+      return "red";
     } else {
-      return 'neutral';
+      return "neutral";
     }
   };
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = model) => {    
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = model) => {
     try {
       setIsLoading(true);
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
@@ -91,31 +106,31 @@ function SonarPipelineWiseReliabilityDetails() {
         cancelSource,
         "sonarRatingsBugsActionableInsights",
         undefined,
-        undefined,        
+        undefined,
         filterDto,
         undefined,
         undefined,
         undefined,
         undefined,
         undefined,
-        undefined,
+        undefined
       );
       if (isMounted?.current === true && response?.status === 200) {
         const sonarBugs = response?.data?.data[0]?.sonarBugs?.data[0]?.projectData;
-        await setBugsData(sonarBugs.map((bug,index)=>({
-              ...bug,
-              status : calculateTrend(bug),
-              // TODO: remove the hard coded pipelineId value replaces with the api response
-              pipelineId: '60ae84a54fa0c75fc683ad2b',
-              "_blueprint": <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2"/>,
-            })));
+        await setBugsData(
+          sonarBugs.map((bug, index) => ({
+            ...bug,
+            status: calculateTrend(bug),
+            _blueprint: <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2" />,
+          }))
+        );
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", sonarBugs.length);
         setModel({ ...newFilterDto });
-        setIssueTypeData( response?.data?.data[0]?.sonarBugs?.data[0]?.typeData[0]);
+        setIssueTypeData(response?.data?.data[0]?.sonarBugs?.data[0]?.typeData[0]);
         setFooterData(response?.data?.data[0]?.sonarBugs?.data[0]?.debtData[0]);
       }
-    } catch (error) {      
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
@@ -127,9 +142,7 @@ function SonarPipelineWiseReliabilityDetails() {
     }
   };
 
-
   const getBody = () => {
-
     return (
       <>
         {getPipelineDetails()}
@@ -138,7 +151,7 @@ function SonarPipelineWiseReliabilityDetails() {
           showBorder={false}
           title={`Bugs Report`}
           titleIcon={faDraftingCompass}
-          body={getTable()}          
+          body={getTable()}
           className={"px-2 pb-2"}
         />
         {getFooterDetails()}
@@ -147,54 +160,78 @@ function SonarPipelineWiseReliabilityDetails() {
   };
 
   const getPipelineDetails = () => {
-    if (!issueTypeData){
+    if (!issueTypeData) {
       return null;
     }
     return (
-      
-        <Row className="py-3 px-5">
-          <Col>
-            <div className="metric-box p-3 text-center">
-              <div className="box-metric">
-                <div className="font-weight-bold">{issueTypeData?.total}</div>
-              </div>
-              <div className="w-100 text-muted mb-1">Bugs</div>
+      <Row className="py-3 px-5">
+        <Col>
+          <div className="metric-box p-3 text-center">
+            <div className="box-icon">
+              <FontAwesomeIcon icon={faBug} fixedWidth className="mr-2" />
             </div>
-          </Col>
-          <Col>
-            <div className="metric-box p-3 text-center" >
-              <div className="box-metric">
-                <div className="font-weight-bold red">{issueTypeData?.critical}</div>
-              </div>
-              <div className="w-100  mb-1 red">Critical</div>
+            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
+              <div className="font-weight-bold">{issueTypeData?.total}</div>
             </div>
-          </Col>
-          <Col>
-            <div className="metric-box p-3 text-center">
-              <div className="box-metric">
-                <div className="font-weight-bold orange">{issueTypeData?.major}</div>
-              </div>
-              <div className="w-100  mb-1 orange">Major</div>
+            <div className="w-100 text-muted mb-1">Bugs</div>
+          </div>
+        </Col>
+        <Col>
+          <div className="metric-box p-3 text-center">
+            <div className="box-icon">
+              <FontAwesomeIcon icon={faSirenOn} fixedWidth className="mr-2 red" />
             </div>
-          </Col>
-          <Col>
-            <div className="metric-box p-3 text-center">
-              <div className="box-metric">
-                <div className="font-weight-bold yellow">{issueTypeData?.minor}</div>
-              </div>
-              <div className="w-100  mb-1 yellow">Minor</div>
+            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
+              <div className="font-weight-bold red">{issueTypeData?.critical}</div>
             </div>
-          </Col>
-          <Col>
-            <div className="metric-box p-3 text-center ">
-              <div className="box-metric">
-                <div className="font-weight-bold black">{issueTypeData?.info}</div>
-              </div>
-              <div className="w-100  mb-1 black">Info</div>
+            <div className="w-100 red mb-1">Critical</div>
+          </div>
+        </Col>
+        <Col>
+          <div className="metric-box p-3 text-center">
+            <div className="box-icon">
+              <FontAwesomeIcon icon={faBan} fixedWidth className="mr-2 red" />
             </div>
-          </Col>
-        </Row>
-      
+            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
+              <div className="font-weight-bold red">{issueTypeData?.blocker}</div>
+            </div>
+            <div className="w-100 red mb-1 ">Blocker</div>
+          </div>
+        </Col>
+        <Col>
+          <div className="metric-box p-3 text-center ">
+            <div className="box-icon">
+              <FontAwesomeIcon icon={faExclamationTriangle} fixedWidth className="mr-2 opsera-yellow" />
+            </div>
+            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
+              <div className="font-weight-bold opsera-yellow">{issueTypeData?.major}</div>
+            </div>
+            <div className="w-100 opsera-yellow mb-1 ">Major</div>
+          </div>
+        </Col>
+        <Col>
+          <div className="metric-box p-3 text-center">
+            <div className="box-icon">
+              <FontAwesomeIcon icon={faExclamation} fixedWidth className="mr-2 green" />
+            </div>
+            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
+              <div className="font-weight-bold green">{issueTypeData?.minor}</div>
+            </div>
+            <div className="w-100 green mb-1 ">Minor</div>
+          </div>
+        </Col>
+        <Col>
+          <div className="metric-box  p-3  text-center">
+            <div className="box-icon">
+              <FontAwesomeIcon icon={faInfoCircle} fixedWidth   />
+            </div>
+            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
+              <div className="font-weight-bold">{issueTypeData?.info}</div>
+            </div>
+            <div className="w-100 mb-1">Info</div>
+          </div>
+        </Col>
+      </Row>
     );
   };
 
@@ -202,30 +239,15 @@ function SonarPipelineWiseReliabilityDetails() {
     if(!footerData){
       return null;
     }
-    return(<>
-          <Row className="px-5">
-            <Col className="text-right">
-              Total Debt for Remediating Critical Issues : {footerData?.critical} 
+    return(
+          <Row className="px-2">
+            <Col className="footer-records">
+              Total remediation Efforts : {footerData?.totalEffort ? `${footerData?.totalEffort} minutes` : '0 minutes'} 
             </Col>
-          </Row>
-          <Row className="px-5">
-            <Col className="text-right">
-              Total Debt for Remediating Major Issues : {footerData?.major} 
-            </Col>
-          </Row>
-          <Row className="px-5">
-            <Col className="text-right">
-              Total Debt for Remediating Minor Issues : {footerData?.minor} 
-            </Col>
-          </Row>
-          <Row className="px-5">
-            <Col className="text-right">
-              Total Debt for Remediating Info Issues : {footerData?.info} 
-            </Col>
-          </Row>
-          </>);
+          </Row>          
+        );
   };
-    
+
   const getPaginationOptions = () => {
     return {
       pageSize: model.getData("pageSize"),
@@ -234,21 +256,21 @@ function SonarPipelineWiseReliabilityDetails() {
       gotoPageFn: gotoPage,
     };
   };
-  
+
   const gotoPage = (pageNumber, pageSize) => {
-    let newModel = {...model};
+    let newModel = { ...model };
     newModel.setData("currentPage", pageNumber);
     newModel.setData("pageSize", pageSize);
-    setModel({...newModel});
+    setModel({ ...newModel });
   };
 
   const onRowSelect = (rowData) => {
-    if (rowData.id == 0) {
-      toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount} />);
-    }
+      toastContext.showOverlayPanel(
+        <BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount} />
+      );
   };
-  
-  const getTable = () => {    
+
+  const getTable = () => {
     return (
       <CustomTable
         isLoading={isLoading}
@@ -258,16 +280,11 @@ function SonarPipelineWiseReliabilityDetails() {
         paginationOptions={getPaginationOptions()}
         loadData={loadData}
         onRowSelect={onRowSelect}
-      />      
+      />
     );
   };
 
-  return (
-    <>
-      {getBody()}      
-    </>
-  );
-
+  return <>{getBody()}</>;
 }
 
 SonarPipelineWiseReliabilityDetails.propTypes = {

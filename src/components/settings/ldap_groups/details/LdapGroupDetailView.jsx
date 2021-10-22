@@ -12,6 +12,7 @@ import ActionBarBackButton from "components/common/actions/buttons/ActionBarBack
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import axios from "axios";
+import GroupManagementSubNavigationBar from "components/settings/ldap_groups/GroupManagementSubNavigationBar";
 
 // TODO: Can we get an API Call to get role group names associated with an organization?
 const roleGroups = ["Administrators", "PowerUsers", "Users"];
@@ -159,7 +160,7 @@ function LdapGroupDetailView() {
       metadata={ldapGroupMetaData}
       dataObject={ldapGroupData}
       isLoading={isLoading}
-      // navigationTabContainer={<GroupManagementSubNavigationBar activeTab={"groupViewer"} />}
+      navigationTabContainer={<GroupManagementSubNavigationBar activeTab={"groupViewer"} />}
       actionBar={getActionBar()}
       accessDenied={!authorizedActions.includes("get_group_details") && !isLoading}
       detailPanel={

@@ -19,6 +19,7 @@ import IconBase from "components/common/icons/IconBase";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import SalesforcePipelineComponentCountsViewer
   from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/counts/SalesforcePipelineComponentCountsViewer";
+import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 
 // TODO: This should be refactored and cleaned up.
 const SfdcPipelineWizardXmlViewer = (
@@ -243,7 +244,7 @@ const SfdcPipelineWizardXmlViewer = (
       <div className="flex-container">
         {getTabContainer()}
         {getView()}        
-        <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
+        <SaveButtonContainer>
           <Button variant="secondary" size="sm" className="mr-2" onClick={() => { handleBackButton(); }}>
             <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-2" />
             Back
@@ -253,7 +254,7 @@ const SfdcPipelineWizardXmlViewer = (
             Proceed
           </Button>
           <CancelButton className={"ml-2"} cancelFunction={handleClose} />
-        </div>
+        </SaveButtonContainer>
       </div>
     </div>
   );

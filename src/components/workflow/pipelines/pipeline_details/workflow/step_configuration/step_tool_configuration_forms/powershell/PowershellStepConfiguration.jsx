@@ -6,8 +6,8 @@ import PropTypes from "prop-types";
 import powershellStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/powershell-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import PowershellJenkinsToolInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellJenkinsToolInput";
+import PowershellStepJenkinsToolSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellStepJenkinsToolSelectInput";
 import PowershellJenkinsJobInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellJenkinsJobInput";
 import modelHelpers from "components/common/model/modelHelpers";
@@ -90,7 +90,10 @@ function PowershellStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <PowershellJenkinsToolInput dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto} />
+      <PowershellStepJenkinsToolSelectInput
+        model={powershellStepConfigurationDto}
+        setModel={setPowershellStepConfigurationDataDto}
+      />
       <PowershellJenkinsJobInput dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto}/>
       <PowershellJenkinsAccountInput dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto} />
       <PowershellBitbucketWorkspaceInput dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto} />

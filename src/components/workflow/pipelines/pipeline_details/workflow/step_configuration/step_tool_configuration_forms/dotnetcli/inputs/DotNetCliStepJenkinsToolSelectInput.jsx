@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineToolInput from "components/common/list_of_values_input/workflow/pipelines/PipelineToolInput";
+import RoleRestrictedJenkinsToolSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
 
-function CommandLineJenkinsToolInput({dataObject, setDataObject, disabled}) {
-  const setJenkinsTool = (fieldName, selectedOption) => {
+function DotNetCliStepJenkinsToolSelectInput({dataObject, setDataObject, disabled}) {
+  const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
-    newDataObject.setData("toolConfigId", selectedOption.id);
+    newDataObject.setData("toolConfigId", selectedOption._id);
     newDataObject.setData("toolName",selectedOption.name);
     newDataObject.setData("toolJobName", "");
     newDataObject.setData("toolJobId", "");
@@ -18,28 +19,25 @@ function CommandLineJenkinsToolInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("repository", "");
     newDataObject.setData("gitBranch", "");
     newDataObject.setData("workspace", "");
-    newDataObject.setData("autoScaleEnable", selectedOption.configuration.autoScaleEnable || false);
     setDataObject({...newDataObject});
   };
 
   return (
-     <PipelineToolInput
-       toolType={"jenkins"}
-       toolFriendlyName={"Jenkins"}
-       fieldName={"toolConfigId"}
-       configurationRequired={true}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       setDataFunction={setJenkinsTool}
-       disabled={disabled}
-     />
+    <RoleRestrictedJenkinsToolSelectInput
+      fieldName={"toolConfigId"}
+      configurationRequired={true}
+      model={dataObject}
+      setModel={setDataObject}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+    />
   );
 }
 
-CommandLineJenkinsToolInput.propTypes = {
+DotNetCliStepJenkinsToolSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default CommandLineJenkinsToolInput;
+export default DotNetCliStepJenkinsToolSelectInput;

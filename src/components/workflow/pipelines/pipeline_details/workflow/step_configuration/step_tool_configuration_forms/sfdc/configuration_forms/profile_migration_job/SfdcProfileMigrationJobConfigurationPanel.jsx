@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
-import SfdcToolInput from "../../inputs/SfdcToolInput";
+import SalesforceStepToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/inputs/SalesforceStepToolSelectInput";
 import DestSfdcToolInput from "../../inputs/DestSfdcToolInput";
 
 function SfdcProfileMigrationJobEditorPanel({ sfdcStepConfigurationDto, setSfdcStepConfigurationDataDto }) {
@@ -17,7 +17,7 @@ function SfdcProfileMigrationJobEditorPanel({ sfdcStepConfigurationDto, setSfdcS
 
   return (
     <>
-      <SfdcToolInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
+      <SalesforceStepToolSelectInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
       <DestSfdcToolInput  dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
     </>
   );

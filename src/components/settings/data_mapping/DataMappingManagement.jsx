@@ -15,6 +15,8 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PropTypes from "prop-types";
 import axios from "axios";
+import DataMappingManagementSubNavigationBar
+  from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
 
 function DataMappingManagement() {
   const { tabKey } = useParams();
@@ -249,6 +251,7 @@ function DataMappingManagement() {
   if (!accessRoleData) {
     return (
       <ScreenContainer
+        navigationTabContainer={<DataMappingManagementSubNavigationBar activeTab={"dataMappings"} />}
         breadcrumbDestination={"dataMappingManagement"}
         pageDescription={"Manage data mapping for the Opsera Analytics Engine."}
         isLoading={true}
@@ -258,6 +261,7 @@ function DataMappingManagement() {
 
   return (
     <ScreenContainer
+      navigationTabContainer={<DataMappingManagementSubNavigationBar activeTab={"dataMappings"} />}
       breadcrumbDestination={"dataMappingManagement"}
       accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
       pageDescription={"Manage data mapping for the Opsera Analytics Engine."}

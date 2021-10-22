@@ -6,6 +6,7 @@ import BreadcrumbPageLink from "components/common/links/BreadcrumbPageLink";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import BreadcrumbPageLinkCard from "components/common/card/link/BreadcrumbPageLinkCard";
+import AccountSettingsSubNavigationBar from "components/settings/AccountSettingsSubNavigationBar";
 
 function AccountSettings() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -85,10 +86,11 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"dataMappingManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"deleteTools"} />
           <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"} visible={!isSassUser()}/>
+          <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"} visible={!isSassUser()} />
           <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"} visible={!isSassUser() || !envIsProd}/>
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"userManagement"} visible={!isSassUser() && !envIsProd}/>
+          <BreadcrumbPageLink breadcrumbDestination={"userManagement"} visible={!isSassUser()}/>
         </>
       );
     }
@@ -124,6 +126,7 @@ function AccountSettings() {
       pageDescription={"Manage account settings from this dashboard."}
       accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator && !accessRoleData?.SassPowerUser}
       isLoading={isLoading}
+      navigationTabContainer={<AccountSettingsSubNavigationBar activeTab={"accountSettings"} />}
     >
       {/*TODO: For future enhancement*/}
       {/*<div className={"px-2"}>*/}

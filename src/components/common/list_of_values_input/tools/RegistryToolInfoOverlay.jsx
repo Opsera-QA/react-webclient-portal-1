@@ -8,10 +8,29 @@ import {faTools} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import TableCardView from "components/common/table/TableCardView";
 
-function RegistryToolInfoOverlay({tools, fieldName, toolMetadata, isMounted, loadData, isLoading, selectedToolId, setDataFunction}) {
+function RegistryToolInfoOverlay(
+  {
+    tools,
+    fieldName,
+    toolMetadata,
+    isMounted,
+    loadData,
+    isLoading,
+    selectedToolId,
+    setDataFunction,
+    model,
+    setModel,
+  }) {
   // TODO: This is a workaround until the tool info overlay is complete
   const rowClickFunction = (selectedTool) => {
-    setDataFunction(fieldName, selectedTool);
+    if (setDataFunction) {
+      setDataFunction(fieldName, selectedTool);
+    } else {
+      if (setModel != null) {
+        model?.setData(fieldName, selectedTool?._id);
+        setModel({...model});
+      }
+    }
     document.body.click();
   };
 
@@ -82,6 +101,8 @@ RegistryToolInfoOverlay.propTypes = {
   isMounted: PropTypes.object,
   setDataFunction: PropTypes.func,
   fieldName: PropTypes.string,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
 };
 
 export default RegistryToolInfoOverlay;

@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineToolInput from "../../../../../../../common/list_of_values_input/workflow/pipelines/PipelineToolInput";
+import RoleRestrictedJiraToolSelectInput
+  from "components/common/list_of_values_input/tools/jira/RoleRestrictedJiraToolSelectInput";
 
 function JiraStepNotificationToolInput({visible, dataObject, setDataObject, disabled}) {
-  const setJiraTool = (selectedOption) => {
-    let newDataObject = {...selectedOption};
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newDataObject = {...dataObject};
+    newDataObject.setData("jiraToolId", selectedOption?._id);
     newDataObject.setData("jiraProject", "");
     newDataObject.setData("jiraSprint", "");
     newDataObject.setData("jiraParentTicket", "");
@@ -27,12 +29,11 @@ function JiraStepNotificationToolInput({visible, dataObject, setDataObject, disa
   }
 
   return (
-    <PipelineToolInput
-      toolType={"jira"}
-      toolFriendlyName={"Jira"}
+    <RoleRestrictedJiraToolSelectInput
       fieldName={"jiraToolId"}
-      dataObject={dataObject}
-      setDataObject={setJiraTool}
+      model={dataObject}
+      setModel={setDataObject}
+      setDataFunction={setDataFunction}
       placeholderText={getPlaceholderText()}
       visible={visible}
       disabled={disabled || dataObject.getData("enabled") === false}
