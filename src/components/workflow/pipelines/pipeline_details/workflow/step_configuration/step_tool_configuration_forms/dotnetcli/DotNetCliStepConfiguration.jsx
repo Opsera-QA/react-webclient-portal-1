@@ -7,8 +7,8 @@ import PropTypes from "prop-types";
 import dotNetCliStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/dotnet-cli-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import DotNetJenkinsToolInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetJenkinsToolInput";
+import DotNetCliStepJenkinsToolSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliStepJenkinsToolSelectInput";
 import DotNetJenkinsJobInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetJenkinsJobInput";
 import modelHelpers from "components/common/model/modelHelpers";
@@ -94,7 +94,7 @@ function DotNetCliStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <DotNetJenkinsToolInput dataObject={dotNetCliStepConfigurationDto} setDataObject={setDotNetCliStepConfigurationDataDto} />
+      <DotNetCliStepJenkinsToolSelectInput dataObject={dotNetCliStepConfigurationDto} setDataObject={setDotNetCliStepConfigurationDataDto} />
       <DotNetJenkinsJobInput dataObject={dotNetCliStepConfigurationDto} setDataObject={setDotNetCliStepConfigurationDataDto}/>
       <DotNetJenkinsAccountInput dataObject={dotNetCliStepConfigurationDto} setDataObject={setDotNetCliStepConfigurationDataDto} />
       <DotNetBitbucketWorkspaceInput dataObject={dotNetCliStepConfigurationDto} setDataObject={setDotNetCliStepConfigurationDataDto} />
