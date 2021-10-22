@@ -10,7 +10,7 @@ function AzureClusterAzureToolSelectInput({ fieldName, dataObject, setDataObject
     newDataObject.setData("azureCredentialId", "");
     newDataObject.setData("region", "");
     newDataObject.setData("machine_type", "");
-    newDataObject.setData(fieldName, selectedOption.id);
+    newDataObject.setData(fieldName, selectedOption._id);
     setDataObject({...newDataObject});
   };
 
