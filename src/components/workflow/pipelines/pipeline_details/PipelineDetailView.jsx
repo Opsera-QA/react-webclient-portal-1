@@ -144,7 +144,7 @@ function PipelineDetailView() {
 
     await fetchData(cancelSource);
     setLoading(false);
-    await getActivityLogs(undefined, false, cancelSource);
+    // await getActivityLogs(undefined, false, cancelSource);
   };
 
   const fetchData = async (cancelSource = cancelTokenSource) => {
