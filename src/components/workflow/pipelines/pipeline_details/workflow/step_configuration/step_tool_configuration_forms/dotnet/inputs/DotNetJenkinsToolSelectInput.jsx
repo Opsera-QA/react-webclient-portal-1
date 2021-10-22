@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineToolInput from "components/common/list_of_values_input/workflow/pipelines/PipelineToolInput";
+import RoleRestrictedJenkinsToolSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
 
-function DotNetJenkinsToolInput({dataObject, setDataObject, disabled}) {
-  const setJenkinsTool = (fieldName, selectedOption) => {
+function DotNetJenkinsToolSelectInput({dataObject, setDataObject, disabled}) {
+  const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
-    newDataObject.setData("toolConfigId", selectedOption.id);
-    newDataObject.setData("toolName",selectedOption.name);
+    newDataObject.setData("toolConfigId", selectedOption?._id);
+    newDataObject.setData("toolName",selectedOption?.name);
     newDataObject.setData("toolJobName", "");
     newDataObject.setData("toolJobId", "");
     newDataObject.setData("jobType", "");
@@ -22,23 +23,21 @@ function DotNetJenkinsToolInput({dataObject, setDataObject, disabled}) {
   };
 
   return (
-     <PipelineToolInput
-       toolType={"jenkins"}
-       toolFriendlyName={"Jenkins"}
+     <RoleRestrictedJenkinsToolSelectInput
        fieldName={"toolConfigId"}
        configurationRequired={true}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       setDataFunction={setJenkinsTool}
+       model={dataObject}
+       setModel={setDataObject}
+       setDataFunction={setDataFunction}
        disabled={disabled}
      />
   );
 }
 
-DotNetJenkinsToolInput.propTypes = {
+DotNetJenkinsToolSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default DotNetJenkinsToolInput;
+export default DotNetJenkinsToolSelectInput;
