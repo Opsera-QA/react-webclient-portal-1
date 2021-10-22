@@ -14,6 +14,7 @@ import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-hel
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import OrganizationsSubNavigationBar from "components/settings/organizations/OrganizationsSubNavigationBar";
 
 function OrganizationDetailView() {
   const {id} = useParams();
@@ -93,10 +94,12 @@ function OrganizationDetailView() {
       return (
         <ActionBarContainer>
           <div>
-            <ActionBarBackButton path={`/settings/organizations`} />
+            <ActionBarBackButton path={`/settings/organizations`}/>
           </div>
           <div>
-            {canDelete && <ActionBarDeleteButton2 relocationPath={`/settings/organizations`} dataObject={organizationData} handleDelete={deleteOrganization}/>}
+            {canDelete &&
+            <ActionBarDeleteButton2 relocationPath={`/settings/organizations`} dataObject={organizationData}
+                                    handleDelete={deleteOrganization}/>}
           </div>
         </ActionBarContainer>
       );
@@ -112,6 +115,7 @@ function OrganizationDetailView() {
       breadcrumbDestination={"organizationDetailView"}
       metadata={organizationMetadata}
       dataObject={organizationData}
+      navigationTabContainer={<OrganizationsSubNavigationBar activeTab={"organizationViewer"}/>}
       isLoading={isLoading}
       actionBar={getActionBar()}
       accessRoleData={accessRoleData}
