@@ -86,10 +86,11 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"dataMappingManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"deleteTools"} />
           <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"} visible={!isSassUser()}/>
+          <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"} visible={!isSassUser()} />
           <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"} visible={!isSassUser() || !envIsProd}/>
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"userManagement"} visible={!isSassUser() && !envIsProd}/>
+          <BreadcrumbPageLink breadcrumbDestination={"userManagement"} visible={!isSassUser()}/>
         </>
       );
     }
