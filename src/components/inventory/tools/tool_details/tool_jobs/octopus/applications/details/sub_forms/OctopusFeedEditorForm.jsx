@@ -7,7 +7,7 @@ import NexusRepoSelectInput from "../input/NexusRepoSelectInput";
 import FeedTypeSelectInput from "../input/FeedTypeSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import FeedToolTypeSelectInput from "../input/FeedToolTypeSelectInput";
-import JfrogToolSelectInput from "../input/JfrogToolSelectInput";
+import OctopusFeedJfrogToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/OctopusFeedJfrogToolSelectInput";
 import JfrogRepoSelectInput from "../input/JfrogRepoSelectInput";
 
 const OctopusFeedEditorForm = ({ dataObject, setDataObject, appID }) => {
@@ -90,10 +90,10 @@ const OctopusFeedEditorForm = ({ dataObject, setDataObject, appID }) => {
       {dataObject && dataObject.getData("toolType") && dataObject.getData("toolType").toLowerCase() === "jfrog" && (
         <>
           <Col lg={12}>
-            <JfrogToolSelectInput
+            <OctopusFeedJfrogToolSelectInput
               fieldName={"nexusToolId"}
-              dataObject={dataObject}
-              setDataObject={setDataObject}
+              model={dataObject}
+              setModel={setDataObject}
               disabled={
                 (dataObject &&              
                   dataObject.getData("toolType").length === 0) ||
