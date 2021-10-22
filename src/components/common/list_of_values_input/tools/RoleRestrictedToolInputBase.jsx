@@ -110,6 +110,8 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
         isLoading={isLoading}
         setDataFunction={setDataFunction}
         fieldName={fieldName}
+        model={model}
+        setModel={setModel}
       />
     );
   };

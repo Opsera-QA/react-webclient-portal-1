@@ -30,8 +30,6 @@ function JiraStepNotificationToolInput({visible, dataObject, setDataObject, disa
 
   return (
     <RoleRestrictedJiraToolSelectInput
-      toolType={"jira"}
-      toolFriendlyName={"Jira"}
       fieldName={"jiraToolId"}
       model={dataObject}
       setModel={setDataObject}
