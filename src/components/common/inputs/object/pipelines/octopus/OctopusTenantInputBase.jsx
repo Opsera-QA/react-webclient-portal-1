@@ -35,7 +35,7 @@ function OctopusTenantInputBase({ fieldName, model, setModel, helpComponent, dis
     if (Array.isArray(tenantList) && tenantList.length === 0) {
       setRows([{id: "", name: "", environmentId: ""}]);
     }
-  }, [tenantList]);
+  }, [JSON.stringify(tenantList)]);
 
   const unpackData = () => {
     let currentData = model.getData(fieldName);
