@@ -10,6 +10,9 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import DataMappingManagementSubNavigationBar
+  from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 function ProjectMappingDetailView() {
   const { projectMappingId } = useParams();
@@ -74,6 +77,7 @@ function ProjectMappingDetailView() {
 
   return (
     <DetailScreenContainer
+      navigationTabContainer={<DataMappingManagementSubNavigationBar activeTab={"projectTagViewer"} />}
       breadcrumbDestination={"projectTaggingDetailView"}
       accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
       metadata={projectTagsMetadata}
