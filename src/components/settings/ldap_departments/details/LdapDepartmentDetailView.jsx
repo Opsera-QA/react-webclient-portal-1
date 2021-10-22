@@ -117,6 +117,7 @@ function LdapDepartmentDetailView() {
               relocationPath={"/admin/departments"}
               dataObject={ldapDepartmentData}
               handleDelete={deleteDepartment}
+              mustBeOpseraAdmin={true}
               deleteTopic={`Department [${ldapDepartmentData.getData("name")}]`}
             />
           </div>

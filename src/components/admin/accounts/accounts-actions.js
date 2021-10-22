@@ -107,7 +107,7 @@ accountsActions.getAllowedDepartmentActions = async (customerAccessRules, organi
   let orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
 
   if (orgOwner || orgAccountOwner || customerAccessRules.Administrator) {
-    return ["get_departments", "get_department_details", "create_department", "update_department", "update_group_membership"];
+    return ["get_departments", "get_department_details", "update_department", "update_group_membership"];
   }
   else {
     return [];
