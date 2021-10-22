@@ -13,12 +13,12 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import SFDCBuildTypeSelectInput  from  "components/common/list_of_values_input/workflow/pipelines/SFDCBuildTypeSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import PipelineToolInput from "components/common/list_of_values_input/workflow/pipelines/PipelineToolInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faPlug } from "@fortawesome/pro-light-svg-icons";
 import SfdxTestConnectionStatusModal from './SfdxTestConnectionStatusModal';
 import { DialogToastContext } from "contexts/DialogToastContext";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import RoleRestrictedJenkinsToolSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
 
 function SfdcToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -82,13 +82,10 @@ function SfdcToolConfiguration({ toolData }) {
         <BooleanToggleInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"checkConnection"} />
         {sfdcConfigurationDto.getData("checkConnection") === true && 
           <>
-            <PipelineToolInput
-              toolType={"jenkins"}
-              toolFriendlyName={"Jenkins"}
+            <RoleRestrictedJenkinsToolSelectInput
               fieldName={"jenkinsToolId"}
-              configurationRequired={true}
-              dataObject={sfdcConfigurationDto}
-              setDataObject={setSfdcConfigurationDto}
+              model={sfdcConfigurationDto}
+              setModel={setSfdcConfigurationDto}
             />
             <div className="p-2">
               {/* <TooltipWrapper innerText={"Select Jenkins tool to Test Connection"}> */}
