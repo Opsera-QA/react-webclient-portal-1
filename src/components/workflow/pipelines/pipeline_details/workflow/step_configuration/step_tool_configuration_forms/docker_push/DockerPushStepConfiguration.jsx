@@ -6,8 +6,8 @@ import PropTypes from "prop-types";
 import dockerPushStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/dockerpush-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import DockerPushJenkinsToolInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushJenkinsToolInput";
+import DockerPushStepJenkinsToolSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushStepJenkinsToolSelectInput";
 import DockerPushJenkinsJobInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushJenkinsJobInput";
 import modelHelpers from "components/common/model/modelHelpers";
@@ -110,7 +110,10 @@ function DockerPushStepConfiguration({ pipelineId, plan, stepTool, stepId, creat
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <DockerPushJenkinsToolInput dataObject={dockerPushStepConfigurationDto} setDataObject={setDockerPushStepConfigurationDataDto} />
+      <DockerPushStepJenkinsToolSelectInput
+        model={dockerPushStepConfigurationDto}
+        setModel={setDockerPushStepConfigurationDataDto}
+      />
       <DockerPushJenkinsJobInput dataObject={dockerPushStepConfigurationDto} setDataObject={setDockerPushStepConfigurationDataDto} />
       <AWSToolSelectInput
         fieldName={"awsToolConfigId"}
