@@ -7,7 +7,7 @@ import {AuthContext} from "contexts/AuthContext";
 import SpinnakerStepActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/spinnaker/spinnaker-step-actions";
 
-function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, spinnakerApplicationName, fieldName, model, setModel, setDataFunction, disabled, clearDataFunction}) {
+function SpinnakerPipelineSelectInput({className, spinnakerToolId, spinnakerApplicationName, fieldName, model, setModel, setDataFunction, disabled, clearDataFunction}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [spinnakerTools, setSpinnakerTools] = useState([]);
@@ -24,11 +24,15 @@ function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, spinna
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    setSpinnakerTools([]);
+
+    if (spinnakerToolId != null && spinnakerToolId !== "" && spinnakerApplicationName != null && spinnakerApplicationName !== "") {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
@@ -39,13 +43,8 @@ function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, spinna
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      setSpinnakerTools([]);
-
-      if (spinnakerToolId != null && spinnakerToolId !== "" && spinnakerApplicationName != null && spinnakerApplicationName !== "") {
-        await loadSpinnakerTools(cancelSource);
-      }
-    }
-    catch (error) {
+      await loadSpinnakerTools(cancelSource);
+    } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     }
     finally {
@@ -56,6 +55,7 @@ function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, spinna
   const loadSpinnakerTools = async (cancelSource = cancelTokenSource) => {
     try {
       const response = await SpinnakerStepActions.getSpinnakerToolsV2(getAccessToken, cancelSource, spinnakerToolId, spinnakerApplicationName);
+
       const pipelines = response?.data?.spinnakerPipelines;
 
       if (Array.isArray(pipelines)) {
@@ -69,7 +69,7 @@ function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, spinna
 
   const getPlaceholderText = () => {
     if (!isLoading && (spinnakerTools == null || spinnakerTools.length === 0)) {
-      return ("Spinnaker Tool information is missing or unavailable!");
+      return ("Spinnaker pipelines information is missing or unavailable!");
     }
 
     return ("Select Spinnaker Tool");
@@ -93,7 +93,7 @@ function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, spinna
   );
 }
 
-SpinnakerApplicationNameSelectInput.propTypes = {
+SpinnakerPipelineSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
@@ -105,4 +105,4 @@ SpinnakerApplicationNameSelectInput.propTypes = {
   spinnakerApplicationName: PropTypes.string,
 };
 
-export default SpinnakerApplicationNameSelectInput;
+export default SpinnakerPipelineSelectInput;
