@@ -1,7 +1,9 @@
-import React, { createContext } from "react";
+import React, {createContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
+import commonActions from "components/common/common.actions";
+import axios from "axios";
 
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
@@ -9,6 +11,23 @@ const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
 const AuthContextProvider = (props) => {
     const { userData, refreshToken, authClient } = props;
     const history = useHistory();
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
 
     const logoutUserContext = async () => {
       authClient.tokenManager.clear();
@@ -87,6 +106,11 @@ const AuthContextProvider = (props) => {
         return userData.groups.includes("Preview");
       }
     };
+
+  const getFeatureFlags = async () => {
+    const response = await commonActions.getFeatureFlagsV2(getAccessToken, cancelTokenSource);
+    return response?.data?.featureFlags;
+  };
 
     const featureFlagHideItemInProd = () => {
       return process.env.REACT_APP_ENVIRONMENT === "production";
@@ -179,6 +203,7 @@ const AuthContextProvider = (props) => {
         generateJwtServiceTokenWithValue: generateJwtServiceTokenWithValue,
         getAccessRoleData: getAccessRoleData,
         isSassUser: isSassUser,
+        getFeatureFlags: getFeatureFlags,
       }}>
         {props.children}
       </AuthContext.Provider>
