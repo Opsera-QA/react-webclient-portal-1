@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import JenkinsJobSelectInput from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsJobSelectInput";
+import JenkinsRegistryToolJobSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 
-function SfdcJenkinsJobInput({dataObject, setDataObject, disabled}) {
-  const setJenkinsJob = (fieldName, selectedOption) => {    
-
-    let newDataObject = {...dataObject};
+function SfdcStepJenkinsJobSelectInput({model, setModel, disabled}) {
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newDataObject = {...model};
     newDataObject.setData("toolJobName", selectedOption.name);
     newDataObject.setData("toolJobType", selectedOption.type);
     newDataObject.setData("toolJobId", selectedOption._id);
@@ -13,11 +13,11 @@ function SfdcJenkinsJobInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("jobDescription", selectedOption.description);
     newDataObject.setData("buildType", selectedOption.configuration.buildType || "ant");
     newDataObject.setData("agentLabels", selectedOption.configuration?.agentLabels || "");
-    setDataObject({...newDataObject});
+    setModel({...newDataObject});
   };
 
-  const clearData = () => {
-    let newDataObject = {...dataObject};
+  const clearDataFunction = () => {
+    let newDataObject = {...model};
     newDataObject.setData("toolJobName", "");
     newDataObject.setData("toolJobType", "");
     newDataObject.setData("toolJobId", "");
@@ -25,29 +25,29 @@ function SfdcJenkinsJobInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("jobDescription", "");
     newDataObject.setData("buildType", "");
     newDataObject.setData("agentLabels", "");
-    setDataObject({...newDataObject});
+    setModel({...newDataObject});
   };
 
   // TODO : Type filter needs to be checked 
   return (
-     <JenkinsJobSelectInput
-       fieldName={"toolJobName"}
-       jenkinsId={dataObject?.getData("toolConfigId")}
-       typeFilter={"SFDC"}
-       configurationRequired={true}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       setDataFunction={setJenkinsJob}
-       disabled={disabled}
-       clearDataFunction={clearData}
-     />
+    <JenkinsRegistryToolJobSelectInput
+      fieldName={"toolJobId"}
+      jenkinsToolId={model?.getData("toolConfigId")}
+      typeFilter={"SFDC"}
+      configurationRequired={true}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+      clearDataFunction={clearDataFunction}
+    />
   );
 }
 
-SfdcJenkinsJobInput.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+SfdcStepJenkinsJobSelectInput.propTypes = {
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default SfdcJenkinsJobInput;
+export default SfdcStepJenkinsJobSelectInput;
