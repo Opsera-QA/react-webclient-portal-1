@@ -56,8 +56,8 @@ function SpinnakerPipelineSelectInput({className, spinnakerToolId, spinnakerAppl
     try {
       const response = await SpinnakerStepActions.getSpinnakerToolsV2(getAccessToken, cancelSource, spinnakerToolId, spinnakerApplicationName);
 
-      console.log("response: " + JSON.stringify(response));
       const pipelines = response?.data?.spinnakerPipelines;
+
       if (Array.isArray(pipelines)) {
         setSpinnakerTools(pipelines);
       }
