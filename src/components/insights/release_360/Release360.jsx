@@ -320,7 +320,7 @@ function Release360 () {
     <ScreenContainer
       navigationTabContainer={<InsightsSubNavigationBar currentTab={"release360"} />}
       breadcrumbDestination={"release360"}
-      pageDescription={"Put Release 360 Description here"}
+      pageDescription={"Release 360 provides a 360 degree view of data, starting from planning to release, capturing all metrics in the intermediate stages as well. Different views are split based on category, duration and functionality"}
     >
       {getSynopsisActionBar()}
       <div className={"px-3"}>

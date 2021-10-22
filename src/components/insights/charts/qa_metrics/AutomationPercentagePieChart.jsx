@@ -16,7 +16,6 @@ import { Col, Container, Row } from "react-bootstrap";
 import DataBlockWrapper from "../../../common/data_boxes/DataBlockWrapper";
 
 function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis, showSettingsToggle }) {
-  console.log(dashboardData, ' ** dashboard data');
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -50,7 +49,9 @@ function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, d
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "automationPercentage", kpiConfiguration, dashboardTags);
+      let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
+      let dateRange = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "date")]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "automationPercentage", kpiConfiguration, dashboardTags, null, null, dashboardOrgs, null, null, dateRange);
       let dataObject = response?.data ? response?.data?.data[0]?.automationPercentage?.data : [];
       assignStandardColors(dataObject[0]?.pairs);
       shortenPieChartLegend(dataObject[0]?.pairs);

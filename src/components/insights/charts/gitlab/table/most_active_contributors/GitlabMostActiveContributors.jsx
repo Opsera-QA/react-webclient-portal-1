@@ -75,13 +75,15 @@ function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
+      let dateRange = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "date")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "gitlabMostActiveUsers",
         kpiConfiguration,
         dashboardTags,
-        filterDto
+        filterDto, null, dashboardOrgs, null, null, dateRange
       );
       let dataObject = response?.data?.data[0]?.gitlabMostActiveUsers?.data;
 

@@ -112,7 +112,8 @@ function ChartContainer(
         <div className={"d-flex"}>
           <div>
             <FontAwesomeIcon icon={getChartIconFromKpiConfiguration(kpiConfiguration)} fixedWidth className="mr-1"/>
-            {kpiConfiguration?.kpi_name + getDate()}
+            {kpiConfiguration?.kpi_name}
+            {/* {kpiConfiguration?.kpi_name + getDate()} */}
           </div>
       </div>
         <div className={"d-flex"}>

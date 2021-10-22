@@ -112,7 +112,7 @@ function OverallReleaseQualityMetrics({dashboardData}) {
 
   const getMetricBlocks = () => {
     return (
-      <div className={"d-flex"}>
+      <div>
         <DataBlockBoxContainer className={"mr-2"}>
           <Row className="p-1">
             <Col>
@@ -120,6 +120,7 @@ function OverallReleaseQualityMetrics({dashboardData}) {
                 kpiConfiguration={{
                   kpi_name: "Automation Percentage", ...filters
                 }}
+                dashboardData={dashboardData}
                 showSettingsToggle={false}
               />
             </Col>
@@ -128,6 +129,7 @@ function OverallReleaseQualityMetrics({dashboardData}) {
                 kpiConfiguration={{
                   kpi_name: "Adoption Percentage", ...filters
                 }}
+                dashboardData={dashboardData}
                 showSettingsToggle={false}
               />
             </Col>
@@ -138,6 +140,7 @@ function OverallReleaseQualityMetrics({dashboardData}) {
                 kpiConfiguration={{
                   kpi_name: "Cumulative Open Defects", ...filters
                 }}
+                dashboardData={dashboardData}
                 showSettingsToggle={false}
               />
             </Col>
@@ -146,6 +149,7 @@ function OverallReleaseQualityMetrics({dashboardData}) {
                 kpiConfiguration={{
                   kpi_name: "Defect Removal Efficiency", ...filters
                 }}
+                dashboardData={dashboardData}
                 showSettingsToggle={false}
               />
             </Col>
@@ -158,6 +162,7 @@ function OverallReleaseQualityMetrics({dashboardData}) {
                 kpiConfiguration={{
                   kpi_name: "First Pass Yield", ...filters
                 }}
+                dashboardData={dashboardData}
                 showSettingsToggle={false}
               />
             </Col>
@@ -166,6 +171,7 @@ function OverallReleaseQualityMetrics({dashboardData}) {
                 kpiConfiguration={{
                   kpi_name: "Sonar Ratings", ...filters
                 }}
+                dashboardData={dashboardData}
                 showSettingsToggle={false}
               />
             </Col>

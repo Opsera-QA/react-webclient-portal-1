@@ -94,7 +94,7 @@ function OverallReleaseTraceabilityMetrics({dashboardData}) {
 
   const getMetricBlocks = () => {
     return (
-      <div className={"d-flex"}>
+      <div>
         <DataBlockBoxContainer className={"mr-2"}>
           <Row className="p-1">
             <Col>
@@ -102,6 +102,7 @@ function OverallReleaseTraceabilityMetrics({dashboardData}) {
                 kpiConfiguration={{
                   kpi_name: "Gitlab Most Active Contributors", ...filters
                 }}
+                dashboardData={dashboardData}
                 showSettingsToggle={false}
               />
             </Col>
@@ -110,6 +111,7 @@ function OverallReleaseTraceabilityMetrics({dashboardData}) {
                 kpiConfiguration={{
                   kpi_name: "Gitlab Total Commits By Project", ...filters
                 }}
+                dashboardData={dashboardData}
                 showSettingsToggle={false}
               />
             </Col>
@@ -120,6 +122,7 @@ function OverallReleaseTraceabilityMetrics({dashboardData}) {
                 kpiConfiguration={{
                   kpi_name: "Gitlab Merge Requests, Pushes, and Comments", ...filters
                 }}
+                dashboardData={dashboardData}
                 showSettingsToggle={false}
               />
             </Col>

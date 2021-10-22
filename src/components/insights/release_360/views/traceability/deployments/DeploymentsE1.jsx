@@ -59,7 +59,8 @@ function DeploymentsE1({ dashboardData, environment}) {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
-      const response = await chartsActions.getEnvironmentMetrics(getAccessToken, cancelSource, "totalDeploymentCounts", environment, dashboardTags, dashboardOrgs);
+      let dateRange = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "date")]?.value;
+      const response = await chartsActions.getEnvironmentMetrics(getAccessToken, cancelSource, "totalDeploymentCounts", environment, dashboardTags, dashboardOrgs, dateRange);
       let dataObject = response?.data ? response?.data?.data[0] : [];
 
       if (isMounted?.current === true && dataObject) {
