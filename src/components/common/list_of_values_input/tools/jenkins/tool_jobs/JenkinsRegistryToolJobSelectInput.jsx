@@ -39,6 +39,7 @@ function JenkinsRegistryToolJobSelectInput(
 
 
     setJenkinsJobs([]);
+    console.log("jenkinsToolId: " + JSON.stringify(jenkinsToolId));
     if (jenkinsToolId != null && jenkinsToolId !== "") {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
@@ -102,7 +103,7 @@ function JenkinsRegistryToolJobSelectInput(
   };
 
   const getPlaceholderText = () => {
-    if (!isLoading && (jenkinsJobs == null || jenkinsJobs.length === 0 && jenkinsToolId !== "")) {
+    if (!isLoading && (jenkinsJobs == null || jenkinsJobs.length === 0 && jenkinsToolId != null && jenkinsToolId !== "")) {
       return (`No configured ${typeFilter ? typeFilter + " " : ""} Jenkins Jobs have been registered for this Jenkins tool.`);
     }
 
