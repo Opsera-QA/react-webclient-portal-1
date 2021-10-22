@@ -243,7 +243,7 @@ const SfdcPipelineWizardXmlViewer = (
       <div className="flex-container">
         {getTabContainer()}
         {getView()}        
-        <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
+        <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right d-flex">
           <Button variant="secondary" size="sm" className="mr-2" onClick={() => { handleBackButton(); }}>
             <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-2" />
             Back
