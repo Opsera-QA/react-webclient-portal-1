@@ -1,44 +1,28 @@
-import { axiosApiService } from "../../../../../../../../api/apiService";
+import baseActions from "utils/actionsBase";
 
 const SpinnakerStepActions = {};
 
-SpinnakerStepActions.searchApps = async (id, getAccessToken) => {
-  const accessToken = await getAccessToken();
+SpinnakerStepActions.getSpinnakerApplicationsV2 = async (getAccessToken, cancelTokenSource, spinnakerToolId) => {
   const apiUrl = "/tools/properties";
   const postBody = {
-    tool : "spinnaker",
-    metric : "applications",
-    id: id
+    tool: "spinnaker",
+    metric: "applications",
+    id: spinnakerToolId,
   };
-  const res = await axiosApiService(accessToken)
-    .post(apiUrl, postBody)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  return res;
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-SpinnakerStepActions.searchTools = async (spinnakerId, appName, getAccessToken) => {
-  const accessToken = await getAccessToken();
+SpinnakerStepActions.getSpinnakerToolsV2 = async (getAccessToken, cancelTokenSource, spinnakerToolId, applicationName) => {
   const apiUrl = "/tools/properties";
   const postBody = {
-    tool : "spinnaker",
-    metric : "tools",
-    id: spinnakerId,
-    appname: appName
+    tool: "spinnaker",
+    metric: "tools",
+    id: spinnakerToolId,
+    appname: applicationName,
   };
-  const res = await axiosApiService(accessToken)
-    .post(apiUrl, postBody)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  return res;
-  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
 
 export default SpinnakerStepActions;
