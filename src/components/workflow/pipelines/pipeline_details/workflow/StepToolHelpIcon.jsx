@@ -69,6 +69,7 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
       case "conditional-operator":
       case "powershell":
       case "dotnet":
+      case "dotnet-cli":
       case "nunit":
       case "jfrog_artifactory_docker":
       case "terrascan":
