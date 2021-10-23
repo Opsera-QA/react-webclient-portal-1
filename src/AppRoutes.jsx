@@ -87,7 +87,6 @@ import SiteNotificationManager from "components/admin/site_notifications/manager
 import ToolCountsReport from "components/reports/tools/counts/ToolCountsReport";
 import UserSettings from "components/user/user_settings/UserSettings";
 import AccessTokenDetailView from "components/user/user_settings/access_tokens/details/AccessTokenDetailView";
-import DetailedToolReport from "./components/reports/tools/detailedReport/DetailedToolReport";
 import TaskDetailView from "components/tasks/details/TaskDetailView";
 import TagsUsedInDashboardsReport from "components/reports/tags/dashboards/TagsUsedInDashboardReport";
 import OrganizationManagement from "components/settings/organizations/OrganizationManagement";
@@ -213,7 +212,6 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
 
           <SecureRoute path="/reports/tools/tools-used-in-pipeline" exact component={ToolsUsedInPipelineReport} />
           <SecureRoute path="/reports/tools/tool-counts" exact component={ToolCountsReport} />
-          <SecureRoute path="/reports/tools/detailed-tool-report" exact component={DetailedToolReport} />
 
 
           <SecureRoute path="/reports/tags/tags-used-in-pipeline" exact component={TagsUsedInPipelineReport} />
