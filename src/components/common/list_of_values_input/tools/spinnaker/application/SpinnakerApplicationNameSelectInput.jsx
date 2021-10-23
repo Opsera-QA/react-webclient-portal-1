@@ -12,6 +12,7 @@ function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, fieldN
   const toastContext = useContext(DialogToastContext);
   const [spinnakerApplications, setSpinnakerApplications] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -23,6 +24,7 @@ function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, fieldN
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
+    setErrorMessage("");
 
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
@@ -46,7 +48,8 @@ function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, fieldN
       }
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      console.error(error);
+      setErrorMessage("Error pulling Spinnaker Applications! Check browser logs for more details.");
     }
     finally {
       setIsLoading(false);
@@ -54,16 +57,11 @@ function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, fieldN
   };
 
   const loadSpinnakerApplications = async (cancelSource = cancelTokenSource) => {
-    try {
-      const response = await SpinnakerStepActions.getSpinnakerApplicationsV2(getAccessToken, cancelSource, spinnakerToolId);
-      const applications = response?.data?.spinnakerApplications;
+    const response = await SpinnakerStepActions.getSpinnakerApplicationsV2(getAccessToken, cancelSource, spinnakerToolId);
+    const applications = response?.data?.spinnakerApplications;
 
-      if (Array.isArray(applications)) {
-        setSpinnakerApplications(applications);
-      }
-    } catch (error) {
-      console.error(error);
-      toastContext.showServiceUnavailableDialog();
+    if (Array.isArray(applications)) {
+      setSpinnakerApplications(applications);
     }
   };
 
@@ -87,6 +85,7 @@ function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, fieldN
       setDataObject={setModel}
       setDataFunction={setDataFunction}
       selectOptions={spinnakerApplications}
+      errorMessage={errorMessage}
       clearDataFunction={clearDataFunction}
       textField={"name"}
       valueField={"name"}

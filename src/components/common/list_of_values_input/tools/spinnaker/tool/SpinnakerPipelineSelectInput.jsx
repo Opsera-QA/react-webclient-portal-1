@@ -9,9 +9,9 @@ import SpinnakerStepActions
 
 function SpinnakerPipelineSelectInput({className, spinnakerToolId, spinnakerApplicationName, fieldName, model, setModel, setDataFunction, disabled, clearDataFunction}) {
   const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [spinnakerTools, setSpinnakerTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -24,6 +24,7 @@ function SpinnakerPipelineSelectInput({className, spinnakerToolId, spinnakerAppl
     setCancelTokenSource(source);
     isMounted.current = true;
 
+    setErrorMessage("");
     setSpinnakerTools([]);
 
     if (spinnakerToolId != null && spinnakerToolId !== "" && spinnakerApplicationName != null && spinnakerApplicationName !== "") {
@@ -45,7 +46,8 @@ function SpinnakerPipelineSelectInput({className, spinnakerToolId, spinnakerAppl
       setIsLoading(true);
       await loadSpinnakerTools(cancelSource);
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      console.error(error);
+      setErrorMessage("Error pulling Spinnaker Pipelines! Check browser logs for more details.");
     }
     finally {
       setIsLoading(false);
@@ -53,17 +55,11 @@ function SpinnakerPipelineSelectInput({className, spinnakerToolId, spinnakerAppl
   };
 
   const loadSpinnakerTools = async (cancelSource = cancelTokenSource) => {
-    try {
-      const response = await SpinnakerStepActions.getSpinnakerToolsV2(getAccessToken, cancelSource, spinnakerToolId, spinnakerApplicationName);
+    const response = await SpinnakerStepActions.getSpinnakerToolsV2(getAccessToken, cancelSource, spinnakerToolId, spinnakerApplicationName);
+    const pipelines = response?.data?.spinnakerPipelines;
 
-      const pipelines = response?.data?.spinnakerPipelines;
-
-      if (Array.isArray(pipelines)) {
-        setSpinnakerTools(pipelines);
-      }
-    } catch (error) {
-      console.error(error);
-      toastContext.showServiceUnavailableDialog();
+    if (Array.isArray(pipelines)) {
+      setSpinnakerTools(pipelines);
     }
   };
 
@@ -89,6 +85,7 @@ function SpinnakerPipelineSelectInput({className, spinnakerToolId, spinnakerAppl
       busy={isLoading}
       disabled={disabled}
       className={className}
+      errorMessage={errorMessage}
     />
   );
 }
