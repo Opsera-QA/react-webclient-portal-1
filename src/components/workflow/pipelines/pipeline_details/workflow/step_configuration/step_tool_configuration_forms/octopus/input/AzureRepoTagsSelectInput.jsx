@@ -3,11 +3,10 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import octopusActions from "../octopus-step-actions";
-import PipelineActions from "../../../../../../../pipeline-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/pro-light-svg-icons";
+import toolsActions from "components/inventory/tools/tools-actions";
 
 function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject, disabled, plan, stepId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -68,11 +67,12 @@ function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject, disa
   const fetchAzureDetails = async (cancelSource) => {
     setIsSearching(true);
     try {
-      let results = await PipelineActions.getToolsListV2(getAccessToken, cancelSource, "azure_account");
-      if (results?.data) {
+      let results = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, cancelSource, "azure_account");
+      const toolResponse = results?.data?.data;
+
+      if (toolResponse) {
         let respObj = [];
-        let arrOfObj = results.data;
-        arrOfObj.map((item) => {
+        toolResponse.map((item) => {
           respObj.push({
             name: item.name,
             id: item._id,
