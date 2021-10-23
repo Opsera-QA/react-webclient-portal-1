@@ -13,6 +13,7 @@ toolsActions.deleteToolV2 = async (getAccessToken, cancelToken, toolModel) => {
   return baseActions.apiDeleteCallV2(getAccessToken, cancelToken, apiUrl);
 };
 
+// TODO: Move to vault actions file
 toolsActions.deleteOwnerVaultRecordsForToolIdV2 = async (getAccessToken, cancelTokenSource, toolModel) => {
   const apiUrl = `/vault/tool/delete`;
   let postBody = {
@@ -75,11 +76,6 @@ toolsActions.getToolAccessWithEmail = async (getAccessToken, cancelTokenSource, 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-toolsActions.getRoleLimitedToolById = async (id, getAccessToken) => {
-  const apiUrl = `/registry/configs/${id}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
 toolsActions.getRoleLimitedToolByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/registry/configs/${id}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
@@ -113,12 +109,6 @@ toolsActions.getRoleLimitedToolsByIdentifier = async (getAccessToken, cancelToke
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-// TODO: Remove when all references are updated to V2
-toolsActions.getToolLovs = async (getAccessToken) => {
-  const apiUrl = `/registry/configs/summary`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
 toolsActions.getToolLovsV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = `/registry/configs/summary`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
@@ -150,12 +140,6 @@ toolsActions.getToolLogById = async (getAccessToken, cancelTokenSource, logId) =
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-// TODO: Remove when all references are updated to V2
-toolsActions.getRelevantPipelines = async (toolDto, getAccessToken) => {
-  const apiUrl = `/registry/${toolDto.getData("_id")}/pipelines`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
 toolsActions.getRelevantPipelinesV2 = async (getAccessToken, cancelTokenSource, toolDto) => {
   const apiUrl = `/registry/${toolDto.getData("_id")}/pipelines`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
@@ -165,12 +149,13 @@ toolsActions.updateToolConfiguration = async (toolData, getAccessToken) => {
   const apiUrl = `/registry/${toolData._id}/update`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, toolData);
 };
-// getAccessToken, sourceToken, apiUrl, postBody
+
 toolsActions.updateToolConfigurationV2 = async (toolData, getAccessToken, cancelTokenSource) => {
   const apiUrl = `/registry/${toolData._id}/update`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, toolData);
 };
 
+// TODO: This should be moved to a Jira helper function
 toolsActions.installJiraApp = async (toolId, getAccessToken) => {
   const apiUrl = `/connectors/jira/${toolId}/app/install`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
@@ -227,7 +212,7 @@ toolsActions.saveKeyPasswordToVault = async (toolConfigurationData, fieldName, v
   return typeof currentValue === "string" ? {} : currentValue;
 };
 
-
+// TODO: Make update route that just takes configuration and sets it into the mongo DB collection
 toolsActions.saveToolConfiguration = async (toolData, configurationItem, getAccessToken) => {
   let newToolData = toolData.getPersistData();
   newToolData["configuration"] = configurationItem.configuration;
