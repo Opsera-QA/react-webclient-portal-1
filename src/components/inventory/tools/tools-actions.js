@@ -39,27 +39,6 @@ toolsActions.createToolV2 = async (getAccessToken, cancelTokenSource, toolModel)
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-// TODO: Update to V3 and remove this and the related route
-toolsActions.getRoleLimitedToolRegistryListV2 = async (getAccessToken, cancelTokenSource, toolFilterDto) => {
-  let sortOption = toolFilterDto.getData("sortOption");
-
-  let urlParams = {
-    params: {
-      sort: sortOption ? sortOption.value : undefined,
-      page: toolFilterDto.getData("currentPage"),
-      size: toolFilterDto.getData("pageSize"),
-      tag: toolFilterDto.getFilterValue("tag"),
-      status: toolFilterDto.getFilterValue("status"),
-      tool: toolFilterDto.getFilterValue("toolIdentifier"),
-      search: toolFilterDto.getFilterValue("search"),
-      owner: toolFilterDto.getFilterValue("owner")
-    }
-  };
-
-  const apiUrl = `/registry/configs`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
-};
-
 toolsActions.getRoleLimitedToolRegistryListV3 = async (getAccessToken, cancelTokenSource, toolFilterModel, fields) => {
   const apiUrl = `/registry/configs/v2`;
 
@@ -94,36 +73,6 @@ toolsActions.getToolAccessWithEmail = async (getAccessToken, cancelTokenSource, 
   };
 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
-};
-
-toolsActions.getFullRoleLimitedToolRegistryList = async (getAccessToken) => {
-  let urlParams = {
-    params: {
-      sort: "name",
-      size: 10000,
-    }
-  };
-
-
-  const apiUrl = `/registry/configs`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
-};
-
-toolsActions.getFullToolRegistryList = async (getAccessToken) => {
-  let urlParams = {
-    params: {
-      sort: "name",
-      size: 10000,
-    }
-  };
-
-  const apiUrl = `/registry`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
-};
-
-toolsActions.getFullToolByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
-  const apiUrl = `/registry/${id}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 toolsActions.getRoleLimitedToolById = async (id, getAccessToken) => {

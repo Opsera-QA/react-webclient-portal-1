@@ -69,9 +69,9 @@ function JenkinsRegistryToolJobSelectInput(
   };
 
   const loadJenkinsJobs = async (cancelSource = cancelTokenSource) => {
-    const response = await toolsActions.getFullToolByIdV2(getAccessToken, cancelSource, jenkinsToolId);
-    const jenkinsToolArray = response?.data;
-    const jenkinsJobs = jenkinsToolArray ? jenkinsToolArray[0]?.jobs : [];
+    // TODO: Make route that actually just returns jobs
+    const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, jenkinsToolId);
+    const jenkinsJobs = response?.data?.data?.jobs;
     const existingJobSelection = model?.getData(fieldName);
 
     if (Array.isArray(jenkinsJobs) && jenkinsJobs.length > 0) {
