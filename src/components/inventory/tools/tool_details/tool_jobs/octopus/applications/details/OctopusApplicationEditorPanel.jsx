@@ -28,7 +28,7 @@ import axios from "axios";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import pipelineActions from "components/workflow/pipeline-actions";
-import AzureToolConfigIdSelectInput from "./input/AzureToolConfigIdSelectInput";
+import OctopusStepAzureToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/OctopusStepAzureToolSelectInput";
 import AzureClusterSelectInput from "./input/AzureClusterSelectInput";
 import AzureResourceGroupSelectInput from "./input/AzureResourceGroupSelectInput";
 import OctopusFeedEditorForm from "./sub_forms/OctopusFeedEditorForm";
@@ -402,9 +402,9 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                   />
                 </Col>
                 <Col lg={12}>
-                  <AzureToolConfigIdSelectInput
-                    dataObject={octopusApplicationDataDto}
-                    setDataObject={setOctopusApplicationDataDto}
+                  <OctopusStepAzureToolSelectInput
+                    model={octopusApplicationDataDto}
+                    setModel={setOctopusApplicationDataDto}
                     setAzureConfig={setAzureConfig}
                   />
                 </Col>
