@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import { useParams } from "react-router-dom";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -9,6 +9,8 @@ import JiraProjectDetailView
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/JiraProjectDetailView";
 import jiraProjectMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jira-project-metadata";
 import toolsActions from "components/inventory/tools/tools-actions";
+import axios from "axios";
+import ToolModel from "components/inventory/tools/tool.model";
 
 function ToolProjectsView() {
   const { id, projectId } = useParams();
@@ -17,26 +19,36 @@ function ToolProjectsView() {
   const [toolData, setToolData] = useState(undefined);
   const [toolProjectData, setToolProjectData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    getTool();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
-  const getTool = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await toolsActions.getRoleLimitedToolById(id, getAccessToken);
-
-      if (response?.data?.data[0]) {
-        const toolDataResponse = response?.data?.data[0];
-        if (toolDataResponse) {
-          const toolDataDto = new Model(toolDataResponse, toolMetadata, false);
-          await setToolData(toolDataDto);
-          await unpackToolProject(toolDataDto);
-        }
-      }
-    } catch (error) {
+      await getTool(cancelSource);
+    }
+    catch (error) {
       if (!error?.error?.message?.includes(404)) {
         console.error(error);
         toastContext.showLoadingErrorDialog(error);
@@ -44,6 +56,17 @@ function ToolProjectsView() {
     }
     finally {
       setIsLoading(false);
+    }
+  };
+
+  const getTool = async (cancelSource = cancelTokenSource) => {
+    const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, id);
+    const tool = response?.data?.data;
+
+    if (tool) {
+      const toolDataDto = new ToolModel(tool, response?.data?.metadata, false);
+      await setToolData(toolDataDto);
+      await unpackToolProject(toolDataDto);
     }
   };
 
