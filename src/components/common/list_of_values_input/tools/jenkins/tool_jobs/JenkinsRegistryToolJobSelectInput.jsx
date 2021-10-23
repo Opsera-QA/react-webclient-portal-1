@@ -182,7 +182,9 @@ JenkinsRegistryToolJobSelectInput.propTypes = {
   visible: PropTypes.bool,
   typeFilter: PropTypes.string,
   configurationRequired: PropTypes.bool,
-  clearDataFunction: PropTypes.func
+  clearDataFunction: PropTypes.func,
+  valueField: PropTypes.string,
+  textField: PropTypes.string,
 };
 
 JenkinsRegistryToolJobSelectInput.defaultProps = {

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import JenkinsAccountInput from "components/common/list_of_values_input/tools/jenkins/JenkinsAccountInput";
+import RoleRestrictedJenkinsAccountSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsAccountSelectInput";
 
 function SfdcJenkinsAccountInput({dataObject, setDataObject, disabled}) {
   const setJenkinsAccount = (fieldName, selectedOption) => {
@@ -35,7 +36,7 @@ function SfdcJenkinsAccountInput({dataObject, setDataObject, disabled}) {
   };
 
   return (
-     <JenkinsAccountInput
+     <RoleRestrictedJenkinsAccountSelectInput
        fieldName={"gitCredential"}
        jenkinsId={dataObject?.getData("toolConfigId")}
        requireConfiguration={true}
