@@ -4,12 +4,12 @@ import { Form } from "react-bootstrap";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
-function CheckboxInput({ fieldName, model, setModel, setDataFunction, disabled }) {
-    const [field] = useState(model?.getFieldById(fieldName));
+function CheckboxInputBase({fieldName, model, setModel, setDataFunction, disabled}) {
+  const [field] = useState(model?.getFieldById(fieldName));
 
   const validateAndSetData = (value) => {
     let newDataObject = model;
-    newDataObject.setData(field.id, !!value);
+    newDataObject.setData(fieldName, value);
     setModel({...newDataObject});
   };
 
@@ -18,7 +18,7 @@ function CheckboxInput({ fieldName, model, setModel, setDataFunction, disabled }
       setDataFunction(fieldName, newValue);
     }
     else {
-      validateAndSetData(fieldName, newValue);
+      validateAndSetData(newValue);
     }
   };
 
@@ -43,7 +43,7 @@ function CheckboxInput({ fieldName, model, setModel, setDataFunction, disabled }
   );
 }
 
-CheckboxInput.propTypes = {
+CheckboxInputBase.propTypes = {
   disabled: PropTypes.bool,
   setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
@@ -51,4 +51,4 @@ CheckboxInput.propTypes = {
   model: PropTypes.object,
 };
 
-export default CheckboxInput;
+export default CheckboxInputBase;

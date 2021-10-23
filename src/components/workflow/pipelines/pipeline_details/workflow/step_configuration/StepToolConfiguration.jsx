@@ -64,6 +64,9 @@ import MongodbRealmStepConfiguration from "./step_tool_configuration_forms/mongo
 import AnsibleStepConfiguration from "./step_tool_configuration_forms/ansible/AnsibleStepConfiguration";
 import AzureFunctionsStepConfiguration from "./step_tool_configuration_forms/azure_functions/AzureFunctionsStepConfiguration";
 import DotNetCliStepConfiguration from "./step_tool_configuration_forms/dotnetcli/DotNetCliStepConfiguration";
+import CypressStepConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/CypressStepConfiguration";
+
 function StepToolConfiguration({
   pipeline,
   editItem,
@@ -625,6 +628,15 @@ function StepToolConfiguration({
         );
       case "cypress":
         return (
+          // <CypressStepConfiguration
+          //   pipelineId={pipeline._id}
+          //   stepId={stepId}
+          //   stepTool={stepTool}
+          //   parentCallback={callbackFunction}
+          //   createJob={createJob}
+          //   closeEditorPanel={closeEditorPanel}
+          // />
+
           <LegacyCypressStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
