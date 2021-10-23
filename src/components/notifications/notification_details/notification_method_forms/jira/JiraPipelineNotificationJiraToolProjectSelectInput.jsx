@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
@@ -10,25 +10,46 @@ import JiraUserInputs
 import {faProjectDiagram} from "@fortawesome/pro-light-svg-icons";
 import JiraToolProjectField from "components/common/fields/inventory/tools/jira/JiraToolProjectField";
 import toolsActions from "components/inventory/tools/tools-actions";
+import axios from "axios";
 
-function JiraToolProjectInput({jiraToolId, fieldName, dataObject, setDataObject, disabled}) {
+// TODO: Make base component and then wrap this around it.
+function JiraPipelineNotificationJiraToolProjectSelectInput({jiraToolId, fieldName, model, setModel, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const {getAccessToken} = useContext(AuthContext);
   const [selectedJiraProject, setSelectedJiraProject] = useState("");
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
     setProjects([]);
     if (jiraToolId !== "") {
-      loadData();
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
     }
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, [jiraToolId]);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadProjects();
+      await loadProjects(cancelSource);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     } finally {
@@ -36,12 +57,12 @@ function JiraToolProjectInput({jiraToolId, fieldName, dataObject, setDataObject,
     }
   };
 
-  const loadProjects = async () => {
-    const response = await toolsActions.getFullToolById(jiraToolId, getAccessToken);
+  const loadProjects = async (cancelSource = cancelTokenSource) => {
+    const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, jiraToolId);
+    const toolProjects = response?.data?.data?.projects;
 
-    let toolProjects = response?.data[0]?.projects;
-    if (toolProjects) {
-      let projectId = dataObject.getData(fieldName);
+    if (Array.isArray(toolProjects)) {
+      let projectId = model?.getData(fieldName);
       if (projectId !== "") {
         let toolProject = toolProjects.find((project) => {
           return project.id === projectId;
@@ -55,12 +76,12 @@ function JiraToolProjectInput({jiraToolId, fieldName, dataObject, setDataObject,
   };
 
   const setJiraProject = (fieldName, jiraProject) => {
-    let newDataObject = {...dataObject};
+    let newDataObject = {...model};
     setSelectedJiraProject(jiraProject);
     newDataObject.setData("toolProjectId", jiraProject["id"]);
     newDataObject.setData("jiraPrimaryAssignee", "");
     newDataObject.setData("jiraSecondaryAssignees", []);
-    setDataObject({...newDataObject});
+    setModel({...newDataObject});
   };
 
   const getPlaceholderText = () => {
@@ -78,10 +99,10 @@ function JiraToolProjectInput({jiraToolId, fieldName, dataObject, setDataObject,
   };
 
   const getJiraToolProjectInfo = () => {
-    if (dataObject.getData(fieldName) !== "") {
+    if (model?.getData(fieldName) !== "") {
       return (
         <div className="d-flex mx-2 justify-content-between">
-          <Link to={`/inventory/tools/details/${jiraToolId}/projects/${dataObject.getData(fieldName)}`}>
+          <Link to={`/inventory/tools/details/${jiraToolId}/projects/${model?.getData(fieldName)}`}>
             <small><FontAwesomeIcon icon={faProjectDiagram} className="pr-1"/>View Or Edit this Tool Project&lsquo;s settings</small>
           </Link>
           <small className="form-text text-muted">
@@ -104,7 +125,7 @@ function JiraToolProjectInput({jiraToolId, fieldName, dataObject, setDataObject,
     <>
       <SelectInputBase
         fieldName={fieldName}
-        dataObject={dataObject}
+        dataObject={model}
         setDataFunction={setJiraProject}
         selectOptions={projects}
         busy={isLoading}
@@ -115,23 +136,23 @@ function JiraToolProjectInput({jiraToolId, fieldName, dataObject, setDataObject,
       />
       {getJiraToolProjectInfo()}
       <div className="mx-2">
-        <JiraToolProjectField fieldName={fieldName} dataObject={dataObject} jiraToolId={dataObject.getData("jiraToolId")} jiraToolProjectId={dataObject.getData(fieldName)} title={"Jira Tool Project"}/>
+        <JiraToolProjectField fieldName={fieldName} dataObject={model} jiraToolId={model.getData("jiraToolId")} jiraToolProjectId={model.getData(fieldName)} title={"Jira Tool Project"}/>
       </div>
-      <JiraUserInputs jiraToolId={jiraToolId} jiraProject={getJiraProject()} dataObject={dataObject} setDataObject={setDataObject} />
+      <JiraUserInputs jiraToolId={jiraToolId} jiraProject={getJiraProject()} dataObject={model} setDataObject={setModel} />
     </>
   );
 }
 
-JiraToolProjectInput.propTypes = {
-  dataObject: PropTypes.object,
+JiraPipelineNotificationJiraToolProjectSelectInput.propTypes = {
+  model: PropTypes.object,
   fieldName: PropTypes.string,
-  setDataObject: PropTypes.func,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   jiraToolId: PropTypes.string
 };
 
-JiraToolProjectInput.defaultProps = {
+JiraPipelineNotificationJiraToolProjectSelectInput.defaultProps = {
   fieldName: "toolProjectId"
 };
 
-export default JiraToolProjectInput;
+export default JiraPipelineNotificationJiraToolProjectSelectInput;
