@@ -91,10 +91,7 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
 }
 
 BitbucketWorkspaceInput.propTypes = {
-  service: PropTypes.string,
   gitToolId: PropTypes.string,
-  repoId: PropTypes.string,
-  workspace: PropTypes.string,
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
