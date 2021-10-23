@@ -10,6 +10,8 @@ import TextInputBase from "../../../../common/inputs/text/TextInputBase";
 import ClusterTemplateSelectInput from "./inputs/ClusterTemplateSelectInput";
 import NetworkingOnlySubForm from "./sub_forms/NetworkingOnlySubForm";
 import EC2SubForm from "./sub_forms/EC2SubForm";
+import RoleRestrictedAwsAccountToolSelectInput
+  from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 
 
 function EC2ClusterCreationTaskConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
@@ -44,7 +46,11 @@ function EC2ClusterCreationTaskConfigurationPanel({ gitTasksDataDto, gitTasksCon
   return (
     <Row>
       <Col lg={12}>
-        <AwsToolSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"awsToolId"} />
+        <RoleRestrictedAwsAccountToolSelectInput
+          model={gitTasksConfigurationData}
+          setModel={setGitTasksConfigurationData}
+          fieldName={"awsToolId"}
+        />
       </Col>
       <Col lg={12}>
         <ClusterTemplateSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"clusterTemplate"} disabled={gitTasksDataDto.getData("configuration")?.stackId && gitTasksDataDto.getData("configuration")?.stackId.length > 0}/>
