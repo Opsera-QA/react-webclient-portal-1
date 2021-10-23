@@ -8,12 +8,6 @@ toolsActions.checkToolConnectivity = async (toolId, toolName, getAccessToken) =>
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-// TODO: Update all references to V2 and remove this
-toolsActions.deleteTool = async (dataObject, getAccessToken) => {
-  const apiUrl = `/registry/${dataObject.getData("_id")}`;
-  return baseActions.apiDeleteCall(getAccessToken, apiUrl);
-};
-
 toolsActions.deleteToolV2 = async (getAccessToken, cancelToken, toolModel) => {
   const apiUrl = `/registry/${toolModel?.getData("_id")}`;
   return baseActions.apiDeleteCallV2(getAccessToken, cancelToken, apiUrl);
