@@ -1,18 +1,36 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ToolRegistryRoleAccessHelpDocumentation
   from "components/common/help/documentation/tool_registry/ToolRegistryRoleAccessHelpDocumentation";
+import axios from "axios";
 
 function RegistryToolRoleAccessInput({fieldName, dataObject, setDataObject, disabled, visible}) {
   const { getAccessToken, isSassUser } = useContext(AuthContext);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
 
   const saveData = async (newRoles) => {
     let newDataObject = {...dataObject};
     newDataObject.setData(fieldName, newRoles);
-    const response = await toolsActions.updateTool(newDataObject, getAccessToken);
+    const response = await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, newDataObject);
     setDataObject({...newDataObject});
     return response;
   };
