@@ -8,7 +8,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import CoverityBitbucketWorkspaceInput from "./inputs/CoverityBitbucketWorkspaceInput";
 import CoverityGitRepositoryInput from "./inputs/CoverityGitRepositoryInput";
 import CoverityGitBranchInput from "./inputs/CoverityGitBranchInput";
-import CoverityAccountInput from "./inputs/CoverityAccountInput";
+import CoverityStepJenkinsAccountSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/coverity/inputs/CoverityStepJenkinsAccountSelectInput";
 import CoverityJenkinsAccountInput from "./inputs/CoverityJenkinsAccountInput";
 import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
 import CoverityStepJenkinsToolSelectInput
@@ -87,7 +87,10 @@ function CoverityStepConfiguration({ pipelineId, stepTool, stepId,createJob, clo
         model={coverityStepConfigurationDto}
         setModel={setCoverityStepConfigurationDataDto}
       />
-      <CoverityAccountInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} />
+      <CoverityStepJenkinsAccountSelectInput
+        dataObject={coverityStepConfigurationDto}
+        setDataObject={setCoverityStepConfigurationDataDto}
+      />
       <TextInputBase
               setDataObject={setCoverityStepConfigurationDataDto}
               dataObject={coverityStepConfigurationDto}
