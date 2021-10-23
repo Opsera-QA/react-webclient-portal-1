@@ -88,7 +88,11 @@ function AzureAcrPushStepConfiguration({ stepTool, closeEditorPanel, parentCallb
       {/* buildStepId */}
       <AzureAcrPushBuildStepSelectInput dataObject={azureAcrPushModel} setDataObject={setAzureAcrPushModel} plan={plan} stepId={stepId} />
       {/* azureToolConfigId */}
-      <AzureAcrPushAzureToolConfigIdSelectInput dataObject={azureAcrPushModel} setDataObject={setAzureAcrPushModel} setAzureConfig={setAzureConfig} />
+      <AzureAcrPushAzureToolConfigIdSelectInput
+        model={azureAcrPushModel}
+        setModel={setAzureAcrPushModel}
+        setAzureConfig={setAzureConfig}
+      />
       {/* azureCredentialId */}
       {/* <AzureAcrPushCredentialIdSelectInput dataObject={azureAcrPushModel} setDataObject={setAzureAcrPushModel} azureConfig={azureConfig} setApplicationData={setApplicationData} /> */}
       {/* resource */}
