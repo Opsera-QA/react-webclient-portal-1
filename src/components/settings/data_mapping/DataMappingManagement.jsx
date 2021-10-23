@@ -103,8 +103,10 @@ function DataMappingManagement() {
   const getProjectTags = async () => {
     try {
       const response = await adminTagsActions.getProjectTags(getAccessToken);
-      if (response?.data?.data?.length > 0) {
-        setOpseraProjectTags(response.data.data);
+      const projectTags = response?.data?.data;
+
+      if (Array.isArray(projectTags)) {
+        setOpseraProjectTags(projectTags);
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -113,9 +115,11 @@ function DataMappingManagement() {
 
   const getToolRegistryList = async () => {
     try {
-      const response = await toolsActions.getFullToolRegistryList(getAccessToken);
-      if (response?.data?.data?.length > 0) {
-        setToolRegistryList(response.data.data);
+      const response = await toolsActions.getRoleLimitedToolRegistryListV3(getAccessToken, cancelTokenSource);
+      const tools = response?.data?.data;
+
+      if (Array.isArray(tools)) {
+        setToolRegistryList(tools);
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);

@@ -31,9 +31,9 @@ toolsActions.updateToolV2 = async (getAccessToken, cancelTokenSource, toolModel)
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-toolsActions.createToolV2 = async (getAccessToken, cancelTokenSource, toolDataDto) => {
+toolsActions.createToolV2 = async (getAccessToken, cancelTokenSource, toolModel) => {
   const postBody = {
-    ...toolDataDto.getPersistData()
+    ...toolModel?.getPersistData()
   };
   const apiUrl = "/registry/create";
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
@@ -60,19 +60,19 @@ toolsActions.getRoleLimitedToolRegistryListV2 = async (getAccessToken, cancelTok
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-toolsActions.getRoleLimitedToolRegistryListV3 = async (getAccessToken, cancelTokenSource, toolFilterDto, fields) => {
+toolsActions.getRoleLimitedToolRegistryListV3 = async (getAccessToken, cancelTokenSource, toolFilterModel, fields) => {
   const apiUrl = `/registry/configs/v2`;
 
   const urlParams = {
     params: {
-      sortOption: toolFilterDto.getSortOption(),
-      currentPage: toolFilterDto.getFilterValue("currentPage"),
-      pageSize: toolFilterDto.getFilterValue("pageSize"),
-      toolIdentifier: toolFilterDto.getFilterValue("toolIdentifier"),
-      tag: toolFilterDto.getFilterValue("tag"),
-      active: toolFilterDto.getFilterValue("status"),
-      search: toolFilterDto.getFilterValue("search"),
-      owner: toolFilterDto.getFilterValue("owner"),
+      sortOption: toolFilterModel?.getSortOption(),
+      currentPage: toolFilterModel?.getFilterValue("currentPage"),
+      pageSize: toolFilterModel?.getFilterValue("pageSize"),
+      toolIdentifier: toolFilterModel?.getFilterValue("toolIdentifier"),
+      tag: toolFilterModel?.getFilterValue("tag"),
+      active: toolFilterModel?.getFilterValue("status"),
+      search: toolFilterModel?.getFilterValue("search"),
+      owner: toolFilterModel?.getFilterValue("owner"),
       fields: fields,
     }
   };
@@ -302,6 +302,7 @@ toolsActions.getToolConnectionLog = async (getAccessToken, toolDataDto) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+// TODO: Move to a Salesforce (DX) specific actions file
 toolsActions.checkSFDXToolConnection = async (getAccessToken, toolDataDto, selectedJenkinsId) => {
   // console.log(toolDataDto);
   const postBody = {
