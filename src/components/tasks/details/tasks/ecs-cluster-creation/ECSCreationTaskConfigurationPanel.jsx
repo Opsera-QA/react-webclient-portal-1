@@ -5,7 +5,6 @@ import modelHelpers from "components/common/model/modelHelpers";
 import ec2ClusterCreationTaskConfigurationMetadata from "./ecs-creation-git-task-configuration";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import AwsToolSelectInput from "./inputs/AwsToolSelectInput";
 import TextInputBase from "../../../../common/inputs/text/TextInputBase";
 import ClusterTemplateSelectInput from "./inputs/ClusterTemplateSelectInput";
 import NetworkingOnlySubForm from "./sub_forms/NetworkingOnlySubForm";
