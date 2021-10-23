@@ -12,6 +12,11 @@ const cypressPipelineStepConfigurationMetadata = {
       isRequired: true
     },
     {
+      label: "Job Type",
+      id: "opsera_job_type",
+      isRequired: true
+    },
+    {
       label: "Job Name",
       id: "jobName",
       isRequiredFunction: (model) => {
@@ -36,6 +41,10 @@ const cypressPipelineStepConfigurationMetadata = {
     {
       label: "Job",
       id: "toolJobId",
+    },
+    {
+      label: "Jenkins Account",
+      id: "gitToolId",
     },
     {
       label: "Account",
@@ -108,6 +117,7 @@ const cypressPipelineStepConfigurationMetadata = {
   ],
   newObjectFields: {
     jobType: "CYPRESS UNIT TESTING",
+    opsera_job_type: "opsera-job",
     toolConfigId: "",
     jenkinsUrl: "",
     jenkinsPort: "",
@@ -115,7 +125,7 @@ const cypressPipelineStepConfigurationMetadata = {
     jAuthToken: "",
     jobName: "",
     toolJobId: "",
-    toolJobType: "",
+    toolJobType: "CYPRESS UNIT TESTING",
     accountUsername: "",
     projectId: "",
     defaultBranch: "",

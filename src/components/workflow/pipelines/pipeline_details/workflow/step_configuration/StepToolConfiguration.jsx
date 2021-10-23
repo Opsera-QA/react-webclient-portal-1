@@ -64,6 +64,8 @@ import AzureFunctionsStepConfiguration from "./step_tool_configuration_forms/azu
 import AnsibleStepConfiguration from "./step_tool_configuration_forms/ansible/AnsibleStepConfiguration";
 import JenkinsStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
+import CypressStepConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/CypressStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -625,6 +627,15 @@ function StepToolConfiguration({
         );
       case "cypress":
         return (
+          // <CypressStepConfiguration
+          //   pipelineId={pipeline._id}
+          //   stepId={stepId}
+          //   stepTool={stepTool}
+          //   parentCallback={callbackFunction}
+          //   createJob={createJob}
+          //   closeEditorPanel={closeEditorPanel}
+          // />
+
           <LegacyCypressStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}

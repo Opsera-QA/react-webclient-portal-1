@@ -9,8 +9,6 @@ function CypressStepJenkinsJobSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("toolJobId", selectedOption?._id);
-    newModel.setData("toolJobType", selectedOption?.type);
-    newModel.setData("jobType", selectedOption?.jobType[0]);
     newModel.setData("buildToolVersion", "6.3");
     newModel.setData("projectKey", "");
     newModel.setData("buildArgs", {});
@@ -55,6 +53,8 @@ function CypressStepJenkinsJobSelectInput({model, setModel, disabled}) {
        setDataFunction={setDataFunction}
        jenkinsId={model?.getData("toolConfigId")}
        disabled={disabled}
+       valueField={"_id"}
+       textField={"name"}
      />
   );
 }

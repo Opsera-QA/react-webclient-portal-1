@@ -1,23 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Form,
 } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faExclamationCircle,
-  faSpinner,
-} from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
-import pipelineActions from "components/workflow/pipeline-actions";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import modelHelpers from "components/common/model/modelHelpers";
 import cypressPipelineStepConfigurationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/cypressPipelineStepConfigurationMetadata";
-import {AuthContext} from "contexts/AuthContext";
 import CypressStepJenkinsToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepJenkinsToolSelectInput";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -30,7 +20,7 @@ import CypressStepRepositorySelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepRepositorySelectInput";
 import CypressStepBranchSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepBranchSelectInput";
-import CheckboxInput from "components/common/inputs/boolean/CheckboxInput";
+import CheckboxInputBase from "components/common/inputs/boolean/CheckboxInputBase";
 import CypressStepBitbucketWorkspaceSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepBitbucketWorkspaceSelectInput";
 import CypressStepJenkinsAccountSelectInput
@@ -42,12 +32,12 @@ function CypressStepConfiguration({
   stepId,
   parentCallback,
   createJob,
-  handleClose,
+  closeEditorPanel,
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [thresholdVal] = useState("");
   const [thresholdType] = useState("");
-  const [cypressStepModel, setCypressStepModel] = useState("");
+  const [cypressStepModel, setCypressStepModel] = useState(undefined);
 
   useEffect(() => {
     loadFormData(stepTool);
@@ -59,7 +49,9 @@ function CypressStepConfiguration({
     setCypressStepModel({...newModel});
   };
 
-  const handleCreateAndSave = async (pipelineId, stepId, toolId) => {
+  const handleCreateAndSave = async () => {
+    const toolId = cypressStepModel?.getData("toolConfigId");
+
     if (toolId) {
       setIsLoading(true);
 
@@ -106,63 +98,50 @@ function CypressStepConfiguration({
 
   return (
     <PipelineStepEditorPanelContainer
-      handleClose={handleClose}
+      handleClose={closeEditorPanel}
       recordDto={cypressStepModel}
-      persistRecord={cypressStepModel?.getData("opsera_job_type") === CYPRESS_JOB_TYPES.OPSERA_MANAGED_JOB ? handleCreateAndSave(pipelineId, stepId, formData.toolConfigId) : callbackFunction}
+      persistRecord={cypressStepModel?.getData("opsera_job_type") === CYPRESS_JOB_TYPES.OPSERA_MANAGED_JOB ? handleCreateAndSave : callbackFunction}
       isLoading={isLoading}
     >
-      <Form>
-        <CypressStepJobTypeSelectInput
-          model={cypressStepModel}
-          setModel={setCypressStepModel}
-        />
-        <CypressStepJenkinsToolSelectInput
-          model={cypressStepModel}
-          setModel={setCypressStepModel}
-        />
-        <CypressStepJenkinsJobSelectInput
-          model={cypressStepModel}
-          setModel={setCypressStepModel}
-        />
-        <CypressStepJenkinsAccountSelectInput
-          model={cypressStepModel}
-          setModel={setCypressStepModel}
-        />
-        <CypressStepBitbucketWorkspaceSelectInput
-          model={cypressStepModel}
-          setModel={setCypressStepModel}
-        />
-        <CypressStepRepositorySelectInput
-          model={cypressStepModel}
-          setModel={setCypressStepModel}
-        />
-        <CypressStepBranchSelectInput
-          model={cypressStepModel}
-          setModel={setCypressStepModel}
-        />
-        <CheckboxInput
-          model={cypressStepModel}
-          setModel={setCypressStepModel}
-          fieldName={"workspaceDeleteFlag"}
-          disabled={cypressStepModel?.getData("branch") === ""}
-        />
-        <TextInputBase
-          fieldName={"jsonPath"}
-          dataObject={cypressStepModel}
-          setDataObject={setCypressStepModel}
-        />
-        {/*TODO: Remove this*/}
-        <Form.Group controlId="threshold">
-          <Form.Label>Success Threshold</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder=""
-            value={thresholdVal || ""}
-            onChange={(e) => setThresholdValue(e.target.value)}
-            disabled={true}
-          />
-        </Form.Group>
-      </Form>
+      <CypressStepJobTypeSelectInput
+        model={cypressStepModel}
+        setModel={setCypressStepModel}
+      />
+      <CypressStepJenkinsToolSelectInput
+        model={cypressStepModel}
+        setModel={setCypressStepModel}
+      />
+      <CypressStepJenkinsJobSelectInput
+        model={cypressStepModel}
+        setModel={setCypressStepModel}
+      />
+      <CypressStepJenkinsAccountSelectInput
+        model={cypressStepModel}
+        setModel={setCypressStepModel}
+      />
+      <CypressStepBitbucketWorkspaceSelectInput
+        model={cypressStepModel}
+        setModel={setCypressStepModel}
+      />
+      <CypressStepRepositorySelectInput
+        model={cypressStepModel}
+        setModel={setCypressStepModel}
+      />
+      <CypressStepBranchSelectInput
+        model={cypressStepModel}
+        setModel={setCypressStepModel}
+      />
+      <CheckboxInputBase
+        model={cypressStepModel}
+        setModel={setCypressStepModel}
+        fieldName={"workspaceDeleteFlag"}
+        disabled={cypressStepModel?.getData("branch") === ""}
+      />
+      <TextInputBase
+        fieldName={"jsonPath"}
+        dataObject={cypressStepModel}
+        setDataObject={setCypressStepModel}
+      />
     </PipelineStepEditorPanelContainer>
   );
 }
@@ -173,7 +152,7 @@ CypressStepConfiguration.propTypes = {
   stepId: PropTypes.string,
   parentCallback: PropTypes.func,
   createJob: PropTypes.func,
-  handleClose: PropTypes.func,
+  closeEditorPanel: PropTypes.func,
 };
 
 export default CypressStepConfiguration;

@@ -7,8 +7,26 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 import axios from "axios";
+import JenkinsJobSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsJobSelectInput";
 
-function JenkinsAccountInput({ jenkinsId, visible, fieldName, placeholderText, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, configurationRequired, className}) {
+// TODO: Refactor
+function JenkinsAccountInput(
+  {
+    jenkinsId,
+    visible,
+    fieldName,
+    placeholderText,
+    dataObject,
+    setDataObject,
+    setDataFunction,
+    clearDataFunction,
+    disabled,
+    configurationRequired,
+    className,
+    textField,
+    valueField,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [jenkinsTools, setJenkinsTools] = useState([]);
@@ -127,10 +145,10 @@ function JenkinsAccountInput({ jenkinsId, visible, fieldName, placeholderText, d
         selectOptions={jenkinsAccounts}
         busy={isLoading}
         placeholderText={placeholderText}
-        valueField="gitCredential"
-        textField="gitCredential"
+        valueField={valueField}
+        textField={textField}
         clearDataFunction={clearDataFunction}
-        disabled={disabled || isLoading || jenkinsId === "" || jenkinsAccounts?.length === 0}
+        disabled={disabled || isLoading || jenkinsId === ""}
       />
       {getNoJobsMessage()}
     </div>
@@ -149,7 +167,14 @@ JenkinsAccountInput.propTypes = {
   typeFilter: PropTypes.string,
   configurationRequired: PropTypes.bool,
   className: PropTypes.string,
-  clearDataFunction: PropTypes.func
+  clearDataFunction: PropTypes.func,
+  textField: PropTypes.string,
+  valueField: PropTypes.string,
+};
+
+JenkinsAccountInput.defaultProps = {
+  textField: "gitCredential",
+  valueField: "gitCredential",
 };
 
 export default JenkinsAccountInput;

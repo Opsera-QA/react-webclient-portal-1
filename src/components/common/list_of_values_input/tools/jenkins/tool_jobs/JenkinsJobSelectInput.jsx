@@ -7,7 +7,23 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 
-function JenkinsJobSelectInput({ jenkinsId, visible, typeFilter, fieldName, placeholderText, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, configurationRequired}) {
+// TODO: Refactor
+function JenkinsJobSelectInput(
+  {
+    jenkinsId,
+    visible,
+    typeFilter,
+    fieldName,
+    placeholderText,
+    dataObject,
+    setDataObject,
+    setDataFunction,
+    clearDataFunction,
+    disabled,
+    configurationRequired,
+    textField,
+    valueField,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [jenkinsTools, setJenkinsTools] = useState([]);
@@ -93,8 +109,8 @@ function JenkinsJobSelectInput({ jenkinsId, visible, typeFilter, fieldName, plac
         selectOptions={jenkinsJobs}
         placeholderText={placeholderText}
         busy={isLoading}
-        valueField="name"
-        textField="name"
+        valueField={valueField}
+        textField={textField}
         clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading || jenkinsId === "" || jenkinsJobs?.length === 0}
       />
@@ -114,7 +130,14 @@ JenkinsJobSelectInput.propTypes = {
   visible: PropTypes.bool,
   typeFilter: PropTypes.string,
   configurationRequired: PropTypes.bool,
-  clearDataFunction: PropTypes.func
+  clearDataFunction: PropTypes.func,
+  textField: PropTypes.string,
+  valueField: PropTypes.string,
+};
+
+JenkinsJobSelectInput.defaultProps = {
+  textField: "name",
+  valueField: "name",
 };
 
 export default JenkinsJobSelectInput;

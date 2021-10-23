@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 import GitUpstreamBranchInput from "components/common/list_of_values_input/tools/git/GitUpstreamBranchInput";
 import GitBranchManualRollBackBranchInput from "components/common/list_of_values_input/tools/git/GitBranchManualRollBackBranchInput";
-import CheckboxInput from "components/common/inputs/boolean/CheckboxInput";
+import CheckboxInputBase from "components/common/inputs/boolean/CheckboxInputBase";
 
 const disallowedJobTypes = [
   "SFDC VALIDATE PACKAGE XML",
@@ -110,7 +110,7 @@ function JenkinsStepConfigurationBranchEditorPanel(
   return (
     <>
       {getDynamicFields()}
-      <CheckboxInput
+      <CheckboxInputBase
         fieldName={"workspaceDeleteFlag"}
         model={dataObject}
         setModel={setDataObject}

@@ -23,14 +23,15 @@ function CypressStepJenkinsAccountSelectInput({model, setModel, disabled}) {
   };
 
   return (
-     <JenkinsAccountInput
-       fieldName={"gitToolId"}
-       jenkinsId={model?.getData("toolConfigId")}
-       dataObject={model}
-       setDataObject={setModel}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-     />
+    <JenkinsAccountInput
+      fieldName={"gitToolId"}
+      jenkinsId={model?.getData("toolConfigId")}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+      valueField={"toolId"}
+    />
   );
 }
 

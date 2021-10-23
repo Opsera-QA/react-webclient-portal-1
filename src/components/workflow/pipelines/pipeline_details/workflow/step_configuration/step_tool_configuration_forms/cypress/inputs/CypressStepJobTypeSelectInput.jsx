@@ -20,7 +20,6 @@ function CypressStepJobTypeSelectInput({ model, setModel }) {
     newDataObject.setData("jobName", "");
     newDataObject.setData("buildType", "");
     newDataObject.setData("jobDescription", "");
-    newDataObject.setData("jobType", "");
     newDataObject.setData("toolJobId", "");
     newDataObject.setData("toolJobType", "");
     setModel({...newDataObject});

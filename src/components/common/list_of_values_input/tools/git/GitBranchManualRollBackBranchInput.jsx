@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import CheckboxInput from "components/common/inputs/boolean/CheckboxInput";
+import CheckboxInputBase from "components/common/inputs/boolean/CheckboxInputBase";
 
 function GitBranchManualRollBackBranchInput({ dataObject, setDataObject }) {
   const renderTooltip = (message, props) => (
@@ -29,7 +29,7 @@ function GitBranchManualRollBackBranchInput({ dataObject, setDataObject }) {
         placement="left"
         overlay={renderTooltip("Check this option if back up should be pushed to a branch name of your choice.")}
       >
-        <CheckboxInput
+        <CheckboxInputBase
           model={dataObject}
           setModel={setDataObject}
           fieldName={"isManualRollBackBranch"}
