@@ -1,4 +1,4 @@
-import React, {useState, useContext, useMemo} from "react";
+import React, {useState, useContext, useMemo, useRef, useEffect} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import PropTypes from "prop-types";
@@ -9,11 +9,31 @@ import {getTableTextColumn, getTableButtonColumn, getTableDateColumn, getTagColu
 import Model from "core/data_model/model";
 import toolsActions from "components/inventory/tools/tools-actions";
 import ToolRegMetadata from "components/settings/delete_tools/tool-reg-metadata";
+import axios from "axios";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
 function PlatformToolRegistryTable({ data, isLoading, reLoadData, setIsLoading, setData }) {
   const { getAccessToken } = useContext(AuthContext);
   const fields = pipelineSummaryMetadata.fields;
   const toastContext = useContext(DialogToastContext);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
+
 
   const deleteToolRegistry = async(dataObject) => {
     try {
@@ -27,7 +47,7 @@ function PlatformToolRegistryTable({ data, isLoading, reLoadData, setIsLoading, 
         toastContext.showErrorDialog(errorMsg);
         return;
       }
-      let result = await toolsActions.deleteTool(registryDTO, getAccessToken);
+      let result = await toolsActions.deleteToolV2(getAccessToken, cancelTokenSource, registryDTO);
       toastContext.showDeleteSuccessResultDialog("Tool registry record");
       console.log(result);
     }
