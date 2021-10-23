@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
@@ -9,10 +9,28 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import {generateUUID} from "components/common/helpers/string-helpers";
 import JiraProjectConfigurationPanel
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraProjectConfigurationPanel";
+import axios from "axios";
 
 function JiraProjectEditorPanel({ toolData, jiraProjectData, setJiraProjectData, handleClose }) {
   const [jiraConfigurationDto, setJiraConfigurationDto] = useState(undefined);
   const { getAccessToken } = useContext(AuthContext);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
 
   const createJiraProject = async () => {
     let newToolData = {...toolData};
@@ -29,7 +47,7 @@ function JiraProjectEditorPanel({ toolData, jiraProjectData, setJiraProjectData,
     newProject["configuration"] = newConfigurationData;
     jiraProjects.push(newProject);
     newToolData.setData("projects", jiraProjects);
-    return await toolsActions.updateTool(newToolData, getAccessToken);
+    return await toolsActions.updateTool(getAccessToken, cancelTokenSource, newToolData);
   };
 
   const updateJiraProject = async () => {
@@ -58,7 +76,7 @@ function JiraProjectEditorPanel({ toolData, jiraProjectData, setJiraProjectData,
     }
 
     newToolData.setData("projects", jiraProjects);
-    return await toolsActions.updateTool(newToolData, getAccessToken);
+    return await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, newToolData);
   };
 
   return (
