@@ -19,7 +19,9 @@ function JenkinsRegistryToolJobSelectInput(
     setModel,
     setDataFunction,
     clearDataFunction,
-    disabled
+    disabled,
+    valueField,
+    textField,
   }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -161,8 +163,8 @@ function JenkinsRegistryToolJobSelectInput(
       placeholderText={getPlaceholderText()}
       busy={isLoading}
       groupBy={(job) => getJenkinsJobTypeLabelForValue(job?.type)}
-      valueField="_id"
-      textField="name"
+      valueField={valueField}
+      textField={textField}
       infoOverlay={renderOverlayTrigger()}
       clearDataFunction={clearDataFunction}
       disabled={disabled || jenkinsToolId === ""}
@@ -181,6 +183,11 @@ JenkinsRegistryToolJobSelectInput.propTypes = {
   typeFilter: PropTypes.string,
   configurationRequired: PropTypes.bool,
   clearDataFunction: PropTypes.func
+};
+
+JenkinsRegistryToolJobSelectInput.defaultProps = {
+  valueField: "_id",
+  textField: "name",
 };
 
 export default JenkinsRegistryToolJobSelectInput;

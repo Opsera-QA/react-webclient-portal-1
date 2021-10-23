@@ -25,6 +25,7 @@ import {
 import pipelineActions from "components/workflow/pipeline-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import toolsActions from "components/inventory/tools/tools-actions";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -144,7 +145,26 @@ function LegacyCypressStepConfiguration({
 
     async function fetchJenkinsDetails(service) {
       setisJenkinsSearching(true);
-      let results = await pipelineActions.getToolsList(service, getAccessToken);
+      let results = await toolsActions.getRoleLimitedTools(service, getAccessToken);
+      const tools = results?.data?.data;
+      let respObj = [];
+
+      if (Array.isArray(tools)) {
+        tools.map((item) => {
+          if (item.configuration == null) {
+            return;
+          }
+
+          respObj.push({
+            name: item.name,
+            id: item._id,
+            configuration: item.configuration,
+            accounts: item.accounts,
+            jobs: item.jobs,
+          });
+        });
+      }
+
       if (typeof(results) != "object") {
         setJenkinsList([{ value: "", name: "Select One", isDisabled: "yes" }]);
         let errorMessage =
@@ -153,13 +173,9 @@ function LegacyCypressStepConfiguration({
         setisJenkinsSearching(false);
         return;
       }
-      const filteredList = results.filter(
-        (el) => el.configuration !== undefined,
-      ); //filter out items that do not have any configuration data!
-      if (filteredList) {
-        setJenkinsList(filteredList);
+
+        setJenkinsList(respObj);
         setisJenkinsSearching(false);
-      }
     }
 
     // Fire off our API call
