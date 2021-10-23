@@ -50,7 +50,7 @@ const INITIAL_DATA = {
 };
 
 
-// TODO: This needs to be refactored to follow new standards
+// TODO: This needs to be refactored to follow new standards and won't work without a refactor
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
 function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCallback, callbackSaveToVault, setToast, setShowToast }) {

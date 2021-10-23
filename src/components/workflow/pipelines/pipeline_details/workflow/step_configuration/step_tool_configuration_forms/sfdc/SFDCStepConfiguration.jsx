@@ -50,7 +50,7 @@ const INITIAL_DATA = {
   buildType: "Ant" //hardcoded now but needs to get it from a dropdown
 };
 
-
+// TODO: This needs a heavy refactor
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
 function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCallback, callbackSaveToVault, setToast, setShowToast }) {
