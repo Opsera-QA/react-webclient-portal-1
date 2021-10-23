@@ -350,12 +350,6 @@ pipelineActions.createFreeTrialPipeline = async (postBody, getAccessToken) => {
   return response;
 };
 
-// TODO: Replace this with toolsActions.getRoleLimitedToolsByIdentifier
-pipelineActions.getToolsListV2 = async (getAccessToken, cancelTokenSource, service) => {
-  const apiUrl = `/registry/properties/${service}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
 pipelineActions.getPipelineUsageToolList = async (getAccessToken) => {
   const params = { status: "active", usage: "pipeline"};
   const apiUrl = `/registry/tools`;
