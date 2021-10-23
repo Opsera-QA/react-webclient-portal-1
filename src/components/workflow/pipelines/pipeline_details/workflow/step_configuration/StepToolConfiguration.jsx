@@ -41,7 +41,6 @@ import PowershellStepConfiguration from "./step_tool_configuration_forms/powersh
 import DotNetStepConfiguration from "./step_tool_configuration_forms/dotnet/DotNetStepConfiguration";
 import DotNetCliStepConfiguration from "./step_tool_configuration_forms/dotnetcli/DotNetCliStepConfiguration";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import pipelineActions from "../../../../pipeline-actions";
 import NUnitStepConfiguration from "./step_tool_configuration_forms/nunit/NUnitStepConfiguration";
 import JFrogDockerStepConfiguration
   from "./step_tool_configuration_forms/jfrog_artifactory_docker/JFrogDockerStepConfiguration";
@@ -399,14 +398,6 @@ function StepToolConfiguration({
     }
   };
 
-    const getToolsList = async (service) => {
-    try {
-      return await pipelineActions.getToolsList(service, getAccessToken);
-    } catch (error) {
-      toastContext.showErrorDialog(error);
-    }
-  };
-
   // TODO: Alphabetize, simplify props when refactoring each panel.
   //  just pass pipeline and pull id and plan inside instead of passing them individually,
   //  remove deprecated toasts and use toast contexts, wire up latest buttons,
@@ -472,7 +463,6 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
@@ -612,7 +602,6 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
             setToast={setToast}
             setShowToast={setShowToast}
           />
@@ -627,26 +616,26 @@ function StepToolConfiguration({
         );
       case "cypress":
         return (
-          <CypressStepConfiguration
-            pipelineId={pipeline._id}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            createJob={createJob}
-            closeEditorPanel={closeEditorPanel}
-          />
-
-          // <LegacyCypressStepConfiguration
+          // <CypressStepConfiguration
           //   pipelineId={pipeline._id}
-          //   plan={pipeline.workflow.plan}
           //   stepId={stepId}
           //   stepTool={stepTool}
           //   parentCallback={callbackFunction}
-          //   callbackSaveToVault={saveToVault}
           //   createJob={createJob}
-          //   setToast={setToast}
-          //   setShowToast={setShowToast}
+          //   closeEditorPanel={closeEditorPanel}
           // />
+
+          <LegacyCypressStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+          />
         );
       case "docker-push":
         return (
@@ -694,7 +683,6 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
             setToast={setToast}
             setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
@@ -745,7 +733,6 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
             setToast={setToast}
             setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
@@ -760,7 +747,6 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
             setToast={setToast}
             setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
@@ -775,7 +761,6 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
             setToast={setToast}
             setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
@@ -825,7 +810,6 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
@@ -841,7 +825,6 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
@@ -857,7 +840,6 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
@@ -873,7 +855,6 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
@@ -889,7 +870,6 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
@@ -905,7 +885,6 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
@@ -921,7 +900,6 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
@@ -937,7 +915,6 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
@@ -953,7 +930,6 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
@@ -969,7 +945,6 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
@@ -985,7 +960,6 @@ function StepToolConfiguration({
               stepTool={stepTool}
               parentCallback={callbackFunction}
               callbackSaveToVault={saveToVault}
-              getToolsList={getToolsList}
               createJob={createCoverityJob}
               setToast={setToast}
               setShowToast={setShowToast}
@@ -1015,7 +989,6 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
@@ -1045,7 +1018,6 @@ function StepToolConfiguration({
               stepTool={stepTool}
               parentCallback={callbackFunction}
               callbackSaveToVault={saveToVault}
-              getToolsList={getToolsList}
               createJob={createJob}
               setToast={setToast}
               setShowToast={setShowToast}

@@ -41,7 +41,6 @@ function JenkinsRegistryToolJobSelectInput(
 
 
     setJenkinsJobs([]);
-    console.log("jenkinsToolId: " + JSON.stringify(jenkinsToolId));
     if (jenkinsToolId != null && jenkinsToolId !== "") {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
@@ -92,6 +91,7 @@ function JenkinsRegistryToolJobSelectInput(
         setJenkinsJobs(filteredJobs);
       } else {
         setJenkinsJobs(jenkinsJobs);
+
         if (existingJobSelection != null && existingJobSelection !== "") {
           const existingJob = jenkinsJobs.find((x) => x._id === existingJobSelection);
           if (existingJob == null) {
@@ -99,7 +99,7 @@ function JenkinsRegistryToolJobSelectInput(
               "Preselected job is no longer available. It may have been deleted. Please select another job from the list or recreate the job in Tool Registry."
             );
           }
-        } 
+        }
       }
     }
   };
@@ -182,7 +182,9 @@ JenkinsRegistryToolJobSelectInput.propTypes = {
   visible: PropTypes.bool,
   typeFilter: PropTypes.string,
   configurationRequired: PropTypes.bool,
-  clearDataFunction: PropTypes.func
+  clearDataFunction: PropTypes.func,
+  valueField: PropTypes.string,
+  textField: PropTypes.string,
 };
 
 JenkinsRegistryToolJobSelectInput.defaultProps = {

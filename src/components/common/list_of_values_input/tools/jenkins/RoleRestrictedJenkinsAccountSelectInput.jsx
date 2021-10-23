@@ -74,7 +74,7 @@ function RoleRestrictedJenkinsAccountSelectInput(
   };
 
   const loadTools = async (cancelSource = cancelTokenSource) => {
-    const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, jenkinsId);
+    const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, jenkinsToolId);
     const tool = response?.data?.data;
 
     if (isMounted?.current === true && tool) {
@@ -87,7 +87,7 @@ function RoleRestrictedJenkinsAccountSelectInput(
   };
 
   const getNoAccountsMessage = () => {
-    if (!isLoading && (jenkinsAccounts == null || jenkinsAccounts.length === 0 && jenkinsId !== "")) {
+    if (!isLoading && (jenkinsAccounts == null || jenkinsAccounts.length === 0 && jenkinsToolId !== "")) {
       return (
         <div className="form-text text-muted p-2">
           <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
