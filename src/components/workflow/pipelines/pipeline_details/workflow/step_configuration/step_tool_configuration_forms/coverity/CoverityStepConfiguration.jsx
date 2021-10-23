@@ -10,10 +10,11 @@ import CoverityGitRepositoryInput from "./inputs/CoverityGitRepositoryInput";
 import CoverityGitBranchInput from "./inputs/CoverityGitBranchInput";
 import CoverityAccountInput from "./inputs/CoverityAccountInput";
 import CoverityJenkinsAccountInput from "./inputs/CoverityJenkinsAccountInput";
-import CoverityToolSelectInput from "./inputs/CoverityToolSelectInput";
 import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
 import CoverityStepJenkinsToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/coverity/inputs/CoverityStepJenkinsToolSelectInput";
+import CoverityStepCoverityToolSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/coverity/inputs/CoverityStepCoverityToolSelectInput";
 
 function CoverityStepConfiguration({ pipelineId, stepTool, stepId,createJob, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -82,9 +83,9 @@ function CoverityStepConfiguration({ pipelineId, stepTool, stepId,createJob, clo
         model={coverityStepConfigurationDto}
         setModel={setCoverityStepConfigurationDataDto}
       />
-      <CoverityToolSelectInput
-        dataObject={coverityStepConfigurationDto}
-        setDataObject={setCoverityStepConfigurationDataDto}
+      <CoverityStepCoverityToolSelectInput
+        model={coverityStepConfigurationDto}
+        setModel={setCoverityStepConfigurationDataDto}
       />
       <CoverityAccountInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} />
       <TextInputBase
