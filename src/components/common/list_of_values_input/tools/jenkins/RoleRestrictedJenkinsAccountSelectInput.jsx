@@ -5,15 +5,13 @@ import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import pipelineActions from "components/workflow/pipeline-actions";
 import axios from "axios";
-import JenkinsJobSelectInput
-  from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsJobSelectInput";
+import toolsActions from "components/inventory/tools/tools-actions";
 
 // TODO: Refactor
-function JenkinsAccountInput(
+function RoleRestrictedJenkinsAccountSelectInput(
   {
-    jenkinsId,
+    jenkinsToolId,
     visible,
     fieldName,
     placeholderText,
@@ -22,26 +20,16 @@ function JenkinsAccountInput(
     setDataFunction,
     clearDataFunction,
     disabled,
-    configurationRequired,
     className,
     textField,
     valueField,
   }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [jenkinsTools, setJenkinsTools] = useState([]);
   const [jenkinsAccounts, setJenkinsAccounts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    setJenkinsAccounts([]);
-
-    if (jenkinsId !== "" && jenkinsId != null) {
-      loadJenkinsAccounts();
-    }
-  }, [jenkinsId, jenkinsTools]);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -52,17 +40,21 @@ function JenkinsAccountInput(
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    setJenkinsAccounts([]);
+
+    if (jenkinsToolId !== "" && jenkinsToolId != null) {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [jenkinsToolId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -82,45 +74,19 @@ function JenkinsAccountInput(
   };
 
   const loadTools = async (cancelSource = cancelTokenSource) => {
-    const response = await pipelineActions.getToolsListV2(getAccessToken, cancelSource, "jenkins");
+    const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, jenkinsId);
+    const tool = response?.data?.data;
 
-    if (isMounted?.current === true && response?.data) {
-      let tools = [];
-      let toolsResponseData = response.data;
-      toolsResponseData.map((item) => {
-        tools.push({
-          name: item.name,
-          id: item._id,
-          configuration: item.configuration,
-          accounts: item.accounts,
-          jobs: item.jobs,
-        });
-      });
+    if (isMounted?.current === true && tool) {
+      const jenkinsAccounts = tool?.accounts;
 
-      if (tools) {
-        if (configurationRequired) {
-          const filteredTools = tools?.filter((tool) => {return tool.configuration != null && Object.entries(tool.configuration).length > 0; });
-          setJenkinsTools(filteredTools);
-        }
-        else {
-          setJenkinsTools(tools);
-        }
+      if (Array.isArray(jenkinsAccounts)) {
+        setJenkinsAccounts(jenkinsAccounts);
       }
     }
   };
 
-  const loadJenkinsAccounts = () => {
-    setIsLoading(true);
-    const index = jenkinsTools.findIndex((x) => x.id === jenkinsId);
-
-    if (isMounted?.current === true && index !== -1) {
-      const jobs = jenkinsTools[index]?.accounts ? jenkinsTools[index].accounts : [];
-      setJenkinsAccounts(jobs);
-      setIsLoading(false);
-    }
-  };
-
-  const getNoJobsMessage = () => {
+  const getNoAccountsMessage = () => {
     if (!isLoading && (jenkinsAccounts == null || jenkinsAccounts.length === 0 && jenkinsId !== "")) {
       return (
         <div className="form-text text-muted p-2">
@@ -148,15 +114,16 @@ function JenkinsAccountInput(
         valueField={valueField}
         textField={textField}
         clearDataFunction={clearDataFunction}
-        disabled={disabled || isLoading || jenkinsId === ""}
+        disabled={disabled}
+        groupBy={"service"}
       />
-      {getNoJobsMessage()}
+      {getNoAccountsMessage()}
     </div>
   );
 }
 
-JenkinsAccountInput.propTypes = {
-  jenkinsId: PropTypes.string,
+RoleRestrictedJenkinsAccountSelectInput.propTypes = {
+  jenkinsToolId: PropTypes.string,
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
@@ -172,9 +139,9 @@ JenkinsAccountInput.propTypes = {
   valueField: PropTypes.string,
 };
 
-JenkinsAccountInput.defaultProps = {
+RoleRestrictedJenkinsAccountSelectInput.defaultProps = {
   textField: "gitCredential",
   valueField: "gitCredential",
 };
 
-export default JenkinsAccountInput;
+export default RoleRestrictedJenkinsAccountSelectInput;

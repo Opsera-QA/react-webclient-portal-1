@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import JenkinsAccountInput from "components/common/list_of_values_input/tools/jenkins/JenkinsAccountInput";
+import RoleRestrictedJenkinsAccountSelectInput from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsAccountSelectInput";
 
 function CypressStepJenkinsAccountSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
@@ -23,9 +23,9 @@ function CypressStepJenkinsAccountSelectInput({model, setModel, disabled}) {
   };
 
   return (
-    <JenkinsAccountInput
+    <RoleRestrictedJenkinsAccountSelectInput
       fieldName={"gitToolId"}
-      jenkinsId={model?.getData("toolConfigId")}
+      jenkinsToolId={model?.getData("toolConfigId")}
       dataObject={model}
       setDataObject={setModel}
       setDataFunction={setDataFunction}

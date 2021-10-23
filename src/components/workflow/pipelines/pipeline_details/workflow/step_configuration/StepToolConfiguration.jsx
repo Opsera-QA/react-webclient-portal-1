@@ -627,26 +627,26 @@ function StepToolConfiguration({
         );
       case "cypress":
         return (
-          // <CypressStepConfiguration
-          //   pipelineId={pipeline._id}
-          //   stepId={stepId}
-          //   stepTool={stepTool}
-          //   parentCallback={callbackFunction}
-          //   createJob={createJob}
-          //   closeEditorPanel={closeEditorPanel}
-          // />
-
-          <LegacyCypressStepConfiguration
+          <CypressStepConfiguration
             pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
             stepId={stepId}
             stepTool={stepTool}
             parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
             createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
+
+          // <LegacyCypressStepConfiguration
+          //   pipelineId={pipeline._id}
+          //   plan={pipeline.workflow.plan}
+          //   stepId={stepId}
+          //   stepTool={stepTool}
+          //   parentCallback={callbackFunction}
+          //   callbackSaveToVault={saveToVault}
+          //   createJob={createJob}
+          //   setToast={setToast}
+          //   setShowToast={setShowToast}
+          // />
         );
       case "docker-push":
         return (
