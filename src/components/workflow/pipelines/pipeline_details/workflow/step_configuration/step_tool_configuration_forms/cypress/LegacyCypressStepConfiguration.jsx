@@ -142,45 +142,44 @@ function LegacyCypressStepConfiguration({
 
   useEffect(() => {
     setShowToast(false);
+    // Fire off our API call
+    getJenkinsList();
+  }, []);
 
-    async function fetchJenkinsDetails(service) {
-      setisJenkinsSearching(true);
-      let results = await toolsActions.getRoleLimitedTools(service, getAccessToken);
-      const tools = results?.data?.data;
-      let respObj = [];
+  const getJenkinsList = async () => {
+    setisJenkinsSearching(true);
+    let results = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, undefined, "jenkins");
+    const tools = results?.data?.data;
+    let respObj = [];
 
-      if (Array.isArray(tools)) {
-        tools.map((item) => {
-          if (item.configuration == null) {
-            return;
-          }
+    if (Array.isArray(tools)) {
+      tools.map((item) => {
+        if (item.configuration == null) {
+          return;
+        }
 
-          respObj.push({
-            name: item.name,
-            id: item._id,
-            configuration: item.configuration,
-            accounts: item.accounts,
-            jobs: item.jobs,
-          });
+        respObj.push({
+          name: item.name,
+          id: item._id,
+          configuration: item.configuration,
+          accounts: item.accounts,
+          jobs: item.jobs,
         });
-      }
-
-      if (typeof(results) != "object") {
-        setJenkinsList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-        let errorMessage =
-          "Jenkins information is missing or unavailable!";
-        toastContext.showErrorDialog(errorMessage);
-        setisJenkinsSearching(false);
-        return;
-      }
-
-        setJenkinsList(respObj);
-        setisJenkinsSearching(false);
+      });
     }
 
-    // Fire off our API call
-    fetchJenkinsDetails("jenkins");
-  }, []);
+    if (typeof(results) != "object") {
+      setJenkinsList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+      let errorMessage =
+        "Jenkins information is missing or unavailable!";
+      toastContext.showErrorDialog(errorMessage);
+      setisJenkinsSearching(false);
+      return;
+    }
+
+    setJenkinsList(respObj);
+    setisJenkinsSearching(false);
+  };
 
 
   // fetch repos
