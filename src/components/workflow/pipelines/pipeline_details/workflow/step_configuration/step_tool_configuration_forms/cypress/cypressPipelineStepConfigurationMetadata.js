@@ -2,7 +2,7 @@ const cypressPipelineStepConfigurationMetadata = {
   type: "Cypress Pipeline Step Configuration",
   fields: [
     {
-      label: "Step Tool",
+      label: "Jenkins Tool",
       id: "toolConfigId",
       isRequired: true
     },
@@ -14,17 +14,32 @@ const cypressPipelineStepConfigurationMetadata = {
     {
       label: "Job Name",
       id: "jobName",
+      isRequiredFunction: (model) => {
+        return model?.getData("opsera_job_type") === "job";
+      },
+    },
+    {
+      label: "Jenkins URL",
+      id: "jenkinsUrl",
+      isRequired: true
+    },
+    {
+      label: "Jenkins User ID",
+      id: "jUserId",
+      isRequired: true
+    },
+    {
+      label: "Jenkins Authorization Token",
+      id: "jAuthToken",
       isRequired: true
     },
     {
       label: "Job",
       id: "toolJobId",
-      isRequired: true
     },
     {
       label: "Account",
       id: "gitCredential",
-      isRequired: true
     },
     {
       label: "Workspace",
@@ -38,12 +53,10 @@ const cypressPipelineStepConfigurationMetadata = {
     {
       label: "Repository",
       id: "repository",
-      isRequired: true
     },
     {
       label: "Branch",
       id: "branch",
-      isRequired: true
     },
     {
       label: "Rollback Branch Name",
@@ -52,22 +65,29 @@ const cypressPipelineStepConfigurationMetadata = {
     {
       label: "Branch Name",
       id: "gitBranch",
-      isRequired: true
     },
     {
       label: "Build/Xml Step Info",
       id: "stepIdXML",
-      isRequired: true
     },
     {
       label: "Docker Name",
       id: "dockerName",
-      isRequired: true
+      isRequiredFunction: (model) => {
+        return model?.getData("buildType") === "docker";
+      },
     },
     {
       label: "Docker Tag",
       id: "dockerTagName",
-      isRequired: true
+      isRequiredFunction: (model) => {
+        return model?.getData("buildType") === "docker";
+      },
+    },
+    {
+      label: "JSON Path",
+      id: "jsonPath",
+      maxLength: 250,
     },
     {
       label: "Docker File Path",
@@ -81,9 +101,13 @@ const cypressPipelineStepConfigurationMetadata = {
       label: "Jenkins Agent",
       id: "agentLabels",
     },
+    {
+      label: "Delete Workspace Before Building",
+      id: "workspaceDeleteFlag",
+    },
   ],
   newObjectFields: {
-    jobType: "", //hardcoded, every step wil have a hardcoded jobType is what i know needs to check with Todd.
+    jobType: "CYPRESS UNIT TESTING",
     toolConfigId: "",
     jenkinsUrl: "",
     jenkinsPort: "",
@@ -109,6 +133,9 @@ const cypressPipelineStepConfigurationMetadata = {
     branch: "",
     jsonPath: "",
     workspace: "",
+    workspaceName: "",
+    workspaceDeleteFlag: false
+    // agentLabels : "",
   }
 };
 
