@@ -39,12 +39,6 @@ toolsActions.createToolV2 = async (getAccessToken, cancelTokenSource, toolDataDt
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-// TODO: Replace with getToolIdentifiersV2 when all references are updated
-toolsActions.getTools = async (getAccessToken) => {
-  const apiUrl = "/registry/tools";
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
 // TODO: Update to V3 and remove this and the related route
 toolsActions.getRoleLimitedToolRegistryListV2 = async (getAccessToken, cancelTokenSource, toolFilterDto) => {
   let sortOption = toolFilterDto.getData("sortOption");
