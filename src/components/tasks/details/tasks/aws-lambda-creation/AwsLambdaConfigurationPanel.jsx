@@ -4,7 +4,6 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import AwsToolSelectInput from "./inputs/AwsToolSelectInput";
 import TextInputBase from "../../../../common/inputs/text/TextInputBase";
 import IAMRoleSelectInput from "./inputs/IAMRoleSelectInput";
 import awsLambdaFunctionTaskConfigurationMetadata from "./aws-lambda-metadata";
