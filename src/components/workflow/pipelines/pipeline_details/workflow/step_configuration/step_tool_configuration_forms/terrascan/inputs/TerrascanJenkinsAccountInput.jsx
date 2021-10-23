@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import JenkinsAccountInput from "components/common/list_of_values_input/tools/jenkins/JenkinsAccountInput";
+import RoleRestrictedJenkinsAccountSelectInput from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsAccountSelectInput";
 
 function TerrascanJenkinsAccountInput({dataObject, setDataObject, disabled, className}) {
   const setJenkinsAccount = (fieldName, selectedOption) => {
@@ -19,9 +19,9 @@ function TerrascanJenkinsAccountInput({dataObject, setDataObject, disabled, clas
   };
 
   return (
-     <JenkinsAccountInput
+     <RoleRestrictedJenkinsAccountSelectInput
        fieldName={"gitCredential"}
-       jenkinsId={dataObject?.getData("toolConfigId")}
+       jenkinsToolId={dataObject?.getData("toolConfigId")}
        className={className}
        requireConfiguration={true}
        dataObject={dataObject}
