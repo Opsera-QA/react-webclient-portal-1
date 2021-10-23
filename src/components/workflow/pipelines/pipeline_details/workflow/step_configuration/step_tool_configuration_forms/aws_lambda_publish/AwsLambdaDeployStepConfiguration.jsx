@@ -8,6 +8,8 @@ import modelHelpers from "components/common/model/modelHelpers";
 import MultiTaskSelectInputBase from "./inputs/MultiTaskSelectInput";
 import AwsLambdaActionSelectInput from "./inputs/ActionTypeSelectInput";
 import AwsToolSelectInput from "./inputs/AwsToolSelectInput";
+import RoleRestrictedAwsAccountToolSelectInput
+  from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 
 function AwsLambdaDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan, stepId, pipelineId }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -55,9 +57,10 @@ function AwsLambdaDeployStepConfiguration({ stepTool, closeEditorPanel, parentCa
         dataObject={lambdaModel}
         setDataObject={setLambdaModel}
       />
-      <AwsToolSelectInput
-        dataObject={lambdaModel}
-        setDataObject={setLambdaModel}
+      <RoleRestrictedAwsAccountToolSelectInput
+        model={lambdaModel}
+        setModel={setLambdaModel}
+        fieldName={"toolConfigId"}
       />
       <MultiTaskSelectInputBase
         titleIcon={faBracketsCurly}
