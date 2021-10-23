@@ -13,25 +13,6 @@ toolsActions.deleteToolV2 = async (getAccessToken, cancelToken, toolModel) => {
   return baseActions.apiDeleteCallV2(getAccessToken, cancelToken, apiUrl);
 };
 
-toolsActions.deleteVaultRecordsForToolId = async (toolDataDto,getAccessToken) => {
-  const apiUrl = `/vault/delete`;
-  let id = toolDataDto.getData("_id");
-  let postBody = {
-    id : id
-  };
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
-// TODO: Update all references to V2 and remove this
-toolsActions.deleteOwnerVaultRecordsForToolId = async (toolDataDto,getAccessToken) => {
-  const apiUrl = `/vault/tool/delete`;
-  let id = toolDataDto.getData("_id");
-  let postBody = {
-    id : id
-  };
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
 toolsActions.deleteOwnerVaultRecordsForToolIdV2 = async (getAccessToken, cancelTokenSource, toolModel) => {
   const apiUrl = `/vault/tool/delete`;
   let postBody = {
