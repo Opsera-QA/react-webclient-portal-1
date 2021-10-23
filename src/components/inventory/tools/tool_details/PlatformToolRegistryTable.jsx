@@ -41,7 +41,7 @@ function PlatformToolRegistryTable({ data, isLoading, reLoadData, setIsLoading, 
       setData([]);
       let registryDTO = new Model(dataObject, ToolRegMetadata, false);
 
-      let vaultDeleteResponse = await toolsActions.deleteOwnerVaultRecordsForToolId(registryDTO, getAccessToken);
+      let vaultDeleteResponse = await toolsActions.deleteOwnerVaultRecordsForToolIdV2(getAccessToken, cancelTokenSource, registryDTO);
       if (vaultDeleteResponse.status !== 200) {
         const errorMsg = `Error reported by services while deleting tool information from Vault. Please try again`;
         toastContext.showErrorDialog(errorMsg);
