@@ -3,30 +3,29 @@ import PropTypes from "prop-types";
 import ScmToolIdentifierSelectInput
   from "components/common/list_of_values_input/tools/source_control/ScmToolIdentifierSelectInput";
 
-  function AnsibleStepScmServiceTypeSelectInput({model, setModel, disabled}) {
-  
+  function AnsibleStepScmServiceTypeSelectInput({model, fieldName, setModel, disabled}) {
   const setDataFunction = async (fieldName, selectedOption) => {
-    let newDataObject = {...model};
-    await newDataObject.setData(fieldName, selectedOption.value);
-    newDataObject.setData("gitToolId", "");
-    newDataObject.setData("repoId", "");
-    newDataObject.setData("gitUrl", "");
-    newDataObject.setData("sshUrl", "");
-    newDataObject.setData("repository", "");
-    newDataObject.setData("gitBranch", "");
-    setModel({...newDataObject});
-    return;
+    let newModel = {...model};
+    await newModel.setData(fieldName, selectedOption?.value);
+    newModel.setData("gitToolId", "");
+    newModel.setData("repoId", "");
+    newModel.setData("gitUrl", "");
+    newModel.setData("sshUrl", "");
+    newModel.setData("repository", "");
+    newModel.setData("gitBranch", "");
+    setModel({...newModel});
   };
+  
   const clearDataFunction=(fieldName)=>{
-    let newDataObject = {...model};
-    newDataObject.setData(fieldName, "");
-    newDataObject.setData("gitToolId", "");
-    newDataObject.setData("repoId", "");
-    newDataObject.setData("gitUrl", "");
-    newDataObject.setData("sshUrl", "");
-    newDataObject.setData("repository", "");
-    newDataObject.setData("gitBranch", "");
-    setModel({...newDataObject});
+    let newModel = {...model};
+    newModel.setData(fieldName, "");
+    newModel.setData("gitToolId", "");
+    newModel.setData("repoId", "");
+    newModel.setData("gitUrl", "");
+    newModel.setData("sshUrl", "");
+    newModel.setData("repository", "");
+    newModel.setData("gitBranch", "");
+    setModel({...newModel});
   };
 
   return (
@@ -35,7 +34,7 @@ import ScmToolIdentifierSelectInput
       setModel={setModel}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
-      fieldName={"service"}
+      fieldName={fieldName}
       disabled={disabled}
     />
   );
@@ -45,7 +44,11 @@ AnsibleStepScmServiceTypeSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
-  className: PropTypes.string
+  fieldName: PropTypes.string,
+};
+
+AnsibleStepScmServiceTypeSelectInput.defaultProps = {
+  fieldName: "service",
 };
 
 export default AnsibleStepScmServiceTypeSelectInput;
