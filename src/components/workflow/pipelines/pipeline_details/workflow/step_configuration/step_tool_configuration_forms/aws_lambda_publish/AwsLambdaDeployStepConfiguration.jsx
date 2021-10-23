@@ -7,7 +7,6 @@ import awsLambdaStepFormMetadata from "./awsLambda-stepForm-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import MultiTaskSelectInputBase from "./inputs/MultiTaskSelectInput";
 import AwsLambdaActionSelectInput from "./inputs/ActionTypeSelectInput";
-import AwsToolSelectInput from "./inputs/AwsToolSelectInput";
 import RoleRestrictedAwsAccountToolSelectInput
   from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 
