@@ -11,6 +11,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
+import vaultActions from "components/vault/vault.actions";
 
 function AnsibleToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);

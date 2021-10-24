@@ -13,15 +13,6 @@ toolsActions.deleteToolV2 = async (getAccessToken, cancelToken, toolModel) => {
   return baseActions.apiDeleteCallV2(getAccessToken, cancelToken, apiUrl);
 };
 
-// TODO: Move to vault actions file
-toolsActions.deleteOwnerVaultRecordsForToolIdV2 = async (getAccessToken, cancelTokenSource, toolModel) => {
-  const apiUrl = `/vault/tool/delete`;
-  let postBody = {
-    id: toolModel?.getData("_id")
-  };
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
 toolsActions.updateToolV2 = async (getAccessToken, cancelTokenSource, toolModel) => {
   const id = toolModel?.getData("_id");
   const apiUrl = `/registry/${id}/update`;
