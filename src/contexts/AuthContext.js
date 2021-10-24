@@ -4,6 +4,7 @@ import moment from "moment";
 import { useHistory } from "react-router-dom";
 import commonActions from "components/common/common.actions";
 import axios from "axios";
+import accountsActions from "components/admin/accounts/accounts-actions";
 
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
@@ -112,6 +113,16 @@ const AuthContextProvider = (props) => {
     return response?.data?.featureFlags;
   };
 
+  const isOrganizationOwner = async () => {
+    const user = await getUserRecord();
+
+    if (user) {
+      const response = await accountsActions.getOrganizationOwnerEmailWithNameV2(getAccessToken, cancelTokenSource, user?.ldap?.organization);
+      const organizationOwnerEmail = response?.data?.orgOwnerEmail;
+      return organizationOwnerEmail === user?.email;
+    }
+  };
+
     const featureFlagHideItemInProd = () => {
       return process.env.REACT_APP_ENVIRONMENT === "production";
     };
@@ -123,9 +134,10 @@ const AuthContextProvider = (props) => {
     const setAccessRoles = async (user) => {
       if (user) {
         let customerAccessRules = {};
+        const ldap = user?.ldap;
+        const groups = user?.groups;
 
-        const { ldap, groups } = user;
-        if (groups) {
+        if (Array?.isArray(groups)) {
           let role = "readonly";
 
           if (groups.includes("Administrators")) {
@@ -138,12 +150,13 @@ const AuthContextProvider = (props) => {
             role = "user";
           } else if (groups.includes("NonLDAPEndUser") || ldap.type === "sass-user") {
             //setting Saas Based Access
-            console.log("setting saas-power-user");
             role = "power_user";
           }
 
           customerAccessRules = {
             ...customerAccessRules,
+            OrganizationOwner: ldap?.orgAccountOwnerEmail === user?.emailAddress,
+            OrganizationAccountOwner: ldap?.orgAccountOwnerEmail === user?.emailAddress,
             Administrator: groups.includes("Administrators"),
             PowerUser: groups.includes("PowerUsers"),
             SassPowerUser: ldap.type === "sass-user",
@@ -155,7 +168,8 @@ const AuthContextProvider = (props) => {
             Groups: groups,
           };
         }
-        if (ldap && ldap.domain === "opsera.io") { //checking for OpsERA account domain
+
+        if (ldap?.domain === "opsera.io") { //checking for OpsERA account domain
           customerAccessRules = {
             ...customerAccessRules,
             OpseraAdministrator: groups.includes("Administrators"),
@@ -164,7 +178,7 @@ const AuthContextProvider = (props) => {
         //console.table(customerAccessRules);
         return customerAccessRules;
       } else {
-        console.log("unable to set user access rules: ", user);
+        console.error("Unable to set user access rules: ", user);
       }
     };
 
@@ -203,6 +217,7 @@ const AuthContextProvider = (props) => {
         generateJwtServiceTokenWithValue: generateJwtServiceTokenWithValue,
         getAccessRoleData: getAccessRoleData,
         isSassUser: isSassUser,
+        isOrganizationOwner: isOrganizationOwner,
         getFeatureFlags: getFeatureFlags,
       }}>
         {props.children}

@@ -6,10 +6,11 @@ const accountsActions = {};
 
 // TODO: We should remove the way I handled permissions to align with the new standards.
 accountsActions.isOrganizationAccountOwner = (user) => {
-  const {ldap} = user;
-  return ldap["orgAccountOwnerEmail"] === user["email"];
+  const orgOwnerAccountEmail = user?.ldap?.orgAccountOwnerEmail;
+  return orgOwnerAccountEmail === user?.email;
 };
 
+// TODO: Use call in AuthContext instead
 accountsActions.isOrganizationOwner = async (organizationName, getUserRecord, getAccessToken) => {
   const response = await accountsActions.getOrganizationOwnerEmailWithName(organizationName, getAccessToken);
   const organizationOwnerEmail = response.data["orgOwnerEmail"];
@@ -80,10 +81,7 @@ accountsActions.getAllowedIdpAccountActions = async (customerAccessRules, organi
   let orgAccountOwner = await accountsActions.isOrganizationAccountOwner(user);
   let orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
 
-  if (orgOwner) {
-    return ["get_idp_account_details", "create_idp_account", "update_idp_account"];
-  }
-  else if (orgAccountOwner || customerAccessRules.Administrator) {
+  if (orgOwner || orgAccountOwner || customerAccessRules.Administrator) {
     return ["get_idp_account_details", "create_idp_account", "update_idp_account"];
   }
   else {
@@ -450,6 +448,11 @@ accountsActions.getOrganizationByNameV2 = async (getAccessToken, cancelTokenSour
 accountsActions.getOrganizationOwnerEmailWithName = async (organizationName, getAccessToken) => {
   const apiUrl = `/users/account/organization/${organizationName}?emailOnly=true`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl);
+};
+
+accountsActions.getOrganizationOwnerEmailWithNameV2 = async (getAccessToken, cancelTokenSource, organizationName) => {
+  const apiUrl = `/users/account/organization/${organizationName}?emailOnly=true`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 accountsActions.getOrganizationAccountByName = async (organizationAccountName, getAccessToken) => {
