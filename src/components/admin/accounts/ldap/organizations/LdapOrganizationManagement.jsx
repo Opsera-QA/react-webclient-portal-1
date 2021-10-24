@@ -58,21 +58,6 @@ function LdapOrganizationManagement() {
     }
   };
 
-  const loadOrganizations = async (source = cancelTokenSource) => {
-    try {
-      const response = await accountsActions.getOrganizationsV2(getAccessToken, source);
-
-      if (isMounted?.current === true) {
-        setLdapOrganizationData(response?.data);
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-        console.error(error);
-      }
-    }
-  };
-
   const getRoles = async (source = cancelTokenSource) => {
     const user = await getUserRecord();
     const {ldap} = user;
@@ -89,6 +74,21 @@ function LdapOrganizationManagement() {
       }
       else if (ldap?.organization != null && authorizedActions.includes("get_organization_details")) {
         history.push(`/admin/organizations/details/${ldap.organization}`);
+      }
+    }
+  };
+
+  const loadOrganizations = async (source = cancelTokenSource) => {
+    try {
+      const response = await accountsActions.getOrganizationsV2(getAccessToken, source);
+
+      if (isMounted?.current === true) {
+        setLdapOrganizationData(response?.data);
+      }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+        console.error(error);
       }
     }
   };
