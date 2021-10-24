@@ -5,12 +5,12 @@ import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
-import {parseRoleDefinitionsIntoTableRows} from "components/common/helpers/role-helpers";
+import {parseRoleDefinitionsIntoRbacTableRows} from "components/common/helpers/role-helpers";
 import roleDefinitionMetadata from "components/common/fields/access/table/role-definition-metadata";
 import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
 import CustomTable from "components/common/table/CustomTable";
 
-function RoleAccessTableBase({ roleAccessDefinitions, loadData, isLoading }) {
+function AssignedRoleAccessTable({ roleAccessDefinitions, loadData, isLoading }) {
   const { getAccessRoleData, isSassUser } = useContext(AuthContext);
   const fields = roleDefinitionMetadata?.fields;
   const [userRoleAccess, setUserRoleAccess] = useState(undefined);
@@ -47,7 +47,7 @@ function RoleAccessTableBase({ roleAccessDefinitions, loadData, isLoading }) {
 
     if (accessRoleData) {
       setUserRoleAccess(accessRoleData);
-      setAccessRoles([...parseRoleDefinitionsIntoTableRows(roleAccessDefinitions, accessRoleData)]);
+      setAccessRoles([...parseRoleDefinitionsIntoRbacTableRows(roleAccessDefinitions, accessRoleData)]);
     }
   };
 
@@ -57,8 +57,8 @@ function RoleAccessTableBase({ roleAccessDefinitions, loadData, isLoading }) {
       getTableBooleanIconColumn(getField(fields, "administrator"), undefined, 130),
       getTableBooleanIconColumn(getField(fields, "owner"), undefined, 60),
       getTableBooleanIconColumn(getField(fields, "manager"), undefined, 75),
-      getTableBooleanIconColumn(getField(fields, "power_user"), undefined, 90),
       getTableBooleanIconColumn(getField(fields, "user"), undefined, 45),
+      getTableBooleanIconColumn(getField(fields, "guest"), undefined, 45),
       getTableBooleanIconColumn(getField(fields, "no_access_rules"), undefined, 165),
     ],
     []
@@ -86,17 +86,17 @@ function RoleAccessTableBase({ roleAccessDefinitions, loadData, isLoading }) {
       body={getRoleDefinitionTable()}
       metadata={roleDefinitionMetadata}
       titleIcon={faHandshake}
-      title={"Role Access"}
+      title={"Assigned Role Access"}
       showBorder={false}
     />
   );
 }
 
-RoleAccessTableBase.propTypes = {
+AssignedRoleAccessTable.propTypes = {
   roleAccessDefinitions: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   roleAccessMetadata: PropTypes.object,
 };
 
-export default RoleAccessTableBase;
+export default AssignedRoleAccessTable;
