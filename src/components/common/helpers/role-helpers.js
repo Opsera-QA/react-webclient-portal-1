@@ -10,6 +10,8 @@ export const ROLE_LEVELS = {
 
 export const ACCESS_ROLES = {
   OPSERA_ADMINISTRATOR: "opsera_administrator",
+  ORGANIZATION_OWNER: "organization_owner",
+  ORGANIZATION_ACCOUNT_OWNER: "organization_account_owner",
   ADMINISTRATOR: "administrator",
   SAAS_USER: "saas_user",
   POWER_USER: "power_user",
@@ -26,6 +28,8 @@ export const ACCESS_ROLES = {
 
 export const ACCESS_ROLES_FORMATTED_LABELS = {
   opsera_administrator: "Opsera Administrator",
+  organization_owner: "Organization Owner",
+  organization_account_owner: "Organization Account Owner",
   administrator: "Administrator",
   saas_user: "User",
   power_user: "Power User",
@@ -263,6 +267,14 @@ export const isActionAllowed = (customerAccessRules, action, owner, objectRoles,
   // END TODOs
 
   if (customerAccessRules?.OpseraAdministrator === true && allowedRoles.includes(ACCESS_ROLES.OPSERA_ADMINISTRATOR)) {
+    return true;
+  }
+
+  if (customerAccessRules?.OrganizationOwner === true && allowedRoles.includes(ACCESS_ROLES.ORGANIZATION_OWNER)) {
+    return true;
+  }
+
+  if (customerAccessRules?.OrganizationAccountOwner === true && allowedRoles.includes(ACCESS_ROLES.ORGANIZATION_ACCOUNT_OWNER)) {
     return true;
   }
 
