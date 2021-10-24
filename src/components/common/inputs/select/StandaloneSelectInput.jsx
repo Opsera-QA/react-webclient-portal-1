@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DropdownList from "react-widgets/lib/DropdownList";
+import DropdownList from "react-widgets/DropdownList";
 
 function StandaloneSelectInput(
   {
@@ -37,7 +37,7 @@ function StandaloneSelectInput(
     <DropdownList
       className={className}
       data={selectOptions}
-      valueField={valueField}
+      dataKey={valueField}
       textField={textField}
       groupBy={groupBy}
       value={value}

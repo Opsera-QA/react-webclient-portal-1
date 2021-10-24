@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Multiselect } from 'react-widgets';
+import Multiselect from "react-widgets/Multiselect";
 
 function StandaloneMultiSelectInput(
   {
@@ -22,7 +22,7 @@ function StandaloneMultiSelectInput(
     <div className={"custom-multiselect-input"}>
       <Multiselect
         data={selectOptions}
-        valueField={valueField}
+        dataKey={valueField}
         textField={textField}
         busy={busy}
         filter={"contains"}

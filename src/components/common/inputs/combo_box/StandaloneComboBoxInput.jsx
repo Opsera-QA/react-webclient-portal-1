@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ComboBox from "react-widgets/lib/Combobox";
+import ComboBox from "react-widgets/Combobox";
 
 function StandaloneComboBoxInput(
   {
@@ -18,7 +18,7 @@ function StandaloneComboBoxInput(
   return (
     <ComboBox
       data={selectOptions}
-      valueField={valueField}
+      dataKey={valueField}
       textField={textField}
       groupBy={groupBy}
       value={value}
