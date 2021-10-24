@@ -20,6 +20,7 @@ function StandaloneSelectInput(
     allowCreate,
     className,
     onToggle,
+    hasErrorState,
   }) {
   const getPlaceholderText = () => {
     if (!Array.isArray(selectOptions)) {
@@ -35,7 +36,7 @@ function StandaloneSelectInput(
 
   return (
     <DropdownList
-      className={className}
+      className={`${hasErrorState ? "select-input-error " : ""}${className}`}
       data={selectOptions}
       dataKey={valueField}
       textField={textField}
@@ -82,6 +83,7 @@ StandaloneSelectInput.propTypes = {
   onToggle: PropTypes.func,
   noDataText: PropTypes.string,
   defaultValue: PropTypes.any,
+  hasErrorState: PropTypes.book,
 };
 
 StandaloneSelectInput.defaultProps = {

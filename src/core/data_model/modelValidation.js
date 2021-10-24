@@ -128,15 +128,14 @@ export const fieldValidation = (value, data, field) => {
     }
   }
 
-  if (field?.minItems != null && value?.length < field?.minItems)
+  if (Array.isArray(value) && field?.minItems != null && value?.length < field?.minItems)
   {
     errorMessages.push(`You have selected ${value?.length} values, but the minimum allowed is ${field?.minItems}`);
   }
 
-
-  if (field.maxItems != null && value.length > field.maxItems)
+  if (Array.isArray(value) && field.maxItems != null && value?.length > field.maxItems)
   {
-    errorMessages.push(`You have selected ${value.length} values, but the maximum allowed is ${field.maxItems}`);
+    errorMessages.push(`You have tried to select ${value?.length} values for the ${field?.label} field, but the maximum allowed is ${field?.maxItems}.`);
   }
 
   if (field.mustBeAfter != null && value <= data.getData(field.mustBeAfter))

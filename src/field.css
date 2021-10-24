@@ -332,3 +332,11 @@
 .vertical-tab-text {
     font-size: 1.25em;
 }
+
+/* Error State CSS */
+.select-input-error {
+    box-shadow: 0 0 3px #CC0000;
+    border-radius: 5px;
+}
+
+/* End Error State CSS */

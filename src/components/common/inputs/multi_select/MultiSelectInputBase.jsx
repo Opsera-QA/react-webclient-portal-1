@@ -4,6 +4,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function MultiSelectInputBase(
   {
@@ -121,6 +122,7 @@ function MultiSelectInputBase(
         infoOverlay={infoOverlay}
       />
       <StandaloneMultiSelectInput
+        hasErrorState={hasStringValue(errorMessage) === true}
         selectOptions={selectOptions}
         valueField={valueField}
         textField={textField}

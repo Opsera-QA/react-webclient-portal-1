@@ -16,11 +16,14 @@ function StandaloneMultiSelectInput(
     createOptionFunction,
     allowCreate,
     onToggleFunction,
+    hasErrorState,
+    className,
   }) {
 
   return (
     <div className={"custom-multiselect-input"}>
       <Multiselect
+        className={`${hasErrorState ? "select-input-error " : ""}${className}`}
         data={selectOptions}
         dataKey={valueField}
         textField={textField}
@@ -64,6 +67,8 @@ StandaloneMultiSelectInput.propTypes = {
     PropTypes.string,
   ]),
   onToggleFunction: PropTypes.func,
+  className: PropTypes.string,
+  hasErrorState: PropTypes.bool,
 };
 
 export default StandaloneMultiSelectInput;
