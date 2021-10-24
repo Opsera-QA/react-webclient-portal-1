@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
 import PropTypes from "prop-types";
-import RoleAccessTable from "components/common/fields/access/table/RoleAccessTable";
+import AssignedRoleAccessTable from "components/common/fields/access/table/AssignedRoleAccessTable";
+import SiteRoleAccessTable from "components/common/fields/access/table/SiteRoleAccessTable";
 
 function ToolRegistryHelpDocumentation({registryToolRoleDefinitions}) {
   const toastContext = useContext(DialogToastContext);
@@ -40,7 +41,12 @@ function ToolRegistryHelpDocumentation({registryToolRoleDefinitions}) {
       helpDocumentation={getHelpDocumentation()}
     >
       {/*<div className={"my-2"}>*/}
-      {/*  <RoleAccessTable*/}
+      {/*  <AssignedRoleAccessTable*/}
+      {/*    roleAccessDefinitions={registryToolRoleDefinitions}*/}
+      {/*  />*/}
+      {/*</div>*/}
+      {/*<div className={"my-2"}>*/}
+      {/*  <SiteRoleAccessTable*/}
       {/*    roleAccessDefinitions={registryToolRoleDefinitions}*/}
       {/*  />*/}
       {/*</div>*/}
