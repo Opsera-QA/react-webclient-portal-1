@@ -11,6 +11,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import ToolRegMetadata from "components/settings/delete_tools/tool-reg-metadata";
 import axios from "axios";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import vaultActions from "components/vault/vault.actions";
 
 function PlatformToolRegistryTable({ data, isLoading, reLoadData, setIsLoading, setData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -41,7 +42,7 @@ function PlatformToolRegistryTable({ data, isLoading, reLoadData, setIsLoading, 
       setData([]);
       let registryDTO = new Model(dataObject, ToolRegMetadata, false);
 
-      let vaultDeleteResponse = await toolsActions.deleteOwnerVaultRecordsForToolIdV2(getAccessToken, cancelTokenSource, registryDTO);
+      let vaultDeleteResponse = await vaultActions.deleteOwnerVaultRecordsForToolIdV2(getAccessToken, cancelTokenSource, registryDTO);
       if (vaultDeleteResponse.status !== 200) {
         const errorMsg = `Error reported by services while deleting tool information from Vault. Please try again`;
         toastContext.showErrorDialog(errorMsg);
