@@ -433,10 +433,6 @@ export const calculateRoleLevel = (customerAccessRules, objectRoles, dataModel) 
     return SITE_ROLES.SAAS_USER;
   }
 
-  if (customerAccessRules.SassPowerUser) {
-    return SITE_ROLES.SAAS_USER;
-  }
-
   if (process.env.REACT_APP_STACK === "free-trial") {
     return SITE_ROLES.FREE_TRIAL_USER;
   }
