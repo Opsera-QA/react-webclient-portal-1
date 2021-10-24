@@ -214,6 +214,7 @@ export const isAnLdapUser = (user, accessRole) => {
  * @param roleDefinitions
  * @param owner
  * @param objectRoles
+ * @param allowAllIfNoRolesAssigned
  * @returns {boolean}
  *
  *
@@ -223,7 +224,6 @@ export const isActionAllowed = (customerAccessRules, action, owner, objectRoles,
     return false;
   }
 
-  let roleAllowed = false;
   const allowedRoles = getAllowedRoles(action, roleDefinitions);
 
   if (!Array.isArray(allowedRoles) || allowedRoles.length === 0) {
@@ -262,33 +262,33 @@ export const isActionAllowed = (customerAccessRules, action, owner, objectRoles,
   }
   // END TODOs
 
-  if (customerAccessRules?.OpseraAdministrator) {
-    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.OPSERA_ADMINISTRATOR);
+  if (customerAccessRules?.OpseraAdministrator === true && allowedRoles.includes(ACCESS_ROLES.OPSERA_ADMINISTRATOR)) {
+    return true;
   }
 
-  if (customerAccessRules?.Administrator) {
-    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.ADMINISTRATOR);
+  if (customerAccessRules?.Administrator === true && allowedRoles.includes(ACCESS_ROLES.ADMINISTRATOR)) {
+    return true;
   }
 
-  if (customerAccessRules?.SassPowerUser) {
-    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.SAAS_USER);
+  if (customerAccessRules?.SassPowerUser === true && allowedRoles.includes(ACCESS_ROLES.SAAS_USER)) {
+    return true;
   }
 
-  if (customerAccessRules?.PowerUser) {
-    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.POWER_USER);
+  if (customerAccessRules?.PowerUser === true && allowedRoles.includes(ACCESS_ROLES.POWER_USER)) {
+    return true;
   }
 
-  if (process.env.REACT_APP_STACK === "free-trial") {
-    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.FREE_TRIAL_USER);
+  if (process.env.REACT_APP_STACK === "free-trial" && allowedRoles.includes(ACCESS_ROLES.FREE_TRIAL_USER)) {
+    return true;
   }
 
-  if (owner && customerAccessRules?.UserId === owner) {
-    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.OWNER);
+  if (owner && customerAccessRules?.UserId === owner && allowedRoles.includes(ACCESS_ROLES.OWNER)) {
+    return true;
   }
 
-  const userObjectRole = calculateUserObjectRole(customerAccessRules.Email, customerAccessRules.Groups, objectRoles);
+  const userObjectRole = calculateUserObjectRole(customerAccessRules?.Email, customerAccessRules?.Groups, objectRoles);
   // TODO: By default Admins can do everything, if we want to stop allowing that, do it here:
-  return userObjectRole === "administrator" || roleAllowed || allowedRoles.includes(userObjectRole);
+  return userObjectRole === "administrator" || allowedRoles.includes(userObjectRole);
 };
 
 //compares the user email to the objectRoles data to see if the user has a specific role
