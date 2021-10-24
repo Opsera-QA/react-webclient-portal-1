@@ -1,17 +1,15 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import Moment from "moment";
-import momentLocalizer from "react-widgets-moment";
 import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneDatePickerInput from "components/common/inputs/date/StandaloneDateTimeInput";
 
-function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFunction, disabled, showDate, showTime, minDate, maxDate, dropUp }) {
+function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFunction, disabled, showTime, minDate, maxDate, dropUp }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   Moment.locale("en");
-  momentLocalizer();
 
   useEffect(() => {
     if (dataObject.getData(fieldName) !== "") {
@@ -42,7 +40,6 @@ function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFuncti
     <InputContainer>
       <InputLabel field={field} model={dataObject} />
       <StandaloneDatePickerInput
-        showDate={showDate}
         minDate={minDate}
         maxDate={maxDate}
         showTime={showTime}
@@ -62,7 +59,6 @@ DateTimeInputBase.propTypes = {
   setDataObject: PropTypes.func,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
-  showDate: PropTypes.bool,
   showTime: PropTypes.bool,
   minDate: PropTypes.any,
   maxDate: PropTypes.any,
@@ -70,8 +66,8 @@ DateTimeInputBase.propTypes = {
 };
 
 DateTimeInputBase.defaultProps = {
-  showDate: true,
-  showTime: true
+  showTime: true,
+  dropUp: false
 };
 
 export default DateTimeInputBase;

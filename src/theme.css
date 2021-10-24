@@ -1382,9 +1382,14 @@ div.data-blocks-ellipses {
     max-height: 31px;
 }
 
-.inline-filter-input .rw-dropdown-list-input {
-    height: 29px;
-    max-height: 29px;
+.inline-filter-input .rw-dropdown-list-input, .inline-filter-input .rw-widget-picker {
+    min-height: 31px;
+    height: 31px;
+    max-height: 31px;
+}
+
+.inline-filter-input .rw-widget-picker .rw-dropdown-list-value {
+    margin-top: 4px;
 }
 
 /* End filter bar styling */
