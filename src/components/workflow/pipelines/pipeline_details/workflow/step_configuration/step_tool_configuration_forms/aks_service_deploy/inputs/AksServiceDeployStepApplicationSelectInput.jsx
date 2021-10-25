@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RegistryToolApplicationSelectInput
-  from "components/common/list_of_values_input/tools/applications/RegistryToolApplicationSelectInput";
+import RoleRestrictedRegistryToolApplicationSelectInput
+  from "components/common/list_of_values_input/tools/applications/RoleRestrictedRegistryToolApplicationSelectInput";
 
 function AksServiceDeployStepApplicationSelectInput({fieldName, model, setModel}) {
   const setDataFunction = (fieldName, selectedOption) => {
@@ -21,7 +21,7 @@ function AksServiceDeployStepApplicationSelectInput({fieldName, model, setModel}
   };
 
   return (
-    <RegistryToolApplicationSelectInput
+    <RoleRestrictedRegistryToolApplicationSelectInput
       fieldName={fieldName}
       model={model}
       setModel={setModel}

@@ -5,10 +5,9 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import toolsActions from "components/inventory/tools/tools-actions";
-import {getJenkinsJobTypeLabelForValue} from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobTypeSelectInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 
-function RegistryToolApplicationSelectInput(
+function RoleRestrictedRegistryToolApplicationSelectInput(
   {
     toolId,
     visible,
@@ -69,8 +68,8 @@ function RegistryToolApplicationSelectInput(
 
   const loadApplications = async (cancelSource = cancelTokenSource) => {
     // TODO: Make route that actually just returns applications
-    const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, toolId);
-    const applications = response?.data?.data?.applications;
+    const response = await toolsActions.getRoleLimitedToolApplicationsByToolIdV2(getAccessToken, cancelSource, toolId);
+    const applications = response?.data?.data;
     const existingApplication = model?.getData(fieldName);
 
     if (Array.isArray(applications) && applications.length > 0) {
@@ -92,7 +91,7 @@ function RegistryToolApplicationSelectInput(
 
   const getPlaceholderText = () => {
     if (!isLoading && (!Array.isArray(applications) || applications.length === 0 && hasStringValue(toolId) === true)) {
-      return (`No configured Applications have been registered for this Jenkins tool.`);
+      return (`No configured Applications have been registered for this Tool.`);
     }
 
     return ("Select Application");
@@ -120,7 +119,7 @@ function RegistryToolApplicationSelectInput(
   );
 }
 
-RegistryToolApplicationSelectInput.propTypes = {
+RoleRestrictedRegistryToolApplicationSelectInput.propTypes = {
   toolId: PropTypes.string,
   fieldName: PropTypes.string,
   model: PropTypes.object,
@@ -134,9 +133,9 @@ RegistryToolApplicationSelectInput.propTypes = {
   textField: PropTypes.string,
 };
 
-RegistryToolApplicationSelectInput.defaultProps = {
+RoleRestrictedRegistryToolApplicationSelectInput.defaultProps = {
   valueField: "_id",
   textField: "name",
 };
 
-export default RegistryToolApplicationSelectInput;
+export default RoleRestrictedRegistryToolApplicationSelectInput;
