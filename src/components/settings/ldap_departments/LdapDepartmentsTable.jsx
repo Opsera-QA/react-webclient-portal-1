@@ -44,7 +44,7 @@ function LdapDepartmentsTable({ departmentData, authorizedActions, domain, loadD
   };
 
   return (
-    <div className="px-2 pb-2">
+    <div>
       <FilterContainer
         loadData={loadData}
         addRecordFunction={createNewDepartment}
@@ -53,6 +53,7 @@ function LdapDepartmentsTable({ departmentData, authorizedActions, domain, loadD
         titleIcon={faBuilding}
         title={"Departments"}
         type={"Department"}
+        className="px-2 pb-2"
       />
       <NewLdapDepartmentModal
         showModal={showCreateDepartmentModal}

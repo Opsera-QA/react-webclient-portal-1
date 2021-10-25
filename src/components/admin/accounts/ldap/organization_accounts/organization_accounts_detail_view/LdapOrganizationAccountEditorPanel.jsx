@@ -5,7 +5,6 @@ import Row from "react-bootstrap/Row";
 import {AuthContext} from "contexts/AuthContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
-import WarningDialog from "components/common/status_notifications/WarningDialog";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
@@ -14,7 +13,7 @@ import IdpVendorSelectInput
 import LdapOrganizationAccountOpseraUserSelectInput
   from "components/common/list_of_values_input/admin/accounts/ldap_accounts/LdapOrganizationAccountOpseraUserSelectInput";
 
-function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOrganization, setLdapOrganizationAccountData, authorizedActions, handleClose}) {
+function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOrganization, handleClose}) {
   const {getAccessToken} = useContext(AuthContext);
   const [ldapOrganizationAccountDataDto, setLdapOrganizationAccountDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -50,10 +49,6 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
 
   if (isLoading) {
     return (<LoadingDialog size="sm"/>);
-  }
-
-  if (!authorizedActions.includes("update_organization_account")) {
-    return <WarningDialog warningMessage={"You do not have the required permissions to update this organization account"} />;
   }
 
   return (
@@ -193,8 +188,6 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
 LdapOrganizationAccountEditorPanel.propTypes = {
   ldapOrganization: PropTypes.object,
   ldapOrganizationAccountData: PropTypes.object,
-  setLdapOrganizationAccountData: PropTypes.func,
-  authorizedActions: PropTypes.array,
   handleClose: PropTypes.func
 };
 

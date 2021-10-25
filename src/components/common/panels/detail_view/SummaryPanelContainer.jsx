@@ -33,7 +33,7 @@ SummaryPanelContainer.propTypes = {
 
 SummaryPanelContainer.defaultProps = {
   editingAllowed: true,
-  className: "p-3"
+  className: "py-3"
 };
 
 export default SummaryPanelContainer;

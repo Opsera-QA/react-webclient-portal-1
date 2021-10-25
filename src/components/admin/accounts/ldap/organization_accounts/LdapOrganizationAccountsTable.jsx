@@ -4,13 +4,13 @@ import {useHistory} from "react-router-dom";
 import {ldapOrganizationAccountMetaData} from "components/admin/accounts/ldap/organization_accounts/ldap-organization-account-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import CustomTable from "components/common/table/CustomTable";
-import NewLdapOrganizationAccountModal
-  from "components/admin/accounts/ldap/organization_accounts/NewLdapOrganizationAccountModal";
+import CreateLdapOrganizationAccountOverlay
+  from "components/admin/accounts/ldap/organization_accounts/CreateLdapOrganizationAccountOverlay";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faSitemap} from "@fortawesome/pro-light-svg-icons";
 
-function LdapOrganizationAccountsTable({ldapOrganizationAccounts, ldapOrganizationData, authorizedActions, isLoading, loadData }) {
+function LdapOrganizationAccountsTable({ldapOrganizationAccounts, ldapOrganizationData, isLoading, loadData, className }) {
   const [showCreateOrganizationAccountModal, setShowCreateOrganizationAccountModal] = useState(false);
   let fields = ldapOrganizationAccountMetaData.fields;
   const history = useHistory();
@@ -48,19 +48,18 @@ function LdapOrganizationAccountsTable({ldapOrganizationAccounts, ldapOrganizati
   };
 
   return (
-    <div className="px-2 pb-2">
+    <div className={className}>
       <FilterContainer
         loadData={loadData}
-        addRecordFunction={authorizedActions?.includes("create_organization_account") ? createOrganizationAccount : null}
+        addRecordFunction={createOrganizationAccount}
         isLoading={isLoading}
         body={getOrganizationAccountsTable()}
         titleIcon={faSitemap}
         title={"Organization Accounts"}
         type={"Organization Account"}
       />
-      <NewLdapOrganizationAccountModal
+      <CreateLdapOrganizationAccountOverlay
         ldapOrganizationData={ldapOrganizationData}
-        authorizedActions={authorizedActions}
         showModal={showCreateOrganizationAccountModal}
         loadData={loadData}
         setShowModal={setShowCreateOrganizationAccountModal}
@@ -74,7 +73,8 @@ LdapOrganizationAccountsTable.propTypes = {
   ldapOrganizationData: PropTypes.object,
   authorizedActions: PropTypes.array,
   loadData: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default LdapOrganizationAccountsTable;
