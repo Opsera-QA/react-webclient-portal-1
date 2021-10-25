@@ -5,18 +5,19 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import azurePipelineActions from "../azure-pipeline-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSync } from "@fortawesome/pro-light-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSync} from "@fortawesome/pro-light-svg-icons";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import toolsActions from "components/inventory/tools/tools-actions";
 
-function AzureAcrPushRegistryNameSelectInput({
-  fieldName,
-  dataObject,
-  setDataObject,
-  azureToolConfigId,
-  azureConfig,
-  azureApplication,
-  applicationData,
-}) {
+function AzureAcrPushStepRegistryNameSelectInput(
+  {
+    fieldName,
+    dataObject,
+    setDataObject,
+    azureToolConfigId,
+    resource,
+  }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [azureRegistryList, setAzureRegistryList] = useState([]);
@@ -32,21 +33,13 @@ function AzureAcrPushRegistryNameSelectInput({
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setAzureRegistryList([]);
-    // if (isValidToolConfig() && isValidApplication() && azureConfig && applicationData) {
-    if (isValidToolConfig() && azureConfig && dataObject.getData("resource")) {
+
+    if (hasStringValue(azureToolConfigId) === true && hasStringValue(resource) === true) {
       loadData(source).catch((error) => {
         throw error;
       });
     }
-  }, [azureToolConfigId, azureApplication, azureConfig, applicationData]);
-
-  // const isValidApplication = () => {
-  //   return azureApplication && azureApplication != "" && azureApplication !== null;
-  // };
-
-  const isValidToolConfig = () => {
-    return azureToolConfigId && azureToolConfigId != "" && azureToolConfigId !== null;
-  };
+  }, [azureToolConfigId, resource]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -63,15 +56,24 @@ function AzureAcrPushRegistryNameSelectInput({
   };
 
   const loadAzureRegistries = async (cancelSource = cancelTokenSource) => {
-    const response = await azurePipelineActions.getAzureRegistries(
+    const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, azureToolConfigId);
+    const tool = response?.data?.data;
+
+    if (tool == null) {
+      setPlaceholderText("Error Pulling Clusters!");
+      setErrorMessage("Could not find Tool to grab Clusters.");
+      return;
+    }
+
+    const azureResponse = await azurePipelineActions.getAzureRegistries(
       getAccessToken,
       cancelSource,
-      azureConfig,
+      tool,
       // applicationData,
-      dataObject.getData("resource")
+      resource
     );
 
-    const result = response?.data?.data;
+    const result = azureResponse?.data?.data;
     const listObject = result.map((el) => ({
       name: el.name,
       id: el.id,
@@ -128,18 +130,16 @@ function AzureAcrPushRegistryNameSelectInput({
   );
 }
 
-AzureAcrPushRegistryNameSelectInput.propTypes = {
+AzureAcrPushStepRegistryNameSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   azureToolConfigId: PropTypes.string,
-  azureApplication: PropTypes.string,
-  azureConfig: PropTypes.object,
-  applicationData: PropTypes.object,
+  resource: PropTypes.string,
 };
 
-AzureAcrPushRegistryNameSelectInput.defaultProps = {
+AzureAcrPushStepRegistryNameSelectInput.defaultProps = {
   fieldName: "azureRegistryName",
 };
 
-export default AzureAcrPushRegistryNameSelectInput;
+export default AzureAcrPushStepRegistryNameSelectInput;

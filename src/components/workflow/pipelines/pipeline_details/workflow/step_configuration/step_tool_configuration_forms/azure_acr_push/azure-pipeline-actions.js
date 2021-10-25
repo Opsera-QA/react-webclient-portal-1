@@ -1,5 +1,6 @@
 import baseActions from "utils/actionsBase";
 
+// TODO: Pass the Tool ID to Node and pull this off of objects instead of being required to pass it all to node
 const azurePipelineActions = {};
 
 azurePipelineActions.getAzureRegistries = async (getAccessToken, cancelTokenSource, config, resource) => {
@@ -19,9 +20,8 @@ azurePipelineActions.getAzureRegistries = async (getAccessToken, cancelTokenSour
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
 };
 
-azurePipelineActions.getAzureRepositories = async (getAccessToken, cancelTokenSource, model, config) => {
+azurePipelineActions.getAzureRepositories = async (getAccessToken, cancelTokenSource, acrLoginUrl, config) => {
   const owner = config?.owner;
-  const url = model.getData('acrLoginUrl');
   const cfg = config?.configuration;
   const postBody = {
       "owner": owner, 
@@ -29,7 +29,7 @@ azurePipelineActions.getAzureRepositories = async (getAccessToken, cancelTokenSo
       // "clientSecret": applicationData?.clientSecret?.vaultKey, 
       "clientId": cfg?.applicationId?.vaultKey,
       "clientSecret": cfg?.applicationPassword?.vaultKey,
-      "acrLoginUrl": url
+      "acrLoginUrl": acrLoginUrl
     } ;
     const apiURL = `tools/azure/acr/repositoryList`;
     return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
