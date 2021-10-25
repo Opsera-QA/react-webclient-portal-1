@@ -116,7 +116,7 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
                 visible={taskConfigurationModel?.getData("isNewBranch") !== true}/>
             </Col>
             <Col lg={12}>
-              <SalesforceOrganizationSyncTaskNewBranchToggleInput dataObject={taskConfigurationModel} setDataObject={setTaskConfigurationModel}/>
+              <SalesforceOrganizationSyncTaskNewBranchToggleInput model={taskConfigurationModel} setModel={setTaskConfigurationModel}/>
             </Col>
             {taskConfigurationModel?.getData("isNewBranch") &&
             <>
