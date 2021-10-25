@@ -67,8 +67,8 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
       <Row>
         <Col lg={12}>
           <LdapOrganizationAccountOpseraUserSelectInput
-            dataObject={ldapOrganizationAccountDataDto}
-            setDataObject={setLdapOrganizationAccountDataDto}
+            model={ldapOrganizationAccountDataDto}
+            setModel={setLdapOrganizationAccountDataDto}
           />
         </Col>
         <Col lg={12}>

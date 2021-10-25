@@ -1,16 +1,17 @@
-import React, {useMemo, useState} from "react";
+import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {useHistory} from "react-router-dom";
-import NewLdapOrganizationModal from "components/admin/accounts/ldap/organizations/NewLdapOrganizationModal";
+import CreateLdapOrganizationOverlay from "components/admin/accounts/ldap/organizations/CreateLdapOrganizationOverlay";
 import {ldapOrganizationMetaData} from "components/admin/accounts/ldap/organizations/ldap-organizations-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {faSitemap} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
-function LdapOrganizationsTable({data, isLoading, loadData, authorizedActions}) {
-  const [showCreateOrganizationModal, setShowCreateOrganizationModal] = useState(false);
+function LdapOrganizationsTable({organizations, isLoading, loadData, isMounted}) {
+  const toastContext = useContext(DialogToastContext);
   const fields = ldapOrganizationMetaData.fields;
   const history = useHistory();
 
@@ -30,7 +31,7 @@ function LdapOrganizationsTable({data, isLoading, loadData, authorizedActions}) 
         className={"no-table-border"}
         isLoading={isLoading}
         onRowSelect={onRowSelect}
-        data={data}
+        data={organizations}
         loadData={loadData}
         columns={columns}
       />
@@ -42,7 +43,12 @@ function LdapOrganizationsTable({data, isLoading, loadData, authorizedActions}) 
   };
 
   const createOrganization = () => {
-    setShowCreateOrganizationModal(true);
+    toastContext.showOverlayPanel(
+      <CreateLdapOrganizationOverlay
+        isMounted={isMounted}
+        loadData={loadData}
+      />
+    );
   };
 
   return (
@@ -56,18 +62,13 @@ function LdapOrganizationsTable({data, isLoading, loadData, authorizedActions}) 
         title={"Organizations"}
         type={"Organization"}
       />
-      <NewLdapOrganizationModal
-        showModal={showCreateOrganizationModal}
-        loadData={loadData}
-        authorizedActions={authorizedActions}
-        setShowModal={setShowCreateOrganizationModal}
-      />
     </div>
   );
 }
 
 LdapOrganizationsTable.propTypes = {
-  data: PropTypes.array,
+  organizations: PropTypes.array,
+  isMounted: PropTypes.object,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
   authorizedActions: PropTypes.array
