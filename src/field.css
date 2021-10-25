@@ -82,7 +82,7 @@
 
 .object-properties-input .rw-widget-input {
     /* this is based on form input's height, with a couple extra pixels added */
-    height: calc(1.5em + .75rem + 2px);
+    min-height: calc(1.5em + .75rem + 2px);
 }
 
 .object-properties-footer {
