@@ -17,6 +17,7 @@ function BreadcrumbPageLinkCard({ breadcrumbDestination, visible }) {
       icon={breadcrumb?.icon}
       link={"/" + breadcrumb?.path}
       visible={visible}
+      pageDescription={breadcrumb?.pageDescription}
     />
   );
 }
