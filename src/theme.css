@@ -1738,13 +1738,19 @@ div.data-blocks-ellipses {
 .page-link-card {
     background-color: #FFF;
     color: #000000;
-    border-left: 8px solid #FFF;
-    padding: 2px;
+    padding: 2px 2px 2px 10px;
     min-height: 50px;
+}
+
+.page-link-card-icon {
+    border: 1px solid black;
+    margin-top: 3px;
 }
 
 .page-link-card:hover {
     cursor: pointer;
+    padding-left: 2px;
+    color: #352F54; /* Opsera Primary Color */
     border-left: 8px solid #46415C; /* Opsera Secondary Color */
 }
 

@@ -264,7 +264,8 @@ const breadcrumbs = {
     path: paths.analyticsDataEntryManagement,
     title: "Analytics Data Entry Management",
     linkText: "Analytics Data Entry",
-    icon: faUserChart
+    icon: faUserChart,
+    pageDescription: "Manage analytics data manually and see it reflected in corresponding dashboard KPIs for specific charts.",
   },
   analyticsDataEntryDetailView: {
     parent: "analyticsDataEntryManagement",
@@ -308,7 +309,12 @@ const breadcrumbs = {
     path: paths.userManagement,
     title: "User Management",
     linkText: "Users",
-    icon: faUser
+    icon: faUser,
+    pageDescription: `
+      Manage existing Users and register new Users for this account. 
+      The New User form allows owners to create new User accounts with targeted Group access. 
+      Users will receive an invitation email upon completion of the form.
+    `,
   },
   activeUserDetailView: {
     parent: "userManagement",
@@ -334,7 +340,8 @@ const breadcrumbs = {
     path: paths.ldapGroupManagement,
     title: "Group Management",
     linkText: "Groups",
-    icon: faUserFriends
+    icon: faUserFriends,
+    pageDescription: "Manage Groups and their Membership"
   },
   ldapGroupDetailView: {
     parent: "ldapGroupManagement",
@@ -352,7 +359,8 @@ const breadcrumbs = {
     path: paths.ldapSiteRoleManagement,
     title: "Site Roles Management",
     linkText: "Site Roles",
-    icon: faServer
+    icon: faServer,
+    pageDescription: "Manage Site Roles in the follow levels: Administrators, Power Users, and Users."
   },
   ldapSiteRoleDetailView: {
     parent: "ldapSiteRolesManagement",
@@ -370,7 +378,8 @@ const breadcrumbs = {
     path: paths.ldapDepartmentManagement,
     title: "Departments",
     linkText: "Departments",
-    icon: faBuilding
+    icon: faBuilding,
+    pageDescription: "Manage Departments and their Membership."
   },
   ldapDepartmentDetailView: {
     parent: "ldapDepartmentManagement",
@@ -388,7 +397,8 @@ const breadcrumbs = {
     path: paths.tagManagement,
     title: "Tag Management",
     linkText: "Tags",
-    icon: faTags
+    icon: faTags,
+    pageDescription: "Manage Tags and view their usage in Tools, Pipelines, and Dashboards.",
   },
   tagDetailView: {
     parent: "tagManagement",
@@ -406,7 +416,8 @@ const breadcrumbs = {
     path: paths.organizationManagement,
     title: "Organization Management",
     linkText: "Organizations",
-    icon: faSitemap
+    icon: faSitemap,
+    pageDescription: "Manage Organizations"
   },
   organizationDetailView: {
     parent: "organizationManagement",
@@ -468,7 +479,11 @@ const breadcrumbs = {
     path: paths.deleteTools,
     title: "Delete Tools",
     linkText: "Delete Tools",
-    icon: faTimes
+    icon: faTimes,
+    pageDescription: `
+      Choose a registered application, view the active tools, and then delete them from the application.
+      This will perform a complete end to end removal of all instances related to an application.
+    `,
   },
 
   //Pipelines
@@ -688,7 +703,8 @@ const breadcrumbs = {
     path: paths.analyticsProfile,
     title: "Analytics Profile",
     linkText: "Analytics Profile",
-    icon: faChartNetwork
+    icon: faChartNetwork,
+    pageDescription: "Manage Opsera Analytics Engine settings.",
   },
   dataMappingManagement: {
     parent: "accountSettings",
@@ -696,7 +712,8 @@ const breadcrumbs = {
     path: paths.dataMappingManagement,
     title: "Data Mappings",
     linkText: "Data Mappings",
-    icon: faProjectDiagram
+    icon: faProjectDiagram,
+    pageDescription: "Apply and connect Tags to incoming external data with Opsera.",
   },
   projectTaggingDetailView: {
     parent : "dataMappingManagement",
@@ -774,7 +791,11 @@ const breadcrumbs = {
     path: paths.userRecord,
     title: "My User Record",
     linkText: "My User Record",
-    icon: faUser
+    icon: faUser,
+    pageDescription: `
+      Review and manage your user profile information as well as platform settings from this page. 
+      Please note, profile details are stored in your identity provider, so some changes my not be possible from this portal at this time.
+    `
   },
   subscriptions: {
     parent: "userProfile",
