@@ -80,7 +80,7 @@ function AnalyticsDataEntryManagement() {
     if (isMounted?.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      if (meetsRequirements(ROLE_LEVELS.POWER_USERS, userRoleAccess)) {
+      if (meetsRequirements(ROLE_LEVELS.POWER_USERS_AND_SASS, userRoleAccess)) {
         await getAnalyticsDataEntries(cancelSource);
       }
     }
@@ -91,7 +91,7 @@ function AnalyticsDataEntryManagement() {
       isLoading={!accessRoleData}
       breadcrumbDestination={"analyticsDataEntryManagement"}
       accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.POWER_USERS}
+      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       navigationTabContainer={<AnalyticsDataEntryManagementSubNavigationBar activeTab={"analyticsDataEntries"} />}
     >
       <AnalyticsDataEntryTable
