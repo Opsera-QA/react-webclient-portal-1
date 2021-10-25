@@ -127,6 +127,7 @@ function LazyLoadMultiSelectInputBase({
           setDataFunction={(newValue) =>
             setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)
           }
+          lazyLoad={true}
         />
       </div>
       <InfoText errorMessage={errorMessage} field={field} />
