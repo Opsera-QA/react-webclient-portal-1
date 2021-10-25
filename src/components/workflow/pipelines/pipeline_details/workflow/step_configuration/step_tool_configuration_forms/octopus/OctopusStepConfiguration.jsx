@@ -14,14 +14,11 @@ import PipelineStepEditorPanelContainer
 import OctopusProjectTypeSelectInput from "./input/OctopusProjectTypeSelectInput";
 import OctopusCustomProjectForm from "./sub-forms/OctopusCustomProjectForm";
 import OctopusOpseraManagedProjectForm from "./sub-forms/OctopusOpseraManagedProjectForm";
-import OctopusEnvironmentNameSelectInput from "./input/OctopusEnvironmentSelectInput";
-import OctopusEnvironmentMultiSelectInput
-  from "components/common/list_of_values_input/tools/octopus/environments/OctopusEnvironmentMultiSelectInput";
 import OctopusStepOctopusEnvironmentMultiSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/input/OctopusStepOctopusEnvironmentMultiSelectInput";
 
 // TODO: This needs a refactor. I plan on doing it soon.
-function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, callbackSaveToVault, getToolsList, closeEditorPanel, pipelineId }) {
+function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, callbackSaveToVault, closeEditorPanel, pipelineId }) {
   const { getAccessToken, featureFlagHideItemInProd } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -273,29 +270,6 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
     );
   };
 
-  // TODO: After QA Approves this, put directly in return
-  const getOctopusEnvironmentField = () => {
-    if (featureFlagHideItemInProd() !== false) {
-      return (
-        <OctopusEnvironmentNameSelectInput
-          fieldName={"environmentName"}
-          dataObject={octopusStepConfigurationDto}
-          setDataObject={setOctopusStepConfigurationDataDto}
-          disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
-          tool_prop={octopusStepConfigurationDto ? octopusStepConfigurationDto.getData("spaceName") : ""}
-        />
-      );
-    }
-
-    return (
-      <OctopusStepOctopusEnvironmentMultiSelectInput
-        fieldName={"environmentList"}
-        model={octopusStepConfigurationDto}
-        setModel={setOctopusStepConfigurationDataDto}
-      />
-    );
-  };
-
   if (isLoading || octopusStepConfigurationDto === undefined) {
     return <LoadingDialog size="sm"/>;
   }
@@ -318,7 +292,11 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
         disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusToolId").length === 0}
         tool_prop={octopusStepConfigurationDto ? octopusStepConfigurationDto.getData("octopusToolId") : ""}
       />
-      {getOctopusEnvironmentField()}
+      <OctopusStepOctopusEnvironmentMultiSelectInput
+        fieldName={"environmentList"}
+        model={octopusStepConfigurationDto}
+        setModel={setOctopusStepConfigurationDataDto}
+      />
       <OctopusProjectTypeSelectInput 
         fieldName={"projectType"}
         dataObject={octopusStepConfigurationDto}
@@ -336,7 +314,6 @@ OctopusStepConfiguration.propTypes = {
   stepId: PropTypes.string,
   parentCallback: PropTypes.func,
   callbackSaveToVault: PropTypes.func,
-  getToolsList: PropTypes.func,
   closeEditorPanel: PropTypes.func,
   pipelineId: PropTypes.string
 };

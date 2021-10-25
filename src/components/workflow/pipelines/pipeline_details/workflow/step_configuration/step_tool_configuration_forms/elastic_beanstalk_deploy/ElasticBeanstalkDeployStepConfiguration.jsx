@@ -50,7 +50,7 @@ const INITIAL_DATA = {
 };
 
 
-// TODO: This needs to be refactored to follow new standards
+// TODO: This needs to be refactored to follow new standards and won't work without a refactor
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
 function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCallback, callbackSaveToVault, setToast, setShowToast }) {
@@ -408,7 +408,7 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
             valueField='id'
             textField='label'
             defaultValue={formData.platform ? PLATFORM_OPTIONS[PLATFORM_OPTIONS.findIndex(x => x.value === formData.platform)] : PLATFORM_OPTIONS[0]}
-            onChange={handlePlatformChange}             
+            setDataFunction={handlePlatformChange}
           /> : null }
       </Form.Group>
 

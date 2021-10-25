@@ -8,6 +8,7 @@ import axios from "axios";
 import organizationActions from "components/settings/organizations/organization-actions";
 import Model from "core/data_model/model";
 import organizationFilterMetadata from "components/settings/organizations/organization-filter-metadata";
+import OrganizationsSubNavigationBar from "components/settings/organizations/OrganizationsSubNavigationBar";
 
 function OrganizationManagement() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -90,6 +91,7 @@ function OrganizationManagement() {
       breadcrumbDestination={"organizationManagement"}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+      navigationTabContainer={<OrganizationsSubNavigationBar activeTab={"organizations"} />}
     >
       <OrganizationsTable
         isLoading={isLoading}

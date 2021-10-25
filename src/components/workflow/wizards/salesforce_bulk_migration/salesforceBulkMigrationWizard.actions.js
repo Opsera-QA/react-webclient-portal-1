@@ -16,7 +16,7 @@ salesforceBulkMigrationWizardActions.createNewRecordV2 = async (getAccessToken, 
 };
 
 salesforceBulkMigrationWizardActions.getComponentTypesV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
-  const apiUrl = `/wizard/salesforce/bulk-migration/${pipelineWizardModel?.getData("recordId")}/component-types`;
+  const apiUrl = `/tasks/wizard/salesforce/bulk-migration/${pipelineWizardModel?.getData("recordId")}/component-types`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
@@ -25,8 +25,13 @@ salesforceBulkMigrationWizardActions.updateSelectedComponentTypesV2 = async (get
     selectedComponentTypes:  pipelineWizardModel?.getData("selectedComponentTypes"),
   };
 
-  const apiUrl = `/wizard/salesforce/bulk-migration/${pipelineWizardModel?.getData("recordId")}/component-types`;
+  const apiUrl = `/tasks/wizard/salesforce/bulk-migration/${pipelineWizardModel?.getData("recordId")}/component-types`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+salesforceBulkMigrationWizardActions.triggerTaskV2 = async (getAccessToken, cancelTokenSource, gitTaskId) => {
+  const apiUrl = `/tasks/wizard/salesforce/bulk-migration/${gitTaskId}/trigger-task`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 export default salesforceBulkMigrationWizardActions;

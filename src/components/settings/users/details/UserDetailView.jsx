@@ -10,6 +10,7 @@ import LdapUserDetailPanel from "components/settings/ldap_users/users_detail_vie
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import axios from "axios";
+import UserManagementSubNavigationBar from "components/settings/users/UserManagementSubNavigationBar";
 
 function UserDetailView() {
   const {userEmail, orgDomain} = useParams();
@@ -106,6 +107,7 @@ function UserDetailView() {
       dataObject={ldapUserData}
       isLoading={isLoading}
       actionBar={getActionBar()}
+      navigationTabContainer={<UserManagementSubNavigationBar activeTab={"userViewer"} />}
       detailPanel={
         <LdapUserDetailPanel
           hideSettings={true}

@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import OctopusEnvironmentMultiSelectInput
   from "components/common/list_of_values_input/tools/octopus/environments/OctopusEnvironmentMultiSelectInput";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 function OctopusStepOctopusEnvironmentMultiSelectInput({ fieldName, model, setModel, disabled}) {
+  const [errorMessage, setErrorMessage] = useState("");
+
   const setDataFunction = async (fieldName, newArray) => {
     const newModel = {...model};
     const mappedArray = newArray?.map((environment) => {
@@ -12,6 +15,17 @@ function OctopusStepOctopusEnvironmentMultiSelectInput({ fieldName, model, setMo
         id: environment.id,
       };
     });
+
+    if (mappedArray.length > model.getMaxItems(fieldName)) {
+      setErrorMessage(`
+        You have reached the maximum allowed number of Environment Configurations. 
+        Please remove one, if you would like to add another. 
+      `);
+      return;
+    }
+    else {
+      setErrorMessage("");
+    }
 
     // Environments removed need to also remove related tenants with that environment
     const tenantList = newModel?.getArrayData("tenantList");
@@ -37,18 +51,21 @@ function OctopusStepOctopusEnvironmentMultiSelectInput({ fieldName, model, setMo
   };
 
   return (
-    <OctopusEnvironmentMultiSelectInput
-      octopusToolId={model?.getData("octopusToolId")}
-      spaceId={model?.getData("spaceId")}
-      fieldName={fieldName}
-      model={model}
-      setModel={setModel}
-      valueField={"id"}
-      textField={"name"}
-      disabled={disabled}
-      setDataFunction={setDataFunction}
-      clearDataFunction={clearDataFunction}
-    />
+    <>
+      <OctopusEnvironmentMultiSelectInput
+        octopusToolId={model?.getData("octopusToolId")}
+        spaceId={model?.getData("spaceId")}
+        fieldName={fieldName}
+        model={model}
+        setModel={setModel}
+        valueField={"id"}
+        textField={"name"}
+        disabled={disabled}
+        setDataFunction={setDataFunction}
+        clearDataFunction={clearDataFunction}
+      />
+      <InfoText errorMessage={errorMessage} />
+    </>
   );
 }
 

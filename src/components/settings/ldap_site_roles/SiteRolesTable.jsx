@@ -1,8 +1,7 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import NewLdapGroupModal from "components/settings/ldap_groups/NewLdapGroupOverlay";
 import {
   getTableBooleanIconColumn,
   getTableTextColumn

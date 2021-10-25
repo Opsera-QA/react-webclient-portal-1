@@ -63,13 +63,13 @@ const OctopusTenantStandaloneSelectInput = (
       setIsLoading(true);
       setTenants([]);
       const response = await OctopusStepActions.getTenantsV2(
-          octopusToolId,
-          spaceId,
-          projectId,
-          environmentId,
-          getAccessToken,
-          cancelSource
-        );
+        getAccessToken,
+        cancelSource,
+        octopusToolId,
+        spaceId,
+        projectId,
+        environmentId,
+      );
       const tenants = response?.data?.data;
 
       if (Array.isArray(tenants)) {

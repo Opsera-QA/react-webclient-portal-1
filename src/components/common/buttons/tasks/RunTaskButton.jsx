@@ -10,16 +10,18 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import RunTaskOverlay from "components/tasks/details/RunTaskOverlay";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import TaskActivityView from './TaskActivityView';
 import taskActions from "components/tasks/task.actions";
 import {TASK_TYPES} from "components/tasks/task.types";
+import TaskActivityView from "components/tasks/TaskActivityView";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_GIT_BRANCHES,
   TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE,
   TASK_TYPES.SYNC_SALESFORCE_REPO,
+  TASK_TYPES.SALESFORCE_BULK_MIGRATION,
 ];
 
+// TODO: Delete after verifying /tasks/buttons/RunTaskButton and wiring that one up instead
 function RunTaskButton({gitTasksData, setGitTasksData, disable, className, loadData, actionAllowed, taskType }) {
   const [isCanceling, setIsCanceling] = useState(false);
   const [taskStarting, setTaskStarting] = useState(false);
@@ -108,8 +110,8 @@ function RunTaskButton({gitTasksData, setGitTasksData, disable, className, loadD
     toastContext.showOverlayPanel(
       <RunTaskOverlay
         handleClose={handleClose}
-        gitTasksData={gitTasksData}
-        setGitTasksData={setGitTasksData}
+        taskModel={gitTasksData}
+        setTaskModel={setGitTasksData}
         loadData={loadData}
       />
     );

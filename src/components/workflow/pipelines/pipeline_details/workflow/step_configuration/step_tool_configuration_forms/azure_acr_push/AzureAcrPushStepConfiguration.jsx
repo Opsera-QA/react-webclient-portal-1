@@ -6,8 +6,8 @@ import PropTypes from "prop-types";
 import azureAcrPushStepFormMetadata
   from "./azureAcrPush-stepForm-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
-import AzureAcrPushToolConfigIdSelectInput from "./inputs/AzureAcrPushToolConfigIdSelectInput";
-import AzureAcrPushJenkinsJobNameInput from "./inputs/AzureAcrPushJenkinsJobNameInput";
+import AzureAcrPushStepJenkinsToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_acr_push/inputs/AzureAcrPushStepJenkinsToolSelectInput";
+import AzureAcrPushStepJenkinsJobSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_acr_push/inputs/AzureAcrPushStepJenkinsJobSelectInput";
 import AzureAcrPushAzureToolConfigIdSelectInput from "./inputs/AzureAcrPushAzureToolConfigIdSelectInput";
 import AzureAcrPushBuildStepSelectInput from "./inputs/AzureAcrPushBuildStepSelectInput";
 import AzureAcrPushRegistryNameSelectInput from "./inputs/AzureAcrPushRegistryNameSelectInput";
@@ -77,14 +77,22 @@ function AzureAcrPushStepConfiguration({ stepTool, closeEditorPanel, parentCallb
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      {/* toolConfigId */}
-      <AzureAcrPushToolConfigIdSelectInput dataObject={azureAcrPushModel} setDataObject={setAzureAcrPushModel} />
-      {/* toolJobName */}
-      <AzureAcrPushJenkinsJobNameInput dataObject={azureAcrPushModel} setDataObject={setAzureAcrPushModel} />
+      <AzureAcrPushStepJenkinsToolSelectInput
+        model={azureAcrPushModel}
+        setModel={setAzureAcrPushModel}
+      />
+      <AzureAcrPushStepJenkinsJobSelectInput
+        model={azureAcrPushModel}
+        setModel={setAzureAcrPushModel}
+      />
       {/* buildStepId */}
       <AzureAcrPushBuildStepSelectInput dataObject={azureAcrPushModel} setDataObject={setAzureAcrPushModel} plan={plan} stepId={stepId} />
       {/* azureToolConfigId */}
-      <AzureAcrPushAzureToolConfigIdSelectInput dataObject={azureAcrPushModel} setDataObject={setAzureAcrPushModel} setAzureConfig={setAzureConfig} />
+      <AzureAcrPushAzureToolConfigIdSelectInput
+        model={azureAcrPushModel}
+        setModel={setAzureAcrPushModel}
+        setAzureConfig={setAzureConfig}
+      />
       {/* azureCredentialId */}
       {/* <AzureAcrPushCredentialIdSelectInput dataObject={azureAcrPushModel} setDataObject={setAzureAcrPushModel} azureConfig={azureConfig} setApplicationData={setApplicationData} /> */}
       {/* resource */}

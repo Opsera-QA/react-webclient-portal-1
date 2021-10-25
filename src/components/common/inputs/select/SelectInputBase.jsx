@@ -4,6 +4,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function SelectInputBase(
   {
@@ -81,6 +82,7 @@ function SelectInputBase(
         ellipsisTooltipText={ellipsisTooltipText}
       />
       <StandaloneSelectInput
+        hasErrorState={hasStringValue(errorMessage) === true}
         selectOptions={selectOptions}
         valueField={valueField}
         textField={textField}

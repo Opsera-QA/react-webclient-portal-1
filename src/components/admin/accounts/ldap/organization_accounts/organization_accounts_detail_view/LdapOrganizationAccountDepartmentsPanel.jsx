@@ -36,14 +36,14 @@ function LdapOrganizationAccountDepartmentsPanel({ ldapOrganizationAccountData, 
   }
 
   return (
-    <SummaryPanelContainer>
+    <div className={"mt-2"}>
       <LdapDepartmentsTable
         loadData={loadData}
         departmentData={ldapDepartmentData}
         authorizedActions={authorizedDepartmentActions}
         domain={organizationDomain}
       />
-    </SummaryPanelContainer>
+    </div>
   );
 }
 

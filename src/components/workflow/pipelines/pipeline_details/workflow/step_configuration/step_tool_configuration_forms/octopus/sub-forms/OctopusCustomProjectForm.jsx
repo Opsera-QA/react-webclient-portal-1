@@ -4,36 +4,23 @@ import OctopusProjectGroupSelectInput from "../input/OctopusProjectGroupSelectIn
 import OctopusProjectSelectInput from "../input/OctopusProjectSelectInput";
 import OctopusChannelSelectInput from "../input/OctopusChannelSelectInput";
 import OctopusFeedSelectInput from "../input/OctopusFeedSelectInput";
-import OctopusTenantSelectInput from "../input/OctopusTenantSelectInput";
 import RollbackToggleInput from "../input/RollbackToggleInput";
 import OctopusVersionSelectInput from "../input/OctopusVersionSelectInput";
 import OctopusSpecifyDepVarsToggle from "../input/OctopusSpecifyDepVarsToggle";
 import OctopusDeploymentVariables from "../input/OctopusDeploymentVariables";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {AuthContext} from "contexts/AuthContext";
 import OctopusTenantInputBase from "components/common/inputs/object/pipelines/octopus/OctopusTenantInputBase";
 
 // TODO: Refactor soon
 function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabled, pipelineId, listOfSteps }) {
-  const { featureFlagHideItemInProd } = useContext(AuthContext);
   const getTenantInput = () => {
     if (["tenanted", "tenantedoruntenanted"].includes(dataObject?.getData("tenantedDeploymentMode")?.toLowerCase())) {
-      if (featureFlagHideItemInProd() !== false) {
-        return (
-          <OctopusTenantSelectInput
-            fieldName={"tenantId"}
-            dataObject={dataObject}
-            setDataObject={setDataObject}
-            disabled={dataObject && dataObject.getData("projectGroupId").length === 0}
-          />
-        );
-      }
-
       return (
         <OctopusTenantInputBase
           fieldName={"tenantList"}
           model={dataObject}
           setModel={setDataObject}
+          tenantList={dataObject?.getData("tenantList")}
           environmentList={dataObject?.getData("environmentList")}
         />
       );

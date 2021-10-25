@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import JenkinsAccountInput from "components/common/list_of_values_input/tools/jenkins/JenkinsAccountInput";
+import RoleRestrictedJenkinsAccountSelectInput from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsAccountSelectInput";
 
 function PowershellJenkinsAccountInput({dataObject, setDataObject, disabled}) {
   const setJenkinsAccount = (fieldName, selectedOption) => {
@@ -19,9 +19,9 @@ function PowershellJenkinsAccountInput({dataObject, setDataObject, disabled}) {
   };
 
   return (
-     <JenkinsAccountInput
+     <RoleRestrictedJenkinsAccountSelectInput
        fieldName={"gitCredential"}
-       jenkinsId={dataObject?.getData("toolConfigId")}
+       jenkinsToolId={dataObject?.getData("toolConfigId")}
        requireConfiguration={true}
        dataObject={dataObject}
        setDataObject={setDataObject}

@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
 import SpaceNameSelectInput from "../input/SpaceNameSelectInput";
-import NexusSelectInput from "../input/NexusSelectInput";
 import NexusRepoSelectInput from "../input/NexusRepoSelectInput";
 import FeedTypeSelectInput from "../input/FeedTypeSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import FeedToolTypeSelectInput from "../input/FeedToolTypeSelectInput";
-import JfrogToolSelectInput from "../input/JfrogToolSelectInput";
+import OctopusFeedJfrogToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/OctopusFeedJfrogToolSelectInput";
 import JfrogRepoSelectInput from "../input/JfrogRepoSelectInput";
+import RoleRestrictedNexusToolSelectInput
+  from "components/common/list_of_values_input/tools/nexus/RoleRestrictedNexusToolSelectInput";
 
 const OctopusFeedEditorForm = ({ dataObject, setDataObject, appID }) => {
 
@@ -59,16 +60,15 @@ const OctopusFeedEditorForm = ({ dataObject, setDataObject, appID }) => {
       {dataObject && dataObject.getData("toolType") && dataObject.getData("toolType").toLowerCase() === "nexus" && (
         <>
           <Col lg={12}>
-            <NexusSelectInput
+            <RoleRestrictedNexusToolSelectInput
               fieldName={"nexusToolId"}
-              dataObject={dataObject}
-              setDataObject={setDataObject}
+              model={dataObject}
+              setModel={setDataObject}
               disabled={
                 (dataObject &&              
                   dataObject.getData("toolType").length === 0) ||
                   (appID && !dataObject.getData("id"))              
               }
-              tool_prop={dataObject ? dataObject.getData("spaceId") : ""}
             />
           </Col>
           <Col lg={12}>
@@ -90,10 +90,10 @@ const OctopusFeedEditorForm = ({ dataObject, setDataObject, appID }) => {
       {dataObject && dataObject.getData("toolType") && dataObject.getData("toolType").toLowerCase() === "jfrog" && (
         <>
           <Col lg={12}>
-            <JfrogToolSelectInput
+            <OctopusFeedJfrogToolSelectInput
               fieldName={"nexusToolId"}
-              dataObject={dataObject}
-              setDataObject={setDataObject}
+              model={dataObject}
+              setModel={setDataObject}
               disabled={
                 (dataObject &&              
                   dataObject.getData("toolType").length === 0) ||

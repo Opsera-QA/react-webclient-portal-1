@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import IconBase from "components/common/icons/IconBase";
 
 function WarningToast({ warningMessage, removeToast, autoCloseLength, id }) {
   const [messageBody, setMessageBody] = useState("");
@@ -30,20 +30,22 @@ function WarningToast({ warningMessage, removeToast, autoCloseLength, id }) {
 
   const getCloseButton = () => {
     return (
-      <div className="ml-1">
-        <FontAwesomeIcon icon={faTimes} className="pointer warning-toast-close-button" onClick={() => { clearToast(); }}/>
+      <div className="ml-auto">
+        <IconBase
+          icon={faTimes}
+          className="pointer warning-toast-close-button"
+          onClickFunction={() => { clearToast(); }}
+        />
       </div>
     );
   };
 
   return (
-    <div className="warning-toast d-flex p-2" role="alert" aria-live="assertive" aria-atomic="true">
-      <div>
+    <div className="warning-toast d-flex" role="alert" aria-live="assertive" aria-atomic="true">
+      <div className={"p-2"}>
         {messageBody}
       </div>
-      <div className="ml-auto my-auto">
-        {getCloseButton()}
-      </div>
+      {getCloseButton()}
     </div>
   );
 }

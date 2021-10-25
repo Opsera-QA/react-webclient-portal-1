@@ -21,7 +21,7 @@ function ToolApplicationsTab({ toolModel, handleTabClick, activeTab }) {
       handleTabClick={handleTabClick}
       activeTab={activeTab}
       tabText={"Applications"}
-      disabled={!toolModel.canPerformAction("update_tool_applications")}
+      accessRestricted={!toolModel.canPerformAction("update_tool_applications")}
     />
   );
 }

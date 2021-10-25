@@ -57,6 +57,14 @@ const aksStepFormMetadata = {
       label: "Generate Dynamic Service Name?",
       id: "dynamicServiceName",
     },
+    {
+      label: "Resource Group",
+      id: "resourceGroupName",
+    },
+    {
+      label: "Specify Resource Group?",
+      id: "useCustomResourceGroup"
+    },
   ],
   newObjectFields: {
     aksClusterName : "",
@@ -70,7 +78,9 @@ const aksStepFormMetadata = {
     artifactToolId : "",
     artifactStepId : "",
     namePretext: "",
-    dynamicServiceName: false
+    dynamicServiceName: false,
+    resourceGroupName : "",
+    useCustomResourceGroup: false
   }
 };
 

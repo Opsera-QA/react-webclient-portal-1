@@ -8,6 +8,7 @@ import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import TagsTable from "components/settings/tags/TagsTable";
 import axios from "axios";
 import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import TagManagementSubNavigationBar from "components/settings/tags/TagManagementSubNavigationBar";
 
 function TagManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -89,6 +90,7 @@ function TagManagement() {
       isLoading={!accessRoleData}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+      navigationTabContainer={<TagManagementSubNavigationBar activeTab={"tags"} />}
     >
       <TagsTable
         loadData={loadData}

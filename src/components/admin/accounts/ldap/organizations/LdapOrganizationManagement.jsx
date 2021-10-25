@@ -1,5 +1,4 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
-import {useHistory} from "react-router-dom";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -7,14 +6,15 @@ import {AuthContext} from "contexts/AuthContext";
 import LdapOrganizationsTable from "components/admin/accounts/ldap/organizations/LdapOrganizationsTable";
 import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import LdapOrganizationManagementSubNavigationBar
+  from "components/admin/accounts/ldap/organizations/LdapOrganizationManagementSubNavigationBar";
 
 function LdapOrganizationManagement() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
-  const [ldapOrganizationData, setLdapOrganizationData] = useState([]);
+  const [organizations, setOrganizations] = useState([]);
   const [authorizedActions, setAuthorizedActions] = useState(undefined);
-  const history = useHistory();
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -58,21 +58,6 @@ function LdapOrganizationManagement() {
     }
   };
 
-  const loadOrganizations = async (source = cancelTokenSource) => {
-    try {
-      const response = await accountsActions.getOrganizationsV2(getAccessToken, source);
-
-      if (isMounted?.current === true) {
-        setLdapOrganizationData(response?.data);
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-        console.error(error);
-      }
-    }
-  };
-
   const getRoles = async (source = cancelTokenSource) => {
     const user = await getUserRecord();
     const {ldap} = user;
@@ -87,8 +72,21 @@ function LdapOrganizationManagement() {
       if (userRoleAccess?.OpseraAdministrator) {
         await loadOrganizations(source);
       }
-      else if (ldap?.organization != null && authorizedActions.includes("get_organization_details")) {
-        history.push(`/admin/organizations/details/${ldap.organization}`);
+    }
+  };
+
+  const loadOrganizations = async (source = cancelTokenSource) => {
+    try {
+      const response = await accountsActions.getOrganizationsV2(getAccessToken, source);
+      const organizations = response?.data;
+
+      if (isMounted?.current === true && Array.isArray(organizations)) {
+        setOrganizations(organizations);
+      }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+        console.error(error);
       }
     }
   };
@@ -99,10 +97,12 @@ function LdapOrganizationManagement() {
       isLoading={!accessRoleData}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       accessRoleData={accessRoleData}
+      navigationTabContainer={<LdapOrganizationManagementSubNavigationBar activeTab={"organizations"} />}
     >
       <LdapOrganizationsTable
+        isMounted={isMounted}
         isLoading={isLoading}
-        data={ldapOrganizationData}
+        organizations={organizations}
         loadData={loadData}
         authorizedActions={authorizedActions}
       />

@@ -19,7 +19,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 
-const refreshInterval = 8000;
+const refreshInterval = 5000;
 
 // TODO: Find way to refresh logs inside the log components rather than leaving all the methods in here
 //  we could instead pass refresh trigger down. 
@@ -144,11 +144,10 @@ function PipelineDetailView() {
 
     await fetchData(cancelSource);
     setLoading(false);
-    await getActivityLogs(undefined, false, cancelSource);
+    // await getActivityLogs(undefined, false, cancelSource);
   };
 
   const fetchData = async (cancelSource = cancelTokenSource) => {
-    console.log("Top level fetch data");
     setRefreshCount(refreshCount => refreshCount + 1);
     setSoftLoading(true);
     const accessToken = await getAccessToken();

@@ -3,9 +3,9 @@ import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadi
 import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
-import JfrogToolInput from "./inputs/JfrogToolInput";
-import JfrogJenkinsToolInput from "./inputs/JFrogJenkinsToolSelectInput";
-import JFrogJenkinsJobInput from "./inputs/JfrogJenkinsJobInput";
+import JfrogStepJfrogToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_docker/inputs/JfrogStepJfrogToolSelectInput";
+import JfrogStepJenkinsToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_docker/inputs/JfrogStepJenkinsToolSelectInput";
+import JfrogDockerStepJenkinsJobSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_docker/inputs/JfrogDockerStepJenkinsJobSelectInput";
 import JFrogBuildStepSelectInput from "./inputs/JFrogBuildStepSelectInput";
 import JfrogRepoSelectInput from "./inputs/JfrogRepoSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
@@ -96,11 +96,17 @@ function JFrogDockerStepConfiguration({ pipelineId, stepTool, stepId, createJob,
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <JfrogToolInput dataObject={jfrogStepConfigurationDto} setDataObject={setJFrogStepConfigurationDataDto} />
-      <JfrogJenkinsToolInput dataObject={jfrogStepConfigurationDto} setDataObject={setJFrogStepConfigurationDataDto} />
-      <JFrogJenkinsJobInput
-        dataObject={jfrogStepConfigurationDto}
-        setDataObject={setJFrogStepConfigurationDataDto}
+      <JfrogStepJfrogToolSelectInput
+        model={jfrogStepConfigurationDto}
+        setModel={setJFrogStepConfigurationDataDto}
+      />
+      <JfrogStepJenkinsToolSelectInput
+        model={jfrogStepConfigurationDto}
+        setModel={setJFrogStepConfigurationDataDto}
+      />
+      <JfrogDockerStepJenkinsJobSelectInput
+        model={jfrogStepConfigurationDto}
+        setModel={setJFrogStepConfigurationDataDto}
         disabled={jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("toolConfigId")?.length === 0}
       />
       <JFrogBuildStepSelectInput

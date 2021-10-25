@@ -1,6 +1,7 @@
 import ModelBase from "core/data_model/model.base";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {isActionAllowed} from "components/common/helpers/role-helpers";
+import vaultActions from "components/vault/vault.actions";
 
 export class ToolModel extends ModelBase {
   constructor(
@@ -36,7 +37,7 @@ export class ToolModel extends ModelBase {
 
   // TODO: Not used yet
   deleteModel = async () => {
-    const vaultDeleteResponse = await toolsActions.deleteOwnerVaultRecordsForToolIdV2(this.getAccessToken, this.cancelTokenSource, this);
+    const vaultDeleteResponse = await vaultActions.deleteOwnerVaultRecordsForToolIdV2(this.getAccessToken, this.cancelTokenSource, this);
     if (vaultDeleteResponse?.status !== 200) {
       const errorMsg = `Error reported by services while deleting tool information from Vault. Please try again`;
       // toastContext.showErrorDialog(errorMsg);
@@ -71,7 +72,7 @@ export class ToolModel extends ModelBase {
   };
 
   canPerformAction = (action) => {
-    return isActionAllowed(this.customerAccessRules, action, this.getData("owner"), this.getData("roles"), this.roleDefinitions);
+    return isActionAllowed(this.customerAccessRules, action, this.getData("owner"), this.getData("roles"), this.roleDefinitions, true);
   }
 }
 

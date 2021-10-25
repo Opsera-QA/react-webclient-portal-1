@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import ebsStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/ebs-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import AWSToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/AWSToolSelectInput";
+import RoleRestrictedAwsAccountToolSelectInput from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import JsonInput from "components/common/inputs/object/JsonInput";
@@ -21,10 +21,10 @@ import EBSPlatformOptionsInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSPlatformOptionsInput";
 import EBSCreateDomainToggleInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSCreateDomainToggleInput";
-function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, callbackSaveToVault, pipelineId, closeEditorPanel }) {
+
+function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
-  const [jobType, setJobType] = useState("");  
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [ebsStepConfigurationDto, setEBSStepConfigurationDataDto] = useState(undefined);
@@ -126,10 +126,10 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <AWSToolSelectInput
+      <RoleRestrictedAwsAccountToolSelectInput
         fieldName={"awsToolConfigId"}
-        dataObject={ebsStepConfigurationDto}
-        setDataObject={setEBSStepConfigurationDataDto}
+        model={ebsStepConfigurationDto}
+        setModel={setEBSStepConfigurationDataDto}
       />
       <EBSBucketInput
           fieldName={"bucketName"}
@@ -191,9 +191,6 @@ EBSStepConfiguration.propTypes = {
   plan: PropTypes.array,
   stepId: PropTypes.string,
   parentCallback: PropTypes.func,
-  callbackSaveToVault: PropTypes.func,
-  pipelineId: PropTypes.string,
-  getToolsList: PropTypes.func,
   closeEditorPanel: PropTypes.func
 };
 

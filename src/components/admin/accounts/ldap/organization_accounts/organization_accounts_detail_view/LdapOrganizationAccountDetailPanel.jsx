@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 import PropTypes from "prop-types";
 import LdapOrganizationAccountEditorPanel from "./LdapOrganizationAccountEditorPanel";
-import {faUsers, faUsersClass, faBuilding} from "@fortawesome/pro-light-svg-icons";
+import {faUsers, faUsersClass, faBuilding, faServer} from "@fortawesome/pro-light-svg-icons";
 import LdapOrganizationAccountSummaryPanel
   from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountSummaryPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
@@ -17,6 +17,8 @@ import LdapOrganizationAccountIdpPanel
   from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountIdpPanel";
 import LdapOrganizationAccountDepartmentsPanel
   from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountDepartmentsPanel";
+import LdapOrganizationAccountSiteRolesPanel
+  from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountSiteRolesPanel";
 
 function LdapOrganizationAccountDetailPanel(
   {
@@ -58,6 +60,14 @@ function LdapOrganizationAccountDetailPanel(
         return (
           <LdapOrganizationAccountGroupsPanel
             authorizedActions={authorizedActions}
+            loadData={loadData}
+            ldapOrganizationAccountData={ldapOrganizationAccountData}
+            currentUser={currentUser}
+          />
+        );
+      case "site-roles":
+        return (
+          <LdapOrganizationAccountSiteRolesPanel
             loadData={loadData}
             ldapOrganizationAccountData={ldapOrganizationAccountData}
             currentUser={currentUser}
@@ -106,6 +116,8 @@ function LdapOrganizationAccountDetailPanel(
                    tabText={"Users"}/>
         <CustomTab icon={faUsersClass} tabName={"groups"} handleTabClick={handleTabClick} activeTab={activeTab}
                    tabText={"Groups"}/>
+        <CustomTab icon={faServer} tabName={"site-roles"} handleTabClick={handleTabClick} activeTab={activeTab}
+                   tabText={"Site Roles"}/>
         <CustomTab icon={faBuilding} tabName={"departments"} handleTabClick={handleTabClick} activeTab={activeTab}
                    tabText={"Departments"}/>
         {/*<CustomTab icon={faCubes} tabName={"idpAccounts"} handleTabClick={handleTabClick} activeTab={activeTab}*/}

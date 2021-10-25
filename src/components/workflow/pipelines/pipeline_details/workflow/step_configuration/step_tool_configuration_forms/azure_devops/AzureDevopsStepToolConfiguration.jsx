@@ -51,8 +51,8 @@ function AzureDevopsStepConfiguration({ stepTool, closeEditorPanel, parentCallba
     >
       <AzureDevopsToolSelectInput
         fieldName={"toolConfigId"}
-        dataObject={azureDevopsModel}
-        setDataObject={setAzureDevopsModel}
+        model={azureDevopsModel}
+        setModel={setAzureDevopsModel}
       />
       <AzureDevopsProjectSelectInput
         organization={azureDevopsModel.getData("organizationName")}

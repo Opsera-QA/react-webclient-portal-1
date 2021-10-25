@@ -17,7 +17,7 @@ const powershellStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Jenkins Job Id",
+      label: "Jenkins Job",
       id: "toolJobId",
       isRequired: true
     },
@@ -38,7 +38,7 @@ const powershellStepFormMetadata = {
     },
     
     {
-      label: "SCM Account",
+      label: "Source Control Management Account",
       id: "gitCredential",
       isRequired: true
     },

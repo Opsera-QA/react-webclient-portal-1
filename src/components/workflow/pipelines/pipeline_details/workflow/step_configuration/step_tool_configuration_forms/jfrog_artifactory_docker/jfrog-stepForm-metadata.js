@@ -10,7 +10,7 @@ const jfrogStepFormMetadata = {
       id: "jobName",
     },
     {
-      label: "Jenkins Job ID",
+      label: "Jenkins Job",
       id: "toolJobId",
       isRequired: true
     },
@@ -38,7 +38,7 @@ const jfrogStepFormMetadata = {
       id: "jobDescription"
     },
     {
-      label: "Step Tool",
+      label: "JFrog Tool",
       id: "jfrogToolConfigId",
       isRequired: true
     },
@@ -67,7 +67,7 @@ const jfrogStepFormMetadata = {
       id: "jobName",
     },
     {
-      label: "Jenkins Job ID",
+      label: "Jenkins Job",
       id: "toolJobId",
       isRequired: true
     },
@@ -94,7 +94,7 @@ const jfrogStepFormMetadata = {
       id: "jobDescription"
     },
     {
-      label: "Step Tool",
+      label: "JFrog Tool",
       id: "jfrogToolConfigId",
       isRequired: true
     },
@@ -110,7 +110,7 @@ const jfrogStepFormMetadata = {
       isRequired: true
     },
     {
-      label : "Tool Registry Job Name",
+      label : "Tool Registry Job",
       id: "toolJobName"
     }
   ],

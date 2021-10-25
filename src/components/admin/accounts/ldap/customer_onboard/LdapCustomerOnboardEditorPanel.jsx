@@ -68,7 +68,7 @@ function LdapCustomerOnboardEditorPanel() {
 
   // TODO: Wire up new route after registered users changes are merged in
   // const loadOpseraUsers = async () => {
-  //   const response = await accountsActions.getUsers(getAccessToken);
+  //   const response = await accountsActions.getUsersV2(getAccessToken);
   //   // console.log("Opsera Users: \n" + JSON.stringify(response.data));
   //
   //   let parsedUserNames = [];

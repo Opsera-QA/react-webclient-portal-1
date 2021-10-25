@@ -15,6 +15,8 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PropTypes from "prop-types";
 import axios from "axios";
+import DataMappingManagementSubNavigationBar
+  from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
 
 function DataMappingManagement() {
   const { tabKey } = useParams();
@@ -101,8 +103,10 @@ function DataMappingManagement() {
   const getProjectTags = async () => {
     try {
       const response = await adminTagsActions.getProjectTags(getAccessToken);
-      if (response?.data?.data?.length > 0) {
-        setOpseraProjectTags(response.data.data);
+      const projectTags = response?.data?.data;
+
+      if (Array.isArray(projectTags)) {
+        setOpseraProjectTags(projectTags);
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -111,9 +115,11 @@ function DataMappingManagement() {
 
   const getToolRegistryList = async () => {
     try {
-      const response = await toolsActions.getFullToolRegistryList(getAccessToken);
-      if (response?.data?.data?.length > 0) {
-        setToolRegistryList(response.data.data);
+      const response = await toolsActions.getRoleLimitedToolRegistryListV3(getAccessToken, cancelTokenSource);
+      const tools = response?.data?.data;
+
+      if (Array.isArray(tools)) {
+        setToolRegistryList(tools);
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -249,6 +255,7 @@ function DataMappingManagement() {
   if (!accessRoleData) {
     return (
       <ScreenContainer
+        navigationTabContainer={<DataMappingManagementSubNavigationBar activeTab={"dataMappings"} />}
         breadcrumbDestination={"dataMappingManagement"}
         pageDescription={"Manage data mapping for the Opsera Analytics Engine."}
         isLoading={true}
@@ -258,6 +265,7 @@ function DataMappingManagement() {
 
   return (
     <ScreenContainer
+      navigationTabContainer={<DataMappingManagementSubNavigationBar activeTab={"dataMappings"} />}
       breadcrumbDestination={"dataMappingManagement"}
       accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
       pageDescription={"Manage data mapping for the Opsera Analytics Engine."}

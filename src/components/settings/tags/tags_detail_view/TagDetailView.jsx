@@ -13,6 +13,7 @@ import axios from "axios";
 import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import TagSubscriptionIcon from "components/common/icons/subscription/TagSubscriptionIcon";
+import TagManagementSubNavigationBar from "components/settings/tags/TagManagementSubNavigationBar";
 
 function TagDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -110,6 +111,7 @@ function TagDetailView() {
       metadata={tagEditorMetadata}
       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       accessRoleData={accessRoleData}
+      navigationTabContainer={<TagManagementSubNavigationBar activeTab={"tagViewer"} />}
       dataObject={tagData}
       isLoading={isLoading}
       actionBar={getActionBar()}

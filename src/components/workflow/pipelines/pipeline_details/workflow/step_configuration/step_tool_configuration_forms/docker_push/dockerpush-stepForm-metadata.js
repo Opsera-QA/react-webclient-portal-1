@@ -22,7 +22,7 @@ const dockerPushStepFormMetadata = {
         id: "jobName",
       },
       {
-        label: "Job",
+        label: "Jenkins Job",
         id: "toolJobId",
         isRequired: true
       },

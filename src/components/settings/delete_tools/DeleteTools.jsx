@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 import DeleteToolsPlatformApplicationSelectInput from "components/settings/delete_tools/inputs/DeleteToolsPlatformApplicationSelectInput";
 import DeleteToolsTable from "components/settings/delete_tools/DeleteToolsTable";
 import platformActions from "components/inventory/platform/platform.actions";
+import DeleteToolsSubNavigationBar from "components/settings/delete_tools/DeleteToolsSubNavigationBar";
 
 function DeleteTools() {
   const toastContext = useContext(DialogToastContext);
@@ -123,6 +124,7 @@ function DeleteTools() {
     <ScreenContainer
       breadcrumbDestination={"deleteTools"}
       isLoading={!accessRoleData}
+      navigationTabContainer={<DeleteToolsSubNavigationBar activeTab={"deleteTools"} />}
       accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator && !accessRoleData?.SassPowerUser}
       pageDescription={"This tool enables administrators to select a registered application, view the active tools and then delete them from the platform. This will perform a complete end to end removal of all instances related to an application."}
     >

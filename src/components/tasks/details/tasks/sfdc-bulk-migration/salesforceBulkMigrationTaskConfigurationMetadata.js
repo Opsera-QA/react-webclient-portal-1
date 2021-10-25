@@ -138,7 +138,7 @@ export const salesforceBulkMigrationTaskConfigurationMetadata = {
   ],
   newObjectFields: {
     type: "",
-    jobType: "SFDC_GIT_SYNC",
+    jobType: "SFDC_BULK_MIGRATION",
     toolConfigId: "",
     autoScaleEnable: false,
     toolJobName: "",

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
-import SfdcToolInput from "../../inputs/SfdcToolInput";
+import SalesforceStepToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/inputs/SalesforceStepToolSelectInput";
 import SfdcJenkinsAccountInput from "../../inputs/SfdcJenkinsAccountInput";
 import SfdcBitbucketWorkspaceInput from "../../inputs/SfdcBitbucketWorkspaceInput";
 import SfdcGitRepositoryInput from "../../inputs/SfdcGitRepositoryInput";
@@ -23,7 +23,7 @@ function SfdcBackupJobEditorPanel({ sfdcStepConfigurationDto, setSfdcStepConfigu
 
   return (
     <>      
-      <SfdcToolInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
+      <SalesforceStepToolSelectInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
       {/* is org to org */}
       <BooleanToggleInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} fieldName={"isFullBackup"} />      
       <SfdcJenkinsAccountInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />      

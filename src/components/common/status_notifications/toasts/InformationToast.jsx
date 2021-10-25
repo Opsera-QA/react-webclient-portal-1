@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import IconBase from "components/common/icons/IconBase";
 
 function InformationToast({ informationMessage, removeToast, autoCloseLength, id }) {
   const [messageBody, setMessageBody] = useState("");
@@ -30,8 +30,12 @@ function InformationToast({ informationMessage, removeToast, autoCloseLength, id
 
   const getCloseButton = () => {
     return (
-      <div className="ml-1">
-        <FontAwesomeIcon icon={faTimes} className="pointer information-toast-close-button" onClick={() => { clearToast(); }}/>
+      <div className="ml-auto">
+        <IconBase
+          icon={faTimes}
+          className="pointer information-toast-close-button"
+          onClickFunction={() => { clearToast(); }}
+        />
       </div>
     );
   };
@@ -41,9 +45,7 @@ function InformationToast({ informationMessage, removeToast, autoCloseLength, id
       <div>
         {messageBody}
       </div>
-      <div className="ml-auto my-auto">
-        {getCloseButton()}
-      </div>
+      {getCloseButton()}
     </div>
   );
 }

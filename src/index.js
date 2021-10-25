@@ -5,7 +5,7 @@ import App from "./App";
 import "@fortawesome/fontawesome-pro/css/all.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "dhx-suite-package/codebase/suite.css";
-import "react-widgets/dist/css/react-widgets.css";
+import "react-widgets/styles.css";
 import "./theme.css";
 import "./field.css";
 import "./container.css";

@@ -21,7 +21,7 @@ function ToolAccountsTab({ toolModel, handleTabClick, activeTab }) {
       handleTabClick={handleTabClick}
       activeTab={activeTab}
       tabText={"Accounts"}
-      disabled={!toolModel.canPerformAction("update_tool_accounts")}
+      accessRestricted={!toolModel.canPerformAction("update_tool_accounts")}
     />
   );
 }

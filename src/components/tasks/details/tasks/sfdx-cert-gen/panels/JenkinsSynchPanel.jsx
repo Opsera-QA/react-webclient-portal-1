@@ -1,10 +1,11 @@
 import React, {useContext, useState} from 'react';
 import PropTypes from 'prop-types';
-import JenkinsToolMultiSelectInput from './JenkinsToolMultiSelectInput';
 import { Button } from "react-bootstrap";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import taskActions from "components/tasks/task.actions";
+import RoleRestrictedJenkinsToolMultiSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/tool/RoleRestrictedJenkinsToolMultiSelectInput";
 
 function JenkinsSynchPanel({gitTasksData, setGitTasksData}) {
     const [isSynching, setIsSynching] = useState(false);
@@ -26,20 +27,19 @@ function JenkinsSynchPanel({gitTasksData, setGitTasksData}) {
         }
     };
 
-    return (
-        <div>
-            <JenkinsToolMultiSelectInput 
-                dataObject={gitTasksData}
-                setDataObject={setGitTasksData}
-                toolType={"jenkins"}
-                busy={isSynching}
-                toolFriendlyName={"Jenkins"}
-                configurationRequired={true}
-                fieldName={"jenkinsIds"}
-            />
-            <Button className="mt-2" onClick={handleSynch} disabled={!(gitTasksData.getData("jenkinsIds") && gitTasksData.getData("jenkinsIds").length > 0) || isSynching}>Synch Jenkins</Button>
-        </div>
-    );
+  return (
+    <div>
+      <RoleRestrictedJenkinsToolMultiSelectInput
+        dataObject={gitTasksData}
+        setDataObject={setGitTasksData}
+        busy={isSynching}
+        fieldName={"jenkinsIds"}
+      />
+      <Button className="mt-2" onClick={handleSynch}
+              disabled={!(gitTasksData.getData("jenkinsIds") && gitTasksData.getData("jenkinsIds").length > 0) || isSynching}>Synch
+        Jenkins</Button>
+    </div>
+  );
 }
 
 JenkinsSynchPanel.propTypes = {

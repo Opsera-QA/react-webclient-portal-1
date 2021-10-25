@@ -19,6 +19,10 @@ const SonarPipelineTableMetadata = {
       id: "critical",
     },
     {
+      label: "Blocker",
+      id: "blocker",
+    },
+    {
       label: "Major",
       id: "major",
     },
@@ -32,7 +36,7 @@ const SonarPipelineTableMetadata = {
     },
     {
       label: "Remediation Effort (in minutes)",
-      id: "total_effort",
+      id: "effort",
     },
   ],
   newObjectFields: {},

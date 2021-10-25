@@ -10,7 +10,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel, selectedComponents }) => {
+const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -92,7 +92,7 @@ const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel, s
   const customTemplate = (item) => {
     const value = item["value"] !== "" ? item["value"] : "No file extension found.";
     const enabled = item["enabled"] === true;
-    const className = enabled === true ? "" :  "text-muted";
+    const className = enabled === true ? "" : "text-muted";
 
     return (`
       <div class="${className}">
@@ -164,7 +164,6 @@ const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel, s
 SfdcComponentListInput.propTypes = {
   pipelineWizardModel: PropTypes.object,
   setPipelineWizardModel: PropTypes.func,
-  selectedComponents: PropTypes.array
 };
 
 export default SfdcComponentListInput;

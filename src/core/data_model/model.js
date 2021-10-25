@@ -316,12 +316,24 @@ export class Model {
     return filter != null && filter["text"] != null ? filter["text"] : filter;
   };
 
-  getMaxLength = (field) => {
-    return this.metaData[field].maxLength;
+  getMaxLength = (fieldName) => {
+    const field = this.getFieldById(fieldName);
+    return field?.maxLength;
   };
 
-  getMinLength = (field) => {
-    return this.metaData[field].minLength;
+  getMinLength = (fieldName) => {
+    const field = this.getFieldById(fieldName);
+    return field?.minLength;
+  };
+
+  getMinItems = (fieldName) => {
+    const field = this.getFieldById(fieldName);
+    return field?.minItems;
+  };
+
+  getMaxItems = (fieldName) => {
+    const field = this.getFieldById(fieldName);
+    return field?.maxItems;
   };
 
   getId = (field) => {

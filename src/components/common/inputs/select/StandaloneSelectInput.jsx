@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DropdownList from "react-widgets/lib/DropdownList";
+import DropdownList from "react-widgets/DropdownList";
 
 function StandaloneSelectInput(
   {
@@ -20,6 +20,7 @@ function StandaloneSelectInput(
     allowCreate,
     className,
     onToggle,
+    hasErrorState,
   }) {
   const getPlaceholderText = () => {
     if (!Array.isArray(selectOptions)) {
@@ -35,9 +36,9 @@ function StandaloneSelectInput(
 
   return (
     <DropdownList
-      className={className}
+      className={`${hasErrorState ? "select-input-error " : ""}${className}`}
       data={selectOptions}
-      valueField={valueField}
+      dataKey={valueField}
       textField={textField}
       groupBy={groupBy}
       value={value}
@@ -82,6 +83,7 @@ StandaloneSelectInput.propTypes = {
   onToggle: PropTypes.func,
   noDataText: PropTypes.string,
   defaultValue: PropTypes.any,
+  hasErrorState: PropTypes.book,
 };
 
 StandaloneSelectInput.defaultProps = {

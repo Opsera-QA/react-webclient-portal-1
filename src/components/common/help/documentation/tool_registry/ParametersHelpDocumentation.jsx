@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
-import RoleAccessTable from "components/common/fields/access/table/RoleAccessTable";
 import PropTypes from "prop-types";
+import AssignedRoleAccessTable from "components/common/fields/access/table/AssignedRoleAccessTable";
+import SiteRoleAccessTable from "components/common/fields/access/table/SiteRoleAccessTable";
 
 function ParametersHelpDocumentation({parameterRoleDefinitions}) {
   const toastContext = useContext(DialogToastContext);
@@ -41,9 +42,10 @@ function ParametersHelpDocumentation({parameterRoleDefinitions}) {
       helpDocumentation={getHelpDocumentation()}
     >
       <div className={"my-2"}>
-        <RoleAccessTable
-          roleAccessDefinitions={parameterRoleDefinitions}
-        />
+        <AssignedRoleAccessTable roleAccessDefinitions={parameterRoleDefinitions} />
+      </div>
+      <div className={"my-2"}>
+        <SiteRoleAccessTable roleAccessDefinitions={parameterRoleDefinitions} />
       </div>
     </HelpOverlayBase>
   );

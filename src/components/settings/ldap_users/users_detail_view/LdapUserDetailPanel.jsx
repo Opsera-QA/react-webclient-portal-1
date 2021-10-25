@@ -20,11 +20,23 @@ function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, authori
     setActiveTab("summary");
   };
 
+  const getSettingsTab = () => {
+    if (hideSettings !== true) {
+      return (
+        <SettingsTab
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          disabled={hideSettings}
+        />
+      );
+    }
+  };
+
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} disabled={hideSettings} />
+        {getSettingsTab()}
       </CustomTabContainer>
     );
   };

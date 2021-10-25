@@ -9,6 +9,7 @@ import ToolPipelinesTable from "components/inventory/tools/tool_details/ToolPipe
 import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 import DestructiveDeleteModal from "components/common/modal/DestructiveDeleteModal";
 import axios from "axios";
+import vaultActions from "components/vault/vault.actions";
 
 function ActionBarDeleteToolButton({ toolModel, className }) {
   const toastContext = useContext(DialogToastContext);
@@ -16,7 +17,6 @@ function ActionBarDeleteToolButton({ toolModel, className }) {
   const history = useHistory();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [canDelete, setCanDelete] = useState(false);
   const [relevantPipelines, setRelevantPipelines] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -30,27 +30,16 @@ function ActionBarDeleteToolButton({ toolModel, className }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
     return () => {
       source.cancel();
       isMounted.current = false;
     };
   }, [toolModel]);
 
-  const loadData = async () => {
-    if (toolModel?.canPerformAction("delete_tool") === true) {
-      setCanDelete(true);
-    }
-  };
 
   const deleteObject = async () => {
     try {
-      let vaultDeleteResponse = await toolsActions.deleteOwnerVaultRecordsForToolIdV2(getAccessToken, cancelTokenSource, toolModel);
+      let vaultDeleteResponse = await vaultActions.deleteOwnerVaultRecordsForToolIdV2(getAccessToken, cancelTokenSource, toolModel);
       if (vaultDeleteResponse?.status !== 200) {
         const errorMsg = `Error reported by services while deleting tool information from Vault. Please try again`;
         toastContext.showErrorDialog(errorMsg);
@@ -110,7 +99,7 @@ function ActionBarDeleteToolButton({ toolModel, className }) {
     );
   };
 
-  if (canDelete !== true) {
+  if (toolModel?.canPerformAction("delete_tool") !== true) {
     return <></>;
   }
 

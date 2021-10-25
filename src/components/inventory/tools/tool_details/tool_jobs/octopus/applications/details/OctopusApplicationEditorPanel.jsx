@@ -11,13 +11,13 @@ import OctopusActions from "../../octopus-actions";
 import DeleteModal from "components/common/modal/DeleteModal";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import CloudProviderSelectInput from "./input/CloudProviderSelectInput";
-import AzureToolSelectInput from "./input/AzureToolSelectInput";
+import OctopusApplicationAzureAccountToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/OctopusApplicationAzureAccountToolSelectInput";
 import CommunicationStyleSelectInput from "./input/CommunicationStyleSelectInput";
 import WebAppNameSelectInput from "./input/WebAppNameSelectInput";
 import SpaceNameSelectInput from "./input/SpaceNameSelectInput";
 import EnvironmentNameSelectInput from "./input/EnvironmentSelectInput";
 import AccountSelectInput from "./input/AccountSelectInput";
-import AWSToolSelectInput from "./input/AWSToolSelectInput";
+import RoleRestrictedAwsAccountToolSelectInput from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 import ClusterSelectInput from "./input/ClusterSelectInput";
 import TestConnectionButton from "./input/TestConnectionButton";
 import EditWarningModalToolRegistry from "components/common/modal/EditWarningModalToolRegistry";
@@ -28,7 +28,7 @@ import axios from "axios";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import pipelineActions from "components/workflow/pipeline-actions";
-import AzureToolConfigIdSelectInput from "./input/AzureToolConfigIdSelectInput";
+import OctopusStepAzureToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/OctopusStepAzureToolSelectInput";
 import AzureClusterSelectInput from "./input/AzureClusterSelectInput";
 import AzureResourceGroupSelectInput from "./input/AzureResourceGroupSelectInput";
 import OctopusFeedEditorForm from "./sub_forms/OctopusFeedEditorForm";
@@ -242,7 +242,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
             </Col>
             {octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType") === "AzureServicePrincipal" && (
               <Col lg={12}>
-                <AzureToolSelectInput
+                <OctopusApplicationAzureAccountToolSelectInput
                   fieldName={"azureToolConfigId"}
                   dataObject={octopusApplicationDataDto}
                   setDataObject={setOctopusApplicationDataDto}
@@ -258,17 +258,16 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
             {octopusApplicationDataDto &&
             octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
               <Col lg={12}>
-                <AWSToolSelectInput
+                <RoleRestrictedAwsAccountToolSelectInput
                   fieldName={"awsToolConfigId"}
-                  dataObject={octopusApplicationDataDto}
-                  setDataObject={setOctopusApplicationDataDto}
+                  model={octopusApplicationDataDto}
+                  setModel={setOctopusApplicationDataDto}
                   disabled={
                     (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) ||
                     appID
                       ? true
                       : false
                   }
-                  tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("cloudType") : ""}
                 />
               </Col>
             )}
@@ -348,7 +347,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
             {octopusApplicationDataDto &&
             octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
               <Col lg={12}>
-                <AWSToolSelectInput
+                <RoleRestrictedAwsAccountToolSelectInput
                   fieldName={"awsToolConfigId"}
                   dataObject={octopusApplicationDataDto}
                   setDataObject={setOctopusApplicationDataDto}
@@ -403,9 +402,9 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                   />
                 </Col>
                 <Col lg={12}>
-                  <AzureToolConfigIdSelectInput
-                    dataObject={octopusApplicationDataDto}
-                    setDataObject={setOctopusApplicationDataDto}
+                  <OctopusStepAzureToolSelectInput
+                    model={octopusApplicationDataDto}
+                    setModel={setOctopusApplicationDataDto}
                     setAzureConfig={setAzureConfig}
                   />
                 </Col>

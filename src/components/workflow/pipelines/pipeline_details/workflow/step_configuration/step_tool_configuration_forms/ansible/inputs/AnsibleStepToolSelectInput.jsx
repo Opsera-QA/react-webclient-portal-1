@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
-function AnsibleStepToolSelectInput({ fieldName, model, setModel, disabled, className }) {
 
+function AnsibleStepToolSelectInput({ fieldName, model, setModel, disabled, className }) {
   const getTextField = (tool) => {
     const hostName = tool?.configuration?.hostName || "No Ansible URL Assigned";
     const toolName = tool?.name; 

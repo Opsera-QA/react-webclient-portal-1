@@ -5,8 +5,12 @@ import OverlayTitleBar from "components/common/overlays/OverlayTitleBar";
 import CloseButton from "components/common/buttons/CloseButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
+import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
+import {Col, Row} from "react-bootstrap";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-function ConfirmationOverlay({ children, actionBar, titleText, titleIcon, showPanel, closePanel, isLoading, showToasts, showCloseButton, buttonContainer, fullWidth, pageLink, linkTooltipText }) {
+function ConfirmationOverlay({ children, actionBar, icon, titleText, titleIcon, showPanel, closePanel, isLoading, showToasts, showCloseButton, buttonContainer, fullWidth, pageLink, linkTooltipText }) {
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -56,7 +60,9 @@ function ConfirmationOverlay({ children, actionBar, titleText, titleIcon, showPa
           {actionBar}
           <div className={"confirmation-overlay-panel-body bg-white"}>
             {showToasts && toastContext?.getInlineBanner()}
-            {getBody()}
+            <div className={"d-flex p-3 confirmation-overlay-panel-body-text"}>
+              {getBody()}
+            </div>
           </div>
           <div className={"mt-auto bg-white"}>
             {getButtons()}
@@ -80,11 +86,12 @@ ConfirmationOverlay.propTypes = {
   buttonContainer: PropTypes.object,
   fullWidth: PropTypes.bool,
   pageLink: PropTypes.string,
-  linkTooltipText: PropTypes.string
+  linkTooltipText: PropTypes.string,
+  icon: PropTypes.object,
 };
 
 ConfirmationOverlay.defaultProps = {
-  showCloseButton: true
+  showCloseButton: true,
 };
 
 export default ConfirmationOverlay;

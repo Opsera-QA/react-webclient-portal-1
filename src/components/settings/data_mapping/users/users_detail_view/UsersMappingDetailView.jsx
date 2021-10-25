@@ -10,6 +10,9 @@ import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarD
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import DataMappingManagementSubNavigationBar
+  from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 function UsersMappingDetailView() {
   const { usersMappingId } = useParams();
@@ -83,6 +86,7 @@ function UsersMappingDetailView() {
     <DetailScreenContainer
       breadcrumbDestination={"userTaggingDetailView"}
       metadata={usersTagsMetadata}
+      navigationTabContainer={<DataMappingManagementSubNavigationBar activeTab={"userTagViewer"} />}
       accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
       dataObject={usersMappingData}
       isLoading={isLoading}

@@ -20,7 +20,7 @@ function ToolProjectsTab({ toolModel, handleTabClick, activeTab }) {
       handleTabClick={handleTabClick}
       activeTab={activeTab}
       tabText={"Projects"}
-      disabled={!toolModel.canPerformAction("update_tool_projects")}
+      accessRestricted={!toolModel.canPerformAction("update_tool_projects")}
     />
   );
 }

@@ -69,6 +69,10 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
     }
   };
 
+  if (error === null || error === "") {
+    return null;
+  }
+
   if (align === "center") {
     return (
       <div className="row h-100">

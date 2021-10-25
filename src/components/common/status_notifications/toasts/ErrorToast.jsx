@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {parseError} from "../../helpers/error-helpers";
-import {faExclamation, faExclamationCircle} from "@fortawesome/pro-solid-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function ErrorToast({ error, prependMessage, removeToast, autoCloseLength, id }) {
   const [messageBody, setMessageBody] = useState("");
@@ -41,8 +40,13 @@ function ErrorToast({ error, prependMessage, removeToast, autoCloseLength, id })
   const getCloseButton = () => {
     if (removeToast) {
       return (
-        <div className="ml-1">
-          <FontAwesomeIcon icon={faTimes} className="pointer danger-red" onClick={() => { clearError(); }}/>
+        <div className={"ml-auto"}>
+          <IconBase
+            icon={faTimes}
+            iconSize={"md"}
+            className="pointer danger-red"
+            onClickFunction={() => { clearError(); }}
+          />
         </div>
       );
     }
@@ -51,7 +55,7 @@ function ErrorToast({ error, prependMessage, removeToast, autoCloseLength, id })
   const getCustomMessage = () => {
     if (statusCode === 401 || (messageBody && messageBody.includes("401"))) {
       return (
-        <span className="ml-1">
+        <span>
           <a style={{textDecoration: "underline"}} href="#" onClick={() => { reloadSession(); }}>Click here to renew session.</a>
         </span>
       );
@@ -59,13 +63,11 @@ function ErrorToast({ error, prependMessage, removeToast, autoCloseLength, id })
   };
 
   return (
-    <div className="error-toast d-flex p-2" role="alert" aria-live="assertive" aria-atomic="true">
-      <div className="error-toast-text">
+    <div className="error-toast d-flex" role="alert" aria-live="assertive" aria-atomic="true">
+      <div className="error-toast-text p-2">
         <span>{prependMessage} {messageBody} {getCustomMessage()}</span>
       </div>
-      <div className="ml-auto my-auto">
-        {getCloseButton()}
-      </div>
+      {getCloseButton()}
     </div>
   );
 }

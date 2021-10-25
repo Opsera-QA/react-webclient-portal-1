@@ -8,6 +8,8 @@ import Model from "core/data_model/model";
 import analyticsDataFilterMetadata from "components/settings/analytics_data_entry/analytics-data-filter-metadata";
 import analyticsDataActions from "components/settings/analytics_data_entry/analytics-data-actions";
 import AnalyticsDataEntryTable from "components/settings/analytics_data_entry/AnalyticsDataEntryTable";
+import AnalyticsDataEntryManagementSubNavigationBar
+  from "components/settings/analytics_data_entry/AnalyticsDataEntryManagementSubNavigationBar";
 
 function AnalyticsDataEntryManagement() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -78,7 +80,7 @@ function AnalyticsDataEntryManagement() {
     if (isMounted?.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      if (meetsRequirements(ROLE_LEVELS.POWER_USERS, userRoleAccess)) {
+      if (meetsRequirements(ROLE_LEVELS.POWER_USERS_AND_SASS, userRoleAccess)) {
         await getAnalyticsDataEntries(cancelSource);
       }
     }
@@ -89,7 +91,8 @@ function AnalyticsDataEntryManagement() {
       isLoading={!accessRoleData}
       breadcrumbDestination={"analyticsDataEntryManagement"}
       accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.POWER_USERS}
+      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+      navigationTabContainer={<AnalyticsDataEntryManagementSubNavigationBar activeTab={"analyticsDataEntries"} />}
     >
       <AnalyticsDataEntryTable
         isLoading={isLoading}

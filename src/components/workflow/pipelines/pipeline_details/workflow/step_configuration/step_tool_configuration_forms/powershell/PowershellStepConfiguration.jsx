@@ -6,10 +6,10 @@ import PropTypes from "prop-types";
 import powershellStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/powershell-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import PowershellJenkinsToolInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellJenkinsToolInput";
-import PowershellJenkinsJobInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellJenkinsJobInput";
+import PowershellStepJenkinsToolSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellStepJenkinsToolSelectInput";
+import PowershellStepJenkinsJobSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellStepJenkinsJobSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import PowershellJenkinsAccountInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellJenkinsAccountInput";
@@ -90,8 +90,14 @@ function PowershellStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <PowershellJenkinsToolInput dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto} />
-      <PowershellJenkinsJobInput dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto}/>
+      <PowershellStepJenkinsToolSelectInput
+        model={powershellStepConfigurationDto}
+        setModel={setPowershellStepConfigurationDataDto}
+      />
+      <PowershellStepJenkinsJobSelectInput
+        model={powershellStepConfigurationDto}
+        setModel={setPowershellStepConfigurationDataDto}
+      />
       <PowershellJenkinsAccountInput dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto} />
       <PowershellBitbucketWorkspaceInput dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto} />
       <PowershellGitRepositoryInput dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto} />

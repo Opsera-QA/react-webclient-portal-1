@@ -8,9 +8,9 @@ import modelHelpers from "components/common/model/modelHelpers";
 import KafkaConnectGitRepositoryInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/kafka_connect/inputs/KafkaConnectGitRepositoryInput";
 import KafkaConnectGitBranchInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/kafka_connect/inputs/KafkaConnectGitBranchInput";
 import KafkaConnectBitbucketWorkspaceInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/kafka_connect/inputs/KafkaConnectBitbucketWorkspaceInput";
-import KafkaConnectToolSelectInput from "./inputs/KafkaConnectToolSelectInput";
+import RoleRestrictedKafkaConnectToolSelectInput from "components/common/list_of_values_input/tools/kafka_connect/tool/RoleRestrictedKafkaConnectToolSelectInput";
 import KafkaConnectSCMToolTypeSelectInput from "./inputs/KafkConnectSCMToolTypeSelectInput";
-import KafkaConnectSCMToolSelectInput from "./inputs/KafkaConnectSCMToolSelectInput";
+import KafkaConnectStepSourceControlManagementToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/kafka_connect/inputs/KafkaConnectStepSourceControlManagementToolSelectInput";
 import KafkaConnectSCMRepoFiles from "./inputs/KafkaConnectSCMRepoFiles";
 import OctopusLifecycleSelectInput from "../octopus/input/OctopusLifecycleSelectInput";
 import KafkaConnectActionSelectInput from "./inputs/KafkaConnectActionSelectInput";
@@ -66,9 +66,10 @@ function KafkaConnectStepConfiguration({ pipelineId, stepTool, stepId, closeEdit
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <KafkaConnectToolSelectInput
-        dataObject={kafkaConnectStepConfigurationDto}
-        setDataObject={setKafkaConnectStepConfigurationDataDto}
+      <RoleRestrictedKafkaConnectToolSelectInput
+        model={kafkaConnectStepConfigurationDto}
+        setModel={setKafkaConnectStepConfigurationDataDto}
+        fieldName={"kafkaToolId"}
       />
       <KafkaConnectActionSelectInput
         dataObject={kafkaConnectStepConfigurationDto}
@@ -96,9 +97,9 @@ function KafkaConnectStepConfiguration({ pipelineId, stepTool, stepId, closeEdit
               dataObject={kafkaConnectStepConfigurationDto}
               setDataObject={setKafkaConnectStepConfigurationDataDto}
             />
-            <KafkaConnectSCMToolSelectInput
-              dataObject={kafkaConnectStepConfigurationDto}
-              setDataObject={setKafkaConnectStepConfigurationDataDto}
+            <KafkaConnectStepSourceControlManagementToolSelectInput
+              model={kafkaConnectStepConfigurationDto}
+              setModel={setKafkaConnectStepConfigurationDataDto}
               disabled={kafkaConnectStepConfigurationDto.getData("service").length === 0}
             />
             <KafkaConnectBitbucketWorkspaceInput

@@ -19,6 +19,7 @@ import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline
 import axios from "axios";
 import SfdcPipelineWizardManualTestClassSelector
   from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/SfdcPipelineWizardManualTestClassSelector";
+import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 
 // TODO: This should really be altered to be a part of each of the workflow boxes rather than having it rely on selected object
 const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, setPipelineWizardScreen }) => {
@@ -200,30 +201,30 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
           {getUnitTestSelection()}
 
           </div>
-          <div className="flex-container-bottom pr-2 mt-4 mb-2 text-right">
-           <Button
-            variant="secondary"
-            size="sm"
-            className="mr-2"
-            onClick={() => { handleBackButtonClick(); }}
-          >
-            <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>
-            Back
-          </Button>
+          <SaveButtonContainer>
+             <Button
+              variant="secondary"
+              size="sm"
+              className="mr-2"
+              onClick={() => { handleBackButtonClick(); }}
+            >
+              <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>
+              Back
+            </Button>
 
-          <Button
-            variant="success"
-            size="sm"
-            onClick={() => {
-              setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.XML_VIEWER);
-            }}
-          >
-            <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
-            Next
-          </Button>
+            <Button
+              variant="success"
+              size="sm"
+              onClick={() => {
+                setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.XML_VIEWER);
+              }}
+            >
+              <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
+              Next
+            </Button>
 
             <CancelButton className={"ml-2"} cancelFunction={handleClose} />
-        </div>
+          </SaveButtonContainer>
       </div>
     </div>
   );

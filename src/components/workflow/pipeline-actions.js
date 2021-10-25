@@ -30,6 +30,15 @@ pipelineActions.getInUseTemplatesV2 = async (getAccessToken, cancelTokenSource) 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+pipelineActions.getQueuedPipelineRequestV2 = async (getAccessToken, cancelTokenSource, id) => {
+  let apiUrl = `/pipelines/${id}/queue`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+pipelineActions.deleteQueuedPipelineRequestV2 = async (getAccessToken, cancelTokenSource, id) => {
+  let apiUrl = `/pipelines/${id}/queue`;
+  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
 
 pipelineActions.getPipelinesV2 = async (getAccessToken, cancelTokenSource, pipelineFilterModel, type, fields) => {
   const urlParams = {
@@ -338,40 +347,6 @@ pipelineActions.createFreeTrialPipeline = async (postBody, getAccessToken) => {
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
   return response;
-};
-
-// TODO: Migrate to V2. Also, construct the array inside wherever you pull the data so it's flexible.
-pipelineActions.getToolsList = async (service, getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = `/registry/properties/${service}`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {
-      if (result.data) {
-        let respObj = [];
-        let arrOfObj = result.data;
-        arrOfObj.map((item) => {
-          respObj.push({
-            name: item.name,
-            id: item._id,
-            configuration: item.configuration,
-            accounts: item.accounts,
-            jobs: item.jobs,
-          });
-        });
-        return respObj;
-      }
-      else {
-        throw "Tool information is missing or unavailable!  Please ensure the required creds are registered and up to date in Tool Registry.";
-      }
-    })
-    .catch(error => {throw { error };});
-  return response;
-};
-
-// TODO: Replace this with toolsActions.getRoleLimitedToolsByIdentifier
-pipelineActions.getToolsListV2 = async (getAccessToken, cancelTokenSource, service) => {
-  const apiUrl = `/registry/properties/${service}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 pipelineActions.getPipelineUsageToolList = async (getAccessToken) => {

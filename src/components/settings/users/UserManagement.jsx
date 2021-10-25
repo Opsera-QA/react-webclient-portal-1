@@ -11,6 +11,7 @@ import CustomTab from "components/common/tabs/CustomTab";
 import {faUserHardHat, faUsers} from "@fortawesome/pro-light-svg-icons";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import PendingUsersTable from "components/settings/users/PendingUsersTable";
+import UserManagementSubNavigationBar from "components/settings/users/UserManagementSubNavigationBar";
 
 function UserManagement() {
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
@@ -158,6 +159,7 @@ function UserManagement() {
       isLoading={!accessRoleData}
       roleRequirement={ROLE_LEVELS.POWER_USERS}
       accessRoleData={accessRoleData}
+      navigationTabContainer={<UserManagementSubNavigationBar activeTab={"users"} />}
       pageDescription={"Manage existing users as well as register new users for this account.  The new user form allows owners to create new user accounts with targeted group access. Users will receive an invitation email upon completion of the form."}
     >
       <div className="px-3">
