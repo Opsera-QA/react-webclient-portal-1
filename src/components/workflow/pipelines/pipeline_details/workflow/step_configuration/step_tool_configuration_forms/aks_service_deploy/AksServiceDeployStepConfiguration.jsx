@@ -7,8 +7,8 @@ import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "../../../../../../../common/inputs/text/TextInputBase";
 import aksStepFormMetadata from "./aks-stepForm-metadata";
 import AksDeployStepAzureToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/aks_service_deploy/inputs/AksDeployStepAzureToolSelectInput";
-import AzureCredentialIdSelectInput
-  from "./inputs/AzureCredentialIdSelectInput";
+import AksServiceDeployStepApplicationSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/aks_service_deploy/inputs/AksServiceDeployStepApplicationSelectInput";
 import AksClusterSelectInput from "./inputs/AksClusterSelectInput";
 import DynamicNameToggleInput from "./inputs/DynamicNameToggleInput";
 import DockerPushStepSelectInput from "./inputs/DockerPushStepSelectInput";
@@ -19,7 +19,6 @@ function AksServiceDeployStepConfiguration({ stepTool, closeEditorPanel, parentC
   const [isLoading, setIsLoading] = useState(false);
   const [aksModel, setAksModel] = useState(undefined);
   const [threshold, setThreshold] = useState(undefined);
-  const [azureConfig, setAzureConfig] = useState(null);
   const [applicationData, setApplicationData] = useState(null);
 
   useEffect(() => {
@@ -62,20 +61,16 @@ function AksServiceDeployStepConfiguration({ stepTool, closeEditorPanel, parentC
       <AksDeployStepAzureToolSelectInput
         dataObject={aksModel}
         setDataObject={setAksModel}
-        setAzureConfig={setAzureConfig}
       />
-      <AzureCredentialIdSelectInput
-        dataObject={aksModel}
-        setDataObject={setAksModel}
-        azureConfig={azureConfig}
-        setApplicationData={setApplicationData}
+      <AksServiceDeployStepApplicationSelectInput
+        model={aksModel}
+        setModel={setAksModel}
       />
       <AksClusterSelectInput
         dataObject={aksModel}
         setDataObject={setAksModel}
         azureToolConfigId={aksModel?.getData("azureToolConfigId")}
         azureApplication={aksModel?.getData("azureCredentialId")}
-        azureConfig={azureConfig}
         applicationData={applicationData}
       />
       <DynamicNameToggleInput
@@ -103,7 +98,6 @@ function AksServiceDeployStepConfiguration({ stepTool, closeEditorPanel, parentC
         setDataObject={setAksModel}
         azureToolConfigId={aksModel?.getData("azureToolConfigId")}
         azureApplication={aksModel?.getData("azureCredentialId")}
-        azureConfig={azureConfig}
         applicationData={applicationData}
         />
       )

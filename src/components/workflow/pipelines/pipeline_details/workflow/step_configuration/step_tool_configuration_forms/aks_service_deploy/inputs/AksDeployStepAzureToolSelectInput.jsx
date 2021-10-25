@@ -14,16 +14,15 @@ function AksDeployStepAzureToolSelectInput({ fieldName, dataObject, setDataObjec
     setDataObject({...newDataObject});
   };
 
-  const clearDataFunction=()=>{
+  const clearDataFunction = () => {
     let newDataObject = {...dataObject};
     newDataObject.setData(fieldName, "");
     newDataObject.setData("azureCredentialId", "");
     newDataObject.setData("region", "");
     newDataObject.setData("machine_type", "");
-    setAzureConfig(null);  
+    setAzureConfig(null);
     setDataObject({...newDataObject});
   };
-
 
   return (
     <RoleRestrictedAzureToolSelectInput
@@ -51,7 +50,7 @@ AksDeployStepAzureToolSelectInput.propTypes = {
 };
 
 AksDeployStepAzureToolSelectInput.defaultProps = {
-  valueField: "id",
+  valueField: "_id",
   textField: "name",
   fieldName: "azureToolConfigId",
   
