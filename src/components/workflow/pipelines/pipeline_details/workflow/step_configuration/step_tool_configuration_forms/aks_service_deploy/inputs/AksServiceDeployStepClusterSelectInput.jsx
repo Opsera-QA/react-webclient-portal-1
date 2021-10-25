@@ -1,22 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
-import { AuthContext } from "contexts/AuthContext";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSync } from "@fortawesome/pro-light-svg-icons";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSync} from "@fortawesome/pro-light-svg-icons";
 import aksStepActions from "../aks-step-actions";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import toolsActions from "components/inventory/tools/tools-actions";
 
-function AksClusterSelectInput({
-                                  fieldName,
-                                  dataObject,
-                                  setDataObject,
-                                  azureToolConfigId,
-                                  azureConfig,
-                                  azureApplication,
-                                  applicationData,
-                                }) {
+function AksServiceDeployStepClusterSelectInput(
+  {
+    fieldName,
+    dataObject,
+    setDataObject,
+    azureToolConfigId,
+    applicationId,
+  }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [azureRegionList, setAzureRegionList] = useState([]);
@@ -31,21 +32,14 @@ function AksClusterSelectInput({
     }
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
+
     setAzureRegionList([]);
-    if (isValidToolConfig() && isValidApplication()) {
+    if (hasStringValue(applicationId) === true && hasStringValue(azureToolConfigId) === true) {
       loadData(source).catch((error) => {
         throw error;
       });
     }
-  }, [azureToolConfigId, azureApplication, azureConfig, applicationData]);
-
-  const isValidApplication = () => {
-    return azureApplication && azureApplication != "" && azureApplication !== null && applicationData;
-  };
-
-  const isValidToolConfig = () => {
-    return azureToolConfigId && azureToolConfigId != "" && azureToolConfigId !== null && azureConfig;
-  };
+  }, [azureToolConfigId, applicationId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -61,15 +55,39 @@ function AksClusterSelectInput({
     }
   };
 
+  // TODO: We should make a route on node where you can pass an azure tool ID and an azure Application ID
+  //  and return the clusters instead of constructing the complex query here on React
   const loadAzureRegistries = async (cancelSource = cancelTokenSource) => {
-    const response = await aksStepActions.getAzureClusters(
+    const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, azureToolConfigId);
+    const tool = response?.data?.data;
+
+    if (tool == null) {
+      setPlaceholderText("Error Pulling Clusters!");
+      setErrorMessage("Could not find Tool to grab Clusters.");
+      return;
+    }
+
+    const applicationResponse = await toolsActions.getRoleLimitedToolApplicationByIdV2(getAccessToken, cancelSource, azureToolConfigId, applicationId);
+    const applicationData = applicationResponse?.data?.data;
+
+    if (applicationData == null) {
+      setPlaceholderText("Error Pulling Clusters!");
+      setErrorMessage(`
+        The selected Application was not found. 
+        It may have been deleted, or the Tool's access roles may have been updated.
+        Please select another Application or create another in the Tool Registry.
+      `);
+      return;
+    }
+
+    const azureResponse = await aksStepActions.getAzureClusters(
       getAccessToken,
       cancelSource,
-      azureConfig,
-      applicationData
+      tool,
+      applicationData?.configuration
     );
 
-    const result = response?.data?.data;
+    const result = azureResponse?.data?.data;
     if (Array.isArray(result) && result.length > 0) {
       setErrorMessage("");
       setAzureRegionList(result);
@@ -92,13 +110,6 @@ function AksClusterSelectInput({
     }
   };
 
-  const handleDTOChange = async (fieldName, value) => {
-      let newDataObject = dataObject;
-      newDataObject.setData("aksClusterName", value);
-      setDataObject({ ...newDataObject });
-      return;
-  };
-
   return (
     <>
       <SelectInputBase
@@ -107,7 +118,6 @@ function AksClusterSelectInput({
         setDataObject={setDataObject}
         selectOptions={azureRegionList}
         busy={isLoading}
-        setDataFunction={handleDTOChange}
         disabled={isLoading}
         placeholder={placeholder}
         errorMessage={errorMessage}
@@ -119,20 +129,18 @@ function AksClusterSelectInput({
   );
 }
 
-AksClusterSelectInput.propTypes = {
+AksServiceDeployStepClusterSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   azureToolConfigId: PropTypes.string,
-  azureApplication: PropTypes.string,
-  azureConfig: PropTypes.object,
-  applicationData: PropTypes.object,
+  applicationId: PropTypes.string,
 };
 
-AksClusterSelectInput.defaultProps = {
+AksServiceDeployStepClusterSelectInput.defaultProps = {
   fieldName: "aksClusterName",
   textField: "clusterName",
   valueField: "clusterName",
 };
 
-export default AksClusterSelectInput;
+export default AksServiceDeployStepClusterSelectInput;
