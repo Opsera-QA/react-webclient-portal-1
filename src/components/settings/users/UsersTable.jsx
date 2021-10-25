@@ -10,7 +10,7 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import NewUserOverlay from "components/settings/users/NewUserOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function UsersTable({ userData, isLoading, authorizedActions, loadData, isMounted }) {
+function UsersTable({ userData, orgDomain, isLoading, authorizedActions, loadData, isMounted }) {
   const toastContext = useContext(DialogToastContext);
   const fields = usersMetadata.fields;
   const history = useHistory();
@@ -31,7 +31,7 @@ function UsersTable({ userData, isLoading, authorizedActions, loadData, isMounte
   );
 
   const onRowSelect = (grid, row) => {
-    history.push(`/settings/user-management/active/${row?.emailAddress}/details`);
+    history.push(`/settings/user-management/active/${orgDomain}/${row?.emailAddress}/details`);
   };
 
   const createUser = () => {

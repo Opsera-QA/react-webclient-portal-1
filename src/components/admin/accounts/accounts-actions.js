@@ -127,13 +127,8 @@ accountsActions.getAllowedUserActions = async (customerAccessRules, organization
 
   // TODO: How to determine group owner?
   let groupOwner = false;
-  let orgAccountOwner = await accountsActions.isOrganizationAccountOwner(user);
-  let orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
 
-  if (orgOwner) {
-    return ["get_users", "get_user_details", "create_user", "update_user"];
-  }
-  else if (orgAccountOwner || customerAccessRules.Administrator) {
+  if (customerAccessRules.OrganizationAccountOwner || customerAccessRules.OrganizationAccountOwner || customerAccessRules.Administrator) {
     return ["get_users", "get_user_details", "create_user", "update_user"];
   }
   else if (customerAccessRules.PowerUser || customerAccessRules.User || groupOwner) {

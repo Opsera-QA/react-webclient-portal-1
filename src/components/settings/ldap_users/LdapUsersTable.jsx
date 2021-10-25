@@ -30,7 +30,7 @@ function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loa
 
   const onRowSelect = (rowData) => {
     history.push(
-      `/settings/user-management/active/${rowData?.original?.emailAddress}/details`);
+      `/settings/user-management/active/${orgDomain}/${rowData?.original?.emailAddress}/details`);
   };
 
   const createUser = () => {
