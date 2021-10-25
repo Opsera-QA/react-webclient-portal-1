@@ -17,7 +17,7 @@ function AzureAcrPushAzureToolConfigIdSelectInput(
   const setDataFunction = (fieldName, selectedOption) => {
     setAzureConfig(selectedOption);
     let newModel = {...model};
-    newModel.setData(fieldName, selectedOption.id);
+    newModel.setData(fieldName, selectedOption._id);
     newModel.setData('azureRegistryName', "");
     newModel.setData('azureRepoName', "");
     newModel.setData('acrLoginUrl', "");
