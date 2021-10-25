@@ -7,15 +7,16 @@ import modelHelpers from "components/common/model/modelHelpers";
 import ansibleStepMetadata  from "./ansible.step.metadata";
 import AnsibleStepToolSelectInput from "./inputs/AnsibleStepToolSelectInput";
 import AnsibleStepScmServiceTypeSelectInput from "./inputs/AnsibleStepScmServiceTypeSelectInput";
-import AnsibleStepScmToolIdentifierSelectInput from "./inputs/AnsibleStepScmToolIdentifierSelectInput";
 import AnsibleStepGitRepositorySelectInput from "./inputs/AnsibleStepGitRepositorySelectInput";
 import AnsibleStepGitBranchSelectInput from "./inputs/AnsibleStepGitBranchSelectInput";
 import AnsibleStepScmRepositoryFileSelectInput from "./inputs/AnsibleStepScmRepositoryFileSelectInput";
 import JsonInput from "../../../../../../../common/inputs/object/JsonInput";
+import RoleRestrictedToolByIdentifierInputBase
+  from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
 function AnsibleStepConfiguration({ stepTool, stepId, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [AnsibleStepConfigurationDto, setAnsibleStepConfigurationDataDto] = useState(undefined);
+  const [ansibleStepModel, setAnsibleStepModel] = useState(undefined);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
 
@@ -31,7 +32,7 @@ function AnsibleStepConfiguration({ stepTool, stepId, closeEditorPanel, parentCa
       ansibleStepMetadata
     );
 
-    setAnsibleStepConfigurationDataDto(ansibleConfigurationData);
+    setAnsibleStepModel(ansibleConfigurationData);
 
     if (threshold) {
       setThresholdType(threshold?.type);
@@ -43,7 +44,7 @@ function AnsibleStepConfiguration({ stepTool, stepId, closeEditorPanel, parentCa
 
   const handleCreateAndSave = async () => {
     const item = {
-      configuration: AnsibleStepConfigurationDto.getPersistData(),
+      configuration: ansibleStepModel.getPersistData(),
       threshold: {
         type: thresholdType,
         value: thresholdVal,
@@ -52,52 +53,55 @@ function AnsibleStepConfiguration({ stepTool, stepId, closeEditorPanel, parentCa
     parentCallback(item);
   };
 
-  if (isLoading || AnsibleStepConfigurationDto == null) {
+  if (isLoading || ansibleStepModel == null) {
     return <DetailPanelLoadingDialog />;
   }
 
   return (
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
-      recordDto={AnsibleStepConfigurationDto}
+      recordDto={ansibleStepModel}
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
       <AnsibleStepToolSelectInput
-        model={AnsibleStepConfigurationDto}
-        setModel={setAnsibleStepConfigurationDataDto}
+        model={ansibleStepModel}
+        setModel={setAnsibleStepModel}
       />
       <AnsibleStepScmServiceTypeSelectInput
-        model={AnsibleStepConfigurationDto}
-        setModel={setAnsibleStepConfigurationDataDto}
+        model={ansibleStepModel}
+        setModel={setAnsibleStepModel}
       />
-      <AnsibleStepScmToolIdentifierSelectInput
-        model={AnsibleStepConfigurationDto}
-        setModel={setAnsibleStepConfigurationDataDto}
-        disabled={AnsibleStepConfigurationDto.getData("service").length === 0}
+      <RoleRestrictedToolByIdentifierInputBase
+        fieldName={"gitToolId"}
+        toolFriendlyName={"Source Control Management"}
+        toolIdentifier={ansibleStepModel?.getData("service")}
+        model={ansibleStepModel}
+        setModel={setAnsibleStepModel}
+        disabled={ansibleStepModel.getData("service").length === 0}
       />
       <AnsibleStepGitRepositorySelectInput
-        model={AnsibleStepConfigurationDto}
-        setModel={setAnsibleStepConfigurationDataDto}
+        model={ansibleStepModel}
+        setModel={setAnsibleStepModel}
       />
       <AnsibleStepGitBranchSelectInput
-        model={AnsibleStepConfigurationDto}
-        setModel={setAnsibleStepConfigurationDataDto}
+        model={ansibleStepModel}
+        setModel={setAnsibleStepModel}
       />
       <TextInputBase
-        dataObject={AnsibleStepConfigurationDto}
-        setDataObject={setAnsibleStepConfigurationDataDto}  
+        dataObject={ansibleStepModel}
+        setDataObject={setAnsibleStepModel}
         fieldName={"playbookFilePath"}
       />
       <AnsibleStepScmRepositoryFileSelectInput
-        setModel={setAnsibleStepConfigurationDataDto}
-        model={AnsibleStepConfigurationDto}
+        setModel={setAnsibleStepModel}
+        model={ansibleStepModel}
       />
       <JsonInput
         className={"my-2"}
         fieldName={"commandArgs"}
-        model={AnsibleStepConfigurationDto}
-        setModel={setAnsibleStepConfigurationDataDto}
+        model={ansibleStepModel}
+        setModel={setAnsibleStepModel}
       />
     </PipelineStepEditorPanelContainer>
   );

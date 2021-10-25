@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import {Col} from "react-bootstrap";
 
 function PageLink({link, linkText, icon, visible}) {
-  if (!visible) {
+  if (visible !== true) {
     return null;
   }
 

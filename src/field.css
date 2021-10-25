@@ -82,7 +82,7 @@
 
 .object-properties-input .rw-widget-input {
     /* this is based on form input's height, with a couple extra pixels added */
-    height: calc(1.5em + .75rem + 2px);
+    min-height: calc(1.5em + .75rem + 2px);
 }
 
 .object-properties-footer {
@@ -111,29 +111,6 @@
 }
 
 /* End Group Membership Input Panel Styling */
-
-/* Select input styling. TODO: Determine why this doesn't automatically adjust with adjacent inputs */
-
-.custom-multiselect-input .rw-multiselect-tag {
-    margin-top: .25em;
-    vertical-align: middle;
-    margin-bottom: .25em;
-}
-
-.custom-multiselect-input .rw-widget-input {
-    /* this is based on form input's height, with a couple extra pixels added */
-    height: calc(1.5em + .75rem + 5px);
-}
-
-.custom-select-input .rw-widget-input {
-    /* this is based on form input's height, with a couple extra pixels added */
-    height: calc(1.5em + .75rem + 5px);
-}
-
-.custom-number-input .rw-widget-input {
-    /* this is based on form input's height, with a couple extra pixels added */
-    height: calc(1.5em + .75rem + 3px);
-}
 
 /* Ensure dropdown does not get cut off. */
 
@@ -355,3 +332,11 @@
 .vertical-tab-text {
     font-size: 1.25em;
 }
+
+/* Error State CSS */
+.select-input-error {
+    box-shadow: 0 0 3px #CC0000;
+    border-radius: 5px;
+}
+
+/* End Error State CSS */

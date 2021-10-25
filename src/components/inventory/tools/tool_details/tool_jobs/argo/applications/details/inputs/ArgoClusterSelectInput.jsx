@@ -56,7 +56,6 @@ function ArgoClusterSelectInput({ argoToolId, visible, fieldName, dataObject, se
   };
 
   const loadClusters = async (argoToolId, cancelSource = cancelTokenSource) => {
-    // const response = await pipelineActions.getToolsListV2(getAccessToken, cancelSource, "jenkins");
     const response = await argoActions.getArgoClustersV2(getAccessToken, cancelSource, argoToolId);
     const clusters = response?.data?.data;
 

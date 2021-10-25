@@ -13,10 +13,12 @@ function BreadcrumbPageLinkCard({ breadcrumbDestination, visible }) {
 
   return (
     <PageLinkCard
+      className={"ml-2"}
       linkText={breadcrumb?.linkText}
       icon={breadcrumb?.icon}
       link={"/" + breadcrumb?.path}
       visible={visible}
+      pageDescription={breadcrumb?.pageDescription}
     />
   );
 }

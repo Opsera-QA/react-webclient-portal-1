@@ -41,6 +41,7 @@ const INITIAL_SSH_KEYFILE = {
   vaultKey: "" //pipelineId-stepId-sshKey
 };
 
+// TODO: This needs a heavy refactor
 function SshUploadDeployStepConfiguration({ data, pipelineId, stepId, parentCallback, callbackSaveToVault, setToast, setShowToast }) {
 
   const contextType = useContext(AuthContext);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 import Model from "core/data_model/model";
@@ -8,10 +8,28 @@ import ErrorDialog from "components/common/status_notifications/error";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import toolsActions from "components/inventory/tools/tools-actions";
 import VaultSelectInput from "components/common/list_of_values_input/tools/vault/VaultToolSelectInput";
+import axios from "axios";
 
 function ToolVaultPanel({ toolData, isLoading }) {
   const { getAccessToken } = useContext(AuthContext);
   const [temporaryDataObject, setTemporaryDataObject] = useState(undefined);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     setTemporaryDataObject(new Model({ ...toolData?.getPersistData() }, toolData?.getMetaData(), false));
@@ -20,7 +38,7 @@ function ToolVaultPanel({ toolData, isLoading }) {
   const saveData = async () => {
     toolData.setData("vault", temporaryDataObject.getData("vault"));
     let newDataObject = { ...toolData };
-    const response = await toolsActions.updateTool(newDataObject, getAccessToken);
+    const response = await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, newDataObject);
     setTemporaryDataObject({...newDataObject});
     return response;
   };

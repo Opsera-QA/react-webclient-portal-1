@@ -19,7 +19,7 @@ const ansibleStepMetadata = {
       id: "projectId",
     },
     {
-      label: "SCM Service Type",
+      label: "Source Control Management Service Type",
       id: "service",
     },
     {

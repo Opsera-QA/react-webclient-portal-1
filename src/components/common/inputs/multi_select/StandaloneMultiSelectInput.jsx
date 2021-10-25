@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Multiselect } from 'react-widgets';
+import Multiselect from "react-widgets/Multiselect";
 
 function StandaloneMultiSelectInput(
   {
@@ -16,13 +16,16 @@ function StandaloneMultiSelectInput(
     createOptionFunction,
     allowCreate,
     onToggleFunction,
+    hasErrorState,
+    className,
   }) {
 
   return (
     <div className={"custom-multiselect-input"}>
       <Multiselect
+        className={`${hasErrorState ? "select-input-error " : ""}${className}`}
         data={selectOptions}
-        valueField={valueField}
+        dataKey={valueField}
         textField={textField}
         busy={busy}
         filter={"contains"}
@@ -64,6 +67,8 @@ StandaloneMultiSelectInput.propTypes = {
     PropTypes.string,
   ]),
   onToggleFunction: PropTypes.func,
+  className: PropTypes.string,
+  hasErrorState: PropTypes.bool,
 };
 
 export default StandaloneMultiSelectInput;

@@ -75,7 +75,7 @@ function ScmAccountsEditorPanel({toolData, scmAccountData, handleClose}) {
     let accounts = newToolData.getData("accounts");
     accounts = accounts.filter(acc => !(acc.reviewerId === scmData.reviewerId && acc.repository === scmData.repository));
     newToolData.setData("accounts", [...accounts, scmData]);
-    await toolsActions.updateTool(newToolData, getAccessToken);
+    await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, newToolData);
     handleClose();
   };
 
@@ -87,7 +87,7 @@ function ScmAccountsEditorPanel({toolData, scmAccountData, handleClose}) {
     newToolData.setData("accounts", [...accounts]);
 
     try {
-      await toolsActions.updateTool(newToolData, getAccessToken);
+      await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, newToolData);
       toastContext.showDeleteSuccessResultDialog("Account");
     } catch (error) {
       toastContext.showDeleteFailureResultDialog(error);

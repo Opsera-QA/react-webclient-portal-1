@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import NumberPicker from "react-widgets/lib/NumberPicker";
-import simpleNumberLocalizer from "react-widgets-simple-number";
+import NumberPicker from "react-widgets/NumberPicker";
 
 export const formatTypes = {
   percent: '%'
@@ -18,7 +17,6 @@ function StandaloneNumberPickerInput(
     maximum,
     handleKeyPressFunction
   }) {
-  simpleNumberLocalizer();
 
   if (setDataFunction == null) {
     return null;

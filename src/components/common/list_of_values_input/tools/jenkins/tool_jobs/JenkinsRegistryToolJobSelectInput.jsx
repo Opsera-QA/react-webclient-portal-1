@@ -19,7 +19,9 @@ function JenkinsRegistryToolJobSelectInput(
     setModel,
     setDataFunction,
     clearDataFunction,
-    disabled
+    disabled,
+    valueField,
+    textField,
   }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -67,9 +69,9 @@ function JenkinsRegistryToolJobSelectInput(
   };
 
   const loadJenkinsJobs = async (cancelSource = cancelTokenSource) => {
-    const response = await toolsActions.getFullToolByIdV2(getAccessToken, cancelSource, jenkinsToolId);
-    const jenkinsToolArray = response?.data;
-    const jenkinsJobs = jenkinsToolArray ? jenkinsToolArray[0]?.jobs : [];
+    // TODO: Make route that actually just returns jobs
+    const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, jenkinsToolId);
+    const jenkinsJobs = response?.data?.data?.jobs;
     const existingJobSelection = model?.getData(fieldName);
 
     if (Array.isArray(jenkinsJobs) && jenkinsJobs.length > 0) {
@@ -161,8 +163,8 @@ function JenkinsRegistryToolJobSelectInput(
       placeholderText={getPlaceholderText()}
       busy={isLoading}
       groupBy={(job) => getJenkinsJobTypeLabelForValue(job?.type)}
-      valueField="_id"
-      textField="name"
+      valueField={valueField}
+      textField={textField}
       infoOverlay={renderOverlayTrigger()}
       clearDataFunction={clearDataFunction}
       disabled={disabled || jenkinsToolId === ""}
@@ -180,7 +182,14 @@ JenkinsRegistryToolJobSelectInput.propTypes = {
   visible: PropTypes.bool,
   typeFilter: PropTypes.string,
   configurationRequired: PropTypes.bool,
-  clearDataFunction: PropTypes.func
+  clearDataFunction: PropTypes.func,
+  valueField: PropTypes.string,
+  textField: PropTypes.string,
+};
+
+JenkinsRegistryToolJobSelectInput.defaultProps = {
+  valueField: "_id",
+  textField: "name",
 };
 
 export default JenkinsRegistryToolJobSelectInput;

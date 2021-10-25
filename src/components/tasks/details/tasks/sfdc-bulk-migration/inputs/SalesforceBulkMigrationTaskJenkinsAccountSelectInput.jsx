@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import JenkinsAccountInput from "components/common/list_of_values_input/tools/jenkins/JenkinsAccountInput";
+import RoleRestrictedJenkinsAccountSelectInput from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsAccountSelectInput";
 
 function SalesforceBulkMigrationTaskJenkinsAccountSelectInput({model, setModel, taskModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
@@ -42,9 +42,9 @@ function SalesforceBulkMigrationTaskJenkinsAccountSelectInput({model, setModel, 
   };
 
   return (
-     <JenkinsAccountInput
+     <RoleRestrictedJenkinsAccountSelectInput
        fieldName={"gitCredential"}
-       jenkinsId={model?.getData("toolConfigId")}
+       jenkinsToolId={model?.getData("toolConfigId")}
        requireConfiguration={true}
        dataObject={model}
        setDataObject={setModel}

@@ -8,52 +8,9 @@ toolsActions.checkToolConnectivity = async (toolId, toolName, getAccessToken) =>
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-// TODO: Update all references to V2 and remove this
-toolsActions.deleteTool = async (dataObject, getAccessToken) => {
-  const apiUrl = `/registry/${dataObject.getData("_id")}`;
-  return baseActions.apiDeleteCall(getAccessToken, apiUrl);
-};
-
 toolsActions.deleteToolV2 = async (getAccessToken, cancelToken, toolModel) => {
   const apiUrl = `/registry/${toolModel?.getData("_id")}`;
   return baseActions.apiDeleteCallV2(getAccessToken, cancelToken, apiUrl);
-};
-
-toolsActions.deleteVaultRecordsForToolId = async (toolDataDto,getAccessToken) => {
-  const apiUrl = `/vault/delete`;
-  let id = toolDataDto.getData("_id");
-  let postBody = {
-    id : id
-  };
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
-// TODO: Update all references to V2 and remove this
-toolsActions.deleteOwnerVaultRecordsForToolId = async (toolDataDto,getAccessToken) => {
-  const apiUrl = `/vault/tool/delete`;
-  let id = toolDataDto.getData("_id");
-  let postBody = {
-    id : id
-  };
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
-toolsActions.deleteOwnerVaultRecordsForToolIdV2 = async (getAccessToken, cancelTokenSource, toolModel) => {
-  const apiUrl = `/vault/tool/delete`;
-  let postBody = {
-    id: toolModel?.getData("_id")
-  };
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-// TODO: All references to this need to be updated to V2, Do not use this.
-toolsActions.updateTool = async (toolDataDto, getAccessToken) => {
-  const postBody = {
-    ...toolDataDto.getPersistData()
-  };
-  let id = toolDataDto.getData("_id");
-  const apiUrl = `/registry/${id}/update`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 toolsActions.updateToolV2 = async (getAccessToken, cancelTokenSource, toolModel) => {
@@ -66,62 +23,27 @@ toolsActions.updateToolV2 = async (getAccessToken, cancelTokenSource, toolModel)
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-toolsActions.createTool = async (toolDataDto, getAccessToken) => {
+toolsActions.createToolV2 = async (getAccessToken, cancelTokenSource, toolModel) => {
   const postBody = {
-    ...toolDataDto.getPersistData()
-  };
-  const apiUrl = "/registry/create";
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
-toolsActions.createToolV2 = async (getAccessToken, cancelTokenSource, toolDataDto) => {
-  const postBody = {
-    ...toolDataDto.getPersistData()
+    ...toolModel?.getPersistData()
   };
   const apiUrl = "/registry/create";
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-// TODO: Replace with getToolIdentifiersV2 when all references are updated
-toolsActions.getTools = async (getAccessToken) => {
-  const apiUrl = "/registry/tools";
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-// TODO: Update to V3 and remove this and the related route
-toolsActions.getRoleLimitedToolRegistryListV2 = async (getAccessToken, cancelTokenSource, toolFilterDto) => {
-  let sortOption = toolFilterDto.getData("sortOption");
-
-  let urlParams = {
-    params: {
-      sort: sortOption ? sortOption.value : undefined,
-      page: toolFilterDto.getData("currentPage"),
-      size: toolFilterDto.getData("pageSize"),
-      tag: toolFilterDto.getFilterValue("tag"),
-      status: toolFilterDto.getFilterValue("status"),
-      tool: toolFilterDto.getFilterValue("toolIdentifier"),
-      search: toolFilterDto.getFilterValue("search"),
-      owner: toolFilterDto.getFilterValue("owner")
-    }
-  };
-
-  const apiUrl = `/registry/configs`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
-};
-
-toolsActions.getRoleLimitedToolRegistryListV3 = async (getAccessToken, cancelTokenSource, toolFilterDto, fields) => {
+toolsActions.getRoleLimitedToolRegistryListV3 = async (getAccessToken, cancelTokenSource, toolFilterModel, fields) => {
   const apiUrl = `/registry/configs/v2`;
 
   const urlParams = {
     params: {
-      sortOption: toolFilterDto.getSortOption(),
-      currentPage: toolFilterDto.getFilterValue("currentPage"),
-      pageSize: toolFilterDto.getFilterValue("pageSize"),
-      toolIdentifier: toolFilterDto.getFilterValue("toolIdentifier"),
-      tag: toolFilterDto.getFilterValue("tag"),
-      active: toolFilterDto.getFilterValue("status"),
-      search: toolFilterDto.getFilterValue("search"),
-      owner: toolFilterDto.getFilterValue("owner"),
+      sortOption: toolFilterModel?.getSortOption(),
+      currentPage: toolFilterModel?.getFilterValue("currentPage"),
+      pageSize: toolFilterModel?.getFilterValue("pageSize"),
+      toolIdentifier: toolFilterModel?.getFilterValue("toolIdentifier"),
+      tag: toolFilterModel?.getFilterValue("tag"),
+      active: toolFilterModel?.getFilterValue("status"),
+      search: toolFilterModel?.getFilterValue("search"),
+      owner: toolFilterModel?.getFilterValue("owner"),
       fields: fields,
     }
   };
@@ -143,46 +65,6 @@ toolsActions.getToolAccessWithEmail = async (getAccessToken, cancelTokenSource, 
   };
 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
-};
-
-toolsActions.getFullRoleLimitedToolRegistryList = async (getAccessToken) => {
-  let urlParams = {
-    params: {
-      sort: "name",
-      size: 10000,
-    }
-  };
-
-
-  const apiUrl = `/registry/configs`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
-};
-
-toolsActions.getFullToolRegistryList = async (getAccessToken) => {
-  let urlParams = {
-    params: {
-      sort: "name",
-      size: 10000,
-    }
-  };
-
-  const apiUrl = `/registry`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
-};
-
-toolsActions.getFullToolById = async (id, getAccessToken) => {
-  const apiUrl = `/registry/${id}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-toolsActions.getFullToolByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
-  const apiUrl = `/registry/${id}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-toolsActions.getRoleLimitedToolById = async (id, getAccessToken) => {
-  const apiUrl = `/registry/configs/${id}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 toolsActions.getRoleLimitedToolByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
@@ -218,12 +100,6 @@ toolsActions.getRoleLimitedToolsByIdentifier = async (getAccessToken, cancelToke
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-// TODO: Remove when all references are updated to V2
-toolsActions.getToolLovs = async (getAccessToken) => {
-  const apiUrl = `/registry/configs/summary`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
 toolsActions.getToolLovsV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = `/registry/configs/summary`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
@@ -255,12 +131,6 @@ toolsActions.getToolLogById = async (getAccessToken, cancelTokenSource, logId) =
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-// TODO: Remove when all references are updated to V2
-toolsActions.getRelevantPipelines = async (toolDto, getAccessToken) => {
-  const apiUrl = `/registry/${toolDto.getData("_id")}/pipelines`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
 toolsActions.getRelevantPipelinesV2 = async (getAccessToken, cancelTokenSource, toolDto) => {
   const apiUrl = `/registry/${toolDto.getData("_id")}/pipelines`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
@@ -270,12 +140,13 @@ toolsActions.updateToolConfiguration = async (toolData, getAccessToken) => {
   const apiUrl = `/registry/${toolData._id}/update`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, toolData);
 };
-// getAccessToken, sourceToken, apiUrl, postBody
+
 toolsActions.updateToolConfigurationV2 = async (toolData, getAccessToken, cancelTokenSource) => {
   const apiUrl = `/registry/${toolData._id}/update`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, toolData);
 };
 
+// TODO: This should be moved to a Jira helper function
 toolsActions.installJiraApp = async (toolId, getAccessToken) => {
   const apiUrl = `/connectors/jira/${toolId}/app/install`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
@@ -332,7 +203,7 @@ toolsActions.saveKeyPasswordToVault = async (toolConfigurationData, fieldName, v
   return typeof currentValue === "string" ? {} : currentValue;
 };
 
-
+// TODO: Make update route that just takes configuration and sets it into the mongo DB collection
 toolsActions.saveToolConfiguration = async (toolData, configurationItem, getAccessToken) => {
   let newToolData = toolData.getPersistData();
   newToolData["configuration"] = configurationItem.configuration;
@@ -356,6 +227,7 @@ toolsActions.getToolConnectionLog = async (getAccessToken, toolDataDto) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+// TODO: Move to a Salesforce (DX) specific actions file
 toolsActions.checkSFDXToolConnection = async (getAccessToken, toolDataDto, selectedJenkinsId) => {
   // console.log(toolDataDto);
   const postBody = {

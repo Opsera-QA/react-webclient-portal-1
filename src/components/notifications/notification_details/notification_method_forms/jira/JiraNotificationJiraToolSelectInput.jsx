@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import JiraPriorityInput
   from "components/notifications/notification_details/notification_method_forms/jira/JiraPriorityInput";
-import JiraToolProjectInput
-  from "components/notifications/notification_details/notification_method_forms/jira/JiraToolProjectInput";
+import JiraPipelineNotificationJiraToolProjectSelectInput
+  from "components/notifications/notification_details/notification_method_forms/jira/JiraPipelineNotificationJiraToolProjectSelectInput";
 import RoleRestrictedJiraToolSelectInput
   from "components/common/list_of_values_input/tools/jira/RoleRestrictedJiraToolSelectInput";
 
@@ -27,7 +27,11 @@ function JiraNotificationJiraToolSelectInput({model, setModel, disabled}) {
         disabled={disabled || model?.getData("enabled") === false}
       />
       <JiraPriorityInput dataObject={model} setDataObject={setModel} jiraToolId={model?.getData("jiraToolId")} />
-      <JiraToolProjectInput dataObject={model} setDataObject={setModel} jiraToolId={model?.getData("jiraToolId")} />
+      <JiraPipelineNotificationJiraToolProjectSelectInput
+        model={model}
+        setModel={setModel}
+        jiraToolId={model?.getData("jiraToolId")}
+      />
     </>
   );
 }

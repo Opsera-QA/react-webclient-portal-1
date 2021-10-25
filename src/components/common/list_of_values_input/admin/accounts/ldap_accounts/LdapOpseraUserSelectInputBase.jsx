@@ -1,18 +1,15 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import accountsActions from "components/admin/accounts/accounts-actions";
-import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import InputContainer from "components/common/inputs/InputContainer";
-import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function LdapOpseraUserSelectInputBase({ dataObject, setDataObject, setDataFunction}) {
+function LdapOpseraUserSelectInputBase({ model, setDataFunction, fieldName}) {
   const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
+  const { getAccessToken, getUserRecord, getAccessRoleData } = useContext(AuthContext);
   const [opseraUserList, setOpseraUsersList] = useState([]);
-  const [currentOpseraUser, setCurrentOpseraUser] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -52,23 +49,16 @@ function LdapOpseraUserSelectInputBase({ dataObject, setDataObject, setDataFunct
   };
 
   const loadOpseraUsers = async (cancelSource = cancelTokenSource) => {
-    const response = await accountsActions.getUsers(getAccessToken, cancelSource);
+    const userRecord = getUserRecord();
+    const accessRoleData = getAccessRoleData();
+    const response = await accountsActions.getUsersV2(getAccessToken, cancelSource);
     const users = response?.data?.data;
-    let parsedUserNames = [];
+    const parsedUserNames = [];
 
     if (isMounted?.current === true && Array.isArray(users) && users.length > 0) {
       users.map(user => {
-        let orgDomain = user.email.substring(user.email.lastIndexOf("@") + 1);
-        if (dataObject.isNew() || dataObject["orgDomain"].includes(orgDomain)) {
-          if (dataObject.getData("orgOwnerEmail") != null) {
-            if (user["email"] === dataObject.getData("orgOwnerEmail")) {
-              setCurrentOpseraUser({
-                text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"],
-                id: user
-              });
-            }
-          }
-          parsedUserNames.push({text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user});
+        if (model.isNew() || accessRoleData?.OpseraAdministrator === true || userRecord?.ldap?.organization === user?.organization) {
+          parsedUserNames.push(user);
         }
       });
     }
@@ -78,32 +68,37 @@ function LdapOpseraUserSelectInputBase({ dataObject, setDataObject, setDataFunct
     }
   };
 
-  const handleOpseraUserChange = (selectedOption) => {
-    let option = selectedOption.id;
-    setCurrentOpseraUser(option);
-    setDataFunction(option);
+  const getTextField = (value) => {
+    const user = opseraUserList?.find((user) => user?.email === value?.email);
+
+    if (isLoading || user == null) {
+      return value?.email || value;
+    }
+
+    return (`${user?.firstName} ${user?.lastName}: ${user?.email}`);
   };
 
   return (
-    <InputContainer>
-      <label className="mt-0"><span>Opsera Customer Record<span className="danger-red">*</span></span></label>
-      <StandaloneSelectInput
-        selectOptions={opseraUserList}
-        valueField={"value"}
-        textField={"text"}
-        busy={isLoading}
-        groupBy={user => capitalizeFirstLetter(user.id.organizationName, "-", "No Organization Name")}
-        defaultValue={currentOpseraUser}
-        setDataFunction={handleOpseraUserChange}
-      />
-    </InputContainer>
+    <SelectInputBase
+      dataObject={model}
+      selectOptions={opseraUserList}
+      fieldName={fieldName}
+      valueField={"email"}
+      textField={getTextField}
+      busy={isLoading}
+      setDataFunction={setDataFunction}
+    />
   );
 }
 
 LdapOpseraUserSelectInputBase.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
-  setDataFunction: PropTypes.func
+  model: PropTypes.object.isRequired,
+  setDataFunction: PropTypes.func.isRequired,
+  fieldName: PropTypes.string,
+};
+
+LdapOpseraUserSelectInputBase.defaultProps = {
+  fieldName: "orgOwnerEmail",
 };
 
 export default LdapOpseraUserSelectInputBase;

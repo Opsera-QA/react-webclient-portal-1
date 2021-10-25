@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
@@ -9,14 +9,31 @@ import RegistryToolLocationInput from "components/inventory/tools/tool_details/i
 import RegistryToolApplicationsInput from "components/inventory/tools/tool_details/input/RegistryToolApplicationsInput";
 import RegistryToolOrganizationInput from "components/inventory/tools/tool_details/input/RegistryToolOrganizationInput";
 import RegistryToolContactInput from "components/inventory/tools/tool_details/input/RegistryToolContactInput";
+import axios from "axios";
 
 function ToolAttributeEditorPanel({ toolData, setToolData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [toolDataDto, setToolDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+
     loadData();
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
   const loadData = async () => {
@@ -25,18 +42,14 @@ function ToolAttributeEditorPanel({ toolData, setToolData, handleClose }) {
     setIsLoading(false);
   };
 
-  const createTool = async () => {
-    return await toolsActions.createTool(toolDataDto, getAccessToken);
-  };
-
   const updateTool = async () => {
-    return await toolsActions.updateTool(toolDataDto, getAccessToken);
+    return await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, toolDataDto);
   };
 
   return (
     <EditorPanelContainer
       recordDto={toolDataDto}
-      createRecord={createTool}
+      createRecord={updateTool}
       updateRecord={updateTool}
       setRecordDto={setToolDataDto}
       isLoading={isLoading}

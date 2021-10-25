@@ -9,8 +9,8 @@ import dotNetStepFormMetadata
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DotNetStepJenkinsToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetStepJenkinsToolSelectInput";
-import DotNetJenkinsJobInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetJenkinsJobInput";
+import DotNetStepJenkinsJobSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetStepJenkinsJobSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import DotNetJenkinsAccountInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetJenkinsAccountInput";
@@ -93,8 +93,14 @@ function DotNetStepConfiguration({ pipelineId, stepTool, stepId, createJob, clos
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <DotNetStepJenkinsToolSelectInput dataObject={dotNetStepConfigurationDto} setDataObject={setDotNetStepConfigurationDataDto} />
-      <DotNetJenkinsJobInput dataObject={dotNetStepConfigurationDto} setDataObject={setDotNetStepConfigurationDataDto}/>
+      <DotNetStepJenkinsToolSelectInput
+        dataObject={dotNetStepConfigurationDto}
+        setDataObject={setDotNetStepConfigurationDataDto}
+      />
+      <DotNetStepJenkinsJobSelectInput
+        model={dotNetStepConfigurationDto}
+        setModel={setDotNetStepConfigurationDataDto}
+      />
       <DotNetJenkinsAccountInput dataObject={dotNetStepConfigurationDto} setDataObject={setDotNetStepConfigurationDataDto} />
       <DotNetBitbucketWorkspaceInput dataObject={dotNetStepConfigurationDto} setDataObject={setDotNetStepConfigurationDataDto} />
       <DotNetGitRepositoryInput dataObject={dotNetStepConfigurationDto} setDataObject={setDotNetStepConfigurationDataDto} />

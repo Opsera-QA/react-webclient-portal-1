@@ -9,7 +9,6 @@ import axios from "axios";
 import PropTypes from 'prop-types';
 import GenerateSalesforceCertificateButton from "components/tasks/buttons/GenerateSalesforceCertificateButton";
 import DownloadSalesforceCertificateButton from "components/tasks/buttons/DownloadSalesforceCertificateButton";
-import JenkinsToolMultiSelectInput from "./panels/JenkinsToolMultiSelectInput";
 import JenkinsSynchPanel from "./panels/JenkinsSynchPanel";
 
 function CertManagementPanel({gitTasksData, setGitTasksData, loadData, handleClose}) {

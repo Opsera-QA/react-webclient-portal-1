@@ -4,7 +4,6 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import AwsToolSelectInput from "./inputs/AwsToolSelectInput";
 import TextInputBase from "../../../../common/inputs/text/TextInputBase";
 import IAMRoleSelectInput from "./inputs/IAMRoleSelectInput";
 import awsLambdaFunctionTaskConfigurationMetadata from "./aws-lambda-metadata";
@@ -12,6 +11,8 @@ import LanguageSelectInput from "./inputs/LanguageSelectInput";
 import OctopusProjectNameInput
   from "../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/input/OctopusProjectNameInput";
 import FunctionNameWithButton from "./inputs/FunctionNameWithButton";
+import RoleRestrictedAwsAccountToolSelectInput
+  from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 
 function AwsLambdaConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   useEffect(() => {
@@ -33,9 +34,9 @@ function AwsLambdaConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationDat
   return (
     <Row>
       <Col lg={12}>
-        <AwsToolSelectInput
-          dataObject={gitTasksConfigurationData}
-          setDataObject={setGitTasksConfigurationData}
+        <RoleRestrictedAwsAccountToolSelectInput
+          model={gitTasksConfigurationData}
+          setModel={setGitTasksConfigurationData}
           fieldName={"awsToolConfigId"}
         />
       </Col>

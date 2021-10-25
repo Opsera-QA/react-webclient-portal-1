@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
@@ -14,21 +14,35 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import ToolIdentifierMultiSelectInput
   from "components/common/list_of_values_input/admin/tools/ToolIdentifierMultiSelectInput";
+import axios from "axios";
 
 function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfileData }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [analyticsProfileDataDto, setAnalyticsProfileDataDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [toolList, setToolList] = useState([]);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
     loadData();
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
   const loadData = async () => {
     setIsLoading(true);
-    await getToolList();
     await unpackData(analyticsProfileData);
     setIsLoading(false);
   };
@@ -60,12 +74,6 @@ function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfile
     }
   };
 
-
-  const getToolList = async () => {
-    const response = await toolsActions.getTools(getAccessToken);
-    setToolList(response["data"]);
-  };
-
   if (isLoading) {
     return <LoadingDialog size={"sm"} />;
   }
@@ -85,7 +93,6 @@ function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfile
         <Col>
           <ToolIdentifierMultiSelectInput
             toolRegistryFilter={false}
-            selectOptions={toolList}
             fieldName={"enabledTools"}
             setDataObject={setAnalyticsProfileDataDto}
             dataObject={analyticsProfileDataDto}

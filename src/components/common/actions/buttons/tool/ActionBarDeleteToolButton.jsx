@@ -9,6 +9,7 @@ import ToolPipelinesTable from "components/inventory/tools/tool_details/ToolPipe
 import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 import DestructiveDeleteModal from "components/common/modal/DestructiveDeleteModal";
 import axios from "axios";
+import vaultActions from "components/vault/vault.actions";
 
 function ActionBarDeleteToolButton({ toolModel, className }) {
   const toastContext = useContext(DialogToastContext);
@@ -38,7 +39,7 @@ function ActionBarDeleteToolButton({ toolModel, className }) {
 
   const deleteObject = async () => {
     try {
-      let vaultDeleteResponse = await toolsActions.deleteOwnerVaultRecordsForToolIdV2(getAccessToken, cancelTokenSource, toolModel);
+      let vaultDeleteResponse = await vaultActions.deleteOwnerVaultRecordsForToolIdV2(getAccessToken, cancelTokenSource, toolModel);
       if (vaultDeleteResponse?.status !== 200) {
         const errorMsg = `Error reported by services while deleting tool information from Vault. Please try again`;
         toastContext.showErrorDialog(errorMsg);

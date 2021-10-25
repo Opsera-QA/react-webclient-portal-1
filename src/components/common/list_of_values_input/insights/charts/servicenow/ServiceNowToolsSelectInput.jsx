@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import pipelineActions from "components/workflow/pipeline-actions";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
+import toolsActions from "components/inventory/tools/tools-actions";
 
 function ServiceNowToolsSelectInput({
   placeholderText,
@@ -59,8 +59,8 @@ function ServiceNowToolsSelectInput({
   };
 
   const getTools = async (cancelSource = cancelTokenSource) => {
-    let response = await pipelineActions.getToolsListV2(getAccessToken, cancelSource, "servicenow");
-    const toolList = response?.data;
+    let response = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, cancelSource, "servicenow");
+    const toolList = response?.data?.data;
 
     if (isMounted?.current === true && toolList) {
       setTools(toolList);
