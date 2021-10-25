@@ -248,7 +248,7 @@ accountsActions.createUserV2 = async (getAccessToken, cancelTokenSource, orgDoma
 };
 
 
-accountsActions.getUsers = async (getAccessToken, cancelTokenSource) => {
+accountsActions.getUsersV2 = async (getAccessToken, cancelTokenSource) => {
   const urlParams = {
     params: {
       size: 10000,
@@ -419,20 +419,22 @@ accountsActions.updateOrganizationAccount = async (ldapOrganizationAccountDataDt
   return await baseActions.apiPutCall(getAccessToken, apiUrl, postBody);
 };
 
-accountsActions.createOrganization = async (ldapOrganizationDataDto, getAccessToken) => {
-  const postBody = {
-      ...ldapOrganizationDataDto.getPersistData(),
-  };
+accountsActions.createOrganizationV2 = async (getAccessToken, cancelTokenSource, ldapOrganizationModel) => {
   const apiUrl = "/users/account/organization/create";
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+  const postBody = {
+    ...ldapOrganizationModel?.getPersistData(),
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-accountsActions.updateOrganization = async (ldapOrganizationDataDto, getAccessToken) => {
-  const postBody = {
-    ...ldapOrganizationDataDto.getPersistData()
-  };
+accountsActions.updateOrganizationV2 = async (getAccessToken, cancelTokenSource, ldapOrganizationModel) => {
   const apiUrl = "/users/account/organization/update";
-  return await baseActions.apiPutCall(getAccessToken, apiUrl, postBody);
+  const postBody = {
+    ...ldapOrganizationModel?.getPersistData()
+  };
+
+  return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 accountsActions.getOrganizationByNameV2 = async (getAccessToken, cancelTokenSource, organizationName) => {

@@ -26,11 +26,10 @@ export const ldapOrganizationMetaData = {
       formText: "This field is populated by the Opsera Customer Record drop down",
     },
     {
-      label: "Owner Email",
+      label: "Opsera Customer Record",
       id: "orgOwnerEmail",
       isRequired: true,
       isEmail: true,
-      formText: "This field is populated by the Opsera Customer Record drop down",
     },
     {
       label: "Description",

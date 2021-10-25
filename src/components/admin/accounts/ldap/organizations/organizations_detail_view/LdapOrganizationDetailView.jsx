@@ -12,6 +12,9 @@ import LdapOrganizationDetailPanel
   from "components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationDetailPanel";
 import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import LdapOrganizationManagementSubNavigationBar
+  from "components/admin/accounts/ldap/organizations/LdapOrganizationManagementSubNavigationBar";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 function LdapOrganizationDetailView() {
   const history = useHistory();
@@ -115,6 +118,7 @@ function LdapOrganizationDetailView() {
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       dataObject={ldapOrganizationData}
       isLoading={isLoading}
+      navigationTabContainer={<LdapOrganizationManagementSubNavigationBar activeTab={"organizationViewer"} />}
       actionBar={getActionBar()}
       detailPanel={
         <LdapOrganizationDetailPanel
