@@ -83,7 +83,7 @@ StandaloneSelectInput.propTypes = {
   onToggle: PropTypes.func,
   noDataText: PropTypes.string,
   defaultValue: PropTypes.any,
-  hasErrorState: PropTypes.book,
+  hasErrorState: PropTypes.bool,
 };
 
 StandaloneSelectInput.defaultProps = {

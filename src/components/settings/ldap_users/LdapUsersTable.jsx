@@ -50,7 +50,7 @@ function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loa
   };
 
   return (
-    <div className="px-2 pb-2">
+    <div>
       <FilterContainer
         loadData={loadData}
         addRecordFunction={authorizedActions?.includes("create_user") ? createUser : null}

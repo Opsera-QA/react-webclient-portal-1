@@ -12,9 +12,8 @@ import LdapOrganizationManagementSubNavigationBar
 function LdapOrganizationManagement() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
+  const {getAccessRoleData, getAccessToken} = useContext(AuthContext);
   const [organizations, setOrganizations] = useState([]);
-  const [authorizedActions, setAuthorizedActions] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -59,15 +58,10 @@ function LdapOrganizationManagement() {
   };
 
   const getRoles = async (source = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const {ldap} = user;
-    const userRoleAccess = await setAccessRoles(user);
+    const userRoleAccess = await getAccessRoleData();
 
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-
-      let authorizedActions = await accountsActions.getAllowedOrganizationActions(userRoleAccess, ldap?.organization, getUserRecord, getAccessToken);
-      setAuthorizedActions(authorizedActions);
 
       if (userRoleAccess?.OpseraAdministrator) {
         await loadOrganizations(source);
@@ -76,18 +70,11 @@ function LdapOrganizationManagement() {
   };
 
   const loadOrganizations = async (source = cancelTokenSource) => {
-    try {
-      const response = await accountsActions.getOrganizationsV2(getAccessToken, source);
-      const organizations = response?.data;
+    const response = await accountsActions.getOrganizationsV2(getAccessToken, source);
+    const organizations = response?.data;
 
-      if (isMounted?.current === true && Array.isArray(organizations)) {
-        setOrganizations(organizations);
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-        console.error(error);
-      }
+    if (isMounted?.current === true && Array.isArray(organizations)) {
+      setOrganizations(organizations);
     }
   };
 
@@ -97,14 +84,17 @@ function LdapOrganizationManagement() {
       isLoading={!accessRoleData}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       accessRoleData={accessRoleData}
-      navigationTabContainer={<LdapOrganizationManagementSubNavigationBar activeTab={"organizations"} />}
+      navigationTabContainer={
+        <LdapOrganizationManagementSubNavigationBar
+          activeTab={"organizations"}
+        />
+      }
     >
       <LdapOrganizationsTable
         isMounted={isMounted}
         isLoading={isLoading}
         organizations={organizations}
         loadData={loadData}
-        authorizedActions={authorizedActions}
       />
     </ScreenContainer>
   );

@@ -6,7 +6,7 @@ import LdapOrganizationAccountEditorPanel
   from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountEditorPanel";
 import CreateModal from "components/common/modal/CreateModal";
 
-function NewLdapOrganizationAccountModal({ setShowModal, showModal, ldapOrganizationData, loadData,authorizedActions } ) {
+function CreateLdapOrganizationAccountOverlay({ setShowModal, showModal, ldapOrganizationData, loadData } ) {
   const [ldapOrganizationAccountData, setLdapOrganizationAccountData] = useState(undefined);
 
   useEffect(() => {
@@ -21,7 +21,6 @@ function NewLdapOrganizationAccountModal({ setShowModal, showModal, ldapOrganiza
   return (
     <CreateModal handleCancelModal={handleClose} objectType={"Organization Account"} showModal={showModal} loadData={loadData} >
       <LdapOrganizationAccountEditorPanel
-        authorizedActions={authorizedActions}
         ldapOrganization={ldapOrganizationData}
         setLdapOrganizationAccountData={setLdapOrganizationAccountData}
         handleClose={handleClose}
@@ -31,7 +30,7 @@ function NewLdapOrganizationAccountModal({ setShowModal, showModal, ldapOrganiza
   );
 }
 
-NewLdapOrganizationAccountModal.propTypes = {
+CreateLdapOrganizationAccountOverlay.propTypes = {
   ldapOrganizationData: PropTypes.object,
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
@@ -39,6 +38,6 @@ NewLdapOrganizationAccountModal.propTypes = {
   authorizedActions: PropTypes.array
 };
 
-export default NewLdapOrganizationAccountModal;
+export default CreateLdapOrganizationAccountOverlay;
 
 

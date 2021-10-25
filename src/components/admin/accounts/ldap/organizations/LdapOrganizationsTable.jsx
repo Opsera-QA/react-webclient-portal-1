@@ -52,17 +52,16 @@ function LdapOrganizationsTable({organizations, isLoading, loadData, isMounted})
   };
 
   return (
-    <div className="px-2 pb-2">
-      <FilterContainer
-        loadData={loadData}
-        addRecordFunction={createOrganization}
-        isLoading={isLoading}
-        body={getOrganizationsTable()}
-        titleIcon={faSitemap}
-        title={"Organizations"}
-        type={"Organization"}
-      />
-    </div>
+    <FilterContainer
+      loadData={loadData}
+      addRecordFunction={createOrganization}
+      isLoading={isLoading}
+      body={getOrganizationsTable()}
+      titleIcon={faSitemap}
+      title={"Organizations"}
+      type={"Organization"}
+      className={"px-2 pb-2"}
+    />
   );
 }
 
