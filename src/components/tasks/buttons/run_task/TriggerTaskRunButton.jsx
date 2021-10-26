@@ -57,6 +57,7 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
       try{
         setIsLoading(true);
         await sfdcPipelineActions.triggerGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData.getData("_id"));
+        handleClose();
 
         toastContext.showOverlayPanel(
           <SalesforceBulkMigrationTaskWizardOverlay
@@ -67,10 +68,8 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
         toastContext.showLoadingErrorDialog(error);
         setIsLoading(false);
       } finally {
-        handleClose();
         setIsLoading(false);
       }
-      setIsLoading(false);
     }
     else if (gitTasksData?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_REPO) {
        try {
