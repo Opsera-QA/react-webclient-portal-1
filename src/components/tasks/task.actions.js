@@ -24,7 +24,7 @@ taskActions.createGitTaskV2 = async (getAccessToken, cancelTokenSource, gitTasks
 };
 
 taskActions.pullLiveLogV2 = async (getAccessToken, cancelTokenSource, taskId, runCount) => {
-  const apiUrl = `/tasks/${taskId}/activity/run/${runCount}`;
+  const apiUrl = `/tasks/logs/${taskId}/activity/v2/run/${runCount}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
