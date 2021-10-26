@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
-import { axiosApiService } from "api/apiService";
 import { faTimes, faSync } from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
@@ -19,6 +18,7 @@ function TaskLiveLogsOverlay({ runCount, taskId }) {
   const [timer, setTimer] = useState();
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [taskState, setTaskState] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -64,23 +64,33 @@ function TaskLiveLogsOverlay({ runCount, taskId }) {
     return timerInterval;
   };
 
-  // TODO: Make action file to check this
   const pullLogs = async () => {
     try {
       setLoading(true);
       const response = await taskActions.pullLiveLogV2(getAccessToken, cancelTokenSource, taskId, runCount);
-      const log = response?.data;
+      const log = response?.data?.log;
+      const taskState = response?.data?.state;
+      setTaskState(taskState);
+      console.log(taskState);
 
       if (typeof log === "string" && log.length > 0) {
         setData(log);
       }
     } catch (error) {
-      console.log(error?.message);
-      setErrors(error);
+      if (isMounted?.current === true) {
+        console.log(error?.message);
+        setErrors(error);
+      }
     }
     finally {
-      setLastCheckTimestamp(new Date());
-      setLoading(false);
+      if (isMounted?.current === true) {
+        setLastCheckTimestamp(new Date());
+        setLoading(false);
+
+        if (taskState === "stopped" && timer != null) {
+          clearInterval(timer);
+        }
+      }
     }
   };
 
@@ -106,6 +116,12 @@ function TaskLiveLogsOverlay({ runCount, taskId }) {
     }
   };
 
+  const getTaskStateMessage = () => {
+    if (taskState !== "running") {
+      return (`\n\nThe Task is not currently running, so no new logs will be shown.`);
+    }
+  };
+
   return (
     <div className="console-text workflow-tool-activity-container">
       <div style={{minHeight: "15px"}}>
@@ -128,6 +144,7 @@ function TaskLiveLogsOverlay({ runCount, taskId }) {
       <div className="workflow-tool-activity-window">
         {getBody()}
         {getLastTimestamp()}
+        {getTaskStateMessage()}
       </div>
     </div>
   );
