@@ -31,8 +31,9 @@ function PipelineSourceRepositoryHelpDocumentation() {
                   <li><b>Manual registration</b> - Manually complete webhook registration by copying the webhook URL shown. In your SCM repository webhook settings, paste the copied webhook URL.</li>
                 </ul>
               </li>
-              <li>Select <b>Save</b>.  Pipeline will now run anytime a commit occurs in the selected branch(es). Any activity in other branches for this account will be ignored.</li>
+              <li>Select <b>Save</b>. Upon save, this pipeline will run anytime a commit occurs in the selected branch(es). Any activity in other branches for this account will be ignored.</li>
             </ol>
+              <div className={"ml-4"}><b>Note:</b> When a pipeline is running and user makes a commit, the pipeline will finish its current run and only IF the run was successful, it will run a second time. If the user makes multiple commits during a run the pipeline will always use the latest commit for the next run. The pipeline will only run once after the current run no matter how many run requests it gets for that time period.</div>
           </div>
         </div>
       );
