@@ -35,11 +35,13 @@ function EbsSolutionStackInput({dataObject, setDataObject, disabled}) {
           source.cancel();
           isMounted.current = false;
         };
-      }, []);
+      }, [dataObject.getData("awsToolConfigId")]);
     
       const loadData = async (cancelSource = cancelTokenSource) => {
         try {
           setIsLoading(true);
+          setStackList([]);
+          setStackKeyList([]);
           await loadStackList(cancelSource);
         }
         catch (error) {
@@ -81,6 +83,7 @@ function EbsSolutionStackInput({dataObject, setDataObject, disabled}) {
                 dataObject={dataObject}
                 filter={"contains"}
                 selectOptions={stackKeyList}
+                busy={isLoading}
                 fieldName={"platform"}
                 disabled={disabled || isLoading}
             />
