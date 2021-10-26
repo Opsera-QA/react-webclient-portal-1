@@ -29,7 +29,6 @@ function TaskLiveLogsOverlay({ runCount, taskId }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-
     if (taskId == null || runCount == null) {
       setData("Error: Unable to load Task Activity due to missing attributes.");
       setData("");
@@ -70,8 +69,14 @@ function TaskLiveLogsOverlay({ runCount, taskId }) {
       const response = await taskActions.pullLiveLogV2(getAccessToken, cancelTokenSource, taskId, runCount);
       const log = response?.data?.log;
       const taskState = response?.data?.state;
-      setTaskState(taskState);
-      console.log(taskState);
+
+      if (taskState != null) {
+        setTaskState(taskState);
+
+        if (taskState !== "running" && timer != null) {
+          clearInterval(timer);
+        }
+      }
 
       if (typeof log === "string" && log.length > 0) {
         setData(log);
@@ -86,10 +91,6 @@ function TaskLiveLogsOverlay({ runCount, taskId }) {
       if (isMounted?.current === true) {
         setLastCheckTimestamp(new Date());
         setLoading(false);
-
-        if (taskState === "stopped" && timer != null) {
-          clearInterval(timer);
-        }
       }
     }
   };
@@ -117,7 +118,7 @@ function TaskLiveLogsOverlay({ runCount, taskId }) {
   };
 
   const getTaskStateMessage = () => {
-    if (taskState !== "running") {
+    if (taskState != null && taskState !== "running") {
       return (`\n\nThe Task is not currently running, so no new logs will be shown.`);
     }
   };
