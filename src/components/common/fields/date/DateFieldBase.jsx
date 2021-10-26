@@ -4,17 +4,22 @@ import { format } from "date-fns";
 import FieldLabel from "components/common/fields/FieldLabel";
 import FieldContainer from "components/common/fields/FieldContainer";
 
+export const getFormattedDate = (date, dateFormat) => {
+  return date != null && dateFormat != null ? format(new Date(date), dateFormat) : null;
+};
+
+export const getFormattedTimestamp = (date) => {
+  return date != null ? format(new Date(date), "yyyy-MM-dd', 'hh:mm:ss a") : null;
+};
+
 function DateFieldBase({fieldName, dataObject, dateFormat, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
-  const getDate = () => {
-    const date = dataObject.getData(field.id);
-    return date != null && dateFormat != null ? format(new Date(date), dateFormat) : null;
-  };
-
   return (
     <FieldContainer className={className}>
-      <FieldLabel field={field} fieldName={fieldName} /><span>{getDate()}</span>
+      <FieldLabel field={field} fieldName={fieldName} /><span>
+      {getFormattedDate(dataObject.getData(field.id), dateFormat)}
+    </span>
     </FieldContainer>
   );
 }
