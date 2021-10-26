@@ -174,10 +174,14 @@ function PipelineDetailView() {
         toastContext.showLoadingErrorDialog("Pipeline not found");
       }
     } catch (error) {
-      console.error(error.message);
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        console.error(error.message);
+        toastContext.showLoadingErrorDialog(error);
+      }
     } finally {
-      setSoftLoading(false);
+      if (isMounted?.current === true) {
+        setSoftLoading(false);
+      }
     }
   };
 
