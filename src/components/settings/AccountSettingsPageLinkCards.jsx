@@ -1,6 +1,5 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
+import React from "react";
+import PropTypes from "prop-types";
 import AnalyticsDataEntryPageLinkCard from "components/settings/analytics_data_entry/AnalyticsDataEntryPageLinkCard";
 import LoadingDialog from "components/common/status_notifications/loading";
 import AnalyticsProfilePageLinkCard from "components/settings/analytics/AnalyticsProfilePageLinkCard";
@@ -15,52 +14,8 @@ import TagManagementPageLinkCard from "components/settings/tags/TagManagementPag
 import OrganizationManagementPageLinkCard from "components/settings/organizations/OrganizationManagementPageLinkCard";
 import UserSettingsPageLinkCard from "components/user/user_settings/UserSettingsPageLinkCard";
 
-function AccountSettingsPageLinkCards() {
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const { getAccessRoleData } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [isLoading, setIsLoading] = useState(true);
-  const isMounted = useRef(false);
-
-  useEffect(() => {
-    isMounted.current = true;
-
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
-      await getRoles();
-    } catch (error) {
-      if (isMounted?.current === true) {
-        console.error(error);
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const getRoles = async () => {
-    const userRoleAccess = await getAccessRoleData();
-
-    if (isMounted?.current === true && userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-    }
-  };
-
-  if (isLoading) {
+function AccountSettingsPageLinkCards({accessRoleData}) {
+  if (accessRoleData == null) {
     return (<LoadingDialog size={"sm"} />);
   }
 
@@ -102,5 +57,9 @@ function AccountSettingsPageLinkCards() {
     </div>
   );
 }
+
+AccountSettingsPageLinkCards.propTypes = {
+  accessRoleData: PropTypes.object,
+};
 
 export default AccountSettingsPageLinkCards;
