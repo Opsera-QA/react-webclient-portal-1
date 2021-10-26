@@ -68,6 +68,8 @@ function EbsSolutionStackInput({dataObject, setDataObject, disabled}) {
         let newDataObject = dataObject;
         newDataObject.setData("platform", value);
         newDataObject.setData("solutionStackName", "");
+        newDataObject.setData("customDockerCompose", false);
+        newDataObject.setData("dockerComposeScriptId", "");
         setDataObject({...newDataObject});
     };
 

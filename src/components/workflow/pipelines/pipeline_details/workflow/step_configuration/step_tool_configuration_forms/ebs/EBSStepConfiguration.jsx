@@ -78,15 +78,20 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
   };
 
   const getCustomDockerFields = () => {
-    if (ebsStepConfigurationDto.getData("customDockerCompose") === true) {
+    if(ebsStepConfigurationDto.getData("platform") === "Docker") {
       return (
-        <ScriptLibrarySelectInput
-          fieldName={"dockerComposeScriptId"}
-          dataObject={ebsStepConfigurationDto}
-          setDataObject={setEBSStepConfigurationDataDto}
-          busy={isLoading}
-          disabled={isLoading}
-        />
+        <>
+          <EbsCustomDockerComposeToggleInput  dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} fieldName={"customDockerCompose"} />
+          {ebsStepConfigurationDto.getData("customDockerCompose") === true && 
+            <ScriptLibrarySelectInput
+              fieldName={"dockerComposeScriptId"}
+              dataObject={ebsStepConfigurationDto}
+              setDataObject={setEBSStepConfigurationDataDto}
+              busy={isLoading}
+              disabled={isLoading}
+            />
+          }
+        </>
       );
     }
   };
@@ -196,7 +201,6 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
       {getJsonInputs()}
       <EBSAccessOptionsInput fieldName={"bucketAccess"} dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} />
       <EBSCreateDomainToggleInput dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} fieldName={"createDomain"}/>
-      <EbsCustomDockerComposeToggleInput  dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} fieldName={"customDockerCompose"} />
       {getDynamicDomainFields()}
       {getCustomDockerFields()}
     </PipelineStepEditorPanelContainer>
