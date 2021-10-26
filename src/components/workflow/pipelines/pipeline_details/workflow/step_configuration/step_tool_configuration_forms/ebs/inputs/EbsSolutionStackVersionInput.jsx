@@ -6,8 +6,8 @@ function EbsSolutionStackVersionInput({dataObject, setDataObject, stackList, dis
     
     const [stackVersionList, setStackVersionList] = useState([]);
     useEffect(() => {
-        setStackVersionList(stackList[dataObject.getData("solutionStack")]);
-      }, [stackList, dataObject.getData("solutionStack")]);
+        setStackVersionList(stackList[dataObject.getData("platform")]);
+      }, [stackList, dataObject.getData("platform")]);
 
     return (
         <SelectInputBase

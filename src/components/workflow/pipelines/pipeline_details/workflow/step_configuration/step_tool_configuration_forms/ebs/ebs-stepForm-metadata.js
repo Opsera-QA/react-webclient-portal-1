@@ -83,14 +83,20 @@ const ebsStepFormMetadata = {
       id: "createDomain",
     },
     {
-      label: "Solution Stack Type",
-      id: "solutionStack",
-      isRequired: true
-    },
-    {
       label: "Solution Stack Version",
       id: "solutionStackName",
       isRequired: true
+    },
+    {
+      label: "Custom Docker Compose",
+      id: "customDockerCompose",
+    },
+    {
+      label: "Docker Script",
+      id: "dockerComposeScriptId",
+      isRequiredFunction: (model) => {
+        return model?.getData("customDockerCompose") === true;
+      },
     }
   ],
   
@@ -178,15 +184,21 @@ const ebsStepFormMetadata = {
       id: "createDomain",
     },
     {
-      label: "Solution Stack Type",
-      id: "solutionStack",
-      isRequired: true
-    },
-    {
       label: "Solution Stack Version",
       id: "solutionStackName",
       isRequired: true
     },
+    {
+      label: "Custom Docker Compose",
+      id: "customDockerCompose",
+    },
+    {
+      label: "Docker Script",
+      id: "dockerComposeScriptId",
+      isRequiredFunction: (model) => {
+        return model?.getData("customDockerCompose") === true;
+      },
+    }
   ],
 
   newObjectFields:
@@ -207,8 +219,9 @@ const ebsStepFormMetadata = {
       hostedZoneId: "",
       domainName : "",
       solutionStackName: "",
-      solutionStack: "",
-      createDomain: false
+      createDomain: false,
+      customDockerCompose: false,
+      dockerComposeScriptId: ""
     }
 };
 

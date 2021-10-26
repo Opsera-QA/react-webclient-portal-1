@@ -66,7 +66,7 @@ function EbsSolutionStackInput({dataObject, setDataObject, disabled}) {
 
     const setDataFunction = (fieldName, value) => {
         let newDataObject = dataObject;
-        newDataObject.setData("solutionStack", value);
+        newDataObject.setData("platform", value);
         newDataObject.setData("solutionStackName", "");
         setDataObject({...newDataObject});
     };
@@ -79,10 +79,10 @@ function EbsSolutionStackInput({dataObject, setDataObject, disabled}) {
                 dataObject={dataObject}
                 filter={"contains"}
                 selectOptions={stackKeyList}
-                fieldName={"solutionStack"}
+                fieldName={"platform"}
                 disabled={disabled || isLoading}
             />
-            {dataObject.getData("solutionStack") && 
+            {dataObject.getData("platform") && 
                 <EbsSolutionStackVersionInput 
                     setDataObject={setDataObject}
                     dataObject={dataObject}
