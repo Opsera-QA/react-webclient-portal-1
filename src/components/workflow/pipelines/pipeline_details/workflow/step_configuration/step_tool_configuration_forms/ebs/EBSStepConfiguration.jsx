@@ -18,6 +18,7 @@ import Model from "core/data_model/model";
 import EBSPlatformOptionsInput from "./inputs/EBSPlatformOptionsInput";
 import EBSBucketInput from "./inputs/EBSBucketInput";
 import EBSKeyPairInput from "./inputs/EBSKeyPairInput";
+import EbsSolutionStackInput from "./inputs/EbsSolutionStackInput";
 function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, callbackSaveToVault, pipelineId, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
@@ -144,6 +145,7 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
         fieldName={"port"}
       />
       <EBSPlatformOptionsInput  dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} fieldName={"platform"}/>
+      <EbsSolutionStackInput dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} />
       <TextInputBase
         setDataObject={setEBSStepConfigurationDataDto}
         dataObject={ebsStepConfigurationDto}

@@ -81,6 +81,14 @@ const ebsStepFormMetadata = {
     {
       label: "Create Domain",
       id: "createDomain",
+    },
+    {
+      label: "Solution Stack Name",
+      id: "solutionStack",
+    },
+    {
+      label: "Solution Stack Version",
+      id: "solutionStackName",
     }
   ],
   
@@ -166,6 +174,14 @@ const ebsStepFormMetadata = {
     {
       label: "Create Domain",
       id: "createDomain",
+    },
+    {
+      label: "Solution Stack Name",
+      id: "solutionStack",
+    },
+    {
+      label: "Solution Stack Version",
+      id: "solutionStackName",
     }
   ],
 
@@ -186,6 +202,8 @@ const ebsStepFormMetadata = {
       bucketAccess : "",
       hostedZoneId: "",
       domainName : "",
+      solutionStackName: "",
+      solutionStack: "",
       createDomain: false
     }
 };
