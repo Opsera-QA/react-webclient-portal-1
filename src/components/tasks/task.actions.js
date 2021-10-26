@@ -23,6 +23,17 @@ taskActions.createGitTaskV2 = async (getAccessToken, cancelTokenSource, gitTasks
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+taskActions.pullLiveLogV2 = async (getAccessToken, cancelTokenSource, taskId, runCount) => {
+  const apiUrl = `/tasks/${taskId}/tool-activity/`;
+  const urlParams = {
+    params: {
+      run_count: runCount
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 taskActions.getTasksListV2 = async (getAccessToken, cancelTokenSource, taskFilterModel, fields) => {
   const apiUrl = `/tasks`;
   const urlParams = {

@@ -12,7 +12,7 @@ import RunTaskOverlay from "components/tasks/details/RunTaskOverlay";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import taskActions from "components/tasks/task.actions";
 import {TASK_TYPES} from "components/tasks/task.types";
-import TaskActivityView from "components/tasks/TaskActivityView";
+import TaskLiveLogsOverlay from "components/tasks/TaskLiveLogsOverlay";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_GIT_BRANCHES,
@@ -29,7 +29,6 @@ function RunTaskButton({gitTasksData, setGitTasksData, disable, className, loadD
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
-  const [showToolActivity, setShowToolActivity] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
@@ -77,9 +76,7 @@ function RunTaskButton({gitTasksData, setGitTasksData, disable, className, loadD
             </Button>
             {gitTasksData.getData("type") === "sync-sfdc-repo" && 
                <Button variant="secondary" className="m-2" style={{ cursor: "pointer" }}
-               onClick={() => {
-                 setShowToolActivity(true);
-               }}  >
+               onClick={showLiveLogOverlay}  >
                   View Logs
               <FontAwesomeIcon icon={faTerminal}
                 className="white mx-1" fixedWidth
@@ -119,6 +116,15 @@ function RunTaskButton({gitTasksData, setGitTasksData, disable, className, loadD
     );
   };
 
+  const showLiveLogOverlay = () => {
+    toastContext.showOverlayPanel(
+      <TaskLiveLogsOverlay
+        runCount={gitTasksData?.getData("run_count")}
+        taskId={gitTasksData?.getData("_id")}
+      />
+    );
+  };
+
   if (!ALLOWED_TASK_TYPES.includes(taskType)) {
     return null;
   }
@@ -127,9 +133,6 @@ function RunTaskButton({gitTasksData, setGitTasksData, disable, className, loadD
     <div className={className}>
       {/*TODO: Make sure button is not clickable until form is valid*/}
       {getButton()}
-      {showToolActivity && <TaskActivityView 
-        gitTasksData={gitTasksData}
-        handleClose={() => setShowToolActivity(false)} />
       }
     </div>
   );

@@ -7,6 +7,7 @@ import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import analyticsActions from "components/settings/analytics/analytics-settings-actions";
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObject, groupBy, disabled, placeholderText, setDataFunction, busy, showClearValueButton, clearDataFunction, className}) {
   const [errorMessage, setErrorMessage] = useState("");
@@ -125,6 +126,7 @@ function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObj
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput
           selectOptions={selectOptions}
+          hasErrorState={hasStringValue(errorMessage)}
           busy={busy || isLoading}
           allowCreate={"onFilter"}
           createOptionFunction={(value) => handleCreate(value)}

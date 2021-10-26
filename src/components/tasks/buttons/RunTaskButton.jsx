@@ -9,7 +9,6 @@ import axios from "axios";
 import RunTaskOverlay from "components/tasks/details/RunTaskOverlay";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {TASK_TYPES} from "components/tasks/task.types";
-import TaskActivityView from "components/tasks/TaskActivityView";
 import CancelTaskButton from "components/tasks/buttons/CancelTaskButton";
 
 const ALLOWED_TASK_TYPES = [
@@ -24,7 +23,6 @@ function RunTaskButton({taskModel, setTaskModel, disable, className, loadData, a
   const [taskStarting, setTaskStarting] = useState(false);
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
-  const [showToolActivity, setShowToolActivity] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
@@ -96,10 +94,6 @@ function RunTaskButton({taskModel, setTaskModel, disable, className, loadData, a
     <div className={className}>
       {/*TODO: Make sure button is not clickable until form is valid*/}
       {getButton()}
-      {showToolActivity && <TaskActivityView 
-        gitTasksData={taskModel}
-        handleClose={() => setShowToolActivity(false)} />
-      }
     </div>
   );
 }
