@@ -75,7 +75,6 @@ function TaskLiveLogsOverlay({ runCount, taskId }) {
         setData(log);
       }
     } catch (error) {
-      console.log("error: " + JSON.stringify(error));
       console.log(error?.message);
       setErrors(error);
     }
