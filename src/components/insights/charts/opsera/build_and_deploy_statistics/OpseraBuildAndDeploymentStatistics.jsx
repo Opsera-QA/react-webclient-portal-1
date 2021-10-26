@@ -25,6 +25,7 @@ import AllBuildStatisticsDataBlockContainer
   from "components/insights/charts/opsera/build_and_deploy_statistics/build_statistics/AllBuildStatisticsDataBlockContainer";
 import chartsActions from "components/insights/charts/charts-actions";
 import axios from "axios";
+import { getDateObjectFromKpiConfiguration } from "components/insights/charts/charts-helpers";
 
 
 function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -90,30 +91,53 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
 
   const monthData = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
 
-  const getCorrectedData = (ipData) => {
+  const getCorrectedData = (monthArr, ipData) => {
+    
     if(!ipData){
       return undefined;
     }
-    return Array.from(Array(12).keys(), month => 
-      ipData.find(ipd => ipd.x === month+1) || { x: month+1, y: 0 }
-    ).map(d => {
-      return {
-        x: monthData[d.x-1],
-        y: d.y
-      };
-    });
+
+    return monthArr.map(month => ipData.find(d => d.x === month+1) || { x: month+1, y: 0 })
+            .map(d => {
+              return {
+                x: monthData[d.x-1],
+                y: d.y
+              };
+            });
+
+
+    // return Array.from(Array(12).keys(), month => 
+    //   ipData.find(ipd => ipd.x === month+1) || { x: month+1, y: 0 }
+    // ).map(d => {
+    //   return {
+    //     x: monthData[d.x-1],
+    //     y: d.y
+    //   };
+    // });
   };
 
   const getChartData = (chartData) => {
+
     if(!chartData){
       return undefined;
     }
 
+    const selectedDate = getDateObjectFromKpiConfiguration(kpiConfiguration);    
+
+    let d = new Date(selectedDate.end);
+
+    let monthArr = [];
+    for(let i=0;i<12;i++){
+      monthArr.push(d.getMonth());
+      d.setMonth(d.getMonth()-1);
+    }
+    monthArr.reverse();
+
     return {
-      buildSuccess: getCorrectedData(chartData?.buildSuccess),
-      avgBuilds: getCorrectedData(chartData?.avgBuilds),      
-      deploySuccess: getCorrectedData(chartData?.deploySuccess),
-      avgDeployments: getCorrectedData(chartData?.avgDeployments)
+      buildSuccess: getCorrectedData(monthArr, chartData?.buildSuccess),
+      avgBuilds: getCorrectedData(monthArr, chartData?.avgBuilds),      
+      deploySuccess: getCorrectedData(monthArr, chartData?.deploySuccess),
+      avgDeployments: getCorrectedData(monthArr, chartData?.avgDeployments)
     };
   };
   
