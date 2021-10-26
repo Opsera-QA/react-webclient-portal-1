@@ -54,11 +54,22 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
   const handleRunGitTask = async () => {
     if (gitTasksData?.getData("type") === TASK_TYPES.SALESFORCE_BULK_MIGRATION) {
       handleClose();
-      toastContext.showOverlayPanel(
-        <SalesforceBulkMigrationTaskWizardOverlay
-          taskModel={gitTasksData}
-        />
-      );
+      try{
+        setIsLoading(true);
+        await sfdcPipelineActions.triggerGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData.getData("_id"));
+
+        toastContext.showOverlayPanel(
+          <SalesforceBulkMigrationTaskWizardOverlay
+            taskModel={gitTasksData}
+          />
+        );
+      } catch (error) {
+        toastContext.showLoadingErrorDialog(error);
+        setIsLoading(false);
+      } finally {
+        handleClose();
+        setIsLoading(false);
+      }
       setIsLoading(false);
     }
     else if (gitTasksData?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_REPO) {

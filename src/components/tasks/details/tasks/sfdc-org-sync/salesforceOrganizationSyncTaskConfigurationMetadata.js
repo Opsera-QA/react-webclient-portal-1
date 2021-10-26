@@ -109,7 +109,7 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
     {
       label: "Create a new branch?",
       id: "isNewBranch",
-      formText: "Creates a new branch and synch the changes.",
+      formText: "Creates a new branch and sync the changes.",
     },
     {
       label: "Upstream Branch",
