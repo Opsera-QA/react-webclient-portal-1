@@ -83,12 +83,14 @@ const ebsStepFormMetadata = {
       id: "createDomain",
     },
     {
-      label: "Solution Stack Name",
+      label: "Solution Stack Type",
       id: "solutionStack",
+      isRequired: true
     },
     {
       label: "Solution Stack Version",
       id: "solutionStackName",
+      isRequired: true
     }
   ],
   
@@ -176,13 +178,15 @@ const ebsStepFormMetadata = {
       id: "createDomain",
     },
     {
-      label: "Solution Stack Name",
+      label: "Solution Stack Type",
       id: "solutionStack",
+      isRequired: true
     },
     {
       label: "Solution Stack Version",
       id: "solutionStackName",
-    }
+      isRequired: true
+    },
   ],
 
   newObjectFields:

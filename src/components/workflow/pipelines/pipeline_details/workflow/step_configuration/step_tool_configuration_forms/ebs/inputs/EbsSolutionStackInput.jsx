@@ -5,14 +5,13 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import AWSActionsHelper
   from "components/common/list_of_values_input/tools/aws/aws-actions-helper";
+import EbsSolutionStackVersionInput from "./EbsSolutionStackVersionInput";
 
 function EbsSolutionStackInput({dataObject, setDataObject, disabled}) {
     const { getAccessToken } = useContext(AuthContext);
     const [stackList, setStackList] = useState([]);
     const [stackKeyList, setStackKeyList] = useState([]);
-    const [stackVersionList, setStackVersionList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [isVersionLoading, setIsVersionLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const isMounted = useRef(false);
     const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -66,13 +65,10 @@ function EbsSolutionStackInput({dataObject, setDataObject, disabled}) {
     };
 
     const setDataFunction = (fieldName, value) => {
-        setIsVersionLoading(true);
         let newDataObject = dataObject;
         newDataObject.setData("solutionStack", value);
         newDataObject.setData("solutionStackName", "");
-        setStackVersionList(stackList[value]);
         setDataObject({...newDataObject});
-        setIsVersionLoading(false);
     };
 
     return (
@@ -85,15 +81,14 @@ function EbsSolutionStackInput({dataObject, setDataObject, disabled}) {
                 selectOptions={stackKeyList}
                 fieldName={"solutionStack"}
                 disabled={disabled || isLoading}
-            />   
-            <SelectInputBase
-                setDataObject={setDataObject}
-                dataObject={dataObject}
-                filter={"contains"}
-                selectOptions={stackVersionList}
-                fieldName={"solutionStackName"}
-                disabled={disabled || isVersionLoading}
-            /> 
+            />
+            {dataObject.getData("solutionStack") && 
+                <EbsSolutionStackVersionInput 
+                    setDataObject={setDataObject}
+                    dataObject={dataObject}
+                    stackList={stackList}
+                />
+            }
         </>  
     );
 }
