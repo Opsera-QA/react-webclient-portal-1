@@ -69,7 +69,7 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData }) {
 
   const getTrendChart = () => {
     return(
-      <div className="new-chart mb-3" style={{height: "160px"}}>
+      <div className="new-chart p-0" style={{height: "150px"}}>
         <ResponsiveLine
           data={dailyBuildsChartData}
           {...defaultConfig("", "", 
@@ -83,6 +83,14 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData }) {
           // axisLeft={null}          
           colors={getColor}
           pointSize={6}
+          markers={[
+            {
+                axis: 'y',
+                value: 1,
+                lineStyle: { stroke: '#00897b', strokeWidth: 1 },
+                legend: 'Goal',
+            }            
+          ]}
         />
       </div>
     );
@@ -99,14 +107,14 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData }) {
     >
       <Col sm={4} className={"p-2"}>
         {getLeftDataBlock()}
-        <hr/>
+        {/* <hr/>
         <Row>
           <Col sm={2} className={"p-2"}></Col>
           <Col sm={8} className={"p-2"}>
             {getRightDataBlock()}
           </Col>
           <Col sm={2} className={"p-2"}></Col>
-        </Row>
+        </Row> */}
       </Col>      
       <Col sm={8} className={"p-2"}>
         {getTrendChart()}

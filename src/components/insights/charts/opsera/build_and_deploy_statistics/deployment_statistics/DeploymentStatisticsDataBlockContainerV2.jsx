@@ -74,7 +74,7 @@ function DeploymentStatisticsDataBlockContainerV2({ metricData, chartData }) {
 
   const getSuccessTrendChart = () => {
     return(
-      <div className="new-chart mb-3" style={{height: "160px"}}>
+      <div className="new-chart p-0" style={{height: "150px"}}>
         <ResponsiveLine
           data={successChartData}
           {...defaultConfig("", "", 
@@ -86,7 +86,22 @@ function DeploymentStatisticsDataBlockContainerV2({ metricData, chartData }) {
             tickValues: [0, 50, 100]
           }}
           // axisLeft={null}
-          colors={getColor}         
+          colors={getColor}
+          pointSize={6}
+          markers={[
+            {
+                axis: 'y',
+                value: 95,
+                lineStyle: { stroke: '#00897b', strokeWidth: 1 },
+                legend: 'Goal',
+            },
+            {
+              axis: 'y',
+              value: metricData?.deploy?.successPercent,
+              lineStyle: { stroke: '#00897b', strokeWidth: 1 },
+              legend: 'Success Rate',
+            }            
+          ]}
         />
       </div>
     );
@@ -103,7 +118,7 @@ function DeploymentStatisticsDataBlockContainerV2({ metricData, chartData }) {
     >
       <Col sm={4} className={"p-2"}>
         {getRightDataBlock()}
-        <hr/>
+        {/* <hr/>
         <Row>
           <Col sm={6} className={"p-2"}>
             {getLeftDataBlock()}
@@ -111,7 +126,7 @@ function DeploymentStatisticsDataBlockContainerV2({ metricData, chartData }) {
           <Col sm={6} className={"p-2"}>
             {getMiddleDataBlock()}
           </Col>
-        </Row>
+        </Row> */}
       </Col>      
       <Col sm={8} className={"p-2"}>
         {getSuccessTrendChart()}
