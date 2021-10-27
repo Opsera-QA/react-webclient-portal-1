@@ -11,7 +11,6 @@ import {
   faStepBackward,
   faStepForward
 } from "@fortawesome/free-solid-svg-icons";
-import "../../workflows.css";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";

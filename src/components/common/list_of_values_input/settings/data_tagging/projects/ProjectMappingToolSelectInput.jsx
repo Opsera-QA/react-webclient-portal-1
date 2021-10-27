@@ -1,45 +1,42 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineToolInput from "components/common/list_of_values_input/workflow/pipelines/PipelineToolInput";
+import RoleRestrictedToolByIdentifierInputBase
+  from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
 // TODO: Add support for filtering list
-function ProjectMappingToolSelectInput({visible, dataObject, setDataObject, disabled, fieldName}) {
-  const setProjectMappingTool = (fieldName, selectedOption) => {
-    let newDataObject = {...dataObject};
-    newDataObject.setData(fieldName, selectedOption["id"]);
-    newDataObject.setData("tool_prop", "");
-    newDataObject.setData("key", "");
-    setDataObject({...newDataObject});
+function ProjectMappingToolSelectInput({visible, model, setModel, disabled, fieldName}) {
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newModel = {...model};
+    newModel.setData(fieldName, selectedOption?._id);
+    newModel.setData("tool_prop", "");
+    newModel.setData("key", "");
+    setModel({...newModel});
   };
 
-  if (!visible) {
-    return <></>;
-  }
-
   return (
-    <PipelineToolInput
-      toolType={dataObject.getData("tool_identifier")}
-      setDataFunction={setProjectMappingTool}
+    <RoleRestrictedToolByIdentifierInputBase
+      toolIdentifier={model?.getData("tool_identifier")}
+      toolFriendlyName={"Tool"}
+      setDataFunction={setDataFunction}
       fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      model={model}
+      setModel={setModel}
       placeholderText={"Select a Tool"}
       visible={visible}
-      disabled={disabled || dataObject.getData("tool_identifier") === ""}
+      disabled={disabled}
    />
   );
 }
 
 ProjectMappingToolSelectInput.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   fieldName: PropTypes.string,
   visible: PropTypes.bool
 };
 
 ProjectMappingToolSelectInput.defaultProps = {
-  visible: true,
   fieldName: "tool_id"
 };
 

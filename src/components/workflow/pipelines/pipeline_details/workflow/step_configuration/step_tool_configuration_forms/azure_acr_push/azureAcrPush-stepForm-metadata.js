@@ -9,6 +9,10 @@ const azureAcrPushStepFormMetadata = {
     {
       label: "Jenkins Job",
       id: "toolJobName",
+    },
+    {
+      label: "Jenkins Job",
+      id: "toolJobId",
       isRequired: true
     },
     {

@@ -1,44 +1,47 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineToolInput from "components/common/list_of_values_input/workflow/pipelines/PipelineToolInput";
+import RoleRestrictedToolByIdentifierInputBase
+  from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
-function JenkinsAccountToolSelectInput({ visible, dataObject, setDataObject, disabled, fieldName }) {
-  const setProjectMappingTool = (fieldName, selectedOption) => {
-    dataObject.setData(fieldName, "");
-    dataObject.setData("credentailsToolId", "");
-    dataObject.setData("gitCredential", "");
-    dataObject.setData("gitUserName", "");
-    dataObject.setData("accountUserName", "");
-    let newDataObject = { ...dataObject };
-    newDataObject.setData(fieldName, selectedOption.id);
-    newDataObject.setData("credentailsToolId", selectedOption.id);
-    newDataObject.setData("gitCredential", "");
-    newDataObject.setData("gitUserName", selectedOption?.configuration?.accountUsername || "");
-    newDataObject.setData("accountUserName", selectedOption?.configuration?.accountUsername || "");
-    setDataObject({ ...newDataObject });
+function JenkinsAccountToolSelectInput({ visible, model, setModel, disabled, fieldName }) {
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newModel = { ...model };
+    newModel.setData(fieldName, selectedOption?._id || "");
+    newModel.setData("credentailsToolId", selectedOption?._id || "");
+    newModel.setData("gitCredential", "");
+    newModel.setData("gitUserName", selectedOption?.configuration?.accountUsername || "");
+    newModel.setData("accountUserName", selectedOption?.configuration?.accountUsername || "");
+    setModel({ ...newModel });
   };
 
-  if (!visible) {
-    return <></>;
-  }
+  const clearDataFunction = () => {
+    let newModel = { ...model };
+    newModel.setData(fieldName, "");
+    newModel.setData("credentailsToolId", "");
+    newModel.setData("gitCredential", "");
+    newModel.setData("gitUserName", "");
+    newModel.setData("accountUserName", "");
+    setModel({ ...newModel });
+  };
 
   return (
-    <PipelineToolInput
-      toolType={dataObject.getData("service")}
-      setDataFunction={setProjectMappingTool}
+    <RoleRestrictedToolByIdentifierInputBase
+      toolIdentifier={model?.getData("service")}
+      toolFriendlyName={"Tool"}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
       fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
-      placeholderText={"Select a Tool"}
+      model={model}
+      setModel={setModel}
       visible={visible}
-      disabled={disabled || dataObject.getData("service") === ""}
+      disabled={disabled || model?.getData("service") === ""}
     />
   );
 }
 
 JenkinsAccountToolSelectInput.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   fieldName: PropTypes.string,
   visible: PropTypes.bool,

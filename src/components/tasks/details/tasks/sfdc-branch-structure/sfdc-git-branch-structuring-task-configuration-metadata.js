@@ -106,6 +106,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
     {
+      label: "Salesforce Tool",
       id: "sfdcToolId",
       isRequired: true,
       maxLength: 24,

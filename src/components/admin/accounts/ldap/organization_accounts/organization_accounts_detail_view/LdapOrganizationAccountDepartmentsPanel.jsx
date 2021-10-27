@@ -1,34 +1,24 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import LdapDepartmentsTable from "components/settings/ldap_departments/LdapDepartmentsTable";
 import departmentActions from "components/settings/ldap_departments/department-functions";
 import {AuthContext} from "contexts/AuthContext";
-import accountsActions from "components/admin/accounts/accounts-actions";
 
 function LdapOrganizationAccountDepartmentsPanel({ ldapOrganizationAccountData, loadData, organizationDomain, cancelTokenSource, isMounted }) {
-  const {getAccessToken, getUserRecord, setAccessRoles} = useContext(AuthContext);
+  const {getAccessToken} = useContext(AuthContext);
   const [ldapDepartmentData, setLdapDepartmentData] = useState(undefined);
-  const [authorizedDepartmentActions, setAuthorizedDepartmentActions] = useState([]);
 
   useEffect(() => {
     loadDepartments();
   }, []);
 
   const loadDepartments = async () => {
-    const user = await getUserRecord();
-    const {ldap} = user;
-    const userRoleAccess = await setAccessRoles(user);
-
     const response = await departmentActions.getDepartmentsByDomainV2(getAccessToken, cancelTokenSource, organizationDomain);
 
     if (isMounted?.current === true && response?.data != null) {
       setLdapDepartmentData(response.data);
     }
-
-    let authorizedDepartmentActions = await accountsActions.getAllowedDepartmentActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-    setAuthorizedDepartmentActions(authorizedDepartmentActions);
   };
 
   if (ldapOrganizationAccountData == null) {
@@ -36,14 +26,13 @@ function LdapOrganizationAccountDepartmentsPanel({ ldapOrganizationAccountData, 
   }
 
   return (
-    <div className={"mt-2"}>
-      <LdapDepartmentsTable
-        loadData={loadData}
-        departmentData={ldapDepartmentData}
-        authorizedActions={authorizedDepartmentActions}
-        domain={organizationDomain}
-      />
-    </div>
+    <LdapDepartmentsTable
+      className={"mt-2"}
+      loadData={loadData}
+      departmentData={ldapDepartmentData}
+      authorizedActions={["get_departments", "get_department_details", "create_department", "update_department", "update_group_membership"]}
+      domain={organizationDomain}
+    />
   );
 }
 

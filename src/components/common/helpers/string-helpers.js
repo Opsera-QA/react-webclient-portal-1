@@ -18,6 +18,10 @@ export function capitalizeFirstLetter(string, wordDelimiter = " ", noDataString)
   return noDataString;
 }
 
+export function hasStringValue(string) {
+  return (typeof string === "string" && string !== "");
+}
+
 export function truncateString(string, maxLength){
   if (string == null || typeof string !== "string") {
     return "";

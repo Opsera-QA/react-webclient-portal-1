@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import InputContainer from "components/common/inputs/InputContainer";
 import { Form } from "react-bootstrap";
 
-function ResourceGroupToggleInput({ dataObject, setDataObject, fieldName, disabled, pipelineId }) {
+function ResourceGroupToggleInput({ dataObject, setDataObject, fieldName, disabled }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
 
   const handleChange = () => {
@@ -40,7 +40,6 @@ ResourceGroupToggleInput.propTypes = {
   fieldName: PropTypes.string,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
-  pipelineId: PropTypes.string,
 };
 
 export default ResourceGroupToggleInput;

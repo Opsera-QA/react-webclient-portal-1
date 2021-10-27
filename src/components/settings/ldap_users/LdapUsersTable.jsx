@@ -28,8 +28,9 @@ function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loa
     [fields]
   );
 
-  const onRowSelect = (rowData, type) => {
-    history.push(`/settings/${orgDomain}/users/details/${rowData.original.emailAddress}`);
+  const onRowSelect = (rowData) => {
+    history.push(
+      `/settings/user-management/active/${orgDomain}/${rowData?.original?.emailAddress}/details`);
   };
 
   const createUser = () => {
@@ -49,7 +50,7 @@ function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loa
   };
 
   return (
-    <div className="px-2 pb-2">
+    <div>
       <FilterContainer
         loadData={loadData}
         addRecordFunction={authorizedActions?.includes("create_user") ? createUser : null}

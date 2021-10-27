@@ -5,12 +5,13 @@ import App from "./App";
 import "@fortawesome/fontawesome-pro/css/all.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "dhx-suite-package/codebase/suite.css";
-import "react-widgets/dist/css/react-widgets.css";
-import "./theme.css";
-import "./field.css";
-import "./container.css";
-import "./index.css";
-import "./analytics.css";
+import "react-widgets/styles.css";
+import "css/general/theme.css";
+import "css/general/field.css";
+import "css/general/container.css";
+import "css/general/index.css";
+import "css/analytics/analytics.css";
+import "css/pipelines/workflows.css";
 import * as serviceWorker from "./serviceWorker";
 
 if (typeof window["TextEncoder"] !== "function") {

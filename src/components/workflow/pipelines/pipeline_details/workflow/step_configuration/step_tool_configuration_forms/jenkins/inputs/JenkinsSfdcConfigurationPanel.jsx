@@ -8,10 +8,12 @@ import JenkinsSfdcUnitTestTypeSelectInput from "components/common/list_of_values
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import toolsActions from "components/inventory/tools/tools-actions";
 
 // TODO: Is this supposed to still be in here
 const testArr = ["SFDC UNIT TESTING", "SFDC VALIDATE PACKAGE XML", "SFDC DEPLOY"];
 
+// TODO: Rewrite
 function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
   const { getAccessToken } = useContext(AuthContext);
   const { toastContext } = useContext(DialogToastContext);
@@ -45,12 +47,12 @@ function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      const response = await pipelineActions.getToolsListV2(getAccessToken, cancelTokenSource,"sfdc-configurator");
+      const response = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, cancelTokenSource,"sfdc-configurator");
+      const toolsReponse = response?.data?.data;
 
-      if (isMounted?.current === true && response?.data) {
+      if (isMounted?.current === true && Array.isArray(toolsReponse)) {
         let tools = [];
-        let toolsResponseData = response.data;
-        toolsResponseData.map((item) => {
+        toolsReponse.map((item) => {
           tools.push({
             name: item.name,
             id: item._id,

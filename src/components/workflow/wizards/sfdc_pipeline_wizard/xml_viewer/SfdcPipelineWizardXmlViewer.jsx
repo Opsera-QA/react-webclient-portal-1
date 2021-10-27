@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faStepBackward} from "@fortawesome/free-solid-svg-icons";
-import "components/workflow/workflows.css";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
@@ -19,6 +18,7 @@ import IconBase from "components/common/icons/IconBase";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import SalesforcePipelineComponentCountsViewer
   from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/counts/SalesforcePipelineComponentCountsViewer";
+import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 
 // TODO: This should be refactored and cleaned up.
 const SfdcPipelineWizardXmlViewer = (
@@ -243,7 +243,7 @@ const SfdcPipelineWizardXmlViewer = (
       <div className="flex-container">
         {getTabContainer()}
         {getView()}        
-        <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
+        <SaveButtonContainer>
           <Button variant="secondary" size="sm" className="mr-2" onClick={() => { handleBackButton(); }}>
             <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-2" />
             Back
@@ -253,7 +253,7 @@ const SfdcPipelineWizardXmlViewer = (
             Proceed
           </Button>
           <CancelButton className={"ml-2"} cancelFunction={handleClose} />
-        </div>
+        </SaveButtonContainer>
       </div>
     </div>
   );

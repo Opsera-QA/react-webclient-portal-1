@@ -96,6 +96,7 @@ function LazyLoadSelectInputBase(
         setDataFunction={(newValue) => updateValue(newValue)}
         disabled={disabled}
         onSearch={onSearch}
+        lazyLoad={true}
       />
       <InfoText field={field} errorMessage={errorMessage} />
     </InputContainer>

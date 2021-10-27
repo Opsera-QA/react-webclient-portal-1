@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
@@ -9,9 +9,28 @@ import ActionBarDestructiveDeleteButton from "components/common/actions/buttons/
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import jiraProjectMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jira-project-metadata";
+import axios from "axios";
 
 function JiraProjectDetailView( {toolData, setToolData, jiraProjectData, setJiraProjectData, loadTool}) {
   const { getAccessToken } = useContext(AuthContext);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
+
   const getActionBar = () => {
     return (
       <ActionBarContainer>
@@ -43,7 +62,7 @@ function JiraProjectDetailView( {toolData, setToolData, jiraProjectData, setJira
       throw Error("Could not find Jira Project to delete.");
     }
 
-    return toolsActions.updateTool(newToolData, getAccessToken);
+    return toolsActions.updateToolV2(getAccessToken, cancelTokenSource, newToolData);
   };
 
   return (

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
-import CheckboxInput from "components/common/inputs/boolean/CheckboxInput";
+import CheckboxInputBase from "components/common/inputs/boolean/CheckboxInputBase";
 
 // TODO: Rework component
 function GitUpstreamBranchInput({ dataObject, setDataObject, gitToolId, service, workspace, repoId }) {
@@ -48,7 +48,7 @@ function GitUpstreamBranchInput({ dataObject, setDataObject, gitToolId, service,
             dataObject={dataObject}
             setDataObject={setDataObject}
           />
-          <CheckboxInput
+          <CheckboxInputBase
             fieldName={"hasUpstreamBranch"}
             model={dataObject}
             setModel={setDataObject}
@@ -83,7 +83,7 @@ function GitUpstreamBranchInput({ dataObject, setDataObject, gitToolId, service,
 
   return (
     <div>
-      <CheckboxInput 
+      <CheckboxInputBase
         fieldName={"isNewBranch"}
         setDataFunction={setIsNewBranchFunction}
         model={dataObject}

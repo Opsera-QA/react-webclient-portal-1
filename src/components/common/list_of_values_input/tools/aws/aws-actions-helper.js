@@ -27,4 +27,12 @@ AWSActionsHelper.getKeyPairs = async (awsToolId, getAccessToken, cancelTokenSour
   return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+AWSActionsHelper.getStackList = async (awsToolId, getAccessToken, cancelTokenSource) => {
+  const apiUrl = "/tools/aws/ebs/solutionStack";
+  const postBody = {
+    awsToolId: awsToolId
+  };
+  return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default AWSActionsHelper;

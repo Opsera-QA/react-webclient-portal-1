@@ -45,7 +45,7 @@ function ErrorToast({ error, prependMessage, removeToast, autoCloseLength, id })
             icon={faTimes}
             iconSize={"md"}
             className="pointer danger-red"
-            onClick={() => { clearError(); }}
+            onClickFunction={() => { clearError(); }}
           />
         </div>
       );

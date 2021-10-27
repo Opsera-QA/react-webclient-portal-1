@@ -18,7 +18,7 @@ import {
   faEnvelope,
   faTasks,
 } from "@fortawesome/pro-light-svg-icons";
-import "./sidebar.css";
+import "css/general/sidebar.css";
 
 const hiddenNav = () => {
   return <></>;

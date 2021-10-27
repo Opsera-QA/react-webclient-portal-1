@@ -13,6 +13,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import AnalyticsDefaultPersonaSelectInput
   from "components/common/list_of_values_input/analytics_profile/AnalyticsDefaultPersonaSelectInput";
+import AnalyticsProfileSubNavigationBar from "components/settings/analytics/AnalyticsProfileSubNavigationBar";
 
 function AnalyticsProfileSettings() {
   const toastContext = useContext(DialogToastContext);
@@ -111,6 +112,7 @@ function AnalyticsProfileSettings() {
         breadcrumbDestination={"analyticsProfile"}
         pageDescription={"Opsera Analytics Engine Settings."}
         style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}
+        navigationTabContainer={<AnalyticsProfileSubNavigationBar activeTab={"analyticsProfile"} />}
       >
         <LoadingView size="sm" />
       </ScreenContainer>
@@ -127,6 +129,7 @@ function AnalyticsProfileSettings() {
         <ScreenContainer
           breadcrumbDestination={"analyticsProfile"}
           pageDescription={"Opsera Analytics Engine Settings."}
+          navigationTabContainer={<AnalyticsProfileSubNavigationBar activeTab={"analyticsProfile"} />}
         >
           <Card>
             <Card.Header as="h5">Activate Opsera Analytics</Card.Header>
@@ -156,6 +159,7 @@ function AnalyticsProfileSettings() {
         <ScreenContainer
           breadcrumbDestination={"analyticsProfile"}
           pageDescription={"Opsera Analytics Engine Settings."}
+          navigationTabContainer={<AnalyticsProfileSubNavigationBar activeTab={"analyticsProfile"} />}
         >
           <Card>
             <Card.Header as="h5">Activate Opsera Analytics</Card.Header>
@@ -172,7 +176,11 @@ function AnalyticsProfileSettings() {
   }
 
   return (
-    <ScreenContainer breadcrumbDestination={"analyticsProfile"} pageDescription={"Opsera Analytics Engine Settings."}>
+    <ScreenContainer
+      breadcrumbDestination={"analyticsProfile"}
+      pageDescription={"Opsera Analytics Engine Settings."}
+      navigationTabContainer={<AnalyticsProfileSubNavigationBar activeTab={"analyticsProfile"} />}
+    >
       <div className={"p-2"}>
       {analyticsProfileData.getData("ldapAccount") && !analyticsProfileData.getData("ldapOwner") && (
         <Card>

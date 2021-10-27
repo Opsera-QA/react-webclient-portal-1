@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DropdownList from "react-widgets/lib/DropdownList";
+import DropdownList from "react-widgets/DropdownList";
 
 function StandaloneSelectInput(
   {
@@ -19,7 +19,9 @@ function StandaloneSelectInput(
     onCreate,
     allowCreate,
     className,
-    onToggle,
+    onToggleFunction,
+    hasErrorState,
+    lazyLoad,
   }) {
   const getPlaceholderText = () => {
     if (!Array.isArray(selectOptions)) {
@@ -35,9 +37,9 @@ function StandaloneSelectInput(
 
   return (
     <DropdownList
-      className={className}
+      className={`${hasErrorState ? "select-input-error " : ""}${className}`}
       data={selectOptions}
-      valueField={valueField}
+      dataKey={valueField}
       textField={textField}
       groupBy={groupBy}
       value={value}
@@ -45,10 +47,10 @@ function StandaloneSelectInput(
       busy={busy}
       defaultValue={defaultValue}
       onCreate={onCreate}
-      onToggle={onToggle}
+      onToggle={onToggleFunction}
       placeholder={getPlaceholderText()}
       onChange={(newValue) => setDataFunction(newValue)}
-      disabled={disabled || !Array.isArray(selectOptions) || selectOptions.length === 0}
+      disabled={disabled || (lazyLoad !== true && (!Array.isArray(selectOptions) || selectOptions.length === 0))}
       onSearch={onSearch}
       allowCreate={allowCreate}
     />
@@ -79,9 +81,11 @@ StandaloneSelectInput.propTypes = {
   onCreate: PropTypes.func,
   allowCreate: PropTypes.bool,
   className: PropTypes.string,
-  onToggle: PropTypes.func,
+  onToggleFunction: PropTypes.func,
   noDataText: PropTypes.string,
   defaultValue: PropTypes.any,
+  hasErrorState: PropTypes.bool,
+  lazyLoad: PropTypes.bool,
 };
 
 StandaloneSelectInput.defaultProps = {

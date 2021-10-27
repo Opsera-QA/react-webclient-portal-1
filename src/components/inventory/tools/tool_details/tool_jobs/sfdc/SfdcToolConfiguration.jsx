@@ -13,12 +13,12 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import SFDCBuildTypeSelectInput  from  "components/common/list_of_values_input/workflow/pipelines/SFDCBuildTypeSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import PipelineToolInput from "components/common/list_of_values_input/workflow/pipelines/PipelineToolInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faPlug } from "@fortawesome/pro-light-svg-icons";
 import SfdxTestConnectionStatusModal from './SfdxTestConnectionStatusModal';
 import { DialogToastContext } from "contexts/DialogToastContext";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import RoleRestrictedJenkinsToolSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
 
 function SfdcToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -40,7 +40,7 @@ function SfdcToolConfiguration({ toolData }) {
   const testConnection = async() =>{
     setLoading(true);
     let response;
-    
+
     if (sfdcConfigurationDto != null) {
       try{
         response = await toolsActions.checkSFDXToolConnection(getAccessToken, toolData, sfdcConfigurationDto.getData("jenkinsToolId") );
@@ -49,20 +49,20 @@ function SfdcToolConfiguration({ toolData }) {
       }
     }
 
-    if (response && response.data != null && response.data.status === 200 && response?.data?.message?.buildParams?.buildNumber && response?.data?.message?.buildParams?.jobName ) {   
-      setJenkinsBuildNumber(response?.data?.message?.buildParams?.buildNumber); 
-      setJenkinsJobName(response?.data?.message?.buildParams?.jobName); 
+    if (response && response.data != null && response.data.status === 200 && response?.data?.message?.buildParams?.buildNumber && response?.data?.message?.buildParams?.jobName ) {
+      setJenkinsBuildNumber(response?.data?.message?.buildParams?.buildNumber);
+      setJenkinsJobName(response?.data?.message?.buildParams?.jobName);
       setShowModal(true);
     }
     else {
-      toastContext.showErrorDialog("Something went wrong during test connection. View browser logs for more details"); 
+      toastContext.showErrorDialog("Something went wrong during test connection. View browser logs for more details");
       setLoading(false);
     }
   };
 
   const getSfdxModal = () => {
     return (
-      <SfdxTestConnectionStatusModal 
+      <SfdxTestConnectionStatusModal
         showModal={showModal}
         setShowModal={setShowModal}
         jenkinsBuildNumber={jenkinsBuildNumber}
@@ -70,7 +70,7 @@ function SfdcToolConfiguration({ toolData }) {
         jenkinsJobName={jenkinsJobName}
         setJenkinsJobName={setJenkinsJobName}
         setLoading={setLoading}
-        toolData={toolData}            
+        toolData={toolData}
       />
     );
   };
@@ -80,15 +80,12 @@ function SfdcToolConfiguration({ toolData }) {
       return (
         <>
         <BooleanToggleInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"checkConnection"} />
-        {sfdcConfigurationDto.getData("checkConnection") === true && 
+        {sfdcConfigurationDto.getData("checkConnection") === true &&
           <>
-            <PipelineToolInput
-              toolType={"jenkins"}
-              toolFriendlyName={"Jenkins"}
+            <RoleRestrictedJenkinsToolSelectInput
               fieldName={"jenkinsToolId"}
-              configurationRequired={true}
-              dataObject={sfdcConfigurationDto}
-              setDataObject={setSfdcConfigurationDto}
+              model={sfdcConfigurationDto}
+              setModel={setSfdcConfigurationDto}
             />
             <div className="p-2">
               {/* <TooltipWrapper innerText={"Select Jenkins tool to Test Connection"}> */}

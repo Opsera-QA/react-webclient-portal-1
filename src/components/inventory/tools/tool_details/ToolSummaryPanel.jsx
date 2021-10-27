@@ -8,8 +8,8 @@ import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import RegistryToolRoleAccessInput from "components/inventory/tools/tool_details/input/RegistryToolRoleAccessInput";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
-import VaultSummaryPageInputField from "./input/VaultSummaryPageInputField";
 import TagField from "components/common/fields/multiple_items/TagField";
+import ToolVaultField from "components/common/fields/inventory/tools/vault/ToolVaultField";
 
 function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessRules }) {
   useEffect(() => {
@@ -62,7 +62,7 @@ function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessR
           <RegistryToolRoleAccessInput dataObject={toolData} setDataObject={setToolData} disabled={!authorizedAction("edit_access_roles", toolData?.data)} />
         </Col>
         <Col lg={6}>
-          <VaultSummaryPageInputField dataObject={toolData} setDataObject={setToolData} />
+          <ToolVaultField model={toolData} fieldName={"vault"} />
         </Col>
         <Col lg={12} sm={12}>
           <TextFieldBase dataObject={toolData} fieldName={"description"} />

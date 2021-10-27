@@ -39,6 +39,10 @@ const roleDefinitionMetadata = {
       id: "user",
     },
     {
+      label: "Guest",
+      id: "guest",
+    },
+    {
       label: "Free Trial User",
       id: "free_trial_user",
     },

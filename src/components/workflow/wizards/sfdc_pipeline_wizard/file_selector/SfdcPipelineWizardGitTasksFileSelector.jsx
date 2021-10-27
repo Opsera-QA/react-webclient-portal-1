@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useRef, useContext} from "react";
 import PropTypes from "prop-types";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
-import "components/workflow/workflows.css";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import SfdcPipelineWizardSfdcFileSelector from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSfdcFileSelector";

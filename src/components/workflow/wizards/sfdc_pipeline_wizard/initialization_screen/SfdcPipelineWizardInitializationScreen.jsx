@@ -164,12 +164,10 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
 
   const checkIfSfdx = async (cancelSource, sfdcToolId) => {
     try {
-      const response = await toolsActions.getFullToolByIdV2(getAccessToken, cancelSource, sfdcToolId);
-      const tools = response?.data;
+      const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, sfdcToolId);
+      const buildType = response?.data?.data?.configuration?.buildType;
 
-      if (Array.isArray(tools) && tools.length > 0) {
-       return tools[0]?.configuration?.buildType === "sfdx";
-      }
+      return buildType === "sfdx";
     }
     catch (error) {
       console.error("Could not verify if Tool is Salesforce DX");

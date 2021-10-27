@@ -20,7 +20,6 @@ import {
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import PipelineWorkflowItemList from "./PipelineWorkflowItemList";
 import Modal from "components/common/modal/modal";
-import "../../../workflows.css";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import WorkflowAuthorizedActions from "./workflow-authorized-actions";
 import PipelineDetailsOverviewOverlay

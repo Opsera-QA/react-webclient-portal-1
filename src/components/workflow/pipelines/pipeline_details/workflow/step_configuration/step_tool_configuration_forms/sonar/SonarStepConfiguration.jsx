@@ -29,8 +29,8 @@ import {
 
 import pipelineActions from "components/workflow/pipeline-actions";
 import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
-import {jenkinsAgentArray} from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import toolsActions from "components/inventory/tools/tools-actions";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -50,7 +50,7 @@ const INITIAL_DATA = {
   toolJobId: "",
   toolJobType: "",
   projectKey: "",
-
+  sonarToolConfigId: "",
   accountUsername: "",
   projectId: "",
   defaultBranch: "",
@@ -150,60 +150,86 @@ function SonarStepConfiguration({
   useEffect(() => {
     setShowToast(false);
 
-    async function fetchJenkinsDetails(service) {
-      setisJenkinsSearching(true);
-      let results = await pipelineActions.getToolsList(service, getAccessToken);
-      //console.log(results);
-      if (typeof(results) != "object") {
-        setJenkinsList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-        let errorMessage =
-          "Jenkins information is missing or unavailable!";
-        toastContext.showErrorDialog(errorMessage);
-        setisJenkinsSearching(false);
-        return;
-      }
-      const filteredList = results.filter(
-        (el) => el.configuration !== undefined
-      ); //filter out items that do not have any configuration data!
-      if (filteredList) {
-        setJenkinsList(filteredList);
-        setisJenkinsSearching(false);
-      }
+    // Fire off our API call
+    getJenkinsList();
+  }, []);
+
+  const getJenkinsList = async () => {
+    setisJenkinsSearching(true);
+    let results = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, undefined, "jenkins");
+    const tools = results?.data?.data;
+    let respObj = [];
+
+    if (Array.isArray(tools)) {
+      tools.map((item) => {
+        if (item.configuration == null) {
+          return;
+        }
+
+        respObj.push({
+          name: item.name,
+          id: item._id,
+          configuration: item.configuration,
+          accounts: item.accounts,
+          jobs: item.jobs,
+        });
+      });
     }
 
-    // Fire off our API call
-    fetchJenkinsDetails("jenkins");
-  }, []);
+    if (typeof(results) != "object") {
+      setJenkinsList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+      let errorMessage =
+        "Jenkins information is missing or unavailable!";
+      toastContext.showErrorDialog(errorMessage);
+      setisJenkinsSearching(false);
+      return;
+    }
+
+    setJenkinsList(respObj);
+    setisJenkinsSearching(false);
+  };
 
   // search sonar
   useEffect(() => {
     setShowToast(false);
+    // Fire off our API call
+    getSonarList("sonar");
+  }, []);
 
-    async function fetchSonarDetails(service) {
-      setIsSonarSearching(true);
-      // Set results state
-      let results = await pipelineActions.getToolsList(service, getAccessToken);
-      //console.log(results);
-      if (typeof(results) != "object") {
-        setSonarList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-        let errorMessage =
-          "Sonar information is missing or unavailable!";
-        toastContext.showErrorDialog(errorMessage);
-        setIsSonarSearching(false);
-        return;
-      }
-      const filteredList = results.filter(
-        (el) => el.configuration !== undefined,
-      ); //filter out items that do not have any configuration data!
-      if (filteredList) {
-        setSonarList(filteredList);
-        setIsSonarSearching(false);
-      }
+  const getSonarList = async () => {
+    setisJenkinsSearching(true);
+    let results = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, undefined, "sonar");
+    const tools = results?.data?.data;
+    let respObj = [];
+
+    if (Array.isArray(tools)) {
+      tools.map((item) => {
+        if (item.configuration == null) {
+          return;
+        }
+
+        respObj.push({
+          name: item.name,
+          id: item._id,
+          configuration: item.configuration,
+          accounts: item.accounts,
+          jobs: item.jobs,
+        });
+      });
     }
 
-    // Fire off our API call
-    fetchSonarDetails("sonar");
-  }, []);
+    if (typeof(results) != "object") {
+      setSonarList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+      let errorMessage =
+        "Jenkins information is missing or unavailable!";
+      toastContext.showErrorDialog(errorMessage);
+      setIsSonarSearching(false);
+      return;
+    }
+
+    setSonarList(respObj);
+    setIsSonarSearching(false);
+  };
 
   // fetch repos
   useEffect(() => {

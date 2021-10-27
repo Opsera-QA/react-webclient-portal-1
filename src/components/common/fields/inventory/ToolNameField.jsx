@@ -99,6 +99,7 @@ function ToolNameField({ model, fieldName, className, handleClose }) {
           loadData={loadData}
           isLoading={isLoading}
           isMounted={isMounted}
+          model={model}
         />
       );
     }

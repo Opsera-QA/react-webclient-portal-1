@@ -104,22 +104,21 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
     );
   };
 
+  // TODO: This should be put inside the first step of Wizards.
   const getRunView = () => {
-    if (canEdit && taskModel?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_REPO) {
-      return (
-        <div style={{minHeight: "400px"}}>
-          <Row className={"m-3"}>
-            <Col lg={12}>
-              <SalesforceOrganizationSyncTaskGitBranchSelectInput
-                model={taskConfigurationModel}
-                setModel={setTaskConfigurationModel}
-                visible={taskConfigurationModel?.getData("isNewBranch") !== true}/>
-            </Col>
-            <Col lg={12}>
-              <SalesforceOrganizationSyncTaskNewBranchToggleInput dataObject={taskConfigurationModel} setDataObject={setTaskConfigurationModel}/>
-            </Col>
-            {taskConfigurationModel?.getData("isNewBranch") &&
-            <>
+    const type = taskModel?.getData("type");
+
+    if (canEdit && [TASK_TYPES.SYNC_SALESFORCE_REPO, TASK_TYPES.SALESFORCE_BULK_MIGRATION].includes(type)) {
+      if (taskConfigurationModel?.getData("isNewBranch") === true) {
+        return (
+          <div style={{minHeight: "530px"}}>
+            <Row>
+              <Col lg={12}>
+                <SalesforceOrganizationSyncTaskNewBranchToggleInput
+                  model={taskConfigurationModel}
+                  setModel={setTaskConfigurationModel}
+                />
+              </Col>
               <Col lg={12}>
                 <SalesforceOrganizationSyncTaskGitBranchTextInput
                   fieldName={"gitBranch"}
@@ -134,8 +133,26 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
                   setModel={setTaskConfigurationModel}
                 />
               </Col>
-            </>
-            }
+            </Row>
+          </div>
+        );
+      }
+
+      return (
+        <div style={{minHeight: "400px"}}>
+          <Row>
+            <Col lg={12}>
+              <SalesforceOrganizationSyncTaskNewBranchToggleInput
+                model={taskConfigurationModel}
+                setModel={setTaskConfigurationModel}
+              />
+            </Col>
+            <Col lg={12}>
+              <SalesforceOrganizationSyncTaskGitBranchSelectInput
+                model={taskConfigurationModel}
+                setModel={setTaskConfigurationModel}
+              />
+            </Col>
           </Row>
         </div>
       );
@@ -178,8 +195,12 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
         setHelpIsShown={setShowHelp}
         hideCloseButton={true}
       >
-        <div className={"mb-3 mx-3"}>Do you want to run this Task: {taskModel?.getData("name")}?</div>
-        {getRunView()}
+        <div className={"mx-2 mb-2"}>
+          <div className={"mb-3"}>
+            Do you want to run this Task: {taskModel?.getData("name")}?
+          </div>
+          {getRunView()}
+        </div>
       </OverlayPanelBodyContainer>
     </ConfirmationOverlay>
   );

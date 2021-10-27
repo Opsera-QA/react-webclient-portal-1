@@ -9,8 +9,9 @@ import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
-import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import {capitalizeFirstLetter, hasStringValue} from "components/common/helpers/string-helpers";
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
+import {fieldValidation} from "core/data_model/modelValidation";
 
 function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setDataFunction, allowCreate, inline, allowedTypes, getDisabledTags, placeholderText}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -121,6 +122,14 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
   };
 
   const validateAndSetData = (fieldName, value) => {
+    const errors = fieldValidation(value, dataObject, field);
+
+    if (Array.isArray(errors) && errors.length > 0) {
+      setErrorMessage(errors[0]);
+      return;
+    }
+
+    setErrorMessage("");
     let newDataObject = dataObject;
     newDataObject.setData(fieldName, value);
 
@@ -185,12 +194,14 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
       {!inline && <InputLabel model={dataObject} field={field} className={inline ? "mt-1 mr-2" : undefined}/>}
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput
+          hasErrorState={hasStringValue(errorMessage)}
           selectOptions={[...tagOptions]}
           textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + capitalizeFirstLetter(data["value"])}
           allowCreate={allowCreate}
           groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}
           className={inline ? `inline-filter-input inline-select-filter` : undefined}
           busy={isLoading}
+          manualEntry={true}
           createOptionFunction={(value) => handleCreate(value)}
           value={[...dataObject?.getArrayData(fieldName)]}
           placeholderText={errorMessage ? errorMessage : placeholderText}

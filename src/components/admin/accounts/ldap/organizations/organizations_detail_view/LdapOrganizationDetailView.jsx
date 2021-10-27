@@ -12,6 +12,8 @@ import LdapOrganizationDetailPanel
   from "components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationDetailPanel";
 import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import LdapOrganizationManagementSubNavigationBar
+  from "components/admin/accounts/ldap/organizations/LdapOrganizationManagementSubNavigationBar";
 
 function LdapOrganizationDetailView() {
   const history = useHistory();
@@ -22,8 +24,6 @@ function LdapOrganizationDetailView() {
   const [isLoading, setIsLoading] = useState(false);
   const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
   const [organizationAccounts, setOrganizationAccounts] = useState(undefined);
-  const [authorizedActions, setAuthorizedActions] = useState([]);
-  const [authorizedOrganizationAccountActions, setAuthorizedOrganizationAccountActions] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -75,14 +75,9 @@ function LdapOrganizationDetailView() {
         history.push(`/admin/organizations/details/${ldap.organization}`);
       }
 
-      let authorizedActions = await accountsActions.getAllowedOrganizationActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-      setAuthorizedActions(authorizedActions);
       setAccessRoleData(userRoleAccess);
 
-      let authorizedOrganizationAccountActions = await accountsActions.getAllowedOrganizationAccountActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-      setAuthorizedOrganizationAccountActions(authorizedOrganizationAccountActions);
-
-      if (authorizedActions?.includes("get_organization_details")) {
+      if (userRoleAccess?.OpseraAdministrator) {
         await loadOrganization(cancelSource);
       }
     }
@@ -90,10 +85,11 @@ function LdapOrganizationDetailView() {
 
   const loadOrganization = async (cancelSource = cancelTokenSource) => {
     const response = await accountsActions.getOrganizationByNameV2(getAccessToken, cancelSource, organizationName);
+    const organization = response?.data;
 
-    if (isMounted?.current === true && response?.data != null) {
-      setLdapOrganizationData(new Model(response.data, ldapOrganizationMetaData, false));
-      setOrganizationAccounts(response.data["orgAccounts"]);
+    if (isMounted?.current === true && organization != null) {
+      setLdapOrganizationData(new Model(organization, ldapOrganizationMetaData, false));
+      setOrganizationAccounts(organization?.orgAccounts);
     }
   };
 
@@ -115,16 +111,15 @@ function LdapOrganizationDetailView() {
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       dataObject={ldapOrganizationData}
       isLoading={isLoading}
+      navigationTabContainer={<LdapOrganizationManagementSubNavigationBar activeTab={"organizationViewer"}/>}
       actionBar={getActionBar()}
       detailPanel={
         <LdapOrganizationDetailPanel
           organizationAccounts={organizationAccounts}
           ldapOrganizationData={ldapOrganizationData}
-          setLdapOrganizationData={setLdapOrganizationData}
-          authorizedOrganizationAccountActions={authorizedOrganizationAccountActions}
           loadData={loadData}
-          authorizedActions={authorizedActions}
-      />}
+        />
+      }
     />
   );
 }

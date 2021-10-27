@@ -34,7 +34,7 @@ function WarningToast({ warningMessage, removeToast, autoCloseLength, id }) {
         <IconBase
           icon={faTimes}
           className="pointer warning-toast-close-button"
-          onClick={() => { clearToast(); }}
+          onClickFunction={() => { clearToast(); }}
         />
       </div>
     );

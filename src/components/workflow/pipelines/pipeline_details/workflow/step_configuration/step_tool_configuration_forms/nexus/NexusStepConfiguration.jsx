@@ -6,7 +6,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import NexusRepoSelectInput from "./inputs/NexusRepoSelectInput";
 import NexusRepoFormatSelectInput from "./inputs/NexusRepoFormatSelectInput";
-import NexusJenkinsToolInput from "./inputs/NexusJenkinsToolInput";
+import NexusStepJenkinsToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nexus/inputs/NexusStepJenkinsToolSelectInput";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import NexusStepNexusToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nexus/inputs/NexusStepNexusToolSelectInput";
@@ -118,9 +118,9 @@ function NexusStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdito
     nexusStepConfigurationDto.getData("repositoryFormat") === "docker") {
       return (
         <>          
-          <NexusJenkinsToolInput 
-            setDataObject={setNexusStepConfigurationDataDto}
-            dataObject={nexusStepConfigurationDto}
+          <NexusStepJenkinsToolSelectInput
+            setModel={setNexusStepConfigurationDataDto}
+            model={nexusStepConfigurationDto}
           />
           <TextInputBase
             setDataObject={setNexusStepConfigurationDataDto}

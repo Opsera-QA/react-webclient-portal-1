@@ -8,24 +8,34 @@ export const ROLE_LEVELS = {
   USERS_AND_SASS: "USERS_AND_SASS"
 };
 
-export const ACCESS_ROLES = {
+export const SITE_ROLES = {
   OPSERA_ADMINISTRATOR: "opsera_administrator",
-  ADMINISTRATOR: "administrator",
+  ADMINISTRATOR: "site_administrator",
+  POWER_USER: "site_power_user",
+  USER: "site_user",
+  FREE_TRIAL_USER: "free_trial_user",
   SAAS_USER: "saas_user",
-  POWER_USER: "power_user",
+};
+
+export const ACCESS_ROLES = {
+  ORGANIZATION_OWNER: "organization_owner",
+  ORGANIZATION_ACCOUNT_OWNER: "organization_account_owner",
+  ADMINISTRATOR: "administrator",
   OWNER: "owner",
   SECOPS: "secops",
   MANAGER: "manager",
   USER: "user",
+  GUEST: "guest",
   UNAUTHORIZED: "unauthorized",
+  READ_ONLY: "read_only",
   NO_ACCESS_RULES: "no_access_rules",
   NO_ROLES_ASSIGNED: "no_roles_assigned",
-  FREE_TRIAL_USER: "free_trial_user",
-  READ_ONLY: "read_only",
 };
 
 export const ACCESS_ROLES_FORMATTED_LABELS = {
   opsera_administrator: "Opsera Administrator",
+  organization_owner: "Organization Owner",
+  organization_account_owner: "Organization Account Owner",
   administrator: "Administrator",
   saas_user: "User",
   power_user: "Power User",
@@ -33,6 +43,7 @@ export const ACCESS_ROLES_FORMATTED_LABELS = {
   secops: "Secops",
   manager: "Manager",
   user: "User",
+  guest: "Guest",
   unauthorized: "UNAUTHORIZED",
   no_access_rules: "No Access Rules On Item",
   no_roles_assigned: "No Role Assigned to User",
@@ -128,8 +139,12 @@ export const getUserRoleLevel = (accessRoleData, objectRoles, dataObject) => {
   const prefix = "Your access role for this page is: ";
 
   switch (roleLevel) {
-    case ACCESS_ROLES.OPSERA_ADMINISTRATOR:
+    case SITE_ROLES.OPSERA_ADMINISTRATOR:
       return prefix + "Opsera Administrator";
+    case SITE_ROLES.ADMINISTRATOR:
+      return prefix + "Site Administrator";
+    case SITE_ROLES.POWER_USER:
+      return prefix + "Site Power User";
     case ACCESS_ROLES.ADMINISTRATOR:
       return prefix + "Administrator";
     case ACCESS_ROLES.OWNER:
@@ -140,6 +155,8 @@ export const getUserRoleLevel = (accessRoleData, objectRoles, dataObject) => {
       return prefix + "Manager";
     case ACCESS_ROLES.USER:
       return prefix + "User";
+    case ACCESS_ROLES.GUEST:
+      return prefix + "Guest";
     case ACCESS_ROLES.READ_ONLY:
       return prefix + "Guest";
     case ACCESS_ROLES.UNAUTHORIZED:
@@ -159,7 +176,7 @@ export const roleAllowed = (accessRoles, roleLevel) => {
   return accessRoles.includes(roleLevel) || accessRoles.includes(ACCESS_ROLES.NO_ACCESS_RULES);
 };
 
-export const parseRoleDefinitionsIntoTableRows =  (roleDefinitions) => {
+export const parseRoleDefinitionsIntoRbacTableRows =  (roleDefinitions) => {
   let accessRoleRows = [];
 
   if (roleDefinitions == null) {
@@ -180,8 +197,43 @@ export const parseRoleDefinitionsIntoTableRows =  (roleDefinitions) => {
           administrator: roleAllowed(accessRoles, ACCESS_ROLES.ADMINISTRATOR),
           owner: roleAllowed(accessRoles, ACCESS_ROLES.OWNER),
           manager: roleAllowed(accessRoles, ACCESS_ROLES.MANAGER),
-          power_user: roleAllowed(accessRoles, ACCESS_ROLES.POWER_USER),
           user: roleAllowed(accessRoles, ACCESS_ROLES.USER),
+          guest: roleAllowed(accessRoles, ACCESS_ROLES.GUEST),
+          no_access_rules: roleAllowed(accessRoles, ACCESS_ROLES.NO_ACCESS_RULES),
+        };
+
+        accessRoleRows.push(tableRow);
+      });
+    }
+  }
+  catch (error) {
+    console.error(`Could not parse Role Definitions: ${error}`);
+  }
+
+  return accessRoleRows;
+};
+
+export const parseRoleDefinitionsIntoSiteRoleTableRows =  (roleDefinitions) => {
+  let accessRoleRows = [];
+
+  if (roleDefinitions == null) {
+    return [];
+  }
+
+  try {
+    const roleDefinitionKeys = Object.keys(roleDefinitions);
+
+    if (Array.isArray(roleDefinitionKeys) && roleDefinitionKeys.length > 0) {
+      roleDefinitionKeys.forEach((roleDefinitionKey) => {
+        const roleDefinition = roleDefinitions[roleDefinitionKey];
+        const accessRoles = roleDefinition.allowedRoles;
+
+        const tableRow = {
+          id: roleDefinition.id,
+          description: roleDefinition.description,
+          administrator: roleAllowed(accessRoles, SITE_ROLES.ADMINISTRATOR),
+          power_user: roleAllowed(accessRoles, SITE_ROLES.POWER_USER),
+          user: roleAllowed(accessRoles, SITE_ROLES.USER),
           no_access_rules: roleAllowed(accessRoles, ACCESS_ROLES.NO_ACCESS_RULES),
         };
 
@@ -214,6 +266,7 @@ export const isAnLdapUser = (user, accessRole) => {
  * @param roleDefinitions
  * @param owner
  * @param objectRoles
+ * @param allowAllIfNoRolesAssigned
  * @returns {boolean}
  *
  *
@@ -223,7 +276,6 @@ export const isActionAllowed = (customerAccessRules, action, owner, objectRoles,
     return false;
   }
 
-  let roleAllowed = false;
   const allowedRoles = getAllowedRoles(action, roleDefinitions);
 
   if (!Array.isArray(allowedRoles) || allowedRoles.length === 0) {
@@ -262,33 +314,41 @@ export const isActionAllowed = (customerAccessRules, action, owner, objectRoles,
   }
   // END TODOs
 
-  if (customerAccessRules?.OpseraAdministrator) {
-    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.OPSERA_ADMINISTRATOR);
+  if (customerAccessRules?.OpseraAdministrator === true && allowedRoles.includes(SITE_ROLES.OPSERA_ADMINISTRATOR)) {
+    return true;
   }
 
-  if (customerAccessRules?.Administrator) {
-    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.ADMINISTRATOR);
+  if (customerAccessRules?.OrganizationOwner === true && allowedRoles.includes(ACCESS_ROLES.ORGANIZATION_OWNER)) {
+    return true;
   }
 
-  if (customerAccessRules?.SassPowerUser) {
-    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.SAAS_USER);
+  if (customerAccessRules?.OrganizationAccountOwner === true && allowedRoles.includes(ACCESS_ROLES.ORGANIZATION_ACCOUNT_OWNER)) {
+    return true;
   }
 
-  if (customerAccessRules?.PowerUser) {
-    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.POWER_USER);
+  if (customerAccessRules?.Administrator === true && allowedRoles.includes(SITE_ROLES.ADMINISTRATOR)) {
+    return true;
   }
 
-  if (process.env.REACT_APP_STACK === "free-trial") {
-    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.FREE_TRIAL_USER);
+  if (customerAccessRules?.SassPowerUser === true && allowedRoles.includes(SITE_ROLES.SAAS_USER)) {
+    return true;
   }
 
-  if (owner && customerAccessRules?.UserId === owner) {
-    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.OWNER);
+  if (customerAccessRules?.PowerUser === true && allowedRoles.includes(SITE_ROLES.POWER_USER)) {
+    return true;
   }
 
-  const userObjectRole = calculateUserObjectRole(customerAccessRules.Email, customerAccessRules.Groups, objectRoles);
+  if (process.env.REACT_APP_STACK === "free-trial" && allowedRoles.includes(SITE_ROLES.FREE_TRIAL_USER)) {
+    return true;
+  }
+
+  if (owner && customerAccessRules?.UserId === owner && allowedRoles.includes(ACCESS_ROLES.OWNER)) {
+    return true;
+  }
+
+  const userObjectRole = calculateUserObjectRole(customerAccessRules?.Email, customerAccessRules?.Groups, objectRoles);
   // TODO: By default Admins can do everything, if we want to stop allowing that, do it here:
-  return userObjectRole === "administrator" || roleAllowed || allowedRoles.includes(userObjectRole);
+  return userObjectRole === "administrator" || allowedRoles.includes(userObjectRole);
 };
 
 //compares the user email to the objectRoles data to see if the user has a specific role
@@ -362,19 +422,19 @@ export const calculateRoleLevel = (customerAccessRules, objectRoles, dataModel) 
   }
 
   if (customerAccessRules.OpseraAdministrator) {
-    return ACCESS_ROLES.OPSERA_ADMINISTRATOR;
+    return SITE_ROLES.OPSERA_ADMINISTRATOR;
   }
 
   if (customerAccessRules.Administrator) {
-    return ACCESS_ROLES.ADMINISTRATOR;
+    return SITE_ROLES.ADMINISTRATOR;
   }
 
   if (customerAccessRules.SassPowerUser) {
-    return ACCESS_ROLES.SAAS_USER;
+    return SITE_ROLES.SAAS_USER;
   }
 
   if (process.env.REACT_APP_STACK === "free-trial") {
-    return ACCESS_ROLES.FREE_TRIAL_USER;
+    return SITE_ROLES.FREE_TRIAL_USER;
   }
 
   //filter out only user records (groups null)

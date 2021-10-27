@@ -1,26 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { faBracketsCurly, faInfoCircle, faSync, faTimes, faHandshake} from "@fortawesome/pro-light-svg-icons";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "../../../../../../../common/inputs/text/TextInputBase";
 import aksStepFormMetadata from "./aks-stepForm-metadata";
-import AzureToolSelectInput from "./inputs/AzureToolSelectInput";
-import AzureCredentialIdSelectInput
-  from "./inputs/AzureCredentialIdSelectInput";
-import AksClusterSelectInput from "./inputs/AksClusterSelectInput";
+import AksServiceDeployStepAzureToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/aks_service_deploy/inputs/AksServiceDeployStepAzureToolSelectInput";
+import AksServiceDeployStepApplicationSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/aks_service_deploy/inputs/AksServiceDeployStepApplicationSelectInput";
 import DynamicNameToggleInput from "./inputs/DynamicNameToggleInput";
 import DockerPushStepSelectInput from "./inputs/DockerPushStepSelectInput";
 import AzureResourceGroupSelect from "./inputs/AzureResourceGroupSelect";
 import ResourceGroupToggleInput from "./inputs/ResourceGroupToggleInput";
+import AksServiceDeployStepClusterSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/aks_service_deploy/inputs/AksServiceDeployStepClusterSelectInput";
 
 function AksServiceDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan, stepId, pipelineId }) {
   const [isLoading, setIsLoading] = useState(false);
   const [aksModel, setAksModel] = useState(undefined);
   const [threshold, setThreshold] = useState(undefined);
-  const [azureConfig, setAzureConfig] = useState(null);
-  const [applicationData, setApplicationData] = useState(null);
 
   useEffect(() => {
     loadData();
@@ -59,24 +57,19 @@ function AksServiceDeployStepConfiguration({ stepTool, closeEditorPanel, parentC
       persistRecord={callbackFunction}
       isLoading={isLoading}
     >
-      <AzureToolSelectInput
-        dataObject={aksModel}
-        setDataObject={setAksModel}
-        setAzureConfig={setAzureConfig}
+      <AksServiceDeployStepAzureToolSelectInput
+        model={aksModel}
+        setModel={setAksModel}
       />
-      <AzureCredentialIdSelectInput
-        dataObject={aksModel}
-        setDataObject={setAksModel}
-        azureConfig={azureConfig}
-        setApplicationData={setApplicationData}
+      <AksServiceDeployStepApplicationSelectInput
+        model={aksModel}
+        setModel={setAksModel}
       />
-      <AksClusterSelectInput
+      <AksServiceDeployStepClusterSelectInput
         dataObject={aksModel}
         setDataObject={setAksModel}
         azureToolConfigId={aksModel?.getData("azureToolConfigId")}
-        azureApplication={aksModel?.getData("azureCredentialId")}
-        azureConfig={azureConfig}
-        applicationData={applicationData}
+        applicationId={aksModel?.getData("azureCredentialId")}
       />
       <DynamicNameToggleInput
         dataObject={aksModel}
@@ -91,20 +84,17 @@ function AksServiceDeployStepConfiguration({ stepTool, closeEditorPanel, parentC
           fieldName={"aksServiceName"}
         />
       )}
-        <ResourceGroupToggleInput
+      <ResourceGroupToggleInput
         dataObject={aksModel}
         setDataObject={setAksModel}
         fieldName={"useCustomResourceGroup"}
-        pipelineId={pipelineId}
-        />
+      />
       {aksModel && aksModel?.getData("useCustomResourceGroup") && (
         <AzureResourceGroupSelect
-        dataObject={aksModel}
-        setDataObject={setAksModel}
-        azureToolConfigId={aksModel?.getData("azureToolConfigId")}
-        azureApplication={aksModel?.getData("azureCredentialId")}
-        azureConfig={azureConfig}
-        applicationData={applicationData}
+          dataObject={aksModel}
+          setDataObject={setAksModel}
+          azureToolConfigId={aksModel?.getData("azureToolConfigId")}
+          azureApplication={aksModel?.getData("azureCredentialId")}
         />
       )
       }

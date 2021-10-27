@@ -13,10 +13,10 @@ import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import TagsInlineInputBase from "components/common/inline_inputs/tags/TagsInlineInputBase";
 import TaskRoleAccessInput from "components/tasks/details/TaskRoleAccessInput";
-import RunTaskButton from "components/common/buttons/tasks/RunTaskButton";
 import ECSActionButtons from "components/tasks/ECSActionButtons";
 import AKSActionButtons from "components/tasks/AKSActionButtons";
 import TaskConfigurationSummaryPanel from "components/tasks/details/TaskConfigurationSummaryPanel";
+import RunTaskButton from "components/tasks/buttons/RunTaskButton";
 
 function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -101,8 +101,8 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         <div className={"mx-auto"}>
           <div className={"mx-auto"}>
             <RunTaskButton
-              gitTasksData={gitTasksData}
-              setGitTasksData={setGitTasksData}
+              taskModel={gitTasksData}
+              setTaskModel={setGitTasksData}
               loadData={loadData}
               actionAllowed={actionAllowed("run_task")}
               taskType={gitTasksData?.getData("type")}

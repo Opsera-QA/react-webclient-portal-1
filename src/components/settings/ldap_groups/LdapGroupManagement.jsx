@@ -115,6 +115,7 @@ function LdapGroupManagement() {
       roleRequirement={ROLE_LEVELS.POWER_USERS}
     >
       <LdapGroupsTable
+        className={"mx-2"}
         isLoading={isLoading}
         groupData={parseUsersGroups()}
         loadData={loadData}

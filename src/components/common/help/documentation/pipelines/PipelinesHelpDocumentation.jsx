@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
-import RoleAccessTable from "components/common/fields/access/table/RoleAccessTable";
+import RoleAccessTable from "components/common/fields/access/table/AssignedRoleAccessTable";
 
 
 function PipelinesHelpDocumentation({pipelineRoleDefinitions}) {

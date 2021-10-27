@@ -10,7 +10,7 @@ function DetailPanelContainer({ children, isLoading, showRequiredFieldsMessage }
 
   return (
     <div className="scroll-y full-height">
-      <div className="p-3">
+      <div className="mt-3">
         <div>{children}</div>
         {showRequiredFieldsMessage && <div><small className="form-text text-muted text-right mr-2 mt-3"><span className="danger-red">*</span> Required Fields</small></div>}
       </div>

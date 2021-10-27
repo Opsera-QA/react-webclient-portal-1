@@ -13,6 +13,9 @@ import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarD
 import analyticsDataActions from "components/settings/analytics_data_entry/analytics-data-actions";
 import {analyticsDataMetadata} from "components/settings/analytics_data_entry/analytics-data-metadata";
 import AnalyticsDataEntryDetailPanel from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryDetailPanel";
+import AnalyticsDataEntryManagementSubNavigationBar
+  from "components/settings/analytics_data_entry/AnalyticsDataEntryManagementSubNavigationBar";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 function AnalyticsDataEntryDetailView() {
   const {id} = useParams();
@@ -115,6 +118,7 @@ function AnalyticsDataEntryDetailView() {
       actionBar={getActionBar()}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.POWER_USERS}
+      navigationTabContainer={<AnalyticsDataEntryManagementSubNavigationBar activeTab={"analyticsDataEntryViewer"} />}
       detailPanel={<AnalyticsDataEntryDetailPanel analyticsDataEntry={analyticsDataEntry} />}
     />
   );

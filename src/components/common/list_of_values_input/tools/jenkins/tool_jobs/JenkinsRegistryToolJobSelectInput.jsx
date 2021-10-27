@@ -9,7 +9,20 @@ import {Link} from "react-router-dom";
 import InfoOverlayContainer from "components/common/inputs/info_text/InfoOverlayContainer";
 import {getJenkinsJobTypeLabelForValue} from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobTypeSelectInput";
 
-function JenkinsRegistryToolJobSelectInput({ jenkinsToolId, visible, typeFilter, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
+function JenkinsRegistryToolJobSelectInput(
+  {
+    jenkinsToolId,
+    visible,
+    typeFilter,
+    fieldName,
+    model,
+    setModel,
+    setDataFunction,
+    clearDataFunction,
+    disabled,
+    valueField,
+    textField,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [jenkinsJobs, setJenkinsJobs] = useState([]);
@@ -56,10 +69,10 @@ function JenkinsRegistryToolJobSelectInput({ jenkinsToolId, visible, typeFilter,
   };
 
   const loadJenkinsJobs = async (cancelSource = cancelTokenSource) => {
-    const response = await toolsActions.getFullToolByIdV2(getAccessToken, cancelSource, jenkinsToolId);
-    const jenkinsToolArray = response?.data;
-    const jenkinsJobs = jenkinsToolArray ? jenkinsToolArray[0]?.jobs : [];
-    const existingJobSelection = dataObject?.getData(fieldName);
+    // TODO: Make route that actually just returns jobs
+    const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, jenkinsToolId);
+    const jenkinsJobs = response?.data?.data?.jobs;
+    const existingJobSelection = model?.getData(fieldName);
 
     if (Array.isArray(jenkinsJobs) && jenkinsJobs.length > 0) {
       if (typeFilter) {
@@ -92,7 +105,7 @@ function JenkinsRegistryToolJobSelectInput({ jenkinsToolId, visible, typeFilter,
   };
 
   const getPlaceholderText = () => {
-    if (!isLoading && (jenkinsJobs == null || jenkinsJobs.length === 0 && jenkinsToolId !== "")) {
+    if (!isLoading && (jenkinsJobs == null || jenkinsJobs.length === 0 && jenkinsToolId != null && jenkinsToolId !== "")) {
       return (`No configured ${typeFilter ? typeFilter + " " : ""} Jenkins Jobs have been registered for this Jenkins tool.`);
     }
 
@@ -101,7 +114,7 @@ function JenkinsRegistryToolJobSelectInput({ jenkinsToolId, visible, typeFilter,
 
   // TODO: Make tool job overlay
   const renderOverlayTrigger = () => {
-    const toolJobId = dataObject.getData("toolJobId");
+    const toolJobId = model?.getData(fieldName);
     const jenkinsJobIndex = jenkinsJobs.findIndex((x) => x._id === toolJobId);
     const jenkinsJob = jenkinsJobIndex !== -1 ? jenkinsJobs[jenkinsJobIndex] : undefined;
 
@@ -143,15 +156,15 @@ function JenkinsRegistryToolJobSelectInput({ jenkinsToolId, visible, typeFilter,
   return (
     <SelectInputBase
       fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      dataObject={model}
+      setDataObject={setModel}
       setDataFunction={setDataFunction}
       selectOptions={jenkinsJobs}
       placeholderText={getPlaceholderText()}
       busy={isLoading}
       groupBy={(job) => getJenkinsJobTypeLabelForValue(job?.type)}
-      valueField="_id"
-      textField="name"
+      valueField={valueField}
+      textField={textField}
       infoOverlay={renderOverlayTrigger()}
       clearDataFunction={clearDataFunction}
       disabled={disabled || jenkinsToolId === ""}
@@ -162,14 +175,21 @@ function JenkinsRegistryToolJobSelectInput({ jenkinsToolId, visible, typeFilter,
 JenkinsRegistryToolJobSelectInput.propTypes = {
   jenkinsToolId: PropTypes.string,
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   typeFilter: PropTypes.string,
   configurationRequired: PropTypes.bool,
-  clearDataFunction: PropTypes.func
+  clearDataFunction: PropTypes.func,
+  valueField: PropTypes.string,
+  textField: PropTypes.string,
+};
+
+JenkinsRegistryToolJobSelectInput.defaultProps = {
+  valueField: "_id",
+  textField: "name",
 };
 
 export default JenkinsRegistryToolJobSelectInput;

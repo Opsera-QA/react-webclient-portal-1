@@ -6,10 +6,10 @@ import PropTypes from "prop-types";
 import nunitStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/nunit-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import NUnitJenkinsToolInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/NUnitJenkinsToolInput";
-import NUnitJenkinsJobInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/NUnitJenkinsJobInput";
+import NUnitStepJenkinsToolSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/NUnitStepJenkinsToolSelectInput";
+import NUnitStepJenkinsJobSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/NUnitStepJenkinsJobSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import NUnitJenkinsAccountInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/NUnitJenkinsAccountInput";
@@ -90,8 +90,14 @@ function NUnitStepConfiguration({ pipelineId, stepTool, stepId, createJob, close
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <NUnitJenkinsToolInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} />
-      <NUnitJenkinsJobInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto}/>
+      <NUnitStepJenkinsToolSelectInput
+        model={nunitStepConfigurationDto}
+        setModel={setNUnitStepConfigurationDataDto}
+      />
+      <NUnitStepJenkinsJobSelectInput
+        model={nunitStepConfigurationDto}
+        setModel={setNUnitStepConfigurationDataDto}
+      />
       <NUnitJenkinsAccountInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} />
       <NUnitBitbucketWorkspaceInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} />
       <NUnitGitRepositoryInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} />

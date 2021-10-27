@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
-import RoleAccessTable from "components/common/fields/access/table/RoleAccessTable";
+import AssignedRoleAccessTable from "components/common/fields/access/table/AssignedRoleAccessTable";
+import SiteRoleAccessTable from "components/common/fields/access/table/SiteRoleAccessTable";
 
 function ScriptsHelpDocumentation({scriptRoleDefinitions}) {
   const toastContext = useContext(DialogToastContext);
@@ -40,7 +41,10 @@ function ScriptsHelpDocumentation({scriptRoleDefinitions}) {
       helpDocumentation={getHelpDocumentation()}
     >
       <div className={"my-2"}>
-        <RoleAccessTable roleAccessDefinitions={scriptRoleDefinitions} />
+        <AssignedRoleAccessTable roleAccessDefinitions={scriptRoleDefinitions} />
+      </div>
+      <div className={"my-2"}>
+        <SiteRoleAccessTable roleAccessDefinitions={scriptRoleDefinitions} />
       </div>
     </HelpOverlayBase>
   );

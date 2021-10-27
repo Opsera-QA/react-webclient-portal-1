@@ -12,7 +12,7 @@ import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTa
 import CustomTab from "components/common/tabs/CustomTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
-function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationData, setLdapOrganizationData, loadData, authorizedActions, authorizedOrganizationAccountActions}) {
+function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationData, loadData}) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (tabSelection) => e => {
@@ -29,11 +29,28 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <LdapOrganizationSummaryPanel ldapOrganizationData={ldapOrganizationData} setActiveTab={setActiveTab} />;
+        return (
+          <LdapOrganizationSummaryPanel
+            ldapOrganizationData={ldapOrganizationData}
+            setActiveTab={setActiveTab}
+          />
+        );
       case "accounts":
-        return <div className="p-3"><LdapOrganizationAccountsTable ldapOrganizationAccounts={organizationAccounts} authorizedActions={authorizedOrganizationAccountActions} ldapOrganizationData={ldapOrganizationData} loadData={loadData} /></div>;
+        return (
+          <LdapOrganizationAccountsTable
+            className={"mt-2"}
+            ldapOrganizationAccounts={organizationAccounts}
+            ldapOrganizationData={ldapOrganizationData}
+            loadData={loadData}
+          />
+        );
       case "settings":
-        return <LdapOrganizationEditorPanel handleClose={toggleSummaryPanel} setLdapOrganizationData={setLdapOrganizationData} ldapOrganizationData={ldapOrganizationData} authorizedActions={authorizedActions} />;
+        return (
+          <LdapOrganizationEditorPanel
+            handleClose={toggleSummaryPanel}
+            ldapOrganizationData={ldapOrganizationData}
+          />
+        );
       default:
         return null;
     }
@@ -42,23 +59,33 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <SummaryToggleTab activeTab={activeTab} handleTabClick={handleTabClick} />
-        <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"}/>
+        <SummaryToggleTab
+          activeTab={activeTab}
+          handleTabClick={handleTabClick}
+        />
+        <CustomTab
+          icon={faUsers}
+          tabName={"accounts"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Accounts"}
+        />
       </CustomTabContainer>
     );
   };
 
-  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
+  return (
+    <DetailTabPanelContainer
+      detailView={getCurrentView()}
+      tabContainer={getTabContainer()}
+    />
+  );
 }
 
 LdapOrganizationDetailPanel.propTypes = {
-  setCurrentAccount: PropTypes.func,
-  currentAccount: PropTypes.object,
   organizationAccounts: PropTypes.array,
   loadData: PropTypes.func,
   ldapOrganizationData: PropTypes.object,
-  setLdapOrganizationData: PropTypes.func,
-  authorizedActions: PropTypes.array,
   authorizedOrganizationAccountActions: PropTypes.array
 };
 

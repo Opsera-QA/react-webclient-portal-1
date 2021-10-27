@@ -7,10 +7,10 @@ import PropTypes from "prop-types";
 import dotNetStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/dotnet-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import DotNetJenkinsToolInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetJenkinsToolInput";
-import DotNetJenkinsJobInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetJenkinsJobInput";
+import DotNetStepJenkinsToolSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetStepJenkinsToolSelectInput";
+import DotNetStepJenkinsJobSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetStepJenkinsJobSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import DotNetJenkinsAccountInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetJenkinsAccountInput";
@@ -25,6 +25,7 @@ import ScriptLibrarySelectInput
   from "components/common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
 import ParameterSelectListInputBase
   from "components/common/list_of_values_input/parameters/ParameterSelectListInputBase";
+
 function DotNetStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
   const [jobType, setJobType] = useState("");
@@ -92,8 +93,14 @@ function DotNetStepConfiguration({ pipelineId, stepTool, stepId, createJob, clos
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <DotNetJenkinsToolInput dataObject={dotNetStepConfigurationDto} setDataObject={setDotNetStepConfigurationDataDto} />
-      <DotNetJenkinsJobInput dataObject={dotNetStepConfigurationDto} setDataObject={setDotNetStepConfigurationDataDto}/>
+      <DotNetStepJenkinsToolSelectInput
+        dataObject={dotNetStepConfigurationDto}
+        setDataObject={setDotNetStepConfigurationDataDto}
+      />
+      <DotNetStepJenkinsJobSelectInput
+        model={dotNetStepConfigurationDto}
+        setModel={setDotNetStepConfigurationDataDto}
+      />
       <DotNetJenkinsAccountInput dataObject={dotNetStepConfigurationDto} setDataObject={setDotNetStepConfigurationDataDto} />
       <DotNetBitbucketWorkspaceInput dataObject={dotNetStepConfigurationDto} setDataObject={setDotNetStepConfigurationDataDto} />
       <DotNetGitRepositoryInput dataObject={dotNetStepConfigurationDto} setDataObject={setDotNetStepConfigurationDataDto} />
