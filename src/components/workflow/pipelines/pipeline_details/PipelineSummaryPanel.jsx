@@ -41,37 +41,32 @@ const INITIAL_FORM_DATA = {
 };
 
 // TODO: This class needs to be reworked with new components and also to cleanup
-function PipelineSummaryPanel({
-                                pipeline,
-                                ownerName,
-                                customerAccessRules,
-                                parentWorkflowStatus,
-                                setActiveTab,
-                                fetchPlan,
-                                setWorkflowStatus,
-                                getActivityLogs,
-                                setRefreshCount,
-                                setPipeline,
-                                refreshCount,
-                              }) {
+function PipelineSummaryPanel(
+  {
+    pipeline,
+    ownerName,
+    customerAccessRules,
+    parentWorkflowStatus,
+    fetchPlan,
+    setWorkflowStatus,
+    getActivityLogs,
+    setRefreshCount,
+    setPipeline,
+    refreshCount,
+  }) {
   const contextType = useContext(AuthContext);
   const { getAccessToken } = useContext(AuthContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
   const { featureFlagHideItemInProd, getUserRecord } = contextType;
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [modalDeleteId, setModalDeleteId] = useState(false);
   const [editTitle, setEditTitle] = useState(false);
   const [editDescription, setEditDescription] = useState(false);
-  const [editProject, setEditProject] = useState(false);
-  const [editSchedule, setEditSchedule] = useState(false);
   const [editTags, setEditTags] = useState(false);
   const [editRoles, setEditRoles] = useState(false);
   const [editType, setEditType] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
-  const [approvalStep, setApprovalStep] = useState({});
   const [pipelineModel, setPipelineModel] = useState(new Model(pipeline, pipelineMetadata, false));
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [taskCount, setTaskCount] = useState(0);
@@ -115,16 +110,8 @@ function PipelineSummaryPanel({
       } else {
         setWorkflowStatus(false);
       }
-
-      const step = await pipelineHelpers.getPendingApprovalStep(pipeline);
-      if (step) {
-        setApprovalStep(step);
-      } else {
-        setApprovalStep({});
-      }
     }
   };
-
 
   const handleViewClick = () => {
     toastContext.showOverlayPanel(<PipelineDetailsOverviewOverlay pipeline={pipeline} />);
@@ -194,7 +181,6 @@ function PipelineSummaryPanel({
               "project_id": "",
             },
           };
-          setEditProject(false);
           break;
         case "description":
           pipeline.description = value.description;
@@ -249,10 +235,6 @@ function PipelineSummaryPanel({
     }
   };
 
-  const handleCloseScheduleModal = () => {
-    setEditSchedule(false);
-  };
-
   const handleEditPropertyClick = (type) => {
     switch (type) {
       case "name":
@@ -260,7 +242,6 @@ function PipelineSummaryPanel({
         setFormData({ ...formData, name: pipeline.name });
         break;
       case "project":
-        setEditProject(true);
         setFormData({
           ...formData,
           project: { name: pipeline.project !== undefined && pipeline.project.hasOwnProperty("name") ? pipeline.project.name : "" },
@@ -271,7 +252,6 @@ function PipelineSummaryPanel({
         setFormData({ ...formData, description: pipeline.description });
         break;
       case "schedule":
-        // setEditSchedule(true);
         showSchedulerOverlay();
         break;
       case "tags":
@@ -462,10 +442,7 @@ function PipelineSummaryPanel({
                   </div>
                 </>
                 :
-                <>
-                  {/*{Object.keys(approvalStep).length > 0 &&
-                      <FontAwesomeIcon icon={faFlag} className="red mr-1 vertical-align-item" fixedWidth/>}*/}
-                  {/*<span className="text-muted mr-1">Name:</span> */}{pipeline.name}
+                <>{pipeline.name}
                   {authorizedAction("edit_pipeline_name", pipeline.owner)
                   && parentWorkflowStatus !== "running"
                     ? getEditIcon("name")
@@ -492,34 +469,6 @@ function PipelineSummaryPanel({
           <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">ID:</span> {pipeline._id}</Col>
           <Col sm={12} md={6} className="py-2"><span
             className="text-muted mr-1">Pipeline Run Count:</span> {pipeline.workflow.run_count || "0"}</Col>
-          {/*<Col sm={12} md={6} className="py-2">
-            {editProject ?
-              <>
-                <Row className="">
-                  <Col sm={9}>
-                    <Form.Control maxLength="150" type="text" placeholder="Project Name"
-                                  value={formData.project.name || ""}
-                                  onChange={e => setFormData({
-                                    ...formData,
-                                    project: { name: e.target.value },
-                                  })}/></Col>
-                  <Col sm={3} className="my-auto">
-                    {getSaveIcon("project")}
-                    {getCancelIcon(setEditProject)}
-                  </Col>
-                </Row>
-              </>
-              :
-              <>
-                    <span
-                      className="text-muted">Project: </span> {pipeline.project !== undefined && pipeline.project.hasOwnProperty("name") ? <>{pipeline.project.name}</> :
-                <span className="text-muted font-italic">untitled</span>}
-                {authorizedAction("edit_pipeline_attribute", pipeline.owner)
-                && parentWorkflowStatus !== "running"
-                  ? getEditIcon("project")
-                  : null}
-              </>}
-          </Col>*/}
           <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">
             Owner:</span> {ownerName}</Col>
           <Col xs={12} sm={6} className="py-2"><span
@@ -591,16 +540,6 @@ function PipelineSummaryPanel({
               </Col>
             </>
           }
-
-          {/*{_configuredToolsCount(pipeline.workflow.plan) === 0 &&
-          <Col className="mt-3 mb-1">
-            <Button variant="success" className="mr-2 mt-2" size="sm" onClick={() => setActiveTab("model")}>
-              <FontAwesomeIcon icon={faCogs} className="mr-1" fixedWidth/>
-              Build Workflow
-            </Button>
-          </Col>
-          }*/}
-
           {pipeline.workflow?.last_run?.completed &&
           <Col sm={12} className="py-2">
             <span className="text-muted mr-1">Summary:</span> Last complete run of pipeline finished on {
@@ -633,18 +572,6 @@ function PipelineSummaryPanel({
     </>
   );
 }
-
-const _configuredToolsCount = (array) => {
-  let toolsCount = 0;
-  array.map((item) => {
-    if (item.tool !== undefined) {
-      if ((item.tool.tool_identifier !== undefined && item.tool.tool_identifier !== "") || item.tool.configuration !== undefined) {
-        toolsCount++;
-      }
-    }
-  });
-  return toolsCount;
-};
 
 PipelineSummaryPanel.propTypes = {
   pipeline: PropTypes.object,
