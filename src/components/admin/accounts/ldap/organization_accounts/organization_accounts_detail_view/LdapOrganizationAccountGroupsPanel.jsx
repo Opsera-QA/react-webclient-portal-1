@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import LdapGroupsTable from "components/settings/ldap_groups/LdapGroupsTable";
 
-function LdapOrganizationAccountGroupsPanel({ ldapOrganizationAccountData, authorizedActions, loadData, currentUser }) {
+function LdapOrganizationAccountGroupsPanel({ ldapOrganizationAccountData, loadData, currentUser }) {
   if (ldapOrganizationAccountData == null) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -25,7 +25,7 @@ function LdapOrganizationAccountGroupsPanel({ ldapOrganizationAccountData, autho
         groupData={getGroups()}
         currentUserEmail={currentUser?.email}
         loadData={loadData}
-        authorizedActions={authorizedActions?.includes("update_organization_account") ? ["create_group", "update_group"] : []}
+        authorizedActions={["create_group", "update_group"]}
       />
     </div>
   );
@@ -33,7 +33,6 @@ function LdapOrganizationAccountGroupsPanel({ ldapOrganizationAccountData, autho
 
 LdapOrganizationAccountGroupsPanel.propTypes = {
   ldapOrganizationAccountData: PropTypes.object,
-  authorizedActions: PropTypes.array,
   loadData: PropTypes.func,
   currentUser: PropTypes.object
 };

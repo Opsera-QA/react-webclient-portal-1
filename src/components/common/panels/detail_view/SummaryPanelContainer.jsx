@@ -6,7 +6,7 @@ function SummaryPanelContainer({ setActiveTab, editingAllowed, children, setting
   const getSettingsToggle = () => {
     if (editingAllowed && setActiveTab) {
       return (
-        <div className="float-right mt-2 mr-2">
+        <div className="float-right mt-2">
           <ActionBarEditorToggleButton setActiveTab={setActiveTab} settingsTab={settingsTab} />
         </div>
       );
@@ -33,7 +33,7 @@ SummaryPanelContainer.propTypes = {
 
 SummaryPanelContainer.defaultProps = {
   editingAllowed: true,
-  className: "p-3"
+  className: "py-3"
 };
 
 export default SummaryPanelContainer;

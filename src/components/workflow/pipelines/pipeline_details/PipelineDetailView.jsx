@@ -1,15 +1,12 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "contexts/AuthContext";
-import {axiosApiService} from "api/apiService";
 import PipelineActivityLogTreeTable
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTreeTable";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
-import "../../workflows.css";
 import {useHistory, useParams} from "react-router-dom";
 import PipelineWorkflowView from "./workflow/PipelineWorkflowView";
 import PipelineSummaryPanel from "./PipelineSummaryPanel";
-import PipelineHelpers from "../../pipelineHelpers";
 import pipelineActivityActions
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-actions";
 import axios from "axios";
@@ -18,6 +15,7 @@ import pipelineActivityHelpers
 import {DialogToastContext} from "contexts/DialogToastContext";
 import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
+import pipelineActions from "components/workflow/pipeline-actions";
 
 const refreshInterval = 5000;
 
@@ -38,7 +36,6 @@ function PipelineDetailView() {
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [activeTab, setActiveTab] = useState("summary");
   const [editItem, setEditItem] = useState(false);
-  const [ownerName, setOwnerName] = useState(undefined);
   const [refreshCount, setRefreshCount] = useState(0);
   const [pipelineActivityFilterModel, setPipelineActivityFilterModel] = useState(new PipelineFilterModel());
   const history = useHistory();
@@ -66,7 +63,7 @@ function PipelineDetailView() {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    initComponent(source).catch((error) => {
+    loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -122,7 +119,7 @@ function PipelineDetailView() {
 
     if (tab !== tabSelection) {
       history.push(`/workflow/details/${id}/${tabSelection}`);
-      await fetchData();
+      await getPipeline();
     }
   };
 
@@ -131,52 +128,57 @@ function PipelineDetailView() {
   }, [JSON.stringify(pipeline.workflow), refreshCount]);
 
 
-  const initComponent = async (cancelSource = cancelTokenSource) => {
-    setLoading(true);
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    try {
+      setLoading(true);
 
-    const userRecord = await getUserRecord(); //RBAC Logic
-    const rules = await setAccessRoles(userRecord);
-    setCustomerAccessRules(rules);
+      const userRecord = await getUserRecord(); //RBAC Logic
+      const rules = await setAccessRoles(userRecord);
+      setCustomerAccessRules(rules);
 
-    if (tab) {
-      setActiveTab(tab);
+      if (tab) {
+        setActiveTab(tab);
+      }
+
+      await getPipeline(cancelSource);
+    } catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error.message);
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
-
-    await fetchData(cancelSource);
-    setLoading(false);
-    // await getActivityLogs(undefined, false, cancelSource);
+    finally {
+      if (isMounted?.current === true) {
+        setLoading(false);
+      }
+    }
   };
 
-  const fetchData = async (cancelSource = cancelTokenSource) => {
+  const getPipeline = async (cancelSource = cancelTokenSource) => {
     setRefreshCount(refreshCount => refreshCount + 1);
     setSoftLoading(true);
-    const accessToken = await getAccessToken();
-    const apiUrl = `/pipelines/${id}`;
-    try {
-      const pipeline = await axiosApiService(accessToken).get(apiUrl);
-      if (pipeline && pipeline.data && pipeline.data.length > 0) {
-        setData({
-          ...data,
-          pipeline: pipeline && pipeline.data[0],
-        });
+    const response = await pipelineActions.getPipelineByIdV2(getAccessToken, cancelSource, id);
+    const pipeline = response?.data?.data;
 
-        setPipeline(pipeline && pipeline.data[0]);
+    if (pipeline) {
+      setData({
+        ...data,
+        pipeline: pipeline,
+      });
 
-        let owner = await PipelineHelpers.getUserNameById(pipeline.data[0].owner, getAccessToken);
-        setOwnerName(owner);
+      setPipeline(pipeline);
 
-        if (pipeline && pipeline.data[0] && typeof (pipeline.data[0].workflow) !== "undefined") {
-          if (typeof (pipeline.data[0].workflow.last_step) !== "undefined") {
-            evaluatePipelineStatus(pipeline.data[0]);
-          }
+      if (pipeline?.workflow !== "undefined") {
+        if (typeof (pipeline?.workflow?.last_step) !== "undefined") {
+          evaluatePipelineStatus(pipeline);
         }
-      } else {
+      }
+    } else {
+      if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog("Pipeline not found");
       }
-    } catch (error) {
-      console.error(error.message);
-      toastContext.showLoadingErrorDialog(error);
-    } finally {
+    }
+    if (isMounted?.current === true) {
       setSoftLoading(false);
     }
   };
@@ -198,7 +200,7 @@ function PipelineDetailView() {
     const refreshTimer = setTimeout(async function() {
       console.log("running pipeline refresh interval. Step status: ");
       staleRefreshCount++;
-      await fetchData();
+      await getPipeline();
       if (staleRefreshCount % 3 === 0) {
         console.log("divisible by 3 refresh: getting activity logs");
         await getActivityLogs(pipelineActivityFilterModel, true);
@@ -309,7 +311,7 @@ function PipelineDetailView() {
   const fetchPlan = async (param) => {
     // console.log("fetchPlan")
     // setEditItem(false);
-    await fetchData();
+    await getPipeline();
     if (param) {
       setEditItem(param);
     }
@@ -374,7 +376,7 @@ function PipelineDetailView() {
             setRefreshCount={setRefreshCount}
             customerAccessRules={customerAccessRules}
             parentWorkflowStatus={workflowStatus}
-            ownerName={ownerName}
+            ownerName={pipeline?.owner}
             setActiveTab={setActiveTab}
             setWorkflowStatus={setWorkflowStatus}
             getActivityLogs={getActivityLogs}

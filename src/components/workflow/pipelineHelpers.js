@@ -117,23 +117,6 @@ pipelineHelpers.getPipelineStatus = (pipeline) => {
   }
 };
 
-// TODO: Move to general helper
-pipelineHelpers.getUserNameById = async (userId, accessTokenFn) => {
-  const accessToken = await accessTokenFn();
-  let name = userId;
-  const apiUrl = `/users/user/${userId}`;
-  try {
-    const user = await axiosApiService(accessToken).get(apiUrl);
-    if (user.data && user.data.lastName) {
-      name = user.data.firstName + " " + user.data.lastName;
-    }
-  } catch (err) {
-    console.log(err.message);
-  }
-
-  return name;
-};
-
 pipelineHelpers.displayPipelineType = (typeArray) => {
   switch (typeArray[0]) {
   case "sfdc":

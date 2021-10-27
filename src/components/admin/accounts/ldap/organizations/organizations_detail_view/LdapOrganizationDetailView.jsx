@@ -24,7 +24,6 @@ function LdapOrganizationDetailView() {
   const [isLoading, setIsLoading] = useState(false);
   const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
   const [organizationAccounts, setOrganizationAccounts] = useState(undefined);
-  const [authorizedOrganizationAccountActions, setAuthorizedOrganizationAccountActions] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -78,9 +77,6 @@ function LdapOrganizationDetailView() {
 
       setAccessRoleData(userRoleAccess);
 
-      let authorizedOrganizationAccountActions = await accountsActions.getAllowedOrganizationAccountActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-      setAuthorizedOrganizationAccountActions(authorizedOrganizationAccountActions);
-
       if (userRoleAccess?.OpseraAdministrator) {
         await loadOrganization(cancelSource);
       }
@@ -115,15 +111,15 @@ function LdapOrganizationDetailView() {
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       dataObject={ldapOrganizationData}
       isLoading={isLoading}
-      navigationTabContainer={<LdapOrganizationManagementSubNavigationBar activeTab={"organizationViewer"} />}
+      navigationTabContainer={<LdapOrganizationManagementSubNavigationBar activeTab={"organizationViewer"}/>}
       actionBar={getActionBar()}
       detailPanel={
         <LdapOrganizationDetailPanel
           organizationAccounts={organizationAccounts}
           ldapOrganizationData={ldapOrganizationData}
-          authorizedOrganizationAccountActions={authorizedOrganizationAccountActions}
           loadData={loadData}
-      />}
+        />
+      }
     />
   );
 }

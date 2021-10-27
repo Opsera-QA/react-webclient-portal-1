@@ -12,7 +12,7 @@ import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTa
 import CustomTab from "components/common/tabs/CustomTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
-function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationData, loadData, authorizedOrganizationAccountActions}) {
+function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationData, loadData}) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (tabSelection) => e => {
@@ -37,14 +37,12 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
         );
       case "accounts":
         return (
-          <div className="p-3">
-            <LdapOrganizationAccountsTable
-              ldapOrganizationAccounts={organizationAccounts}
-              authorizedActions={authorizedOrganizationAccountActions}
-              ldapOrganizationData={ldapOrganizationData}
-              loadData={loadData}
-            />
-          </div>
+          <LdapOrganizationAccountsTable
+            className={"mt-2"}
+            ldapOrganizationAccounts={organizationAccounts}
+            ldapOrganizationData={ldapOrganizationData}
+            loadData={loadData}
+          />
         );
       case "settings":
         return (

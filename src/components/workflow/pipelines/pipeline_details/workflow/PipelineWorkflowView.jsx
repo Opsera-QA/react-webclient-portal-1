@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import InfoDialog from "../../../../common/status_notifications/info";
 import PipelineWorkflow from "./PipelineWorkflow";
 import PipelineWorkflowEditor from "./PipelineWorkflowItemEditor";
-import "../../../workflows.css";
 import PipelineActionControls from "../PipelineActionControls";
 
 function PipelineWorkflowView({

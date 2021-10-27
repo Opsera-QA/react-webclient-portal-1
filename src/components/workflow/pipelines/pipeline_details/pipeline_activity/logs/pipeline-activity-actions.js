@@ -56,12 +56,11 @@ pipelineActivityActions.getPipelineActivityLogsByRunNumber = async (getAccessTok
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-pipelineActivityActions.getPipelineActivityLogTree = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterDto) => {
-  const search = pipelineActivityFilterDto?.getData("search");
+pipelineActivityActions.getPipelineActivityLogTree = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterModel) => {
   const urlParams = {
     params: {
-      search: search ? search : undefined,
-      status: pipelineActivityFilterDto?.getFilterValue("status"),
+      search: pipelineActivityFilterModel?.getData("search"),
+      status: pipelineActivityFilterModel?.getFilterValue("status"),
     },
   };
 

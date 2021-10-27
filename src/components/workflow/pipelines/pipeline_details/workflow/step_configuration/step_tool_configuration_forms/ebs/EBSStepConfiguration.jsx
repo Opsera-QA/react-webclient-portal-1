@@ -6,25 +6,25 @@ import PropTypes from "prop-types";
 import ebsStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/ebs-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import EBSCreateDomainToggleInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSCreateDomainToggleInput";
 import RoleRestrictedAwsAccountToolSelectInput from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import JsonInput from "components/common/inputs/object/JsonInput";
+import _ from "lodash";
+import EBSAccessOptionsInput from "./inputs/EBSAccessOptionsInput";
 import Model from "core/data_model/model";
-import EBSAccessOptionsInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSAccessOptionsInput";
-import EBSBucketInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSBucketInput";
-import EBSKeyPairInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSKeyPairInput";
-import EBSPlatformOptionsInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSPlatformOptionsInput";
-import EBSCreateDomainToggleInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSCreateDomainToggleInput";
-
-function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel }) {
+import EBSPlatformOptionsInput from "./inputs/EBSPlatformOptionsInput";
+import EBSBucketInput from "./inputs/EBSBucketInput";
+import EBSKeyPairInput from "./inputs/EBSKeyPairInput";
+import EbsSolutionStackInput from "./inputs/EbsSolutionStackInput";
+import EbsCustomDockerComposeToggleInput from "./inputs/EbsCustomDockerComposeToggleInput";
+import ScriptLibrarySelectInput from "components/common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
+function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, callbackSaveToVault, pipelineId, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
+  const [jobType, setJobType] = useState("");  
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [ebsStepConfigurationDto, setEBSStepConfigurationDataDto] = useState(undefined);
@@ -58,7 +58,7 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEdi
     setIsLoading(false);
   };
 
-  const getDynamicFields = () => {
+  const getDynamicDomainFields = () => {
     if (ebsStepConfigurationDto.getData("createDomain") === true) {
       return (
         <div>
@@ -77,6 +77,32 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEdi
     }
   };
 
+  const getCustomDockerFields = () => {
+    if(ebsStepConfigurationDto.getData("platform") === "Docker") {
+      return (
+        <>
+          <EbsCustomDockerComposeToggleInput  dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} fieldName={"customDockerCompose"} />
+          {ebsStepConfigurationDto.getData("customDockerCompose") === true ?
+           (
+              <ScriptLibrarySelectInput
+                fieldName={"dockerComposeScriptId"}
+                dataObject={ebsStepConfigurationDto}
+                setDataObject={setEBSStepConfigurationDataDto}
+                busy={isLoading}
+                disabled={isLoading}
+              />
+           ) : (
+            <div>
+              <JsonInput fieldName={"dockerVolumePath"} model={ebsStepConfigurationDto} setModel={setEBSStepConfigurationDataDto}/>
+              <JsonInput fieldName={"environments"} model={ebsStepConfigurationDto} setModel={setEBSStepConfigurationDataDto}/>
+            </div>
+           )
+          }
+        </>
+      );
+    }
+  };
+
   const setStepId = (fieldName, selectedOption) => {
     let newDataObject = {...ebsStepConfigurationDto};
     newDataObject.setData("s3ECRStepId", selectedOption._id);
@@ -89,17 +115,6 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEdi
     newDataObject.setData("s3ECRStepId", "");
     newDataObject.setData("tool_identifier", "");
     setEBSStepConfigurationDataDto({...newDataObject});
-  };
-
-  const getJsonInputs = () => {
-    if (ebsStepConfigurationDto.getData("tool_identifier") === "docker-push") {
-      return (
-        <div>
-          <JsonInput fieldName={"dockerVolumePath"} model={ebsStepConfigurationDto} setModel={setEBSStepConfigurationDataDto}/>
-          <JsonInput fieldName={"environments"} model={ebsStepConfigurationDto} setModel={setEBSStepConfigurationDataDto}/>
-        </div>
-      );
-    }
   };
 
   const handleCreateAndSave = async () => {
@@ -146,7 +161,8 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEdi
         dataObject={ebsStepConfigurationDto}
         fieldName={"port"}
       />
-      <EBSPlatformOptionsInput  dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} fieldName={"platform"}/>
+      {/* <EBSPlatformOptionsInput  dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} fieldName={"platform"}/> */}
+      <EbsSolutionStackInput dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} />
       <TextInputBase
         setDataObject={setEBSStepConfigurationDataDto}
         dataObject={ebsStepConfigurationDto}
@@ -178,10 +194,10 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEdi
         selectOptions={listOfSteps ? listOfSteps : []}
         fieldName={"s3ECRStepId"}
       />
-      {getJsonInputs()}
       <EBSAccessOptionsInput fieldName={"bucketAccess"} dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} />
       <EBSCreateDomainToggleInput dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} fieldName={"createDomain"}/>
-      {getDynamicFields()}
+      {getDynamicDomainFields()}
+      {getCustomDockerFields()}
     </PipelineStepEditorPanelContainer>
   );
 }
@@ -191,6 +207,9 @@ EBSStepConfiguration.propTypes = {
   plan: PropTypes.array,
   stepId: PropTypes.string,
   parentCallback: PropTypes.func,
+  callbackSaveToVault: PropTypes.func,
+  pipelineId: PropTypes.string,
+  getToolsList: PropTypes.func,
   closeEditorPanel: PropTypes.func
 };
 

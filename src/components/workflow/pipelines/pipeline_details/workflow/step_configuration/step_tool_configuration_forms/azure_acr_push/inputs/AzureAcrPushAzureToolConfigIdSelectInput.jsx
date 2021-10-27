@@ -11,13 +11,11 @@ function AzureAcrPushAzureToolConfigIdSelectInput(
     disabled, 
     textField, 
     valueField, 
-    setAzureConfig,
   }) {
   
   const setDataFunction = (fieldName, selectedOption) => {
-    setAzureConfig(selectedOption);
     let newModel = {...model};
-    newModel.setData(fieldName, selectedOption.id);
+    newModel.setData(fieldName, selectedOption._id);
     newModel.setData('azureRegistryName', "");
     newModel.setData('azureRepoName', "");
     newModel.setData('acrLoginUrl', "");
@@ -32,7 +30,6 @@ function AzureAcrPushAzureToolConfigIdSelectInput(
     newModel.setData('azureRepoName', "");
     newModel.setData('acrLoginUrl', "");
     newModel.setData('newRepo', false);
-    setAzureConfig(null);
     setModel({...newModel});
   };
 
@@ -57,7 +54,6 @@ AzureAcrPushAzureToolConfigIdSelectInput.propTypes = {
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  setAzureConfig:PropTypes.func,
 };
 
 AzureAcrPushAzureToolConfigIdSelectInput.defaultProps = {

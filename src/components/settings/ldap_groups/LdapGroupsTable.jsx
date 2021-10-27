@@ -13,7 +13,18 @@ import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metad
 import FilterContainer from "components/common/table/FilterContainer";
 import {faUserFriends} from "@fortawesome/pro-light-svg-icons";
 
-function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, loadData, currentUserEmail, useMembers, existingGroupNames }) {
+function LdapGroupsTable(
+  {
+    groupData,
+    orgDomain,
+    isLoading,
+    authorizedActions,
+    loadData,
+    currentUserEmail,
+    useMembers,
+    existingGroupNames,
+    className,
+  }) {
   let fields = ldapGroupMetaData.fields;
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
   const history = useHistory();
@@ -58,7 +69,7 @@ function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, l
   };
 
   return (
-    <div className="px-2 pb-2">
+    <div className={className}>
       <FilterContainer
         loadData={loadData}
         addRecordFunction={!useMembers && authorizedActions ? createGroup : undefined}
@@ -89,7 +100,8 @@ LdapGroupsTable.propTypes = {
   loadData: PropTypes.func,
   currentUserEmail: PropTypes.string,
   useMembers: PropTypes.bool,
-  existingGroupNames: PropTypes.array
+  existingGroupNames: PropTypes.array,
+  className: PropTypes.string,
 };
 
 export default LdapGroupsTable;
