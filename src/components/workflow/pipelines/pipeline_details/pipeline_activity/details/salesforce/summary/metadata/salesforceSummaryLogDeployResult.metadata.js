@@ -1,5 +1,5 @@
 const salesforceSummaryLogDeployResultMetadata = {
-  type: "Salesforce Summary Log Metadata",
+  type: "Salesforce Summary Log Deploy Result Metadata",
   fields: [
     {
       label: "Request ID",

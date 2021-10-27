@@ -1,5 +1,5 @@
-const salesforceSummaryLogUnitTestResult = {
-  type: "Salesforce Summary Log Component Metadata",
+const salesforceSummaryLogUnitTestResultMetadata = {
+  type: "Salesforce Summary Log Unit Test Result Metadata",
   fields: [
     {
       label: "Namespace",
@@ -36,4 +36,4 @@ const salesforceSummaryLogUnitTestResult = {
   }
 };
 
-export default salesforceSummaryLogUnitTestResult;
+export default salesforceSummaryLogUnitTestResultMetadata;

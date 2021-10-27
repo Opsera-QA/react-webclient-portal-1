@@ -1,5 +1,5 @@
 const salesforceSummaryLogTopLevelMetadata = {
-  type: "Salesforce Summary Log Metadata",
+  type: "Salesforce Summary Log Top Level Metadata",
   fields: [
     {
       label: "Request ID",
