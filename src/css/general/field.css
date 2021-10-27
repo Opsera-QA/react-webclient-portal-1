@@ -80,11 +80,6 @@
     padding: 2%;
 }
 
-.object-properties-input .rw-widget-input {
-    /* this is based on form input's height, with a couple extra pixels added */
-    min-height: calc(1.5em + .75rem + 2px);
-}
-
 .object-properties-footer {
     background-color: #E6E5E3;
     min-height: 1em;
