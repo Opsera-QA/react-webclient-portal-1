@@ -129,6 +129,7 @@ function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObj
           hasErrorState={hasStringValue(errorMessage)}
           busy={busy || isLoading}
           allowCreate={"onFilter"}
+          manualEntry={true}
           createOptionFunction={(value) => handleCreate(value)}
           groupBy={groupBy}
           value={dataObject.getArrayData(fieldName) ? [...dataObject.getArrayData(fieldName)] : [] }
