@@ -4,22 +4,30 @@ import {Col, OverlayTrigger, Popover, Row} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
 
-function TooltipWrapper({ innerText, placement, children, title }) {
+function TooltipWrapper({ innerText, placement, children, title, showCloseButton }) {
+  const getCloseButton = () => {
+    if (showCloseButton !== false) {
+      return (
+        <Col sm={2} className="text-right">
+          <FontAwesomeIcon
+            icon={faTimes}
+            className="pointer"
+            onClick={() => {
+              document.body.click();
+            }}
+          />
+        </Col>
+      );
+    }
+  };
+
   const getPopoverTitle = () => {
     if (title) {
       return (
         <Popover.Title as="h3" className="filter-title">
           <Row>
             <Col sm={10} className="my-auto">{title}</Col>
-            <Col sm={2} className="text-right">
-              <FontAwesomeIcon
-                icon={faTimes}
-                className="pointer"
-                onClick={() => {
-                  document.body.click();
-                }}
-              />
-            </Col>
+            {getCloseButton()}
           </Row>
         </Popover.Title>
       );
@@ -52,7 +60,8 @@ TooltipWrapper.propTypes = {
   innerText: PropTypes.any,
   children: PropTypes.any,
   placement: PropTypes.string,
-  title: PropTypes.string
+  title: PropTypes.string,
+  showCloseButton: PropTypes.bool,
 };
 
 TooltipWrapper.defaultProps = {
