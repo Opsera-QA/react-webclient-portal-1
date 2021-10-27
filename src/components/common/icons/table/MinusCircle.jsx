@@ -2,7 +2,6 @@ import React from "react";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
-import "../../../../theme.css";
 
 function ArrowCircleDown() {
   return (

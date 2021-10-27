@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faStepBackward} from "@fortawesome/free-solid-svg-icons";
-import "components/workflow/workflows.css";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
