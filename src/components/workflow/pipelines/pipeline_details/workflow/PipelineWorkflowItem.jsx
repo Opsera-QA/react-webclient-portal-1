@@ -23,7 +23,6 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import StepToolActivityView from "./step_configuration/StepToolActivityView";
-import "../../../workflows.css";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import WorkflowAuthorizedActions from "./workflow-authorized-actions";

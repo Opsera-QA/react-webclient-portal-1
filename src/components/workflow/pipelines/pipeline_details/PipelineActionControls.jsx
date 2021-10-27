@@ -16,7 +16,6 @@ import {
   faRedo,
   faFlag, faInfoCircle, faRepeat1, faClock,
 } from "@fortawesome/pro-light-svg-icons";
-import "../../workflows.css";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
 import WorkflowAuthorizedActions from "./workflow/workflow-authorized-actions";

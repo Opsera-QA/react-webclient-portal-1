@@ -1,15 +1,12 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "contexts/AuthContext";
-import {axiosApiService} from "api/apiService";
 import PipelineActivityLogTreeTable
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTreeTable";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
-import "../../workflows.css";
 import {useHistory, useParams} from "react-router-dom";
 import PipelineWorkflowView from "./workflow/PipelineWorkflowView";
 import PipelineSummaryPanel from "./PipelineSummaryPanel";
-import PipelineHelpers from "../../pipelineHelpers";
 import pipelineActivityActions
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-actions";
 import axios from "axios";
@@ -39,7 +36,6 @@ function PipelineDetailView() {
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [activeTab, setActiveTab] = useState("summary");
   const [editItem, setEditItem] = useState(false);
-  const [ownerName, setOwnerName] = useState(undefined);
   const [refreshCount, setRefreshCount] = useState(0);
   const [pipelineActivityFilterModel, setPipelineActivityFilterModel] = useState(new PipelineFilterModel());
   const history = useHistory();
@@ -171,7 +167,6 @@ function PipelineDetailView() {
       });
 
       setPipeline(pipeline);
-      setOwnerName(pipeline?.owner_name);
 
       if (pipeline?.workflow !== "undefined") {
         if (typeof (pipeline?.workflow?.last_step) !== "undefined") {
@@ -381,7 +376,7 @@ function PipelineDetailView() {
             setRefreshCount={setRefreshCount}
             customerAccessRules={customerAccessRules}
             parentWorkflowStatus={workflowStatus}
-            ownerName={ownerName}
+            ownerName={pipeline?.owner}
             setActiveTab={setActiveTab}
             setWorkflowStatus={setWorkflowStatus}
             getActivityLogs={getActivityLogs}
