@@ -284,7 +284,7 @@ export const getTagColumn = (field, className) => {
           </CustomBadgeContainer>;
 
         return (
-          <TooltipWrapper innerText={tags} title={"Tags"}>
+          <TooltipWrapper innerText={tags} title={"Tags"} showCloseButton={false}>
             <div>
               <span className="item-field">
                   <span>
