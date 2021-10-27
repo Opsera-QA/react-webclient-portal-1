@@ -27,6 +27,7 @@ function TaskTable({ taskData, taskFilterModel, setTaskFilterModel, loadData, is
         [
           getTableTextColumn(getField(fields, "name"), "force-text-wrap"),
           getTableTextColumn(getField(fields, "description"), "force-text-wrap"),
+          getTableTextColumn(getField(fields, "run_count"), "mx-auto"),
           getTaskTypeColumn(getField(fields, "type")),
           getTagColumn(getField(fields, "tags")),
           getTableDateColumn(getField(fields, "createdAt")),
