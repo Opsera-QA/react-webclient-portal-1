@@ -67,8 +67,6 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "pipelineBuildAndDeploymentStatistics", kpiConfiguration, dashboardTags);
       
-      console.log({response});
-      
       const metrics = response?.data?.data[0]?.pipelineBuildAndDeploymentStatistics?.data;
   
       if (isMounted?.current === true && Array.isArray(metrics)) {
@@ -146,16 +144,16 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
     return (
       <Row className={"mx-0 p-2 justify-content-between"}>        
         <Col className={"px-0"} xl={6} lg={12}>
-          <BuildStatisticsDataBlockContainerV2 metricData={buildAndDeployMetricData} chartData={buildAndDeployChartData} />
+          <BuildStatisticsDataBlockContainerV2 metricData={buildAndDeployMetricData} chartData={buildAndDeployChartData} kpiConfiguration={kpiConfiguration} />
         </Col>
         <Col className={"px-0"} xl={6} lg={12}>
-          <BuildFrequencyStatisticsDataBlockContainerV2 metricData={buildAndDeployMetricData} chartData={buildAndDeployChartData} />
+          <BuildFrequencyStatisticsDataBlockContainerV2 metricData={buildAndDeployMetricData} chartData={buildAndDeployChartData} kpiConfiguration={kpiConfiguration} />
         </Col>
         <Col className={"px-0"} xl={6} lg={12}>
-          <DeploymentStatisticsDataBlockContainerV2 metricData={buildAndDeployMetricData} chartData={buildAndDeployChartData} />
+          <DeploymentStatisticsDataBlockContainerV2 metricData={buildAndDeployMetricData} chartData={buildAndDeployChartData} kpiConfiguration={kpiConfiguration} />
         </Col>
         <Col className={"px-0"} xl={6} md={12}>
-          <DeploymentFrequencyStatisticsDataBlockContainerV2 metricData={buildAndDeployMetricData} chartData={buildAndDeployChartData} />
+          <DeploymentFrequencyStatisticsDataBlockContainerV2 metricData={buildAndDeployMetricData} chartData={buildAndDeployChartData} kpiConfiguration={kpiConfiguration} />
         </Col>
       </Row>
     );

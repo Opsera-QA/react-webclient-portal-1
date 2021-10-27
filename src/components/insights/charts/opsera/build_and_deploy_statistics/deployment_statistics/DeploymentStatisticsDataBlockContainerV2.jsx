@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 // import Model from "core/data_model/model";
 // import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
@@ -17,9 +17,11 @@ import Row from "react-bootstrap/Row";
 import { ResponsiveLine } from '@nivo/line';
 import { defaultConfig, getColor, assignStandardColors } from 'components/insights/charts/charts-views';
 import LoadingDialog from "components/common/status_notifications/loading";
+import modelHelpers from "components/common/model/modelHelpers";
+import {  kpiGoalsFilterMetadata  } from "components/insights/marketplace/charts/kpi-configuration-metadata";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function DeploymentStatisticsDataBlockContainerV2({ metricData, chartData }) {
+function DeploymentStatisticsDataBlockContainerV2({ metricData, chartData, kpiConfiguration }) {
 //   const toastContext = useContext(DialogToastContext);
 
 //   const onRowSelect = () => {
@@ -32,6 +34,10 @@ function DeploymentStatisticsDataBlockContainerV2({ metricData, chartData }) {
 //         kpiIdentifier={"sonar-ratings-debt-ratio"}
 //       />);
 //   };
+
+  const [kpiGoalsFilter, setKpiGoalsFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "goals", kpiGoalsFilterMetadata)
+  );
 
 
   let successChartData = [
@@ -67,7 +73,7 @@ function DeploymentStatisticsDataBlockContainerV2({ metricData, chartData }) {
       <SuccessRateDataBlock
         qualityLevel={METRIC_QUALITY_LEVELS.DANGER}
         successPercentage={metricData?.deploy?.successPercent || 0}
-        bottomText={"Goal: 95%"}
+        bottomText={`Goal: ${kpiGoalsFilter.getData("value").deployment_success_rate}%`}
       />
     );
   };
@@ -91,15 +97,9 @@ function DeploymentStatisticsDataBlockContainerV2({ metricData, chartData }) {
           markers={[
             {
                 axis: 'y',
-                value: 95,
+                value: kpiGoalsFilter.getData("value").deployment_success_rate,
                 lineStyle: { stroke: '#00897b', strokeWidth: 1 },
                 legend: 'Goal',
-            },
-            {
-              axis: 'y',
-              value: metricData?.deploy?.successPercent,
-              lineStyle: { stroke: '#00897b', strokeWidth: 1 },
-              legend: 'Success Rate',
             }            
           ]}
         />
@@ -138,6 +138,7 @@ function DeploymentStatisticsDataBlockContainerV2({ metricData, chartData }) {
 DeploymentStatisticsDataBlockContainerV2.propTypes = {
     metricData: PropTypes.object,
     chartData: PropTypes.object,
+    kpiConfiguration: PropTypes.object,
 };
 
 export default DeploymentStatisticsDataBlockContainerV2;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 // import Model from "core/data_model/model";
 // import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
@@ -23,9 +23,11 @@ import AverageBuildDurationDataBlock
 import { ResponsiveLine } from '@nivo/line';
 import { defaultConfig, getColor, assignStandardColors } from 'components/insights/charts/charts-views';
 import LoadingDialog from "components/common/status_notifications/loading";
+import modelHelpers from "components/common/model/modelHelpers";
+import {  kpiGoalsFilterMetadata  } from "components/insights/marketplace/charts/kpi-configuration-metadata";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData }) {
+function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration }) {
   // const toastContext = useContext(DialogToastContext);
 
   // const onRowSelect = () => {
@@ -38,6 +40,10 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData }) {
   //       kpiIdentifier={"sonar-ratings-debt-ratio"}
   //     />);
   // };
+  
+  const [kpiGoalsFilter, setKpiGoalsFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "goals", kpiGoalsFilterMetadata)
+  );
 
   const dailyBuildsChartData = [
     {
@@ -47,12 +53,12 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData }) {
     }  
   ];
 
-  const getLeftDataBlock = () => {
+  const getLeftDataBlock = () => {    
     return (
       <AverageDailyBuildsDataBlock
         qualityLevel={METRIC_QUALITY_LEVELS.DANGER}
         averageDailyCount={metricData?.build?.perDayAverage || 0}
-        bottomText={"Goal: 1"}
+        bottomText={`Goal: ${kpiGoalsFilter.getData("value").average_builds}`}
       />
     );
   };
@@ -74,7 +80,7 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData }) {
           data={dailyBuildsChartData}
           {...defaultConfig("", "", 
                 false, false, "numbers", "string")}
-          yScale={{ type: 'linear', min: '0', max: '1', stacked: false, reverse: false }}          
+          yScale={{ type: 'linear', min: '0', max: '2', stacked: false, reverse: false }}          
           enableGridX={false}
           enableGridY={false}
           axisLeft={{            
@@ -86,7 +92,7 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData }) {
           markers={[
             {
                 axis: 'y',
-                value: 1,
+                value: kpiGoalsFilter.getData("value").average_builds,
                 lineStyle: { stroke: '#00897b', strokeWidth: 1 },
                 legend: 'Goal',
             }            
@@ -126,6 +132,7 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData }) {
 BuildFrequencyStatisticsDataBlockContainer.propTypes = {
   metricData: PropTypes.object,
   chartData: PropTypes.object,
+  kpiConfiguration: PropTypes.object,
 };
 
 export default BuildFrequencyStatisticsDataBlockContainer;
