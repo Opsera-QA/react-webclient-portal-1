@@ -58,19 +58,19 @@ const salesforceSummaryLogDeployResultMetadata = {
       id: "numberTestErrors"
     },
     {
-      label: "Creation Timestamp",
+      label: "Created At",
       id: "createdDate"
     },
     {
-      label: "Start Timestamp",
+      label: "Started At",
       id: "startDate"
     },
     {
-      label: "Last Modified Timestamp",
+      label: "Last Modified At",
       id: "lastModifiedDate"
     },
     {
-      label: "Completion Timestamp",
+      label: "Completed At",
       id: "completedDate"
     },
     {
@@ -102,8 +102,12 @@ const salesforceSummaryLogDeployResultMetadata = {
       id: "canceledByName"
     },
     {
-      label: "Bulk Migration Task Completed",
+      label: "Completed",
       id: "done"
+    },
+    {
+      label: "Details",
+      id: "details"
     },
   ],
   newObjectFields: {
@@ -121,6 +125,7 @@ const salesforceSummaryLogDeployResultMetadata = {
     numberTestsCompleted: 0,
     numberTestsTotal: 0,
     numberTestErrors: 0,
+    details: {},
     createdDate: "",
     startDate: "",
     lastModifiedDate: "",

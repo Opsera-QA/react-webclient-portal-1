@@ -13,11 +13,16 @@ const salesforceSummaryLogTopLevelMetadata = {
       label: "Deploy Options",
       id: "deployOptions"
     },
+    {
+      label: "Deploy Result",
+      id: "deployResult"
+    },
   ],
   newObjectFields: {
     id: "",
     validatedDeployRequestId: "",
     deployOptions: [],
+    deployResult: {},
   }
 };
 

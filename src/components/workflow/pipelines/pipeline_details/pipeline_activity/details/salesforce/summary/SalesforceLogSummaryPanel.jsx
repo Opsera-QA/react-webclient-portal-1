@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import salesforceValidationLogMetadata
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/validation/salesforce.validationLog.metadata";
-import SalesforceValidationLogSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/validation/SalesforceValidationLogSummaryPanel";
+import SalesforceLogSummaryDeployResultsSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/validation/SalesforceLogSummaryDeployResultsSummaryPanel";
+import salesforceSummaryLogDeployResultMetadata
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/metadata/salesforceSummaryLogDeployResult.metadata";
 
 const validationLog = {
   "id": "0Af7A00000l6BaoSAE",
@@ -144,15 +144,15 @@ function SalesforceLogSummaryPanel({ pipelineData }) {
   //   return <LoadingDialog message={"Loading Pipeline"} size={'sm'} />;
   // }
 
-  // const wrapModel = () => {
-    // return (new Model(validationLog, salesforceValidationLogMetadata, false));
-  // };
+  const wrapModel = () => {
+    return (new Model(validationLog?.deployResult, salesforceSummaryLogDeployResultMetadata, false));
+  };
 
   return (
     <div>
       <div className={"mb-3"}>
-        <SalesforceValidationLogSummaryPanel
-          // salesforceValidationLogModel={wrapModel()}
+        <SalesforceLogSummaryDeployResultsSummaryPanel
+          salesforceValidationLogModel={wrapModel()}
         />
       </div>
 
@@ -162,7 +162,7 @@ function SalesforceLogSummaryPanel({ pipelineData }) {
 
 
 SalesforceLogSummaryPanel.propTypes = {
-  salesforceValidationLogModel: PropTypes.object,
+  pipelineData: PropTypes.object,
 };
 
 export default SalesforceLogSummaryPanel;
