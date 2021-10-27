@@ -50,7 +50,7 @@ const INITIAL_DATA = {
   toolJobId: "",
   toolJobType: "",
   projectKey: "",
-
+  sonarToolConfigId: "",
   accountUsername: "",
   projectId: "",
   defaultBranch: "",
@@ -219,16 +219,16 @@ function SonarStepConfiguration({
     }
 
     if (typeof(results) != "object") {
-      setJenkinsList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+      setSonarList([{ value: "", name: "Select One", isDisabled: "yes" }]);
       let errorMessage =
         "Jenkins information is missing or unavailable!";
       toastContext.showErrorDialog(errorMessage);
-      setisJenkinsSearching(false);
+      setIsSonarSearching(false);
       return;
     }
 
-    setJenkinsList(respObj);
-    setisJenkinsSearching(false);
+    setSonarList(respObj);
+    setIsSonarSearching(false);
   };
 
   // fetch repos
