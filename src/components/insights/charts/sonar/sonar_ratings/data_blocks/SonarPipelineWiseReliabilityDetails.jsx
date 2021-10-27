@@ -142,9 +142,17 @@ function SonarPipelineWiseReliabilityDetails() {
     }
   };
 
+  const getInfoText = () => {
+    return (
+      <Row className="py-1 px-5">
+        <Col>This KPI shows data from scans that ran after November 2021</Col>
+      </Row>);
+  };
+
   const getBody = () => {
     return (
       <>
+        {getInfoText()}
         {getPipelineDetails()}
         <FilterContainer
           isLoading={isLoading}
@@ -242,7 +250,7 @@ function SonarPipelineWiseReliabilityDetails() {
     return(
           <Row className="px-2">
             <Col className="footer-records">
-              Total remediation Efforts : {footerData?.totalEffort ? `${footerData?.totalEffort} minutes` : '0 minutes'} 
+              Total Remediation Efforts : {footerData?.totalEffort ? `${footerData?.totalEffort} minutes` : '0 minutes'} 
             </Col>
           </Row>          
         );
