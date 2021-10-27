@@ -7,7 +7,7 @@ import {
   faPauseCircle, faPlayCircle, faSearchPlus,
   faSpinner,
   faStopCircle,
-  faTimesCircle, faTrash, faPlay, faTag, faExclamationCircle
+  faTimesCircle, faTrash, faPlay, faTag, faExclamationCircle, faSearch
 } from "@fortawesome/pro-light-svg-icons";
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import WarningIcon from "../../common/icons/table/WarningIcon";
@@ -31,6 +31,7 @@ import CustomBadge from "components/common/badges/CustomBadge";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
 import {getTaskTypeLabel} from "components/tasks/task.types";
 import { getPipelineStateFieldBase} from "components/common/fields/pipelines/state/PipelineStateField";
+import IconBase from "components/common/icons/IconBase";
 
 export const getCustomTableHeader = (field) => {
   return field ? field.label : "";
@@ -258,7 +259,7 @@ export const getLimitedContactArrayColumn = (field, maxLength, className) => {
   };
 };
 
-export const getTagColumn = (field, maxShown = 2, className) => {
+export const getTagColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
@@ -283,23 +284,15 @@ export const getTagColumn = (field, maxShown = 2, className) => {
           </CustomBadgeContainer>;
 
         return (
-          <TooltipWrapper innerText={maxShown < array.length ? tags : null} title={"Tags"}>
+          <TooltipWrapper innerText={tags} title={"Tags"}>
             <div>
               <span className="item-field">
-              {array.map((tag, index) => {
-                if (index + 1 > maxShown) {
-                  return;
-                }
-
-                return (
-                  <span key={index}>
+                  <span>
                     <span className="mr-1 badge badge-light group-badge">
-                      {capitalizeFirstLetter(tag.type)}: {capitalizeFirstLetter(tag.value)}
+                    <IconBase icon={faSearch} className={"mr-1"} />
+                      {array.length} Tag{array.length !== 1 ? "s" : ""} Applied
                     </span>
                   </span>
-                );
-              })}
-                <span>{array.length > maxShown ? "..." : ""}</span>
               </span>
             </div>
           </TooltipWrapper>
