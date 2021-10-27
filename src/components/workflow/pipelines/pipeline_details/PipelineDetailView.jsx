@@ -18,6 +18,7 @@ import pipelineActivityHelpers
 import {DialogToastContext} from "contexts/DialogToastContext";
 import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
+import pipelineActions from "components/workflow/pipeline-actions";
 
 const refreshInterval = 5000;
 
@@ -66,7 +67,7 @@ function PipelineDetailView() {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    initComponent(source).catch((error) => {
+    loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -122,7 +123,7 @@ function PipelineDetailView() {
 
     if (tab !== tabSelection) {
       history.push(`/workflow/details/${id}/${tabSelection}`);
-      await fetchData();
+      await getPipeline();
     }
   };
 
@@ -131,57 +132,59 @@ function PipelineDetailView() {
   }, [JSON.stringify(pipeline.workflow), refreshCount]);
 
 
-  const initComponent = async (cancelSource = cancelTokenSource) => {
-    setLoading(true);
-
-    const userRecord = await getUserRecord(); //RBAC Logic
-    const rules = await setAccessRoles(userRecord);
-    setCustomerAccessRules(rules);
-
-    if (tab) {
-      setActiveTab(tab);
-    }
-
-    await fetchData(cancelSource);
-    setLoading(false);
-    // await getActivityLogs(undefined, false, cancelSource);
-  };
-
-  const fetchData = async (cancelSource = cancelTokenSource) => {
-    setRefreshCount(refreshCount => refreshCount + 1);
-    setSoftLoading(true);
-    const accessToken = await getAccessToken();
-    const apiUrl = `/pipelines/${id}`;
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      const pipeline = await axiosApiService(accessToken).get(apiUrl);
-      if (pipeline && pipeline.data && pipeline.data.length > 0) {
-        setData({
-          ...data,
-          pipeline: pipeline && pipeline.data[0],
-        });
+      setLoading(true);
 
-        setPipeline(pipeline && pipeline.data[0]);
+      const userRecord = await getUserRecord(); //RBAC Logic
+      const rules = await setAccessRoles(userRecord);
+      setCustomerAccessRules(rules);
 
-        let owner = await PipelineHelpers.getUserNameById(pipeline.data[0].owner, getAccessToken);
-        setOwnerName(owner);
-
-        if (pipeline && pipeline.data[0] && typeof (pipeline.data[0].workflow) !== "undefined") {
-          if (typeof (pipeline.data[0].workflow.last_step) !== "undefined") {
-            evaluatePipelineStatus(pipeline.data[0]);
-          }
-        }
-      } else {
-        toastContext.showLoadingErrorDialog("Pipeline not found");
+      if (tab) {
+        setActiveTab(tab);
       }
+
+      await getPipeline(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error.message);
         toastContext.showLoadingErrorDialog(error);
       }
-    } finally {
+    }
+    finally {
       if (isMounted?.current === true) {
-        setSoftLoading(false);
+        setLoading(false);
       }
+    }
+  };
+
+  const getPipeline = async (cancelSource = cancelTokenSource) => {
+    setRefreshCount(refreshCount => refreshCount + 1);
+    setSoftLoading(true);
+    const response = await pipelineActions.getPipelineByIdV2(getAccessToken, cancelSource, id);
+    const pipeline = response?.data?.data;
+
+    if (pipeline) {
+      setData({
+        ...data,
+        pipeline: pipeline,
+      });
+
+      setPipeline(pipeline);
+      setOwnerName(pipeline?.owner_name);
+
+      if (pipeline?.workflow !== "undefined") {
+        if (typeof (pipeline?.workflow?.last_step) !== "undefined") {
+          evaluatePipelineStatus(pipeline);
+        }
+      }
+    } else {
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog("Pipeline not found");
+      }
+    }
+    if (isMounted?.current === true) {
+      setSoftLoading(false);
     }
   };
 
@@ -202,7 +205,7 @@ function PipelineDetailView() {
     const refreshTimer = setTimeout(async function() {
       console.log("running pipeline refresh interval. Step status: ");
       staleRefreshCount++;
-      await fetchData();
+      await getPipeline();
       if (staleRefreshCount % 3 === 0) {
         console.log("divisible by 3 refresh: getting activity logs");
         await getActivityLogs(pipelineActivityFilterModel, true);
@@ -313,7 +316,7 @@ function PipelineDetailView() {
   const fetchPlan = async (param) => {
     // console.log("fetchPlan")
     // setEditItem(false);
-    await fetchData();
+    await getPipeline();
     if (param) {
       setEditItem(param);
     }

@@ -6,6 +6,16 @@ import {axiosApiService} from "api/apiService";
 //  step for step configuration related ones (save to vault, tools, etc)
 const pipelineActions = {};
 
+pipelineActions.getPipelineById = async (pipelineId, getAccessToken) => {
+  const apiUrl = `/pipelines/${pipelineId}`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+pipelineActions.getPipelineByIdV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
+  const apiUrl = `/pipelines/v2/${pipelineId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 pipelineActions.getWorkflowTemplatesV2 = async (getAccessToken, cancelTokenSource, catalogFilterModel, source) => {
   let sortOption = catalogFilterModel.getData("sortOption");
 
@@ -217,16 +227,6 @@ pipelineActions.get = async (pipelineId, getAccessToken) => {
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
   return response;
-};
-
-pipelineActions.getPipelineById = async (pipelineId, getAccessToken) => {
-  const apiUrl = `/pipelines/${pipelineId}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-pipelineActions.getPipelineById = async (pipelineId, getAccessToken) => {
-  const apiUrl = `/pipelines/${pipelineId}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 pipelineActions.saveToVault = async (postBody, getAccessToken) => {
