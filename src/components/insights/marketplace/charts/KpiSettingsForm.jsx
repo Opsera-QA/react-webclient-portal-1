@@ -9,6 +9,7 @@ import {
   kpiSettingsMetadata,
   kpiDateFilterMetadata,
   kpiTagsFilterMetadata,
+  kpiGoalsFilterMetadata,
   kpiJenkinsResultFilterMetadata,
   kpiJenkinsJobUrlFilterMetadata,
   kpiJenkinsBuildNumberFilterMetadata,
@@ -41,6 +42,7 @@ import dashboardsActions from "components/insights/dashboards/dashboards-actions
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TagManager from "components/common/inputs/tags/TagManager";
 import modelHelpers from "components/common/model/modelHelpers";
+import GoalsInputBase from "components/insights/marketplace/charts/goals/GoalsInputBase";
 
 // Manual Entry Kpis
 import ManualKpiMultiSelectInputBase from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
@@ -93,6 +95,9 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
   );
   const [kpiJiraIssueTypeFilter, setKpiJiraIssueTypeFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-type", kpiJiraIssueTypeFilterMetadata)
+  );
+  const [kpiGoalsFilter, setKpiGoalsFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "goals", kpiGoalsFilterMetadata)
   );
   const [kpiJiraIssueComponentsFilter, setKpiJiraIssueComponentsFilter] = useState(
     modelHelpers.getDashboardFilterModel(
@@ -319,6 +324,18 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
                 !tagFilterEnabled.includes(kpiSettings.getData("kpi_identifier")) ||
                 !kpiConfigSettings.getData("useKpiTags")
               }
+            />
+          </div>
+        );
+      case "goals":
+        return (
+          <div>
+            <GoalsInputBase
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiGoalsFilter}
+              dataObject={kpiGoalsFilter}
+              kpiName={kpiSettings.getData("kpi_identifier")}
             />
           </div>
         );
@@ -625,6 +642,11 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "tags")
       ].value = kpiTagsFilter.getData("value");
+    }
+    if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "goals")]) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "goals")
+      ].value = kpiGoalsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
