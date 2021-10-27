@@ -67,6 +67,7 @@ function MultiTextInputBase({ fieldName, dataObject, setDataObject, groupBy, dis
           createOptionFunction={(value) => handleCreate(value)}
           filter="contains"
           groupBy={groupBy}
+          manualEntry={true}
           value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : [] }
           placeholderText={placeholderText}
           disabled={disabled}
