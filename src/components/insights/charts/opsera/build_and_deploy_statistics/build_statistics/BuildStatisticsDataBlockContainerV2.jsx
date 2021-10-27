@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 // import Model from "core/data_model/model";
 // import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
@@ -17,9 +17,11 @@ import FailedBuildsDataBlock
 import { ResponsiveLine } from '@nivo/line';
 import { defaultConfig, getColor, assignStandardColors } from 'components/insights/charts/charts-views';
 import LoadingDialog from "components/common/status_notifications/loading";
+import modelHelpers from "components/common/model/modelHelpers";
+import {  kpiGoalsFilterMetadata  } from "components/insights/marketplace/charts/kpi-configuration-metadata";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function BuildStatisticsDataBlockContainer({ metricData, chartData }) {
+function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration }) {
   // const toastContext = useContext(DialogToastContext);
 
   // const onRowSelect = () => {
@@ -32,6 +34,10 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData }) {
   //       kpiIdentifier={"sonar-ratings-debt-ratio"}
   //     />);
   // };
+
+  const [kpiGoalsFilter, setKpiGoalsFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "goals", kpiGoalsFilterMetadata)
+  );
 
   let successChartData = [
     {
@@ -66,7 +72,7 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData }) {
       <SuccessRateDataBlock
         qualityLevel={METRIC_QUALITY_LEVELS.DANGER}
         successPercentage={metricData?.build?.successPercent || 0}
-        bottomText={"Goal: 95%"}
+        bottomText={`Goal: ${kpiGoalsFilter.getData("value").build_success_rate}%`}
       />
     );
   };
@@ -90,16 +96,10 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData }) {
           markers={[
             {
                 axis: 'y',
-                value: 95,
+                value: kpiGoalsFilter.getData("value").build_success_rate,
                 lineStyle: { stroke: '#00897b', strokeWidth: 1 },
                 legend: 'Goal',
-            },
-            {
-              axis: 'y',
-              value: metricData?.build?.successPercent,
-              lineStyle: { stroke: '#00897b', strokeWidth: 1 },
-              legend: 'Success Rate',
-            }           
+            }         
           ]}
         />
       </div>
@@ -137,6 +137,7 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData }) {
 BuildStatisticsDataBlockContainer.propTypes = {
   metricData: PropTypes.object,
   chartData: PropTypes.object,
+  kpiConfiguration: PropTypes.object,
 };
 
 export default BuildStatisticsDataBlockContainer;

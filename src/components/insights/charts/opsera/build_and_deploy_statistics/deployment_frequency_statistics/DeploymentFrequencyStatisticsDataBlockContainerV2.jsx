@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 // import Model from "core/data_model/model";
 // import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
@@ -15,9 +15,11 @@ import AverageDeploymentDurationDataBlock
 import { ResponsiveLine } from '@nivo/line';
 import { defaultConfig, getColor, assignStandardColors } from 'components/insights/charts/charts-views';
 import LoadingDialog from "components/common/status_notifications/loading";
+import modelHelpers from "components/common/model/modelHelpers";
+import {  kpiGoalsFilterMetadata  } from "components/insights/marketplace/charts/kpi-configuration-metadata";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function DeploymentFrequencyStatisticsDataBlockContainerV2({ metricData, chartData }) {
+function DeploymentFrequencyStatisticsDataBlockContainerV2({ metricData, chartData, kpiConfiguration }) {
   // const toastContext = useContext(DialogToastContext);
 
   // const onRowSelect = () => {
@@ -30,6 +32,10 @@ function DeploymentFrequencyStatisticsDataBlockContainerV2({ metricData, chartDa
   //       kpiIdentifier={"sonar-ratings-debt-ratio"}
   //     />);
   // };
+
+  const [kpiGoalsFilter, setKpiGoalsFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "goals", kpiGoalsFilterMetadata)
+  );
   
   let dailyDeploymentsChartData = [
     {
@@ -44,7 +50,7 @@ function DeploymentFrequencyStatisticsDataBlockContainerV2({ metricData, chartDa
       <AverageDailyDeploymentsDataBlock
         qualityLevel={METRIC_QUALITY_LEVELS.DANGER}
         averageDailyCount={metricData?.deploy?.perDayAverage || 0}
-        bottomText={"Goal: 1"}
+        bottomText={`Goal: ${kpiGoalsFilter.getData("value").average_deployments}`}
       />
     );
   };
@@ -78,7 +84,7 @@ function DeploymentFrequencyStatisticsDataBlockContainerV2({ metricData, chartDa
           markers={[
             {
                 axis: 'y',
-                value: 1,
+                value: kpiGoalsFilter.getData("value").average_deployments,
                 lineStyle: { stroke: '#00897b', strokeWidth: 1 },
                 legend: 'Goal',
             }            
@@ -118,6 +124,7 @@ function DeploymentFrequencyStatisticsDataBlockContainerV2({ metricData, chartDa
 DeploymentFrequencyStatisticsDataBlockContainerV2.propTypes = {
   metricData: PropTypes.object,
   chartData: PropTypes.object,
+  kpiConfiguration: PropTypes.object,
 };
 
 export default DeploymentFrequencyStatisticsDataBlockContainerV2;
