@@ -82,14 +82,21 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
       return (
         <>
           <EbsCustomDockerComposeToggleInput  dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} fieldName={"customDockerCompose"} />
-          {ebsStepConfigurationDto.getData("customDockerCompose") === true && 
-            <ScriptLibrarySelectInput
-              fieldName={"dockerComposeScriptId"}
-              dataObject={ebsStepConfigurationDto}
-              setDataObject={setEBSStepConfigurationDataDto}
-              busy={isLoading}
-              disabled={isLoading}
-            />
+          {ebsStepConfigurationDto.getData("customDockerCompose") === true ?
+           (
+              <ScriptLibrarySelectInput
+                fieldName={"dockerComposeScriptId"}
+                dataObject={ebsStepConfigurationDto}
+                setDataObject={setEBSStepConfigurationDataDto}
+                busy={isLoading}
+                disabled={isLoading}
+              />
+           ) : (
+            <div>
+              <JsonInput fieldName={"dockerVolumePath"} model={ebsStepConfigurationDto} setModel={setEBSStepConfigurationDataDto}/>
+              <JsonInput fieldName={"environments"} model={ebsStepConfigurationDto} setModel={setEBSStepConfigurationDataDto}/>
+            </div>
+           )
           }
         </>
       );
@@ -108,17 +115,6 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
     newDataObject.setData("s3ECRStepId", "");
     newDataObject.setData("tool_identifier", "");
     setEBSStepConfigurationDataDto({...newDataObject});
-  };
-
-  const getJsonInputs = () => {
-    if (ebsStepConfigurationDto.getData("tool_identifier") === "docker-push") {
-      return (
-        <div>
-          <JsonInput fieldName={"dockerVolumePath"} model={ebsStepConfigurationDto} setModel={setEBSStepConfigurationDataDto}/>
-          <JsonInput fieldName={"environments"} model={ebsStepConfigurationDto} setModel={setEBSStepConfigurationDataDto}/>
-        </div>
-      );
-    }
   };
 
   const handleCreateAndSave = async () => {
@@ -198,7 +194,6 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
         selectOptions={listOfSteps ? listOfSteps : []}
         fieldName={"s3ECRStepId"}
       />
-      {getJsonInputs()}
       <EBSAccessOptionsInput fieldName={"bucketAccess"} dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} />
       <EBSCreateDomainToggleInput dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} fieldName={"createDomain"}/>
       {getDynamicDomainFields()}
