@@ -49,13 +49,13 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
   };
 
   const getSummaryPanel = () => {
-    // if (pipelineTaskData?.action === "salesforce summary") {
-    //   return (
-    //     <SalesforceLogSummaryPanel
-    //       pipelineTaskData={pipelineTaskData}
-    //     />
-    //   );
-    // }
+    if (pipelineTaskData?.action === "salesforce summary") {
+      return (
+        <SalesforceLogSummaryPanel
+          pipelineTaskData={pipelineTaskData}
+        />
+      );
+    }
 
     switch (pipelineTaskData.tool_identifier) {
       case "parallel-processor":

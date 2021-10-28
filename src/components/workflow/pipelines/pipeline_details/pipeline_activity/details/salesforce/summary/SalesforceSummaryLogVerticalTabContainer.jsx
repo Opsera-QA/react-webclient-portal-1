@@ -1,8 +1,7 @@
 import React from "react";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
-import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
-import {faFileAlt, faObjectGroup} from "@fortawesome/pro-light-svg-icons";
+import {faClipboardListCheck, faFileAlt, faFileCode, faObjectGroup} from "@fortawesome/pro-light-svg-icons";
 
 function SalesforceSummaryLogVerticalTabContainer() {
   return (
@@ -13,12 +12,12 @@ function SalesforceSummaryLogVerticalTabContainer() {
         tabName={"summary"}
       />
       <VanitySetVerticalTab
-        icon={faSalesforce}
+        icon={faFileCode}
         tabText={"Component Details"}
         tabName={"components"}
       />
       <VanitySetVerticalTab
-        icon={faObjectGroup}
+        icon={faClipboardListCheck}
         tabText={"Unit Test Details"}
         tabName={"tests"}
       />
