@@ -18,7 +18,9 @@ function AksResourceGroupSelectInput(
     azureToolConfigId,
     azureApplication,
     textField,
-    valueField
+    valueField,
+    clusterName,
+    disabled
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -36,12 +38,12 @@ function AksResourceGroupSelectInput(
     setCancelTokenSource(source);
     setAzureRegionList([]);
 
-    if (hasStringValue(azureToolConfigId) && hasStringValue(azureApplication)) {
+    if (hasStringValue(azureToolConfigId) && hasStringValue(azureApplication) && hasStringValue(clusterName) && !disabled) {
       loadData(source).catch((error) => {
         throw error;
       });
     }
-  }, [azureToolConfigId, azureApplication]);
+  }, [azureToolConfigId, azureApplication, clusterName]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -86,7 +88,8 @@ function AksResourceGroupSelectInput(
       getAccessToken,
       cancelSource,
       tool,
-      applicationData?.configuration
+      applicationData?.configuration,
+      clusterName
     );
     const result = resourceGroupResponse?.data?.data;
 
@@ -120,7 +123,7 @@ function AksResourceGroupSelectInput(
         setDataObject={setDataObject}
         selectOptions={azureRegionList}
         busy={isLoading}
-        disabled={isLoading}
+        disabled={isLoading || disabled}
         placeholder={placeholder}
         textField={textField}
         valueField={valueField}
@@ -141,12 +144,14 @@ AksResourceGroupSelectInput.propTypes = {
   azureApplication: PropTypes.string,
   textField: PropTypes.string,
   valueField: PropTypes.string,
+  clusterName: PropTypes.string,
+  disabled: PropTypes.bool
 };
 
 AksResourceGroupSelectInput.defaultProps = {
   fieldName: "resourceGroupName",
-  textField: "name",
-  valueField: "name",
+  textField: "resourceGroup",
+  valueField: "resourceGroup",
 };
 
 export default AksResourceGroupSelectInput;
