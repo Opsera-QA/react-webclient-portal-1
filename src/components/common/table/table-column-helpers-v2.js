@@ -8,7 +8,6 @@ import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-help
 import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import {getTaskTypeLabel} from "components/tasks/task.types";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {THRESHOLD_LEVELS} from "components/common/list_of_values_input/pipelines/thresholds/PipelineThresholdLevelSelectInputBase";
 export const FILTER_TYPES = {
   SEARCH_FILTER: "inputFilter",

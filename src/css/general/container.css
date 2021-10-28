@@ -103,9 +103,9 @@
 }
 
 .makeup-container-content-body {
-    min-height: calc(70vh);
-    height: calc(70vh);
-    max-height: calc(70vh);
+    min-height: calc(77vh);
+    height: calc(77vh);
+    max-height: calc(77vh);
     overflow-y: hidden;
 }
 /* End Makeup Container Styling */
