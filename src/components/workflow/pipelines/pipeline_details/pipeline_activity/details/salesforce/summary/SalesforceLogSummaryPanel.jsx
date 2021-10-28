@@ -1,11 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import SalesforceLogSummaryDeployResultsSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/validation/SalesforceLogSummaryDeployResultsSummaryPanel";
+import SalesforceLogSummaryOverviewSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/SalesforceLogSummaryOverviewSummaryPanel";
 import salesforceSummaryLogDeployResultMetadata
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/metadata/salesforceSummaryLogDeployResult.metadata";
+import LoadingDialog from "components/common/status_notifications/loading";
+import SalesforceLogSummaryTestResultsSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummaryTestResultsSummaryPanel";
+import salesforceSummaryLogRunTestResultMetadata
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/metadata/test_results/salesforceSummaryLogRunTestResults.metadata";
+import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
+import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
+import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
+import SalesforceSummaryLogVerticalTabContainer
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceSummaryLogVerticalTabContainer";
+import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 
+// TODO: Remove after flow is validated
 const validationLog = {
   "id": "0Af7A00000l6BaoSAE",
   "validatedDeployRequestId": null,
@@ -138,31 +150,62 @@ const validationLog = {
   }
 };
 
-function SalesforceLogSummaryPanel({ pipelineData }) {
+// TODO: Ensure sfdcJobDetails is an array and has a length of 1 or greater, otherwise show "No Summary Captured" message.
+function SalesforceLogSummaryPanel({ pipelineTaskData }) {
 
-  // if (pipelineData == null) {
-  //   return <LoadingDialog message={"Loading Pipeline"} size={'sm'} />;
-  // }
+  if (pipelineTaskData == null) {
+    return (
+      <LoadingDialog
+        message={"Loading Pipeline"}
+        size={'sm'}
+      />
+    );
+  }
 
   const wrapModel = () => {
-    return (new Model(validationLog?.deployResult, salesforceSummaryLogDeployResultMetadata, false));
+    const deployResult = pipelineTaskData?.api_response?.sfdcJobDetails[0]?.deployResult;
+    return (new Model(deployResult, salesforceSummaryLogDeployResultMetadata, false));
   };
 
-  return (
-    <div>
-      <div className={"mb-3"}>
-        <SalesforceLogSummaryDeployResultsSummaryPanel
-          salesforceValidationLogModel={wrapModel()}
-        />
-      </div>
+  const getTestModel = () => {
+    const testResults = pipelineTaskData?.api_response?.sfdcJobDetails[0]?.deployResult?.details?.runTestResult;
+    return (new Model(testResults, salesforceSummaryLogRunTestResultMetadata, false));
+  };
 
-    </div>
+  // TODO: Make own component
+  const getTabContentContainer = () => {
+    return (
+      <VanitySetTabViewContainer>
+        <VanitySetTabView tabKey={"summary"}>
+          <SalesforceLogSummaryOverviewSummaryPanel
+            salesforceDeployResultsModel={wrapModel()}
+          />
+        </VanitySetTabView>
+        <VanitySetTabView tabKey={"tests"}>
+          <SalesforceLogSummaryTestResultsSummaryPanel
+            salesforceDeployResultsModel={wrapModel()}
+            salesforceTestResultsModel={getTestModel()}
+          />
+        </VanitySetTabView>
+      </VanitySetTabViewContainer>
+    );
+  };
+
+
+  return (
+    <VanitySetTabAndViewContainer
+      icon={faSalesforce}
+      title={`Salesforce Execution Summary`}
+      defaultActiveKey={"summary"}
+      verticalTabContainer={<SalesforceSummaryLogVerticalTabContainer />}
+      currentView={getTabContentContainer()}
+    />
   );
 }
 
 
 SalesforceLogSummaryPanel.propTypes = {
-  pipelineData: PropTypes.object,
+  pipelineTaskData: PropTypes.object,
 };
 
 export default SalesforceLogSummaryPanel;

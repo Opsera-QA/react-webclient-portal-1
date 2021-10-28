@@ -22,8 +22,20 @@ const salesforceSummaryLogUnitTestResultMetadata = {
       id: "time"
     },
     {
+      label: "Test Timestamp",
+      id: "testTimestamp"
+    },
+    {
+      label: "System Modstamp",
+      id: "systemModstamp"
+    },
+    {
       label: "See All Data",
       id: "seeAllData"
+    },
+    {
+      label: "Apex Class",
+      id: "apexClass"
     },
   ],
   newObjectFields: {
@@ -32,7 +44,10 @@ const salesforceSummaryLogUnitTestResultMetadata = {
     methodName: "",
     id: "",
     time: "",
+    testTimestamp: "",
+    systemModstamp: "",
     seeAllData: false,
+    apexClass: {},
   }
 };
 

@@ -12,7 +12,7 @@ import DateTimeField from "components/common/fields/date/DateTimeField";
 
 function ParallelProcessorPipelineTaskSummaryPanel({ pipelineTaskData }) {
   return (
-    <SummaryPanelContainer>
+    <SummaryPanelContainer className={"mx-2"}>
       <Row>
         <Col md={12} className="px-1">
           <h6>Step Activity Log Summary:</h6>
