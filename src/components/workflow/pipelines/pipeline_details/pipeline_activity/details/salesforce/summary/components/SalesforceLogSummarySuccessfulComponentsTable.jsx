@@ -35,7 +35,7 @@ function SalesforceLogSummarySuccessfulComponentsTable({ hasFailureComponents, s
       <VanityTable
         data={successfulComponents}
         columns={columns}
-        tableHeight={hasFailureComponents === true ? "25vh" : "52vh"}
+        tableHeight={hasFailureComponents === true ? "28.2vh" : "59.5vh"}
       />
     );
   };

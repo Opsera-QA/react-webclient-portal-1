@@ -18,7 +18,8 @@ export const getApexClassUrlColumnDefinition = (field, maxLength, className) => 
     sortable: false,
     class: className ? className : undefined,
     tooltipTemplate: function (value, row) {
-      return `<div class="custom-tooltip"><span>${row?.apexClass?.attributes?.url}</span></div>`;
+      const url = `${row?.apexClass?.attributes?.url}`;
+      return `<div class="custom-tooltip"><span>${url}</span></div>`;
     },
     template: (text, row) => {
       return row?.apexClass?.attributes?.url;
@@ -45,7 +46,7 @@ function SalesforceLogSummaryTestResultsTableBase({ hasSuccessAndFailureTests, t
       <VanityTable
         data={testResults}
         columns={columns}
-        tableHeight={hasSuccessAndFailureTests === true ? "25vh" : "52vh"}
+        tableHeight={hasSuccessAndFailureTests === true ? "28.2vh" : "59.5vh"}
       />
     );
   };
@@ -56,7 +57,7 @@ function SalesforceLogSummaryTestResultsTableBase({ hasSuccessAndFailureTests, t
       body={getTestResultsTable()}
       titleIcon={icon}
       title={title}
-      className={"my-2"}
+      className={"mt-3"}
     />
   );
 }
