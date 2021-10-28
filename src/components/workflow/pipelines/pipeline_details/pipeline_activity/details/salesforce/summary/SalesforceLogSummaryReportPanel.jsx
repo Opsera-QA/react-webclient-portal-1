@@ -157,7 +157,7 @@ const validationLog = {
   }
 };
 
-function SalesforceLogSummaryPanel({ pipelineTaskData }) {
+function SalesforceLogSummaryReportPanel({ pipelineTaskData }) {
   const [salesforceDeployResultsModel, setSalesforceDeployResultsModel] = useState(undefined);
   const [successfulTests, setSuccessfulTests] = useState(undefined);
   const [unsuccessfulTests, setUnsuccessfulTests] = useState(undefined);
@@ -257,8 +257,8 @@ function SalesforceLogSummaryPanel({ pipelineTaskData }) {
 }
 
 
-SalesforceLogSummaryPanel.propTypes = {
+SalesforceLogSummaryReportPanel.propTypes = {
   pipelineTaskData: PropTypes.object,
 };
 
-export default SalesforceLogSummaryPanel;
+export default SalesforceLogSummaryReportPanel;

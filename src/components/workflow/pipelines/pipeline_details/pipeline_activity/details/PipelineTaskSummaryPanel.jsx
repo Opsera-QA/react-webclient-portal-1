@@ -14,8 +14,8 @@ import ChildPipelineTaskSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/child/ChildPipelineTaskSummaryPanel";
 import childPipelineTaskMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/child/child-pipeline-task-metadata";
-import SalesforceLogSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceLogSummaryPanel";
+import PipelineSummaryReportPanel
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineSummaryReportPanel";
 
 function PipelineTaskSummaryPanel({ pipelineTaskData }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -49,9 +49,9 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
   };
 
   const getSummaryPanel = () => {
-    if (pipelineTaskData?.action === "salesforce summary") {
+    if (pipelineTaskData?.action === "summary report") {
       return (
-        <SalesforceLogSummaryPanel
+        <PipelineSummaryReportPanel
           pipelineTaskData={pipelineTaskData}
         />
       );
