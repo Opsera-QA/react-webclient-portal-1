@@ -10,8 +10,8 @@ import FieldSubHeader from "components/common/fields/FieldSubHeader";
 import SalesforceLogSummaryFailedTestsTable
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummaryFailedTestsTable";
 
-function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsModel, salesforceTestResultsModel }) {
-  if (salesforceTestResultsModel == null) {
+function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsModel, successfulTests, unsuccessfulTests, }) {
+  if (salesforceDeployResultsModel == null) {
     return (
       <LoadingDialog
         message={"Loading Salesforce Unit Test Details"}
@@ -21,7 +21,7 @@ function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsMo
   }
 
   return (
-    <SummaryPanelContainer className={"step-configuration-summary m-3"}>
+    <SummaryPanelContainer className={"step-configuration-summary mt-3 mx-3"}>
       <Row>
         <Col lg={12}>
           <FieldSubHeader subheaderText={"Unit Test Details"} />
@@ -37,12 +37,14 @@ function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsMo
         </Col>
         <Col lg={12}>
           <SalesforceLogSummarySuccessfulTestsTable
-            successfulTests={salesforceTestResultsModel?.getData("successes")}
+            successfulTests={successfulTests}
+            hasUnsuccessfulTests={unsuccessfulTests?.length > 0}
           />
         </Col>
         <Col lg={12}>
           <SalesforceLogSummaryFailedTestsTable
-            failedTests={salesforceTestResultsModel?.getData("failures")}
+            unsuccessfulTests={unsuccessfulTests}
+            hasSuccessfulTests={successfulTests?.length > 0}
           />
         </Col>
       </Row>
@@ -53,7 +55,8 @@ function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsMo
 
 SalesforceLogSummaryTestResultsSummaryPanel.propTypes = {
   salesforceDeployResultsModel: PropTypes.object,
-  salesforceTestResultsModel: PropTypes.object,
+  successfulTests: PropTypes.array,
+  unsuccessfulTests: PropTypes.array,
 };
 
 export default SalesforceLogSummaryTestResultsSummaryPanel;

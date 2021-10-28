@@ -58,7 +58,9 @@ const salesforceSummaryLogUnitTestResultMetadata = {
     time: "",
     testTimestamp: "",
     systemModstamp: "",
-    apexClass: {},
+    apexClass: {
+      attributes: {},
+    },
   }
 };
 
