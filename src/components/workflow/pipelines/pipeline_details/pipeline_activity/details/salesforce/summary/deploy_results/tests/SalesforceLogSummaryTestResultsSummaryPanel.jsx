@@ -4,11 +4,11 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import {Col, Row} from "react-bootstrap";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import SalesforceLogSummarySuccessfulTestsPanel
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummarySuccessfulTestsPanel";
-import SalesforceLogSummaryFailedTestsPanel
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummaryFailedTestsPanel";
+import SalesforceLogSummarySuccessfulTestsTable
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummarySuccessfulTestsTable";
 import FieldSubHeader from "components/common/fields/FieldSubHeader";
+import SalesforceLogSummaryFailedTestsTable
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummaryFailedTestsTable";
 
 function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsModel, salesforceTestResultsModel }) {
   if (salesforceTestResultsModel == null) {
@@ -21,7 +21,7 @@ function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsMo
   }
 
   return (
-    <SummaryPanelContainer className={"step-configuration-summary mx-3 mt-2"}>
+    <SummaryPanelContainer className={"step-configuration-summary m-3"}>
       <Row>
         <Col lg={12}>
           <FieldSubHeader subheaderText={"Unit Test Details"} />
@@ -36,12 +36,12 @@ function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsMo
           <TextFieldBase dataObject={salesforceDeployResultsModel} fieldName={"numberTestErrors"}/>
         </Col>
         <Col lg={12}>
-          <SalesforceLogSummarySuccessfulTestsPanel
+          <SalesforceLogSummarySuccessfulTestsTable
             successfulTests={salesforceTestResultsModel?.getData("successes")}
           />
         </Col>
         <Col lg={12}>
-          <SalesforceLogSummaryFailedTestsPanel
+          <SalesforceLogSummaryFailedTestsTable
             failedTests={salesforceTestResultsModel?.getData("failures")}
           />
         </Col>
