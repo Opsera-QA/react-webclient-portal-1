@@ -1639,15 +1639,15 @@ div.data-blocks-ellipses {
 
 .full-screen-overlay-tab-panel-body-with-buttons {
     overflow-y: hidden;
-    height: calc(100vh - 20px - 48px - 63px - 45px);
-    max-height: calc(100vh - 20px - 48px - 63px - 45px);
+    height: calc(100vh - 20px - 48px - 63px - 32px);
+    max-height: calc(100vh - 20px - 48px - 63px - 32px);
     border-bottom: 1px solid #dee2e6;
 }
 
 .full-screen-overlay-tab-panel-inner-body-with-buttons {
     overflow-y: auto;
-    height: calc(100vh - 20px - 48px - 63px - 85px);
-    max-height: calc(100vh - 20px - 48px - 63px - 85px);
+    height: calc(100vh - 20px - 48px - 63px - 68px);
+    max-height: calc(100vh - 20px - 48px - 63px - 68px);
 }
 
 .overlay-margin {
