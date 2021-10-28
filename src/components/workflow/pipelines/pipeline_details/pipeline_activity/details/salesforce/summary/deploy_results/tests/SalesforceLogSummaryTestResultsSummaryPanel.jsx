@@ -8,12 +8,13 @@ import SalesforceLogSummarySuccessfulTestsPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummarySuccessfulTestsPanel";
 import SalesforceLogSummaryFailedTestsPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummaryFailedTestsPanel";
+import FieldSubHeader from "components/common/fields/FieldSubHeader";
 
 function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsModel, salesforceTestResultsModel }) {
   if (salesforceTestResultsModel == null) {
     return (
       <LoadingDialog
-        message={"Loading Pipeline"}
+        message={"Loading Salesforce Unit Test Details"}
         size={'sm'}
       />
     );
@@ -22,6 +23,9 @@ function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsMo
   return (
     <SummaryPanelContainer className={"step-configuration-summary mx-3 mt-2"}>
       <Row>
+        <Col lg={12}>
+          <FieldSubHeader subheaderText={"Unit Test Details"} />
+        </Col>
         <Col lg={4}>
           <TextFieldBase dataObject={salesforceDeployResultsModel} fieldName={"numberTestsTotal"}/>
         </Col>
