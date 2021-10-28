@@ -30,6 +30,7 @@ function AzureAksDeployPipelineStepConfigurationHelpDocumentation() {
                 <li><b>Cluster Name</b> - Drop down includes successfully run clusters created in Tasks. </li>
                 <li><b>Generate Dynamic Service Name</b> - When switch is enabled, a unique service name for each pipeline run using the Dynamic Name Prefix given and the run count will be generated (for example: PrefixName -1, PrefixName-2).</li>
                 <li><b>Service Name</b> - Azure Service names must also be unique hence we have the ability to generate unique service names for every run based on the run count which can be enabled via the specified toggle in the pipeline step. </li>
+                <li><b>Resource Group</b> - If the Cluster Name selected was created via Opsera then the user should let the resource group option be disabled. However, If the selected clustgier was not created via opsera then the user has to enable the resource group toggle and select the correct resource group with to the selected cluster. The drop down will contain generated names consisting of the above cluster name and “resource”. </li>
                 <li><b>Host URL</b> - Host URL is unique to user. </li>
                 <li><b>Service Port</b> - Select the location where service will be deployed. </li>
                 <li><b>Artifact Step</b> - Select the corresponding Azure ACR push step. </li>
