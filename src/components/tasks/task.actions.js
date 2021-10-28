@@ -214,5 +214,12 @@ taskActions.logAksClusterCancellation = async (getAccessToken, cancelTokenSource
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+taskActions.stopTask = async (getAccessToken, cancelTokenSource, taskModel) => {
+  const postBody = {
+    ...taskModel.getPersistData()
+  };
+  const apiUrl = `/tools/git/${taskModel.getData("_id")}/stop`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
 
 export default taskActions;
