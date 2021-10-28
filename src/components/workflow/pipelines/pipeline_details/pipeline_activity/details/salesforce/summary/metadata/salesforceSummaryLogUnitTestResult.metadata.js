@@ -10,12 +10,12 @@ const salesforceSummaryLogUnitTestResultMetadata = {
       id: "name",
     },
     {
-      label: "Method Name",
-      id: "methodName"
+      label: "Outcome",
+      id: "outcome",
     },
     {
-      label: "ID",
-      id: "id"
+      label: "Method Name",
+      id: "methodName"
     },
     {
       label: "Time",
@@ -30,23 +30,34 @@ const salesforceSummaryLogUnitTestResultMetadata = {
       id: "systemModstamp"
     },
     {
-      label: "See All Data",
-      id: "seeAllData"
-    },
-    {
       label: "Apex Class",
       id: "apexClass"
+    },
+    {
+      label: "Apex Class Name",
+      id: "apexClass.name"
+    },
+    {
+      label: "Length Without Comments",
+      id: "apexClass.lengthWithoutComments"
+    },
+    {
+      label: "Type",
+      id: "apexClass.attributes.type"
+    },
+    {
+      label: "URL",
+      id: "apexClass.attributes.url"
     },
   ],
   newObjectFields: {
     namespace: "",
     name: "",
     methodName: "",
-    id: "",
+    outcome: "",
     time: "",
     testTimestamp: "",
     systemModstamp: "",
-    seeAllData: false,
     apexClass: {},
   }
 };
