@@ -8,6 +8,7 @@ import PipelineTaskSummaryPanel from "components/workflow/pipelines/pipeline_det
 import ModalTabPanelContainer from "components/common/panels/detail_view/ModalTabPanelContainer";
 import PipelineTaskConsoleLogPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskConsoleLogPanel";
 import ConsoleLogTab from "components/common/tabs/detail_view/ConsoleLogTab";
+import OverlayTabPanelContainer from "components/common/panels/general/OverlayTabPanelContainer";
 
 function PipelineTaskTabPanel({ pipelineTaskData }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -68,7 +69,12 @@ function PipelineTaskTabPanel({ pipelineTaskData }) {
     return null;
   }
 
-  return (<ModalTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
+  return (
+    <OverlayTabPanelContainer
+      currentView={getCurrentView()}
+      tabContainer={getTabContainer()}
+    />
+  );
 }
 
 PipelineTaskTabPanel.propTypes = {

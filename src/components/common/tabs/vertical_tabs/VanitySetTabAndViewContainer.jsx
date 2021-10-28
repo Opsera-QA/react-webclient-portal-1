@@ -23,8 +23,8 @@ function VanitySetTabAndViewContainer({verticalTabContainer, currentView, classN
   };
 
   return (
-    <div className={className}>
-      <div className="object-properties-input">
+    <>
+      <div className={`${className} object-properties-input`}>
         <div className="content-container">
           <TitleBarBase title={title} icon={icon} />
           <Tab.Container defaultActiveKey={defaultActiveKey}>
@@ -40,7 +40,7 @@ function VanitySetTabAndViewContainer({verticalTabContainer, currentView, classN
         </div>
       </div>
       <div className={"object-properties-footer"}/>
-    </div>
+    </>
   );
 }
 

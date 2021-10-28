@@ -12,12 +12,12 @@ import SalesforceLogSummaryUnsuccessfulComponentsTable
 function SalesforceLogSummaryComponentResultsSummaryPanel({ salesforceDeployResultsModel }) {
   const getSuccessfulComponents = () => {
     const data = salesforceDeployResultsModel?.getPersistData();
-    return data?.details?.componentSuccesses;
+    return data?.details?.componentSuccesses || [];
   };
 
   const getFailureComponents = () => {
     const data = salesforceDeployResultsModel?.getPersistData();
-    return data?.details?.componentFailures;
+    return data?.details?.componentFailures || [];
   };
 
   return (
