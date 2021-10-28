@@ -243,6 +243,7 @@ export const getPipelineStatusIconCss = (value) => {
     case "queued":
       return ("fa-pause-circle green");
     case "stopped":
+    case "aborted":
     case "halted":
       return ("fa-octagon red");
     case "passed":
