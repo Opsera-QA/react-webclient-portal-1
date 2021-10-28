@@ -111,6 +111,7 @@ function TempTagManagerInput({ label, data, setDataFunction, disabled, filter, p
         textField={data => data["type"] + ": " + data["value"]}
         filter={filter}
         allowCreate={allowCreate}
+        manualEntry={true}
         groupBy={groupBy}
         busy={componentLoading}
         createOptionFunction={handleCreate}

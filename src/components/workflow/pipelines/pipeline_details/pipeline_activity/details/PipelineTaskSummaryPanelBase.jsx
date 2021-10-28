@@ -11,7 +11,7 @@ import DateTimeField from "components/common/fields/date/DateTimeField";
 
 function PipelineTaskSummaryPanelBase({ pipelineTaskData }) {
   return (
-    <SummaryPanelContainer>
+    <SummaryPanelContainer className={"mx-2"}>
       <Row>
         <Col md={6}>
           <TextFieldBase dataObject={pipelineTaskData} fieldName={"step_name"}/>

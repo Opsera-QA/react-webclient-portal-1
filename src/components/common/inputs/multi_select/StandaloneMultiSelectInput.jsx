@@ -19,6 +19,7 @@ function StandaloneMultiSelectInput(
     hasErrorState,
     className,
     lazyLoad,
+    manualEntry,
   }) {
 
   return (
@@ -36,7 +37,7 @@ function StandaloneMultiSelectInput(
         value={value}
         onCreate={createOptionFunction}
         placeholder={placeholderText}
-        disabled={disabled || (lazyLoad !== true && (!Array.isArray(selectOptions) || selectOptions?.length === 0)) || busy}
+        disabled={disabled || (manualEntry !== true && lazyLoad !== true && (!Array.isArray(selectOptions) || selectOptions?.length === 0)) || busy}
         onChange={setDataFunction}
       />
     </div>
@@ -71,6 +72,7 @@ StandaloneMultiSelectInput.propTypes = {
   className: PropTypes.string,
   hasErrorState: PropTypes.bool,
   lazyLoad: PropTypes.bool,
+  manualEntry: PropTypes.bool,
 };
 
 export default StandaloneMultiSelectInput;

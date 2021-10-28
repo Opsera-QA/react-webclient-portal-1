@@ -201,6 +201,7 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
           groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}
           className={inline ? `inline-filter-input inline-select-filter` : undefined}
           busy={isLoading}
+          manualEntry={true}
           createOptionFunction={(value) => handleCreate(value)}
           value={[...dataObject?.getArrayData(fieldName)]}
           placeholderText={errorMessage ? errorMessage : placeholderText}
