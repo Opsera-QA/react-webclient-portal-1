@@ -9,6 +9,7 @@ import pipelineActivityActions
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-actions";
 import {AuthContext} from "contexts/AuthContext";
 import Model from "core/data_model/model";
+import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 
 function PipelineTaskDetailViewer({ pipelineActivityLogId, pipelineName }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -73,17 +74,17 @@ function PipelineTaskDetailViewer({ pipelineActivityLogId, pipelineName }) {
   };
 
   return (
-    <CenterOverlayContainer
+    <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
       titleText={`[${pipelineName}] Pipeline Task Details`}
       titleIcon={faClipboardList}
       isLoading={isLoading}
     >
-      <div className="m-3 shaded-panel">
+      <div className="m-3">
         <PipelineTaskTabPanel pipelineTaskData={pipelineTaskData?.data} />
       </div>
-    </CenterOverlayContainer>
+    </FullScreenCenterOverlayContainer>
   );
 }
 
