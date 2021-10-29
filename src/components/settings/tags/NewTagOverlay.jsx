@@ -5,6 +5,7 @@ import tagEditorMetadata from "components/settings/tags/tags-metadata";
 import TagEditorPanel from "components/settings/tags/tags_detail_view/TagEditorPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
+import {CENTER_OVERLAY_SIZES} from "components/common/overlays/center/CenterOverlayContainer";
 
 function NewTagOverlay({ loadData, isMounted }) {
   const toastContext = useContext(DialogToastContext);
@@ -20,8 +21,17 @@ function NewTagOverlay({ loadData, isMounted }) {
   };
 
   return (
-    <CreateCenterPanel closePanel={closePanel} objectType={tagEditorMetadata.type} loadData={loadData}>
-      <TagEditorPanel setTagData={setTagData} handleClose={closePanel} tagData={tagData}/>
+    <CreateCenterPanel
+      closePanel={closePanel}
+      objectType={tagEditorMetadata.type}
+      loadData={loadData}
+      size={CENTER_OVERLAY_SIZES.SMALL}
+    >
+      <TagEditorPanel
+        setTagData={setTagData}
+        handleClose={closePanel}
+        tagData={tagData}
+      />
     </CreateCenterPanel>
   );
 }

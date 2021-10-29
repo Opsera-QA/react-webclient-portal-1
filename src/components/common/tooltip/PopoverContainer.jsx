@@ -1,26 +1,35 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Col, OverlayTrigger, Popover, Row} from "react-bootstrap";
+import {OverlayTrigger, Popover} from "react-bootstrap";
 import PopoverTitle from "react-bootstrap/PopoverTitle";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/pro-solid-svg-icons";
 
-function PopoverContainer({ content, title, isLoading, children, className }) {
-  
+function PopoverContainer({ content, title, isLoading, children, className, showCloseButton }) {
+  const getCloseButton = () => {
+    if (showCloseButton !== false) {
+      return (
+        <div>
+          <FontAwesomeIcon
+            icon={faTimes}
+            className="pointer"
+            onClick={() => {
+              document.body.click();
+            }}
+          />
+        </div>
+      );
+    }
+  };
+
   const getPopover = () => {
     return (
     <Popover id="popover-basic" className={className}>
       <PopoverTitle as="h3" className="popover-title">
-        <Row>
-          <Col sm={10} className="my-auto">{title}</Col>
-          <Col sm={2} className="text-right">
-            <FontAwesomeIcon
-              icon={faTimes}
-              className="pointer"
-              onClick={() => { document.body.click();}}
-            />
-          </Col>
-        </Row>
+        <div className={"d-flex justify-content-between"}>
+          <div className="my-auto">{title}</div>
+          {getCloseButton()}
+        </div>
       </PopoverTitle>
       <Popover.Content>
         {content}
@@ -41,7 +50,8 @@ PopoverContainer.propTypes = {
   className: PropTypes.string,
   title: PropTypes.string,
   content: PropTypes.object,
-  children: PropTypes.any
+  children: PropTypes.any,
+  showCloseButton: PropTypes.bool,
 };
 
 export default PopoverContainer;
