@@ -1,7 +1,7 @@
 import React, { useState} from "react";
 import PropTypes from "prop-types";
 import EditRolesModal from "components/common/inline_inputs/roles/modal/EditRolesModal";
-import RoleAccessField from "components/common/fields/multiple_items/RoleAccessField";
+import RoleAccessField from "components/common/fields/multiple_items/roles/RoleAccessField";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 import EditIcon from "components/common/icons/field/EditIcon";
 
