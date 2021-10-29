@@ -5,6 +5,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import AccountSettingsSubNavigationBar from "components/settings/AccountSettingsSubNavigationBar";
 import AccountSettingsPageLinkCards from "components/settings/AccountSettingsPageLinkCards";
+import AccountSettingsHelpDocumentation from "../common/help/documentation/settings/AccountSettingsHelpDocumentation";
 
 function AccountSettings() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -55,10 +56,17 @@ function AccountSettings() {
     return (<LoadingDialog size="sm"/>);
   }
 
+  const getHelpComponent = () => {
+    if (!isLoading) {
+      return (<AccountSettingsHelpDocumentation/>);
+    }
+  };
+
   return (
     <ScreenContainer
       breadcrumbDestination={"accountSettings"}
       pageDescription={"Manage account settings from this dashboard."}
+      helpComponent={getHelpComponent()}
       accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator && !accessRoleData?.SassPowerUser}
       isLoading={isLoading}
       navigationTabContainer={<AccountSettingsSubNavigationBar activeTab={"accountSettings"} />}
