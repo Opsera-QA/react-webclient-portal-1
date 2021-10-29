@@ -19,53 +19,6 @@ accountsActions.isOrganizationOwner = async (organizationName, getUserRecord, ge
   return organizationOwnerEmail === user["email"];
 };
 
-accountsActions.getAllowedOrganizationActions = async (customerAccessRules, organizationName, getUserRecord, getAccessToken) => {
-  const user = await getUserRecord();
-  const {ldap} = user;
-  const userOrganization = ldap["organization"];
-
-  if (customerAccessRules.OpseraAdministrator) {
-    return ["get_organizations", "get_organization_details", "create_organization", "update_organization"];
-  }
-  else if (userOrganization !== organizationName) {
-    // User from another organization not allowed to do anything with another org, unless they are an Opsera administrator
-    return [];
-  }
-
-  const orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
-
-  if (orgOwner) {
-    return ["get_organization_details", "update_organization"];
-  }
-  else {
-    return [];
-  }
-};
-
-accountsActions.getAllowedOrganizationAccountActions = async (customerAccessRules) => {
-
-  if (customerAccessRules.OpseraAdministrator) {
-    return ["get_organization_accounts", "get_organization_account_details", "create_organization_account", "update_organization_account"];
-  }
-  // else if (userOrganization !== organizationName) {
-  //   // User from another organization not allowed to do anything with another org, unless they are an Opsera administrator
-  //   return [];
-  // }
-  //
-  // let orgAccountOwner = await accountsActions.isOrganizationAccountOwner(user);
-  // let orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
-  //
-  // if (orgOwner) {
-  //   return ["get_organization_account_details", "create_organization_account", "update_organization_account"];
-  // }
-  // else if (orgAccountOwner || customerAccessRules.Administrator) {
-  //   return ["get_organization_account_details", "update_organization_account"];
-  // }
-  // else {
-    return [];
-  // }
-};
-
 accountsActions.getAllowedIdpAccountActions = async (customerAccessRules, organizationName, getUserRecord, getAccessToken) => {
   const user = await getUserRecord();
   const {ldap} = user;
@@ -206,18 +159,6 @@ accountsActions.getAllowedRoleGroupActions = async (customerAccessRules, organiz
   }
 };
 
-accountsActions.updateUser = async (orgDomain, ldapUserDataDto, getAccessToken) => {
-  const postBody = {
-    domain: orgDomain,
-    user: {
-      ...ldapUserDataDto.getPersistData()
-    }
-  };
-  const apiUrl = "/users/account/user/update";
-  return await baseActions.apiPutCall(getAccessToken, apiUrl, postBody);
-};
-
-// TODO: Remove when V2 is wired up everywhere
 accountsActions.updateUserV2 = async (getAccessToken, cancelTokenSource, orgDomain, ldapUserModel) => {
   const apiUrl = "/users/account/user/update";
   const postBody = {
@@ -228,14 +169,6 @@ accountsActions.updateUserV2 = async (getAccessToken, cancelTokenSource, orgDoma
   };
 
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-accountsActions.createUser = async (orgDomain, ldapUserDataDto, getAccessToken) => {
-  let postData = {
-      ...ldapUserDataDto.getPersistData()
-  };
-  const apiUrl = `/users/account/user/create?domain=${orgDomain}`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
 accountsActions.createUserV2 = async (getAccessToken, cancelTokenSource, orgDomain, ldapUserModel) => {
@@ -286,7 +219,6 @@ accountsActions.getUserDetailViewLink = async (getUserRecord) => {
     return `/settings/${ldap.domain}/users/details/${user.email}`;
   }
 };
-
 
 accountsActions.getLdapUsersWithEmail = async (emailAddress, getAccessToken) => {
   const postBody = {

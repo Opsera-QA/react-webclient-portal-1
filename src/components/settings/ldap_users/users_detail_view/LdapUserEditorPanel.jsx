@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
@@ -8,14 +8,34 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
+import axios from "axios";
 
 function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authorizedActions, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [ldapUserDataDto, setLdapUserDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
   const loadData = async () => {
@@ -32,11 +52,11 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authori
       throw `User with email ${email} already exists. Please try another email address.`;
     }
 
-    return await accountsActions.createUser(orgDomain, ldapUserDataDto, getAccessToken);
+    return await accountsActions.createUserV2(getAccessToken, cancelTokenSource, orgDomain, ldapUserDataDto);
   };
 
   const updateLdapUser = async () => {
-    return await accountsActions.updateUser(orgDomain, ldapUserDataDto, getAccessToken);
+    return await accountsActions.updateUserV2(getAccessToken, cancelTokenSource, orgDomain, ldapUserDataDto);
   };
 
   if (isLoading) {
