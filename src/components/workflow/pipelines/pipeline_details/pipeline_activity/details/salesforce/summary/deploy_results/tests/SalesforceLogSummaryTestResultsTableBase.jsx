@@ -42,11 +42,16 @@ function SalesforceLogSummaryTestResultsTableBase({ hasSuccessAndFailureTests, t
   );
 
   const getTestResultsTable = () => {
+    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+    const bodySize = vh - 264;
+    const halfTableSize = (bodySize * .5)  - 120;
+    const tableSize =  bodySize  - 120;
+
     return (
       <VanityTable
         data={testResults}
         columns={columns}
-        tableHeight={hasSuccessAndFailureTests === true ? "28.2vh" : "59.5vh"}
+        tableHeight={hasSuccessAndFailureTests === true ? halfTableSize : tableSize}
       />
     );
   };

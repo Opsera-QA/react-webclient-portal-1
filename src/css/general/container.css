@@ -56,9 +56,9 @@
 }
 
 .makeup-tree-container-body {
-    min-height: calc(80vh - 40px);
-    height: calc(80vh - 40px);
-    max-height: calc(80vh - 40px);
+    min-height: calc(100vh - 264px);
+    height: calc(100vh - 264px);
+    max-height: calc(100vh - 264px);
     overflow-y: auto;
 }
 
@@ -87,9 +87,9 @@
 }
 
 .makeup-container-body {
-    min-height: calc(80vh - 33px);
-    height: calc(80vh - 33px);
-    max-height: calc(80vh - 33px);
+    min-height: calc(100vh - 264px);
+    height: calc(100vh - 264px);
+    max-height: calc(100vh - 264px);
     overflow-y: hidden;
 }
 
@@ -103,9 +103,9 @@
 }
 
 .makeup-container-content-body {
-    min-height: calc(77vh);
-    height: calc(77vh);
-    max-height: calc(77vh);
-    overflow-y: hidden;
+    min-height: calc(100vh - 264px);
+    height: calc(100vh - 264px);
+    max-height: calc(100vh - 264px);
+    overflow-y: auto;
 }
 /* End Makeup Container Styling */

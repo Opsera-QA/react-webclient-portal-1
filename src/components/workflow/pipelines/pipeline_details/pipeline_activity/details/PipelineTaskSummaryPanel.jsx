@@ -49,7 +49,7 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
   };
 
   const getSummaryPanel = () => {
-    if (pipelineTaskData?.action === "summary report") {
+    if (pipelineTaskData?.action === "report") {
       return (
         <PipelineSummaryReportPanel
           pipelineTaskData={pipelineTaskData}
