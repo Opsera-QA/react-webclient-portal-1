@@ -7,7 +7,7 @@ import CustomBadge from "components/common/badges/CustomBadge";
 import IconBase from "components/common/icons/IconBase";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function TagDisplayer({tags, className}) {
+function TagDisplayer({tags, className, showNoTagsAppliedBadge}) {
   const getTagPopover = () => {
     if (Array.isArray(tags) && tags.length > 0) {
       return (
@@ -30,8 +30,9 @@ function TagDisplayer({tags, className}) {
   };
 
   if (!Array.isArray(tags) || tags.length === 0) {
-    return (
-      <div className={className}>
+    if (showNoTagsAppliedBadge === true) {
+      return (
+        <div className={className}>
         <span className="item-field">
           <span>
             <span className="mr-1 badge badge-light group-badge">
@@ -40,8 +41,11 @@ function TagDisplayer({tags, className}) {
             </span>
           </span>
         </span>
-      </div>
-    );
+        </div>
+      );
+    }
+
+    return null;
   }
 
   return (
@@ -67,6 +71,7 @@ function TagDisplayer({tags, className}) {
 TagDisplayer.propTypes = {
   tags: PropTypes.array,
   className: PropTypes.string,
+  showNoTagsAppliedBadge: PropTypes.string,
 };
 
 export default TagDisplayer;
