@@ -32,6 +32,7 @@ import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-help
 import {getTaskTypeLabel} from "components/tasks/task.types";
 import { getPipelineStateFieldBase} from "components/common/fields/pipelines/state/PipelineStateField";
 import IconBase from "components/common/icons/IconBase";
+import TagDisplayer from "components/common/fields/multiple_items/tags/TagDisplayer";
 
 export const getCustomTableHeader = (field) => {
   return field ? field.label : "";
@@ -264,42 +265,13 @@ export const getTagColumn = (field, className) => {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function stringifyArray(row) {
-      const array = row?.value;
+      const tags = row?.value;
 
-      if (Array.isArray(array) && array.length > 0) {
-        const tags =
-          <CustomBadgeContainer>
-            {array.map((tag, index) => {
-              if (typeof tag !== "string") {
-                return (
-                  <CustomBadge
-                    badgeText={<span><span
-                      className="mr-1">{capitalizeFirstLetter(tag.type)}:</span>{capitalizeFirstLetter(tag.value)}</span>}
-                    icon={faTag}
-                    key={index}
-                  />
-                );
-              }
-            })}
-          </CustomBadgeContainer>;
-
-        return (
-          <TooltipWrapper innerText={tags} title={"Tags"} showCloseButton={false}>
-            <div>
-              <span className="item-field">
-                  <span>
-                    <span className="mr-1 badge badge-light group-badge">
-                    <IconBase icon={faSearch} className={"mr-1"} />
-                      {array.length} Tag{array.length !== 1 ? "s" : ""} Applied
-                    </span>
-                  </span>
-              </span>
-            </div>
-          </TooltipWrapper>
-        );
-      }
-
-      return "";
+      return (
+        <TagDisplayer
+          tags={tags}
+        />
+      );
     },
     class: className ? className : "no-wrap-inline"
   };
