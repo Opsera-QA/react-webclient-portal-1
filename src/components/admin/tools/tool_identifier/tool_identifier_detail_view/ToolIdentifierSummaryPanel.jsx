@@ -8,7 +8,7 @@ import BooleanField from "components/common/fields/boolean/BooleanField";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
-import TagField from "components/common/fields/multiple_items/TagField";
+import TagField from "components/common/fields/multiple_items/tags/TagField";
 import BooleanPropertiesField from "components/common/fields/multiple_items/BooleanPropertiesField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 
