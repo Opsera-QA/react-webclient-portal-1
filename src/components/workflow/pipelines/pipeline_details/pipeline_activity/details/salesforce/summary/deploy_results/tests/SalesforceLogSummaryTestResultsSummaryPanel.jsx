@@ -21,7 +21,7 @@ function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsMo
   }
 
   return (
-    <SummaryPanelContainer className={"step-configuration-summary mt-3 mx-3"}>
+    <SummaryPanelContainer className={"step-configuration-summary m-3"}>
       <Row>
         <Col lg={12}>
           <FieldSubHeader subheaderText={"Unit Test Details"} />
