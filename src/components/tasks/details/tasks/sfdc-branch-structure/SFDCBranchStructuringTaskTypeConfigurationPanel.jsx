@@ -50,8 +50,8 @@ function SFDCBranchStructuringTaskTypeConfigurationPanel({ gitTasksDataDto, gitT
       </Col>
       <Col lg={12}>
         <SalesforceOrganizationSyncTaskBranchTypeSelectInput 
-          model={gitTasksConfigurationData}
-          setModel={setGitTasksConfigurationData} />
+          dataObject={gitTasksConfigurationData}
+          setDataObject={setGitTasksConfigurationData} />
       </Col>
       <Col lg={12}>
         <SalesforceOrganizationSyncTaskJenkinsToolSelectInput
