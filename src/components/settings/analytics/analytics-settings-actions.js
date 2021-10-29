@@ -65,6 +65,11 @@ analyticsActions.fetchProfileV2 = async (getAccessToken, cancelTokenSource) => {
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+analyticsActions.areAnalyticsToolsEnabled = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = "/analytics/profile/enabled-tools-check";
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 analyticsActions.getDropdownFilterOptions = async (getAccessToken, cancelTokenSource, type) => {
   const apiUrl = "/analytics/data-entry/filters";
   const postBody = {
