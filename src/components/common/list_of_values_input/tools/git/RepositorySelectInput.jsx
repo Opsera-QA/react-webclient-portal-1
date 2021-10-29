@@ -6,6 +6,8 @@ import {AuthContext} from "contexts/AuthContext";
 import GitActionsHelper
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
   import axios from "axios";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
 // TODO: Clean up this component. Change "gitToolId" to "toolId", make validateSavedData default to true after all use cases are tested.
 function RepositorySelectInput(
@@ -31,9 +33,9 @@ function RepositorySelectInput(
   const { getAccessToken } = useContext(AuthContext);
   const [repositories, setRepositories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
-
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -45,9 +47,9 @@ function RepositorySelectInput(
     isMounted.current = true;
 
     setRepositories([]);
-    if (service && service !== "" && gitToolId && gitToolId !== "") {
-      if(service === "bitbucket" && (!workspace || workspace === "")) {
-        setRepositories([]);
+    setErrorMessage("");
+    if (hasStringValue(service) && isMongoDbId(gitToolId)) {
+      if(service === "bitbucket" && !hasStringValue(workspace)) {
         return;
       }
       
@@ -94,14 +96,12 @@ function RepositorySelectInput(
           const existingRepositoryExists = repositories.find((repository) => repository[valueField] === existingRepository);
 
           if (existingRepositoryExists == null) {
-            toastContext.showLoadingErrorDialog(
+            setErrorMessage(
               "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list."
             );
           }
         }
       }
-    } else {
-      toastContext.showSystemErrorBanner(repositories);
     }
   };
 
@@ -120,21 +120,20 @@ function RepositorySelectInput(
   };
 
   return (
-    <div>
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        setDataFunction={setDataFunction}
-        selectOptions={repositories}
-        busy={isLoading}
-        placeholderText={getPlaceholderText()}
-        clearDataFunction={clearDataFunction}
-        valueField={valueField}
-        textField={textField}
-        disabled={disabled || isLoading || repositories.length === 0}
-      />
-    </div>
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      setDataFunction={setDataFunction}
+      selectOptions={repositories}
+      busy={isLoading}
+      errorMessage={errorMessage}
+      placeholderText={getPlaceholderText()}
+      clearDataFunction={clearDataFunction}
+      valueField={valueField}
+      textField={textField}
+      disabled={disabled || isLoading || repositories.length === 0}
+    />
   );
 }
 
