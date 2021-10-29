@@ -2,7 +2,7 @@ import React, { useState} from "react";
 import PropTypes from "prop-types";
 import EditIcon from "components/common/icons/field/EditIcon";
 import EditTagsModal from "components/common/inline_inputs/tags/modal/EditTagsModal";
-import TagField from "components/common/fields/multiple_items/TagField";
+import TagField from "components/common/fields/multiple_items/tags/TagField";
 
 function TagsInlineInputBase({dataObject, fieldName, disabled, saveData, visible, noDataMessage, type}) {
   const [showModal, setShowModal] = useState(false);

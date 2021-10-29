@@ -6,7 +6,7 @@ import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import ActivityField from "components/common/fields/boolean/ActivityField";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import TagField from "components/common/fields/multiple_items/TagField";
+import TagField from "components/common/fields/multiple_items/tags/TagField";
 
 function ToolCategorySummaryPanel({ toolCategoryData, setActiveTab }) {
   if (toolCategoryData == null) {

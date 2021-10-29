@@ -111,7 +111,7 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
     if (canEdit && [TASK_TYPES.SYNC_SALESFORCE_REPO, TASK_TYPES.SALESFORCE_BULK_MIGRATION].includes(type)) {
       if (taskConfigurationModel?.getData("isNewBranch") === true) {
         return (
-          <div style={{minHeight: "530px"}}>
+          <div>
             <Row>
               <Col lg={12}>
                 <SalesforceOrganizationSyncTaskNewBranchToggleInput
@@ -139,7 +139,7 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
       }
 
       return (
-        <div style={{minHeight: "400px"}}>
+        <div>
           <Row>
             <Col lg={12}>
               <SalesforceOrganizationSyncTaskNewBranchToggleInput

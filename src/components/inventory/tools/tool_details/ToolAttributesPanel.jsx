@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import TagField from "components/common/fields/multiple_items/TagField";
+import TagField from "components/common/fields/multiple_items/tags/TagField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import workflowAuthorizedActions

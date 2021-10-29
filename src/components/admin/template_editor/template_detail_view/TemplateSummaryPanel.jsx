@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import JsonField from "components/common/fields/json/JsonField";
 import GenericItemField from "components/common/fields/multiple_items/GenericItemField";
-import TagField from "components/common/fields/multiple_items/TagField";
+import TagField from "components/common/fields/multiple_items/tags/TagField";
 import ActivityField from "components/common/fields/boolean/ActivityField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";

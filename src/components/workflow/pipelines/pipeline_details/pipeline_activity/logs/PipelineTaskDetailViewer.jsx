@@ -77,7 +77,7 @@ function PipelineTaskDetailViewer({ pipelineActivityLogId, pipelineName }) {
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`[${pipelineName}] Pipeline Task Details`}
+      titleText={`${pipelineName} Pipeline Task Details`}
       titleIcon={faClipboardList}
       isLoading={isLoading}
     >

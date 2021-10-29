@@ -162,7 +162,11 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
         fieldName={"port"}
       />
       {/* <EBSPlatformOptionsInput  dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} fieldName={"platform"}/> */}
-      <EbsSolutionStackInput dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} />
+      <EbsSolutionStackInput
+        model={ebsStepConfigurationDto}
+        setModel={setEBSStepConfigurationDataDto}
+        awsToolId={ebsStepConfigurationDto?.getData("awsToolConfigId")}
+      />
       <TextInputBase
         setDataObject={setEBSStepConfigurationDataDto}
         dataObject={ebsStepConfigurationDto}
