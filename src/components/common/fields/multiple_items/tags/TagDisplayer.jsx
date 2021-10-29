@@ -71,7 +71,7 @@ function TagDisplayer({tags, className, showNoTagsAppliedBadge}) {
 TagDisplayer.propTypes = {
   tags: PropTypes.array,
   className: PropTypes.string,
-  showNoTagsAppliedBadge: PropTypes.string,
+  showNoTagsAppliedBadge: PropTypes.bool,
 };
 
 export default TagDisplayer;
