@@ -3,7 +3,7 @@ import {Row, Col} from "react-bootstrap";
 import PropTypes from "prop-types";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import TagField from "components/common/fields/multiple_items/TagField";
+import TagField from "components/common/fields/multiple_items/tags/TagField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 
 function AnalyticsDataEntrySummaryPanel({ analyticsDataEntry, setActiveTab }) {
