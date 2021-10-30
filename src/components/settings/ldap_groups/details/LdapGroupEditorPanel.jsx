@@ -23,7 +23,8 @@ function LdapGroupEditorPanel(
   }) {
   const {getAccessToken} = useContext(AuthContext);
   const [ldapGroupDataDto, setLdapGroupDataDto] = useState({});
-  const [isLoading, setIsLoading] = useState(true);  const isMounted = useRef(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {

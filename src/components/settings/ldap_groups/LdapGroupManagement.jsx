@@ -10,15 +10,16 @@ import axios from "axios";
 import GroupManagementSubNavigationBar from "components/settings/ldap_groups/GroupManagementSubNavigationBar";
 
 function LdapGroupManagement() {
+  const toastContext = useContext(DialogToastContext);
+  const {getUserRecord, setAccessRoles, getAccessToken} = useContext(AuthContext);
   const history = useHistory();
   const {orgDomain} = useParams();
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const {getUserRecord, setAccessRoles, getAccessToken} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const [groupList, setGroupList] = useState([]);
   const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
   const [existingGroupNames, setExistingGroupNames] = useState([]);
-  const toastContext = useContext(DialogToastContext);
+  const [ldapGroupMetadata, setLdapGroupMetadata] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -93,6 +94,8 @@ function LdapGroupManagement() {
         const groups = response?.data?.data;
 
         if (Array.isArray(groups)) {
+          const metadata = response?.data?.metadata;
+          setLdapGroupMetadata({...metadata});
           const existingGroupNames = groups.map((group) => {return group.name.toLowerCase();});
           setExistingGroupNames(existingGroupNames);
           setGroupList(groups);
@@ -117,6 +120,7 @@ function LdapGroupManagement() {
         isLoading={isLoading}
         groupData={groupList}
         isMounted={isMounted}
+        ldapGroupMetadata={ldapGroupMetadata}
         loadData={loadData}
         orgDomain={orgDomain}
         existingGroupNames={existingGroupNames}
