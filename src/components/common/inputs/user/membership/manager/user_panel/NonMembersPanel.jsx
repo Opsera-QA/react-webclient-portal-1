@@ -6,7 +6,7 @@ import {faArrowRight, faPlusCircle, faUsers} from "@fortawesome/pro-light-svg-ic
 import ClientSideBottomPaginator from "components/common/pagination/client_side/ClientSideBottomPaginator";
 import {Button} from "react-bootstrap";
 
-function NonMembersPanel({selectedNonMembers, setSelectedNonMembers, nonMembers, setNonMembers, members, setMembers, setShowUnsavedChangesMessage, filteredNonmembers}) {
+function NonMembersPanel({selectedNonMembers, setSelectedNonMembers, nonMembers, setNonMembers, members, setMembers, setShowUnsavedChangesMessage, filteredNonmembers, setSearchText}) {
   const [shownNonMembers, setShownNonMembers] = useState([]);
 
   if (members == null) {
@@ -20,6 +20,7 @@ function NonMembersPanel({selectedNonMembers, setSelectedNonMembers, nonMembers,
     let newNonMembers = nonMembers.filter(user => !newMembers.includes(user));
     setMembers([...newMembers]);
     setNonMembers([...newNonMembers]);
+    setSearchText("");
   };
 
   const addAllShownNonMembers = () => {
@@ -30,6 +31,7 @@ function NonMembersPanel({selectedNonMembers, setSelectedNonMembers, nonMembers,
     setNonMembers([...newNonMembers]);
     setMembers([...newMembers]);
     setSelectedNonMembers([]);
+    setSearchText("");
   };
 
   const addSelectedToMembers = () => {
@@ -40,6 +42,7 @@ function NonMembersPanel({selectedNonMembers, setSelectedNonMembers, nonMembers,
     setNonMembers([...newNonMembers]);
     setMembers([...newMembers]);
     setSelectedNonMembers([]);
+    setSearchText("");
   };
 
   const formatUser = (user, index) => {
@@ -105,7 +108,8 @@ NonMembersPanel.propTypes = {
   setNonMembers: PropTypes.func,
   selectedNonMembers: PropTypes.array,
   setSelectedNonMembers: PropTypes.func,
-  setShowUnsavedChangesMessage: PropTypes.func
+  setShowUnsavedChangesMessage: PropTypes.func,
+  setSearchText: PropTypes.func,
 };
 
 export default NonMembersPanel;

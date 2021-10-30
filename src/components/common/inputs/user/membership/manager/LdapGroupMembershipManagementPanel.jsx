@@ -16,6 +16,7 @@ import NonMembersPanel
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, setActiveTab, loadData}) {
   const toastContext = useContext(DialogToastContext);
@@ -55,26 +56,20 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, set
   // TODO: Sort users alphabetically
   const getLdapUsers = async (cancelSource = cancelTokenSource) => {
     if (orgDomain != null) {
-      const response = await accountsActions.getLdapUsersWithDomainV2(getAccessToken, cancelSource, orgDomain);
-      let ldapUsers = response?.data;
+      try {
+        setIsLoading(true);
+        const response = await accountsActions.getLdapUsersWithDomainV2(getAccessToken, cancelSource, orgDomain);
+        let users = response?.data;
 
-      if (isMounted.current === true && ldapUsers) {
-        setLdapUsers(ldapUsers);
-        await loadMembers(ldapUsers);
+        if (isMounted.current === true && Array.isArray(users)) {
+          setLdapUsers(users);
+          await loadMemberStatus(users);
+        }
+      } catch (error) {
+        toastContext.showLoadingErrorDialog(error);
+      } finally {
+        setIsLoading(false);
       }
-    }
-  };
-
-  const loadMembers = async (users = ldapUsers) => {
-    try {
-      setIsLoading(true);
-      await loadMemberStatus(users);
-    }
-    catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    }
-    finally {
-      setIsLoading(false);
     }
   };
 
@@ -101,6 +96,35 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, set
       setMembers([]);
       setNonMembers([...organizationUsers]);
     }
+  };
+
+  const sortByFirstName = (users) => {
+    if (Array.isArray(users) && users.length > 0) {
+      let usersCopy = [...users];
+
+      usersCopy?.sort((member1, member2) => {
+        const firstLetter1 = hasStringValue(member1?.name) ? member1?.name?.toLowerCase() : null;
+        const firstLetter2 = hasStringValue(member2.name) ? member2.name?.toLowerCase() : null;
+
+        if (firstLetter2 == null) {
+          return -1;
+        }
+
+        if (firstLetter1 == null) {
+          return 1;
+        }
+
+        if (firstLetter1 === firstLetter2) {
+          return 0;
+        }
+
+        return firstLetter1 > firstLetter2 ? 1 : -1;
+      });
+
+      return usersCopy;
+    }
+
+    return [];
   };
 
   const updateMembers = async () => {
@@ -167,7 +191,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, set
       });
     }
 
-    return members;
+    return [...sortByFirstName(members)];
   };
 
   const getFilteredNonMembers = () => {
@@ -178,7 +202,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, set
       });
     }
 
-    return nonMembers;
+    return [...sortByFirstName(nonMembers)];
   };
 
 
@@ -215,6 +239,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, set
             setNonMembers={setNonMembers}
             setShowUnsavedChangesMessage={setShowUnsavedChangesMessage}
             filteredNonmembers={getFilteredNonMembers()}
+            setSearchText={setSearchText}
           />
         </Col>
         <Col xs={6}>
@@ -227,6 +252,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, set
             setNonMembers={setNonMembers}
             setShowUnsavedChangesMessage={setShowUnsavedChangesMessage}
             filteredMembers={getFilteredMembers()}
+            setSearchText={setSearchText}
           />
         </Col>
       </Row>
