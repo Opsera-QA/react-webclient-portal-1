@@ -4,7 +4,6 @@ import Model from "core/data_model/model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import departmentFilterMetadata from "components/settings/ldap_departments/department-filter-metadata";
 import departmentActions from "components/settings/ldap_departments/department-functions";
-import accountsActions from "components/admin/accounts/accounts-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import LdapDepartmentsTable from "components/settings/ldap_departments/LdapDepartmentsTable";
 import axios from "axios";
@@ -20,9 +19,9 @@ function LdapDepartmentManagement() {
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
+  const [departmentMetadata, setDepartmentMetadata] = useState(undefined);
   const [departments, setDepartments] = useState([]);
   const [departmentFilterDto, setDepartmentFilterDto] = useState(new Model({...departmentFilterMetadata.newObjectFields}, departmentFilterMetadata, false));
-  const [authorizedActions, setAuthorizedActions] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -65,14 +64,6 @@ function LdapDepartmentManagement() {
     }
   };
 
-  const getDepartments = async (cancelSource = cancelTokenSource) => {
-      let response = await departmentActions.getDepartmentsByDomainV2(getAccessToken, cancelSource, orgDomain);
-
-      if (isMounted?.current === true && response?.data) {
-        setDepartments(response?.data);
-      }
-  };
-
   const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const {ldap} = user;
@@ -84,11 +75,25 @@ function LdapDepartmentManagement() {
         history.push(`/admin/${ldap.domain}/departments`);
       }
 
-      if ((userRoleAccess?.OpseraAdministrator || userRoleAccess?.Administrator) && orgDomain != null) {
-        let authorizedActions = await accountsActions.getAllowedDepartmentActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-        setAuthorizedActions(authorizedActions);
+      if (
+           userRoleAccess?.OpseraAdministrator
+        || userRoleAccess?.Administrator
+        || userRoleAccess?.OrganizationOwner
+        || userRoleAccess?.OrganizationAccountOwner
+      ) {
         await getDepartments(cancelSource);
       }
+    }
+  };
+
+  const getDepartments = async (cancelSource = cancelTokenSource) => {
+    const response = await departmentActions.getDepartmentGroupsV2(getAccessToken, cancelSource, orgDomain);
+    const departments = response?.data?.data;
+
+    if (isMounted?.current === true && Array.isArray(departments)) {
+      const metadata = response?.data?.metadata;
+      setDepartmentMetadata({...metadata});
+      setDepartments([...departments]);
     }
   };
 
@@ -96,17 +101,18 @@ function LdapDepartmentManagement() {
     <ScreenContainer
       isLoading={!accessRoleData}
       breadcrumbDestination={"ldapDepartmentManagement"}
-      accessDenied={!authorizedActions?.includes("get_departments")}
       accessRoleData={accessRoleData}
       navigationTabContainer={<LdapDepartmentManagementSubNavigationBar activeTab={"departments"} />}
       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
       >
       <LdapDepartmentsTable
-        authorizedActions={authorizedActions}
         loadData={loadData}
         domain={orgDomain}
+        isMounted={isMounted}
         isLoading={isLoading}
-        departmentData={departments}
+        accessRoleData={accessRoleData}
+        departmentMetadata={departmentMetadata}
+        departments={departments}
         departmentFilterDto={departmentFilterDto}
         setDepartmentFilterDto={setDepartmentFilterDto}
       />
