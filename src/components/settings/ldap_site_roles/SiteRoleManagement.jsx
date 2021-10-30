@@ -75,7 +75,6 @@ function SiteRoleManagement() {
       if (
         userRoleAccess?.OpseraAdministrator
         || userRoleAccess?.Administrator
-        || userRoleAccess?.PowerUser
         || userRoleAccess?.OrganizationOwner
         || userRoleAccess?.OrganizationAccountOwner
       ) {

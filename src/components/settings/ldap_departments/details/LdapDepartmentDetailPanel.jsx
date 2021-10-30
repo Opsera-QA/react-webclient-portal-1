@@ -12,10 +12,8 @@ import LdapDepartmentMembershipPanel
 import LdapDepartmentEditorPanel
   from "components/settings/ldap_departments/details/LdapDepartmentEditorPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
-import LdapGroupMembershipManagementPanel
-  from "components/common/inputs/user/membership/manager/LdapGroupMembershipManagementPanel";
 
-function LdapDepartmentDetailPanel({ ldapDepartmentData, loadData, setLdapDepartmentData, ldapDepartmentGroupData, orgDomain, authorizedActions }) {
+function LdapDepartmentDetailPanel({ ldapDepartmentData, loadData, setLdapDepartmentData, ldapDepartmentGroupData, orgDomain }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -61,7 +59,6 @@ function LdapDepartmentDetailPanel({ ldapDepartmentData, loadData, setLdapDepart
         return (
           <LdapDepartmentEditorPanel
             setLdapDepartmentData={setLdapDepartmentData}
-            authorizedActions={authorizedActions}
             orgDomain={orgDomain}
             ldapDepartmentData={ldapDepartmentData}
             reloadData={loadData}

@@ -68,6 +68,27 @@ function LdapDepartmentDetailView() {
       }
     }
   };
+
+  const getRoles = async (cancelSource = cancelTokenSource) => {
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+      let {ldap} = user;
+
+      if (userRoleAccess?.OpseraAdministrator === false && (ldap.domain !== orgDomain)) {
+        history.push(`/admin/${ldap.domain}/departments`);
+      }
+
+      let authorizedActions = await accountsActions.getAllowedDepartmentActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
+      setAuthorizedActions(authorizedActions);
+
+      if (authorizedActions?.includes("get_department_details")) {
+        await getLdapDepartment(cancelSource);
+      }
+    }
+  };
+
   const getLdapDepartment = async (cancelSource = cancelTokenSource) => {
     const response = await departmentActions.getDepartmentV2(getAccessToken, cancelSource, orgDomain, departmentName);
 
@@ -78,25 +99,6 @@ function LdapDepartmentDetailView() {
 
       if (isMounted.current === true && groupResponse?.data != null) {
         setLdapDepartmentGroupData(new Model({...groupResponse.data}, ldapGroupMetaData, false));
-      }
-    }
-  };
-
-  const getRoles = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-      let {ldap} = user;
-
-      if (userRoleAccess?.OpseraAdministrator || ldap.domain === orgDomain)
-      {
-        let authorizedActions = await accountsActions.getAllowedDepartmentActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-        setAuthorizedActions(authorizedActions);
-
-        if (authorizedActions?.includes("get_department_details")) {
-          await getLdapDepartment(cancelSource);
-        }
       }
     }
   };
@@ -144,7 +146,8 @@ function LdapDepartmentDetailView() {
           ldapDepartmentData={ldapDepartmentData}
           authorizedActions={authorizedActions}
           loadData={loadData}
-        />}
+        />
+      }
     />
   );
 }

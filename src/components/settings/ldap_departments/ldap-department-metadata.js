@@ -1,11 +1,10 @@
 export const ldapDepartmentMetaData = {
-  idProperty: "name",
   type: "Department",
   // detailView: function(record) {
   //   return `/admin/departments/details/${record.getData("name")}`;
   // },
   detailViewTitle: function (record) {
-    return `Department Details [${record.getOriginalValue("name")}]`;
+    return `${record.getOriginalValue("name")} Department Details`;
   },
   fields: [
     {
@@ -18,7 +17,7 @@ export const ldapDepartmentMetaData = {
       id: "ownerEmail",
     },
     {
-      label: "Group Name",
+      label: "Internal Name",
       id: "departmentGroupName",
     },
     {
@@ -28,6 +27,9 @@ export const ldapDepartmentMetaData = {
   ],
   newObjectFields: {
     name: "",
+    ownerEmail: "",
+    departmentGroupName: "",
+    members: [],
   }
 };
 

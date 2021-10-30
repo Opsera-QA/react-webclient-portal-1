@@ -6,12 +6,11 @@ import Row from "react-bootstrap/Row";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import departmentActions from "components/settings/ldap_departments/department-functions";
 import LoadingDialog from "components/common/status_notifications/loading";
-import WarningDialog from "components/common/status_notifications/WarningDialog";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import LdapUserSelectInput from "components/common/list_of_values_input/users/LdapUserSelectInput";
 
-function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, orgDomain, authorizedActions, handleClose }) {
+function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, orgDomain, handleClose }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [ldapDepartmentDataDto, setLdapDepartmentDataDto] = useState({});
@@ -96,10 +95,6 @@ function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, orgDomain, 
 
   if (isLoading || ldapDepartmentDataDto == null) {
     return (<LoadingDialog size="sm"/>);
-  }
-
-  if (!authorizedActions.includes("update_department")) {
-    return <WarningDialog warningMessage={"You do not have the required permissions to update this user"} />;
   }
 
   return (
