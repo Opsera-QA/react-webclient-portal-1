@@ -21,7 +21,7 @@ function SiteRoleDetailView() {
   const {groupName, orgDomain} = useParams();
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});
-  const { getAccessRoleData, getAccessToken } = useContext(AuthContext);
+  const { getAccessRoleData, getAccessToken, getUserRecord } = useContext(AuthContext);
   const [ldapGroupData, setLdapGroupData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
@@ -76,7 +76,24 @@ function SiteRoleDetailView() {
   };
 
   const getRoles = async (cancelSource = cancelTokenSource) => {
+    const user = await getUserRecord();
+    const userDomain = user?.ldap?.domain;
     const userRoleAccess = await getAccessRoleData();
+
+    if (userRoleAccess?.OpseraAdministrator !== true && orgDomain !== userDomain) {
+      history.push(`/settings/${userDomain}/site-roles/details/${groupName}`);
+      return;
+    }
+
+    if (groupName.startsWith("_dept")) {
+      history.push(`/settings/${orgDomain}/departments/details/${groupName}`);
+      return;
+    }
+
+    if (!roleGroups.includes(groupName)) {
+      history.push(`/settings/${orgDomain}/groups/details/${groupName}`);
+      return;
+    }
 
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
