@@ -23,11 +23,9 @@ function LdapGroupDetailView() {
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
-  const [ldapUsers, setLdapUsers] = useState([]);
   const [ldapGroupData, setLdapGroupData] = useState(undefined);
   const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [authorizedActions, setAuthorizedActions] = useState([]);
   const [canDelete, setCanDelete] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -71,7 +69,43 @@ function LdapGroupDetailView() {
     }
   };
 
-  const getGroup = async (cancelSource = cancelTokenSource) => {
+  const getRoles = async (cancelSource = cancelTokenSource) => {
+    const user = await getUserRecord();
+    const userDomain = user?.ldap?.domain;
+    setCurrentUserEmail(user.email);
+    const userRoleAccess = await setAccessRoles(user);
+
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+
+      if (userRoleAccess?.OpseraAdministrator !== true && orgDomain !== userDomain) {
+        history.push(`/settings/${orgDomain}/groups`);
+      }
+
+      if (roleGroups.includes(groupName)) {
+        history.push(`/settings/${orgDomain}/role-groups/details/${groupName}`);
+        return;
+      }
+
+      if (groupName.startsWith("_dept")) {
+        history.push(`/settings/${orgDomain}/departments/details/${groupName}`);
+        return;
+      }
+
+      if (
+           userRoleAccess?.OpseraAdministrator
+        || userRoleAccess?.Administrator
+        || userRoleAccess?.PowerUser
+        || userRoleAccess?.OrganizationOwner
+        || userRoleAccess?.OrganizationAccountOwner
+      ) {
+        await getGroup(cancelSource, userRoleAccess);
+      }
+    }
+  };
+
+  const getGroup = async (cancelSource = cancelTokenSource, userRoleAccess) => {
+    // TODO: Remove duplicate pull
     const user = await getUserRecord();
     const response = await accountsActions.getGroupV2(getAccessToken, cancelSource, orgDomain, groupName);
 
@@ -79,54 +113,14 @@ function LdapGroupDetailView() {
       setLdapGroupData(new Model(response.data, ldapGroupMetaData, false));
       let isOwner = user.email === response.data["ownerEmail"];
 
-      if (isOwner) {
-        let authorizedActions = ["get_group_details", "update_group", "update_group_membership"];
-
-        if (!roleGroups.includes(groupName) && !groupName.startsWith("_dept")) {
-          authorizedActions.push("delete_group");
-        }
-
-        setAuthorizedActions(authorizedActions);
-      }
-    }
-  };
-
-  const getLdapUsers = async (domain, cancelSource = cancelTokenSource) => {
-    if (domain != null) {
-      const response = await accountsActions.getLdapUsersWithDomainV2(getAccessToken, cancelSource, domain);
-      let ldapUsers = response?.data;
-
-      if (isMounted.current === true && ldapUsers) {
-        setLdapUsers(ldapUsers);
-      }
-    }
-  };
-
-  const getRoles = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    let {ldap} = user;
-    setCurrentUserEmail(user.email);
-    const userRoleAccess = await setAccessRoles(user);
-
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-      let authorizedActions;
-
-      if (roleGroups.includes(groupName)) {
-        history.push(`/settings/${orgDomain}/role-groups/details/${groupName}`);
-        return;
-      }
-
-      authorizedActions = await accountsActions.getAllowedGroupActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-      setAuthorizedActions(authorizedActions);
-
-      if (!groupName.startsWith("_dept")) {
-        setCanDelete(authorizedActions.includes("delete_group"));
-      }
-
-      if (authorizedActions.includes("get_group_details")) {
-        await getLdapUsers(orgDomain, cancelSource);
-        await getGroup(cancelSource);
+      if (
+        userRoleAccess?.OpseraAdministrator
+        || userRoleAccess?.Administrator
+        || userRoleAccess?.OrganizationOwner
+        || userRoleAccess?.OrganizationAccountOwner
+        || isOwner === true
+      ) {
+        setCanDelete(true);
       }
     }
   };
@@ -162,16 +156,13 @@ function LdapGroupDetailView() {
       isLoading={isLoading}
       navigationTabContainer={<GroupManagementSubNavigationBar activeTab={"groupViewer"} />}
       actionBar={getActionBar()}
-      accessDenied={!authorizedActions.includes("get_group_details") && !isLoading}
       detailPanel={
         <LdapGroupDetailPanel
           orgDomain={orgDomain}
           ldapGroupData={ldapGroupData}
-          ldapUsers={ldapUsers}
           currentUserEmail={currentUserEmail}
           setLdapGroupData={setLdapGroupData}
           loadData={getRoles}
-          authorizedActions={authorizedActions}
         />
       }
     />

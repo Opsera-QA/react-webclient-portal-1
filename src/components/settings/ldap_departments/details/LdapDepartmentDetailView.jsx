@@ -5,7 +5,6 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import departmentActions from "components/settings/ldap_departments/department-functions";
 import ldapDepartmentMetaData from "components/settings/ldap_departments/ldap-department-metadata";
-import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
@@ -26,7 +25,6 @@ function LdapDepartmentDetailView() {
   const [ldapDepartmentGroupData, setLdapDepartmentGroupData] = useState(undefined);
   const [ldapDepartmentData, setLdapDepartmentData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [authorizedActions, setAuthorizedActions] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -80,12 +78,7 @@ function LdapDepartmentDetailView() {
         history.push(`/admin/${ldap.domain}/departments`);
       }
 
-      let authorizedActions = await accountsActions.getAllowedDepartmentActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-      setAuthorizedActions(authorizedActions);
-
-      if (authorizedActions?.includes("get_department_details")) {
-        await getLdapDepartment(cancelSource);
-      }
+      await getLdapDepartment(cancelSource);
     }
   };
 
@@ -98,7 +91,7 @@ function LdapDepartmentDetailView() {
       const groupResponse = await accountsActions.getGroupV2(getAccessToken, cancelSource, orgDomain, newLdapDepartmentData.getData("departmentGroupName"));
 
       if (isMounted.current === true && groupResponse?.data != null) {
-        setLdapDepartmentGroupData(new Model({...groupResponse.data}, ldapGroupMetaData, false));
+        setLdapDepartmentGroupData(new Model({...groupResponse.data}, ldapDepartmentMetaData, false));
       }
     }
   };
@@ -116,7 +109,7 @@ function LdapDepartmentDetailView() {
           </div>
           <div>
             <ActionBarDestructiveDeleteButton
-              relocationPath={"/admin/departments"}
+              relocationPath={"/settings/departments"}
               dataObject={ldapDepartmentData}
               handleDelete={deleteDepartment}
               mustBeOpseraAdmin={true}
@@ -144,7 +137,6 @@ function LdapDepartmentDetailView() {
           setLdapDepartmentData={setLdapDepartmentData}
           orgDomain={orgDomain}
           ldapDepartmentData={ldapDepartmentData}
-          authorizedActions={authorizedActions}
           loadData={loadData}
         />
       }

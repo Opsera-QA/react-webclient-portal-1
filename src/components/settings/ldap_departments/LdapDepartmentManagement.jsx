@@ -72,7 +72,7 @@ function LdapDepartmentManagement() {
     if (isMounted?.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
       if (orgDomain == null || (ldap?.domain !== orgDomain && !userRoleAccess?.OpseraAdministrator)) {
-        history.push(`/admin/${ldap.domain}/departments`);
+        history.push(`/settings/${ldap.domain}/departments`);
       }
 
       if (

@@ -277,12 +277,6 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
                        component={LdapOrganizationAccountDetailView} />
           <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView} />
 
-          {/*TODO: Remove after fully migrating*/}
-          <SecureRoute path="/admin/:orgDomain?/departments" exact component={LdapDepartmentManagement} />
-          <SecureRoute path="/admin/:orgDomain/departments/details/:departmentName" exact
-                       component={LdapDepartmentDetailView} />
-
-
           <SecureRoute path="/pipeline" component={Pipeline} />
           <SecureRoute path="/workflow/catalog" exact component={PipelineCatalogLibrary} />
           <SecureRoute path="/workflow/:tab?" exact component={Pipelines} />
