@@ -79,11 +79,11 @@ function LdapGroupDetailView() {
       setAccessRoleData(userRoleAccess);
 
       if (userRoleAccess?.OpseraAdministrator !== true && orgDomain !== userDomain) {
-        history.push(`/settings/${orgDomain}/groups`);
+        history.push(`/settings/${orgDomain}/groups/details/${groupName}`);
       }
 
       if (roleGroups.includes(groupName)) {
-        history.push(`/settings/${orgDomain}/role-groups/details/${groupName}`);
+        history.push(`/settings/${orgDomain}/site-roles/details/${groupName}`);
         return;
       }
 
