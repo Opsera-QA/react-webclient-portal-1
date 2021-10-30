@@ -1,7 +1,7 @@
 export const ldapDepartmentMetaData = {
   type: "Department",
   // detailView: function(record) {
-  //   return `/admin/departments/details/${record.getData("name")}`;
+  //   return `/settings/departments/details/${record.getData("name")}`;
   // },
   detailViewTitle: function (record) {
     return `${record.getOriginalValue("name")} Department Details`;
