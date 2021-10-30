@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import {Row, Col} from "react-bootstrap";
 import {AuthContext} from "contexts/AuthContext";
 import accountsActions from "components/admin/accounts/accounts-actions.js";
@@ -7,7 +7,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import CancelButton from "components/common/buttons/CancelButton";
 import StandaloneSaveButton from "components/common/buttons/saving/StandaloneSaveButton";
 import LoadingDialog from "components/common/status_notifications/loading";
-import WarningDialog from "components/common/status_notifications/WarningDialog";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import MessageField from "components/common/fields/text/MessageField";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
@@ -16,26 +15,60 @@ import NonMembersPanel
   from "components/common/inputs/user/membership/manager/user_panel/NonMembersPanel";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/pro-light-svg-icons";
+import axios from "axios";
 
-function LdapGroupMembershipManagementPanel({ldapGroupData, type, ldapUsers, orgDomain, setActiveTab, loadData, authorizedActions}) {
+function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, setActiveTab, loadData}) {
   const toastContext = useContext(DialogToastContext);
   const {getAccessToken} = useContext(AuthContext);
   const [members, setMembers] = useState([]);
   const [nonMembers, setNonMembers] = useState([]);
   const [selectedMembers, setSelectedMembers] = useState([]);
+  const [ldapUsers, setLdapUsers] = useState([]);
   const [selectedNonMembers, setSelectedNonMembers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showUnsavedChangesMessage, setShowUnsavedChangesMessage] = useState(false);
   const [searchText, setSearchText] = useState("");
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadMembers();
-  }, []);
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
 
-  const loadMembers = async () => {
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    getLdapUsers(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [orgDomain]);
+
+  // TODO: Sort users alphabetically
+  const getLdapUsers = async (cancelSource = cancelTokenSource) => {
+    if (orgDomain != null) {
+      const response = await accountsActions.getLdapUsersWithDomainV2(getAccessToken, cancelSource, orgDomain);
+      let ldapUsers = response?.data;
+
+      if (isMounted.current === true && ldapUsers) {
+        setLdapUsers(ldapUsers);
+        await loadMembers(ldapUsers);
+      }
+    }
+  };
+
+  const loadMembers = async (users = ldapUsers) => {
     try {
       setIsLoading(true);
-      await loadMemberStatus();
+      await loadMemberStatus(users);
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -45,8 +78,8 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, ldapUsers, org
     }
   };
 
-  const loadMemberStatus = async () => {
-    const organizationUsers = Array.isArray(ldapUsers) ? ldapUsers : [];
+  const loadMemberStatus = async (users = ldapUsers) => {
+    const organizationUsers = Array.isArray(users) ? users : [];
     let unpackedMembers = [...ldapGroupData.getData("members")];
     let unpackedNonMembers = [];
 
@@ -150,11 +183,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, ldapUsers, org
 
 
   if (isLoading) {
-    return (<LoadingDialog/>);
-  }
-
-  if (!authorizedActions.includes("update_group_membership")) {
-    return <WarningDialog warningMessage={"You do not have the required permissions to update group membership."} />;
+    return (<LoadingDialog size={"sm"} message={"Loading Users"}/>);
   }
 
   return (
@@ -211,11 +240,9 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, ldapUsers, org
 LdapGroupMembershipManagementPanel.propTypes = {
   ldapGroupData: PropTypes.object,
   orgDomain: PropTypes.string,
-  ldapUsers: PropTypes.array,
   getGroup: PropTypes.func,
   setActiveTab: PropTypes.func,
   loadData: PropTypes.func,
-  authorizedActions: PropTypes.array,
   type: PropTypes.string,
 };
 

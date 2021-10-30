@@ -11,7 +11,15 @@ import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTa
 import LdapGroupMembershipManagementPanel
   from "components/common/inputs/user/membership/manager/LdapGroupMembershipManagementPanel";
 
-function LdapGroupDetailPanel({currentUserEmail, ldapGroupData, setLdapGroupData, ldapUsers, orgDomain, loadData, authorizedActions }) {
+function LdapGroupDetailPanel(
+  {
+    currentUserEmail,
+    ldapGroupData,
+    setLdapGroupData,
+    orgDomain,
+    loadData,
+    authorizedActions,
+  }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -58,7 +66,6 @@ function LdapGroupDetailPanel({currentUserEmail, ldapGroupData, setLdapGroupData
             setActiveTab={setActiveTab}
             ldapGroupData={ldapGroupData}
             authorizedActions={authorizedActions}
-            ldapUsers={ldapUsers}
             loadData={loadData}
           />
           );
@@ -89,7 +96,6 @@ function LdapGroupDetailPanel({currentUserEmail, ldapGroupData, setLdapGroupData
 LdapGroupDetailPanel.propTypes = {
   ldapGroupData: PropTypes.object,
   setLdapGroupData: PropTypes.func,
-  ldapUsers: PropTypes.array,
   orgDomain: PropTypes.string,
   currentUserEmail: PropTypes.string,
   loadData: PropTypes.func,

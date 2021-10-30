@@ -2,30 +2,6 @@ import baseActions from "utils/actionsBase";
 
 const accountsActions = {};
 
-// TODO: We need to rewrite this entire file to be role definitions instead
-// TODO: Wire up role definitions instead
-accountsActions.getAllowedDepartmentActions = async (customerAccessRules, organizationName, getUserRecord, getAccessToken) => {
-  const user = await getUserRecord();
-  const {ldap} = user;
-  const userOrganization = ldap["organization"];
-  if (customerAccessRules.OpseraAdministrator) {
-    return ["get_departments", "get_department_details", "create_department", "update_department", "update_group_membership"];
-  }
-  else if (userOrganization !== organizationName) {
-    // User from another organization not allowed to do anything with another org, unless they are an Opsera administrator
-    return [];
-  }
-
-
-  if (customerAccessRules.OrganizationOwner || customerAccessRules.OrganizationAccountOwner || customerAccessRules.Administrator) {
-    return ["get_departments", "get_department_details", "update_department", "update_group_membership"];
-  }
-  else {
-    return [];
-  }
-};
-
-
 // TODO: Wire up Role Definitions instead
 accountsActions.getAllowedUserActions = async (customerAccessRules, organizationName, selected_user_email, getUserRecord) => {
   const user = await getUserRecord();
@@ -54,56 +30,6 @@ accountsActions.getAllowedUserActions = async (customerAccessRules, organization
     }
 
     return permissions;
-  }
-  else {
-    return [];
-  }
-};
-
-// TODO: Wire up Role Definitions instead
-accountsActions.getAllowedGroupActions = async (customerAccessRules, organizationName, getUserRecord) => {
-  const user = await getUserRecord();
-  const {ldap} = user;
-  const userOrganization = ldap["organization"];
-  if (customerAccessRules.OpseraAdministrator) {
-    return ["get_groups", "get_group_details", "create_group", "update_group", "update_group_membership", "delete_group"];
-  }
-  else if (userOrganization !== organizationName) {
-    // User from another organization not allowed to do anything with another org, unless they are an Opsera administrator
-    return [];
-  }
-
-  if (customerAccessRules.OrganizationOwner || customerAccessRules.OrganizationAccountOwner || customerAccessRules.Administrator) {
-    return ["get_groups", "get_group_details", "create_group", "update_group", "update_group_membership", "delete_group"];
-  }
-  else if (customerAccessRules.PowerUser) {
-    return ["get_groups", "get_group_details", "create_group", "update_group", "update_group_membership"];
-  }
-  // TODO: If we have a better way to get group owner, enable this
-  // else if (groupOwner) {
-  //   return ["get_group_details", "update_group", "update_group_membership"];
-  // }
-  else {
-    return [];
-  }
-};
-
-// TODO: Wire up Role Definitions instead
-accountsActions.getAllowedRoleGroupActions = async (customerAccessRules, organizationName, getUserRecord) => {
-  const user = await getUserRecord();
-  const {ldap} = user;
-  const userOrganization = ldap["organization"];
-
-  if (customerAccessRules.OpseraAdministrator) {
-    return ["get_groups", "get_group_details", "create_group", "update_group", "update_group_membership"];
-  }
-  else if (userOrganization !== organizationName) {
-    // User from another organization not allowed to do anything with another org, unless they are an Opsera administrator
-    return [];
-  }
-
-  else if (customerAccessRules.OrganizationOwner || customerAccessRules.OrganizationAccountOwner || customerAccessRules.Administrator) {
-    return ["get_groups", "get_group_details", "update_group_membership"];
   }
   else {
     return [];

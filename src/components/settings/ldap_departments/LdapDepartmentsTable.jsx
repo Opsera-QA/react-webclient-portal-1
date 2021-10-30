@@ -35,7 +35,7 @@ function LdapDepartmentsTable({ accessRoleData, isMounted, departmentMetadata, d
   };
 
   const onRowSelect = (rowData) => {
-    history.push(`/admin/${domain}/departments/details/${rowData.original.name}`);
+    history.push(`/settings/${domain}/departments/details/${rowData.original.name}`);
   };
 
   const createNewDepartment = () => {
