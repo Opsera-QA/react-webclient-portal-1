@@ -35,7 +35,7 @@ function MultipleConsoleLogsField({consoleLogs}) {
 
   const getVerticalTabContainer = () => {
     return (
-      <VanitySetVerticalTabContainer className={"h-100"}>
+      <VanitySetVerticalTabContainer className={"console-log-container-tabs"}>
         {consoleLogs.map((consoleLog) => {
           return (
             getVerticalTab(consoleLog?.id)
@@ -52,7 +52,7 @@ function MultipleConsoleLogsField({consoleLogs}) {
           {getVerticalTabContainer()}
         </Col>
         <Col sm={10} className={"px-0"}>
-          <div className="console-text">
+          <div className="console-text console-log-container-body">
             {getCurrentView()}
           </div>
         </Col>
@@ -79,7 +79,7 @@ function MultipleConsoleLogsField({consoleLogs}) {
       <div className="object-properties-input">
         <div className="content-container">
           <FieldTitleBar customTitle={"Console Logs"} icon={faLaptopCode}/>
-          <div style={{height: "500px", maxHeight: "500px", overflowY: "auto"}}>
+          <div className={"console-log-container"}>
             {getTabView()}
           </div>
         </div>
