@@ -28,6 +28,7 @@ function LdapDepartmentsTable({ accessRoleData, isMounted, departmentMetadata, d
         [
           getTableTextColumn(getField(fields, "name")),
           getTableTextColumn(getField(fields, "ownerEmail")),
+          getTableTextColumn(getField(fields, "memberCount")),
           getTableTextColumn(getField(fields, "departmentGroupName")),
         ]
       );
