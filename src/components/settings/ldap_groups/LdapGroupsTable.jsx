@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, useState} from "react";
+import React, {useContext, useEffect, useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
@@ -7,7 +7,6 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
-import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faUserFriends} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -23,20 +22,31 @@ function LdapGroupsTable(
     existingGroupNames,
     className,
     isMounted,
+    ldapGroupMetadata,
   }) {
   const toastContext = useContext(DialogToastContext);
-  const fields = ldapGroupMetaData.fields;
   const history = useHistory();
+  const [columns, setColumns] = useState([]);
 
-  const columns = useMemo(
-    () => [
-      getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "externalSyncGroup")),
-      getTableTextColumn(getField(fields, "memberCount")),
-      getTableBooleanIconColumn(getField(fields, "isSync"))
-    ],
-    []
-  );
+  useEffect(() => {
+    setColumns([]);
+    loadColumnMetadata(ldapGroupMetadata);
+  }, [JSON.stringify(ldapGroupMetadata)]);
+
+  const loadColumnMetadata = (metadata) => {
+    if (isMounted?.current === true && metadata?.fields) {
+      const fields = metadata.fields;
+
+      setColumns(
+        [
+          getTableTextColumn(getField(fields, "name")),
+          getTableTextColumn(getField(fields, "externalSyncGroup")),
+          getTableTextColumn(getField(fields, "memberCount")),
+          getTableBooleanIconColumn(getField(fields, "isSync")),
+        ]
+      );
+    }
+  };
 
   const createGroup = () => {
     toastContext.showOverlayPanel(
@@ -81,6 +91,7 @@ function LdapGroupsTable(
 }
 
 LdapGroupsTable.propTypes = {
+  ldapGroupMetadata: PropTypes.object,
   groupData: PropTypes.array,
   orgDomain: PropTypes.string,
   isLoading: PropTypes.bool,
