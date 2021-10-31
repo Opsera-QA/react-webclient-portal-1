@@ -106,7 +106,7 @@ function LdapGroupEditorPanel(
         </Col>
         <Col lg={12}>
           <TextInputBase
-            disabled={ldapGroupDataDto?.getData("groupType") !== "project"}
+            disabled={true}
             fieldName={"externalSyncGroup"}
             dataObject={ldapGroupDataDto}
             setDataObject={setLdapGroupDataDto}

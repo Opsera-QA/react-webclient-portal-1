@@ -36,7 +36,10 @@ function LdapGroupDetailPanel(
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SummaryToggleTab
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+        />
         <CustomTab
           icon={faIdCard}
           tabName={"manage"}
@@ -55,7 +58,6 @@ function LdapGroupDetailPanel(
           <LdapGroupSummaryPanel
             ldapGroupData={ldapGroupData}
             domain={orgDomain}
-            setActiveTab={setActiveTab}
             loadData={loadData}
           />
         );

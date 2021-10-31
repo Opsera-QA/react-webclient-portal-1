@@ -12,13 +12,16 @@ import {useHistory, useParams} from "react-router-dom";
 import LdapDepartmentManagementSubNavigationBar
   from "components/settings/ldap_departments/LdapDepartmentManagementSubNavigationBar";
 
+// TODO: Instead of rerouting if we have no orgDomain,
+//  we should make  separate components that handle rerouting in the LDAP scenarios. (Groups, Site Roles, Departments, User Management)
+//  Doing it as is causing it to look like it's not loading properly
 function LdapDepartmentManagement() {
   const history = useHistory();
   const { orgDomain } = useParams();
   const toastContext = useContext(DialogToastContext);
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [departmentMetadata, setDepartmentMetadata] = useState(undefined);
   const [departments, setDepartments] = useState([]);
   const [departmentFilterDto, setDepartmentFilterDto] = useState(new Model({...departmentFilterMetadata.newObjectFields}, departmentFilterMetadata, false));
@@ -32,8 +35,8 @@ function LdapDepartmentManagement() {
 
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-
     isMounted.current = true;
+
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -106,6 +109,7 @@ function LdapDepartmentManagement() {
       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
       >
       <LdapDepartmentsTable
+        className={"mx-2"}
         loadData={loadData}
         domain={orgDomain}
         isMounted={isMounted}

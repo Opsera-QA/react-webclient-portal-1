@@ -24,7 +24,6 @@ function LdapOrganizationAccountDetailPanel(
   {
     ldapOrganizationAccountData,
     setLdapOrganizationAccountData,
-    cancelTokenSource,
     loadData,
     isMounted,
     organizationDomain,
@@ -57,17 +56,16 @@ function LdapOrganizationAccountDetailPanel(
       case "groups":
         return (
           <LdapOrganizationAccountGroupsPanel
-            loadData={loadData}
             ldapOrganizationAccountData={ldapOrganizationAccountData}
             currentUser={currentUser}
+            organizationDomain={organizationDomain}
           />
         );
       case "site-roles":
         return (
           <LdapOrganizationAccountSiteRolesPanel
-            loadData={loadData}
             ldapOrganizationAccountData={ldapOrganizationAccountData}
-            currentUser={currentUser}
+            organizationDomain={organizationDomain}
           />
         );
       case "idpAccounts":
@@ -82,10 +80,7 @@ function LdapOrganizationAccountDetailPanel(
       case "departments":
         return (
           <LdapOrganizationAccountDepartmentsPanel
-            loadData={loadData}
-            isMounted={isMounted}
             ldapOrganizationAccountData={ldapOrganizationAccountData}
-            cancelTokenSource={cancelTokenSource}
             organizationDomain={organizationDomain}
           />
         );
@@ -150,7 +145,6 @@ LdapOrganizationAccountDetailPanel.propTypes = {
   organizationDomain: PropTypes.string,
   loadData: PropTypes.func,
   isMounted: PropTypes.object,
-  cancelTokenSource: PropTypes.object,
   currentUser: PropTypes.object
 };
 

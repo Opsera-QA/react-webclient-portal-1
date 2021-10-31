@@ -5,8 +5,19 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
-function LdapUserByDomainSelectInput({ model, setModel, fieldName, valueField, textField, showClearValueButton, setDataFunction }) {
+function LdapUserByDomainSelectInput(
+  {
+    model,
+    setModel,
+    fieldName,
+    valueField,
+    textField,
+    showClearValueButton,
+    setDataFunction,
+    organizationDomain,
+  }) {
   const { getAccessToken, getUserRecord, setAccessRoles, isSassUser } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +57,11 @@ function LdapUserByDomainSelectInput({ model, setModel, fieldName, valueField, t
       const userRoleAccess = await setAccessRoles(user);
 
       if (userRoleAccess && userRoleAccess?.Type !== "sass-user" && ldap?.domain != null) {
-        await getUsers(cancelSource, ldap.domain);
+        // Because Opsera Administrators can add LDAP Groups, Departments, etc. we need to be able to force lookup
+        // for users in those domains. Otherwise, we default to users in the active user's organization account.
+        const domainToCheck =
+          hasStringValue(organizationDomain) && userRoleAccess?.OpseraAdministrator ? organizationDomain : ldap?.domain;
+        await getUsers(cancelSource, domainToCheck);
       }
     }
     catch (error) {
@@ -100,13 +115,14 @@ LdapUserByDomainSelectInput.propTypes = {
   valueField: PropTypes.string,
   showClearValueButton: PropTypes.bool,
   textField: PropTypes.string,
-  setDataFunction: PropTypes.func
+  setDataFunction: PropTypes.func,
+  organizationDomain: PropTypes.string,
 };
 
 LdapUserByDomainSelectInput.defaultProps = {
   valueField: "value",
   textField: "text",
-  showClearValueButton: true
+  showClearValueButton: true,
 };
 
 export default LdapUserByDomainSelectInput;
