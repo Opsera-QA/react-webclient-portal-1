@@ -110,6 +110,7 @@ function SiteRoleManagement() {
       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
     >
       <SiteRolesTable
+        className={"mx-2"}
         isMounted={isMounted}
         isLoading={isLoading}
         siteRoles={siteRoles}

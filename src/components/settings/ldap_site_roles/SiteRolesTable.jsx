@@ -10,7 +10,7 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faServer} from "@fortawesome/pro-light-svg-icons";
 
-function SiteRolesTable({ siteRoles, isMounted, siteRoleMetadata, orgDomain, isLoading, loadData }) {
+function SiteRolesTable({ siteRoles, isMounted, siteRoleMetadata, orgDomain, isLoading, loadData, className }) {
   const history = useHistory();
   const [columns, setColumns] = useState([]);
 
@@ -57,7 +57,7 @@ function SiteRolesTable({ siteRoles, isMounted, siteRoleMetadata, orgDomain, isL
       body={getGroupsTable()}
       titleIcon={faServer}
       title={"Site Roles"}
-      className={"px-2 pb-2"}
+      className={className}
     />
   );
 }
@@ -69,6 +69,7 @@ SiteRolesTable.propTypes = {
   orgDomain: PropTypes.string,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
+  className: PropTypes.string,
 };
 
 export default SiteRolesTable;

@@ -9,7 +9,17 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faBuilding} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function LdapDepartmentsTable({ accessRoleData, isMounted, departmentMetadata, departments, domain, loadData, isLoading }) {
+function LdapDepartmentsTable(
+  {
+    accessRoleData,
+    isMounted,
+    departmentMetadata,
+    departments,
+    domain,
+    loadData,
+    isLoading,
+    className,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const [showCreateDepartmentModal, setShowCreateDepartmentModal] = useState(false);
   const history = useHistory();
@@ -42,9 +52,7 @@ function LdapDepartmentsTable({ accessRoleData, isMounted, departmentMetadata, d
   const createNewDepartment = () => {
     toastContext.showOverlayPanel(
       <CreateLdapDepartmentOverlay
-        showModal={showCreateDepartmentModal}
         loadData={loadData}
-        setShowModal={setShowCreateDepartmentModal}
         orgDomain={domain}
         isMounted={isMounted}
       />
@@ -73,7 +81,7 @@ function LdapDepartmentsTable({ accessRoleData, isMounted, departmentMetadata, d
       titleIcon={faBuilding}
       title={"Departments"}
       type={"Department"}
-      className="px-2 pb-2"
+      className={className}
     />
   );
 }
@@ -85,7 +93,8 @@ LdapDepartmentsTable.propTypes = {
   departments: PropTypes.array,
   domain: PropTypes.string,
   loadData: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default LdapDepartmentsTable;

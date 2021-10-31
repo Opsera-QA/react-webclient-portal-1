@@ -8,7 +8,7 @@ import departmentActions from "components/settings/ldap_departments/department-f
 import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import LdapUserSelectInput from "components/common/list_of_values_input/users/LdapUserSelectInput";
+import LdapUserByDomainSelectInput from "components/common/list_of_values_input/users/LdapUserByDomainSelectInput";
 
 function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, orgDomain, handleClose }) {
   const toastContext = useContext(DialogToastContext);
@@ -110,12 +110,11 @@ function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, orgDomain, 
           <TextInputBase disabled={!ldapDepartmentDataDto.isNew()} setDataObject={setLdapDepartmentDataDto} dataObject={ldapDepartmentDataDto} fieldName={"name"} />
         </Col>
         <Col lg={12}>
-          {/*TODO: Make component*/}
-          <LdapUserSelectInput
+          <LdapUserByDomainSelectInput
             model={ldapDepartmentDataDto}
             setModel={setLdapDepartmentDataDto}
             fieldName={"ownerEmail"}
-            valueField={"emailAddress"}
+            organizationDomain={orgDomain}
           />
         </Col>
       </Row>
