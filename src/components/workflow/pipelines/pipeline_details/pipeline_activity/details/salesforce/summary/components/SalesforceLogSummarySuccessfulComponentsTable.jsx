@@ -19,8 +19,8 @@ function SalesforceLogSummarySuccessfulComponentsTable({ hasFailureComponents, s
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "componentType")),
+      getTableTextColumn(getField(fields, "fullName")),
       getTableTextColumn(getField(fields, "fileName")),
-      getTableDateTimeColumn(getField(fields, "createdDate")),
       getTableBooleanIconColumn(getField(fields, "success"), undefined, 75),
       getTableBooleanIconColumn(getField(fields, "warning"), undefined, 75),
       getTableBooleanIconColumn(getField(fields, "created"), undefined, 75),
