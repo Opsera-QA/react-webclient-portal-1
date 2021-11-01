@@ -87,6 +87,7 @@ function SalesforceLogSummaryReportPanel({ pipelineTaskData }) {
             salesforceDeployResultsModel={salesforceDeployResultsModel}
             successfulTests={successfulTests}
             unsuccessfulTests={unsuccessfulTests}
+            codeCoverageWarnings={codeCoverageWarnings}
           />
         </VanitySetTabView>
       </VanitySetTabViewContainer>

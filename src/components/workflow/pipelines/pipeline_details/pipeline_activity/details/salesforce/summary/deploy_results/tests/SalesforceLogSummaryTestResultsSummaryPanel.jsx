@@ -9,8 +9,9 @@ import SalesforceLogSummarySuccessfulTestsTable
 import FieldSubHeader from "components/common/fields/FieldSubHeader";
 import SalesforceLogSummaryFailedTestsTable
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummaryFailedTestsTable";
+import SalesforceLogSummaryCodeCoverageTable from "../../components/SalesforceLogSummaryCodeCoverageTable";
 
-function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsModel, successfulTests, unsuccessfulTests, }) {
+function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsModel, successfulTests, unsuccessfulTests, codeCoverageWarnings }) {
   if (salesforceDeployResultsModel == null) {
     return (
       <LoadingDialog
@@ -47,6 +48,12 @@ function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsMo
             hasSuccessfulTests={successfulTests?.length > 0}
           />
         </Col>
+        <Col lg={12}>
+          <SalesforceLogSummaryCodeCoverageTable
+            unsuccessfulTests={codeCoverageWarnings}
+            hasSuccessfulTests={codeCoverageWarnings?.length > 0}
+          />
+        </Col>
       </Row>
     </SummaryPanelContainer>
   );
@@ -57,6 +64,7 @@ SalesforceLogSummaryTestResultsSummaryPanel.propTypes = {
   salesforceDeployResultsModel: PropTypes.object,
   successfulTests: PropTypes.array,
   unsuccessfulTests: PropTypes.array,
+  codeCoverageWarnings: PropTypes.array,
 };
 
 export default SalesforceLogSummaryTestResultsSummaryPanel;
