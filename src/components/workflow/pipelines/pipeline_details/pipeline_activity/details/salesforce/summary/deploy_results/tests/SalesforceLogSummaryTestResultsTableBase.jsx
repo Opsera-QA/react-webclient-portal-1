@@ -34,6 +34,7 @@ function SalesforceLogSummaryTestResultsTableBase({ hasSuccessAndFailureTests, t
     () => [
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "methodName")),
+      getTableTextColumn(getField(fields, "outcome")),
       getTableDateTimeColumn(getField(fields, "testTimestamp")),
       // getTableTextColumn(getField(fields, "apexClass.attributes.type")),
       getApexClassUrlColumnDefinition(getField(fields, "apexClass.attributes.url")),
