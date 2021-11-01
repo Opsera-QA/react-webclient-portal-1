@@ -54,7 +54,6 @@ function SalesforceLogSummaryReportPanel({ pipelineTaskData }) {
         setUnsuccessfulTests(Array.isArray(successfulTests) ? [...unsuccessfulTests] : []);
         const codeCoverageWarnings = deployResult?.details?.runTestResult?.codeCoverageWarnings;
         setCodeCoverageWarnings(Array.isArray(codeCoverageWarnings) ? [...codeCoverageWarnings] : []);
-        
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -88,6 +87,7 @@ function SalesforceLogSummaryReportPanel({ pipelineTaskData }) {
             salesforceDeployResultsModel={salesforceDeployResultsModel}
             successfulTests={successfulTests}
             unsuccessfulTests={unsuccessfulTests}
+            codeCoverageWarnings={codeCoverageWarnings}
           />
         </VanitySetTabView>
       </VanitySetTabViewContainer>
