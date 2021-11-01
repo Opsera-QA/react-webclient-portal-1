@@ -21,6 +21,10 @@ function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsMo
     );
   }
 
+  const getCodeCoverageComponents = () => {
+    return codeCoverageWarnings;
+  };
+
   return (
     <SummaryPanelContainer className={"step-configuration-summary m-3"}>
       <Row>
@@ -50,8 +54,8 @@ function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsMo
         </Col>
         <Col lg={12}>
           <SalesforceLogSummaryCodeCoverageTable
-            unsuccessfulTests={codeCoverageWarnings}
-            hasSuccessfulTests={codeCoverageWarnings?.length > 0}
+            codeCoverageComponents={getCodeCoverageComponents()}
+            hasCodeCoverageComponents={getCodeCoverageComponents()?.length > 0}
           />
         </Col>
       </Row>
