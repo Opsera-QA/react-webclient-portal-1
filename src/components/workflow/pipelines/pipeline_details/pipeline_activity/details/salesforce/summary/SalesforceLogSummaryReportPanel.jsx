@@ -23,6 +23,7 @@ function SalesforceLogSummaryReportPanel({ pipelineTaskData }) {
   const [salesforceDeployResultsModel, setSalesforceDeployResultsModel] = useState(undefined);
   const [successfulTests, setSuccessfulTests] = useState(undefined);
   const [unsuccessfulTests, setUnsuccessfulTests] = useState(undefined);
+  const [codeCoverageWarnings, setCodeCoverageWarnings] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
 
@@ -51,6 +52,8 @@ function SalesforceLogSummaryReportPanel({ pipelineTaskData }) {
         setSuccessfulTests(Array.isArray(successfulTests) ? [...successfulTests] : []);
         const unsuccessfulTests = deployResult?.details?.runTestResult?.failures;
         setUnsuccessfulTests(Array.isArray(successfulTests) ? [...unsuccessfulTests] : []);
+        const codeCoverageWarnings = deployResult?.details?.runTestResult?.codeCoverageWarnings;
+        setCodeCoverageWarnings(Array.isArray(codeCoverageWarnings) ? [...codeCoverageWarnings] : []);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -76,6 +79,7 @@ function SalesforceLogSummaryReportPanel({ pipelineTaskData }) {
         <VanitySetTabView tabKey={"components"}>
           <SalesforceLogSummaryComponentResultsSummaryPanel
             salesforceDeployResultsModel={salesforceDeployResultsModel}
+            codeCoverageWarnings={codeCoverageWarnings}
           />
         </VanitySetTabView>
         <VanitySetTabView tabKey={"tests"}>
