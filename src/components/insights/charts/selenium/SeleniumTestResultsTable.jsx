@@ -5,13 +5,19 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import PropTypes from "prop-types";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import { getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
+import {
+  getTableDateTimeColumn,
+  getTableTextColumn,
+  getLimitedTableTextColumn,
+} from "components/common/table/table-column-helpers";
 import seleniumTestResultsTableMetadata from "./selenium-test-results-metadata.js";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import { useHistory } from "react-router-dom";
 
 function SeleniumTestResultsTable({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+  const history = useHistory();
   const fields = seleniumTestResultsTableMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -28,6 +34,7 @@ function SeleniumTestResultsTable({ kpiConfiguration, setKpiConfiguration, dashb
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "pipelineId"), "no-wrap-inline"),
+      getLimitedTableTextColumn(getField(fields, "pipelineName"), 20),
       getTableTextColumn(getField(fields, "runCount")),
       getTableDateTimeColumn(getField(fields, "timestamp")),
       getTableTextColumn(getField(fields, "testsRun")),
@@ -38,6 +45,10 @@ function SeleniumTestResultsTable({ kpiConfiguration, setKpiConfiguration, dashb
     ],
     []
   );
+
+  const onRowSelect = (rowData) => {
+    history.push(`/blueprint/${rowData.original.pipelineId}/${rowData.original.runCount}`);
+  };
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -103,6 +114,7 @@ function SeleniumTestResultsTable({ kpiConfiguration, setKpiConfiguration, dashb
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
+        onRowSelect={onRowSelect}
       />
     );
   };
