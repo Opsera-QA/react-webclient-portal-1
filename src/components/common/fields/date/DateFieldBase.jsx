@@ -5,7 +5,7 @@ import FieldLabel from "components/common/fields/FieldLabel";
 import FieldContainer from "components/common/fields/FieldContainer";
 
 export const getFormattedDate = (date, dateFormat) => {
-  return date != null && dateFormat != null ? format(new Date(date), dateFormat) : null;
+  return date && date != null && dateFormat != null ? format(new Date(date), dateFormat) : null;
 };
 
 export const getFormattedTimestamp = (date) => {
