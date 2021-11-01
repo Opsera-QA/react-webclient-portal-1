@@ -484,3 +484,20 @@ export const getStaticInfoColumn = (className) => {
     class: className
   };
 };
+
+export const getSalesforceSumamryTableBooleanIconColumn = (field, className, width = 60) => {
+  return {
+    header: getColumnHeader(field),
+    id: getColumnId(field),
+    align: "center",
+    width: width,
+    template: function (text) {
+      const iconCss = text === true ? "fa-check-circle green" : "fa-minus";
+      return (
+        `<i class="fal ${iconCss} cell-icon vertical-align-item"></i>`
+      );
+    },
+    htmlEnable: true,
+    class: className ? className : "text-left"
+  };
+};
