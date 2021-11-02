@@ -8,6 +8,32 @@
     letter-spacing: .6px;
 }
 
+/*primary analytics font*/
+.font-inter-light-100 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 100;
+}
+
+.font-inter-light-300 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+}
+
+/*primary product font*/
+.font-lato-100 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 100;
+}
+
+.font-lato-300 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+.font-lato-400 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+}
 
 .failure-text {
     color: red;
