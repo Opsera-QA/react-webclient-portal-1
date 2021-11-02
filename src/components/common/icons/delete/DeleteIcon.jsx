@@ -17,7 +17,7 @@ function EditIcon({ handleDeleteClick, className, tooltipBody, disabled }) {
           onClick={() => {handleDeleteClick();}}
           icon={faTrash}
           fixedWidth
-          className={"pointer delete-icon"}
+          className={"pointer delete-icon danger-red"}
         />
       </ButtonTooltip>
     </div>

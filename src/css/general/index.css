@@ -44,16 +44,12 @@
     color: #E57373;
 }
 
-.danger-red, .delete-icon {
+.danger-red {
     color: #dc3545;
 }
 
 .yellow {
     color: #CF940C;
-}
-
-.orange {
-    color:#ff6000;
 }
 
 .green {
