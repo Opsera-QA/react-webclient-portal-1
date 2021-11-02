@@ -89,6 +89,16 @@
     background-color: #FCFCFC;
 }
 
+/*begin analytics focused color scheme*/
+.dark-gray-text-primary {
+    color: #2e384d;
+}
+
+.light-gray-text-secondary {
+    color: #8798ad;
+}
+
+/*end analytics color scheme*/
 /*END Official Colors*/
 
 
