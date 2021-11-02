@@ -46,7 +46,7 @@ const automationPercentageMetadata = {
       maxLength: 20
     },
     {
-      label: "Total no of Regression Test Cases",
+      label: "Total no of Automation Candidates",
       id: "total_tests",
       maxLength: 5,
       isRequired: true
@@ -54,6 +54,18 @@ const automationPercentageMetadata = {
     {
       label: "No of Regression Test Cases Automated ",
       id: "total_automated",
+      maxLength: 5,
+      isRequired: true
+    },
+    {
+      label: "Total No of Functional Test Cases",
+      id: "functional_tests",
+      maxLength: 5,
+      isRequired: true
+    },
+    {
+      label: "Total No of Regression Test Cases",
+      id: "regression_tests",
       maxLength: 5,
       isRequired: true
     }

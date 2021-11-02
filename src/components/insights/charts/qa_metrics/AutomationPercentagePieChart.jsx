@@ -86,15 +86,19 @@ function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, d
               <div className="box-metric">
                 <div>{metrics[0]?.totalTests}</div>
               </div>
-              <div className="w-100 text-muted mb-1">Total No of Regression Test Cases</div>
+              <div className="w-100 text-muted mb-1">Total Number of Automation Candidates</div>
             </div></Col>
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                { metrics[0]?.automationRate ?
-                  <div className ={metrics[0]?.automationRate >= 90 ? 'green' : 'red'}>{metrics[0]?.automationRate+ "%"}</div>
-                  : <div>{"N/A"}</div>}
+                <div>{metrics[0]?.functionalTests}</div>
               </div>
-              <div className="w-100 text-muted mb-1">Automation Percentage</div>
+              <div className="w-100 text-muted mb-1">Total Number of Functional Test Cases</div>
+            </div></Col>
+            <Col><div className="metric-box text-center">
+              <div className="box-metric">
+                <div>{metrics[0]?.regressionTests}</div>
+              </div>
+              <div className="w-100 text-muted mb-1">Total Number of Regression Test Cases</div>
             </div></Col>
           </Row>
           <Row className="p-1">
@@ -108,7 +112,15 @@ function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, d
               <div className="box-metric">
                 <div>{metrics[0]?.manualTests}</div>
               </div>
-              <div className="w-100 text-muted mb-1">Regression Test Cases Manual</div>
+              <div className="w-100 text-muted mb-1">Regression Test Cases To Be Automated</div>
+            </div></Col>
+            <Col><div className="metric-box text-center">
+              <div className="box-metric">
+                { metrics[0]?.automationRate ?
+                  <div className ={metrics[0]?.automationRate >= 90 ? 'green' : 'red'}>{metrics[0]?.automationRate+ "%"}</div>
+                  : <div>{"N/A"}</div>}
+              </div>
+              <div className="w-100 text-muted mb-1">Automation Percentage</div>
             </div></Col>
           </Row>
           <Row className="p-1">
