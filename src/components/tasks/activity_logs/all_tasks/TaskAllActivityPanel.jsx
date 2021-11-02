@@ -1,5 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "contexts/AuthContext";
+import AllTasksActivityLogs
+  from "components/tasks/activity_logs/all_tasks/AllTasksActivityLogs";
 import axios from "axios";
 import taskActivityHelpers
   from "components/tasks/activity_logs/task-activity-helpers";
@@ -8,7 +10,6 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
 import taskActions from "components/tasks/task.actions";
 import {TaskActivityFilterModel} from "components/tasks/activity_logs/task-activity.filter.model";
-import AllTasksActivityLogs from "components/tasks/activity_logs/AllTasksActivityLogs";
 
 function TaskAllActivityPanel() {
   const toastContext = useContext(DialogToastContext);

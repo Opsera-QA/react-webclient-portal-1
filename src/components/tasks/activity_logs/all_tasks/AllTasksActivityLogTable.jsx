@@ -9,7 +9,7 @@ import {
 import TableBase from "components/common/table/TableBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function TaskActivityLogsTable({ taskLogData, taskActivityMetadata, isLoading, currentRunNumber }) {
+function AllTasksActivityLogTable({ taskLogData, taskActivityMetadata, isLoading, currentTaskName, currentRunNumber }) {
   const [columns, setColumns] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
@@ -48,8 +48,16 @@ function TaskActivityLogsTable({ taskLogData, taskActivityMetadata, isLoading, c
   };
 
   const getFilteredData = () => {
+    if (currentTaskName === null || currentTaskName === undefined ) {
+      return taskLogData;
+    }
+
     return taskLogData.filter((item) => {
-      return currentRunNumber === undefined || item.run_count === currentRunNumber;
+      if (currentRunNumber === "logs") {
+        return item.name === currentTaskName;
+      }
+
+      return item.name === currentTaskName && (currentRunNumber === null || currentRunNumber === undefined || item.run_count === currentRunNumber);
     });
   };
 
@@ -64,11 +72,13 @@ function TaskActivityLogsTable({ taskLogData, taskActivityMetadata, isLoading, c
     </div>
   );
 }
-TaskActivityLogsTable.propTypes = {
+
+AllTasksActivityLogTable.propTypes = {
   taskLogData: PropTypes.array,
   isLoading: PropTypes.bool,
+  currentTaskName: PropTypes.string,
   taskActivityMetadata: PropTypes.object,
   currentRunNumber: PropTypes.number,
 };
 
-export default TaskActivityLogsTable;
+export default AllTasksActivityLogTable;
