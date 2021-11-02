@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import AllTasksActivityLogs
-  from "components/tasks/activity_logs/AllTasksActivityLogs";
+  from "components/tasks/activity_logs/all_tasks/AllTasksActivityLogs";
 import axios from "axios";
 import taskActivityHelpers
   from "components/tasks/activity_logs/task-activity-helpers";

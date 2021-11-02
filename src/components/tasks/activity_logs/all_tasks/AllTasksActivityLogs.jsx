@@ -8,8 +8,8 @@ import TaskActivityLogTree
   from "components/tasks/activity_logs/TaskActivityLogTree";
 import TaskTypeFilter from "components/common/filters/tasks/type/TaskTypeFilter";
 import TaskStatusFilter from "components/common/filters/tasks/status/TaskStatusFilter";
-import TaskActivityLogsTable from "components/tasks/activity_logs/TaskActivityLogTable";
 import InlineTaskTypeFilter from "components/common/filters/tasks/type/InlineTaskTypeFilter";
+import AllTasksActivityLogTable from "components/tasks/activity_logs/all_tasks/AllTasksActivityLogTable";
 
 function AllTasksActivityLogs({ taskLogData, taskActivityMetadata, loadData, isLoading, taskActivityFilterModel, setTaskActivityFilterModel, taskActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
   const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
@@ -26,7 +26,7 @@ function AllTasksActivityLogs({ taskLogData, taskActivityMetadata, loadData, isL
 
   const getTable = () => {
     return (
-      <TaskActivityLogsTable
+      <AllTasksActivityLogTable
         isLoading={isLoading}
         taskLogData={taskLogData}
         currentRunNumber={currentRunNumber}
