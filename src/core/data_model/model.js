@@ -228,9 +228,9 @@ export class Model {
     return this.newModel;
   };
 
-  isChanged = (field) => {
-    if (field) {
-      return this.changeMap.has(field);
+  isChanged = (fieldName) => {
+    if (fieldName) {
+      return this.changeMap.has(fieldName);
     }
 
     return this.dataState !== DataState.LOADED;

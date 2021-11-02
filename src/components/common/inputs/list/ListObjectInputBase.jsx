@@ -9,18 +9,17 @@ import {List} from "dhx-suite-package";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import ComponentLoadingWrapper from "components/common/loading/ComponentLoadingWrapper";
 
-// TODO: Make an actual base version and rename this VanityListInput
-// TODO: Refactor
-function ListInputBase(
+// TODO: Rewrite and combine with list input base
+function ListObjectInputBase(
   {
-    fieldName, dataObject, setDataObject,
+    fieldName, model, setModel,
     selectOptions, valueField, textField,
     setDataFunction, isLoading, disabled, clearDataFunction,
     showClearValueButton, getCurrentValue,
     height, icon, searchFunction, showSelectAllButton, customTemplate, disabledOptions, noDataMessage,
     customTitle
-  }) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+}) {
+  const [field] = useState(model?.getFieldById(fieldName));
   const [list, setList] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -60,11 +59,11 @@ function ListInputBase(
         list.selection.remove();
       }
 
-      if (dataObject?.isNew() === false || dataObject?.isChanged(fieldName) === true) {
-        validateData(dataObject);
+      if (model?.isNew() === false || model?.isChanged(fieldName) === true) {
+        validateData(model);
       }
     }
-  }, [dataObject]);
+  }, [model]);
 
   const constructList = () => {
     if (Array.isArray(selectOptions) && selectOptions.length > 0) {
@@ -84,7 +83,16 @@ function ListInputBase(
 
     if (Array.isArray(currentValues) && currentValues.length > 0) {
       currentValues.forEach((item) => {
-        list.selection.add(item);
+        if (typeof item === "string") {
+          list.selection.add(item);
+        }
+        else if (typeof item === "object") {
+          const id = item[valueField];
+
+          if (id != null) {
+            list.selection.add(id);
+          }
+        }
       });
     }
 
@@ -125,10 +133,10 @@ function ListInputBase(
   };
 
   const validateAndSetData = (fieldName, valueArray) => {
-    let newDataObject = dataObject;
+    let newDataObject = model;
     newDataObject.setData(fieldName, valueArray);
     validateData(newDataObject);
-    setDataObject({...newDataObject});
+    setModel({...newDataObject});
   };
 
   const updateValue = (newArray) => {
@@ -151,26 +159,54 @@ function ListInputBase(
       }
     }
 
-    if (Array.isArray(currentData) && !currentData.includes(item)) {
-      if (currentData.length + 1 > field.maxItems) {
-        setErrorMessage("You have reached the maximum allowed number of values. Please remove one to add another.");
-        return false;
-      }
+    if (setDataFunction) {
+      const newOption = selectOptions.find((option) => option[valueField] === item);
+      const optionAlreadySelected = currentData.find((option) => option[valueField] === item);
 
-      currentData.push(item);
-      updateValue(currentData);
+      if (newOption != null && optionAlreadySelected == null) {
+        if (currentData.length + 1 > field.maxItems) {
+          setErrorMessage("You have reached the maximum allowed number of values. Please remove one to add another.");
+          return false;
+        }
+
+        currentData.push(newOption);
+        updateValue(currentData);
+      }
+    }
+    else {
+      if (Array.isArray(currentData) && !currentData.includes(item)) {
+        if (currentData.length + 1 > field.maxItems) {
+          setErrorMessage("You have reached the maximum allowed number of values. Please remove one to add another.");
+          return false;
+        }
+
+        currentData.push(item);
+        updateValue(currentData);
+      }
     }
   };
 
   const removeItem = (item) => {
     let currentData = findCurrentValue();
 
-    if (Array.isArray(currentData) && currentData.includes(item)) {
-      const index = currentData.indexOf(item);
+    let index;
+
+    if (setDataFunction) {
+      index = currentData.findIndex((option) => option[valueField] === item);
 
       if (index > -1) {
         currentData.splice(index, 1);
         updateValue(currentData);
+      }
+    }
+    else {
+      if (Array.isArray(currentData) && currentData.includes(item)) {
+        const index = currentData.indexOf(item);
+
+        if (index > -1) {
+          currentData.splice(index, 1);
+          updateValue(currentData);
+        }
       }
     }
   };
@@ -182,7 +218,7 @@ function ListInputBase(
 
   // TODO: Make clearDataButton Component
   const getClearDataIcon = () => {
-    if (!disabled && dataObject?.getArrayData(field?.id)?.length > 0 && showClearValueButton !== false && (setDataFunction == null || clearDataFunction)) {
+    if (!disabled && model?.getArrayData(field?.id)?.length > 0 && showClearValueButton !== false && (setDataFunction == null || clearDataFunction)) {
       return (
         <TooltipWrapper innerText={"Clear this Value"}>
           <span onClick={() => clearValue()} className="my-auto badge badge-danger clear-value-badge pointer ml-2">
@@ -231,7 +267,7 @@ function ListInputBase(
       return getCurrentValue();
     }
 
-    return dataObject?.getArrayData(field.id);
+    return model?.getArrayData(field.id);
   };
 
   const getItemCount = () => {
@@ -298,15 +334,15 @@ function ListInputBase(
   );
 }
 
-ListInputBase.propTypes = {
+ListObjectInputBase.propTypes = {
   selectOptions: PropTypes.array.isRequired,
-  setDataObject: PropTypes.func,
+  setModel: PropTypes.func,
   fieldName: PropTypes.string,
   groupBy: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.func
   ]),
-  dataObject: PropTypes.object,
+  model: PropTypes.object,
   valueField: PropTypes.string,
   textField: PropTypes.oneOfType([
     PropTypes.string,
@@ -332,9 +368,9 @@ ListInputBase.propTypes = {
   customTitle: PropTypes.string
 };
 
-ListInputBase.defaultProps = {
+ListObjectInputBase.defaultProps = {
   height: "300px",
   noDataMessage: "No items are currently available"
 };
 
-export default ListInputBase;
+export default ListObjectInputBase;
