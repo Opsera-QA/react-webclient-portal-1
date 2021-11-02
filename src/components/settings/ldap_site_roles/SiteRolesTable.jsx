@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
@@ -7,23 +7,32 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
-import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faServer} from "@fortawesome/pro-light-svg-icons";
 
-function SiteRolesTable({ groupData, orgDomain, isLoading, loadData }) {
-  let fields = ldapGroupMetaData.fields;
+function SiteRolesTable({ siteRoles, isMounted, siteRoleMetadata, orgDomain, isLoading, loadData, className }) {
   const history = useHistory();
+  const [columns, setColumns] = useState([]);
 
-  const columns = useMemo(
-    () => [
-      getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "externalSyncGroup")),
-      getTableTextColumn(getField(fields, "memberCount")),
-      getTableBooleanIconColumn(getField(fields, "isSync"))
-    ],
-    []
-  );
+  useEffect(() => {
+    setColumns([]);
+    loadColumnMetadata(siteRoleMetadata);
+  }, [JSON.stringify(siteRoleMetadata)]);
+
+  const loadColumnMetadata = (metadata) => {
+    if (isMounted?.current === true && metadata?.fields) {
+      const fields = metadata.fields;
+
+      setColumns(
+        [
+          getTableTextColumn(getField(fields, "name")),
+          getTableTextColumn(getField(fields, "externalSyncGroup")),
+          getTableTextColumn(getField(fields, "memberCount")),
+          getTableBooleanIconColumn(getField(fields, "isSync")),
+        ]
+      );
+    }
+  };
 
   const onRowSelect = (rowData) => {
     history.push(`/settings/${orgDomain}/site-roles/details/${rowData.original.name}`);
@@ -35,7 +44,7 @@ function SiteRolesTable({ groupData, orgDomain, isLoading, loadData }) {
         className={"no-table-border"}
         isLoading={isLoading}
         onRowSelect={onRowSelect}
-        data={groupData}
+        data={siteRoles}
         columns={columns}
       />
     );
@@ -48,20 +57,19 @@ function SiteRolesTable({ groupData, orgDomain, isLoading, loadData }) {
       body={getGroupsTable()}
       titleIcon={faServer}
       title={"Site Roles"}
-      className={"px-2 pb-2"}
+      className={className}
     />
   );
 }
 
 SiteRolesTable.propTypes = {
-  groupData: PropTypes.array,
+  siteRoles: PropTypes.array,
+  siteRoleMetadata: PropTypes.object,
+  isMounted: PropTypes.object,
   orgDomain: PropTypes.string,
   isLoading: PropTypes.bool,
-  authorizedActions: PropTypes.array,
   loadData: PropTypes.func,
-  currentUserEmail: PropTypes.string,
-  useMembers: PropTypes.bool,
-  existingGroupNames: PropTypes.array
+  className: PropTypes.string,
 };
 
 export default SiteRolesTable;

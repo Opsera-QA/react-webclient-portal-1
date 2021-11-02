@@ -21,11 +21,9 @@ function SiteRoleDetailView() {
   const {groupName, orgDomain} = useParams();
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});
-  const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
-  const [ldapUsers, setLdapUsers] = useState([]);
+  const { getAccessRoleData, getAccessToken, getUserRecord } = useContext(AuthContext);
   const [ldapGroupData, setLdapGroupData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [authorizedActions, setAuthorizedActions] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -69,50 +67,44 @@ function SiteRoleDetailView() {
     }
   };
 
-  const getGroup = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
+  const getSiteRole = async (cancelSource = cancelTokenSource) => {
     const response = await accountsActions.getGroupV2(getAccessToken, cancelSource, orgDomain, groupName);
 
     if (isMounted.current === true && response?.data) {
       setLdapGroupData(new Model(response.data, ldapGroupMetaData, false));
-      let isOwner = user.email === response.data["ownerEmail"];
-
-      if (isOwner) {
-        let authorizedActions = ["get_group_details", "update_group", "update_group_membership"];
-
-        if (!roleGroups.includes(groupName) && !groupName.startsWith("_dept")) {
-          authorizedActions.push("delete_group");
-        }
-
-        setAuthorizedActions(authorizedActions);
-      }
-    }
-  };
-
-  const getLdapUsers = async (cancelSource = cancelTokenSource) => {
-    const response = await accountsActions.getLdapUsersWithDomainV2(getAccessToken, cancelSource, orgDomain);
-    let ldapUsers = response?.data;
-
-    if (isMounted.current === true && ldapUsers) {
-      setLdapUsers(ldapUsers);
     }
   };
 
   const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
-    const ldap = user?.ldap;
-    const userRoleAccess = await setAccessRoles(user);
+    const userDomain = user?.ldap?.domain;
+    const userRoleAccess = await getAccessRoleData();
+
+    if (userRoleAccess?.OpseraAdministrator !== true && orgDomain !== userDomain) {
+      history.push(`/settings/${userDomain}/site-roles/details/${groupName}`);
+      return;
+    }
+
+    if (groupName.startsWith("_dept")) {
+      history.push(`/settings/${orgDomain}/departments/details/${groupName}`);
+      return;
+    }
+
+    if (!roleGroups.includes(groupName)) {
+      history.push(`/settings/${orgDomain}/groups/details/${groupName}`);
+      return;
+    }
 
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      let authorizedActions;
 
-      authorizedActions = await accountsActions.getAllowedRoleGroupActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-      setAuthorizedActions(authorizedActions);
-
-      if (authorizedActions.includes("get_group_details")) {
-        await getLdapUsers(cancelSource);
-        await getGroup(cancelSource);
+      if (
+        userRoleAccess?.OpseraAdministrator
+        || userRoleAccess?.Administrator
+        || userRoleAccess?.OrganizationOwner
+        || userRoleAccess?.OrganizationAccountOwner
+      ) {
+        await getSiteRole(cancelSource);
       }
     }
   };
@@ -141,15 +133,12 @@ function SiteRoleDetailView() {
       isLoading={isLoading}
       navigationTabContainer={<SiteRoleManagementSubNavigationBar activeTab={"siteRoleViewer"}/>}
       actionBar={getActionBar()}
-      accessDenied={!authorizedActions.includes("get_group_details") && !isLoading}
       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
       detailPanel={
         <SiteRoleDetailPanel
           orgDomain={orgDomain}
           ldapGroupData={ldapGroupData}
-          ldapUsers={ldapUsers}
           loadData={getRoles}
-          authorizedActions={authorizedActions}
         />
       }
     />

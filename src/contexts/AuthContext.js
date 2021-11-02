@@ -153,7 +153,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
 
         customerAccessRules = {
           ...customerAccessRules,
-          OrganizationOwner: ldap?.orgAccountOwnerEmail === user?.email,
+          OrganizationOwner: ldap?.organizationOwnerEmail === user?.email,
           OrganizationAccountOwner: ldap?.orgAccountOwnerEmail === user?.email,
           Administrator: groups.includes("Administrators"),
           PowerUser: groups.includes("PowerUsers"),

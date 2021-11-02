@@ -34,7 +34,8 @@ const tagEditorMetadata = {
       id: "value",
       isRequired: true,
       inputMaskRegex: /^[A-Za-z0-9][A-Za-z0-9-.]*$/,
-      lowercase: true
+      lowercase: true,
+      maxLength: 255,
     },
     {
       label: "Configuration Properties",

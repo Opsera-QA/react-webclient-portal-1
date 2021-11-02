@@ -15,12 +15,20 @@ function TagDisplayer({tags, className, showNoTagsAppliedBadge}) {
           {tags.map((tag, index) => {
             if (typeof tag !== "string") {
               return (
-                <CustomBadge
-                  badgeText={<span><span
-                    className="mr-1">{capitalizeFirstLetter(tag.type)}:</span>{capitalizeFirstLetter(tag.value)}</span>}
-                  icon={faTag}
-                  key={index}
-                />
+                // <div>
+                  <CustomBadge
+                    badgeText={
+                      <span>
+                        <span className="mr-1">
+                          {capitalizeFirstLetter(tag.type)}:
+                        </span>
+                        {capitalizeFirstLetter(tag.value)}
+                      </span>
+                    }
+                    icon={faTag}
+                    key={index}
+                  />
+                // </div>
               );
             }
           })}
@@ -53,6 +61,7 @@ function TagDisplayer({tags, className, showNoTagsAppliedBadge}) {
       innerText={getTagPopover()}
       title={"Tags"}
       showCloseButton={false}
+      className={"popover-filter"}
     >
       <div className={className}>
         <span className="item-field">

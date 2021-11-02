@@ -1,33 +1,62 @@
-import React, {useMemo, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import ldapDepartmentMetaData from "components/settings/ldap_departments/ldap-department-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
-import NewLdapDepartmentModal from "components/settings/ldap_departments/NewLdapDepartmentModal";
+import CreateLdapDepartmentOverlay from "components/settings/ldap_departments/CreateLdapDepartmentOverlay";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faBuilding} from "@fortawesome/pro-light-svg-icons";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
-function LdapDepartmentsTable({ departmentData, authorizedActions, domain, loadData, isLoading }) {
+function LdapDepartmentsTable(
+  {
+    accessRoleData,
+    isMounted,
+    departmentMetadata,
+    departments,
+    domain,
+    loadData,
+    isLoading,
+    className,
+  }) {
+  const toastContext = useContext(DialogToastContext);
   const [showCreateDepartmentModal, setShowCreateDepartmentModal] = useState(false);
-  const fields = ldapDepartmentMetaData.fields;
   const history = useHistory();
+  const [columns, setColumns] = useState([]);
 
-  const columns = useMemo(
-    () => [
-      getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "ownerEmail")),
-      getTableTextColumn(getField(fields, "departmentGroupName")),
-    ],
-    [fields]
-  );
+  useEffect(() => {
+    setColumns([]);
+    loadColumnMetadata(departmentMetadata);
+  }, [JSON.stringify(departmentMetadata)]);
+
+  const loadColumnMetadata = (metadata) => {
+    if (isMounted?.current === true && metadata?.fields) {
+      const fields = metadata.fields;
+
+      setColumns(
+        [
+          getTableTextColumn(getField(fields, "name")),
+          getTableTextColumn(getField(fields, "ownerEmail")),
+          getTableTextColumn(getField(fields, "memberCount")),
+          getTableTextColumn(getField(fields, "departmentGroupName")),
+        ]
+      );
+    }
+  };
 
   const onRowSelect = (rowData) => {
-    history.push(`/admin/${domain}/departments/details/${rowData.original.name}`);
+    history.push(`/settings/${domain}/departments/details/${rowData.original.name}`);
   };
 
   const createNewDepartment = () => {
+    toastContext.showOverlayPanel(
+      <CreateLdapDepartmentOverlay
+        loadData={loadData}
+        orgDomain={domain}
+        isMounted={isMounted}
+      />
+    );
     setShowCreateDepartmentModal(true);
   };
 
@@ -37,41 +66,35 @@ function LdapDepartmentsTable({ departmentData, authorizedActions, domain, loadD
         className={"no-table-border"}
         isLoading={isLoading}
         onRowSelect={onRowSelect}
-        data={departmentData}
+        data={departments}
         columns={columns}
       />
     );
   };
 
   return (
-    <div>
-      <FilterContainer
-        loadData={loadData}
-        addRecordFunction={createNewDepartment}
-        isLoading={isLoading}
-        body={getDepartmentsTable()}
-        titleIcon={faBuilding}
-        title={"Departments"}
-        type={"Department"}
-        className="px-2 pb-2"
-      />
-      <NewLdapDepartmentModal
-        showModal={showCreateDepartmentModal}
-        loadData={loadData}
-        setShowModal={setShowCreateDepartmentModal}
-        authorizedActions={authorizedActions}
-        orgDomain={domain}
-      />
-    </div>
+    <FilterContainer
+      loadData={loadData}
+      addRecordFunction={accessRoleData?.OpseraAdministrator === true ? createNewDepartment : null}
+      isLoading={isLoading}
+      body={getDepartmentsTable()}
+      titleIcon={faBuilding}
+      title={"Departments"}
+      type={"Department"}
+      className={className}
+    />
   );
 }
 
 LdapDepartmentsTable.propTypes = {
-  departmentData: PropTypes.array,
-  authorizedActions: PropTypes.array,
+  departmentMetadata: PropTypes.object,
+  accessRoleData: PropTypes.object,
+  isMounted: PropTypes.object,
+  departments: PropTypes.array,
   domain: PropTypes.string,
   loadData: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default LdapDepartmentsTable;

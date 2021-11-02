@@ -4,7 +4,15 @@ import {faFileAlt} from "@fortawesome/pro-light-svg-icons";
 import CustomTab from "../CustomTab";
 
 function SummaryTab({ activeTab, handleTabClick }) {
-  return (<CustomTab activeTab={activeTab} tabText={"Summary"} tabName={"summary"} handleTabClick={handleTabClick} icon={faFileAlt} />);
+  return (
+    <CustomTab
+      activeTab={activeTab}
+      tabText={"Summary"}
+      tabName={"summary"}
+      handleTabClick={handleTabClick}
+      icon={faFileAlt}
+    />
+  );
 }
 
 SummaryTab.propTypes = {

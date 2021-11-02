@@ -16,7 +16,7 @@ function SiteRoleManagement() {
   const {getUserRecord, setAccessRoles, getAccessToken} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const [siteRoles, setSiteRoles] = useState([]);
-  const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
+  const [siteRoleMetadata, setSiteRoleMetadata] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -60,40 +60,43 @@ function SiteRoleManagement() {
     }
   };
 
-  const getGroupsByDomain = async (ldapDomain, cancelSource = cancelTokenSource) => {
-    if (ldapDomain != null) {
-      try {
-        let response = await accountsActions.getLdapGroupsWithDomainV2(getAccessToken, cancelSource, ldapDomain);
-        const groups = response?.data;
-
-        if (Array.isArray(groups)) {
-          const filteredRoles = groups.filter((group) => {return group?.groupType === "Role";});
-          setSiteRoles(filteredRoles);
-        }
-      } catch (error) {
-        toastContext.showLoadingErrorDialog(error);
-        console.error(error);
-      }
-    }
-  };
-
   const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
     const {ldap} = user;
 
     if (isMounted?.current === true && userRoleAccess) {
-      setCurrentUserEmail(user?.email);
       if (orgDomain == null || (ldap?.domain !== orgDomain && !userRoleAccess?.OpseraAdministrator)) {
         history.push(`/settings/${ldap.domain}/site-roles`);
       }
 
       setAccessRoleData(userRoleAccess);
 
-      let authorizedActions = await accountsActions.getAllowedGroupActions(userRoleAccess, ldap?.organization, getUserRecord, getAccessToken);
+      if (
+        userRoleAccess?.OpseraAdministrator
+        || userRoleAccess?.Administrator
+        || userRoleAccess?.OrganizationOwner
+        || userRoleAccess?.OrganizationAccountOwner
+      ) {
+        await getRoleGroups(cancelSource);
+      }
+    }
+  };
 
-      if (userRoleAccess?.OpseraAdministrator || authorizedActions?.includes("get_groups")) {
-        await getGroupsByDomain(orgDomain, cancelSource);
+  const getRoleGroups = async (cancelSource = cancelTokenSource) => {
+    if (orgDomain != null) {
+      try {
+        let response = await accountsActions.getLdapRoleGroupsWithDomainV2(getAccessToken, cancelSource, orgDomain);
+        const roleGroups = response?.data?.data;
+
+        if (Array.isArray(roleGroups)) {
+          const metadata = response?.data?.metadata;
+          setSiteRoleMetadata({...metadata});
+          setSiteRoles(roleGroups);
+        }
+      } catch (error) {
+        toastContext.showLoadingErrorDialog(error);
+        console.error(error);
       }
     }
   };
@@ -107,11 +110,13 @@ function SiteRoleManagement() {
       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
     >
       <SiteRolesTable
+        className={"mx-2"}
+        isMounted={isMounted}
         isLoading={isLoading}
-        groupData={siteRoles}
+        siteRoles={siteRoles}
         loadData={loadData}
+        siteRoleMetadata={siteRoleMetadata}
         orgDomain={orgDomain}
-        currentUserEmail={currentUserEmail}
       />
     </ScreenContainer>
   );

@@ -76,6 +76,7 @@ const dashboardMetadata = {
     visibility: "private",
     type: "",
     active: true,
+    isFavorite: false,
     tags: [],
     configuration: [],
     attributes: {},

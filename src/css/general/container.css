@@ -56,9 +56,13 @@
 }
 
 .makeup-tree-container-body {
-    min-height: calc(100vh - 264px);
-    height: calc(100vh - 264px);
-    max-height: calc(100vh - 264px);
+    /*TODO: Leaving these here temporarily, They're for taking up the entire space. If left unused, remove.*/
+    /*min-height: calc(100vh - 264px);*/
+    /*height: calc(100vh - 264px);*/
+    /*max-height: calc(100vh - 264px);*/
+    min-height: 100%;
+    height: 100%;
+    max-height: 100%;
     overflow-y: auto;
 }
 
@@ -109,3 +113,21 @@
     overflow-y: auto;
 }
 /* End Makeup Container Styling */
+
+
+/* Console Log Container Styling */
+.console-log-container {
+    min-height: 500px;
+    height: 500px;
+    max-height: 500px;
+    overflow-y: hidden;
+}
+
+.console-log-container-tabs, .console-log-container-body {
+    min-height: 500px;
+    height: 500px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+/* Console Log Container Styling */

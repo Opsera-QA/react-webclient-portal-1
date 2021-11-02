@@ -19,7 +19,6 @@ function LdapOrganizationAccountManagement() {
   const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
   const [organizationAccounts, setOrganizationAccounts] = useState(undefined);
   const toastContext = useContext(ToastContext);
-  const [authorizedActions, setAuthorizedActions] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -91,9 +90,6 @@ function LdapOrganizationAccountManagement() {
 
       setAccessRoleData(userRoleAccess);
 
-      let authorizedActions = await accountsActions.getAllowedOrganizationAccountActions(userRoleAccess, ldap?.organization, getUserRecord, getAccessToken);
-      setAuthorizedActions(authorizedActions);
-
       if (userRoleAccess?.OpseraAdministrator) {
         await loadOrganizationByName(organizationName, cancelSource);
       }
@@ -109,7 +105,6 @@ function LdapOrganizationAccountManagement() {
     >
       <LdapOrganizationAccountsTable
         isLoading={isLoading}
-        authorizedActions={authorizedActions}
         ldapOrganizationData={ldapOrganizationData}
         ldapOrganizationAccounts={organizationAccounts}
         loadData={loadData}

@@ -3,12 +3,18 @@ import baseActions from "utils/actionsBase";
 
 const departmentActions = {};
 
+// TODO: Phase out for getDepartmentGroupsV2
 departmentActions.getDepartmentsByDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
   let postBody = {
     domain: domain
   };
   const apiUrl = `/users/account/departments`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+departmentActions.getDepartmentGroupsV2 = async (getAccessToken, cancelTokenSource, domain) => {
+  const apiUrl = `/users/account/${domain}/department-groups`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 departmentActions.getDepartmentV2 = async (getAccessToken, cancelTokenSource, domain, departmentName) => {

@@ -81,12 +81,12 @@ function TagEditorPanel({ tagData, setTagData, handleClose }) {
     >
       {getInlineWarning()}
       <Row>
-        <Col md={6}>
+        <Col md={tagDataDto?.isNew() === true ? 12 : 6}>
           <TagTypeSelectInput dataObject={tagDataDto} setDataObject={setTagDataDto}/>
           <TextInputBase fieldName={"value"} setDataObject={setTagDataDto} dataObject={tagDataDto}/>
           <ActivityToggleInput fieldName={"active"} setDataObject={setTagDataDto} dataObject={tagDataDto}/>
         </Col>
-        <Col md={6}>
+        <Col md={tagDataDto?.isNew() === true ? 12 : 6}>
           <TagConfigurationInput dataObject={tagDataDto} setDataObject={setTagDataDto}/>
         </Col>
       </Row>

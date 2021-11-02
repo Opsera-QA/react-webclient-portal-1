@@ -1,15 +1,16 @@
 import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import tagEditorMetadata from "components/settings/tags/tags-metadata";
-import TagEditorPanel from "components/settings/tags/tags_detail_view/TagEditorPanel";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import ldapDepartmentMetaData from "components/settings/ldap_departments/ldap-department-metadata";
+import LdapDepartmentEditorPanel
+  from "components/settings/ldap_departments/details/LdapDepartmentEditorPanel";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import {CENTER_OVERLAY_SIZES} from "components/common/overlays/center/CenterOverlayContainer";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
-function NewTagOverlay({ loadData, isMounted }) {
+function CreateLdapDepartmentOverlay({ isMounted, loadData, orgDomain } ) {
   const toastContext = useContext(DialogToastContext);
-  const [tagData, setTagData] = useState(new Model({...tagEditorMetadata.newObjectFields}, tagEditorMetadata, true));
+  const [ldapDepartmentData, setLdapDepartmentData] = useState(new Model({...ldapDepartmentMetaData.newObjectFields}, ldapDepartmentMetaData, true));
 
   const closePanel = () => {
     if (isMounted?.current === true) {
@@ -23,24 +24,26 @@ function NewTagOverlay({ loadData, isMounted }) {
   return (
     <CreateCenterPanel
       closePanel={closePanel}
-      objectType={tagEditorMetadata.type}
+      objectType={"Department"}
       loadData={loadData}
       size={CENTER_OVERLAY_SIZES.SMALL}
     >
-      <TagEditorPanel
-        setTagData={setTagData}
+      <LdapDepartmentEditorPanel
+        orgDomain={orgDomain}
+        ldapDepartmentData={ldapDepartmentData}
+        setLdapDepartmentData={setLdapDepartmentData}
         handleClose={closePanel}
-        tagData={tagData}
       />
     </CreateCenterPanel>
   );
 }
- 
-NewTagOverlay.propTypes = {
+
+CreateLdapDepartmentOverlay.propTypes = {
   isMounted: PropTypes.object,
+  orgDomain: PropTypes.string,
   loadData: PropTypes.func,
 };
 
-export default NewTagOverlay;
+export default CreateLdapDepartmentOverlay;
 
 

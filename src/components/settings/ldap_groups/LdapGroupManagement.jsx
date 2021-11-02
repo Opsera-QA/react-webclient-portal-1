@@ -10,16 +10,16 @@ import axios from "axios";
 import GroupManagementSubNavigationBar from "components/settings/ldap_groups/GroupManagementSubNavigationBar";
 
 function LdapGroupManagement() {
+  const toastContext = useContext(DialogToastContext);
+  const {getUserRecord, setAccessRoles, getAccessToken} = useContext(AuthContext);
   const history = useHistory();
   const {orgDomain} = useParams();
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const {getUserRecord, setAccessRoles, getAccessToken} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const [groupList, setGroupList] = useState([]);
   const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
   const [existingGroupNames, setExistingGroupNames] = useState([]);
-  const toastContext = useContext(DialogToastContext);
-  const [authorizedActions, setAuthorizedActions] = useState([]);
+  const [ldapGroupMetadata, setLdapGroupMetadata] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -62,24 +62,6 @@ function LdapGroupManagement() {
     }
   };
 
-  const getGroupsByDomain = async (ldapDomain, cancelSource = cancelTokenSource) => {
-    if (ldapDomain != null) {
-      try {
-        let response = await accountsActions.getLdapGroupsWithDomainV2(getAccessToken, cancelSource, ldapDomain);
-
-        if (response?.data) {
-          let existingGroups = response?.data;
-          const existingGroupNames = existingGroups.map((group) => {return group.name.toLowerCase();});
-          setExistingGroupNames(existingGroupNames);
-          setGroupList(existingGroups);
-        }
-      } catch (error) {
-        toastContext.showLoadingErrorDialog(error);
-        console.error(error);
-      }
-    }
-  };
-
   const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
@@ -93,17 +75,36 @@ function LdapGroupManagement() {
 
       setAccessRoleData(userRoleAccess);
 
-      let authorizedActions = await accountsActions.getAllowedGroupActions(userRoleAccess, ldap?.organization, getUserRecord, getAccessToken);
-      setAuthorizedActions(authorizedActions);
-
-      if (userRoleAccess?.OpseraAdministrator || authorizedActions?.includes("get_groups")) {
-        await getGroupsByDomain(orgDomain, cancelSource);
+      if (
+           userRoleAccess?.OpseraAdministrator
+        || userRoleAccess?.Administrator
+        || userRoleAccess?.PowerUser
+        || userRoleAccess?.OrganizationOwner
+        || userRoleAccess?.OrganizationAccountOwner
+      ) {
+        await getGroupsByDomain(cancelSource);
       }
     }
   };
 
-  const parseUsersGroups = () => {
-    return Array.isArray(groupList) && groupList.filter((group) => {return group.groupType === "user";});
+  const getGroupsByDomain = async (cancelSource = cancelTokenSource) => {
+    if (orgDomain != null) {
+      try {
+        const response = await accountsActions.getLdapUserGroupsWithDomainV2(getAccessToken, cancelSource, orgDomain);
+        const groups = response?.data?.data;
+
+        if (Array.isArray(groups)) {
+          const metadata = response?.data?.metadata;
+          setLdapGroupMetadata({...metadata});
+          const existingGroupNames = groups.map((group) => {return group.name.toLowerCase();});
+          setExistingGroupNames(existingGroupNames);
+          setGroupList(groups);
+        }
+      } catch (error) {
+        toastContext.showLoadingErrorDialog(error);
+        console.error(error);
+      }
+    }
   };
 
   return (
@@ -117,10 +118,11 @@ function LdapGroupManagement() {
       <LdapGroupsTable
         className={"mx-2"}
         isLoading={isLoading}
-        groupData={parseUsersGroups()}
+        groupData={groupList}
+        isMounted={isMounted}
+        ldapGroupMetadata={ldapGroupMetadata}
         loadData={loadData}
         orgDomain={orgDomain}
-        authorizedActions={authorizedActions}
         existingGroupNames={existingGroupNames}
         currentUserEmail={currentUserEmail}
       />

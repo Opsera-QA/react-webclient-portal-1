@@ -8,6 +8,8 @@ import SalesforceLogSummaryUnitTestOverview
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/SalesforceLogSummaryUnitTestOverview";
 import SalesforceLogSummaryExecutionOverview
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/SalesforceLogSummaryExecutionOverview";
+import SalesforceLogSummaryCodeCoverageOverview
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/SalesforceLogSummaryCodeCoverageOverview";
 
 function SalesforceLogSummaryOverviewSummaryPanel({ salesforceDeployResultsModel }) {
   if (salesforceDeployResultsModel == null) {
@@ -28,6 +30,9 @@ function SalesforceLogSummaryOverviewSummaryPanel({ salesforceDeployResultsModel
         salesforceDeployResultsModel={salesforceDeployResultsModel}
       />
       <SalesforceLogSummaryUnitTestOverview
+        salesforceDeployResultsModel={salesforceDeployResultsModel}
+      />
+      <SalesforceLogSummaryCodeCoverageOverview
         salesforceDeployResultsModel={salesforceDeployResultsModel}
       />
     </SummaryPanelContainer>
