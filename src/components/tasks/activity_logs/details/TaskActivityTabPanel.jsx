@@ -45,17 +45,34 @@ function TaskActivityTabPanel({ gitTaskActivityData }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <TaskActivitySummaryPanel gitTaskActivityData={wrapObject(tasksActivityLogMetadata)} />;
+        return (
+          <TaskActivitySummaryPanel
+            gitTaskActivityData={wrapObject(tasksActivityLogMetadata)}
+          />
+        );
       case "log":
-        return <TaskActivityConsoleLogPanel gitTaskActivityData={gitTaskActivityData} />;
+        return (
+          <TaskActivityConsoleLogPanel
+            gitTaskActivityData={gitTaskActivityData}
+          />
+        );
       case "json":
-        return <TaskActivityJsonPanel gitTaskActivityData={gitTaskActivityData} />;
+        return (
+          <TaskActivityJsonPanel
+            gitTaskActivityData={gitTaskActivityData}
+          />
+        );
       default:
         return null;
     }
   };
 
-  return (<ModalTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
+  return (
+    <ModalTabPanelContainer
+      detailView={getCurrentView()}
+      tabContainer={getTabContainer()}
+    />
+  );
 }
 
 TaskActivityTabPanel.propTypes = {

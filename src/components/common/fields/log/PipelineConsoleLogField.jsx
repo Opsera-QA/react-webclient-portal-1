@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {format} from "date-fns";
 import StandaloneConsoleLogsDisplayer from "components/common/fields/log/StandaloneConsoleLogsDisplayer";
+import {getFormattedTimestamp} from "components/common/fields/date/DateFieldBase";
 
 // TODO: This needs to be tailored to Pipeline Field
 function PipelineConsoleLogField({dataObject, apiResponse}) {
@@ -117,7 +117,7 @@ function PipelineConsoleLogField({dataObject, apiResponse}) {
     <div>
       <div className="m-2">
         <div className="float-right mr-2">
-          <span>{format(new Date(dataObject?.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</span>
+          <span>{getFormattedTimestamp(dataObject?.createdAt)}</span>
         </div>
         <span><span className="text-muted ml-2">Step: </span> {dataObject?.step_name}</span>
       </div>
