@@ -186,6 +186,11 @@ taskActions.getTaskActivityLogById = async (getAccessToken, cancelTokenSource, i
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+taskActions.getTaskActivityGridFsLogById = async (getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `/tasks/logs/files/${id}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 taskActions.createECSCluster = async (postBody, getAccessToken) => {
   const apiUrl = `/tools/aws/v2/create/ecs`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
