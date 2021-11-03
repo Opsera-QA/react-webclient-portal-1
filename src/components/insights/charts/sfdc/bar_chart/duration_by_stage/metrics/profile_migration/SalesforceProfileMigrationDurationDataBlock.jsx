@@ -12,9 +12,8 @@ function SalesforceProfileMigrationDurationDataBlock({dataBlockValues, goalsData
 
   return (
     <ThreeLineDataBlockNoFocusBase
-    topStyle={{color: "#E57373"}}
     topText={"Profile Migration"}
-    middleText={dataBlockValues[0]?.profile_migration_mean ? dataBlockValues[0]?.profile_migration_mean + " min | " + dataBlockValues[0]?.profile_migration_count : "N/A"}
+    middleText={dataBlockValues[0]?.profile_migration_mean ? dataBlockValues[0]?.profile_migration_mean + " min | " + dataBlockValues[0]?.profile_migration_count + " runs" : "N/A"}
   />
   );
 }

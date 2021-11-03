@@ -9,12 +9,10 @@ import Col from "react-bootstrap/Col";
 import getDate from "date-fns/getDate";
 
 function SalesforceCreatePackageDurationDataBlock({dataBlockValues, goalsData}) {
-
   return (
     <ThreeLineDataBlockNoFocusBase
-    topStyle={{color: "#5B5851"}}
     topText={"Package Creation"}
-    middleText={dataBlockValues[0]?.create_package_mean ? dataBlockValues[0]?.create_package_mean + " min | " + dataBlockValues[0]?.create_package_count : "N/A"}
+    middleText={dataBlockValues[0]?.create_package_mean ? dataBlockValues[0]?.create_package_mean + " min | " + dataBlockValues[0]?.create_package_count + " runs" : "N/A"}
     bottomText={goalsData?.average_builds ? "Goal: " + goalsData?.average_builds + " min" : ""}
   />
   );

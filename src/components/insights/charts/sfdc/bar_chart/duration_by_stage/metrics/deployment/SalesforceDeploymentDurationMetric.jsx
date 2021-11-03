@@ -7,6 +7,9 @@ import SalesforceDeploymentDurationDataBlock
   from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/deployment/SalesforceDeploymentDurationDataBlock";
 
 function SalesforceDeploymentDurationMetric({dataBlockValues, goalsData, metric}) {
+  if (dataBlockValues[0]?.deploy_mean < goalsData.average_deployments) {metric[0].color = "#26cf26";}
+  if (dataBlockValues[0]?.deploy_mean > goalsData.average_deployments) {metric[0].color = "#E57373";}
+
   const getDataBlock = () => {
     return (
       <SalesforceDeploymentDurationDataBlock

@@ -12,9 +12,8 @@ function SalesforceDeploymentDurationDataBlock({dataBlockValues, goalsData}) {
 
   return (
     <ThreeLineDataBlockNoFocusBase
-    topStyle={{color: "#FFA500"}}
     topText={"Deployment"}
-    middleText={dataBlockValues[0]?.deploy_mean ? dataBlockValues[0]?.deploy_mean + " min | " + dataBlockValues[0]?.deploy_count : "N/A | 0"}
+    middleText={dataBlockValues[0]?.deploy_mean ? dataBlockValues[0]?.deploy_mean + " min | " + dataBlockValues[0]?.deploy_count + " runs" : "N/A | 0"}
     bottomText={goalsData?.average_deployments ? "Goal: " + goalsData?.average_deployments + " min" : ""}
   />
   );

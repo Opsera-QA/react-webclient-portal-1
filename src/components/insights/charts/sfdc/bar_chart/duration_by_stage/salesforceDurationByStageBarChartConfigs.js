@@ -10,7 +10,7 @@ export default () => ({
   },
   xFormat: "time:%Y-%m-%d",
   legends: [],
-  colors:{ datum: 'color' },
+  colors: { datum: 'color' },
   axisLeft: {
     "format": d => (typeof d === "number") && (Math.floor(d) === d && d),
     "orient": "left",

@@ -6,9 +6,8 @@ function SalesforcePackageValidationDurationDataBlock({dataBlockValues, goalsDat
 
   return (
     <ThreeLineDataBlockNoFocusBase
-    topStyle={{color: "brown"}}
     topText={"Package Validation"}
-    middleText={dataBlockValues[0]?.validate_package_mean ? dataBlockValues[0]?.validate_package_mean + " min | " + dataBlockValues[0]?.validate_package_count : "N/A"}
+    middleText={dataBlockValues[0]?.validate_package_mean ? dataBlockValues[0]?.validate_package_mean + " min | " + dataBlockValues[0]?.validate_package_count + " runs" : "N/A"}
   />
   );
 }

@@ -6,6 +6,7 @@ import {defaultConfig} from "components/insights/charts/charts-views";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 
 function SalesforceDurationByStageBarChartBase({ metric }) {
+
   return (
     <ResponsiveLine
       data={metric}

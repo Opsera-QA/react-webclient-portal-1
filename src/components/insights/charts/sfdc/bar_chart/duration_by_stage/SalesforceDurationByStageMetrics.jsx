@@ -58,6 +58,7 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")]?.value;
+      setGoalsData(goals);
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "salesforceDurationByStage", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data : [];
       let means = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data[6] : [];
@@ -65,7 +66,6 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         setDataBlockValues(means);
-        setGoalsData(goals);
       }
     }
     catch (error) {
