@@ -4,16 +4,31 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import PipelineConsoleLogField from "components/common/fields/log/PipelineConsoleLogField";
+import GridFsLogField from "components/common/fields/log/GridFsLogField";
 
-function TaskActivityConsoleLogPanel({ gitTaskActivityData }) {
+function TaskActivityConsoleLogPanel({ task }) {
+  const getBody = () => {
+    if (task?.api_response?.logRecordId) {
+      return (
+        <GridFsLogField
+          gridFsLogRecordId={task?.api_response?.logRecordId}
+        />
+      );
+    }
+
+    return (
+      <PipelineConsoleLogField
+        apiResponse={task["api_response"]}
+        dataObject={task}
+      />
+    );
+  };
+
   return (
     <SummaryPanelContainer>
       <Row>
         <Col md={12}>
-          <PipelineConsoleLogField
-            apiResponse={gitTaskActivityData["api_response"]}
-            dataObject={gitTaskActivityData}
-          />
+          {getBody()}
         </Col>
       </Row>
     </SummaryPanelContainer>
@@ -21,7 +36,7 @@ function TaskActivityConsoleLogPanel({ gitTaskActivityData }) {
 }
 
 TaskActivityConsoleLogPanel.propTypes = {
-  gitTaskActivityData: PropTypes.object,
+  task: PropTypes.object,
 };
 
 

@@ -8,6 +8,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import {List} from "dhx-suite-package";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import ComponentLoadingWrapper from "components/common/loading/ComponentLoadingWrapper";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: Rewrite and combine with list input base
 function ListObjectInputBase(
@@ -220,9 +221,17 @@ function ListObjectInputBase(
   const getClearDataIcon = () => {
     if (!disabled && model?.getArrayData(field?.id)?.length > 0 && showClearValueButton !== false && (setDataFunction == null || clearDataFunction)) {
       return (
-        <TooltipWrapper innerText={"Clear this Value"}>
-          <span onClick={() => clearValue()} className="my-auto badge badge-danger clear-value-badge pointer ml-2">
-            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>Clear Selection
+        <TooltipWrapper innerText={"Empty out all stored values"}>
+          <span onClick={() => clearValue()} className="badge badge-danger clear-value-badge pointer ml-2">
+            <span className={"my-auto"}>
+              <IconBase
+                icon={faTimes}
+                fixedWidth
+                className={"mr-1"}
+                iconClassName={"clear-selection-badge-icon"}
+              />
+              Clear Selection
+            </span>
           </span>
         </TooltipWrapper>
       );
