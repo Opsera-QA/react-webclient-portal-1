@@ -8,7 +8,8 @@
     letter-spacing: .6px;
 }
 
-/*primary analytics font*/
+/* Site Typography
+primary analytics font*/
 .font-inter-light-100 {
     font-family: 'Inter', sans-serif;
     font-weight: 100;
@@ -17,6 +18,13 @@
 .font-inter-light-300 {
     font-family: 'Inter', sans-serif;
     font-weight: 300;
+}
+
+.chart-header-name-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 100;
+    text-transform: capitalize;
+    color: #8798ad;
 }
 
 /*primary product font*/
