@@ -13,7 +13,7 @@ function SalesforceBackupDurationDataBlock({dataBlockValues, goalsData}) {
   return (
     <ThreeLineDataBlockNoFocusBase
     topText={"Backups"}
-    middleText={dataBlockValues[0]?.backup_mean ? dataBlockValues[0]?.backup_mean + " min | " + dataBlockValues[0]?.backup_count + " runs" : "N/A"}
+    middleText={dataBlockValues[0]?.backup_mean ? dataBlockValues[0]?.backup_mean + " min | " + dataBlockValues[0]?.backup_count + " runs" : "N/A | 0"}
   />
   );
 }

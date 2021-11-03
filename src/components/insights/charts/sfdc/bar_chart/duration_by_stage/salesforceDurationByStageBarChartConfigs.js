@@ -18,7 +18,7 @@ export default () => ({
     "tickValues": 2,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Value",
+    "legend": "Duration (min)",
     "legendOffset": -40,
     "legendPosition": "middle"
   },

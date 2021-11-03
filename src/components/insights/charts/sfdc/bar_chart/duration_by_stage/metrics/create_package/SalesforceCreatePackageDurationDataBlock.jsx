@@ -12,7 +12,7 @@ function SalesforceCreatePackageDurationDataBlock({dataBlockValues, goalsData}) 
   return (
     <ThreeLineDataBlockNoFocusBase
     topText={"Package Creation"}
-    middleText={dataBlockValues[0]?.create_package_mean ? dataBlockValues[0]?.create_package_mean + " min | " + dataBlockValues[0]?.create_package_count + " runs" : "N/A"}
+    middleText={dataBlockValues[0]?.create_package_mean ? dataBlockValues[0]?.create_package_mean + " min | " + dataBlockValues[0]?.create_package_count + " runs" : "N/A | 0"}
     bottomText={goalsData?.average_builds ? "Goal: " + goalsData?.average_builds + " min" : ""}
   />
   );

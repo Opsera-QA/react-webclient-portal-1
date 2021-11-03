@@ -7,7 +7,7 @@ function SalesforceUnitTestingDurationDataBlock({dataBlockValues, goalsData}) {
   return (
     <ThreeLineDataBlockNoFocusBase
     topText={"Unit Testing"}
-    middleText={dataBlockValues[0]?.unit_testing_mean ? dataBlockValues[0]?.unit_testing_mean + " min | " +  dataBlockValues[0]?.unit_testing_count + " runs": "N/A"}
+    middleText={dataBlockValues[0]?.unit_testing_mean ? dataBlockValues[0]?.unit_testing_mean + " min | " +  dataBlockValues[0]?.unit_testing_count + " runs": "N/A | 0"}
   />
   );
 }

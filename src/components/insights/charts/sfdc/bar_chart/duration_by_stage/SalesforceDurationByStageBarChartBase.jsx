@@ -11,7 +11,7 @@ function SalesforceDurationByStageBarChartBase({ metric }) {
     <ResponsiveLine
       data={metric}
       {...defaultConfig(
-        "Value",
+        "Duration (min)",
         "Date",
         false,
         true,

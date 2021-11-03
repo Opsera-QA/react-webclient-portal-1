@@ -86,7 +86,7 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
   };
 
   const getChartBody = () => {
-    if (!Array.isArray(metrics) || metrics.length === 0) {
+    if (!Array.isArray(metrics) || metrics.length === 0 || !Array.isArray(dataBlockValues) || dataBlockValues.length === 0) {
       return null;
     }
 
