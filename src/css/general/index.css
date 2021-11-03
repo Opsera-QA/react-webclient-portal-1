@@ -27,6 +27,14 @@ primary analytics font*/
     color: #8798ad;
 }
 
+.chart-footer-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 100;
+    font-size: small;
+    text-transform: capitalize;
+    color: #8798ad;
+}
+
 /*primary product font*/
 .font-lato-100 {
     font-family: 'Lato', sans-serif;
