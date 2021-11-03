@@ -5,11 +5,12 @@ import SalesforceCreatePackageDurationDataBlock
   from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/create_package/SalesforceCreatePackageDurationDataBlock";
 import SalesforceDurationByStageBarChartBase
   from "components/insights/charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageBarChartBase";
-
+import {assignLineChartGoalColors} from "components/insights/charts/charts-views";
 function SalesforceCreatePackageDurationMetric({dataBlockValues, goalsData, metric}) {
-  if (dataBlockValues[0]?.create_package_mean < goalsData.average_builds) {metric[0].color = "#26cf26";}
-  if (dataBlockValues[0]?.create_package_mean > goalsData.average_builds) {metric[0].color = "#E57373";}
-
+  if (dataBlockValues.length > 0 && goalsData) {
+    assignLineChartGoalColors(dataBlockValues, "create_package_mean", goalsData, "average_builds", metric);
+  }
+  
   const getDataBlock = () => {
     return (
       <SalesforceCreatePackageDurationDataBlock
