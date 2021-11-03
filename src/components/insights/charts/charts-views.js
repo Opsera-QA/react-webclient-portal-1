@@ -142,7 +142,6 @@ export const assignLineColors = data => {
 
 // Assigning color to a line chart based on goals
 export const assignLineChartGoalColors = (dataBlockValues, dataBlockAttribute, goalsData, goalsDataAttribute, lineData) => {
-  console.log(dataBlockValues);
   if (dataBlockValues[0][dataBlockAttribute] < goalsData[goalsDataAttribute]) {lineData[0].color = "#26cf26";}
   if (dataBlockValues[0][dataBlockAttribute] > goalsData[goalsDataAttribute]) {lineData[0].color = "#E57373";}
 };

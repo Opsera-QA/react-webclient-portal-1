@@ -26,6 +26,7 @@ export default () => ({
     "format": "%b",
     "orient": "bottom",
     "tickSize": 5,
+    "tickValues": 'every month',
     "tickPadding": 5,
     "tickRotation": -45,
     "legend": "Month",
