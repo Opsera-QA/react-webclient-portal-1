@@ -186,8 +186,13 @@ taskActions.getTaskActivityLogById = async (getAccessToken, cancelTokenSource, i
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-taskActions.getTaskActivityGridFsLogById = async (getAccessToken, cancelTokenSource, id) => {
+taskActions.getTaskActivityGridFsLogRecordById = async (getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/tasks/logs/files/${id}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+taskActions.getTaskActivityGridFsLogContentById = async (getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `/tasks/logs/files/${id}/content`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

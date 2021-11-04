@@ -59,10 +59,13 @@ function GridFsLogField({gridFsLogRecordId}) {
   };
 
   const getPipelineTaskData = async (cancelSource = cancelTokenSource) => {
-    const response = await taskActions.getTaskActivityGridFsLogById(getAccessToken, cancelSource, gridFsLogRecordId);
+    const response = await taskActions.getTaskActivityGridFsLogContentById(getAccessToken, cancelSource, gridFsLogRecordId);
     console.log("response: " + JSON.stringify(response));
     const pipelineActivityLogData = response?.data?.data;
 
+    if (pipelineActivityLogData) {
+      setLogData(pipelineActivityLogData);
+    }
   };
 
   return (
@@ -74,7 +77,7 @@ function GridFsLogField({gridFsLogRecordId}) {
         {/*<span><span className="text-muted ml-2">Step: </span> {dataObject?.step_name}</span>*/}
       </div>
       <div className={"my-2"}>
-        {/*{getBody()}*/}
+        {JSON.stringify(logData)}
       </div>
       <div className={"my-2"}>
         {/*<StandaloneConsoleLogsDisplayer*/}
