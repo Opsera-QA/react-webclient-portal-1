@@ -19,7 +19,6 @@ function AccountSettingsHelpDocumentation() {
             <li><b>Delete Tools</b> - Choose a registered application, view the active tools, and then delete them from the application. This will perform a complete end to end removal of all instances related to an application.</li>
             <li><b>Site Roles</b> - (Administrator access) Manage the following Site Roles levels: Administrators, Power Users and Users.  </li>
             <li><b>My User Record</b> - Review and manage your user profile information as well as platform settings from this page. Please note, profile details are stored in your identify provider so some changes may not be possible from this portal at this time.</li>
-            <li><b>Departments</b> - (Administrator access) Manage Departments and their Membership. </li>
             <li><b>Analytics Profile</b> - Manage Opsera Analytics Engine Settings.</li>
             <li><b>Groups</b> - Manage user groups and their Membership.</li>
             <li><b>Tags</b> - Manage tags and view tag usage in Tools, Pipeline and Dashboards.</li>
