@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
-import { Row, Col, Badge, Button } from "react-bootstrap";
+import { Row, Col, Badge } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import FreeTrialLandingView from "../free_trial/landing_page/Landing";
 import LoadingView from "../common/status_notifications/loading";
@@ -45,6 +45,7 @@ function OverviewLanding() {
     setUserInfo(user);
   };
 
+  // TODO: Move to actions file, wire up cancel token to request
   const loadData = async () => {
     try {
       const accessToken = await getAccessToken();
@@ -116,6 +117,150 @@ function OverviewLanding() {
     }
   };
 
+  const getToolchainBlock = () => {
+    return (
+      <div className={"landing-content-module"}>
+        <div>
+          <img
+            alt="Toolchain Automation"
+            src="/img/platform.png"
+            width="195"
+            height="225"
+            className="d-inline-block align-top pointer"
+            onClick={() => {
+              loadPlatforms();
+            }}
+          />
+        </div>
+        <div className="mt-4">
+          <div className="h5 text-color">Toolchain Automation</div>
+          <div className="text-muted pr-2">
+            You choose your tools, we take care of the rest. Put together the perfect CI/CD stack that fits your
+            organization’s goals with zero vendor lock-in.
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const getDeclarativePipelinesBlock = () => {
+    return (
+      <div className={"landing-content-module"}>
+        <div>
+          <img
+            alt="Declarative Pipelines"
+            src="/img/pipeline.png"
+            width="195"
+            height="225"
+            className="d-inline-block align-top pointer"
+            onClick={() => {
+              loadPipelines();
+            }}
+          />
+        </div>
+        <div className="mt-4">
+          <div className="h5 text-color">
+            Declarative Pipelines
+            {statsData.pendingPipelines && statsData.pendingPipelines.length > 0 && (
+              <Badge variant="danger" className="ml-1" style={{ fontSize: "small" }}>
+                New Pipeline Alerts
+              </Badge>
+            )}
+          </div>
+          <div className="text-muted pr-2">
+            Pipeline workflows follow a declarative model so you focus on what is required — not how it’s
+            accomplished — including: software builds, security scans, unit testing, and deployments.
+          </div>
+
+          <div className="mt-2">
+            {(statsData.pendingPipelines && statsData.pendingPipelines.length > 0) &&
+            <div className="row">
+              <div className="col-12">
+                <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                     aria-orientation="vertical">
+
+                  {statsData.pendingPipelines.map((item, key) => (
+                    <a key={key} className="nav-link pointer" data-toggle="pill"
+                       role="tab" aria-controls="v-pills-home" aria-selected="true" onClick={() => {
+                      loadPipelines(item._id);
+                    }}>{item.name.substring(0, 30)}
+                      {item.name.length > 30 && <>...</>}
+                      <span className={"opsera-yellow"} style={{ fontStyle: "italic", fontSize: "smaller", paddingLeft:"5px"}}>Pending Approval</span></a>
+                  ))}
+
+                </div>
+              </div>
+            </div>
+            }
+
+            {(statsData.recentPipelines && statsData.recentPipelines.length > 0) &&
+            <div className="row">
+              <div className="col-12">
+                <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                     aria-orientation="vertical">
+
+                  {statsData.recentPipelines.map((item, key) => (
+                    <a key={key} className="nav-link pointer" data-toggle="pill"
+                       role="tab" aria-controls="v-pills-home" aria-selected="true" onClick={() => {
+                      loadPipelines(item._id);
+                    }}>{item.name.substring(0, 50)}
+                      {item.name.length > 30 && <>...</>}
+                      {new Date(item.createdAt) > d &&
+                      <span className={"opsera-yellow"} style={{ fontStyle: "italic", fontSize: "smaller", paddingLeft:"5px"}}>New</span>
+                      }
+                    </a>
+                  ))}
+
+                </div>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const getInsightsBlock = () => {
+    return (
+      <div className={"landing-content-module"}>
+        <div>
+          <img
+            alt="Insights"
+            src="/img/analytics.png"
+            width="195"
+            height="225"
+            className="d-inline-block align-top pointer"
+            onClick={() => {
+              loadAnalytics();
+            }}
+          />
+        </div>
+        <div className="mt-4">
+          <div className="h5 text-color">Insights</div>
+          <div className="text-muted pr-2">
+            Comprehensive software delivery analytics across your CI/CD process in a unified view — including Lead
+            Time, Change Failure Rate, Deployment Frequency, and Time to Restore.
+          </div>
+          <div className="mt-2">
+            <TopFiveDashboards loadDashboardById={loadDashboardById} />
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const getWelcomeText = () => {
+    // TODO: Do we want to add comma?
+    const nameText = userInfo?.firstName ? `${userInfo?.firstName}` : "";
+
+    return (
+      <div className="h4 text-color mb-3">
+        {`Welcome Back ${nameText}`}
+      </div>
+    );
+  };
+
   if (!accessRoleData) {
     return (<LoadingView size="sm" message={"Loading user data"} />);
   }
@@ -144,143 +289,23 @@ function OverviewLanding() {
               }
             </ul>
           </div>
-
-          <div className="h4 text-color mb-3">Welcome Back&nbsp;
-            {userInfo && userInfo.firstName ? userInfo.firstName : null}
-          </div>
+          {getWelcomeText()}
 
           <MyTagCloud />
 
           <hr />
 
-          <div className="row mx-n2 mt-3">
-
-            <div className="col-md px-2 landing-content-module">
-              <img
-                alt="Toolchain Automation"
-                src="/img/platform.png"
-                width="195"
-                height="225"
-                className="d-inline-block align-top pointer"
-                onClick={() => {
-                  loadPlatforms();
-                }}
-              />
-            </div>
-
-            <div className="col-md px-2 landing-content-module">
-              <img
-                alt="Declarative Pipelines"
-                src="/img/pipeline.png"
-                width="195"
-                height="225"
-                className="d-inline-block align-top pointer"
-                onClick={() => {
-                  loadPipelines();
-                }}
-              />
-            </div>
-
-            <div className="col-md px-2 landing-content-module">
-              <img
-                alt="Insights"
-                src="/img/analytics.png"
-                width="195"
-                height="225"
-                className="d-inline-block align-top pointer"
-                onClick={() => {
-                  loadAnalytics();
-                }}
-              />
-            </div>
-
-
-          </div>
-          <div className="row mx-n2 mt-4">
-            <div className="col-md px-2 landing-content-module">
-              <div className="h5 text-color">Toolchain Automation</div>
-              <div className="text-muted pr-2">
-                You choose your tools, we take care of the rest. Put together the perfect CI/CD stack that fits your
-                organization’s goals with zero vendor lock-in.
-              </div>
-            </div>
-
-            <div className="col-md px-2 landing-content-module">
-              <div className="h5 text-color">
-                Declarative Pipelines
-                {statsData.pendingPipelines && statsData.pendingPipelines.length > 0 && (
-                  <Badge variant="danger" className="ml-1" style={{ fontSize: "small" }}>
-                    New Pipeline Alerts
-                  </Badge>
-                )}
-              </div>
-              <div className="text-muted pr-2">
-                Pipeline workflows follow a declarative model so you focus on what is required — not how it’s
-                accomplished — including: software builds, security scans, unit testing, and deployments.
-              </div>
-
-              <div className="mt-2">
-                {(statsData.pendingPipelines && statsData.pendingPipelines.length > 0) &&
-                <div className="row">
-                  <div className="col-12">
-                    <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
-                         aria-orientation="vertical">
-
-                      {statsData.pendingPipelines.map((item, key) => (
-                        <a key={key} className="nav-link pointer" data-toggle="pill"
-                           role="tab" aria-controls="v-pills-home" aria-selected="true" onClick={() => {
-                          loadPipelines(item._id);
-                        }}>{item.name.substring(0, 30)}
-                          {item.name.length > 30 && <>...</>}
-                          <span className={"opsera-yellow"} style={{ fontStyle: "italic", fontSize: "smaller", paddingLeft:"5px"}}>Pending Approval</span></a>
-                      ))}
-
-                    </div>
-                  </div>
-                </div>
-                }
-
-                {(statsData.recentPipelines && statsData.recentPipelines.length > 0) &&
-                <div className="row">
-                  <div className="col-12">
-                    <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
-                         aria-orientation="vertical">
-
-                      {statsData.recentPipelines.map((item, key) => (
-                        <a key={key} className="nav-link pointer" data-toggle="pill"
-                           role="tab" aria-controls="v-pills-home" aria-selected="true" onClick={() => {
-                          loadPipelines(item._id);
-                        }}>{item.name.substring(0, 50)}
-                          {item.name.length > 30 && <>...</>}
-                          {new Date(item.createdAt) > d &&
-                          <span className={"opsera-yellow"} style={{ fontStyle: "italic", fontSize: "smaller", paddingLeft:"5px"}}>New</span>
-                          }
-                        </a>
-                      ))}
-
-                    </div>
-                  </div>
-                </div>
-                }
-              </div>
-            </div>
-
-            <div className="col-md px-2 landing-content-module">
-              <div className="h5 text-color">Insights</div>
-              <div className="text-muted pr-2">
-                Comprehensive software delivery analytics across your CI/CD process in a unified view — including Lead
-                Time, Change Failure Rate, Deployment Frequency, and Time to Restore.
-              </div>
-              <div className="mt-2">
-                <TopFiveDashboards loadDashboardById={loadDashboardById} />
-              </div>
-
-            </div>
-
-
-
-          </div>
-
+          <Row className="mt-3">
+            <Col md={4}>
+              {getToolchainBlock()}
+            </Col>
+            <Col md={4}>
+              {getDeclarativePipelinesBlock()}
+            </Col>
+            <Col md={4}>
+              {getInsightsBlock()}
+            </Col>
+          </Row>
         </div>
         <hr />
 
