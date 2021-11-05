@@ -9,8 +9,9 @@ import SalesforceLogSummarySuccessfulTestsTable
 import FieldSubHeader from "components/common/fields/FieldSubHeader";
 import SalesforceLogSummaryFailedTestsTable
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummaryFailedTestsTable";
+import SalesforceLogSummaryCodeCoverageTable from "../../components/SalesforceLogSummaryCodeCoverageTable";
 
-function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsModel, successfulTests, unsuccessfulTests, }) {
+function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsModel, successfulTests, unsuccessfulTests, codeCoverageWarnings }) {
   if (salesforceDeployResultsModel == null) {
     return (
       <LoadingDialog
@@ -19,6 +20,10 @@ function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsMo
       />
     );
   }
+
+  const getCodeCoverageComponents = () => {
+    return codeCoverageWarnings;
+  };
 
   return (
     <SummaryPanelContainer className={"step-configuration-summary m-3"}>
@@ -47,6 +52,12 @@ function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsMo
             hasSuccessfulTests={successfulTests?.length > 0}
           />
         </Col>
+        <Col lg={12}>
+          <SalesforceLogSummaryCodeCoverageTable
+            codeCoverageComponents={getCodeCoverageComponents()}
+            hasCodeCoverageComponents={getCodeCoverageComponents()?.length > 0}
+          />
+        </Col>
       </Row>
     </SummaryPanelContainer>
   );
@@ -57,6 +68,7 @@ SalesforceLogSummaryTestResultsSummaryPanel.propTypes = {
   salesforceDeployResultsModel: PropTypes.object,
   successfulTests: PropTypes.array,
   unsuccessfulTests: PropTypes.array,
+  codeCoverageWarnings: PropTypes.array,
 };
 
 export default SalesforceLogSummaryTestResultsSummaryPanel;

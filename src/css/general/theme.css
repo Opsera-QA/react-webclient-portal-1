@@ -298,6 +298,10 @@
     height: 18px;
 }
 
+.clear-selection-badge-icon {
+    padding-top: 1px;
+}
+
 .badge-primary[href]:hover, .badge-primary[href]:focus {
     color: #fff;
     background-color: #082954;

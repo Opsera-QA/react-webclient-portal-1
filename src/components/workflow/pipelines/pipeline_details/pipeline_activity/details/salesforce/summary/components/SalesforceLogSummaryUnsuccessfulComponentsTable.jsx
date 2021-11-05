@@ -5,7 +5,7 @@ import salesforceSummaryLogComponentMetadata
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/metadata/components/salesforceSummaryLogComponent.metadata";
 import {
   getTableBooleanIconColumn,
-  getTableDateTimeColumn,
+  getSalesforceSumamryTableBooleanIconColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -19,14 +19,16 @@ function SalesforceLogSummaryUnsuccessfulComponentsTable({ hasSuccessfulComponen
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "componentType")),
+      getTableTextColumn(getField(fields, "fullName")),
       getTableTextColumn(getField(fields, "fileName")),
-      getTableDateTimeColumn(getField(fields, "createdDate")),
       getTableTextColumn(getField(fields, "problem")),
+      getTableTextColumn(getField(fields, "lineNumber")),
+      getTableTextColumn(getField(fields, "columnNumber")),
       getTableBooleanIconColumn(getField(fields, "success"), undefined, 75),
-      getTableBooleanIconColumn(getField(fields, "warning"), undefined, 75),
-      getTableBooleanIconColumn(getField(fields, "created"), undefined, 75),
-      getTableBooleanIconColumn(getField(fields, "changed"), undefined, 75),
-      getTableBooleanIconColumn(getField(fields, "deleted"), undefined, 75),
+      getSalesforceSumamryTableBooleanIconColumn(getField(fields, "warning"), undefined, 75),
+      getSalesforceSumamryTableBooleanIconColumn(getField(fields, "created"), undefined, 75),
+      getSalesforceSumamryTableBooleanIconColumn(getField(fields, "changed"), undefined, 75),
+      getSalesforceSumamryTableBooleanIconColumn(getField(fields, "deleted"), undefined, 75),
       getTableTextColumn(getField(fields, "problemType")),
     ],
     []

@@ -1,7 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineTaskSummaryPanelBase from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskSummaryPanelBase";
-import pipelineTaskMetadata from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/pipeline-task-metadata";
 import Model from "core/data_model/model";
 import SalesforceLogSummaryReportPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceLogSummaryReportPanel";
@@ -12,14 +10,8 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
   };
 
   const getSummaryReportPanel = () => {
-    switch (pipelineTaskData?.step_name) {
-      case "sfdc unit test":
-      case "sfdc xml validate job":
-      case "sfdc deploy":
-        return (<SalesforceLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>);
-      default:
-        return (<PipelineTaskSummaryPanelBase pipelineTaskData={wrapObject(pipelineTaskMetadata)}/>);
-    }
+    // TODO : we cant restrict this based on step name, this is where i was thinking to have a unique tool identifier. Removing check for step name for now
+    return (<SalesforceLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>);
   };
 
   return (getSummaryReportPanel());

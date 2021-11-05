@@ -10,7 +10,7 @@ const salesforceSummaryLogComponentMetadata = {
       id: "fileName",
     },
     {
-      label: "Full Name",
+      label: "Component Name",
       id: "fullName"
     },
     {
