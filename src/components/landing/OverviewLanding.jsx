@@ -1,20 +1,27 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import { Row, Col, Badge } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import FreeTrialLandingView from "../free_trial/landing_page/Landing";
-import LoadingView from "../common/status_notifications/loading";
 import MyTagCloud from "components/common/fields/tags/cloud/MyTagCloud";
 import TopFiveDashboards from "components/insights/dashboards/top_five/TopFiveDashboards";
+import axios from "axios";
+import landingActions from "components/landing/landing.actions";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import LoadingDialog from "../common/status_notifications/loading";
 
 function OverviewLanding() {
   const contextType = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
+  const history = useHistory();
   const [userInfo, setUserInfo] = useState({});
   const [statsData, setStatsData] = useState({});
-  const [accessRoleData, setAccessRoleData] = useState();
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
   const [summaryStats, setSummaryStats] = useState([]);
-  const history = useHistory();
+  let d = new Date();
+  d.setDate(d.getDate() - 12);
   const {
     getAccessToken,
     getUserRecord,
@@ -23,15 +30,31 @@ function OverviewLanding() {
     featureFlagHideItemInTest,
   } = contextType;
   let userAccess = {};
-
-  let d = new Date();
-  d.setDate(d.getDate() - 12);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    getRoles();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    getRoles(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
-  const getRoles = async () => {
+  const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     userAccess = await setAccessRoles(user);
     if (userAccess) {
@@ -39,40 +62,55 @@ function OverviewLanding() {
     }
 
     if (process.env.REACT_APP_STACK !== "free-trial") {
-      await loadData();
+      await loadData(cancelSource);
     }
 
     setUserInfo(user);
   };
 
-  // TODO: Move to actions file, wire up cancel token to request
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      const accessToken = await getAccessToken();
-      let apiUrl = "/landing/stats";
-      const response = await axiosApiService(accessToken).get(apiUrl, {});
+      setIsLoading(true);
+      await loadStats(cancelSource);
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
+    }
+    finally {
+      if (isMounted?.current === true ) {
+        setIsLoading(false);
+      }
+    }
+  };
 
-      let data = response.data;
+  const loadStats = async (cancelSource = cancelTokenSource) => {
+    const response = await landingActions.getLandingStats(getAccessToken, cancelSource);
+    const stats = response?.data;
 
-      if (data?.pendingPipelines && data?.recentPipelines && data.pendingPipelines.length > 0 && data.recentPipelines.length > 0) {
-        let approvalPipelineIds = data.pendingPipelines.map(a => a._id);
-        let i = data.recentPipelines.length;
+    if (isMounted.current === true && stats) {
+      const pendingPipelines = stats?.pendingPipelines;
+      const recentPipelines = stats?.recentPipelines;
+
+      if (Array.isArray(pendingPipelines) && Array.isArray(recentPipelines) && pendingPipelines.length > 0 && recentPipelines.length > 0) {
+        let approvalPipelineIds = pendingPipelines.map(a => a._id);
+        let i = recentPipelines.length;
         while (i--) {
-          if (approvalPipelineIds.includes(data.recentPipelines[i]._id)) {
-            data.recentPipelines.splice(i, 1);
+          if (approvalPipelineIds.includes(recentPipelines[i]._id)) {
+            recentPipelines.splice(i, 1);
           }
         }
       }
 
-      setStatsData(data);
+      setStatsData(stats);
 
       setSummaryStats([
-        { name: "Platforms", value: data.applications, footer: null, status: null },
-        { name: "My Pipelines", value: data.pipelines, footer: null, status: null },
-        { name: "Registered Tools", value: data.tools, footer: null, status: null },
+        {name: "Platforms", value: stats.applications, footer: null, status: null},
+        {name: "My Pipelines", value: stats.pipelines, footer: null, status: null},
+        {name: "Registered Tools", value: stats.tools, footer: null, status: null},
       ]);
-    } catch (err) {
-      console.log(err.message);
     }
   };
 
@@ -117,6 +155,7 @@ function OverviewLanding() {
     }
   };
 
+  // TODO: Make separate component
   const getToolchainBlock = () => {
     return (
       <div className={"landing-content-module"}>
@@ -143,6 +182,7 @@ function OverviewLanding() {
     );
   };
 
+  // TODO: Make separate component
   const getDeclarativePipelinesBlock = () => {
     return (
       <div className={"landing-content-module"}>
@@ -221,6 +261,7 @@ function OverviewLanding() {
     );
   };
 
+  // TODO: Make separate component
   const getInsightsBlock = () => {
     return (
       <div className={"landing-content-module"}>
@@ -261,8 +302,28 @@ function OverviewLanding() {
     );
   };
 
-  if (!accessRoleData) {
-    return (<LoadingView size="sm" message={"Loading user data"} />);
+  // TODO: Convert to data blocks, left align, make separate component
+  const getDataBlocks = () => {
+    if (Array.isArray(summaryStats) && summaryStats.length > 0) {
+      summaryStats.map(function (item, index) {
+          return (
+            <li className="nav-item" key={index}>
+              <a className={"nav-link"} href="#"
+                 onClick={handleTabClick(index)}>{item.name}: {item.value}</a>
+            </li>
+          );
+        }
+      );
+    }
+  };
+
+  if (isLoading === true || !accessRoleData) {
+    return (
+      <LoadingDialog
+        size="sm"
+        message={"Loading Overview Landing"}
+      />
+    );
   }
 
   if (process.env.REACT_APP_STACK === "free-trial") {
@@ -270,50 +331,38 @@ function OverviewLanding() {
   }
 
   return (
-    <>
-      <div className="mt-3 ml-5 max-content-width">
+    <div className="mt-3 ml-5 max-content-width">
 
-        <div className="max-content-width">
-          <div className="alternate-tabs text-right">
-            <ul className="nav nav-tabs mb-2">
-              {
-                summaryStats &&
-                summaryStats.map(function(item, index) {
-                  return (
-                    <li className="nav-item" key={index}>
-                      <a className={"nav-link"} href="#"
-                         onClick={handleTabClick(index)}>{item.name}: {item.value}</a>
-                    </li>
-                  );
-                })
-              }
-            </ul>
-          </div>
-          {getWelcomeText()}
-
-          <MyTagCloud />
-
-          <hr />
-
-          <Row className="mt-3">
-            <Col md={4}>
-              {getToolchainBlock()}
-            </Col>
-            <Col md={4}>
-              {getDeclarativePipelinesBlock()}
-            </Col>
-            <Col md={4}>
-              {getInsightsBlock()}
-            </Col>
-          </Row>
+      <div className="max-content-width">
+        <div className="alternate-tabs text-right">
+          <ul className="nav nav-tabs mb-2">
+            {getDataBlocks()}
+          </ul>
         </div>
-        <hr />
+        {getWelcomeText()}
 
-        <div className="h5 text-color">Need help?</div>
-        <div className="h6 mt-1 mb-5">Send an email to support@opsera.io</div>
+        <MyTagCloud/>
 
+        <hr/>
+
+        <Row className="mt-3 mr-2">
+          <Col md={4}>
+            {getToolchainBlock()}
+          </Col>
+          <Col md={4}>
+            {getDeclarativePipelinesBlock()}
+          </Col>
+          <Col md={4}>
+            {getInsightsBlock()}
+          </Col>
+        </Row>
       </div>
-    </>
+      <hr/>
+
+      <div className="h5 text-color">Need help?</div>
+      <div className="h6 mt-1 mb-5">Send an email to support@opsera.io</div>
+
+    </div>
   );
 }
 
