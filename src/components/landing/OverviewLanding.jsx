@@ -317,7 +317,7 @@ function OverviewLanding() {
     }
   };
 
-  if (isLoading === true || !accessRoleData) {
+  if (!accessRoleData) {
     return (
       <LoadingDialog
         size="sm"
