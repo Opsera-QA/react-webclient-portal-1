@@ -305,17 +305,20 @@ function OverviewLanding() {
   // TODO: Convert to data blocks, left align, make separate component
   const getDataBlocks = () => {
     if (Array.isArray(summaryStats) && summaryStats.length > 0) {
-      summaryStats.map(function (item, index) {
-          return (
-            <li className="nav-item" key={index}>
-              <a className={"nav-link"} href="#"
-                 onClick={handleTabClick(index)}>{item.name}: {item.value}</a>
-            </li>
-          );
-        }
+      return (
+        summaryStats.map(function (item, index) {
+            return (
+              <li className="nav-item" key={index}>
+                <a className={"nav-link"} href="#"
+                   onClick={handleTabClick(index)}>{item.name}: {item.value}</a>
+              </li>
+            );
+          }
+        )
       );
     }
   };
+
 
   if (!accessRoleData) {
     return (
