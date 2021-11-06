@@ -7,7 +7,6 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { useHistory } from "react-router-dom";
-import SdlcDurationMetric from "./metrics/sdlc_duration_data_blocks/SdlcDurationMetric";
 import SdlcBuildDurationMetric from "./metrics/build/SdlcBuildDurationMetric";
 import SdlcDeployDurationMetric from "./metrics/deploy/SdlcDeployDurationMetric";
 import SdlcQualityScanDurationMetric from "./metrics/quality_scan/SdlcQualityScanDurationMetric";
@@ -53,7 +52,7 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-        let goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")]?.value;
+      let goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -83,7 +82,7 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
       }
     }
   };
-  
+
   const getChartBody = () => {
     if (
       !Array.isArray(metrics) ||
@@ -98,58 +97,30 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
       <div className="new-chart mb-3 pointer" style={{ minHeight: "450px", display: "flex" }}>
         <Row>
           <Col xs={12} sm={6} key={`metric-build`}>
-            <SdlcBuildDurationMetric
-              metric={metrics[0]}
-              dataBlockValues={dataBlockValues}
-              mean={dataBlockValues[0]["build_mean"]}
-              count={dataBlockValues[0]["build_count"]}
-              bottomText={'Goals : 1 min'}
-            ></SdlcBuildDurationMetric>
+            <SdlcBuildDurationMetric metric={metrics[0]} dataBlockValues={dataBlockValues} goalsData={goalsData} />
           </Col>
           <Col xs={12} sm={6} key="metric-deploy">
-            <SdlcDeployDurationMetric
-              metric={metrics[1]}
-              dataBlockValues={dataBlockValues}
-              mean={dataBlockValues[0]["deploy_mean"]}
-              count={dataBlockValues[0]["deploy_count"]}
-              bottomText={'Goals : 1 min'}
-            />
+            <SdlcDeployDurationMetric metric={metrics[1]} dataBlockValues={dataBlockValues} goalsData={goalsData} />
           </Col>
           <Col xs={12} sm={6} key="metric-quality-scan">
             <SdlcQualityScanDurationMetric
               metric={metrics[2]}
               dataBlockValues={dataBlockValues}
-              mean={dataBlockValues[0]["container_scan_mean"]}
-              count={dataBlockValues[0]["container_scan_count"]}
-              bottomText={'Goals : 1 min'}
+              goalsData={goalsData}
             />
           </Col>
           <Col xs={12} sm={6} key="metric-security-scan">
             <SdlcSecurityScanDurationMetric
               metric={metrics[3]}
               dataBlockValues={dataBlockValues}
-              mean={dataBlockValues[0]["code_scan_mean"]}
-              count={dataBlockValues[0]["code_scan_count"]}
-              bottomText={'Goals : 1 min'}
+              goalsData={goalsData}
             />
           </Col>
           <Col xs={12} sm={6} key="metric-scripts">
-            <SdlcScriptsDurationMetric
-              metric={metrics[4]}
-              dataBlockValues={dataBlockValues}
-              mean={dataBlockValues[0]["script_mean"]}
-              count={dataBlockValues[0]["script_count"]}
-              bottomText={'Goals : 1 min'}
-            />
+            <SdlcTestDurationMetric metric={metrics[4]} dataBlockValues={dataBlockValues} goalsData={goalsData} />
           </Col>
-          <Col xs={12} sm={6} key="metric-scripts">
-            <SdlcTestDurationMetric
-              metric={metrics[5]}
-              dataBlockValues={dataBlockValues}
-              mean={dataBlockValues[0]["testing_mean"]}
-              count={dataBlockValues[0]["testing_count"]}
-              bottomText={'Goals : 1 min'}
-            />
+          <Col xs={12} sm={6} key="metric-test">
+            <SdlcScriptsDurationMetric metric={metrics[5]} dataBlockValues={dataBlockValues} goalsData={goalsData} />
           </Col>
         </Row>
       </div>

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
 
-function SdlcQualityScanDurationDataBlock({ topText, mean, count, bottomText }) {
+function SdlcQualityScanDurationDataBlock({ topText, dataBlockValues, goalsData }) {
   return (
     <div
       className="metric-box"
@@ -11,8 +11,12 @@ function SdlcQualityScanDurationDataBlock({ topText, mean, count, bottomText }) 
       <div style={{ margin: "auto" }}>
         <ThreeLineDataBlockNoFocusBase
           topText={topText}
-          middleText={mean !== null ? `${mean} min | ${count}` : "N/A"}
-          bottomText={bottomText}
+          middleText={
+            dataBlockValues[0]?.container_scan_mean
+              ? dataBlockValues[0]?.container_scan_mean + " min | " + dataBlockValues[0]?.container_scan_count + " runs"
+              : "N/A | 0"
+          }
+          bottomText={goalsData?.average_quality_scan ? "Goal: " + goalsData?.average_quality_scan + " min" : ""}
         />
       </div>
     </div>
@@ -21,9 +25,8 @@ function SdlcQualityScanDurationDataBlock({ topText, mean, count, bottomText }) 
 
 SdlcQualityScanDurationDataBlock.propTypes = {
   topText: PropTypes.string,
-  mean: PropTypes.number,
-  count: PropTypes.number,
-  bottomText: PropTypes.string,
+  dataBlockValues: PropTypes.array,
+  goalsData: PropTypes.object,
 };
 
 export default SdlcQualityScanDurationDataBlock;

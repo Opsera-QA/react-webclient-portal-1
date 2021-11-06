@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
 
-function SdlcDeployDurationDataBlock({ topText, mean, count, bottomText }) {
+function SdlcDeployDurationDataBlock({ topText, dataBlockValues, goalsData }) {
   return (
     <div
       className="metric-box"
@@ -11,8 +11,12 @@ function SdlcDeployDurationDataBlock({ topText, mean, count, bottomText }) {
       <div style={{ margin: "auto" }}>
         <ThreeLineDataBlockNoFocusBase
           topText={topText}
-          middleText={mean !== null ? `${mean} min | ${count}` : "N/A"}
-          bottomText={bottomText}
+          middleText={
+            dataBlockValues[0]?.deploy_mean
+              ? dataBlockValues[0]?.deploy_mean + " min | " + dataBlockValues[0]?.deploy_count + " runs"
+              : "N/A | 0"
+          }
+          bottomText={goalsData?.average_builds ? "Goal: " + goalsData?.average_builds + " min" : ""}
         />
       </div>
     </div>
@@ -21,9 +25,8 @@ function SdlcDeployDurationDataBlock({ topText, mean, count, bottomText }) {
 
 SdlcDeployDurationDataBlock.propTypes = {
   topText: PropTypes.string,
-  mean: PropTypes.number,
-  count: PropTypes.number,
-  bottomText: PropTypes.string,
+  dataBlockValues: PropTypes.array,
+  goalsData: PropTypes.object,
 };
 
 export default SdlcDeployDurationDataBlock;

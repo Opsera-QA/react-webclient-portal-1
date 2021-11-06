@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
 
-function SdlcBuildDurationDataBlock({ topText, mean, count, bottomText }) {
+function SdlcBuildDurationDataBlock({ topText, dataBlockValues, goalsData }) {
   return (
     <div
       className="metric-box"
@@ -11,8 +11,12 @@ function SdlcBuildDurationDataBlock({ topText, mean, count, bottomText }) {
       <div style={{ margin: "auto" }}>
         <ThreeLineDataBlockNoFocusBase
           topText={topText}
-          middleText={mean !== null ? `${mean} min | ${count}` : "N/A"}
-          bottomText={bottomText}
+          middleText={
+            dataBlockValues[0]?.build_mean
+              ? dataBlockValues[0]?.build_mean + " min | " + dataBlockValues[0]?.build_mean + " runs"
+              : "N/A | 0"
+          }
+          bottomText={goalsData?.average_builds ? "Goal: " + goalsData?.average_builds + " min" : ""}
         />
       </div>
     </div>
@@ -21,9 +25,8 @@ function SdlcBuildDurationDataBlock({ topText, mean, count, bottomText }) {
 
 SdlcBuildDurationDataBlock.propTypes = {
   topText: PropTypes.string,
-  mean: PropTypes.number,
-  count: PropTypes.number,
-  bottomText: PropTypes.string,
+  dataBlockValues: PropTypes.array,
+  goalsData: PropTypes.object,
 };
 
 export default SdlcBuildDurationDataBlock;

@@ -141,6 +141,11 @@ export const assignLineColors = data => {
 
 // ----- End of color-assigning functions for Nivo charts -----
 
+export const assignLineChartGoalColors = (dataBlockValues, dataBlockAttribute, goalsData, goalsDataAttribute, lineData) => {
+  if (dataBlockValues[0][dataBlockAttribute] < goalsData[goalsDataAttribute]) {lineData[0].color = "#26cf26";}
+  if (dataBlockValues[0][dataBlockAttribute] > goalsData[goalsDataAttribute]) {lineData[0].color = "#E57373";}
+};
+
 // ----- Start of functions that that render colors assigned from above functions -----
 // Ex: colors={getColor} (on Nivo chart config)
 

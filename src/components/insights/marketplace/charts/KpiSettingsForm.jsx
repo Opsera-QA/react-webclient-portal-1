@@ -9,6 +9,7 @@ import {
   kpiSettingsMetadata,
   kpiDateFilterMetadata,
   kpiTagsFilterMetadata,
+  kpiGoalsFilterMetadata,
   kpiJenkinsResultFilterMetadata,
   kpiJenkinsJobUrlFilterMetadata,
   kpiJenkinsBuildNumberFilterMetadata,
@@ -36,6 +37,7 @@ import {
 import Model from "core/data_model/model";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import GoalsInputBase from "./goals/GoalsInputBase";
 import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
@@ -81,6 +83,9 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
   );
   const [kpiTagsFilter, setKpiTagsFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "tags", kpiTagsFilterMetadata)
+  );
+  const [kpiGoalsFilter, setKpiGoalsFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "goals", kpiGoalsFilterMetadata)
   );
   const [kpiJenkinsResultFilter, setKpiJenkinsResultFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "jenkins-result", kpiJenkinsResultFilterMetadata)
@@ -322,6 +327,18 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
             />
           </div>
         );
+        case "goals":
+          return (
+            <div>
+              <GoalsInputBase
+                type={"kpi_filter"}
+                fieldName={"value"}
+                setDataObject={setKpiGoalsFilter}
+                dataObject={kpiGoalsFilter}
+                kpiName={kpiSettings.getData("kpi_identifier")}
+              />
+            </div>
+          );  
       case "jenkins-result":
         return (
           <div>
@@ -625,6 +642,11 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "tags")
       ].value = kpiTagsFilter.getData("value");
+    }
+    if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "goals")]) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "goals")
+      ].value = kpiGoalsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
