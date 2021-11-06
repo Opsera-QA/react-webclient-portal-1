@@ -88,13 +88,13 @@ function SonarRatingsReliabilityDataBlock({ reliabilityRating, bugCount }) {
       title={"Sonar Ratings: Reliability"}
       onClick={() => onRowSelect()}
     >
-      <Col sm={4} className={"p-2"}>
+      <Col sm={4}>
         {getLeftDataBlock()}
       </Col>
-      <Col sm={4} className={"p-2"}>
+      <Col sm={4}>
         {getMiddleDataBlock()}
       </Col>
-      <Col sm={4} className={"p-2"}>
+      <Col sm={4}>
         {getRightDataBlock()}
       </Col>
     </HorizontalDataBlocksContainer>
