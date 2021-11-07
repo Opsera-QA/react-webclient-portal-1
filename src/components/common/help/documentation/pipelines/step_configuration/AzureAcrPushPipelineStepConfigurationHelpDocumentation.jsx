@@ -28,7 +28,7 @@ function AzureAcrPushPipelineStepConfigurationHelpDocumentation() {
                 <li><b>Jenkins Tool</b> - Select a configured Jenkins tool from Tool Registry.</li>
                 <li><b>Jenkins Job</b> - Select the Azure Docker Push job that was created in the selected Jenkins tool.</li>
                 <li><b>Build Step</b> - Select the name of the preceding build step.</li>
-                <li><b>Azure Tool</b> - Select the configured Azure tool from Tool Registry.</li>
+                <li><b>Azure Tool</b> - Select the configured Azure Account Legacy tool from Tool Registry.</li>
                 <li><b>Resource</b> - Value found in the Azure portal.</li>
                 <li><b>Azure Registry</b> - Select the container registry to push the images into.</li>
                 <li><b>Use Existing Repository</b> - Toggle on to view and select an existing repository in the Azure Registry to push the images into. Toggle off to create a new repository where the images will be pushed. Then enter a unique name for the new repository.</li>

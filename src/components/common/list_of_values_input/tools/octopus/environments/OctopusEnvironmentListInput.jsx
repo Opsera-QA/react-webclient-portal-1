@@ -88,12 +88,10 @@ function OctopusEnvironmentListInput(
   const customTemplate = (item) => {
 
     return (`
-      <div>
-        <div class="d-flex justify-content-between">
+        <div>
             <div>${item?.name}</div>
             <div>${item?.id}</div>
         </div>
-      </div>
     `);
   };
 
