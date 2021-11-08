@@ -1,7 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function ThreeLineDataBlockNoFocusBase({ middleText, bottomText, topText, className, topStyle }) {
+function ThreeLineDataBlockNoFocusBase({
+  middleText,
+  bottomText,
+  topText,
+  className,
+  topStyle,
+  middleStyle,
+  bottomStyle,
+}) {
   const getTopText = () => {
     if (topText) {
       return <div style={topStyle}>{topText}</div>;
@@ -10,13 +18,13 @@ function ThreeLineDataBlockNoFocusBase({ middleText, bottomText, topText, classN
 
   const getMiddleText = () => {
     if (middleText) {
-      return <div>{middleText}</div>;
+      return <div style={middleStyle}>{middleText}</div>;
     }
   };
 
   const getSubtitle = () => {
     if (bottomText) {
-      return <div>{bottomText}</div>;
+      return <div style={bottomStyle}>{bottomText}</div>;
     }
   };
 
@@ -37,6 +45,8 @@ ThreeLineDataBlockNoFocusBase.propTypes = {
   bottomText: PropTypes.any,
   className: PropTypes.string,
   topStyle: PropTypes.string,
+  middleStyle: PropTypes.string,
+  bottomStyle: PropTypes.string,
 };
 
 export default ThreeLineDataBlockNoFocusBase;

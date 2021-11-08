@@ -65,6 +65,7 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
       let dataObject = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data : [];
       let means = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data[6] : [];
       assignStandardLineColors(dataObject, true);
+      console.log(dataObject);
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         setDataBlockValues(means);

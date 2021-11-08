@@ -13,6 +13,12 @@ export const colorPalette1 = "#00a8e8";
 export const standardColors = [mainColor, "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173", "#E6E5E3", mainPurple, "#1E1D1B"];
 export const gradationalColors = ["#B1AeA7", "#7A756C", mainColor, "#1E1D1B"];
 
+export const statusColors = {
+  success: "#00897b",
+  danger: "#E57373",
+  warning: "#F1AD0F",
+};
+
 // ----- Start of color-assigning functions for Nivo charts -----
 
 // For most charts
@@ -143,9 +149,12 @@ export const assignLineColors = data => {
 
 // Assigning color to a line chart
 export const assignStandardLineColors = (data, uniColor=false) => {
+  console.log(data);
   if (Array.isArray(data)) {
     data.forEach((data, i) => {
-      data[0].color = uniColor ? mainColor : standardColors[i];
+      if (Array.isArray(data) && data.length > 0) {
+        data[0].color = uniColor ? mainColor : standardColors[i];
+      }
     });
   }
 };

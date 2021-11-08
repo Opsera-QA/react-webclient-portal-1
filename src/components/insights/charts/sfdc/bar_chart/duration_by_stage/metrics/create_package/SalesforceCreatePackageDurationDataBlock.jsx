@@ -7,6 +7,7 @@ import FullScreenCenterOverlayContainer from "components/common/overlays/center/
 import { faTable } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import getDate from "date-fns/getDate";
+import { statusColors } from "components/insights/charts/charts-views";
 
 function SalesforceCreatePackageDurationDataBlock({ meanData, countData, goalsData }) {
   const getMiddleText = (meanData, countData) => {
@@ -19,11 +20,27 @@ function SalesforceCreatePackageDurationDataBlock({ meanData, countData, goalsDa
     return "No runs";
   };
 
+  const getMiddleStyle = (meanData, goalsData) => {
+    if (!meanData || !goalsData || goalsData == 0) {
+      return;
+    }
+    if (goalsData < meanData) {
+      return { color: statusColors.success };
+    }
+    if (goalsData > meanData) {
+      return { color: statusColors.danger };
+    }
+    if (goalsData == meanData) {
+      return { color: statusColors.warning };
+    }
+  };
+
   return (
     <ThreeLineDataBlockNoFocusBase
       topText={"Package Creation"}
       middleText={getMiddleText(meanData, countData)}
       bottomText={goalsData ? "Goal: " + goalsData + " min" : ""}
+      middleStyle={getMiddleStyle(meanData, goalsData)}
     />
   );
 }
