@@ -2,7 +2,7 @@ import React  from "react";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 
-function CustomBadge({icon, badgeText, className}) {
+function BadgeBase({icon, badgeText, className}) {
   const getIcon = () => {
     if (icon) {
       return (
@@ -19,16 +19,16 @@ function CustomBadge({icon, badgeText, className}) {
   }
 
   return (
-    <span className={`custom-badge ${className}`}>
+    <span className={`badge ${className}`}>
       <span>{getIcon()}{badgeText}</span>
     </span>
   );
 }
 
-CustomBadge.propTypes = {
+BadgeBase.propTypes = {
   icon: PropTypes.object,
   badgeText: PropTypes.any,
   className: PropTypes.string
 };
 
-export default React.memo(CustomBadge);
+export default React.memo(BadgeBase);
