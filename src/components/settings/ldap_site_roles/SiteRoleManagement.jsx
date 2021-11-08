@@ -8,6 +8,7 @@ import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import axios from "axios";
 import SiteRoleManagementSubNavigationBar from "components/settings/ldap_site_roles/SiteRoleManagementSubNavigationBar";
 import SiteRolesTable from "components/settings/ldap_site_roles/SiteRolesTable";
+import SiteRolesHelpDocumentation from "../../common/help/documentation/settings/SiteRolesHelpDocumentation";
 
 function SiteRoleManagement() {
   const history = useHistory();
@@ -101,11 +102,19 @@ function SiteRoleManagement() {
     }
   };
 
+  const getHelpComponent = () => {
+    if (!isLoading) {
+      return (<SiteRolesHelpDocumentation/>);
+    }
+  };
+
   return (
     <ScreenContainer
       isLoading={!accessRoleData}
       navigationTabContainer={<SiteRoleManagementSubNavigationBar activeTab={"siteRoles"} />}
       breadcrumbDestination={"ldapSiteRolesManagement"}
+      pageDescription={"Site Roles determine a user’s level of accessibility. Manage Site Roles from this dashboard."}
+      helpComponent={getHelpComponent()}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
     >
