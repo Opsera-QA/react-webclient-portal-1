@@ -2,8 +2,8 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUser, faUserFriends} from "@fortawesome/pro-light-svg-icons";
+import UserBadge from "components/common/badges/user/UserBadge";
+import GroupBadge from "components/common/badges/group/GroupBadge";
 
 function RoleAccessField({dataObject, fieldName, noDataMessage, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -20,16 +20,20 @@ function RoleAccessField({dataObject, fieldName, noDataMessage, className}) {
 
         if (user) {
           return (
-            <span key={i} className="mx-1 mb-1 badge badge-light user-badge">
-              <FontAwesomeIcon icon={faUser} fixedWidth className="mr-1"/>{`${user}: ${item.role}`}
-            </span>
+            <UserBadge
+              badgeText={`${user}: ${item.role}`}
+              className={"mx-1 mb-1"}
+              key={i}
+            />
           );
         }
 
         return (
-          <span key={i} className="mx-1 mb-1 badge badge-light group-badge">
-            <FontAwesomeIcon icon={faUserFriends} fixedWidth className="mr-1"/>{`${group}: ${item.role}`}
-          </span>
+          <GroupBadge
+            badgeText={`${group}: ${item.role}`}
+            className={"mx-1 mb-1"}
+            key={i}
+          />
         );
       })
     );
