@@ -19,8 +19,8 @@ function SiteRolesHelpDocumentation() {
             <li>Click on the Site Role of which you’d like to add or remove a member (Administrators, PowerUsers or Users).</li>
             <li>Navigate to the ‘Manage Members‘ tab.</li>
             <li>Locate a user by typing their name into the search box.</li>
-            <li>To <b>add</b> a member to the group, select user‘s name from the column on the left to highlight it, then click the ‘Add Selected’ button. You should see the user name move into the ‘Members’ box on the right.</li>
-            <li>To <b>remove</b> a member from the group, select user’s name from the column on the right to highlight it, then click the ‘Remove Selected‘ button. The user‘s name will move into the ‘Not Members’ column on the left.</li>
+            <li>To <b>add</b> a member to the Site Role, select user‘s name from the column on the left to highlight it, then click the ‘Add Selected’ button. You should see the user name move into the ‘Members’ box on the right.</li>
+            <li>To <b>remove</b> a member from the Site Role, select user’s name from the column on the right to highlight it, then click the ‘Remove Selected‘ button. The user‘s name will move into the ‘Not Members’ column on the left.</li>
             <li>Click the ‘Save’ button.</li>
           </ol>
          Note: For any Site Role membership changes go into effect, user must log out then log back into the portal.
