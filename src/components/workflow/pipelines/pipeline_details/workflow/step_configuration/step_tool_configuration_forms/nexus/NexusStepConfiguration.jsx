@@ -113,40 +113,45 @@ function NexusStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdito
     parentCallback(item);
   };
 
-  const getAdditionalFields = () => {    
-    if(nexusStepConfigurationDto.getData("repositoryFormat") !== "" && 
-    nexusStepConfigurationDto.getData("repositoryFormat") === "docker") {
-      return (
-        <>          
-          <NexusStepJenkinsToolSelectInput
-            setModel={setNexusStepConfigurationDataDto}
-            model={nexusStepConfigurationDto}
-          />
-          <TextInputBase
-            setDataObject={setNexusStepConfigurationDataDto}
-            dataObject={nexusStepConfigurationDto}
-            fieldName={"dockerPort"}
-            key="dockerPort"
-          />
-        </>
-      );
-    }
-    return (
-      <>
-        <TextInputBase                      
-          setDataObject={setNexusStepConfigurationDataDto}
-          dataObject={nexusStepConfigurationDto}
-          fieldName={"groupName"}
-          key="groupName"
-        />
-        <TextInputBase                      
-          setDataObject={setNexusStepConfigurationDataDto}
-          dataObject={nexusStepConfigurationDto}
-          fieldName={"artifactName"}
-          key="artifactName"
-        />
-      </>
-    );
+  const getAdditionalFields = () => {
+    switch(nexusStepConfigurationDto.getData("repositoryFormat")) {
+      case "docker" : 
+        return (
+          <>          
+            <NexusStepJenkinsToolSelectInput
+              setModel={setNexusStepConfigurationDataDto}
+              model={nexusStepConfigurationDto}
+            />
+            <TextInputBase
+              setDataObject={setNexusStepConfigurationDataDto}
+              dataObject={nexusStepConfigurationDto}
+              fieldName={"dockerPort"}
+              key="dockerPort"
+            />
+          </>
+        );
+      case "maven2" :
+        return (
+          <>
+            <TextInputBase                      
+              setDataObject={setNexusStepConfigurationDataDto}
+              dataObject={nexusStepConfigurationDto}
+              fieldName={"groupName"}
+              key="groupName"
+            />
+            <TextInputBase                      
+              setDataObject={setNexusStepConfigurationDataDto}
+              dataObject={nexusStepConfigurationDto}
+              fieldName={"artifactName"}
+              key="artifactName"
+            />
+          </>
+        );
+      case "nuget" :
+        return (<></>);
+      default:
+        return (<></>);
+    }    
   };
 
   if (isLoading || nexusStepConfigurationDto == null) {
@@ -185,7 +190,6 @@ function NexusStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdito
           listOfSteps={listOfSteps}
         />
       }
-      {/* flag for custom version */}
       <NexusCustomVersionToggleInput 
         setDataObject={setNexusStepConfigurationDataDto}
         dataObject={nexusStepConfigurationDto}
