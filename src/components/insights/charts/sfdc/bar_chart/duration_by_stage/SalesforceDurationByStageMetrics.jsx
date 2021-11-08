@@ -1,28 +1,22 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
-import {Col, Row} from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import ModalLogs from "components/common/modal/modalLogs";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { useHistory } from "react-router-dom";
-import SalesforceBackupDurationMetric
-  from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/backup/SalesforceBackupDurationMetric";
-import SalesforceCreatePackageDurationMetric
-  from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/create_package/SalesforceCreatePackageDurationMetric";
-import SalesforceProfileMigrationDurationMetrics
-  from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/profile_migration/SalesforceProfileMigrationDurationMetric";
-import SalesforceUnitTestingDurationMetric
-  from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/unit_testing/SalesforceUnitTestingDurationMetric";
-import SalesforcePackageValidationDurationMetric
-  from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/validation/SalesforcePackageValidationDurationMetric";
-import SalesforceDeploymentDurationMetric
-  from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/deployment/SalesforceDeploymentDurationMetric";
+import SalesforceBackupDurationMetric from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/backup/SalesforceBackupDurationMetric";
+import SalesforceCreatePackageDurationMetric from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/create_package/SalesforceCreatePackageDurationMetric";
+import SalesforceProfileMigrationDurationMetrics from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/profile_migration/SalesforceProfileMigrationDurationMetric";
+import SalesforceUnitTestingDurationMetric from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/unit_testing/SalesforceUnitTestingDurationMetric";
+import SalesforcePackageValidationDurationMetric from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/validation/SalesforcePackageValidationDurationMetric";
+import SalesforceDeploymentDurationMetric from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/deployment/SalesforceDeploymentDurationMetric";
 
 function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const history = useHistory();
-  const {getAccessToken} = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [dataBlockValues, setDataBlockValues] = useState([]);
@@ -56,10 +50,17 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")]?.value;
       setGoalsData(goals);
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "salesforceDurationByStage", kpiConfiguration, dashboardTags);
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "salesforceDurationByStage",
+        kpiConfiguration,
+        dashboardTags
+      );
       let dataObject = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data : [];
       let means = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data[6] : [];
 
@@ -67,14 +68,12 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
         setMetrics(dataObject);
         setDataBlockValues(means);
       }
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -86,12 +85,17 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
   };
 
   const getChartBody = () => {
-    if (!Array.isArray(metrics) || metrics.length === 0 || !Array.isArray(dataBlockValues) || dataBlockValues.length === 0) {
+    if (
+      !Array.isArray(metrics) ||
+      metrics.length === 0 ||
+      !Array.isArray(dataBlockValues) ||
+      dataBlockValues.length === 0
+    ) {
       return null;
     }
 
     return (
-      <div className="new-chart mb-3" style={{minHeight: "450px", display: "flex"}}>
+      <div className="new-chart mb-3" style={{ minHeight: "450px", display: "flex" }}>
         <Row>
           <Col xs={12} sm={6}>
             <SalesforceCreatePackageDurationMetric
@@ -171,7 +175,7 @@ SalesforceDurationByStageMetrics.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func
+  setKpis: PropTypes.func,
 };
 
 export default SalesforceDurationByStageMetrics;

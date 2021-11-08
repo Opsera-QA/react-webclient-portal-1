@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
@@ -8,19 +8,23 @@ import { faTable } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import getDate from "date-fns/getDate";
 
-function SalesforceCreatePackageDurationDataBlock({dataBlockValues, goalsData}) {
+function SalesforceCreatePackageDurationDataBlock({ dataBlockValues, goalsData }) {
   return (
     <ThreeLineDataBlockNoFocusBase
-    topText={"Package Creation"}
-    middleText={dataBlockValues[0]?.create_package_mean ? dataBlockValues[0]?.create_package_mean + " min | " + dataBlockValues[0]?.create_package_count + " runs" : "N/A | 0"}
-    bottomText={goalsData?.average_builds ? "Goal: " + goalsData?.average_builds + " min" : ""}
-  />
+      topText={"Package Creation"}
+      middleText={
+        dataBlockValues[0]?.create_package_mean
+          ? dataBlockValues[0]?.create_package_mean + " min | " + dataBlockValues[0]?.create_package_count + " runs"
+          : "N/A | 0"
+      }
+      bottomText={goalsData?.average_builds ? "Goal: " + goalsData?.average_builds + " min" : ""}
+    />
   );
 }
 
 SalesforceCreatePackageDurationDataBlock.propTypes = {
-    dataBlockValues: PropTypes.array,
-    goalsData: PropTypes.object
+  dataBlockValues: PropTypes.array,
+  goalsData: PropTypes.object,
 };
 
 export default SalesforceCreatePackageDurationDataBlock;
