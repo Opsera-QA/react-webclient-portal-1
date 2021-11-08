@@ -1,11 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faSearch, faTag} from "@fortawesome/pro-light-svg-icons";
-import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
-import CustomBadge from "components/common/badges/CustomBadge";
-import IconBase from "components/common/icons/IconBase";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import TagBadge from "components/common/badges/tag/TagBadge";
+import TagBadgeBase from "components/common/badges/tag/TagBadgeBase";
+import SpyglassBadge from "components/common/badges/spyglass/SpyglassBadge";
 
 function TagDisplayer({tags, className, showNoTagsAppliedBadge}) {
   const getTagPopover = () => {
@@ -16,18 +15,10 @@ function TagDisplayer({tags, className, showNoTagsAppliedBadge}) {
             if (typeof tag !== "string") {
               return (
                 // <div>
-                  <CustomBadge
-                    badgeText={
-                      <span>
-                        <span className="mr-1">
-                          {capitalizeFirstLetter(tag.type)}:
-                        </span>
-                        {capitalizeFirstLetter(tag.value)}
-                      </span>
-                    }
-                    icon={faTag}
-                    key={index}
-                  />
+                <TagBadge
+                  tag={tag}
+                  key={index}
+                />
                 // </div>
               );
             }
@@ -41,14 +32,11 @@ function TagDisplayer({tags, className, showNoTagsAppliedBadge}) {
     if (showNoTagsAppliedBadge === true) {
       return (
         <div className={className}>
-        <span className="item-field">
-          <span>
-            <span className="mr-1 badge badge-light group-badge">
-              <IconBase icon={faTag} className={"mr-1"}/>
-              No Tags Applied
-            </span>
+          <span className="item-field">
+            <TagBadgeBase
+              badgeText={"No Tags Applied"}
+            />
           </span>
-        </span>
         </div>
       );
     }
@@ -65,12 +53,9 @@ function TagDisplayer({tags, className, showNoTagsAppliedBadge}) {
     >
       <div className={className}>
         <span className="item-field">
-          <span>
-            <span className="mr-1 badge badge-light group-badge">
-              <IconBase icon={faSearch} className={"mr-1"}/>
-              {tags.length} Tag{tags.length !== 1 ? "s" : ""} Applied
-            </span>
-          </span>
+          <SpyglassBadge
+            badgeText={`${tags.length} Tag${tags.length !== 1 ? "s" : ""} Applied`}
+          />
         </span>
       </div>
     </TooltipWrapper>
