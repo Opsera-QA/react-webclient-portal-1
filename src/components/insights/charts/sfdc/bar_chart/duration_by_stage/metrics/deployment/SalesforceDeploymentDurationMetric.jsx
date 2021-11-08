@@ -19,8 +19,8 @@ function SalesforceDeploymentDurationMetric({ meanData, countData, goalsData, me
 SalesforceDeploymentDurationMetric.propTypes = {
   meanData: PropTypes.number,
   countData: PropTypes.number,
-  goalsData: PropTypes.object,
-  metric: PropTypes.object,
+  goalsData: PropTypes.number,
+  metric: PropTypes.array,
 };
 
 export default SalesforceDeploymentDurationMetric;

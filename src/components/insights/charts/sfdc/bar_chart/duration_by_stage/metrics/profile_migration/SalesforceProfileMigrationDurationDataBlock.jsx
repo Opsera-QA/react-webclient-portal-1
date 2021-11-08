@@ -9,11 +9,18 @@ import Col from "react-bootstrap/Col";
 import getDate from "date-fns/getDate";
 
 function SalesforceProfileMigrationDurationDataBlock({ meanData, countData }) {
+  const getMiddleText = (meanData, countData) => {
+    if (meanData && countData) {
+      return meanData + " min | " + countData + " runs";
+    }
+    if (meanData) {
+      return meanData + " min | 0";
+    }
+    return "No runs";
+  };
+
   return (
-    <ThreeLineDataBlockNoFocusBase
-      topText={"Profile Migration"}
-      middleText={meanData ? meanData + " min | " + countData + " runs" : "N/A | 0"}
-    />
+    <ThreeLineDataBlockNoFocusBase topText={"Profile Migration"} middleText={getMiddleText(meanData, countData)} />
   );
 }
 

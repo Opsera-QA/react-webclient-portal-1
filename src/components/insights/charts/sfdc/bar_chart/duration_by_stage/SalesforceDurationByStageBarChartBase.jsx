@@ -24,7 +24,7 @@ function SalesforceDurationByStageBarChartBase({ metric }) {
 }
 
 SalesforceDurationByStageBarChartBase.propTypes = {
-  metric: PropTypes.object,
+  metric: PropTypes.array,
 };
 
 export default SalesforceDurationByStageBarChartBase;

@@ -5,9 +5,9 @@ import SalesforceDurationByStageBarChartBase from "components/insights/charts/sf
 import SalesforceBackupDurationDataBlock from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/backup/SalesforceBackupDurationDataBlock";
 import { assignLineChartGoalColors } from "components/insights/charts/charts-views";
 
-function SalesforceBackupDurationMetric({ meanData, countData, goalsData, metric }) {
+function SalesforceBackupDurationMetric({ meanData, countData, metric }) {
   const getDataBlock = () => {
-    return <SalesforceBackupDurationDataBlock meanData={meanData} countData={countData} goalsData={goalsData} />;
+    return <SalesforceBackupDurationDataBlock meanData={meanData} countData={countData} />;
   };
 
   const getChart = () => {
@@ -18,10 +18,9 @@ function SalesforceBackupDurationMetric({ meanData, countData, goalsData, metric
 }
 
 SalesforceBackupDurationMetric.propTypes = {
-  meanData: PropTypes.array,
+  meanData: PropTypes.number,
   countData: PropTypes.number,
-  goalsData: PropTypes.object,
-  metric: PropTypes.object,
+  metric: PropTypes.array,
 };
 
 export default SalesforceBackupDurationMetric;

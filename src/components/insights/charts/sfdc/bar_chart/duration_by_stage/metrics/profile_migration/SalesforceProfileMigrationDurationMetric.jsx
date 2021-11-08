@@ -22,7 +22,7 @@ SalesforceProfileMigrationDurationMetrics.propTypes = {
   meanData: PropTypes.number,
   countData: PropTypes.number,
   goalsData: PropTypes.object,
-  metric: PropTypes.object,
+  metric: PropTypes.array,
 };
 
 export default SalesforceProfileMigrationDurationMetrics;

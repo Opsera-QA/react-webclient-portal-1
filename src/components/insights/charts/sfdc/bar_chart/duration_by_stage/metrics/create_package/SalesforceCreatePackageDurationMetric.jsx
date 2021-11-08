@@ -19,8 +19,8 @@ function SalesforceCreatePackageDurationMetric({ meanData, countData, goalsData,
 SalesforceCreatePackageDurationMetric.propTypes = {
   meanData: PropTypes.number,
   countData: PropTypes.number,
-  goalsData: PropTypes.object,
-  metric: PropTypes.object,
+  goalsData: PropTypes.number,
+  metric: PropTypes.array,
 };
 
 export default SalesforceCreatePackageDurationMetric;

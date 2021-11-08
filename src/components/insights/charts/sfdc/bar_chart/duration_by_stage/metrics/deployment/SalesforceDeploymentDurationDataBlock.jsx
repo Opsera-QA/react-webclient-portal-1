@@ -9,10 +9,20 @@ import Col from "react-bootstrap/Col";
 import getDate from "date-fns/getDate";
 
 function SalesforceDeploymentDurationDataBlock({ meanData, countData, goalsData }) {
+  const getMiddleText = (meanData, countData) => {
+    if (meanData && countData) {
+      return meanData + " min | " + countData + " runs";
+    }
+    if (meanData) {
+      return meanData + " min | 0";
+    }
+    return "No runs";
+  };
+
   return (
     <ThreeLineDataBlockNoFocusBase
       topText={"Deployment"}
-      middleText={meanData ? meanData + " min | " + countData + " runs" : "N/A | 0"}
+      middleText={getMiddleText(meanData, countData)}
       bottomText={goalsData ? "Goal: " + goalsData + " min" : ""}
     />
   );
@@ -21,7 +31,7 @@ function SalesforceDeploymentDurationDataBlock({ meanData, countData, goalsData 
 SalesforceDeploymentDurationDataBlock.propTypes = {
   meanData: PropTypes.number,
   countData: PropTypes.number,
-  goalsData: PropTypes.object,
+  goalsData: PropTypes.number,
 };
 
 export default SalesforceDeploymentDurationDataBlock;

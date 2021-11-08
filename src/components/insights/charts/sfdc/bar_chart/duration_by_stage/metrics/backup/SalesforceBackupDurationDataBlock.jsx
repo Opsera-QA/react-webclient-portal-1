@@ -8,19 +8,23 @@ import { faTable } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import getDate from "date-fns/getDate";
 
-function SalesforceBackupDurationDataBlock({ meanData, countData, goalsData }) {
-  return (
-    <ThreeLineDataBlockNoFocusBase
-      topText={"Backups"}
-      middleText={meanData ? meanData + " min | " + countData + " runs" : "N/A | 0"}
-    />
-  );
+function SalesforceBackupDurationDataBlock({ meanData, countData }) {
+  const getMiddleText = (meanData, countData) => {
+    if (meanData && countData) {
+      return meanData + " min | " + countData + " runs";
+    }
+    if (meanData) {
+      return meanData + " min | 0";
+    }
+    return "No runs";
+  };
+
+  return <ThreeLineDataBlockNoFocusBase topText={"Backups"} middleText={getMiddleText(meanData, countData)} />;
 }
 
 SalesforceBackupDurationDataBlock.propTypes = {
   meanData: PropTypes.number,
   countData: PropTypes.number,
-  goalsData: PropTypes.object,
 };
 
 export default SalesforceBackupDurationDataBlock;
