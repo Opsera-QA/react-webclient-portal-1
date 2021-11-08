@@ -4,9 +4,11 @@ import DataBlockAndChartContainer from "components/common/metrics/container/Data
 import SalesforceDurationByStageBarChartBase from "components/insights/charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageBarChartBase";
 import SalesforcePackageValidationDurationDataBlock from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/validation/SalesforcePackageValidationDurationDataBlock";
 
-function SalesforcePackageValidationDurationMetric({ dataBlockValues, goalsData, metric }) {
+function SalesforcePackageValidationDurationMetric({ meanData, countData, goalsData, metric }) {
   const getDataBlock = () => {
-    return <SalesforcePackageValidationDurationDataBlock dataBlockValues={dataBlockValues} goalsData={goalsData} />;
+    return (
+      <SalesforcePackageValidationDurationDataBlock meanData={meanData} countData={countData} goalsData={goalsData} />
+    );
   };
 
   const getChart = () => {
@@ -17,7 +19,8 @@ function SalesforcePackageValidationDurationMetric({ dataBlockValues, goalsData,
 }
 
 SalesforcePackageValidationDurationMetric.propTypes = {
-  dataBlockValues: PropTypes.array,
+  meanData: PropTypes.number,
+  countData: PropTypes.number,
   goalsData: PropTypes.object,
   metric: PropTypes.object,
 };

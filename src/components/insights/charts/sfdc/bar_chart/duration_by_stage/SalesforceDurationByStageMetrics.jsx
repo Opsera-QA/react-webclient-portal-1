@@ -13,6 +13,7 @@ import SalesforceProfileMigrationDurationMetrics from "components/insights/chart
 import SalesforceUnitTestingDurationMetric from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/unit_testing/SalesforceUnitTestingDurationMetric";
 import SalesforcePackageValidationDurationMetric from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/validation/SalesforcePackageValidationDurationMetric";
 import SalesforceDeploymentDurationMetric from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/deployment/SalesforceDeploymentDurationMetric";
+import { assignStandardLineColors } from "components/insights/charts/charts-views";
 
 function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const history = useHistory();
@@ -63,7 +64,7 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
       );
       let dataObject = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data : [];
       let means = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data[6] : [];
-
+      assignStandardLineColors(dataObject, true);
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         setDataBlockValues(means);
@@ -100,43 +101,45 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
           <Col xs={12} sm={6}>
             <SalesforceCreatePackageDurationMetric
               metric={metrics[0]}
-              dataBlockValues={dataBlockValues}
-              goalsData={goalsData}
+              meanData={dataBlockValues[0]?.create_package_mean}
+              countData={dataBlockValues[0]?.create_package_count}
+              goalsData={goalsData?.average_builds}
             />
           </Col>
           <Col xs={12} sm={6}>
             <SalesforcePackageValidationDurationMetric
               metric={metrics[1]}
-              dataBlockValues={dataBlockValues}
-              goalsData={goalsData}
+              meanData={dataBlockValues[0]?.validate_package_mean}
+              countData={dataBlockValues[0]?.validate_package_count}
             />
           </Col>
           <Col xs={12} sm={6}>
             <SalesforceProfileMigrationDurationMetrics
               metric={metrics[2]}
-              dataBlockValues={dataBlockValues}
-              goalsData={goalsData}
+              meanData={dataBlockValues[0]?.profile_migration_mean}
+              countData={dataBlockValues[0]?.profile_migration_count}
             />
           </Col>
           <Col xs={12} sm={6}>
             <SalesforceBackupDurationMetric
               metric={metrics[3]}
-              dataBlockValues={dataBlockValues}
-              goalsData={goalsData}
+              meanData={dataBlockValues[0]?.backup_mean}
+              countData={dataBlockValues[0]?.backup_count}
             />
           </Col>
           <Col xs={12} sm={6}>
             <SalesforceUnitTestingDurationMetric
               metric={metrics[4]}
-              dataBlockValues={dataBlockValues}
-              goalsData={goalsData}
+              meanData={dataBlockValues[0]?.unit_testing_mean}
+              countData={dataBlockValues[0]?.unit_testing_count}
             />
           </Col>
           <Col xs={12} sm={6}>
             <SalesforceDeploymentDurationMetric
               metric={metrics[5]}
-              dataBlockValues={dataBlockValues}
-              goalsData={goalsData}
+              meanData={dataBlockValues[0]?.deploy_mean}
+              countData={dataBlockValues[0]?.deploy_count}
+              goalsData={goalsData?.average_deployments}
             />
           </Col>
         </Row>

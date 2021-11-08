@@ -4,13 +4,9 @@ import DataBlockAndChartContainer from "components/common/metrics/container/Data
 import SalesforceCreatePackageDurationDataBlock from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/create_package/SalesforceCreatePackageDurationDataBlock";
 import SalesforceDurationByStageBarChartBase from "components/insights/charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageBarChartBase";
 import { assignLineChartGoalColors } from "components/insights/charts/charts-views";
-function SalesforceCreatePackageDurationMetric({ dataBlockValues, goalsData, metric }) {
-  if (dataBlockValues.length > 0 && goalsData) {
-    assignLineChartGoalColors(dataBlockValues, "create_package_mean", goalsData, "average_builds", metric);
-  }
-
+function SalesforceCreatePackageDurationMetric({ meanData, countData, goalsData, metric }) {
   const getDataBlock = () => {
-    return <SalesforceCreatePackageDurationDataBlock dataBlockValues={dataBlockValues} goalsData={goalsData} />;
+    return <SalesforceCreatePackageDurationDataBlock meanData={meanData} countData={countData} goalsData={goalsData} />;
   };
 
   const getChart = () => {
@@ -21,7 +17,8 @@ function SalesforceCreatePackageDurationMetric({ dataBlockValues, goalsData, met
 }
 
 SalesforceCreatePackageDurationMetric.propTypes = {
-  dataBlockValues: PropTypes.array,
+  meanData: PropTypes.number,
+  countData: PropTypes.number,
   goalsData: PropTypes.object,
   metric: PropTypes.object,
 };

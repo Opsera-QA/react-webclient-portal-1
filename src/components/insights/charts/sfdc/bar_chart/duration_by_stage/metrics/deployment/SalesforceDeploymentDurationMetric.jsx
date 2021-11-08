@@ -4,13 +4,9 @@ import DataBlockAndChartContainer from "components/common/metrics/container/Data
 import SalesforceDurationByStageBarChartBase from "components/insights/charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageBarChartBase";
 import SalesforceDeploymentDurationDataBlock from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/deployment/SalesforceDeploymentDurationDataBlock";
 import { assignLineChartGoalColors } from "components/insights/charts/charts-views";
-function SalesforceDeploymentDurationMetric({ dataBlockValues, goalsData, metric }) {
-  if (dataBlockValues.length > 0 && goalsData) {
-    assignLineChartGoalColors(dataBlockValues, "deploy_mean", goalsData, "average_deployments", metric);
-  }
-
+function SalesforceDeploymentDurationMetric({ meanData, countData, goalsData, metric }) {
   const getDataBlock = () => {
-    return <SalesforceDeploymentDurationDataBlock dataBlockValues={dataBlockValues} goalsData={goalsData} />;
+    return <SalesforceDeploymentDurationDataBlock meanData={meanData} countData={countData} goalsData={goalsData} />;
   };
 
   const getChart = () => {
@@ -21,7 +17,8 @@ function SalesforceDeploymentDurationMetric({ dataBlockValues, goalsData, metric
 }
 
 SalesforceDeploymentDurationMetric.propTypes = {
-  dataBlockValues: PropTypes.array,
+  meanData: PropTypes.number,
+  countData: PropTypes.number,
   goalsData: PropTypes.object,
   metric: PropTypes.object,
 };

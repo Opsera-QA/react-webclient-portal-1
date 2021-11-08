@@ -141,12 +141,13 @@ export const assignLineColors = data => {
   return data;
 };
 
-// Assigning color to a line chart based on goals
-export const assignLineChartGoalColors = (dataBlockValues, dataBlockAttribute, goalsData, goalsDataAttribute, lineData) => {
-  lineData[0].color = colorPalette1;
-  if (dataBlockValues[0][dataBlockAttribute] < goalsData[goalsDataAttribute]) {lineData[0].color = "#26cf26";}
-  if (dataBlockValues[0][dataBlockAttribute] === goalsData[goalsDataAttribute] || !dataBlockValues[0][dataBlockAttribute]) {lineData[0].color = "#FFA500";}
-  if (dataBlockValues[0][dataBlockAttribute] > goalsData[goalsDataAttribute]) {lineData[0].color = "#E57373";}
+// Assigning color to a line chart
+export const assignStandardLineColors = (data, uniColor=false) => {
+  if (Array.isArray(data)) {
+    data.forEach((data, i) => {
+      data[0].color = uniColor ? mainColor : standardColors[i];
+    });
+  }
 };
 
 // ----- End of color-assigning functions for Nivo charts -----

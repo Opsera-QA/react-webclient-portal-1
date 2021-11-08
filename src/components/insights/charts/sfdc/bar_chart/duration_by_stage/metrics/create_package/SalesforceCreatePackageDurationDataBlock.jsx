@@ -8,22 +8,19 @@ import { faTable } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import getDate from "date-fns/getDate";
 
-function SalesforceCreatePackageDurationDataBlock({ dataBlockValues, goalsData }) {
+function SalesforceCreatePackageDurationDataBlock({ meanData, countData, goalsData }) {
   return (
     <ThreeLineDataBlockNoFocusBase
       topText={"Package Creation"}
-      middleText={
-        dataBlockValues[0]?.create_package_mean
-          ? dataBlockValues[0]?.create_package_mean + " min | " + dataBlockValues[0]?.create_package_count + " runs"
-          : "N/A | 0"
-      }
-      bottomText={goalsData?.average_builds ? "Goal: " + goalsData?.average_builds + " min" : ""}
+      middleText={meanData ? meanData + " min | " + countData + " runs" : "N/A | 0"}
+      bottomText={goalsData ? "Goal: " + goalsData + " min" : ""}
     />
   );
 }
 
 SalesforceCreatePackageDurationDataBlock.propTypes = {
-  dataBlockValues: PropTypes.array,
+  meanData: PropTypes.number,
+  countData: PropTypes.number,
   goalsData: PropTypes.object,
 };
 

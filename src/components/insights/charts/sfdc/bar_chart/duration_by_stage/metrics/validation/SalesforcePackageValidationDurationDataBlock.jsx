@@ -2,22 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
 
-function SalesforcePackageValidationDurationDataBlock({ dataBlockValues, goalsData }) {
+function SalesforcePackageValidationDurationDataBlock({ meanData, countData }) {
   return (
     <ThreeLineDataBlockNoFocusBase
       topText={"Package Validation"}
-      middleText={
-        dataBlockValues[0]?.validate_package_mean
-          ? dataBlockValues[0]?.validate_package_mean + " min | " + dataBlockValues[0]?.validate_package_count + " runs"
-          : "N/A | 0"
-      }
+      middleText={meanData ? meanData + " min | " + countData + " runs" : "N/A | 0"}
     />
   );
 }
 
 SalesforcePackageValidationDurationDataBlock.propTypes = {
-  dataBlockValues: PropTypes.array,
-  goalsData: PropTypes.object,
+  meanData: PropTypes.number,
+  countData: PropTypes.number,
 };
 
 export default SalesforcePackageValidationDurationDataBlock;

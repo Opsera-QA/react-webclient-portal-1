@@ -8,22 +8,19 @@ import { faTable } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import getDate from "date-fns/getDate";
 
-function SalesforceDeploymentDurationDataBlock({ dataBlockValues, goalsData }) {
+function SalesforceDeploymentDurationDataBlock({ meanData, countData, goalsData }) {
   return (
     <ThreeLineDataBlockNoFocusBase
       topText={"Deployment"}
-      middleText={
-        dataBlockValues[0]?.deploy_mean
-          ? dataBlockValues[0]?.deploy_mean + " min | " + dataBlockValues[0]?.deploy_count + " runs"
-          : "N/A | 0"
-      }
-      bottomText={goalsData?.average_deployments ? "Goal: " + goalsData?.average_deployments + " min" : ""}
+      middleText={meanData ? meanData + " min | " + countData + " runs" : "N/A | 0"}
+      bottomText={goalsData ? "Goal: " + goalsData + " min" : ""}
     />
   );
 }
 
 SalesforceDeploymentDurationDataBlock.propTypes = {
-  dataBlockValues: PropTypes.array,
+  meanData: PropTypes.number,
+  countData: PropTypes.number,
   goalsData: PropTypes.object,
 };
 

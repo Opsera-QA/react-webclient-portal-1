@@ -8,25 +8,18 @@ import { faTable } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import getDate from "date-fns/getDate";
 
-function SalesforceProfileMigrationDurationDataBlock({ dataBlockValues, goalsData }) {
+function SalesforceProfileMigrationDurationDataBlock({ meanData, countData }) {
   return (
     <ThreeLineDataBlockNoFocusBase
       topText={"Profile Migration"}
-      middleText={
-        dataBlockValues[0]?.profile_migration_mean
-          ? dataBlockValues[0]?.profile_migration_mean +
-            " min | " +
-            dataBlockValues[0]?.profile_migration_count +
-            " runs"
-          : "N/A | 0"
-      }
+      middleText={meanData ? meanData + " min | " + countData + " runs" : "N/A | 0"}
     />
   );
 }
 
 SalesforceProfileMigrationDurationDataBlock.propTypes = {
-  dataBlockValues: PropTypes.array,
-  goalsData: PropTypes.object,
+  meanData: PropTypes.number,
+  countData: PropTypes.number,
 };
 
 export default SalesforceProfileMigrationDurationDataBlock;
