@@ -6,7 +6,7 @@ import {faWrench} from "@fortawesome/pro-light-svg-icons";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
-import ViewDashboardDetailsButton from "components/common/buttons/dashboards/ViewChartDetailsButton";
+import ViewChartDetailsButton from "components/common/buttons/dashboards/ViewChartDetailsButton";
 import {faList} from "@fortawesome/pro-solid-svg-icons";
 
 export default function MarketplaceChartCard({ kpi, dashboardId }) {
@@ -67,8 +67,8 @@ export default function MarketplaceChartCard({ kpi, dashboardId }) {
         {getToolsField()}
         {getCategoriesField()}
         <div className={"mt-3 justify-content-between d-flex"}>
-          <ViewDashboardDetailsButton dashboardId={dashboardId} marketplaceChart={kpi}/>
-          <small className="text-muted mt-auto">Last
+          <ViewChartDetailsButton dashboardId={dashboardId} marketplaceChart={kpi}/>
+          <small className="text-muted mt-auto ml-2">Last
             updated {formatDistanceToNowStrict(new Date(kpi.updatedAt))} ago.</small>
         </div>
       </Card.Body>
