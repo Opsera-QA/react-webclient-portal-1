@@ -7,6 +7,9 @@ import SalesforceBackupDurationDataBlock
   from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/backup/SalesforceBackupDurationDataBlock";
 
 function SalesforceBackupDurationMetric({dataBlockValues, goalsData, metric}) {
+  if (dataBlockValues.length > 0 && goalsData) {
+    assignLineChartGoalColors(dataBlockValues, "create_package_mean", goalsData, "average_builds", metric);
+  }
   const getDataBlock = () => {
     return (
       <SalesforceBackupDurationDataBlock

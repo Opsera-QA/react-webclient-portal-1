@@ -7,6 +7,7 @@ export const accentColor = "#A8D0DB";
 export const failColor = "#E57373";
 export const neutralColor = "#FFA500";
 export const successColor = "#26cf26";
+export const colorPalette1 = "#00a8e8";
 
 // Color schema for Nivo charts
 export const standardColors = [mainColor, "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173", "#E6E5E3", mainPurple, "#1E1D1B"];
@@ -142,7 +143,9 @@ export const assignLineColors = data => {
 
 // Assigning color to a line chart based on goals
 export const assignLineChartGoalColors = (dataBlockValues, dataBlockAttribute, goalsData, goalsDataAttribute, lineData) => {
+  lineData[0].color = colorPalette1;
   if (dataBlockValues[0][dataBlockAttribute] < goalsData[goalsDataAttribute]) {lineData[0].color = "#26cf26";}
+  if (dataBlockValues[0][dataBlockAttribute] === goalsData[goalsDataAttribute] || !dataBlockValues[0][dataBlockAttribute]) {lineData[0].color = "#FFA500";}
   if (dataBlockValues[0][dataBlockAttribute] > goalsData[goalsDataAttribute]) {lineData[0].color = "#E57373";}
 };
 
