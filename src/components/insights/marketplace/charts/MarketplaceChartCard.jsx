@@ -55,7 +55,7 @@ export default function MarketplaceChartCard({ kpi, dashboardId }) {
   };
 
   return (
-    <Card>
+    <Card className={"marketplace-chart-card"}>
       {getChartImage()}
       <Card.Body>
         <Card.Title>{kpi.name}</Card.Title>
@@ -67,9 +67,16 @@ export default function MarketplaceChartCard({ kpi, dashboardId }) {
         {getToolsField()}
         {getCategoriesField()}
         <div className={"mt-3 justify-content-between d-flex"}>
-          <ViewChartDetailsButton dashboardId={dashboardId} marketplaceChart={kpi}/>
-          <small className="text-muted mt-auto ml-2">Last
-            updated {formatDistanceToNowStrict(new Date(kpi.updatedAt))} ago.</small>
+          <ViewChartDetailsButton
+            dashboardId={dashboardId}
+            marketplaceChart={kpi}
+            className={"mr-3"}
+          />
+          <div className={"mt-auto"}>
+            <small className="text-muted">
+              Last updated {formatDistanceToNowStrict(new Date(kpi.updatedAt))} ago.
+            </small>
+          </div>
         </div>
       </Card.Body>
     </Card>
