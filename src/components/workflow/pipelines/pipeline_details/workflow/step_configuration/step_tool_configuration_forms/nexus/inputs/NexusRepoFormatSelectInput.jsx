@@ -13,7 +13,7 @@ const NEXUS_REPO_TYPES = [
   },
   {
     name: "NuGet",
-    value: "nuget "
+    value: "nuget"
   }
 ];
 
