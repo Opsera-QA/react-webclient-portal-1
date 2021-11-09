@@ -1,3 +1,5 @@
+/*// TODO: Remove this*/
+
 .footer-records {
   margin-left: auto;
   margin-right: 20px;
@@ -15,14 +17,6 @@
   font-size: 1.5rem;
   top: 5px;
   left: 25px;
-}
-
-.col-sm-4 {
-  margin-bottom: 20px;
-}
-
-.d-none.d-lg-block {
-  display: block !important;
 }
 
 .sonar-pipeline-details-table .custom-table > thead > tr > th >div {
