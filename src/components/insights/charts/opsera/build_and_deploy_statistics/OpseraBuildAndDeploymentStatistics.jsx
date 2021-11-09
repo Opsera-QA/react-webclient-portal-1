@@ -87,7 +87,7 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
     }
   };
 
-  const monthData = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+  const monthData = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   const getCorrectedData = (monthArr, ipData) => {
     
