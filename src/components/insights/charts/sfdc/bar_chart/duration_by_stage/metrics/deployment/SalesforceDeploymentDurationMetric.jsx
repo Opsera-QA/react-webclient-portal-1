@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import DataBlockAndChartContainer from "components/common/metrics/container/DataBlockAndChartContainer";
 import SalesforceDurationByStageBarChartBase from "components/insights/charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageBarChartBase";
 import SalesforceDeploymentDurationDataBlock from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/deployment/SalesforceDeploymentDurationDataBlock";
-import { assignLineChartGoalColors } from "components/insights/charts/charts-views";
 function SalesforceDeploymentDurationMetric({ meanData, countData, goalsData, metric }) {
   const getDataBlock = () => {
     return <SalesforceDeploymentDurationDataBlock meanData={meanData} countData={countData} goalsData={goalsData} />;
