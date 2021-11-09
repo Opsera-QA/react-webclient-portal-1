@@ -92,6 +92,13 @@
     border-radius: 0.25rem;
 }
 
+.data-block-left-icon {
+    position: absolute;
+    font-size: 1.25rem;
+    top: 5px;
+    left: 25px;
+}
+
 /* End Data Block Styling */
 
 /* Marketplace Chart Card Styling */
