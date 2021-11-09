@@ -70,39 +70,6 @@ export const getOwnerNameField = (headerText = "Owner Name") => {
   };
 };
 
-export const getKpiSonarPipelineTableTextColumn=(field,block)=>{
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function parseText(row) {
-      let classNm = "dark-gray-text-primary";
-      const value = row?.value;
-      if(value > 0){
-        switch(block){
-          case "vulnerability":
-          case "bugs":
-          case "code_smells":
-          case "critical":
-          case "blocker":
-            classNm = 'danger-red';
-            break;
-          case "major":
-            classNm = value <= 1 ? 'opsera-yellow' : "danger-red";
-            break;
-          case "minor":
-            classNm = value < 10 ? 'opsera-yellow' : "danger-red";
-            break;
-          default:
-            classNm = "dark-gray-text-primary";
-        }
-      }
-      return (<div className={`${classNm} text-center`}>  
-            {value}
-        </div>);
-    },
-  };
-};
-
 export const getLimitedTableTextColumn = (field, maxLength, className) => {
   return {
     Header: getCustomTableHeader(field),

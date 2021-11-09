@@ -542,6 +542,7 @@ a.text-primary:hover, a.text-primary:focus {
 .custom-table .status-icon {
     display: flex;
     justify-content: center;
+    width: 1rem;
 
     /*TODO: REMOVE AFTER FIXING CENTERING*/
     margin-left: 15px;

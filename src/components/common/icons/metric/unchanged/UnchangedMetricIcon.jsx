@@ -10,7 +10,6 @@ function UnchangedMetricIcon() {
         <IconBase
           icon={faPauseCircle}
           iconClassName={"cell-icon vertical-align-item"}
-          className={"status-icon"}
         />
       </div>
     </TooltipWrapper>
