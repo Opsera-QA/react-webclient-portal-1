@@ -10,6 +10,7 @@ import jfrogMavenStepFormMetadata from "./jfrog-maven-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import JFrogMavenStepTypeSelectInput from "./inputs/JFrogMavenStepTypeSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import JFrogRepositoryFormatSelectInput from "./inputs/JFrogRepositoryFormatSelectInput";
 
 function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan, parentCallback }) {
 
@@ -30,7 +31,7 @@ function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
     }
   }, [plan, stepId]);
 
-  const formatStepOptions = (plan, stepId) => {
+  const formatStepOptions = (plan, stepId) => {    
     let STEP_OPTIONS = plan.slice(
       0,
       plan.findIndex((element) => element._id === stepId)
@@ -93,6 +94,7 @@ function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
         setModel={setJFrogStepConfigurationDataDto}
       />
       <JFrogMavenStepTypeSelectInput dataObject={jfrogStepConfigurationDto} setDataObject={setJFrogStepConfigurationDataDto} />
+      <JFrogRepositoryFormatSelectInput dataObject={jfrogStepConfigurationDto} setDataObject={setJFrogStepConfigurationDataDto} />
       <JfrogMavenRepoSelectInput
         fieldName={"repositoryName"}
         dataObject={jfrogStepConfigurationDto}
@@ -105,18 +107,32 @@ function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
             : ""
         }
       />
-      <TextInputBase                      
-        setDataObject={setJFrogStepConfigurationDataDto}
-        dataObject={jfrogStepConfigurationDto}
-        fieldName={"groupName"}
-        key="groupName"
-      />
-      <TextInputBase                      
-        setDataObject={setJFrogStepConfigurationDataDto}
-        dataObject={jfrogStepConfigurationDto}
-        fieldName={"artifactName"}
-        key="artifactName"
-      />
+      {jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("repositoryFormat") === "Maven" &&
+        <>
+          <TextInputBase                      
+            setDataObject={setJFrogStepConfigurationDataDto}
+            dataObject={jfrogStepConfigurationDto}
+            fieldName={"groupName"}
+            key="groupName"
+          />
+          <TextInputBase                      
+            setDataObject={setJFrogStepConfigurationDataDto}
+            dataObject={jfrogStepConfigurationDto}
+            fieldName={"artifactName"}
+            key="artifactName"
+          />
+        </>
+      }
+      {jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("repositoryFormat") === "NuGet" &&
+        <>
+          <TextInputBase                      
+            setDataObject={setJFrogStepConfigurationDataDto}
+            dataObject={jfrogStepConfigurationDto}
+            fieldName={"serverPath"}
+            key="serverPath"
+          />
+        </>
+      }
       <JFrogMavenBuildStepSelectInput
         dataObject={jfrogStepConfigurationDto}
         setDataObject={setJFrogStepConfigurationDataDto}

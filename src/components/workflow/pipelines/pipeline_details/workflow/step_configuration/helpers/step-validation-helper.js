@@ -32,7 +32,6 @@ StepValidationHelper.isValidConfiguration = (stepConfig) => {
       case "jfrog_artifactory_maven":
         return configuration.jfrogToolConfigId && configuration.type && 
           configuration.repositoryName && configuration.repositoryFormat  && 
-          configuration.artifactName && configuration.groupName  && 
           configuration.artifactStepId ? true : false;
 
       default:
