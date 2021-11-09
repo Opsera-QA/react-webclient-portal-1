@@ -9,6 +9,7 @@ import {
   kpiSettingsMetadata,
   kpiDateFilterMetadata,
   kpiTagsFilterMetadata,
+  kpiNotesFilterMetadata,
   kpiJenkinsResultFilterMetadata,
   kpiJenkinsJobUrlFilterMetadata,
   kpiJenkinsBuildNumberFilterMetadata,
@@ -68,6 +69,7 @@ import GenericChartSettingsHelpDocumentation
 import StandaloneDeleteButtonWithConfirmationModal
   from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
+import FreeNotesTextInput from "./NotesFreeTextInput";
 
 function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData, index, closePanel, loadChart, setKpis, settingsHelpComponent }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -81,6 +83,9 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
   );
   const [kpiTagsFilter, setKpiTagsFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "tags", kpiTagsFilterMetadata)
+  );
+  const [kpiNotesFilter, setKpiNotesFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "notes", kpiNotesFilterMetadata)
   );
   const [kpiJenkinsResultFilter, setKpiJenkinsResultFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "jenkins-result", kpiJenkinsResultFilterMetadata)
@@ -319,6 +324,17 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
                 !tagFilterEnabled.includes(kpiSettings.getData("kpi_identifier")) ||
                 !kpiConfigSettings.getData("useKpiTags")
               }
+            />
+          </div>
+        );
+      case "notes":
+        return (
+          <div>
+            <FreeNotesTextInput
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiNotesFilter}
+              dataObject={kpiNotesFilter}
             />
           </div>
         );
@@ -625,6 +641,15 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "tags")
       ].value = kpiTagsFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "notes")
+        ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "notes")
+        ].value = kpiNotesFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[

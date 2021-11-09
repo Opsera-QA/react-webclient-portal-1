@@ -21,6 +21,7 @@ function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, d
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [notesData, setNotesData] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -47,13 +48,15 @@ function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, d
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
+      let notes = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "notes")]?.value;
+      setNotesData(notes);
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "automationPercentage", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.automationPercentage?.data : [];
       assignStandardColors(dataObject[0]?.pairs);
       shortenPieChartLegend(dataObject[0]?.pairs);
-
+      console.log("automation", dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -126,6 +129,11 @@ function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, d
           <Row className="p-1">
             <Col className="text-center">
               <small><span className="font-weight-bold">Goal:</span> Automation Percentage &gt; 90%</small>
+            </Col>
+          </Row>
+          <Row className="p-1">
+            <Col className="text-center">
+              <small><span className="font-weight-bold">Notes:</span> {notesData} </small>
             </Col>
           </Row>
         </Container>
