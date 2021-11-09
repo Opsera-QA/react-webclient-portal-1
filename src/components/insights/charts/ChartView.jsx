@@ -13,6 +13,7 @@ import OpseraPipelineDeploymentFrequencyStats from "./opsera/OpseraDeploymentFre
 import OpseraBuildDurationByStageBarChart from "./opsera/bar_chart/duration_by_stage/OpseraBuildDurationByStageBarChart";
 import OpseraMeanTimeToRestoreBarChart from "./opsera/bar_chart/mean_time_to_restore/OpseraMeanTimeToRestoreBarChart";
 import OpseraNexusPipelineStepInfo from "components/insights/charts/opsera/table/nexus_pipeline_step_info/OpseraNexusPipelineStepInfo";
+import OpseraBuildAndDeploymentStatistics from "components/insights/charts/opsera/build_and_deploy_statistics/OpseraBuildAndDeploymentStatistics";
 
 // Jenkins KPIs
 import JenkinsBuildsByUserBarChart from "./jenkins/bar_chart/builds_by_user/JenkinsBuildsByUserBarChart";
@@ -1417,6 +1418,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col xl={6} md={12} className="p-2">
             <CoverityIssuesByCategory
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "build-deployment-statistics":
+        return (
+          <Col md={12} className="p-2">
+            <OpseraBuildAndDeploymentStatistics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
