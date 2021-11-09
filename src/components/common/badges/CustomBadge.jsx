@@ -1,11 +1,16 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import IconBase from "components/common/icons/IconBase";
 
 function CustomBadge({icon, badgeText, className}) {
   const getIcon = () => {
     if (icon) {
-      return (<FontAwesomeIcon icon={icon} fixedWidth className="mr-1"/>);
+      return (
+        <IconBase
+          icon={icon}
+          className={"mr-1"}
+        />
+      );
     }
   };
 

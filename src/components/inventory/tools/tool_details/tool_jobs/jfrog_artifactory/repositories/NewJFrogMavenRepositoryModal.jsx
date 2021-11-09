@@ -33,7 +33,7 @@ function NewJFrogMavenRepositoryModal({
   };
 
   return (
-    <CreateModal handleCancelModal={handleClose} objectType={"JFrog Maven Repository"} objectMethod={editMode ? "update" : "create"} showModal={showModal} loadData={loadData} >
+    <CreateModal handleCancelModal={handleClose} objectType={"JFrog Repository"} objectMethod={editMode ? "update" : "create"} showModal={showModal} loadData={loadData} >
       <JFrogRepositoryEditorPanel 
         toolData={toolData} 
         jfrogRepositoryData={jfrogRepositoryData} 

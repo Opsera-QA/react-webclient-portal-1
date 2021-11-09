@@ -7,13 +7,13 @@ import chartsActions from "components/insights/charts/charts-actions";
 import SonarRatingsChartHelpDocumentation
   from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
 import SonarRatingsMaintainabilityDataBlock
-  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsMaintainabilityDataBlock_reverted";
+  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsMaintainabilityDataBlock";
 import SonarRatingsVulnerabilityDataBlock
-  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsVulnerabilityDataBlock_reverted";
+  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsVulnerabilityDataBlock";
 import ThreeStackedHorizontalMetricsContainer
   from "components/common/metrics/data_blocks/horizontal/ThreeStackedHorizontalMetricsContainer";
 import SonarRatingsReliabilityDataBlock
-  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlock_reverted";
+  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlock";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 
 function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {

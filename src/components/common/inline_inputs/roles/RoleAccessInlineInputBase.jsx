@@ -25,7 +25,13 @@ function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData, v
   return (
     <div className="role-access">
       <div className="d-flex">
-        <div><RoleAccessField dataObject={dataObject} fieldName={fieldName} noDataMessage={noDataMessage} /></div>
+        <div>
+          <RoleAccessField
+            model={dataObject}
+            fieldName={fieldName}
+            noDataMessage={noDataMessage}
+          />
+        </div>
         <div className="edit-button d-flex">
           <EditIcon
             className={"ml-2 mt-2 text-muted"}

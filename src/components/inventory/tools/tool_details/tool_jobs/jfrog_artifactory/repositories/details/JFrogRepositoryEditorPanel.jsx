@@ -125,7 +125,7 @@ function JFrogRepositoryEditorPanel({
           <TextInputBase dataObject={jfrogRepositoryData} setDataObject={setJFrogRepositoryData} fieldName={"description"} />
         </Col>
       </Row>
-      <JFrogMavenPackageTypeInput dataObject={jfrogRepositoryData} setDataObject={setJFrogRepositoryData} fieldName={"packageType"} disabled={true} />      
+      <JFrogMavenPackageTypeInput dataObject={jfrogRepositoryData} setDataObject={setJFrogRepositoryData} fieldName={"packageType"} />      
     </EditorPanelContainer>
   );
 }

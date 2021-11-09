@@ -1,13 +1,17 @@
+/*// TODO: Remove this*/
+
 .footer-records {
-  max-width: 26%!important;
   margin-left: auto;
+  margin-right: 20px;
 }
+
 .box-icon {
   position: absolute;
   font-size: 1.25rem;
   top: 5px;
   left: 25px;
 }
+
 .info-box-icon {
   position: absolute;
   font-size: 1.5rem;

@@ -1,5 +1,5 @@
 // Analytics Software Testing, Persona Manager/Developer/Executive, Node Ticket AN-147
-import config from "./sonarCodeCoverageBarChartConfigs";
+import config from "components/insights/charts/sonar/bar_chart/code_coverage/sonarCodeCoverageBarChartConfigs";
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";

@@ -2,7 +2,7 @@
 
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
-import config from "./sonarMetricByProjectLineChartConfigs";
+import config from "components/insights/charts/sonar/line_chart/metric-by-project/sonarMetricByProjectLineChartConfigs";
 import React, {useState, useEffect, useContext, useRef} from "react";
 import ModalLogs from "components/common/modal/modalLogs";
 import axios from "axios";
