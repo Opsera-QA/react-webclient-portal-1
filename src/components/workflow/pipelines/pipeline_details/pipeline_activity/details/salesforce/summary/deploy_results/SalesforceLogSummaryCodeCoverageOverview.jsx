@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {Col, Row} from "react-bootstrap";
-import FieldSubHeader from "components/common/fields/FieldSubHeader";
+import H4FieldSubHeader from "components/common/fields/subheader/H4FieldSubHeader";
 
 function SalesforceLogSummaryCodeCoverageOverview({ salesforceDeployResultsModel }) {
  
@@ -40,7 +40,7 @@ function SalesforceLogSummaryCodeCoverageOverview({ salesforceDeployResultsModel
 
   return (
     <Row className={"my-3"}>
-      <Col lg={12}><FieldSubHeader subheaderText={"Code Coverage Overview"}/></Col>
+      <Col lg={12}><H4FieldSubHeader subheaderText={"Code Coverage Overview"}/></Col>
       {getBody()}
     </Row>
   );

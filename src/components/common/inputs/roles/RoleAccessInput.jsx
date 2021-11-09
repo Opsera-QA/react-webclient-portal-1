@@ -15,14 +15,7 @@ import PropertyInputContainer from "components/common/inputs/object/PropertyInpu
 import axios from "axios";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
-
-const roleTypes = [
-  {text: "Administrator", value: "administrator"},
-  {text: "Manager", value: "manager"},
-  // {text: "SecOps", value: "secops"},
-  {text: "User", value: "user"},
-  {text: "Guest", value: "guest"},
-];
+import StandaloneRoleAccessTypeInput from "components/common/inputs/roles/StandaloneRoleAccessTypeInput";
 
 // TODO: Create RoleAccessInputRow that holds the actual inputs to clean this up.
 function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, disabled }) {
@@ -340,20 +333,6 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
     );
   };
 
-  const getRoleTypeInput = (role) => {
-    return (
-      <StandaloneSelectInput
-        selectOptions={roleTypes}
-        valueField={"value"}
-        textField={"text"}
-        value={role["role"]}
-        disabled={disabled}
-        placeholderText={"Select Role Type"}
-        setDataFunction={(value) => updateProperty(role, "role", value["value"])}
-      />
-    );
-  };
-
   const getDeletePropertyButton = (index) => {
     if (disabled !== true) {
       return (
@@ -376,7 +355,11 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
               {getAssigneeInput(role)}
             </Col>
             <Col sm={4} className={"pl-2 pr-2"}>
-              {getRoleTypeInput(role)}
+              <StandaloneRoleAccessTypeInput
+                accessRole={role}
+                disabled={disabled}
+                updateRoleType={updateProperty}
+              />
             </Col>
           </Row>
         </Col>
