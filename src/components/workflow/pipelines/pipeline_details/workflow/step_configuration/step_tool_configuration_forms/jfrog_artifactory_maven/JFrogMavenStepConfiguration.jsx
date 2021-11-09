@@ -121,6 +121,11 @@ function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
             fieldName={"artifactName"}
             key="artifactName"
           />
+          <BooleanToggleInput 
+            dataObject={jfrogStepConfigurationDto} 
+            setDataObject={setJFrogStepConfigurationDataDto} 
+            fieldName={"customVersion"} 
+          />  
         </>
       }
       {jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("repositoryFormat") === "NuGet" &&
@@ -142,12 +147,6 @@ function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
           (listOfSteps && listOfSteps.length === 0)
         }
       />
-      {/* flag for custom version */}
-      <BooleanToggleInput 
-        dataObject={jfrogStepConfigurationDto} 
-        setDataObject={setJFrogStepConfigurationDataDto} 
-        fieldName={"customVersion"} 
-      />  
     </PipelineStepEditorPanelContainer>
   );
 }
