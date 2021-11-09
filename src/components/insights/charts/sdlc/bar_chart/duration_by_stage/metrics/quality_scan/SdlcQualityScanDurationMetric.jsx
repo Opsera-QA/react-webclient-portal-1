@@ -2,19 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import DataBlockAndChartContainer from "components/common/metrics/container/DataBlockAndChartContainer";
 import SdlcDurationByStageBarChartBase from "../../SdlcDurationByStageBarChartBase";
-import SdlcQualityScanDurationDataBlock from "./SdlcQualityScanDurationDataBlock";
-import { assignLineChartGoalColors } from "components/insights/charts/charts-views";
+import SdlcDurationByStageDataBlockBase from "../../SdlcDurationByStageDataBlockBase";
 
-function SdlcQualityScanDurationMetric({ dataBlockValues, goalsData, metric }) {
-  if (dataBlockValues.length > 0 && goalsData) {
-    assignLineChartGoalColors(dataBlockValues, "container_scan_mean", goalsData, "average_quality_scan", metric);
-  }
-
+function SdlcQualityScanDurationMetric({ meanData, countData, goalsData, metric }) {
   const getDataBlock = () => {
     return (
-      <SdlcQualityScanDurationDataBlock
+      <SdlcDurationByStageDataBlockBase
         topText={metric[0]?.id}
-        dataBlockValues={dataBlockValues}
+        meanData={meanData}
+        countData={countData}
         goalsData={goalsData}
       />
     );
@@ -28,8 +24,9 @@ function SdlcQualityScanDurationMetric({ dataBlockValues, goalsData, metric }) {
 }
 
 SdlcQualityScanDurationMetric.propTypes = {
-  dataBlockValues: PropTypes.array,
-  goalsData: PropTypes.object,
+  meanData: PropTypes.number,
+  countData: PropTypes.number,
+  goalsData: PropTypes.number,
   metric: PropTypes.array,
 };
 

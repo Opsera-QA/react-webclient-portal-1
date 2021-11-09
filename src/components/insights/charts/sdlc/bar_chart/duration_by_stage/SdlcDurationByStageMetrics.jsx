@@ -13,6 +13,7 @@ import SdlcQualityScanDurationMetric from "./metrics/quality_scan/SdlcQualitySca
 import SdlcSecurityScanDurationMetric from "./metrics/security_scan/SdlcSecurityScanDurationMetric";
 import SdlcScriptsDurationMetric from "./metrics/scripts/SdlcScriptsDurationMetric";
 import SdlcTestDurationMetric from "./metrics/test/SdlcTestDurationMetric";
+import { assignStandardLineColors } from "components/insights/charts/charts-views";
 
 function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const history = useHistory();
@@ -65,7 +66,7 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
       let means = response?.data?.data
         ? response?.data?.data[0]?.opseraSdlcDurationByStage?.data[objectLength - 1]
         : [];
-
+      assignStandardLineColors(dataObject, true);
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         setDataBlockValues(means);
@@ -97,30 +98,52 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
       <div className="new-chart mb-3 pointer" style={{ minHeight: "450px", display: "flex" }}>
         <Row>
           <Col xs={12} sm={6} key={`metric-build`}>
-            <SdlcBuildDurationMetric metric={metrics[0]} dataBlockValues={dataBlockValues} goalsData={goalsData} />
+            <SdlcBuildDurationMetric
+              metric={metrics[0]}
+              meanData={dataBlockValues[0]?.build_mean}
+              countData={dataBlockValues[0]?.build_count}
+              goalsData={goalsData?.average_builds}
+            />
           </Col>
           <Col xs={12} sm={6} key="metric-deploy">
-            <SdlcDeployDurationMetric metric={metrics[1]} dataBlockValues={dataBlockValues} goalsData={goalsData} />
+            <SdlcDeployDurationMetric
+              metric={metrics[1]}
+              meanData={dataBlockValues[0]?.deploy_mean}
+              countData={dataBlockValues[0]?.deploy_count}
+              goalsData={goalsData?.average_deploy}
+            />
           </Col>
           <Col xs={12} sm={6} key="metric-quality-scan">
             <SdlcQualityScanDurationMetric
               metric={metrics[2]}
-              dataBlockValues={dataBlockValues}
-              goalsData={goalsData}
+              meanData={dataBlockValues[0]?.container_scan_mean}
+              countData={dataBlockValues[0]?.container_scan_count}
+              goalsData={goalsData?.average_quality_scan}
             />
           </Col>
           <Col xs={12} sm={6} key="metric-security-scan">
             <SdlcSecurityScanDurationMetric
               metric={metrics[3]}
-              dataBlockValues={dataBlockValues}
-              goalsData={goalsData}
+              meanData={dataBlockValues[0]?.code_scan_mean}
+              countData={dataBlockValues[0]?.code_scan_count}
+              goalsData={goalsData?.average_security_scan}
+            />
+          </Col>
+          <Col xs={12} sm={6} key="metric-test">
+            <SdlcTestDurationMetric
+              metric={metrics[4]}
+              meanData={dataBlockValues[0]?.testing_mean}
+              countData={dataBlockValues[0]?.testing_count}
+              goalsData={goalsData?.average_test}
             />
           </Col>
           <Col xs={12} sm={6} key="metric-scripts">
-            <SdlcTestDurationMetric metric={metrics[4]} dataBlockValues={dataBlockValues} goalsData={goalsData} />
-          </Col>
-          <Col xs={12} sm={6} key="metric-test">
-            <SdlcScriptsDurationMetric metric={metrics[5]} dataBlockValues={dataBlockValues} goalsData={goalsData} />
+            <SdlcScriptsDurationMetric
+              metric={metrics[5]}
+              meanData={dataBlockValues[0]?.script_mean}
+              countData={dataBlockValues[0]?.script_count}
+              goalsData={goalsData?.average_scripts}
+            />
           </Col>
         </Row>
       </div>
