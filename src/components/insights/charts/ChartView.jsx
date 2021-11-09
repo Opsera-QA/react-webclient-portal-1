@@ -1302,6 +1302,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+      case "salesforce-duration-by-stage":
+        return (
+          <Col md={12} className="p-2">
+            <SalesforceDurationByStageMetrics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       case "sfdc-manual-test":
         return (
           <Col md={12} className="p-2">
