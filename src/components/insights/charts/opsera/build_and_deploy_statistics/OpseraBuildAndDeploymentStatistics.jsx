@@ -1,28 +1,17 @@
 import React, {useState, useContext, useRef, useEffect} from "react";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
-import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-// import SonarRatingsChartHelpDocumentation
-//   from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
-import DeploymentStatisticsDataBlockContainerV2
-  from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/DeploymentStatisticsDataBlockContainerV2";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import BuildStatisticsDataBlockContainer
   from "components/insights/charts/opsera/build_and_deploy_statistics/build_statistics/BuildStatisticsDataBlockContainer";
-import BuildStatisticsDataBlockContainerV2
-  from "components/insights/charts/opsera/build_and_deploy_statistics/build_statistics/BuildStatisticsDataBlockContainerV2";
-import DeploymentFrequencyStatisticsDataBlockContainerV2
-  from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_frequency_statistics/DeploymentFrequencyStatisticsDataBlockContainerV2";
 import BuildFrequencyStatisticsDataBlockContainer
   from "components/insights/charts/opsera/build_and_deploy_statistics/build_frequency_statistics/BuildFrequencyStatisticsDataBlockContainer";
-import BuildFrequencyStatisticsDataBlockContainerV2
-  from "components/insights/charts/opsera/build_and_deploy_statistics/build_frequency_statistics/BuildFrequencyStatisticsDataBlockContainerV2";
-import AllDeploymentStatisticsDataBlockContainer
-  from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/AllDeploymentStatisticsDataBlockContainer";
-import AllBuildStatisticsDataBlockContainer
-  from "components/insights/charts/opsera/build_and_deploy_statistics/build_statistics/AllBuildStatisticsDataBlockContainer";
+import DeploymentStatisticsDataBlockContainer 
+  from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/DeploymentStatisticsDataBlockContainer";
+import DeploymentFrequencyStatisticsDataBlockContainer 
+  from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_frequency_statistics/DeploymentFrequencyStatisticsDataBlockContainer";
 import chartsActions from "components/insights/charts/charts-actions";
 import axios from "axios";
 import { getDateObjectFromKpiConfiguration } from "components/insights/charts/charts-helpers";
@@ -140,7 +129,7 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
     return (
       <Row className={"mx-0 p-2 justify-content-between"}>        
         <Col className={"px-0"} xl={6} lg={12}>
-          <BuildStatisticsDataBlockContainerV2 
+          <BuildStatisticsDataBlockContainer 
             metricData={buildAndDeployMetricData} 
             chartData={buildAndDeployChartData} 
             kpiConfiguration={kpiConfiguration}
@@ -149,14 +138,14 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
           />
         </Col>
         <Col className={"px-0"} xl={6} lg={12}>
-          <BuildFrequencyStatisticsDataBlockContainerV2 
+          <BuildFrequencyStatisticsDataBlockContainer 
             metricData={buildAndDeployMetricData} 
             chartData={buildAndDeployChartData}             
             goalsData={goalsData?.average_builds}
           />
         </Col>
         <Col className={"px-0"} xl={6} lg={12}>
-          <DeploymentStatisticsDataBlockContainerV2 
+          <DeploymentStatisticsDataBlockContainer 
             metricData={buildAndDeployMetricData} 
             chartData={buildAndDeployChartData} 
             kpiConfiguration={kpiConfiguration} 
@@ -165,7 +154,7 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
           />
         </Col>
         <Col className={"px-0"} xl={6} md={12}>
-          <DeploymentFrequencyStatisticsDataBlockContainerV2 
+          <DeploymentFrequencyStatisticsDataBlockContainer 
             metricData={buildAndDeployMetricData} 
             chartData={buildAndDeployChartData}            
             goalsData={goalsData?.average_deployments}
