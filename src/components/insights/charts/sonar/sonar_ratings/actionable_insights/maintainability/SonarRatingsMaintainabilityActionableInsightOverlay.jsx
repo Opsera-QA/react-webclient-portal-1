@@ -16,12 +16,7 @@ import CustomTable from "components/common/table/CustomTable";
 import {
   faDraftingCompass,
   faExternalLink,
-  faExclamationTriangle,
-  faExclamation,
-  faSirenOn,
-  faInfoCircle,
-  faRadiationAlt,
-  faBan, faTable,
+  faTable,
 } from "@fortawesome/pro-light-svg-icons";
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -33,6 +28,18 @@ import {
   getColor,
   getTimeDisplay
 } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
+import SonarCodeSmellsDataBlock
+  from "components/common/metrics/data_blocks/tools/sonar/code_smells/total/SonarCodeSmellsDataBlock";
+import SonarCriticalCodeSmellsDataBlock
+  from "components/common/metrics/data_blocks/tools/sonar/code_smells/critical/SonarCriticalCodeSmellsDataBlock";
+import SonarBlockerCodeSmellsDataBlock
+  from "components/common/metrics/data_blocks/tools/sonar/code_smells/blocker/SonarBlockerCodeSmellsDataBlock";
+import SonarMinorCodeSmellsDataBlock
+  from "components/common/metrics/data_blocks/tools/sonar/code_smells/minor/SonarMinorCodeSmellsDataBlock";
+import SonarMajorCodeSmellsDataBlock
+  from "components/common/metrics/data_blocks/tools/sonar/code_smells/major/SonarMajorCodeSmellsDataBlock";
+import SonarInfoCodeSmellsDataBlock
+  from "components/common/metrics/data_blocks/tools/sonar/code_smells/info/SonarInfoCodeSmellsDataBlock";
 
 function SonarRatingsMaintainabilityActionableInsightOverlay() {
   const { getAccessToken } = useContext(AuthContext);
@@ -160,70 +167,40 @@ function SonarRatingsMaintainabilityActionableInsightOverlay() {
     return (
       <Row className="py-3 px-2">
         <Col xl={2} lg={2} sm={4}>
-          <div className="metric-box p-3 text-center">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faRadiationAlt} fixedWidth className={`mr-2 ${code_smells}`} />
-            </div>
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className={`font-weight-bold ${code_smells}`}>{issueTypeData?.total}</div>
-            </div>
-            <div className={`w-100 mb-1 ${code_smells}`}>Code Smells</div>
-          </div>
+          <SonarCodeSmellsDataBlock
+            codeSmellCount={issueTypeData?.total}
+            className={`p-2 ${code_smells}`}
+          />
         </Col>
         <Col xl={2} lg={2} sm={4}>
-          <div className="metric-box p-3 text-center">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faSirenOn} fixedWidth className={`mr-2 ${critical}`} />
-            </div>
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className={`font-weight-bold ${critical}`}>{issueTypeData?.critical}</div>
-            </div>
-            <div className={`w-100 mb-1 ${critical}`}>Critical</div>
-          </div>
+          <SonarCriticalCodeSmellsDataBlock
+            className={`p-2 ${critical}`}
+            criticalCodeSmellCount={issueTypeData?.critical}
+          />
         </Col>
         <Col xl={2} lg={2} sm={4}>
-          <div className="metric-box p-3 text-center">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faBan} fixedWidth className={`mr-2 ${blocker}`} />
-            </div>
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className={`font-weight-bold ${blocker}`}>{issueTypeData?.blocker}</div>
-            </div>
-            <div className={`w-100 mb-1 ${blocker}`}>Blocker</div>
-          </div>
+          <SonarBlockerCodeSmellsDataBlock
+            blockerCodeSmellCount={issueTypeData?.blocker}
+            className={`p-2 ${blocker}`}
+          />
         </Col>
         <Col xl={2} lg={2} sm={4}>
-          <div className="metric-box p-3 text-center ">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faExclamationTriangle} className={`mr-2 ${major}`} />
-            </div>
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className={`font-weight-bold ${major}`}>{issueTypeData?.major}</div>
-            </div>
-            <div className={`w-100 mb-1 ${major}`}>Major</div>
-          </div>
+          <SonarMajorCodeSmellsDataBlock
+            majorCodeSmellCount={issueTypeData?.major}
+            className={`p-2 ${major}`}
+          />
         </Col>
         <Col xl={2} lg={2} sm={4}>
-          <div className="metric-box p-3 text-center">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faExclamation} fixedWidth className={`mr-2 ${minor}`} />
-            </div>
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className={`font-weight-bold ${minor}`}>{issueTypeData?.minor}</div>
-            </div>
-            <div className={`w-100 mb-1 ${minor}`}>Minor</div>
-          </div>
+          <SonarMinorCodeSmellsDataBlock
+            minorCodeSmellCount={issueTypeData?.minor}
+            className={`p-2 ${minor}`}
+          />
         </Col>
         <Col xl={2} lg={2} sm={4}>
-          <div className="metric-box p-3 text-center">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faInfoCircle} fixedWidth className={`mr-2 ${info}`} />
-            </div>
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className={`font-weight-bold ${info}`}>{issueTypeData?.info}</div>
-            </div>
-            <div className={`w-100 mb-1 ${info}`}>Info</div>
-          </div>
+          <SonarInfoCodeSmellsDataBlock
+            infoCodeSmellCount={issueTypeData?.info}
+            className={`p-2 ${info}`}
+          />
         </Col>
       </Row>
     );
@@ -244,22 +221,6 @@ function SonarRatingsMaintainabilityActionableInsightOverlay() {
     );
   };
 
-  const getPaginationOptions = () => {
-    return {
-      pageSize: model.getData("pageSize"),
-      totalCount: model.getData("totalCount"),
-      currentPage: model.getData("currentPage"),
-      gotoPageFn: gotoPage,
-    };
-  };
-
-  const gotoPage = (pageNumber, pageSize) => {
-    let newModel = { ...model };
-    newModel.setData("currentPage", pageNumber);
-    newModel.setData("pageSize", pageSize);
-    setModel({ ...newModel });
-  };
-
   const onRowSelect = (rowData) => {
     toastContext.showOverlayPanel(
       <BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount} />
@@ -273,7 +234,6 @@ function SonarRatingsMaintainabilityActionableInsightOverlay() {
         columns={columns}
         data={maintainibilityData}
         noDataMessage={noDataMessage}
-        paginationOptions={getPaginationOptions()}
         loadData={loadData}
         onRowSelect={onRowSelect}
         className='sonar-pipeline-details-table'
