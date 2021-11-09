@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {Col, Row} from "react-bootstrap";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import FieldSubHeader from "components/common/fields/FieldSubHeader";
+import H4FieldSubHeader from "components/common/fields/subheader/H4FieldSubHeader";
 
 function SalesforceLogSummaryComponentOverview({ salesforceDeployResultsModel }) {
 
@@ -42,7 +42,7 @@ function SalesforceLogSummaryComponentOverview({ salesforceDeployResultsModel })
 
   return (
     <Row className={"my-3"}>
-      <Col lg={12}><FieldSubHeader subheaderText={"Component Overview"}/></Col>
+      <Col lg={12}><H4FieldSubHeader subheaderText={"Component Overview"}/></Col>
       {getBody()}
     </Row>
   );
