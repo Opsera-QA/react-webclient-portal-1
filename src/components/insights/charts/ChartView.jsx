@@ -130,6 +130,7 @@ import DefectRemovalEfficiencyPieChart from "./qa_metrics/DefectRemovalEfficienc
 import SFDCBackups from "components/insights/charts/sfdc/SFDCBackups";
 import SFDCProfileMigrationsBarChart from "components/insights/charts/sfdc/bar_chart/profile_migrations/SFDCProfileMigrationsBarChart";
 import SFDCUnitTestingPieChart from "components/insights/charts/sfdc/pie_chart/unit_testing/SFDCUnitTestingPieChart";
+import SalesforceDurationByStageMetrics from "components/insights/charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageMetrics";
 
 // Service Now KPIs
 import ServiceNowMeanTimeToResolutionBarChart from "./servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionBarChart";
