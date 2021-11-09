@@ -10,7 +10,7 @@ import { getTableTextColumn, getTableTextColumnWithoutField } from "components/c
 import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
 import CustomTable from "components/common/table/CustomTable";
-import { faDraftingCompass, faExternalLink } from "@fortawesome/pro-light-svg-icons";
+import { faDraftingCompass, faExternalLink, faClock, faTools, faCheckCircle, faTimesCircle, faRocketLaunch } from "@fortawesome/pro-light-svg-icons";
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
@@ -118,7 +118,8 @@ function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardDat
           titleIcon={faDraftingCompass}
           body={getTable()}          
           className={"px-2 pb-2"}
-        />        
+        />
+        {getFooterDetails()}        
       </>
     );
   };
@@ -128,49 +129,82 @@ function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardDat
       return null;
     }
     return (
-      <Row className="py-3 px-2">
-        <Col xl={1} lg={1} sm={0} ></Col>
-        <Col xl={2} lg={2} sm={4} >
-          <div className="metric-box p-3 text-center">            
+      <Row className="pb-3 px-2">
+        <Col xl={1} lg={1} sm={0} className="mt-3" ></Col>
+        <Col xl={2} lg={2} sm={4} className="mt-3" >
+          <div className="metric-box p-3 text-center">
+            <div className="box-icon">
+              <FontAwesomeIcon icon={faTools} fixedWidth className='mr-2' />
+            </div>            
             <div className="box-metric d-flex flex-row" style={{alignItems: 'center', justifyContent: 'center'}}>
               <div className="font-weight-bold">{buildSummaryData?.total}</div>
             </div>
             <div className="w-100 text-muted mb-1">Total Builds</div>
           </div>
         </Col>
-        <Col xl={2} lg={2} sm={4}>
-          <div className="metric-box p-3 text-center">            
+        <Col xl={2} lg={2} sm={4} className="mt-3" >
+          <div className="metric-box p-3 text-center">
+            <div className="box-icon">
+              <FontAwesomeIcon icon={faCheckCircle} fixedWidth className='mr-2 green' />
+            </div>            
             <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
               <div className="font-weight-bold green">{buildSummaryData?.success}</div>
             </div>
             <div className="w-100 green mb-1">Successful Builds</div>
           </div>
         </Col>
-        <Col xl={2} lg={2} sm={4}>
-          <div className="metric-box p-3 text-center">            
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className="font-weight-bold red">{buildSummaryData?.failure}</div>
+        <Col xl={2} lg={2} sm={4} className="mt-3" >
+          <div className="metric-box p-3 text-center">
+            <div className="box-icon">
+              <FontAwesomeIcon icon={faTimesCircle} fixedWidth className='mr-2 danger-red' />
             </div>
-            <div className="w-100 red mb-1 ">Failed Builds</div>
+            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
+              <div className="font-weight-bold danger-red">{buildSummaryData?.failure}</div>
+            </div>
+            <div className="w-100 danger-red mb-1 ">Failed Builds</div>
           </div>
         </Col>
-        <Col xl={2} lg={2} sm={4}>
-          <div className="metric-box p-3 text-center">            
+        <Col xl={2} lg={2} sm={4} className="mt-3" >
+          <div className="metric-box p-3 text-center">
+            <div className="box-icon">
+              <FontAwesomeIcon icon={faRocketLaunch} fixedWidth className='mr-2 green' />
+            </div>            
             <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
               <div className="font-weight-bold green">{buildSummaryData?.avgDuration} <span className="metric-box-subtext"> mins</span></div>
             </div>
             <div className="w-100 green mb-1">Average Duration</div>
           </div>
         </Col>
-        <Col xl={2} lg={2} sm={4}>
-          <div className="metric-box p-3 text-center">            
+        <Col xl={2} lg={2} sm={4} className="mt-3" >
+          <div className="metric-box p-3 text-center"> 
+            <div className="box-icon">
+              <FontAwesomeIcon icon={faClock} fixedWidth className='mr-2 danger-red' />
+            </div>                       
             <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className="font-weight-bold red">{buildSummaryData?.avgTimeToResolve}<span className="metric-box-subtext"> hrs</span></div>
+              <div className="font-weight-bold danger-red">{buildSummaryData?.avgTimeToResolve}<span className="metric-box-subtext"> hrs</span></div>
             </div>
-            <div className="w-100 red mb-1 ">Average Duration to Resolve</div>
+            <div className="w-100 danger-red mb-1 ">Average Duration to Resolve</div>
           </div>
         </Col>        
       </Row>
+    );
+  };
+
+  const getFooterDetails = () => {
+    if (!buildSummaryData) {
+      return null;
+    }    
+
+    return (
+      <>
+        <Row className="px-2">
+          <Col className="footer-records text-right green">{`Total time spent to execute builds : ${buildSummaryData.duration}`}</Col>        
+        </Row>
+        <Row className="px-2">
+          <Col className="footer-records text-right danger-red">{`Total time spent to resolve failed builds : ${buildSummaryData.timeToResolve}`}</Col>
+        </Row>
+      </>
+      
     );
   };
   
