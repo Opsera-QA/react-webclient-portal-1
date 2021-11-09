@@ -8,7 +8,6 @@ import sonarPipelineDetailsFilterMetadata from "components/insights/charts/sonar
 import SonarPipelineTableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar.pipeline.table.metadata";
 import {
   getChartTrendStatusColumn,
-  getTableTextColumn,
   getTableTextColumnWithoutField,
   getKpiSonarPipelineTableTextColumn,
 } from "components/common/table/table-column-helpers";
@@ -18,21 +17,17 @@ import CustomTable from "components/common/table/CustomTable";
 import {
   faDraftingCompass,
   faExternalLink,
-  faExclamationTriangle,
-  faExclamation,
-  faSirenOn,
-  faInfoCircle,
-  faBan,
-  faBug, faTable,
+  faTable,
 } from "@fortawesome/pro-light-svg-icons";
 
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-details.css";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import {getColor, getTimeDisplay} from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
+import SonarRatingsReliabilityOverviewDataBlockContainer
+  from "components/insights/charts/sonar/sonar_ratings/actionable_insights/reliability/SonarRatingsReliabilityOverviewDataBlockContainer";
 
 function SonarRatingsReliabilityActionableInsightOverlay() {
   const { getAccessToken } = useContext(AuthContext);
@@ -145,90 +140,6 @@ function SonarRatingsReliabilityActionableInsightOverlay() {
     }
   };
 
-  const getPipelineDetails = () => {
-    if (!issueTypeData) {
-      return null;
-    }
-
-    const bugs = getColor("bugs", issueTypeData?.total);
-    const critical = getColor("critical", issueTypeData?.critical);
-    const blocker = getColor("blocker", issueTypeData?.blocker);
-    const major = getColor("major", issueTypeData?.major);
-    const minor = getColor("minor", issueTypeData?.minor);
-    const info = getColor("info", issueTypeData?.info);
-
-    return (
-      <Row className="py-3 px-2">
-        <Col xl={2} lg={2} sm={4}>
-          <div className="metric-box p-3 text-center">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faBug} fixedWidth className={`mr-2 ${bugs}`} />
-            </div>
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className={`font-weight-bold ${bugs}`}>{issueTypeData?.total}</div>
-            </div>
-            <div className={`w-100 mb-1 ${bugs}`}>Bugs</div>
-          </div>
-        </Col>
-        <Col xl={2} lg={2} sm={4}>
-          <div className="metric-box p-3 text-center">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faSirenOn} fixedWidth className={`mr-2 ${critical}`} />
-            </div>
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className={`font-weight-bold ${critical}`}>{issueTypeData?.critical}</div>
-            </div>
-            <div className={`w-100 mb-1 ${critical}`}>Critical</div>
-          </div>
-        </Col>
-        <Col xl={2} lg={2} sm={4}>
-          <div className="metric-box p-3 text-center">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faBan} fixedWidth className={`mr-2 ${blocker}`} />
-            </div>
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className={`font-weight-bold ${blocker}`}>{issueTypeData?.blocker}</div>
-            </div>
-            <div className={`w-100 mb-1 ${blocker}`}>Blocker</div>
-          </div>
-        </Col>
-        <Col xl={2} lg={2} sm={4}>
-          <div className="metric-box p-3 text-center ">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faExclamationTriangle} className={`mr-2 ${major}`} />
-            </div>
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className={`font-weight-bold ${major}`}>{issueTypeData?.major}</div>
-            </div>
-            <div className={`w-100 mb-1 ${major}`}>Major</div>
-          </div>
-        </Col>
-        <Col xl={2} lg={2} sm={4}>
-          <div className="metric-box p-3 text-center">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faExclamation} fixedWidth className={`mr-2 ${minor}`} />
-            </div>
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className={`font-weight-bold ${minor}`}>{issueTypeData?.minor}</div>
-            </div>
-            <div className={`w-100 mb-1 ${minor}`}>Minor</div>
-          </div>
-        </Col>
-        <Col xl={2} lg={2} sm={4}>
-          <div className="metric-box p-3 text-center">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faInfoCircle} fixedWidth className={`mr-2 ${info}`} />
-            </div>
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className={`font-weight-bold ${info}`}>{issueTypeData?.info}</div>
-            </div>
-            <div className={`w-100 mb-1 ${info}`}>Info</div>
-          </div>
-        </Col>
-      </Row>
-    );
-  };
-
   const getFooterDetails = () => {
     if (!footerData) {
       return null;
@@ -244,22 +155,6 @@ function SonarRatingsReliabilityActionableInsightOverlay() {
     );
   };
 
-  const getPaginationOptions = () => {
-    return {
-      pageSize: model.getData("pageSize"),
-      totalCount: model.getData("totalCount"),
-      currentPage: model.getData("currentPage"),
-      gotoPageFn: gotoPage,
-    };
-  };
-
-  const gotoPage = (pageNumber, pageSize) => {
-    let newModel = { ...model };
-    newModel.setData("currentPage", pageNumber);
-    newModel.setData("pageSize", pageSize);
-    setModel({ ...newModel });
-  };
-
   const onRowSelect = (rowData) => {
     toastContext.showOverlayPanel(
       <BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount} />
@@ -273,7 +168,6 @@ function SonarRatingsReliabilityActionableInsightOverlay() {
         columns={columns}
         data={bugsData}
         noDataMessage={noDataMessage}
-        paginationOptions={getPaginationOptions()}
         loadData={loadData}
         onRowSelect={onRowSelect}
         className='sonar-pipeline-details-table'
@@ -297,7 +191,9 @@ function SonarRatingsReliabilityActionableInsightOverlay() {
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
-        {getPipelineDetails()}
+        <SonarRatingsReliabilityOverviewDataBlockContainer
+          sonarMetric={issueTypeData}
+        />
         <FilterContainer
           isLoading={isLoading}
           showBorder={false}

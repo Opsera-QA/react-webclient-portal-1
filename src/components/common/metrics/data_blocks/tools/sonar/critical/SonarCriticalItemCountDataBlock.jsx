@@ -1,25 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
-import {faExclamation} from "@fortawesome/pro-light-svg-icons";
+import {faSirenOn} from "@fortawesome/pro-light-svg-icons";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 
-function SonarMinorCodeSmellsDataBlock({ minorCodeSmellCount, className, }) {
+function SonarCriticalItemCountDataBlock({ criticalCodeSmellCount, className, }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
       <TwoLineScoreDataBlock
         className={className}
-        icon={faExclamation}
-        score={minorCodeSmellCount}
-        subtitle={"Minor"}
+        icon={faSirenOn}
+        score={criticalCodeSmellCount}
+        subtitle={"Critical"}
       />
     </DataBlockBoxContainer>
   );
 }
 
-SonarMinorCodeSmellsDataBlock.propTypes = {
+SonarCriticalItemCountDataBlock.propTypes = {
   className: PropTypes.string,
-  minorCodeSmellCount: PropTypes.number,
+  criticalCodeSmellCount: PropTypes.number,
 };
 
-export default SonarMinorCodeSmellsDataBlock;
+export default SonarCriticalItemCountDataBlock;

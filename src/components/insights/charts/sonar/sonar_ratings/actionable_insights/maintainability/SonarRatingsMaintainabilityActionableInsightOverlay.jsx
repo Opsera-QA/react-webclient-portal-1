@@ -22,24 +22,12 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-details.css";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import {
-  getColor,
   getTimeDisplay
 } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
-import SonarCodeSmellsDataBlock
-  from "components/common/metrics/data_blocks/tools/sonar/code_smells/total/SonarCodeSmellsDataBlock";
-import SonarCriticalCodeSmellsDataBlock
-  from "components/common/metrics/data_blocks/tools/sonar/code_smells/critical/SonarCriticalCodeSmellsDataBlock";
-import SonarBlockerCodeSmellsDataBlock
-  from "components/common/metrics/data_blocks/tools/sonar/code_smells/blocker/SonarBlockerCodeSmellsDataBlock";
-import SonarMinorCodeSmellsDataBlock
-  from "components/common/metrics/data_blocks/tools/sonar/code_smells/minor/SonarMinorCodeSmellsDataBlock";
-import SonarMajorCodeSmellsDataBlock
-  from "components/common/metrics/data_blocks/tools/sonar/code_smells/major/SonarMajorCodeSmellsDataBlock";
-import SonarInfoCodeSmellsDataBlock
-  from "components/common/metrics/data_blocks/tools/sonar/code_smells/info/SonarInfoCodeSmellsDataBlock";
+import SonarRatingsMaintainabilityOverviewDataBlockContainer
+  from "components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityOverviewDataBlockContainer";
 
 function SonarRatingsMaintainabilityActionableInsightOverlay() {
   const { getAccessToken } = useContext(AuthContext);
@@ -152,60 +140,6 @@ function SonarRatingsMaintainabilityActionableInsightOverlay() {
     }
   };
 
-
-  const getPipelineDetails = () => {
-    if (!issueTypeData) {
-      return null;
-    }
-    const code_smells = getColor("code_smells", issueTypeData?.total);
-    const critical = getColor("critical", issueTypeData?.critical);
-    const blocker = getColor("blocker", issueTypeData?.blocker);
-    const major = getColor("major", issueTypeData?.major);
-    const minor = getColor("minor", issueTypeData?.minor);
-    const info = getColor("info", issueTypeData?.info);
-
-    return (
-      <Row className="py-3 px-2">
-        <Col xl={2} lg={2} sm={4}>
-          <SonarCodeSmellsDataBlock
-            codeSmellCount={issueTypeData?.total}
-            className={`p-2 ${code_smells}`}
-          />
-        </Col>
-        <Col xl={2} lg={2} sm={4}>
-          <SonarCriticalCodeSmellsDataBlock
-            className={`p-2 ${critical}`}
-            criticalCodeSmellCount={issueTypeData?.critical}
-          />
-        </Col>
-        <Col xl={2} lg={2} sm={4}>
-          <SonarBlockerCodeSmellsDataBlock
-            blockerCodeSmellCount={issueTypeData?.blocker}
-            className={`p-2 ${blocker}`}
-          />
-        </Col>
-        <Col xl={2} lg={2} sm={4}>
-          <SonarMajorCodeSmellsDataBlock
-            majorCodeSmellCount={issueTypeData?.major}
-            className={`p-2 ${major}`}
-          />
-        </Col>
-        <Col xl={2} lg={2} sm={4}>
-          <SonarMinorCodeSmellsDataBlock
-            minorCodeSmellCount={issueTypeData?.minor}
-            className={`p-2 ${minor}`}
-          />
-        </Col>
-        <Col xl={2} lg={2} sm={4}>
-          <SonarInfoCodeSmellsDataBlock
-            infoCodeSmellCount={issueTypeData?.info}
-            className={`p-2 ${info}`}
-          />
-        </Col>
-      </Row>
-    );
-  };
-
   const getFooterDetails = () => {
     if (!footerData) {
       return null;
@@ -257,7 +191,9 @@ function SonarRatingsMaintainabilityActionableInsightOverlay() {
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
-        {getPipelineDetails()}
+        <SonarRatingsMaintainabilityOverviewDataBlockContainer
+          sonarMetric={issueTypeData}
+        />
         <FilterContainer
           isLoading={isLoading}
           showBorder={false}

@@ -1,25 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
-import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
+import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 
-function SonarInfoCodeSmellsDataBlock({ infoCodeSmellCount, className, }) {
+function SonarMajorCountDataBlock({ majorCodeSmellCount, className, }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
       <TwoLineScoreDataBlock
         className={className}
-        icon={faInfoCircle}
-        score={infoCodeSmellCount}
-        subtitle={"Info"}
+        icon={faExclamationTriangle}
+        score={majorCodeSmellCount}
+        subtitle={"Major"}
       />
     </DataBlockBoxContainer>
   );
 }
 
-SonarInfoCodeSmellsDataBlock.propTypes = {
+SonarMajorCountDataBlock.propTypes = {
   className: PropTypes.string,
-  infoCodeSmellCount: PropTypes.number,
+  majorCodeSmellCount: PropTypes.number,
 };
 
-export default SonarInfoCodeSmellsDataBlock;
+export default SonarMajorCountDataBlock;
