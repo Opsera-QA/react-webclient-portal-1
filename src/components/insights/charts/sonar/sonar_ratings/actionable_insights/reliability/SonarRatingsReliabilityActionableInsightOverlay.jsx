@@ -3,7 +3,6 @@ import { AuthContext } from "contexts/AuthContext";
 import PropTypes from "prop-types";
 import axios from "axios";
 import Model from "core/data_model/model";
-import sonarPipelineDetailsFilterMetadata from "components/insights/charts/sonar/sonar_ratings/sonar.pipeline.details.filter.metadata";
 import { Row, Col } from "react-bootstrap";
 import {
   faExternalLink,
@@ -19,11 +18,14 @@ import SonarRatingsReliabilityOverviewDataBlockContainer
   from "components/insights/charts/sonar/sonar_ratings/actionable_insights/reliability/SonarRatingsReliabilityOverviewDataBlockContainer";
 import SonarRatingsReliabilityActionableInsightTable
   from "components/insights/charts/sonar/sonar_ratings/actionable_insights/reliability/SonarRatingsReliabilityActionableInsightTable";
+import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import SonarBugsMetricScorecardMetaData
+  from "components/insights/charts/sonar/table/bugs-scorecard/SonarBugsMetricScorecardMetaData";
 
 function SonarRatingsReliabilityActionableInsightOverlay() {
   const { getAccessToken } = useContext(AuthContext);
-  const [model, setModel] = useState(
-    new Model({ ...sonarPipelineDetailsFilterMetadata.newObjectFields }, sonarPipelineDetailsFilterMetadata, false)
+  const [filterModel, setFilterModel] = useState(
+    new Model({ ...genericChartFilterMetadata.newObjectFields }, SonarBugsMetricScorecardMetaData, false)
   );
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -67,7 +69,7 @@ function SonarRatingsReliabilityActionableInsightOverlay() {
     }
   };
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = model) => {
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     try {
       setIsLoading(true);
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
@@ -95,7 +97,7 @@ function SonarRatingsReliabilityActionableInsightOverlay() {
         );
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", sonarBugs.length);
-        setModel({ ...newFilterDto });
+        setFilterModel({ ...newFilterDto });
         setIssueTypeData(response?.data?.data[0]?.sonarBugs?.data[0]?.typeData[0]);
         setFooterData(response?.data?.data[0]?.sonarBugs?.data[0]?.debtData[0]);
       }
@@ -148,6 +150,9 @@ function SonarRatingsReliabilityActionableInsightOverlay() {
         <SonarRatingsReliabilityActionableInsightTable
           bugsData={bugsData}
           isLoading={isLoading}
+          filterModel={filterModel}
+          setFilterModel={setFilterModel}
+          loadData={loadData}
         />
         {getFooterDetails()}
       </div>

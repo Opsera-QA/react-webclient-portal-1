@@ -1,8 +1,7 @@
-import React, { useEffect, useContext, useState, useMemo, useRef } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import Model from "core/data_model/model";
-import sonarPipelineDetailsFilterMetadata from "components/insights/charts/sonar/sonar_ratings/sonar.pipeline.details.filter.metadata";
 import { Row, Col } from "react-bootstrap";
 import {
   faExternalLink,
@@ -20,11 +19,14 @@ import SonarRatingsMaintainabilityOverviewDataBlockContainer
   from "components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityOverviewDataBlockContainer";
 import SonarRatingsMaintainabilityActionableInsightTable
   from "components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityActionableInsightTable";
+import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import SonarBugsMetricScorecardMetaData
+  from "components/insights/charts/sonar/table/bugs-scorecard/SonarBugsMetricScorecardMetaData";
 
 function SonarRatingsMaintainabilityActionableInsightOverlay() {
   const { getAccessToken } = useContext(AuthContext);
-  const [model, setModel] = useState(
-    new Model({ ...sonarPipelineDetailsFilterMetadata.newObjectFields }, sonarPipelineDetailsFilterMetadata, false)
+  const [filterModel, setFilterModel] = useState(
+    new Model({ ...genericChartFilterMetadata.newObjectFields }, SonarBugsMetricScorecardMetaData, false)
   );
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -68,7 +70,7 @@ function SonarRatingsMaintainabilityActionableInsightOverlay() {
     }
   };
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = model) => {
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     try {
       setIsLoading(true);
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
@@ -96,7 +98,7 @@ function SonarRatingsMaintainabilityActionableInsightOverlay() {
         );
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", sonarMaintainability.length);
-        setModel({ ...newFilterDto });
+        setFilterModel({ ...newFilterDto });
         setIssueTypeData(response?.data?.data[0]?.sonarCodeSmells?.data[0]?.typeData[0]);
         setFooterData(response?.data?.data[0]?.sonarCodeSmells?.data[0]?.debtData[0]);
       }
@@ -154,7 +156,10 @@ function SonarRatingsMaintainabilityActionableInsightOverlay() {
         />
         <SonarRatingsMaintainabilityActionableInsightTable
           isLoading={isLoading}
-          maintainibilityData={maintainibilityData}
+          maintainabilityData={maintainibilityData}
+          filterModel={filterModel}
+          setFilterModel={setFilterModel}
+          loadData={loadData}
         />
         {getFooterDetails()}
       </div>

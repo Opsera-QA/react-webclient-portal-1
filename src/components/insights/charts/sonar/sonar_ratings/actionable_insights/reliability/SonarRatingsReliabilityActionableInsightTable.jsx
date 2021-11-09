@@ -16,7 +16,14 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 
 // TODO: Convert to cards
-function SonarRatingsReliabilityActionableInsightTable({bugsData, isLoading}) {
+function SonarRatingsReliabilityActionableInsightTable(
+  {
+    bugsData,
+    isLoading,
+    filterModel,
+    setFilterModel,
+    loadData,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const noDataMessage = "Sonar Bugs report is currently unavailable at this time";
   const fields = SonarPipelineTableMetadata.fields;
@@ -97,6 +104,9 @@ function SonarRatingsReliabilityActionableInsightTable({bugsData, isLoading}) {
       titleIcon={faDraftingCompass}
       body={getTable()}
       className={"px-2 pb-2"}
+      filterDto={filterModel}
+      setFilterDto={setFilterModel}
+      loadData={loadData}
     />
   );
 }
@@ -104,6 +114,9 @@ function SonarRatingsReliabilityActionableInsightTable({bugsData, isLoading}) {
 SonarRatingsReliabilityActionableInsightTable.propTypes = {
   bugsData: PropTypes.array,
   isLoading: PropTypes.bool,
+  filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
+  loadData: PropTypes.func,
 };
 
 export default SonarRatingsReliabilityActionableInsightTable;
