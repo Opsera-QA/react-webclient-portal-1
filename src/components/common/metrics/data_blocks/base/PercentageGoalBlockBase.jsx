@@ -1,18 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import IconBase from "components/common/icons/IconBase";
 
-function TwoLineDataBlockBase({ title, subtitle, className, icon,}) {
-  const getLeftDataBlockIcon = () => {
-    if (icon) {
-      return (
-        <div className={"data-block-left-icon"}>
-          <IconBase icon={icon}  />
-        </div>
-      );
-    }
-  };
-
+function PercentGoalBlockBase({ title, subtitle, className, goal}) {
   const getTitle = () => {
     if (title) {
       return (
@@ -33,26 +22,38 @@ function TwoLineDataBlockBase({ title, subtitle, className, icon,}) {
     }
   };
 
+  const getGoal = () => {
+    if (goal) {
+      return (
+        <div>
+          {goal}
+        </div>
+      );
+    }
+  };
+
   return (
     <div className={className}>
       <div className={"p-2 text-center"}>
-        {getLeftDataBlockIcon()}
         <div className="data-block-focal-text">
           {getTitle()}
         </div>
         <div className="w-100 text-muted">
           {getSubtitle()}
         </div>
+        <div className="w-100 font-weight-bolder">
+          {getGoal()}
+        </div>
       </div>
     </div>
   );
 }
 
-TwoLineDataBlockBase.propTypes = {
+PercentGoalBlockBase.propTypes = {
   title: PropTypes.any,
   subtitle: PropTypes.any,
   className: PropTypes.string,
-  icon: PropTypes.object,
+  goal: PropTypes.any,
 };
 
-export default TwoLineDataBlockBase;
+export default PercentGoalBlockBase;

@@ -10,6 +10,7 @@ import {
   kpiDateFilterMetadata,
   kpiTagsFilterMetadata,
   kpiGoalsFilterMetadata,
+  kpiNotesFilterMetadata,
   kpiJenkinsResultFilterMetadata,
   kpiJenkinsJobUrlFilterMetadata,
   kpiJenkinsBuildNumberFilterMetadata,
@@ -68,6 +69,7 @@ import OverlayPanelBodyContainer from "components/common/panels/detail_panel_con
 import GenericChartSettingsHelpDocumentation from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
 import StandaloneDeleteButtonWithConfirmationModal from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
+import TextAreaInput from "../../../common/inputs/text/TextAreaInput";
 
 function KpiSettingsForm({
   kpiConfiguration,
@@ -93,6 +95,9 @@ function KpiSettingsForm({
   );
   const [kpiGoalsFilter, setKpiGoalsFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "goals", kpiGoalsFilterMetadata)
+  );
+  const [kpiNotesFilter, setKpiNotesFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "notes", kpiNotesFilterMetadata)
   );
   const [kpiJenkinsResultFilter, setKpiJenkinsResultFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "jenkins-result", kpiJenkinsResultFilterMetadata)
@@ -344,6 +349,17 @@ function KpiSettingsForm({
               setDataObject={setKpiGoalsFilter}
               dataObject={kpiGoalsFilter}
               kpiName={kpiSettings.getData("kpi_identifier")}
+            />
+          </div>
+        );
+      case "notes":
+        return (
+          <div>
+            <TextAreaInput
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiNotesFilter}
+              dataObject={kpiNotesFilter}
             />
           </div>
         );
@@ -655,6 +671,15 @@ function KpiSettingsForm({
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "goals")
       ].value = kpiGoalsFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "notes")
+        ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "notes")
+        ].value = kpiNotesFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[

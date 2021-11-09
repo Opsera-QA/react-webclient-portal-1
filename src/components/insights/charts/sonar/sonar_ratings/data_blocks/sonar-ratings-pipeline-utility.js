@@ -1,24 +1,3 @@
-// TODO: Remove
-export const getColor = (block, value) => {
-  if (value > 0) {
-    switch (block) {
-      case "vulnerability":
-      case "bugs":
-      case "code_smells":
-      case "critical":
-      case "blocker":
-        return "danger-red";
-      case "major":
-        return value <= 1 ? "opsera-yellow" : "danger-red";
-      case "minor":
-        return value < 10 ? "opsera-yellow" : "danger-red";
-      default:
-        return "dark-gray-text-primary";
-    }
-  }
-  return "dark-gray-text-primary";
-};
-
 export const getTimeDisplay = (mins) => {
   const seconds = Number(mins * 60);
   const days = Math.floor(seconds / (3600 * 24));
