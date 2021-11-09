@@ -15,6 +15,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import TwoLineScoreDataBlock from "../../../common/metrics/score/TwoLineScoreDataBlock";
 import NewPercentageDataBlock from "../../../common/metrics/percentage/NewPercentageDataBlock";
 import "../qa_metrics/Styling.css";
+import { METRIC_QUALITY_LEVELS } from "../../../common/metrics/text/MetricTextBase";
 
 function AdoptionPercentagePieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
