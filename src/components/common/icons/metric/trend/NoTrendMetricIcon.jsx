@@ -10,7 +10,6 @@ function NoTrendMetricIcon() {
         <IconBase
           icon={faMinusCircle}
           iconClassName={"cell-icon vertical-align-item"}
-          className={"status-icon"}
         />
       </div>
     </TooltipWrapper>

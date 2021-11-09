@@ -10,7 +10,6 @@ function DangerMetricIcon() {
         <IconBase
           icon={faArrowCircleUp}
           iconClassName={"red cell-icon vertical-align-item"}
-          className={"status-icon"}
         />
       </div>
     </TooltipWrapper>

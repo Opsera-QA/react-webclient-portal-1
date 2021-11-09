@@ -8,7 +8,7 @@ import SonarPipelineTableMetadata from "components/insights/charts/sonar/sonar_r
 import {
   getChartTrendStatusColumn,
   getTableTextColumnWithoutField,
-  getKpiSonarPipelineTableTextColumn,
+  getCustomTableHeader, getCustomTableAccessor,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
@@ -47,11 +47,45 @@ function SonarRatingsMaintainabilityActionableInsightOverlay() {
 
   const fields = SonarPipelineTableMetadata.fields;
 
+  // TODO: Handle colors with rules after written
+  const getKpiSonarPipelineTableTextColumn = (field, block) => {
+    return {
+      Header: getCustomTableHeader(field),
+      accessor: getCustomTableAccessor(field),
+      Cell: function parseText(row) {
+        let classNm = "dark-gray-text-primary";
+        const value = row?.value;
+        if (value > 0) {
+          switch (block) {
+            case "vulnerability":
+            case "bugs":
+            case "code_smells":
+            case "critical":
+            case "blocker":
+              classNm = 'danger-red';
+              break;
+            case "major":
+              classNm = value <= 1 ? 'opsera-yellow' : "danger-red";
+              break;
+            case "minor":
+              classNm = value < 10 ? 'opsera-yellow' : "danger-red";
+              break;
+            default:
+              classNm = "dark-gray-text-primary";
+          }
+        }
+        return (<div className={`${classNm}`}>
+          {value}
+        </div>);
+      },
+    };
+  };
+
   const columns = useMemo(
     () => [
       getKpiSonarPipelineTableTextColumn(getField(fields, "project")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "runCount")),
-      getChartTrendStatusColumn(getField(fields, "status"), "text-center", true),
+      getChartTrendStatusColumn(getField(fields, "status")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "critical"), "critical"),
       getKpiSonarPipelineTableTextColumn(getField(fields, "blocker"), "blocker"),
       getKpiSonarPipelineTableTextColumn(getField(fields, "major"), "major"),
@@ -170,7 +204,6 @@ function SonarRatingsMaintainabilityActionableInsightOverlay() {
         noDataMessage={noDataMessage}
         loadData={loadData}
         onRowSelect={onRowSelect}
-        className='sonar-pipeline-details-table'
       />
     );
   };

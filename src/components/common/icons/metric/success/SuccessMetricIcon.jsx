@@ -10,7 +10,6 @@ function SuccessMetricIcon() {
         <IconBase
           icon={faArrowCircleDown}
           iconClassName={"green cell-icon vertical-align-item"}
-          className={"status-icon"}
         />
       </div>
     </TooltipWrapper>
