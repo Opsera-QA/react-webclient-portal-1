@@ -95,6 +95,7 @@ export const kpiNotesFilterMetadata = {
     {
       label: "Notes",
       id: "value",
+      maxLength: 300,
     },
   ],
   newObjectFields: {

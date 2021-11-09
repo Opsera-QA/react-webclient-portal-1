@@ -106,9 +106,9 @@ function AdoptionPercentagePieChart({ kpiConfiguration, setKpiConfiguration, das
             <Col lg={6} md={8}>
             <NewPercentageDataBlock className={"test-percentage"}
                                  percentage={metrics[0]?.adoptionRate}
-                                 subtitle={"Automation Percentage"}
-                                 qualityLevel={metrics[0]?.automationRate < 98 ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS  }
-                                    goal={"Goal: Automation Percentage > 98%"}
+                                 subtitle={"Adoption Percentage"}
+                                 qualityLevel={metrics[0]?.adoptionRate < 98 ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS  }
+                                    goal={"Goal: Adoption Percentage > 98%"}
             />
             </Col>
           </Row>
