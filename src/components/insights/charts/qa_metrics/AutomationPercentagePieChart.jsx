@@ -14,6 +14,8 @@ import {
 import ChartTooltip from "../ChartTooltip";
 import { Col, Container, Row } from "react-bootstrap";
 import DataBlockWrapper from "../../../common/data_boxes/DataBlockWrapper";
+import TwoLineScoreDataBlock from "../../../common/metrics/score/TwoLineScoreDataBlock";
+import PercentageDataBlock from "../../../common/metrics/percentage/PercentageDataBlock";
 
 function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -82,56 +84,54 @@ function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, d
 
     return (
 
-      <div className="new-chart mb-3" style={{height: "300px", display: "flex"}}>
+      <div className="new-chart mb-3 p-0" style={{height: "300px", display: "flex"}}>
         <Container>
-          <Row className="p-1">
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                <div>{metrics[0]?.totalTests}</div>
-              </div>
-              <div className="w-100 text-muted mb-1">Total Number of Automation Candidates</div>
-            </div></Col>
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                <div>{metrics[0]?.functionalTests}</div>
-              </div>
-              <div className="w-100 text-muted mb-1">Total Number of Functional Test Cases</div>
-            </div></Col>
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                <div>{metrics[0]?.regressionTests}</div>
-              </div>
-              <div className="w-100 text-muted mb-1">Total Number of Regression Test Cases</div>
-            </div></Col>
+          <Row className="p-0">
+            <Col lg={4} md={6}>
+            <TwoLineScoreDataBlock
+              score={metrics[0]?.totalTests}
+              subtitle={"Total Number of Automation Candidates"}
+            />
+            </Col>
+            <Col lg={4} md={6}>
+            <TwoLineScoreDataBlock
+              score={metrics[0]?.functionalTests}
+              subtitle={"Total Number of Functional Test Cases"}
+            />
+            </Col>
+            <Col lg={4} md={6}>
+            <TwoLineScoreDataBlock
+              score={metrics[0]?.regressionTests}
+              subtitle={"Total Number of Regression Test Cases"}
+            />
+            </Col>
           </Row>
-          <Row className="p-1">
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                <div>{metrics[0]?.automatedTests}</div>
-              </div>
-              <div className="w-100 text-muted mb-1">Regression Test Cases Automated</div>
-            </div></Col>
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                <div>{metrics[0]?.manualTests}</div>
-              </div>
-              <div className="w-100 text-muted mb-1">Regression Test Cases To Be Automated</div>
-            </div></Col>
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                { metrics[0]?.automationRate ?
-                  <div className ={metrics[0]?.automationRate >= 90 ? 'green' : 'red'}>{metrics[0]?.automationRate+ "%"}</div>
-                  : <div>{"N/A"}</div>}
-              </div>
-              <div className="w-100 text-muted mb-1">Automation Percentage</div>
-            </div></Col>
+          <Row className="p-0">
+            <Col lg={4} md={6}>
+            <TwoLineScoreDataBlock
+              score={metrics[0]?.automatedTests}
+              subtitle={"Regression Test Cases Automated"}
+            />
+            </Col>
+            <Col lg={4} md={6}>
+            <TwoLineScoreDataBlock
+              score={metrics[0]?.manualTests}
+              subtitle={"Regression Test Cases To Be Automated"}
+            />
+            </Col>
+            <Col lg={4} md={6}>
+            <PercentageDataBlock
+              percentage={metrics[0].automationRate}
+              subtitle={"Automation Percentage"}
+            />
+            </Col>
           </Row>
-          <Row className="p-1">
-            <Col className="text-center">
+          <Row className="p-0">
+            <Col className="text-right">
               <small><span className="font-weight-bold">Goal:</span> Automation Percentage &gt; 90%</small>
             </Col>
           </Row>
-          <Row className="p-1">
+          <Row className="p-0">
             <Col className="text-center">
               <small><span className="font-weight-bold">Notes:</span> {notesData} </small>
             </Col>

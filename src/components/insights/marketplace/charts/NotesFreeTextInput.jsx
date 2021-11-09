@@ -5,11 +5,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Form } from "react-bootstrap";
 import {kpiNotesFilterMetadata} from "components/insights/marketplace/charts/kpi-configuration-metadata";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
 function FreeNotesTextInput({ dataObject, setDataObject }) {
   const [notesConfigurationData, setNotesConfigurationData] = useState(dataObject);
-
   return (
+
     <Row className={"mx-0"}>
       <Col lg={6}>
           <Form.Control maxLength="300" as="textarea" type="text" placeholder=""
