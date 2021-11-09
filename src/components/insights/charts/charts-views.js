@@ -153,7 +153,7 @@ export const assignStandardLineColors = (data, uniColor=false) => {
   if (Array.isArray(data)) {
     data.forEach((data, i) => {
       if (Array.isArray(data) && data.length > 0) {
-        data[0].color = uniColor ? mainColor : standardColors[i];
+        data[0].color = uniColor ? mainPurple : standardColors[i];
       }
     });
   }
