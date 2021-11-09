@@ -65,7 +65,7 @@ function EbsSolutionStackInput({model, setModel, disabled, awsToolId}) {
     const response = await AWSActionsHelper.getSolutionStackList(getAccessToken, cancelSource, awsToolId);
     const stackList = response?.data?.data;
 
-    if (isMounted?.current === true && Array.isArray(stackList) && stackList.length > 0) {
+    if (isMounted?.current === true && Array.isArray(Object.keys(stackList)) && Object.keys(stackList).length > 0) {
       setStackKeyList(Object.keys(stackList));
       setStackList(stackList);
     }

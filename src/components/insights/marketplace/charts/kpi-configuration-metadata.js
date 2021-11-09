@@ -102,7 +102,6 @@ export const kpiGoalsFilterMetadata = {
   },
 };
 
-
 export const kpiJenkinsResultFilterMetadata = {
   type: "Jenkins Result Filter",
   fields: [
