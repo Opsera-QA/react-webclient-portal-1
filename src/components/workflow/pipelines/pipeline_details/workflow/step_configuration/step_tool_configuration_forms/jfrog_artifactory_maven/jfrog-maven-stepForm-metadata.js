@@ -26,14 +26,18 @@ const jfrogMavenStepFormMetadata = {
       id: "groupName",
       regexDefinitionName: "generalText",
       maxLength: 50,
-      isRequired: true
+      isRequiredFunction: (model) => {
+        return model?.getData("repositoryFormat") === "Maven";
+      },
     },
     {
       label: "Artifact Name",
       id: "artifactName",
       regexDefinitionName: "generalText",
       maxLength: 50,
-      isRequired: true
+      isRequiredFunction: (model) => {
+        return model?.getData("repositoryFormat") === "Maven";
+      },
     },
     {
       label: "Package ID",
@@ -48,15 +52,24 @@ const jfrogMavenStepFormMetadata = {
       label: "Use Run count as version?",
       id: "customVersion",
     },
+    {
+      label: "Server Path",
+      id: "serverPath",
+      regexDefinitionName: "pathField",
+      isRequiredFunction: (model) => {
+        return model?.getData("repositoryFormat") === "NuGet";
+      },
+    },
   ],
   newObjectFields: {    
     jfrogToolConfigId: "",
     repositoryName : "",
-    repositoryFormat: "maven2",    
+    repositoryFormat: "Maven",    
     groupName: "",
     artifactName: "",
     type: "",    
     artifactStepId: "",
+    serverPath: "",
     packageId : "",
     customVersion: true,
   }

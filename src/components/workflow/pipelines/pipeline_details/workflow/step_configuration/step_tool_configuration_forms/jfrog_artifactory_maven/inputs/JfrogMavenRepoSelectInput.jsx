@@ -36,7 +36,7 @@ function JfrogMavenRepoSelectInput({ fieldName, dataObject, setDataObject, disab
       source.cancel();
       isMounted.current = false;
     };
-  }, [tool_prop]);
+  }, [tool_prop, dataObject.getData("repositoryFormat")]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -59,7 +59,7 @@ function JfrogMavenRepoSelectInput({ fieldName, dataObject, setDataObject, disab
 
   const loadRepos = async (cancelSource = cancelTokenSource) => {
     try {
-      const res = await JFrogStepActions.getRepos(dataObject.getData("jfrogToolConfigId"),"Maven", getAccessToken, cancelSource);
+      const res = await JFrogStepActions.getRepos(dataObject.getData("jfrogToolConfigId"), dataObject.getData("repositoryFormat"), getAccessToken, cancelSource);
       if (res && res.status === 200) {        
         setRepos(res.data);
         return;

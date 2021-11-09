@@ -43,7 +43,7 @@ function JFrogMavenRepositoriesTable({ toolData, isLoading }) {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsRepoLoading(true);
-      const response = await jfrogActions.getRepos(toolData.getData("_id"), "Maven", getAccessToken, cancelSource);
+      const response = await jfrogActions.getRepos(toolData.getData("_id"), "allMaven", getAccessToken, cancelSource);
 
       if(response.status === 200) {
         setJfrogMavenRepos(response.data);
@@ -89,8 +89,8 @@ function JFrogMavenRepositoriesTable({ toolData, isLoading }) {
         data={jfrogMavenRepos}
         loadData={loadData}
         createNewRecord={createJFrogMavenRepository}
-        tableTitle={"JFrog Maven Repositories"}
-        type={"JFrog Maven Repository"}
+        tableTitle={"JFrog Repositories"}
+        type={"JFrog Repository"}
         onRowSelect={onRowSelect}
         isLoading={isRepoLoading}
       />
