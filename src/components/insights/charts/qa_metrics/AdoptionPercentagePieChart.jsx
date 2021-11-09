@@ -91,24 +91,24 @@ function AdoptionPercentagePieChart({ kpiConfiguration, setKpiConfiguration, das
           <Row className="p-1">
             <Col lg={6} md={8}>
               <TwoLineScoreDataBlock className={"test-percentage"}
-                                     score={metrics[0]?.executedTests}
-                                     subtitle={"No of Automated Test Cases Executed"}
+                 score={metrics[0]?.executedTests}
+                 subtitle={"No of Automated Test Cases Executed"}
               />
             </Col>
             <Col lg={6} md={8}>
               <TwoLineScoreDataBlock className={"test-percentage"}
-                                     score={metrics[0]?.manualTests}
-                                     subtitle={"No of Automated Test Cases Executed Manually"}
+                 score={metrics[0]?.manualTests}
+                 subtitle={"No of Automated Test Cases Executed Manually"}
               />
             </Col>
           </Row>
           <Row className="p-1 text-center">
             <Col lg={6} md={8}>
             <NewPercentageDataBlock className={"test-percentage"}
-                                 percentage={metrics[0]?.adoptionRate}
-                                 subtitle={"Adoption Percentage"}
-                                 qualityLevel={metrics[0]?.adoptionRate < 98 ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS  }
-                                    goal={"Goal: Adoption Percentage > 98%"}
+               percentage={metrics[0]?.adoptionRate}
+               subtitle={"Adoption Percentage"}
+               qualityLevel={metrics[0]?.adoptionRate < 98 ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS  }
+                goal={"Goal: Adoption Percentage > 98%"}
             />
             </Col>
           </Row>
