@@ -48,7 +48,8 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, kpi
   const dailyBuildsChartData = [
     {
       "id": "average daily builds",
-      "color": "hsl(2, 54%, 65%)",
+      "color": "#ABA4CC",
+      // "color": "#696969",
       "data": chartData?.avgBuilds
     }  
   ];
@@ -78,13 +79,16 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, kpi
       <div className="new-chart p-0" style={{height: "150px"}}>
         <ResponsiveLine
           data={dailyBuildsChartData}
-          {...defaultConfig("", "", 
+          {...defaultConfig("Count", "Month", 
                 false, false, "numbers", "string")}
-          yScale={{ type: 'linear', min: '0', max: '2', stacked: false, reverse: false }}          
+          yScale={{ type: 'linear', min: '0', max: kpiGoalsFilter.getData("value").average_builds, stacked: false, reverse: false }}          
           enableGridX={false}
           enableGridY={false}
           axisLeft={{            
-            tickValues: [0, 1]
+            tickValues: [0, kpiGoalsFilter.getData("value").average_builds],
+            legend: 'Avg Daily Builds',
+            legendOffset: -38,
+            legendPosition: 'middle'
           }}
           // axisLeft={null}          
           colors={getColor}
@@ -93,7 +97,7 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, kpi
             {
                 axis: 'y',
                 value: kpiGoalsFilter.getData("value").average_builds,
-                lineStyle: { stroke: '#00897b', strokeWidth: 1 },
+                lineStyle: { stroke: '#00897b', strokeWidth: 2 },
                 legend: 'Goal',
             }            
           ]}

@@ -40,7 +40,7 @@ function DeploymentFrequencyStatisticsDataBlockContainerV2({ metricData, chartDa
   let dailyDeploymentsChartData = [
     {
       "id": "average daily deployments",
-      "color": "hsl(2, 54%, 65%)",
+      "color": "#ABA4CC",
       "data": chartData?.avgDeployments
     }  
   ];
@@ -70,13 +70,16 @@ function DeploymentFrequencyStatisticsDataBlockContainerV2({ metricData, chartDa
       <div className="new-chart p-0" style={{height: "150px"}}>
         <ResponsiveLine
           data={dailyDeploymentsChartData}
-          {...defaultConfig("", "", 
+          {...defaultConfig("", "Month", 
                 false, false, "numbers", "string")}
-          yScale={{ type: 'linear', min: '0', max: '1', stacked: false, reverse: false }}          
+          yScale={{ type: 'linear', min: '0', max: kpiGoalsFilter.getData("value").average_deployments, stacked: false, reverse: false }}          
           enableGridX={false}
           enableGridY={false}
           axisLeft={{            
-            tickValues: [0, 1]
+            tickValues: [0, kpiGoalsFilter.getData("value").average_deployments],
+            legend: 'Avg Daily Deployments',
+            legendOffset: -38,
+            legendPosition: 'middle'
           }}
           // axisLeft={null}                    
           colors={getColor}
@@ -85,7 +88,7 @@ function DeploymentFrequencyStatisticsDataBlockContainerV2({ metricData, chartDa
             {
                 axis: 'y',
                 value: kpiGoalsFilter.getData("value").average_deployments,
-                lineStyle: { stroke: '#00897b', strokeWidth: 1 },
+                lineStyle: { stroke: '#00897b', strokeWidth: 2 },
                 legend: 'Goal',
             }            
           ]}

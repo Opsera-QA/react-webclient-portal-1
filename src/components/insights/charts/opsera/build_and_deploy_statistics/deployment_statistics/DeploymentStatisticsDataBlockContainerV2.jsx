@@ -1,9 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
-// import Model from "core/data_model/model";
-// import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
-// import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
-// import { DialogToastContext } from "contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import SuccessfulDeploymentsDataBlock
   from "components/common/metrics/data_blocks/deployment/successful_deployments/SuccessfulDeploymentsDataBlock";
@@ -13,27 +10,40 @@ import FailedDeploymentsDataBlock
 import SuccessRateDataBlock
   from "components/common/metrics/data_blocks/success/success_rate/SuccessRateDataBlock";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import { ResponsiveLine } from '@nivo/line';
 import { defaultConfig, getColor, assignStandardColors } from 'components/insights/charts/charts-views';
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import {  kpiGoalsFilterMetadata  } from "components/insights/marketplace/charts/kpi-configuration-metadata";
+import DeploymentStatisticsActionableInsightsTable from "./DeploymentStatisticsActionableInsightsTable";
+import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import { faTable } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function DeploymentStatisticsDataBlockContainerV2({ metricData, chartData, kpiConfiguration }) {
-//   const toastContext = useContext(DialogToastContext);
+  const toastContext = useContext(DialogToastContext);
 
-//   const onRowSelect = () => {
-//     const chartModel = new Model({...SonarRatingsBugsActionableMetadata.newObjectFields}, SonarRatingsBugsActionableMetadata, false);
-//     toastContext.showOverlayPanel(
-//       <ChartDetailsOverlay
-//         dashboardData={dashboardData}
-//         kpiConfiguration={kpiConfiguration}
-//         chartModel={chartModel}
-//         kpiIdentifier={"sonar-ratings-debt-ratio"}
-//       />);
-//   };
+  const onRowSelect = () => {    
+    toastContext.showOverlayPanel(
+      <FullScreenCenterOverlayContainer
+        closePanel={closePanel}
+        showPanel={true}
+        titleText={`Opsera Deployment Statistics`}
+        showToasts={true}
+        titleIcon={faTable}
+        isLoading={false}        
+      >
+        <div className={"p-3"}>
+          <DeploymentStatisticsActionableInsightsTable />
+        </div>        
+      </FullScreenCenterOverlayContainer>
+    );    
+  };
+
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
 
   const [kpiGoalsFilter, setKpiGoalsFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "goals", kpiGoalsFilterMetadata)
@@ -43,7 +53,7 @@ function DeploymentStatisticsDataBlockContainerV2({ metricData, chartData, kpiCo
   let successChartData = [
     {
       "id": "success rate",
-      "color": "hsl(2, 54%, 65%)",
+      "color": "#ABA4CC",
       "data": chartData?.deploySuccess
     }  
   ];
@@ -83,13 +93,16 @@ function DeploymentStatisticsDataBlockContainerV2({ metricData, chartData, kpiCo
       <div className="new-chart p-0" style={{height: "150px"}}>
         <ResponsiveLine
           data={successChartData}
-          {...defaultConfig("", "", 
+          {...defaultConfig("", "Month", 
                 false, false, "wholeNumbers", "string")}
           yScale={{ type: 'linear', min: '0', max: '100', stacked: false, reverse: false }}          
           enableGridX={false}
           enableGridY={false}
           axisLeft={{            
-            tickValues: [0, 50, 100]
+            tickValues: [0, 50, 100],
+            legend: 'Success Rate %',
+            legendOffset: -38,
+            legendPosition: 'middle'
           }}
           // axisLeft={null}
           colors={getColor}
@@ -98,7 +111,7 @@ function DeploymentStatisticsDataBlockContainerV2({ metricData, chartData, kpiCo
             {
                 axis: 'y',
                 value: kpiGoalsFilter.getData("value").deployment_success_rate,
-                lineStyle: { stroke: '#00897b', strokeWidth: 1 },
+                lineStyle: { stroke: '#00897b', strokeWidth: 2 },
                 legend: 'Goal',
             }            
           ]}
@@ -114,7 +127,7 @@ function DeploymentStatisticsDataBlockContainerV2({ metricData, chartData, kpiCo
   return (
     <HorizontalDataBlocksContainer
       title={"Deployment Statistics"}
-      // onClick={() => onRowSelect()}
+      onClick={() => onRowSelect()}
     >
       <Col sm={4} className={"p-2"}>
         {getRightDataBlock()}

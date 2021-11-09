@@ -1,15 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
-// import Model from "core/data_model/model";
-// import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
-// import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
-// import { DialogToastContext } from "contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
 import SuccessRateDataBlock
   from "components/common/metrics/data_blocks/success/success_rate/SuccessRateDataBlock";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import SuccessfulBuildsDataBlock
   from "components/common/metrics/data_blocks/build/successful_builds/SuccessfulBuildsDataBlock";
 import FailedBuildsDataBlock
@@ -19,21 +15,35 @@ import { defaultConfig, getColor, assignStandardColors } from 'components/insigh
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import {  kpiGoalsFilterMetadata  } from "components/insights/marketplace/charts/kpi-configuration-metadata";
+import BuildStatisticsActionableInsightsTable from "./BuildStatisticsActionableInsightsTable";
+import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import { faTable } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration }) {
-  // const toastContext = useContext(DialogToastContext);
+  const toastContext = useContext(DialogToastContext);
 
-  // const onRowSelect = () => {
-  //   const chartModel = new Model({...SonarRatingsBugsActionableMetadata.newObjectFields}, SonarRatingsBugsActionableMetadata, false);
-  //   toastContext.showOverlayPanel(
-  //     <ChartDetailsOverlay
-  //       dashboardData={dashboardData}
-  //       kpiConfiguration={kpiConfiguration}
-  //       chartModel={chartModel}
-  //       kpiIdentifier={"sonar-ratings-debt-ratio"}
-  //     />);
-  // };
+  const onRowSelect = () => {    
+    toastContext.showOverlayPanel(
+      <FullScreenCenterOverlayContainer
+        closePanel={closePanel}
+        showPanel={true}
+        titleText={`Opsera Build Statistics`}
+        showToasts={true}
+        titleIcon={faTable}
+        isLoading={false}        
+      >
+        <div className={"p-3"}>
+          <BuildStatisticsActionableInsightsTable />
+        </div>        
+      </FullScreenCenterOverlayContainer>
+    );    
+  };
+
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
 
   const [kpiGoalsFilter, setKpiGoalsFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "goals", kpiGoalsFilterMetadata)
@@ -42,7 +52,7 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
   let successChartData = [
     {
       "id": "success rate",
-      "color": "hsl(2, 54%, 65%)",
+      "color": "#ABA4CC",
       "data": chartData?.buildSuccess
     }  
   ];
@@ -82,13 +92,16 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
       <div className="new-chart p-0" style={{height: "150px"}}>
         <ResponsiveLine
           data={successChartData}
-          {...defaultConfig("", "", 
+          {...defaultConfig("", "Month", 
                 false, false, "wholeNumbers", "string")}
-          yScale={{ type: 'linear', min: '0', max: '100', stacked: false, reverse: false }}          
+          yScale={{ type: 'linear', min: '0', max: '100', stacked: false, reverse: false }}
           enableGridX={false}
           enableGridY={false}
           axisLeft={{            
-            tickValues: [0, 50, 100]
+            tickValues: [0, 50, 100],
+            legend: 'Success Rate %',
+            legendOffset: -38,
+            legendPosition: 'middle'
           }}
           // axisLeft={null}         
           colors={getColor}
@@ -97,7 +110,7 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
             {
                 axis: 'y',
                 value: kpiGoalsFilter.getData("value").build_success_rate,
-                lineStyle: { stroke: '#00897b', strokeWidth: 1 },
+                lineStyle: { stroke: '#00897b', strokeWidth: 2 },
                 legend: 'Goal',
             }         
           ]}
@@ -113,7 +126,7 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
   return (
     <HorizontalDataBlocksContainer
       title={"Build Statistics"}
-      // onClick={() => onRowSelect()}
+      onClick={() => onRowSelect()}
     >      
       <Col sm={4} className={"p-2"}>
         {getRightDataBlock()}
