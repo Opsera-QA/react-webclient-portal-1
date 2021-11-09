@@ -1,25 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
-import {faSirenOn} from "@fortawesome/pro-light-svg-icons";
+import {faBug} from "@fortawesome/pro-light-svg-icons";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 
-function SonarCriticalCodeSmellsDataBlock({ criticalCodeSmellCount, className, }) {
+function SonarBugCountDataBlock({ bugCount, className, }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
       <TwoLineScoreDataBlock
         className={className}
-        icon={faSirenOn}
-        score={criticalCodeSmellCount}
-        subtitle={"Critical"}
+        icon={faBug}
+        score={bugCount}
+        subtitle={"Bugs"}
       />
     </DataBlockBoxContainer>
   );
 }
 
-SonarCriticalCodeSmellsDataBlock.propTypes = {
+SonarBugCountDataBlock.propTypes = {
   className: PropTypes.string,
-  criticalCodeSmellCount: PropTypes.number,
+  bugCount: PropTypes.number,
 };
 
-export default SonarCriticalCodeSmellsDataBlock;
+export default SonarBugCountDataBlock;
