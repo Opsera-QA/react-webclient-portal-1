@@ -1,78 +1,85 @@
-import React, {useContext} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import Model from "core/data_model/model";
-import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
-import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
-import SuccessfulDeploymentsDataBlock
-  from "components/common/metrics/data_blocks/deployment/successful_deployments/SuccessfulDeploymentsDataBlock";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
-import FailedDeploymentsDataBlock
-  from "components/common/metrics/data_blocks/deployment/failed_deployments/FailedDeploymentsDataBlock";
 import Col from "react-bootstrap/Col";
-import AverageDailyDeploymentsDataBlock
-  from "components/common/metrics/data_blocks/deployment/average_daily/AverageDailyDeploymentsDataBlock";
-import AverageDeploymentDurationDataBlock
-  from "components/common/metrics/data_blocks/deployment/average_duration/AverageDeploymentDurationDataBlock";
 import AverageDailyBuildsDataBlock
   from "components/common/metrics/data_blocks/build/average_daily/AverageDailyBuildsDataBlock";
-import AverageBuildDurationDataBlock
-  from "components/common/metrics/data_blocks/build/average_duration/AverageBuildDurationDataBlock";
+import { ResponsiveLine } from '@nivo/line';
+import { defaultConfig, getColor, assignStandardColors } from 'components/insights/charts/charts-views';
+import "../build-and-deploy-kpi.css";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function BuildFrequencyStatisticsDataBlockContainer({ dashboardData, kpiConfiguration }) {
-  const toastContext = useContext(DialogToastContext);
+function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData }) {  
 
-  const onRowSelect = () => {
-    const chartModel = new Model({...SonarRatingsBugsActionableMetadata.newObjectFields}, SonarRatingsBugsActionableMetadata, false);
-    toastContext.showOverlayPanel(
-      <ChartDetailsOverlay
-        dashboardData={dashboardData}
-        kpiConfiguration={kpiConfiguration}
-        chartModel={chartModel}
-        kpiIdentifier={"sonar-ratings-debt-ratio"}
-      />);
-  };
+  const dailyBuildsChartData = [
+    {
+      "id": "average daily builds",
+      "color": "#ABA4CC",
+      "data": chartData?.avgBuilds
+    }  
+  ];
 
-  const getLeftDataBlock = () => {
+  const getLeftDataBlock = () => {    
     return (
       <AverageDailyBuildsDataBlock
-        qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
-        averageDailyCount={1.25}
-        bottomText={"0.5% increase"}
+        className={'build-deploy-kpi'}
+        qualityLevel={metricData?.build?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS}
+        averageDailyCount={metricData?.build?.perDayAverage || 0}
+        bottomText={`Goal: ${goalsData}`}
       />
     );
   };
 
-  const getRightDataBlock = () => {
-    return (
-      <AverageBuildDurationDataBlock
-        qualityLevel={METRIC_QUALITY_LEVELS.DANGER}
-        averageDuration={"10 mins"}
-        bottomText={"20% increase"}
-      />
+  const getTrendChart = () => {
+    return(
+      <div className="new-chart p-0" style={{height: "150px"}}>
+        <ResponsiveLine
+          data={dailyBuildsChartData}
+          {...defaultConfig("Count", "Month", 
+                false, false, "numbers", "string")}
+          yScale={{ type: 'linear', min: '0', max: goalsData, stacked: false, reverse: false }}          
+          enableGridX={false}
+          enableGridY={false}
+          axisLeft={{            
+            tickValues: [0, goalsData],
+            legend: 'Avg Daily Builds',
+            legendOffset: -38,
+            legendPosition: 'middle'
+          }}
+          colors={getColor}
+          pointSize={6}
+          markers={[
+            {
+                axis: 'y',
+                value: goalsData,
+                lineStyle: { stroke: '#00897b', strokeWidth: 2 },
+                legend: 'Goal',
+            }            
+          ]}
+        />
+      </div>
     );
   };
 
   return (
     <HorizontalDataBlocksContainer
-      title={"Build Frequency Statistics"}
-      // onClick={() => onRowSelect()}
+      title={"Build Frequency Statistics"}      
     >
-      <Col sm={6} className={"p-2"}>
-        {getLeftDataBlock()}
-      </Col>
-      <Col sm={6} className={"p-2"}>
-        {getRightDataBlock()}
+      <Col sm={4} className={"p-2"}>
+        {getLeftDataBlock()}        
+      </Col>      
+      <Col sm={8} className={"p-2"}>
+        {getTrendChart()}
       </Col>
     </HorizontalDataBlocksContainer>
   );
 }
 
 BuildFrequencyStatisticsDataBlockContainer.propTypes = {
-  kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
+  metricData: PropTypes.object,
+  chartData: PropTypes.object,
+  goalsData: PropTypes.number,
 };
 
 export default BuildFrequencyStatisticsDataBlockContainer;

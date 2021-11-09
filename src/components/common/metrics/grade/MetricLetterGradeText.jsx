@@ -15,13 +15,13 @@ function MetricLetterGradeText({ letterGrade }) {
       case LETTER_GRADES.A:
         return <div className="green">A</div>;
       case LETTER_GRADES.B:
-        return <div className="green">B</div>;
+        return <div className="yellow">B</div>;
       case LETTER_GRADES.C:
         return <div className="yellow">C</div>;
       case LETTER_GRADES.D:
-        return <div className="red">D</div>;
+        return <div className="danger-red">D</div>;
       case LETTER_GRADES.E:
-        return <div className="red">E</div>;
+        return <div className="danger-red">E</div>;
       default:
         return <div className="red">ERROR</div>;
     }

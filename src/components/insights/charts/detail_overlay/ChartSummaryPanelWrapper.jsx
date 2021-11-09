@@ -15,9 +15,9 @@ import PipelineByStatusSuccessfulTable from "../opsera/bar_chart/pipeline_by_sta
 import PipelineByStatusFailedTable from "../opsera/bar_chart/pipeline_by_status/PipelineByStatusFailedTable";
 
 // Sonar
-import SonarReliabilityRatingPipelinesTable from "components/insights/charts/sonar/sonar_ratings/SonarReliabilityRatingPipelinesTable";
-import SonarSecurityRatingPipelinesTable from "components/insights/charts/sonar/sonar_ratings/SonarSecurityRatingPipelinesTable";
-import SonarMaintainabilityRatingPipelinesTable from "components/insights/charts/sonar/sonar_ratings/SonarMaintainabilityRatingPipelinesTable";
+import SonarReliabilityRatingPipelinesTable from "components/insights/charts/sonar/sonar_ratings_legacy/SonarReliabilityRatingPipelinesTable";
+import SonarSecurityRatingPipelinesTable from "components/insights/charts/sonar/sonar_ratings_legacy/SonarSecurityRatingPipelinesTable";
+import SonarMaintainabilityRatingPipelinesTable from "components/insights/charts/sonar/sonar_ratings_legacy/SonarMaintainabilityRatingPipelinesTable";
 
 // Coverity
 import CoverityHighIssuesSummaryPanel from "../coverity/CoverityIssuesByCategory/CoverityHighIssuesSummaryPanel";

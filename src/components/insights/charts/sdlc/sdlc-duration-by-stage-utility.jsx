@@ -21,10 +21,10 @@ export const getMiddleStyle = (meanData, goalsData) => {
   if (isEmptyCustom(meanData) || isEmptyCustom(goalsData)) {
     return;
   }
-  if (goalsData < meanData) {
+  if (goalsData > meanData) {
     return { color: statusColors.success };
   }
-  if (goalsData > meanData) {
+  if (goalsData < meanData) {
     return { color: statusColors.danger };
   }
   if (goalsData == meanData) {

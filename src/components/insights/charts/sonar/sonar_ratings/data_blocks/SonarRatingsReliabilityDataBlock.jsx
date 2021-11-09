@@ -6,21 +6,15 @@ import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks
 import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
+
+import SonarRatingsReliabilityActionableInsightOverlay from 'components/insights/charts/sonar/sonar_ratings/actionable_insights/reliability/SonarRatingsReliabilityActionableInsightOverlay';
 import Col from "react-bootstrap/Col";
-import Model from "core/data_model/model";
-import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
-import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
-function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, reliabilityRating, bugCount }) {
+function SonarRatingsReliabilityDataBlock({ reliabilityRating, bugCount }) {
   const toastContext = useContext(DialogToastContext);
 
-  const onRowSelect = () => {
-    const chartModel = new Model({...SonarRatingsBugsActionableMetadata.newObjectFields}, SonarRatingsBugsActionableMetadata, false);
+  const onRowSelect =()=>{    
     toastContext.showOverlayPanel(
-      <ChartDetailsOverlay
-        dashboardData={dashboardData}
-        kpiConfiguration={kpiConfiguration}
-        chartModel={chartModel}
-        kpiIdentifier={"sonar-ratings-bugs"} />
+      <SonarRatingsReliabilityActionableInsightOverlay />
     );
   };
 
@@ -91,8 +85,6 @@ function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, rel
 }
 
 SonarRatingsReliabilityDataBlock.propTypes = {
-  kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
   reliabilityRating: PropTypes.number,
   bugCount: PropTypes.number,
 };

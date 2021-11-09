@@ -6,6 +6,10 @@ const PACKAGE_TYPES = [
   {
     name: "Maven",
     value: "Maven"
+  },
+  {
+    name: "NuGet",
+    value: "NuGet"
   }
 ];
 

@@ -153,7 +153,7 @@ export const assignStandardLineColors = (data, uniColor=false) => {
   if (Array.isArray(data)) {
     data.forEach((data, i) => {
       if (Array.isArray(data) && data.length > 0) {
-        data[0].color = uniColor ? mainColor : standardColors[i];
+        data[0].color = uniColor ? mainPurple : standardColors[i];
       }
     });
   }
@@ -233,6 +233,7 @@ const formats = {
   dateTime: d => typeof d === "string" ? d.substring(0, 11) : "",
   monthDate: "%b %d",
   monthDate2: d => { var date = new Date(d).toDateString(); date = date.split(" "); return date[1]+" "+date[2]; },
+  month: d => { var date = new Date(d).toDateString(); date = date.split(" "); return date[1]; },
   yearMonthDate: d => (typeof d === "string") && (d.split("T")[0]),
   cutoffString: d => typeof d === "string" && d.length > 0 ? d.slice(0, 8) + (d.length > 8 ? "..." : "") : "",
   values: d => /(?:(?!-).)*/.exec(d)[0],
