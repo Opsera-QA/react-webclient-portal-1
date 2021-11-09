@@ -16,7 +16,14 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 
 // TODO: Convert to cards
-function SonarRatingsMaintainabilityActionableInsightTable({maintainibilityData, isLoading}) {
+function SonarRatingsMaintainabilityActionableInsightTable(
+  {
+    maintainabilityData,
+    isLoading,
+    loadData,
+    filterModel,
+    setFilterModel,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const noDataMessage = "Sonar Code Smell report is currently unavailable at this time";
   const fields = SonarPipelineTableMetadata.fields;
@@ -82,7 +89,7 @@ function SonarRatingsMaintainabilityActionableInsightTable({maintainibilityData,
       <CustomTable
         isLoading={isLoading}
         columns={columns}
-        data={maintainibilityData}
+        data={maintainabilityData}
         noDataMessage={noDataMessage}
         onRowSelect={onRowSelect}
       />
@@ -97,13 +104,19 @@ function SonarRatingsMaintainabilityActionableInsightTable({maintainibilityData,
       titleIcon={faDraftingCompass}
       body={getTable()}
       className={"px-2 pb-2"}
+      loadData={loadData}
+      setFilterDto={setFilterModel}
+      filterDto={filterModel}
     />
   );
 }
 
 SonarRatingsMaintainabilityActionableInsightTable.propTypes = {
-  maintainibilityData: PropTypes.array,
+  maintainabilityData: PropTypes.array,
   isLoading: PropTypes.bool,
+  loadData: PropTypes.func,
+  filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
 };
 
 export default SonarRatingsMaintainabilityActionableInsightTable;
