@@ -14,7 +14,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import SonarDebtRatioMetaData from "components/insights/charts/sonar/sonar_ratings/SonarDebtRatioMetadata";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import BlueprintLogOverlay from "../../../../blueprint/BlueprintLogOverlay";
+import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 
@@ -51,7 +51,7 @@ function SonarMaintainabilityRatingPipelinesTable({ dashboardData, kpiConfigurat
       isMounted.current = false;
     };
   }, [JSON.stringify(dashboardData)]);
-
+  
   const onRowSelect = (rowData) => {
     toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.run_count} />);
   };
@@ -69,9 +69,9 @@ function SonarMaintainabilityRatingPipelinesTable({ dashboardData, kpiConfigurat
         dashboardTags,
         filterDto
       );
-
+      
       let dataObject = response?.data?.data[0]?.sonarDebtRatioByProject?.data[0].data;
-
+      
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;

@@ -2,14 +2,14 @@
 
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
-import config from "./sonarReliabilityRemediationEffortByProjectLineChartConfigs";
+import config from "components/insights/charts/sonar/line_chart/reliability_remediation_effort_by_project/sonarReliabilityRemediationEffortByProjectLineChartConfigs";
 import React, { useState, useEffect, useContext, useRef } from "react";
 // import ModalLogs from "components/common/modal/modalLogs";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-// import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+// import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {
   defaultConfig,
@@ -20,6 +20,7 @@ import {
 import ChartTooltip from "../../../ChartTooltip";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import VanityTable from "components/common/table/VanityTable";
+// import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import {
   // getChartPipelineStatusColumn,
   // getTableDateTimeColumn,
@@ -127,7 +128,10 @@ function SonarReliabilityRemediationEffortByProjectLineChart({
       }
     }
   };
-
+  /**
+   * @param {Object} node
+   * getArrayOfProjects go over metrics and get the array of data for an specific project
+   */
   const getArrayOfProject = (node) => {
     for (let project of metrics) {
       if (node.serieId === project.id) {
@@ -135,7 +139,11 @@ function SonarReliabilityRemediationEffortByProjectLineChart({
       }
     }
   };
-
+  /**
+   * @param {Array} projectArr
+   * the array gotten from the server can have entries with the correct format but empty values
+   * filterSelectedProjectArr remove those objects and return an array with valid data
+   */
   const filterSelectedProjectArr = (projectArr) => {
     let projectsWithData = [];
     for (let entry of projectArr) {
@@ -213,16 +221,18 @@ function SonarReliabilityRemediationEffortByProjectLineChart({
           onClick={(node) => {
             nodeClickHandler(node);
           }}
-          tooltip={(node) => (
-            <ChartTooltip
-              titles={["Project", "Date", "Remediation Effort Required"]}
-              values={[
-                node.point.data.project,
-                node.point.data.xFormatted,
-                String(node.point.data.yFormatted) + " minutes",
-              ]}
-            />
-          )}
+          tooltip={(node) => {
+            return (
+              <ChartTooltip
+                titles={["Project", "Date", "Remediation Effort Required"]}
+                values={[
+                  node.point.data.project,
+                  node.point.data.xFormatted,
+                  String(node.point.data.yFormatted) + " minutes",
+                ]}
+              />
+            );
+          }}
         />
       </div>
     );

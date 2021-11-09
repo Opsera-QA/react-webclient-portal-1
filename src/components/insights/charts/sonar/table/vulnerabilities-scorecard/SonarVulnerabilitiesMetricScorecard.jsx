@@ -15,13 +15,14 @@ import SonarVulnerabilitiesMetricScorecardMetaData from "components/insights/cha
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import { useHistory } from "react-router-dom";
 import { faTable } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import SonarPipelineWiseVulnerabilitiesDetails from "./SonarPipelineWiseVulnerabilitiesDetails";
-import { useHistory } from "react-router-dom";
+import SonarPipelineWiseVulnerabilitiesDetails from "components/insights/charts/sonar/table/vulnerabilities-scorecard/SonarPipelineWiseVulnerabilitiesDetails";
 
 function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+  const history = useHistory();
   const fields = SonarVulnerabilitiesMetricScorecardMetaData.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -29,13 +30,10 @@ function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfigura
   const [metrics, setMetrics] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  let toastContext = useContext(DialogToastContext);
   const [tableFilterDto, setTableFilterDto] = useState(
     new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
   );
-
-  const history = useHistory();
-
-  let toastContext = useContext(DialogToastContext);
 
   const noDataMessage = "No Data is available for this chart at this time";
 
@@ -78,6 +76,7 @@ function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfigura
     toastContext.clearOverlayPanel();
   };
 
+  
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();

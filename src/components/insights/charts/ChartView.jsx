@@ -143,6 +143,7 @@ import {
   getTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 import { Col } from "react-bootstrap";
+import LegacySonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings_legacy/LegacySonarRatingMetrics";
 import SonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings/SonarRatingMetrics";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
@@ -675,6 +676,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
       case "sonar-ratings":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <LegacySonarRatingMetrics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sonar-ratings-v2":
         return (
           <Col xl={6} md={12} className="p-2">
             <SonarRatingMetrics

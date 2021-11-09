@@ -6,14 +6,14 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import SonarRatingsChartHelpDocumentation
   from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
-import SonarRatingsMaintainabilityDataBlock
-  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsMaintainabilityDataBlock";
-import SonarRatingsVulnerabilityDataBlock
-  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsVulnerabilityDataBlock";
+import SonarRatingsMaintainabilityDataBlockV2
+  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsMaintainabilityDataBlockV2";
+import SonarRatingsVulnerabilityDataBlockV2
+  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsVulnerabilityDataBlockV2";
 import ThreeStackedHorizontalMetricsContainer
   from "components/common/metrics/data_blocks/horizontal/ThreeStackedHorizontalMetricsContainer";
-import SonarRatingsReliabilityDataBlock
-  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlock";
+import SonarRatingsReliabilityDataBlockV2
+  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlockV2";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 
 function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -79,7 +79,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
     return (
       <ThreeStackedHorizontalMetricsContainer
         topDataBlock={
-          <SonarRatingsVulnerabilityDataBlock
+          <SonarRatingsVulnerabilityDataBlockV2
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
             securityRating={sonarRatingsMetric?.security_rating}
@@ -87,7 +87,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
           />
         }
         middleDataBlock={
-          <SonarRatingsReliabilityDataBlock
+          <SonarRatingsReliabilityDataBlockV2
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
             reliabilityRating={sonarRatingsMetric?.reliability_rating}
@@ -95,7 +95,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
           />
         }
         bottomDataBlock={
-          <SonarRatingsMaintainabilityDataBlock
+          <SonarRatingsMaintainabilityDataBlockV2
             dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             maintainabilityRating={sonarRatingsMetric?.maintainability_rating}

@@ -11,16 +11,16 @@ import {
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import chartsActions from "components/insights/charts/charts-actions";
-import SonarVulnerabilitiesMetricScorecardMetaData from "components/insights/charts/sonar/table/vulnerabilities-scorecard/SonarVulnerabilitiesMetricScorecardMetaData";
+import SonarBugsMetricScorecardMetaData from "components/insights/charts/sonar/table/bugs-scorecard/SonarBugsMetricScorecardMetaData";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import BlueprintLogOverlay from "../../../../blueprint/BlueprintLogOverlay";
+import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 
-function SonarSecurityRatingPipelinesTable({ dashboardData, kpiConfiguration }) {
+function SonarReliabilityRatingPipelinesTable({ dashboardData, kpiConfiguration }) {
   const toastContext = useContext(DialogToastContext);
-  const fields = SonarVulnerabilitiesMetricScorecardMetaData.fields;
+  const fields = SonarBugsMetricScorecardMetaData.fields;
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -28,7 +28,7 @@ function SonarSecurityRatingPipelinesTable({ dashboardData, kpiConfiguration }) 
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
-    new Model({ ...genericChartFilterMetadata.newObjectFields }, SonarVulnerabilitiesMetricScorecardMetaData, false)
+    new Model({ ...genericChartFilterMetadata.newObjectFields }, SonarBugsMetricScorecardMetaData, false)
   );
 
   useEffect(() => {
@@ -64,19 +64,19 @@ function SonarSecurityRatingPipelinesTable({ dashboardData, kpiConfiguration }) 
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "sonarVulnerabilitiesCodeBasedMetricScorecard",
+        "sonarBugsCodeBasedMetricScorecard",
         kpiConfiguration,
         dashboardTags,
         filterDto
       );
-      let dataObject = response?.data?.data[0]?.sonarVulnerabilitiesCodeBasedMetricScorecard?.data[0]?.data;
+      let dataObject = response?.data?.data[0]?.sonarBugsCodeBasedMetricScorecard?.data[0]?.data;
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;
         newFilterDto.setData(
           "totalCount",
-          response?.data?.data[0]?.sonarVulnerabilitiesCodeBasedMetricScorecard?.data[0]?.count[0]?.count
+          response?.data?.data[0]?.sonarBugsCodeBasedMetricScorecard?.data[0]?.count[0]?.count
         );
         setTableFilterDto({ ...newFilterDto });
       }
@@ -133,11 +133,9 @@ function SonarSecurityRatingPipelinesTable({ dashboardData, kpiConfiguration }) 
   );
 }
 
-SonarSecurityRatingPipelinesTable.propTypes = {
-  chartModel: PropTypes.object,
-  setActiveTab: PropTypes.func,
+SonarReliabilityRatingPipelinesTable.propTypes = {
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object,
 };
 
-export default SonarSecurityRatingPipelinesTable;
+export default SonarReliabilityRatingPipelinesTable;
