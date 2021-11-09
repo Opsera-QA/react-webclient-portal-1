@@ -24,10 +24,10 @@ function SalesforceCreatePackageDurationDataBlock({ meanData, countData, goalsDa
     if (!meanData || !goalsData || goalsData == 0) {
       return;
     }
-    if (goalsData < meanData) {
+    if (goalsData > meanData) {
       return { color: statusColors.success };
     }
-    if (goalsData > meanData) {
+    if (goalsData < meanData) {
       return { color: statusColors.danger };
     }
     if (goalsData == meanData) {
