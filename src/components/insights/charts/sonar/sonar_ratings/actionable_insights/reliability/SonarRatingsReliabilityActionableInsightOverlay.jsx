@@ -1,33 +1,24 @@
-import React, { useEffect, useContext, useState, useMemo, useRef } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import PropTypes from "prop-types";
 import axios from "axios";
-import FilterContainer from "components/common/table/FilterContainer";
 import Model from "core/data_model/model";
 import sonarPipelineDetailsFilterMetadata from "components/insights/charts/sonar/sonar_ratings/sonar.pipeline.details.filter.metadata";
-import SonarPipelineTableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar.pipeline.table.metadata";
-import {
-  getChartTrendStatusColumn,
-  getTableTextColumnWithoutField,
-  getCustomTableHeader, getCustomTableAccessor,
-} from "components/common/table/table-column-helpers";
-import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
-import CustomTable from "components/common/table/CustomTable";
 import {
-  faDraftingCompass,
   faExternalLink,
   faTable,
 } from "@fortawesome/pro-light-svg-icons";
 
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import {getTimeDisplay} from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
 import SonarRatingsReliabilityOverviewDataBlockContainer
   from "components/insights/charts/sonar/sonar_ratings/actionable_insights/reliability/SonarRatingsReliabilityOverviewDataBlockContainer";
+import SonarRatingsReliabilityActionableInsightTable
+  from "components/insights/charts/sonar/sonar_ratings/actionable_insights/reliability/SonarRatingsReliabilityActionableInsightTable";
 
 function SonarRatingsReliabilityActionableInsightOverlay() {
   const { getAccessToken } = useContext(AuthContext);
@@ -42,60 +33,6 @@ function SonarRatingsReliabilityActionableInsightOverlay() {
   const [error, setError] = useState(undefined);
   const [footerData, setFooterData] = useState(undefined);
   const [issueTypeData, setIssueTypeData] = useState(undefined);
-
-  const noDataMessage = "Sonar Bugs report is currently unavailable at this time";
-
-  const fields = SonarPipelineTableMetadata.fields;
-
-  // TODO: Handle colors with rules after written
-  const getKpiSonarPipelineTableTextColumn = (field, block) => {
-    return {
-      Header: getCustomTableHeader(field),
-      accessor: getCustomTableAccessor(field),
-      Cell: function parseText(row) {
-        let classNm = "dark-gray-text-primary";
-        const value = row?.value;
-        if (value > 0) {
-          switch (block) {
-            case "vulnerability":
-            case "bugs":
-            case "code_smells":
-            case "critical":
-            case "blocker":
-              classNm = 'danger-red';
-              break;
-            case "major":
-              classNm = value <= 1 ? 'opsera-yellow' : "danger-red";
-              break;
-            case "minor":
-              classNm = value < 10 ? 'opsera-yellow' : "danger-red";
-              break;
-            default:
-              classNm = "dark-gray-text-primary";
-          }
-        }
-        return (<div className={`${classNm}`}>
-          {value}
-        </div>);
-      },
-    };
-  };
-
-  const columns = useMemo(
-    () => [
-      getKpiSonarPipelineTableTextColumn(getField(fields, "project")),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "runCount")),
-      getChartTrendStatusColumn(getField(fields, "status")),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "critical"), "critical"),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "blocker"), "blocker"),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "major"), "major"),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "minor"), "minor"),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "info"), "info"),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "effort")),
-      getTableTextColumnWithoutField("Actions", "_blueprint", "text-center"),
-    ],
-    []
-  );
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -189,25 +126,6 @@ function SonarRatingsReliabilityActionableInsightOverlay() {
     );
   };
 
-  const onRowSelect = (rowData) => {
-    toastContext.showOverlayPanel(
-      <BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount} />
-    );
-  };
-
-  const getTable = () => {
-    return (
-      <CustomTable
-        isLoading={isLoading}
-        columns={columns}
-        data={bugsData}
-        noDataMessage={noDataMessage}
-        loadData={loadData}
-        onRowSelect={onRowSelect}
-      />
-    );
-  };
-
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
@@ -227,13 +145,9 @@ function SonarRatingsReliabilityActionableInsightOverlay() {
         <SonarRatingsReliabilityOverviewDataBlockContainer
           sonarMetric={issueTypeData}
         />
-        <FilterContainer
+        <SonarRatingsReliabilityActionableInsightTable
+          bugsData={bugsData}
           isLoading={isLoading}
-          showBorder={false}
-          title={`Bugs Report`}
-          titleIcon={faDraftingCompass}
-          body={getTable()}
-          className={"px-2 pb-2"}
         />
         {getFooterDetails()}
       </div>
