@@ -19,10 +19,10 @@ const buildAndDeployGoalsMetadata = {
       },
     ],
     newObjectFields: {
-      build_success_rate: 0,
-      average_builds: 0,
-      deployment_success_rate: 0,
-      average_deployments: 0
+      build_success_rate: 90,
+      average_builds: 1,
+      deployment_success_rate: 90,
+      average_deployments: 1
     }
   };
   

@@ -37,6 +37,7 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [goalsData, setGoalsData] = useState(undefined);
 
   // TODO: Wire up data pull and pass relevant data down
   useEffect(() => {
@@ -65,6 +66,8 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")]?.value;
+      setGoalsData(goals);
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "pipelineBuildAndDeploymentStatistics", kpiConfiguration, dashboardTags);
       
       const metrics = response?.data?.data[0]?.pipelineBuildAndDeploymentStatistics?.data;
@@ -102,16 +105,6 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
                 y: d.y
               };
             });
-
-
-    // return Array.from(Array(12).keys(), month => 
-    //   ipData.find(ipd => ipd.x === month+1) || { x: month+1, y: 0 }
-    // ).map(d => {
-    //   return {
-    //     x: monthData[d.x-1],
-    //     y: d.y
-    //   };
-    // });
   };
 
   const getChartData = (chartData) => {
@@ -140,22 +133,45 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
   };
   
 
-  const getChartBody = () => {    
+  const getChartBody = () => {
+    if(!buildAndDeployMetricData || !buildAndDeployChartData){
+      return null;
+    }    
     return (
       <Row className={"mx-0 p-2 justify-content-between"}>        
         <Col className={"px-0"} xl={6} lg={12}>
-          <BuildStatisticsDataBlockContainerV2 metricData={buildAndDeployMetricData} chartData={buildAndDeployChartData} kpiConfiguration={kpiConfiguration} />
+          <BuildStatisticsDataBlockContainerV2 
+            metricData={buildAndDeployMetricData} 
+            chartData={buildAndDeployChartData} 
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData} 
+            goalsData={goalsData?.build_success_rate}
+          />
         </Col>
         <Col className={"px-0"} xl={6} lg={12}>
-          <BuildFrequencyStatisticsDataBlockContainerV2 metricData={buildAndDeployMetricData} chartData={buildAndDeployChartData} kpiConfiguration={kpiConfiguration} />
+          <BuildFrequencyStatisticsDataBlockContainerV2 
+            metricData={buildAndDeployMetricData} 
+            chartData={buildAndDeployChartData}             
+            goalsData={goalsData?.average_builds}
+          />
         </Col>
         <Col className={"px-0"} xl={6} lg={12}>
-          <DeploymentStatisticsDataBlockContainerV2 metricData={buildAndDeployMetricData} chartData={buildAndDeployChartData} kpiConfiguration={kpiConfiguration} />
+          <DeploymentStatisticsDataBlockContainerV2 
+            metricData={buildAndDeployMetricData} 
+            chartData={buildAndDeployChartData} 
+            kpiConfiguration={kpiConfiguration} 
+            dashboardData={dashboardData}
+            goalsData={goalsData?.deployment_success_rate}
+          />
         </Col>
         <Col className={"px-0"} xl={6} md={12}>
-          <DeploymentFrequencyStatisticsDataBlockContainerV2 metricData={buildAndDeployMetricData} chartData={buildAndDeployChartData} kpiConfiguration={kpiConfiguration} />
+          <DeploymentFrequencyStatisticsDataBlockContainerV2 
+            metricData={buildAndDeployMetricData} 
+            chartData={buildAndDeployChartData}            
+            goalsData={goalsData?.average_deployments}
+          />
         </Col>
-      </Row>
+      </Row>      
     );
   };
 

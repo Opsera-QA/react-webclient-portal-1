@@ -16,7 +16,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-function DeploymentStatisticsActionableInsightsTable() {
+function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [model, setModel] = useState(
     new Model({...BuildDeployInsightsFilterMetadata.newObjectFields}, BuildDeployInsightsFilterMetadata, false)
@@ -72,19 +72,14 @@ function DeploymentStatisticsActionableInsightsTable() {
   const loadData = async (cancelSource = cancelTokenSource, filterDto = model) => {    
     try {
       setIsLoading(true);
+      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "opseraDeployActionableInsights",
-        undefined,
-        undefined,        
-        filterDto,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
+        kpiConfiguration,
+        dashboardTags,        
+        filterDto
       );
       
       if (isMounted?.current === true && response?.status === 200) {
@@ -222,7 +217,8 @@ function DeploymentStatisticsActionableInsightsTable() {
 }
 
 DeploymentStatisticsActionableInsightsTable.propTypes = {
-  dataObject: PropTypes.object,
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
 };
 
 export default DeploymentStatisticsActionableInsightsTable;
