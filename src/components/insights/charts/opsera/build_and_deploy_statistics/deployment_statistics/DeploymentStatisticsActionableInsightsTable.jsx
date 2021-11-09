@@ -10,11 +10,16 @@ import { getTableTextColumn, getTableTextColumnWithoutField } from "components/c
 import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
 import CustomTable from "components/common/table/CustomTable";
-import { faDraftingCompass, faExternalLink, faClock, faTools, faCheckCircle, faTimesCircle, faRocketLaunch } from "@fortawesome/pro-light-svg-icons";
+import { faDraftingCompass, faExternalLink } from "@fortawesome/pro-light-svg-icons";
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import TotalBuildsDeployments from "../data_blocks/TotalBuildsDeployments";
+import SuccessfulBuildsDeployments from "../data_blocks/SuccessfulBuildsDeployments";
+import FailedBuildsDeployments from "../data_blocks/FailedBuildsDeployments";
+import AverageDuration from "../data_blocks/AverageDuration";
+import AverageDurationToResolve from "../data_blocks/AverageDurationToResolve";
 
 
 function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboardData }) {
@@ -133,59 +138,32 @@ function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboa
       <Row className="pb-3 px-2">
         <Col xl={1} lg={1} sm={0} className="mt-3" ></Col>
         <Col xl={2} lg={2} sm={4} className="mt-3" >
-          <div className="metric-box p-3 text-center">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faTools} fixedWidth className='mr-2' />
-            </div>            
-            <div className="box-metric d-flex flex-row" style={{alignItems: 'center', justifyContent: 'center'}}>
-              <div className="font-weight-bold">{deploymentSummaryData?.total}</div>
-            </div>
-            <div className="w-100 text-muted mb-1">Total Deployments</div>
-          </div>
+          <TotalBuildsDeployments 
+            displayValue={deploymentSummaryData?.total}
+            displayText="Total Deployments"
+          />
         </Col>
         <Col xl={2} lg={2} sm={4} className="mt-3">          
-          <div className="metric-box p-3 text-center">            
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faCheckCircle} fixedWidth className='mr-2 green' />
-            </div>
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className="font-weight-bold green">{deploymentSummaryData?.success}</div>
-            </div>
-            <div className="w-100 green mb-1">Successful Deployments</div>
-          </div>
+          <SuccessfulBuildsDeployments 
+            displayValue={deploymentSummaryData?.success}
+            displayText="Successful Deployments"
+          />          
         </Col>
         <Col xl={2} lg={2} sm={4} className="mt-3">
-          <div className="metric-box p-3 text-center">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faTimesCircle} fixedWidth className='mr-2 danger-red' />
-            </div>            
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className="font-weight-bold red">{deploymentSummaryData?.failure}</div>
-            </div>
-            <div className="w-100 red mb-1 ">Failed Deployments</div>
-          </div>
+          <FailedBuildsDeployments 
+            displayValue={deploymentSummaryData?.failure}
+            displayText="Failed Deployments"
+          />          
         </Col>
         <Col xl={2} lg={2} sm={4} className="mt-3">
-          <div className="metric-box p-3 text-center">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faRocketLaunch} fixedWidth className='mr-2 green' />
-            </div>            
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className="font-weight-bold green">{deploymentSummaryData?.avgDuration} <span className="metric-box-subtext"> mins</span></div>
-            </div>
-            <div className="w-100 green mb-1">Average Duration</div>
-          </div>
+          <AverageDuration 
+            displayValue={deploymentSummaryData?.avgDuration}            
+          />          
         </Col>
         <Col xl={2} lg={2} sm={4} className="mt-3">
-          <div className="metric-box p-3 text-center">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faClock} fixedWidth className='mr-2 danger-red' />
-            </div>            
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className="font-weight-bold red">{deploymentSummaryData?.avgTimeToResolve}<span className="metric-box-subtext"> hrs</span></div>
-            </div>
-            <div className="w-100 red mb-1 ">Average Duration to Resolve</div>
-          </div>
+          <AverageDurationToResolve 
+            displayValue={deploymentSummaryData?.avgTimeToResolve}            
+          />         
         </Col>        
       </Row>
     );
