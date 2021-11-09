@@ -31,8 +31,8 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-details.css";
-import { getColor, getTimeDisplay, getField_custom } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import {getColor, getTimeDisplay} from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
 
 function SonarRatingsReliabilityActionableInsightOverlay() {
   const { getAccessToken } = useContext(AuthContext);

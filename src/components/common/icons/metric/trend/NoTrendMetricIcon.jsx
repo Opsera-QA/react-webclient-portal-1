@@ -1,29 +1,20 @@
 import React from "react";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
-import PropTypes from "prop-types";
+import IconBase from "components/common/icons/IconBase";
 
-function NoTrendMetricIcon({noPad}) {
+function NoTrendMetricIcon() {
   return (
     <TooltipWrapper innerText={"Success"}>
       <div>
-        <div className="status-icon">
-          <FontAwesomeIcon
-            icon={faMinusCircle}
-            style={ !noPad ? { marginLeft: 15 } : {}}
-            className="cell-icon vertical-align-item"
-            fixedWidth
-          />
-        </div>
+        <IconBase
+          icon={faMinusCircle}
+          iconClassName={"cell-icon vertical-align-item"}
+          className={"status-icon"}
+        />
       </div>
     </TooltipWrapper>
   );
 }
-NoTrendMetricIcon.propTypes = {
-  noPad: PropTypes.boolean,
-};
-NoTrendMetricIcon.defaultProps = {
-  noPad:false
-};
+
 export default NoTrendMetricIcon;

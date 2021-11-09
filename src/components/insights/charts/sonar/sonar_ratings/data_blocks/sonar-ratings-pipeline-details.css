@@ -18,11 +18,3 @@
   top: 5px;
   left: 25px;
 }
-
-.sonar-pipeline-details-table .custom-table > thead > tr > th >div {
-  justify-content: center;
-}
-
-.sonar-pipeline-details-table .custom-table .status-icon{
-  width: 100%;
-}

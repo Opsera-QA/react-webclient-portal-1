@@ -9,7 +9,7 @@ import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeD
 
 import SonarRatingsMaintainabilityActionableInsightOverlay from 'components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityActionableInsightOverlay';
 import Col from "react-bootstrap/Col";
-function SonarRatingsMaintainabilityDataBlockV2({ maintainabilityRating, technicalDebtRatio }) {
+function SonarRatingsMaintainabilityDataBlock({ maintainabilityRating, technicalDebtRatio }) {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = () => {
@@ -84,9 +84,9 @@ function SonarRatingsMaintainabilityDataBlockV2({ maintainabilityRating, technic
   );
 }
 
-SonarRatingsMaintainabilityDataBlockV2.propTypes = {
+SonarRatingsMaintainabilityDataBlock.propTypes = {
   maintainabilityRating: PropTypes.number,
   technicalDebtRatio: PropTypes.number,
 };
 
-export default SonarRatingsMaintainabilityDataBlockV2;
+export default SonarRatingsMaintainabilityDataBlock;
