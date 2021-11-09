@@ -69,7 +69,7 @@ import GenericChartSettingsHelpDocumentation
 import StandaloneDeleteButtonWithConfirmationModal
   from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
-import FreeNotesTextInput from "./NotesFreeTextInput";
+import TextAreaInput from "../../../common/inputs/text/TextAreaInput";
 
 function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData, index, closePanel, loadChart, setKpis, settingsHelpComponent }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -330,7 +330,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       case "notes":
         return (
           <div>
-            <FreeNotesTextInput
+            <TextAreaInput
               type={"kpi_filter"}
               fieldName={"value"}
               setDataObject={setKpiNotesFilter}

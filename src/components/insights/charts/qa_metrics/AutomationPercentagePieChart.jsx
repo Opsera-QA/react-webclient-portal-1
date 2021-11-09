@@ -13,9 +13,11 @@ import {
 } from "../charts-views";
 import ChartTooltip from "../ChartTooltip";
 import { Col, Container, Row } from "react-bootstrap";
-import DataBlockWrapper from "../../../common/data_boxes/DataBlockWrapper";
 import TwoLineScoreDataBlock from "../../../common/metrics/score/TwoLineScoreDataBlock";
 import PercentageDataBlock from "../../../common/metrics/percentage/PercentageDataBlock";
+import { METRIC_QUALITY_LEVELS } from "../../../common/metrics/text/MetricTextBase";
+import "./Styling.css";
+import NewPercentageDataBlock from "../../../common/metrics/percentage/NewPercentageDataBlock";
 
 function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -88,19 +90,19 @@ function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, d
         <Container>
           <Row className="p-0">
             <Col lg={4} md={6}>
-            <TwoLineScoreDataBlock
+            <TwoLineScoreDataBlock className={"test-percentage"}
               score={metrics[0]?.totalTests}
               subtitle={"Total Number of Automation Candidates"}
             />
             </Col>
             <Col lg={4} md={6}>
-            <TwoLineScoreDataBlock
+            <TwoLineScoreDataBlock className={"test-percentage"}
               score={metrics[0]?.functionalTests}
               subtitle={"Total Number of Functional Test Cases"}
             />
             </Col>
             <Col lg={4} md={6}>
-            <TwoLineScoreDataBlock
+            <TwoLineScoreDataBlock className={"test-percentage"}
               score={metrics[0]?.regressionTests}
               subtitle={"Total Number of Regression Test Cases"}
             />
@@ -108,32 +110,29 @@ function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, d
           </Row>
           <Row className="p-0">
             <Col lg={4} md={6}>
-            <TwoLineScoreDataBlock
+            <TwoLineScoreDataBlock className={"test-percentage"}
               score={metrics[0]?.automatedTests}
               subtitle={"Regression Test Cases Automated"}
             />
             </Col>
             <Col lg={4} md={6}>
-            <TwoLineScoreDataBlock
+            <TwoLineScoreDataBlock className={"test-percentage"}
               score={metrics[0]?.manualTests}
               subtitle={"Regression Test Cases To Be Automated"}
             />
             </Col>
             <Col lg={4} md={6}>
-            <PercentageDataBlock
+            <NewPercentageDataBlock className={"test-percentage"}
               percentage={metrics[0].automationRate}
               subtitle={"Automation Percentage"}
+              qualityLevel={metrics[0]?.automationRate < 90 ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS}
+              goal={"Goal: Automation Percentage > 90%"}
             />
             </Col>
           </Row>
-          <Row className="p-0">
-            <Col className="text-right">
-              <small><span className="font-weight-bold">Goal:</span> Automation Percentage &gt; 90%</small>
-            </Col>
-          </Row>
-          <Row className="p-0">
+          <Row className="p-3">
             <Col className="text-center">
-              <small><span className="font-weight-bold">Notes:</span> {notesData} </small>
+              <small>{notesData} </small>
             </Col>
           </Row>
         </Container>

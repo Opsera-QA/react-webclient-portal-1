@@ -93,7 +93,7 @@ export const kpiNotesFilterMetadata = {
       id: "type",
     },
     {
-      label: "notes",
+      label: "Notes",
       id: "value",
     },
   ],
