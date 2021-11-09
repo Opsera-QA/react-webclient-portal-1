@@ -19,7 +19,7 @@ import { useHistory } from "react-router-dom";
 import { faTable } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import SonarPipelineWiseVulnerabilitiesDetails from "./SonarPipelineWiseVulnerabilitiesDetails";
+import SonarPipelineWiseVulnerabilitiesDetails from "components/insights/charts/sonar/table/vulnerabilities-scorecard/SonarPipelineWiseVulnerabilitiesDetails";
 
 function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const history = useHistory();

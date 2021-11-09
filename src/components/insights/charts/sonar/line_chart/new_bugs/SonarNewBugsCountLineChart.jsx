@@ -3,7 +3,7 @@
 // Sprint - Analytics Mt. Rainier
 // Persona - Developer
 
-import config from "./sonarNewBugsCountLineChartConfigs";
+import config from "components/insights/charts/sonar/line_chart/new_bugs/sonarNewBugsCountLineChartConfigs";
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";

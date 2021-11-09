@@ -4,28 +4,21 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGradeText";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
-import PercentageDataBlock from "components/common/metrics/percentage/PercentageDataBlock";
+import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
-import Col from "react-bootstrap/Col";
-import Model from "core/data_model/model";
-import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
-import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 
-function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration, maintainabilityRating, technicalDebtRatio }) {
+import SonarRatingsReliabilityActionableInsightOverlay from 'components/insights/charts/sonar/sonar_ratings/actionable_insights/reliability/SonarRatingsReliabilityActionableInsightOverlay';
+import Col from "react-bootstrap/Col";
+function SonarRatingsReliabilityDataBlockV2({ reliabilityRating, bugCount }) {
   const toastContext = useContext(DialogToastContext);
 
-  const onRowSelect = () => {
-    const chartModel = new Model({...SonarRatingsBugsActionableMetadata.newObjectFields}, SonarRatingsBugsActionableMetadata, false);
+  const onRowSelect =()=>{    
     toastContext.showOverlayPanel(
-      <ChartDetailsOverlay
-        dashboardData={dashboardData}
-        kpiConfiguration={kpiConfiguration}
-        chartModel={chartModel}
-        kpiIdentifier={"sonar-ratings-debt-ratio"} />
+      <SonarRatingsReliabilityActionableInsightOverlay />
     );
   };
 
-  const getSonarMaintainabilityGrade = (rating) => {
+  const getSonarReliabilityGrade = (rating) => {
     if (rating <= 1) {
       return LETTER_GRADES.A;
     }
@@ -49,17 +42,17 @@ function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration,
   const getLeftDataBlock = () => {
     return (
       <TwoLineGradeDataBlock
-        letterGrade={getSonarMaintainabilityGrade(maintainabilityRating)}
-        subtitle={"Maintainability"}
+        letterGrade={getSonarReliabilityGrade(reliabilityRating)}
+        subtitle={"Reliability"}
       />
     );
   };
 
   const getMiddleDataBlock = () => {
     return (
-      <PercentageDataBlock
-        percentage={technicalDebtRatio}
-        subtitle={"Technical Debt Ratio"}
+      <TwoLineScoreDataBlock
+        score={bugCount}
+        subtitle={"Bugs"}
       />
     );
   };
@@ -67,17 +60,17 @@ function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration,
   const getRightDataBlock = () => {
     return (
       <LegendDataBlock
-        firstItem={"Goal for Maintainability: A"}
-        secondItem={"Technical Debt Ratio: 0 - 5%"}
+        firstItem={"Goal for Reliability: A"}
+        // secondItem={"Fix X Bugs"}
       />
     );
   };
 
   return (
     <HorizontalDataBlocksContainer
-      title={"Sonar Ratings: Maintainability"}
+      title={"Sonar Ratings: Reliability"}
       onClick={() => onRowSelect()}
-     >
+    >
       <Col sm={4}>
         {getLeftDataBlock()}
       </Col>
@@ -91,11 +84,9 @@ function SonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration,
   );
 }
 
-SonarRatingsMaintainabilityDataBlock.propTypes = {
-  kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
-  maintainabilityRating: PropTypes.number,
-  technicalDebtRatio: PropTypes.number,
+SonarRatingsReliabilityDataBlockV2.propTypes = {
+  reliabilityRating: PropTypes.number,
+  bugCount: PropTypes.number,
 };
 
-export default SonarRatingsMaintainabilityDataBlock;
+export default SonarRatingsReliabilityDataBlockV2;

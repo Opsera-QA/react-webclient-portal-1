@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 
@@ -120,13 +120,12 @@ import ManualQaTestPieChart from "components/insights/charts/qa_metrics/ManualQa
 import FirstPassYieldPieChart from "components/insights/charts/qa_metrics/FirstPassYieldPieChart";
 import CummulativeOpenDefectsPieChart from "components/insights/charts/qa_metrics/CummulativeOpenDefectsPieChart";
 import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieChart";
-import AdoptionPercentagePieChart from "./qa_metrics/AdoptionPercentagePieChart";
+import AdoptionTestPercentagePieChart from "./qa_metrics/AdoptionTestPercentagePieChart";
 import AutomatedTestResultsPieChart from "./qa_metrics/AutomatedTestResultsPieChart";
 import SFDCManualTestResultsPieChart from "./qa_metrics/SFDCManualTestResultsPieChart";
 import DefectRemovalEfficiencyPieChart from "./qa_metrics/DefectRemovalEfficiencyPieChart";
 
 // SFDC KPIs
-import SalesforceDurationByStageMetrics from "components/insights/charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageMetrics";
 import SFDCBackups from "components/insights/charts/sfdc/SFDCBackups";
 import SFDCProfileMigrationsBarChart from "components/insights/charts/sfdc/bar_chart/profile_migrations/SFDCProfileMigrationsBarChart";
 import SFDCUnitTestingPieChart from "components/insights/charts/sfdc/pie_chart/unit_testing/SFDCUnitTestingPieChart";
@@ -144,15 +143,12 @@ import {
   getTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 import { Col } from "react-bootstrap";
-import { AuthContext } from "../../../contexts/AuthContext";
+import LegacySonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings_legacy/LegacySonarRatingMetrics";
 import SonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings/SonarRatingMetrics";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
   const [kpiConfig, setKpiConfig] = useState(kpiConfiguration);
-  const { featureFlagHideItemInProd } = useContext(AuthContext);
-  const envIsProd = featureFlagHideItemInProd();
-
   // TODO: This is only being used until each chart is updated to use ChartContainer inside.
   //  After everything is refactored,
   //  this should be deleted and we should just return getChart() at bottom of component instead
@@ -593,17 +589,15 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-reliability-remediation-agg-trend":
         return (
-          !envIsProd && (
-            <Col xl={6} md={12} className="p-2">
-              <SonarReliabilityRemediationEffortAggTrendLineChart
-                kpiConfiguration={kpiConfig}
-                setKpiConfiguration={setKpiConfig}
-                dashboardData={dashboardData}
-                setKpis={setKpis}
-                index={index}
-              />
-            </Col>
-          )
+          <Col xl={6} md={12} className="p-2">
+            <SonarReliabilityRemediationEffortAggTrendLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "sonar-vulnerabilities-by-project":
         return (
@@ -684,6 +678,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "sonar-ratings":
         return (
           <Col xl={6} md={12} className="p-2">
+            <LegacySonarRatingMetrics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sonar-ratings-v2":
+        return (
+          <Col xl={6} md={12} className="p-2">
             <SonarRatingMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -741,6 +747,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+
       // Jmeter KPIs
       case "jmeter-hits":
         return (
@@ -1274,7 +1281,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "adoption-percentage":
         return (
           <Col md={12} className="p-2">
-            <AdoptionPercentagePieChart
+            <AdoptionTestPercentagePieChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1287,18 +1294,6 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col md={12} className="p-2">
             <AutomatedTestResultsPieChart
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
-        );
-      case "salesforce-duration-by-stage":
-        return (
-          <Col md={12} className="p-2">
-            <SalesforceDurationByStageMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1380,18 +1375,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "servicenow-mean-time-between-failures":
-        return (
-          <Col xl={6} md={12} className="p-2">
-            <ServiceNowMeanTimeBetweenFailuresBarChart
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
-        );
+      // case "servicenow-mean-time-between-failures":
+      //   return (
+      //     <Col xl={6} md={12} className="p-2">
+      //       <ServiceNowMeanTimeBetweenFailuresBarChart
+      //         kpiConfiguration={kpiConfig}
+      //         setKpiConfiguration={setKpiConfig}
+      //         dashboardData={dashboardData}
+      //         setKpis={setKpis}
+      //         index={index}
+      //       />
+      //     </Col>
+      //   );
       case "defect-removal-efficiency":
         return (
           <Col md={12} className="p-2">

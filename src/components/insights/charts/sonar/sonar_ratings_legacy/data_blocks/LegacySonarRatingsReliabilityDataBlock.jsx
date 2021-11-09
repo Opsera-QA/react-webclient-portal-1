@@ -10,7 +10,7 @@ import Col from "react-bootstrap/Col";
 import Model from "core/data_model/model";
 import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
 import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
-function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, reliabilityRating, bugCount }) {
+function LegacySonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, reliabilityRating, bugCount }) {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = () => {
@@ -90,11 +90,11 @@ function SonarRatingsReliabilityDataBlock({ dashboardData, kpiConfiguration, rel
   );
 }
 
-SonarRatingsReliabilityDataBlock.propTypes = {
+LegacySonarRatingsReliabilityDataBlock.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   reliabilityRating: PropTypes.number,
   bugCount: PropTypes.number,
 };
 
-export default SonarRatingsReliabilityDataBlock;
+export default LegacySonarRatingsReliabilityDataBlock;

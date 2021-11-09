@@ -6,18 +6,17 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import SonarRatingsChartHelpDocumentation
   from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
-import SonarRatingsMaintainabilityDataBlock
-  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsMaintainabilityDataBlock_reverted";
-import SonarRatingsVulnerabilityDataBlock
-  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsVulnerabilityDataBlock_reverted";
-import HorizontalThreeDataBlockContainer
-  from "components/common/metrics/data_blocks/horizontal/HorizontalThreeDataBlockContainer";
-import SonarRatingsReliabilityDataBlock
-  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlock_reverted";
+import LegacySonarRatingsMaintainabilityDataBlock
+  from "components/insights/charts/sonar/sonar_ratings_legacy/data_blocks/LegacySonarRatingsMaintainabilityDataBlock";
+import LegacySonarRatingsVulnerabilityDataBlock
+  from "components/insights/charts/sonar/sonar_ratings_legacy/data_blocks/LegacySonarRatingsVulnerabilityDataBlock";
+import ThreeStackedHorizontalMetricsContainer
+  from "components/common/metrics/data_blocks/horizontal/ThreeStackedHorizontalMetricsContainer";
+import LegacySonarRatingsReliabilityDataBlock
+  from "components/insights/charts/sonar/sonar_ratings_legacy/data_blocks/LegacySonarRatingsReliabilityDataBlock";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 
-// TODO: Replace SonarRatings once verified
-function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function LegacySonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [sonarRatingsMetric, setSonarRatingsMetric] = useState(undefined);
@@ -78,21 +77,27 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
     }
 
     return (
-      <HorizontalThreeDataBlockContainer
+      <ThreeStackedHorizontalMetricsContainer
         topDataBlock={
-          <SonarRatingsVulnerabilityDataBlock
+          <LegacySonarRatingsVulnerabilityDataBlock
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
             securityRating={sonarRatingsMetric?.security_rating}
             vulnerabilityCount={sonarRatingsMetric?.vulnerabilities}
           />
         }
         middleDataBlock={
-          <SonarRatingsReliabilityDataBlock
+          <LegacySonarRatingsReliabilityDataBlock
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
             reliabilityRating={sonarRatingsMetric?.reliability_rating}
             bugCount={sonarRatingsMetric?.bugs}
           />
         }
         bottomDataBlock={
-          <SonarRatingsMaintainabilityDataBlock
+          <LegacySonarRatingsMaintainabilityDataBlock
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
             maintainabilityRating={sonarRatingsMetric?.maintainability_rating}
             technicalDebtRatio={sonarRatingsMetric.technical_debt_ratio}
           />
@@ -128,7 +133,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
   );
 }
 
-SonarRatingMetrics.propTypes = {
+LegacySonarRatingMetrics.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -136,4 +141,4 @@ SonarRatingMetrics.propTypes = {
   setKpis: PropTypes.func
 };
 
-export default SonarRatingMetrics;
+export default LegacySonarRatingMetrics;

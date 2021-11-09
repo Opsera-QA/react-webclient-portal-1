@@ -6,34 +6,16 @@ import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks
 import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import PercentageDataBlock from "components/common/metrics/percentage/PercentageDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
-import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import { faTable } from "@fortawesome/pro-light-svg-icons";
-import SonarPipelineWiseMaintainabilityDetails from './SonarPipelineWiseMaintainabilityDetails';
+
+import SonarRatingsMaintainabilityActionableInsightOverlay from 'components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityActionableInsightOverlay';
 import Col from "react-bootstrap/Col";
-function SonarRatingsMaintainabilityDataBlock({ maintainabilityRating, technicalDebtRatio }) {
+function SonarRatingsMaintainabilityDataBlockV2({ maintainabilityRating, technicalDebtRatio }) {
   const toastContext = useContext(DialogToastContext);
 
-  const onRowSelect =()=>{    
+  const onRowSelect = () => {
     toastContext.showOverlayPanel(
-      <FullScreenCenterOverlayContainer
-        closePanel={closePanel}
-        showPanel={true}
-        titleText={`Sonar Ratings: Maintainability`}
-        showToasts={true}
-        titleIcon={faTable}
-        isLoading={false}
-        linkTooltipText={"View Full Blueprint"}
-      >
-        <div className={"p-3"}>
-          <SonarPipelineWiseMaintainabilityDetails />
-        </div>        
-      </FullScreenCenterOverlayContainer>
+      <SonarRatingsMaintainabilityActionableInsightOverlay/>
     );
-  };
-  
-  const closePanel = () => {
-    toastContext.removeInlineMessage();
-    toastContext.clearOverlayPanel();
   };
 
   const getSonarMaintainabilityGrade = (rating) => {
@@ -102,9 +84,9 @@ function SonarRatingsMaintainabilityDataBlock({ maintainabilityRating, technical
   );
 }
 
-SonarRatingsMaintainabilityDataBlock.propTypes = {
+SonarRatingsMaintainabilityDataBlockV2.propTypes = {
   maintainabilityRating: PropTypes.number,
   technicalDebtRatio: PropTypes.number,
 };
 
-export default SonarRatingsMaintainabilityDataBlock;
+export default SonarRatingsMaintainabilityDataBlockV2;

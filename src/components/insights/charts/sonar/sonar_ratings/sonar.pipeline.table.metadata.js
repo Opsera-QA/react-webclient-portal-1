@@ -3,11 +3,11 @@ const SonarPipelineTableMetadata = {
   type: "Sonar Pipeline Table Report",
   fields: [
     {
-      label: "Project Name",
+      label: "Project",
       id: "project",
     },
     {
-      label: "Recent Scan",
+      label: "Last Scan",
       id: "runCount",
     },
     {
