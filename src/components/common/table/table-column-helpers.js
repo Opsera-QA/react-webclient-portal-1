@@ -524,7 +524,7 @@ export const getChartPipelineStatusColumn = (field, className) => {
   };
 };
 
-export const getChartTrendStatusColumn = (field, className, noPad) => {
+export const getChartTrendStatusColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
@@ -533,13 +533,13 @@ export const getChartTrendStatusColumn = (field, className, noPad) => {
 
       switch (status) {
         case "red":
-          return (<DangerMetricIcon noPad={noPad} />);
+          return (<DangerMetricIcon />);
         case "neutral":
-          return (<UnchangedMetricIcon noPad={noPad} />);
+          return (<UnchangedMetricIcon />);
         case "green":
-        return (<SuccessMetricIcon noPad={noPad} />);
+        return (<SuccessMetricIcon />);
         case "-":
-          return (<NoTrendMetricIcon noPad={noPad} />);
+          return (<NoTrendMetricIcon />);
         default:
           return status;
       }

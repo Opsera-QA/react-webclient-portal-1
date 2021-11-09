@@ -6,38 +6,19 @@ import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks
 import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
-import Col from "react-bootstrap/Col";
-import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import { faTable } from "@fortawesome/pro-light-svg-icons";
-import SonarRatingsVulnerabilityActionableInsightOverlay from 'components/insights/charts/sonar/sonar_ratings/actionable_insights/vulnerability/SonarRatingsVulnerabilityActionableInsightOverlay';
 
-function SonarRatingsVulnerabilityDataBlockV2({  securityRating, vulnerabilityCount }) {
+import SonarRatingsReliabilityActionableInsightOverlay from 'components/insights/charts/sonar/sonar_ratings/actionable_insights/reliability/SonarRatingsReliabilityActionableInsightOverlay';
+import Col from "react-bootstrap/Col";
+function SonarRatingsReliabilityDataBlock({ reliabilityRating, bugCount }) {
   const toastContext = useContext(DialogToastContext);
-  
+
   const onRowSelect =()=>{    
     toastContext.showOverlayPanel(
-      <FullScreenCenterOverlayContainer
-        closePanel={closePanel}
-        showPanel={true}
-        titleText={`Sonar Ratings: Vulnerability`}
-        showToasts={true}
-        titleIcon={faTable}
-        isLoading={false}
-        linkTooltipText={"View Full Blueprint"}
-      >
-        <div className={"p-3"}>
-          <SonarRatingsVulnerabilityActionableInsightOverlay />
-        </div>        
-      </FullScreenCenterOverlayContainer>
+      <SonarRatingsReliabilityActionableInsightOverlay />
     );
   };
 
-  const closePanel = () => {
-    toastContext.removeInlineMessage();
-    toastContext.clearOverlayPanel();
-  };
-
-  const getSonarSecurityGrade = (rating) => {
+  const getSonarReliabilityGrade = (rating) => {
     if (rating <= 1) {
       return LETTER_GRADES.A;
     }
@@ -61,8 +42,8 @@ function SonarRatingsVulnerabilityDataBlockV2({  securityRating, vulnerabilityCo
   const getLeftDataBlock = () => {
     return (
       <TwoLineGradeDataBlock
-        letterGrade={getSonarSecurityGrade(securityRating)}
-        subtitle={"Security"}
+        letterGrade={getSonarReliabilityGrade(reliabilityRating)}
+        subtitle={"Reliability"}
       />
     );
   };
@@ -70,8 +51,8 @@ function SonarRatingsVulnerabilityDataBlockV2({  securityRating, vulnerabilityCo
   const getMiddleDataBlock = () => {
     return (
       <TwoLineScoreDataBlock
-        score={vulnerabilityCount}
-        subtitle={"Vulnerabilities"}
+        score={bugCount}
+        subtitle={"Bugs"}
       />
     );
   };
@@ -79,15 +60,15 @@ function SonarRatingsVulnerabilityDataBlockV2({  securityRating, vulnerabilityCo
   const getRightDataBlock = () => {
     return (
       <LegendDataBlock
-        firstItem={"Goal for Security: A"}
-        // secondItem={"Fix [Insert Count] Vulnerabilities"}
+        firstItem={"Goal for Reliability: A"}
+        // secondItem={"Fix X Bugs"}
       />
     );
   };
 
   return (
     <HorizontalDataBlocksContainer
-      title={"Sonar Ratings: Security"}
+      title={"Sonar Ratings: Reliability"}
       onClick={() => onRowSelect()}
     >
       <Col sm={4}>
@@ -103,9 +84,9 @@ function SonarRatingsVulnerabilityDataBlockV2({  securityRating, vulnerabilityCo
   );
 }
 
-SonarRatingsVulnerabilityDataBlockV2.propTypes = {
-  securityRating: PropTypes.number,
-  vulnerabilityCount: PropTypes.number,
+SonarRatingsReliabilityDataBlock.propTypes = {
+  reliabilityRating: PropTypes.number,
+  bugCount: PropTypes.number,
 };
 
-export default SonarRatingsVulnerabilityDataBlockV2;
+export default SonarRatingsReliabilityDataBlock;
