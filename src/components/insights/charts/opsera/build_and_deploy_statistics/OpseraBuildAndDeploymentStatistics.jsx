@@ -15,6 +15,12 @@ import DeploymentFrequencyStatisticsDataBlockContainer
 import chartsActions from "components/insights/charts/charts-actions";
 import axios from "axios";
 
+const DEFAULT_GOALS = {
+  build_success_rate: 90,
+  average_builds: 1,
+  deployment_success_rate: 90,
+  average_deployments: 1
+};
 
 function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -54,7 +60,13 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")]?.value;
-      setGoalsData(goals);
+      if(goals){
+        setGoalsData(goals);
+      }else{        
+        kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "goals")].value = DEFAULT_GOALS;
+        setGoalsData(DEFAULT_GOALS);
+      }
+      
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "pipelineBuildAndDeploymentStatistics", kpiConfiguration, dashboardTags);
       
       const metrics = response?.data?.data[0]?.pipelineBuildAndDeploymentStatistics?.data;
