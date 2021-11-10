@@ -14,7 +14,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import TotalBuildsDeployments from "../data_blocks/TotalBuildsDeployments";
+import TotalBuilds from "../data_blocks/TotalBuilds";
 import SuccessfulBuildsDeployments from "../data_blocks/SuccessfulBuildsDeployments";
 import FailedBuildsDeployments from "../data_blocks/FailedBuildsDeployments";
 import AverageDuration from "../data_blocks/AverageDuration";
@@ -138,35 +138,35 @@ function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardDat
     }
     return (
       <Row className="pb-3 px-2">        
-        <Col xl={2} lg={2} sm={4} className="mt-3" >
-          <TotalBuildsDeployments 
+        <Col lg={4} md={6} className="mt-3">
+          <TotalBuilds 
             displayValue={buildSummaryData?.total}
             displayText="Total Builds"
           />          
         </Col>
-        <Col xl={2} lg={2} sm={4} className="mt-3" >
+        <Col lg={4} md={6} className="mt-3">
           <SuccessfulBuildsDeployments 
             displayValue={buildSummaryData?.success}
             displayText="Successful Builds"
           />          
         </Col>
-        <Col xl={2} lg={2} sm={4} className="mt-3" >
+        <Col lg={4} md={6} className="mt-3">
           <FailedBuildsDeployments 
             displayValue={buildSummaryData?.failure}
             displayText="Failed Builds"
           />          
         </Col>
-        <Col xl={2} lg={2} sm={4} className="mt-3" >
+        <Col lg={4} md={6} className="mt-3">
           <AverageDuration 
             displayValue={buildSummaryData?.avgDuration}
           />          
         </Col>
-        <Col xl={2} lg={2} sm={4} className="mt-3" >
+        <Col lg={4} md={6} className="mt-3">
           <AverageDurationToResolve 
             displayValue={buildSummaryData?.avgTimeToResolve}
           />          
         </Col>
-        <Col xl={2} lg={2} sm={4} className="mt-3" >
+        <Col lg={4} md={6} className="mt-3">
           <TotalDurationToResolve 
             displayValue={buildSummaryData?.timeToResolve}
           />          

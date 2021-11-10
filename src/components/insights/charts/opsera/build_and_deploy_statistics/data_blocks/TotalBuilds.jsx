@@ -4,7 +4,7 @@ import { faTools } from "@fortawesome/pro-light-svg-icons";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 
-function TotalBuildsDeployments({ displayValue, displayText }) {
+function TotalBuilds({ displayValue, displayText }) {
   return (    
     <DataBlockBoxContainer showBorder={true}>
       <TwoLineScoreDataBlock        
@@ -16,10 +16,10 @@ function TotalBuildsDeployments({ displayValue, displayText }) {
   );
 }
 
-TotalBuildsDeployments.propTypes = {
+TotalBuilds.propTypes = {
   displayValue: PropTypes.string,
   displayText: PropTypes.string,
 };
 
-export default TotalBuildsDeployments;
+export default TotalBuilds;
 
