@@ -9,25 +9,26 @@ export const isEmptyCustom = (val) => {
 
 export const getMiddleText = (meanData, countData) => {
   if (!isEmptyCustom(meanData) && !isEmptyCustom(countData)) {
-    return meanData + " min | " + countData + " runs";
+    return `${meanData} min | ${countData} runs`;
   }
   if (!isEmptyCustom(meanData)) {
-    return meanData + " min | 0";
+    return `${meanData} min | 0`;
   }
   return "No runs";
 };
 
 export const getMiddleStyle = (meanData, goalsData) => {
-  if (isEmptyCustom(meanData) || isEmptyCustom(goalsData)) {
+  if (isEmptyCustom(meanData)) {
     return;
   }
-  if (goalsData > meanData) {
+  const  goalsDataValue = !isEmptyCustom(goalsData) ? goalsData : 0;
+  if (goalsDataValue > meanData) {
     return { color: statusColors.success };
   }
-  if (goalsData < meanData) {
+  if (goalsDataValue < meanData) {
     return { color: statusColors.danger };
   }
-  if (goalsData == meanData) {
+  if (goalsDataValue == meanData) {
     return { color: statusColors.warning };
   }
 };

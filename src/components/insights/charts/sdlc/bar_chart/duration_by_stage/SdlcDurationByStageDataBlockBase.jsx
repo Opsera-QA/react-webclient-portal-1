@@ -6,13 +6,14 @@ import {
   getMiddleStyle,
   isEmptyCustom,
 } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
-
+import "components/insights/charts/sdlc/sdlc-duration-by-stage-kpi.css";
 function SdlcDurationByStageDataBlockBase({ topText, meanData, countData, goalsData }) {
   return (
         <ThreeLineDataBlockNoFocusBase
           topText={topText}
+          className="sdlc-duration-by-stage-kpi"
           middleText={getMiddleText(meanData, countData)}
-          bottomText={!isEmptyCustom(goalsData) ? `Goal: ${goalsData} min` : ""}
+          bottomText={!isEmptyCustom(goalsData) ? `Goal: ${goalsData} min` : `Goal: 0 min`}
           middleStyle={getMiddleStyle(meanData, goalsData)}
         />
   );

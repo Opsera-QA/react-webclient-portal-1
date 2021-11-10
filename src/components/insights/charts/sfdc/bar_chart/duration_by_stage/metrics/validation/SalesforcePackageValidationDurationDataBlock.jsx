@@ -14,7 +14,11 @@ function SalesforcePackageValidationDurationDataBlock({ meanData, countData }) {
   };
 
   return (
-    <ThreeLineDataBlockNoFocusBase topText={"Package Validation"} middleText={getMiddleText(meanData, countData)} />
+    <ThreeLineDataBlockNoFocusBase
+      className="salesforce-duration-by-stage-kpi"
+      topText={"Package Validation"}
+      middleText={getMiddleText(meanData, countData)}
+    />
   );
 }
 
