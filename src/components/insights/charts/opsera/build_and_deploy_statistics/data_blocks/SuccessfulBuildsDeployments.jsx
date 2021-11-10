@@ -7,8 +7,7 @@ import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlo
 function SuccessfulBuildsDeployments({ displayValue, displayText }) {
   return (   
     <DataBlockBoxContainer showBorder={true}>
-      <TwoLineScoreDataBlock
-        className="green"        
+      <TwoLineScoreDataBlock              
         icon={faCheckCircle}
         score={displayValue}
         subtitle={displayText}

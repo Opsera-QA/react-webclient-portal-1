@@ -4,7 +4,7 @@ import { faClock } from "@fortawesome/pro-light-svg-icons";
 import TwoLineScoreWithSupportingTextDataBlock from "components/common/metrics/score/TwoLineScoreWithSupportingTextDataBlock";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 
-function AverageDurationToResolve({ displayValue, displayText }) {
+function TotalDurationToResolve({ displayValue, displayText }) {
   return (    
     <DataBlockBoxContainer showBorder={true}>
       <TwoLineScoreWithSupportingTextDataBlock
@@ -17,13 +17,13 @@ function AverageDurationToResolve({ displayValue, displayText }) {
   );
 }
 
-AverageDurationToResolve.propTypes = {
+TotalDurationToResolve.propTypes = {
   displayValue: PropTypes.string,
   displayText: PropTypes.string,
 };
 
-AverageDurationToResolve.defaultProps = {
-  displayText: "Average Duration to Resolve"
+TotalDurationToResolve.defaultProps = {
+  displayText: "Total Time Spent to Resolve"
 };
 
-export default AverageDurationToResolve;
+export default TotalDurationToResolve;
