@@ -300,6 +300,7 @@ function KpiSettingsForm({
     "coverity-issues-by-category-trend",
     "salesforce-duration-by-stage",
     "sdlc-duration-statistics",
+    "build-deployment-statistics",
   ];
 
   const getKpiFilters = (filter) => {
