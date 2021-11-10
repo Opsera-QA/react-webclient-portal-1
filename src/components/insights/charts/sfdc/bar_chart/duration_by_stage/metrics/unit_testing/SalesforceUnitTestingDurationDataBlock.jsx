@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
+import "../../salesforce-duration-by-stage-kpi.css";
 
 function SalesforceUnitTestingDurationDataBlock({ meanData, countData }) {
   const getMiddleText = (meanData, countData) => {
@@ -13,7 +14,13 @@ function SalesforceUnitTestingDurationDataBlock({ meanData, countData }) {
     return "No runs";
   };
 
-  return <ThreeLineDataBlockNoFocusBase topText={"Unit Testing"} middleText={getMiddleText(meanData, countData)} />;
+  return (
+    <ThreeLineDataBlockNoFocusBase
+      className="salesforce-duration-by-stage-kpi"
+      topText={"Unit Testing"}
+      middleText={getMiddleText(meanData, countData)}
+    />
+  );
 }
 
 SalesforceUnitTestingDurationDataBlock.propTypes = {

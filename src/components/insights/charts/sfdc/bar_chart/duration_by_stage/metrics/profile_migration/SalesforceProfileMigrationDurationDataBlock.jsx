@@ -1,12 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
-import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import { faTable } from "@fortawesome/pro-light-svg-icons";
-import Col from "react-bootstrap/Col";
-import getDate from "date-fns/getDate";
+import "../../salesforce-duration-by-stage-kpi.css";
 
 function SalesforceProfileMigrationDurationDataBlock({ meanData, countData }) {
   const getMiddleText = (meanData, countData) => {
@@ -20,7 +15,11 @@ function SalesforceProfileMigrationDurationDataBlock({ meanData, countData }) {
   };
 
   return (
-    <ThreeLineDataBlockNoFocusBase topText={"Profile Migration"} middleText={getMiddleText(meanData, countData)} />
+    <ThreeLineDataBlockNoFocusBase
+      className="salesforce-duration-by-stage-kpi"
+      topText={"Profile Migration"}
+      middleText={getMiddleText(meanData, countData)}
+    />
   );
 }
 

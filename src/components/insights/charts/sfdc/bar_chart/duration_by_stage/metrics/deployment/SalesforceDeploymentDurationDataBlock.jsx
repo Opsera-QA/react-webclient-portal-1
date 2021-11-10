@@ -1,13 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
-import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import { faTable } from "@fortawesome/pro-light-svg-icons";
-import Col from "react-bootstrap/Col";
-import getDate from "date-fns/getDate";
 import { statusColors } from "components/insights/charts/charts-views";
+import "../../salesforce-duration-by-stage-kpi.css";
 
 function SalesforceDeploymentDurationDataBlock({ meanData, countData, goalsData }) {
   const getMiddleText = (meanData, countData) => {
@@ -37,6 +32,7 @@ function SalesforceDeploymentDurationDataBlock({ meanData, countData, goalsData 
 
   return (
     <ThreeLineDataBlockNoFocusBase
+      className="salesforce-duration-by-stage-kpi"  
       topText={"Deployment"}
       middleText={getMiddleText(meanData, countData)}
       bottomText={goalsData ? "Goal: " + goalsData + " min" : ""}
