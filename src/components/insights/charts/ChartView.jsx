@@ -680,7 +680,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "sonar-ratings":
+      case "sonar-ratings-nnn":
         return (
           <Col xl={6} md={12} className="p-2">
             <LegacySonarRatingMetrics
@@ -692,7 +692,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "sonar-ratings-v2":
+      case "sonar-ratings":
         return (
           <Col xl={6} md={12} className="p-2">
             <SonarRatingMetrics
