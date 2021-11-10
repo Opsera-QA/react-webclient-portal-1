@@ -149,7 +149,6 @@ export const assignLineColors = data => {
 
 // Assigning color to a line chart
 export const assignStandardLineColors = (data, uniColor=false) => {
-  console.log(data);
   if (Array.isArray(data)) {
     data.forEach((data, i) => {
       if (Array.isArray(data) && data.length > 0) {

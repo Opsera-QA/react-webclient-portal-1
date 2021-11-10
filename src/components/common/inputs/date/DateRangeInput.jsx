@@ -89,8 +89,8 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
             {
               label: "Last Week",
               range: () => ({
-                startDate: addDays(new Date(), -7),
-                endDate: new Date(),
+                startDate: new Date(addDays(new Date(), -7).setHours(0, 0, 0, 0)),
+                endDate: new Date(new Date().setHours(0, 0, 0, 0)),
               }),
               isSelected(range) {
                 const definedRange = this.range();
@@ -102,8 +102,8 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
             {
               label: "Last Month",
               range: () => ({
-                startDate: addDays(new Date(), -30),
-                endDate: new Date(),
+                startDate: new Date(addDays(new Date(), -30).setHours(0, 0, 0, 0)),
+                endDate: new Date(new Date().setHours(0, 0, 0, 0)),
               }),
               isSelected(range) {
                 const definedRange = this.range();
@@ -115,8 +115,8 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
             {
               label: "Last 3 Months",
               range: () => ({
-                startDate: addDays(new Date(), -90),
-                endDate: new Date(),
+                startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
+                endDate: new Date(new Date().setHours(0, 0, 0, 0)),
               }),
               isSelected(range) {
                 const definedRange = this.range();
@@ -128,8 +128,8 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
             {
               label: "Last 6 Months",
               range: () => ({
-                startDate: addDays(new Date(), -180),
-                endDate: new Date(),
+                startDate: new Date(addDays(new Date(), -180).setHours(0, 0, 0, 0)),
+                endDate: new Date(new Date().setHours(0, 0, 0, 0)),
               }),
               isSelected(range) {
                 const definedRange = this.range();
@@ -141,8 +141,8 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
             {
               label: "Last 1 Year",
               range: () => ({
-                startDate: addDays(new Date(), -365),
-                endDate: new Date(),
+                startDate: new Date(addDays(new Date(), -365).setHours(0, 0, 0, 0)),
+                endDate: new Date(new Date().setHours(0, 0, 0, 0)),
               }),
               isSelected(range) {
                 const definedRange = this.range();

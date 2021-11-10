@@ -15,8 +15,8 @@ function SdlcDurationByStageBarChartBase({ metric }) {
       enableGridY={false}
       tooltip={(node) => (
         <ChartTooltip
-          titles={["Month", "Average Duration", "Number of Executions"]}
-          values={[node.point.data.xFormatted, String(node.point.data.yFormatted) + " minutes", node.point.data.count]}
+          titles={["Date Range", "Average Duration", "Number of Executions"]}
+          values={[node.point.data.range, String(node.point.data.yFormatted) + " minutes", node.point.data.count]}
         />
       )}
     />
