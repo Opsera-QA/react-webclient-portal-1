@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import { faClock } from "@fortawesome/pro-light-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import TwoLineScoreWithSupportingTextDataBlock from "components/common/metrics/score/TwoLineScoreWithSupportingTextDataBlock";
+import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 
 function AverageDurationToResolve({ displayValue, displayText }) {
-  return (
-    <div className="metric-box p-3 text-center">
-      <div className="box-icon">
-        <FontAwesomeIcon icon={ faClock } fixedWidth className='mr-2 danger-red' />
-      </div>
-      <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-        <div className="font-weight-bold danger-red">{ displayValue }<span className="metric-box-subtext"> hrs</span></div>
-      </div>
-      <div className="w-100 danger-red mb-1 ">{ displayText }</div>
-    </div>
+  return (    
+    <DataBlockBoxContainer showBorder={true}>
+      <TwoLineScoreWithSupportingTextDataBlock
+        className="danger-red"        
+        icon={faClock}
+        score={displayValue}
+        supportingText=" hrs"
+        subtitle={displayText}
+      />
+    </DataBlockBoxContainer>
   );
 }
 
