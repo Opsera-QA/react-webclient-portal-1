@@ -53,6 +53,12 @@ function AutomationPercentageConfiguration({ analyticsDataEntryModel, kpiConfigu
       <Col lg={6}>
         <PositiveIntegerNumberPickerInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_automated"} />
       </Col>
+      <Col lg={6}>
+        <PositiveIntegerNumberPickerInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"functional_tests"} />
+      </Col>
+      <Col lg={6}>
+        <PositiveIntegerNumberPickerInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"regression_tests"} />
+      </Col>
     </Row>
   );
 }
