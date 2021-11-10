@@ -125,6 +125,7 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
         chart={getChartTable()}
         loadChart={loadData}
         dashboardData={dashboardData}
+        tableChart={true}
         index={index}
         error={error}
         setKpis={setKpis}

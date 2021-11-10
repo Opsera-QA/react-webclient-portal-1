@@ -161,6 +161,7 @@ function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfigura
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        tableChart={true}
       />
     </div>
   );

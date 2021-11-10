@@ -119,6 +119,7 @@ function SeleniumTestResultsTable({ kpiConfiguration, setKpiConfiguration, dashb
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        tableChart={true}
       />
     </div>
   );

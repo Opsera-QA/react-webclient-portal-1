@@ -117,6 +117,7 @@ function JiraIssuesAssignedToMe({ kpiConfiguration, setKpiConfiguration, dashboa
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        tableChart={true}
       />
     </div>
   );
