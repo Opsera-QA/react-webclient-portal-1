@@ -20,6 +20,7 @@ import SuccessfulBuildsDeployments from "../data_blocks/SuccessfulBuildsDeployme
 import FailedBuildsDeployments from "../data_blocks/FailedBuildsDeployments";
 import AverageDuration from "../data_blocks/AverageDuration";
 import AverageDurationToResolve from "../data_blocks/AverageDurationToResolve";
+import TotalDurationToResolve from "../data_blocks/TotalDurationToResolve";
 
 function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -126,8 +127,7 @@ function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardDat
           titleIcon={faDraftingCompass}
           body={getTable()}          
           className={"px-2 pb-2"}
-        />
-        {getFooterDetails()}        
+        />        
       </>
     );
   };
@@ -137,8 +137,7 @@ function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardDat
       return null;
     }
     return (
-      <Row className="pb-3 px-2">
-        <Col xl={1} lg={1} sm={0} className="mt-3" ></Col>
+      <Row className="pb-3 px-2">        
         <Col xl={2} lg={2} sm={4} className="mt-3" >
           <TotalBuildsDeployments 
             displayValue={buildSummaryData?.total}
@@ -166,26 +165,13 @@ function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardDat
           <AverageDurationToResolve 
             displayValue={buildSummaryData?.avgTimeToResolve}
           />          
+        </Col>
+        <Col xl={2} lg={2} sm={4} className="mt-3" >
+          <TotalDurationToResolve 
+            displayValue={buildSummaryData?.timeToResolve}
+          />          
         </Col>        
       </Row>
-    );
-  };
-
-  const getFooterDetails = () => {
-    if (!buildSummaryData) {
-      return null;
-    }    
-
-    return (
-      <>
-        <Row className="px-2">
-          <Col className="footer-records text-right green">{`Total time spent to execute builds : ${buildSummaryData.duration}`}</Col>        
-        </Row>
-        <Row className="px-2">
-          <Col className="footer-records text-right danger-red">{`Total time spent to resolve failed builds : ${buildSummaryData.timeToResolve}`}</Col>
-        </Row>
-      </>
-      
     );
   };
 

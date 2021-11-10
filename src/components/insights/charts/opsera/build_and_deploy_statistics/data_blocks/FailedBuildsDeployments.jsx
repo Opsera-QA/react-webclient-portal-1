@@ -8,7 +8,6 @@ function FailedBuildsDeployments({ displayValue, displayText }) {
   return (   
     <DataBlockBoxContainer showBorder={true}>
       <TwoLineScoreDataBlock
-        className="danger-red"        
         icon={faTimesCircle}
         score={displayValue}
         subtitle={displayText}

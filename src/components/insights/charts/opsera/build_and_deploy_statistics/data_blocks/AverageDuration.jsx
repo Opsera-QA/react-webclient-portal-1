@@ -8,10 +8,9 @@ function AverageDuration({ displayValue, displayText }) {
   return (    
     <DataBlockBoxContainer showBorder={true}>
       <TwoLineScoreWithSupportingTextDataBlock
-        className="green"        
         icon={faClock}
         score={displayValue}
-        supportingText=" mins"
+        supportingText=" hrs"
         subtitle={displayText}
       />
     </DataBlockBoxContainer>
