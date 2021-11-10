@@ -23,7 +23,7 @@ import AverageDurationToResolve from "../data_blocks/AverageDurationToResolve";
 
 function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [model, setModel] = useState(
+  const [tableFilterDto, setTableFilterDto] = useState(
     new Model({...BuildDeployInsightsFilterMetadata.newObjectFields}, BuildDeployInsightsFilterMetadata, false)
   );
   const toastContext = useContext(DialogToastContext);
@@ -74,7 +74,7 @@ function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardDat
     };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = model) => {    
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {    
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
@@ -95,8 +95,11 @@ function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardDat
               "_blueprint": <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2"/> ,
             })));
         let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", buildData.length);
-        setModel({ ...newFilterDto });
+        newFilterDto.setData(
+          "totalCount",
+          response?.data?.data[0]?.opseraBuildActionableInsights?.data[0]?.count[0]?.count
+        );
+        setTableFilterDto({ ...newFilterDto });
         setBuildSummaryData( response?.data?.data[0]?.opseraBuildActionableInsights?.data[0]?.summaryData[0]);        
       }
     } catch (error) {      
@@ -185,22 +188,6 @@ function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardDat
       
     );
   };
-  
-  const getPaginationOptions = () => {
-    return {
-      pageSize: model.getData("pageSize"),
-      totalCount: model.getData("totalCount"),
-      currentPage: model.getData("currentPage"),
-      gotoPageFn: gotoPage,
-    };
-  };
-  
-  const gotoPage = (pageNumber, pageSize) => {
-    let newModel = {...model};
-    newModel.setData("currentPage", pageNumber);
-    newModel.setData("pageSize", pageSize);
-    setModel({...newModel});
-  };
 
   const onRowSelect = (rowData) => {
       toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount} />);
@@ -208,13 +195,13 @@ function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardDat
 
   const getTable = () => {    
     return (
-      <CustomTable
-        isLoading={isLoading}
+      <CustomTable        
         columns={columns}
         data={buildStatsData}
         noDataMessage={noDataMessage}
-        paginationOptions={getPaginationOptions()}
-        loadData={`loadData`}
+        paginationDto={tableFilterDto}
+        setPaginationDto={setTableFilterDto}        
+        loadData={loadData}
         onRowSelect={onRowSelect}
       />      
     );
