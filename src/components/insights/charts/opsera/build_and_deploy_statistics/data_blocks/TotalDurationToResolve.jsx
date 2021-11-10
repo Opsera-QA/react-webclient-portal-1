@@ -23,7 +23,7 @@ TotalDurationToResolve.propTypes = {
 };
 
 TotalDurationToResolve.defaultProps = {
-  displayText: "Total Time Spent to Resolve"
+  displayText: "Total Duration to Resolve"
 };
 
 export default TotalDurationToResolve;
