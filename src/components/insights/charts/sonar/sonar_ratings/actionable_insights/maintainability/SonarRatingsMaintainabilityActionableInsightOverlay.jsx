@@ -20,13 +20,11 @@ import SonarRatingsMaintainabilityOverviewDataBlockContainer
 import SonarRatingsMaintainabilityActionableInsightTable
   from "components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityActionableInsightTable";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
-import SonarBugsMetricScorecardMetaData
-  from "components/insights/charts/sonar/table/bugs-scorecard/SonarBugsMetricScorecardMetaData";
 
 function SonarRatingsMaintainabilityActionableInsightOverlay() {
   const { getAccessToken } = useContext(AuthContext);
   const [filterModel, setFilterModel] = useState(
-    new Model({ ...genericChartFilterMetadata.newObjectFields }, SonarBugsMetricScorecardMetaData, false)
+    new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
   );
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
