@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import FilterContainer from "components/common/table/FilterContainer";
 import Model from "core/data_model/model";
-import BuildDeployInsightsFilterMetadata from "../build-deploy-insights-filter-metadata";
 import DeploymentStatisticsActionableInsightsMetadata from "./deployment-statistics-actionable-insights-metadata";
 import { getTableTextColumn, getTableTextColumnWithoutField } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -21,12 +20,13 @@ import FailedBuildsDeployments from "../data_blocks/FailedBuildsDeployments";
 import AverageDuration from "../data_blocks/AverageDuration";
 import AverageDurationToResolve from "../data_blocks/AverageDurationToResolve";
 import TotalDurationToResolve from "../data_blocks/TotalDurationToResolve";
+import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
 
 function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [tableFilterDto, setTableFilterDto] = useState(
-    new Model({...BuildDeployInsightsFilterMetadata.newObjectFields}, BuildDeployInsightsFilterMetadata, false)
+    new Model({...genericChartFilterMetadata.newObjectFields}, genericChartFilterMetadata, false)
   );
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
