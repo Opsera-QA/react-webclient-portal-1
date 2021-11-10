@@ -1,19 +1,18 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import { faTools } from "@fortawesome/pro-light-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
+import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 
 function TotalBuildsDeployments({ displayValue, displayText }) {
-  return (
-    <div className="metric-box p-3 text-center">
-      <div className="box-icon">
-        <FontAwesomeIcon icon={ faTools }  fixedWidth className='mr-2' />
-      </div>
-      <div className="box-metric d-flex flex-row" style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <div className="font-weight-bold">{ displayValue }</div>
-      </div>
-      <div className="w-100 text-muted mb-1">{ displayText }</div>
-    </div>
+  return (    
+    <DataBlockBoxContainer showBorder={true}>
+      <TwoLineScoreDataBlock        
+        icon={faTools}
+        score={displayValue}
+        subtitle={displayText}
+      />
+    </DataBlockBoxContainer>
   );
 }
 
@@ -23,3 +22,4 @@ TotalBuildsDeployments.propTypes = {
 };
 
 export default TotalBuildsDeployments;
+
