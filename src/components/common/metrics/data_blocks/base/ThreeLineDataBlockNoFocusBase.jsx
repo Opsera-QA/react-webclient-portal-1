@@ -32,7 +32,7 @@ function ThreeLineDataBlockNoFocusBase({
     <div className={className}>
       <div className={"text-center h-100"}>
         <div className="w-100 text-muted data-block-title-text">{getTopText()}</div>
-        <div className="my-auto">{getMiddleText()}</div>
+        <div className="my-auto data-block-focal-text">{getMiddleText()}</div>
         <div className="mt-auto text-muted">{getSubtitle()}</div>
       </div>
     </div>
