@@ -132,6 +132,7 @@ function BitbucketPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, 
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        tableChart={true}
       />
       <ModalLogs
         header="Bitbucket Pending Pull Requests"

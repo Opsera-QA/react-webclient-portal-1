@@ -132,6 +132,7 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        tableChart={true}
       />
       <ModalLogs
         header="Github Recent Pull Requests"

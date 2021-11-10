@@ -129,6 +129,7 @@ function BitbucketMostActiveContributors({ kpiConfiguration, setKpiConfiguration
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        tableChart={true}
       />
     </div>
   );

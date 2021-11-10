@@ -132,6 +132,7 @@ function GitlabRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        tableChart={true}
       />
       <ModalLogs
         header="Gitlab Recent Merge Requests"

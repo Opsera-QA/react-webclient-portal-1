@@ -124,6 +124,7 @@ function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
         setKpiConfiguration={setKpiConfiguration}
         chart={getChartTable()}
         loadChart={loadData}
+        tableChart={true}
         dashboardData={dashboardData}
         index={index}
         error={error}

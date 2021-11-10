@@ -120,6 +120,7 @@ function JenkinsRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, da
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        tableChart={true}
       />
     </div>
   );

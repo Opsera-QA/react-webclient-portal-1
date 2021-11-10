@@ -134,6 +134,7 @@ function BitbucketRecentMergeRequestsTable({ kpiConfiguration, setKpiConfigurati
         dashboardData={dashboardData}
         index={index}
         error={error}
+        tableChart={true}
         setKpis={setKpis}
         isLoading={isLoading}
       />
