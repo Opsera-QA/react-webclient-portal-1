@@ -14,7 +14,6 @@ import DeploymentFrequencyStatisticsDataBlockContainer
   from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_frequency_statistics/DeploymentFrequencyStatisticsDataBlockContainer";
 import chartsActions from "components/insights/charts/charts-actions";
 import axios from "axios";
-import { getDateObjectFromKpiConfiguration } from "components/insights/charts/charts-helpers";
 
 
 function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -23,7 +22,6 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
   const [buildAndDeployMetricData, setBuildAndDeployMetricData] = useState(undefined);
   const [buildAndDeployChartData, setBuildAndDeployChartData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [goalsData, setGoalsData] = useState(undefined);
@@ -63,7 +61,7 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
   
       if (isMounted?.current === true && Array.isArray(metrics)) {
         setBuildAndDeployMetricData(metrics[0]?.statisticsData);
-        setBuildAndDeployChartData(getChartData(metrics[0]?.chartData));
+        setBuildAndDeployChartData(metrics[0]?.chartData);
       }
     }
     catch (error) {
@@ -78,49 +76,6 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
       }
     }
   };
-
-  const monthData = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-  const getCorrectedData = (monthArr, ipData) => {
-    
-    if(!ipData){
-      return undefined;
-    }
-
-    return monthArr.map(month => ipData.find(d => d.x === month+1) || { x: month+1, y: 0 })
-            .map(d => {
-              return {
-                x: monthData[d.x-1],
-                y: d.y
-              };
-            });
-  };
-
-  const getChartData = (chartData) => {
-
-    if(!chartData){
-      return undefined;
-    }
-
-    const selectedDate = getDateObjectFromKpiConfiguration(kpiConfiguration);    
-
-    let d = new Date(selectedDate.end);
-
-    let monthArr = [];
-    for(let i=0;i<12;i++){
-      monthArr.push(d.getMonth());
-      d.setMonth(d.getMonth()-1);
-    }
-    monthArr.reverse();
-
-    return {
-      buildSuccess: getCorrectedData(monthArr, chartData?.buildSuccess),
-      avgBuilds: getCorrectedData(monthArr, chartData?.avgBuilds),      
-      deploySuccess: getCorrectedData(monthArr, chartData?.deploySuccess),
-      avgDeployments: getCorrectedData(monthArr, chartData?.avgDeployments)
-    };
-  };
-  
 
   const getChartBody = () => {
     if(!buildAndDeployMetricData || !buildAndDeployChartData){

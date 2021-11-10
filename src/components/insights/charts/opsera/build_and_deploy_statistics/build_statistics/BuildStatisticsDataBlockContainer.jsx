@@ -63,7 +63,7 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
         <ResponsiveLine
           data={successChartData}
           {...defaultConfig("", "Month", 
-                false, false, "wholeNumbers", "string")}
+                false, false, "wholeNumbers", "month")}
           yScale={{ type: 'linear', min: '0', max: '100', stacked: false, reverse: false }}
           enableGridX={false}
           enableGridY={false}
