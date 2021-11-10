@@ -1,3 +1,7 @@
 .build-deploy-kpi .data-block-focal-text {
     font-size: 1.8rem;
 }
+
+.data-block-focal-text .supporting-text {
+    font-size: 50%;
+}

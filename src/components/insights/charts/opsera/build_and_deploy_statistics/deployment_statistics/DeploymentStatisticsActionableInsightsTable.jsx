@@ -10,16 +10,22 @@ import { getTableTextColumn, getTableTextColumnWithoutField } from "components/c
 import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
 import CustomTable from "components/common/table/CustomTable";
-import { faDraftingCompass, faExternalLink, faClock, faTools, faCheckCircle, faTimesCircle, faRocketLaunch } from "@fortawesome/pro-light-svg-icons";
+import { faDraftingCompass, faExternalLink } from "@fortawesome/pro-light-svg-icons";
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import TotalBuildsDeployments from "../data_blocks/TotalBuildsDeployments";
+import SuccessfulBuildsDeployments from "../data_blocks/SuccessfulBuildsDeployments";
+import FailedBuildsDeployments from "../data_blocks/FailedBuildsDeployments";
+import AverageDuration from "../data_blocks/AverageDuration";
+import AverageDurationToResolve from "../data_blocks/AverageDurationToResolve";
+import TotalDurationToResolve from "../data_blocks/TotalDurationToResolve";
 
 
 function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [model, setModel] = useState(
+  const [tableFilterDto, setTableFilterDto] = useState(
     new Model({...BuildDeployInsightsFilterMetadata.newObjectFields}, BuildDeployInsightsFilterMetadata, false)
   );
   const toastContext = useContext(DialogToastContext);
@@ -70,7 +76,7 @@ function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboa
     };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = model) => {    
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {    
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
@@ -91,8 +97,11 @@ function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboa
               "_blueprint": <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2"/> ,
             })));
         let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", deploymentData.length);
-        setModel({ ...newFilterDto });
+        newFilterDto.setData(
+          "totalCount",
+          response?.data?.data[0]?.opseraDeploymentActionableInsights?.data[0]?.count[0]?.count
+        );
+        setTableFilterDto({ ...newFilterDto });
         setDeploymentSummaryData( response?.data?.data[0]?.opseraDeploymentActionableInsights?.data[0]?.summaryData[0]);        
       }
     } catch (error) {      
@@ -119,8 +128,7 @@ function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboa
           titleIcon={faDraftingCompass}
           body={getTable()}          
           className={"px-2 pb-2"}
-        />
-        {getFooterDetails()}        
+        />        
       </>
     );
   };
@@ -130,98 +138,42 @@ function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboa
       return null;
     }
     return (
-      <Row className="pb-3 px-2">
-        <Col xl={1} lg={1} sm={0} className="mt-3" ></Col>
+      <Row className="pb-3 px-2">        
         <Col xl={2} lg={2} sm={4} className="mt-3" >
-          <div className="metric-box p-3 text-center">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faTools} fixedWidth className='mr-2' />
-            </div>            
-            <div className="box-metric d-flex flex-row" style={{alignItems: 'center', justifyContent: 'center'}}>
-              <div className="font-weight-bold">{deploymentSummaryData?.total}</div>
-            </div>
-            <div className="w-100 text-muted mb-1">Total Deployments</div>
-          </div>
+          <TotalBuildsDeployments 
+            displayValue={deploymentSummaryData?.total}
+            displayText="Total Deployments"
+          />
         </Col>
         <Col xl={2} lg={2} sm={4} className="mt-3">          
-          <div className="metric-box p-3 text-center">            
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faCheckCircle} fixedWidth className='mr-2 green' />
-            </div>
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className="font-weight-bold green">{deploymentSummaryData?.success}</div>
-            </div>
-            <div className="w-100 green mb-1">Successful Deployments</div>
-          </div>
+          <SuccessfulBuildsDeployments 
+            displayValue={deploymentSummaryData?.success}
+            displayText="Successful Deployments"
+          />          
         </Col>
         <Col xl={2} lg={2} sm={4} className="mt-3">
-          <div className="metric-box p-3 text-center">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faTimesCircle} fixedWidth className='mr-2 danger-red' />
-            </div>            
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className="font-weight-bold red">{deploymentSummaryData?.failure}</div>
-            </div>
-            <div className="w-100 red mb-1 ">Failed Deployments</div>
-          </div>
+          <FailedBuildsDeployments 
+            displayValue={deploymentSummaryData?.failure}
+            displayText="Failed Deployments"
+          />          
         </Col>
         <Col xl={2} lg={2} sm={4} className="mt-3">
-          <div className="metric-box p-3 text-center">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faRocketLaunch} fixedWidth className='mr-2 green' />
-            </div>            
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className="font-weight-bold green">{deploymentSummaryData?.avgDuration} <span className="metric-box-subtext"> mins</span></div>
-            </div>
-            <div className="w-100 green mb-1">Average Duration</div>
-          </div>
+          <AverageDuration 
+            displayValue={deploymentSummaryData?.avgDuration}            
+          />          
         </Col>
         <Col xl={2} lg={2} sm={4} className="mt-3">
-          <div className="metric-box p-3 text-center">
-            <div className="box-icon">
-              <FontAwesomeIcon icon={faClock} fixedWidth className='mr-2 danger-red' />
-            </div>            
-            <div className="box-metric d-flex flex-row" style={{ alignItems: "center", justifyContent: "center" }}>
-              <div className="font-weight-bold red">{deploymentSummaryData?.avgTimeToResolve}<span className="metric-box-subtext"> hrs</span></div>
-            </div>
-            <div className="w-100 red mb-1 ">Average Duration to Resolve</div>
-          </div>
-        </Col>        
+          <AverageDurationToResolve 
+            displayValue={deploymentSummaryData?.avgTimeToResolve}            
+          />         
+        </Col>
+        <Col xl={2} lg={2} sm={4} className="mt-3" >
+          <TotalDurationToResolve 
+            displayValue={deploymentSummaryData?.timeToResolve}
+          />          
+        </Col>
       </Row>
     );
-  };
-
-  const getFooterDetails = () => {
-    if (!deploymentSummaryData) {
-      return null;
-    }    
-
-    return (
-      <>
-        <Row className="px-2">
-          <Col className="footer-records text-right green">{`Total time spent to execute deployments : ${deploymentSummaryData.duration}`}</Col>          
-        </Row>
-        <Row className="px-2">
-          <Col className="footer-records text-right danger-red">{`Total time spent to resolve failed deployments : ${deploymentSummaryData.timeToResolve}`}</Col>
-        </Row>
-      </>      
-    );
-  };
-  
-  const getPaginationOptions = () => {
-    return {
-      pageSize: model.getData("pageSize"),
-      totalCount: model.getData("totalCount"),
-      currentPage: model.getData("currentPage"),
-      gotoPageFn: gotoPage,
-    };
-  };
-  
-  const gotoPage = (pageNumber, pageSize) => {
-    let newModel = {...model};
-    newModel.setData("currentPage", pageNumber);
-    newModel.setData("pageSize", pageSize);
-    setModel({...newModel});
   };
 
   const onRowSelect = (rowData) => {
@@ -230,13 +182,13 @@ function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboa
 
   const getTable = () => {    
     return (
-      <CustomTable
-        isLoading={isLoading}
+      <CustomTable        
         columns={columns}
         data={deploymentStatsData}
         noDataMessage={noDataMessage}
-        paginationOptions={getPaginationOptions()}
-        loadData={`loadData`}
+        paginationDto={tableFilterDto}
+        setPaginationDto={setTableFilterDto}        
+        loadData={loadData}
         onRowSelect={onRowSelect}
       />      
     );
