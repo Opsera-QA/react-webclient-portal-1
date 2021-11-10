@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
@@ -7,10 +7,20 @@ import AverageDailyDeploymentsDataBlock
   from "components/common/metrics/data_blocks/deployment/average_daily/AverageDailyDeploymentsDataBlock";
 import { ResponsiveLine } from '@nivo/line';
 import { defaultConfig, getColor, assignStandardColors } from 'components/insights/charts/charts-views';
+import _ from "lodash";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData }) {
   
+  const [maxVal, setMaxVal] = useState(goalsData);
+
+  useEffect(() => {
+    let dataHigh = {x: "", y: 0};
+    dataHigh = _.maxBy(chartData?.avgDeployments, 'y');
+    const high = dataHigh?.y > goalsData ? dataHigh?.y : goalsData;
+    setMaxVal(Math.ceil(high));
+  }, [goalsData, chartData]);
+
   let dailyDeploymentsChartData = [
     {
       "id": "average daily deployments",
@@ -37,11 +47,11 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
           data={dailyDeploymentsChartData}
           {...defaultConfig("", "Month", 
                 false, false, "numbers", "string")}
-          yScale={{ type: 'linear', min: '0', max: goalsData, stacked: false, reverse: false }}          
+          yScale={{ type: 'linear', min: '0', max: maxVal, stacked: false, reverse: false }}          
           enableGridX={false}
           enableGridY={false}
           axisLeft={{            
-            tickValues: [0, goalsData],
+            tickValues: [0, maxVal],
             legend: 'Avg Daily Deployments',
             legendOffset: -38,
             legendPosition: 'middle'
