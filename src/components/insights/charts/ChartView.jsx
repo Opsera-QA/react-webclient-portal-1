@@ -942,7 +942,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Selenium KPIs
       case "selenium-test-results":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col md={12} className="p-2">
             <SeleniumTestResultsTable
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
