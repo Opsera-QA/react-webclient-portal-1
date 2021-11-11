@@ -6,7 +6,7 @@ import {AuthContext} from "contexts/AuthContext";
 function LdapDepartmentManagementPageLinkCard({accessRoleData}) {
   const { isSassUser } = useContext(AuthContext);
 
-  if (isSassUser() !== false || (accessRoleData.Administrator !== true && accessRoleData.OpseraAdministrator !== true)) {
+  if (isSassUser() !== false || accessRoleData.OpseraAdministrator !== true) {
     return null;
   }
 

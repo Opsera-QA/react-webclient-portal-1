@@ -59,6 +59,10 @@ function ListInputBase(
       if (Array.isArray(currentValues) && currentValues.length === 0) {
         list.selection.remove();
       }
+
+      if (dataObject?.isNew() === false || dataObject?.isChanged(fieldName) === true) {
+        validateData(dataObject);
+      }
     }
   }, [dataObject]);
 
@@ -109,10 +113,8 @@ function ListInputBase(
     `);
   };
 
-  const validateAndSetData = (fieldName, valueArray) => {
-    let newDataObject = dataObject;
-    newDataObject.setData(fieldName, valueArray);
-    let errors = newDataObject.isFieldValid(field.id);
+  const validateData = (dataModel) => {
+    let errors = dataModel?.isFieldValid(field.id);
 
     if ( errors != null && errors !== true) {
       setErrorMessage(errors[0]);
@@ -120,7 +122,12 @@ function ListInputBase(
     else {
       setErrorMessage("");
     }
+  };
 
+  const validateAndSetData = (fieldName, valueArray) => {
+    let newDataObject = dataObject;
+    newDataObject.setData(fieldName, valueArray);
+    validateData(newDataObject);
     setDataObject({...newDataObject});
   };
 

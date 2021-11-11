@@ -1,7 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
+import IconBase from "components/common/icons/IconBase";
 
-function ThreeLineDataBlockBase({ middleText, bottomText, topText, className}) {
+function ThreeLineDataBlockBase({ middleText, bottomText, topText, className, icon}) {
+  const getLeftDataBlockIcon = () => {
+    if (icon) {
+      return (
+        <div className={"data-block-left-icon"}>
+          <IconBase icon={icon}  />
+        </div>
+      );
+    }
+  };
+
   const getTopText = () => {
     if (topText) {
       return (
@@ -36,6 +47,7 @@ function ThreeLineDataBlockBase({ middleText, bottomText, topText, className}) {
   return (
     <div className={className}>
       <div className={"text-center h-100"}>
+        {getLeftDataBlockIcon()}
         <div className="w-100 text-muted data-block-title-text">
           {getTopText()}
         </div>
@@ -54,7 +66,8 @@ ThreeLineDataBlockBase.propTypes = {
   topText: PropTypes.any,
   middleText: PropTypes.any,
   bottomText: PropTypes.any,
-  className: PropTypes.string
+  className: PropTypes.string,
+  icon: PropTypes.object,
 };
 
 export default ThreeLineDataBlockBase;

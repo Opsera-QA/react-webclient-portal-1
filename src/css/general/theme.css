@@ -298,6 +298,10 @@
     height: 18px;
 }
 
+.clear-selection-badge-icon {
+    padding-top: 1px;
+}
+
 .badge-primary[href]:hover, .badge-primary[href]:focus {
     color: #fff;
     background-color: #082954;
@@ -394,6 +398,9 @@ a.text-primary:hover, a.text-primary:focus {
 
 .scroll-y {
     overflow-y: auto;
+}
+
+.hide-x-overflow {
     overflow-x: hidden;
 }
 
@@ -536,9 +543,12 @@ a.text-primary:hover, a.text-primary:focus {
 }
 
 .custom-table .status-icon {
-  display: flex;
-  justify-content: center;
-  width: 1rem;
+    display: flex;
+    justify-content: center;
+    width: 1rem;
+
+    /*TODO: REMOVE AFTER FIXING CENTERING*/
+    margin-left: 15px;
 }
 
 .custom-table > thead > tr > th {

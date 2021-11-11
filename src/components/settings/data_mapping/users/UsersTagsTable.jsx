@@ -1,7 +1,7 @@
 import React, { useMemo, useContext} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import usersTagsMetadata from "./tagging-users-metadata";
+import usersMappingMetadata from "components/settings/data_mapping/users/userMapping.metadata";
 import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
 import { useHistory } from "react-router-dom";
 import NewUsersMappingOverlay from "./NewUsersMappingOverlay";
@@ -13,7 +13,7 @@ import {getField} from "components/common/metadata/metadata-helpers";
 function UsersTagTable({ data, loadData, isLoading, isMounted }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
-  let fields = usersTagsMetadata.fields;
+  let fields = usersMappingMetadata.fields;
 
   const columns = useMemo(() => [
     getTableTextColumn(getField(fields,"tool_identifier")),
@@ -58,7 +58,7 @@ function UsersTagTable({ data, loadData, isLoading, isMounted }) {
       supportSearch={false}
       isLoading={isLoading}
       body={getUsersTagsTable()}
-      metadata={usersTagsMetadata}
+      metadata={usersMappingMetadata}
       titleIcon={faTags}
       title={"User Tags"}
       type={"User Tag"}

@@ -4,12 +4,12 @@ import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
-import {ldapUsersMetaData} from "components/settings/ldap_users/ldap-users-metadata";
+import {ldapUserMetadata} from "components/settings/ldap_users/ldapUser.metadata";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import LdapUserDetailPanel from "components/settings/ldap_users/users_detail_view/LdapUserDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
-import {ssoUserMetadata} from "components/settings/users/sso-user-metadata";
+import {ssoUserMetadata} from "components/settings/users/ssoUser.metadata";
 import axios from "axios";
 import SsoUserDetailPanel from "components/settings/users/sso_user_details/SsoUserDetailPanel";
 

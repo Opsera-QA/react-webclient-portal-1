@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import Model from "core/data_model/model";
-import {analyticsDataMetadata} from "components/settings/analytics_data_entry/analytics-data-metadata";
+import {analyticsDataEntryMetadata} from "components/settings/analytics_data_entry/analyticsDataEntry.metadata";
 import AnalyticsDataEntryEditorPanel from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryEditorPanel";
 
 function NewAnalyticsDataEntryOverlay({ isMounted, loadData }) {
   const toastContext = useContext(DialogToastContext);
-  const [analyticsDataEntry] = useState(new Model({...analyticsDataMetadata.newObjectFields}, analyticsDataMetadata, true));
+  const [analyticsDataEntry] = useState(new Model({...analyticsDataEntryMetadata.newObjectFields}, analyticsDataEntryMetadata, true));
 
   const closePanel = () => {
     if (isMounted?.current === true) {
@@ -20,7 +20,7 @@ function NewAnalyticsDataEntryOverlay({ isMounted, loadData }) {
   };
 
   return (
-    <CreateCenterPanel closePanel={closePanel} objectType={analyticsDataMetadata.type} loadData={loadData}>
+    <CreateCenterPanel closePanel={closePanel} objectType={analyticsDataEntryMetadata.type} loadData={loadData}>
       <AnalyticsDataEntryEditorPanel handleClose={closePanel} analyticsDataEntry={analyticsDataEntry}/>
     </CreateCenterPanel>
   );

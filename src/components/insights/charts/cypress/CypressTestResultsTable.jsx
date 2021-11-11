@@ -120,6 +120,7 @@ function CypressTestResultsTable({ kpiConfiguration, setKpiConfiguration, dashbo
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        tableChart={true}
       />
     </div>
   );

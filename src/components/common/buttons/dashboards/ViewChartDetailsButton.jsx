@@ -1,10 +1,10 @@
 import React, {useContext} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/pro-light-svg-icons";
+import {faSearchPlus} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import AddChartOverlay from "components/insights/marketplace/charts/AddChartOverlay";
+import IconBase from "components/common/icons/IconBase";
 
 function ViewChartDetailsButton({ disable, marketplaceChart, dashboardId, className }) {
   const toastContext = useContext(DialogToastContext);
@@ -20,7 +20,13 @@ function ViewChartDetailsButton({ disable, marketplaceChart, dashboardId, classN
         size={"sm"}
         disabled={disable}
         onClick={() => showChartDetails()}>
-        <span><FontAwesomeIcon icon={faPlus} fixedWidth className="mr-2"/>View Chart Details</span>
+        <div className={"text-nowrap"}>
+          <IconBase
+            icon={faSearchPlus}
+            className={"mr-2"}
+          />
+          Details
+        </div>
       </Button>
     </div>
   );

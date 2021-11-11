@@ -22,7 +22,7 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import PipelineFilterSelectInput from "components/logs/PipelineFilterSelectInput";
 import ExportLogSearchButton from "components/common/buttons/export/log_search/ExportLogSearchButton";
 import {getAllResultsForExport} from "components/common/buttons/export/exportHelpers";
-import projectTagsMetadata from "components/settings/data_mapping/projects/tagging-project-metadata";
+import projectMappingMetadata from "components/settings/data_mapping/projects/projectMapping.metadata";
 import Model from "core/data_model/model";
 import ProjectMappingToolSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
@@ -58,7 +58,7 @@ function LogSearch({tools, sideBySide}) {
     tool_prop: "",
     createdAt: "",
     active : true
-  }, projectTagsMetadata, true));
+  }, projectMappingMetadata, true));
   // const [jenkinsJobs, setJenkinsJobs] = useState([]);
 
   const [date, setDate] = useState([

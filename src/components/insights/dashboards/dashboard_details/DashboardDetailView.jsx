@@ -9,7 +9,6 @@ import dashboardMetadata from "components/insights/dashboards/dashboard-metadata
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import ActionBarShowJsonButton from "components/common/actions/buttons/ActionBarShowJsonButton";
-import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import DashboardEditorPanel from "components/insights/dashboards/dashboard_details/DashboardEditorPanel";
 import DashboardViewer from "components/insights/dashboards/dashboard_details/DashboardViewer";
 import TitleActionBarContainer from "components/common/actions/TitleActionBarContainer.jsx";
@@ -20,6 +19,7 @@ import PublishDashboardToPrivateCatalogIcon
 import PublishDashboardToPublicMarketplaceIcon
   from "components/common/icons/dashboards/PublishDashboardToPublicMarketplaceIcon";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
+import DashboardScreenContainer from "components/common/panels/detail_view_container/DashboardScreenContainer";
 
 function DashboardDetailView() {
   const {tab, id} = useParams();
@@ -122,7 +122,7 @@ function DashboardDetailView() {
 
   if (activeTab === "settings") {
     return (
-      <DetailScreenContainer
+      <DashboardScreenContainer
         breadcrumbDestination={"dashboardDetails"}
         metadata={dashboardMetadata}
         dataObject={dashboardData}
@@ -135,7 +135,7 @@ function DashboardDetailView() {
   }
 
   return (
-    <DetailScreenContainer
+    <DashboardScreenContainer
       dataObject={dashboardData}
       navigationTabContainer={<InsightsSubNavigationBar currentTab={"dashboardViewer"} />}
       breadcrumbDestination={"dashboardDetails"}

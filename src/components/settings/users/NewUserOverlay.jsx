@@ -9,7 +9,7 @@ import userActions from "components/user/user-actions";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
-import {usersMetadata} from "components/settings/users/users-metadata";
+import {usersMetadata} from "components/settings/users/users.metadata";
 
 function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
   const { generateJwtServiceTokenWithValue, getUserRecord } = useContext(AuthContext);

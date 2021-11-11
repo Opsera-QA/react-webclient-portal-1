@@ -12,10 +12,8 @@ import {
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import WarningIcon from "../../common/icons/table/WarningIcon";
 import FailIcon from "../../common/icons/table/FailIcon";
-import ArrowCircleDown from "../../common/icons/table/ArrowCircleDown";
-import ArrowCircleUp from "../../common/icons/table/ArrowCircleUp";
-import MinusCircle from "../../common/icons/table/MinusCircle";
-import PauseCircle from "../../common/icons/table/PauseCircle";
+import SuccessMetricIcon from "components/common/icons/metric/success/SuccessMetricIcon";
+import DangerMetricIcon from "components/common/icons/metric/danger/DangerMetricIcon";
 import React from "react";
 import Model from "core/data_model/model";
 import PipelineTypesField from "components/common/fields/pipelines/PipelineTypesField";
@@ -26,13 +24,12 @@ import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pip
 import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date-helpers";
 import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
-import CustomBadge from "components/common/badges/CustomBadge";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
 import {getTaskTypeLabel} from "components/tasks/task.types";
 import { getPipelineStateFieldBase} from "components/common/fields/pipelines/state/PipelineStateField";
-import IconBase from "components/common/icons/IconBase";
 import TagDisplayer from "components/common/fields/multiple_items/tags/TagDisplayer";
+import UnchangedMetricIcon from "components/common/icons/metric/unchanged/UnchangedMetricIcon";
+import NoTrendMetricIcon from "components/common/icons/metric/trend/NoTrendMetricIcon";
 
 export const getCustomTableHeader = (field) => {
   return field ? field.label : "";
@@ -42,10 +39,11 @@ export const getCustomTableAccessor = (field) => {
   return field ? field.id : "";
 };
 
-export const getTableTextColumnWithoutField = (header, accessor) => {
+export const getTableTextColumnWithoutField = (header, accessor, className) => {
   return {
     Header: header,
-    accessor: accessor
+    accessor: accessor,
+    class: className ? className : undefined
   };
 };
 
@@ -493,21 +491,22 @@ export const getChartPipelineStatusColumn = (field, className) => {
   };
 };
 
-export const getChartTrendStatusColumn = (field, className) => {  
+export const getChartTrendStatusColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
-    Cell: function parseStatus(row) {    
-      let status = typeof row?.value === "string" ? row.value.toLowerCase() : status;    
+    Cell: function parseStatus(row) {
+      let status = typeof row?.value === "string" ? row.value.toLowerCase() : "";
+
       switch (status) {
-        case "red":        
-          return (<ArrowCircleUp />);
+        case "red":
+          return (<DangerMetricIcon />);
         case "neutral":
-          return (<PauseCircle/>);
-        case "green":        
-        return (<ArrowCircleDown/>);
-        case "-":        
-          return (<MinusCircle/>);
+          return (<UnchangedMetricIcon />);
+        case "green":
+        return (<SuccessMetricIcon />);
+        case "-":
+          return (<NoTrendMetricIcon />);
         default:
           return status;
       }

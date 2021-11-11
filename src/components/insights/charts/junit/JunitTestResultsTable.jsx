@@ -122,6 +122,7 @@ function JunitTestResultsTable({ kpiConfiguration, setKpiConfiguration, dashboar
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        tableChart={true}
       />
     </div>
   );

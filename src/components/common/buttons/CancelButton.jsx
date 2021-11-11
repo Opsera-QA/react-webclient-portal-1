@@ -13,6 +13,7 @@ function CancelButton({isLoading, cancelFunction, size, className, buttonText}) 
         variant="secondary"
         disabled={isLoading}
         onClick={() => cancelFunction()}
+        className={"w-100"}
       >
         <span>
           <IconBase icon={faTimes} className="mr-1" fixedWidth/>

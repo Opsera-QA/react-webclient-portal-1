@@ -4,7 +4,7 @@ import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
-import {ldapUsersMetaData} from "components/settings/ldap_users/ldap-users-metadata";
+import {ldapUserMetadata} from "components/settings/ldap_users/ldapUser.metadata";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import LdapUserDetailPanel from "components/settings/ldap_users/users_detail_view/LdapUserDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
@@ -40,7 +40,7 @@ function LdapUserDetailView() {
     const response = await accountsActions.getUserByEmail(userEmail, getAccessToken);
 
     if (response?.data != null) {
-      setLdapUserData(new Model(response.data, ldapUsersMetaData, false));
+      setLdapUserData(new Model(response.data, ldapUserMetadata, false));
     }
   };
 
@@ -80,7 +80,7 @@ function LdapUserDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={(accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator) ? "ldapUserDetailView" : "ldapUserDetailViewLimited"}
-      metadata={ldapUsersMetaData}
+      metadata={ldapUserMetadata}
       accessDenied={!authorizedActions?.includes("get_user_details")}
       dataObject={ldapUserData}
       isLoading={isLoading}

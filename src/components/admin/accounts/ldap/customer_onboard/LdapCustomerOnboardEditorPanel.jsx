@@ -422,7 +422,7 @@ function LdapCustomerOnboardEditorPanel() {
   }
 
   return (
-    <div className="scroll-y full-height">
+    <div className="scroll-y hide-x-overflow full-height">
       {getOrganizationFields()}
       {getOrganizationAccountFields()}
       {getUsersInput()}

@@ -3,7 +3,7 @@ import { AuthContext } from "contexts/AuthContext";
 import Model from "core/data_model/model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import kpiFilterMetadata from "components/admin/kpi_editor/kpi-filter-metadata";
+import kpiFilterMetadata from "components/admin/kpi_identifiers/kpi-filter-metadata";
 import { meetsRequirements, ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import axios from "axios";
 import PipelineStorageActions from "components/admin/pipeline_storage/pipeline-storage-actions";

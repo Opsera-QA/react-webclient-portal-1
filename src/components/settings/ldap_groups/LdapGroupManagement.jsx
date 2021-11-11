@@ -8,6 +8,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import axios from "axios";
 import GroupManagementSubNavigationBar from "components/settings/ldap_groups/GroupManagementSubNavigationBar";
+import GroupsHelpDocumentation from "../../common/help/documentation/settings/GroupsHelpDocumentation";
 
 function LdapGroupManagement() {
   const toastContext = useContext(DialogToastContext);
@@ -107,11 +108,19 @@ function LdapGroupManagement() {
     }
   };
 
+  const getHelpComponent = () => {
+    if (!isLoading) {
+      return (<GroupsHelpDocumentation/>);
+    }
+  };
+
   return (
     <ScreenContainer
       isLoading={!accessRoleData}
       navigationTabContainer={<GroupManagementSubNavigationBar activeTab={"groups"} />}
       breadcrumbDestination={"ldapGroupManagement"}
+      pageDescription={"Group Management allows users to manage membership for existing groups and create new groups. These groups are the custom groups that users can create, manage and apply to individual items, like Pipelines and Tools."}
+      helpComponent={getHelpComponent()}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.POWER_USERS}
     >

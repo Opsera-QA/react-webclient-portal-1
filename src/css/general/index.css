@@ -8,6 +8,48 @@
     letter-spacing: .6px;
 }
 
+/* Site Typography
+primary analytics font*/
+.font-inter-light-100 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 100;
+}
+
+.font-inter-light-300 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+}
+
+.chart-header-name-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 100;
+    text-transform: capitalize;
+    color: #8798ad;
+}
+
+.chart-footer-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 100;
+    font-size: small;
+    text-transform: capitalize;
+    color: #8798ad;
+}
+
+/*primary product font*/
+.font-lato-100 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 100;
+}
+
+.font-lato-300 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+.font-lato-400 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+}
 
 .failure-text {
     color: red;
@@ -63,6 +105,35 @@
     background-color: #FCFCFC;
 }
 
+/*begin analytics focused color scheme*/
+.dark-gray-text-primary {
+    color: #2e384d;
+}
+
+.light-gray-text-secondary {
+    color: #8798ad;
+}
+
+.chart-palette-1 {
+    color: #00a8e8;
+}
+
+.chart-palette-2 {
+    color: #e76500;
+}
+
+.chart-palette-3 {
+    color: #a24600;
+}
+
+.chart-palette-4 {
+    color: #2e17e7;
+}
+
+.chart-palette-5 {
+    color: #2010a2;
+}
+/*end analytics color scheme*/
 /*END Official Colors*/
 
 

@@ -1,7 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
+import IconBase from "components/common/icons/IconBase";
 
-function TwoLineDataBlockBase({ title, subtitle, className}) {
+function TwoLineDataBlockBase({ title, subtitle, className, icon,}) {
+  const getLeftDataBlockIcon = () => {
+    if (icon) {
+      return (
+        <div className={"data-block-left-icon"}>
+          <IconBase icon={icon}  />
+        </div>
+      );
+    }
+  };
+
   const getTitle = () => {
     if (title) {
       return (
@@ -25,6 +36,7 @@ function TwoLineDataBlockBase({ title, subtitle, className}) {
   return (
     <div className={className}>
       <div className={"p-2 text-center"}>
+        {getLeftDataBlockIcon()}
         <div className="data-block-focal-text">
           {getTitle()}
         </div>
@@ -39,7 +51,8 @@ function TwoLineDataBlockBase({ title, subtitle, className}) {
 TwoLineDataBlockBase.propTypes = {
   title: PropTypes.any,
   subtitle: PropTypes.any,
-  className: PropTypes.string
+  className: PropTypes.string,
+  icon: PropTypes.object,
 };
 
 export default TwoLineDataBlockBase;

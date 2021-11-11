@@ -154,6 +154,11 @@ taskActions.getTaskActivityLogById = async (getAccessToken, cancelTokenSource, i
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+taskActions.getTaskActivityGridFsLogById = async (getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `/tasks/logs/files/${id}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 taskActions.createECSCluster = async (postBody, getAccessToken) => {
   const apiUrl = `/tools/aws/v2/create/ecs`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
@@ -214,5 +219,12 @@ taskActions.logAksClusterCancellation = async (getAccessToken, cancelTokenSource
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+taskActions.stopTask = async (getAccessToken, cancelTokenSource, taskModel) => {
+  const postBody = {
+    ...taskModel.getPersistData()
+  };
+  const apiUrl = `/tools/git/${taskModel.getData("_id")}/stop`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
 
 export default taskActions;

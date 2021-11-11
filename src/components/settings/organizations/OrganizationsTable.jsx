@@ -10,7 +10,7 @@ import {
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faSitemap} from "@fortawesome/pro-light-svg-icons";
-import {organizationMetadata} from "components/settings/organizations/organization-metadata";
+import {organizationMetadata} from "components/settings/organizations/organization.metadata";
 import NewOrganizationOverlay from "components/settings/organizations/NewOrganizationOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 

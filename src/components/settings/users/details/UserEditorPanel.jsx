@@ -12,8 +12,8 @@ import userActions from "components/user/user-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
 import Model from "core/data_model/model";
-import {ldapUsersMetaData} from "components/settings/ldap_users/ldap-users-metadata";
-import {ssoUserMetadata} from "components/settings/users/sso-user-metadata";
+import {ldapUserMetadata} from "components/settings/ldap_users/ldapUser.metadata";
+import {ssoUserMetadata} from "components/settings/users/ssoUser.metadata";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import LdapGroupMultiSelectInput
   from "components/common/list_of_values_input/settings/groups/LdapGroupMultiSelectInput";
@@ -145,7 +145,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
       teams: userModel?.getData("teams"),
       title: userModel?.getData("title"),
     };
-    const newLdapUser = new Model({...newLdapUserData}, ldapUsersMetaData, false);
+    const newLdapUser = new Model({...newLdapUserData}, ldapUserMetadata, false);
 
     return await accountsActions.createUserV2(getAccessToken, cancelTokenSource, orgDomain, newLdapUser);
   };

@@ -3,11 +3,11 @@ const SonarPipelineTableMetadata = {
   type: "Sonar Pipeline Table Report",
   fields: [
     {
-      label: "Project Name",
+      label: "Project",
       id: "project",
     },
     {
-      label: "Recent Scan",
+      label: "Last Scan",
       id: "runCount",
     },
     {
@@ -17,6 +17,10 @@ const SonarPipelineTableMetadata = {
     {
       label: "Critical",
       id: "critical",
+    },
+    {
+      label: "Blocker",
+      id: "blocker",
     },
     {
       label: "Major",
@@ -32,7 +36,7 @@ const SonarPipelineTableMetadata = {
     },
     {
       label: "Remediation Effort (in minutes)",
-      id: "total_effort",
+      id: "effort",
     },
   ],
   newObjectFields: {},
