@@ -30,7 +30,7 @@ function SideOverlayContainer({ children, titleText, titleIcon, showPanel, close
       <div className="px-3 content-block-header title-text-header-1">
         <OverlayTitleBar handleClose={handleClose} isLoading={isLoading} titleText={titleText} titleIcon={titleIcon} />
       </div>
-      <div className="bg-white scroll-y overlay-panel-body">
+      <div className="bg-white hide-x-overflow scroll-y overlay-panel-body">
         {showToasts && toastContext?.getInlineBanner()}
         <div>
           {children}

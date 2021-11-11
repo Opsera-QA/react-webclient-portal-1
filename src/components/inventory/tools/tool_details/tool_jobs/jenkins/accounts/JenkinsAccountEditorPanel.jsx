@@ -56,7 +56,7 @@ function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData, setJenkinsAcc
 
   return (
     <>
-      <div className="scroll-y full-height">
+      <div className="scroll-y hide-x-overflow full-height">
         <Row>
           <Col lg={12}>
             <JenkinsAccountServiceSelectInput

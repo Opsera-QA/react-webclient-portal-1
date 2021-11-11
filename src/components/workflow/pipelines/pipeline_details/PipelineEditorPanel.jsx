@@ -45,7 +45,7 @@ function PipelineEditorPanel({ pipelineData, setPipelineData, handleClose }) {
   }
 
   return (
-    <div className="scroll-y full-height p-2">
+    <div className="scroll-y hide-x-overflow full-height p-2">
       <Row>
         <Col lg={6}>
           <TextInputBase setDataObject={setPipelineDataDto} dataObject={pipelineDataDto} fieldName={"name"}/>

@@ -398,6 +398,9 @@ a.text-primary:hover, a.text-primary:focus {
 
 .scroll-y {
     overflow-y: auto;
+}
+
+.hide-x-overflow {
     overflow-x: hidden;
 }
 

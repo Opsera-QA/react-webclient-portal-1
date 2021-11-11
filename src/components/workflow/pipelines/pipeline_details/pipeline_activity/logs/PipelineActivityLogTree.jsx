@@ -81,8 +81,8 @@ function PipelineActivityLogTree({ pipelineLogTree, currentLogTreePage, setCurre
 
   return (
     <div className={"table-tree mb-3"}>
-      <div className={"scroll-y table-tree-with-paginator-and-secondary-tree p-2"}>
-      {/*<div className={"scroll-y table-tree-with-paginator p-2"}>*/}
+      <div className={"scroll-y hide-x-overflow table-tree-with-paginator-and-secondary-tree p-2"}>
+      {/*<div className={"scroll-y hide-x-overflow table-tree-with-paginator p-2"}>*/}
         <TreeBase
           data={pipelineLogTree}
           onItemClick={onMainTreeItemClick}
