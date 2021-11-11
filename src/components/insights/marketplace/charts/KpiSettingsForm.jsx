@@ -9,6 +9,7 @@ import {
   kpiSettingsMetadata,
   kpiDateFilterMetadata,
   kpiTagsFilterMetadata,
+  kpiGoalsFilterMetadata,
   kpiNotesFilterMetadata,
   kpiJenkinsResultFilterMetadata,
   kpiJenkinsJobUrlFilterMetadata,
@@ -36,6 +37,7 @@ import {
 } from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import Model from "core/data_model/model";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import GoalsInputBase from "./goals/GoalsInputBase";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
@@ -90,6 +92,9 @@ function KpiSettingsForm({
   );
   const [kpiTagsFilter, setKpiTagsFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "tags", kpiTagsFilterMetadata)
+  );
+  const [kpiGoalsFilter, setKpiGoalsFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "goals", kpiGoalsFilterMetadata)
   );
   const [kpiNotesFilter, setKpiNotesFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "notes", kpiNotesFilterMetadata)
@@ -293,6 +298,7 @@ function KpiSettingsForm({
     "sonar-vulnerabilities-metric-scorecard",
     "sonar-reliability-remediation-agg-by-time",
     "coverity-issues-by-category-trend",
+    "salesforce-duration-by-stage",
   ];
 
   const getKpiFilters = (filter) => {
@@ -331,6 +337,18 @@ function KpiSettingsForm({
                 !tagFilterEnabled.includes(kpiSettings.getData("kpi_identifier")) ||
                 !kpiConfigSettings.getData("useKpiTags")
               }
+            />
+          </div>
+        );
+      case "goals":
+        return (
+          <div>
+            <GoalsInputBase
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiGoalsFilter}
+              dataObject={kpiGoalsFilter}
+              kpiName={kpiSettings.getData("kpi_identifier")}
             />
           </div>
         );
@@ -649,14 +667,15 @@ function KpiSettingsForm({
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "tags")
       ].value = kpiTagsFilter.getData("value");
     }
-    if (
+    if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "goals")]) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "goals")
+      ].value = kpiGoalsFilter.getData("value");
+    }
+    if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "notes")]) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "notes")
-        ]
-    ) {
-      newKpiSettings.getData("filters")[
-        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "notes")
-        ].value = kpiNotesFilter.getData("value");
+      ].value = kpiNotesFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
