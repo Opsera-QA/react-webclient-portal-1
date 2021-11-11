@@ -136,6 +136,10 @@ import ServiceNowMeanTimeToResolutionBarChart from "./servicenow/bar_chart/mean_
 import ServiceNowMeanTimeToAcknowledgeBarChart from "./servicenow/bar_chart/mean_time_to_acknowledge/ServiceNowMeanTimeToAcknowledgeBarChart";
 import ServiceNowMeanTimeBetweenFailuresBarChart from "./servicenow/bar_chart/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresBarChart";
 
+//SDLC KPIs
+import SdlcDurationByStageMetrics from "components/insights/charts/sdlc/bar_chart/duration_by_stage/SdlcDurationByStageMetrics";
+
+
 // Coverity KPIs
 import CoverityIssuesByCategory from "./coverity/CoverityIssuesByCategory/CoverityIssuesByCategory";
 
@@ -1363,6 +1367,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+      case "sdlc-duration-statistics":
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <SdlcDurationByStageMetrics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );  
       // Service Now
       case "servicenow-mean-time-to-resolution":
         return (
