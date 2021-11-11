@@ -82,7 +82,7 @@ function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
 
   const getCardView = () => {
     return (
-      <div className={"scroll-y full-screen-overlay-selection-container"}>
+      <div className={"scroll-y full-screen-overlay-selection-container hide-x-overflow"}>
         <ToolIdentifierSelectionCardView
           toolIdentifiers={toolIdentifiers}
           setDataFunction={setDataFunction}

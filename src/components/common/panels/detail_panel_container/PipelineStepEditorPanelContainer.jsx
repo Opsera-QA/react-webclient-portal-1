@@ -33,7 +33,7 @@ function PipelineStepEditorPanelContainer(
   }
 
   return (
-    <Form className="scroll-y full-height">
+    <Form className="scroll-y hide-x-overflow full-height">
       <div>
         <div>{children}</div>
         <PipelineStepConfigurationButtonContainer

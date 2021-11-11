@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-
+import LoadingDialog from "components/common/status_notifications/loading";
 
 // TODO: Implement
 function AzureApplicationSummaryPanel({ azureApplicationData } ) {
@@ -12,7 +12,7 @@ function AzureApplicationSummaryPanel({ azureApplicationData } ) {
   }
 
   return (
-    <div className="scroll-y pt-3 px-3">
+    <div className="scroll-y pt-3 px-3 hide-x-overflow">
       <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
         <Row>
           <Col lg={6}>

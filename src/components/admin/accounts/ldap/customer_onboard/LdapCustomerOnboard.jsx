@@ -43,7 +43,7 @@ function LdapCustomerOnboard() {
 
       <div className="content-container content-card-1 max-content-width ml-2">
         <div className="pl-2 content-block-header title-text-header-1">New Customer Onboarding</div>
-        <div className="scroll-y p-3">
+        <div className="scroll-y hide-x-overflow p-3">
           <h6 className="text-center mb-3">Please complete the form below in order to create the LDAP data needed to
             support a new customer Organization and Account.</h6>
           <div className="my-3">

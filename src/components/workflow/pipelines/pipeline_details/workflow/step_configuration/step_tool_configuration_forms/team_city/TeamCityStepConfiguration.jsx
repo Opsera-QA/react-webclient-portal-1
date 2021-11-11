@@ -48,7 +48,7 @@ function TeamCityStepConfiguration( { configurationData, parentCallback }) {
   }
   
   return (
-    <div className="scroll-y full-height">
+    <div className="scroll-y hide-x-overflow full-height">
       <TextInputBase fieldName={"teamcityApiURL"} dataObject={teamCityDataDto} setDataObject={setTeamCityDataDto} />
       <TextInputBase fieldName={"teamcityUsername"} dataObject={teamCityDataDto} setDataObject={setTeamCityDataDto} />
       <TextInputBase type={"password"} fieldName={"teamcityPassword"} dataObject={teamCityDataDto} setDataObject={setTeamCityDataDto} />

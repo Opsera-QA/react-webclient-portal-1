@@ -9,7 +9,7 @@ function ArgoApplicationSummaryPanel({ argoApplicationData } ) {
   }
 
   return (
-    <div className="scroll-y pt-3 px-3">
+    <div className="scroll-y pt-3 px-3 hide-x-overflow">
       <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
         <Row>
           <Col lg={12}>
