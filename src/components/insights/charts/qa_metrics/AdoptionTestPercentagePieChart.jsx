@@ -90,13 +90,13 @@ function AdoptionPercentagePieChart({ kpiConfiguration, setKpiConfiguration, das
             <Col lg={6} md={8}>
               <TwoLineScoreDataBlock className={"test-percentage"}
                                      score={metrics[0]?.executedTests}
-                                     subtitle={"No of Automated Test Cases Executed"}
+                                     subtitle={"Automated Test Cases Executed"}
               />
             </Col>
             <Col lg={6} md={8}>
               <TwoLineScoreDataBlock className={"test-percentage"}
                                      score={metrics[0]?.manualTests}
-                                     subtitle={"No of Automated Test Cases Executed Manually"}
+                                     subtitle={"Automated Test Cases Executed Manually"}
               />
             </Col>
           </Row>
