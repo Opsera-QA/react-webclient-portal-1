@@ -299,6 +299,7 @@ function KpiSettingsForm({
     "sonar-reliability-remediation-agg-by-time",
     "coverity-issues-by-category-trend",
     "salesforce-duration-by-stage",
+    "build-deployment-statistics",
   ];
 
   const getKpiFilters = (filter) => {
