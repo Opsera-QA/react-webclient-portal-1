@@ -11,7 +11,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 
-function KpiSummaryPanel({ kpiData, setActiveTab }) {
+function KpiIdentifierSummaryPanel({ kpiData, setActiveTab }) {
   if (kpiData == null) {
     return <LoadingDialog size="sm" />;
   }
@@ -69,9 +69,9 @@ function KpiSummaryPanel({ kpiData, setActiveTab }) {
   );
 }
 
-KpiSummaryPanel.propTypes = {
+KpiIdentifierSummaryPanel.propTypes = {
   kpiData: PropTypes.object,
   setActiveTab: PropTypes.func,
 };
 
-export default KpiSummaryPanel;
+export default KpiIdentifierSummaryPanel;

@@ -6,6 +6,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import BreadcrumbPageLink from "components/common/links/BreadcrumbPageLink";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import AdminToolsSubNavigationBar from "components/admin/AdminToolsSubNavigationBar";
 
 function AdminTools() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -44,6 +45,7 @@ function AdminTools() {
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       accessRoleData={accessRoleData}
       pageDescription={"Listed below are administration tools for the platform."}
+      navigationTabContainer={<AdminToolsSubNavigationBar activeTab={"adminTools"} />}
     >
       <Row className="ml-3">
         {/* <BreadcrumbPageLink breadcrumbDestination={"systemStatus"} /> */}

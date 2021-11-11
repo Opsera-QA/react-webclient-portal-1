@@ -1,4 +1,4 @@
-const kpiConfigurationMetadata = {
+const kpiIdentifierMetadata = {
   idProperty: "name",
   type: "KPI Configuration",
   activeField: "active",
@@ -99,4 +99,4 @@ const kpiConfigurationMetadata = {
   }
 };
 
-export default kpiConfigurationMetadata;
+export default kpiIdentifierMetadata;

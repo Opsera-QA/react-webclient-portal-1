@@ -8,7 +8,7 @@ import WebsitePathInput from "components/common/inputs/text/WebsitePathInput";
 import JsonInput from "components/common/inputs/object/JsonInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
-import KpiActions from "components/admin/kpi_editor/kpi-editor-actions";
+import KpiActions from "components/admin/kpi_identifiers/kpi.actions";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import KpiChartTypeInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiChartTypeInput";
 import KpiToolsInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiToolsInput";
@@ -19,7 +19,7 @@ import NotificationConditionTriggerSelectInput from "components/common/list_of_v
 import axios from "axios";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function KpiEditorPanel({ kpiData, handleClose }) {
+function KpiIdentifierEditorPanel({ kpiData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [kpiDataDto, setKpiDataDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
@@ -103,10 +103,10 @@ function KpiEditorPanel({ kpiData, handleClose }) {
   );
 }
 
-KpiEditorPanel.propTypes = {
+KpiIdentifierEditorPanel.propTypes = {
   kpiData: PropTypes.object,
   setKpiData: PropTypes.func,
   handleClose: PropTypes.func,
 };
 
-export default KpiEditorPanel;
+export default KpiIdentifierEditorPanel;

@@ -29,8 +29,8 @@ import ReportsRegistration from "./components/admin/analytics/ReportsRegistratio
 import Registration from "./components/landing/Registration";
 import TagEditor from "./components/settings/tags/TagManagement";
 import TagDetailView from "./components/settings/tags/tags_detail_view/TagDetailView";
-import KpiManagement from "./components/admin/kpi_editor/KpiManagement";
-import KpiDetailView from "./components/admin/kpi_editor/kpi_detail_view/KpiDetailView";
+import KpiIdentifierManagement from "components/admin/kpi_identifiers/KpiIdentifierManagement";
+import KpiIdentifierDetailView from "components/admin/kpi_identifiers/details/KpiIdentifierDetailView";
 import TemplateManagement from "./components/admin/template_editor/TemplateManagement";
 import LdapOrganizationsView from "./components/admin/accounts/ldap/organizations/LdapOrganizationManagement";
 import LdapOrganizationDetailView
@@ -254,8 +254,8 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/admin/tools/types/details/:toolTypeId" exact component={ToolCategoryDetailView} />
           <SecureRoute path="/admin/tools/identifiers/details/:toolIdentifierId" exact
                        component={ToolIdentifierDetailView} />
-          <SecureRoute path="/admin/kpis" exact component={KpiManagement} />
-          <SecureRoute path="/admin/kpis/:id" exact component={KpiDetailView} />
+          <SecureRoute path="/admin/kpis" exact component={KpiIdentifierManagement} />
+          <SecureRoute path="/admin/kpis/:id" exact component={KpiIdentifierDetailView} />
           <SecureRoute path="/admin/templates" exact component={TemplateManagement} />
           <SecureRoute path="/admin/templates/details/:templateId" exact component={TemplateDetailView} />
           <SecureRoute path="/admin/reports" exact component={Reports_Old} />

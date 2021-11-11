@@ -3,15 +3,15 @@ import { AuthContext } from "contexts/AuthContext";
 import Model from "core/data_model/model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import kpiFilterMetadata from "components/admin/kpi_editor/kpi-filter-metadata";
-import KpiTable from "components/admin/kpi_editor/KpiTable";
-import KpiActions from "components/admin/kpi_editor/kpi-editor-actions";
+import kpiFilterMetadata from "components/admin/kpi_identifiers/kpi-filter-metadata";
+import KpiIdentifierTable from "components/admin/kpi_identifiers/KpiIdentifierTable";
+import KpiActions from "components/admin/kpi_identifiers/kpi.actions";
 import { meetsRequirements, ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import axios from "axios";
+import KpiIdentifierManagementSubNavigationBar
+  from "components/admin/kpi_identifiers/KpiIdentifierManagementSubNavigationBar";
 
-
-
-function KpiManagement() {
+function KpiIdentifierManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -93,8 +93,9 @@ function KpiManagement() {
       pageDescription={`Listed below are registered charts for the Analytics platform. 
         Each chart or KPI corresponds to a data point in the analytics platform.
       `}
+      navigationTabContainer={<KpiIdentifierManagementSubNavigationBar activeTab={"kpiIdentifierManagement"} />}
     >
-      <KpiTable
+      <KpiIdentifierTable
         loadData={loadData}
         isLoading={isLoading}
         data={kpiList}
@@ -105,4 +106,4 @@ function KpiManagement() {
   );
 }
 
-export default KpiManagement;
+export default KpiIdentifierManagement;

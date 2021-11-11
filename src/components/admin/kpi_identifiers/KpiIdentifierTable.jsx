@@ -2,7 +2,7 @@ import React, { useContext, useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import kpiConfigurationMetadata from "components/admin/kpi_editor/kpiConfiguration.metadata";
+import kpiIdentifierMetadata from "components/admin/kpi_identifiers/kpiIdentifier.metadata";
 import {
   getLimitedTableTextColumn,
   getTableBooleanIconColumn,
@@ -10,15 +10,15 @@ import {
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
-import NewKpiOverlay from "components/admin/kpi_editor/NewKpiOverlay";
+import NewKpiOverlay from "components/admin/kpi_identifiers/NewKpiOverlay";
 import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import { faFileInvoice } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 
-function KpiTable({ data, loadData, isLoading, kpiFilterDto, setKpiFilterDto, isMounted }) {
+function KpiIdentifierTable({ data, loadData, isLoading, kpiFilterDto, setKpiFilterDto, isMounted }) {
   const toastContext = useContext(DialogToastContext);
-  let fields = kpiConfigurationMetadata.fields;
+  let fields = kpiIdentifierMetadata.fields;
   const history = useHistory();
 
   const columns = useMemo(
@@ -80,7 +80,7 @@ function KpiTable({ data, loadData, isLoading, kpiFilterDto, setKpiFilterDto, is
   );
 }
 
-KpiTable.propTypes = {
+KpiIdentifierTable.propTypes = {
   data: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
@@ -89,4 +89,4 @@ KpiTable.propTypes = {
   isMounted: PropTypes.object
 };
 
-export default KpiTable;
+export default KpiIdentifierTable;
