@@ -5,7 +5,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import dataMappingActions from "components/settings/data_mapping/data-mapping-actions";
 import Model from "core/data_model/model";
-import projectTagsMetadata from "components/settings/data_mapping/projects/tagging-project-metadata";
+import projectMappingMetadata from "components/settings/data_mapping/projects/projectMapping.metadata";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
@@ -43,7 +43,7 @@ function ProjectMappingDetailView() {
     try {
       const response = await dataMappingActions.getProjectMappingById(projectMappingId, getAccessToken);
       if (response?.data?.length > 0) {
-        setProjectMappingData(new Model(response.data[0], projectTagsMetadata, false));
+        setProjectMappingData(new Model(response.data[0], projectMappingMetadata, false));
       }
     } catch (error) {
       if (!error?.error?.message?.includes(404)) {
@@ -80,7 +80,7 @@ function ProjectMappingDetailView() {
       navigationTabContainer={<DataMappingManagementSubNavigationBar activeTab={"projectTagViewer"} />}
       breadcrumbDestination={"projectTaggingDetailView"}
       accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
-      metadata={projectTagsMetadata}
+      metadata={projectMappingMetadata}
       dataObject={projectMappingData}
       isLoading={isLoading}
       actionBar={getActionBar()}

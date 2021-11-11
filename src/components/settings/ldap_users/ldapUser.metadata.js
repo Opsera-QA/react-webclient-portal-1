@@ -1,11 +1,12 @@
-export const ldapUsersMetaData = {
+// TODO: Pull with users list in route route
+export const ldapUserMetadata = {
   idProperty: "name",
   type: "User",
   // detailView: function (record) {
   //   return `/admin/organizations/details/${record.getData("name")}`;
   // },
   detailViewTitle: function (record) {
-    return `User Details [${record?.getOriginalValue("name")}]`;
+    return `${record?.getOriginalValue("name")}`;
   },
   fields: [
     {

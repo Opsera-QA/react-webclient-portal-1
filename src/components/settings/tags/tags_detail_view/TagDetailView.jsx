@@ -4,7 +4,7 @@ import {AuthContext} from "contexts/AuthContext";
 import Model from "core/data_model/model";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
-import tagEditorMetadata from "components/settings/tags/tags-metadata";
+import tagMetadata from "components/settings/tags/tag.metadata";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
@@ -68,7 +68,7 @@ function TagDetailView() {
     const response = await adminTagsActions.getTagV2(getAccessToken, cancelSource, id);
 
     if (isMounted.current === true && response?.data) {
-      setTagData(new Model(response.data, tagEditorMetadata, false));
+      setTagData(new Model(response.data, tagMetadata, false));
     }
   };
 
@@ -108,7 +108,7 @@ function TagDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"tagDetailView"}
-      metadata={tagEditorMetadata}
+      metadata={tagMetadata}
       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       accessRoleData={accessRoleData}
       navigationTabContainer={<TagManagementSubNavigationBar activeTab={"tagViewer"} />}

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Card, Col, Row } from "react-bootstrap";
-import projectTagsMetadata from "components/settings/data_mapping/projects/tagging-project-metadata";
+import projectMappingMetadata from "components/settings/data_mapping/projects/projectMapping.metadata";
 import Model from "core/data_model/model";
 import dataMappingActions from "components/settings/data_mapping/data-mapping-actions";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
@@ -56,8 +56,8 @@ function ProjectMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
   const loadData = async () => {
     if (isMounted?.current === true) {
       setIsLoading(true);
-      let modelData = typeof toolTypeData !== "undefined" ? toolTypeData.getPersistData() : projectTagsMetadata.newObjectFields;
-      setProjectMappingDto(new Model(modelData, projectTagsMetadata, false));
+      let modelData = typeof toolTypeData !== "undefined" ? toolTypeData.getPersistData() : projectMappingMetadata.newObjectFields;
+      setProjectMappingDto(new Model(modelData, projectMappingMetadata, false));
       setIsLoading(false);
     }
   };

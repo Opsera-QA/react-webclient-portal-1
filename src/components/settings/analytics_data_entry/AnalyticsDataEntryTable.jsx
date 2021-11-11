@@ -10,7 +10,7 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faUserChart} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {analyticsDataMetadata} from "components/settings/analytics_data_entry/analytics-data-metadata";
+import {analyticsDataEntryMetadata} from "components/settings/analytics_data_entry/analyticsDataEntry.metadata";
 import NewAnalyticsDataEntryOverlay from "components/settings/analytics_data_entry/NewAnalyticsDataEntryOverlay";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import KpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_identifier/KpiIdentifierFilter";
@@ -18,7 +18,7 @@ import InlineKpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_
 
 function AnalyticsDataEntryTable({ analyticsDataEntries, isLoading, loadData, isMounted, analyticsDataEntryFilterModel, setAnalyticsDataEntryFilterModel }) {
   const toastContext = useContext(DialogToastContext);
-  let fields = analyticsDataMetadata.fields;
+  let fields = analyticsDataEntryMetadata.fields;
   const history = useHistory();
 
   const columns = useMemo(
@@ -90,7 +90,7 @@ function AnalyticsDataEntryTable({ analyticsDataEntries, isLoading, loadData, is
       supportSearch={true}
       isLoading={isLoading}
       body={getAnalyticsDataEntryTable()}
-      metadata={analyticsDataMetadata}
+      metadata={analyticsDataEntryMetadata}
       titleIcon={faUserChart}
       filterDto={analyticsDataEntryFilterModel}
       dropdownFilters={getDropdownFilters()}

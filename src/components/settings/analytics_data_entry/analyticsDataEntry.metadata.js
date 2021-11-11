@@ -1,11 +1,11 @@
-export const analyticsDataMetadata = {
+export const analyticsDataEntryMetadata = {
   idProperty: "name",
   type: "Entry",
   detailView: function (record) {
     return `/settings/analytics-data-entries/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `Analytics Data Entry [${record.getOriginalValue("kpi_identifier")}]`;
+    return `${record.getOriginalValue("kpi_identifier")} Analytics Data Entry`;
   },
   fields: [
     {

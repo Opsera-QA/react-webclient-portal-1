@@ -2,7 +2,7 @@ import React, { useContext, useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import kpiMetaData from "components/admin/kpi_editor/kpi-metadata";
+import kpiConfigurationMetadata from "components/admin/kpi_editor/kpiConfiguration.metadata";
 import {
   getLimitedTableTextColumn,
   getTableBooleanIconColumn,
@@ -18,7 +18,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 
 function KpiTable({ data, loadData, isLoading, kpiFilterDto, setKpiFilterDto, isMounted }) {
   const toastContext = useContext(DialogToastContext);
-  let fields = kpiMetaData.fields;
+  let fields = kpiConfigurationMetadata.fields;
   const history = useHistory();
 
   const columns = useMemo(

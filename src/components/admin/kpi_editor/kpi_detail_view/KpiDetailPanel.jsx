@@ -21,14 +21,24 @@ function KpiDetailPanel({ kpiData, setKpiData }) {
   };
 
   if (kpiData == null) {
-    return <LoadingDialog size="sm" />;
+    return (
+      <LoadingDialog
+        size="sm"
+      />
+    );
   }
 
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SummaryTab
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+        />
+        <SettingsTab
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+        />
       </CustomTabContainer>
     );
   };
@@ -36,15 +46,31 @@ function KpiDetailPanel({ kpiData, setKpiData }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <KpiSummaryPanel kpiData={kpiData} setActiveTab={setActiveTab} />;
+        return (
+          <KpiSummaryPanel
+            kpiData={kpiData}
+            setActiveTab={setActiveTab}
+          />
+        );
       case "settings":
-        return <KpiEditorPanel setKpiData={setKpiData} kpiData={kpiData} handleClose={toggleSummaryPanel} />;
+        return (
+          <KpiEditorPanel
+            setKpiData={setKpiData}
+            kpiData={kpiData}
+            handleClose={toggleSummaryPanel}
+          />
+        );
       default:
         return null;
     }
   };
 
-  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
+  return (
+    <DetailTabPanelContainer
+      detailView={getCurrentView()}
+      tabContainer={getTabContainer()}
+    />
+  );
 }
 
 KpiDetailPanel.propTypes = {

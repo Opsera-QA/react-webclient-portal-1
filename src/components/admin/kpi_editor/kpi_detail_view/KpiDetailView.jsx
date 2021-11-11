@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "contexts/AuthContext";
 import Model from "core/data_model/model";
-import kpiMetaData from "components/admin/kpi_editor/kpi-metadata";
+import kpiConfigurationMetadata from "components/admin/kpi_editor/kpiConfiguration.metadata";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import KpiActions from "components/admin/kpi_editor/kpi-editor-actions";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
@@ -64,7 +64,7 @@ function KpiDetailView() {
     const response = await KpiActions.getKpiById(getAccessToken, cancelSource, id);
 
     if (isMounted?.current === true && response?.data) {
-      setKpiData(new Model(response?.data, kpiMetaData, false));
+      setKpiData(new Model(response?.data, kpiConfigurationMetadata, false));
     }
   };
 
@@ -104,9 +104,9 @@ function KpiDetailView() {
      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       breadcrumbDestination={"kpiDetailView"}
       accessRoleData={accessRoleData}
-      metadata={kpiMetaData}
+      metadata={kpiConfigurationMetadata}
       dataObject={kpiData}
-      isLoading={isLoading}
+      isLoading={isLoading || !accessRoleData}
       actionBar={getActionBar()}
       detailPanel={<KpiDetailPanel setKpiData={setKpiData} kpiData={kpiData} accessRoleData={accessRoleData} />}
     />

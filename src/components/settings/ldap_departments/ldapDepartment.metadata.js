@@ -1,10 +1,10 @@
-export const ldapDepartmentMetaData = {
+export const ldapDepartmentMetadata = {
   type: "Department",
   // detailView: function(record) {
   //   return `/settings/departments/details/${record.getData("name")}`;
   // },
   detailViewTitle: function (record) {
-    return `${record.getOriginalValue("name")} Department Details`;
+    return `${record.getOriginalValue("name")}`;
   },
   fields: [
     {
@@ -33,4 +33,4 @@ export const ldapDepartmentMetaData = {
   }
 };
 
-export default ldapDepartmentMetaData;
+export default ldapDepartmentMetadata;

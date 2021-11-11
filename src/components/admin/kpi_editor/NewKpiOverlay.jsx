@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import kpiEditorMetadata from "components/admin/kpi_editor/kpi-metadata";
+import kpiEditorMetadata from "components/admin/kpi_editor/kpiConfiguration.metadata";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel.jsx";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import KpiEditorPanel from "components/admin/kpi_editor/kpi_detail_view/KpiEditorPanel";

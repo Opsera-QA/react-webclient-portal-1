@@ -5,7 +5,7 @@ export const organizationMetadata = {
     return `/settings/organizations/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `Organization Details [${record?.getOriginalValue("name")}]`;
+    return `${record?.getOriginalValue("name")}`;
   },
   fields: [
     {

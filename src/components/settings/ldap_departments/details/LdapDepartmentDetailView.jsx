@@ -4,7 +4,7 @@ import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import departmentActions from "components/settings/ldap_departments/department-functions";
-import ldapDepartmentMetaData from "components/settings/ldap_departments/ldap-department-metadata";
+import ldapDepartmentMetadata from "components/settings/ldap_departments/ldapDepartment.metadata";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
@@ -95,12 +95,12 @@ function LdapDepartmentDetailView() {
     const response = await departmentActions.getDepartmentV2(getAccessToken, cancelSource, orgDomain, departmentName);
 
     if (isMounted.current === true && response?.data != null) {
-      let newLdapDepartmentData = new Model({...response.data}, ldapDepartmentMetaData, false);
+      let newLdapDepartmentData = new Model({...response.data}, ldapDepartmentMetadata, false);
       setLdapDepartmentData(newLdapDepartmentData);
       const groupResponse = await accountsActions.getGroupV2(getAccessToken, cancelSource, orgDomain, newLdapDepartmentData.getData("departmentGroupName"));
 
       if (isMounted.current === true && groupResponse?.data != null) {
-        setLdapDepartmentGroupData(new Model({...groupResponse.data}, ldapDepartmentMetaData, false));
+        setLdapDepartmentGroupData(new Model({...groupResponse.data}, ldapDepartmentMetadata, false));
       }
     }
   };
@@ -133,7 +133,7 @@ function LdapDepartmentDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"ldapDepartmentDetailView"}
-      metadata={ldapDepartmentMetaData}
+      metadata={ldapDepartmentMetadata}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
       dataObject={ldapDepartmentData}

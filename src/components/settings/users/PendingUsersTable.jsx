@@ -5,7 +5,7 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faUserHardHat} from "@fortawesome/pro-light-svg-icons";
 import VanityTable from "components/common/table/VanityTable";
 import {getField} from "components/common/metadata/metadata-helpers";
-import {ssoUserMetadata} from "components/settings/users/sso-user-metadata";
+import {ssoUserMetadata} from "components/settings/users/ssoUser.metadata";
 import {useHistory} from "react-router-dom";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 

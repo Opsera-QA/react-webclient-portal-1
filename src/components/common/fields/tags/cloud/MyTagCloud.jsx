@@ -8,7 +8,7 @@ import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import axios from "axios";
 import TagsCloudBase from "components/common/fields/tags/cloud/TagsCloudBase";
 import Model from "core/data_model/model";
-import tagEditorMetadata from "components/settings/tags/tags-metadata";
+import tagMetadata from "components/settings/tags/tag.metadata";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import TagUsagePanel from "components/settings/tags/tags_detail_view/TagUsagePanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -89,12 +89,12 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
   };
 
   const showTagUsage = (tag) => {
-    const tagModel = new Model(tag, tagEditorMetadata, false);
+    const tagModel = new Model(tag, tagMetadata, false);
 
     toastContext.showOverlayPanel(
       <CenterOverlayContainer
         showPanel={true}
-        objectType={tagEditorMetadata?.type}
+        objectType={tagMetadata?.type}
         loadData={loadData}
         closePanel={clearOverlayPanel}
         titleText={`[${capitalizeFirstLetter(tag?.type)}: ${capitalizeFirstLetter(tag?.value)}] Tag Usage`}

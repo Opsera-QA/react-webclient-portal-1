@@ -1,6 +1,6 @@
 import React, { useState, useContext} from "react";
 import PropTypes from "prop-types";
-import projectTagsMetadata from "./tagging-project-metadata";
+import projectMappingMetadata from "components/settings/data_mapping/projects/projectMapping.metadata";
 import ProjectMappingEditorPanel from "./projects_detail_view/ProjectMappingEditorPanel";
 import Model from "core/data_model/model";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -8,7 +8,7 @@ import CreateCenterPanel from "components/common/overlays/center/CreateCenterPan
 
   function NewProjectMappingOverlay({ loadData, isMounted }) {
     const toastContext = useContext(DialogToastContext);
-    const [projectTagsData, setProjectTagsData] = useState(new Model({...projectTagsMetadata.newObjectFields}, projectTagsMetadata, true));
+    const [projectTagsData, setProjectTagsData] = useState(new Model({...projectMappingMetadata.newObjectFields}, projectMappingMetadata, true));
   
     const closePanel = () => {
       if (isMounted?.current === true) {
@@ -20,7 +20,7 @@ import CreateCenterPanel from "components/common/overlays/center/CreateCenterPan
     };
   
     return (
-      <CreateCenterPanel closePanel={closePanel} objectType={projectTagsMetadata.type} loadData={loadData}>
+      <CreateCenterPanel closePanel={closePanel} objectType={projectMappingMetadata.type} loadData={loadData}>
         <ProjectMappingEditorPanel setProjectTagsData={setProjectTagsData} handleClose={closePanel} projectTagsData={projectTagsData}/>
       </CreateCenterPanel>
     );

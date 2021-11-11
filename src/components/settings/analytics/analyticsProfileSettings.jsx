@@ -4,7 +4,7 @@ import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "../../../contexts/DialogToastContext";
 import analyticsActions from "components/settings/analytics/analytics-settings-actions";
 import Model from "core/data_model/model";
-import AnalyticsProfileMetadata from "./analytics-profile-metadata";
+import AnalyticsProfileMetadata from "components/settings/analytics/analyticsProfile.metadata";
 import ScreenContainer from "../../common/panels/general/ScreenContainer";
 import LoadingView from "../../common/status_notifications/loading";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";

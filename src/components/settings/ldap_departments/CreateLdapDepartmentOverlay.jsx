@@ -1,7 +1,7 @@
 import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import ldapDepartmentMetaData from "components/settings/ldap_departments/ldap-department-metadata";
+import ldapDepartmentMetadata from "components/settings/ldap_departments/ldapDepartment.metadata";
 import LdapDepartmentEditorPanel
   from "components/settings/ldap_departments/details/LdapDepartmentEditorPanel";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
@@ -10,7 +10,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 
 function CreateLdapDepartmentOverlay({ isMounted, loadData, orgDomain } ) {
   const toastContext = useContext(DialogToastContext);
-  const [ldapDepartmentData, setLdapDepartmentData] = useState(new Model({...ldapDepartmentMetaData.newObjectFields}, ldapDepartmentMetaData, true));
+  const [ldapDepartmentData, setLdapDepartmentData] = useState(new Model({...ldapDepartmentMetadata.newObjectFields}, ldapDepartmentMetadata, true));
 
   const closePanel = () => {
     if (isMounted?.current === true) {

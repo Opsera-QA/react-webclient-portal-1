@@ -1,7 +1,7 @@
-// TODO: put metadata on node server and pull down that way?
+// TODO: put metadata on node server and pull with new route
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
-const tagEditorMetadata = {
+const tagMetadata = {
   idProperty: "_id",
   type: "Tag",
   activeField: "active",
@@ -9,7 +9,7 @@ const tagEditorMetadata = {
     return `/settings/tags/${record.getData("_id")}`;
   },
   detailViewTitle: function(record) {
-    return `Tag Details [${capitalizeFirstLetter(record?.getOriginalValue("type"))}: ${capitalizeFirstLetter(record?.getOriginalValue("value"))}]`;
+    return `${capitalizeFirstLetter(record?.getOriginalValue("type"))}: ${capitalizeFirstLetter(record?.getOriginalValue("value"))}`;
   },
   fields: [
     {
@@ -54,4 +54,4 @@ const tagEditorMetadata = {
   }
 };
 
-export default tagEditorMetadata;
+export default tagMetadata;

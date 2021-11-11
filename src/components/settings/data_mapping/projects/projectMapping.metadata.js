@@ -1,12 +1,12 @@
-const usersTagsMetadata = {
+const projectMappingMetadata = {
   idProperty: "_id",
-  type: "User Mapping",
+  type: "Project Mapping",
   activeField: "active",
   detailView: function (record) {
-    return `/settings/data_mapping/user_mapping/details/${record.getData("_id")}`;
+    return `/settings/data_mapping/projects/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `User Mapping Details`;
+    return `${record?.getData("key")} Project Mapping`;
   },
   fields: [
     {
@@ -25,28 +25,14 @@ const usersTagsMetadata = {
       isRequired: true,
     },
     {
-      label: "Tool User",
-      id: "tool_user_id",
+      label: "Mapping Key",
+      id: "key",
       isRequired: true,
     },
     {
-      label: "Tool User Email",
-      id: "tool_user_email",
-      // isRequired: true
-    },
-    {
-      label: "Opsera User ID",
-      id: "opsera_user_id",
+      label: "Project Name",
+      id: "value",
       isRequired: true,
-    },
-    {
-      label: "Opsera User",
-      id: "opsera_user_email",
-      isRequired: true,
-    },
-    {
-      label: "Project/Repository Information",
-      id: "tool_user_prop",
     },
     {
       label: "Owner",
@@ -55,6 +41,14 @@ const usersTagsMetadata = {
     {
       label: "Account",
       id: "account",
+    },
+    {
+      label: "Workspace",
+      id: "tool_prop",
+    },
+    {
+      label: "Workspace/Project",
+      id: "tool_prop_name",
     },
     {
       label: "Active",
@@ -66,17 +60,17 @@ const usersTagsMetadata = {
     },
   ],
   newObjectFields: {
-    type: "users",
+    type: "project",
     tool_identifier: "",
-    tool_user_id: "",
-    opsera_user_id: "",
-    opsera_user_email: "",
-    tool_user_prop: "",
-    owner: "",
-    account: {},
+    tool_id: "",
+    key: "",
+    value: [],
+    owner : "",
+    account : {},
+    tool_prop: "",
     createdAt: "",
-    active: true,
+    active : true
   },
 };
 
-export default usersTagsMetadata;
+export default projectMappingMetadata;
