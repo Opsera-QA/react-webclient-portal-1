@@ -39,9 +39,9 @@ function AccountSettingsPageLinkCards({accessRoleData}) {
       <LdapGroupManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
-      <UserSettingsPageLinkCard
-        accessRoleData={accessRoleData}
-      />
+      {/*<UserSettingsPageLinkCard*/}
+      {/*  accessRoleData={accessRoleData}*/}
+      {/*/>*/}
       <OrganizationManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
