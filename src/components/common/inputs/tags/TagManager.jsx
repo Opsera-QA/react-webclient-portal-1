@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import tagEditorMetadata from "components/settings/tags/tags-metadata";
+import tagMetadata from "components/settings/tags/tag.metadata";
 import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -170,7 +170,7 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
     let currentOptions = [...tagOptions];
     let newTag = {type: type, value: newValue, active: true, configuration: {}};
     let newTagOption = {type: type, value: newValue};
-    let newTagDto = new Model(newTag, tagEditorMetadata, true);
+    let newTagDto = new Model(newTag, tagMetadata, true);
     await saveNewTag(newTagDto);
     currentValues.push(newTagOption);
     currentOptions.push(newTagOption);

@@ -5,7 +5,7 @@ export const usersMetadata = {
   //   return `/admin/organizations/details/${record.getData("name")}`;
   // },
   detailViewTitle: function (record) {
-    return `User Details [${record?.getOriginalValue("name")}]`;
+    return `${record?.getOriginalValue("name")}`;
   },
   fields: [
     {

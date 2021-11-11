@@ -2,7 +2,7 @@ import React, {useContext, useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import tagEditorMetadata from "components/settings/tags/tags-metadata";
+import tagMetadata from "components/settings/tags/tag.metadata";
 import {
   getTableBooleanIconColumn,
   getTableDateColumn,
@@ -20,7 +20,7 @@ import TagTypeFilter from "components/common/filters/tags/tag_type/TagTypeFilter
 function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, isMounted }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
-  let fields = tagEditorMetadata.fields;
+  let fields = tagMetadata.fields;
 
   const columns = useMemo(
     () => [
@@ -87,7 +87,7 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, i
       body={getTagsTable()}
       inlineFilters={getInlineFilters()}
       dropdownFilters={getDropdownFilters()}
-      metadata={tagEditorMetadata}
+      metadata={tagMetadata}
       titleIcon={faTags}
       title={"Tags"}
       className={"px-2 pb-2"}

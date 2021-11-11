@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import Model from "core/data_model/model";
-import {organizationMetadata} from "components/settings/organizations/organization-metadata";
+import {organizationMetadata} from "components/settings/organizations/organization.metadata";
 import OrganizationEditorPanel
   from "components/settings/organizations/organization_detail_view/OrganizationEditorPanel";
 

@@ -1,7 +1,7 @@
 import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
-import {usersMetadata} from "components/settings/users/users-metadata";
+import {usersMetadata} from "components/settings/users/users.metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faUsers} from "@fortawesome/pro-light-svg-icons";

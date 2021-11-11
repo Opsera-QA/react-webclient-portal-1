@@ -3,7 +3,7 @@ import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
-import {ldapUsersMetaData} from "components/settings/ldap_users/ldap-users-metadata";
+import {ldapUserMetadata} from "components/settings/ldap_users/ldapUser.metadata";
 import LdapUserDetailPanel from "components/settings/ldap_users/users_detail_view/LdapUserDetailPanel";
 import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
@@ -62,7 +62,7 @@ function MyUserRecord() {
     const response = await accountsActions.getUserByEmailV2(getAccessToken, cancelTokenSource, userEmail);
 
     if (isMounted.current === true && response?.data != null) {
-      setLdapUserData(new Model(response.data, ldapUsersMetaData, false));
+      setLdapUserData(new Model(response.data, ldapUserMetadata, false));
     }
   };
 

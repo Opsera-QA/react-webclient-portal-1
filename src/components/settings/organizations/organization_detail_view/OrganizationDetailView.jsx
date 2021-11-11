@@ -6,7 +6,7 @@ import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import axios from "axios";
-import {organizationMetadata} from "components/settings/organizations/organization-metadata";
+import {organizationMetadata} from "components/settings/organizations/organization.metadata";
 import OrganizationDetailPanel
   from "components/settings/organizations/organization_detail_view/OrganizationDetailPanel";
 import organizationActions from "components/settings/organizations/organization-actions";

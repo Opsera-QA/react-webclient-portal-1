@@ -17,6 +17,7 @@ import KpiCategoriesInput from "components/common/list_of_values_input/admin/kpi
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import NotificationConditionTriggerSelectInput from "components/common/list_of_values_input/notifications/NotificationConditionTriggerSelectInput";
 import axios from "axios";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function KpiEditorPanel({ kpiData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -94,12 +95,8 @@ function KpiEditorPanel({ kpiData, handleClose }) {
         </Col>
         <Col lg={12}>
           <TextAreaInput dataObject={kpiDataDto} fieldName={"description"} setDataObject={setKpiDataDto} />
-
-          <div className="text-muted pl-1 pb-1">Policy Support:</div>
-          <ActivityToggleInput setDataObject={setKpiDataDto} fieldName={"policySupport"} dataObject={kpiData} />
-
-          <div className="text-muted pl-1 pb-1">Status:</div>
-          <ActivityToggleInput setDataObject={setKpiDataDto} fieldName={"active"} dataObject={kpiData} />
+          <BooleanToggleInput setDataObject={setKpiDataDto} fieldName={"policySupport"} dataObject={kpiData} />
+          <BooleanToggleInput setDataObject={setKpiDataDto} fieldName={"active"} dataObject={kpiData} />
         </Col>
       </Row>
     </EditorPanelContainer>
