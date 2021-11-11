@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import kpiEditorMetadata from "components/admin/kpi_editor/kpiConfiguration.metadata";
+import kpiEditorMetadata from "components/admin/kpi_identifiers/kpiIdentifier.metadata";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel.jsx";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import KpiEditorPanel from "components/admin/kpi_editor/kpi_detail_view/KpiEditorPanel";
+import KpiIdentifierEditorPanel from "components/admin/kpi_identifiers/details/KpiIdentifierEditorPanel";
 
 function NewKpiOverlay({ loadData, isMounted }) {
   const toastContext = useContext(DialogToastContext);
@@ -21,7 +21,7 @@ function NewKpiOverlay({ loadData, isMounted }) {
 
   return (
     <CreateCenterPanel closePanel={closePanel} objectType={kpiEditorMetadata.type} loadData={loadData}>
-      <KpiEditorPanel setKpiData={setKpiData} kpiData={kpiData} handleClose={closePanel} />
+      <KpiIdentifierEditorPanel setKpiData={setKpiData} kpiData={kpiData} handleClose={closePanel} />
     </CreateCenterPanel>
   );
 }

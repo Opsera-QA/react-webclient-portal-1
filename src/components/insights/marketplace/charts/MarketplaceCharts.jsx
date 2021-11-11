@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
 import Model from "core/data_model/model";
-import KpiActions from 'components/admin/kpi_editor/kpi-editor-actions';
+import KpiActions from 'components/admin/kpi_identifiers/kpi.actions';
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import kpiMarketplaceFilterMetadata from "components/insights/marketplace/charts/kpi-marketplace-filter-metadata";

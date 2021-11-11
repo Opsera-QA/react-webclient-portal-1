@@ -200,16 +200,16 @@ const breadcrumbs = {
     parent: "admin",
     name: "kpiManagement",
     path: paths.kpiManagement,
-    title: "KPI Management",
-    linkText: "KPI Management",
+    title: "KPI Identifier Management",
+    linkText: "KPI Identifier Management",
     icon: faFileInvoice
   },
   kpiDetailView: {
     parent: "kpiManagement",
     name: "kpiDetailView",
     path: paths.kpiManagement,
-    title: "KPI Configuration Details",
-    linkText: "KPI Configuration Details",
+    title: "KPI Identifier Details",
+    linkText: "KPI Identifier Details",
     icon: faFileInvoice
   },
 

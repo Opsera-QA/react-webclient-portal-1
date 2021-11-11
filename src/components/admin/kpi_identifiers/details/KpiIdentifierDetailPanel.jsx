@@ -4,11 +4,11 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
-import KpiSummaryPanel from "components/admin/kpi_editor/kpi_detail_view/KpiSummaryPanel";
-import KpiEditorPanel from "components/admin/kpi_editor/kpi_detail_view/KpiEditorPanel";
+import KpiIdentifierSummaryPanel from "components/admin/kpi_identifiers/details/KpiIdentifierSummaryPanel";
+import KpiIdentifierEditorPanel from "components/admin/kpi_identifiers/details/KpiIdentifierEditorPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
-function KpiDetailPanel({ kpiData, setKpiData }) {
+function KpiIdentifierDetailPanel({ kpiData, setKpiData }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -47,14 +47,14 @@ function KpiDetailPanel({ kpiData, setKpiData }) {
     switch (activeTab) {
       case "summary":
         return (
-          <KpiSummaryPanel
+          <KpiIdentifierSummaryPanel
             kpiData={kpiData}
             setActiveTab={setActiveTab}
           />
         );
       case "settings":
         return (
-          <KpiEditorPanel
+          <KpiIdentifierEditorPanel
             setKpiData={setKpiData}
             kpiData={kpiData}
             handleClose={toggleSummaryPanel}
@@ -73,11 +73,11 @@ function KpiDetailPanel({ kpiData, setKpiData }) {
   );
 }
 
-KpiDetailPanel.propTypes = {
+KpiIdentifierDetailPanel.propTypes = {
   kpiData: PropTypes.object,
   setKpiData: PropTypes.func,
 };
 
-export default KpiDetailPanel;
+export default KpiIdentifierDetailPanel;
 
 
