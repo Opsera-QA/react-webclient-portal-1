@@ -11,11 +11,10 @@ import {
   defaultConfig, getColorByData,getColor, assignStandardColors,
   shortenPieChartLegend, mainColor,
 } from "../charts-views";
-import ChartTooltip from "../ChartTooltip";
 import { Col, Container, Row } from "react-bootstrap";
-import DataBlockWrapper from "../../../common/data_boxes/DataBlockWrapper";
 import TwoLineScoreDataBlock from "../../../common/metrics/score/TwoLineScoreDataBlock";
 import NewPercentageDataBlock from "../../../common/metrics/percentage/NewPercentageDataBlock";
+import "../qa_metrics/Styling.css";
 import { METRIC_QUALITY_LEVELS } from "../../../common/metrics/text/MetricTextBase";
 
 function AdoptionPercentagePieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -87,23 +86,26 @@ function AdoptionPercentagePieChart({ kpiConfiguration, setKpiConfiguration, das
 
       <div className="new-chart mb-3" style={{height: "300px", display: "flex"}}>
         <Container>
-          <Row className="p-1">
+          <Row className="p-0">
             <Col lg={6} md={8}>
-              <TwoLineScoreDataBlock className={"test-percentage"}
-                 score={metrics[0]?.executedTests}
-                 subtitle={"No of Automated Test Cases Executed"}
+              <TwoLineScoreDataBlock
+                className={"test-percentage"}
+                score={metrics[0]?.executedTests}
+                subtitle={"Automated Test Cases Executed"}
               />
             </Col>
             <Col lg={6} md={8}>
-              <TwoLineScoreDataBlock className={"test-percentage"}
-                 score={metrics[0]?.manualTests}
-                 subtitle={"No of Automated Test Cases Executed Manually"}
+              <TwoLineScoreDataBlock
+                className={"test-percentage"}
+                score={metrics[0]?.manualTests}
+                subtitle={"Automated Test Cases Executed Manually"}
               />
             </Col>
           </Row>
-          <Row className="p-1 text-center">
-            <Col lg={6} md={8} className={"text-center"}>
-              <NewPercentageDataBlock className={"test-percentage"}
+          <Row className="p-0 justify-content-center">
+            <Col lg={6} md={8} className="w-1000">
+              <NewPercentageDataBlock
+                className={"test-percentage"}
                 percentage={metrics[0]?.adoptionRate}
                 subtitle={"Adoption Percentage"}
                 qualityLevel={metrics[0]?.adoptionRate < 98 ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS  }
@@ -111,7 +113,7 @@ function AdoptionPercentagePieChart({ kpiConfiguration, setKpiConfiguration, das
               />
             </Col>
           </Row>
-          <Row className="p-3">
+          <Row className="p-4">
             <Col className="text-center">
               <small> {notesData} </small>
             </Col>
