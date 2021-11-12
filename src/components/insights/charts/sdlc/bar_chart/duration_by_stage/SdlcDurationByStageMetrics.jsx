@@ -117,16 +117,16 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
           <Col xs={12} sm={6} key="metric-quality-scan">
             <SdlcQualityScanDurationMetric
               metric={metrics[2]}
-              meanData={dataBlockValues[0]?.container_scan_mean}
-              countData={dataBlockValues[0]?.container_scan_count}
+              meanData={dataBlockValues[0]?.code_scan_mean}
+              countData={dataBlockValues[0]?.code_scan_count}
               goalsData={goalsData?.average_quality_scan}
             />
           </Col>
           <Col xs={12} sm={6} key="metric-security-scan">
             <SdlcSecurityScanDurationMetric
               metric={metrics[3]}
-              meanData={dataBlockValues[0]?.code_scan_mean}
-              countData={dataBlockValues[0]?.code_scan_count}
+              meanData={dataBlockValues[0]?.container_scan_mean}
+              countData={dataBlockValues[0]?.container_scan_count}
               goalsData={goalsData?.average_security_scan}
             />
           </Col>
