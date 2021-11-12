@@ -29,6 +29,7 @@ function JenkinsJobsPanel({ toolData, toolId }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
+    setJenkinsJobs([]);
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -44,7 +45,6 @@ function JenkinsJobsPanel({ toolData, toolId }) {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      setJenkinsJobs([]);
 
       if (isMongoDbId(toolId)) {
         await getJenkinsJobs(cancelSource);
