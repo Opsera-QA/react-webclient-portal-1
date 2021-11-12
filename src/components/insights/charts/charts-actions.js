@@ -162,7 +162,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     serviceNowServiceOfferings: serviceNowServiceOfferings,
     serviceNowConfigurationItems: serviceNowConfigurationItems,
     serviceNowBusinessServices: serviceNowBusinessServices,
-    actionableInsightsQueryData: actionableInsightsQueryData
+    actionableInsightsQueryData: actionableInsightsQueryData,
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);

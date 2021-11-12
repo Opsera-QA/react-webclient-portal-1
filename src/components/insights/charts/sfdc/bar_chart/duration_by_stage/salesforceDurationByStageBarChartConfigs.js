@@ -9,7 +9,7 @@ export default () => ({
     stacked: false,
   },
   xFormat: "time:%Y-%m-%d",
-  legends: [],
+  // legends: [],
   colors: { datum: 'color' },
   axisLeft: {
     "format": d => (typeof d === "number") && (Math.floor(d) === d && d),

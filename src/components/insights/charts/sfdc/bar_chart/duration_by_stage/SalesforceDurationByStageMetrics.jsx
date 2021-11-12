@@ -81,10 +81,6 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
     }
   };
 
-  const onRowSelect = (rowData) => {
-    history.push(`/blueprint/${rowData.data._id.pipelineId}/${rowData.data._id.run}`);
-  };
-
   const getChartBody = () => {
     if (
       !Array.isArray(metrics) ||
@@ -104,6 +100,8 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
               meanData={dataBlockValues[0]?.create_package_mean}
               countData={dataBlockValues[0]?.create_package_count}
               goalsData={goalsData?.average_builds}
+              kpiConfiguration={kpiConfiguration}
+              dashboardData={dashboardData}
             />
           </Col>
           <Col xs={12} sm={6}>
@@ -111,6 +109,8 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
               metric={metrics[1]}
               meanData={dataBlockValues[0]?.validate_package_mean}
               countData={dataBlockValues[0]?.validate_package_count}
+              kpiConfiguration={kpiConfiguration}
+              dashboardData={dashboardData}
             />
           </Col>
           <Col xs={12} sm={6}>
@@ -118,6 +118,8 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
               metric={metrics[2]}
               meanData={dataBlockValues[0]?.profile_migration_mean}
               countData={dataBlockValues[0]?.profile_migration_count}
+              kpiConfiguration={kpiConfiguration}
+              dashboardData={dashboardData}
             />
           </Col>
           <Col xs={12} sm={6}>
@@ -125,6 +127,8 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
               metric={metrics[3]}
               meanData={dataBlockValues[0]?.backup_mean}
               countData={dataBlockValues[0]?.backup_count}
+              kpiConfiguration={kpiConfiguration}
+              dashboardData={dashboardData}
             />
           </Col>
           <Col xs={12} sm={6}>
@@ -132,6 +136,8 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
               metric={metrics[4]}
               meanData={dataBlockValues[0]?.unit_testing_mean}
               countData={dataBlockValues[0]?.unit_testing_count}
+              kpiConfiguration={kpiConfiguration}
+              dashboardData={dashboardData}
             />
           </Col>
           <Col xs={12} sm={6}>
@@ -140,6 +146,8 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
               meanData={dataBlockValues[0]?.deploy_mean}
               countData={dataBlockValues[0]?.deploy_count}
               goalsData={goalsData?.average_deployments}
+              kpiConfiguration={kpiConfiguration}
+              dashboardData={dashboardData}
             />
           </Col>
         </Row>
