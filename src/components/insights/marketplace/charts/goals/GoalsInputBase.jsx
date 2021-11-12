@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SalesforceDurationByStageGoals from "components/insights/marketplace/charts/goals/salesforce_duration_by_stage/SalesforceDurationByStageGoals";
 import SdlcDurationStatisticsGoals from "components/insights/marketplace/charts/goals/sdlc_duration_statistics/SdlcDurationStatisticsGoals";
+import BuildAndDeployGoals from "components/insights/marketplace/charts/goals/build_and_deploy_statistics/BuildAndDeployGoals";
 
 function GoalsInputBase({ dataObject, setDataObject, kpiName }) {
   switch (kpiName) {
