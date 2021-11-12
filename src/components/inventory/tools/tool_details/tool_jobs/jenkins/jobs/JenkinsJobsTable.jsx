@@ -64,6 +64,7 @@ function JenkinsJobsTable({ toolData, loadData, onRowSelect, isLoading, jenkinsJ
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "_id")),
       getTableTextColumn(getField(fields, "description")),
       getJobTypeColumn(getField(fields, "type")),
       getTableBooleanIconColumn(getField(fields, "active"))
