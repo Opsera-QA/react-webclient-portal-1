@@ -3,17 +3,17 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGradeText";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
-import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
 import Col from "react-bootstrap/Col";
 import Model from "core/data_model/model";
 import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
 import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
+import StandardTwoGoalDataBlock from "components/common/metrics/goals/double/StandardTwoGoalDataBlock";
 
-function LegacySonarRatingsVulnerabilityDataBlock({ dashboardData, kpiConfiguration, securityRating, vulnerabilityCount }) {
+function LegacySonarRatingsReliabilityDataBlockContainer({ dashboardData, kpiConfiguration, reliabilityRating, bugCount }) {
   const toastContext = useContext(DialogToastContext);
-  
+
   const onRowSelect = () => {
     const chartModel = new Model({...SonarRatingsBugsActionableMetadata.newObjectFields}, SonarRatingsBugsActionableMetadata, false);
     toastContext.showOverlayPanel(
@@ -21,11 +21,11 @@ function LegacySonarRatingsVulnerabilityDataBlock({ dashboardData, kpiConfigurat
         dashboardData={dashboardData}
         kpiConfiguration={kpiConfiguration}
         chartModel={chartModel}
-        kpiIdentifier={"sonar-ratings-vulnerabilities"} />
+        kpiIdentifier={"sonar-ratings-bugs"} />
     );
   };
 
-  const getSonarSecurityGrade = (rating) => {
+  const getSonarReliabilityGrade = (rating) => {
     if (rating <= 1) {
       return LETTER_GRADES.A;
     }
@@ -49,8 +49,8 @@ function LegacySonarRatingsVulnerabilityDataBlock({ dashboardData, kpiConfigurat
   const getLeftDataBlock = () => {
     return (
       <TwoLineGradeDataBlock
-        letterGrade={getSonarSecurityGrade(securityRating)}
-        subtitle={"Security"}
+        letterGrade={getSonarReliabilityGrade(reliabilityRating)}
+        subtitle={"Reliability"}
       />
     );
   };
@@ -58,24 +58,24 @@ function LegacySonarRatingsVulnerabilityDataBlock({ dashboardData, kpiConfigurat
   const getMiddleDataBlock = () => {
     return (
       <TwoLineScoreDataBlock
-        score={vulnerabilityCount}
-        subtitle={"Vulnerabilities"}
+        score={bugCount}
+        subtitle={"Bugs"}
       />
     );
   };
 
   const getRightDataBlock = () => {
     return (
-      <LegendDataBlock
-        firstItem={"Goal for Security: A"}
-        // secondItem={"Fix [Insert Count] Vulnerabilities"}
+      <StandardTwoGoalDataBlock
+        topGoal={"Reliability: A"}
+        bottomGoal={"Bugs: 0 - 1"}
       />
     );
   };
 
   return (
     <HorizontalDataBlocksContainer
-      title={"Sonar Ratings: Security"}
+      title={"Sonar Ratings: Reliability"}
       onClick={() => onRowSelect()}
     >
       <Col sm={4}>
@@ -91,11 +91,11 @@ function LegacySonarRatingsVulnerabilityDataBlock({ dashboardData, kpiConfigurat
   );
 }
 
-LegacySonarRatingsVulnerabilityDataBlock.propTypes = {
+LegacySonarRatingsReliabilityDataBlockContainer.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  securityRating: PropTypes.number,
-  vulnerabilityCount: PropTypes.number,
+  reliabilityRating: PropTypes.number,
+  bugCount: PropTypes.number,
 };
 
-export default LegacySonarRatingsVulnerabilityDataBlock;
+export default LegacySonarRatingsReliabilityDataBlockContainer;

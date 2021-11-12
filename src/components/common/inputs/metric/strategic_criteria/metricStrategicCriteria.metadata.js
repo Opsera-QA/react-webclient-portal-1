@@ -1,6 +1,11 @@
 const metricStrategicCriteriaMetadata = {
   fields: [
     {
+      label: "Data Point",
+      id: "data_point_id",
+      isRequired: true
+    },
+    {
       label: "Type",
       id: "type",
       isRequired: true
@@ -27,11 +32,17 @@ const metricStrategicCriteriaMetadata = {
     },
   ],
   newObjectFields: {
-    type: "include",
-    componentTypes: [],
-    field: "",
-    fieldFilter: "equals",
-    values: [],
+    data_point_id: "",
+    success_rule: {
+
+    },
+    warning_rule: {
+
+    },
+    failure_rule: {
+
+    },
+    goal_text: "",
   }
 };
 

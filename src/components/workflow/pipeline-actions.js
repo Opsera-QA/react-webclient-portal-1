@@ -349,6 +349,7 @@ pipelineActions.createFreeTrialPipeline = async (postBody, getAccessToken) => {
   return response;
 };
 
+// TODO: Move to tool actions
 pipelineActions.getPipelineUsageToolList = async (getAccessToken) => {
   const params = { status: "active", usage: "pipeline"};
   const apiUrl = `/registry/tools`;
@@ -361,6 +362,7 @@ pipelineActions.getPipelineUsageToolListV2 = async (getAccessToken, cancelTokenS
   return await baseActions.apiGetCall(getAccessToken, apiUrl, params);
 };
 
+// TODO: If we're doing different metrics, they should be different routes, not one route coupled with other unrelated routes.
 // TODO: We should be handling not getting data inside the places that call this route instead
 //  We can always have a function in a helper that does the parsing of data automatically and call that instead
 pipelineActions.searchWorkSpaces = async (service, gitAccountId, getAccessToken) => {

@@ -9,17 +9,14 @@ import RuleTypeSelectInput from "components/common/list_of_values_input/workflow
 import RuleValueMultiSelectInput
   from "components/common/list_of_values_input/workflow/wizard/rules/SfdcRuleValueMulitSelectInput";
 import SfdcRuleFieldSelectInput from "components/common/list_of_values_input/workflow/wizard/rules/SfdcRuleFieldSelectInput";
-import SfdcRuleComponentTypeMultiSelectInput
-  from "components/common/list_of_values_input/workflow/wizard/rules/SfdcRuleComponentTypeMultiSelectInput";
 import Model from "core/data_model/model";
-import sfdcRuleMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/rules/sfdc-rule-metadata";
-import GitRuleFieldSelectInput
-  from "components/common/list_of_values_input/workflow/wizard/rules/GitRuleFieldSelectInput";
 import SfdcPipelineWizardRuleFieldFilterSelectInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/rules/SfdcPipelineWizardRuleFieldFilterSelectInput";
 import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
+import metricStrategicCriteriaMetadata
+  from "components/common/inputs/metric/strategic_criteria/metricStrategicCriteria.metadata";
 
-function MetricStrategicCriteriaInputRow({pipelineWizardModel, ruleData, index, addRule, deleteRule, updateRule, fetchAttribute, isGitTab}) {
+function MetricStrategicCriteriaInputRow({model, ruleData, index, addRule, deleteRule, updateRule,}) {
   const [ruleModel, setRuleModel] = useState(undefined);
   const isMounted = useRef(false);
 
@@ -34,7 +31,7 @@ function MetricStrategicCriteriaInputRow({pipelineWizardModel, ruleData, index, 
   }, [index, ruleData]);
 
   const loadData = () => {
-    let newModel = new Model({...ruleData}, sfdcRuleMetadata, false);
+    let newModel = new Model({...ruleData}, metricStrategicCriteriaMetadata, false);
     setRuleModel({...newModel});
   };
 
@@ -62,10 +59,6 @@ function MetricStrategicCriteriaInputRow({pipelineWizardModel, ruleData, index, 
   };
 
   const getRulesFieldComponent = () => {
-    if (isGitTab === true) {
-      return (<GitRuleFieldSelectInput dataObject={ruleModel} setDataObject={updateData} showLabel={false} />);
-    }
-
     return (<SfdcRuleFieldSelectInput dataObject={ruleModel} setDataObject={updateData} showLabel={false} />);
   };
 
@@ -90,9 +83,8 @@ function MetricStrategicCriteriaInputRow({pipelineWizardModel, ruleData, index, 
             dataObject={ruleModel}
             setDataObject={updateData}
             showLabel={false}
-            fetchAttribute={fetchAttribute}
             componentTypes={ruleModel?.getData("componentTypes")}
-            pipelineWizardModel={pipelineWizardModel}
+            model={model}
           />
         );
     }
@@ -107,16 +99,20 @@ function MetricStrategicCriteriaInputRow({pipelineWizardModel, ruleData, index, 
       <Col sm={12} className={"px-0"}>
         <Row className={"mx-0"}>
           <Col xs={1} className={"pr-1 pl-0"}>
-            <RuleTypeSelectInput dataObject={ruleModel} setDataObject={updateData} showLabel={false} />
-          </Col>
-          <Col xs={3} className={"px-0"}>
-            <SfdcRuleComponentTypeMultiSelectInput
+            <RuleTypeSelectInput
               dataObject={ruleModel}
               setDataObject={updateData}
               showLabel={false}
-              fetchAttribute={fetchAttribute}
-              pipelineWizardModel={pipelineWizardModel}
             />
+          </Col>
+          <Col xs={3} className={"px-0"}>
+            {/*<SfdcRuleComponentTypeMultiSelectInput*/}
+            {/*  dataObject={ruleModel}*/}
+            {/*  setDataObject={updateData}*/}
+            {/*  showLabel={false}*/}
+            {/*  fetchAttribute={fetchAttribute}*/}
+            {/*  model={model}*/}
+            {/*/>*/}
           </Col>
           <Col xs={2} className={"px-1"}>
             {getRulesFieldComponent()}
@@ -149,7 +145,7 @@ MetricStrategicCriteriaInputRow.propTypes = {
   updateRule: PropTypes.func,
   fetchAttribute: PropTypes.string,
   isGitTab: PropTypes.bool,
-  pipelineWizardModel: PropTypes.object
+  model: PropTypes.object
 };
 
 export default MetricStrategicCriteriaInputRow;

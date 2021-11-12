@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
-import Row from "react-bootstrap/Row";
+import {Row} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 
-function TwoLineDataBlockBase({ title, subtitle, className, icon,}) {
+function TwoGoalDataBlockBase({ topGoal, bottomGoal, className, icon, }) {
+
   const getLeftDataBlockIcon = () => {
     if (icon) {
       return (
@@ -15,21 +16,22 @@ function TwoLineDataBlockBase({ title, subtitle, className, icon,}) {
     }
   };
 
-  const getTitle = () => {
-    if (title) {
+  const getTopText = () => {
+    if (topGoal) {
       return (
         <div>
-          {title}
+          {topGoal}
         </div>
       );
     }
   };
 
-  const getSubtitle = () => {
-    if (subtitle) {
+
+  const getMiddleText = () => {
+    if (bottomGoal) {
       return (
         <div>
-          {subtitle}
+          {bottomGoal}
         </div>
       );
     }
@@ -39,22 +41,23 @@ function TwoLineDataBlockBase({ title, subtitle, className, icon,}) {
     <div className={className}>
       <Row className={"w-100 h-100 text-center mx-auto"}>
         {getLeftDataBlockIcon()}
-        <Col xs={12} className="text-center data-block-focal-text">
-          {getTitle()}
+        <Col xs={12} className={"w-100 mt-auto"}>
+          {getTopText()}
+          {getMiddleText()}
         </Col>
-        <Col xs={12} className="text-center text-muted">
-          {getSubtitle()}
+        <Col xs={12} className="mt-auto text-muted">
+          Goals
         </Col>
       </Row>
     </div>
   );
 }
 
-TwoLineDataBlockBase.propTypes = {
-  title: PropTypes.any,
-  subtitle: PropTypes.any,
+TwoGoalDataBlockBase.propTypes = {
+  topGoal: PropTypes.any,
+  bottomGoal: PropTypes.any,
   className: PropTypes.string,
   icon: PropTypes.object,
 };
 
-export default TwoLineDataBlockBase;
+export default TwoGoalDataBlockBase;
