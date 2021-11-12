@@ -73,7 +73,12 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case "configuration":
         return <ToolConfigurationPanel toolData={toolData} loadData={loadData}/>;
       case "jobs":
-        return <ToolJobsPanel toolData={toolData}  setToolData={setToolData} loadData={loadData} isLoading={isLoading}/>;
+        return (
+          <ToolJobsPanel
+            toolData={toolData}
+            toolIdentifier={toolData?.tool_identifier}
+          />
+        );
       case "applications":
         return <ToolApplicationsPanel toolData={toolData} loadData={loadData} isLoading={isLoading}/>;
       case "accounts":
