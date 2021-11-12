@@ -3,22 +3,24 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGradeText";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
-import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
+import SonarRatingsReliabilityActionableInsightOverlay from 'components/insights/charts/sonar/sonar_ratings/actionable_insights/reliability/SonarRatingsReliabilityActionableInsightOverlay';
 import Col from "react-bootstrap/Col";
-import SonarRatingsVulnerabilityActionableInsightOverlay from 'components/insights/charts/sonar/sonar_ratings/actionable_insights/vulnerability/SonarRatingsVulnerabilityActionableInsightOverlay';
+import OneLineGoalDataBlockBase from "components/common/metrics/goals/single/OneLineGoalDataBlockBase";
+import Row from "react-bootstrap/Row";
+import StandardTwoGoalDataBlock from "components/common/metrics/goals/double/StandardTwoGoalDataBlock";
 
-function SonarRatingsVulnerabilityDataBlock({  securityRating, vulnerabilityCount }) {
+function SonarRatingsReliabilityDataBlockContainer({ reliabilityRating, bugCount }) {
   const toastContext = useContext(DialogToastContext);
-  
+
   const onRowSelect =()=>{    
     toastContext.showOverlayPanel(
-      <SonarRatingsVulnerabilityActionableInsightOverlay />
+      <SonarRatingsReliabilityActionableInsightOverlay />
     );
   };
 
-  const getSonarSecurityGrade = (rating) => {
+  const getSonarReliabilityGrade = (rating) => {
     if (rating <= 1) {
       return LETTER_GRADES.A;
     }
@@ -42,8 +44,8 @@ function SonarRatingsVulnerabilityDataBlock({  securityRating, vulnerabilityCoun
   const getLeftDataBlock = () => {
     return (
       <TwoLineGradeDataBlock
-        letterGrade={getSonarSecurityGrade(securityRating)}
-        subtitle={"Security"}
+        letterGrade={getSonarReliabilityGrade(reliabilityRating)}
+        subtitle={"Reliability"}
       />
     );
   };
@@ -51,24 +53,24 @@ function SonarRatingsVulnerabilityDataBlock({  securityRating, vulnerabilityCoun
   const getMiddleDataBlock = () => {
     return (
       <TwoLineScoreDataBlock
-        score={vulnerabilityCount}
-        subtitle={"Vulnerabilities"}
+        score={bugCount}
+        subtitle={"Bugs"}
       />
     );
   };
 
   const getRightDataBlock = () => {
     return (
-      <LegendDataBlock
-        firstItem={"Goal for Security: A"}
-        // secondItem={"Fix [Insert Count] Vulnerabilities"}
+      <StandardTwoGoalDataBlock
+        topGoal={"Reliability: A"}
+        bottomGoal={"Bugs: 0 - 1"}
       />
     );
   };
 
   return (
     <HorizontalDataBlocksContainer
-      title={"Sonar Ratings: Security"}
+      title={"Sonar Ratings: Reliability"}
       onClick={() => onRowSelect()}
     >
       <Col sm={4}>
@@ -84,9 +86,9 @@ function SonarRatingsVulnerabilityDataBlock({  securityRating, vulnerabilityCoun
   );
 }
 
-SonarRatingsVulnerabilityDataBlock.propTypes = {
-  securityRating: PropTypes.number,
-  vulnerabilityCount: PropTypes.number,
+SonarRatingsReliabilityDataBlockContainer.propTypes = {
+  reliabilityRating: PropTypes.number,
+  bugCount: PropTypes.number,
 };
 
-export default SonarRatingsVulnerabilityDataBlock;
+export default SonarRatingsReliabilityDataBlockContainer;

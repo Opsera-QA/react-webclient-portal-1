@@ -3,25 +3,19 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGradeText";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
-import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import PercentageDataBlock from "components/common/metrics/percentage/PercentageDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
+import SonarRatingsMaintainabilityActionableInsightOverlay from 'components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityActionableInsightOverlay';
 import Col from "react-bootstrap/Col";
-import Model from "core/data_model/model";
-import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
-import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
+import Row from "react-bootstrap/Row";
+import StandardTwoGoalDataBlock from "components/common/metrics/goals/double/StandardTwoGoalDataBlock";
 
-function LegacySonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfiguration, maintainabilityRating, technicalDebtRatio }) {
+function SonarRatingsMaintainabilityDataBlockContainer({ maintainabilityRating, technicalDebtRatio }) {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = () => {
-    const chartModel = new Model({...SonarRatingsBugsActionableMetadata.newObjectFields}, SonarRatingsBugsActionableMetadata, false);
     toastContext.showOverlayPanel(
-      <ChartDetailsOverlay
-        dashboardData={dashboardData}
-        kpiConfiguration={kpiConfiguration}
-        chartModel={chartModel}
-        kpiIdentifier={"sonar-ratings-debt-ratio"} />
+      <SonarRatingsMaintainabilityActionableInsightOverlay/>
     );
   };
 
@@ -66,9 +60,9 @@ function LegacySonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfigur
 
   const getRightDataBlock = () => {
     return (
-      <LegendDataBlock
-        firstItem={"Goal for Maintainability: A"}
-        secondItem={"Technical Debt Ratio: 0 - 5%"}
+      <StandardTwoGoalDataBlock
+        topGoal={"Maintainability: A"}
+        bottomGoal={"Technical Debt Ratio: 0 - 5%"}
       />
     );
   };
@@ -78,24 +72,22 @@ function LegacySonarRatingsMaintainabilityDataBlock({ dashboardData, kpiConfigur
       title={"Sonar Ratings: Maintainability"}
       onClick={() => onRowSelect()}
      >
-      <Col sm={4}>
-        {getLeftDataBlock()}
-      </Col>
-      <Col sm={4}>
-        {getMiddleDataBlock()}
-      </Col>
-      <Col sm={4}>
-        {getRightDataBlock()}
-      </Col>
+        <Col sm={4}>
+          {getLeftDataBlock()}
+        </Col>
+        <Col sm={4}>
+          {getMiddleDataBlock()}
+        </Col>
+        <Col sm={4}>
+          {getRightDataBlock()}
+        </Col>
     </HorizontalDataBlocksContainer>
   );
 }
 
-LegacySonarRatingsMaintainabilityDataBlock.propTypes = {
-  kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
+SonarRatingsMaintainabilityDataBlockContainer.propTypes = {
   maintainabilityRating: PropTypes.number,
   technicalDebtRatio: PropTypes.number,
 };
 
-export default LegacySonarRatingsMaintainabilityDataBlock;
+export default SonarRatingsMaintainabilityDataBlockContainer;

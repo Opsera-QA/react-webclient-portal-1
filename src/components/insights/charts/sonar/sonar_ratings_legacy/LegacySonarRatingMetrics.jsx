@@ -6,14 +6,14 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import SonarRatingsChartHelpDocumentation
   from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
-import LegacySonarRatingsMaintainabilityDataBlock
-  from "components/insights/charts/sonar/sonar_ratings_legacy/data_blocks/LegacySonarRatingsMaintainabilityDataBlock";
-import LegacySonarRatingsVulnerabilityDataBlock
-  from "components/insights/charts/sonar/sonar_ratings_legacy/data_blocks/LegacySonarRatingsVulnerabilityDataBlock";
+import LegacySonarRatingsMaintainabilityDataBlockContainer
+  from "components/insights/charts/sonar/sonar_ratings_legacy/data_blocks/LegacySonarRatingsMaintainabilityDataBlockContainer";
+import LegacySonarRatingsVulnerabilityDataBlockContainer
+  from "components/insights/charts/sonar/sonar_ratings_legacy/data_blocks/LegacySonarRatingsVulnerabilityDataBlockContainer";
 import ThreeStackedHorizontalMetricsContainer
   from "components/common/metrics/data_blocks/horizontal/ThreeStackedHorizontalMetricsContainer";
-import LegacySonarRatingsReliabilityDataBlock
-  from "components/insights/charts/sonar/sonar_ratings_legacy/data_blocks/LegacySonarRatingsReliabilityDataBlock";
+import LegacySonarRatingsReliabilityDataBlockContainer
+  from "components/insights/charts/sonar/sonar_ratings_legacy/data_blocks/LegacySonarRatingsReliabilityDataBlockContainer";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 
 function LegacySonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -79,7 +79,7 @@ function LegacySonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashb
     return (
       <ThreeStackedHorizontalMetricsContainer
         topDataBlock={
-          <LegacySonarRatingsVulnerabilityDataBlock
+          <LegacySonarRatingsVulnerabilityDataBlockContainer
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
             securityRating={sonarRatingsMetric?.security_rating}
@@ -87,7 +87,7 @@ function LegacySonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashb
           />
         }
         middleDataBlock={
-          <LegacySonarRatingsReliabilityDataBlock
+          <LegacySonarRatingsReliabilityDataBlockContainer
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
             reliabilityRating={sonarRatingsMetric?.reliability_rating}
@@ -95,7 +95,7 @@ function LegacySonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashb
           />
         }
         bottomDataBlock={
-          <LegacySonarRatingsMaintainabilityDataBlock
+          <LegacySonarRatingsMaintainabilityDataBlockContainer
             dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             maintainabilityRating={sonarRatingsMetric?.maintainability_rating}
