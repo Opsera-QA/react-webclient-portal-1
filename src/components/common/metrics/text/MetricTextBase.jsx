@@ -19,10 +19,6 @@ function MetricTextBase({ formattedText, qualityLevel }) {
     }
   };
 
-  if (formattedText == null) {
-    return null;
-  }
-
   return (
     <span className={getQualityBasedClassName()}>
       {formattedText}
@@ -31,8 +27,12 @@ function MetricTextBase({ formattedText, qualityLevel }) {
 }
 
 MetricTextBase.propTypes = {
-  formattedText: PropTypes.number,
+  formattedText: PropTypes.string,
   qualityLevel: PropTypes.string,
+};
+
+MetricTextBase.defaultProps = {
+  formattedText: "N/A",
 };
 
 export default MetricTextBase;

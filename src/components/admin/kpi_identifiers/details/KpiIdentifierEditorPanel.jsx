@@ -77,21 +77,37 @@ function KpiIdentifierEditorPanel({ kpiData, handleClose }) {
       <Row>
         <Col lg={6}>
           <TextInputBase dataObject={kpiDataDto} fieldName={"name"} setDataObject={setKpiDataDto} />
+        </Col>
+        <Col lg={6}>
           <TextInputBase dataObject={kpiDataDto} fieldName={"identifier"} setDataObject={setKpiDataDto} />
+        </Col>
+        <Col lg={6}>
           <KpiChartTypeInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
-          <KpiToolsInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
-          <KpiFiltersInput dataObject={kpiDataDto} fieldName={"supported_filters"} setDataObject={setKpiDataDto} />
-          <JsonInput model={kpiDataDto} fieldName={"dataPoints"} setModel={setKpiDataDto} />
-          <KpiCategoriesInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
+        </Col>
+        <Col lg={6}>
           <NotificationConditionTriggerSelectInput
             dataObject={kpiDataDto}
             setDataObject={setKpiDataDto}
             fieldName={"yAxis"}
           />
+        </Col>
+        <Col lg={12}>
+          <KpiToolsInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
+        </Col>
+        <Col lg={12}>
+          <KpiFiltersInput dataObject={kpiDataDto} fieldName={"supported_filters"} setDataObject={setKpiDataDto} />
+        </Col>
+        <Col lg={12}>
+          <KpiCategoriesInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
+        </Col>
+        <Col lg={12}>
           <WebsitePathInput dataObject={kpiDataDto} fieldName={"thumbnailPath"} setDataObject={setKpiDataDto} />
         </Col>
         <Col lg={6}>
           <JsonInput model={kpiDataDto} fieldName={"settings"} setModel={setKpiDataDto} />
+        </Col>
+        <Col lg={6}>
+          <JsonInput model={kpiDataDto} fieldName={"dataPoints"} setModel={setKpiDataDto} />
         </Col>
         <Col lg={12}>
           <TextAreaInput dataObject={kpiDataDto} fieldName={"description"} setDataObject={setKpiDataDto} />

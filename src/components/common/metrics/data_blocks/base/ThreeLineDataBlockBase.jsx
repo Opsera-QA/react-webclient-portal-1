@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function ThreeLineDataBlockBase({ middleText, bottomText, topText, className, icon}) {
   const getLeftDataBlockIcon = () => {
@@ -46,18 +48,18 @@ function ThreeLineDataBlockBase({ middleText, bottomText, topText, className, ic
 
   return (
     <div className={className}>
-      <div className={"text-center h-100"}>
+      <Row className={"w-100 h-100 mx-auto text-center"}>
         {getLeftDataBlockIcon()}
-        <div className="w-100 text-muted data-block-title-text">
+        <Col xs={12} className={"w-100 text-center text-muted data-block-title-text"}>
           {getTopText()}
-        </div>
-        <div className="my-auto data-block-focal-text">
+        </Col>
+        <Col xs={12} className={"my-auto text-center data-block-focal-text"}>
           {getMiddleText()}
-        </div>
-        <div className="mt-auto text-muted">
+        </Col>
+        <Col xs={12} className={"mt-auto text-center text-muted"}>
           {getSubtitle()}
-        </div>
-      </div>
+        </Col>
+      </Row>
     </div>
   );
 }

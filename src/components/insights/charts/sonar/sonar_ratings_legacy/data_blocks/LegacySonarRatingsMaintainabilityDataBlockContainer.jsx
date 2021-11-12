@@ -6,15 +6,23 @@ import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks
 import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import PercentageDataBlock from "components/common/metrics/percentage/PercentageDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
-
-import SonarRatingsMaintainabilityActionableInsightOverlay from 'components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityActionableInsightOverlay';
 import Col from "react-bootstrap/Col";
-function SonarRatingsMaintainabilityDataBlock({ maintainabilityRating, technicalDebtRatio }) {
+import Model from "core/data_model/model";
+import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
+import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
+import StandardTwoGoalDataBlock from "components/common/metrics/goals/double/StandardTwoGoalDataBlock";
+
+function LegacySonarRatingsMaintainabilityDataBlockContainer({ dashboardData, kpiConfiguration, maintainabilityRating, technicalDebtRatio }) {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = () => {
+    const chartModel = new Model({...SonarRatingsBugsActionableMetadata.newObjectFields}, SonarRatingsBugsActionableMetadata, false);
     toastContext.showOverlayPanel(
-      <SonarRatingsMaintainabilityActionableInsightOverlay/>
+      <ChartDetailsOverlay
+        dashboardData={dashboardData}
+        kpiConfiguration={kpiConfiguration}
+        chartModel={chartModel}
+        kpiIdentifier={"sonar-ratings-debt-ratio"} />
     );
   };
 
@@ -59,9 +67,9 @@ function SonarRatingsMaintainabilityDataBlock({ maintainabilityRating, technical
 
   const getRightDataBlock = () => {
     return (
-      <LegendDataBlock
-        firstItem={"Goal for Maintainability: A"}
-        secondItem={"Technical Debt Ratio: 0 - 5%"}
+      <StandardTwoGoalDataBlock
+        topGoal={"Maintainability: A"}
+        bottomGoal={"Technical Debt Ratio: 0 - 5%"}
       />
     );
   };
@@ -84,9 +92,11 @@ function SonarRatingsMaintainabilityDataBlock({ maintainabilityRating, technical
   );
 }
 
-SonarRatingsMaintainabilityDataBlock.propTypes = {
+LegacySonarRatingsMaintainabilityDataBlockContainer.propTypes = {
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
   maintainabilityRating: PropTypes.number,
   technicalDebtRatio: PropTypes.number,
 };
 
-export default SonarRatingsMaintainabilityDataBlock;
+export default LegacySonarRatingsMaintainabilityDataBlockContainer;

@@ -2,14 +2,14 @@ import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {faFilter} from "@fortawesome/pro-light-svg-icons";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
-import PipelineWizardRuleInput from "components/workflow/wizards/sfdc_pipeline_wizard/rules/PipelineWizardRuleInput";
 import sfdcRuleMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/rules/sfdc-rule-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import IconBase from "components/common/icons/IconBase";
+import MetricStrategicCriteriaInputRow
+  from "components/common/inputs/metric/strategic_criteria/MetricStrategicCriteriaInputRow";
 
-// TODO: On final refactor of SFDC Wizard, utilize model/set models here
-function MetricStrategicCriteriaInput({pipelineWizardModel, setPipelineWizardModel, fieldName, modifiedFiles, isGitTab, isLoading, filePullCompleted, fetchAttribute}) {
+function MetricStrategicCriteriaInput({model, setModel, fieldName, isLoading}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [rules, setRules] = useState([]);
   const isMounted = useRef(false);
@@ -22,10 +22,10 @@ function MetricStrategicCriteriaInput({pipelineWizardModel, setPipelineWizardMod
     return () => {
       isMounted.current = false;
     };
-  }, [filePullCompleted]);
+  }, []);
 
   const loadData = () => {
-    let currentData = pipelineWizardModel?.getData(fieldName);
+    let currentData = model?.getData(fieldName);
 
     let items = Array.isArray(currentData) && currentData.length > 0 ? currentData : [];
 
@@ -50,8 +50,8 @@ function MetricStrategicCriteriaInput({pipelineWizardModel, setPipelineWizardMod
     }
 
     setRules([...newPropertyList]);
-    pipelineWizardModel.setData(fieldName, [...newPropertyList]);
-    setPipelineWizardModel({...pipelineWizardModel});
+    model.setData(fieldName, [...newPropertyList]);
+    setModel({...model});
   };
 
   const updateRule = (index, rule) => {
@@ -76,7 +76,7 @@ function MetricStrategicCriteriaInput({pipelineWizardModel, setPipelineWizardMod
     if (!rules || rules.length === 0) {
       return (
         <div className="text-center">
-          <div className="text-muted my-3">No rules have been added</div>
+          <div className="text-muted my-3">No strategic criteria rules have been added</div>
         </div>
       );
     }
@@ -86,16 +86,13 @@ function MetricStrategicCriteriaInput({pipelineWizardModel, setPipelineWizardMod
         {rules.map((ruleData, index) => {
           return (
             <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
-              <PipelineWizardRuleInput
+              <MetricStrategicCriteriaInputRow
                 index={index}
                 addRule={addRule}
                 deleteRule={deleteRule}
                 ruleData={ruleData}
-                pipelineWizardModel={pipelineWizardModel}
+                model={model}
                 updateRule={updateRule}
-                fetchAttribute={fetchAttribute}
-                modifiedFiles={modifiedFiles}
-                isGitTab={isGitTab}
               />
             </div>
           );
@@ -107,19 +104,16 @@ function MetricStrategicCriteriaInput({pipelineWizardModel, setPipelineWizardMod
   const getHeaderBar = () => {
     return (
       <Row className="d-flex mx-1 py-1 justify-content-between">
-        <Col xs={1} className={"pr-1 pl-0 my-auto"}>
+        <Col xs={2} className={"pr-1 pl-0 my-auto"}>
+          Data Point
+        </Col>
+        <Col xs={2} className={"pr-1 pl-0 my-auto"}>
           Type
         </Col>
-        <Col xs={3} className={"px-0 my-auto"}>
-          Component Type
+        <Col xs={2} className={"px-0 my-auto"}>
+          Trigger Criteria
         </Col>
-        <Col xs={2} className={"px-1 my-auto"}>
-          Field
-        </Col>
-        <Col xs={2} className={"px-1 my-auto"}>
-          Filter
-        </Col>
-        <Col xs={4} className={"px-0 my-auto"}>
+        <Col xs={4} className={"px-1 my-auto"}>
           Value
         </Col>
       </Row>
@@ -127,14 +121,6 @@ function MetricStrategicCriteriaInput({pipelineWizardModel, setPipelineWizardMod
   };
 
   const getBody = () => {
-    if (!filePullCompleted) {
-      return (
-        <div className="rules-input">
-          <div className="text-center text-muted pt-3"><IconBase className={"mr-2"} isLoading={!filePullCompleted} />Waiting on File Pull to Complete</div>
-        </div>
-      );
-    }
-
     return (
       <div>
         <div className={"filter-bg-white"}>
@@ -151,7 +137,7 @@ function MetricStrategicCriteriaInput({pipelineWizardModel, setPipelineWizardMod
     <PropertyInputContainer
       titleIcon={faFilter}
       field={null}
-      isLoading={!filePullCompleted || isLoading}
+      isLoading={isLoading}
       titleText={"File Selection Rule Filter"}
       errorMessage={errorMessage}
     >
@@ -161,14 +147,10 @@ function MetricStrategicCriteriaInput({pipelineWizardModel, setPipelineWizardMod
 }
 
 MetricStrategicCriteriaInput.propTypes = {
-  pipelineWizardModel: PropTypes.object,
-  setPipelineWizardModel: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   fieldName: PropTypes.string,
-  modifiedFiles: PropTypes.array,
-  isGitTab: PropTypes.bool,
   isLoading: PropTypes.bool,
-  filePullCompleted: PropTypes.bool,
-  fetchAttribute: PropTypes.string
 };
 
 export default MetricStrategicCriteriaInput;

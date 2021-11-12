@@ -85,7 +85,7 @@ function SeleniumTestSummaryPercentages({ kpiConfiguration, setKpiConfiguration,
                 <div className="box-metric">
                   <div>{metrics[0]?.testsRun}</div>
                 </div>
-                <div className="w-100 text-muted mb-1">Total TestCases</div>
+                <div className="w-100 text-muted mb-1">Total Test Cases</div>
               </div>
             </Col>
             <Col>

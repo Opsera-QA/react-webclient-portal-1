@@ -15,6 +15,8 @@ function GoalsInputBase({ dataObject, setDataObject, kpiName }) {
         setKpiConfigurationData={setDataObject} />
       );
   
+    case "build-deployment-statistics":
+      return <BuildAndDeployGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />;
   }
 }
 
