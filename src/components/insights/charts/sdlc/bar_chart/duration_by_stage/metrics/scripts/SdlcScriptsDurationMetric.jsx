@@ -4,7 +4,7 @@ import DataBlockAndChartContainer from "components/common/metrics/container/Data
 import SdlcDurationByStageBarChartBase from "../../SdlcDurationByStageBarChartBase";
 import SdlcDurationByStageDataBlockBase from "../../SdlcDurationByStageDataBlockBase";
 
-function SdlcScriptsDurationMetric({ meanData, countData, goalsData, metric }) {
+function SdlcScriptsDurationMetric({ kpiConfiguration, dashboardData, meanData, countData, goalsData, metric }) {
   const getDataBlock = () => {
     return (
       <SdlcDurationByStageDataBlockBase
@@ -17,13 +17,21 @@ function SdlcScriptsDurationMetric({ meanData, countData, goalsData, metric }) {
   };
 
   const getChart = () => {
-    return <SdlcDurationByStageBarChartBase metric={metric} />;
+    return (
+      <SdlcDurationByStageBarChartBase
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+        metric={metric}
+      />
+    );
   };
 
   return <DataBlockAndChartContainer dataBlock={getDataBlock()} chart={getChart()} />;
 }
 
 SdlcScriptsDurationMetric.propTypes = {
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
   meanData: PropTypes.number,
   countData: PropTypes.number,
   goalsData: PropTypes.number,
