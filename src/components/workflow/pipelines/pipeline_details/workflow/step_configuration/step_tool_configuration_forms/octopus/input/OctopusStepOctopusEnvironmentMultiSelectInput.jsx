@@ -96,22 +96,22 @@ function OctopusStepOctopusEnvironmentMultiSelectInput({ fieldName, model, setMo
 
   // TODO: Remove from inline and put directly in return once tested and approved
   const getInput = () => {
-    if (featureFlagHideItemInProd() === false) {
-      return (
-        <OctopusEnvironmentListInput
-          octopusToolId={model?.getData("octopusToolId")}
-          spaceId={model?.getData("spaceId")}
-          fieldName={fieldName}
-          model={model}
-          setModel={setModel}
-          valueField={"id"}
-          textField={"name"}
-          disabled={disabled}
-          setDataFunction={setListDataFunction}
-          clearDataFunction={clearDataFunction}
-        />
-      );
-    }
+    // if (featureFlagHideItemInProd() === false) {
+    //   return (
+    //     <OctopusEnvironmentListInput
+    //       octopusToolId={model?.getData("octopusToolId")}
+    //       spaceId={model?.getData("spaceId")}
+    //       fieldName={fieldName}
+    //       model={model}
+    //       setModel={setModel}
+    //       valueField={"id"}
+    //       textField={"name"}
+    //       disabled={disabled}
+    //       setDataFunction={setListDataFunction}
+    //       clearDataFunction={clearDataFunction}
+    //     />
+    //   );
+    // }
 
     return (
       <OctopusEnvironmentMultiSelectInput
