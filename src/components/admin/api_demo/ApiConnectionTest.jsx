@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import { axiosApiServiceMultiGet } from "api/apiService";
-import LoadingDialog from "components/common/status_notifications/loading";
 import { AuthContext } from "contexts/AuthContext";
 import Modal from "components/common/modal/modal";
 import ReactJson from "react-json-view";
@@ -18,7 +17,7 @@ import ApiConnectionDemoSubNavigationBar from "components/admin/api_demo/ApiConn
 function ApiConnectionTest() {
   const {getAccessToken, getUserRecord} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [authData, setAuthData] = useState([]);
   const [user, setUser] = useState([]);
   const [analyticsProfile, setAnalyticsProfile] = useState([]);
@@ -33,7 +32,7 @@ function ApiConnectionTest() {
 
   const loadData = async () => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       await fetchData();
       await getUserTools();
     }
@@ -41,7 +40,7 @@ function ApiConnectionTest() {
       toastContext.showLoadingErrorDialog(error);
     }
     finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -115,20 +114,17 @@ function ApiConnectionTest() {
     }
   };
 
-  if (loading) {
-    return (<LoadingDialog size="lg"/>);
-  }
-
   return (
     <ScreenContainer
       breadcrumbDestination={"apiConnectionTest"}
+      isLoading={isLoading}
       navigationTabContainer={
         <ApiConnectionDemoSubNavigationBar
           activeTab={"apiConnectionTest"}
         />
       }
     >
-      <div className="px-2 pb-2">
+      <div className="m-3">
       <h6 style={{marginTop: 20}}>Response Package Breakdown:<br/>
         <small className="text-muted">This is confirmation the data is returned from the server and an example of
           breaking it down
