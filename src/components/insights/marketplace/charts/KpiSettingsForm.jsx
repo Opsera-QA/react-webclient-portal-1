@@ -301,6 +301,7 @@ function KpiSettingsForm({
     "salesforce-duration-by-stage",
     "build-deployment-statistics",
     "sdlc-duration-statistics",
+    "sonar-ratings-v2",
   ];
 
   const getKpiFilters = (filter) => {
