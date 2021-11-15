@@ -56,15 +56,23 @@ function ScreenContainer(
   };
 
   const getPageDescription = () => {
-    if (pageDescription == null) {
-      return <></>;
+    const breadcrumbPageDescription = breadcrumb?.pageDescription;
+
+    if (typeof pageDescription === "string" && pageDescription?.length > 0) {
+      return (
+        <div className="page-description px-3 py-2">
+          {pageDescription}
+        </div>
+      );
     }
 
-    return (
-      <div className="page-description px-3 py-2">
-        {pageDescription}
-      </div>
-    );
+    if (typeof breadcrumbPageDescription === "string" && breadcrumbPageDescription?.length > 0) {
+      return (
+        <div className="page-description px-3 py-2">
+          {breadcrumbPageDescription}
+        </div>
+      );
+    }
   };
 
   const getBody = () => {

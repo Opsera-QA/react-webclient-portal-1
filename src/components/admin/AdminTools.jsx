@@ -1,16 +1,15 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Row } from "react-bootstrap";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import BreadcrumbPageLink from "components/common/links/BreadcrumbPageLink";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import AdminToolsSubNavigationBar from "components/admin/AdminToolsSubNavigationBar";
+import AdminToolsPageLinkCards from "components/admin/AdminToolsPageLinkCards";
 
 function AdminTools() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const { getUserRecord, setAccessRoles, featureFlagHideItemInProd } = useContext(AuthContext);
+  const { getAccessRoleData } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -27,8 +26,7 @@ function AdminTools() {
   };
 
   const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
+    const userRoleAccess = await getAccessRoleData();
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
     }
@@ -47,23 +45,9 @@ function AdminTools() {
       pageDescription={"Listed below are administration tools for the platform."}
       navigationTabContainer={<AdminToolsSubNavigationBar activeTab={"adminTools"} />}
     >
-      <Row className="ml-3">
-        {/* <BreadcrumbPageLink breadcrumbDestination={"systemStatus"} /> */}
-        {/*<BreadcrumbPageLink breadcrumbDestination={"systemHealthCheck"} />*/}
-        <BreadcrumbPageLink breadcrumbDestination={"deprecatedReports"} />
-        <BreadcrumbPageLink breadcrumbDestination={"reportsRegistration"} />
-        <BreadcrumbPageLink breadcrumbDestination={"systemManagement"} />
-        <BreadcrumbPageLink breadcrumbDestination={"registeredUsersManagement"} />
-        <BreadcrumbPageLink breadcrumbDestination={"apiManagement"} />
-        <BreadcrumbPageLink breadcrumbDestination={"toolManagement"} />
-        <BreadcrumbPageLink breadcrumbDestination={"deleteTools"} />
-        <BreadcrumbPageLink breadcrumbDestination={"kpiManagement"} />
-        <BreadcrumbPageLink breadcrumbDestination={"pipelineStorageManagement"} />
-        <BreadcrumbPageLink breadcrumbDestination={"templateManagement"} />
-        <BreadcrumbPageLink breadcrumbDestination={"siteNotificationManager"} />
-        <BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationManagement"} />
-        <BreadcrumbPageLink breadcrumbDestination={"customerOnboarding"} />
-      </Row>
+      <AdminToolsPageLinkCards
+        accessRoleData={accessRoleData}
+      />
     </ScreenContainer>
   );
 }
