@@ -20,10 +20,10 @@ function OneLineGoalDataBlockBase({ goal, className, icon, }) {
     <div className={className}>
       <Row className={"w-100 h-100 text-center mx-auto font-inter-light-300"}>
         {getLeftDataBlockIcon()}
-        <Col xs={12} className={"mt-2 my-auto dark-gray-text-primary"}>
+        <Col xs={12} className={"mt-2 my-auto dark-gray-text-primary metric-block-content-text"}>
           {goal}
         </Col>
-        <Col xs={12} className="mt-auto light-gray-text-secondary">
+        <Col xs={12} className="mt-auto light-gray-text-secondary metric-block-footer-text">
           Goals
         </Col>
       </Row>

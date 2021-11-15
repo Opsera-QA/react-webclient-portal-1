@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// TODO: This should not be used
 function PercentGoalBlockBase({ title, subtitle, className, goal}) {
   const getTitle = () => {
     if (title) {

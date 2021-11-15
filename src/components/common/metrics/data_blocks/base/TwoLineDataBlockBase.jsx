@@ -18,7 +18,7 @@ function TwoLineDataBlockBase({ title, subtitle, className, icon,}) {
   const getTitle = () => {
     if (title) {
       return (
-        <div>
+        <div className={"font-inter-light-300 metric-block-content-text dark-gray-text-primary"}>
           {title}
         </div>
       );
@@ -28,7 +28,7 @@ function TwoLineDataBlockBase({ title, subtitle, className, icon,}) {
   const getSubtitle = () => {
     if (subtitle) {
       return (
-        <div>
+        <div className={"font-inter-light-300 light-gray-text-secondary metric-block-footer-text"}>
           {subtitle}
         </div>
       );
@@ -37,12 +37,12 @@ function TwoLineDataBlockBase({ title, subtitle, className, icon,}) {
 
   return (
     <div className={className}>
-      <Row className={"w-100 h-100 text-center mx-auto font-inter-light-300"}>
+      <Row className={"w-100 h-100 text-center mx-auto"}>
         {getLeftDataBlockIcon()}
-        <Col xs={12} className="mt-2 text-center data-block-focal-text dark-gray-text-primary">
+        <Col xs={12} className="mt-2 text-center">
           {getTitle()}
         </Col>
-        <Col xs={12} className="text-center light-gray-text-secondary">
+        <Col xs={12} className="text-center">
           {getSubtitle()}
         </Col>
       </Row>
