@@ -5,7 +5,6 @@ import PropertyInputContainer from "components/common/inputs/object/PropertyInpu
 import sfdcRuleMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/rules/sfdc-rule-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import IconBase from "components/common/icons/IconBase";
 import MetricStrategicCriteriaInputRow
   from "components/common/inputs/metric/strategic_criteria/MetricStrategicCriteriaInputRow";
 
@@ -105,9 +104,6 @@ function MetricStrategicCriteriaInput({model, setModel, fieldName, isLoading}) {
     return (
       <Row className="d-flex mx-1 py-1 justify-content-between">
         <Col xs={2} className={"pr-1 pl-0 my-auto"}>
-          Data Point
-        </Col>
-        <Col xs={2} className={"pr-1 pl-0 my-auto"}>
           Type
         </Col>
         <Col xs={2} className={"px-0 my-auto"}>
@@ -138,7 +134,7 @@ function MetricStrategicCriteriaInput({model, setModel, fieldName, isLoading}) {
       titleIcon={faFilter}
       field={null}
       isLoading={isLoading}
-      titleText={"File Selection Rule Filter"}
+      titleText={"Strategic Criteria"}
       errorMessage={errorMessage}
     >
       {getBody()}

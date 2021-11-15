@@ -54,10 +54,9 @@ function ToolIdentifierTableCardView(
     if (isTrue) {
       return (
         <TableCardView
-          filterDto={toolIdentifierFilterModel}
+          filterModel={toolIdentifierFilterModel}
           data={toolIdentifiers}
           isLoading={isLoading}
-          loadData={loadData}
           cardView={getCardView()}
           tableView={getTableView()}
         />
@@ -75,10 +74,9 @@ function ToolIdentifierTableCardView(
         </Col>
         <Col sm={10} className={"px-0"}>
           <TableCardView
-            filterDto={toolIdentifierFilterModel}
+            filterModel={toolIdentifierFilterModel}
             data={toolIdentifiers}
             isLoading={isLoading}
-            loadData={loadData}
             cardView={getCardView()}
             tableView={getTableView()}
           />
