@@ -29,7 +29,7 @@ function ThreeLineDataBlockBase({ middleText, bottomText, topText, className, ic
   const getMiddleText = () => {
     if (middleText) {
       return (
-        <div className={"dark-gray-text-primary font-inter-light-500 metric-block-content-text"}>
+        <div className={"dark-gray-text-primary font-inter-light-500"}>
           {middleText}
         </div>
       );

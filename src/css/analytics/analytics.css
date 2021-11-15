@@ -1,18 +1,3 @@
-/* Metric Text Styling */
-.metric-success-text {
-    color: #00897b;
-}
-
-.metric-danger-text {
-    color: #E57373;
-}
-
-.metric-warning-text {
-    color: #F1AD0F;
-}
-
-/* End Metric Text Styling */
-
 /* Data Block Styling */
 .data-block-focal-text {
     font-size: 2.43rem;
@@ -23,17 +8,9 @@
     display: inline-block;
 }
 
-.data-block-title-text {
-    font-weight: bold;
-}
-
 @media (min-width: 1250px) {
     .data-block-focal-text {
         font-size: 2.43rem;
-    }
-
-    .data-block-title-text {
-        font-size: .9rem;
     }
 }
 
@@ -41,29 +18,17 @@
     .data-block-focal-text {
         font-size: 2.43rem;
     }
-
-    .data-block-title-text {
-        font-size: .8rem;
-    }
 }
 
 @media (max-width: 1000px) {
     .data-block-focal-text {
         font-size: 2.25rem;
     }
-
-    .data-block-title-text {
-        font-size: .75rem;
-    }
 }
 
 @media (max-width: 800px) {
     .data-block-focal-text {
         font-size: 2rem;
-    }
-
-    .data-block-title-text {
-        font-size: .7rem;
     }
 }
 
