@@ -10,9 +10,12 @@ import ActionBarBackButton from "components/common/actions/buttons/ActionBarBack
 import ActionBarShowJsonButton from "components/common/actions/buttons/ActionBarShowJsonButton";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import TemplateDetailPanel from "components/admin/template_editor/template_detail_view/TemplateDetailPanel";
+import TemplateDetailPanel from "components/admin/template_editor/details/TemplateDetailPanel";
 import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import PipelineTemplateManagementSubNavigationBar
+  from "components/admin/template_editor/PipelineTemplateManagementSubNavigationBar";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 function TemplateDetailView() {
   const {templateId} = useParams();
@@ -115,6 +118,11 @@ function TemplateDetailView() {
       isLoading={isLoading}
       metadata={templateEditorMetadata}
       actionBar={getActionBar()}
+      navigationTabContainer={
+        <PipelineTemplateManagementSubNavigationBar
+          activeTab={"pipelineTemplateViewer"}
+        />
+      }
       detailPanel={<TemplateDetailPanel setTemplateData={setTemplateData} templateData={templateData} />}
     />
   );

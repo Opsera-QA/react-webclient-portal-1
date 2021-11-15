@@ -12,7 +12,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import PipelineTemplateRoleAccessInput
-  from "components/admin/template_editor/template_detail_view/inputs/PipelineTemplateRoleAccessInput";
+  from "components/admin/template_editor/details/inputs/PipelineTemplateRoleAccessInput";
 
 function TemplateSummaryPanel({ templateData, setActiveTab, setTemplateData }) {
   if (templateData == null) {

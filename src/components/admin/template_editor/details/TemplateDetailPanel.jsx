@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
-import TemplateSummaryPanel from "components/admin/template_editor/template_detail_view/TemplateSummaryPanel";
-import TemplateEditorPanel from "components/admin/template_editor/template_detail_view/TemplateEditorPanel";
+import TemplateSummaryPanel from "components/admin/template_editor/details/TemplateSummaryPanel";
+import TemplateEditorPanel from "components/admin/template_editor/details/TemplateEditorPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
 function TemplateDetailPanel({ templateData, setTemplateData }) {

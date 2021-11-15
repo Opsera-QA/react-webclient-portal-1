@@ -43,7 +43,7 @@ import AccountSettingsView from "./components/settings/AccountSettings";
 import LdapGroupManagement from "./components/settings/ldap_groups/LdapGroupManagement";
 import LdapGroupDetailView from "./components/settings/ldap_groups/details/LdapGroupDetailView";
 import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetailView";
-import TemplateDetailView from "./components/admin/template_editor/template_detail_view/TemplateDetailView";
+import TemplateDetailView from "./components/admin/template_editor/details/TemplateDetailView";
 import DataMappingManagement from "components/settings/data_mapping/DataMappingManagement";
 import ToolCategoryDetailView
   from "components/admin/tools/tool_category/tool_category_detail_view/ToolCategoryDetailView";
