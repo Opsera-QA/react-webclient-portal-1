@@ -8,6 +8,8 @@ import LdapOrganizationAccountsTable
   from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountsTable";
 import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import LdapOrganizationAccountManagementSubNavigationBar
+  from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagementSubNavigationBar";
 
 // TODO: If we ever support multiple administrators, we will need to remove the requirement to be an Opsera Administrator
 function LdapOrganizationAccountManagement() {
@@ -102,6 +104,11 @@ function LdapOrganizationAccountManagement() {
       isLoading={!accessRoleData}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       accessRoleData={accessRoleData}
+      navigationTabContainer={
+        <LdapOrganizationAccountManagementSubNavigationBar
+          activeTab={"organizationAccounts"}
+        />
+      }
     >
       <LdapOrganizationAccountsTable
         isLoading={isLoading}

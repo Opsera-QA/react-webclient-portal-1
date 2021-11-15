@@ -1,5 +1,4 @@
 import React from "react";
-import BreadcrumbPageLink from "components/common/links/BreadcrumbPageLink";
 import PropTypes from "prop-types";
 import ApiConnectionDemoPageLinkCard from "components/admin/api_demo/ApiConnectionDemoPageLinkCard";
 import KpiIdentifierManagementPageLinkCard from "components/admin/kpi_identifiers/KpiIdentifierManagementPageLinkCard";

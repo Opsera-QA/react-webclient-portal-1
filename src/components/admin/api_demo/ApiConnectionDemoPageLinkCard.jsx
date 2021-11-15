@@ -9,7 +9,7 @@ function ApiConnectionDemoPageLinkCard({accessRoleData}) {
 
   return (
     <BreadcrumbPageLinkCard
-      breadcrumbDestination={"apiManagement"}
+      breadcrumbDestination={"apiConnectionTest"}
     />
   );
 }

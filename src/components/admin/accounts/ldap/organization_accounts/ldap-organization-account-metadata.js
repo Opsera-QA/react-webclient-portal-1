@@ -5,7 +5,7 @@ export const ldapOrganizationAccountMetaData = {
     return `/admin/organization-accounts/${record.getData("orgDomain")}/details/`;
   },
   detailViewTitle: function (record) {
-    return `Organization Account Details [${record.getOriginalValue("name")}]`;
+    return `${record?.getOriginalValue("name")}`;
   },
   fields: [
     {
