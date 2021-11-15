@@ -8,41 +8,41 @@ function SalesforceDurationByStageOverviewDataBlockContainer({ data }) {
   let className = `p-2 dark-gray-text-primary`;
   return (
     <Row className="px-2">
-      <Col xl={2} lg={2} sm={4} className={"my-3"}>
+      <Col lg={4} md={6} className={"my-3"}>
         <DataBlockBoxContainer showBorder={true}>
-          <TwoLineScoreDataBlock className={className} score={data.total_success} subtitle={"Successful Builds"} />
+          <TwoLineScoreDataBlock className={className} score={data.total_success} subtitle={"Successful"} />
         </DataBlockBoxContainer>
       </Col>
-      <Col xl={2} lg={2} sm={4} className={"my-3"}>
-        <DataBlockBoxContainer showBorder={true}>
-          <TwoLineScoreDataBlock className={className} score={data.total_failed} subtitle={"Failed Builds"} />
-        </DataBlockBoxContainer>
-      </Col>
-      <Col xl={2} lg={2} sm={4} className={"my-3"}>
-        <DataBlockBoxContainer showBorder={true}>
-          <TwoLineScoreDataBlock className={className} score={data.mean_duration} subtitle={"Average Duration (hrs)"} />
-        </DataBlockBoxContainer>{" "}
-      </Col>
-      <Col xl={2} lg={2} sm={4} className={"my-3"}>
+      <Col lg={4} md={6} className={"my-3"}>
         <DataBlockBoxContainer showBorder={true}>
           <TwoLineScoreDataBlock className={className} score={data.total_duration} subtitle={"Total Duration (hrs)"} />
         </DataBlockBoxContainer>{" "}
       </Col>
-      <Col xl={2} lg={2} sm={4} className={"my-3"}>
-        <DataBlockBoxContainer showBorder={true}>
-          <TwoLineScoreDataBlock
-            className={className}
-            score={data.mean_time_to_resolve}
-            subtitle={"Average Time to Resolve (hrs)"}
-          />
-        </DataBlockBoxContainer>{" "}
-      </Col>
-      <Col xl={2} lg={2} sm={4} className={"my-3"}>
+      <Col lg={4} md={6} className={"my-3"}>
         <DataBlockBoxContainer showBorder={true}>
           <TwoLineScoreDataBlock
             className={className}
             score={data.total_time_to_resolve}
             subtitle={"Total Time to Resolve (hrs)"}
+          />
+        </DataBlockBoxContainer>{" "}
+      </Col>
+      <Col lg={4} md={6} className={"my-3"}>
+        <DataBlockBoxContainer showBorder={true}>
+          <TwoLineScoreDataBlock className={className} score={data.total_failed} subtitle={"Failed"} />
+        </DataBlockBoxContainer>
+      </Col>
+      <Col lg={4} md={6} className={"my-3"}>
+        <DataBlockBoxContainer showBorder={true}>
+          <TwoLineScoreDataBlock className={className} score={data.mean_duration} subtitle={"Average Duration (hrs)"} />
+        </DataBlockBoxContainer>{" "}
+      </Col>
+      <Col lg={4} md={6} className={"my-3"}>
+        <DataBlockBoxContainer showBorder={true}>
+          <TwoLineScoreDataBlock
+            className={className}
+            score={data.mean_time_to_resolve}
+            subtitle={"Average Time to Resolve (hrs)"}
           />
         </DataBlockBoxContainer>{" "}
       </Col>
