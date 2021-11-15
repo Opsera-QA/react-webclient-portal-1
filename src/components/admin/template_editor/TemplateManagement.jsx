@@ -6,6 +6,8 @@ import TemplateTable from "components/admin/template_editor/TemplateTable";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import PipelineTemplateManagementSubNavigationBar
+  from "components/admin/template_editor/PipelineTemplateManagementSubNavigationBar";
 
 function TemplateManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -81,6 +83,11 @@ function TemplateManagement() {
       isLoading={!accessRoleData}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       accessRoleData={accessRoleData}
+      navigationTabContainer={
+        <PipelineTemplateManagementSubNavigationBar
+          activeTab={"pipelineTemplateManagement"}
+        />
+      }
     >
       <TemplateTable data={templateList} isLoading={isLoading} loadData={loadData}/>
     </ScreenContainer>

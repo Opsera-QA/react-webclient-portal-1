@@ -2,10 +2,10 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faArrowLeft, faToolbox, faTools} from "@fortawesome/pro-light-svg-icons";
+import {faArrowLeft, faStream} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 
-function ToolManagementSubNavigationBar({activeTab}) {
+function PipelineTemplateManagementSubNavigationBar({activeTab}) {
   const history = useHistory();
 
   const handleTabClick = (tabSelection) => e => {
@@ -15,35 +15,22 @@ function ToolManagementSubNavigationBar({activeTab}) {
       case "adminTools":
         history.push(`/admin`);
         return;
-      case "categories":
-        history.push(`/admin/tools/categories`);
-        return;
-      case "identifiers":
-        history.push(`/admin/tools/identifiers`);
+      case "pipelineTemplateManagement":
+        history.push(`/admin/templates`);
         return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-      case "toolIdentifierViewer":
+      case "pipelineTemplateViewer":
         return (
           <NavigationTab
-            icon={faTools}
-            tabName={"toolIdentifierViewer"}
+            icon={faStream}
+            tabName={"pipelineTemplateViewer"}
             handleTabClick={handleTabClick}
-            activeTab={"toolIdentifierViewer"}
-            tabText={"Tool Identifier Viewer"}
-          />
-        );
-      case "toolCategoryViewer":
-        return (
-          <NavigationTab
-            icon={faToolbox}
-            tabName={"toolCategoryViewer"}
-            handleTabClick={handleTabClick}
-            activeTab={"toolCategoryViewer"}
-            tabText={"Tool Category Viewer"}
+            activeTab={activeTab}
+            tabText={"Pipeline Template Viewer"}
           />
         );
       default:
@@ -61,25 +48,19 @@ function ToolManagementSubNavigationBar({activeTab}) {
         tabText={"Back to Admin Tools"}
       />
       <NavigationTab
-        icon={faToolbox}
-        tabName={"categories"}
+        icon={faStream}
+        tabName={"pipelineTemplateManagement"}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
-        tabText={"Categories"}/>
-      <NavigationTab
-        icon={faTools}
-        tabName={"identifiers"}
-        handleTabClick={handleTabClick}
-        activeTab={activeTab}
-        tabText={"Tool Identifiers"}
+        tabText={"Pipeline Template Manager"}
       />
       {getActiveViewerTab()}
     </NavigationTabContainer>
   );
 }
 
-ToolManagementSubNavigationBar.propTypes = {
+PipelineTemplateManagementSubNavigationBar.propTypes = {
   activeTab: PropTypes.string,
 };
 
-export default ToolManagementSubNavigationBar;
+export default PipelineTemplateManagementSubNavigationBar;
