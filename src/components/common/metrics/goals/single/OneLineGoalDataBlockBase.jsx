@@ -18,12 +18,12 @@ function OneLineGoalDataBlockBase({ goal, className, icon, }) {
 
   return (
     <div className={className}>
-      <Row className={"w-100 h-100 text-center mx-auto"}>
+      <Row className={"w-100 h-100 text-center mx-auto font-inter-light-300"}>
         {getLeftDataBlockIcon()}
-        <Col xs={12} className={"my-auto"}>
+        <Col xs={12} className={"mt-2 my-auto dark-gray-text-primary"}>
           {goal}
         </Col>
-        <Col xs={12} className="mt-auto text-muted">
+        <Col xs={12} className="mt-auto light-gray-text-secondary">
           Goals
         </Col>
       </Row>

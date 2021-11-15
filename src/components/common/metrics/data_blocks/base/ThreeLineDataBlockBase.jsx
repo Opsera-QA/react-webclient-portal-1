@@ -48,15 +48,15 @@ function ThreeLineDataBlockBase({ middleText, bottomText, topText, className, ic
 
   return (
     <div className={className}>
-      <Row className={"w-100 h-100 mx-auto text-center"}>
+      <Row className={"w-100 h-100 mx-auto text-center font-inter-light-300"}>
         {getLeftDataBlockIcon()}
-        <Col xs={12} className={"w-100 text-center text-muted data-block-title-text"}>
+        <Col xs={12} className={"mt-2 w-100 text-center light-gray-text-secondary"}>
           {getTopText()}
         </Col>
-        <Col xs={12} className={"my-auto text-center data-block-focal-text"}>
+        <Col xs={12} className={"my-auto text-center data-block-focal-text dark-gray-text-primary"}>
           {getMiddleText()}
         </Col>
-        <Col xs={12} className={"mt-auto text-center text-muted"}>
+        <Col xs={12} className={"mt-auto text-center light-gray-text-secondary"}>
           {getSubtitle()}
         </Col>
       </Row>

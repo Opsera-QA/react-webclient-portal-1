@@ -37,12 +37,12 @@ function TwoLineDataBlockBase({ title, subtitle, className, icon,}) {
 
   return (
     <div className={className}>
-      <Row className={"w-100 h-100 text-center mx-auto"}>
+      <Row className={"w-100 h-100 text-center mx-auto font-inter-light-300"}>
         {getLeftDataBlockIcon()}
-        <Col xs={12} className="text-center data-block-focal-text">
+        <Col xs={12} className="mt-2 text-center data-block-focal-text dark-gray-text-primary">
           {getTitle()}
         </Col>
-        <Col xs={12} className="text-center text-muted">
+        <Col xs={12} className="text-center light-gray-text-secondary">
           {getSubtitle()}
         </Col>
       </Row>
