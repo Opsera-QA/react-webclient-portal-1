@@ -92,9 +92,6 @@ function TaskManagement() {
   return (
     <ScreenContainer
       breadcrumbDestination={"taskManagement"}
-      pageDescription={`
-        Create and Manage Opsera Related Tasks.
-      `}
       navigationTabContainer={<TasksSubNavigationBar currentTab={"tasks"}/>}
     >
       <TaskViews
