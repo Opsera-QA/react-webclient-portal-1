@@ -301,6 +301,7 @@ function KpiSettingsForm({
     "salesforce-duration-by-stage",
     "sdlc-duration-statistics",
     "build-deployment-statistics",
+    "sonar-ratings-v2",
   ];
 
   const getKpiFilters = (filter) => {
@@ -674,14 +675,10 @@ function KpiSettingsForm({
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "goals")
       ].value = kpiGoalsFilter.getData("value");
     }
-    if (
+    if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "notes")]) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "notes")
-        ]
-    ) {
-      newKpiSettings.getData("filters")[
-        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "notes")
-        ].value = kpiNotesFilter.getData("value");
+      ].value = kpiNotesFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
