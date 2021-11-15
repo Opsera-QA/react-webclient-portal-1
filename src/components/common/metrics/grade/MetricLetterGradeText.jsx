@@ -19,7 +19,7 @@ function MetricLetterGradeText({ letterGrade }) {
       case LETTER_GRADES.C:
         return <div className="metric-block-content-text yellow">C</div>;
       case LETTER_GRADES.D:
-        return <div className="metric-block-content-textdanger-red">D</div>;
+        return <div className="metric-block-content-text danger-red">D</div>;
       case LETTER_GRADES.E:
         return <div className="metric-block-content-text danger-red">E</div>;
       default:
