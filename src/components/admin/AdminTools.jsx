@@ -6,6 +6,8 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import AdminToolsSubNavigationBar from "components/admin/AdminToolsSubNavigationBar";
 import AdminToolsPageLinkCards from "components/admin/AdminToolsPageLinkCards";
+import AdministrationToolsHelpDocumentation
+  from "../common/help/documentation/admin_tools/AdministrationToolsHelpDocumentation";
 
 function AdminTools() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -36,6 +38,10 @@ function AdminTools() {
     return (<LoadingDialog size="sm"/>);
   }
 
+  const getHelpComponent = () => {
+    return (<AdministrationToolsHelpDocumentation/>);
+  };
+
   return (
     <ScreenContainer
       breadcrumbDestination={"admin"}
@@ -43,6 +49,7 @@ function AdminTools() {
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       accessRoleData={accessRoleData}
       pageDescription={"Listed below are administration tools for the platform."}
+      helpComponent={getHelpComponent()}
       navigationTabContainer={<AdminToolsSubNavigationBar activeTab={"adminTools"} />}
     >
       <AdminToolsPageLinkCards
