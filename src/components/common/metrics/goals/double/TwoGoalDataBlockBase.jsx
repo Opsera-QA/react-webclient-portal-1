@@ -19,7 +19,7 @@ function TwoGoalDataBlockBase({ topGoal, bottomGoal, className, icon, }) {
   const getTopText = () => {
     if (topGoal) {
       return (
-        <div>
+        <div className={"dark-gray-text-primary"}>
           {topGoal}
         </div>
       );
@@ -30,7 +30,7 @@ function TwoGoalDataBlockBase({ topGoal, bottomGoal, className, icon, }) {
   const getMiddleText = () => {
     if (bottomGoal) {
       return (
-        <div>
+        <div className={"dark-gray-text-primary"}>
           {bottomGoal}
         </div>
       );
@@ -41,11 +41,11 @@ function TwoGoalDataBlockBase({ topGoal, bottomGoal, className, icon, }) {
     <div className={className}>
       <Row className={"w-100 h-100 text-center mx-auto font-inter-light-300"}>
         {getLeftDataBlockIcon()}
-        <Col xs={12} className={"mt-2 w-100 mt-auto dark-gray-text-primary"}>
+        <Col xs={12} className={"mt-2 w-100 mt-auto"}>
           {getTopText()}
           {getMiddleText()}
         </Col>
-        <Col xs={12} className="mt-auto light-gray-text-secondary">
+        <Col xs={12} className="mt-auto light-gray-text-secondary metric-block-footer-text">
           Goals
         </Col>
       </Row>

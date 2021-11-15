@@ -18,7 +18,7 @@ function ThreeLineDataBlockBase({ middleText, bottomText, topText, className, ic
   const getTopText = () => {
     if (topText) {
       return (
-        <div>
+        <div className={"light-gray-text-secondary font-inter-light-300 metric-block-header-text"}>
           {topText}
         </div>
       );
@@ -29,7 +29,7 @@ function ThreeLineDataBlockBase({ middleText, bottomText, topText, className, ic
   const getMiddleText = () => {
     if (middleText) {
       return (
-        <div>
+        <div className={"dark-gray-text-primary font-inter-light-500 metric-block-content-text"}>
           {middleText}
         </div>
       );
@@ -39,7 +39,7 @@ function ThreeLineDataBlockBase({ middleText, bottomText, topText, className, ic
   const getSubtitle = () => {
     if (bottomText) {
       return (
-        <div>
+        <div className={"light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>
           {bottomText}
         </div>
       );
@@ -48,15 +48,15 @@ function ThreeLineDataBlockBase({ middleText, bottomText, topText, className, ic
 
   return (
     <div className={className}>
-      <Row className={"w-100 h-100 mx-auto text-center font-inter-light-300"}>
+      <Row className={"w-100 h-100 mx-auto text-center"}>
         {getLeftDataBlockIcon()}
-        <Col xs={12} className={"mt-2 w-100 text-center light-gray-text-secondary"}>
+        <Col xs={12} className={"mt-2 w-100 text-center"}>
           {getTopText()}
         </Col>
-        <Col xs={12} className={"my-auto text-center data-block-focal-text dark-gray-text-primary"}>
+        <Col xs={12} className={"my-auto text-center"}>
           {getMiddleText()}
         </Col>
-        <Col xs={12} className={"mt-auto text-center light-gray-text-secondary"}>
+        <Col xs={12} className={"mt-auto text-center"}>
           {getSubtitle()}
         </Col>
       </Row>

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import DataBlockContainer from "components/common/metrics/data_blocks/horizontal/DataBlockContainer";
 
+// TODO: THis should not be used.
 function ContainedThreeLineDataBlockBase({ middleText, bottomText, titleText, className}) {
   const getMiddleText = () => {
     if (middleText) {
