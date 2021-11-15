@@ -97,10 +97,9 @@ function ToolTableCardView(
   const getTableCardView = () => {
     return (
       <TableCardView
-        filterDto={toolFilterDto}
+        filterModel={toolFilterDto}
         data={tools}
         isLoading={isLoading}
-        loadData={loadData}
         cardView={getCardView()}
         tableView={getTableView()}
       />

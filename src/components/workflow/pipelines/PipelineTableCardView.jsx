@@ -79,10 +79,9 @@ function PipelineTableCardView({ pipelines, isLoading, pipelineFilterModel, setP
         </Col>
         <Col sm={10} className={"px-0"}>
           <TableCardView
-            filterDto={pipelineFilterModel}
+            filterModel={pipelineFilterModel}
             data={pipelines}
             isLoading={isLoading}
-            loadData={loadData}
             cardView={getCardView()}
             tableView={getTableView()}
           />
