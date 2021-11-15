@@ -6,7 +6,7 @@ const templateEditorMetadata = {
     return `/admin/templates/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `Template Details [${record?.getOriginalValue("name")}]`;
+    return `${record?.getOriginalValue("name")}`;
   },
   fields: [
     {

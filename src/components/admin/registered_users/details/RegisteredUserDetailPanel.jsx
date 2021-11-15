@@ -10,7 +10,7 @@ import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import CustomTab from "components/common/tabs/CustomTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import LdapSettingsPanel
-  from "components/admin/registered_users/registered_user_details/ldap_settings/LdapSettingsPanel";
+  from "components/admin/registered_users/details/ldap_settings/LdapSettingsPanel";
 
 function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData, setAnalyticsProfileData, loadData }) {
   const [activeTab, setActiveTab] = useState("summary");

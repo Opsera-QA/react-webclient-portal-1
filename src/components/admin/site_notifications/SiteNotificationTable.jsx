@@ -2,7 +2,7 @@ import React, {useMemo, useContext } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import siteNotificationMetadata from "components/admin/site_notifications/siteNotificationMetadata";
+import siteNotificationMetadata from "components/admin/site_notifications/siteNotification.metadata";
 import {
   getLimitedTableTextColumn,
   getTableBooleanIconColumn,

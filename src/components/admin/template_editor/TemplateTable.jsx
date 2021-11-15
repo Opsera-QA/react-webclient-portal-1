@@ -9,7 +9,7 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import NewTemplateOverlay from "components/admin/template_editor/NewTemplateOverlay";
-import templateEditorMetadata from "components/admin/template_editor/template-metadata";
+import templateEditorMetadata from "components/admin/template_editor/pipelineTemplate.metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faStream} from "@fortawesome/pro-light-svg-icons";

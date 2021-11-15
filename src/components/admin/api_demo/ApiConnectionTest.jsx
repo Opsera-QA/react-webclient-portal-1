@@ -7,7 +7,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
 import Model from "core/data_model/model";
 import registeredUserToolsMetadata
-  from "components/admin/registered_users/registered_user_details/tools/registered-user-tools-form-fields";
+  from "components/admin/registered_users/details/tools/registered-user-tools-form-fields";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import JsonField from "components/common/fields/json/JsonField";

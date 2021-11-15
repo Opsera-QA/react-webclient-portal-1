@@ -1,9 +1,9 @@
 import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import siteNotificationMetadata from "components/admin/site_notifications/siteNotificationMetadata";
+import siteNotificationMetadata from "components/admin/site_notifications/siteNotification.metadata";
 import SiteNotificationEditorPanel
-  from "components/admin/site_notifications/site_notification_detail_view/SiteNotificationEditorPanel";
+  from "components/admin/site_notifications/details/SiteNotificationEditorPanel";
   import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 

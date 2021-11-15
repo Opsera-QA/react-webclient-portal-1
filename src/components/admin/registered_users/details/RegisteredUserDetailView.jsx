@@ -5,12 +5,15 @@ import { AuthContext } from "contexts/AuthContext";
 import analyticsProfileMetadata from "./analytics_profile/analytics-profile-form-fields";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
-import registeredUsersMetadata from "components/admin/registered_users/registered-users-metadata";
+import registeredUsersMetadata from "components/admin/registered_users/registeredUsers.metadata";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarShowDetailsButton from "components/common/actions/buttons/ActionBarShowDetailsButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import Model from "core/data_model/model";
+import RegisteredUsersManagementSubNavigationBar
+  from "components/admin/registered_users/RegisteredUsersManagementSubNavigationBar";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 function RegisteredUserDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -95,6 +98,11 @@ function RegisteredUserDetailView() {
       accessDenied={!accessRoleData?.OpseraAdministrator}
       isLoading={isLoading}
       actionBar={getActionBar()}
+      navigationTabContainer={
+        <RegisteredUsersManagementSubNavigationBar
+          activeTab={"registeredUserViewer"}
+        />
+      }
       detailPanel={
         <RegisteredUserDetailPanel
           setAnalyticsProfileData={setAnalyticsProfileData}

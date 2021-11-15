@@ -8,6 +8,8 @@ import { meetsRequirements, ROLE_LEVELS } from "components/common/helpers/role-h
 import axios from "axios";
 import PipelineStorageActions from "components/admin/pipeline_storage/pipeline-storage-actions";
 import PipelineStorageTable from "components/admin/pipeline_storage/PipelineStorageTable";
+import PipelineStorageManagementSubNavigationBar
+  from "components/admin/pipeline_storage/PipelineStorageManagementSubNavigationBar";
 
 function PipelineStorageManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -92,6 +94,11 @@ function PipelineStorageManagement() {
       isLoading={!accessRoleData || !pipelineStorageMetadata}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
+      navigationTabContainer={
+        <PipelineStorageManagementSubNavigationBar
+          activeTab={"pipelineStorageManagement"}
+        />
+      }
     >
       <PipelineStorageTable
         loadData={loadData}

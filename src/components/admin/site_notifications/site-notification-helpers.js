@@ -1,5 +1,5 @@
 import Model from "core/data_model/model";
-import siteNotificationMetadata from "components/admin/site_notifications/siteNotificationMetadata";
+import siteNotificationMetadata from "components/admin/site_notifications/siteNotification.metadata";
 
 const siteNotificationHelpers = {};
 

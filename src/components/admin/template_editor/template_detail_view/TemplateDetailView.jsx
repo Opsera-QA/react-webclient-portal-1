@@ -4,7 +4,7 @@ import Model from "core/data_model/model";
 import templateActions from "components/admin/template_editor/template-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import templateEditorMetadata from "components/admin/template_editor/template-metadata";
+import templateEditorMetadata from "components/admin/template_editor/pipelineTemplate.metadata";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarShowJsonButton from "components/common/actions/buttons/ActionBarShowJsonButton";
