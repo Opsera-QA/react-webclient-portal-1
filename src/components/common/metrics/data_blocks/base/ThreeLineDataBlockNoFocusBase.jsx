@@ -31,9 +31,15 @@ function ThreeLineDataBlockNoFocusBase({
   return (
     <div className={className}>
       <div className={"text-center h-100"}>
-        <div className="w-100 text-muted data-block-title-text">{getTopText()}</div>
-        <div className="my-auto data-block-focal-text">{getMiddleText()}</div>
-        <div className="mt-auto text-muted">{getSubtitle()}</div>
+        <div className="w-100 light-gray-text-secondary">
+          {getTopText()}
+        </div>
+        <div className="my-auto data-block-focal-text dark-gray-text-primary">
+          {getMiddleText()}
+        </div>
+        <div className="mt-auto light-gray-text-secondary">
+          {getSubtitle()}
+        </div>
       </div>
     </div>
   );

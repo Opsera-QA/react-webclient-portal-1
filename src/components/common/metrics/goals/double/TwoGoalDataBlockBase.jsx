@@ -39,13 +39,13 @@ function TwoGoalDataBlockBase({ topGoal, bottomGoal, className, icon, }) {
 
   return (
     <div className={className}>
-      <Row className={"w-100 h-100 text-center mx-auto"}>
+      <Row className={"w-100 h-100 text-center mx-auto font-inter-light-300"}>
         {getLeftDataBlockIcon()}
-        <Col xs={12} className={"w-100 mt-auto"}>
+        <Col xs={12} className={"mt-2 w-100 mt-auto dark-gray-text-primary"}>
           {getTopText()}
           {getMiddleText()}
         </Col>
-        <Col xs={12} className="mt-auto text-muted">
+        <Col xs={12} className="mt-auto light-gray-text-secondary">
           Goals
         </Col>
       </Row>

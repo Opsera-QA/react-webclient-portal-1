@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGradeText";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
-import LegendDataBlock from "components/common/metrics/data_blocks/legend/LegendDataBlock";
 import PercentageDataBlock from "components/common/metrics/percentage/PercentageDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
 import Col from "react-bootstrap/Col";
