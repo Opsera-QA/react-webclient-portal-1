@@ -20,6 +20,23 @@ primary analytics font*/
     font-weight: 300;
 }
 
+.font-inter-light-500 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+}
+
+.metric-block-header-text {
+    font-size: 1rem;
+}
+
+.metric-block-content-text {
+    font-size: 2rem;
+}
+
+.metric-block-footer-text {
+    font-size: .7rem;
+}
+
 .chart-header-name-text {
     font-family: 'Inter', sans-serif;
     font-weight: 100;
