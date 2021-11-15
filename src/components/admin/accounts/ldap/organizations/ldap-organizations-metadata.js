@@ -5,7 +5,7 @@ export const ldapOrganizationMetaData = {
     return `/admin/organizations/details/${record.getData("name")}`;
   },
   detailViewTitle: function(record) {
-    return `Organization Details [${record.getOriginalValue("name")}]`;
+    return `${record?.getOriginalValue("name")}`;
   },
   fields: [
     {

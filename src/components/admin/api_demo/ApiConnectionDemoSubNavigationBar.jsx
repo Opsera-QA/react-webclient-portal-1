@@ -2,10 +2,10 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faArrowLeft, faSitemap, faUsers} from "@fortawesome/pro-light-svg-icons";
+import {faArrowLeft, faLink} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 
-function LdapOrganizationAccountManagementSubNavigationBar({activeTab}) {
+function ApiConnectionDemoSubNavigationBar({activeTab}) {
   const history = useHistory();
 
   const handleTabClick = (tabSelection) => e => {
@@ -15,26 +15,9 @@ function LdapOrganizationAccountManagementSubNavigationBar({activeTab}) {
       case "adminTools":
         history.push(`/admin`);
         return;
-      case "organizations":
-        history.push(`/admin/organizations`);
+      case "apiConnectionTest":
+        history.push(`/admin/demo/api`);
         return;
-    }
-  };
-
-  const getActiveViewerTab = () => {
-    switch (activeTab) {
-      case "organizationAccountViewer":
-        return (
-          <NavigationTab
-            icon={faUsers}
-            tabName={"organizationAccountViewer"}
-            handleTabClick={handleTabClick}
-            activeTab={activeTab}
-            tabText={"Organization Account Viewer"}
-          />
-        );
-      default:
-        return null;
     }
   };
 
@@ -48,19 +31,18 @@ function LdapOrganizationAccountManagementSubNavigationBar({activeTab}) {
         tabText={"Back to Admin Tools"}
       />
       <NavigationTab
-        icon={faSitemap}
-        tabName={"organizations"}
+        icon={faLink}
+        tabName={"apiConnectionTest"}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
-        tabText={"Organizations"}
+        tabText={"API Connection Test"}
       />
-      {getActiveViewerTab()}
     </NavigationTabContainer>
   );
 }
 
-LdapOrganizationAccountManagementSubNavigationBar.propTypes = {
+ApiConnectionDemoSubNavigationBar.propTypes = {
   activeTab: PropTypes.string,
 };
 
-export default LdapOrganizationAccountManagementSubNavigationBar;
+export default ApiConnectionDemoSubNavigationBar;

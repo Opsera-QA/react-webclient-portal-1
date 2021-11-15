@@ -12,6 +12,9 @@ import LdapOrganizationAccountDetailPanel
   from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountDetailPanel";
 import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import LdapOrganizationAccountManagementSubNavigationBar
+  from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagementSubNavigationBar";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 function LdapOrganizationAccountDetailView() {
   const { organizationDomain } = useParams();
@@ -104,6 +107,11 @@ function LdapOrganizationAccountDetailView() {
       dataObject={ldapOrganizationAccountData}
       isLoading={isLoading}
       actionBar={getActionBar()}
+      navigationTabContainer={
+        <LdapOrganizationAccountManagementSubNavigationBar
+          activeTab={"organizationAccountViewer"}
+        />
+      }
       detailPanel={
         <LdapOrganizationAccountDetailPanel
           isMounted={isMounted}

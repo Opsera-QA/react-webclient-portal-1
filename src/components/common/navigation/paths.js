@@ -38,11 +38,11 @@ paths.ldapOrganizationDetailView = paths.admin + "/organizations";
 paths.ldapOrganizationAccountManagement = paths.admin + "/organization-accounts";
 paths.ldapOrganizationDetailView = paths.admin + "/organization-accounts";
 
-paths.customerOnboarding = "accounts/create";
+paths.customerOnboarding = "admin/accounts/create";
 
 paths.registeredUsersManagement = paths.admin + "/registered-users";
 
-paths.apiManagement = paths.admin + "/demo/api";
+paths.apiConnectionTest = paths.admin + "/demo/api";
 
 paths.kpiManagement = paths.admin + "/kpis";
 paths.kpiDetailView = paths.kpiManagement;

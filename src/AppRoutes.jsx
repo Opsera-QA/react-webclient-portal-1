@@ -36,7 +36,7 @@ import LdapOrganizationsView from "./components/admin/accounts/ldap/organization
 import LdapOrganizationDetailView
   from "./components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationDetailView";
 import LdapCustomerOnboardView from "./components/admin/accounts/ldap/customer_onboard/LdapCustomerOnboard";
-import ApiConnectionDemo from "components/admin/api_demo/ApiConnectionDemo";
+import ApiConnectionTest from "components/admin/api_demo/ApiConnectionTest";
 import LdapUserManagement from "./components/settings/ldap_users/LdapUserManagement";
 import LdapUserDetailView from "./components/settings/ldap_users/users_detail_view/LdapUserDetailView";
 import AccountSettingsView from "./components/settings/AccountSettings";
@@ -275,7 +275,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
                        component={LdapOrganizationAccountManagement} />
           <SecureRoute path="/admin/organization-accounts/:organizationDomain/details" exact
                        component={LdapOrganizationAccountDetailView} />
-          <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView} />
+          <SecureRoute path="/admin/accounts/create" exact component={LdapCustomerOnboardView} />
 
           <SecureRoute path="/pipeline" component={Pipeline} />
           <SecureRoute path="/workflow/catalog" exact component={PipelineCatalogLibrary} />
@@ -312,7 +312,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/settings/data_mapping/user_mapping/details/:usersMappingId" exact
                        component={UsersMappingDetailView} />
 
-          <SecureRoute path="/admin/demo/api" component={ApiConnectionDemo} />
+          <SecureRoute path="/admin/demo/api" component={ApiConnectionTest} />
 
           {/*{getFreeTrialRoutes()}*/}
         </div>

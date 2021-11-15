@@ -13,8 +13,9 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import JsonField from "components/common/fields/json/JsonField";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import ApiConnectionDemoSubNavigationBar from "components/admin/api_demo/ApiConnectionDemoSubNavigationBar";
 
-function ApiConnectionDemo() {
+function ApiConnectionTest() {
   const {getAccessToken, getUserRecord} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [loading, setLoading] = useState(false);
@@ -120,10 +121,12 @@ function ApiConnectionDemo() {
 
   return (
     <ScreenContainer
-      breadcrumbDestination={"apiManagement"}
-      pageDescription={`
-        API Test w/ Okta Authentication Token and Axios.js
-      `}
+      breadcrumbDestination={"apiConnectionTest"}
+      navigationTabContainer={
+        <ApiConnectionDemoSubNavigationBar
+          activeTab={"apiConnectionTest"}
+        />
+      }
     >
       <div className="px-2 pb-2">
       <h6 style={{marginTop: 20}}>Response Package Breakdown:<br/>
@@ -199,4 +202,4 @@ function ApiConnectionDemo() {
 }
 
 
-export default ApiConnectionDemo;
+export default ApiConnectionTest;

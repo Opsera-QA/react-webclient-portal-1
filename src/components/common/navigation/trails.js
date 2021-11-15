@@ -238,14 +238,15 @@ const breadcrumbs = {
     linkText: "Registered User Details",
     icon: faUserCircle
   },
-  apiManagement: {
+
+  apiConnectionTest: {
     parent: "admin",
-    name: "apiManagement",
-    path: paths.apiManagement,
-    title: "API Management",
-    linkText: "API Management",
+    name: "apiConnectionTest",
+    path: paths.apiConnectionTest,
+    title: "API Connection Test",
+    linkText: "API Connection Test",
     icon: faLink,
-    pageDescription: "Run an API test against the server using the Okta Authentication Token and Axios.js",
+    pageDescription: "Run an API connection test against the server using the Okta Authentication Token and Axios.js",
   },
 
   // Account settings
