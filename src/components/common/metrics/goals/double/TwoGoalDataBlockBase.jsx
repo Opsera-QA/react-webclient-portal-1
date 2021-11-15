@@ -19,7 +19,7 @@ function TwoGoalDataBlockBase({ topGoal, bottomGoal, className, icon, }) {
   const getTopText = () => {
     if (topGoal) {
       return (
-        <div className={"dark-gray-text-primary metric-block-content-text"}>
+        <div className={"dark-gray-text-primary"}>
           {topGoal}
         </div>
       );
@@ -30,7 +30,7 @@ function TwoGoalDataBlockBase({ topGoal, bottomGoal, className, icon, }) {
   const getMiddleText = () => {
     if (bottomGoal) {
       return (
-        <div className={"dark-gray-text-primary metric-block-content-text"}>
+        <div className={"dark-gray-text-primary"}>
           {bottomGoal}
         </div>
       );
