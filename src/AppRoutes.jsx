@@ -23,7 +23,7 @@ import Update from "./components/update/Update";
 import AdminTools from "./components/admin/AdminTools";
 import RegisteredUsersManagement from "./components/admin/registered_users/RegisteredUsersManagement";
 import RegisteredUserDetailView
-  from "./components/admin/registered_users/registered_user_details/RegisteredUserDetailView";
+  from "./components/admin/registered_users/details/RegisteredUserDetailView";
 import ManageSystems from "./components/admin/manage_systems/ManageSystems";
 import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
 import Registration from "./components/landing/Registration";
@@ -65,7 +65,7 @@ import InsightsSynopsis from "components/insights/summary/InsightsSynopsis";
 import AnalyticsProfileSettings from "./components/settings/analytics/analyticsProfileSettings";
 import SiteNotificationManagement from "./components/admin/site_notifications/SiteNotificationManagement";
 import SiteNotificationDetailView
-  from "./components/admin/site_notifications/site_notification_detail_view/SiteNotificationDetailView";
+  from "./components/admin/site_notifications/details/SiteNotificationDetailView";
 import Notifications from "./components/notifications/Notifications";
 import ToolsUsedInPipelineReport from "./components/reports/tools/pipelines/ToolsUsedInPipelineReport";
 import Insights from "./components/insights/dashboards/Insights";
@@ -98,7 +98,7 @@ import Blueprint from "components/blueprint/Blueprint";
 import DeleteTools from "components/settings/delete_tools/DeleteTools";
 import PipelineStorageManagement from "components/admin/pipeline_storage/PipelineStorageManagement";
 import PipelineStorageDetailView
-  from "components/admin/pipeline_storage/pipeline_storagei_detail_view/PipelineStorageDetailView";
+  from "components/admin/pipeline_storage/details/PipelineStorageDetailView";
 import ParametersInventory from "components/inventory/parameters/ParametersInventory";
 import ToolInventory from "components/inventory/tools/ToolInventory";
 import ScriptsInventory from "components/inventory/scripts/ScriptsInventory";

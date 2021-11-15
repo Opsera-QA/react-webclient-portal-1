@@ -7,10 +7,10 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import userActions from "components/user/user-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import LdapSettingsPanel
-  from "components/admin/registered_users/registered_user_details/ldap_settings/LdapSettingsPanel";
+  from "components/admin/registered_users/details/ldap_settings/LdapSettingsPanel";
 import Model from "core/data_model/model";
-import registeredUsersMetadata from "components/admin/registered_users/registered-users-metadata";
-import RegisteredUserSummary from "components/admin/registered_users/registered_user_details/RegisteredUserSummary";
+import registeredUsersMetadata from "components/admin/registered_users/registeredUsers.metadata";
+import RegisteredUserSummary from "components/admin/registered_users/details/RegisteredUserSummary";
 import AccessRoleField from "components/common/fields/access/AccessRoleField";
 import axios from "axios";
 

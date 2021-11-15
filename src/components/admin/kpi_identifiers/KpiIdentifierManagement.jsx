@@ -90,9 +90,6 @@ function KpiIdentifierManagement() {
       isLoading={!accessRoleData}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
-      pageDescription={`Listed below are registered charts for the Analytics platform. 
-        Each chart or KPI corresponds to a data point in the analytics platform.
-      `}
       navigationTabContainer={<KpiIdentifierManagementSubNavigationBar activeTab={"kpiIdentifierManagement"} />}
     >
       <KpiIdentifierTable

@@ -5,7 +5,7 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import PipelineStorageSummaryPanel
-  from "components/admin/pipeline_storage/pipeline_storagei_detail_view/PipelineStorageSummaryPanel";
+  from "components/admin/pipeline_storage/details/PipelineStorageSummaryPanel";
 
 function PipelineStorageDetailPanel({ pipelineStorageData }) {
   const [activeTab, setActiveTab] = useState("summary");
