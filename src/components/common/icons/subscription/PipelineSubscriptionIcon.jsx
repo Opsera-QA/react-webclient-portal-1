@@ -21,11 +21,13 @@ function PipelineSubscriptionIcon({ pipelineId, showText, className }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (featureFlagHideItemInProd() === false && featureFlagHideItemInTest() === false) {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
