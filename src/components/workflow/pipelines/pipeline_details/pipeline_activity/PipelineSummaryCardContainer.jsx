@@ -16,7 +16,7 @@ function PipelineSummaryCardContainer({ children, isLoading, pipelineData }) {
       <div className="d-flex justify-content-between w-100">
         <div><span>{pipelineData.getData("name")}</span></div>
         <div className="d-flex ml-auto">
-          <PipelineSubscriptionIcon pipelineModel={pipelineData} className={"mr-1"}/>
+          <PipelineSubscriptionIcon pipelineId={pipelineData?._id} className={"mr-1"}/>
           <PipelineTypesField dataObject={pipelineData}/>
         </div>
       </div>
