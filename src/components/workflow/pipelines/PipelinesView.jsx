@@ -147,7 +147,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   };
 
   const addPipeline = () => {
-    history.push(`/workflow/catalog`);
+    history.push(`/workflow/catalog/library`);
   };
 
   const getView = () => {
