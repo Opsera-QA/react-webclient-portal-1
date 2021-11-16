@@ -106,7 +106,7 @@ function PipelineDetailView() {
     }
 
     if (tabSelection === "catalog") {
-      history.push(`/workflow/catalog`);
+      history.push(`/workflow/catalog/library`);
       return;
     }
 

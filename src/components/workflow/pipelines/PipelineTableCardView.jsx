@@ -38,7 +38,7 @@ function PipelineTableCardView({ pipelines, isLoading, pipelineFilterModel, setP
   };
 
   const addPipeline = () => {
-    history.push(`/workflow/catalog`);
+    history.push(`/workflow/catalog/library`);
   };
 
   const getCardView = () => {

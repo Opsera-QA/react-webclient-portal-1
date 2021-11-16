@@ -278,7 +278,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/admin/accounts/create" exact component={LdapCustomerOnboardView} />
 
           <SecureRoute path="/pipeline" component={Pipeline} />
-          <SecureRoute path="/workflow/catalog" exact component={PipelineCatalogLibrary} />
+          <SecureRoute path="/workflow/catalog/library" exact component={PipelineCatalogLibrary} />
           <SecureRoute path="/workflow/:tab?" exact component={Pipelines} />
           <SecureRoute path="/workflow/details/:id/:tab?" exact component={PipelineDetailView} />
 
