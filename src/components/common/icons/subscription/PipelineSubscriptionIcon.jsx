@@ -4,6 +4,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import SubscriptionIcon from "components/common/icons/subscription/SubscriptionIcon";
 import pipelineActions from "components/workflow/pipeline-actions";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
 function PipelineSubscriptionIcon({ pipelineId, showText, className }) {
   const { getAccessToken, featureFlagHideItemInProd, featureFlagHideItemInTest } = useContext(AuthContext);
@@ -21,7 +22,7 @@ function PipelineSubscriptionIcon({ pipelineId, showText, className }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    if (featureFlagHideItemInProd() === false && featureFlagHideItemInTest() === false) {
+    if (featureFlagHideItemInProd() === false && featureFlagHideItemInTest() === false && isMongoDbId(pipelineId) === true) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
