@@ -2,26 +2,20 @@ import React, { useEffect, useContext, useState, useRef } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import Model from "core/data_model/model";
+import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
-import {
-  faExternalLink,
-  faTable,
-} from "@fortawesome/pro-light-svg-icons";
+import { faExternalLink, faTable } from "@fortawesome/pro-light-svg-icons";
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import {
-  getTimeDisplay
-} from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
-import SonarRatingsMaintainabilityOverviewDataBlockContainer
-  from "components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityOverviewDataBlockContainer";
-import SonarRatingsMaintainabilityActionableInsightTable
-  from "components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityActionableInsightTable";
+import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
+import SonarRatingsMaintainabilityOverviewDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityOverviewDataBlockContainer";
+import SonarRatingsMaintainabilityActionableInsightTable from "components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityActionableInsightTable";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function SonarRatingsMaintainabilityActionableInsightOverlay() {
+function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [filterModel, setFilterModel] = useState(
     new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
@@ -71,12 +65,14 @@ function SonarRatingsMaintainabilityActionableInsightOverlay() {
   const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     try {
       setIsLoading(true);
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "sonarRatingsCodeSmellsActionableInsights",
-        undefined,
-        undefined,
+        kpiConfiguration,
+        dashboardTags,
         filterDto,
         undefined,
         undefined,
@@ -122,7 +118,9 @@ function SonarRatingsMaintainabilityActionableInsightOverlay() {
 
     return (
       <Row className="px-2">
-        <Col className="footer-records text-right">Total Remediation Efforts : {mins === 0 ? "0 minutes" : display}</Col>
+        <Col className="footer-records text-right">
+          Total Remediation Efforts : {mins === 0 ? "0 minutes" : display}
+        </Col>
       </Row>
     );
   };
@@ -149,9 +147,7 @@ function SonarRatingsMaintainabilityActionableInsightOverlay() {
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
-        <SonarRatingsMaintainabilityOverviewDataBlockContainer
-          sonarMetric={issueTypeData}
-        />
+        <SonarRatingsMaintainabilityOverviewDataBlockContainer sonarMetric={issueTypeData} />
         <SonarRatingsMaintainabilityActionableInsightTable
           isLoading={isLoading}
           maintainabilityData={maintainibilityData}
@@ -164,5 +160,10 @@ function SonarRatingsMaintainabilityActionableInsightOverlay() {
     </FullScreenCenterOverlayContainer>
   );
 }
+
+SonarRatingsMaintainabilityActionableInsightOverlay.propTypes = {
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+};
 
 export default SonarRatingsMaintainabilityActionableInsightOverlay;
