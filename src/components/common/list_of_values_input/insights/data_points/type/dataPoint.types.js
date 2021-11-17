@@ -10,8 +10,8 @@ export const DATA_POINT_TYPE_LABELS = {
   LETTER_GRADE: "Letter Grade",
 };
 
-export const getTaskTypeLabel = (taskType) => {
-  switch (taskType) {
+export const getDataPointTypeLabel = (dataPointType) => {
+  switch (dataPointType) {
     case DATA_POINT_TYPES.PERCENTAGE:
       return DATA_POINT_TYPE_LABELS.PERCENTAGE;
     case DATA_POINT_TYPES.NUMBER:
@@ -19,6 +19,6 @@ export const getTaskTypeLabel = (taskType) => {
     case DATA_POINT_TYPES.LETTER_GRADE:
       return DATA_POINT_TYPE_LABELS.LETTER_GRADE;
     default:
-      return taskType;
+      return dataPointType;
   }
 };

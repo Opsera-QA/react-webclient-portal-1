@@ -25,7 +25,7 @@ kpiDataPointActions.updateKpiDataPointV2 = async (getAccessToken, cancelTokenSou
 };
 
 kpiDataPointActions.deleteKpiDataPointV2 = async (getAccessToken, cancelTokenSource, kpiDataPointModel, kpiId) => {
-  const apiUrl = `/analytics/kpi/${kpiId}/data-points/${kpiDataPointModel.getData("_id")}/delete`;
+  const apiUrl = `/analytics/kpi/${kpiId}/data-points/${kpiDataPointModel.getData("_id")}`;
   return baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

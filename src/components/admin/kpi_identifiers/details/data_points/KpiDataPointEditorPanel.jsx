@@ -49,7 +49,7 @@ function KpiDataPointEditorPanel({ dataPointModel, closeEditorPanel }) {
 
   return (
     <VanityEditorPanelContainer
-      model={dataPointModel}
+      model={kpiDataPointModel}
       setModel={setKpiDataPointModel}
       isLoading={isLoading}
       handleClose={closeEditorPanel}

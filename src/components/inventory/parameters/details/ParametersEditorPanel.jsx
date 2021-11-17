@@ -73,7 +73,6 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
       model={parameterModel}
       setModel={setParameterModel}
       handleClose={handleClose}
-      extraButtons={<DeleteModelButtonWithConfirmation model={parameterModel} />}
     >
       <Row>
         <Col md={12} lg={parameterModel?.isNew() ? 4 : 5}>

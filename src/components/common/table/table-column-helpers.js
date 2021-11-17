@@ -93,6 +93,17 @@ export const getLimitedTableTextColumn = (field, maxLength, className) => {
   };
 };
 
+export const getFormattedLabelWithFunctionColumnDefinition = (field, formatFunction, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    Cell: function formatValue(row) {
+      return formatFunction(row?.value);
+    },
+    class: className ? className : "no-wrap-inline"
+  };
+};
+
 export const getStringifiedArrayColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
@@ -110,6 +121,7 @@ export const getStringifiedArrayColumn = (field, className) => {
   };
 };
 
+// TODO: Replace with getFormattedLabelWithFunctionColumnDefinition
 export const getTaskTypeColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
