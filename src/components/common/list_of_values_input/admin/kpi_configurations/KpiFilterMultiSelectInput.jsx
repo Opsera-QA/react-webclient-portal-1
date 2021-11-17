@@ -3,29 +3,29 @@ import PropTypes from "prop-types";
 import kpiLovHelpers from "./kpi-lov-helpers";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
-function KpiFiltersInput({ fieldName, dataObject, setDataObject, disabled }) {
+function KpiFilterMultiSelectInput({ fieldName, dataObject, setDataObject, disabled }) {
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={kpiLovHelpers.filters}
-      valueField="id"
-      textField="label"
+      valueField={"id"}
+      textField={"label"}
       disabled={disabled}
     />
   );
 }
 
-KpiFiltersInput.propTypes = {
+KpiFilterMultiSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-KpiFiltersInput.defaultProps = {
+KpiFilterMultiSelectInput.defaultProps = {
   fieldName: "filters"
 };
 
-export default KpiFiltersInput;
+export default KpiFilterMultiSelectInput;
