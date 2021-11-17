@@ -15,7 +15,7 @@ import KpiToolsInput from "components/common/list_of_values_input/admin/kpi_conf
 import KpiFiltersInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiFiltersInput";
 import KpiCategoriesInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiCategoriesInput";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
-import NotificationConditionTriggerSelectInput from "components/common/list_of_values_input/notifications/NotificationConditionTriggerSelectInput";
+import MetricDataPointTypeSelectInput from "components/common/list_of_values_input/insights/data_points/type/MetricDataPointTypeSelectInput";
 import axios from "axios";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
@@ -85,7 +85,7 @@ function KpiIdentifierEditorPanel({ kpiData, handleClose }) {
           <KpiChartTypeInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
         </Col>
         <Col lg={6}>
-          <NotificationConditionTriggerSelectInput
+          <MetricDataPointTypeSelectInput
             dataObject={kpiDataDto}
             setDataObject={setKpiDataDto}
             fieldName={"yAxis"}

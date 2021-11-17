@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
-import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
-import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import KpiIdentifierSummaryPanel from "components/admin/kpi_identifiers/details/KpiIdentifierSummaryPanel";
 import KpiIdentifierEditorPanel from "components/admin/kpi_identifiers/details/KpiIdentifierEditorPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
+import CustomTab from "components/common/tabs/CustomTab";
+import {faBezierCurve} from "@fortawesome/pro-light-svg-icons";
+import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
+import KpiDataPointsPanel from "components/admin/kpi_identifiers/details/data_points/KpiDataPointsPanel";
 
 function KpiIdentifierDetailPanel({ kpiData, setKpiData }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -31,14 +33,17 @@ function KpiIdentifierDetailPanel({ kpiData, setKpiData }) {
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <SummaryTab
+        <SummaryToggleTab
           handleTabClick={handleTabClick}
           activeTab={activeTab}
         />
-        <SettingsTab
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-        />
+        {/*<CustomTab*/}
+        {/*  handleTabClick={handleTabClick}*/}
+        {/*  activeTab={activeTab}*/}
+        {/*  icon={faBezierCurve}*/}
+        {/*  tabName={"dataPoints"}*/}
+        {/*  tabText={"Data Points"}*/}
+        {/*/>*/}
       </CustomTabContainer>
     );
   };
@@ -58,6 +63,12 @@ function KpiIdentifierDetailPanel({ kpiData, setKpiData }) {
             setKpiData={setKpiData}
             kpiData={kpiData}
             handleClose={toggleSummaryPanel}
+          />
+        );
+      case "dataPoints":
+        return (
+          <KpiDataPointsPanel
+            kpiId={kpiData?.getData("_id")}
           />
         );
       default:

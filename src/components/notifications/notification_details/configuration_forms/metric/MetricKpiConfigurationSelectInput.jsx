@@ -8,8 +8,8 @@ import Col from "react-bootstrap/Col";
 import NumberPickerInputBase from "components/common/inputs/number/picker/base/NumberPickerInputBase";
 import NotificationConditionSelectInput
   from "components/common/list_of_values_input/notifications/NotificationConditionSelectInput";
-import  NotificationConditionTriggerSelectInput
-  from "components/common/list_of_values_input/notifications/NotificationConditionTriggerSelectInput";
+import  MetricDataPointTypeSelectInput
+  from "components/common/list_of_values_input/insights/data_points/type/MetricDataPointTypeSelectInput";
 import MetricNotificationConfigurationCardContainer
   from "components/notifications/notification_details/configuration_forms/metric/MetricNotificationConfigurationCardContainer";
 
@@ -34,7 +34,7 @@ function MetricKpiConfigurationSelectInput({ fieldName, dataObject, setDataObjec
     // console.log(value["dataPoint"])
     const newDataObject = {...dataObject};
     newDataObject.setData(fieldName, value["name"]);
-    newDataObject.setData("dataPoint", value["dataPoint"]);
+    newDataObject.setData("dataPoint", value["identifier"]);
     newDataObject.setData("conditionIf", value["type"]);
     setDataObject({...newDataObject});
   };
@@ -81,7 +81,11 @@ function MetricKpiConfigurationSelectInput({ fieldName, dataObject, setDataObjec
             }
             <Row>
               <Col lg={4}>
-                <NotificationConditionTriggerSelectInput dataObject={dataObject} setDataObject={setDataObject} />
+                <MetricDataPointTypeSelectInput
+                  model={dataObject}
+                  setModel={setDataObject}
+                  fieldName={"conditionIf"}
+                />
               </Col>
               <Col lg={4}>
                 <NotificationConditionSelectInput dataObject={dataObject} setDataObject={setDataObject}/>
