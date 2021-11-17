@@ -62,7 +62,6 @@ function ToolEditorPanel({ toolData, handleClose }) {
     <VanityEditorPanelContainer
       model={toolDataDto}
       setModel={setToolDataDto}
-      setRecordDto={setToolDataDto}
       isLoading={isLoading}
       showBooleanToggle={true}
       handleClose={handleClose}
