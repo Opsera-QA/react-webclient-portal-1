@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
-import kpiLovHelpers from "components/common/list_of_values_input/admin/kpi_configurations/kpi-lov-helpers";
+import {KPI_CATEGORY_SELECT_OPTIONS} from "components/common/list_of_values_input/admin/kpi_configurations/categories/kpiCategory.types";
 
 function KpiCategoryFilter({ fieldName, filterModel, setFilterModel, setDataFunction, inline, className}) {
   if (filterModel == null) {
@@ -16,7 +16,7 @@ function KpiCategoryFilter({ fieldName, filterModel, setFilterModel, setDataFunc
       placeholderText={"Filter By Category"}
       setDataObject={setFilterModel}
       dataObject={filterModel}
-      selectOptions={kpiLovHelpers.categories}
+      selectOptions={KPI_CATEGORY_SELECT_OPTIONS}
       setDataFunction={setDataFunction}
     />
   );

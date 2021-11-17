@@ -1,23 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
-import kpiLovHelpers from "./kpi-lov-helpers";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
+import {KPI_CATEGORY_SELECT_OPTIONS} from "components/common/list_of_values_input/admin/kpi_configurations/categories/kpiCategory.types";
 
-function KpiCategoriesInput({ fieldName, dataObject, setDataObject, disabled }) {
+function KpiCategoryMultiSelectInput({ fieldName, dataObject, setDataObject, disabled }) {
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      selectOptions={kpiLovHelpers.categories}
-      valueField="value"
-      textField="text"
+      selectOptions={KPI_CATEGORY_SELECT_OPTIONS}
+      valueField={"value"}
+      textField={"text"}
       disabled={disabled}
     />
   );
 }
 
-KpiCategoriesInput.propTypes = {
+KpiCategoryMultiSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
@@ -27,8 +27,8 @@ KpiCategoriesInput.propTypes = {
   ]),
 };
 
-KpiCategoriesInput.defaultProps = {
+KpiCategoryMultiSelectInput.defaultProps = {
   fieldName: "category"
 };
 
-export default KpiCategoriesInput;
+export default KpiCategoryMultiSelectInput;

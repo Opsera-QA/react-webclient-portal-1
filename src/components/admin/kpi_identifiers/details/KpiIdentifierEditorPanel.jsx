@@ -13,7 +13,7 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import KpiChartTypeInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiChartTypeInput";
 import KpiToolsInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiToolsInput";
 import KpiFilterMultiSelectInput from "components/common/list_of_values_input/admin/kpi_configurations/filters/KpiFilterMultiSelectInput";
-import KpiCategoriesInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiCategoriesInput";
+import KpiCategoryMultiSelectInput from "components/common/list_of_values_input/admin/kpi_configurations/categories/KpiCategoryMultiSelectInput";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import MetricDataPointTypeSelectInput from "components/common/list_of_values_input/insights/data_points/type/MetricDataPointTypeSelectInput";
 import axios from "axios";
@@ -102,7 +102,7 @@ function KpiIdentifierEditorPanel({ kpiData, handleClose }) {
           />
         </Col>
         <Col lg={12}>
-          <KpiCategoriesInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
+          <KpiCategoryMultiSelectInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
         </Col>
         <Col lg={12}>
           <WebsitePathInput dataObject={kpiDataDto} fieldName={"thumbnailPath"} setDataObject={setKpiDataDto} />
