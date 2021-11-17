@@ -1,0 +1,79 @@
+export const KPI_CATEGORY_TYPES = {
+  PIPELINE: "pipeline",
+  SECURITY: "security",
+  QUALITY: "quality",
+  SOFTWARE_DEVELOPMENT: "software-development",
+  SOFTWARE_TESTING: "software-testing",
+  SOURCE_CODE: "source-code",
+  OPERATIONS: "operations",
+  PLANNING: "planning",
+};
+
+export const KPI_CATEGORY_TYPE_LABELS = {
+  PIPELINE: "Pipeline",
+  SECURITY: "Security",
+  QUALITY: "Quality",
+  SOFTWARE_DEVELOPMENT: "Software Development",
+  SOFTWARE_TESTING: "Software Testing",
+  SOURCE_CODE: "Source Code",
+  OPERATIONS: "Operations",
+  PLANNING: "Planning",
+};
+
+export const getKpiCategoryTypeLabel = (kpiCategoryType) => {
+  switch (kpiCategoryType) {
+    case KPI_CATEGORY_TYPES.PIPELINE:
+      return KPI_CATEGORY_TYPE_LABELS.PIPELINE;
+    case KPI_CATEGORY_TYPES.SECURITY:
+      return KPI_CATEGORY_TYPE_LABELS.SECURITY;
+    case KPI_CATEGORY_TYPES.QUALITY:
+      return KPI_CATEGORY_TYPE_LABELS.QUALITY;
+    case KPI_CATEGORY_TYPES.SOFTWARE_DEVELOPMENT:
+      return KPI_CATEGORY_TYPE_LABELS.SOFTWARE_DEVELOPMENT;
+    case KPI_CATEGORY_TYPES.SOFTWARE_TESTING:
+      return KPI_CATEGORY_TYPE_LABELS.SOFTWARE_TESTING;
+    case KPI_CATEGORY_TYPES.SOURCE_CODE:
+      return KPI_CATEGORY_TYPE_LABELS.SOURCE_CODE;
+    case KPI_CATEGORY_TYPES.OPERATIONS:
+      return KPI_CATEGORY_TYPE_LABELS.OPERATIONS;
+    case KPI_CATEGORY_TYPES.PLANNING:
+      return KPI_CATEGORY_TYPE_LABELS.PLANNING;
+    default:
+      return kpiCategoryType;
+  }
+};
+
+export const KPI_CATEGORY_SELECT_OPTIONS = [
+  {
+    value: KPI_CATEGORY_TYPES.PIPELINE,
+    text: KPI_CATEGORY_TYPE_LABELS.PIPELINE,
+  },
+  {
+    value: KPI_CATEGORY_TYPES.SECURITY,
+    text: KPI_CATEGORY_TYPE_LABELS.SECURITY,
+  },
+  {
+    value: KPI_CATEGORY_TYPES.QUALITY,
+    text: KPI_CATEGORY_TYPE_LABELS.QUALITY,
+  },
+  {
+    value: KPI_CATEGORY_TYPES.SOFTWARE_DEVELOPMENT,
+    text: KPI_CATEGORY_TYPE_LABELS.SOFTWARE_DEVELOPMENT,
+  },
+  {
+    value: KPI_CATEGORY_TYPES.SOFTWARE_TESTING,
+    text: KPI_CATEGORY_TYPE_LABELS.SOFTWARE_TESTING,
+  },
+  {
+    value: KPI_CATEGORY_TYPES.SOURCE_CODE,
+    text: KPI_CATEGORY_TYPE_LABELS.SOURCE_CODE,
+  },
+  {
+    value: KPI_CATEGORY_TYPES.OPERATIONS,
+    text: KPI_CATEGORY_TYPE_LABELS.OPERATIONS,
+  },
+  {
+    value: KPI_CATEGORY_TYPES.PLANNING,
+    text: KPI_CATEGORY_TYPE_LABELS.PLANNING,
+  },
+];

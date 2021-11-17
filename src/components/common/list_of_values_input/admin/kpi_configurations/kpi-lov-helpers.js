@@ -13,19 +13,4 @@ kpiLovHelpers.getChartTypeById = (id) => {
   return kpiLovHelpers.chartTypes.find((chartType) => chartType.id === id);
 };
 
-kpiLovHelpers.categories = [
-  { value: "pipeline", text: "Pipeline" },
-  { value: "security", text: "Security" },
-  { value: "quality", text: "Quality" },
-  { value: "software-development", text: "Software Development" },
-  { value: "software-testing", text: "Software Testing" },
-  { value: "source-code", text: "Source Code" },
-  { value: "operations", text: "Operations" },
-  { value: "planning", text: "Planning" },
-];
-
-kpiLovHelpers.getCategoryById = (id) => {
-  return kpiLovHelpers.categories.find((filter) => filter.value === id);
-};
-
 export default kpiLovHelpers;
