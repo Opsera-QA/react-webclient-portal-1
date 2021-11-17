@@ -8,12 +8,28 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function MultiSelectInputBase(
   {
-    fieldName, dataObject, setDataObject, groupBy,
-    disabled, selectOptions, valueField, textField,
-    placeholderText, setDataFunction, busy, showClearValueButton,
-    clearDataFunction, className, showLabel, requireClearDataConfirmation,
-    clearDataDetails, linkTooltipText, detailViewLink, infoOverlay,
+    fieldName,
+    dataObject,
+    setDataObject,
+    groupBy,
+    disabled,
+    selectOptions,
+    valueField,
+    textField,
+    placeholderText,
+    setDataFunction,
+    busy,
+    showClearValueButton,
+    clearDataFunction,
+    className,
+    showLabel,
+    requireClearDataConfirmation,
+    clearDataDetails,
+    linkTooltipText,
+    detailViewLink,
+    infoOverlay,
     formatDataFunction,
+    parseValueFunction,
   }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -37,7 +53,7 @@ function MultiSelectInputBase(
 
   const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
-    let parsedValues = parseValues(valueArray);
+    const parsedValues = parseValues(valueArray);
 
     if (parsedValues.length > field.maxItems) {
       setErrorMessage("You have reached the maximum allowed number of values. Please remove one to add another.");
@@ -45,9 +61,9 @@ function MultiSelectInputBase(
     }
 
     newDataObject.setData(fieldName, parsedValues);
-    let errors = newDataObject.isFieldValid(field.id);
+    const errors = newDataObject.isFieldValid(field.id);
 
-    if ( errors != null && errors !== true) {
+    if (Array.isArray(errors) && errors.length > 0) {
       setErrorMessage(errors[0]);
     }
     else {
@@ -67,7 +83,12 @@ function MultiSelectInputBase(
   };
 
   const getClearDataFunction = () => {
-    if (dataObject.getData(field.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
+    if (
+         dataObject.getData(field.id) !== ""
+      && !disabled
+      && showClearValueButton !== false
+      && (setDataFunction == null || clearDataFunction))
+    {
       return (clearValue);
     }
   };
@@ -80,8 +101,12 @@ function MultiSelectInputBase(
     let parsedValues = [];
 
     if (valueArray != null && valueArray.length > 0) {
-      valueArray.map(value => {
-        if (typeof value === "string") {
+      valueArray.map((value) => {
+        if (parseValueFunction) {
+          const parsedValue = parseValueFunction(value);
+          parsedValues.push(parsedValue);
+        }
+        else if (typeof value === "string") {
           parsedValues.push(value);
         }
         else {
@@ -167,10 +192,7 @@ MultiSelectInputBase.propTypes = {
   detailViewLink: PropTypes.string,
   infoOverlay: PropTypes.any,
   formatDataFunction: PropTypes.func,
-};
-
-MultiSelectInputBase.defaultProps = {
-  showClearValueButton: true
+  parseValueFunction: PropTypes.func,
 };
 
 export default MultiSelectInputBase;

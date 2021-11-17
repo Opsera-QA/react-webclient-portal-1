@@ -12,7 +12,7 @@ import KpiActions from "components/admin/kpi_identifiers/kpi.actions";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import KpiChartTypeInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiChartTypeInput";
 import KpiToolsInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiToolsInput";
-import KpiFilterMultiSelectInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiFilterMultiSelectInput";
+import KpiFilterMultiSelectInput from "components/common/list_of_values_input/admin/kpi_configurations/filters/KpiFilterMultiSelectInput";
 import KpiCategoriesInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiCategoriesInput";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import MetricDataPointTypeSelectInput from "components/common/list_of_values_input/insights/data_points/type/MetricDataPointTypeSelectInput";
@@ -95,7 +95,11 @@ function KpiIdentifierEditorPanel({ kpiData, handleClose }) {
           <KpiToolsInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
         </Col>
         <Col lg={12}>
-          <KpiFilterMultiSelectInput dataObject={kpiDataDto} fieldName={"supported_filters"} setDataObject={setKpiDataDto} />
+          <KpiFilterMultiSelectInput
+            fieldName={"supported_filters"}
+            model={kpiDataDto}
+            setModel={setKpiDataDto}
+          />
         </Col>
         <Col lg={12}>
           <KpiCategoriesInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
