@@ -7,17 +7,17 @@ import Loading from "components/common/status_notifications/loading";
 import WebsitePathInput from "components/common/inputs/text/WebsitePathInput";
 import JsonInput from "components/common/inputs/object/JsonInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import KpiActions from "components/admin/kpi_identifiers/kpi.actions";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import KpiChartTypeInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiChartTypeInput";
-import KpiToolsInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiToolsInput";
+import KpiChartTypeSelectInput from "components/common/list_of_values_input/admin/kpi_configurations/chart_type/KpiChartTypeSelectInput";
 import KpiFilterMultiSelectInput from "components/common/list_of_values_input/admin/kpi_configurations/filters/KpiFilterMultiSelectInput";
 import KpiCategoryMultiSelectInput from "components/common/list_of_values_input/admin/kpi_configurations/categories/KpiCategoryMultiSelectInput";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import MetricDataPointTypeSelectInput from "components/common/list_of_values_input/insights/data_points/type/MetricDataPointTypeSelectInput";
 import axios from "axios";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import PipelineUsageToolMultiSelectInput
+  from "components/common/list_of_values_input/workflow/pipelines/PipelineUsageToolMultiSelectInput";
 
 function KpiIdentifierEditorPanel({ kpiData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -76,23 +76,38 @@ function KpiIdentifierEditorPanel({ kpiData, handleClose }) {
     >
       <Row>
         <Col lg={6}>
-          <TextInputBase dataObject={kpiDataDto} fieldName={"name"} setDataObject={setKpiDataDto} />
+          <TextInputBase
+            fieldName={"name"}
+            dataObject={kpiDataDto}
+            setDataObject={setKpiDataDto}
+          />
         </Col>
         <Col lg={6}>
-          <TextInputBase dataObject={kpiDataDto} fieldName={"identifier"} setDataObject={setKpiDataDto} />
+          <TextInputBase
+            fieldName={"identifier"}
+            dataObject={kpiDataDto}
+            setDataObject={setKpiDataDto}
+          />
         </Col>
         <Col lg={6}>
-          <KpiChartTypeInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
+          <KpiChartTypeSelectInput
+            model={kpiDataDto}
+            setModel={setKpiDataDto}
+          />
         </Col>
         <Col lg={6}>
           <MetricDataPointTypeSelectInput
+            fieldName={"yAxis"}
             model={kpiDataDto}
             setModel={setKpiDataDto}
-            fieldName={"yAxis"}
           />
         </Col>
         <Col lg={12}>
-          <KpiToolsInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
+          <PipelineUsageToolMultiSelectInput
+            fieldName={"tools"}
+            model={kpiDataDto}
+            setModel={setKpiDataDto}
+          />
         </Col>
         <Col lg={12}>
           <KpiFilterMultiSelectInput
@@ -102,21 +117,57 @@ function KpiIdentifierEditorPanel({ kpiData, handleClose }) {
           />
         </Col>
         <Col lg={12}>
-          <KpiCategoryMultiSelectInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
+          <KpiCategoryMultiSelectInput
+            dataObject={kpiDataDto}
+            setDataObject={setKpiDataDto}
+          />
         </Col>
         <Col lg={12}>
-          <WebsitePathInput dataObject={kpiDataDto} fieldName={"thumbnailPath"} setDataObject={setKpiDataDto} />
+          <WebsitePathInput
+            fieldName={"thumbnailPath"}
+            dataObject={kpiDataDto}
+            setDataObject={setKpiDataDto}
+          />
         </Col>
         <Col lg={6}>
-          <JsonInput model={kpiDataDto} fieldName={"settings"} setModel={setKpiDataDto} />
+          <JsonInput
+            fieldName={"settings"}
+            model={kpiDataDto}
+            setModel={setKpiDataDto}
+          />
         </Col>
-        <Col lg={6}>
-          <JsonInput model={kpiDataDto} fieldName={"dataPoints"} setModel={setKpiDataDto} />
+        <Col lg={6} />
+        <Col lg={6} className={"mt-2"}>
+          <JsonInput
+            fieldName={"dataPoints"}
+            model={kpiDataDto}
+            setModel={setKpiDataDto}
+          />
+          <div className={"m-2 text-muted"}>
+            The Data Point JSON input is temporarily left in to make it easy to remove old data point data that cause issues saving KPIs with the new data point flow.
+            Once all stacks are updated, this will be removed. Please use the Data Point tab if adding or editing data points in the short term.
+          </div>
         </Col>
         <Col lg={12}>
-          <TextAreaInput dataObject={kpiDataDto} fieldName={"description"} setDataObject={setKpiDataDto} />
-          <BooleanToggleInput setDataObject={setKpiDataDto} fieldName={"policySupport"} dataObject={kpiData} />
-          <BooleanToggleInput setDataObject={setKpiDataDto} fieldName={"active"} dataObject={kpiData} />
+          <TextAreaInput
+            fieldName={"description"}
+            dataObject={kpiDataDto}
+            setDataObject={setKpiDataDto}
+          />
+        </Col>
+        <Col lg={12}>
+          <BooleanToggleInput
+            fieldName={"policySupport"}
+            setDataObject={setKpiDataDto}
+            dataObject={kpiData}
+          />
+        </Col>
+        <Col lg={12}>
+          <BooleanToggleInput
+            fieldName={"active"}
+            setDataObject={setKpiDataDto}
+            dataObject={kpiData}
+          />
         </Col>
       </Row>
     </EditorPanelContainer>

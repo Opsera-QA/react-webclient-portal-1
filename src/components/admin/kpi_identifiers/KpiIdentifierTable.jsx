@@ -4,7 +4,7 @@ import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import kpiIdentifierMetadata from "components/admin/kpi_identifiers/kpiIdentifier.metadata";
 import {
-  getLimitedTableTextColumn,
+  getLimitedTableTextColumn, getTableArrayCountColumn,
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn,
@@ -26,6 +26,7 @@ function KpiIdentifierTable({ data, loadData, isLoading, kpiFilterDto, setKpiFil
       getTableTextColumn(getField(fields, "name")),
       getLimitedTableTextColumn(getField(fields, "description"), 100),
       getTableBooleanIconColumn(getField(fields, "active")),
+      getTableArrayCountColumn(getField(fields, "dataPoints")),
       getTableDateColumn(getField(fields, "createdAt")),
     ],
     []

@@ -6,8 +6,8 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import pipelineActions from "components/workflow/pipeline-actions";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import toolManagementActions from "components/admin/tools/tool-management-actions";
 
 function PipelineUsageToolSelectInput({ placeholderText, fieldName, dataObject, setDataObject, setDataFunction, disabled, textField, valueField}) {
   const toastContext = useContext(DialogToastContext);
@@ -53,10 +53,11 @@ function PipelineUsageToolSelectInput({ placeholderText, fieldName, dataObject, 
   };
 
   const loadTools = async (cancelSource = cancelTokenSource) => {
-    const response = await pipelineActions.getPipelineUsageToolListV2(getAccessToken, cancelSource);
+    const response = await toolManagementActions.getPipelineUsageToolIdentifiersV2(getAccessToken, cancelSource);
+    const toolIdentifiers  = response?.data;
 
-    if (response?.data != null) {
-      setPipelineUsageTools(response?.data);
+    if (isMounted?.current === true && Array.isArray(toolIdentifiers)) {
+      setPipelineUsageTools(toolIdentifiers);
     }
   };
 

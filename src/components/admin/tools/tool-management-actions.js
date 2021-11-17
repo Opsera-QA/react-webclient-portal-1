@@ -53,11 +53,20 @@ toolManagementActions.getToolIdentifiersV2 = async (getAccessToken, cancelTokenS
   const urlParams = {
     params: {
       status: status,
-      registry: enabledInToolRegistry
+      registry: enabledInToolRegistry,
     },
   };
   const apiUrl = `/registry/tools`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+toolManagementActions.getPipelineUsageToolIdentifiersV2 = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/registry/tools`;
+  const params = {
+    status: "active",
+    usage: "pipeline",
+  };
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, params);
 };
 
 toolManagementActions.createToolIdentifier = async (toolIdentifierDataDto, getAccessToken) => {

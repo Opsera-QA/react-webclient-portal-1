@@ -1,26 +1,55 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/free-solid-svg-icons";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import pipelineActions from "components/workflow/pipeline-actions";
+import axios from "axios";
+import toolManagementActions from "components/admin/tools/tool-management-actions";
 
-function PipelineUsageToolMultiSelectInput({ placeholderText, valueField, textField, fieldName, dataObject, setDataObject, setDataFunction, disabled}) {
+function PipelineUsageToolMultiSelectInput(
+  {
+    placeholderText,
+    valueField,
+    textField,
+    fieldName,
+    model,
+    setModel,
+    setDataFunction,
+    disabled,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadTools();
+      await loadTools(cancelSource);
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -30,11 +59,12 @@ function PipelineUsageToolMultiSelectInput({ placeholderText, valueField, textFi
     }
   };
 
-  const loadTools = async () => {
-    const response = await pipelineActions.getPipelineUsageToolList(getAccessToken);
+  const loadTools = async (cancelSource = cancelTokenSource) => {
+    const response = await toolManagementActions.getPipelineUsageToolIdentifiersV2(getAccessToken, cancelSource);
+    const toolIdentifiers  = response?.data;
 
-    if (response.data != null) {
-      setToolIdentifiers(response.data);
+    if (isMounted?.current === true && Array.isArray(toolIdentifiers)) {
+      setToolIdentifiers(toolIdentifiers);
     }
   };
 
@@ -50,8 +80,8 @@ function PipelineUsageToolMultiSelectInput({ placeholderText, valueField, textFi
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      dataObject={model}
+      setDataObject={setModel}
       setDataFunction={setDataFunction}
       selectOptions={toolIdentifiers}
       busy={isLoading}
@@ -68,8 +98,8 @@ PipelineUsageToolMultiSelectInput.propTypes = {
   fieldName: PropTypes.string,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool
