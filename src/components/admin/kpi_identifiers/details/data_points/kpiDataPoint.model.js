@@ -36,7 +36,7 @@ export class KpiDataPointModel extends ModelBase {
   };
 
   deleteModel = async () => {
-    await kpiDataPointActions.deleteKpiDataPointV2(this.getAccessToken, this.cancelTokenSource, this, this.kpiId);
+   return await kpiDataPointActions.deleteKpiDataPointV2(this.getAccessToken, this.cancelTokenSource, this, this.kpiId);
   };
 
   getDetailViewTitle = () => {

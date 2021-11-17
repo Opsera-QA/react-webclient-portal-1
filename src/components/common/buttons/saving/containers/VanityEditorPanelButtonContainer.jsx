@@ -1,13 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SaveButtonContainer from "./SaveButtonContainer";
 import CloseEditorButton from "components/common/buttons/cancel/CloseEditorButton";
 import VanityCreateButton from "components/common/buttons/saving/VanityCreateButton";
 import VanitySaveButtonBase from "components/common/buttons/saving/VanitySaveButtonBase";
+import DeleteModelButtonWithConfirmation from "components/common/buttons/delete/DeleteModelButtonWithConfirmationModal";
+import Row from "react-bootstrap/Row";
 
-function PersistAndCloseVanityButtonContainer({ model, setModel, handleClose, disable, extraButtons }) {
+function VanityEditorPanelButtonContainer({ model, setModel, handleClose, disable, extraButtons }) {
+  const getDeleteButton = () => {
+    return (
+      <DeleteModelButtonWithConfirmation
+        model={model}
+        afterDeleteFunction={handleClose}
+      />
+    );
+  };
+
   const getSaveButton = () => {
-    if (model.isNew()){
+    if (model.isNew()) {
       return (
         <VanityCreateButton
           handleClose={handleClose}
@@ -18,7 +28,12 @@ function PersistAndCloseVanityButtonContainer({ model, setModel, handleClose, di
       );
     }
 
-    return (<VanitySaveButtonBase model={model} disable={disable} />);
+    return (
+      <VanitySaveButtonBase
+        model={model}
+        disable={disable}
+      />
+    );
   };
 
   const getCloseButton = () => {
@@ -34,14 +49,20 @@ function PersistAndCloseVanityButtonContainer({ model, setModel, handleClose, di
   };
 
   return (
-    <SaveButtonContainer extraButtons={extraButtons}>
-      {getSaveButton()}
-      {getCloseButton()}
-    </SaveButtonContainer>
+    <Row className="mx-0 mt-3 d-flex">
+      <div className={"d-flex"}>
+        {getDeleteButton()}
+        {extraButtons}
+      </div>
+      <div className="ml-auto d-flex">
+        {getSaveButton()}
+        {getCloseButton()}
+      </div>
+    </Row>
   );
 }
 
-PersistAndCloseVanityButtonContainer.propTypes = {
+VanityEditorPanelButtonContainer.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   handleClose: PropTypes.func,
@@ -49,4 +70,4 @@ PersistAndCloseVanityButtonContainer.propTypes = {
   extraButtons: PropTypes.any
 };
 
-export default PersistAndCloseVanityButtonContainer;
+export default VanityEditorPanelButtonContainer;

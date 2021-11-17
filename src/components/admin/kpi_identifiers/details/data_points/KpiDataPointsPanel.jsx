@@ -15,6 +15,7 @@ function KpiDataPointsPanel({kpiId}) {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [dataPoints, setDataPoints] = useState([]);
   const [dataPointMetadata, setDataPointMetadata] = useState(undefined);
+  const [dataPointRoleDefinitions, setDataPointRoleDefinitions] = useState(undefined);
   const [dataPointModel, setDataPointModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
@@ -76,11 +77,13 @@ function KpiDataPointsPanel({kpiId}) {
     if (isMounted?.current === true && Array.isArray(dataPoints)) {
       setDataPoints(dataPoints);
       setDataPointMetadata(response?.data?.metadata);
+      setDataPointRoleDefinitions(response?.data?.roles);
     }
   };
 
-  const closeEditorPanel = () => {
+  const closeEditorPanel = async () => {
     setDataPointModel(null);
+    await loadData();
   };
 
   if (dataPointModel != null) {
@@ -99,6 +102,7 @@ function KpiDataPointsPanel({kpiId}) {
       isMounted={isMounted}
       dataPoints={dataPoints}
       dataPointMetadata={dataPointMetadata}
+      dataPointRoleDefinitions={dataPointRoleDefinitions}
       setDataPointModel={setDataPointModel}
       accessRoleData={accessRoleData}
       kpiId={kpiId}

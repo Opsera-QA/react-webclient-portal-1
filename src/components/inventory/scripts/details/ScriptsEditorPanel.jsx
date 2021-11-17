@@ -39,7 +39,6 @@ function ScriptsEditorPanel({ scriptModel, setScriptModel, scriptModelId, handle
       model={scriptModel}
       setModel={setScriptModel}
       handleClose={handleClose}
-      extraButtons={<DeleteModelButtonWithConfirmation model={scriptModel} />}
     >
       <Row>
         <Col md={6}>
