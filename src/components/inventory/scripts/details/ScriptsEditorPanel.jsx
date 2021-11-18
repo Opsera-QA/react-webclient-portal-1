@@ -4,7 +4,6 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
-import DeleteModelButtonWithConfirmation from "components/common/buttons/delete/DeleteModelButtonWithConfirmationModal";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 import ScriptLanguageSelectInput
@@ -39,6 +38,7 @@ function ScriptsEditorPanel({ scriptModel, setScriptModel, scriptModelId, handle
       model={scriptModel}
       setModel={setScriptModel}
       handleClose={handleClose}
+      className={"mx-2 mb-2"}
     >
       <Row>
         <Col md={6}>

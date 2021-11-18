@@ -65,6 +65,7 @@ function ToolEditorPanel({ toolData, handleClose }) {
       isLoading={isLoading}
       showBooleanToggle={true}
       handleClose={handleClose}
+      className={"mx-3 mb-2"}
     >
       <Row>
         <Col lg={6}>

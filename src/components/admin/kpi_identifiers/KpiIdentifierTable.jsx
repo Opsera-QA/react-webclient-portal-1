@@ -24,6 +24,7 @@ function KpiIdentifierTable({ data, loadData, isLoading, kpiFilterDto, setKpiFil
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "identifier")),
       getLimitedTableTextColumn(getField(fields, "description"), 100),
       getTableBooleanIconColumn(getField(fields, "active")),
       getTableArrayCountColumn(getField(fields, "dataPoints")),

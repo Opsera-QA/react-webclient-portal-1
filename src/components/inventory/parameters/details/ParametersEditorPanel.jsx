@@ -73,6 +73,7 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
       model={parameterModel}
       setModel={setParameterModel}
       handleClose={handleClose}
+      className={"mx-2 mb-2"}
     >
       <Row>
         <Col md={12} lg={parameterModel?.isNew() ? 4 : 5}>
