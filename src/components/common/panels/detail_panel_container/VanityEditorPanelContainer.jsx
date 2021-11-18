@@ -105,7 +105,7 @@ function VanityEditorPanelContainer(
   }
 
   return (
-    <div className="p-3 h-100">
+    <div className={className}>
       {getActionBar()}
       <div>{children}</div>
       <div>

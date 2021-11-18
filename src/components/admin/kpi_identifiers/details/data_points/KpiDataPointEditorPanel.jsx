@@ -9,6 +9,8 @@ import VanityEditorPanelContainer from "components/common/panels/detail_panel_co
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import MetricDataPointTypeSelectInput
   from "components/common/list_of_values_input/insights/data_points/type/MetricDataPointTypeSelectInput";
+import MetricStrategicCriteriaPanel
+  from "components/common/inputs/metric/strategic_criteria/MetricStrategicCriteriaPanel";
 
 function KpiDataPointEditorPanel({ dataPointModel, closeEditorPanel }) {
   const [kpiDataPointModel, setKpiDataPointModel] = useState(undefined);
@@ -74,6 +76,13 @@ function KpiDataPointEditorPanel({ dataPointModel, closeEditorPanel }) {
             fieldName={"type"}
             model={kpiDataPointModel}
             setModel={setKpiDataPointModel}
+          />
+        </Col>
+        <Col lg={12}>
+          <MetricStrategicCriteriaPanel
+            model={kpiDataPointModel}
+            setModel={setKpiDataPointModel}
+            strategicCriteria={kpiDataPointModel?.getData("strategic_criteria")}
           />
         </Col>
         <Col lg={12}>

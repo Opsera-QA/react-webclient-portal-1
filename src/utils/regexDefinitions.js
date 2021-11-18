@@ -120,6 +120,12 @@ regexDefinitions.numericalField = {
   errorFormText: "Only numbers are allowed",
 };
 
+regexDefinitions.decimalField = {
+  regex: /^\d*\.?\d*$/,
+  formText: "Only numbers (including decimals) are allowed",
+  errorFormText: "Only numbers (including decimals) are allowed",
+};
+
 regexDefinitions.hostnameRegex = {
   regex: /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/,
   formText: "Host names must follow the RFC 1123 standard",
