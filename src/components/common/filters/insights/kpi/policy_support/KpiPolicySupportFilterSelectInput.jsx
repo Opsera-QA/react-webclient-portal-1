@@ -1,9 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
-import {KPI_CATEGORY_SELECT_OPTIONS} from "components/common/list_of_values_input/admin/kpi_configurations/categories/kpiCategory.types";
 
-function KpiCategoryFilter({ fieldName, filterModel, setFilterModel, setDataFunction, inline, className}) {
+const NOTIFICATION_POLICY_SUPPORT_OPTIONS = [
+  {text: "All", value: undefined},
+  {text: "True", value: "active"},
+  {text: "False", value: "inactive"}
+];
+
+function KpiPolicySupportFilterSelectInput({ fieldName, filterModel, setFilterModel, setDataFunction, inline, className}) {
   if (filterModel == null) {
     return null;
   }
@@ -13,16 +18,16 @@ function KpiCategoryFilter({ fieldName, filterModel, setFilterModel, setDataFunc
       inline={inline}
       fieldName={fieldName}
       className={className}
-      placeholderText={"Filter By Category"}
+      placeholderText={"Filter By Policy Support"}
       setDataObject={setFilterModel}
       dataObject={filterModel}
-      selectOptions={KPI_CATEGORY_SELECT_OPTIONS}
+      selectOptions={NOTIFICATION_POLICY_SUPPORT_OPTIONS}
       setDataFunction={setDataFunction}
     />
   );
 }
 
-KpiCategoryFilter.propTypes = {
+KpiPolicySupportFilterSelectInput.propTypes = {
   fieldName: PropTypes.string,
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
@@ -31,8 +36,8 @@ KpiCategoryFilter.propTypes = {
   className: PropTypes.string
 };
 
-KpiCategoryFilter.defaultProps = {
-  fieldName: "category"
+KpiPolicySupportFilterSelectInput.defaultProps = {
+  fieldName: "policySupport"
 };
 
-export default KpiCategoryFilter;
+export default KpiPolicySupportFilterSelectInput;

@@ -23,6 +23,10 @@ const kpiFilterMetadata = {
       id: "sortOption",
     },
     {
+      label: "Policy Support",
+      id: "policySupport",
+    },
+    {
       label: "Search",
       id: "search",
     },
@@ -46,6 +50,10 @@ const kpiFilterMetadata = {
       activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
     }
 
+    if (filterDto.getData("policySupport") != null && filterDto.getData("policySupport") !== "") {
+      activeFilters.push({filterId: "policySupport", text: `Policy Support: ${filterDto.getFilterText("policySupport")}`});
+    }
+
     return activeFilters;
   },
   newObjectFields: {
@@ -53,6 +61,7 @@ const kpiFilterMetadata = {
     currentPage: 1,
     sortOption: {text: "Sort: Newest", value: "newest"},
     search: "",
+    policySupport: undefined,
     activeFilters: []
   },
   sortOptions: [

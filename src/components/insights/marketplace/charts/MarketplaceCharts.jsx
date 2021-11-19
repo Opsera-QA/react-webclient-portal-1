@@ -5,8 +5,8 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import kpiMarketplaceFilterMetadata from "components/insights/marketplace/charts/kpi-marketplace-filter-metadata";
 import axios from "axios";
-import InlineKpiCategoryFilter
-  from "components/common/filters/insights/marketplace/kpi_category/InlineKpiCategoryFilter";
+import InlineKpiCategoryFilterSelectInput
+  from "components/common/filters/insights/kpi/category/InlineKpiCategoryFilterSelectInput";
 import InlineToolIdentifierFilter from "components/common/filters/tools/tool_identifier/InlineToolIdentifierFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faChartArea} from "@fortawesome/pro-light-svg-icons";
@@ -90,7 +90,7 @@ function MarketplaceCharts ({ dashboardId }) {
   const getInlineFilters = () => {
     return (
       <div className="d-flex">
-        <InlineKpiCategoryFilter filterModel={marketplaceFilterDto} setFilterModal={setMarketplaceFilterDto} loadData={loadData} className={"mr-2"} />
+        <InlineKpiCategoryFilterSelectInput filterModel={marketplaceFilterDto} setFilterModel={setMarketplaceFilterDto} loadData={loadData} className={"mr-2"} />
         <InlineToolIdentifierFilter loadData={loadData} setFilterModel={setMarketplaceFilterDto} filterModel={marketplaceFilterDto} fieldName={"tool"} className={"mr-2"} />
       </div>
     );

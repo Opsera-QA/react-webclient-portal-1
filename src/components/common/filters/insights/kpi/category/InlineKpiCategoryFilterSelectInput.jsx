@@ -1,19 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import KpiCategoryFilter from "components/common/filters/insights/marketplace/kpi_category/KpiCategoryFilter";
+import KpiCategoryFilterSelectInput from "components/common/filters/insights/kpi/category/KpiCategoryFilterSelectInput";
 
-function InlineKpiCategoryFilter({ fieldName, filterModel, setFilterModal, loadData, className}) {
+function InlineKpiCategoryFilterSelectInput({ fieldName, filterModel, setFilterModel, loadData, className}) {
   const setDataFunction = (fieldName, value) => {
     let newDataObject = filterModel;
+    newDataObject.setData("currentPage", 1);
     newDataObject.setData(fieldName, value);
     loadData(newDataObject);
   };
 
   return (
-    <KpiCategoryFilter
+    <KpiCategoryFilterSelectInput
       inline={true}
       fieldName={fieldName}
-      setFilterModel={setFilterModal}
+      setFilterModel={setFilterModel}
       filterModel={filterModel}
       className={className}
       setDataFunction={setDataFunction}
@@ -21,16 +22,16 @@ function InlineKpiCategoryFilter({ fieldName, filterModel, setFilterModal, loadD
   );
 }
 
-InlineKpiCategoryFilter.propTypes = {
+InlineKpiCategoryFilterSelectInput.propTypes = {
   fieldName: PropTypes.string,
   filterModel: PropTypes.object,
-  setFilterModal: PropTypes.func,
+  setFilterModel: PropTypes.func,
   loadData: PropTypes.func,
   className: PropTypes.string
 };
 
-InlineKpiCategoryFilter.defaultProps = {
+InlineKpiCategoryFilterSelectInput.defaultProps = {
   fieldName: "category"
 };
 
-export default InlineKpiCategoryFilter;
+export default InlineKpiCategoryFilterSelectInput;
