@@ -376,7 +376,7 @@ function PipelineDetailView() {
             setRefreshCount={setRefreshCount}
             customerAccessRules={customerAccessRules}
             parentWorkflowStatus={workflowStatus}
-            ownerName={pipeline?.owner}
+            ownerName={pipeline?.owner_name}
             setActiveTab={setActiveTab}
             setWorkflowStatus={setWorkflowStatus}
             getActivityLogs={getActivityLogs}
