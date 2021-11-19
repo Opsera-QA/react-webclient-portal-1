@@ -15,6 +15,8 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import { faFileInvoice } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import KpiPolicySupportFilterSelectInput
+  from "components/common/filters/insights/kpi/policy_support/KpiPolicySupportFilterSelectInput";
 
 function KpiIdentifierTable({ data, loadData, isLoading, kpiFilterDto, setKpiFilterDto, isMounted }) {
   const toastContext = useContext(DialogToastContext);
@@ -26,8 +28,9 @@ function KpiIdentifierTable({ data, loadData, isLoading, kpiFilterDto, setKpiFil
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "identifier")),
       getLimitedTableTextColumn(getField(fields, "description"), 100),
-      getTableBooleanIconColumn(getField(fields, "active")),
       getTableArrayCountColumn(getField(fields, "dataPoints")),
+      getTableBooleanIconColumn(getField(fields, "active")),
+      getTableBooleanIconColumn(getField(fields, "policySupport")),
       getTableDateColumn(getField(fields, "createdAt")),
     ],
     []
@@ -46,7 +49,18 @@ function KpiIdentifierTable({ data, loadData, isLoading, kpiFilterDto, setKpiFil
   };
 
   const getDropdownFilters = () => {
-    return <ActiveFilter filterDto={kpiFilterDto} setFilterDto={setKpiFilterDto} />;
+    return (
+      <>
+        <KpiPolicySupportFilterSelectInput
+          filterModel={kpiFilterDto}
+          setFilterModel={setKpiFilterDto}
+        />
+        <ActiveFilter
+          filterDto={kpiFilterDto}
+          setFilterDto={setKpiFilterDto}
+        />
+      </>
+    );
   };
 
   const getKpiTable = () => {

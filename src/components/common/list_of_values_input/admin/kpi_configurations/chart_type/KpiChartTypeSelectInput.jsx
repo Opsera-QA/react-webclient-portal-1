@@ -10,8 +10,8 @@ function KpiChartTypeSelectInput({ fieldName, model, setModel, disabled }) {
       dataObject={model}
       setDataObject={setModel}
       selectOptions={KPI_CHART_TYPE_SELECT_OPTIONS}
-      valueField={"id"}
-      textField={"label"}
+      valueField={"value"}
+      textField={"text"}
       disabled={disabled}
     />
   );
