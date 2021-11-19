@@ -625,7 +625,7 @@ export const getTableArrayCountColumn = (field, className) => {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function getCount(row) {
-      return row.value.length;
+      return Array.isArray(row?.value) ? row.value.length : "";
     },
     class: className ? className :  "no-wrap-inline"
   };
