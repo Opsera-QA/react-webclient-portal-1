@@ -46,8 +46,6 @@ function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
         noDataMessage={noDataMessage}
         onRowSelect={selectedRow}
         isLoading={isLoading}
-        tableTitle={"Project Mapping"}
-        type={"Project Mapping"}
       />
     );
   };

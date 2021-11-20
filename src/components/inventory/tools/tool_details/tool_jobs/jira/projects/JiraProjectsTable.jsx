@@ -6,6 +6,8 @@ import jiraProjectMetadata from "components/inventory/tools/tool_details/tool_jo
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {useHistory} from "react-router-dom";
+import {faBrowser} from "@fortawesome/pro-light-svg-icons";
+import FilterContainer from "components/common/table/FilterContainer";
 
 function JiraProjectsTable({ toolData, loadData, isLoading }) {
   let history = useHistory();
@@ -28,18 +30,30 @@ function JiraProjectsTable({ toolData, loadData, isLoading }) {
     history.push(`/inventory/tools/details/${toolData.getData("_id")}/projects/${rowData.original.id}`);
   };
 
-
-  return (
-    <div>
+  const getJiraProjectsTable = () => {
+    return (
       <CustomTable
         columns={columns}
         data={toolData.getData("projects")}
         loadData={loadData}
         createNewRecord={createJiraProject}
-        tableTitle={"Jira Projects"}
-        type={"Jira Project"}
         onRowSelect={onRowSelect}
         isLoading={isLoading}
+      />
+    );
+  };
+
+  return (
+    <div>
+      <FilterContainer
+        showBorder={false}
+        loadData={loadData}
+        addRecordFunction={createJiraProject}
+        body={getJiraProjectsTable()}
+        isLoading={isLoading}
+        metadata={jiraProjectMetadata}
+        titleIcon={faBrowser}
+        title={"Projects"}
       />
       <NewJiraProjectModal toolData={toolData} loadData={loadData} setShowModal={setShowCreateProjectModal} showModal={showCreateProjectModal}/>
     </div>
