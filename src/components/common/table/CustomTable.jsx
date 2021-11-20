@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import Pagination from "components/common/pagination";
-import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 
 export const defaultRowStyling = (row) => {
@@ -18,8 +17,6 @@ export const defaultInitialState = {
 function CustomTable(
   {
     className,
-    tableStyleName,
-    type,
     columns,
     data,
     noDataMessage,
@@ -29,9 +26,6 @@ function CustomTable(
     paginationOptions,
     showHeaderText,
     isLoading,
-    tableTitle,
-    createNewRecord,
-    tableFilterBar,
     paginationDto,
     setPaginationDto,
     loadData,
@@ -84,39 +78,6 @@ function CustomTable(
     );
   };
 
-  const getTableTitleLoader = () => {
-    if (isLoading && tableTitle && data != null && data.length !== 0) {
-      return (<FontAwesomeIcon icon={faSpinner} spin className="ml-2 my-auto"/>);
-    }
-  };
-
-  const getTitleBar = () => {
-    return (
-      <div className="d-flex pl-0 my-1 justify-content-between">
-        <div className="my-auto"><span className="h6 ml-1">{tableTitle}{getTableTitleLoader()}</span></div>
-        <div>
-          <NewRecordButton isLoading={isLoading} type={type} addRecordFunction={createNewRecord} size={"sm"} />
-        </div>
-      </div>
-    );
-  };
-
-  const getFilterTitleBar = () => {
-    return (
-      <div className="pl-0">
-        <div className="mb-2"><span className="h6 ml-1">{tableTitle}{getTableTitleLoader()}</span></div>
-        <div className="pr-0"><div className="mt-0"><div className="ml-auto">{tableFilterBar}</div></div></div>
-      </div>
-    );
-  };
-
-  const getTableTitleBar = () => {
-    if (tableFilterBar) {
-      return getFilterTitleBar();
-    }
-
-    return (getTitleBar());
-  };
 
   const getTableHeader = () => {
     if ((isLoading && data == null) || !showHeaderText || !headerGroups) {
@@ -232,19 +193,26 @@ function CustomTable(
   };
 
 
+  // TODO: Separate out pagination container into table component that wraps this base component
   return (
-    <PaginationContainer nextGeneration={nextGeneration} isLoading={isLoading} filterDto={paginationDto} setFilterDto={setPaginationDto} loadData={loadData} scrollOnLoad={scrollOnLoad}>
-      {tableTitle && getTableTitleBar()}
+    <PaginationContainer
+      nextGeneration={nextGeneration}
+      isLoading={isLoading}
+      filterDto={paginationDto}
+      setFilterDto={setPaginationDto}
+      loadData={loadData}
+      scrollOnLoad={scrollOnLoad}
+    >
       <div className={className}>
-          <table className={tableStyleName} responsive="true" hover="true" {...getTableProps()}>
-            <thead>
-              {getTableHeader()}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-                {getTableBody()}
-            </tbody>
-            {getFooter()}
-          </table>
+        <table className={"custom-table"} responsive="true" hover="true" {...getTableProps()}>
+          <thead>
+          {getTableHeader()}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+          {getTableBody()}
+          </tbody>
+          {getFooter()}
+        </table>
       </div>
     </PaginationContainer>
   );
@@ -261,10 +229,6 @@ CustomTable.propTypes = {
   paginationOptions: PropTypes.object,
   showHeaderText: PropTypes.bool,
   isLoading: PropTypes.bool,
-  tableTitle: PropTypes.string,
-  createNewRecord: PropTypes.func,
-  type: PropTypes.string,
-  tableFilterBar: PropTypes.object,
   paginationDto: PropTypes.object,
   setPaginationDto: PropTypes.func,
   loadData: PropTypes.func,
@@ -274,13 +238,11 @@ CustomTable.propTypes = {
 };
 
 CustomTable.defaultProps = {
-  tableStyleName: "custom-table",
   rowStyling: defaultRowStyling,
   initialState: defaultInitialState,
   showHeaderText: true,
   data: [],
   isLoading: false,
-  tableTitle: "",
   noDataMessage: "No data is currently available",
   className: "table-content-block",
   scrollOnLoad: true

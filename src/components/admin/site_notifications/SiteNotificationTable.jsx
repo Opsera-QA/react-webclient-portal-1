@@ -52,8 +52,6 @@ function SiteNotificationTable({ data, loadData, isLoading, isMounted, siteNotif
         columns={columns}
         initialState={initialState}
         isLoading={isLoading}
-        createNewRecord={createSiteNotification}
-        loadData={loadData}
         paginationDto={siteNotificationDataDto}
         setPaginationDto={setSiteNotificationDto}
       />
@@ -67,6 +65,8 @@ function SiteNotificationTable({ data, loadData, isLoading, isMounted, siteNotif
       body={getSiteNotificationTable()}
       metadata={siteNotificationMetadata}
       titleIcon={faFlag}
+      addRecordFunction={createSiteNotification}
+      loadData={loadData}
       title={"Site Notifications"}
     />
   );
