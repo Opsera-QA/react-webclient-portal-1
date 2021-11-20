@@ -36,9 +36,6 @@ function ClientSidePaginationMakeupTable(
   const getPaginatedData = () => {
     const currentPage = paginationModel?.getData("currentPage");
     const pageSize = paginationModel?.getPageSize("pageSize");
-    console.log("currentPage: " + JSON.stringify(currentPage));
-    console.log("pageSize: " + JSON.stringify(pageSize));
-
     return paginateData(data, currentPage, pageSize);
   };
 
