@@ -3,7 +3,6 @@ import { useTable, usePagination, useSortBy } from "react-table";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown, faSpinner } from "@fortawesome/pro-light-svg-icons";
-import Pagination from "components/common/pagination";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 
 export const defaultRowStyling = (row) => {
@@ -23,7 +22,6 @@ function CustomTable(
     onRowSelect,
     rowStyling,
     initialState,
-    paginationOptions,
     isLoading,
     paginationDto,
     setPaginationDto,
