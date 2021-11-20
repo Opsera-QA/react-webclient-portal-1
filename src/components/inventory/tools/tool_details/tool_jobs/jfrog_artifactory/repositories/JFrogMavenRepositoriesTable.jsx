@@ -1,65 +1,24 @@
-import React, {useMemo, useState, useEffect, useContext, useRef} from "react";
+import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import NewJFrogMavenRepositoryModal from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/NewJFrogMavenRepositoryModal";
 import jfrogMavenRepositoryMetadata from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jfrog-maven-repository-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
-import {AuthContext} from "contexts/AuthContext";
-import axios from "axios";
-import jfrogActions from "./jfrog-actions";
-function JFrogMavenRepositoriesTable({ toolData, isLoading }) {
-  
-  const { getAccessToken } = useContext(AuthContext);
+import {faAbacus} from "@fortawesome/pro-light-svg-icons";
+import FilterContainer from "components/common/table/FilterContainer";
+
+function JFrogMavenRepositoriesTable(
+  {
+    jfrogArtifactoryMavenRepositories,
+    toolData,
+    loadData,
+    isLoading,
+  }) {
   const fields = jfrogMavenRepositoryMetadata.fields;
   const [showCreateRepoModal, setShowCreateRepoModal] = useState(false);
-  const [jfrogMavenRepos, setJfrogMavenRepos] = useState([]);
   const [editRepoObj, setEditRepoObj] = useState({});
   const [editMode, setEditMode] = useState(false);
-  const [error, setError] = useState(undefined);
-  const [isRepoLoading, setIsRepoLoading] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect (() => {
-    if(cancelTokenSource){
-      cancelTokenSource.cancel();
-    }
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-    loadData(source).catch((error) => {
-      if(isMounted?.current === true){
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
-    try {
-      setIsRepoLoading(true);
-      const response = await jfrogActions.getRepos(toolData.getData("_id"), "allMaven", getAccessToken, cancelSource);
-
-      if(response.status === 200) {
-        setJfrogMavenRepos(response.data);
-      }
-
-    } catch (error) {
-      if(isMounted?.current === true) {
-        console.error(error);
-        setError(error);
-      }
-    } finally {
-      if(isMounted?.current === true) {
-        setIsRepoLoading(false);
-      }      
-    }
-  };
 
   const createJFrogMavenRepository = () => {
     setShowCreateRepoModal(true);
@@ -75,31 +34,44 @@ function JFrogMavenRepositoriesTable({ toolData, isLoading }) {
   );
 
   const onRowSelect = (rowData) => {    
-    let newDataObject = jfrogMavenRepos[rowData.index];
+    let newDataObject = rowData?.original;
     setEditRepoObj(newDataObject);
     setEditMode(true);    
     setShowCreateRepoModal(true);
   };
 
+  const getJfrogArtifactoryMavenRepositoriesTable = () => {
+    return (
+      <CustomTable
+        columns={columns}
+        data={jfrogArtifactoryMavenRepositories}
+        loadData={loadData}
+        createNewRecord={createJFrogMavenRepository}
+        onRowSelect={onRowSelect}
+        isLoading={isLoading}
+      />
+    );
+  };
 
   return (
     <div>
-      <CustomTable
-        columns={columns}
-        data={jfrogMavenRepos}
+      <FilterContainer
+        showBorder={false}
         loadData={loadData}
-        createNewRecord={createJFrogMavenRepository}
-        tableTitle={"JFrog Repositories"}
-        type={"JFrog Repository"}
-        onRowSelect={onRowSelect}
-        isLoading={isRepoLoading}
+        addRecordFunction={createJFrogMavenRepository}
+        body={getJfrogArtifactoryMavenRepositoriesTable()}
+        isLoading={isLoading}
+        metadata={jfrogMavenRepositoryMetadata}
+        titleIcon={faAbacus}
+        title={"JFrog Maven Repositories"}
+        type={"JFrog Maven Repository"}
       />
       <NewJFrogMavenRepositoryModal 
         toolData={toolData} 
         loadData={loadData} 
         setShowModal={setShowCreateRepoModal} 
         showModal={showCreateRepoModal} 
-        jfrogRepositories={jfrogMavenRepos}
+        jfrogRepositories={jfrogArtifactoryMavenRepositories}
         editRepoObj={editRepoObj}
         editMode={editMode}
         setEditMode={setEditMode}
@@ -109,9 +81,10 @@ function JFrogMavenRepositoriesTable({ toolData, isLoading }) {
 }
 
 JFrogMavenRepositoriesTable.propTypes = {
-  toolData: PropTypes.object,  
-  selectRowFunction: PropTypes.func,
-  isLoading: PropTypes.bool
+  jfrogArtifactoryMavenRepositories: PropTypes.array,
+  loadData: PropTypes.func,
+  isLoading: PropTypes.bool,
+  toolData: PropTypes.object,
 };
 
 export default JFrogMavenRepositoriesTable;
