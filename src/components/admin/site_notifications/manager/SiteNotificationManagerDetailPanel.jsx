@@ -8,7 +8,6 @@ import {faSitemap} from "@fortawesome/pro-light-svg-icons";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
-
 function SiteNotificationManagerDetailPanel({ siteWideNotificationData, setSiteWideNotificationData }) {
   const [activeTab, setActiveTab] = useState("site");
 

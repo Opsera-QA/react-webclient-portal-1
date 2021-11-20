@@ -13,6 +13,9 @@ import SiteNotificationDetailPanel
 import { meetsRequirements, ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import Model from "core/data_model/model";
 import axios from "axios";
+import SiteNotificationManagementSubNavigationBar
+  from "components/admin/site_notifications/SiteNotificationManagementSubNavigationBar";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 function SiteNotificationDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -113,6 +116,7 @@ function SiteNotificationDetailView() {
       dataObject={siteNotificationData}
       isLoading={isLoading}
       actionBar={getActionBar()}
+      navigationTabContainer={<SiteNotificationManagementSubNavigationBar activeTab={"siteNotificationManager"}/>}
       detailPanel={<SiteNotificationDetailPanel setSiteNotificationData={setSiteNotificationData} siteNotificationData={siteNotificationData} accessRoleData={accessRoleData} />}
     />
   );

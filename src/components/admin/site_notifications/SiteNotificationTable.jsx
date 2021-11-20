@@ -12,11 +12,14 @@ import {
 import {DialogToastContext} from "contexts/DialogToastContext";
 import NewSiteNotificationOverlay from "components/admin/site_notifications/NewSiteNotificationOverlay";
 import {getField} from "components/common/metadata/metadata-helpers";
+import {faFlag} from "@fortawesome/pro-light-svg-icons";
+import FilterContainer from "components/common/table/FilterContainer";
 
 function SiteNotificationTable({ data, loadData, isLoading, isMounted, siteNotificationDataDto, setSiteNotificationDto }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   let fields = siteNotificationMetadata.fields;
+
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "type")),
@@ -30,7 +33,7 @@ function SiteNotificationTable({ data, loadData, isLoading, isMounted, siteNotif
   );
 
   const onRowSelect = (rowData, type) => {
-    history.push("/admin/site-notifications/details/" + rowData.original._id);
+    history.push("/admin/site-notifications/details/" + rowData?.original?._id);
   };
 
   const initialState = {
@@ -41,21 +44,31 @@ function SiteNotificationTable({ data, loadData, isLoading, isMounted, siteNotif
     toastContext.showOverlayPanel(<NewSiteNotificationOverlay loadData={loadData} isMounted={isMounted} />);
   };
 
-  return (
+  const getSiteNotificationTable = () => {
+    return (
       <CustomTable
-        className="px-2 pb-2"
         onRowSelect={onRowSelect}
         data={data}
         columns={columns}
         initialState={initialState}
         isLoading={isLoading}
-        type={"Site Notification"}
-        tableTitle={"Site Notifications"}
         createNewRecord={createSiteNotification}
         loadData={loadData}
         paginationDto={siteNotificationDataDto}
         setPaginationDto={setSiteNotificationDto}
       />
+    );
+  };
+
+  return (
+    <FilterContainer
+      className={"m-2"}
+      showBorder={false}
+      body={getSiteNotificationTable()}
+      metadata={siteNotificationMetadata}
+      titleIcon={faFlag}
+      title={"Site Notifications"}
+    />
   );
 }
 
