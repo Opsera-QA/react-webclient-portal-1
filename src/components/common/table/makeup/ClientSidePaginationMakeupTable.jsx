@@ -1,61 +1,80 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import TopPaginator from "components/common/pagination/v2/TopPaginator";
-import BottomPaginator from "components/common/pagination/v2/BottomPaginator";
-import axios from "axios";
+import VanityPaginationContainer from "components/common/pagination/v2/VanityPaginationContainer";
+import MakeupTableBase from "components/common/table/makeup/MakupTableBase";
+import GenericPaginationModel from "core/data_model/genericPaginationModel";
+import {paginateData} from "components/common/helpers/pagination.helpers";
 
-// TODO: Implement
 function ClientSidePaginationMakeupTable(
   {
+    className,
+    columns,
+    data,
+    noDataMessage,
+    onRowSelect,
+    rowStyling,
     isLoading,
-    children
+    initialState,
   }) {
   const [paginationModel, setPaginationModel] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+    const newPaginationModel = new GenericPaginationModel();
+
+    if (Array.isArray(data)) {
+      newPaginationModel.setTotalCount(data.length);
     }
 
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
+    loadData(newPaginationModel);
 
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+  }, [data]);
 
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async (newPaginationModel = paginationModel) => {
+  const loadData = (newPaginationModel) => {
+    setPaginationModel({...newPaginationModel});
   };
 
-  if (paginationModel == null || paginationModel?.showPagination() === false) {
-    return children;
+  const getPaginatedData = () => {
+    const currentPage = paginationModel?.getData("currentPage");
+    const pageSize = paginationModel?.getPageSize("pageSize");
+    console.log("currentPage: " + JSON.stringify(currentPage));
+    console.log("pageSize: " + JSON.stringify(pageSize));
+
+    return paginateData(data, currentPage, pageSize);
+  };
+
+  if (paginationModel == null) {
+    return null;
   }
 
   return (
-    <div className="pagination-container">
-      <TopPaginator paginationModel={paginationModel} isLoading={isLoading} loadData={loadData} />
-      {children}
-      <BottomPaginator nextGeneration={true} loadData={loadData} isLoading={isLoading} paginationModel={paginationModel} />
-    </div>
+    <VanityPaginationContainer
+      isLoading={isLoading}
+      loadData={loadData}
+      paginationModel={paginationModel}
+    >
+      <MakeupTableBase
+        data={getPaginatedData()}
+        isLoading={isLoading}
+        columns={columns}
+        rowStyling={rowStyling}
+        onRowSelect={onRowSelect}
+        noDataMessage={noDataMessage}
+        className={className}
+        initialState={initialState}
+      />
+    </VanityPaginationContainer>
   );
 }
 
 ClientSidePaginationMakeupTable.propTypes = {
+  columns: PropTypes.array,
+  data: PropTypes.array,
+  noDataMessage: PropTypes.string,
+  onRowSelect: PropTypes.func,
+  rowStyling: PropTypes.func,
   isLoading: PropTypes.bool,
-  paginationModel: PropTypes.object,
-  children: PropTypes.any,
-  loadData: PropTypes.func,
+  className: PropTypes.string,
+  initialState: PropTypes.object,
 };
 
 export default ClientSidePaginationMakeupTable;

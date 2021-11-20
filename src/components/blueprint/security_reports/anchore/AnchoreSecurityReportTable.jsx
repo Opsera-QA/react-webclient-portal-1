@@ -1,8 +1,8 @@
 import React, {useMemo} from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table/CustomTable";
 import {faBug} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
+import ClientSidePaginationMakeupTable from "components/common/table/makeup/ClientSidePaginationMakeupTable";
 
 // TODO: Refactor further.
 function AnchoreSecurityReportTable({ anchoreSecurityVulnerabilities }) {
@@ -83,7 +83,7 @@ function AnchoreSecurityReportTable({ anchoreSecurityVulnerabilities }) {
 
   const getAnchoreSecurityReportTable = () => {
     return (
-      <CustomTable
+      <ClientSidePaginationMakeupTable
         columns={columns}
         data={anchoreSecurityVulnerabilities}
         initialState={initialState}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { useTable, usePagination, useSortBy } from "react-table";
 import PropTypes from "prop-types";
 import MakeupTableBody from "components/common/table/makeup/MakeupTableBody";
@@ -19,13 +19,7 @@ function MakeupTableBase(
     initialState,
     isLoading,
   }) {
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    rows
-  } = useTable(
+  const table = useTable(
     {
       columns,
       data,
@@ -35,13 +29,17 @@ function MakeupTableBase(
     usePagination
   );
 
+  if (table == null) {
+    return null;
+  }
+
   return (
     <div className={className}>
-      <table className={"custom-table"} responsive="true" hover="true" {...getTableProps()}>
+      <table className={"custom-table"} responsive="true" hover="true" {...table?.getTableProps()}>
         <MakeupTableHeader
           isLoading={isLoading}
           data={data}
-          headerGroups={headerGroups}
+          headerGroups={table?.headerGroups}
         />
         <MakeupTableBody
           isLoading={isLoading}
@@ -49,9 +47,9 @@ function MakeupTableBase(
           onRowSelect={onRowSelect}
           rowStyling={rowStyling}
           columns={columns}
-          getTableBodyProps={getTableBodyProps}
-          prepareRow={prepareRow}
-          rows={rows}
+          getTableBodyProps={table?.getTableBodyProps}
+          prepareRow={table?.prepareRow}
+          rows={table?.rows}
         />
       </table>
     </div>

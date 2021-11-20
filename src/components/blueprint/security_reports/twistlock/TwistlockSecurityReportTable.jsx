@@ -1,8 +1,8 @@
 import React, {useMemo} from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table/CustomTable";
 import {faBug} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
+import ClientSidePaginationMakeupTable from "components/common/table/makeup/ClientSidePaginationMakeupTable";
 
 // TODO: Refactor further.
 function TwistlockSecurityReportTable({ twistlockSecurityReportVulnerabilities }) {
@@ -65,7 +65,7 @@ function TwistlockSecurityReportTable({ twistlockSecurityReportVulnerabilities }
 
   const getTwistlockSecurityReportTable = () => {
     return (
-      <CustomTable
+      <ClientSidePaginationMakeupTable
         columns={columns}
         data={twistlockSecurityReportVulnerabilities}
         initialState={initialState}

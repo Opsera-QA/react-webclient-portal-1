@@ -1,28 +1,5 @@
-const baseMetadata = {
-  fields: [
-    {
-      label: "Current Page",
-      id: "currentPage",
-    },
-    {
-      label: "Page Size",
-      id: "pageSize",
-    },
-    {
-      label: "Total Count",
-      id: "totalCount",
-    },
-  ],
-  newObjectFields: {
-    pageSize: 50,
-    currentPage: 1,
-    totalCount: undefined,
-  },
-};
-
-
 export class FilterModelBase {
-  constructor(metaData = baseMetadata) {
+  constructor(metaData) {
     this.metaData = {...metaData};
     this.data = {...this.getNewObjectFields()};
   }
@@ -38,6 +15,22 @@ export class FilterModelBase {
 
   setData = (fieldName, newValue) => {
       this.data[fieldName] = newValue;
+  };
+
+  getTotalCount = () => {
+    return this.data?.totalCount;
+  }
+
+  setTotalCount = (newValue) => {
+   this.setData("totalCount", newValue);
+  };
+
+  getPageSize = () => {
+    return this.getFilterValue("pageSize");
+  }
+
+  getPageCount = () => {
+    return Math.ceil(this.getTotalCount() / this.getPageSize());
   };
 
   getPersistData = () => {
