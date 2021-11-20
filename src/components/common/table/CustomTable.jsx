@@ -15,7 +15,29 @@ export const defaultInitialState = {
   pageIndex: 0
 };
 
-function CustomTable({ className, tableStyleName, type, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, paginationOptions, showHeaderText, isLoading, tableTitle, createNewRecord, tableFilterBar, paginationDto, setPaginationDto, loadData, noFooter, scrollOnLoad, nextGeneration }) {
+function CustomTable(
+  {
+    className,
+    tableStyleName,
+    type,
+    columns,
+    data,
+    noDataMessage,
+    onRowSelect,
+    rowStyling,
+    initialState,
+    paginationOptions,
+    showHeaderText,
+    isLoading,
+    tableTitle,
+    createNewRecord,
+    tableFilterBar,
+    paginationDto,
+    setPaginationDto,
+    loadData,
+    scrollOnLoad,
+    nextGeneration
+  }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -247,7 +269,6 @@ CustomTable.propTypes = {
   setPaginationDto: PropTypes.func,
   loadData: PropTypes.func,
   className: PropTypes.string,
-  noFooter: PropTypes.bool,
   scrollOnLoad: PropTypes.bool,
   nextGeneration: PropTypes.bool,
 };
@@ -262,7 +283,6 @@ CustomTable.defaultProps = {
   tableTitle: "",
   noDataMessage: "No data is currently available",
   className: "table-content-block",
-  noFooter: false,
   scrollOnLoad: true
 };
 
