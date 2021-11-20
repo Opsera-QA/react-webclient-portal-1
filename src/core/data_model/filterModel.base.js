@@ -1,5 +1,28 @@
+const baseMetadata = {
+  fields: [
+    {
+      label: "Current Page",
+      id: "currentPage",
+    },
+    {
+      label: "Page Size",
+      id: "pageSize",
+    },
+    {
+      label: "Total Count",
+      id: "totalCount",
+    },
+  ],
+  newObjectFields: {
+    pageSize: 50,
+    currentPage: 1,
+    totalCount: undefined,
+  },
+};
+
+
 export class FilterModelBase {
-  constructor(metaData) {
+  constructor(metaData = baseMetadata) {
     this.metaData = {...metaData};
     this.data = {...this.getNewObjectFields()};
   }
