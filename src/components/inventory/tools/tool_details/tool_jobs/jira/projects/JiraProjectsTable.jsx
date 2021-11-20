@@ -35,8 +35,6 @@ function JiraProjectsTable({ toolData, loadData, isLoading }) {
       <CustomTable
         columns={columns}
         data={toolData.getData("projects")}
-        loadData={loadData}
-        createNewRecord={createJiraProject}
         onRowSelect={onRowSelect}
         isLoading={isLoading}
       />

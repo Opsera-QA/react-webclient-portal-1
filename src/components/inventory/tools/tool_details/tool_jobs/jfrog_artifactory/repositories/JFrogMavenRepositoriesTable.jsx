@@ -46,7 +46,6 @@ function JFrogMavenRepositoriesTable(
         columns={columns}
         data={jfrogArtifactoryMavenRepositories}
         loadData={loadData}
-        createNewRecord={createJFrogMavenRepository}
         onRowSelect={onRowSelect}
         isLoading={isLoading}
       />
