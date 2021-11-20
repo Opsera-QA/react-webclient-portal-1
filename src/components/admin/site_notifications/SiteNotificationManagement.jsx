@@ -8,6 +8,8 @@ import AccessDeniedDialog from "components/common/status_notifications/accessDen
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import axios from "axios";
+import SiteNotificationManagementSubNavigationBar
+  from "components/admin/site_notifications/SiteNotificationManagementSubNavigationBar";
 
 function SiteNotificationManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -88,11 +90,12 @@ function SiteNotificationManagement() {
       isLoading={!accessRoleData}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
-      >
-      <SiteNotificationTable 
+      navigationTabContainer={<SiteNotificationManagementSubNavigationBar activeTab={"siteNotificationManager"}/>}
+    >
+      <SiteNotificationTable
         loadData={loadData}
-        isLoading={isLoading} 
-        data={siteNotifications} 
+        isLoading={isLoading}
+        data={siteNotifications}
       />
     </ScreenContainer>
   );
