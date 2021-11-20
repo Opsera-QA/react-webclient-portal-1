@@ -15,7 +15,7 @@ import ExportBlueprintLogButton from "components/common/buttons/export/blueprint
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 import {useHistory} from "react-router-dom";
-import ShowSecurityReportButton from "components/blueprint/ShowSecurityReportButton";
+import ShowSecurityReportButton from "components/blueprint/security_reports/ShowSecurityReportButton";
 import ShowPackageXmlButton from "components/blueprint/ShowPackageXmlButton";
 
 function BlueprintSearchResult({ logData, closeModal }) {
@@ -207,7 +207,7 @@ function BlueprintSearchResult({ logData, closeModal }) {
                   <div className={"justify-content-between d-flex w-100"}>
                     <div className="ml-1 blueprint-title">Blueprint</div>
                     <div className={"d-flex"}>
-                      {!closeModal && <ShowSecurityReportButton logData={logData} />}
+                      <ShowSecurityReportButton logData={logData} />
                       {!closeModal && <ShowPackageXmlButton logData={logData} />}
                       {/*// TODO: Just pass in logData to ExportBlueprintLogButton*/}
                       {!closeModal && completeInput &&

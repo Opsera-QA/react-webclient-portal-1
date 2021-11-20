@@ -24,7 +24,6 @@ function CustomTable(
     rowStyling,
     initialState,
     paginationOptions,
-    showHeaderText,
     isLoading,
     paginationDto,
     setPaginationDto,
@@ -80,7 +79,7 @@ function CustomTable(
 
 
   const getTableHeader = () => {
-    if ((isLoading && data == null) || !showHeaderText || !headerGroups) {
+    if ((isLoading && data == null) || !headerGroups) {
       return (
         <tr>
           <th colSpan="12">
@@ -227,7 +226,6 @@ CustomTable.propTypes = {
   rowStyling: PropTypes.func,
   initialState: PropTypes.object,
   paginationOptions: PropTypes.object,
-  showHeaderText: PropTypes.bool,
   isLoading: PropTypes.bool,
   paginationDto: PropTypes.object,
   setPaginationDto: PropTypes.func,
@@ -240,7 +238,6 @@ CustomTable.propTypes = {
 CustomTable.defaultProps = {
   rowStyling: defaultRowStyling,
   initialState: defaultInitialState,
-  showHeaderText: true,
   data: [],
   isLoading: false,
   noDataMessage: "No data is currently available",

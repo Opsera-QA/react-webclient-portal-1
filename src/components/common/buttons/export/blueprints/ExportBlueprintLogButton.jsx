@@ -103,7 +103,7 @@ name: stepName};
 ExportBlueprintLogButton.propTypes = {
   blueprintLog: PropTypes.array,
   isLoading: PropTypes.bool,
-  pipelineId: PropTypes.object, 
+  pipelineId: PropTypes.string,
   runCount: PropTypes.number,
   blueprintName: PropTypes.any,
   numberOfSteps: PropTypes.number,
