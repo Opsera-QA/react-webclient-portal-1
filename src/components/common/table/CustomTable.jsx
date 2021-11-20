@@ -157,41 +157,6 @@ function CustomTable(
     );
   };
 
-  // TODO: Remove when all tables are updated
-  const getOldPaginator = () => {
-    if (!paginationOptions || isLoading) {
-      return null;
-    }
-
-    return (
-      <div>
-        <Pagination
-          total={paginationOptions.totalCount}
-          currentPage={paginationOptions.currentPage}
-          pageSize={paginationOptions.pageSize}
-          onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)}
-        />
-      </div>
-    );
-  };
-
-  const getFooter = () => {
-    if (paginationOptions) {
-      return (
-        <tfoot>
-          <tr>
-            <td colSpan="100%">
-              <div className="table-footer">
-                {getOldPaginator()}
-              </div>
-            </td>
-          </tr>
-        </tfoot>
-      );
-    }
-  };
-
-
   // TODO: Separate out pagination container into table component that wraps this base component
   return (
     <PaginationContainer
@@ -210,7 +175,6 @@ function CustomTable(
           <tbody {...getTableBodyProps()}>
           {getTableBody()}
           </tbody>
-          {getFooter()}
         </table>
       </div>
     </PaginationContainer>
