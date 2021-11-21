@@ -5,7 +5,7 @@ import FilterContainer from "components/common/table/FilterContainer";
 import ClientSidePaginationMakeupTable from "components/common/table/makeup/ClientSidePaginationMakeupTable";
 import {
   getCustomTableAccessor,
-  getCustomTableHeader,
+  getCustomTableHeader, getExternalLinkIconColumnDefinition,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -48,22 +48,13 @@ function TwistlockSecurityReportTable({ twistlockSecurityReportVulnerabilities }
     ],
   };
 
-  // TODO: Create Metadata, use fields instead.
   const columns = useMemo(() =>  [
     getTableTextColumn(getField(fields, "vulnerability")),
     getTableTextColumn(getField(fields, "package_name")),
     getTableTextColumn(getField(fields, "severity")),
     getTableTextColumn(getField(fields, "cvss"), "console-text-invert-modal"),
     getRiskFactorColumnDefinition(getField(fields, "risk_factors")),
-    {
-      Header: "Vulnerability URL",
-      accessor: "url",
-      Cell: function getValue(row) {
-        return row ?
-          <a href={row.value} target="_blank" rel="noreferrer" className="text-muted console-text-invert-modal">{row.value}</a> :
-          "N/A";
-      },
-    }
+    getExternalLinkIconColumnDefinition(getField(fields, "url"), "Open Vulnerability Details in New Window"),
   ], []);
 
   const getTwistlockSecurityReportTable = () => {

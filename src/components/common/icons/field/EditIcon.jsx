@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilAlt} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
+import IconBase from "components/common/icons/IconBase";
 
 function EditIcon({ editFunction, className, tooltipBody, disabled }) {
 
@@ -13,10 +13,9 @@ function EditIcon({ editFunction, className, tooltipBody, disabled }) {
   return (
     <div className={className}>
       <ButtonTooltip innerText={tooltipBody}>
-        <FontAwesomeIcon
-          onClick={() => {editFunction();}}
+        <IconBase
+          onClickFunction={() => {editFunction();}}
           icon={faPencilAlt}
-          fixedWidth
           className={"pointer"}
         />
       </ButtonTooltip>

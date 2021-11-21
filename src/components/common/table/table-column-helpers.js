@@ -21,13 +21,15 @@ import dashboardsActions from "components/insights/dashboards/dashboards-actions
 import {Button} from "react-bootstrap";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date-helpers";
-import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
+import {capitalizeFirstLetter, hasStringValue, truncateString} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
 import { getPipelineStateFieldBase} from "components/common/fields/pipelines/state/PipelineStateField";
 import TagDisplayer from "components/common/fields/multiple_items/tags/TagDisplayer";
 import UnchangedMetricIcon from "components/common/icons/metric/unchanged/UnchangedMetricIcon";
 import NoTrendMetricIcon from "components/common/icons/metric/trend/NoTrendMetricIcon";
+import IconBase from "components/common/icons/IconBase";
+import PageLinkIcon from "components/common/icons/general/PageLinkIcon";
 
 export const getCustomTableHeader = (field) => {
   return field ? field.label : "";
@@ -207,31 +209,6 @@ export const getTableDateAndTimeUntilValueColumn = (header, id, fakeColumn = "fa
       return originalRow[id] ? convertFutureDateToDhmsFromNowString(new Date(originalRow[id])) : "";
     },
     class: className ? className : "no-wrap-inline"
-  };
-};
-
-export const getPipelineActivityStatusColumn = (field, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function parseStatus(row) {
-      if (row?.value == null || row?.value === "") {
-        return (
-          <div className="d-flex flex-nowrap">
-            <div><FontAwesomeIcon icon={faCircle} className="cell-icon yellow my-auto" fixedWidth/></div>
-            <div className="ml-1">Unknown</div>
-          </div>
-        );
-      }
-
-      return (
-        <div className="d-flex flex-nowrap">
-          <div>{getPipelineStatusIcon(row)}</div>
-          <div className="ml-1">{capitalizeFirstLetter(row.value)}</div>
-        </div>
-      );
-    },
-    class: className ? className : undefined
   };
 };
 
@@ -487,23 +464,29 @@ export const getRoleAccessLevelColumn = (field, className) => {
   };
 };
 
-export const getStaticIconColumn = (icon, accessor = "row", className) => {
-  return {
-    Header: "",
-    accessor: accessor,
-    Cell: function StaticIcon(){
-      return <FontAwesomeIcon icon={icon} />;
-    },
-    class: className ? className : undefined
-  };
-};
-
 export const getStaticInfoColumn = (icon, accessor = "row", className) => {
   return {
     Header: "",
     accessor: accessor,
     Cell: function StaticIcon(){
-      return <FontAwesomeIcon icon={faSearchPlus} />;
+      return <IconBase icon={faSearchPlus} />;
+    },
+    class: className ? className : undefined
+  };
+};
+
+export const getExternalLinkIconColumnDefinition = (field, linkText, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    Cell: function getPageLink(row){
+      return (
+        <PageLinkIcon
+          pageLink={row?.value}
+          externalLink={true}
+          pageLinkText={linkText}
+        />
+      );
     },
     class: className ? className : undefined
   };
