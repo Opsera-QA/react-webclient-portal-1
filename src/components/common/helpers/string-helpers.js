@@ -23,7 +23,7 @@ export function hasStringValue(string) {
 }
 
 export function truncateString(string, maxLength){
-  if (string == null || typeof string !== "string") {
+  if (hasStringValue(string) !== true) {
     return "";
   }
 
