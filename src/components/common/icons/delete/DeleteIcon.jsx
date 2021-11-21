@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 
-function EditIcon({ handleDeleteClick, className, tooltipBody, disabled }) {
+function DeleteIcon({ handleDeleteClick, className, tooltipBody, disabled }) {
 
   if (disabled === true) {
     return null;
@@ -24,11 +24,11 @@ function EditIcon({ handleDeleteClick, className, tooltipBody, disabled }) {
   );
 }
 
-EditIcon.propTypes = {
+DeleteIcon.propTypes = {
   handleDeleteClick: PropTypes.func,
   className: PropTypes.string,
   tooltipBody: PropTypes.any,
   disabled: PropTypes.bool
 };
 
-export default EditIcon;
+export default DeleteIcon;
