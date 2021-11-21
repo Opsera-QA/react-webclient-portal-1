@@ -1,6 +1,5 @@
 import { format } from "date-fns";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { Form } from "react-bootstrap";
 import {
   faCheckCircle,
   faCircle, faOctagon,
@@ -25,7 +24,6 @@ import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/da
 import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
-import {getTaskTypeLabel} from "components/tasks/task.types";
 import { getPipelineStateFieldBase} from "components/common/fields/pipelines/state/PipelineStateField";
 import TagDisplayer from "components/common/fields/multiple_items/tags/TagDisplayer";
 import UnchangedMetricIcon from "components/common/icons/metric/unchanged/UnchangedMetricIcon";
