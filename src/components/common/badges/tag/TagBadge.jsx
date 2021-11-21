@@ -1,17 +1,13 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
 import TagBadgeBase from "components/common/badges/tag/TagBadgeBase";
 
 function TagBadge({tag, className}) {
-  if (tag == null || typeof tag !== "object") {
-    return null;
-  }
-
   return (
     <TagBadgeBase
       className={className}
-      badgeText={`${capitalizeFirstLetter(tag?.type)}: ${capitalizeFirstLetter(tag?.value)}`}
+      badgeText={`${capitalizeFirstLetter(tag?.type)}: ${truncateString(tag?.value, 50)}`}
     />
   );
 }

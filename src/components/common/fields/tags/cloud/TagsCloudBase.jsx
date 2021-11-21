@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {faChartNetwork, faDraftingCompass, faEye, faTag, faWrench} from "@fortawesome/pro-light-svg-icons";
-import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
 import DangerIcon from "components/common/icons/status/danger/DangerIcon";
@@ -36,7 +36,7 @@ function TagsCloudBase({ tagsWithUsage, onTagClick, className, getTooltip, subsc
           return (
             <TooltipWrapper innerText={getTooltip(tagWithUsage)} key={tag?._id}>
               <span className={classNames} style={getDynamicBadgeStyle(tagWithUsage)} onClick={() => {handleClick(tag);}}>
-                <span><IconBase icon={faTag} isLoading={subscribingToTag === tag?._id} className={"mr-1"} />{`${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}</span>
+                <span><IconBase icon={faTag} isLoading={subscribingToTag === tag?._id} className={"mr-1"} />{`${capitalizeFirstLetter(tag?.type)}: ${truncateString(tag?.value, 50)}`}</span>
                 <span>
                   <IconBase icon={faDraftingCompass} className="ml-3 mr-1"/>
                   {tagWithUsage?.pipeline_usage_count}
