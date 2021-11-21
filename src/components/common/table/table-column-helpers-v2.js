@@ -9,6 +9,7 @@ import {capitalizeFirstLetter, truncateString} from "components/common/helpers/s
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import {getTaskTypeLabel} from "components/tasks/task.types";
 import {THRESHOLD_LEVELS} from "components/common/list_of_values_input/pipelines/thresholds/PipelineThresholdLevelSelectInputBase";
+import {getCustomTableAccessor, getCustomTableHeader} from "components/common/table/table-column-helpers";
 export const FILTER_TYPES = {
   SEARCH_FILTER: "inputFilter",
   SELECT_FILTER: "selectFilter",
@@ -314,12 +315,12 @@ export const getPipelineTypeColumn = (field, className) => {
   };
 };
 
-export const getTaskTypeColumn = (field, className) => {
+export const getFormattedLabelWithFunctionColumnDefinition = (field, formatFunction, className) => {
   return {
     header: getColumnHeader(field),
     id: getColumnId(field),
     template: function (text) {
-      return getTaskTypeLabel(text);
+      return formatFunction(text);
     },
     class: className ? className : "no-wrap-inline"
   };

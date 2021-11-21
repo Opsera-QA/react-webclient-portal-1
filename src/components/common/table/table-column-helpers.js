@@ -7,7 +7,7 @@ import {
   faPauseCircle, faPlayCircle, faSearchPlus,
   faSpinner,
   faStopCircle,
-  faTimesCircle, faTrash, faPlay, faTag, faExclamationCircle, faSearch
+  faTimesCircle, faTrash, faPlay, faExclamationCircle
 } from "@fortawesome/pro-light-svg-icons";
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import WarningIcon from "../../common/icons/table/WarningIcon";
@@ -104,35 +104,6 @@ export const getFormattedLabelWithFunctionColumnDefinition = (field, formatFunct
   };
 };
 
-export const getStringifiedArrayColumn = (field, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function stringifyArray(row) {
-      const array = row?.value;
-
-      if (Array.isArray(array) && array.length > 0) {
-        return JSON.stringify(array);
-      }
-
-      return "";
-    },
-    class: className ? className : "no-wrap-inline"
-  };
-};
-
-// TODO: Replace with getFormattedLabelWithFunctionColumnDefinition
-export const getTaskTypeColumn = (field, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function formatTaskTypeLabel(row) {
-      return getTaskTypeLabel(row?.value);
-    },
-    class: className ? className : "no-wrap-inline"
-  };
-};
-
 export const getTaskStatusColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
@@ -160,49 +131,6 @@ export const getTaskStatusColumn = (field, className) => {
   };
 };
 
-export const getLimitedStringifiedArrayColumn = (field, maxLength, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function stringifyArray(row) {
-      const array = row?.value;
-
-      if (Array.isArray(array) && array.length > 0) {
-        const value = JSON.stringify(array);
-        const truncatedString = truncateString(value ,maxLength);
-        
-        if (truncatedString !== value) {
-          return (<TooltipWrapper innerText={value}><span>{truncatedString}</span></TooltipWrapper>);
-        }
-
-        return value;
-      }
-
-      return "";
-    },
-    class: className ? className : "no-wrap-inline"
-  };
-};
-
-export const getNameValueArrayColumn = (field, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function stringifyArray(row) {
-      const array = row?.value;
-
-      if (Array.isArray(array) && array.length > 0) {
-        return array.map((item, index) => {
-          return (`${item.name}:${item.value}${array.length > index + 1 ? ',' : ''}`);
-        });
-      }
-
-      return "";
-    },
-    class: className ? className : "no-wrap-inline"
-  };
-};
-
 export const getRoleArrayColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
@@ -214,54 +142,6 @@ export const getRoleArrayColumn = (field, className) => {
         return array.map((item, index) => {
           return (`${item.role}:${item.user}:${item.group}${array.length > index + 1 ? ',' : ''}`);
         });
-      }
-
-      return "";
-    },
-    class: className ? className : "no-wrap-inline"
-  };
-};
-
-export const getContactArrayColumn = (field, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function stringifyArray(row) {
-      const array = row?.value;
-
-      if (Array.isArray(array) && array.length > 0) {
-        return array.map((item, index) => {
-          return (`${item.name}:${item.email}:${item.user_id}${array.length > index + 1 ? ',' : ''}`);
-        });
-      }
-
-      return "";
-    },
-    class: className ? className : "no-wrap-inline"
-  };
-};
-
-export const getLimitedContactArrayColumn = (field, maxLength, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function stringifyArray(row) {
-      const array = row?.value;
-
-      if (Array.isArray(array) && array.length > 0) {
-          const valueArr = array.map((item, index) => {
-            return (`${item.name}:${item.email}:${item.user_id}${array.length > index + 1 ? ',' : ''}`);
-          });
-
-          const value = JSON.stringify(valueArr).replace(/[["\]]/g,'');
-
-          const truncatedString = truncateString(value, maxLength);
-          
-          if (truncatedString !== value) {
-            return (<TooltipWrapper innerText={value}><span>{truncatedString}</span></TooltipWrapper>);
-          }
-  
-          return value;
       }
 
       return "";
@@ -282,54 +162,6 @@ export const getTagColumn = (field, className) => {
           tags={tags}
         />
       );
-    },
-    class: className ? className : "no-wrap-inline"
-  };
-};
-
-export const getTagArrayColumn = (field, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function stringifyArray(row) {
-      const array = row?.value;
-
-      if (Array.isArray(array) && array.length > 0) {
-        return array.map((tag, index) => {
-          return (`${tag.type}: ${tag.value}${array.length > index + 1 ? ',' : ''}`);
-        });
-      }
-
-      return "";
-    },
-    class: className ? className : "no-wrap-inline"
-  };
-};
-
-export const getLimitedTagArrayColumn = (field, maxLength, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function stringifyArray(row) {
-      const array = row?.value;
-
-      if (Array.isArray(array) && array.length > 0) {
-        const valueArr = array.map((tag, index) => {
-          return (`${tag.type}: ${tag.value}${array.length > index + 1 ? ',' : ''}`);
-        });
-
-        const value = JSON.stringify(valueArr).replace(/[["\]]/g,'');
-
-        const truncatedString = truncateString(value, maxLength);
-
-        if (truncatedString !== value) {
-          return (<TooltipWrapper innerText={value}><span>{truncatedString}</span></TooltipWrapper>);
-        }
-
-        return value;
-      }
-
-      return "";
     },
     class: className ? className : "no-wrap-inline"
   };
@@ -595,19 +427,6 @@ export const getTableBooleanIconColumn = (field, className) => {
   };
 };
 
-export const getGitTasksStatusColumn = (field, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function parseStatus(row) {
-      return (        
-        <div>{getPipelineStatusIcon(row)}</div>        
-      );
-    },
-    class: className ? className : undefined
-  };
-};
-
 export const getTableInfoIconColumn = (showInformationFunction, accessor = "row", className) => {
   return {
     Header: "Info",
@@ -667,43 +486,6 @@ export const getRoleAccessLevelColumn = (field, className) => {
       return "ROLE ACCESS LEVEL UNKNOWN";
     },
     class: className ? className :  "no-wrap-inline"
-  };
-};
-
-export const getValueColumn = (field, valueFormat) => {
-  switch (valueFormat) {
-    case "boolean":
-      return getTableBooleanIconColumn(field);
-    case "date":
-      return getTableDateColumn(field);
-    case "count":
-      return getTableArrayCountColumn(field);
-    case "text":
-    default:
-      return getTableTextColumn(field);
-  }
-};
-
-export const getCheckBoxColumn = (handleChange) => {
-  return {
-    Header: "",
-    accessor: "row",
-    Cell: function getCheckboxForRow(row) {
-      const idx = row.row["index"];
-      const item = row["data"][idx];
-      return <Form.Check
-        inline
-        type={"checkbox"}
-        name={item.committedFile}
-        id={idx}
-        disabled={item.checkAll}
-        checked={!!item.isChecked}
-        onChange = {() => {
-          item.isChecked = !item.isChecked;
-          handleChange(item);
-        }}
-      />;
-    },
   };
 };
 
