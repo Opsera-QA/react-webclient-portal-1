@@ -30,7 +30,6 @@ export const getRiskFactorColumnDefinition = (field, className) => {
   };
 };
 
-// TODO: Refactor further.
 function TwistlockSecurityReportTable({ twistlockSecurityReportVulnerabilities }) {
   const fields = twistlockSecurityReportMetadata?.fields;
 

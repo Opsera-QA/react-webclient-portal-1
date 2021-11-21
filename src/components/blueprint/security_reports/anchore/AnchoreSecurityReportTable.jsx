@@ -3,9 +3,14 @@ import PropTypes from "prop-types";
 import {faBug} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import ClientSidePaginationMakeupTable from "components/common/table/makeup/ClientSidePaginationMakeupTable";
+import {getExternalLinkIconColumnDefinition, getTableTextColumn} from "components/common/table/table-column-helpers";
+import {getField} from "components/common/metadata/metadata-helpers";
+import anchoreSecurityReportMetadata
+  from "components/blueprint/security_reports/anchore/anchoreSecurityReport.metadata";
 
-// TODO: Refactor further.
 function AnchoreSecurityReportTable({ anchoreSecurityVulnerabilities }) {
+  const fields = anchoreSecurityReportMetadata.fields;
+
   const initialState = {
     pageIndex: 0,
     sortBy: [
@@ -28,57 +33,14 @@ function AnchoreSecurityReportTable({ anchoreSecurityVulnerabilities }) {
     ],
   };
 
-  // TODO: Create Metadata, use fields instead.
   const columns = useMemo(() => [
-    {
-      Header: "Vulnerability",
-      accessor: "vulnerability",
-      class: "cell-center no-wrap-inline",
-    },
-    {
-      Header: "Package Name",
-      accessor: "package_name",
-    },
-    {
-      Header: "Severity",
-      accessor: "severity",
-    },
-    {
-      Header: "CVSS Base",
-      accessor: "cvss_base",
-      Cell: function getValue(row)  {
-        return row ?
-          <div className="console-text-invert-modal">{row.value}</div> :
-          "N/A";
-      }
-    },
-    {
-      Header: "CVSS Exploitability",
-      accessor: "cvss_exploitability_score",
-      Cell: function getValue(row)  {
-        return row ?
-          <div className="console-text-invert-modal">{row.value}</div> :
-          "N/A";
-      }
-    },
-    {
-      Header: "CVSS Impact",
-      accessor: "cvss_impact_score",
-      Cell: function getValue(row) {
-        return row ?
-          <div className="console-text-invert-modal">{row.value}</div> :
-          "N/A";
-      }
-    },
-    {
-      Header: "Vulnerability URL",
-      accessor: "url",
-      Cell: function getValue(row) {
-        return row ?
-          <a href={row.value} target="_blank" rel="noreferrer" className="text-muted console-text-invert-modal">{row.value}</a> :
-          "N/A";
-      },
-    }
+    getTableTextColumn(getField(fields, "vulnerability"), "no-wrap-inline"),
+    getTableTextColumn(getField(fields, "package_name")),
+    getTableTextColumn(getField(fields, "severity")),
+    getTableTextColumn(getField(fields, "cvss_base"), "console-text-invert-modal"),
+    getTableTextColumn(getField(fields, "cvss_exploitability_score"), "console-text-invert-modal"),
+    getTableTextColumn(getField(fields, "cvss_impact_score"), "console-text-invert-modal"),
+    getExternalLinkIconColumnDefinition(getField(fields, "url"), "Open Vulnerability Details in New Window"),
   ], []);
 
   const getAnchoreSecurityReportTable = () => {
