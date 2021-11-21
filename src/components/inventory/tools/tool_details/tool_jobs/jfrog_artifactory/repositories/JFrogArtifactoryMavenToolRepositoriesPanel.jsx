@@ -38,9 +38,10 @@ function JFrogArtifactoryMavenToolRepositoriesPanel({ toolData }) {
     try {
       setIsLoading(true);
       const response = await jFrogToolRepositoriesActions.getMavenRepositories(getAccessToken, cancelSource, toolData.getData("_id"));
+      const repositories = response?.data?.data;
 
-      if(response.status === 200) {
-        setJfrogArtifactoryMavenRepositories(response.data);
+      if(Array.isArray(repositories)) {
+        setJfrogArtifactoryMavenRepositories(repositories);
       }
 
     } catch (error) {

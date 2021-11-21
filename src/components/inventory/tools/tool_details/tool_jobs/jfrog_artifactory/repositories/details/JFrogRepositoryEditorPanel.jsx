@@ -5,11 +5,12 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import JFrogMavenPackageTypeInput from "./inputs/JFrogMavenPackageTypeInput";
-import jFrogToolRepositoriesActions from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jFrogToolRepositories.actions";
+import JFrogMavenPackageTypeInput from "components/common/list_of_values_input/tools/jfrog/package_type/JFrogMavenPackageTypeInput";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
+import jFrogToolRepositoriesActions
+  from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jFrogToolRepositories.actions";
 
 function JFrogRepositoryEditorPanel({ 
   toolData, 
@@ -124,8 +125,15 @@ function JFrogRepositoryEditorPanel({
         <Col lg={12}>
           <TextInputBase dataObject={jfrogRepositoryData} setDataObject={setJFrogRepositoryData} fieldName={"description"} />
         </Col>
+        <Col lg={12}>
+          <JFrogMavenPackageTypeInput
+            model={jfrogRepositoryData}
+            setModel={setJFrogRepositoryData}
+            fieldName={"packageType"}
+            disabled={true}
+          />
+        </Col>
       </Row>
-      <JFrogMavenPackageTypeInput dataObject={jfrogRepositoryData} setDataObject={setJFrogRepositoryData} fieldName={"packageType"} />      
     </EditorPanelContainer>
   );
 }

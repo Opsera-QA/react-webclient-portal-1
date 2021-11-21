@@ -4,7 +4,7 @@ const jfrogMavenRepositoryMetadata = {
       {
         label: "Repository Name",
         id: "key",
-        isRequired: true
+        isRequired: true,
       },
       {
         label: "Description",
@@ -16,7 +16,8 @@ const jfrogMavenRepositoryMetadata = {
       },
       {
         label: "Package Type",
-        id: "packageType"
+        id: "packageType",
+        isRequired: true,
       },
       {
         label: "URL",
@@ -28,7 +29,7 @@ const jfrogMavenRepositoryMetadata = {
       description: "",
       type: "",
       packageType: "Maven",
-      url: ""
+      url: "",
     }
   };
   

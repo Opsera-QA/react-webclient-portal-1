@@ -28,6 +28,7 @@ function JFrogMavenRepositoriesTable(
     () => [
       getTableTextColumn(getField(fields, "key")),
       getTableTextColumn(getField(fields, "description")),
+      getTableTextColumn(getField(fields, "packageType")),
       getTableTextColumn(getField(fields, "url"))
     ],
     []
