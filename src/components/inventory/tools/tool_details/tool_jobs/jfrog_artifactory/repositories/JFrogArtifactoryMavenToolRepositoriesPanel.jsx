@@ -5,7 +5,6 @@ import axios from "axios";
 import jFrogToolRepositoriesActions
   from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jFrogToolRepositories.actions";
 import {AuthContext} from "contexts/AuthContext";
-import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
 function JFrogArtifactoryMavenToolRepositoriesPanel({ toolData }) {
@@ -39,9 +38,10 @@ function JFrogArtifactoryMavenToolRepositoriesPanel({ toolData }) {
     try {
       setIsLoading(true);
       const response = await jFrogToolRepositoriesActions.getMavenRepositories(getAccessToken, cancelSource, toolData.getData("_id"));
+      const repositories = response?.data?.data;
 
-      if(response.status === 200) {
-        setJfrogArtifactoryMavenRepositories(response.data);
+      if(Array.isArray(repositories)) {
+        setJfrogArtifactoryMavenRepositories(repositories);
       }
 
     } catch (error) {
