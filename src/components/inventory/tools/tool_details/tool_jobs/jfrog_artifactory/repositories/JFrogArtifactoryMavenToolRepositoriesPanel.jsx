@@ -2,13 +2,15 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import JFrogMavenRepositoriesTable from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/JFrogMavenRepositoriesTable";
 import axios from "axios";
-import jfrogActions
-  from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jfrog-actions";
+import jFrogToolRepositoriesActions
+  from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jFrogToolRepositories.actions";
 import {AuthContext} from "contexts/AuthContext";
+import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function JFrogArtifactoryMavenToolRepositoriesPanel({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [error, setError] = useState(undefined);
+  const toastContext = useContext(DialogToastContext);
   const [jfrogArtifactoryMavenRepositories, setJfrogArtifactoryMavenRepositories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
@@ -36,7 +38,7 @@ function JFrogArtifactoryMavenToolRepositoriesPanel({ toolData }) {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await jfrogActions.getRepos(toolData.getData("_id"), "Maven", getAccessToken, cancelSource);
+      const response = await jFrogToolRepositoriesActions.getMavenRepositories(getAccessToken, cancelSource, toolData.getData("_id"));
 
       if(response.status === 200) {
         setJfrogArtifactoryMavenRepositories(response.data);
@@ -45,7 +47,7 @@ function JFrogArtifactoryMavenToolRepositoriesPanel({ toolData }) {
     } catch (error) {
       if(isMounted?.current === true) {
         console.error(error);
-        setError(error);
+        toastContext.showLoadingErrorDialog(error);
       }
     } finally {
       if(isMounted?.current === true) {

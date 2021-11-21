@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import JFrogMavenPackageTypeInput from "./inputs/JFrogMavenPackageTypeInput";
-import jfrogActions from "../jfrog-actions";
+import jFrogToolRepositoriesActions from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jFrogToolRepositories.actions";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
@@ -55,7 +55,7 @@ function JFrogRepositoryEditorPanel({
     };
 
     try {
-      const response = await jfrogActions.createRepository(postBody, getAccessToken, cancelTokenSource);      
+      const response = await jFrogToolRepositoriesActions.createRepository(postBody, getAccessToken, cancelTokenSource);
       if (response && response.status === 200) {      
         handleClose();
       }      
@@ -75,7 +75,7 @@ function JFrogRepositoryEditorPanel({
     };
 
     try {
-      const response = await jfrogActions.updateRepository(postBody, getAccessToken, cancelTokenSource);
+      const response = await jFrogToolRepositoriesActions.updateRepository(postBody, getAccessToken, cancelTokenSource);
       if (response && response.status === 200) {      
         handleClose();
       }      
@@ -90,7 +90,7 @@ function JFrogRepositoryEditorPanel({
       toolId: toolData.getData("_id"),      
       repositoryName: repo.key
     };
-    const response = await jfrogActions.deleteRepository(postBody, getAccessToken, cancelTokenSource);
+    const response = await jFrogToolRepositoriesActions.deleteRepository(postBody, getAccessToken, cancelTokenSource);
     handleClose();
     return response;
   };

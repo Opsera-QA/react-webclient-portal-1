@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
-import JFrogStepActions from 
-  "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_docker/jfrog-step-actions";
 import axios from "axios";
+import JFrogToolRepositoriesActions
+  from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jFrogToolRepositories.actions";
 
 function JfrogRepoSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_prop}) {
   const toastContext = useContext(DialogToastContext);
@@ -60,7 +60,7 @@ function JfrogRepoSelectInput({ fieldName, dataObject, setDataObject, disabled, 
 
   const loadRepos = async (cancelSource = cancelTokenSource) => {
     try {
-      const res = await JFrogStepActions.getRepos(dataObject.getData("nexusToolId"),"Maven", getAccessToken, cancelSource);
+      const res = await JFrogToolRepositoriesActions.getMavenRepositories(getAccessToken, cancelSource, dataObject.getData("nexusToolId"));
       if (res && res.status === 200) {
         setRepos(res.data);
         return;
