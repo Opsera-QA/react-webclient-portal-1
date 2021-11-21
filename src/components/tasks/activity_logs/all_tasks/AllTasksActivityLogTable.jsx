@@ -3,11 +3,12 @@ import PropTypes from "prop-types";
 import TaskDetailViewer from "components/tasks/activity_logs/details/TaskDetailViewer";
 import {
   getPipelineActivityStatusColumn, getTableDateTimeColumn,
-  getTableTextColumn,
-  getTaskTypeColumn
+  getTableTextColumn, getFormattedLabelWithFunctionColumnDefinition
 } from "components/common/table/table-column-helpers-v2";
 import TableBase from "components/common/table/TableBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import {getField} from "components/common/metadata/metadata-helpers";
+import {getTaskTypeLabel} from "components/tasks/task.types";
 
 function AllTasksActivityLogTable({ taskLogData, taskActivityMetadata, isLoading, currentTaskName, currentRunNumber }) {
   const [columns, setColumns] = useState([]);
@@ -36,12 +37,12 @@ function AllTasksActivityLogTable({ taskLogData, taskActivityMetadata, isLoading
       setColumns(
         [
           // {...getTableTextColumn(fields.find(field => { return field.id === "run_count";}), "cell-center no-wrap-inline", 100,)},
-          getTableTextColumn(fields.find(field => { return field.id === "name";})),
-          getTaskTypeColumn(fields.find(field => { return field.id === "type";})),
-          getTableTextColumn(fields.find(field => { return field.id === "log_type";})),
-          getTableTextColumn(fields.find(field => { return field.id === "message";})),
-          getPipelineActivityStatusColumn(fields.find(field => { return field.id === "status";})),
-          getTableDateTimeColumn(fields.find(field => { return field.id === "createdAt";}))
+          getTableTextColumn(getField(fields, "name")),
+          getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), getTaskTypeLabel),
+          getTableTextColumn(getField(fields, "log_type")),
+          getTableTextColumn(getField(fields, "message")),
+          getPipelineActivityStatusColumn(getField(fields, "status")),
+          getTableDateTimeColumn(getField(fields, "createdAt")),
         ]
       );
     }

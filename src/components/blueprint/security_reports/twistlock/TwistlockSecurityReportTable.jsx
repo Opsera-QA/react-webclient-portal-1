@@ -3,9 +3,37 @@ import PropTypes from "prop-types";
 import {faBug} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import ClientSidePaginationMakeupTable from "components/common/table/makeup/ClientSidePaginationMakeupTable";
+import {
+  getCustomTableAccessor,
+  getCustomTableHeader,
+  getTableTextColumn
+} from "components/common/table/table-column-helpers";
+import {getField} from "components/common/metadata/metadata-helpers";
+import twistlockSecurityReportMetadata
+  from "components/blueprint/security_reports/twistlock/twistlockSecurityReport.metadata";
+import RiskFactorDisplayer from "components/blueprint/security_reports/twistlock/RiskFactorDisplayer";
+
+export const getRiskFactorColumnDefinition = (field, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    Cell: function stringifyArray(row) {
+      const riskFactors = row?.value;
+
+      return (
+        <RiskFactorDisplayer
+          riskFactors={riskFactors}
+        />
+      );
+    },
+    class: className ? className : "no-wrap-inline"
+  };
+};
 
 // TODO: Refactor further.
 function TwistlockSecurityReportTable({ twistlockSecurityReportVulnerabilities }) {
+  const fields = twistlockSecurityReportMetadata?.fields;
+
   const initialState = {
     pageIndex: 0,
     sortBy: [
@@ -22,36 +50,11 @@ function TwistlockSecurityReportTable({ twistlockSecurityReportVulnerabilities }
 
   // TODO: Create Metadata, use fields instead.
   const columns = useMemo(() =>  [
-    {
-      Header: "Vulnerability",
-      accessor: "vulnerability",
-    },
-    {
-      Header: "Package Name",
-      accessor: "package_name",
-    },
-    {
-      Header: "Severity",
-      accessor: "severity",
-    },
-    {
-      Header: "CVSS",
-      accessor: "cvss",
-      Cell: function getValue(row)  {
-        return row ?
-          <div className="console-text-invert-modal">{row.value}</div> :
-          "N/A";
-      }
-    },
-    {
-      Header: "Risk Factors",
-      accessor: "risk_factors",
-      Cell: function getValue(row)  {
-        return row ?
-          <div className="console-text-invert-modal">{row.value.join(", ")}</div> :
-          "N/A";
-      }
-    },
+    getTableTextColumn(getField(fields, "vulnerability")),
+    getTableTextColumn(getField(fields, "package_name")),
+    getTableTextColumn(getField(fields, "severity")),
+    getTableTextColumn(getField(fields, "cvss"), "console-text-invert-modal"),
+    getRiskFactorColumnDefinition(getField(fields, "risk_factors")),
     {
       Header: "Vulnerability URL",
       accessor: "url",
