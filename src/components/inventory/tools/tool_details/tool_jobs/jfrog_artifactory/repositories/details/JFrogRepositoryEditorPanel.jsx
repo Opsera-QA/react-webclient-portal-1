@@ -18,8 +18,7 @@ function JFrogRepositoryEditorPanel({
   setJFrogRepositoryData, 
   handleClose, 
   jfrogRepositories,
-  editMode
-}) {  
+}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -47,16 +46,8 @@ function JFrogRepositoryEditorPanel({
       throw new Error("Name Must Be Unique");      
     }
 
-    const newRepo = jfrogRepositoryData.getPersistData();
-    let postBody = {
-      toolId: toolData.getData("_id"),
-      packageType: newRepo.packageType,
-      repositoryName: newRepo.key,
-      description: newRepo.description,
-    };
-
     try {
-      const response = await jFrogToolRepositoriesActions.createRepository(postBody, getAccessToken, cancelTokenSource);
+      const response = await jFrogToolRepositoriesActions.createRepository(getAccessToken, cancelTokenSource, toolData.getData("_id"), jfrogRepositoryData);
       if (response && response.status === 200) {      
         handleClose();
       }      
@@ -97,7 +88,7 @@ function JFrogRepositoryEditorPanel({
   };
 
   const getExtraButtons = () => {
-    if (editMode) {
+    if (jfrogRepositoryData?.isNew() === false) {
       return (
         <DeleteButtonWithInlineConfirmation dataObject={jfrogRepositoryData} deleteRecord={deleteJFrogMavenRepository}/>
       );
@@ -120,17 +111,26 @@ function JFrogRepositoryEditorPanel({
       </div>
       <Row>
         <Col lg={12}>
-          <TextInputBase dataObject={jfrogRepositoryData} setDataObject={setJFrogRepositoryData} fieldName={"key"} disabled={editMode} />
+          <TextInputBase
+            dataObject={jfrogRepositoryData}
+            setDataObject={setJFrogRepositoryData}
+            fieldName={"key"}
+            disabled={jfrogRepositoryData.isNew() !== true}
+          />
         </Col>
         <Col lg={12}>
-          <TextInputBase dataObject={jfrogRepositoryData} setDataObject={setJFrogRepositoryData} fieldName={"description"} />
+          <TextInputBase
+            dataObject={jfrogRepositoryData}
+            setDataObject={setJFrogRepositoryData}
+            fieldName={"description"}
+          />
         </Col>
         <Col lg={12}>
           <JFrogMavenPackageTypeInput
             model={jfrogRepositoryData}
             setModel={setJFrogRepositoryData}
             fieldName={"packageType"}
-            disabled={jfrogRepositoryData?.isNew()}
+            disabled={jfrogRepositoryData?.isNew() !== true}
           />
         </Col>
       </Row>
@@ -144,7 +144,6 @@ JFrogRepositoryEditorPanel.propTypes = {
   setJFrogRepositoryData: PropTypes.func,
   handleClose: PropTypes.func,
   jfrogRepositories: PropTypes.array,
-  editMode: PropTypes.bool,
 };
 
 export default JFrogRepositoryEditorPanel;

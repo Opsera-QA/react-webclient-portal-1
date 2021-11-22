@@ -5,7 +5,7 @@ pipelineActivityHelpers.constructTree = (pipelineLogData) => {
 
   if (Array.isArray(pipelineLogData) && pipelineLogData.length > 0) {
     pipelineLogData.forEach((log) => {
-      if (!log.run_count || log.step_name === "start pipeline") {
+      if (!log.run_count || log.step_name === "start pipeline" || log.step_name === "registered webhook event") {
         return;
       }
 

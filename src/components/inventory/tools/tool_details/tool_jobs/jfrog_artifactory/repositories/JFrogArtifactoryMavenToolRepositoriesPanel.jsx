@@ -6,11 +6,14 @@ import jFrogToolRepositoriesActions
   from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jFrogToolRepositories.actions";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import JFrogRepositoryEditorPanel
+  from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/details/JFrogRepositoryEditorPanel";
 
 function JFrogArtifactoryMavenToolRepositoriesPanel({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [jfrogArtifactoryMavenRepositories, setJfrogArtifactoryMavenRepositories] = useState([]);
+  const [jfrogArtifactoryModel, setJfrogArtifactoryModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -56,6 +59,24 @@ function JFrogArtifactoryMavenToolRepositoriesPanel({ toolData }) {
     }
   };
 
+  const togglePanel = async () => {
+    setJfrogArtifactoryModel(null);
+    await loadData();
+  };
+
+  if (jfrogArtifactoryModel) {
+    return (
+      <JFrogRepositoryEditorPanel
+        toolData={toolData}
+        jfrogRepositoryData={jfrogArtifactoryModel}
+        setJFrogRepositoryData={setJfrogArtifactoryModel}
+        loadData={loadData}
+        handleClose={togglePanel}
+        jfrogRepositories={jfrogArtifactoryMavenRepositories}
+      />
+    );
+  }
+
   return (
     <div>
       <JFrogMavenRepositoriesTable
@@ -63,6 +84,8 @@ function JFrogArtifactoryMavenToolRepositoriesPanel({ toolData }) {
         loadData={loadData}
         isLoading={isLoading}
         toolData={toolData}
+        isMounted={isMounted}
+        setJfrogArtifactoryModel={setJfrogArtifactoryModel}
       />
     </div>
   );
