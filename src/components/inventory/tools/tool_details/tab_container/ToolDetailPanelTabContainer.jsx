@@ -13,6 +13,7 @@ import ToolRepositoriesTab from "components/inventory/tools/tool_details/tab_con
 import ToolConnectionTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolConnectionTab";
 import ToolProjectsTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolProjectsTab";
 import ToolS3BucketsTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolS3BucketsTab";
+import ToolAzureStorageTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolAzureStorageTab";
 import ToolUsageTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolUsageTab";
 
 function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
@@ -67,6 +68,11 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         handleTabClick={handleTabClick}
       />
       <ToolS3BucketsTab
+        toolModel={toolModel}
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+      />
+      <ToolAzureStorageTab
         toolModel={toolModel}
         activeTab={activeTab}
         handleTabClick={handleTabClick}
