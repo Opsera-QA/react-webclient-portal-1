@@ -1,14 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-
-// TODO: Make types file
-const PACKAGE_TYPES = [
-  {
-    text: "Maven",
-    value: "Maven"
-  }
-];
+import {JFROG_ARTIFACTORY_MAVEN_PACKAGE_TYPE_SELECT_OPTIONS} from "components/common/list_of_values_input/tools/jfrog/package_type/jfrogArtificatoryMavenPackage.types";
 
 const JFrogMavenPackageTypeInput = ({model, setModel, disabled, fieldName}) => {
   return (
@@ -16,7 +9,7 @@ const JFrogMavenPackageTypeInput = ({model, setModel, disabled, fieldName}) => {
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={PACKAGE_TYPES}
+      selectOptions={JFROG_ARTIFACTORY_MAVEN_PACKAGE_TYPE_SELECT_OPTIONS}
       valueField={"value"}
       textField={"text"}
       placeholderText={"Select Package Type"}
@@ -30,10 +23,6 @@ JFrogMavenPackageTypeInput.propTypes = {
   setModel: PropTypes.func,
   disabled: PropTypes.bool,  
   fieldName: PropTypes.string,
-};
-
-JFrogMavenPackageTypeInput.defaultProps = {
-  disabled: false
 };
 
 export default JFrogMavenPackageTypeInput;
