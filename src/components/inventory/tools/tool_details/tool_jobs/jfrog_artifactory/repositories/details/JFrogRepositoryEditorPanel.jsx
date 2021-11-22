@@ -130,7 +130,6 @@ function JFrogRepositoryEditorPanel({
             model={jfrogRepositoryData}
             setModel={setJFrogRepositoryData}
             fieldName={"packageType"}
-            disabled={true}
           />
         </Col>
       </Row>
