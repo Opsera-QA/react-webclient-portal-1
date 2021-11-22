@@ -20,6 +20,7 @@ function StandaloneMultiSelectInput(
     className,
     lazyLoad,
     manualEntry,
+    onSearchFunction,
   }) {
 
   return (
@@ -34,6 +35,7 @@ function StandaloneMultiSelectInput(
         allowCreate={allowCreate}
         groupBy={groupBy}
         onToggle={onToggleFunction}
+        onSearch={onSearchFunction}
         value={value}
         onCreate={createOptionFunction}
         placeholder={placeholderText}
@@ -73,6 +75,7 @@ StandaloneMultiSelectInput.propTypes = {
   hasErrorState: PropTypes.bool,
   lazyLoad: PropTypes.bool,
   manualEntry: PropTypes.bool,
+  onSearchFunction: PropTypes.func,
 };
 
 export default StandaloneMultiSelectInput;
