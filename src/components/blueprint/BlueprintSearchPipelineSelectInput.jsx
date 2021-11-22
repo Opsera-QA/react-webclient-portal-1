@@ -131,7 +131,7 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
       busy={isLoading}
       placeholderText={"Select A Pipeline"}
       disabled={disabledPipelines}
-      onSearch={(searchTerm) => {setSearchTerm(searchTerm);}}
+      onSearchFunction={(searchTerm) => {setSearchTerm(searchTerm);}}
       showLabel={showLabel}
     />
   );

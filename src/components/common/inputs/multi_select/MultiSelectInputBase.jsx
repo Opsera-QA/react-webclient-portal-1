@@ -28,6 +28,7 @@ function MultiSelectInputBase(
     linkTooltipText,
     detailViewLink,
     infoOverlay,
+    onSearchFunction,
     formatDataFunction,
     parseValueFunction,
   }) {
@@ -157,6 +158,7 @@ function MultiSelectInputBase(
         placeholderText={placeholderText}
         disabled={disabled}
         setDataFunction={updateValue}
+        onSearchFunction={onSearchFunction}
       />
       <InfoText errorMessage={errorMessage} field={field}/>
     </InputContainer>
@@ -193,6 +195,7 @@ MultiSelectInputBase.propTypes = {
   infoOverlay: PropTypes.any,
   formatDataFunction: PropTypes.func,
   parseValueFunction: PropTypes.func,
+  onSearchFunction: PropTypes.func,
 };
 
 export default MultiSelectInputBase;

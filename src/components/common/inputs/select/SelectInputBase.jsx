@@ -8,13 +8,32 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function SelectInputBase(
   {
-    fieldName, dataObject, setDataObject, groupBy,
-    selectOptions, valueField, textField, placeholderText,
-    setDataFunction, busy, disabled, clearDataFunction,
-    showClearValueButton, errorMessage, getCurrentValue,
-    showLabel, className, onSearch, requireClearDataConfirmation,
-    clearDataDetails, linkTooltipText, detailViewLink, infoOverlay, linkIcon,
-    ellipsisTooltipText, lenientClearValueButton,
+    fieldName,
+    dataObject,
+    setDataObject,
+    groupBy,
+    selectOptions,
+    valueField,
+    textField,
+    placeholderText,
+    setDataFunction,
+    busy,
+    disabled,
+    clearDataFunction,
+    showClearValueButton,
+    errorMessage,
+    getCurrentValue,
+    showLabel,
+    className,
+    onSearchFunction,
+    requireClearDataConfirmation,
+    clearDataDetails,
+    linkTooltipText,
+    detailViewLink,
+    infoOverlay,
+    linkIcon,
+    ellipsisTooltipText,
+    lenientClearValueButton,
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
@@ -92,7 +111,7 @@ function SelectInputBase(
         placeholderText={placeholderText}
         setDataFunction={(newValue) => updateValue(newValue)}
         disabled={disabled}
-        onSearch={onSearch}
+        onSearchFunction={onSearchFunction}
       />
       <InfoText field={field} errorMessage={errorMessage} />
     </InputContainer>
@@ -126,7 +145,7 @@ SelectInputBase.propTypes = {
   getCurrentValue: PropTypes.func,
   showLabel: PropTypes.bool,
   className: PropTypes.string,
-  onSearch: PropTypes.func,
+  onSearchFunction: PropTypes.func,
   requireClearDataConfirmation: PropTypes.bool,
   clearDataDetails: PropTypes.any,
   linkTooltipText: PropTypes.string,

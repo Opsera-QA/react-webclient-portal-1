@@ -12,7 +12,7 @@ function StandaloneSelectInput(
     noDataText,
     busy,
     disabled,
-    onSearch,
+    onSearchFunction,
     value,
     setDataFunction,
     defaultValue,
@@ -51,7 +51,7 @@ function StandaloneSelectInput(
       placeholder={getPlaceholderText()}
       onChange={(newValue) => setDataFunction(newValue)}
       disabled={disabled || (lazyLoad !== true && (!Array.isArray(selectOptions) || selectOptions.length === 0))}
-      onSearch={onSearch}
+      onSearch={onSearchFunction}
       allowCreate={allowCreate}
     />
   );
@@ -77,7 +77,7 @@ StandaloneSelectInput.propTypes = {
     PropTypes.array
   ]),
   value: PropTypes.any,
-  onSearch: PropTypes.func,
+  onSearchFunction: PropTypes.func,
   onCreate: PropTypes.func,
   allowCreate: PropTypes.bool,
   className: PropTypes.string,
