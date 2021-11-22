@@ -13,16 +13,12 @@ jFrogToolRepositoriesActions.getDockerRepositories = async (getAccessToken, canc
 };
 
 jFrogToolRepositoriesActions.createRepository = async (getAccessToken, cancelTokenSource, toolId, jfrogRepositoryModel) => {
-  const apiUrl = `/tools/${toolId}/jfrog_artifactory/repository/create`;
-  const newRepo = jfrogRepositoryModel?.getPersistData();
+  const apiUrl = `/tools/${toolId}/jfrog_artifactory/repositories/create`;
   const postBody = {
-    toolId: toolId,
-    packageType: newRepo?.packageType,
-    repositoryName: newRepo?.key,
-    description: newRepo?.description,
+    ...jfrogRepositoryModel?.getPersistData(),
   };
 
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 jFrogToolRepositoriesActions.updateRepository = async (postBody, getAccessToken, cancelTokenSource) => {

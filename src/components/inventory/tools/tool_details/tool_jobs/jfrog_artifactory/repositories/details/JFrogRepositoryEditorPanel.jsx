@@ -40,40 +40,34 @@ function JFrogRepositoryEditorPanel({
   }, []);
 
   const createJFrogMavenRepository = async () => {
-
-    const repoAlreadyExists = jfrogRepositories.some(repo => repo.key === jfrogRepositoryData.getData("key"));    
+    const repoAlreadyExists = jfrogRepositories.some(repo => repo.key === jfrogRepositoryData.getData("key"));
     if (repoAlreadyExists) {
-      throw new Error("Name Must Be Unique");      
+      throw new Error("Name Must Be Unique");
     }
 
-    try {
-      const response = await jFrogToolRepositoriesActions.createRepository(getAccessToken, cancelTokenSource, toolData.getData("_id"), jfrogRepositoryData);
-      if (response && response.status === 200) {      
-        handleClose();
-      }      
-    } catch (error) {      
-      toastContext.showErrorDialog(error);      
+    const response = await jFrogToolRepositoriesActions.createRepository(getAccessToken, cancelTokenSource, toolData.getData("_id"), jfrogRepositoryData);
+    if (response?.status === 200) {
+      handleClose();
     }
+
+    return response;
   };
 
   const updateJFrogMavenRepository = async () => {
-
     const repo = jfrogRepositoryData.getPersistData();
 
-    let postBody = {
-      toolId: toolData.getData("_id"),      
+    const postBody = {
+      toolId: toolData.getData("_id"),
       repositoryName: repo.key,
       description: repo.description,
     };
 
-    try {
-      const response = await jFrogToolRepositoriesActions.updateRepository(postBody, getAccessToken, cancelTokenSource);
-      if (response && response.status === 200) {      
-        handleClose();
-      }      
-    } catch (error) {      
-      toastContext.showErrorDialog(error);      
-    }    
+    const response = await jFrogToolRepositoriesActions.updateRepository(postBody, getAccessToken, cancelTokenSource);
+    if (response?.status === 200) {
+      handleClose();
+    }
+
+    return response;
   };
 
   const deleteJFrogMavenRepository = async () => {
