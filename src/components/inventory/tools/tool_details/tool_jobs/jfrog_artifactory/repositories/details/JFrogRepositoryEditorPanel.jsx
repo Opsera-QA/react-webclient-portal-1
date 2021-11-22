@@ -113,7 +113,7 @@ function JFrogRepositoryEditorPanel({
       updateRecord={updateJFrogMavenRepository}
       createRecord={createJFrogMavenRepository}
       lenient={true}
-      disable={jfrogRepositoryData?.checkCurrentValidity() !== true || jfrogRepositoryData?.checkCurrentValidity() !== true}
+      disable={jfrogRepositoryData?.checkCurrentValidity() !== true}
     >
       <div className="text-muted pt-1 pb-3">
         Enter the required configuration information below. These settings will be used for Repository Creation.
@@ -130,6 +130,7 @@ function JFrogRepositoryEditorPanel({
             model={jfrogRepositoryData}
             setModel={setJFrogRepositoryData}
             fieldName={"packageType"}
+            disabled={jfrogRepositoryData?.isNew()}
           />
         </Col>
       </Row>
