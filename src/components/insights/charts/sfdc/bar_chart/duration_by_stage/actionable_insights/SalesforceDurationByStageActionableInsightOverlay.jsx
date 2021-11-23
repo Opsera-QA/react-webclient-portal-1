@@ -143,7 +143,7 @@ function SalesforceDurationByStageActionableInsightsOverlay({
       titleText={title}
       showToasts={true}
       titleIcon={faTable}
-      isLoading={false}
+      isLoading={isLoading}
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
