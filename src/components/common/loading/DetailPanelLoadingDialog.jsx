@@ -15,5 +15,8 @@ DetailPanelLoadingDialog.propTypes = {
   type: PropTypes.string
 };
 
+DetailPanelLoadingDialog.defaultProps = {
+  type: "data",
+};
 
 export default DetailPanelLoadingDialog;

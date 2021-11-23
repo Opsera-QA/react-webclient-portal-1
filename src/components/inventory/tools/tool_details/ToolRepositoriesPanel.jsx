@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
-import JFrogArtifactoryMavenToolRepositoriesPanel from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/JFrogArtifactoryMavenToolRepositoriesPanel";
+import JFrogToolRepositoriesPanel from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/JFrogToolRepositoriesPanel";
 import MessageField from "components/common/fields/text/MessageField";
 import ArgoToolRepositoriesPanel from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/ArgoToolRepositoriesPanel";
 
@@ -11,9 +11,8 @@ function ToolRepositoriesPanel({ toolData, loadData, isLoading }) {
     switch (toolData?.getData("tool_identifier")) {
     case "jfrog_artifactory_maven":
       return (
-        <JFrogArtifactoryMavenToolRepositoriesPanel
-          isLoading={isLoading}
-          toolData={toolData}
+        <JFrogToolRepositoriesPanel
+          toolId={toolData?.getData("_id")}
         />
       );
     case "argo":

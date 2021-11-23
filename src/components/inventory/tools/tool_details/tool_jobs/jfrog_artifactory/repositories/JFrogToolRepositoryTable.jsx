@@ -1,7 +1,7 @@
-import React, {useContext, useMemo, useState} from "react";
+import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import CreateJFrogArtifactoryMavenRepositoryOverlay from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/CreateJFrogRepositoryOverlay";
+import CreateJFrogRepositoryOverlay from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/CreateJFrogRepositoryOverlay";
 import jfrogMavenRepositoryMetadata from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jfrog-maven-repository-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -10,22 +10,22 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import modelHelpers from "components/common/model/modelHelpers";
 
-function JFrogMavenRepositoriesTable(
+function JFrogToolRepositoryTable(
   {
     jfrogArtifactoryMavenRepositories,
-    toolData,
+    toolId,
     loadData,
     isLoading,
     isMounted,
-    setJfrogArtifactoryModel,
+    setJfrogRepositoryModel,
   }) {
   const toastContext = useContext(DialogToastContext);
   const fields = jfrogMavenRepositoryMetadata.fields;
 
   const createJFrogMavenRepository = () => {
     toastContext.showOverlayPanel(
-      <CreateJFrogArtifactoryMavenRepositoryOverlay
-        toolData={toolData}
+      <CreateJFrogRepositoryOverlay
+        toolId={toolId}
         loadData={loadData}
         isMounted={isMounted}
         jfrogRepositories={jfrogArtifactoryMavenRepositories}
@@ -45,7 +45,7 @@ function JFrogMavenRepositoriesTable(
 
   const onRowSelect = (rowData) => {
     const parsedModel = modelHelpers.parseObjectIntoModel(rowData?.original, jfrogMavenRepositoryMetadata);
-    setJfrogArtifactoryModel({...parsedModel});
+    setJfrogRepositoryModel({...parsedModel});
   };
 
   const getJfrogArtifactoryMavenRepositoriesTable = () => {
@@ -75,13 +75,13 @@ function JFrogMavenRepositoriesTable(
   );
 }
 
-JFrogMavenRepositoriesTable.propTypes = {
+JFrogToolRepositoryTable.propTypes = {
   jfrogArtifactoryMavenRepositories: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  toolData: PropTypes.object,
+  toolId: PropTypes.string,
   isMounted: PropTypes.object,
-  setJfrogArtifactoryModel: PropTypes.func,
+  setJfrogRepositoryModel: PropTypes.func,
 };
 
-export default JFrogMavenRepositoriesTable;
+export default JFrogToolRepositoryTable;
