@@ -11,6 +11,7 @@ import { defaultConfig, getColor, assignStandardColors } from 'components/insigh
 import BuildStatisticsActionableInsightsTable from "./BuildStatisticsActionableInsightsTable";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import { faTable } from "@fortawesome/pro-light-svg-icons";
+import ChartTooltip from "components/insights/charts/ChartTooltip";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData }) {
@@ -67,6 +68,12 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
           yScale={{ type: 'linear', min: '0', max: '100', stacked: false, reverse: false }}
           enableGridX={false}
           enableGridY={false}
+          tooltip={(node) => (            
+            <ChartTooltip
+              titles={["Date Range", "Number of Builds", "Success Rate"]}
+              values={[node.point.data.range, node.point.data.total, String(node.point.data.y) + " %"]}
+            />
+          )}
           axisLeft={{            
             tickValues: [0, 50, 100],
             legend: 'Success Rate %',
