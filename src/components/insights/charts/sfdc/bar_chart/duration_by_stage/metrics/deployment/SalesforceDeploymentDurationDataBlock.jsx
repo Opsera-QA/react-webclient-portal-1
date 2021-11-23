@@ -10,9 +10,8 @@ function SalesforceDeploymentDurationDataBlock({ meanData, countData, goalsData 
     <ThreeLineDataBlockNoFocusBase
       className="salesforce-duration-by-stage-kpi"
       topText={"Deployment"}
-      middleText={getMiddleText(meanData, countData)}
+      middleText={getMiddleText(meanData, countData, goalsData)}
       bottomText={goalsData ? "Goal: " + goalsData + " min" : "No Goal"}
-      middleStyle={getMiddleStyle(meanData, goalsData)}
     />
   );
 }
