@@ -5,13 +5,13 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
-import DataBlock from "components/common/data_boxes/DataBlock";
 import Model from "core/data_model/model";
 import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SFDCPipelinesInsightsTableMetadata from "components/insights/charts/sfdc/sfdc-pipelines-actionable-metadata.js";
 import {Row, Col, Container} from "react-bootstrap";
+import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
+
 function SfdcBackups({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -86,43 +86,39 @@ function SfdcBackups({ kpiConfiguration, setKpiConfiguration, dashboardData, ind
     }
 
     return (
-      <div className="new-chart mb-3" style={{height: "300px", display:"flex"}}>
-      <Container>
-      <Col>
-      <Row>
-      <DataBlockWrapper>
-      <DataBlock 
-        title={metrics[0].success.toString()}
-        subTitle="No. of Pipelines with Successful Backups"
-        toolTipText="Total number of pipelines with successful backups"
-        clickAction={() => onRowSelect("sfdc-backups-successful")}
-      />
-      <DataBlock 
-        title={metrics[0].failure.toString()}
-        subTitle="No. of Pipelines with Failed Backups"
-        toolTipText="Total number of pipelines with failed backups"
-        clickAction={() => onRowSelect("sfdc-backups-failure")}
-      />
-      </DataBlockWrapper>
-      </Row>
-      <Row>
-      <DataBlockWrapper>
-      <DataBlock 
-        title={rollbacks && rollbacks.length > 0 ? rollbacks[0].success.toString() : 0}
-        subTitle="No. of Pipelines with Successful Rollbacks"
-        toolTipText="Total number of pipelines with successful rollbacks"
-        clickAction={() => onRowSelect("sfdc-rollbacks-successful")}
-      />
-      <DataBlock 
-        title={rollbacks && rollbacks.length > 0 ? rollbacks[0].failure.toString() : 0}
-        subTitle="No. of Pipelines with Failed Rollbacks"
-        toolTipText="Total number of pipelines with failed rollbacks"
-        clickAction={() => onRowSelect("sfdc-rollbacks-failure")}
-      />
-      </DataBlockWrapper>
-      </Row>
-      </Col>
-      </Container>
+      <div className="new-chart mb-3" style={{ height: "300px", display: "flex" }}>
+        <Container>
+          <Row className="p-0">
+            <Col lg={6} md={6}>
+              <TwoLineScoreDataBlock
+                className={"backups-success"}
+                score={metrics[0].success.toString()}
+                subtitle="No. of Pipelines with Successful Backups"
+              />
+            </Col>
+            <Col lg={6} md={6}>
+              <TwoLineScoreDataBlock
+                className={"backups-failure"}
+                score={metrics[0].failure.toString()}
+                subtitle="No. of Pipelines with Failed Backups"
+              />
+            </Col>
+            <Col lg={6} md={6}>
+              <TwoLineScoreDataBlock
+                className={"rollbacks-success"}
+                score={rollbacks && rollbacks.length > 0 ? rollbacks[0].success.toString() : 0}
+                subtitle="No. of Pipelines with Successful Rollbacks"
+              />
+            </Col>
+            <Col lg={6} md={6}>
+              <TwoLineScoreDataBlock
+                className={"rollbacks-failure"}
+                score={rollbacks && rollbacks.length > 0 ? rollbacks[0].failure.toString() : 0}
+                subtitle={"No. of Pipelines with Failed Rollbacks"}
+              />
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   };
