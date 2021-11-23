@@ -16,7 +16,7 @@ import { AuthContext } from "contexts/AuthContext";
 import ToolAttributeEditorPanel from "components/inventory/tools/tool_details/ToolAttributeEditorPanel";
 import ToolVaultPanel from "components/inventory/tools/tool_details/vault/ToolVaultPanel";
 import ToolRepositoriesPanel from "./ToolRepositoriesPanel";
-import ToolS3BucketsPanel from "./ToolS3BucketsPanel";
+import ToolStoragePanel from "components/inventory/tools/tool_details/ToolStoragePanel";
 import ToolDetailPanelTabContainer
   from "components/inventory/tools/tool_details/tab_container/ToolDetailPanelTabContainer";
 
@@ -95,8 +95,8 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         return <ToolVaultPanel toolData={toolData} setToolData={setToolData} />;
       case "repositories":
         return <ToolRepositoriesPanel toolData={toolData} setToolData={setToolData} loadData={loadData} isLoading={isLoading} />;
-      case "buckets":
-        return <ToolS3BucketsPanel toolData={toolData} setToolData={setToolData} loadData={loadData} />;
+      case "storage":
+        return <ToolStoragePanel toolData={toolData} setToolData={setToolData} loadData={loadData} />;
       default:
         return null;
     }
