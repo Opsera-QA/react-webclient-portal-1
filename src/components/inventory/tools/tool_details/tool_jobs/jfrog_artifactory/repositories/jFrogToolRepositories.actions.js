@@ -7,6 +7,11 @@ jFrogToolRepositoriesActions.getMavenRepositories = async (getAccessToken, cance
   return await baseActions.apiGetCallV2(getAccessToken,cancelTokenSource, apiUrl);
 };
 
+jFrogToolRepositoriesActions.getAllMavenRepositories = async (getAccessToken, cancelTokenSource, toolId,) => {
+  const apiUrl = `/tools/${toolId}/jfrog_artifactory/repositories/allMaven`;
+  return await baseActions.apiGetCallV2(getAccessToken,cancelTokenSource, apiUrl);
+};
+
 jFrogToolRepositoriesActions.getDockerRepositories = async (getAccessToken, cancelTokenSource, toolId,) => {
   const apiUrl = `/tools/${toolId}/jfrog_artifactory/repositories/docker`;
   return await baseActions.apiGetCallV2(getAccessToken,cancelTokenSource, apiUrl);
