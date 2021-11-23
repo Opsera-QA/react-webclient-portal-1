@@ -24,7 +24,7 @@ export const getMiddleText = (meanData, countData, goalsData) => {
 };
 
 export const getMiddleStyle = (meanData, goalsData) => {
-  if (isEmptyCustom(meanData) || isEmptyCustom(goalsData)) {
+  if (isEmptyCustom(meanData) || isEmptyCustom(goalsData) || goalsData === 0) {
     return;
   }
   const goalsDataValue = !isEmptyCustom(goalsData) ? goalsData : 0;

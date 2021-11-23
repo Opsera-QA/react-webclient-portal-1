@@ -13,7 +13,7 @@ function SdlcDurationByStageDataBlockBase({ topText, meanData, countData, goalsD
       topText={topText}
       className="sdlc-duration-by-stage-kpi"
       middleText={getMiddleText(meanData, countData, goalsData)}
-      bottomText={!isEmptyCustom(goalsData) ? `Goal: ${goalsData} min` : `No Goal`}
+      bottomText={goalsData ? `Goal: ${goalsData} min` : `No Goal`}
     />
   );
 }
