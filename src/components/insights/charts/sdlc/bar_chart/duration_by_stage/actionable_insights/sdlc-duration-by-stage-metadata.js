@@ -19,12 +19,12 @@ const SonarPipelineTableMetadata = {
         id: "total_failed",
       },
       {
-        label: "Total Time to Build (hrs)",
+        label: "Total Time to Build",
         // label: "Mean Time to Build (min)",
         id: "duration",
       },
       {
-        label: "Total Time to Resolve Builds (hrs)",
+        label: "Total Time to Resolve Builds",
         // label: "Mean Time to Resolve Builds (min)",
         id: "time_to_resolve",
       }
