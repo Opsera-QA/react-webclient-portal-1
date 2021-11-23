@@ -2,7 +2,7 @@ import React from "react";
 import AwsS3Buckets from "./tool_jobs/aws/buckets/AwsS3Buckets";
 import PropTypes from "prop-types";
 
-function ToolS3BucketsPanel({ toolData, loadData, isLoading }) {
+function ToolStoragePanel({ toolData, loadData, isLoading }) {
   const getPanel = (toolIdentifier, loadData) => {
     switch (toolIdentifier) {
       case "aws_account":
@@ -17,7 +17,7 @@ function ToolS3BucketsPanel({ toolData, loadData, isLoading }) {
       default:
         return (
           <div className="text-center p-5 text-muted mt-5">
-            S3 Buckets Creation is not currently available for this tool.
+            Tool Storage is not currently available for this tool.
           </div>
         );
     }
@@ -34,18 +34,18 @@ function ToolS3BucketsPanel({ toolData, loadData, isLoading }) {
   return (
     <>
       <div className="text-muted p-3">
-        <div className="h6">Managed AWS S3 Bucket Creation</div>
-        <div className="mb-3">Use this feature to create AWS S3 Buckets in the managed tool.</div>
+        <div className="h6">Managed Tool Storage</div>
+        <div className="mb-3">Use this feature to handle storage in the managed tool.</div>
         {getBody()}
       </div>
     </>
   );
 }
 
-ToolS3BucketsPanel.propTypes = {
+ToolStoragePanel.propTypes = {
   toolData: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
 };
 
-export default ToolS3BucketsPanel;
+export default ToolStoragePanel;
