@@ -35,10 +35,11 @@ export const isEmptyCustom = (val) => {
   return false;
 };
 
-export const getMiddleText = (meanData, countData) => {
+export const getMiddleText = (meanData, countData, goalsData) => {
+  let style = getMiddleStyle(meanData, goalsData);
   if (!isEmptyCustom(meanData) && !isEmptyCustom(countData)) {
     return (
-      <div>
+      <div style={style}>
         {meanData} min <br></br> {countData} runs
       </div>
     );
@@ -50,7 +51,7 @@ export const getMiddleText = (meanData, countData) => {
 };
 
 export const getMiddleStyle = (meanData, goalsData) => {
-  if (isEmptyCustom(meanData)) {
+  if (isEmptyCustom(meanData) || isEmptyCustom(goalsData) || goalsData === 0) {
     return;
   }
   const goalsDataValue = !isEmptyCustom(goalsData) ? goalsData : 0;
