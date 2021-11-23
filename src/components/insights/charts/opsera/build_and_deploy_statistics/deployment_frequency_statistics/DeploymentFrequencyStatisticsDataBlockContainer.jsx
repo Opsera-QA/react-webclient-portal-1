@@ -8,6 +8,7 @@ import AverageDailyDeploymentsDataBlock
 import { ResponsiveLine } from '@nivo/line';
 import { defaultConfig, getColor, assignStandardColors } from 'components/insights/charts/charts-views';
 import _ from "lodash";
+import ChartTooltip from "components/insights/charts/ChartTooltip";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData }) {
@@ -50,6 +51,12 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
           yScale={{ type: 'linear', min: '0', max: maxVal, stacked: false, reverse: false }}          
           enableGridX={false}
           enableGridY={false}
+          tooltip={(node) => (            
+            <ChartTooltip
+              titles={["Date Range", "Number of Builds", "Avg Daily Builds"]}
+              values={[node.point.data.range, node.point.data.total, node.point.data.y]}
+            />
+          )}
           axisLeft={{            
             tickValues: [0, maxVal],
             legend: 'Avg Daily Deployments',
