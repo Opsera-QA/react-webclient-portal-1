@@ -41,35 +41,11 @@ function JFrogRepositoryEditorPanel(
   }, []);
 
   const createJFrogMavenRepository = async () => {
-    const repoAlreadyExists = jfrogRepositories.some(repo => repo.key === jFrogRepositoryModel?.getData("key"));
-    if (repoAlreadyExists) {
-      throw new Error("Name Must Be Unique");
-    }
-
-    const response = await jFrogToolRepositoriesActions.createRepository(getAccessToken, cancelTokenSource, toolId, jFrogRepositoryModel);
-
-    if (response?.status === 200) {
-      handleClose();
-    }
-
-    return response;
+    return await jFrogToolRepositoriesActions.createRepository(getAccessToken, cancelTokenSource, toolId, jFrogRepositoryModel);
   };
 
   const updateJFrogMavenRepository = async () => {
-    const repo = jFrogRepositoryModel?.getPersistData();
-
-    const postBody = {
-      toolId: toolId,
-      repositoryName: repo.key,
-      description: repo.description,
-    };
-
-    const response = await jFrogToolRepositoriesActions.updateRepository(postBody, getAccessToken, cancelTokenSource);
-    if (response?.status === 200) {
-      handleClose();
-    }
-
-    return response;
+    return await jFrogToolRepositoriesActions.updateRepository(getAccessToken, cancelTokenSource, toolId, jFrogRepositoryModel);
   };
 
   const deleteJFrogMavenRepository = async () => {

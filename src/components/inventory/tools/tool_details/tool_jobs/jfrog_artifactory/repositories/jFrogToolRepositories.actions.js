@@ -8,7 +8,7 @@ jFrogToolRepositoriesActions.getMavenRepositories = async (getAccessToken, cance
 };
 
 jFrogToolRepositoriesActions.getAllMavenRepositories = async (getAccessToken, cancelTokenSource, toolId,) => {
-  const apiUrl = `/tools/${toolId}/jfrog_artifactory/repositories/allMaven`;
+  const apiUrl = `/tools/${toolId}/jfrog_artifactory/tool/repositories`;
   return await baseActions.apiGetCallV2(getAccessToken,cancelTokenSource, apiUrl);
 };
 
@@ -26,8 +26,12 @@ jFrogToolRepositoriesActions.createRepository = async (getAccessToken, cancelTok
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-jFrogToolRepositoriesActions.updateRepository = async (postBody, getAccessToken, cancelTokenSource) => {
-  const apiUrl = '/tools/jfrog_artifactory/repositories/updateRepository';
+jFrogToolRepositoriesActions.updateRepository = async (getAccessToken, cancelTokenSource, toolId, jfrogRepositoryModel) => {
+  const apiUrl = `/tools/${toolId}/jfrog_artifactory/repositories/update`;
+  const postBody = {
+    ...jfrogRepositoryModel.getPersistData(),
+  };
+
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
