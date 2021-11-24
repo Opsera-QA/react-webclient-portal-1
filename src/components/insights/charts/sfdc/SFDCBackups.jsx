@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React, {useState, useEffect, useContext, useRef} from "react";
-import { ResponsivePie } from "@nivo/pie";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
@@ -10,7 +9,8 @@ import ChartDetailsOverlay from "components/insights/charts/detail_overlay/Chart
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SFDCPipelinesInsightsTableMetadata from "components/insights/charts/sfdc/sfdc-pipelines-actionable-metadata.js";
 import {Row, Col, Container} from "react-bootstrap";
-import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
+import { faCheckCircle, faTimesCircle } from "@fortawesome/pro-light-svg-icons";
+import TwoLineScoreWithSupportingTextDataBlock from "components/common/metrics/score/TwoLineScoreWithSupportingTextDataBlock";
 
 function SfdcBackups({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -19,7 +19,6 @@ function SfdcBackups({ kpiConfiguration, setKpiConfiguration, dashboardData, ind
   const [metrics, setMetrics] = useState([]);
   const [rollbacks, setRollbacks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -90,31 +89,35 @@ function SfdcBackups({ kpiConfiguration, setKpiConfiguration, dashboardData, ind
         <Container>
           <Row className="p-0">
             <Col lg={6} md={6}>
-              <TwoLineScoreDataBlock
+              <TwoLineScoreWithSupportingTextDataBlock
                 className={"backups-success"}
                 score={metrics[0].success.toString()}
-                subtitle="No. of Pipelines with Successful Backups"
+                subtitle="Successful Backups"
+                icon={faCheckCircle}
               />
             </Col>
             <Col lg={6} md={6}>
-              <TwoLineScoreDataBlock
+              <TwoLineScoreWithSupportingTextDataBlock
                 className={"backups-failure"}
                 score={metrics[0].failure.toString()}
-                subtitle="No. of Pipelines with Failed Backups"
+                subtitle="Failed Backups"
+                icon={faTimesCircle}
               />
             </Col>
-            <Col lg={6} md={6}>
-              <TwoLineScoreDataBlock
+            <Col lg={6} md={6}>              
+              <TwoLineScoreWithSupportingTextDataBlock
                 className={"rollbacks-success"}
                 score={rollbacks && rollbacks.length > 0 ? rollbacks[0].success.toString() : 0}
-                subtitle="No. of Pipelines with Successful Rollbacks"
+                subtitle="Successful Rollbacks"
+                icon={faCheckCircle}
               />
             </Col>
             <Col lg={6} md={6}>
-              <TwoLineScoreDataBlock
+              <TwoLineScoreWithSupportingTextDataBlock
                 className={"rollbacks-failure"}
                 score={rollbacks && rollbacks.length > 0 ? rollbacks[0].failure.toString() : 0}
-                subtitle={"No. of Pipelines with Failed Rollbacks"}
+                subtitle={"Failed Rollbacks"}
+                icon={faTimesCircle}
               />
             </Col>
           </Row>
