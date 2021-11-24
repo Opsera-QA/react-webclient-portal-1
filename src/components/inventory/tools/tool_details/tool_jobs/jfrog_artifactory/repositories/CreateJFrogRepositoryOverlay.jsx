@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import JFrogRepositoryEditorPanel
   from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/details/JFrogRepositoryEditorPanel";
 import Model from "core/data_model/model";
-import jfrogMavenRepositoryMetadata from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jfrog-maven-repository-metadata";
+import jfrogMavenRepositoryMetadata from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jfrogMavenRepository.metadata";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 

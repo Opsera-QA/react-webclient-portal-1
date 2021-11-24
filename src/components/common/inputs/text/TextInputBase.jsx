@@ -7,9 +7,21 @@ import {parseError} from "components/common/helpers/error-helpers";
 
 function TextInputBase(
   {
-    fieldName, dataObject, setDataObject, disabled, type,
-    showLabel, inputClasses, linkTooltipText, detailViewLink, infoOverlay,
-    setDataFunction, name, style, className, error
+    fieldName,
+    dataObject,
+    setDataObject,
+    disabled,
+    type,
+    showLabel,
+    inputClasses,
+    linkTooltipText,
+    detailViewLink,
+    infoOverlay,
+    setDataFunction,
+    name,
+    style,
+    className,
+    error,
   }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -30,6 +42,11 @@ function TextInputBase(
   };
 
   const updateValue = (newValue) => {
+    if (typeof newValue !== "string") {
+      setErrorMessage(`${field?.label} must be a string.`);
+      return;
+    }
+
     if (setDataFunction) {
       const newDataObject = setDataFunction(fieldName, newValue);
 
@@ -56,6 +73,10 @@ function TextInputBase(
 
     return classes;
   };
+
+  if (field == null) {
+    return null;
+  }
 
   return (
     <InputContainer className={className}>
