@@ -109,9 +109,7 @@ function LdapGroupManagement() {
   };
 
   const getHelpComponent = () => {
-    if (!isLoading) {
       return (<GroupsHelpDocumentation/>);
-    }
   };
 
   return (
