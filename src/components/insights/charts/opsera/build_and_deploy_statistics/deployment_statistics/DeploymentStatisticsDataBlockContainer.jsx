@@ -63,8 +63,8 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
       <div className="new-chart p-0" style={{height: "150px"}}>
         <ResponsiveLine
           data={successChartData}
-          {...defaultConfig("", "Month", 
-                false, false, "wholeNumbers", "month")}
+          {...defaultConfig("", "Date", 
+                false, false, "wholeNumbers", "monthDate2")}
           yScale={{ type: 'linear', min: '0', max: '100', stacked: false, reverse: false }}          
           enableGridX={false}
           enableGridY={false}
