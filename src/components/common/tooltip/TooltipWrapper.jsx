@@ -66,7 +66,8 @@ TooltipWrapper.propTypes = {
 };
 
 TooltipWrapper.defaultProps = {
-  placement: "top"
+  placement: "top",
+  className: "popover-container"
 };
 
 export default TooltipWrapper;
