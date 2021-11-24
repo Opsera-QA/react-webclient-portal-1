@@ -46,8 +46,8 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
       <div className="new-chart p-0" style={{height: "150px"}}>
         <ResponsiveLine
           data={dailyDeploymentsChartData}
-          {...defaultConfig("", "Month", 
-                false, false, "numbers", "month")}
+          {...defaultConfig("", "Date", 
+                false, false, "numbers", "monthDate2")}
           yScale={{ type: 'linear', min: '0', max: maxVal, stacked: false, reverse: false }}          
           enableGridX={false}
           enableGridY={false}
