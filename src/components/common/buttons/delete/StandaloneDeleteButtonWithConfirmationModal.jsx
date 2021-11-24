@@ -8,7 +8,16 @@ import DeleteModal from "components/common/modal/DeleteModal";
 import IconBase from "components/common/icons/IconBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function StandaloneDeleteButtonWithConfirmationModal({model, disabled, size, icon, className, deleteDataFunction}) {
+function StandaloneDeleteButtonWithConfirmationModal(
+  {
+    model,
+    disabled,
+    size,
+    icon,
+    className,
+    deleteDataFunction,
+    handleCloseFunction,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const [isDeleting, setIsDeleting] = useState(false);
   const isMounted = useRef(false);
@@ -28,6 +37,10 @@ function StandaloneDeleteButtonWithConfirmationModal({model, disabled, size, ico
     try {
       const response = await deleteDataFunction();
       toastContext.showDeleteSuccessResultDialog(model?.getType());
+
+      if (handleCloseFunction) {
+        handleCloseFunction();
+      }
     }
     catch (error) {
       toastContext.showDeleteFailureResultDialog(model?.getType(), error);
@@ -71,7 +84,8 @@ StandaloneDeleteButtonWithConfirmationModal.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   size: PropTypes.string,
-  icon: PropTypes.object
+  icon: PropTypes.object,
+  handleCloseFunction: PropTypes.func,
 };
 
 

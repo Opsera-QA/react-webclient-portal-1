@@ -28,7 +28,6 @@ function JFrogToolRepositoryTable(
         toolId={toolId}
         loadData={loadData}
         isMounted={isMounted}
-        jfrogRepositories={jfrogArtifactoryMavenRepositories}
       />
     );
   };

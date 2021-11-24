@@ -11,7 +11,6 @@ function CreateJFrogRepositoryOverlay({
   toolId,
   loadData, 
   isMounted,
-  jfrogRepositories,
  } ) {
   const toastContext = useContext(DialogToastContext);
   const [jFrogRepositoryModel, setJFrogRepositoryModel] = useState(new Model({...jfrogMavenRepositoryMetadata.newObjectFields}, jfrogMavenRepositoryMetadata, true));
@@ -40,9 +39,7 @@ function CreateJFrogRepositoryOverlay({
         toolId={toolId}
         jFrogRepositoryModel={jFrogRepositoryModel}
         setJFrogRepositoryModel={setJFrogRepositoryModel}
-        loadData={loadData} 
-        handleClose={handleClose} 
-        jfrogRepositories={jfrogRepositories} 
+        handleClose={handleClose}
       />
     </CreateCenterPanel>
   );
@@ -52,7 +49,6 @@ CreateJFrogRepositoryOverlay.propTypes = {
   toolId: PropTypes.string,
   loadData: PropTypes.func,
   isMounted: PropTypes.object,
-  jfrogRepositories: PropTypes.array,
 };
 
 export default CreateJFrogRepositoryOverlay;
