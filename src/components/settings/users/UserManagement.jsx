@@ -156,9 +156,7 @@ function UserManagement() {
   };
 
   const getHelpComponent = () => {
-    if (!isLoading) {
-      return (<UserManagementHelpDocumentation/>);
-    }
+    return (<UserManagementHelpDocumentation/>);
   };
 
   return (
