@@ -12,6 +12,8 @@ import jFrogToolRepositoriesActions
 import StandaloneDeleteButtonWithConfirmationModal
   from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
+import JFrogRepositoryKeyTextInput
+  from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/details/inputs/JFrogRepositoryKeyTextInput";
 
 function JFrogRepositoryEditorPanel(
   {
@@ -92,9 +94,9 @@ function JFrogRepositoryEditorPanel(
       </div>
       <Row>
         <Col lg={12}>
-          <TextInputBase
-            dataObject={jFrogRepositoryModel}
-            setDataObject={setJFrogRepositoryModel}
+          <JFrogRepositoryKeyTextInput
+            model={jFrogRepositoryModel}
+            setModel={setJFrogRepositoryModel}
             fieldName={"key"}
             disabled={jFrogRepositoryModel?.isNew() !== true}
           />
