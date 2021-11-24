@@ -21,7 +21,6 @@ function JFrogRepositoryEditorPanel(
     jFrogRepositoryModel,
     setJFrogRepositoryModel,
     handleClose,
-    jfrogRepositories,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -51,14 +50,7 @@ function JFrogRepositoryEditorPanel(
   };
 
   const deleteJFrogMavenRepository = async () => {
-    const repo = jFrogRepositoryModel?.getPersistData();
-    let postBody = {
-      toolId: toolId,
-      repositoryName: repo.key
-    };
-    const response = await jFrogToolRepositoriesActions.deleteRepository(postBody, getAccessToken, cancelTokenSource);
-    handleClose();
-    return response;
+    return await jFrogToolRepositoriesActions.deleteRepository(getAccessToken, cancelTokenSource, toolId, jFrogRepositoryModel);
   };
 
   const getExtraButtons = () => {
@@ -67,6 +59,7 @@ function JFrogRepositoryEditorPanel(
         <StandaloneDeleteButtonWithConfirmationModal
           model={jFrogRepositoryModel}
           deleteDataFunction={deleteJFrogMavenRepository}
+          handleCloseFunction={handleClose}
         />
       );
     }
@@ -126,7 +119,6 @@ JFrogRepositoryEditorPanel.propTypes = {
   jFrogRepositoryModel: PropTypes.object,
   setJFrogRepositoryModel: PropTypes.func,
   handleClose: PropTypes.func,
-  jfrogRepositories: PropTypes.array,
 };
 
 export default JFrogRepositoryEditorPanel;

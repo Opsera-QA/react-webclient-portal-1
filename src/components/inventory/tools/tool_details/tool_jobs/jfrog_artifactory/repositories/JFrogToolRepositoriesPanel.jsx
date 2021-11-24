@@ -6,7 +6,7 @@ import jFrogToolRepositoriesActions
   from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jFrogToolRepositories.actions";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import JFrogToolRepositoryEditorPanel
+import JFrogRepositoryEditorPanel
   from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/details/JFrogRepositoryEditorPanel";
 
 function JFrogToolRepositoriesPanel({ toolId }) {
@@ -68,13 +68,11 @@ function JFrogToolRepositoriesPanel({ toolId }) {
 
   if (jFrogRepositoryModel) {
     return (
-      <JFrogToolRepositoryEditorPanel
+      <JFrogRepositoryEditorPanel
         toolId={toolId}
         jFrogRepositoryModel={jFrogRepositoryModel}
         setJFrogRepositoryModel={setJfrogRepositoryModel}
-        loadData={loadData}
         handleClose={togglePanel}
-        setJfrogRepositoryModel={setJfrogRepositoryModel}
       />
     );
   }
