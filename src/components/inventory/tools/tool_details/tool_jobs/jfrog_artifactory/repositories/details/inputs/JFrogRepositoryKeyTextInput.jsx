@@ -24,6 +24,7 @@ function JFrogRepositoryKeyTextInput(
       setErrorMessage("");
       model.setData(fieldName, newValue);
       setModel({...newModel});
+      return model;
     }
   };
 
