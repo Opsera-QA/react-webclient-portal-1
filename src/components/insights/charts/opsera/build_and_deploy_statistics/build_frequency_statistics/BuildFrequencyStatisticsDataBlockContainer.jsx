@@ -9,6 +9,7 @@ import { ResponsiveLine } from '@nivo/line';
 import { defaultConfig, getColor, assignStandardColors } from 'components/insights/charts/charts-views';
 import "../build-and-deploy-kpi.css";
 import _ from "lodash";
+import ChartTooltip from "components/insights/charts/ChartTooltip";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData }) {    
@@ -46,11 +47,17 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
       <div className="new-chart p-0" style={{height: "150px"}}>
         <ResponsiveLine
           data={dailyBuildsChartData}
-          {...defaultConfig("Count", "Month", 
-                false, false, "numbers", "month")}
+          {...defaultConfig("Count", "Date", 
+                false, false, "numbers", "monthDate2")}
           yScale={{ type: 'linear', min: '0', max: maxVal, stacked: false, reverse: false }}          
           enableGridX={false}
           enableGridY={false}
+          tooltip={(node) => (            
+            <ChartTooltip
+              titles={["Date Range", "Number of Builds", "Avg Daily Builds"]}
+              values={[node.point.data.range, node.point.data.total, node.point.data.y]}
+            />
+          )}
           axisLeft={{            
             tickValues: [0, maxVal],
             legend: 'Avg Daily Builds',
