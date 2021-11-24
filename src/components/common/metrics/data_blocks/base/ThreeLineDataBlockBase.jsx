@@ -3,13 +3,34 @@ import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import InfoOverlayIcon from "components/common/icons/general/InfoOverlayIcon";
 
-function ThreeLineDataBlockBase({ middleText, bottomText, topText, className, icon}) {
+function ThreeLineDataBlockBase(
+  {
+    middleText,
+    bottomText,
+    topText,
+    className,
+    icon,
+    infoOverlay,
+  }) {
   const getLeftDataBlockIcon = () => {
     if (icon) {
       return (
         <div className={"data-block-left-icon"}>
           <IconBase icon={icon}  />
+        </div>
+      );
+    }
+  };
+
+  const getInfoOverlayIcon = () => {
+    if (infoOverlay) {
+      return (
+        <div className={"data-block-right-icon"}>
+          <InfoOverlayIcon
+            infoOverlay={infoOverlay}
+          />
         </div>
       );
     }
@@ -50,6 +71,7 @@ function ThreeLineDataBlockBase({ middleText, bottomText, topText, className, ic
     <div className={className}>
       <Row className={"w-100 h-100 mx-auto text-center"}>
         {getLeftDataBlockIcon()}
+        {getInfoOverlayIcon()}
         <Col xs={12} className={"mt-2 w-100 text-center"}>
           {getTopText()}
         </Col>
@@ -70,6 +92,7 @@ ThreeLineDataBlockBase.propTypes = {
   bottomText: PropTypes.any,
   className: PropTypes.string,
   icon: PropTypes.object,
+  infoOverlay: PropTypes.any,
 };
 
 export default ThreeLineDataBlockBase;
