@@ -103,9 +103,7 @@ function SiteRoleManagement() {
   };
 
   const getHelpComponent = () => {
-    if (!isLoading) {
       return (<SiteRolesHelpDocumentation/>);
-    }
   };
 
   return (
