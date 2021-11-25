@@ -10,9 +10,8 @@ function SalesforceCreatePackageDurationDataBlock({ meanData, countData, goalsDa
     <ThreeLineDataBlockNoFocusBase
       className="salesforce-duration-by-stage-kpi"
       topText={"Package Creation"}
-      middleText={getMiddleText(meanData, countData)}
+      middleText={getMiddleText(meanData, countData, goalsData)}
       bottomText={goalsData ? "Goal: " + goalsData + " min" : "No Goal"}
-      middleStyle={getMiddleStyle(meanData, goalsData)}
     />
   );
 }
