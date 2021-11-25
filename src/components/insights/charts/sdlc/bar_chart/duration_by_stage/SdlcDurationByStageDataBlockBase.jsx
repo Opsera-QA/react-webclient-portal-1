@@ -12,9 +12,8 @@ function SdlcDurationByStageDataBlockBase({ topText, meanData, countData, goalsD
     <ThreeLineDataBlockNoFocusBase
       topText={topText}
       className="sdlc-duration-by-stage-kpi"
-      middleText={getMiddleText(meanData, countData)}
-      bottomText={!isEmptyCustom(goalsData) ? `Goal: ${goalsData} min` : `No Goal`}
-      middleStyle={getMiddleStyle(meanData, goalsData)}
+      middleText={getMiddleText(meanData, countData, goalsData)}
+      bottomText={goalsData ? `Goal: ${goalsData} min` : `No Goal`}
     />
   );
 }
