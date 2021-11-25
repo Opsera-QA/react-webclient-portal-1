@@ -20,7 +20,7 @@ import DashboardFavoritesIcon from "components/common/icons/dashboards/Dashboard
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import {Button} from "react-bootstrap";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
-import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date-helpers";
+import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date.helpers";
 import {capitalizeFirstLetter, hasStringValue, truncateString} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
