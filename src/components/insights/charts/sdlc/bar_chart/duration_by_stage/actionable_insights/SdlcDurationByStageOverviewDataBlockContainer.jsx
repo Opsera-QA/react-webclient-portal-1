@@ -3,7 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
-import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
+import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
 function SdlcDurationByStageOverviewDataBlockContainer({ data }) {
   let className = `p-2 dark-gray-text-primary`;
   return (
@@ -18,8 +18,8 @@ function SdlcDurationByStageOverviewDataBlockContainer({ data }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
-              score={data.total_duration}
-              subtitle={"Total Duration (hrs)"}
+              score={getTimeDisplay(data.total_duration)}
+              subtitle={"Total Duration"}
             />
           </DataBlockBoxContainer>{" "}
         </Col>
@@ -27,8 +27,8 @@ function SdlcDurationByStageOverviewDataBlockContainer({ data }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
-              score={data.total_time_to_resolve}
-              subtitle={"Total Time to Resolve (hrs)"}
+              score={getTimeDisplay(data.total_time_to_resolve)}
+              subtitle={"Total Time to Resolve"}
             />
           </DataBlockBoxContainer>{" "}
         </Col>
@@ -41,8 +41,8 @@ function SdlcDurationByStageOverviewDataBlockContainer({ data }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
-              score={data.mean_duration}
-              subtitle={"Average Duration (hrs)"}
+              score={getTimeDisplay(data.mean_duration)}
+              subtitle={"Average Duration"}
             />
           </DataBlockBoxContainer>{" "}
         </Col>
@@ -50,8 +50,8 @@ function SdlcDurationByStageOverviewDataBlockContainer({ data }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
-              score={data.mean_time_to_resolve}
-              subtitle={"Average Time to Resolve (hrs)"}
+              score={getTimeDisplay(data.mean_time_to_resolve)}
+              subtitle={"Average Time to Resolve"}
             />
           </DataBlockBoxContainer>{" "}
         </Col>
