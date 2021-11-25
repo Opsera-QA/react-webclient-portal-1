@@ -131,7 +131,7 @@ function DetailScreenContainer(
 
   if (!isLoading && dataObject == null) {
     return (
-      <DataNotFoundContainer type={metadata?.type} breadcrumbDestination={breadcrumbDestination} />
+      <AccessDeniedContainer />
     );
   }
 
