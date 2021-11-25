@@ -13,13 +13,13 @@ export const getTimeDisplay = (mins) => {
     arrayToDisplay.push(days + (days === 1 ? " day" : " days"));
   }
   if (hours > 0) {
-    arrayToDisplay.push(hours + (hours === 1 ? " hour" : " hours"));
+    arrayToDisplay.push(hours + (hours === 1 ? " hour" : " hrs"));
   }
   if (minutes > 0) {
-    arrayToDisplay.push(minutes + (minutes === 1 ? " minute" : " minutes"));
+    arrayToDisplay.push(minutes + (minutes === 1 ? " minute" : " min"));
   }
   if (remainingSeconds > 0) {
-    arrayToDisplay.push(remainingSeconds + (remainingSeconds === 1 ? " second" : " seconds"));
+    arrayToDisplay.push(remainingSeconds + (remainingSeconds === 1 ? " second" : " sec"));
   }
   if (arrayToDisplay.length === 0) {
     return "0 seconds";
