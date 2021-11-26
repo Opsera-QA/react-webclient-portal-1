@@ -40,6 +40,7 @@ function ImagePathTextInput(
           hideDataFunction={hideImageFunction}
           className={"input-button"}
           valueShown={imageShown}
+          type={"Image"}
           disabled={hasStringValue(model?.getData(fieldName)) !== true}
         />
       </>
