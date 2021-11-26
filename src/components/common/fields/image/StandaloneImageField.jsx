@@ -11,14 +11,14 @@ function StandaloneImageField(
     className,
   }) {
   const getImageClassNames = () => {
-    let imageClassNames;
+    let imageClassNames = "m-auto";
 
     if (onClickFunction) {
-      imageClassNames = "pointer";
+      imageClassNames += " pointer";
     }
 
     if (className) {
-      imageClassNames = imageClassNames ? `${imageClassNames} ${className}` : className;
+      imageClassNames += ` ${className}`;
     }
 
     return imageClassNames;
@@ -29,7 +29,7 @@ function StandaloneImageField(
   }
 
   return (
-    <div className={"content-container"}>
+    <div className={"image-container content-container d-flex"}>
       <img
         src={imageLink}
         alt={imageAltText}
