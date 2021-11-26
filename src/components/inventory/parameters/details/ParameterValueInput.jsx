@@ -57,8 +57,8 @@ function ParameterValueTextInput({fieldName, model, parameterId, setModel, disab
     return (
       <div className={"d-flex ml-2"}>
         <ShowSensitiveDataButton
-          showData={showData}
-          hideData={hideValue}
+          showDataFunction={showData}
+          hideDataFunction={hideValue}
           isLoading={isLoading}
           className={"input-button"}
           valueShown={valueShown || model?.isChanged(fieldName)}
