@@ -4,7 +4,7 @@ import IconBase from "components/common/icons/IconBase";
 
 function FieldTitleBar({ field, icon, isLoading, customTitle, actionButtons }) {
   return (
-    <div className="px-2 d-flex input-title-bar justify-content-between">
+    <div className={"px-2 d-flex input-title-bar justify-content-between"}>
       <div className={"my-auto"}>
         <IconBase icon={icon} isLoading={isLoading} className={"mr-1"}/>
         <span>{customTitle ? customTitle : field?.label}</span>
