@@ -14,12 +14,20 @@ function ImageContainer(
     className,
     visible,
   }) {
-  if (imageLink == null || visible === false) {
+  const isValidImageUrl = () => {
+    if ( typeof imageLink !== 'string' ) {
+      return false;
+    }
+
+    return !!imageLink?.match(/\w+\.(jpg|jpeg|gif|png|tiff|bmp)$/gi);
+  };
+
+  if (isValidImageUrl(imageLink) !== true || visible === false) {
     return null;
   }
 
   return (
-    <div className={"d-flex"}>
+    <div className={"d-flex image-container"}>
       <div className={className}>
         <FieldTitleBar
           customTitle={imageTitle}
