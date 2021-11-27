@@ -59,8 +59,8 @@ function VisibleVaultTextInput({fieldName, dataObject, setDataObject, disabled, 
       return (
         <ShowSensitiveDataButton
           isLoading={pullingValueFromVault || isLoading}
-          showData={showData}
-          hideData={hideValue}
+          showDataFunction={showData}
+          hideDataFunction={hideValue}
           className={"input-button mr-2"}
           valueShown={valueShown}
         />

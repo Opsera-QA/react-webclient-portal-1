@@ -16,23 +16,29 @@ function JFrogMavenPipelineStepConfigurationSummaryPanel({ jFrogPipelineDataObje
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <ToolNameField model={jFrogPipelineDataObject} fieldName={"jfrogToolConfigId"}/>
+          <ToolNameField dataObject={jFrogPipelineDataObject} fieldName={"toolConfigId"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={jFrogPipelineDataObject} fieldName={"type"}/>
+          <TextFieldBase dataObject={jFrogPipelineDataObject} fieldName={"jobType"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={jFrogPipelineDataObject} fieldName={"jobName"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={jFrogPipelineDataObject} fieldName={"toolJobId"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={jFrogPipelineDataObject} fieldName={"buildStepId"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={jFrogPipelineDataObject} fieldName={"jfrogToolConfigId"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={jFrogPipelineDataObject} fieldName={"repositoryName"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={jFrogPipelineDataObject} fieldName={"groupName"}/>
+          <TextFieldBase dataObject={jFrogPipelineDataObject} fieldName={"jobDescription"}/>
         </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={jFrogPipelineDataObject} fieldName={"artifactName"}/>
-        </Col>        
-        <Col lg={6}>
-          <TextFieldBase dataObject={jFrogPipelineDataObject} fieldName={"artifactStepId"}/>
-        </Col>        
       </Row>
     </PipelineStepSummaryPanelContainer>
   );
