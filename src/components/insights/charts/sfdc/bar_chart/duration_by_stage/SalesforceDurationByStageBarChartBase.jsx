@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
 import config from "./salesforceDurationByStageBarChartConfigs";
 import { defaultConfig } from "components/insights/charts/charts-views";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import SalesforceDurationByStageActionableInsightsOverlay from "./actionable_insights/SalesforceDurationByStageActionableInsightOverlay";
 
-function SalesforceDurationByStageBarChartBase({ metric }) {
+function SalesforceDurationByStageBarChartBase({ metric, kpiConfiguration, dashboardData }) {
+  const toastContext = useContext(DialogToastContext);
+  const onNodeSelect = (node) => {
+    let title = node.serieId;
+    toastContext.showOverlayPanel(
+      <SalesforceDurationByStageActionableInsightsOverlay
+        title={title}
+        actionableInsightsQueryData={node}
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+      />
+    );
+  };
+
   return (
     <ResponsiveLine
       data={metric}
@@ -23,12 +38,15 @@ function SalesforceDurationByStageBarChartBase({ metric }) {
           ]}
         />
       )}
+      onClick={(node) => onNodeSelect(node)}
     />
   );
 }
 
 SalesforceDurationByStageBarChartBase.propTypes = {
   metric: PropTypes.array,
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
 };
 
 export default SalesforceDurationByStageBarChartBase;
