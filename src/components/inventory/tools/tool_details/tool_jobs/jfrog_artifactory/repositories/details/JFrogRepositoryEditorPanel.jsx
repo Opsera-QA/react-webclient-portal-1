@@ -106,7 +106,7 @@ function JFrogRepositoryEditorPanel(
             model={jFrogRepositoryModel}
             setModel={setJFrogRepositoryModel}
             fieldName={"packageType"}
-            disabled={true}
+            disabled={jFrogRepositoryModel?.isNew() !== true}
           />
         </Col>
       </Row>

@@ -40,8 +40,8 @@ function TogglePasswordTextInput({fieldName, model, setModel, disabled}) {
   const getSensitiveDataButton = () => {
     return (
       <ShowSensitiveDataButton
-        showData={showData}
-        hideData={hideValue}
+        showDataFunction={showData}
+        hideDataFunction={hideValue}
         className={"input-button"}
         valueShown={valueShown}
       />

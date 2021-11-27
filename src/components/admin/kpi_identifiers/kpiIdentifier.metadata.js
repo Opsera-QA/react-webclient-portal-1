@@ -62,7 +62,7 @@ const kpiIdentifierMetadata = {
     {
       label: "Thumbnail Path",
       id: "thumbnailPath",
-      // isWebsite: true
+      // regexDefinitionName: "imagePathField",
     },
     {
       label: "Status",
