@@ -5,7 +5,7 @@ import {faClipboardCheck, faClipboardList} from "@fortawesome/pro-light-svg-icon
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 import {Button} from "react-bootstrap";
 
-function CopyToClipboardButton({ copyString, className, copyText, copiedText, copyIcon, copiedIcon, size, variant, hideIfNoValue }) {
+function CopyToClipboardButton({ copyString, className, copyText, copiedText, copyIcon, copiedIcon, size, variant }) {
   const [copiedToClipboard, setCopiedToClipboard] = useState(false);
 
   const copyToClipboard = () => {
@@ -18,17 +18,13 @@ function CopyToClipboardButton({ copyString, className, copyText, copiedText, co
     setCopiedToClipboard(true);
   };
 
-  if ((copyString == null || copyString === "") && hideIfNoValue === true) {
-    return null;
-  }
-
   return (
     <ButtonTooltip trigger={["hover", "focus"]} innerText={copiedToClipboard === true ? copiedText : copyText}>
       <div className={className}>
         <Button
           variant={variant}
           size={size}
-          disabled={copyString == null || copyString === ""}
+          disabled={typeof copyString !== "string" || copyString.length === 0}
           onClick={() => {copyToClipboard();}}
         >
           <FontAwesomeIcon
@@ -52,7 +48,6 @@ CopyToClipboardButton.propTypes = {
   copyIcon: PropTypes.object,
   copiedIcon: PropTypes.object,
   variant: PropTypes.string,
-  hideIfNoValue: PropTypes.bool
 };
 
 CopyToClipboardButton.defaultProps = {
@@ -61,7 +56,6 @@ CopyToClipboardButton.defaultProps = {
   copyIcon: faClipboardList,
   copiedIcon: faClipboardCheck,
   variant: "outline-primary",
-  hideIfNoValue: false
 };
 
 export default CopyToClipboardButton;

@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import DataNotFoundContainer from "components/common/panels/detail_view_container/DataNotFoundContainer";
 import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import TitleBar from "components/common/fields/TitleBar";
@@ -132,7 +131,7 @@ function DashboardScreenContainer(
 
   if (!isLoading && dataObject == null) {
     return (
-      <DataNotFoundContainer type={metadata?.type} breadcrumbDestination={breadcrumbDestination} />
+      <AccessDeniedContainer />
     );
   }
 

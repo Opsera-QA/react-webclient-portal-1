@@ -22,7 +22,9 @@ function NewScriptOverlay({ loadData, isMounted, scriptMetadata, getAccessToken,
 
   return (
     <CreateCenterPanel closePanel={closePanel} objectType={scriptMetadata?.type} loadData={loadData}>
-      <ScriptsEditorPanel handleClose={closePanel} setScriptModel={setScriptModel} scriptModel={scriptModel}/>
+      <div className={"mx-2"}>
+        <ScriptsEditorPanel handleClose={closePanel} setScriptModel={setScriptModel} scriptModel={scriptModel}/>
+      </div>
     </CreateCenterPanel>
   );
 }
