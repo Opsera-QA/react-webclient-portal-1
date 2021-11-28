@@ -22,6 +22,7 @@ function TextInputBase(
     style,
     className,
     error,
+    inputButtons,
   }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -74,6 +75,16 @@ function TextInputBase(
     return classes;
   };
 
+  const getInputButtons = () => {
+    if (inputButtons) {
+      return (
+        <div className={"d-flex ml-2"}>
+          {inputButtons}
+        </div>
+      );
+    }
+  };
+
   if (field == null) {
     return null;
   }
@@ -88,16 +99,19 @@ function TextInputBase(
         detailViewLink={detailViewLink}
         infoOverlay={infoOverlay}
       />
-      <input
-        type={type}
-        style={style}
-        disabled={disabled}
-        name={name}
-        value={dataObject.getData(fieldName)}
-        onChange={(event) => updateValue(event.target.value)}
-        className={getInputClasses()}
-        autoComplete="off"
-      />
+      <div className={"d-flex"}>
+        <input
+          type={type}
+          style={style}
+          disabled={disabled}
+          name={name}
+          value={dataObject.getData(fieldName)}
+          onChange={(event) => updateValue(event.target.value)}
+          className={getInputClasses()}
+          autoComplete="off"
+        />
+        {getInputButtons()}
+      </div>
       <InfoText field={field} errorMessage={errorMessage}/>
     </InputContainer>
   );
@@ -123,6 +137,7 @@ TextInputBase.propTypes = {
     PropTypes.string,
     PropTypes.object,
   ]),
+  inputButtons: PropTypes.any,
 };
 
 export default TextInputBase;

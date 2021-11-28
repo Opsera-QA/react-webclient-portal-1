@@ -22,11 +22,13 @@ function NewParameterOverlay({ loadData, isMounted, parameterMetadata, getAccess
 
   return (
     <CreateCenterPanel closePanel={closePanel} objectType={parameterMetadata?.type} loadData={loadData}>
-      <ParametersEditorPanel
-        handleClose={closePanel}
-        parameterModel={parameterModel}
-        setParameterModel={setParameterModel}
-      />
+      <div className={"mx-2"}>
+        <ParametersEditorPanel
+          handleClose={closePanel}
+          parameterModel={parameterModel}
+          setParameterModel={setParameterModel}
+        />
+      </div>
     </CreateCenterPanel>
   );
 }

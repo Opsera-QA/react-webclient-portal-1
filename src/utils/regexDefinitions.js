@@ -24,6 +24,13 @@ regexDefinitions.nameField = {
   errorFormText: "Only letters, numbers, dashes, underscores, and periods are allowed",
 };
 
+// TODO: Validate
+regexDefinitions.imagePathField = {
+  regex: /^\w+\.(jpg|jpeg|gif|png|tiff|bmp)$/gi,
+  formText: "Only links with valid image file extensions allowed",
+  errorFormText: "Only links with valid image file extensions allowed",
+};
+
 regexDefinitions.generalTextWithSpacesSlash = {
   regex: /^[A-Za-z0-9'\\/\-_.: ]*$/,
   formText: "Letters, numbers, spaces, slashes, dashes, apostrophes, colons, underscores, and periods are allowed",
