@@ -63,7 +63,7 @@ dashboardsActions.createDashboardV2 = async(getAccessToken, cancelTokenSource, d
     ...dashboardModel.getPersistData()
   };
 
-  return baseActions.apiPostCallV2(getAccessToken, apiUrl, postData);
+  return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
 };
 
 
