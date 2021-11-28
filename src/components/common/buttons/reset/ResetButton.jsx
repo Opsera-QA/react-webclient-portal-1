@@ -10,6 +10,7 @@ function ResetButton(
   {
     model,
     resetFunction,
+    isLoading,
     disabled,
     size,
     icon,
@@ -27,7 +28,7 @@ function ResetButton(
     };
   }, []);
 
-  const persistRecord = async () => {
+  const resetData = async () => {
     setIsResetting(true);
     await resetFunction();
 
@@ -53,9 +54,9 @@ function ResetButton(
       <TooltipWrapper innerText={cannotBeUndone}>
         <Button
           size={size}
-          variant={"danger"}
-          disabled={isResetting || disabled}
-          onClick={() => persistRecord()}
+          variant={"warning"}
+          disabled={isResetting || isLoading || disabled}
+          onClick={() => resetData()}
         >
           <span>
             <IconBase isLoading={isResetting} icon={icon} fixedWidth className="mr-2"/>
@@ -75,6 +76,7 @@ ResetButton.propTypes = {
   size: PropTypes.string,
   icon: PropTypes.object,
   label: PropTypes.string,
+  isLoading: PropTypes.bool,
 };
 
 ResetButton.defaultProps = {

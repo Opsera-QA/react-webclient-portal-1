@@ -6,23 +6,22 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import IconBase from "components/common/icons/IconBase";
 import KpiActions from "components/admin/kpi_identifiers/kpi.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import ResetConfirmationPanel from "components/common/panels/general/reset/ResetConfirmationPanel";
+import {parseError} from "components/common/helpers/error-helpers";
+import ResetButton from "components/common/buttons/reset/ResetButton";
 
-// TODO: Allow users to select what to reset with checkboxes.
 function ResetMetricConfigurationButton(
   {
     kpiConfigurationModel,
-    setKpiConfiguration,
     dashboardModel,
     index,
     identifier,
-    disable,
+    disabled,
     closePanel,
     className,
+    setKpiConfiguration, // TODO: Remove ASAP. Only in here due to dashboard detail view bug
   }) {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -30,8 +29,6 @@ function ResetMetricConfigurationButton(
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [showResetConfirmationPanel, setShowResetConfirmationPanel] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
@@ -87,7 +84,6 @@ function ResetMetricConfigurationButton(
 
   const resetKpiData = async () => {
     try {
-      setIsSaving(true);
       kpiConfigurationModel.setData("kpi_name", defaultKpiConfiguration?.name);
       kpiConfigurationModel.setData("kpi_category", defaultKpiConfiguration?.category);
       kpiConfigurationModel.setData("kpi_settings", defaultKpiConfiguration?.settings);
@@ -97,57 +93,17 @@ function ResetMetricConfigurationButton(
       const configuration = dashboardModel.getData("configuration");
       const resetKpiData = kpiConfigurationModel?.getPersistData();
       configuration[index] = resetKpiData;
-      setKpiConfiguration(resetKpiData);
+      setKpiConfiguration({...resetKpiData});
       dashboardModel.setData("configuration", configuration);
 
       await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardModel);
       closePanel();
     } catch (error) {
       if (isMounted?.current === true) {
-        console.log(error);
-        toastContext.showServiceUnavailableDialog();
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsSaving(false);
+        const parsedError = parseError(error);
+        setErrorMessage(parsedError);
       }
     }
-  };
-
-  const getLabel = () => {
-    if (isSaving) {
-      return ("Resetting KPI");
-    }
-
-    return ("Resetting KPI to Default Configuration");
-  };
-
-  const getBody = () => {
-    if (showResetConfirmationPanel === true) {
-      return (
-        <ResetConfirmationPanel
-          model={kpiConfigurationModel}
-          closePanelFunction={() => setShowResetConfirmationPanel(false)}
-          resetDataFunction={resetKpiData}
-        />
-      );
-    }
-
-    return (
-      <Button
-        disabled={disable || isSaving || isLoading}
-        onClick={() => setShowResetConfirmationPanel(true)}
-      >
-        <span>
-          <IconBase
-            isLoading={isSaving}
-            icon={faHistory}
-            className={"mr-2"}
-          />
-          {getLabel()}
-        </span>
-      </Button>
-    );
   };
 
   if (defaultKpiConfiguration == null || dashboardModel == null) {
@@ -156,7 +112,12 @@ function ResetMetricConfigurationButton(
 
   return (
     <div className={className}>
-      <div>{getBody()}</div>
+      <ResetButton
+        model={kpiConfigurationModel}
+        resetFunction={resetKpiData}
+        isLoading={isLoading}
+        disabled={disabled}
+      />
       <InfoText errorMessage={errorMessage} />
     </div>
   );
@@ -164,13 +125,13 @@ function ResetMetricConfigurationButton(
 
 ResetMetricConfigurationButton.propTypes = {
   kpiConfigurationModel: PropTypes.object,
-  setKpiConfiguration: PropTypes.func,
   dashboardModel: PropTypes.object,
   identifier: PropTypes.string,
   index: PropTypes.number,
   closePanel: PropTypes.func,
   className: PropTypes.string,
-  disable: PropTypes.bool,
+  disabled: PropTypes.bool,
+  setKpiConfiguration: PropTypes.func,
 };
 
-export default React.memo(ResetMetricConfigurationButton);
+export default  React.memo(ResetMetricConfigurationButton);
