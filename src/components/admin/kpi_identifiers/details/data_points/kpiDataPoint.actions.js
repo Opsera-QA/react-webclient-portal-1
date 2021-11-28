@@ -7,6 +7,11 @@ kpiDataPointActions.getKpiDataPointsV2 = async (getAccessToken, cancelTokenSourc
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+kpiDataPointActions.getKpiDataPointByIdentifiersV2 = async (getAccessToken, cancelTokenSource, kpiIdentifier, dataPointIdentifier) => {
+  const apiUrl = `/analytics/kpi/identifier/${kpiIdentifier}/data-points/identifier/${dataPointIdentifier}`;
+  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 kpiDataPointActions.createKpiDataPointV2 = async (getAccessToken, cancelTokenSource, kpiDataPointModel, kpiId) => {
   const postBody = {
     ...kpiDataPointModel.getPersistData(),

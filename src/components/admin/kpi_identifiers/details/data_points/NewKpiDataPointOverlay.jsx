@@ -84,10 +84,12 @@ function NewKpiDataPointOverlay(
       closePanel={closePanel}
       isMounted={isMounted}
     >
-      <KpiDataPointEditorPanel
-        dataPointModel={dataPointModel}
-        closeEditorPanel={closePanel}
-      />
+      <div className={"m-3"}>
+        <KpiDataPointEditorPanel
+          dataPointModel={dataPointModel}
+          closeEditorPanel={closePanel}
+        />
+      </div>
     </CreateCenterPanel>
   );
 }
