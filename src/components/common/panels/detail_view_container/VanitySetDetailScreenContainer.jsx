@@ -109,19 +109,25 @@ function VanitySetDetailScreenContainer(
 
   if (!isLoading && accessDenied) {
     return (
-      <AccessDeniedContainer />
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
     );
   }
 
   if (!isLoading && accessRoleData && roleRequirement && !meetsRequirements(roleRequirement, accessRoleData)) {
     return (
-      <AccessDeniedContainer />
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
     );
   }
 
   if (!isLoading && model == null) {
     return (
-      <AccessDeniedContainer />
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
     );
   }
 
