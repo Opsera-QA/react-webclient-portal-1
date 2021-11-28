@@ -76,22 +76,17 @@ dashboardsActions.updateDashboardV2 = async(getAccessToken, cancelTokenSource, d
   return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
 };
 
+dashboardsActions.deleteDashboardV2 = async(getAccessToken, cancelTokenSource, dashboardModel) => {
+  const apiUrl = `/analytics/dashboard/${dashboardModel?.getData('_id')}`;
+  return baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 dashboardsActions.updateFavorite = async(rowData, getAccessToken) => {
   const apiUrl = `/analytics/dashboard/${rowData._id}/update`;
   let postData = {
     ...rowData
   };
   return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
-};
-
-dashboardsActions.delete = async(dashboardDataDto, getAccessToken) => {
-    const apiUrl = `/analytics/dashboard/${dashboardDataDto.getData('_id')}`;
-    return baseActions.apiDeleteCall(getAccessToken, apiUrl);
-};
-
-dashboardsActions.deleteDashboardV2 = async(getAccessToken, cancelTokenSource, dashboardModel) => {
-  const apiUrl = `/analytics/dashboard/${dashboardModel?.getData('_id')}`;
-  return baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 export default dashboardsActions;
