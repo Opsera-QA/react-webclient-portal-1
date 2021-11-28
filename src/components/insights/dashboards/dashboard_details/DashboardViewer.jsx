@@ -14,7 +14,6 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import DashboardFiltersInput from "components/insights/dashboards/DashboardFiltersInput";
-import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import axios from "axios";
 
 function DashboardViewer({dashboardData}) {
@@ -92,9 +91,7 @@ function DashboardViewer({dashboardData}) {
   };
 
   if (dashboardDataDto == null) {
-    return (
-      <AccessDeniedContainer />
-    );
+    return null;
   }
 
   return (

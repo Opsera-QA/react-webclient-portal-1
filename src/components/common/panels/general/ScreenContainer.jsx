@@ -104,13 +104,17 @@ function ScreenContainer(
 
   if (!isLoading && accessDenied) {
     return (
-      <AccessDeniedContainer />
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
     );
   }
 
   if (!isLoading && accessRoleData && roleRequirement && !meetsRequirements(roleRequirement, accessRoleData)) {
     return (
-      <AccessDeniedContainer />
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
     );
   }
 

@@ -119,19 +119,25 @@ function DashboardScreenContainer(
 
   if (!isLoading && accessDenied) {
     return (
-      <AccessDeniedContainer />
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
     );
   }
 
   if (!isLoading && accessRoleData && roleRequirement && !meetsRequirements(roleRequirement, accessRoleData)) {
     return (
-      <AccessDeniedContainer />
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
     );
   }
 
   if (!isLoading && dataObject == null) {
     return (
-      <AccessDeniedContainer />
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
     );
   }
 
