@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, {useState, useContext, useRef, useEffect} from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Row, Col } from "react-bootstrap";
@@ -71,6 +71,10 @@ import StandaloneDeleteButtonWithConfirmationModal from "components/common/butto
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import TextAreaInput from "../../../common/inputs/text/TextAreaInput";
 
+import ResetMetricConfigurationButton from "components/common/buttons/dashboards/ResetMetricConfigurationButton";
+import axios from "axios";
+
+// TODO: There are a handful of issues with this we need to address.
 function KpiSettingsForm({
   kpiConfiguration,
   setKpiConfiguration,
@@ -204,6 +208,24 @@ function KpiSettingsForm({
       kpiServiceNowBusinessServicesFilterMetadata
     )
   );
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
+
 
   const tagFilterEnabled = [
     "opsera-pipeline-duration",
@@ -888,9 +910,8 @@ function KpiSettingsForm({
     }
 
     setKpiSettings({ ...newKpiSettings });
-    dashboardData.getData("configuration")[index] = kpiSettings.data;
-    setKpiConfiguration(kpiSettings.data);
-    await dashboardsActions.update(dashboardData, getAccessToken);
+    dashboardData.getData("configuration")[index] = kpiSettings?.getPersistData();
+    await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardData);
 
     if (closePanel) {
       closePanel();
@@ -904,7 +925,7 @@ function KpiSettingsForm({
   const deleteKpi = async () => {
     dashboardData?.getData("configuration").splice(index, 1);
     setKpis(dashboardData?.getData("configuration"));
-    await dashboardsActions.update(dashboardData, getAccessToken);
+    await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardData);
 
     if (closePanel) {
       closePanel();
@@ -919,8 +940,24 @@ function KpiSettingsForm({
     return <GenericChartSettingsHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
   };
 
-  const getDeleteButton = () => {
-    return <DeleteButtonWithInlineConfirmation dataObject={kpiSettings} deleteRecord={deleteKpi} />;
+  const getExtraButtons = () => {
+    return (
+      <div className={"d-flex"}>
+        <DeleteButtonWithInlineConfirmation
+          dataObject={kpiSettings}
+          deleteRecord={deleteKpi}
+        />
+        {/*<ResetMetricConfigurationButton*/}
+        {/*  kpiConfigurationModel={kpiSettings}*/}
+        {/*  dashboardModel={dashboardData}*/}
+        {/*  setKpiConfiguration={setKpiConfiguration}*/}
+        {/*  className={"ml-2"}*/}
+        {/*  identifier={kpiSettings?.getData("kpi_identifier")}*/}
+        {/*  index={index}*/}
+        {/*  closePanel={closePanel}*/}
+        {/*/>*/}
+      </div>
+    );
   };
 
   const getBody = () => {
@@ -959,7 +996,7 @@ function KpiSettingsForm({
         recordDto={kpiSettings}
         lenient={true}
         className={"px-3 pb-3"}
-        extraButtons={getDeleteButton()}
+        extraButtons={getExtraButtons()}
       >
         {getBody()}
       </EditorPanelContainer>
