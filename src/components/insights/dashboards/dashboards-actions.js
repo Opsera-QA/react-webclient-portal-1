@@ -81,6 +81,16 @@ dashboardsActions.deleteDashboardV2 = async(getAccessToken, cancelTokenSource, d
   return baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+dashboardsActions.updateDashboardKpiV2 = async(getAccessToken, cancelTokenSource, dashboardId, kpiModel) => {
+  const apiUrl = `/analytics/dashboard/${dashboardId}/kpi/${kpiModel?.getData('_id')}/update`;
+  const postData = {
+    ...kpiModel?.getPersistData()
+  };
+
+  return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
+};
+
+
 dashboardsActions.updateFavorite = async(rowData, getAccessToken) => {
   const apiUrl = `/analytics/dashboard/${rowData._id}/update`;
   let postData = {
