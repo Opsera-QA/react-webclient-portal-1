@@ -2,14 +2,6 @@ import baseActions from "utils/actionsBase";
 
 const dashboardsActions = {};
 
-dashboardsActions.create = async(dashboardDataDto, getAccessToken) => {
-    const apiUrl = "/analytics/dashboard/create";
-    let postData = {
-      ...dashboardDataDto.getPersistData()
-    };
-    return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
-};
-
 dashboardsActions.getDashboardByIdV2 = async(getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/analytics/dashboard/${id}`;
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
@@ -65,19 +57,22 @@ dashboardsActions.getAllDashboardsLovV2 = async(getAccessToken, cancelTokenSourc
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-dashboardsActions.update = async(dashboardDataDto, getAccessToken) => {
-    const apiUrl = `/analytics/dashboard/${dashboardDataDto.getData('_id')}/update`;
-    let postData = {
-      ...dashboardDataDto.getPersistData()
-    };
-    return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
+dashboardsActions.createDashboardV2 = async(getAccessToken, cancelTokenSource, dashboardModel) => {
+  const apiUrl = "/analytics/dashboard/create";
+  const postData = {
+    ...dashboardModel.getPersistData()
+  };
+
+  return baseActions.apiPostCallV2(getAccessToken, apiUrl, postData);
 };
 
-dashboardsActions.updateDashboardV2 = async(getAccessToken, cancelTokenSource, dashboardData) => {
-  const apiUrl = `/analytics/dashboard/${dashboardData.getData('_id')}/update`;
-  let postData = {
-    ...dashboardData.getPersistData()
+
+dashboardsActions.updateDashboardV2 = async(getAccessToken, cancelTokenSource, dashboardModel) => {
+  const apiUrl = `/analytics/dashboard/${dashboardModel?.getData('_id')}/update`;
+  const postData = {
+    ...dashboardModel?.getPersistData()
   };
+
   return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
 };
 
@@ -92,6 +87,11 @@ dashboardsActions.updateFavorite = async(rowData, getAccessToken) => {
 dashboardsActions.delete = async(dashboardDataDto, getAccessToken) => {
     const apiUrl = `/analytics/dashboard/${dashboardDataDto.getData('_id')}`;
     return baseActions.apiDeleteCall(getAccessToken, apiUrl);
+};
+
+dashboardsActions.deleteDashboardV2 = async(getAccessToken, cancelTokenSource, dashboardModel) => {
+  const apiUrl = `/analytics/dashboard/${dashboardModel?.getData('_id')}`;
+  return baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 export default dashboardsActions;
