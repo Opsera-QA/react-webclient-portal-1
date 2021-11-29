@@ -11,7 +11,7 @@ import FullScreenCenterOverlayContainer from "components/common/overlays/center/
 import { faTable } from "@fortawesome/pro-light-svg-icons";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import config from "../OpseraBuildAndDeployLineChartConfig";
-import MetricScoreText from "components/common/metrics/score/MetricScoreText";
+import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
 import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
 
 // TODO: Pass in relevant data and don't use hardcoded data
@@ -51,7 +51,7 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
     return (  
       <ThreeLineDataBlockNoFocusBase        
         topText={"Success Rate"}
-        middleText={<MetricScoreText score={metricData?.deploy?.successPercent || 0} qualityLevel={metricData?.deploy?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS} />}
+        middleText={<MetricPercentageText score={metricData?.deploy?.successPercent || 0} qualityLevel={metricData?.deploy?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS} />}
         bottomText={`Goal: ${goalsData}`}
       />
     );

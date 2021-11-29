@@ -7,6 +7,7 @@ function MetricScoreText({score, qualityLevel}) {
     <MetricTextBase
       formattedText={score}
       qualityLevel={qualityLevel}
+      className={"metric-block-content-text"}
     />
   );
 }
