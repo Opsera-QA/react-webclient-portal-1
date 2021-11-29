@@ -51,7 +51,7 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
     return (  
       <ThreeLineDataBlockNoFocusBase        
         topText={"Success Rate"}
-        middleText={<MetricPercentageText score={metricData?.deploy?.successPercent || 0} qualityLevel={metricData?.deploy?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS} />}
+        middleText={<MetricPercentageText percentage={metricData?.deploy?.successPercent || 0} qualityLevel={metricData?.deploy?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS} />}
         bottomText={`Goal: ${goalsData}`}
       />
     );
