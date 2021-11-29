@@ -14,6 +14,7 @@ import DeploymentFrequencyStatisticsDataBlockContainer
   from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_frequency_statistics/DeploymentFrequencyStatisticsDataBlockContainer";
 import chartsActions from "components/insights/charts/charts-actions";
 import axios from "axios";
+import OpseraBuildAndDeployChartHelpDocumentation from "./OpseraBuildAndDeployChartHelpDocumentation";
 
 const DEFAULT_GOALS = {
   build_success_rate: 90,
@@ -144,7 +145,7 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
-        // chartHelpComponent={(closeHelpPanel) => <SonarRatingsChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
+        chartHelpComponent={(closeHelpPanel) => <OpseraBuildAndDeployChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
     </div>
   );
