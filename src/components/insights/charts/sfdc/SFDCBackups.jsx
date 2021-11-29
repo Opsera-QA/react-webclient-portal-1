@@ -104,19 +104,19 @@ function SfdcBackups({ kpiConfiguration, setKpiConfiguration, dashboardData, ind
 
     return (
       <Row className={"mx-0 p-2 justify-content-between"}>
-        <Col className={"px-0"} xl={6} lg={12}>
+        <Col xl={6} lg={12} className={'mb-3'}>
           <SfdcBackupSuccessDataBlock score={metrics[0].success.toString()} subtitle="Successful Backups" />
         </Col>
-        <Col className={"px-0"} xl={6} lg={12}>
+        <Col xl={6} lg={12} className={'mb-3'}>
           <SfdcBackupFailureDataBlock score={metrics[0].failure.toString()} subtitle="Failed Backups" />
         </Col>
-        <Col className={"px-0"} xl={6} lg={12}>
+        <Col xl={6} lg={12} className={'mb-3'}>
           <SfdcBackupSuccessDataBlock
             score={rollbacks && rollbacks.length > 0 ? rollbacks[0].success.toString() : 0}
             subtitle="Successful Rollbacks"
           />
         </Col>
-        <Col className={"px-0"} xl={6} lg={12}>
+        <Col xl={6} lg={12} className={'mb-3'}>
           <SfdcBackupFailureDataBlock
             score={rollbacks && rollbacks.length > 0 ? rollbacks[0].failure.toString() : 0}
             subtitle="Failed Backups"
