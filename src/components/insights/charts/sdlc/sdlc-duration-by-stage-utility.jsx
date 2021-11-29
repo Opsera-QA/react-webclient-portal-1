@@ -13,16 +13,16 @@ export const getTimeDisplay = (mins) => {
     arrayToDisplay.push(days + (days === 1 ? " day" : " days"));
   }
   if (hours > 0) {
-    arrayToDisplay.push(hours + (hours === 1 ? " hour" : " hrs"));
+    arrayToDisplay.push(hours + (hours === 1 ? " hr" : " hrs"));
   }
   if (minutes > 0) {
-    arrayToDisplay.push(minutes + (minutes === 1 ? " minute" : " min"));
+    arrayToDisplay.push(minutes + (minutes === 1 ? " min" : " min"));
   }
   if (remainingSeconds > 0) {
-    arrayToDisplay.push(remainingSeconds + (remainingSeconds === 1 ? " second" : " sec"));
+    arrayToDisplay.push(remainingSeconds + (remainingSeconds === 1 ? " sec" : " sec"));
   }
   if (arrayToDisplay.length === 0) {
-    return "0 seconds";
+    return "0 sec";
   }
   const display = arrayToDisplay.slice(0, 2).join(", ");
   return display;
