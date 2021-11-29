@@ -7,6 +7,7 @@ function MetricPercentageText({ percentage, qualityLevel }) {
     <MetricTextBase
       formattedText={`${percentage}%`}
       qualityLevel={qualityLevel}
+      className="metric-block-content-text"
     />
   );
 }
