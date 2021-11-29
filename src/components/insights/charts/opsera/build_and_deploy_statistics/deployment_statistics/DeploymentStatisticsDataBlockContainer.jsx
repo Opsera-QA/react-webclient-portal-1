@@ -12,6 +12,7 @@ import DeploymentStatisticsActionableInsightsTable from "./DeploymentStatisticsA
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import { faTable } from "@fortawesome/pro-light-svg-icons";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
+import config from "../OpseraBuildAndDeployLineChartConfig";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData }) {
@@ -42,7 +43,7 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
   let successChartData = [
     {
       "id": "success rate",
-      "color": "#ABA4CC",
+      "color": "#494173",
       "data": chartData?.deploySuccess
     }  
   ];
@@ -65,23 +66,13 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
           data={successChartData}
           {...defaultConfig("", "Date", 
                 false, false, "wholeNumbers", "monthDate2")}
-          yScale={{ type: 'linear', min: '0', max: '100', stacked: false, reverse: false }}          
-          enableGridX={false}
-          enableGridY={false}
+          {...config()}
           tooltip={(node) => (            
             <ChartTooltip
               titles={["Date Range", "Number of Builds", "Success Rate"]}
               values={[node.point.data.range, node.point.data.total, String(node.point.data.y) + " %"]}
             />
-          )}
-          axisLeft={{            
-            tickValues: [0, 50, 100],
-            legend: 'Success Rate %',
-            legendOffset: -38,
-            legendPosition: 'middle'
-          }}
-          colors={getColor}
-          pointSize={6}
+          )}          
           markers={[
             {
                 axis: 'y',
@@ -100,10 +91,10 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
       title={"Deployment Statistics"}
       onClick={() => onRowSelect()}
     >
-      <Col sm={4} className={"p-2"}>
+      <Col sm={3} className={"p-2"}>
         {getLeftDataBlock()}        
       </Col>      
-      <Col sm={8} className={"p-2"}>
+      <Col sm={9} className={"p-2"}>
         {getSuccessTrendChart()}
       </Col>      
     </HorizontalDataBlocksContainer>

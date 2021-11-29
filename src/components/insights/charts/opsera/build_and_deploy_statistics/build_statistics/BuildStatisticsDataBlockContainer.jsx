@@ -12,6 +12,7 @@ import BuildStatisticsActionableInsightsTable from "./BuildStatisticsActionableI
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import { faTable } from "@fortawesome/pro-light-svg-icons";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
+import config from "../OpseraBuildAndDeployLineChartConfig";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData }) {
@@ -42,7 +43,7 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
   let successChartData = [
     {
       "id": "success rate",
-      "color": "#ABA4CC",
+      "color": "#494173",
       "data": chartData?.buildSuccess
     }  
   ];
@@ -64,24 +65,15 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
         <ResponsiveLine
           data={successChartData}
           {...defaultConfig("", "Date", 
-                false, false, "wholeNumbers", "monthDate2")}
-          yScale={{ type: 'linear', min: '0', max: '100', stacked: false, reverse: false }}
-          enableGridX={false}
-          enableGridY={false}
+                false, false, "wholeNumbers", "monthDate2")}          
+          {...config()}
           tooltip={(node) => (            
             <ChartTooltip
+              key={node.point.data.range}
               titles={["Date Range", "Number of Builds", "Success Rate"]}
               values={[node.point.data.range, node.point.data.total, String(node.point.data.y) + " %"]}
             />
-          )}
-          axisLeft={{            
-            tickValues: [0, 50, 100],
-            legend: 'Success Rate %',
-            legendOffset: -38,
-            legendPosition: 'middle'
-          }}
-          colors={getColor}
-          pointSize={6}
+          )}          
           markers={[
             {
                 axis: 'y',
@@ -100,10 +92,10 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
       title={"Build Statistics"}
       onClick={() => onRowSelect()}
     >      
-      <Col sm={4} className={"p-2"}>
+      <Col sm={3} className={"p-2"}>
         {getLeftDataBlock()}        
       </Col>
-      <Col sm={8} className={"p-2"}>
+      <Col sm={9} className={"p-2"}>
         {getSuccessTrendChart()}
       </Col>
     </HorizontalDataBlocksContainer>
