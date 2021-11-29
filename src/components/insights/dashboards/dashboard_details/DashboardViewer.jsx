@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import { AuthContext } from "contexts/AuthContext";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
-import { Col, Row } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import InfoDialog from "components/common/status_notifications/info";
 import {faUsers} from "@fortawesome/pro-light-svg-icons";
-import DataNotFoundContainer from "components/common/panels/detail_view_container/DataNotFoundContainer";
-import DataNotFoundDialog from "components/common/status_notifications/data_not_found/DataNotFoundDialog";
 import ChartView from "components/insights/charts/ChartView";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
@@ -16,29 +14,52 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import DashboardFiltersInput from "components/insights/dashboards/DashboardFiltersInput";
+import axios from "axios";
 
-function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLink, managementTitle, type}) {
+function DashboardViewer({dashboardData}) {
   const { getAccessToken } = useContext(AuthContext);
   const history = useHistory();
   const [dashboardDataDto, setDashboardDataDto] = useState(dashboardData);
   const [kpis, setKpis] = useState([]);
   const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(modelHelpers.getDashboardFilterModel(dashboardDataDto, "tags", dashboardFiltersMetadata));
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData(dashboardDataDto);
-  }, []);
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(dashboardData).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [dashboardData]);
 
   const loadData = async (newDashboardData) => {
     setDashboardDataDto({...newDashboardData});
-    setKpis(newDashboardData?.data?.configuration);
+    const newDashboardFilterModel = modelHelpers.getDashboardFilterModel(dashboardDataDto, "tags", dashboardFiltersMetadata);
+    setDashboardFilterTagsModel(newDashboardFilterModel);
+    setKpis(newDashboardData.getData("configuration"));
   };
 
   const gotoMarketplace = () => {
-    history.push({ pathname:`/insights/marketplace/${dashboardDataDto.getData("_id")}`});
+    history.push({ pathname:`/insights/marketplace/${dashboardDataDto?.getData("_id")}`});
   };
 
+  // TODO: Move this into DashboardFiltersInput
   const validateAndSaveData = async () => {
-    return await dashboardsActions.update(dashboardData, getAccessToken);
+    return await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardData);
   };
 
   const getKpiView = () => {
@@ -70,15 +91,7 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
   };
 
   if (dashboardDataDto == null) {
-    return (
-      <DataNotFoundContainer type={type} breadcrumbDestination={breadcrumbDestination}>
-        <DataNotFoundDialog
-          type={type}
-          managementViewTitle={managementTitle}
-          managementViewLink={managementViewLink}
-        />
-      </DataNotFoundContainer>
-    );
+    return null;
   }
 
   return (
@@ -108,14 +121,8 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
   );
 }
 
-
 DashboardViewer.propTypes = {
   dashboardData: PropTypes.object,
-  dashboardName: PropTypes.string,
-  breadcrumbDestination: PropTypes.string,
-  managementViewLink: PropTypes.string,
-  managementTitle: PropTypes.string,
-  type: PropTypes.string
 };
 
 export default DashboardViewer;

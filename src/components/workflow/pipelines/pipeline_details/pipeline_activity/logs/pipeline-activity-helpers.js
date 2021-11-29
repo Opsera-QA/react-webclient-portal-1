@@ -1,3 +1,5 @@
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+
 const pipelineActivityHelpers = {};
 
 pipelineActivityHelpers.constructTree = (pipelineLogData) => {
@@ -13,7 +15,18 @@ pipelineActivityHelpers.constructTree = (pipelineLogData) => {
       const stepIndex = log.step_index >= 0 ? log.step_index : "other_logs";
       const stepName = log.step_name ? log.step_name : "Other Logs";
       const runNumberText = log.run_count ? `Run ${log.run_count}` : "Other Logs";
-      const stepNameText = stepIndex !== "other_logs" && log.step_name ? `Step ${stepIndex + 1}: ${log.step_name}` : `Step: ${log.step_name}`;
+
+      let stepNameText;
+
+      if (stepName === "registered webhook event") {
+        stepNameText = `${capitalizeFirstLetter(log.step_name)}`;
+      }
+      else if (stepIndex === "other_logs" || !log.step_name) {
+        stepNameText = `Step: ${capitalizeFirstLetter(log.step_name)}`;
+      }
+      else {
+        stepNameText = `Step ${stepIndex + 1}: ${capitalizeFirstLetter(log.step_name)}`;
+      }
 
       let currentValue = newTree.find((entry) => {return entry.id === runNumber;});
 

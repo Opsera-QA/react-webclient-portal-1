@@ -20,7 +20,7 @@ import DashboardFavoritesIcon from "components/common/icons/dashboards/Dashboard
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import {Button} from "react-bootstrap";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
-import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date-helpers";
+import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date.helpers";
 import {capitalizeFirstLetter, hasStringValue, truncateString} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
@@ -30,6 +30,7 @@ import UnchangedMetricIcon from "components/common/icons/metric/unchanged/Unchan
 import NoTrendMetricIcon from "components/common/icons/metric/trend/NoTrendMetricIcon";
 import IconBase from "components/common/icons/IconBase";
 import PageLinkIcon from "components/common/icons/general/PageLinkIcon";
+import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
 
 export const getCustomTableHeader = (field) => {
   return field ? field.label : "";
@@ -60,6 +61,30 @@ export const getTableTextColumn = (field, className) => {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     class: className ? className : undefined
+  };
+};
+
+export const getTableDurationTextColumn = (field, className) => {
+  if (className) {
+    return {
+      Header: getCustomTableHeader(field),
+      accessor: getCustomTableAccessor(field),
+      class: className,
+      Cell: function parseText(row) {
+        const value = row?.value;
+        return getTimeDisplay(value);
+      }
+    };
+  }
+
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    class: className ? className : undefined,
+    Cell: function parseText(row) {
+      const value = row?.value;
+      return getTimeDisplay(value);
+    }
   };
 };
 
