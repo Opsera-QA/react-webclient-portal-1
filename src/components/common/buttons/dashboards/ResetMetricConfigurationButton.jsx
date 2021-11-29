@@ -91,6 +91,7 @@ function ResetMetricConfigurationButton(
         kpiConfigurationModel.setData("kpi_category", defaultKpiConfiguration?.category);
         kpiConfigurationModel.setData("kpi_settings", defaultKpiConfiguration?.settings);
         kpiConfigurationModel.setData("filters", defaultKpiConfiguration?.supported_filters);
+        kpiConfigurationModel.setData("dataPoints", defaultKpiConfiguration?.dataPoints);
       }
 
       const configuration = dashboardModel.getData("configuration");
