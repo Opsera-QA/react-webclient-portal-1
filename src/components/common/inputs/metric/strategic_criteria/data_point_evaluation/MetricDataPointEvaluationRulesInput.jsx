@@ -10,7 +10,7 @@ function MetricDataPointEvaluationRulesInput({model, setModel, strategicCriteria
   const validateAndSetData = (newDataPointEvaluationRules) => {
     const newStrategicCriteria = typeof strategicCriteria === "object" ? strategicCriteria : {};
     newStrategicCriteria.data_point_evaluation_rules = {...newDataPointEvaluationRules};
-    model.setData("strategic_criteria", newStrategicCriteria);
+    model.setData("strategic_criteria", {...newStrategicCriteria});
     setModel({...model});
   };
 

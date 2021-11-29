@@ -5,7 +5,6 @@ import Col from "react-bootstrap/Col";
 import Model from "core/data_model/model";
 import dataPointEvaluationRowMetadata
   from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/dataPointEvaluationRowMetadata";
-import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import dataPointEvaluationRulesMetadata
   from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/dataPointEvaluationRules.metadata";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
@@ -65,7 +64,7 @@ function MetricDataPointEvaluationRuleInput({ruleData, updateRule, fieldName, ic
           <DataPointEvaluationTriggerValuesInput
             model={ruleModel}
             setModel={setRuleModel}
-            updateRule={updateRule}
+            updateRule={updateRuleRow}
             triggerFilter={ruleModel?.getData("trigger_filter")}
           />
         </Col>

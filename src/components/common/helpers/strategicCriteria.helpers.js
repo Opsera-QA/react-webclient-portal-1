@@ -5,11 +5,11 @@ import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBa
 export const strategicCriteriaHelpers = {};
 
 strategicCriteriaHelpers.evaluateDataPointQualityLevel = (dataPoint, value) => {
-  if (typeof dataPoint !== "object" || typeof dataPoint?.data_point_evaluation_rules !== "object" || typeof value !== "number"){
+  if (typeof dataPoint !== "object" || typeof dataPoint?.strategic_criteria?.data_point_evaluation_rules !== "object" || typeof value !== "number"){
     return null;
   }
 
-  const dataPointEvaluationRules = dataPoint?.data_point_evaluation_rules;
+  const dataPointEvaluationRules = dataPoint?.strategic_criteria?.data_point_evaluation_rules;
   const successRule = dataPointEvaluationRules.success_rule;
   const warningRule = dataPointEvaluationRules.warning_rule;
   const failureRule = dataPointEvaluationRules.failure_rule;
