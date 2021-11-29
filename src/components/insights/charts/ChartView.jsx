@@ -151,6 +151,8 @@ import {
 import { Col } from "react-bootstrap";
 import LegacySonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings_legacy/LegacySonarRatingMetrics";
 import SonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings/SonarRatingMetrics";
+import AdoptionTestPercentageMetric
+  from "components/insights/charts/qa_metrics/adoption_test_percentage/AdoptionTestPercentageMetric";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1306,6 +1308,13 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               setKpis={setKpis}
               index={index}
             />
+            {/*<AdoptionTestPercentageMetric*/}
+            {/*  kpiConfiguration={kpiConfig}*/}
+            {/*  setKpiConfiguration={setKpiConfig}*/}
+            {/*  dashboardData={dashboardData}*/}
+            {/*  setKpis={setKpis}*/}
+            {/*  index={index}*/}
+            {/*/>*/}
           </Col>
         );
       case "automated-test-results":

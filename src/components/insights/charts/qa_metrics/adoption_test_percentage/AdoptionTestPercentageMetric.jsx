@@ -14,8 +14,8 @@ import {
 import { Col, Container, Row } from "react-bootstrap";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import "components/insights/charts/qa_metrics/Styling.css";
-import { METRIC_QUALITY_LEVELS } from "components/common/metrics/text/MetricTextBase";
 import PercentageDataBlock from "components/common/metrics/percentage/PercentageDataBlock";
+import {strategicCriteriaHelpers} from "components/common/helpers/strategicCriteria.helpers";
 
 const ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS = {
   EXECUTED_TESTS: "executed_tests",
@@ -101,6 +101,13 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
   const loadDataPoints = async () => {
     const dataPoints = kpiConfiguration?.dataPoints;
 
+    let newAdoptionPercentageDataPoint = strategicCriteriaHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.ADOPTION_PERCENTAGE);
+    // if (newAdoptionPercentageDataPoint == null) {
+    //
+    // }
+
+    // TODO: handle pulling from KPI if not attached.
+    setAdoptionPercentageDataPoint(newAdoptionPercentageDataPoint);
 
   };
 
@@ -131,8 +138,7 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
               <PercentageDataBlock
                 percentage={metric?.adoptionRate}
                 subtitle={"Adoption Percentage"}
-                qualityLevel={metric?.adoptionRate < 98 ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS  }
-                goal={"Goal: Adoption Percentage > 98%"} // TODO: Remove goal
+                dataPoint={adoptionPercentageDataPoint}
               />
             </Col>
           </Row>
