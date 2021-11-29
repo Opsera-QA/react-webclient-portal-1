@@ -226,7 +226,7 @@ const formats = {
   wholeNumbers: d => (typeof d === "number") && (Math.floor(d) === d && d),
   dateTime: d => typeof d === "string" ? d.substring(0, 11) : "",
   monthDate: "%b %d",
-  monthDate2: d => { var date = new Date(d).toUTCString(); date = date.split(" "); return date[1]+" "+date[2]; },
+  monthDate2: d => { var date = new Date(d).toUTCString(); date = date.split(" "); return date[2]+" "+date[1]; },
   month: d => { var date = new Date(d).toUTCString(); date = date.split(" "); return date[2]; },
   yearMonthDate: d => (typeof d === "string") && (d.split("T")[0]),
   cutoffString: d => typeof d === "string" && d.length > 0 ? d.slice(0, 8) + (d.length > 8 ? "..." : "") : "",
