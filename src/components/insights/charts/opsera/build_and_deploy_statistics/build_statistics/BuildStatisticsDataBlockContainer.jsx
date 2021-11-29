@@ -51,7 +51,7 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
     return (      
       <ThreeLineDataBlockNoFocusBase        
         topText={"Success Rate"}
-        middleText={<MetricPercentageText score={metricData?.build?.successPercent || 0} qualityLevel={metricData?.build?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS} />}
+        middleText={<MetricPercentageText percentage={metricData?.build?.successPercent || 0} qualityLevel={metricData?.build?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS} />}
         bottomText={`Goal: ${goalsData}`}
       />
     );
