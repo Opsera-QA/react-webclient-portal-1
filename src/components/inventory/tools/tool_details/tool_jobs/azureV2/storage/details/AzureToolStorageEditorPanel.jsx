@@ -5,19 +5,14 @@ import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
-import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
-import modelHelpers from "components/common/model/modelHelpers";
-import azureStorageMetadata from "../azure-storage-metadata";
-import azureStorageActions from "../../azure-storage-actions";
+import azureStorageActions from "../../azureStorage.actions";
+import StandaloneDeleteButtonWithConfirmationModal
+  from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 
-function AzureStorageEditorPanel({ azureStorageData, toolData, handleClose, editMode, editRowData }) {
+
+function AzureStorageEditorPanel({ azureStorageAccountsModel, setAzureStorageAccountsModel, toolId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [azureStorageModel, setAzureStorageModel] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -30,87 +25,60 @@ function AzureStorageEditorPanel({ azureStorageData, toolData, handleClose, edit
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
-      if(isMounted?.current === true){
-        throw error;
-      }
-    });
-
     return () => {
       source.cancel();
       isMounted.current = false;
     };
-  }, [azureStorageData]);
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      if(editMode){
-        const response = await azureStorageActions.getAzureStorageDetails(toolData.getData("_id"), editRowData.storageName, getAccessToken, cancelSource);
-        
-        if(response && response?.status === 200) {
-          setAzureStorageModel(modelHelpers.parseObjectIntoModel(response?.data?.message ? response.data.message : {}, azureStorageMetadata));
-        }
-      }else{
-        setAzureStorageModel(azureStorageData);
-      }      
-    } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  }, []);
 
   const createAzureStorage = async () => {
-    let newConfiguration = azureStorageModel.getPersistData();
-    const response = await azureStorageActions.createAzureStorage(getAccessToken, cancelTokenSource, toolData?._id, newConfiguration);
+    let newConfiguration = azureStorageAccountsModel.getPersistData();
+    // const response = await azureStorageActions.createAzureStorage(getAccessToken, cancelTokenSource, toolData?._id, newConfiguration);
     handleClose();
-    return response;
+    return;
   };
 
   const deleteAzureStorage = async () => {
-    const response = await azureStorageActions.deleteAzureStorage(getAccessToken, cancelTokenSource, toolData?._id, azureStorageModel.getPersistData());
+    const response = await azureStorageActions.deleteAzureStorage(getAccessToken, cancelTokenSource, toolId, azureStorageAccountsModel.getPersistData());
     handleClose();
     return response;
   };
 
   const getExtraButtons = () => {
-    if (editMode) {
+    if (azureStorageAccountsModel?.isNew() === false) {
       return (
-        <DeleteButtonWithInlineConfirmation dataObject={azureStorageModel} deleteRecord={deleteAzureStorage}/>
+        <StandaloneDeleteButtonWithConfirmationModal
+          model={azureStorageAccountsModel}
+          deleteDataFunction={deleteAzureStorage}
+          handleCloseFunction={handleClose}
+        />
       );
     }
   };
 
-  if (isLoading || azureStorageModel == null) {
-    return <LoadingDialog size="sm" message={"Loading Data"} />;
-  }
-
   return (
     <EditorPanelContainer
-      recordDto={azureStorageModel}
+      recordDto={azureStorageAccountsModel}
       createRecord={createAzureStorage}
       updateRecord={createAzureStorage}
-      setRecordDto={setAzureStorageModel}
-      isLoading={isLoading}
+      setRecordDto={setAzureStorageAccountsModel}
+      lenient={false}
       extraButtons={getExtraButtons()}
       handleClose={handleClose}
     >
       <Row>
         <Col lg={12}>
           <TextInputBase
-            dataObject={azureStorageModel}
-            setDataObject={setAzureStorageModel}            
+            dataObject={azureStorageAccountsModel}
+            setDataObject={setAzureStorageAccountsModel}            
             fieldName={"storageName"}
-            disabled={editMode}
           />
         </Col>
         <Col lg={12}>
           <TextInputBase
-            dataObject={azureStorageModel}
-            setDataObject={setAzureStorageModel}            
-            fieldName={"bucketName"}
-            disabled={editMode}
+            dataObject={azureStorageAccountsModel}
+            setDataObject={setAzureStorageAccountsModel}            
+            fieldName={"storageAccessToken"}
           />
         </Col>
       </Row>      
@@ -119,12 +87,10 @@ function AzureStorageEditorPanel({ azureStorageData, toolData, handleClose, edit
 }
 
 AzureStorageEditorPanel.propTypes = {
-  azureStorageData: PropTypes.object,
-  toolData: PropTypes.object,
-  loadData: PropTypes.func,
+  azureStorageAccountsModel: PropTypes.object,
+  setAzureStorageAccountsModel: PropTypes.func,
+  toolId: PropTypes.string,
   handleClose: PropTypes.func,
-  editMode: PropTypes.bool,
-  editRowData: PropTypes.object,
 };
 
 export default AzureStorageEditorPanel;

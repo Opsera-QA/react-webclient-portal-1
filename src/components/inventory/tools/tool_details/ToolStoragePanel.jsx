@@ -1,6 +1,6 @@
 import React from "react";
 import AwsS3Buckets from "./tool_jobs/aws/buckets/AwsS3Buckets";
-import AzureStorage from "./tool_jobs/azureV2/storage/AzureToolStoragePanel";
+import AzureToolStoragePanel from "./tool_jobs/azureV2/storage/AzureToolStoragePanel";
 import PropTypes from "prop-types";
 
 function ToolStoragePanel({ toolData, loadData, isLoading }) {
@@ -17,10 +17,10 @@ function ToolStoragePanel({ toolData, loadData, isLoading }) {
         );
       case "azure":
         return (
-          <AzureStorage
+          <AzureToolStoragePanel
             toolActions={toolData?.getData("actions")}
             isLoading={isLoading}
-            toolData={toolData}
+            toolId={toolData.id}
             loadData={loadData}
           />
         );

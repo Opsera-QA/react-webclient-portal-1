@@ -15,26 +15,21 @@ azureStorageActions.deleteAzureStorageCredential = async (getAccessToken, cancel
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-azureStorageActions.getAzureStorageAccountsList = async (toolId, getAccessToken, cancelTokenSource) => {
-  const urlParams = {
-    params: {
-      toolId: toolId,
-    },
-  };
+azureStorageActions.getAzureStorageAccountsList = async ( getAccessToken, cancelTokenSource, toolId) => {
 
   const apiUrl = `/tools/${toolId}/azure/storage/accounts`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-azureStorageActions.getAzureStorageDetails = async (toolId, storageName, getAccessToken, cancelTokenSource) => {
-  const urlParams = {
-    params: {
-      storageName: storageName
-    },
-  };
+azureStorageActions.getAzureStorageDetails = async (getAccessToken, cancelTokenSource, toolId) => {
+  // const urlParams = {
+  //   params: {
+  //     storageName: storageName
+  //   },
+  // };
 
   const apiUrl = `/tools/${toolId}/storage`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 export default azureStorageActions;

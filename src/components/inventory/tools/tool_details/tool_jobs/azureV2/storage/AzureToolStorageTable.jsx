@@ -5,17 +5,21 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import AzureStorageOverlay from "./AzureToolStorageOverlay";
+import CreateAzureStorageOverlay from "./CreateAzureToolStorageOverlay";
 import {getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 
-function AzureStorageTable({ toolData, azureStorage, loadData, isLoading }) {
-  const toastContext = useContext(DialogToastContext);  
+function AzureStorageTable({ toolId, azureStorageAccountsList, loadData, isLoading, isMounted}) { 
   
-  let fields = azureStorageMetadata.fields;
+  const fields = azureStorageMetadata.fields;
+  const toastContext = useContext(DialogToastContext);
 
   const createAzureStorage = () => {
-    toastContext.showOverlayPanel(<AzureStorageOverlay toolData={toolData} loadData={loadData} editMode={false} />);
+    toastContext.showOverlayPanel(
+      <CreateAzureStorageOverlay 
+        toolId={toolId} 
+        loadData={loadData} 
+        isMounted={isMounted} />);
   };
 
   const columns = useMemo(
@@ -28,8 +32,8 @@ function AzureStorageTable({ toolData, azureStorage, loadData, isLoading }) {
 
   const onRowSelect = async (grid, row) => {    
     toastContext.showOverlayPanel(
-      <AzureStorageOverlay 
-        toolData={toolData} 
+      <CreateAzureStorageOverlay 
+        toolId={toolId} 
         loadData={loadData} 
         editMode={true} 
         editRowData={row}
@@ -41,9 +45,10 @@ function AzureStorageTable({ toolData, azureStorage, loadData, isLoading }) {
     return (
       <VanityTable
         columns={columns}
-        data={azureStorage}
+        data={azureStorageAccountsList}
         onRowSelect={onRowSelect}
         isLoading={isLoading}
+        loadData={loadData}
       />
     );
   };
@@ -55,7 +60,7 @@ function AzureStorageTable({ toolData, azureStorage, loadData, isLoading }) {
       title={"Azure Storage Accounts"}
       type={"Azure Storage Accounts"}
       titleIcon={faBrowser}
-      addRecordFunction={toolData?.data?.configuration ? createAzureStorage : undefined}
+      addRecordFunction={createAzureStorage}
       body={getTable()}
       showBorder={false}
     />
@@ -63,10 +68,12 @@ function AzureStorageTable({ toolData, azureStorage, loadData, isLoading }) {
 }
 
 AzureStorageTable.propTypes = {
-  toolData: PropTypes.object,
+  toolId: PropTypes.string,
+  azureStorageAccountsList: PropTypes.array,
+  setAzureStorageAccountsList: PropTypes.func,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  azureStorage: PropTypes.array
+  isMounted: PropTypes.object,
 };
 
 export default AzureStorageTable;
