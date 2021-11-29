@@ -1,7 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
-import {faHistory} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
@@ -15,6 +13,7 @@ import ResetButton from "components/common/buttons/reset/ResetButton";
 function ResetMetricConfigurationButton(
   {
     kpiConfigurationModel,
+    resetKpiModel,
     dashboardModel,
     index,
     identifier,
@@ -84,11 +83,15 @@ function ResetMetricConfigurationButton(
 
   const resetKpiData = async () => {
     try {
-      kpiConfigurationModel.setData("kpi_name", defaultKpiConfiguration?.name);
-      kpiConfigurationModel.setData("kpi_category", defaultKpiConfiguration?.category);
-      kpiConfigurationModel.setData("kpi_settings", defaultKpiConfiguration?.settings);
-      kpiConfigurationModel.setData("filters", defaultKpiConfiguration?.supported_filters);
-      kpiConfigurationModel.setData("tags", []);
+      if (resetKpiModel.getData("name") === true) {
+        kpiConfigurationModel.setData("kpi_name", defaultKpiConfiguration?.name);
+      }
+
+      if (resetKpiModel.getData("internalProperties") === true) {
+        kpiConfigurationModel.setData("kpi_category", defaultKpiConfiguration?.category);
+        kpiConfigurationModel.setData("kpi_settings", defaultKpiConfiguration?.settings);
+        kpiConfigurationModel.setData("filters", defaultKpiConfiguration?.supported_filters);
+      }
 
       const configuration = dashboardModel.getData("configuration");
       const resetKpiData = kpiConfigurationModel?.getPersistData();
@@ -96,7 +99,7 @@ function ResetMetricConfigurationButton(
       setKpiConfiguration({...resetKpiData});
       dashboardModel.setData("configuration", configuration);
 
-      await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardModel);
+      await dashboardsActions.updateDashboardKpiV2(getAccessToken, cancelTokenSource, dashboardModel?.getData("_id"), kpiConfigurationModel);
       closePanel();
     } catch (error) {
       if (isMounted?.current === true) {
@@ -116,7 +119,7 @@ function ResetMetricConfigurationButton(
         model={kpiConfigurationModel}
         resetFunction={resetKpiData}
         isLoading={isLoading}
-        disabled={disabled}
+        disabled={disabled || resetKpiModel?.isChanged() === false}
       />
       <InfoText errorMessage={errorMessage} />
     </div>
@@ -125,6 +128,7 @@ function ResetMetricConfigurationButton(
 
 ResetMetricConfigurationButton.propTypes = {
   kpiConfigurationModel: PropTypes.object,
+  resetKpiModel: PropTypes.object,
   dashboardModel: PropTypes.object,
   identifier: PropTypes.string,
   index: PropTypes.number,
