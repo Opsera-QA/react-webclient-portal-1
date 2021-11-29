@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
-import SuccessRateDataBlock
-  from "components/common/metrics/data_blocks/success/success_rate/SuccessRateDataBlock";
 import Col from "react-bootstrap/Col";
 import { ResponsiveLine } from '@nivo/line';
 import { defaultConfig, getColor, assignStandardColors } from 'components/insights/charts/charts-views';
@@ -13,6 +11,8 @@ import FullScreenCenterOverlayContainer from "components/common/overlays/center/
 import { faTable } from "@fortawesome/pro-light-svg-icons";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import config from "../OpseraBuildAndDeployLineChartConfig";
+import MetricScoreText from "components/common/metrics/score/MetricScoreText";
+import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData }) {
@@ -43,18 +43,16 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
   let successChartData = [
     {
       "id": "success rate",
-      "color": "#494173",
       "data": chartData?.deploySuccess
     }  
   ];
 
   const getLeftDataBlock = () => {
-    return (
-      <SuccessRateDataBlock
-        className={'build-deploy-kpi'}
-        qualityLevel={metricData?.deploy?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS}
-        successPercentage={metricData?.deploy?.successPercent || 0}
-        bottomText={`Goal: ${goalsData}%`}
+    return (  
+      <ThreeLineDataBlockNoFocusBase        
+        topText={"Success Rate"}
+        middleText={<MetricScoreText score={metricData?.deploy?.successPercent || 0} qualityLevel={metricData?.deploy?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS} />}
+        bottomText={`Goal: ${goalsData}`}
       />
     );
   };

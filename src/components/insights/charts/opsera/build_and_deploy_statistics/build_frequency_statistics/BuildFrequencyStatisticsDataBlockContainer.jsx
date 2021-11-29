@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
 import Col from "react-bootstrap/Col";
-import AverageDailyBuildsDataBlock
-  from "components/common/metrics/data_blocks/build/average_daily/AverageDailyBuildsDataBlock";
 import { ResponsiveLine } from '@nivo/line';
 import { defaultConfig, getColor, assignStandardColors } from 'components/insights/charts/charts-views';
 import "../build-and-deploy-kpi.css";
 import _ from "lodash";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import config from "../OpseraBuildAndDeployLineChartConfig";
+import MetricScoreText from "components/common/metrics/score/MetricScoreText";
+import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData }) {    
@@ -27,17 +27,15 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
   const dailyBuildsChartData = [
     {
       "id": "average daily builds",
-      "color": "#494173",
       "data": chartData?.avgBuilds
     }  
   ];
 
   const getLeftDataBlock = () => {    
-    return (
-      <AverageDailyBuildsDataBlock
-        className={'build-deploy-kpi'}
-        qualityLevel={metricData?.build?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS}
-        averageDailyCount={metricData?.build?.perDayAverage || 0}
+    return (      
+      <ThreeLineDataBlockNoFocusBase        
+        topText={"Average Daily Builds"}
+        middleText={<MetricScoreText score={metricData?.build?.perDayAverage || 0} qualityLevel={metricData?.build?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS} />}
         bottomText={`Goal: ${goalsData}`}
       />
     );

@@ -9,7 +9,7 @@ export default () => ({
     reverse: false 
   },
   xFormat: "time:%Y-%m-%d",  
-  colors: { datum: 'color' },
+  colors: "#494173",
   axisLeft: {
     tickValues: [0, 50, 100],
     legend: 'Success Rate %',
