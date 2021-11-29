@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import { ResponsivePie } from "@nivo/pie";
-import config from "components/insights/charts/qa_metrics/adoptionTestPercentagePieChartConfig";
+import config from "components/insights/charts/qa_metrics/adoption_test_percentage/adoptionTestPercentagePieChartConfig";
 import ModalLogs from "components/common/modal/modalLogs";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
@@ -10,14 +10,15 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import {
   defaultConfig, getColorByData,getColor, assignStandardColors,
   shortenPieChartLegend, mainColor,
-} from "../charts-views";
+} from "components/insights/charts/charts-views";
 import { Col, Container, Row } from "react-bootstrap";
-import TwoLineScoreDataBlock from "../../../common/metrics/score/TwoLineScoreDataBlock";
-import NewPercentageDataBlock from "../../../common/metrics/percentage/NewPercentageDataBlock";
-import "../qa_metrics/Styling.css";
-import { METRIC_QUALITY_LEVELS } from "../../../common/metrics/text/MetricTextBase";
+import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
+import NewPercentageDataBlock from "components/common/metrics/percentage/NewPercentageDataBlock";
+import "components/insights/charts/qa_metrics/Styling.css";
+import { METRIC_QUALITY_LEVELS } from "components/common/metrics/text/MetricTextBase";
 
-function AdoptionPercentagePieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+// TODO: Remove after new version is validated
+function AdoptionTestPercentageMetricV1({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -155,11 +156,12 @@ function AdoptionPercentagePieChart({ kpiConfiguration, setKpiConfiguration, das
   );
 }
 
-AdoptionPercentagePieChart.propTypes = {
+AdoptionTestPercentageMetricV1.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func};
+  setKpis: PropTypes.func
+};
 
-export default AdoptionPercentagePieChart;
+export default AdoptionTestPercentageMetricV1;

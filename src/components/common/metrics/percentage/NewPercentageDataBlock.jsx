@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
 import PercentageGoalBlockBase from "../data_blocks/base/PercentageGoalBlockBase";
 
+// TODO: Don't use this. Remove
 function NewPercentageDataBlock({ percentage, subtitle, className, qualityLevel, goal}) {
   return (
     <PercentageGoalBlockBase
