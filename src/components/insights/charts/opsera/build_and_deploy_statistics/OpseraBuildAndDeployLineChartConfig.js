@@ -17,7 +17,7 @@ export default () => ({
     legendPosition: 'middle'
   },
   axisBottom: {
-    format: d => { var date = new Date(d).toDateString(); date = date.split(" "); return date[1] + " " + date[2]; },
+    format: d => { var date = new Date(d).toUTCString(); date = date.split(" "); return date[2]+" "+date[1]; },
     tickRotation: -45,
     legend: 'Date',
     legendOffset: 55,
