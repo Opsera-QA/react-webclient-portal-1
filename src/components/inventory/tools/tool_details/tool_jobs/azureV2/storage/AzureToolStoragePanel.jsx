@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import AzureStorageTable from "./AzureStorageTable";
+import AzureToolStorageTable from "./AzureToolStorageTable";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import azureActions from "../azure-actions";
+import azureStorageActions from "../azure-storage-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function AzureStorage({ toolData, loadData }) {  
+function AzureToolStoragePanel({ toolData, loadData }) {  
   const [AzureStorage, setAzureStorage] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { getAccessToken } = useContext(AuthContext);
@@ -36,7 +36,7 @@ function AzureStorage({ toolData, loadData }) {
   const loadStorage = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await azureActions.getAzureStorageAccountsList(toolData.getData("_id"), getAccessToken, cancelSource);      
+      const response = await azureStorageActions.getAzureStorageAccountsList(toolData.getData("_id"), getAccessToken, cancelSource);      
       if(response.status === 200) {
         setAzureStorage(response.data.message);
       }
@@ -54,7 +54,7 @@ function AzureStorage({ toolData, loadData }) {
 
   
   return (
-    <AzureStorageTable
+    <AzureToolStorageTable
       isLoading={isLoading}
       toolData={toolData}
       loadData={loadData}
@@ -63,9 +63,9 @@ function AzureStorage({ toolData, loadData }) {
   );
 }
 
-AzureStorage.propTypes = {
+AzureToolStoragePanel.propTypes = {
   toolData: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
 };
-export default AzureStorage;
+export default AzureToolStoragePanel;

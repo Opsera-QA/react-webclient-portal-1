@@ -1,5 +1,5 @@
 import React from "react";
-import AzureStorage from "./tool_jobs/azureV2/storage/AzureStorage";
+import AzureStorage from "./tool_jobs/azureV2/storage/AzureToolStoragePanel";
 import PropTypes from "prop-types";
 
 function ToolAzureStoragePanel({ toolData, loadData, isLoading }) {

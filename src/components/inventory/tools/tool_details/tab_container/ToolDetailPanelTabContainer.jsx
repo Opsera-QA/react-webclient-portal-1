@@ -71,11 +71,11 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         activeTab={activeTab}
         handleTabClick={handleTabClick}
       />
-      <ToolAzureStorageTab
+      {/* <ToolAzureStorageTab
         toolModel={toolModel}
         activeTab={activeTab}
         handleTabClick={handleTabClick}
-      />
+      /> */}
       <ToolUsageTab
         handleTabClick={handleTabClick}
         activeTab={activeTab}

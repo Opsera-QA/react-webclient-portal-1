@@ -11,7 +11,7 @@ import axios from "axios";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import modelHelpers from "components/common/model/modelHelpers";
 import azureStorageMetadata from "../azure-storage-metadata";
-import azureActions from "../../azure-actions";
+import azureStorageActions from "../../azure-storage-actions";
 
 function AzureStorageEditorPanel({ azureStorageData, toolData, handleClose, editMode, editRowData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -46,7 +46,7 @@ function AzureStorageEditorPanel({ azureStorageData, toolData, handleClose, edit
     try {
       setIsLoading(true);
       if(editMode){
-        const response = await azureActions.getAzureStorageDetails(toolData.getData("_id"), editRowData.storageName, getAccessToken, cancelSource);
+        const response = await azureStorageActions.getAzureStorageDetails(toolData.getData("_id"), editRowData.storageName, getAccessToken, cancelSource);
         
         if(response && response?.status === 200) {
           setAzureStorageModel(modelHelpers.parseObjectIntoModel(response?.data?.message ? response.data.message : {}, azureStorageMetadata));
@@ -63,13 +63,13 @@ function AzureStorageEditorPanel({ azureStorageData, toolData, handleClose, edit
 
   const createAzureStorage = async () => {
     let newConfiguration = azureStorageModel.getPersistData();
-    const response = await azureActions.createAzureStorage(getAccessToken, cancelTokenSource, toolData?._id, newConfiguration);
+    const response = await azureStorageActions.createAzureStorage(getAccessToken, cancelTokenSource, toolData?._id, newConfiguration);
     handleClose();
     return response;
   };
 
   const deleteAzureStorage = async () => {
-    const response = await azureActions.deleteAzureStorage(getAccessToken, cancelTokenSource, toolData?._id, azureStorageModel.getPersistData());
+    const response = await azureStorageActions.deleteAzureStorage(getAccessToken, cancelTokenSource, toolData?._id, azureStorageModel.getPersistData());
     handleClose();
     return response;
   };

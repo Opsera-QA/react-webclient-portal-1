@@ -5,7 +5,7 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import AzureStorageOverlay from "./AzureStorageOverlay";
+import AzureStorageOverlay from "./AzureToolStorageOverlay";
 import {getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 

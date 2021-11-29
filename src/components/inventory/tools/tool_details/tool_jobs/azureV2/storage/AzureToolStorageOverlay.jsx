@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import azureStorageMetadata from "./azure-storage-metadata";
-import AzureStorageEditorPanel from "./details/AzureStorageEditorPanel";
+import AzureStorageEditorPanel from "./details/AzureToolStorageEditorPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
