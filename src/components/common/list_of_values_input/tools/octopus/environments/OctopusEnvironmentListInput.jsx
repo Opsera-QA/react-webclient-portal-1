@@ -19,7 +19,8 @@ function OctopusEnvironmentListInput(
     octopusToolId,
     spaceId,
     setDataFunction,
-    clearDataFunction
+    clearDataFunction,
+    error,
   }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -108,6 +109,7 @@ function OctopusEnvironmentListInput(
       customTemplate={customTemplate}
       isLoading={isLoading}
       valueField={valueField}
+      error={error}
       textField={textField}
       placeholderText={placeholder}
       disabled={disabled}
@@ -127,6 +129,10 @@ OctopusEnvironmentListInput.propTypes = {
   formatDataFunction: PropTypes.func,
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
+  error: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
 };
 
 OctopusEnvironmentListInput.defaultProps = {
