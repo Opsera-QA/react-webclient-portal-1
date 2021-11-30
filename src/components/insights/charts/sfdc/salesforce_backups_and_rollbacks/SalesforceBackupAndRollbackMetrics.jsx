@@ -103,7 +103,7 @@ function SalesforceBackupAndRollbackMetrics({ kpiConfiguration, setKpiConfigurat
     }
 
     return (
-      <Row className="px-2 justify-content-between">
+      <Row className="px-4 justify-content-between">
         <Col xl={6} lg={6} sm={6} className={"my-3"}>
           <SfdcBackupSuccessDataBlock
             score={metrics[0].success.toString()}

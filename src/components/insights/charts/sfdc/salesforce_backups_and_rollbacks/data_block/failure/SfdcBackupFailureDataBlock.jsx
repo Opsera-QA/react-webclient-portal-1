@@ -7,12 +7,14 @@ import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/Two
 function SfdcBackupFailureDataBlock({ score, subtitle, onClickFunction }) {
   return (
     <DataBlockBoxContainer showBorder={true} onClickFunction={onClickFunction}>
-      <TwoLineDataBlockBase
-        className={"failure-data-block"}
-        title={score}
-        subtitle={subtitle}
-        icon={faTimesCircle}
-      />
+      <div className={'p-3'}>
+        <TwoLineDataBlockBase
+          className={"failure-data-block"}
+          title={score}
+          subtitle={subtitle}
+          icon={faTimesCircle}
+        />
+      </div>
     </DataBlockBoxContainer>
   );
 }
