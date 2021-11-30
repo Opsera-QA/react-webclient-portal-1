@@ -14,8 +14,8 @@ import PipelineStepEditorPanelContainer
 import OctopusProjectTypeSelectInput from "./input/OctopusProjectTypeSelectInput";
 import OctopusCustomProjectForm from "./sub-forms/OctopusCustomProjectForm";
 import OctopusOpseraManagedProjectForm from "./sub-forms/OctopusOpseraManagedProjectForm";
-import OctopusStepOctopusEnvironmentMultiSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/input/OctopusStepOctopusEnvironmentMultiSelectInput";
+import OctopusStepOctopusEnvironmentListInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/input/OctopusStepOctopusEnvironmentListInput";
 
 // TODO: This needs a refactor. I plan on doing it soon.
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, callbackSaveToVault, closeEditorPanel, pipelineId }) {
@@ -292,7 +292,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
         disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusToolId").length === 0}
         tool_prop={octopusStepConfigurationDto ? octopusStepConfigurationDto.getData("octopusToolId") : ""}
       />
-      <OctopusStepOctopusEnvironmentMultiSelectInput
+      <OctopusStepOctopusEnvironmentListInput
         fieldName={"environmentList"}
         model={octopusStepConfigurationDto}
         setModel={setOctopusStepConfigurationDataDto}
