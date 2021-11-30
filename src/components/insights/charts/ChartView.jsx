@@ -121,7 +121,7 @@ import ManualQaTestPieChart from "components/insights/charts/qa_metrics/ManualQa
 import FirstPassYieldPieChart from "components/insights/charts/qa_metrics/FirstPassYieldPieChart";
 import CummulativeOpenDefectsPieChart from "components/insights/charts/qa_metrics/CummulativeOpenDefectsPieChart";
 import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieChart";
-import AdoptionTestPercentagePieChart from "./qa_metrics/AdoptionTestPercentagePieChart";
+import AdoptionTestPercentageMetricV1 from "components/insights/charts/qa_metrics/adoption_test_percentage/AdoptionTestPercentageMetricV1";
 import AutomatedTestResultsPieChart from "./qa_metrics/AutomatedTestResultsPieChart";
 import SFDCManualTestResultsPieChart from "./qa_metrics/SFDCManualTestResultsPieChart";
 import DefectRemovalEfficiencyPieChart from "./qa_metrics/DefectRemovalEfficiencyPieChart";
@@ -150,6 +150,8 @@ import {
 import { Col } from "react-bootstrap";
 import LegacySonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings_legacy/LegacySonarRatingMetrics";
 import SonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings/SonarRatingMetrics";
+import AdoptionTestPercentageMetric
+  from "components/insights/charts/qa_metrics/adoption_test_percentage/AdoptionTestPercentageMetric";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1286,13 +1288,20 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "adoption-percentage":
         return (
           <Col md={12} className="p-2">
-            <AdoptionTestPercentagePieChart
+            <AdoptionTestPercentageMetricV1
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
               setKpis={setKpis}
               index={index}
             />
+            {/*<AdoptionTestPercentageMetric*/}
+            {/*  kpiConfiguration={kpiConfig}*/}
+            {/*  setKpiConfiguration={setKpiConfig}*/}
+            {/*  dashboardData={dashboardData}*/}
+            {/*  setKpis={setKpis}*/}
+            {/*  index={index}*/}
+            {/*/>*/}
           </Col>
         );
       case "automated-test-results":

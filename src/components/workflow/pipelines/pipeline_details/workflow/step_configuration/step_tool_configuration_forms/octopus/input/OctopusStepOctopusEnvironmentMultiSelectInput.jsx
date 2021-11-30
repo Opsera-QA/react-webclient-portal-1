@@ -7,7 +7,7 @@ import {AuthContext} from "contexts/AuthContext";
 import OctopusEnvironmentListInput
   from "components/common/list_of_values_input/tools/octopus/environments/OctopusEnvironmentListInput";
 
-// TODO: Rename *ListInput once approved
+// TODO: Remove after validation
 function OctopusStepOctopusEnvironmentMultiSelectInput({ fieldName, model, setModel, disabled}) {
   const { featureFlagHideItemInProd } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
