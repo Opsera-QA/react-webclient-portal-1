@@ -104,7 +104,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
             />
           }
         />
-        <div className={"m-1"}>Results of scans from 15th November 2021</div>
+        <div className={"m-1"}>Results of scans from 30th November 2021 onward</div>
       </>
     );
   };
