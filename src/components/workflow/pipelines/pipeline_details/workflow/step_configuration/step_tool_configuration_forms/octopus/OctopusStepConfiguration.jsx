@@ -14,8 +14,8 @@ import PipelineStepEditorPanelContainer
 import OctopusProjectTypeSelectInput from "./input/OctopusProjectTypeSelectInput";
 import OctopusCustomProjectForm from "./sub-forms/OctopusCustomProjectForm";
 import OctopusOpseraManagedProjectForm from "./sub-forms/OctopusOpseraManagedProjectForm";
-import OctopusStepOctopusEnvironmentMultiSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/input/OctopusStepOctopusEnvironmentMultiSelectInput";
+import OctopusStepOctopusEnvironmentListInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/input/OctopusStepOctopusEnvironmentListInput";
 
 // TODO: This needs a refactor. I plan on doing it soon.
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, callbackSaveToVault, closeEditorPanel, pipelineId }) {
@@ -36,7 +36,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
     setIsLoading(true);
     let { configuration, threshold } = step;
     if (typeof configuration !== "undefined") {
-      setIsFormUpdate(true);      
+      setIsFormUpdate(true);
       setOctopusStepConfigurationDataDto(new Model(configuration, OctopusStepFormMetadata, false));
       if (typeof threshold !== "undefined") {
         setThresholdType(threshold.type);
@@ -57,7 +57,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
   };
 
   const saveToVault = async (pipelineId, stepId, key, name, value) => {
-    
+
     let octopusConfig = {...octopusStepConfigurationDto};
 
     const keyName = `${pipelineId}-${stepId}-${key}`;
@@ -65,7 +65,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
       "key": keyName,
       "value": value
     };
-    const response = await callbackSaveToVault(body);    
+    const response = await callbackSaveToVault(body);
     if (response.status === 200 ) {
       return { name: name, vaultKey: keyName };
     } else {
@@ -112,7 +112,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
       if(!octopusStepConfigurationDto.getData("projectType") || octopusStepConfigurationDto.getData("projectType") !== "CUSTOM") {
         await createOctopusProject();
         await createOctopusDeploymentProcess();
-      }      
+      }
       await createOctopusVariables();
     }
   };
@@ -139,9 +139,9 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
     await octopusActions
       .createOctopusDeploymentProcess({
         pipelineId: pipelineId,
-        stepId: stepId        
+        stepId: stepId
       }, getAccessToken)
-      .then(async (response) => {        
+      .then(async (response) => {
         return response;
       })
       .catch(function (error) {
@@ -249,18 +249,18 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
           <OctopusCustomProjectForm
             dataObject={octopusStepConfigurationDto}
             setDataObject={setOctopusStepConfigurationDataDto}
-            disabled={false}          
+            disabled={false}
             pipelineId={pipelineId}
             listOfSteps={listOfSteps}
           />
         );
       }
-    
+
     return (
       <OctopusOpseraManagedProjectForm
         dataObject={octopusStepConfigurationDto}
         setDataObject={setOctopusStepConfigurationDataDto}
-        disabled={false}          
+        disabled={false}
         pipelineId={pipelineId}
         stepTool={stepTool}
         listOfSteps={listOfSteps}
@@ -292,7 +292,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
         disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusToolId").length === 0}
         tool_prop={octopusStepConfigurationDto ? octopusStepConfigurationDto.getData("octopusToolId") : ""}
       />
-      <OctopusStepOctopusEnvironmentMultiSelectInput
+      <OctopusStepOctopusEnvironmentListInput
         fieldName={"environmentList"}
         model={octopusStepConfigurationDto}
         setModel={setOctopusStepConfigurationDataDto}
