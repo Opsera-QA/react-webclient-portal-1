@@ -1,21 +1,25 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
-import { ResponsivePie } from "@nivo/pie";
-import config from "components/insights/charts/qa_metrics/adoption_test_percentage/adoptionTestPercentagePieChartConfig";
 import ModalLogs from "components/common/modal/modalLogs";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import {
-  defaultConfig, getColorByData, assignStandardColors,
+  assignStandardColors,
   shortenPieChartLegend,
 } from "components/insights/charts/charts-views";
-import { Col, Container, Row } from "react-bootstrap";
-import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
+import { Col, Row } from "react-bootstrap";
 import "components/insights/charts/qa_metrics/Styling.css";
-import PercentageDataBlock from "components/common/metrics/percentage/PercentageDataBlock";
 import {strategicCriteriaHelpers} from "components/common/helpers/strategicCriteria.helpers";
+import AdoptionTestPercentageAutomatedTestCasesDataBlock
+  from "components/insights/charts/qa_metrics/adoption_test_percentage/data_blocks/AdoptionTestPercentageAutomatedTestCasesDataBlock";
+import AdoptionTestPercentageManualTestCasesDataBlock
+  from "components/insights/charts/qa_metrics/adoption_test_percentage/data_blocks/AdoptionTestPercentageManualTestCasesDataBlock";
+import AdoptionTestPercentageAdoptionPercentageDataBlock
+  from "components/insights/charts/qa_metrics/adoption_test_percentage/data_blocks/AdoptionTestPercentageAdoptionPercentageDataBlock";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import NivoPieChartBase from "components/common/metrics/charts/nivo/NivoPieChartBase";
 
 const ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS = {
   EXECUTED_TESTS: "executed_tests",
@@ -111,50 +115,76 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
 
   };
 
+  const getNotesRow = () => {
+    if (hasStringValue(notesData)) {
+      return (
+          <Col className="px-4 pb-4 text-center">
+            <small> {notesData} </small>
+          </Col>
+      );
+    }
+  };
+
+  const getLegendsData = () => {
+    return (
+      [
+        {
+          anchor: "top-right",
+          direction: "column",
+          justify: false,
+          translateX: 0,
+          translateY: 0,
+          itemsSpacing: 0,
+          // itemDirection: "right-to-left",
+          itemWidth: 80,
+          itemHeight: 50,
+          // itemOpacity: isLegendHidden ? 0 : 1,
+          symbolSize: 10,
+          // symbolShape: symbol,
+          symbolBorderColor: "rgba(0, 0, 0, .5)",
+        }
+      ]
+    );
+  };
+
   const getChartBody = () => {
     if (!Array.isArray(metric?.pairs) || metric?.pairs.length === 0) {
       return null;
     }
 
     return (
-      <div className="new-chart mb-3" style={{height: "300px", display: "flex"}}>
-        <Container>
-          <Row className="p-0">
-            <Col lg={6} md={8}>
-              <TwoLineScoreDataBlock
-                score={metric?.executedTests}
-                subtitle={"Automated Test Cases Executed"}
-              />
-            </Col>
-            <Col lg={6} md={8}>
-              <TwoLineScoreDataBlock
-                score={metric?.manualTests}
-                subtitle={"Automated Test Cases Executed Manually"}
-              />
-            </Col>
-          </Row>
-          <Row className="p-0 justify-content-center">
-            <Col lg={6} md={8}>
-              <PercentageDataBlock
-                percentage={metric?.adoptionRate}
-                subtitle={"Adoption Percentage"}
-                dataPoint={adoptionPercentageDataPoint}
-              />
-            </Col>
-          </Row>
-          <Row className="p-4">
-            <Col className="text-center">
-              <small> {notesData} </small>
-            </Col>
-          </Row>
-        </Container>
-        <ResponsivePie
-          data={metric?.pairs}
-          {...defaultConfig()}
-          {...config(getColorByData)}
-          onClick={() => setShowModal(true)}
-        />
-      </div>
+      <>
+        <Row>
+          <Col xl={4} lg={6} md={8} className={"d-flex align-content-around"}>
+            <Row>
+              <Col lg={12}>
+                <AdoptionTestPercentageAutomatedTestCasesDataBlock
+                  executedTestCount={metric?.executedTests}
+                />
+              </Col>
+              <Col lg={12}>
+                <AdoptionTestPercentageManualTestCasesDataBlock
+                  manualTestCount={metric?.manualTests}
+                />
+              </Col>
+              <Col lg={12}>
+                <AdoptionTestPercentageAdoptionPercentageDataBlock
+                  adoptionRatePercentage={metric?.adoptionRate}
+                  adoptionRateDataPoint={adoptionPercentageDataPoint}
+                />
+              </Col>
+            </Row>
+          </Col>
+          <Col xl={8} lg={6} md={4} className={"my-2"}>
+            <NivoPieChartBase
+              data={metric?.pairs}
+              onClickFunction={() => setShowModal(true)}
+              legendsData={getLegendsData()}
+            />
+          </Col>
+        </Row>
+        {getNotesRow()}
+      </>
     );
   };
 
@@ -165,6 +195,7 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
         chart={getChartBody()}
+        tableChart={true} // TODO: Don't automatically have padding on new container
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
