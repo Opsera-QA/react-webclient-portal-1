@@ -1,15 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TwoLineScoreWithSupportingTextDataBlock from "components/common/metrics/score/TwoLineScoreWithSupportingTextDataBlock";
 import { faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
+import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/TwoLineDataBlockBase";
 
-function SfdcBackupSuccessDataBlock({ score, subtitle }) {
+
+function SfdcBackupSuccessDataBlock({ score, subtitle, onClickFunction }) {
   return (
-    <DataBlockBoxContainer showBorder={true}>
-      <TwoLineScoreWithSupportingTextDataBlock
+    <DataBlockBoxContainer showBorder={true} onClickFunction={onClickFunction}>
+      <TwoLineDataBlockBase
         className={"success-data-block"}
-        score={score}
+        title={score}
         subtitle={subtitle}
         icon={faCheckCircle}
       />
@@ -19,6 +20,7 @@ function SfdcBackupSuccessDataBlock({ score, subtitle }) {
 SfdcBackupSuccessDataBlock.propTypes = {
   score: PropTypes.string,
   subtitle: PropTypes.string,
+  onClickFunction: PropTypes.func,
 };
 
 export default SfdcBackupSuccessDataBlock;
