@@ -7,39 +7,13 @@ import {ResponsivePie} from "@nivo/pie";
 function NivoPieChartBase(
   {
     data,
-    legendsData,
+    legendsConfiguration,
+    leftAxisConfiguration,
+    rightAxisConfiguration,
+    bottomAxisConfiguration,
+    topAxisConfiguration,
     onClickFunction,
   }) {
-  const getLeftAxis = () => {
-    return (
-      {
-        // format: formats[leftLabelFormat],
-        orient: "left",
-        tickSize: 5,
-        tickPadding: 5,
-        tickRotation: 0,
-        // legend: leftAxisTitle,
-        // legendOffset: largeLeftSpaceRequired ? -80 : -40,
-        legendPosition: "middle",
-      }
-    );
-  };
-
-  const getBottomAxis = () => {
-    return (
-      {
-        // format: formats[bottomLabelFormat],
-        orient: "bottom",
-        tickSize: 5,
-        tickPadding: 5,
-        // tickRotation: largeBottomSpaceRequired ? -45 : 0,
-        // legend: bottomAxisTitle,
-        // legendOffset: largeBottomSpaceRequired ? 60 : 40,
-        legendPosition: "middle",
-      }
-    );
-  };
-
   const getThemeData = () => {
     return (
       {
@@ -74,11 +48,11 @@ function NivoPieChartBase(
       animate={true}
       motionStiffness={90}
       motionDamping={15}
-      axisTop={null}
-      axisRight={null}
-      axisLeft={getLeftAxis()}
-      axisBottom={getBottomAxis()}
-      legends={legendsData}
+      axisTop={topAxisConfiguration}
+      axisRight={rightAxisConfiguration}
+      axisBottom={bottomAxisConfiguration}
+      axisLeft={leftAxisConfiguration}
+      legends={legendsConfiguration}
       theme={getThemeData()}
       keys={["tests"]}
       sortByValue={true}
@@ -126,7 +100,11 @@ function NivoPieChartBase(
 
 NivoPieChartBase.propTypes = {
   data: PropTypes.any, // TODO: Should this be array?
-  legendsData: PropTypes.any, // TODO: Should this be array?
+  legendsConfiguration: PropTypes.any, // TODO: Should this be array?
+  leftAxisConfiguration: PropTypes.object,
+  rightAxisConfiguration: PropTypes.object,
+  topAxisConfiguration: PropTypes.object,
+  bottomAxisConfiguration: PropTypes.object,
   onClickFunction: PropTypes.func,
 };
 

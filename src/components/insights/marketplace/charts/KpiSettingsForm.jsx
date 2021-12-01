@@ -955,11 +955,11 @@ function KpiSettingsForm({
           dataObject={kpiSettings}
           deleteRecord={deleteKpi}
         />
-        {/*<ResetButton*/}
-        {/*  className={"ml-2"}*/}
-        {/*  model={kpiSettings}*/}
-        {/*  resetFunction={() => setShowResetConfirmationPanel(true)}*/}
-        {/*/>*/}
+        <ResetButton
+          className={"ml-2"}
+          model={kpiSettings}
+          resetFunction={() => setShowResetConfirmationPanel(true)}
+        />
       </div>
     );
   };

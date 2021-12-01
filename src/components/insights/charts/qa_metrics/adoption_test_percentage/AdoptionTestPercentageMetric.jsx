@@ -19,7 +19,8 @@ import AdoptionTestPercentageManualTestCasesDataBlock
 import AdoptionTestPercentageAdoptionPercentageDataBlock
   from "components/insights/charts/qa_metrics/adoption_test_percentage/data_blocks/AdoptionTestPercentageAdoptionPercentageDataBlock";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import NivoPieChartBase from "components/common/metrics/charts/nivo/NivoPieChartBase";
+import NivoPieChartBase from "components/common/metrics/charts/nivo/pie/NivoPieChartBase";
+import {nivoChartLegendDefinitions} from "components/common/metrics/charts/nivo/nivoChartLegend.definitions";
 
 const ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS = {
   EXECUTED_TESTS: "executed_tests",
@@ -106,13 +107,7 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
     const dataPoints = kpiConfiguration?.dataPoints;
 
     let newAdoptionPercentageDataPoint = strategicCriteriaHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.ADOPTION_PERCENTAGE);
-    // if (newAdoptionPercentageDataPoint == null) {
-    //
-    // }
-
-    // TODO: handle pulling from KPI if not attached.
     setAdoptionPercentageDataPoint(newAdoptionPercentageDataPoint);
-
   };
 
   const getNotesRow = () => {
@@ -125,24 +120,10 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
     }
   };
 
-  const getLegendsData = () => {
+  const getLegendsConfiguration = () => {
     return (
       [
-        {
-          anchor: "top-right",
-          direction: "column",
-          justify: false,
-          translateX: 0,
-          translateY: 0,
-          itemsSpacing: 0,
-          // itemDirection: "right-to-left",
-          itemWidth: 80,
-          itemHeight: 50,
-          // itemOpacity: isLegendHidden ? 0 : 1,
-          symbolSize: 10,
-          // symbolShape: symbol,
-          symbolBorderColor: "rgba(0, 0, 0, .5)",
-        }
+        nivoChartLegendDefinitions.getTopRightLegendDefinition(),
       ]
     );
   };
@@ -179,7 +160,7 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
             <NivoPieChartBase
               data={metric?.pairs}
               onClickFunction={() => setShowModal(true)}
-              legendsData={getLegendsData()}
+              legendsConfiguration={getLegendsConfiguration()}
             />
           </Col>
         </Row>
