@@ -1015,7 +1015,7 @@ function KpiSettingsForm({
             className={"ml-2"}
             identifier={kpiSettings?.getData("kpi_identifier")}
             index={index}
-            closePanelFunction={() => setShowResetConfirmationPanel(false)}
+            closePanelFunction={closePanel}
             setKpiConfiguration={setKpiConfiguration}
           />
         </div>

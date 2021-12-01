@@ -101,7 +101,11 @@ function ResetMetricConfigurationButton(
       dashboardModel.setData("configuration", configuration);
 
       await dashboardsActions.updateDashboardKpiV2(getAccessToken, cancelTokenSource, dashboardModel?.getData("_id"), kpiConfigurationModel);
-      closePanel();
+      toastContext.showResetSuccessToast("KPI Configuration");
+
+      if (closePanel) {
+        closePanel();
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         const parsedError = parseError(error);
@@ -137,6 +141,7 @@ ResetMetricConfigurationButton.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   setKpiConfiguration: PropTypes.func,
+  handleClose: PropTypes.func,
 };
 
 export default  React.memo(ResetMetricConfigurationButton);

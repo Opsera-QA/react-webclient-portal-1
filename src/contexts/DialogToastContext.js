@@ -292,6 +292,19 @@ function ToastContextProvider({children, navBar}) {
     addToast(successToast, id, notificationTypes.FORM);
   };
 
+  const showResetSuccessToast = (type, autoCloseLengthInSeconds = 10) => {
+    let id = generateUUID();
+    let successToast = getSuccessToast(`${type} reset successfully!`, id, autoCloseLengthInSeconds);
+    removeFormToasts();
+    addToast(successToast, id, notificationTypes.FORM);
+  };
+
+  const showResetFailureToast = (type, error) => {
+    let id = generateUUID();
+    let errorToast = getErrorToast(error, id, `WARNING! An error has occurred resetting this ${type}:`);
+    addToast(errorToast, id, notificationTypes.FORM);
+  };
+
   const showDeleteSuccessResultDialog = (type, autoCloseLengthInSeconds = 10) => {
     let id = generateUUID();
     let successToast = getSuccessToast(`${type} deleted successfully!`, id, autoCloseLengthInSeconds);
@@ -525,6 +538,7 @@ function ToastContextProvider({children, navBar}) {
         showSystemSuccessToast: showSystemSuccessToast,
         showSaveSuccessToast: showSaveSuccessToast,
         showSaveFailureToast: showSaveFailureToast,
+        showResetSuccessToast: showResetSuccessToast,
 
         // Information Banners
         showSystemInformationBanner: showSystemInformationBanner,
@@ -552,6 +566,7 @@ function ToastContextProvider({children, navBar}) {
         showSystemErrorToast: showSystemErrorToast,
         showFormErrorToast: showFormErrorToast,
         showFormValidationErrorToast: showFormValidationErrorToast,
+        showResetFailureToast: showResetFailureToast,
 
         //Inline Errors
         showInlineErrorMessage: showInlineErrorMessage,
