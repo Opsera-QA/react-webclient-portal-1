@@ -58,6 +58,11 @@ KpiActions.getKpiById = async (getAccessToken, cancelTokenSource, kpiId) => {
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+KpiActions.getKpiByIdentifier = async (getAccessToken, cancelTokenSource, identifier) => {
+  const apiUrl = `/analytics/kpi/configurations/identifier/${identifier}`;
+  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 KpiActions.createKpiV2 = async (getAccessToken, cancelTokenSource, kpiDataDto) => {
   let postBody = {
     ...kpiDataDto.getPersistData(),

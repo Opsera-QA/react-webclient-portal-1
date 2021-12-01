@@ -2,13 +2,31 @@ import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
 import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
+import PropTypes from "prop-types";
 
-function AccessDeniedContainer() {
-  return (
-    <div className="max-content-width mb-2 ml-2">
+function AccessDeniedContainer(
+  {
+    navigationTabContainer,
+  }) {
+  const getTopNavigation = () => {
+    if (navigationTabContainer) {
+      return (
+        <div className="mb-3">
+          {navigationTabContainer}
+        </div>
+      );
+    }
+
+    return (
       <div className="mb-3">
         <div className="sub-navigation-block" />
       </div>
+    );
+  };
+
+  return (
+    <div className="max-content-width mb-2 ml-2">
+      {getTopNavigation()}
       <div className="content-container content-card-1 ">
         <div className="pl-2 content-block-header title-text-header-1">
           <FontAwesomeIcon icon={faExclamationTriangle} fixedWidth className="mr-1"/>Access Denied!
@@ -27,6 +45,7 @@ function AccessDeniedContainer() {
 }
 
 AccessDeniedContainer.propTypes = {
+  navigationTabContainer: PropTypes.object,
 };
 
 export default AccessDeniedContainer;

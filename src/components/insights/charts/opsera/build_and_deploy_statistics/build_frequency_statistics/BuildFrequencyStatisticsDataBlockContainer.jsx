@@ -3,12 +3,14 @@ import PropTypes from "prop-types";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
 import Col from "react-bootstrap/Col";
-import AverageDailyBuildsDataBlock
-  from "components/common/metrics/data_blocks/build/average_daily/AverageDailyBuildsDataBlock";
 import { ResponsiveLine } from '@nivo/line';
 import { defaultConfig, getColor, assignStandardColors } from 'components/insights/charts/charts-views';
 import "../build-and-deploy-kpi.css";
 import _ from "lodash";
+import ChartTooltip from "components/insights/charts/ChartTooltip";
+import config from "../OpseraBuildAndDeployLineChartConfig";
+import MetricScoreText from "components/common/metrics/score/MetricScoreText";
+import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData }) {    
@@ -25,17 +27,15 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
   const dailyBuildsChartData = [
     {
       "id": "average daily builds",
-      "color": "#ABA4CC",
       "data": chartData?.avgBuilds
     }  
   ];
 
   const getLeftDataBlock = () => {    
-    return (
-      <AverageDailyBuildsDataBlock
-        className={'build-deploy-kpi'}
-        qualityLevel={metricData?.build?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS}
-        averageDailyCount={metricData?.build?.perDayAverage || 0}
+    return (      
+      <ThreeLineDataBlockNoFocusBase        
+        topText={"Average Daily Builds"}
+        middleText={<MetricScoreText score={metricData?.build?.perDayAverage || 0} qualityLevel={metricData?.build?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS} />}
         bottomText={`Goal: ${goalsData}`}
       />
     );
@@ -46,19 +46,22 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
       <div className="new-chart p-0" style={{height: "150px"}}>
         <ResponsiveLine
           data={dailyBuildsChartData}
-          {...defaultConfig("Count", "Month", 
-                false, false, "numbers", "month")}
-          yScale={{ type: 'linear', min: '0', max: maxVal, stacked: false, reverse: false }}          
-          enableGridX={false}
-          enableGridY={false}
-          axisLeft={{            
+          {...defaultConfig("Count", "Date", 
+                false, false, "numbers", "monthDate2")}
+          {...config()}
+          yScale={{ type: 'linear', min: '0', max: maxVal, stacked: false, reverse: false }}
+          axisLeft={{
             tickValues: [0, maxVal],
             legend: 'Avg Daily Builds',
             legendOffset: -38,
             legendPosition: 'middle'
           }}
-          colors={getColor}
-          pointSize={6}
+          tooltip={(node) => (            
+            <ChartTooltip
+              titles={["Date Range", "Number of Builds", "Avg Daily Builds"]}
+              values={[node.point.data.range, node.point.data.total, node.point.data.y]}
+            />
+          )}          
           markers={[
             {
                 axis: 'y',
@@ -76,10 +79,10 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
     <HorizontalDataBlocksContainer
       title={"Build Frequency Statistics"}      
     >
-      <Col sm={4} className={"p-2"}>
+      <Col sm={3} className={"p-2"}>
         {getLeftDataBlock()}        
       </Col>      
-      <Col sm={8} className={"p-2"}>
+      <Col sm={9} className={"p-2"}>
         {getTrendChart()}
       </Col>
     </HorizontalDataBlocksContainer>

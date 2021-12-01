@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import React from "react";
-import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date-helpers";
+import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date.helpers";
 import {
   getScriptLanguageDisplayText,
 } from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";

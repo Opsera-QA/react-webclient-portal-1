@@ -86,7 +86,7 @@ function DashboardDetailView() {
   };
 
   const handleDelete = async () => {
-    return await dashboardsActions.delete(dashboardData, getAccessToken);
+    return await dashboardsActions.deleteDashboardV2(getAccessToken, cancelTokenSource, dashboardData);
   };
 
   const handleClose = async () => {

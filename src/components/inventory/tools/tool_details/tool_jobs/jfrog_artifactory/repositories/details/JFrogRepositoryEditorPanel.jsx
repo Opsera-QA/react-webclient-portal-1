@@ -12,6 +12,8 @@ import jFrogToolRepositoriesActions
 import StandaloneDeleteButtonWithConfirmationModal
   from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
+import JFrogRepositoryKeyTextInput
+  from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/details/inputs/JFrogRepositoryKeyTextInput";
 
 function JFrogRepositoryEditorPanel(
   {
@@ -19,7 +21,6 @@ function JFrogRepositoryEditorPanel(
     jFrogRepositoryModel,
     setJFrogRepositoryModel,
     handleClose,
-    jfrogRepositories,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -49,14 +50,7 @@ function JFrogRepositoryEditorPanel(
   };
 
   const deleteJFrogMavenRepository = async () => {
-    const repo = jFrogRepositoryModel?.getPersistData();
-    let postBody = {
-      toolId: toolId,
-      repositoryName: repo.key
-    };
-    const response = await jFrogToolRepositoriesActions.deleteRepository(postBody, getAccessToken, cancelTokenSource);
-    handleClose();
-    return response;
+    return await jFrogToolRepositoriesActions.deleteRepository(getAccessToken, cancelTokenSource, toolId, jFrogRepositoryModel);
   };
 
   const getExtraButtons = () => {
@@ -65,6 +59,7 @@ function JFrogRepositoryEditorPanel(
         <StandaloneDeleteButtonWithConfirmationModal
           model={jFrogRepositoryModel}
           deleteDataFunction={deleteJFrogMavenRepository}
+          handleCloseFunction={handleClose}
         />
       );
     }
@@ -92,9 +87,9 @@ function JFrogRepositoryEditorPanel(
       </div>
       <Row>
         <Col lg={12}>
-          <TextInputBase
-            dataObject={jFrogRepositoryModel}
-            setDataObject={setJFrogRepositoryModel}
+          <JFrogRepositoryKeyTextInput
+            model={jFrogRepositoryModel}
+            setModel={setJFrogRepositoryModel}
             fieldName={"key"}
             disabled={jFrogRepositoryModel?.isNew() !== true}
           />
@@ -124,7 +119,6 @@ JFrogRepositoryEditorPanel.propTypes = {
   jFrogRepositoryModel: PropTypes.object,
   setJFrogRepositoryModel: PropTypes.func,
   handleClose: PropTypes.func,
-  jfrogRepositories: PropTypes.array,
 };
 
 export default JFrogRepositoryEditorPanel;

@@ -5,32 +5,31 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 
-function LazyLoadMultiSelectInputBase(
-  {
-    fieldName,
-    dataObject,
-    setDataObject,
-    groupBy,
-    disabled,
-    selectOptions,
-    valueField,
-    textField,
-    placeholderText,
-    setDataFunction,
-    busy,
-    showClearValueButton,
-    clearDataFunction,
-    className,
-    showLabel,
-    requireClearDataConfirmation,
-    clearDataDetails,
-    linkTooltipText,
-    detailViewLink,
-    infoOverlay,
-    onToggleFunction,
-    onSearchFunction,
-  }) {
-
+function LazyLoadMultiSelectInputBase({
+  fieldName,
+  dataObject,
+  setDataObject,
+  groupBy,
+  disabled,
+  selectOptions,
+  valueField,
+  textField,
+  placeholderText,
+  setDataFunction,
+  busy,
+  showClearValueButton,
+  clearDataFunction,
+  className,
+  showLabel,
+  requireClearDataConfirmation,
+  clearDataDetails,
+  linkTooltipText,
+  detailViewLink,
+  infoOverlay,
+  onToggleFunction,
+  onSearchFunction,
+  useToggle,
+}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
 
@@ -120,7 +119,7 @@ function LazyLoadMultiSelectInputBase(
           filter="contains"
           groupBy={groupBy}
           onToggleFunction={(test) => {
-            if (test === true && (!Array.isArray(selectOptions) || selectOptions?.length === 0)) {
+            if (useToggle && test === true && (!Array.isArray(selectOptions) || selectOptions?.length === 0)) {
               onToggleFunction();
             }
           }}
@@ -163,6 +162,7 @@ LazyLoadMultiSelectInputBase.propTypes = {
   infoOverlay: PropTypes.any,
   onToggleFunction: PropTypes.func,
   onSearchFunction: PropTypes.func,
+  useToggle: PropTypes.bool,
 };
 
 LazyLoadMultiSelectInputBase.defaultProps = {

@@ -1,4 +1,4 @@
-const SFDCPipelinesInsightsTableMetadata = {
+const SfdcPipelinesInsightsTableMetadata = {
     idProperty: "_id",
     type: "SFDC Pipeline Details",
     fields: [
@@ -26,5 +26,5 @@ const SFDCPipelinesInsightsTableMetadata = {
     newObjectFields: {},
   };
   
-  export default SFDCPipelinesInsightsTableMetadata;
+  export default SfdcPipelinesInsightsTableMetadata;
   

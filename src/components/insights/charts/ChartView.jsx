@@ -121,13 +121,13 @@ import ManualQaTestPieChart from "components/insights/charts/qa_metrics/ManualQa
 import FirstPassYieldPieChart from "components/insights/charts/qa_metrics/FirstPassYieldPieChart";
 import CummulativeOpenDefectsPieChart from "components/insights/charts/qa_metrics/CummulativeOpenDefectsPieChart";
 import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieChart";
-import AdoptionTestPercentagePieChart from "./qa_metrics/AdoptionTestPercentagePieChart";
+import AdoptionTestPercentageMetricV1 from "components/insights/charts/qa_metrics/adoption_test_percentage/AdoptionTestPercentageMetricV1";
 import AutomatedTestResultsPieChart from "./qa_metrics/AutomatedTestResultsPieChart";
 import SFDCManualTestResultsPieChart from "./qa_metrics/SFDCManualTestResultsPieChart";
 import DefectRemovalEfficiencyPieChart from "./qa_metrics/DefectRemovalEfficiencyPieChart";
 
 // SFDC KPIs
-import SFDCBackups from "components/insights/charts/sfdc/SFDCBackups";
+import SalesforceBackupAndRollbackMetrics from "components/insights/charts/sfdc/salesforce_backups_and_rollbacks/SalesforceBackupAndRollbackMetrics";
 import SFDCProfileMigrationsBarChart from "components/insights/charts/sfdc/bar_chart/profile_migrations/SFDCProfileMigrationsBarChart";
 import SFDCUnitTestingPieChart from "components/insights/charts/sfdc/pie_chart/unit_testing/SFDCUnitTestingPieChart";
 import SalesforceDurationByStageMetrics from "components/insights/charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageMetrics";
@@ -135,7 +135,6 @@ import SalesforceDurationByStageMetrics from "components/insights/charts/sfdc/ba
 // Service Now KPIs
 import ServiceNowMeanTimeToResolutionBarChart from "./servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionBarChart";
 import ServiceNowMeanTimeToAcknowledgeBarChart from "./servicenow/bar_chart/mean_time_to_acknowledge/ServiceNowMeanTimeToAcknowledgeBarChart";
-import ServiceNowMeanTimeBetweenFailuresBarChart from "./servicenow/bar_chart/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresBarChart";
 
 // Coverity KPIs
 import CoverityIssuesByCategory from "./coverity/CoverityIssuesByCategory/CoverityIssuesByCategory";
@@ -143,13 +142,12 @@ import CoverityIssuesByCategory from "./coverity/CoverityIssuesByCategory/Coveri
 //SDLC KPIs
 import SdlcDurationByStageMetrics from "components/insights/charts/sdlc/bar_chart/duration_by_stage/SdlcDurationByStageMetrics";
 
-import {
-  getDateObjectFromKpiConfiguration,
-  getTagsFromKpiConfiguration,
-} from "components/insights/charts/charts-helpers";
+import { getDateObjectFromKpiConfiguration } from "components/insights/charts/charts-helpers";
 import { Col } from "react-bootstrap";
 import LegacySonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings_legacy/LegacySonarRatingMetrics";
 import SonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings/SonarRatingMetrics";
+import AdoptionTestPercentageMetric
+  from "components/insights/charts/qa_metrics/adoption_test_percentage/AdoptionTestPercentageMetric";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1286,13 +1284,20 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "adoption-percentage":
         return (
           <Col md={12} className="p-2">
-            <AdoptionTestPercentagePieChart
+            <AdoptionTestPercentageMetricV1
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
               setKpis={setKpis}
               index={index}
             />
+            {/*<AdoptionTestPercentageMetric*/}
+            {/*  kpiConfiguration={kpiConfig}*/}
+            {/*  setKpiConfiguration={setKpiConfig}*/}
+            {/*  dashboardData={dashboardData}*/}
+            {/*  setKpis={setKpis}*/}
+            {/*  index={index}*/}
+            {/*/>*/}
           </Col>
         );
       case "automated-test-results":
@@ -1334,7 +1339,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "sfdc-backups":
         return (
           <Col xl={6} md={12} className="p-2">
-            <SFDCBackups
+            <SalesforceBackupAndRollbackMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}

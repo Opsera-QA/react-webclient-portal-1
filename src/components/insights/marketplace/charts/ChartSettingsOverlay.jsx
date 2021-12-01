@@ -10,8 +10,7 @@ function ChartSettingsOverlay({ kpiConfiguration, setKpiConfiguration, dashboard
 
   const closePanel = () => {
     if (isMounted?.current === true) {
-      // TODO: I removed this because it was causing loadData to be triggered twice. Remove this when verified. Leaving in in case of false positive.
-      // loadData();
+      loadData();
     }
 
     toastContext.removeInlineMessage();

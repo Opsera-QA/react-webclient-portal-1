@@ -4,7 +4,7 @@ import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Loading from "components/common/status_notifications/loading";
-import WebsitePathInput from "components/common/inputs/text/WebsitePathInput";
+import ImagePathTextInput from "components/common/inputs/image/ImagePathTextInput";
 import JsonInput from "components/common/inputs/object/JsonInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import KpiActions from "components/admin/kpi_identifiers/kpi.actions";
@@ -123,10 +123,12 @@ function KpiIdentifierEditorPanel({ kpiData, handleClose }) {
           />
         </Col>
         <Col lg={12}>
-          <WebsitePathInput
+          <ImagePathTextInput
             fieldName={"thumbnailPath"}
-            dataObject={kpiDataDto}
-            setDataObject={setKpiDataDto}
+            model={kpiDataDto}
+            setModel={setKpiDataDto}
+            imageAltText={"KPI Identifier Thumbnail"}
+            imageTitle={"KPI Identifier Thumbnail"}
           />
         </Col>
         <Col lg={6}>

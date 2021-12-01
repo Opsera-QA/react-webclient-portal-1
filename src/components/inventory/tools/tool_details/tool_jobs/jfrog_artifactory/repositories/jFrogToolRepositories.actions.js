@@ -35,9 +35,9 @@ jFrogToolRepositoriesActions.updateRepository = async (getAccessToken, cancelTok
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-jFrogToolRepositoriesActions.deleteRepository = async (postBody, getAccessToken, cancelTokenSource) => {
-  const apiUrl = '/tools/jfrog_artifactory/repositories/deleteRepository';
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+jFrogToolRepositoriesActions.deleteRepository = async (getAccessToken, cancelTokenSource, toolId, jfrogRepositoryModel) => {
+  const apiUrl = `/tools/${toolId}/jfrog_artifactory/repositories/${jfrogRepositoryModel?.getData("key")}`;
+  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 export default jFrogToolRepositoriesActions;

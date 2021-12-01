@@ -64,6 +64,14 @@
     left: 25px;
 }
 
+.data-block-right-icon {
+    position: absolute;
+    font-size: 1.25rem;
+    top: 5px;
+    right: 25px;
+}
+
+
 /* End Data Block Styling */
 
 /* Marketplace Chart Card Styling */

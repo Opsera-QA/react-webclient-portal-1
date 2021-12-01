@@ -37,13 +37,13 @@ function KpiIdentifierDetailPanel({ kpiData, setKpiData }) {
           handleTabClick={handleTabClick}
           activeTab={activeTab}
         />
-        {/*<CustomTab*/}
-        {/*  handleTabClick={handleTabClick}*/}
-        {/*  activeTab={activeTab}*/}
-        {/*  icon={faBezierCurve}*/}
-        {/*  tabName={"dataPoints"}*/}
-        {/*  tabText={"Data Points"}*/}
-        {/*/>*/}
+        <CustomTab
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          icon={faBezierCurve}
+          tabName={"dataPoints"}
+          tabText={"Data Points"}
+        />
       </CustomTabContainer>
     );
   };

@@ -1,23 +1,18 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import ModalLogs from "components/common/modal/modalLogs";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import SonarRatingsChartHelpDocumentation
-  from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
-import SonarRatingsMaintainabilityDataBlockContainer
-  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsMaintainabilityDataBlockContainer";
-import SonarRatingsVulnerabilityDataBlockContainer
-  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsVulnerabilityDataBlockContainer";
-import ThreeStackedHorizontalMetricsContainer
-  from "components/common/metrics/data_blocks/horizontal/ThreeStackedHorizontalMetricsContainer";
-import SonarRatingsReliabilityDataBlockContainer
-  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlockContainer";
+import SonarRatingsChartHelpDocumentation from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
+import SonarRatingsMaintainabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsMaintainabilityDataBlockContainer";
+import SonarRatingsVulnerabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsVulnerabilityDataBlockContainer";
+import ThreeStackedHorizontalMetricsContainer from "components/common/metrics/data_blocks/horizontal/ThreeStackedHorizontalMetricsContainer";
+import SonarRatingsReliabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlockContainer";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 
 function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
-  const {getAccessToken} = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [sonarRatingsMetric, setSonarRatingsMetric] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -50,21 +45,26 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "sonarRatingsV2", kpiConfiguration, dashboardTags);
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "sonarRatingsV2",
+        kpiConfiguration,
+        dashboardTags
+      );
       const metrics = response?.data?.data[0]?.sonarRatings?.data;
 
       if (isMounted?.current === true && Array.isArray(metrics)) {
         setSonarRatingsMetric(metrics[0]);
       }
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -78,33 +78,33 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
 
     return (
       <>
-      <ThreeStackedHorizontalMetricsContainer
-        topDataBlock={
-          <SonarRatingsVulnerabilityDataBlockContainer
-            kpiConfiguration={kpiConfiguration}
-            dashboardData={dashboardData}
-            securityRating={sonarRatingsMetric?.security_rating}
-            vulnerabilityCount={sonarRatingsMetric?.vulnerabilities}
-          />
-        }
-        middleDataBlock={
-          <SonarRatingsReliabilityDataBlockContainer
-            kpiConfiguration={kpiConfiguration}
-            dashboardData={dashboardData}
-            reliabilityRating={sonarRatingsMetric?.reliability_rating}
-            bugCount={sonarRatingsMetric?.bugs}
-          />
-        }
-        bottomDataBlock={
-          <SonarRatingsMaintainabilityDataBlockContainer
-            dashboardData={dashboardData}
-            kpiConfiguration={kpiConfiguration}
-            maintainabilityRating={sonarRatingsMetric?.maintainability_rating}
-            technicalDebtRatio={sonarRatingsMetric.technical_debt_ratio}
-          />
-        }
-      />
-      <div className={"m-1"}>Results of scans from 15th November 2021</div>
+        <ThreeStackedHorizontalMetricsContainer
+          topDataBlock={
+            <SonarRatingsVulnerabilityDataBlockContainer
+              kpiConfiguration={kpiConfiguration}
+              dashboardData={dashboardData}
+              securityRating={sonarRatingsMetric?.security_rating}
+              vulnerabilityCount={sonarRatingsMetric?.vulnerabilities}
+            />
+          }
+          middleDataBlock={
+            <SonarRatingsReliabilityDataBlockContainer
+              kpiConfiguration={kpiConfiguration}
+              dashboardData={dashboardData}
+              reliabilityRating={sonarRatingsMetric?.reliability_rating}
+              bugCount={sonarRatingsMetric?.bugs}
+            />
+          }
+          bottomDataBlock={
+            <SonarRatingsMaintainabilityDataBlockContainer
+              dashboardData={dashboardData}
+              kpiConfiguration={kpiConfiguration}
+              maintainabilityRating={sonarRatingsMetric?.maintainability_rating}
+              technicalDebtRatio={sonarRatingsMetric.technical_debt_ratio}
+            />
+          }
+        />
+        <div className={"m-1"}>Results of scans from 25th November 2021 onward</div>
       </>
     );
   };
@@ -141,7 +141,7 @@ SonarRatingMetrics.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func
+  setKpis: PropTypes.func,
 };
 
 export default SonarRatingMetrics;

@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import IconBase from "components/common/icons/IconBase";
 
 function PullDataIcon({ pullDataFunction, className, tooltipText }) {
   if (pullDataFunction == null) {
@@ -12,10 +12,9 @@ function PullDataIcon({ pullDataFunction, className, tooltipText }) {
   return (
     <div className={className}>
       <TooltipWrapper innerText={tooltipText} placement={"top"}>
-        <FontAwesomeIcon
-          onClick={() => {pullDataFunction();}}
+        <IconBase
+          onClickFunction={pullDataFunction}
           icon={faFileDownload}
-          fixedWidth
           className={"pointer"}
         />
       </TooltipWrapper>
