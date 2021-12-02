@@ -30,7 +30,7 @@ function TwoLineDataBlockBase(
       <DataBlockInfoOverlayIcon
         dataBlockInfoPanel={dataBlockInfoPanel}
         dataPoint={dataPoint}
-        className={"data-block-right-icon"}
+        // className={"data-block-right-icon"}
       />
     );
   };

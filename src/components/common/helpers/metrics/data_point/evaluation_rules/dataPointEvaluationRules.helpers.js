@@ -1,13 +1,15 @@
+import {objectHelpers} from "components/common/helpers/object/object.helpers";
+
 export const dataPointEvaluationRulesHelpers = {};
 
 dataPointEvaluationRulesHelpers.hasDataPointEvaluationRule = (dataPointEvaluationRules) => {
   return (
-    typeof dataPointEvaluationRules === "object"
+    objectHelpers.isObject(dataPointEvaluationRules)
     &&
     (
-         typeof dataPointEvaluationRules?.success_rule === "object"
-      || typeof dataPointEvaluationRules?.warning_rule === "object"
-      || typeof dataPointEvaluationRules?.failure_rule === "object"
+         objectHelpers.isObject(dataPointEvaluationRules?.success_rule)  === true
+      || objectHelpers.isObject(dataPointEvaluationRules?.warning_rule) === true
+      || objectHelpers.isObject(dataPointEvaluationRules?.failure_rule) === true
     )
   );
 };

@@ -8,7 +8,7 @@ function HelpInfoOverlayIcon(
     infoOverlay,
     title,
     className,
-    placement,
+    overlayPlacement,
   }) {
 
   if (infoOverlay == null) {
@@ -17,10 +17,10 @@ function HelpInfoOverlayIcon(
 
   return (
     <TooltipWrapper
-      placement={placement}
+      placement={overlayPlacement}
       innerText={
         <div style={{height: 500}}>
-          THIS IS A TEST
+          {infoOverlay}
         </div>
       }
       title={title}
@@ -38,11 +38,11 @@ HelpInfoOverlayIcon.propTypes = {
   infoOverlay: PropTypes.any,
   title: PropTypes.string,
   className: PropTypes.string,
-  placement: PropTypes.string,
+  overlayPlacement: PropTypes.string,
 };
 
 HelpInfoOverlayIcon.defaultProps = {
-  placement: "left",
+  overlayPlacement: "left",
 };
 
 export default HelpInfoOverlayIcon;

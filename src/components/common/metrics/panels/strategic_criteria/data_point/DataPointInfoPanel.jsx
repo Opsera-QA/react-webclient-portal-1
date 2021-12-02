@@ -5,13 +5,13 @@ import {faBezierCurve} from "@fortawesome/pro-light-svg-icons";
 import DataPointStrategicCriteriaInfoPanel
   from "components/common/metrics/panels/strategic_criteria/data_point/DataPointStrategicCriteriaInfoPanel";
 import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
+import {objectHelpers} from "components/common/helpers/object/object.helpers";
 
 function DataPointInfoPanel({ dataPoint, className }) {
-  if (dataPoint == null || typeof dataPoint !== "object") {
+  if (objectHelpers.isObject(dataPoint) !== true) {
     return null;
   }
 
-  console.log("dataPoint: " + JSON.stringify(dataPoint));
 
   // TODO: Should we show attributes like type?
   return (

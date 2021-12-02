@@ -1,46 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
-import InfoOverlayContainer from "components/common/inputs/info_text/InfoOverlayContainer";
 import DataPointInfoPanel from "components/common/metrics/panels/strategic_criteria/data_point/DataPointInfoPanel";
+import {objectHelpers} from "components/common/helpers/object/object.helpers";
 
 function DataBlockInfoOverlay(
   {
-    title,
     dataPoint,
     dataBlockInfoPanel,
   }) {
-  const getBody = () => {
-    return (
-      <div>
-        {dataBlockInfoPanel}
-        <DataPointInfoPanel
-          dataPoint={dataPoint}
-        />
-      </div>
-    );
-  };
 
-  if ((dataPoint == null || dataPoint !== "object") && dataBlockInfoPanel == null) {
+  if (objectHelpers.isObject(dataPoint) !== true && dataBlockInfoPanel == null) {
     return null;
   }
 
   return (
-    <InfoOverlayContainer
-      title={title}
-    >
-      {getBody()}
-    </InfoOverlayContainer>
+    <div>
+      {dataBlockInfoPanel}
+      <DataPointInfoPanel
+        dataPoint={dataPoint}
+      />
+    </div>
   );
 }
 
 DataBlockInfoOverlay.propTypes = {
   dataPoint: PropTypes.object,
   dataBlockInfoPanel: PropTypes.any,
-  title: PropTypes.string,
-};
-
-DataBlockInfoOverlay.defaultProps = {
-  title: "Metric Details",
 };
 
 export default DataBlockInfoOverlay;

@@ -7,11 +7,12 @@ import {
   SUPPORTED_DATA_POINT_EVALUATION_RULE_TYPES
 } from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/dataPointEvaluationRule.types";
 import {dataPointEvaluationRulesHelpers} from "components/common/helpers/metrics/data_point/evaluation_rules/dataPointEvaluationRules.helpers";
+import {objectHelpers} from "components/common/helpers/object/object.helpers";
 
 export const dataPointHelpers = {};
 
 dataPointHelpers.evaluateDataPointQualityLevel = (dataPoint, value) => {
-  if (typeof dataPoint !== "object" || dataPointHelpers.hasDataPointEvaluationRules(dataPoint) !== true || typeof value !== "number"){
+  if (dataPointHelpers.hasDataPointEvaluationRules(dataPoint) !== true || typeof value !== "number"){
     return null;
   }
 
@@ -20,7 +21,7 @@ dataPointHelpers.evaluateDataPointQualityLevel = (dataPoint, value) => {
   const warningRule = dataPointEvaluationRules.warning_rule;
   const failureRule = dataPointEvaluationRules.failure_rule;
 
-  if (typeof failureRule === "object") {
+  if (objectHelpers.isObject(failureRule)) {
     const isFailure = evaluateDataPointEvaluationRule(failureRule, value);
 
     if (isFailure === true) {
@@ -28,7 +29,7 @@ dataPointHelpers.evaluateDataPointQualityLevel = (dataPoint, value) => {
     }
   }
 
-  if (typeof warningRule === "object") {
+  if (objectHelpers.isObject(warningRule)) {
     const isWarning = evaluateDataPointEvaluationRule(warningRule, value);
 
     if (isWarning === true) {
@@ -36,7 +37,7 @@ dataPointHelpers.evaluateDataPointQualityLevel = (dataPoint, value) => {
     }
   }
 
-  if (typeof successRule === "object") {
+  if (objectHelpers.isObject(successRule)) {
     const isSuccess = evaluateDataPointEvaluationRule(successRule, value);
 
     if (isSuccess === true) {
@@ -57,9 +58,9 @@ dataPointHelpers.getDataPointStrategicCriteria = (dataPoint) => {
 
 dataPointHelpers.hasStrategicCriteria = (dataPoint) => {
   return (
-       typeof dataPoint === "object"
-    && typeof dataPoint?.strategic_criteria === "object"
-    && Object.keys(dataPoint?.strategic_criteria) > 0
+       objectHelpers.isObject(dataPoint) === true
+    && objectHelpers.isObject(dataPoint?.strategic_criteria) === true
+    && Object.keys(dataPoint?.strategic_criteria).length > 0
   );
 };
 
@@ -102,7 +103,7 @@ dataPointHelpers.getDataPoint = (dataPoints, dataPointIdentifier) => {
 };
 
 dataPointHelpers.isDataEvaluationRuleComplete = (dataPointEvaluationRule) => {
-  if (typeof dataPointEvaluationRule !== "object") {
+  if (objectHelpers.isObject(dataPointEvaluationRule)) {
     return false;
   }
 
@@ -119,7 +120,7 @@ dataPointHelpers.isDataEvaluationRuleComplete = (dataPointEvaluationRule) => {
 
 // The data checks are redundant but in case of reuse leaving them in here for now.
 const evaluateDataPointEvaluationRule = (rule, value) => {
-  if (typeof rule !== "object" || typeof value !== "number") {
+  if (objectHelpers.isObject(rule) || numberHelpers.hasNumberValue(value)) {
     return false;
   }
 
