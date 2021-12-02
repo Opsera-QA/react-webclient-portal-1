@@ -14,6 +14,7 @@ function MetricDataPointsInfoPanel({ dataPoints }) {
       dataPoints.map((dataPoint, index) => {
         return (
           <DataPointInfoPanel
+            className={"my-2"}
             dataPoint={dataPoint}
             key={index}
           />

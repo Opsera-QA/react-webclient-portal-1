@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import InfoOverlayIcon from "components/common/icons/general/InfoOverlayIcon";
+import DataBlockInfoOverlayIcon from "components/common/icons/metric/info/DataBlockInfoOverlayIcon";
 
 function TwoLineDataBlockBase(
   {
@@ -11,7 +11,8 @@ function TwoLineDataBlockBase(
     subtitle,
     className,
     icon,
-    infoOverlay,
+    dataBlockInfoPanel,
+    dataPoint,
   }) {
   const getLeftDataBlockIcon = () => {
     if (icon) {
@@ -24,15 +25,14 @@ function TwoLineDataBlockBase(
   };
 
   const getInfoOverlayIcon = () => {
-    if (infoOverlay) {
-      return (
-        <div className={"data-block-right-icon"}>
-          <InfoOverlayIcon
-            infoOverlay={infoOverlay}
-          />
-        </div>
-      );
-    }
+    return (
+      <div className={"data-block-right-icon"}>
+        <DataBlockInfoOverlayIcon
+          dataBlockInfoPanel={dataBlockInfoPanel}
+          dataPoint={dataPoint}
+        />
+      </div>
+    );
   };
 
   const getTitle = () => {
@@ -76,7 +76,8 @@ TwoLineDataBlockBase.propTypes = {
   subtitle: PropTypes.any,
   className: PropTypes.string,
   icon: PropTypes.object,
-  infoOverlay: PropTypes.any,
+  dataBlockInfoPanel: PropTypes.any,
+  dataPoint: PropTypes.object,
 };
 
 export default TwoLineDataBlockBase;

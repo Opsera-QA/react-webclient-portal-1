@@ -10,6 +10,7 @@ function PercentageDataBlock(
     dataPoint,
     subtitle,
     className,
+    dataBlockInfoPanel,
   }) {
   return (
     <TwoLineDataBlockBase
@@ -21,6 +22,7 @@ function PercentageDataBlock(
         />
       }
       subtitle={subtitle}
+      infoOverlayPanel={dataBlockInfoPanel}
     />
   );
 }
@@ -29,7 +31,8 @@ PercentageDataBlock.propTypes = {
   percentage: PropTypes.number,
   dataPoint: PropTypes.object,
   subtitle: PropTypes.any,
-  className: PropTypes.string
+  className: PropTypes.string,
+  dataBlockInfoPanel: PropTypes.any,
 };
 
 export default PercentageDataBlock;

@@ -107,6 +107,8 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
     const dataPoints = kpiConfiguration?.dataPoints;
 
     let newAdoptionPercentageDataPoint = dataPointHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.ADOPTION_PERCENTAGE);
+
+    console.log("newAdoptionPercentageDataPoint: " + JSON.stringify(newAdoptionPercentageDataPoint));
     setAdoptionPercentageDataPoint(newAdoptionPercentageDataPoint);
   };
 
