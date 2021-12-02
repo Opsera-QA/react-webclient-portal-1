@@ -57,25 +57,12 @@
     border-radius: 0.25rem;
 }
 
-.data-block-left-icon {
-    position: absolute;
+.data-block-icon {
+    width: 1.75rem;
+    max-width: 1.75rem;
     font-size: 1.25rem;
-    top: 5px;
-    left: 25px;
-}
-
-.data-block-right-icon {
-    position: absolute;
-    font-size: 1.25rem;
-    top: 5px;
-    right: 25px;
     z-index: 500;
 }
-
-.data-block-center-text {
-/*    margin-right: calc(100% - 25px);*/
-}
-
 
 /* End Data Block Styling */
 
