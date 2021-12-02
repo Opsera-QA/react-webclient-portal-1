@@ -61,7 +61,7 @@ function JfrogMavenRepoSelectInput({ fieldName, dataObject, setDataObject, disab
 
   const loadRepos = async (cancelSource = cancelTokenSource) => {
     try {
-      const res = await JFrogToolRepositoriesActions.getMavenRepositories(getAccessToken, cancelSource, dataObject.getData("jfrogToolConfigId"));
+      const res = await JFrogToolRepositoriesActions.getRepositories(getAccessToken, cancelSource, dataObject.getData("jfrogToolConfigId"), dataObject.getData("repositoryFormat"));
       if (res && res.status === 200) {
         setRepos(res.data);
         return;
