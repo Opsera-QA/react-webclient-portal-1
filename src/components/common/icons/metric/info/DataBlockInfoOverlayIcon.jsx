@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import HelpInfoOverlayIcon from "components/common/icons/general/HelpInfoOverlayIcon";
 import DataBlockInfoOverlay from "components/common/inputs/metric/DataBlockInfoOverlay";
+import {objectHelpers} from "components/common/helpers/object/object.helpers";
 
 function DataBlockInfoOverlayIcon(
   {
@@ -12,7 +13,7 @@ function DataBlockInfoOverlayIcon(
     overlayPlacement,
   }) {
   const getInfoOverlay = () => {
-    if ((dataPoint == null || typeof dataPoint !== "object") && dataBlockInfoPanel == null) {
+    if (objectHelpers.isObject(dataPoint) !== true && dataBlockInfoPanel == null) {
       return null;
     }
 

@@ -9,6 +9,8 @@ function HelpInfoOverlayIcon(
     title,
     className,
     overlayPlacement,
+    overlayHeight,
+    overlayWidth,
   }) {
 
   if (infoOverlay == null) {
@@ -18,11 +20,9 @@ function HelpInfoOverlayIcon(
   return (
     <TooltipWrapper
       placement={overlayPlacement}
-      innerText={
-        <div style={{height: 500}}>
-          {infoOverlay}
-        </div>
-      }
+      overlayHeight={overlayHeight}
+      overlayWidth={overlayWidth}
+      innerText={infoOverlay}
       title={title}
       showCloseButton={false}
     >
@@ -39,10 +39,20 @@ HelpInfoOverlayIcon.propTypes = {
   title: PropTypes.string,
   className: PropTypes.string,
   overlayPlacement: PropTypes.string,
+  overlayHeight: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  overlayWidth: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
 };
 
 HelpInfoOverlayIcon.defaultProps = {
   overlayPlacement: "left",
+  overlayHeight: 250,
+  overlayWidth: 500,
 };
 
 export default HelpInfoOverlayIcon;

@@ -5,7 +5,17 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Combine with PopoverContainer but make base component used by both
-function TooltipWrapper({ innerText, placement, children, title, showCloseButton, className }) {
+function TooltipWrapper(
+  {
+    innerText,
+    placement,
+    children,
+    title,
+    showCloseButton,
+    className,
+    overlayHeight,
+    overlayWidth,
+  }) {
   const getCloseButton = () => {
     if (showCloseButton !== false) {
       return (
@@ -37,7 +47,14 @@ function TooltipWrapper({ innerText, placement, children, title, showCloseButton
 
   const getPopover = (innerText) => {
     return (
-      <Popover id="popover-basic" className={className}>
+      <Popover
+        id="popover-basic"
+        className={className}
+        style={{
+          minHeight: overlayHeight,
+          minWidth: overlayWidth,
+        }}
+      >
         {getPopoverTitle()}
         <Popover.Content>
           {innerText}
@@ -71,6 +88,14 @@ TooltipWrapper.propTypes = {
   title: PropTypes.string,
   showCloseButton: PropTypes.bool,
   className: PropTypes.string,
+  overlayHeight: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  overlayWidth: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
 };
 
 TooltipWrapper.defaultProps = {
