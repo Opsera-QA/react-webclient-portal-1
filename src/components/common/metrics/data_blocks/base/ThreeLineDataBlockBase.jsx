@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import InfoOverlayIcon from "components/common/icons/general/InfoOverlayIcon";
+import HelpInfoOverlayIcon from "components/common/icons/general/HelpInfoOverlayIcon";
 
 function ThreeLineDataBlockBase(
   {
@@ -28,7 +28,7 @@ function ThreeLineDataBlockBase(
     if (infoOverlay) {
       return (
         <div className={"data-block-right-icon"}>
-          <InfoOverlayIcon
+          <HelpInfoOverlayIcon
             infoOverlay={infoOverlay}
           />
         </div>

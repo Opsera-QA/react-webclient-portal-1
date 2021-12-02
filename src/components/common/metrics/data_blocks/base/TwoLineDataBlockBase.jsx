@@ -24,14 +24,14 @@ function TwoLineDataBlockBase(
     }
   };
 
+  // TODO: Fix overlay appearing in wrong spot. We probably need to not use absolute positioning for the icon
   const getInfoOverlayIcon = () => {
     return (
-      <div className={"data-block-right-icon"}>
-        <DataBlockInfoOverlayIcon
-          dataBlockInfoPanel={dataBlockInfoPanel}
-          dataPoint={dataPoint}
-        />
-      </div>
+      <DataBlockInfoOverlayIcon
+        dataBlockInfoPanel={dataBlockInfoPanel}
+        dataPoint={dataPoint}
+        className={"data-block-right-icon"}
+      />
     );
   };
 
@@ -58,8 +58,10 @@ function TwoLineDataBlockBase(
   return (
     <div className={className}>
       <Row className={"w-100 h-100 text-center mx-auto"}>
-        {getLeftDataBlockIcon()}
-        {getInfoOverlayIcon()}
+        <div>
+          {getLeftDataBlockIcon()}
+          {getInfoOverlayIcon()}
+        </div>
         <Col xs={12} className="mt-2 text-center">
           {getTitle()}
         </Col>

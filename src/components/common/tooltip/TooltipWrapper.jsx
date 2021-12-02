@@ -4,6 +4,7 @@ import {OverlayTrigger, Popover} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
 
+// TODO: Combine with PopoverContainer but make base component used by both
 function TooltipWrapper({ innerText, placement, children, title, showCloseButton, className }) {
   const getCloseButton = () => {
     if (showCloseButton !== false) {
@@ -50,8 +51,15 @@ function TooltipWrapper({ innerText, placement, children, title, showCloseButton
   }
 
   return (
-    <OverlayTrigger trigger={["hover", "focus"]} placement={placement} overlay={getPopover(innerText)}>
-      {children}
+    <OverlayTrigger
+      trigger={["hover", "focus"]}
+      placement={placement}
+      overlay={getPopover(innerText)}
+      onToggle={(shown) => {console.log("popover should be shown: " + shown);}}
+    >
+      <div>
+        {children}
+      </div>
     </OverlayTrigger>
   );
 }

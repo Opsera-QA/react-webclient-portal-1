@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import InfoOverlayIcon from "components/common/icons/general/InfoOverlayIcon";
+import HelpInfoOverlayIcon from "components/common/icons/general/HelpInfoOverlayIcon";
 import DataBlockInfoOverlay from "components/common/inputs/metric/DataBlockInfoOverlay";
 
 function DataBlockInfoOverlayIcon({dataBlockInfoPanel, dataPoint, title, className}) {
@@ -18,7 +18,7 @@ function DataBlockInfoOverlayIcon({dataBlockInfoPanel, dataPoint, title, classNa
   };
 
   return (
-    <InfoOverlayIcon
+    <HelpInfoOverlayIcon
       title={title}
       infoOverlay={getInfoOverlay()}
       className={className}

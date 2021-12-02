@@ -69,6 +69,11 @@
     font-size: 1.25rem;
     top: 5px;
     right: 25px;
+    z-index: 500;
+}
+
+.data-block-center-text {
+/*    margin-right: calc(100% - 25px);*/
 }
 
 
