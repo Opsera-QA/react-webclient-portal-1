@@ -11,7 +11,7 @@ import {
 } from "components/insights/charts/charts-views";
 import { Col, Row } from "react-bootstrap";
 import "components/insights/charts/qa_metrics/Styling.css";
-import {strategicCriteriaHelpers} from "components/common/helpers/strategicCriteria.helpers";
+import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import AdoptionTestPercentageAutomatedTestCasesDataBlock
   from "components/insights/charts/qa_metrics/adoption_test_percentage/data_blocks/AdoptionTestPercentageAutomatedTestCasesDataBlock";
 import AdoptionTestPercentageManualTestCasesDataBlock
@@ -106,7 +106,7 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
   const loadDataPoints = async () => {
     const dataPoints = kpiConfiguration?.dataPoints;
 
-    let newAdoptionPercentageDataPoint = strategicCriteriaHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.ADOPTION_PERCENTAGE);
+    let newAdoptionPercentageDataPoint = dataPointHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.ADOPTION_PERCENTAGE);
     setAdoptionPercentageDataPoint(newAdoptionPercentageDataPoint);
   };
 

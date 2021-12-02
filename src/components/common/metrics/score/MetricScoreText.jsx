@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import MetricTextBase from "components/common/metrics/text/MetricTextBase";
-import {strategicCriteriaHelpers} from "components/common/helpers/strategicCriteria.helpers";
+import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 
 // TODO: Rename MetricNumberText
 function MetricScoreText(
@@ -15,7 +15,7 @@ function MetricScoreText(
 
     // TODO: allow existing data points to use their quality level but eventually require the use of strategic criteria
     if (dataPoint) {
-      const evaluatedDataPoint = strategicCriteriaHelpers.evaluateDataPointQualityLevel(dataPoint, score);
+      const evaluatedDataPoint = dataPointHelpers.evaluateDataPointQualityLevel(dataPoint, score);
 
       if (typeof evaluatedDataPoint === "string") {
         evaluation = evaluatedDataPoint;
