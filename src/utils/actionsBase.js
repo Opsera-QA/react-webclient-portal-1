@@ -4,7 +4,7 @@ import {
   axiosApiGetCall,
   axiosApiPatchCall,
   axiosApiPostCall,
-  axiosApiPutCall, axiosCustomTokenApiPostCall, axiosTokenlessApiGetCall
+  axiosApiPutCall, axiosCustomTokenApiPostCall, axiosTokenlessApiGetCall, nodeAnalyticsApiPostCall
 } from "api/apiServiceV2";
 
 const baseActions = {};
@@ -80,6 +80,8 @@ baseActions.apiDeleteCallV2 = async (getAccessToken, sourceToken, apiUrl) => {
   return await axiosApiDeleteCall(getAccessToken, sourceToken, apiUrl);
 };
 
-
+baseActions.handleNodeAnalyticsApiPostRequest = async (getAccessToken, sourceToken, apiUrl, postBody = {}) => {
+  return await nodeAnalyticsApiPostCall(getAccessToken, sourceToken, apiUrl, postBody);
+};
 
 export default baseActions;

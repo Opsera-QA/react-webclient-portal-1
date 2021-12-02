@@ -63,3 +63,84 @@ export async function axiosApiDeleteCall(getAccessToken, cancelTokenSource, apiU
     .catch(error => { if (!axios.isCancel(error)) {throw error;}});
 }
 
+
+function getNodeAnalyticsAxiosInstance(token, cancelToken) {
+  const axiosInstance = axios.create({
+    baseURL: config.NODE_ANALYTICS_API_SERVER_URL,
+    timeout: 50000,
+    cancelToken: cancelToken
+  });
+
+
+  if (token) {
+    axiosInstance.defaults.headers.common['authorization'] = `Bearer ${token}`;
+  }
+
+  return axiosInstance;
+}
+
+export async function nodeAnalyticsApiGetCall(getAccessToken, cancelTokenSource, apiUrl, urlParams) {
+  const accessToken = await getAccessToken();
+
+  try {
+    return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).get(apiUrl, urlParams);
+  }
+  catch (error) {
+    if (!axios.isCancel(error)) {
+      throw error;
+    }
+  }
+}
+
+export async function nodeAnalyticsApiPostCall(getAccessToken, cancelTokenSource, apiUrl, postBody) {
+  const accessToken = await getAccessToken();
+
+  try {
+    return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).post(apiUrl, postBody);
+  }
+  catch (error) {
+    if (!axios.isCancel(error)) {
+      throw error;
+    }
+  }
+}
+
+export async function nodeAnalyticsApiPutCall(getAccessToken, cancelTokenSource, apiUrl, postBody) {
+  const accessToken = await getAccessToken();
+
+  try {
+    return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).put(apiUrl, postBody);
+  }
+  catch (error) {
+    if (!axios.isCancel(error)) {
+      throw error;
+    }
+  }
+}
+
+export async function nodeAnalyticsApiPatchCall(getAccessToken, cancelTokenSource, apiUrl, postBody) {
+  const accessToken = await getAccessToken();
+
+  try {
+    return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).patch(apiUrl, postBody);
+  }
+  catch (error) {
+    if (!axios.isCancel(error)) {
+      throw error;
+    }
+  }
+}
+
+export async function nodeAnalyticsApiDeleteCall(getAccessToken, cancelTokenSource, apiUrl) {
+  const accessToken = await getAccessToken();
+
+
+  try {
+    return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).delete(apiUrl);
+  }
+  catch (error) {
+    if (!axios.isCancel(error)) {
+      throw error;
+    }
+  }
+}
