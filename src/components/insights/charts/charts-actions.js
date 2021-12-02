@@ -76,8 +76,8 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
   };
 
   // TODO: Wire up v2
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, apiUrl, postBody);
-  // return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+  // return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, apiUrl, postBody);
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 chartsActions.parseConfigurationAndGetChartMetrics = async (
@@ -168,8 +168,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   };
 
   // TODO: Wire up v2
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
-  // return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  // return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 export default chartsActions;
