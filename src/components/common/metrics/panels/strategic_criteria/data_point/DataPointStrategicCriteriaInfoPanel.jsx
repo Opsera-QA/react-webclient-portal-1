@@ -6,6 +6,7 @@ import {strategicCriteriaHelpers} from "components/common/helpers/metrics/strate
 
 function DataPointStrategicCriteriaInfoPanel({ strategicCriteria }) {
   const getBody = () => {
+    // TODO: Handle UI
     if (typeof strategicCriteria !== "object") {
       return "There is no strategic criteria assigned to this data point.";
     }

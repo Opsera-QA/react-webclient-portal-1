@@ -5,35 +5,45 @@ import {
   faExclamationCircle,
   faExclamationTriangle
 } from "@fortawesome/pro-light-svg-icons";
+import {DATA_POINT_EVALUATION_RULE_TYPES} from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/dataPointEvaluationRule.types";
+import IconBase from "components/common/icons/IconBase";
 
-function DataPointEvaluationRuleInfoPanel({ dataPointEvaluationRule }) {
-  // TODO: Should this be in a types file?
+function DataPointEvaluationRuleInfoPanel({ dataPointEvaluationRule, dataPointEvaluationRuleType }) {
   const getIcon = () => {
-    switch (dataPointEvaluationRule) {
-      case "success":
+    switch (dataPointEvaluationRuleType) {
+      case DATA_POINT_EVALUATION_RULE_TYPES.SUCCESS:
         return faCheckCircle;
-      case "warning":
+      case DATA_POINT_EVALUATION_RULE_TYPES.WARNING:
         return faExclamationTriangle;
-      case "failure":
+      case DATA_POINT_EVALUATION_RULE_TYPES.FAILURE:
         return faExclamationCircle;
     }
   };
 
-  if (typeof dataPointEvaluationRule !== "object") {
-    return null;
-  }
+  const getBody = () => {
+    if (typeof dataPointEvaluationRule !== "object") {
+      return `There is no ${dataPointEvaluationRuleType} rule assigned to this data point.`;
+    }
+
+    // TODO: Add incomplete message. type rule is not complete so it will not take effect
+    // if (typeof dataPointEvaluationRule !== "object") {
+    //   return `There is no ${dataPointEvaluationRuleType} rule assigned to this data point.`;
+    // }
+
+    return "insert rule formatted text here";
+  };
 
   return (
     <div className={"d-flex my-2"}>
-      <div className={"mr-2"}>
-        {getIcon()}
-      </div>
+      <IconBase className={"mr-2"} icon={getIcon()} />
+      {getBody()}
     </div>
   );
 }
 
 DataPointEvaluationRuleInfoPanel.propTypes = {
   dataPointEvaluationRule: PropTypes.object,
+  dataPointEvaluationRuleType: PropTypes.string,
 };
 
 export default DataPointEvaluationRuleInfoPanel;
