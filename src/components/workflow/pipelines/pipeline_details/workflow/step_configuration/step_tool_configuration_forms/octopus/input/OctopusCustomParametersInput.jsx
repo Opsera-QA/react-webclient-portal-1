@@ -7,7 +7,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import axios from "axios";
-import ReactJson from "react-json-view";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import { faHandshake } from "@fortawesome/pro-light-svg-icons";
 import OctopusDeploymentVariables from "./OctopusDeploymentVariables";
@@ -15,13 +14,6 @@ import StandaloneBooleanToggleInput from "components/common/inputs/boolean/Stand
 import OctopusStandaloneVariablesTypeSelectInput from "./OctopusStandaloneVariablesTypeSelectInput";
 import OctopusStandaloneParametersSelectInput from "./OctopusStandaloneParametersSelectInput";
 import OctopusStandaloneEnvironmentsMultiSelectInput from "./OctopusStandaloneEnvironmentsMultiSelectInput";
-
-const SAMPLE_DATA = {
-  subnet_list: [
-    "item1", "item2", "item3"
-  ]
-};
-
 
 function OctopusCustomParametersInput({
   dataObject,
@@ -245,7 +237,7 @@ function OctopusCustomParametersInput({
             </Col>
             {property["variableType"].toLowerCase() === "variable" ? (
               <Col sm={4} className={"pl-2 pr-0 force-text-wrap"}>
-                {`Environments: ${property["environmentNames"].reduce((acc, val) => acc = acc + ", " + val).trim()}`}
+                {`Environments: ${property["environmentNames"].length > 0 ? property["environmentNames"].reduce((acc, val) => acc = acc + ", " + val).trim() : ""}`}
               </Col>
             ) : (
               <Col sm={4} className={"pl-2 pr-0 force-text-wrap"}>
@@ -347,24 +339,11 @@ function OctopusCustomParametersInput({
         placement="left"
         overlay={
           <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
-            <Popover.Title as="h3">Response Parameter Mapping</Popover.Title>
-
+            <Popover.Title as="h3">Custom Parameter Mapping</Popover.Title>
             <Popover.Content>
               <div className="text-muted mb-2">
-                This functionality helps users map Opsera Global Parameters to output data from a Terraform script. Select a created parameter from the dropdown list and enter the exact name of the output key from your terraform script in order to set up a mapping.<br /><br />
-                For instance for the following sample Terraform output that displays a list of subnet ID&apos;s the Output Key would be <strong>subnet_list</strong>. Upon execution of the script, the data from the Output Key would be stored in the Vault under the specified parameter.
-                {
-                  <div className={"mt-2"}>
-                    Sample:
-                    <ReactJson
-                      className={"mt-1 py-1"}
-                      src={SAMPLE_DATA}
-                      displayDataTypes={false}
-                    />
-                  </div>
-                }
+                This functionality helps users map Opsera Global Parameters to Octopus Deployments. Select a varibale type from the dropdown list, select a created parameter from the dropdown list and based on the variable type, select the environments or the slot setting. Environments is a multi-select field.<br /><br />                
               </div>
-
             </Popover.Content>
           </Popover>
         }
