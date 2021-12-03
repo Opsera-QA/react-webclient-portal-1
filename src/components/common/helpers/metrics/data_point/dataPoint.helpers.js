@@ -1,5 +1,3 @@
-import {hasStringValue} from "components/common/helpers/string-helpers";
-import {DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES} from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/dataPointEvaluationTrigger.types";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
 import {numberHelpers} from "components/common/helpers/number/number.helpers";
 import {
@@ -12,33 +10,35 @@ import {objectHelpers} from "components/common/helpers/object/object.helpers";
 export const dataPointHelpers = {};
 
 dataPointHelpers.evaluateDataPointQualityLevel = (dataPoint, value) => {
-  if (dataPointHelpers.hasDataPointEvaluationRules(dataPoint) !== true || typeof value !== "number"){
+  if (dataPointHelpers.hasDataPointEvaluationRules(dataPoint) !== true || numberHelpers.hasNumberValue(value) !== true){
     return null;
   }
+
+  console.log("made it through ");
 
   const dataPointEvaluationRules = dataPoint?.strategic_criteria?.data_point_evaluation_rules;
   const successRule = dataPointEvaluationRules.success_rule;
   const warningRule = dataPointEvaluationRules.warning_rule;
   const failureRule = dataPointEvaluationRules.failure_rule;
 
-  if (objectHelpers.isObject(failureRule)) {
-    const isFailure = evaluateDataPointEvaluationRule(failureRule, value);
+  if (objectHelpers.isObject(failureRule) === true) {
+    const isFailure = dataPointEvaluationRulesHelpers.evaluateDataPointEvaluationRule(failureRule, value);
 
     if (isFailure === true) {
       return METRIC_QUALITY_LEVELS.DANGER;
     }
   }
 
-  if (objectHelpers.isObject(warningRule)) {
-    const isWarning = evaluateDataPointEvaluationRule(warningRule, value);
+  if (objectHelpers.isObject(warningRule) === true) {
+    const isWarning = dataPointEvaluationRulesHelpers.evaluateDataPointEvaluationRule(warningRule, value);
 
     if (isWarning === true) {
       return METRIC_QUALITY_LEVELS.WARNING;
     }
   }
 
-  if (objectHelpers.isObject(successRule)) {
-    const isSuccess = evaluateDataPointEvaluationRule(successRule, value);
+  if (objectHelpers.isObject(successRule) === true) {
+    const isSuccess = dataPointEvaluationRulesHelpers.evaluateDataPointEvaluationRule(successRule, value);
 
     if (isSuccess === true) {
       return METRIC_QUALITY_LEVELS.SUCCESS;
@@ -65,7 +65,7 @@ dataPointHelpers.hasStrategicCriteria = (dataPoint) => {
 };
 
 dataPointHelpers.hasDataPointEvaluationRules = (dataPoint) => {
-  if (dataPointHelpers.hasStrategicCriteria(dataPoint)) {
+  if (dataPointHelpers.hasStrategicCriteria(dataPoint) !== true) {
     return false;
   }
 
@@ -100,50 +100,4 @@ dataPointHelpers.getDataPoint = (dataPoints, dataPointIdentifier) => {
   return (
     dataPoints.find((dataPoint) => dataPoint.identifier === dataPointIdentifier)
   );
-};
-
-dataPointHelpers.isDataEvaluationRuleComplete = (dataPointEvaluationRule) => {
-  if (objectHelpers.isObject(dataPointEvaluationRule)) {
-    return false;
-  }
-
-  const triggerFilter = dataPointEvaluationRule?.trigger_filter;
-  const hasTriggerFilter = hasStringValue(triggerFilter);
-  const hasPrimaryValue = numberHelpers.hasNumberValue(dataPointEvaluationRule?.primary_trigger_value);
-  const hasSecondaryValue = numberHelpers.hasNumberValue(dataPointEvaluationRule?.secondary_trigger_value);
-  const requiresSecondaryValue = triggerFilter === DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.BETWEEN_INCLUSIVE;
-
-  return (
-    hasTriggerFilter && hasPrimaryValue && (requiresSecondaryValue === false || hasSecondaryValue)
-  );
-};
-
-// The data checks are redundant but in case of reuse leaving them in here for now.
-const evaluateDataPointEvaluationRule = (rule, value) => {
-  if (objectHelpers.isObject(rule) || numberHelpers.hasNumberValue(value)) {
-    return false;
-  }
-
-  const triggerFilter = rule?.trigger_filter;
-
-  if (!hasStringValue(triggerFilter)) {
-    return false;
-  }
-
-  switch (triggerFilter) {
-    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.BETWEEN_INCLUSIVE:
-      return numberHelpers.isNumberBetweenInclusive(rule?.primary_trigger_value, rule?.secondary_trigger_value, value);
-    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.EQUAL_TO:
-      return numberHelpers.isNumberEqual(rule?.primary_trigger_value, value);
-    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.GREATER_THAN:
-      return numberHelpers.isNumberGreaterThan(rule?.primary_trigger_value, value);
-    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.GREATER_THAN_OR_EQUAL_TO:
-      return numberHelpers.isNumberGreaterThanOrEqualTo(rule?.primary_trigger_value, value);
-    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.LESS_THAN:
-      return numberHelpers.isNumberLessThan(rule?.primary_trigger_value, value);
-    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.LESS_THAN_OR_EQUAL_TO:
-      return numberHelpers.isNumberLessThanOrEqualTo(rule?.primary_trigger_value, value);
-    default:
-      return false;
-  }
 };

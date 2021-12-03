@@ -72,7 +72,6 @@ function TooltipWrapper(
       trigger={["hover", "focus"]}
       placement={placement}
       overlay={getPopover(innerText)}
-      onToggle={(shown) => {console.log("popover should be shown: " + shown);}}
     >
       <div>
         {children}

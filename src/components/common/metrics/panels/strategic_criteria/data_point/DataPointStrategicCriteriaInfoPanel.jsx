@@ -14,6 +14,7 @@ function DataPointStrategicCriteriaInfoPanel({ strategicCriteria }) {
     return (
       <div>
         <DataPointEvaluationRulesInfoPanel
+          className={"p-2"}
           dataPointEvaluationRules={strategicCriteriaHelpers.getStrategicCriteriaDataPointEvaluationRules(strategicCriteria)}
         />
       </div>
