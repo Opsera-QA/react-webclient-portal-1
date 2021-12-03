@@ -34,7 +34,7 @@ function PipelineSourceRepositoryHelpDocumentation() {
               <li>Select <b>Save</b>. Upon save, this pipeline will run anytime a commit occurs in the selected branch(es). Any activity in other branches for this account will be ignored.</li>
             </ol>
             <h6>Pipeline Queuing</h6>
-            <div className={"ml-4"}>Opsera Pipelines support queuing of runs when the pipeline is currently in progress. If a pipeline is already running and another webhook request comes in, the webhook request will be logged in the Pipeline Logs as part of the NEXT run as a Queued Request. Once the current run is successful, the queued pipeline will run a second time.  The latest commit will always be used and the pipeline will only run once after the current run no matter how many run requests it gets for that time period. If prior pipeline fails the queued request will not run.</div>
+            <div className={"ml-4"}>Opsera Pipelines support queuing of runs when the pipeline is currently in progress. If a pipeline is already running and another webhook request comes in, the webhook request will be logged in the Pipeline Logs as part of the NEXT run as a Queued Request. Once the current run is successful, the queued pipeline will run.  The latest commit will always be used and the pipeline will only run once after the current run no matter how many run requests it gets for that time period. If prior pipeline fails the queued request will not run.</div>
           </div>
         </div>
       );
