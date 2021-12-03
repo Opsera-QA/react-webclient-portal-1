@@ -8,7 +8,7 @@ import OctopusFeedSelectInput from "../input/OctopusFeedSelectInput";
 import RollbackToggleInput from "../input/RollbackToggleInput";
 import OctopusVersionSelectInput from "../input/OctopusVersionSelectInput";
 import OctopusSpecifyDepVarsToggle from "../input/OctopusSpecifyDepVarsToggle";
-import OctopusDeploymentVariables from "../input/OctopusDeploymentVariables";
+import OctopusCustomParametersInput from "../input/OctopusCustomParametersInput";
 
 function OctopusDeployToTomcatDetailsView({dataObject, setDataObject, isLoading, disabled, platformType, pipelineId}) {
 
@@ -116,8 +116,8 @@ function OctopusDeployToTomcatDetailsView({dataObject, setDataObject, isLoading,
       />
       {dataObject && dataObject.getData("specifyDepVariables") && (
         <>
-          <OctopusDeploymentVariables
-            fieldName={"deploymentVariables"}
+          <OctopusCustomParametersInput
+            fieldName={"customParameters"}
             dataObject={dataObject}
             setDataObject={setDataObject}
           />

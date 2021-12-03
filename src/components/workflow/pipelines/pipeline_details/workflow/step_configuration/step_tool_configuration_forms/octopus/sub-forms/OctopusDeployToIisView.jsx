@@ -7,12 +7,12 @@ import OctopusFeedSelectInput from "../input/OctopusFeedSelectInput";
 import RollbackToggleInput from "../input/RollbackToggleInput";
 import OctopusVersionSelectInput from "../input/OctopusVersionSelectInput";
 import OctopusSpecifyDepVarsToggle from "../input/OctopusSpecifyDepVarsToggle";
-import OctopusDeploymentVariables from "../input/OctopusDeploymentVariables";
 import OctopusMultiProtocolInput from "../input/OctopusMultiProtocolInput";
 import IisAuthenticationSelectInput from "../input/IisAuthenticationSelectInput";
 import IisDotNetClrVersionSelectInput from "../input/IisDotNetClrVersionSelectInput";
 import IisPoolIdentityTypeSelectInput from "../input/IisPoolIdentityTypeSelectInput";
 import OctopusCustomDeploymentDirectoryDetailsInput from "../input/OctopusCustomDeploymentDirectoryDetailsInput";
+import OctopusCustomParametersInput from "../input/OctopusCustomParametersInput";
 function OctopusDeployToIisView({dataObject, setDataObject, isLoading, disabled, platformType, pipelineId}) {
 
   return (
@@ -107,11 +107,11 @@ function OctopusDeployToIisView({dataObject, setDataObject, isLoading, disabled,
       />
       {dataObject && dataObject.getData("specifyDepVariables") && (
         <>
-          <OctopusDeploymentVariables
-            fieldName={"deploymentVariables"}
+          <OctopusCustomParametersInput
+            fieldName={"customParameters"}
             dataObject={dataObject}
             setDataObject={setDataObject}
-          />
+          />          
           <TextInputBase
             setDataObject={setDataObject}
             dataObject={dataObject}

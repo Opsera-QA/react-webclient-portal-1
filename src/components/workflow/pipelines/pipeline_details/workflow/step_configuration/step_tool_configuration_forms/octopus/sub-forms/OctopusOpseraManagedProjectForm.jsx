@@ -7,7 +7,6 @@ import OctopusFeedSelectInput from "../input/OctopusFeedSelectInput";
 import OctopusVersionSelectInput from "../input/OctopusVersionSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import RollbackToggleInput from "../input/RollbackToggleInput";
-import OctopusDeploymentVariables from "../input/OctopusDeploymentVariables";
 import OctopusSpecifyDepVarsToggle from "../input/OctopusSpecifyDepVarsToggle";
 import OctopusLifecycleSelectInput from "../input/OctopusLifecycleSelectInput";
 import OctopusScriptTypeSelectInput from "../input/OctopusScriptTypeSelectInput";
@@ -20,6 +19,7 @@ import OctopusDeployToIisView from "./OctopusDeployToIisView";
 import OctopusDeployToJavaArchiveView from "./OctopusDeployToJavaArchiveView";
 import OctopusKubernetesPlatform from "./OctopusKubernetesPlatform";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import OctopusCustomParametersInput from "../input/OctopusCustomParametersInput";
 
 function OctopusOpseraManagedProjectForm({
     dataObject, 
@@ -227,11 +227,11 @@ function OctopusOpseraManagedProjectForm({
           />
           {dataObject && dataObject.getData("specifyDepVariables") && (
             <>
-              <OctopusDeploymentVariables
-                fieldName={"deploymentVariables"}
+              <OctopusCustomParametersInput
+                fieldName={"customParameters"}
                 dataObject={dataObject}
                 setDataObject={setDataObject}
-              />
+              />              
               <TextInputBase
                 setDataObject={setDataObject}
                 dataObject={dataObject}
