@@ -14,8 +14,6 @@ dataPointHelpers.evaluateDataPointQualityLevel = (dataPoint, value) => {
     return null;
   }
 
-  console.log("made it through ");
-
   const dataPointEvaluationRules = dataPoint?.strategic_criteria?.data_point_evaluation_rules;
   const successRule = dataPointEvaluationRules.success_rule;
   const warningRule = dataPointEvaluationRules.warning_rule;
