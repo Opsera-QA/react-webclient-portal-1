@@ -64,9 +64,7 @@ function Reports() {
   };
 
   const getHelpComponent = () => {
-    if (!isLoading) {
       return (<ReportsHelpDocumentation/>);
-    }
   };
 
   return (
