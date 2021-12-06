@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 
-function AdoptionTestPercentageAutomatedTestCasesDataBlock({executedTestCount, executedTestsDataPoint}) {
+function AutomatedTestAdoptionRateAdoptedTestsDataBlock({executedTestCount, executedTestsDataPoint}) {
   return (
     <TwoLineScoreDataBlock
       score={executedTestCount}
@@ -12,9 +12,9 @@ function AdoptionTestPercentageAutomatedTestCasesDataBlock({executedTestCount, e
   );
 }
 
-AdoptionTestPercentageAutomatedTestCasesDataBlock.propTypes = {
+AutomatedTestAdoptionRateAdoptedTestsDataBlock.propTypes = {
   executedTestCount: PropTypes.number,
   executedTestsDataPoint: PropTypes.object,
 };
 
-export default AdoptionTestPercentageAutomatedTestCasesDataBlock;
+export default AutomatedTestAdoptionRateAdoptedTestsDataBlock;

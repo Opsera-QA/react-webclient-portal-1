@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import TwoLinePercentageDataBlock from "components/common/metrics/percentage/TwoLinePercentageDataBlock";
 
-function AdoptionTestPercentageAdoptionPercentageDataBlock({adoptionRatePercentage, adoptionRateDataPoint}) {
+function AutomatedTestAdoptionRateAdoptionRateDataBlock({adoptionRatePercentage, adoptionRateDataPoint}) {
   return (
     <TwoLinePercentageDataBlock
       percentage={adoptionRatePercentage}
@@ -12,9 +12,9 @@ function AdoptionTestPercentageAdoptionPercentageDataBlock({adoptionRatePercenta
   );
 }
 
-AdoptionTestPercentageAdoptionPercentageDataBlock.propTypes = {
+AutomatedTestAdoptionRateAdoptionRateDataBlock.propTypes = {
   adoptionRatePercentage: PropTypes.number,
   adoptionRateDataPoint: PropTypes.object,
 };
 
-export default AdoptionTestPercentageAdoptionPercentageDataBlock;
+export default AutomatedTestAdoptionRateAdoptionRateDataBlock;
