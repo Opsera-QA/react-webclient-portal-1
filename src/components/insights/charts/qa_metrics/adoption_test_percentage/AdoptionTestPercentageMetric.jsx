@@ -140,7 +140,7 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
     }
 
     return (
-      <>
+      <div className={"mb-2"}>
         <Row>
           <Col xl={4} lg={6} md={8} className={"d-flex align-content-around"}>
             <Row>
@@ -173,7 +173,7 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
           </Col>
         </Row>
         {getNotesRow()}
-      </>
+      </div>
     );
   };
 
