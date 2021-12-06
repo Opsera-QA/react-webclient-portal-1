@@ -9,7 +9,7 @@ const OctopusStandaloneEnvironmentsMultiSelectInput = ({ dataObject, value,  dis
 
   useEffect(() => {
     setIsLoading(true);
-    setOctopusEnvironments(dataObject && dataObject.getData("environmentList"));
+    setOctopusEnvironments(dataObject && dataObject.getData("environmentList") ? dataObject.getData("environmentList") : []);
     setIsLoading(false);
   }, [dataObject.getData("environmentList")]);
 
