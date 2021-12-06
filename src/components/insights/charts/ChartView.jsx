@@ -126,7 +126,7 @@ import SFDCManualTestResultsPieChart from "./qa_metrics/SFDCManualTestResultsPie
 import DefectRemovalEfficiencyPieChart from "./qa_metrics/DefectRemovalEfficiencyPieChart";
 
 // SFDC KPIs
-import SFDCBackups from "components/insights/charts/sfdc/SFDCBackups";
+import SalesforceBackupAndRollbackMetrics from "components/insights/charts/sfdc/salesforce_backups_and_rollbacks/SalesforceBackupAndRollbackMetrics";
 import SFDCProfileMigrationsBarChart from "components/insights/charts/sfdc/bar_chart/profile_migrations/SFDCProfileMigrationsBarChart";
 import SFDCUnitTestingPieChart from "components/insights/charts/sfdc/pie_chart/unit_testing/SFDCUnitTestingPieChart";
 import SalesforceDurationByStageMetrics from "components/insights/charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageMetrics";
@@ -1330,7 +1330,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "sfdc-backups":
         return (
           <Col xl={6} md={12} className="p-2">
-            <SFDCBackups
+            <SalesforceBackupAndRollbackMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
