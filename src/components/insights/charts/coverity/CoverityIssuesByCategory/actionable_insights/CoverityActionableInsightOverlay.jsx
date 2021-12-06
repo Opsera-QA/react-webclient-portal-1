@@ -73,6 +73,7 @@ function CoverityActionableInsightOverlay({
         null,
         null,
         null,
+        null,
         coveritySeverity
       );
       console.log("response", response);

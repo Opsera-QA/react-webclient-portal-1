@@ -9,7 +9,7 @@ function CoverityActionableDataBlockContainers({ data }) {
   return (
     <div>
       <Row className="px-2">
-        <Col lg={4} md={6} className={"my-3"}>
+        <Col xl={2} lg={2} sm={4} className={"my-3"}>
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
@@ -17,7 +17,7 @@ function CoverityActionableDataBlockContainers({ data }) {
               subtitle={"Total Issues"} />
           </DataBlockBoxContainer>
         </Col>
-        <Col lg={4} md={6} className={"my-3"}>
+        <Col xl={2} lg={2} sm={4} className={"my-3"}>
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
@@ -26,7 +26,7 @@ function CoverityActionableDataBlockContainers({ data }) {
             />
           </DataBlockBoxContainer>
         </Col>
-        <Col lg={4} md={6} className={"my-3"}>
+        <Col xl={2} lg={2} sm={4} className={"my-3"}>
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
@@ -35,7 +35,7 @@ function CoverityActionableDataBlockContainers({ data }) {
             />
           </DataBlockBoxContainer>
         </Col>
-        <Col lg={4} md={6} className={"my-3"}>
+        <Col xl={2} lg={2} sm={4} className={"my-3"}>
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
@@ -43,7 +43,7 @@ function CoverityActionableDataBlockContainers({ data }) {
               subtitle={"Total Quality Issues"} />
           </DataBlockBoxContainer>
         </Col>
-        <Col lg={4} md={6} className={"my-3"}>
+        <Col xl={2} lg={2} sm={4} className={"my-3"}>
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
