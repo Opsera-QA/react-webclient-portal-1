@@ -9,14 +9,12 @@ import axios from "axios";
 import azureStorageActions from "../../azureStorage.actions";
 import StandaloneDeleteButtonWithConfirmationModal
   from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
-import modelHelpers from "components/common/model/modelHelpers";
-import azureStorageMetadata from "../azure-storage-metadata";
-
 
 function AzureToolStorageEditorPanel({ azureStorageAccountsModel, setAzureStorageAccountsModel, toolId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [currentAzureStorageAccountName, setCurrentAzureStorageAccountName] = useState(undefined);
   console.log(azureStorageAccountsModel);
 
   useEffect(() => {
@@ -28,6 +26,8 @@ function AzureToolStorageEditorPanel({ azureStorageAccountsModel, setAzureStorag
     setCancelTokenSource(source);
     isMounted.current = true;
 
+    setCurrentAzureStorageAccountName(azureStorageAccountsModel?.getData('storageAccountName'));
+
     return () => {
       source.cancel();
       isMounted.current = false;
@@ -35,15 +35,16 @@ function AzureToolStorageEditorPanel({ azureStorageAccountsModel, setAzureStorag
   }, []);
 
   const createAzureStorageCredentials = async () => {
-    return await azureStorageActions.createAzureToolStorageAccount(getAccessToken, cancelTokenSource, toolId, azureStorageAccountsModel);
+    const {newAzureStorageAccountName, newAzureStorageAccountToken} = azureStorageAccountsModel.getPersistData();
+    return await azureStorageActions.createAzureToolStorageAccount(getAccessToken, cancelTokenSource, toolId, azureStorageAccountsModel, newAzureStorageAccountName, newAzureStorageAccountToken);
   };
 
   const updateAzureStorageCredentials = async () => {
-    return await azureStorageActions.updateAzureToolStorageAccount(getAccessToken, cancelTokenSource, toolId, azureStorageAccountsModel); 
+    return await azureStorageActions.updateAzureToolStorageAccount(getAccessToken, cancelTokenSource, toolId, azureStorageAccountsModel, currentAzureStorageAccountName); 
   };
 
   const deleteAzureStorageCredentials = async () => {
-    return await azureStorageActions.deleteAzureToolStorageAccount(getAccessToken, cancelTokenSource, toolId, azureStorageAccountsModel.getData("storageAccountName"));
+    return await azureStorageActions.deleteAzureToolStorageAccount(getAccessToken, cancelTokenSource, toolId, currentAzureStorageAccountName);
   };
 
   const getExtraButtons = () => {
