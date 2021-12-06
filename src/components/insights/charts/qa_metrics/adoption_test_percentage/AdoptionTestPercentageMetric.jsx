@@ -140,7 +140,7 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
     }
 
     return (
-      <div className={"mb-2"}>
+      <div className={"my-2"}>
         <Row>
           <Col xl={4} lg={6} md={8} className={"d-flex align-content-around"}>
             <Row>
@@ -150,13 +150,13 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
                   executedTestsDataPoint={executedTestsDataPoint}
                 />
               </Col>
-              <Col lg={12}>
+              <Col lg={12} className={"my-2"}>
                 <AdoptionTestPercentageManualTestCasesDataBlock
                   manualTestCount={metric?.manualTests}
                   manualTestsDataPoint={manualTestsDataPoint}
                 />
               </Col>
-              <Col lg={12}>
+              <Col lg={12} className={"mb-2"}>
                 <AdoptionTestPercentageAdoptionPercentageDataBlock
                   adoptionRatePercentage={metric?.adoptionRate}
                   adoptionRateDataPoint={adoptionPercentageDataPoint}
