@@ -11,7 +11,6 @@ function TwoLineDataBlockBase(
     subtitle,
     className,
     icon,
-    dataBlockInfoPanel,
     dataPoint,
   }) {
   const getLeftDataBlockIcon = () => {
@@ -27,7 +26,6 @@ function TwoLineDataBlockBase(
   const getInfoOverlayIcon = () => {
     return (
       <DataBlockInfoOverlayIcon
-        dataBlockInfoPanel={dataBlockInfoPanel}
         dataPoint={dataPoint}
       />
     );
@@ -74,7 +72,6 @@ TwoLineDataBlockBase.propTypes = {
   subtitle: PropTypes.any,
   className: PropTypes.string,
   icon: PropTypes.object,
-  dataBlockInfoPanel: PropTypes.any,
   dataPoint: PropTypes.object,
 };
 

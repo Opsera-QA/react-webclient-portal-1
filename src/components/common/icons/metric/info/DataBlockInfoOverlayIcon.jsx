@@ -6,21 +6,19 @@ import {objectHelpers} from "components/common/helpers/object/object.helpers";
 
 function DataBlockInfoOverlayIcon(
   {
-    dataBlockInfoPanel,
     dataPoint,
     title,
     className,
     overlayPlacement,
   }) {
   const getInfoOverlay = () => {
-    if (objectHelpers.isObject(dataPoint) !== true && dataBlockInfoPanel == null) {
+    if (objectHelpers.isObject(dataPoint) !== true) {
       return null;
     }
 
     return (
       <DataBlockInfoOverlay
         dataPoint={dataPoint}
-        dataBlockInfoPanel={dataBlockInfoPanel}
       />
     );
   };
@@ -36,7 +34,6 @@ function DataBlockInfoOverlayIcon(
 }
 
 DataBlockInfoOverlayIcon.propTypes = {
-  dataBlockInfoPanel: PropTypes.any,
   title: PropTypes.string,
   className: PropTypes.string,
   dataPoint: PropTypes.object,

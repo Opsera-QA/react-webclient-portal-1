@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
+import TwoLinePercentageDataBlock from "components/common/metrics/percentage/TwoLinePercentageDataBlock";
 
 function AdoptionTestPercentageAdoptionPercentageDataBlock({adoptionRatePercentage, adoptionRateDataPoint}) {
   return (
-    <TwoLineScoreDataBlock
-      score={adoptionRatePercentage}
+    <TwoLinePercentageDataBlock
+      percentage={adoptionRatePercentage}
       subtitle={"Adoption Percentage"}
       dataPoint={adoptionRateDataPoint}
     />

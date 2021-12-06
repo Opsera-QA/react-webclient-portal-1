@@ -10,7 +10,6 @@ function TwoLineScoreDataBlock(
     className,
     icon,
     dataPoint,
-    dataBlockInfoPanel,
   }) {
   return (
     <TwoLineDataBlockBase
@@ -22,7 +21,6 @@ function TwoLineScoreDataBlock(
           score={score}
         />
       }
-      dataBlockInfoPanel={dataBlockInfoPanel}
       subtitle={subtitle}
       icon={icon}
     />
@@ -35,7 +33,6 @@ TwoLineScoreDataBlock.propTypes = {
   className: PropTypes.string,
   icon: PropTypes.object,
   dataPoint: PropTypes.object,
-  dataBlockInfoPanel: PropTypes.any,
 };
 
 export default TwoLineScoreDataBlock;

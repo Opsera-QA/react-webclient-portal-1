@@ -8,14 +8,12 @@ function TwoLineGradeDataBlock(
     letterGrade,
     subtitle,
     className,
-    dataBlockInfoPanel
   }) {
   return (
     <TwoLineDataBlockBase
       className={className}
       title={<MetricLetterGradeText letterGrade={letterGrade} />}
       subtitle={subtitle}
-      infoOverlayPanel={dataBlockInfoPanel}
     />
   );
 }
@@ -25,7 +23,6 @@ TwoLineGradeDataBlock.propTypes = {
   subtitle: PropTypes.any,
   tooltipText: PropTypes.string,
   className: PropTypes.string,
-  dataBlockInfoPanel: PropTypes.any,
 };
 
 export default TwoLineGradeDataBlock;

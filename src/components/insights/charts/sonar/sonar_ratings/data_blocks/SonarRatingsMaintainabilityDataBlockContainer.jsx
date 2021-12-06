@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { LETTER_GRADES } from "components/common/metrics/grade/MetricLetterGradeText";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
-import PercentageDataBlock from "components/common/metrics/percentage/PercentageDataBlock";
+import TwoLinePercentageDataBlock from "components/common/metrics/percentage/TwoLinePercentageDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
 import SonarRatingsMaintainabilityActionableInsightOverlay from "components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityActionableInsightOverlay";
 import Col from "react-bootstrap/Col";
@@ -53,7 +53,7 @@ function SonarRatingsMaintainabilityDataBlockContainer({
   };
 
   const getMiddleDataBlock = () => {
-    return <PercentageDataBlock percentage={technicalDebtRatio} subtitle={"Technical Debt Ratio"} />;
+    return <TwoLinePercentageDataBlock percentage={technicalDebtRatio} subtitle={"Technical Debt Ratio"} />;
   };
 
   const getRightDataBlock = () => {

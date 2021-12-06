@@ -6,26 +6,21 @@ import {objectHelpers} from "components/common/helpers/object/object.helpers";
 function DataBlockInfoOverlay(
   {
     dataPoint,
-    dataBlockInfoPanel,
   }) {
 
-  if (objectHelpers.isObject(dataPoint) !== true && dataBlockInfoPanel == null) {
+  if (objectHelpers.isObject(dataPoint) !== true) {
     return null;
   }
 
   return (
-    <div>
-      {dataBlockInfoPanel}
-      <DataPointInfoPanel
-        dataPoint={dataPoint}
-      />
-    </div>
+    <DataPointInfoPanel
+      dataPoint={dataPoint}
+    />
   );
 }
 
 DataBlockInfoOverlay.propTypes = {
   dataPoint: PropTypes.object,
-  dataBlockInfoPanel: PropTypes.any,
 };
 
 export default DataBlockInfoOverlay;

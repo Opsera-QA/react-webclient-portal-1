@@ -8,18 +8,28 @@ import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dat
 import {objectHelpers} from "components/common/helpers/object/object.helpers";
 
 function DataPointInfoPanel({ dataPoint, className }) {
+  const getDescription = () => {
+    if (dataPoint?.description) {
+      return (
+        <div className={"m-2"}>
+          {dataPoint?.description}
+        </div>
+      );
+    }
+  };
+
   if (objectHelpers.isObject(dataPoint) !== true) {
     return null;
   }
 
-
-  // TODO: Should we show attributes like type?
+  // TODO: The body should probably be a summary panel. Should we show attributes like type?
   return (
     <InfoContainer
       className={className}
       titleIcon={faBezierCurve}
       titleText={dataPoint?.name}
     >
+      {getDescription()}
       <DataPointStrategicCriteriaInfoPanel
         strategicCriteria={dataPointHelpers.getDataPointStrategicCriteria(dataPoint)}
       />

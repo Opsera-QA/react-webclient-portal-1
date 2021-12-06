@@ -36,6 +36,8 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
   const [showModal, setShowModal] = useState(false);
   const [notesData, setNotesData] = useState(undefined);
   const [adoptionPercentageDataPoint, setAdoptionPercentageDataPoint] = useState(undefined);
+  const [executedTestsDataPoint, setExecutedTestsDataPoint] = useState(undefined);
+  const [manualTestsDataPoint, setManualTestsDataPoint] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -106,9 +108,12 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
   const loadDataPoints = async () => {
     const dataPoints = kpiConfiguration?.dataPoints;
 
-    let newAdoptionPercentageDataPoint = dataPointHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.ADOPTION_PERCENTAGE);
-
+    const newAdoptionPercentageDataPoint = dataPointHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.ADOPTION_PERCENTAGE);
     setAdoptionPercentageDataPoint(newAdoptionPercentageDataPoint);
+    const newExecutedTestsDataPoint = dataPointHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.EXECUTED_TESTS);
+    setExecutedTestsDataPoint(newExecutedTestsDataPoint);
+    const newManualTestDataPoint = dataPointHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.MANUAL_TESTS);
+    setManualTestsDataPoint(newManualTestDataPoint);
   };
 
   const getNotesRow = () => {
@@ -142,11 +147,13 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
               <Col lg={12}>
                 <AdoptionTestPercentageAutomatedTestCasesDataBlock
                   executedTestCount={metric?.executedTests}
+                  executedTestsDataPoint={executedTestsDataPoint}
                 />
               </Col>
               <Col lg={12}>
                 <AdoptionTestPercentageManualTestCasesDataBlock
                   manualTestCount={metric?.manualTests}
+                  manualTestsDataPoint={manualTestsDataPoint}
                 />
               </Col>
               <Col lg={12}>
