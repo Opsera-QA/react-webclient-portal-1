@@ -29,8 +29,8 @@ function LazyLoadMultiSelectInputBase(
     infoOverlay,
     onToggleFunction,
     onSearchFunction,
-  }) {
-
+    useToggle,
+}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
 
@@ -120,7 +120,7 @@ function LazyLoadMultiSelectInputBase(
           filter="contains"
           groupBy={groupBy}
           onToggleFunction={(test) => {
-            if (test === true && (!Array.isArray(selectOptions) || selectOptions?.length === 0)) {
+            if (useToggle && test === true && (!Array.isArray(selectOptions) || selectOptions?.length === 0)) {
               onToggleFunction();
             }
           }}
@@ -163,6 +163,7 @@ LazyLoadMultiSelectInputBase.propTypes = {
   infoOverlay: PropTypes.any,
   onToggleFunction: PropTypes.func,
   onSearchFunction: PropTypes.func,
+  useToggle: PropTypes.bool,
 };
 
 LazyLoadMultiSelectInputBase.defaultProps = {

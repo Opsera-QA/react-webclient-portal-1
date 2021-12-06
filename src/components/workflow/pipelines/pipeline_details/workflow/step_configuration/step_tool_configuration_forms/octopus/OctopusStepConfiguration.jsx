@@ -209,35 +209,12 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
 
   const validateDeploymentVariables = async () => {
     if (octopusStepConfigurationDto.getData("specifyDepVariables")) {
-      if (octopusStepConfigurationDto.getData("deploymentVariables").length === 0) {
+      if (octopusStepConfigurationDto.getData("deploymentVariables").length === 0 && octopusStepConfigurationDto.getData("customVariableList").length === 0 ) {
         let errorMesage = "Please specify deployment variables.";
         toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
         return false;
       }
-      for (let item in octopusStepConfigurationDto.getData("deploymentVariables")) {
-        if (octopusStepConfigurationDto.getData("deploymentVariables")[item]?.scope && octopusStepConfigurationDto.getData("deploymentVariables")[item]?.scope?.environment) {
-          let errorMesage =
-            "The scope and environment are auto filled. Please do not specify scope and environment in deployment variables.";
-          toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
-          return false;
-        }
-        if (Object.keys(octopusStepConfigurationDto.getData("deploymentVariables")[item]).length > 4) {
-          let errorMesage = "Validate deployment Variables, Please refer to specified deployment variables format";
-          toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
-          return false;
-        }
-        if (
-          !octopusStepConfigurationDto.getData("deploymentVariables")[item]["description"] ||
-          !octopusStepConfigurationDto.getData("deploymentVariables")[item]["name"] ||
-          !octopusStepConfigurationDto.getData("deploymentVariables")[item]["value"]
-        ) {
-          let errorMesage =
-            "Missing required fields for deployment variables, Please refer to specified deployment variables format";
-          toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
-          return false;
-        }
-      }
-    }
+    }    
     return true;
   };
 

@@ -72,6 +72,7 @@ import TextAreaInput from "../../../common/inputs/text/TextAreaInput";
 import axios from "axios";
 import ResetMetricConfirmationPanel
   from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricConfirmationPanel";
+import ResetButton from "components/common/buttons/reset/ResetButton";
 
 // TODO: There are a handful of issues with this we need to address.
 function KpiSettingsForm({
@@ -954,11 +955,11 @@ function KpiSettingsForm({
           dataObject={kpiSettings}
           deleteRecord={deleteKpi}
         />
-        {/*<ResetButton*/}
-        {/*  className={"ml-2"}*/}
-        {/*  model={kpiSettings}*/}
-        {/*  resetFunction={() => setShowResetConfirmationPanel(true)}*/}
-        {/*/>*/}
+        <ResetButton
+          className={"ml-2"}
+          model={kpiSettings}
+          resetFunction={() => setShowResetConfirmationPanel(true)}
+        />
       </div>
     );
   };
@@ -1014,7 +1015,7 @@ function KpiSettingsForm({
             className={"ml-2"}
             identifier={kpiSettings?.getData("kpi_identifier")}
             index={index}
-            closePanelFunction={() => setShowResetConfirmationPanel(false)}
+            closePanelFunction={closePanel}
             setKpiConfiguration={setKpiConfiguration}
           />
         </div>
