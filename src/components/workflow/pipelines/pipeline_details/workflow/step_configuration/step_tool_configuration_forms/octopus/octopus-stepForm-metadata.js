@@ -303,7 +303,7 @@ const octopusStepFormMetadata = {
         id: "tenantedDeploymentMode"
       },
       {
-        id: "customParameters"
+        id: "customVariableList"
       }
     ],
   newObjectFields:
@@ -370,7 +370,7 @@ const octopusStepFormMetadata = {
         tenantId: "",
         environmentList: [],
         tenantList: [],
-        customParameters: []
+        customVariableList: []
       }
   };
   

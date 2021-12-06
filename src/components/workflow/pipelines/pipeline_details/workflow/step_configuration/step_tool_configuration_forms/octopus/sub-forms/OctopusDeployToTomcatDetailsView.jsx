@@ -117,7 +117,7 @@ function OctopusDeployToTomcatDetailsView({dataObject, setDataObject, isLoading,
       {dataObject && dataObject.getData("specifyDepVariables") && (
         <>
           <OctopusCustomParametersInput
-            fieldName={"customParameters"}
+            fieldName={"customVariableList"}
             dataObject={dataObject}
             setDataObject={setDataObject}
           />
