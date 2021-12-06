@@ -145,15 +145,6 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
           <Col xl={4} lg={6} md={8} className={"d-flex align-content-around"}>
             <Row>
               <Col lg={12}>
-<<<<<<< Updated upstream:src/components/insights/charts/qa_metrics/adoption_test_percentage/AdoptionTestPercentageMetric.jsx
-                <AdoptionTestPercentageAutomatedTestCasesDataBlock
-                  executedTestCount={metric?.executedTests}
-                  executedTestsDataPoint={executedTestsDataPoint}
-                />
-              </Col>
-              <Col lg={12} className={"my-2"}>
-                <AdoptionTestPercentageManualTestCasesDataBlock
-=======
                 <AutomatedTestAdoptionRateAdoptedTestsDataBlock
                   executedTestCount={metric?.executedTests}
                   executedTestsDataPoint={automatedTestsDataPoint}
@@ -161,21 +152,14 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
               </Col>
               <Col lg={12} className={"my-2"}>
                 <AutomatedTestAdoptionRateManualTestsDataBlock
->>>>>>> Stashed changes:src/components/insights/charts/qa_metrics/automation_test_adoption_rate/AutomatedTestAdoptionRateMetric.jsx
                   manualTestCount={metric?.manualTests}
                   manualTestsDataPoint={manualTestsDataPoint}
                 />
               </Col>
               <Col lg={12} className={"mb-2"}>
-<<<<<<< Updated upstream:src/components/insights/charts/qa_metrics/adoption_test_percentage/AdoptionTestPercentageMetric.jsx
-                <AdoptionTestPercentageAdoptionPercentageDataBlock
-                  adoptionRatePercentage={metric?.adoptionRate}
-                  adoptionRateDataPoint={adoptionPercentageDataPoint}
-=======
                 <AutomatedTestAdoptionRateAdoptionRateDataBlock
                   adoptionRatePercentage={metric?.adoptionRate}
                   adoptionRateDataPoint={adoptionRateDataPoint}
->>>>>>> Stashed changes:src/components/insights/charts/qa_metrics/automation_test_adoption_rate/AutomatedTestAdoptionRateMetric.jsx
                 />
               </Col>
             </Row>
