@@ -116,7 +116,7 @@ function AutomationTestAdoptionRateEditorPanel({ kpiConfiguration, setKpiConfigu
         </Row>
       </VanityEditorPanelContainer>
     );
-  }
+  };
 
   const getBody = () => {
     // TODO: Implement

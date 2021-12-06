@@ -73,8 +73,6 @@ import axios from "axios";
 import ResetMetricConfirmationPanel
   from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricConfirmationPanel";
 import ResetButton from "components/common/buttons/reset/ResetButton";
-import AutomationTestAdoptionRateEditorPanel
-  from "components/insights/charts/qa_metrics/adoption_test_percentage/details/AutomationTestAdoptionRateEditorPanel";
 
 // TODO: After all KPIs are converted, don't do check and just convert this file to be the one that points to the separate editor panels
 // TODO: Make types file with all supported KPI Identifiers
@@ -957,20 +955,20 @@ function KpiSettingsForm({
   };
 
   // TODO: Combine with getEditorPanel when all are moved over
-  const getStandaloneEditorPanel = (kpiIdentifier) => {
-    switch (kpiIdentifier) {
-      case "adoption-percentage":
-        return (
-          <AutomationTestAdoptionRateEditorPanel
-            dashboardData={dashboardData}
-            kpiConfiguration={kpiConfiguration}
-            setKpis={setKpis}
-            index={index}
-            handleClose={closePanel}
-          />
-        );
-    }
-  };
+  // const getStandaloneEditorPanel = (kpiIdentifier) => {
+  //   switch (kpiIdentifier) {
+  //     case "adoption-percentage":
+  //       return (
+  //         <AutomationTestAdoptionRateEditorPanel
+  //           dashboardData={dashboardData}
+  //           kpiConfiguration={kpiConfiguration}
+  //           setKpis={setKpis}
+  //           index={index}
+  //           handleClose={closePanel}
+  //         />
+  //       );
+  //   }
+  // };
 
   const getExtraButtons = () => {
     return (
