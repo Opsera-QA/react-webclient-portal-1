@@ -81,7 +81,7 @@ function ServiceNowAssignmentGroupSelectInput({
   }, [serviceNowToolId]);
 
   const loadGroups = async (searchTerm) => {
-    if (searchTerm && searchTerm.length >= 4) {
+    if (searchTerm && searchTerm.length >= 3) {
       try {
         setIsLoading(true);
         // setToggleSelected(true);
