@@ -118,7 +118,7 @@ function OctopusCustomParametersInput({
     setErrorMessage("");
 
     if (variableType == "" || customParameterId == "") {
-      setErrorMessage("Variable type and Parameter are mandatory");
+      setErrorMessage("Parameter Type and Parameter are mandatory");
       return;
     }
 
@@ -317,7 +317,7 @@ function OctopusCustomParametersInput({
         <Col sm={11}>
           <Row>
             <Col sm={4} className={"pl-2 pr-0 py-2"}>
-              <span className="text-muted">Variable Type</span>
+              <span className="text-muted">Parameter Type</span>
             </Col>
             <Col sm={4} className={"pl-2 pr-0 py-2"}>
               <span className="text-muted">Parameter</span>
@@ -342,7 +342,7 @@ function OctopusCustomParametersInput({
             <Popover.Title as="h3">Custom Parameter Mapping</Popover.Title>
             <Popover.Content>
               <div className="text-muted mb-2">
-                This functionality helps users map Opsera Global Parameters to Octopus Deployments. Select a varibale type from the dropdown list, select a created parameter from the dropdown list and based on the variable type, select the environments or the slot setting. Environments is a multi-select field.<br /><br />                
+                This functionality helps users map Opsera Global Parameters to Octopus Deployments. Select a varibale type from the dropdown list, select a created parameter from the dropdown list and based on the parameter type, select the environments or the slot setting. Environments is a multi-select field.<br /><br />                
               </div>
             </Popover.Content>
           </Popover>
@@ -373,7 +373,7 @@ function OctopusCustomParametersInput({
     if(dataObject.getData("deploymentVariables") && 
         Array.isArray(dataObject.getData("deploymentVariables")) && 
         dataObject.getData("deploymentVariables").length > 0 && 
-        (!dataObject.getData("customParameters") || !Array.isArray(dataObject.getData("customParameters")) || dataObject.getData("customParameters").length === 0)
+        (!dataObject.getData("customVariableList") || !Array.isArray(dataObject.getData("customVariableList")) || dataObject.getData("customVariableList").length === 0)
     ){
       return (
         <OctopusDeploymentVariables
