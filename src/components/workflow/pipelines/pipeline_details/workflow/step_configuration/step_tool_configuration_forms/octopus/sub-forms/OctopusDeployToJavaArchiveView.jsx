@@ -108,7 +108,7 @@ function OctopusDeployToJavaArchiveView({dataObject, setDataObject, isLoading, d
       {dataObject && dataObject.getData("specifyDepVariables") && (
         <>
           <OctopusCustomParametersInput
-            fieldName={"customParameters"}
+            fieldName={"customVariableList"}
             dataObject={dataObject}
             setDataObject={setDataObject}
           />

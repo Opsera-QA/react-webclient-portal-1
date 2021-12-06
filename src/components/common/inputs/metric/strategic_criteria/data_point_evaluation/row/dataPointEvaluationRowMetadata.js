@@ -32,7 +32,7 @@ const dataPointEvaluationRowMetadata = {
     trigger_filter: "",
     primary_trigger_value: 0,
     secondary_trigger_value: 0,
-    enabled: false,
+    enabled: true,
   }
 };
 

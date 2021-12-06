@@ -9,7 +9,7 @@ function OctopusSpecifyDepVarsToggle({dataObject, setDataObject, fieldName, disa
     let sourceScriptFlag = !dataObject.getData(fieldName);
     newDataObject.setData(fieldName, sourceScriptFlag);
     newDataObject.setData("deploymentVariables", []);
-    newDataObject.setData("customParameters", []);
+    newDataObject.setData("customVariableList", []);
     newDataObject.setData("structuredConfigVariablesPath", "");
     newDataObject.setData("xmlConfigTransformVariableValue", "");
     setDataObject({...newDataObject});

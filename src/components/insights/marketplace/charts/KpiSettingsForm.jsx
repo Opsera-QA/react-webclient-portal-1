@@ -74,6 +74,12 @@ import ResetMetricConfirmationPanel
   from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricConfirmationPanel";
 import ResetButton from "components/common/buttons/reset/ResetButton";
 
+// TODO: After all KPIs are converted, don't do check and just convert this file to be the one that points to the separate editor panels
+// TODO: Make types file with all supported KPI Identifiers
+const STANDALONE_EDITOR_PANEL_KPI_IDENTIFIERS = [
+  "adoption-percentage",
+];
+
 // TODO: There are a handful of issues with this we need to address.
 function KpiSettingsForm({
   kpiConfiguration,
@@ -948,6 +954,22 @@ function KpiSettingsForm({
     return <GenericChartSettingsHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
   };
 
+  // TODO: Combine with getEditorPanel when all are moved over
+  // const getStandaloneEditorPanel = (kpiIdentifier) => {
+  //   switch (kpiIdentifier) {
+  //     case "adoption-percentage":
+  //       return (
+  //         <AutomationTestAdoptionRateEditorPanel
+  //           dashboardData={dashboardData}
+  //           kpiConfiguration={kpiConfiguration}
+  //           setKpis={setKpis}
+  //           index={index}
+  //           handleClose={closePanel}
+  //         />
+  //       );
+  //   }
+  // };
+
   const getExtraButtons = () => {
     return (
       <div className={"d-flex"}>
@@ -983,6 +1005,11 @@ function KpiSettingsForm({
   };
 
   const getEditorPanel = () => {
+    // TODO: Implement separately
+    // if (STANDALONE_EDITOR_PANEL_KPI_IDENTIFIERS.includes(kpiSettings?.getData("kpi_identifier"))) {
+    //   return (getStandaloneEditorPanel());
+    // }
+
     return (
       <EditorPanelContainer
         showRequiredFieldsMessage={false}

@@ -108,7 +108,7 @@ function OctopusDeployToIisView({dataObject, setDataObject, isLoading, disabled,
       {dataObject && dataObject.getData("specifyDepVariables") && (
         <>
           <OctopusCustomParametersInput
-            fieldName={"customParameters"}
+            fieldName={"customVariableList"}
             dataObject={dataObject}
             setDataObject={setDataObject}
           />          
