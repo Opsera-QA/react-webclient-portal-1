@@ -4,22 +4,22 @@ const azureStorageMetadata = {
     fields: [
       {
         label: "Azure Storage Account Name",
-        id: "storageName",
+        id: "storageAccountName",
         isRequired: true,
         regexDefinitionName: "azureLabels",
         maxLength: 100
       },
       {
         label: "Azure Storage Shared Access Signature",
-        id: "storageAccessToken",
+        id: "azureStorageAccountToken",
         isRequired: true,
         regexDefinitionName: "azureLabels",
         maxLength: 100
       },
     ],
     newObjectFields: {
-      storageName: "",
-      storageAccessToken:""
+      storageAccountName: "",
+      azureStorageAccountToken:""
     }
   };
   

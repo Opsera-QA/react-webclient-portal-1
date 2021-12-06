@@ -9,9 +9,11 @@ import axios from "axios";
 import azureStorageActions from "../../azureStorage.actions";
 import StandaloneDeleteButtonWithConfirmationModal
   from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
+import modelHelpers from "components/common/model/modelHelpers";
+import azureStorageMetadata from "../azure-storage-metadata";
 
 
-function AzureStorageEditorPanel({ azureStorageAccountsModel, setAzureStorageAccountsModel, toolId, handleClose }) {
+function AzureToolStorageEditorPanel({ azureStorageAccountsModel, setAzureStorageAccountsModel, toolId, handleClose, toolData }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -25,17 +27,29 @@ function AzureStorageEditorPanel({ azureStorageAccountsModel, setAzureStorageAcc
     setCancelTokenSource(source);
     isMounted.current = true;
 
+    loadData(source).catch((error) => {
+      if(isMounted?.current === true){
+        throw error;
+      }
+    });
+
     return () => {
       source.cancel();
       isMounted.current = false;
     };
   }, []);
 
-  const createAzureStorage = async () => {
-    let newConfiguration = azureStorageAccountsModel.getPersistData();
-    // const response = await azureStorageActions.createAzureStorage(getAccessToken, cancelTokenSource, toolData?._id, newConfiguration);
-    handleClose();
-    return;
+  const loadData = async () => {
+    setAzureStorageAccountsModel(modelHelpers.parseObjectIntoModel({}, azureStorageMetadata));
+    // setAzureStorageAccountsModel(modelHelpers.getToolConfigurationModel(null, azureStorageMetadata));
+  };
+
+  const createAzureStorageCredentials = async () => {
+    const azureStorageAccountData = azureStorageAccountsModel.getPersistData();
+    const {storageAccountName, azureStorageAccountToken} = azureStorageAccountData;
+    console.log(azureStorageAccountData);
+    const response = await azureStorageActions.createAzureToolStorageAccount(getAccessToken, cancelTokenSource, toolId, storageAccountName, azureStorageAccountToken );
+    return response;
   };
 
   const deleteAzureStorage = async () => {
@@ -59,8 +73,8 @@ function AzureStorageEditorPanel({ azureStorageAccountsModel, setAzureStorageAcc
   return (
     <EditorPanelContainer
       recordDto={azureStorageAccountsModel}
-      createRecord={createAzureStorage}
-      updateRecord={createAzureStorage}
+      createRecord={createAzureStorageCredentials}
+      updateRecord={createAzureStorageCredentials}
       setRecordDto={setAzureStorageAccountsModel}
       lenient={false}
       extraButtons={getExtraButtons()}
@@ -71,14 +85,14 @@ function AzureStorageEditorPanel({ azureStorageAccountsModel, setAzureStorageAcc
           <TextInputBase
             dataObject={azureStorageAccountsModel}
             setDataObject={setAzureStorageAccountsModel}            
-            fieldName={"storageName"}
+            fieldName={"storageAccountName"}
           />
         </Col>
         <Col lg={12}>
           <TextInputBase
             dataObject={azureStorageAccountsModel}
             setDataObject={setAzureStorageAccountsModel}            
-            fieldName={"storageAccessToken"}
+            fieldName={"azureStorageAccountToken"}
           />
         </Col>
       </Row>      
@@ -86,11 +100,12 @@ function AzureStorageEditorPanel({ azureStorageAccountsModel, setAzureStorageAcc
   );
 }
 
-AzureStorageEditorPanel.propTypes = {
+AzureToolStorageEditorPanel.propTypes = {
   azureStorageAccountsModel: PropTypes.object,
   setAzureStorageAccountsModel: PropTypes.func,
   toolId: PropTypes.string,
   handleClose: PropTypes.func,
+  toolData: PropTypes.object
 };
 
-export default AzureStorageEditorPanel;
+export default AzureToolStorageEditorPanel;

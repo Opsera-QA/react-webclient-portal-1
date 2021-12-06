@@ -1,15 +1,16 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import AzureToolStorageTable from "./AzureToolStorageTable";
+import AzureToolStorageAccountTable from "./AzureToolStorageAccountTable";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import azureStorageActions from "../azureStorage.actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import AzureToolStorageEditorPanel from "../storage/details/AzureToolStorageEditorPanel";
+import AzureToolStorageEditorPanel from "./details/AzureToolStorageAccountEditorPanel";
 
-function AzureToolStoragePanel({ toolId, loadData }) {  
+
+function AzureToolStoragePanel({ toolId, loadData, toolData }) {  
   const [azureStorageAccountsList, setAzureStorageAccountsList] = useState([]);
-  const [azureStorageModel, setAzureStorageModel] = useState(undefined);
+  const [azureStorageAccountsModel, setAzureStorageAccountsModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
@@ -39,9 +40,10 @@ function AzureToolStoragePanel({ toolId, loadData }) {
   const loadStorage = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await azureStorageActions.getAzureStorageAccountsList(getAccessToken, cancelSource, toolId);      
+      const response = await azureStorageActions.getAzureToolStorageAccounts(getAccessToken, cancelSource, toolId);      
       if(response.status === 200) {
-        setAzureStorageAccountsList(response?.data?.message);
+        setAzureStorageAccountsList(response?.data?.data);
+        console.log(response.data.data);
       }
     } catch (error) {
       if(isMounted?.current === true) {
@@ -55,27 +57,29 @@ function AzureToolStoragePanel({ toolId, loadData }) {
   };
 
   const togglePanel = async () => {
-    setAzureStorageModel(null);
+    setAzureStorageAccountsModel(null);
     await loadData();
   };
 
-  if(azureStorageModel) {
+  if(azureStorageAccountsModel) {
     return (
       <AzureToolStorageEditorPanel
+        azureStorageAccountsModel={azureStorageAccountsModel}
+        setAzureStorageAccountsModel={setAzureStorageAccountsModel}
         toolId={toolId}
-        azureStorageModel={azureStorageModel}
-        setAzureStorageModel={setAzureStorageModel}
         handleClose={togglePanel}
+        toolData={toolData}
     />
     );
   }
   
   return (
-    <AzureToolStorageTable
+    <AzureToolStorageAccountTable
       isLoading={isLoading}
       toolId={toolId}
       loadData={loadStorage}
       azureStorageAccountsList={azureStorageAccountsList}
+      toolData={toolData}
     />
   );
 }
@@ -84,5 +88,6 @@ AzureToolStoragePanel.propTypes = {
   toolId: PropTypes.string,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
+  toolData: PropTypes.object
 };
 export default AzureToolStoragePanel;

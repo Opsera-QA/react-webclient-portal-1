@@ -2,10 +2,12 @@ import baseActions from "utils/actionsBase";
 
 const azureStorageActions = {};
 
-azureStorageActions.createAzureStorageCredential = async (getAccessToken, cancelTokenSource, toolId, azureStorageModel) => {
-  const apiUrl = `/tools/${toolId}/azure/storage/create`;
+azureStorageActions.createAzureToolStorageAccount = async (getAccessToken, cancelTokenSource, toolId, storageAccountName, azureStorageAccountToken) => {
+  const apiUrl = `/tools/${toolId}/azure/storage/account/create`;
   const postBody = {
-    ...azureStorageModel,
+    toolId,
+    storageAccountName,
+    azureStorageAccountToken
   };
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
@@ -15,7 +17,7 @@ azureStorageActions.deleteAzureStorageCredential = async (getAccessToken, cancel
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-azureStorageActions.getAzureStorageAccountsList = async ( getAccessToken, cancelTokenSource, toolId) => {
+azureStorageActions.getAzureToolStorageAccounts = async ( getAccessToken, cancelTokenSource, toolId) => {
 
   const apiUrl = `/tools/${toolId}/azure/storage/accounts`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);

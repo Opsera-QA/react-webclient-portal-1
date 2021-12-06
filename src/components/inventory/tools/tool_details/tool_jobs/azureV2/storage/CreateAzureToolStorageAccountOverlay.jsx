@@ -1,12 +1,12 @@
 import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
 import azureStorageMetadata from "./azure-storage-metadata";
-import AzureStorageEditorPanel from "./details/AzureToolStorageEditorPanel";
+import AzureToolStorageEditorPanel from "./details/AzureToolStorageAccountEditorPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import Model from "core/data_model/model";
 
-function CreateAzureStoragesOverlay({ loadData, toolId, isMounted }) {
+function CreateAzureStoragesOverlay({ loadData, toolId, isMounted, toolData }) {
   const toastContext = useContext(DialogToastContext);
   const [azureStorageAccountsModel, setAzureStorageAccountsModel] = useState(new Model({...azureStorageMetadata.newObjectFields}, azureStorageMetadata, true));
 
@@ -29,11 +29,12 @@ function CreateAzureStoragesOverlay({ loadData, toolId, isMounted }) {
       objectType={azureStorageMetadata.type} 
       loadData={loadData}
     >
-      <AzureStorageEditorPanel
+      <AzureToolStorageEditorPanel
         azureStorageAccountsModel={azureStorageAccountsModel}
         setAzureStorageAccountsModel={setAzureStorageAccountsModel}
         toolId={toolId}
         handleClose={handleClose}
+        toolData={toolData}
       />
     </CreateCenterPanel>
   );
@@ -45,6 +46,7 @@ CreateAzureStoragesOverlay.propTypes = {
   loadData: PropTypes.func,
   editMode: PropTypes.bool,
   isMounted: PropTypes.object,
+  toolData: PropTypes.object
 };
 
 export default CreateAzureStoragesOverlay;

@@ -5,11 +5,11 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import CreateAzureStorageOverlay from "./CreateAzureToolStorageOverlay";
+import CreateAzureStorageOverlay from "./CreateAzureToolStorageAccountOverlay";
 import {getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 
-function AzureStorageTable({ toolId, azureStorageAccountsList, loadData, isLoading, isMounted}) { 
+function AzureStorageTable({ toolId, azureStorageAccountsList, loadData, isLoading, isMounted, toolData}) { 
   
   const fields = azureStorageMetadata.fields;
   const toastContext = useContext(DialogToastContext);
@@ -19,13 +19,15 @@ function AzureStorageTable({ toolId, azureStorageAccountsList, loadData, isLoadi
       <CreateAzureStorageOverlay 
         toolId={toolId} 
         loadData={loadData} 
-        isMounted={isMounted} />);
+        isMounted={isMounted} 
+        toolData={toolData}
+      />);
   };
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "storageName")),
-      getTableTextColumn(getField(fields, "storageAccessToken"))      
+      getTableTextColumn(getField(fields, "storageAccountName")),
+      getTableTextColumn(getField(fields, "azureStorageAccountToken"))      
     ],
     []
   );
@@ -37,6 +39,7 @@ function AzureStorageTable({ toolId, azureStorageAccountsList, loadData, isLoadi
         loadData={loadData} 
         editMode={true} 
         editRowData={row}
+        toolData={toolData}
       />
     );
   };
@@ -74,6 +77,7 @@ AzureStorageTable.propTypes = {
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   isMounted: PropTypes.object,
+  toolData: PropTypes.object
 };
 
 export default AzureStorageTable;
