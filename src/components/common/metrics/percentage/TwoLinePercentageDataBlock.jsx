@@ -13,6 +13,7 @@ function TwoLinePercentageDataBlock(
   return (
     <TwoLineDataBlockBase
       className={className}
+      dataPoint={dataPoint}
       title={
         <MetricPercentageText
           dataPoint={dataPoint}
