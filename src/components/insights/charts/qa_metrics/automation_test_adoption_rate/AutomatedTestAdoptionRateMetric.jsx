@@ -12,31 +12,31 @@ import {
 import { Col, Row } from "react-bootstrap";
 import "components/insights/charts/qa_metrics/Styling.css";
 import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
-import AdoptionTestPercentageAutomatedTestCasesDataBlock
-  from "components/insights/charts/qa_metrics/adoption_test_percentage/data_blocks/AdoptionTestPercentageAutomatedTestCasesDataBlock";
-import AdoptionTestPercentageManualTestCasesDataBlock
-  from "components/insights/charts/qa_metrics/adoption_test_percentage/data_blocks/AdoptionTestPercentageManualTestCasesDataBlock";
-import AdoptionTestPercentageAdoptionPercentageDataBlock
-  from "components/insights/charts/qa_metrics/adoption_test_percentage/data_blocks/AdoptionTestPercentageAdoptionPercentageDataBlock";
+import AutomatedTestAdoptionRateAdoptedTestsDataBlock
+  from "components/insights/charts/qa_metrics/automation_test_adoption_rate/data_blocks/AutomatedTestAdoptionRateAdoptedTestsDataBlock";
+import AutomatedTestAdoptionRateManualTestsDataBlock
+  from "components/insights/charts/qa_metrics/automation_test_adoption_rate/data_blocks/AutomatedTestAdoptionRateManualTestsDataBlock";
+import AutomatedTestAdoptionRateAdoptionRateDataBlock
+  from "components/insights/charts/qa_metrics/automation_test_adoption_rate/data_blocks/AutomatedTestAdoptionRateAdoptionRateDataBlock";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import NivoPieChartBase from "components/common/metrics/charts/nivo/pie/NivoPieChartBase";
 import {nivoChartLegendDefinitions} from "components/common/metrics/charts/nivo/nivoChartLegend.definitions";
 
 const ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS = {
-  EXECUTED_TESTS: "executed_tests",
+  ADOPTED_TESTS: "adopted_tests",
   MANUAL_TESTS: "manual_tests",
-  ADOPTION_PERCENTAGE: "adoption_percentage"
+  ADOPTION_RATE: "adoption_rate"
 };
 
-function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metric, setMetric] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [notesData, setNotesData] = useState(undefined);
-  const [adoptionPercentageDataPoint, setAdoptionPercentageDataPoint] = useState(undefined);
-  const [executedTestsDataPoint, setExecutedTestsDataPoint] = useState(undefined);
+  const [adoptionRateDataPoint, setAdoptionRateDataPoint] = useState(undefined);
+  const [automatedTestsDataPoint, setAutomatedTestsDataPoint] = useState(undefined);
   const [manualTestsDataPoint, setManualTestsDataPoint] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -108,10 +108,10 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
   const loadDataPoints = async () => {
     const dataPoints = kpiConfiguration?.dataPoints;
 
-    const newAdoptionPercentageDataPoint = dataPointHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.ADOPTION_PERCENTAGE);
-    setAdoptionPercentageDataPoint(newAdoptionPercentageDataPoint);
-    const newExecutedTestsDataPoint = dataPointHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.EXECUTED_TESTS);
-    setExecutedTestsDataPoint(newExecutedTestsDataPoint);
+    const newAdoptionPercentageDataPoint = dataPointHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.ADOPTION_RATE);
+    setAdoptionRateDataPoint(newAdoptionPercentageDataPoint);
+    const newExecutedTestsDataPoint = dataPointHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.ADOPTED_TESTS);
+    setAutomatedTestsDataPoint(newExecutedTestsDataPoint);
     const newManualTestDataPoint = dataPointHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.MANUAL_TESTS);
     setManualTestsDataPoint(newManualTestDataPoint);
   };
@@ -145,21 +145,21 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
           <Col xl={4} lg={6} md={8} className={"d-flex align-content-around"}>
             <Row>
               <Col lg={12}>
-                <AdoptionTestPercentageAutomatedTestCasesDataBlock
+                <AutomatedTestAdoptionRateAdoptedTestsDataBlock
                   executedTestCount={metric?.executedTests}
-                  executedTestsDataPoint={executedTestsDataPoint}
+                  executedTestsDataPoint={automatedTestsDataPoint}
                 />
               </Col>
               <Col lg={12} className={"my-2"}>
-                <AdoptionTestPercentageManualTestCasesDataBlock
+                <AutomatedTestAdoptionRateManualTestsDataBlock
                   manualTestCount={metric?.manualTests}
                   manualTestsDataPoint={manualTestsDataPoint}
                 />
               </Col>
               <Col lg={12} className={"mb-2"}>
-                <AdoptionTestPercentageAdoptionPercentageDataBlock
+                <AutomatedTestAdoptionRateAdoptionRateDataBlock
                   adoptionRatePercentage={metric?.adoptionRate}
-                  adoptionRateDataPoint={adoptionPercentageDataPoint}
+                  adoptionRateDataPoint={adoptionRateDataPoint}
                 />
               </Col>
             </Row>
@@ -204,7 +204,7 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
   );
 }
 
-AdoptionTestPercentageMetric.propTypes = {
+AutomatedTestAdoptionRateMetric.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -212,4 +212,4 @@ AdoptionTestPercentageMetric.propTypes = {
   setKpis: PropTypes.func
 };
 
-export default AdoptionTestPercentageMetric;
+export default AutomatedTestAdoptionRateMetric;
