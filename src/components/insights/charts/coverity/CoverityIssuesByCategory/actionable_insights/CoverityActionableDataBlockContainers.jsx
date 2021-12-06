@@ -3,7 +3,6 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
-import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
 
 function CoverityActionableDataBlockContainers({ data }) {
   let className = `p-2 dark-gray-text-primary`;
@@ -14,7 +13,7 @@ function CoverityActionableDataBlockContainers({ data }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
-              score={data.total_success}
+              score={data.totalIssues}
               subtitle={"Total Issues"} />
           </DataBlockBoxContainer>
         </Col>
@@ -22,25 +21,25 @@ function CoverityActionableDataBlockContainers({ data }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
-              score={getTimeDisplay(data.total_duration)}
+              score={data.totalProjects}
               subtitle={"Total Projects"}
             />
-          </DataBlockBoxContainer>{"Total"}
+          </DataBlockBoxContainer>
         </Col>
         <Col lg={4} md={6} className={"my-3"}>
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
-              score={getTimeDisplay(data.total_time_to_resolve)}
+              score={data.totalScans}
               subtitle={"Total Scans"}
             />
-          </DataBlockBoxContainer>{" "}
+          </DataBlockBoxContainer>
         </Col>
         <Col lg={4} md={6} className={"my-3"}>
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
-              score={data.total_failed}
+              score={data.totalQuality}
               subtitle={"Total Quality Issues"} />
           </DataBlockBoxContainer>
         </Col>
@@ -48,10 +47,10 @@ function CoverityActionableDataBlockContainers({ data }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
-              score={getTimeDisplay(data.mean_duration)}
-              subtitle={"Total Secuity Issues"}
+              score={data.totalSecurity}
+              subtitle={"Total Security Issues"}
             />
-          </DataBlockBoxContainer>{" "}
+          </DataBlockBoxContainer>
         </Col>
       </Row>
     </div>

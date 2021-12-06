@@ -90,7 +90,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   pipelineName,
   currentDate,
   dateRange,
-  actionableInsightsQueryData
+  actionableInsightsQueryData,
+  coveritySeverity
 ) => {
   const apiUrl = "/analytics/metrics",
     date = getDateObjectFromKpiConfiguration(kpiConfiguration),
@@ -163,6 +164,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     serviceNowConfigurationItems: serviceNowConfigurationItems,
     serviceNowBusinessServices: serviceNowBusinessServices,
     actionableInsightsQueryData: actionableInsightsQueryData,
+    coveritySeverity: coveritySeverity
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
