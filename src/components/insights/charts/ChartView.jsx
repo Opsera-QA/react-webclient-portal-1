@@ -121,7 +121,7 @@ import ManualQaTestPieChart from "components/insights/charts/qa_metrics/ManualQa
 import FirstPassYieldPieChart from "components/insights/charts/qa_metrics/FirstPassYieldPieChart";
 import CummulativeOpenDefectsPieChart from "components/insights/charts/qa_metrics/CummulativeOpenDefectsPieChart";
 import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieChart";
-import AdoptionTestPercentageMetricV1 from "components/insights/charts/qa_metrics/adoption_test_percentage/AdoptionTestPercentageMetricV1";
+import AdoptionTestPercentageMetricV1 from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AdoptionTestPercentageMetricV1";
 import AutomatedTestResultsPieChart from "./qa_metrics/AutomatedTestResultsPieChart";
 import SFDCManualTestResultsPieChart from "./qa_metrics/SFDCManualTestResultsPieChart";
 import DefectRemovalEfficiencyPieChart from "./qa_metrics/DefectRemovalEfficiencyPieChart";
@@ -146,8 +146,8 @@ import { getDateObjectFromKpiConfiguration } from "components/insights/charts/ch
 import { Col } from "react-bootstrap";
 import LegacySonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings_legacy/LegacySonarRatingMetrics";
 import SonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings/SonarRatingMetrics";
-import AdoptionTestPercentageMetric
-  from "components/insights/charts/qa_metrics/adoption_test_percentage/AdoptionTestPercentageMetric";
+import AutomatedTestAdoptionRateMetric
+  from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AutomatedTestAdoptionRateMetric";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1291,7 +1291,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             {/*  setKpis={setKpis}*/}
             {/*  index={index}*/}
             {/*/>*/}
-            <AdoptionTestPercentageMetric
+            <AutomatedTestAdoptionRateMetric
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
