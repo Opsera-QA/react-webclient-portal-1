@@ -8,6 +8,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
 import TaskViews from "components/tasks/TaskViews";
 import TaskFilterModel from "components/tasks/task.filter.model";
+import TasksHelpDocumentation from "../common/help/documentation/tasks/TasksHelpDocumentation";
 
 function TaskManagement() {
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
@@ -85,6 +86,10 @@ function TaskManagement() {
     }
   };
 
+  const getHelpComponent = () => {
+    return (<TasksHelpDocumentation/>);
+  };
+
   if (!accessRoleData) {
     return <LoadingDialog size="sm" />;
   }
@@ -92,6 +97,7 @@ function TaskManagement() {
   return (
     <ScreenContainer
       breadcrumbDestination={"taskManagement"}
+      helpComponent={getHelpComponent()}
       navigationTabContainer={<TasksSubNavigationBar currentTab={"tasks"}/>}
     >
       <TaskViews

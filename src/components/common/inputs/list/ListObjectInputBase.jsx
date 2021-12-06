@@ -9,16 +9,32 @@ import {List} from "dhx-suite-package";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import ComponentLoadingWrapper from "components/common/loading/ComponentLoadingWrapper";
 import IconBase from "components/common/icons/IconBase";
+import {parseError} from "components/common/helpers/error-helpers";
 
 // TODO: Rewrite and combine with list input base
 function ListObjectInputBase(
   {
-    fieldName, model, setModel,
-    selectOptions, valueField, textField,
-    setDataFunction, isLoading, disabled, clearDataFunction,
-    showClearValueButton, getCurrentValue,
-    height, icon, searchFunction, showSelectAllButton, customTemplate, disabledOptions, noDataMessage,
-    customTitle
+    fieldName,
+    model,
+    setModel,
+    selectOptions,
+    valueField,
+    textField,
+    setDataFunction,
+    isLoading,
+    disabled,
+    clearDataFunction,
+    showClearValueButton,
+    getCurrentValue,
+    height,
+    icon,
+    searchFunction,
+    showSelectAllButton,
+    customTemplate,
+    disabledOptions,
+    noDataMessage,
+    customTitle,
+    error,
 }) {
   const [field] = useState(model?.getFieldById(fieldName));
   const [list, setList] = useState(undefined);
@@ -50,6 +66,10 @@ function ListObjectInputBase(
       }
     }
   }, [searchTerm]);
+
+  useEffect(() => {
+    setErrorMessage(error ? parseError(error) : "");
+  }, [error]);
 
   // TODO: We should probably also handle selection here. Look at when more use cases arise
   useEffect(() => {
@@ -142,7 +162,12 @@ function ListObjectInputBase(
 
   const updateValue = (newArray) => {
     if (setDataFunction) {
-      setDataFunction(field?.id, newArray);
+      const newModel = setDataFunction(field?.id, newArray);
+
+      // TODO: Implement validation on this side.
+      // if (typeof newModel === "object") {
+        // validateData(newModel);
+      // }
     }
     else {
       validateAndSetData(field?.id, newArray);
@@ -374,7 +399,11 @@ ListObjectInputBase.propTypes = {
   customTemplate: PropTypes.func,
   disabledOptions: PropTypes.array,
   noDataMessage: PropTypes.string,
-  customTitle: PropTypes.string
+  customTitle: PropTypes.string,
+  error: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
 };
 
 ListObjectInputBase.defaultProps = {

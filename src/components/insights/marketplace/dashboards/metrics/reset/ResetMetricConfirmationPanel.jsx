@@ -57,7 +57,7 @@ function ResetMetricConfirmationPanel(
           className={"ml-2"}
           identifier={identifier}
           index={index}
-          closePanel={closePanelFunction}
+          closePanelFunction={closePanelFunction}
           setKpiConfiguration={setKpiConfiguration}
         />
       }

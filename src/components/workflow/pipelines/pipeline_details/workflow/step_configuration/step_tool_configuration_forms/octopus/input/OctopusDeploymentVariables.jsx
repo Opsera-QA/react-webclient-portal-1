@@ -21,7 +21,7 @@ const SAMPLE_DATA = [
   },
 ];
 
-function OctopusDeploymentVariables({ fieldName, dataObject, setDataObject }) {
+function OctopusDeploymentVariables({ fieldName, dataObject, setDataObject, disabled }) {
   return (
     <>
       <OverlayTrigger
@@ -57,11 +57,13 @@ function OctopusDeploymentVariables({ fieldName, dataObject, setDataObject }) {
         />
       </OverlayTrigger>
       <div className="form-group">
-        <JsonInput fieldName={fieldName} model={dataObject} setModel={setDataObject} />
+        <JsonInput fieldName={fieldName} model={dataObject} setModel={setDataObject} disabled={disabled} />
       </div>
-      <small className="form-text text-muted form-group m-2 text-left">
-        Enter deployment variables as a list of JSON Objects
-      </small>
+      {!disabled && (
+        <small className="form-text text-muted form-group m-2 text-left">
+          Enter deployment variables as a list of JSON Objects
+        </small>
+      ) }      
     </>
   );
 }
@@ -70,6 +72,7 @@ OctopusDeploymentVariables.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default OctopusDeploymentVariables;

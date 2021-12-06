@@ -19,7 +19,7 @@ function ServiceNowConfigurationItemsSelectInput({
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [toggleSelected, setToggleSelected] = useState(false);
+  // const [toggleSelected, setToggleSelected] = useState(false);
   const [configurationItems, setConfigurationItems] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -80,29 +80,36 @@ function ServiceNowConfigurationItemsSelectInput({
     };
   }, [serviceNowToolId]);
 
-  const loadConfigurationItems = async () => {
-    try {
-      setIsLoading(true);
-      setToggleSelected(true);
-      const response = await pipelineStepNotificationActions.getServiceNowConfigurationItems(
-        serviceNowToolId,
-        getAccessToken,
-        cancelTokenSource
-      );
-
-      if (response.data != null && response.data.message != null && Array.isArray(response.data.message)) {
-        setConfigurationItems(response.data.message);
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showErrorDialog(
-          "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry."
+  const loadConfigurationItems = async (searchTerm) => {
+    if (searchTerm && searchTerm.length >= 4) {
+      try {
+        setIsLoading(true);
+        // setToggleSelected(true);
+        const response = await pipelineStepNotificationActions.getServiceNowConfigurationItemsByName(
+          serviceNowToolId,
+          searchTerm,
+          getAccessToken,
+          cancelTokenSource
         );
-      }
-      console.error(error);
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
+
+        if (
+          response?.data !== null &&
+          response?.data?.message?.result !== null &&
+          Array.isArray(response.data.message.result)
+        ) {
+          setConfigurationItems(response.data.message.result);
+        }
+      } catch (error) {
+        if (isMounted?.current === true) {
+          toastContext.showErrorDialog(
+            "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry."
+          );
+        }
+        console.error(error);
+      } finally {
+        if (isMounted?.current === true) {
+          setIsLoading(false);
+        }
       }
     }
   };
@@ -116,11 +123,11 @@ function ServiceNowConfigurationItemsSelectInput({
       return "A ServiceNow Tool must be selected before selecting a Configuration Item";
     }
 
-    if (!isLoading && serviceNowToolId !== "" && configurationItems.length === 0 && !toggleSelected) {
-      return "Click to load Configuration Items";
+    if (!isLoading && serviceNowToolId !== "" && configurationItems.length === 0) {
+      return "Start typing to load Configuration Items";
     }
 
-    if (!isLoading && serviceNowToolId !== "" && configurationItems.length === 0 && toggleSelected) {
+    if (!isLoading && serviceNowToolId !== "" && configurationItems.length === 0) {
       return "No Configuration Items found for selected ServiceNow account.";
     }
 
@@ -140,9 +147,11 @@ function ServiceNowConfigurationItemsSelectInput({
       valueField={valueField}
       textField={textField}
       placeholderText={getPlaceholderText()}
-      onToggleFunction={loadConfigurationItems}
+      // onToggleFunction={loadBusinessServices}
       disabled={disabled || serviceNowToolId === "" || !serviceNowToolId}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
+      onSearchFunction={(searchTerm) => loadConfigurationItems(searchTerm)}
+      useToggle={false}
     />
   );
 }

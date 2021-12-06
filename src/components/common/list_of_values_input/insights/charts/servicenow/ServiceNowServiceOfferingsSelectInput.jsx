@@ -19,7 +19,7 @@ function ServiceNowServiceOfferingsSelectInput({
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [toggleSelected, setToggleSelected] = useState(false);
+  // const [toggleSelected, setToggleSelected] = useState(false);
   const [serviceOfferings, setServiceOfferings] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -80,29 +80,36 @@ function ServiceNowServiceOfferingsSelectInput({
     };
   }, [serviceNowToolId]);
 
-  const loadServiceOfferings = async () => {
-    try {
-      setIsLoading(true);
-      setToggleSelected(true);
-      const response = await pipelineStepNotificationActions.getServiceNowServiceOfferings(
-        serviceNowToolId,
-        getAccessToken,
-        cancelTokenSource
-      );
-
-      if (response.data != null && response.data.message != null && Array.isArray(response.data.message)) {
-        setServiceOfferings(response.data.message);
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showErrorDialog(
-          "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry."
+  const loadServiceOfferings = async (searchTerm) => {
+    if (searchTerm && searchTerm.length >= 4) {
+      try {
+        setIsLoading(true);
+        // setToggleSelected(true);
+        const response = await pipelineStepNotificationActions.getServiceNowServiceOfferingsByName(
+          serviceNowToolId,
+          searchTerm,
+          getAccessToken,
+          cancelTokenSource
         );
-      }
-      console.error(error);
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
+
+        if (
+          response?.data !== null &&
+          response?.data?.message?.result !== null &&
+          Array.isArray(response.data.message.result)
+        ) {
+          setServiceOfferings(response.data.message.result);
+        }
+      } catch (error) {
+        if (isMounted?.current === true) {
+          toastContext.showErrorDialog(
+            "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry."
+          );
+        }
+        console.error(error);
+      } finally {
+        if (isMounted?.current === true) {
+          setIsLoading(false);
+        }
       }
     }
   };
@@ -116,11 +123,11 @@ function ServiceNowServiceOfferingsSelectInput({
       return "A ServiceNow Tool must be selected before selecting a Service Offering";
     }
 
-    if (!isLoading && serviceNowToolId !== "" && serviceOfferings.length === 0 && !toggleSelected) {
-      return "Click to load Service Offerings";
+    if (!isLoading && serviceNowToolId !== "" && serviceOfferings.length === 0) {
+      return "Start typing to load Service Offerings";
     }
 
-    if (!isLoading && serviceNowToolId !== "" && serviceOfferings.length === 0 && toggleSelected) {
+    if (!isLoading && serviceNowToolId !== "" && serviceOfferings.length === 0) {
       return "No Service Offerings found for selected ServiceNow account.";
     }
 
@@ -140,9 +147,11 @@ function ServiceNowServiceOfferingsSelectInput({
       valueField={valueField}
       textField={textField}
       placeholderText={getPlaceholderText()}
-      onToggleFunction={loadServiceOfferings}
+      // onToggleFunction={loadBusinessServices}
       disabled={disabled || serviceNowToolId === "" || !serviceNowToolId}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
+      onSearchFunction={(searchTerm) => loadServiceOfferings(searchTerm)}
+      useToggle={false}
     />
   );
 }

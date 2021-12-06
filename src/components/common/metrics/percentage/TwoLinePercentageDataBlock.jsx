@@ -3,20 +3,33 @@ import PropTypes from "prop-types";
 import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/TwoLineDataBlockBase";
 import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
 
-function PercentageDataBlock({ percentage, subtitle, className}) {
+function TwoLinePercentageDataBlock(
+  {
+    percentage,
+    dataPoint,
+    subtitle,
+    className,
+  }) {
   return (
     <TwoLineDataBlockBase
       className={className}
-      title={<MetricPercentageText percentage={percentage} />}
+      dataPoint={dataPoint}
+      title={
+        <MetricPercentageText
+          dataPoint={dataPoint}
+          percentage={percentage}
+        />
+      }
       subtitle={subtitle}
     />
   );
 }
 
-PercentageDataBlock.propTypes = {
+TwoLinePercentageDataBlock.propTypes = {
   percentage: PropTypes.number,
+  dataPoint: PropTypes.object,
   subtitle: PropTypes.any,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
-export default PercentageDataBlock;
+export default TwoLinePercentageDataBlock;

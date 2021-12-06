@@ -1,16 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-
-// TODO: make types
-export const DATA_POINT_EVALUATION_TRIGGER_FILTER_SELECT_OPTIONS = [
-  {text: "Between", value: "between"},
-  {text: "Equal To", value: "equals"},
-  {text: "Greater Than", value: "greater_than"},
-  {text: "Greater Than Or Equal To", value: "greater_than_or_equal_to"},
-  {text: "Less Than", value: "less_than"},
-  {text: "Less Than Or Equal To", value: "less_than_or_equal_to"},
-];
+import {DATA_POINT_EVALUATION_TRIGGER_FILTER_SELECT_OPTIONS} from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/dataPointEvaluationTrigger.types";
 
 // TODO: If this is reused anywhere, make generic version in /list_of_values_input
 function DataPointEvaluationTriggerFilterSelectInput(

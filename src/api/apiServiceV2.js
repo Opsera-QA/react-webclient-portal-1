@@ -1,6 +1,7 @@
 const axios = require("axios");
 const config = require("../config");
 
+// TODO: Rework this file to be like nodeAnalyticsApiService
 function getAxiosInstance(token, cancelToken) {
   const axiosInstance = axios.create({
     baseURL: config.apiServerUrl,
@@ -62,4 +63,3 @@ export async function axiosApiDeleteCall(getAccessToken, cancelTokenSource, apiU
     .then((result) =>  {return result;})
     .catch(error => { if (!axios.isCancel(error)) {throw error;}});
 }
-

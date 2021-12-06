@@ -91,6 +91,7 @@ function ResetMetricConfigurationButton(
         kpiConfigurationModel.setData("kpi_category", defaultKpiConfiguration?.category);
         kpiConfigurationModel.setData("kpi_settings", defaultKpiConfiguration?.settings);
         kpiConfigurationModel.setData("filters", defaultKpiConfiguration?.supported_filters);
+        kpiConfigurationModel.setData("dataPoints", defaultKpiConfiguration?.dataPoints);
       }
 
       const configuration = dashboardModel.getData("configuration");
@@ -100,7 +101,11 @@ function ResetMetricConfigurationButton(
       dashboardModel.setData("configuration", configuration);
 
       await dashboardsActions.updateDashboardKpiV2(getAccessToken, cancelTokenSource, dashboardModel?.getData("_id"), kpiConfigurationModel);
-      closePanel();
+      toastContext.showResetSuccessToast("KPI Configuration");
+
+      if (closePanel) {
+        closePanel();
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         const parsedError = parseError(error);
@@ -136,6 +141,7 @@ ResetMetricConfigurationButton.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   setKpiConfiguration: PropTypes.func,
+  handleClose: PropTypes.func,
 };
 
 export default  React.memo(ResetMetricConfigurationButton);

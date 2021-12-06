@@ -282,7 +282,7 @@ const octopusStepFormMetadata = {
         label: "Environment Configurations",
         id: "environmentList",
         formText: `
-          This feature is currently limited to a maximum of 10 environments.  
+          This feature is currently limited to a maximum of 30 environments.  
           If you have a need to exceed that limit, please contact Opsera with details on specific requirements.
         `,
         maxItems: 30,
@@ -301,6 +301,9 @@ const octopusStepFormMetadata = {
       },
       {
         id: "tenantedDeploymentMode"
+      },
+      {
+        id: "customVariableList"
       }
     ],
   newObjectFields:
@@ -367,6 +370,7 @@ const octopusStepFormMetadata = {
         tenantId: "",
         environmentList: [],
         tenantList: [],
+        customVariableList: []
       }
   };
   

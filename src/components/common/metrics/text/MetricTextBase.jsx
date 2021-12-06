@@ -7,7 +7,12 @@ export const METRIC_QUALITY_LEVELS = {
   DANGER: "danger",
 };
 
-function MetricTextBase({ formattedText, qualityLevel, className }) {
+function MetricTextBase(
+  {
+    formattedText,
+    qualityLevel,
+    className,
+  }) {
   const getQualityBasedClassName = () => {
     switch (qualityLevel) {
       case METRIC_QUALITY_LEVELS.SUCCESS:
