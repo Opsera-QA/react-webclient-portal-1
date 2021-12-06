@@ -16,7 +16,7 @@ const OctopusStandaloneEnvironmentsMultiSelectInput = ({ dataObject, value,  dis
   return (    
     <StandaloneMultiSelectInput      
       selectOptions={octopusEnvironments}
-      valueField={"_id"}
+      valueField={"id"}
       textField={"name"}
       busy={isLoading}
       value={value}
