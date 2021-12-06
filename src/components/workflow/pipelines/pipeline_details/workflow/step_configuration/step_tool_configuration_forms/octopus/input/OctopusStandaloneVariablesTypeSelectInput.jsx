@@ -66,7 +66,7 @@ const OctopusStandaloneVariablesTypeSelectInput = ({ dataObject, value,  disable
       selectOptions={variableTypes}
       value={value}
       busy={isLoading}
-      placeholderText="Select Variable Type"
+      placeholderText="Select Parameter Type"
       setDataFunction={(data) => setDataFunction(data)}
     />
   );

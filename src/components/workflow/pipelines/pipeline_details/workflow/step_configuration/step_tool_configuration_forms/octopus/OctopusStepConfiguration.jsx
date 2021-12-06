@@ -209,7 +209,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
 
   const validateDeploymentVariables = async () => {
     if (octopusStepConfigurationDto.getData("specifyDepVariables")) {
-      if (octopusStepConfigurationDto.getData("deploymentVariables").length === 0 && octopusStepConfigurationDto.getData("customParameters").length === 0 ) {
+      if (octopusStepConfigurationDto.getData("deploymentVariables").length === 0 && octopusStepConfigurationDto.getData("customVariableList").length === 0 ) {
         let errorMesage = "Please specify deployment variables.";
         toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
         return false;
