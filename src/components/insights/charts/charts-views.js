@@ -238,9 +238,9 @@ const formats = {
 // For properties such as xScale, yScale, colors, colorBy, indexBy, set them individually on charts
 export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
                               largeLeftSpaceRequired=false, largeBottomSpaceRequired=false,
-                              leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false, symbol="square") => ({
-  margin: { top: 40, right: 20, bottom: largeBottomSpaceRequired ? 80 : 60, 
-            left: largeLeftSpaceRequired ? 100 : 60},
+                              leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false, symbol="square") => (
+                                {
+  margin: { },
   lineWidth: 3.5,
   pointSize: 8,
   pointBorderWidth: 8,
@@ -279,9 +279,9 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
       "direction": "column",
       "justify": false,
       "translateX": 0,
-      "translateY": -60,
+      "translateY": 0,
       "itemsSpacing": 0,
-      "itemDirection": "right-to-left",
+      // "itemDirection": "right-to-left",
       "itemWidth": 80,
       "itemHeight": 50,
       "itemOpacity": isLegendHidden ? 0 : 1,

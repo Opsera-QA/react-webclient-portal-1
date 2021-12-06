@@ -1284,20 +1284,20 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "adoption-percentage":
         return (
           <Col md={12} className="p-2">
-            <AdoptionTestPercentageMetricV1
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-            {/*<AdoptionTestPercentageMetric*/}
+            {/*<AdoptionTestPercentageMetricV1*/}
             {/*  kpiConfiguration={kpiConfig}*/}
             {/*  setKpiConfiguration={setKpiConfig}*/}
             {/*  dashboardData={dashboardData}*/}
             {/*  setKpis={setKpis}*/}
             {/*  index={index}*/}
             {/*/>*/}
+            <AdoptionTestPercentageMetric
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
           </Col>
         );
       case "automated-test-results":

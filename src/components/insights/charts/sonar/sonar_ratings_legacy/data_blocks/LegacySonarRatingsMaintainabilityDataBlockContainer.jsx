@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {LETTER_GRADES} from "components/common/metrics/grade/MetricLetterGradeText";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
-import PercentageDataBlock from "components/common/metrics/percentage/PercentageDataBlock";
+import TwoLinePercentageDataBlock from "components/common/metrics/percentage/TwoLinePercentageDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
 import Col from "react-bootstrap/Col";
 import Model from "core/data_model/model";
@@ -57,7 +57,7 @@ function LegacySonarRatingsMaintainabilityDataBlockContainer({ dashboardData, kp
 
   const getMiddleDataBlock = () => {
     return (
-      <PercentageDataBlock
+      <TwoLinePercentageDataBlock
         percentage={technicalDebtRatio}
         subtitle={"Technical Debt Ratio"}
       />

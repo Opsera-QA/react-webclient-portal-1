@@ -1,21 +1,26 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
-import { ResponsivePie } from "@nivo/pie";
-import config from "components/insights/charts/qa_metrics/adoption_test_percentage/adoptionTestPercentagePieChartConfig";
 import ModalLogs from "components/common/modal/modalLogs";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import {
-  defaultConfig, getColorByData, assignStandardColors,
+  assignStandardColors,
   shortenPieChartLegend,
 } from "components/insights/charts/charts-views";
-import { Col, Container, Row } from "react-bootstrap";
-import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
+import { Col, Row } from "react-bootstrap";
 import "components/insights/charts/qa_metrics/Styling.css";
-import PercentageDataBlock from "components/common/metrics/percentage/PercentageDataBlock";
-import {strategicCriteriaHelpers} from "components/common/helpers/strategicCriteria.helpers";
+import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
+import AdoptionTestPercentageAutomatedTestCasesDataBlock
+  from "components/insights/charts/qa_metrics/adoption_test_percentage/data_blocks/AdoptionTestPercentageAutomatedTestCasesDataBlock";
+import AdoptionTestPercentageManualTestCasesDataBlock
+  from "components/insights/charts/qa_metrics/adoption_test_percentage/data_blocks/AdoptionTestPercentageManualTestCasesDataBlock";
+import AdoptionTestPercentageAdoptionPercentageDataBlock
+  from "components/insights/charts/qa_metrics/adoption_test_percentage/data_blocks/AdoptionTestPercentageAdoptionPercentageDataBlock";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import NivoPieChartBase from "components/common/metrics/charts/nivo/pie/NivoPieChartBase";
+import {nivoChartLegendDefinitions} from "components/common/metrics/charts/nivo/nivoChartLegend.definitions";
 
 const ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS = {
   EXECUTED_TESTS: "executed_tests",
@@ -31,6 +36,8 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
   const [showModal, setShowModal] = useState(false);
   const [notesData, setNotesData] = useState(undefined);
   const [adoptionPercentageDataPoint, setAdoptionPercentageDataPoint] = useState(undefined);
+  const [executedTestsDataPoint, setExecutedTestsDataPoint] = useState(undefined);
+  const [manualTestsDataPoint, setManualTestsDataPoint] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -101,14 +108,30 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
   const loadDataPoints = async () => {
     const dataPoints = kpiConfiguration?.dataPoints;
 
-    let newAdoptionPercentageDataPoint = strategicCriteriaHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.ADOPTION_PERCENTAGE);
-    // if (newAdoptionPercentageDataPoint == null) {
-    //
-    // }
-
-    // TODO: handle pulling from KPI if not attached.
+    const newAdoptionPercentageDataPoint = dataPointHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.ADOPTION_PERCENTAGE);
     setAdoptionPercentageDataPoint(newAdoptionPercentageDataPoint);
+    const newExecutedTestsDataPoint = dataPointHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.EXECUTED_TESTS);
+    setExecutedTestsDataPoint(newExecutedTestsDataPoint);
+    const newManualTestDataPoint = dataPointHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.MANUAL_TESTS);
+    setManualTestsDataPoint(newManualTestDataPoint);
+  };
 
+  const getNotesRow = () => {
+    if (hasStringValue(notesData)) {
+      return (
+          <Col className="px-4 pb-4 text-center">
+            <small> {notesData} </small>
+          </Col>
+      );
+    }
+  };
+
+  const getLegendsConfiguration = () => {
+    return (
+      [
+        nivoChartLegendDefinitions.getTopRightLegendDefinition(),
+      ]
+    );
   };
 
   const getChartBody = () => {
@@ -117,43 +140,39 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
     }
 
     return (
-      <div className="new-chart mb-3" style={{height: "300px", display: "flex"}}>
-        <Container>
-          <Row className="p-0">
-            <Col lg={6} md={8}>
-              <TwoLineScoreDataBlock
-                score={metric?.executedTests}
-                subtitle={"Automated Test Cases Executed"}
-              />
-            </Col>
-            <Col lg={6} md={8}>
-              <TwoLineScoreDataBlock
-                score={metric?.manualTests}
-                subtitle={"Automated Test Cases Executed Manually"}
-              />
-            </Col>
-          </Row>
-          <Row className="p-0 justify-content-center">
-            <Col lg={6} md={8}>
-              <PercentageDataBlock
-                percentage={metric?.adoptionRate}
-                subtitle={"Adoption Percentage"}
-                dataPoint={adoptionPercentageDataPoint}
-              />
-            </Col>
-          </Row>
-          <Row className="p-4">
-            <Col className="text-center">
-              <small> {notesData} </small>
-            </Col>
-          </Row>
-        </Container>
-        <ResponsivePie
-          data={metric?.pairs}
-          {...defaultConfig()}
-          {...config(getColorByData)}
-          onClick={() => setShowModal(true)}
-        />
+      <div className={"my-2"}>
+        <Row>
+          <Col xl={4} lg={6} md={8} className={"d-flex align-content-around"}>
+            <Row>
+              <Col lg={12}>
+                <AdoptionTestPercentageAutomatedTestCasesDataBlock
+                  executedTestCount={metric?.executedTests}
+                  executedTestsDataPoint={executedTestsDataPoint}
+                />
+              </Col>
+              <Col lg={12} className={"my-2"}>
+                <AdoptionTestPercentageManualTestCasesDataBlock
+                  manualTestCount={metric?.manualTests}
+                  manualTestsDataPoint={manualTestsDataPoint}
+                />
+              </Col>
+              <Col lg={12} className={"mb-2"}>
+                <AdoptionTestPercentageAdoptionPercentageDataBlock
+                  adoptionRatePercentage={metric?.adoptionRate}
+                  adoptionRateDataPoint={adoptionPercentageDataPoint}
+                />
+              </Col>
+            </Row>
+          </Col>
+          <Col xl={8} lg={6} md={4} className={"my-2"}>
+            <NivoPieChartBase
+              data={metric?.pairs}
+              onClickFunction={() => setShowModal(true)}
+              legendsConfiguration={getLegendsConfiguration()}
+            />
+          </Col>
+        </Row>
+        {getNotesRow()}
       </div>
     );
   };
@@ -165,6 +184,7 @@ function AdoptionTestPercentageMetric({ kpiConfiguration, setKpiConfiguration, d
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
         chart={getChartBody()}
+        tableChart={true} // TODO: Don't automatically have padding on new container
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
