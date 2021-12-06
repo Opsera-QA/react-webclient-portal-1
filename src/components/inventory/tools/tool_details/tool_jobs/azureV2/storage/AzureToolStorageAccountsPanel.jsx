@@ -8,7 +8,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import AzureToolStorageEditorPanel from "./details/AzureToolStorageAccountEditorPanel";
 
 
-function AzureToolStoragePanel({ toolId, loadData, toolData }) {  
+function AzureToolStoragePanel({ toolId }) {  
   const [azureStorageAccountsList, setAzureStorageAccountsList] = useState([]);
   const [azureStorageAccountsModel, setAzureStorageAccountsModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -25,7 +25,7 @@ function AzureToolStoragePanel({ toolId, loadData, toolData }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadStorage(source).catch((error) => {
+    loadData(source).catch((error) => {
       if(isMounted?.current === true){
         throw error;
       }
@@ -37,14 +37,16 @@ function AzureToolStoragePanel({ toolId, loadData, toolData }) {
     };
   }, [toolId]);
 
-  const loadStorage = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await azureStorageActions.getAzureToolStorageAccounts(getAccessToken, cancelSource, toolId);      
-      if(response.status === 200) {
-        setAzureStorageAccountsList(response?.data?.data);
-        console.log(response.data.data);
+      const response = await azureStorageActions.getAzureToolStorageAccounts(getAccessToken, cancelSource, toolId);  
+      const accounts = response?.data?.data;
+
+      if(Array.isArray(accounts)) {
+        setAzureStorageAccountsList(accounts);
       }
+
     } catch (error) {
       if(isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -68,18 +70,18 @@ function AzureToolStoragePanel({ toolId, loadData, toolData }) {
         setAzureStorageAccountsModel={setAzureStorageAccountsModel}
         toolId={toolId}
         handleClose={togglePanel}
-        toolData={toolData}
     />
     );
   }
   
   return (
     <AzureToolStorageAccountTable
+      azureStorageAccountsList={azureStorageAccountsList}
+      loadData={loadData}
       isLoading={isLoading}
       toolId={toolId}
-      loadData={loadStorage}
-      azureStorageAccountsList={azureStorageAccountsList}
-      toolData={toolData}
+      isMounted={isMounted}
+      setAzureStorageAccountsModel={setAzureStorageAccountsModel}
     />
   );
 }

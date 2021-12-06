@@ -13,10 +13,11 @@ import modelHelpers from "components/common/model/modelHelpers";
 import azureStorageMetadata from "../azure-storage-metadata";
 
 
-function AzureToolStorageEditorPanel({ azureStorageAccountsModel, setAzureStorageAccountsModel, toolId, handleClose, toolData }) {
+function AzureToolStorageEditorPanel({ azureStorageAccountsModel, setAzureStorageAccountsModel, toolId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  console.log(azureStorageAccountsModel);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -27,35 +28,22 @@ function AzureToolStorageEditorPanel({ azureStorageAccountsModel, setAzureStorag
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
-      if(isMounted?.current === true){
-        throw error;
-      }
-    });
-
     return () => {
       source.cancel();
       isMounted.current = false;
     };
   }, []);
 
-  const loadData = async () => {
-    setAzureStorageAccountsModel(modelHelpers.parseObjectIntoModel({}, azureStorageMetadata));
-    // setAzureStorageAccountsModel(modelHelpers.getToolConfigurationModel(null, azureStorageMetadata));
-  };
-
   const createAzureStorageCredentials = async () => {
-    const azureStorageAccountData = azureStorageAccountsModel.getPersistData();
-    const {storageAccountName, azureStorageAccountToken} = azureStorageAccountData;
-    console.log(azureStorageAccountData);
-    const response = await azureStorageActions.createAzureToolStorageAccount(getAccessToken, cancelTokenSource, toolId, storageAccountName, azureStorageAccountToken );
-    return response;
+    return await azureStorageActions.createAzureToolStorageAccount(getAccessToken, cancelTokenSource, toolId, azureStorageAccountsModel);
   };
 
-  const deleteAzureStorage = async () => {
-    const response = await azureStorageActions.deleteAzureStorage(getAccessToken, cancelTokenSource, toolId, azureStorageAccountsModel.getPersistData());
-    handleClose();
-    return response;
+  const updateAzureStorageCredentials = async () => {
+    return await azureStorageActions.updateAzureToolStorageAccount(getAccessToken, cancelTokenSource, toolId, azureStorageAccountsModel); 
+  };
+
+  const deleteAzureStorageCredentials = async () => {
+    return await azureStorageActions.deleteAzureToolStorageAccount(getAccessToken, cancelTokenSource, toolId, azureStorageAccountsModel.getData("storageAccountName"));
   };
 
   const getExtraButtons = () => {
@@ -63,7 +51,7 @@ function AzureToolStorageEditorPanel({ azureStorageAccountsModel, setAzureStorag
       return (
         <StandaloneDeleteButtonWithConfirmationModal
           model={azureStorageAccountsModel}
-          deleteDataFunction={deleteAzureStorage}
+          deleteDataFunction={deleteAzureStorageCredentials}
           handleCloseFunction={handleClose}
         />
       );
@@ -73,12 +61,13 @@ function AzureToolStorageEditorPanel({ azureStorageAccountsModel, setAzureStorag
   return (
     <EditorPanelContainer
       recordDto={azureStorageAccountsModel}
-      createRecord={createAzureStorageCredentials}
-      updateRecord={createAzureStorageCredentials}
       setRecordDto={setAzureStorageAccountsModel}
-      lenient={false}
-      extraButtons={getExtraButtons()}
       handleClose={handleClose}
+      extraButtons={getExtraButtons()}
+      createRecord={createAzureStorageCredentials}
+      updateRecord={updateAzureStorageCredentials}
+      lenient={false}
+      disable={azureStorageAccountsModel?.checkCurrentValidity() !== true}
     >
       <Row>
         <Col lg={12}>

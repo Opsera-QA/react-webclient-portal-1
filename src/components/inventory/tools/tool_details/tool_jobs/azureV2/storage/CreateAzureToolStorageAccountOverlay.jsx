@@ -34,7 +34,6 @@ function CreateAzureStoragesOverlay({ loadData, toolId, isMounted, toolData }) {
         setAzureStorageAccountsModel={setAzureStorageAccountsModel}
         toolId={toolId}
         handleClose={handleClose}
-        toolData={toolData}
       />
     </CreateCenterPanel>
   );
