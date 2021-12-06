@@ -11,10 +11,8 @@ import {
   defaultConfig, getColorByData,getColor, assignStandardColors,
   shortenPieChartLegend, mainColor,
 } from "../charts-views";
-import ChartTooltip from "../ChartTooltip";
 import { Col, Container, Row } from "react-bootstrap";
 import TwoLineScoreDataBlock from "../../../common/metrics/score/TwoLineScoreDataBlock";
-import PercentageDataBlock from "../../../common/metrics/percentage/PercentageDataBlock";
 import { METRIC_QUALITY_LEVELS } from "../../../common/metrics/text/MetricTextBase";
 import "./Styling.css";
 import NewPercentageDataBlock from "../../../common/metrics/percentage/NewPercentageDataBlock";
