@@ -8,9 +8,9 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import { Row, Col } from "react-bootstrap";
 import SfdcBackupSuccessDataBlock from "./data_block/success/SfdcBackupSuccessDataBlock";
 import SfdcBackupFailureDataBlock from "./data_block/failure/SfdcBackupFailureDataBlock";
-import SalesforceBackupAndRollbacksActionableInsightOverlay from "./actionable_insights/SalesforceBackupAndRollbacksActionableInsightOverlay";
+import SalesforceBackupsAndRollbacksActionableInsightOverlay from "./actionable_insights/SalesforceBackupsAndRollbacksActionableInsightOverlay";
 
-function SalesforceBackupAndRollbackMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function SalesforceBackupsAndRollbacksMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [error, setError] = useState(undefined);
@@ -80,7 +80,7 @@ function SalesforceBackupAndRollbackMetrics({ kpiConfiguration, setKpiConfigurat
 
   const onRowSelect = (request) => {
     toastContext.showOverlayPanel(
-      <SalesforceBackupAndRollbacksActionableInsightOverlay
+      <SalesforceBackupsAndRollbacksActionableInsightOverlay
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
         request={request}
@@ -143,7 +143,7 @@ function SalesforceBackupAndRollbackMetrics({ kpiConfiguration, setKpiConfigurat
     </>
   );
 }
-SalesforceBackupAndRollbackMetrics.propTypes = {
+SalesforceBackupsAndRollbacksMetrics.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -154,4 +154,4 @@ SalesforceBackupAndRollbackMetrics.propTypes = {
   yScale: PropTypes.any,
 };
 
-export default SalesforceBackupAndRollbackMetrics;
+export default SalesforceBackupsAndRollbacksMetrics;

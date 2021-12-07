@@ -8,9 +8,9 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
-import SalesforceBackupAndRollbacksActionableInsightTable from "./SalesforceBackupAndRollbacksActionableInsightTable";
+import SalesforceBackupsAndRollbacksActionableInsightTable from "./SalesforceBackupsAndRollbacksActionableInsightTable";
 
-function SalesforceBackupAndRollbacksActionableInsightOverlay({ kpiConfiguration, dashboardData, request }) {
+function SalesforceBackupsAndRollbacksActionableInsightOverlay({ kpiConfiguration, dashboardData, request }) {
   const { getAccessToken } = useContext(AuthContext);
   const [filterModel, setFilterModel] = useState(
     new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
@@ -92,14 +92,14 @@ function SalesforceBackupAndRollbacksActionableInsightOverlay({ kpiConfiguration
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`Salesforce Backup and Rollback`}
+      titleText={`Salesforce Backups & Rollbacks`}
       showToasts={true}
       titleIcon={faTable}
       isLoading={false}
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
-        <SalesforceBackupAndRollbacksActionableInsightTable
+        <SalesforceBackupsAndRollbacksActionableInsightTable
           isLoading={isLoading}
           metrics={metrics}
           filterModel={filterModel}
@@ -111,10 +111,10 @@ function SalesforceBackupAndRollbacksActionableInsightOverlay({ kpiConfiguration
   );
 }
 
-SalesforceBackupAndRollbacksActionableInsightOverlay.propTypes = {
+SalesforceBackupsAndRollbacksActionableInsightOverlay.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   request: PropTypes.string,
 };
 
-export default SalesforceBackupAndRollbacksActionableInsightOverlay;
+export default SalesforceBackupsAndRollbacksActionableInsightOverlay;

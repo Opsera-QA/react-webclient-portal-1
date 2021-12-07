@@ -13,7 +13,7 @@ import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 
-function SalesforceBackupAndRollbacksActionableInsightTable({
+function SalesforceBackupsAndRollbacksActionableInsightTable({
   metrics,
   isLoading,
   loadData,
@@ -21,7 +21,7 @@ function SalesforceBackupAndRollbacksActionableInsightTable({
   setFilterModel,
 }) {
   const toastContext = useContext(DialogToastContext);
-  const noDataMessage = "Salesforce backup and rollback report is currently unavailable at this time";
+  const noDataMessage = "Salesforce backups and rollbacks report is currently unavailable at this time";
   const fields = SfdcPipelinesInsightsTableMetadata.fields;
   const columns = useMemo(
     () => [
@@ -35,7 +35,7 @@ function SalesforceBackupAndRollbacksActionableInsightTable({
 
   const onRowSelect = (rowData) => {
     toastContext.showOverlayPanel(
-      <BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount} />
+      <BlueprintLogOverlay pipelineId={rowData?.original?._id?.id} runCount={rowData?.original?._id?.run} />
     );
   };
 
@@ -58,7 +58,7 @@ function SalesforceBackupAndRollbacksActionableInsightTable({
     <FilterContainer
       isLoading={isLoading}
       showBorder={false}
-      title={`Salesforce Backup And Rollback Report`}
+      title={`Salesforce Backups & Rollbacks Report`}
       titleIcon={faDraftingCompass}
       body={getTable()}
       className={"px-2 pb-2"}
@@ -69,7 +69,7 @@ function SalesforceBackupAndRollbacksActionableInsightTable({
   );
 }
 
-SalesforceBackupAndRollbacksActionableInsightTable.propTypes = {
+SalesforceBackupsAndRollbacksActionableInsightTable.propTypes = {
   metrics: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
@@ -77,4 +77,4 @@ SalesforceBackupAndRollbacksActionableInsightTable.propTypes = {
   setFilterModel: PropTypes.func,
 };
 
-export default SalesforceBackupAndRollbacksActionableInsightTable;
+export default SalesforceBackupsAndRollbacksActionableInsightTable;
