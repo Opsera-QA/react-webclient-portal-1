@@ -128,8 +128,7 @@ function OctopusCustomParametersInput({
     }
 
     for (let item in properties) {
-      // if (Object.values(properties[item]).includes(customParameterName) || Object.values(properties[item]).includes(variableType)) {
-      if (Object.values(properties[item]).includes(customParameterName)) {
+      if (Object.values(properties[item]).includes(customParameterName) && Object.values(properties[item]).includes(variableType)) {
         setErrorMessage("Existing parameters can not be added again");
         return;
       }
