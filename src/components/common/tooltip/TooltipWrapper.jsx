@@ -73,9 +73,7 @@ function TooltipWrapper(
       placement={placement}
       overlay={getPopover(innerText)}
     >
-      <div>
-        {children}
-      </div>
+      {children}
     </OverlayTrigger>
   );
 }
