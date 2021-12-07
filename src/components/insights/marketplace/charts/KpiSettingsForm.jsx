@@ -36,8 +36,8 @@ import {
   kpiServiceNowBusinessServicesFilterMetadata,
 } from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import Model from "core/data_model/model";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import GoalsInputBase from "./goals/GoalsInputBase";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
@@ -330,8 +330,8 @@ function KpiSettingsForm({
     "sonar-reliability-remediation-agg-by-time",
     "coverity-issues-by-category-trend",
     "salesforce-duration-by-stage",
-    "sdlc-duration-statistics",
     "build-deployment-statistics",
+    "sdlc-duration-statistics",
     "sonar-ratings-v2",
   ];
 
@@ -694,228 +694,228 @@ function KpiSettingsForm({
     if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "date")]) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "date")
-      ].value = kpiDateFilter.getData("value");
+        ].value = kpiDateFilter.getData("value");
     }
     if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "tags")]) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "tags")
-      ].value = kpiTagsFilter.getData("value");
+        ].value = kpiTagsFilter.getData("value");
     }
     if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "goals")]) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "goals")
-      ].value = kpiGoalsFilter.getData("value");
+        ].value = kpiGoalsFilter.getData("value");
     }
     if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "notes")]) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "notes")
-      ].value = kpiNotesFilter.getData("value");
+        ].value = kpiNotesFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-result")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-result")
-      ].value = kpiJenkinsResultFilter.getData("value");
+        ].value = kpiJenkinsResultFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-job-url")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-job-url")
-      ].value = kpiJenkinsJobUrlFilter.getData("value");
+        ].value = kpiJenkinsJobUrlFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-build-number")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-build-number")
-      ].value = kpiJenkinsBuildNumberFilter.getData("value");
+        ].value = kpiJenkinsBuildNumberFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-type")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-type")
-      ].value = kpiJiraIssueTypeFilter.getData("value");
+        ].value = kpiJiraIssueTypeFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-components")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-components")
-      ].value = kpiJiraIssueComponentsFilter.getData("value");
+        ].value = kpiJiraIssueComponentsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-labels")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-labels")
-      ].value = kpiJiraIssueLabelsFilter.getData("value");
+        ].value = kpiJiraIssueLabelsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-status")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-status")
-      ].value = kpiJiraIssueStatusFilter.getData("value");
+        ].value = kpiJiraIssueStatusFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-start-status")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-start-status")
-      ].value = kpiJiraIssueStartStatusFilter.getData("value");
+        ].value = kpiJiraIssueStartStatusFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-done-status")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-done-status")
-      ].value = kpiJiraIssueDoneStatusFilter.getData("value");
+        ].value = kpiJiraIssueDoneStatusFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sonar-project-key")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sonar-project-key")
-      ].value = kpiSonarProjectKeyFilter.getData("value");
+        ].value = kpiSonarProjectKeyFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "domain")]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "domain")
-      ].value = kpiDomainFilter.getData("value");
+        ].value = kpiDomainFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")
-      ].value = kpiProjectFilter.getData("value");
+        ].value = kpiProjectFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "application")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "application")
-      ].value = kpiApplicationFilter.getData("value");
+        ].value = kpiApplicationFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sprint")]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sprint")
-      ].value = kpiSprintFilter.getData("value");
+        ].value = kpiSprintFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")
-      ].value = kpiProjectFilter.getData("value");
+        ].value = kpiProjectFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "release")]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "release")
-      ].value = kpiReleaseFilter.getData("value");
+        ].value = kpiReleaseFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "selenium-test-suites")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "selenium-test-suites")
-      ].value = kpiSeleniumTestSuitesFilter.getData("value");
+        ].value = kpiSeleniumTestSuitesFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sonar-project-languages")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sonar-project-languages")
-      ].value = kpiSonarProjectLanguagesFilter.getData("value");
+        ].value = kpiSonarProjectLanguagesFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-priorities")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-priorities")
-      ].value = kpiServiceNowPrioritiesFilter.getData("value");
+        ].value = kpiServiceNowPrioritiesFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-tools")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-tools")
-      ].value = kpiServiceNowToolsFilter.getData("value");
+        ].value = kpiServiceNowToolsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-assignment-groups")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-assignment-groups")
-      ].value = kpiServiceNowAssignmentGroupsFilter.getData("value");
+        ].value = kpiServiceNowAssignmentGroupsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-service-offerings")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-service-offerings")
-      ].value = kpiServiceNowServiceOfferingsFilter.getData("value");
+        ].value = kpiServiceNowServiceOfferingsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-configuration-items")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-configuration-items")
-      ].value = kpiServiceNowConfigurationItemsFilter.getData("value");
+        ].value = kpiServiceNowConfigurationItemsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-business-services")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-business-services")
-      ].value = kpiServiceNowBusinessServicesFilter.getData("value");
+        ].value = kpiServiceNowBusinessServicesFilter.getData("value");
     }
 
     setKpiSettings({ ...newKpiSettings });
@@ -1025,6 +1025,12 @@ function KpiSettingsForm({
     );
   };
 
+  const handleClose = () => {
+    if (closePanel) {
+      closePanel();
+    }
+  };
+
   const getBody = () => {
     // TODO: Implement
     // if (showDeleteConfirmationPanel === true) {
@@ -1042,7 +1048,7 @@ function KpiSettingsForm({
             className={"ml-2"}
             identifier={kpiSettings?.getData("kpi_identifier")}
             index={index}
-            closePanelFunction={closePanel}
+            closePanelFunction={handleClose}
             setKpiConfiguration={setKpiConfiguration}
           />
         </div>
