@@ -8,9 +8,9 @@ import BuildStatisticsDataBlockContainer
   from "components/insights/charts/opsera/build_and_deploy_statistics/build_statistics/BuildStatisticsDataBlockContainer";
 import BuildFrequencyStatisticsDataBlockContainer
   from "components/insights/charts/opsera/build_and_deploy_statistics/build_frequency_statistics/BuildFrequencyStatisticsDataBlockContainer";
-import DeploymentStatisticsDataBlockContainer 
+import DeploymentStatisticsDataBlockContainer
   from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/DeploymentStatisticsDataBlockContainer";
-import DeploymentFrequencyStatisticsDataBlockContainer 
+import DeploymentFrequencyStatisticsDataBlockContainer
   from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_frequency_statistics/DeploymentFrequencyStatisticsDataBlockContainer";
 import chartsActions from "components/insights/charts/charts-actions";
 import axios from "axios";
@@ -39,23 +39,23 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
-  
+
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-  
+
     isMounted.current = true;
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-  
+
     return () => {
       source.cancel();
       isMounted.current = false;
     };
   }, [JSON.stringify(dashboardData)]);
-  
+
   // TODO: Don't send this complicated object, just send the metric
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -64,15 +64,15 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
       let goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")]?.value;
       if(goals){
         setGoalsData(goals);
-      }else{        
+      }else{
         kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "goals")].value = DEFAULT_GOALS;
         setGoalsData(DEFAULT_GOALS);
       }
-      
+
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "pipelineBuildAndDeploymentStatistics", kpiConfiguration, dashboardTags);
-      
+
       const metrics = response?.data?.data[0]?.pipelineBuildAndDeploymentStatistics?.data;
-  
+
       if (isMounted?.current === true && Array.isArray(metrics)) {
         setBuildAndDeployMetricData(metrics[0]?.statisticsData);
         setBuildAndDeployChartData(metrics[0]?.chartData);
@@ -94,61 +94,61 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
   const getChartBody = () => {
     if(!buildAndDeployMetricData || !buildAndDeployChartData){
       return null;
-    }    
+    }
     return (
-      <Row className={"mx-0 p-2 justify-content-between"}>        
-        <Col className={"px-0"} xl={6} lg={12}>
-          <BuildStatisticsDataBlockContainer 
-            metricData={buildAndDeployMetricData} 
-            chartData={buildAndDeployChartData} 
-            kpiConfiguration={kpiConfiguration}
-            dashboardData={dashboardData} 
-            goalsData={goalsData?.build_success_rate}
-          />
-        </Col>
-        <Col className={"px-0"} xl={6} lg={12}>
-          <BuildFrequencyStatisticsDataBlockContainer 
-            metricData={buildAndDeployMetricData} 
-            chartData={buildAndDeployChartData}             
-            goalsData={goalsData?.average_builds}
-          />
-        </Col>
-        <Col className={"px-0"} xl={6} lg={12}>
-          <DeploymentStatisticsDataBlockContainer 
-            metricData={buildAndDeployMetricData} 
-            chartData={buildAndDeployChartData} 
-            kpiConfiguration={kpiConfiguration} 
-            dashboardData={dashboardData}
-            goalsData={goalsData?.deployment_success_rate}
-          />
-        </Col>
-        <Col className={"px-0"} xl={6} md={12}>
-          <DeploymentFrequencyStatisticsDataBlockContainer 
-            metricData={buildAndDeployMetricData} 
-            chartData={buildAndDeployChartData}            
-            goalsData={goalsData?.average_deployments}
-          />
-        </Col>
-      </Row>      
+        <Row className={"mx-0 p-2 justify-content-between"}>
+          <Col className={"px-0"} xl={6} lg={12}>
+            <BuildStatisticsDataBlockContainer
+                metricData={buildAndDeployMetricData}
+                chartData={buildAndDeployChartData}
+                kpiConfiguration={kpiConfiguration}
+                dashboardData={dashboardData}
+                goalsData={goalsData?.build_success_rate}
+            />
+          </Col>
+          <Col className={"px-0"} xl={6} lg={12}>
+            <BuildFrequencyStatisticsDataBlockContainer
+                metricData={buildAndDeployMetricData}
+                chartData={buildAndDeployChartData}
+                goalsData={goalsData?.average_builds}
+            />
+          </Col>
+          <Col className={"px-0"} xl={6} lg={12}>
+            <DeploymentStatisticsDataBlockContainer
+                metricData={buildAndDeployMetricData}
+                chartData={buildAndDeployChartData}
+                kpiConfiguration={kpiConfiguration}
+                dashboardData={dashboardData}
+                goalsData={goalsData?.deployment_success_rate}
+            />
+          </Col>
+          <Col className={"px-0"} xl={6} md={12}>
+            <DeploymentFrequencyStatisticsDataBlockContainer
+                metricData={buildAndDeployMetricData}
+                chartData={buildAndDeployChartData}
+                goalsData={goalsData?.average_deployments}
+            />
+          </Col>
+        </Row>
     );
   };
 
   return (
-    <div>
-      <VanityMetricContainer
-        title={"Build and deploy metrics"}
-        kpiConfiguration={kpiConfiguration}
-        setKpiConfiguration={setKpiConfiguration}
-        chart={getChartBody()}
-        loadChart={loadData}
-        dashboardData={dashboardData}
-        index={index}
-        error={error}
-        setKpis={setKpis}
-        isLoading={isLoading}
-        chartHelpComponent={(closeHelpPanel) => <BuildAndDeployChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
-      />
-    </div>
+      <div>
+        <VanityMetricContainer
+            title={"Build and deploy metrics"}
+            kpiConfiguration={kpiConfiguration}
+            setKpiConfiguration={setKpiConfiguration}
+            chart={getChartBody()}
+            loadChart={loadData}
+            dashboardData={dashboardData}
+            index={index}
+            error={error}
+            setKpis={setKpis}
+            isLoading={isLoading}
+            chartHelpComponent={(closeHelpPanel) => <BuildAndDeployChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
+        />
+      </div>
   );
 }
 
