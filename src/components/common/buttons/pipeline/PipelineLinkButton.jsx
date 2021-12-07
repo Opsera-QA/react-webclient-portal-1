@@ -1,19 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import Button from "react-bootstrap/Button";
 import {useHistory} from "react-router-dom";
+import IconBase from "components/common/icons/IconBase";
 
 function PipelineLinkButton({pipelineId, loadPipelineInNewWindow, closePanel}) {
   let history = useHistory();
 
   const loadPipeline = () => {
     if (loadPipelineInNewWindow) {
-      window.open(`/workflow/details/${pipelineId}`);
+      window.open(`/workflow/details/${pipelineId}/summary`);
     }
     else {
-      history.push(`/workflow/details/${pipelineId}`);
+      history.push(`/workflow/details/${pipelineId}/summary`);
 
       if (closePanel) {
         closePanel();
@@ -23,7 +23,7 @@ function PipelineLinkButton({pipelineId, loadPipelineInNewWindow, closePanel}) {
 
   return (
     <Button onClick={() => loadPipeline()} className="mb-2" size={"sm"}>
-      <span className="my-auto"><FontAwesomeIcon icon={faDraftingCompass} className="pr-1" fixedWidth/>View</span>
+      <span className="my-auto"><IconBase icon={faDraftingCompass} className="pr-1"/>View</span>
     </Button>
   );
 }
