@@ -6,7 +6,7 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateAzureStorageOverlay from "./CreateAzureToolStorageAccountOverlay";
-import {getTableTextColumn} from "components/common/table/table-column-helpers-v2";
+import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import VanityTable from "components/common/table/VanityTable";
 import modelHelpers from "components/common/model/modelHelpers";
 import CustomTable from "components/common/table/CustomTable";
