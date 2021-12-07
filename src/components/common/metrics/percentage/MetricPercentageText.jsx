@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import MetricTextBase from "components/common/metrics/text/MetricTextBase";
-import {strategicCriteriaHelpers} from "components/common/helpers/strategicCriteria.helpers";
+import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 
 function MetricPercentageText(
   {
@@ -14,7 +14,7 @@ function MetricPercentageText(
 
     // TODO: allow existing data points to use their quality level but eventually require the use of strategic criteria
     if (dataPoint) {
-      const evaluatedDataPoint = strategicCriteriaHelpers.evaluateDataPointQualityLevel(dataPoint, percentage);
+      const evaluatedDataPoint = dataPointHelpers.evaluateDataPointQualityLevel(dataPoint, percentage);
 
       if (typeof evaluatedDataPoint === "string") {
         evaluation = evaluatedDataPoint;
