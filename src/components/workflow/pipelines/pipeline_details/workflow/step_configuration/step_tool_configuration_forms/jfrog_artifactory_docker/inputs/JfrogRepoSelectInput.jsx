@@ -62,7 +62,7 @@ function JfrogRepoSelect({ fieldName, dataObject, setDataObject, disabled, textF
     try {
       const res = await JFrogToolRepositoriesActions.getDockerRepositories(getAccessToken, cancelSource, dataObject.getData("jfrogToolConfigId"));
       if (res && res.status === 200) {
-        setRepos(res.data);
+        setRepos(res?.data?.data);
         return;
       }
       setRepos([]);
