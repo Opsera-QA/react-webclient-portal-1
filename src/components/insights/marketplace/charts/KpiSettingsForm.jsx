@@ -998,6 +998,12 @@ function KpiSettingsForm({
     );
   };
 
+  const handleClose = () => {
+    if (closePanel) {
+      closePanel();
+    }
+  };
+
   const getBody = () => {
     // TODO: Implement
     // if (showDeleteConfirmationPanel === true) {
@@ -1015,7 +1021,7 @@ function KpiSettingsForm({
             className={"ml-2"}
             identifier={kpiSettings?.getData("kpi_identifier")}
             index={index}
-            closePanelFunction={() => setShowResetConfirmationPanel(false)}
+            closePanelFunction={handleClose}
             setKpiConfiguration={setKpiConfiguration}
           />
         </div>
