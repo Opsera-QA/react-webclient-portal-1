@@ -7,7 +7,6 @@ import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateAzureStorageOverlay from "./CreateAzureToolStorageAccountOverlay";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
-import VanityTable from "components/common/table/VanityTable";
 import modelHelpers from "components/common/model/modelHelpers";
 import CustomTable from "components/common/table/CustomTable";
 
@@ -19,7 +18,6 @@ function AzureStorageTable(
     isLoading, 
     isMounted, 
     setAzureStorageAccountsModel,
-    // azureStorageAccountsModel
   }) { 
   const fields = azureStorageMetadata.fields;
   const toastContext = useContext(DialogToastContext);
@@ -36,7 +34,6 @@ function AzureStorageTable(
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "storageAccountName")),
-      getTableTextColumn(getField(fields, "azureStorageAccountToken"))      
     ],
     []
   );
@@ -47,7 +44,6 @@ function AzureStorageTable(
   };
 
   const getTable = () => {
-    console.log(azureStorageAccountsList);
     return (
       <CustomTable
         columns={columns}
@@ -69,7 +65,7 @@ function AzureStorageTable(
       metaData={azureStorageMetadata}
       titleIcon={faBrowser}
       title={"Azure Storage Accounts"}
-      // type={"Azure Storage Accounts"}
+      type={"Azure Storage Accounts"}
     />
   );
 }
@@ -84,5 +80,4 @@ AzureStorageTable.propTypes = {
   toolData: PropTypes.object,
   setAzureStorageAccountsModel: PropTypes.func
 };
-
 export default AzureStorageTable;

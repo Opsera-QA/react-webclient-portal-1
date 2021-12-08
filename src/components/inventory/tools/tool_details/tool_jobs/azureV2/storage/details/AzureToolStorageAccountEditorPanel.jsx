@@ -9,13 +9,13 @@ import axios from "axios";
 import azureStorageActions from "../../azureStorage.actions";
 import StandaloneDeleteButtonWithConfirmationModal
   from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
+import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 
 function AzureToolStorageEditorPanel({ azureStorageAccountsModel, setAzureStorageAccountsModel, toolId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [currentAzureStorageAccountName, setCurrentAzureStorageAccountName] = useState(undefined);
-  console.log(azureStorageAccountsModel);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -76,10 +76,11 @@ function AzureToolStorageEditorPanel({ azureStorageAccountsModel, setAzureStorag
             dataObject={azureStorageAccountsModel}
             setDataObject={setAzureStorageAccountsModel}            
             fieldName={"storageAccountName"}
+            disabled={!azureStorageAccountsModel.isNew()}
           />
         </Col>
         <Col lg={12}>
-          <TextInputBase
+          <VaultTextInput
             dataObject={azureStorageAccountsModel}
             setDataObject={setAzureStorageAccountsModel}            
             fieldName={"azureStorageAccountToken"}

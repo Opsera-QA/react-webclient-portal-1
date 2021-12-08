@@ -12,7 +12,6 @@ azureStorageActions.createAzureToolStorageAccount = async (getAccessToken, cance
 };
 
 azureStorageActions.deleteAzureToolStorageAccount = async (getAccessToken, cancelTokenSource, toolId, storageAccountName) => {
-  console.log(storageAccountName);
   const apiUrl = `/tools/${toolId}/azure/storage/account/${storageAccountName}`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
@@ -22,12 +21,10 @@ azureStorageActions.getAzureToolStorageAccounts = async ( getAccessToken, cancel
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-azureStorageActions.updateAzureToolStorageAccount = async (getAccessToken, cancelTokenSource, toolId, azureStorageAccountsModel, currentAzureStorageAccountName, newAzureStorageAccountName, newAzureStorageAccountToken) => {
-  const apiUrl = `/tools/${toolId}/azure/storage/account/update`;
+azureStorageActions.updateAzureToolStorageAccount = async (getAccessToken, cancelTokenSource, toolId, azureStorageAccountsModel, currentAzureStorageAccountName) => {
+  const apiUrl = `/tools/${toolId}/azure/storage/account/update/${currentAzureStorageAccountName}`;
   const postBody = {
-    newAzureStorageAccountName: azureStorageAccountsModel?.getData("storageAccountName"),
     newAzureStorageAccountToken: azureStorageAccountsModel?.getData("azureStorageAccountToken"),
-    currentAzureStorageAccountName
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);

@@ -6,7 +6,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import Model from "core/data_model/model";
 
-function CreateAzureStoragesOverlay({ loadData, toolId, isMounted, toolData }) {
+function CreateAzureStoragesOverlay({ loadData, toolId, isMounted }) {
   const toastContext = useContext(DialogToastContext);
   const [azureStorageAccountsModel, setAzureStorageAccountsModel] = useState(new Model({...azureStorageMetadata.newObjectFields}, azureStorageMetadata, true));
 
