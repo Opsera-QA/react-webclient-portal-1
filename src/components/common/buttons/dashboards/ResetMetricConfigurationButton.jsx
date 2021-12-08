@@ -18,7 +18,7 @@ function ResetMetricConfigurationButton(
     index,
     identifier,
     disabled,
-    closePanel,
+    closePanelFunction,
     className,
     setKpiConfiguration, // TODO: Remove ASAP. Only in here due to dashboard detail view bug
   }) {
@@ -103,8 +103,8 @@ function ResetMetricConfigurationButton(
       await dashboardsActions.updateDashboardKpiV2(getAccessToken, cancelTokenSource, dashboardModel?.getData("_id"), kpiConfigurationModel);
       toastContext.showResetSuccessToast("KPI Configuration");
 
-      if (closePanel) {
-        closePanel();
+      if (closePanelFunction) {
+        closePanelFunction();
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -137,7 +137,7 @@ ResetMetricConfigurationButton.propTypes = {
   dashboardModel: PropTypes.object,
   identifier: PropTypes.string,
   index: PropTypes.number,
-  closePanel: PropTypes.func,
+  closePanelFunction: PropTypes.func,
   className: PropTypes.string,
   disabled: PropTypes.bool,
   setKpiConfiguration: PropTypes.func,
