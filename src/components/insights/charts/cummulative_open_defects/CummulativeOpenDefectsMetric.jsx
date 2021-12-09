@@ -6,9 +6,8 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { assignStandardColors, shortenPieChartLegend } from "components/insights/charts/charts-views";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import "components/insights/charts/qa_metrics/Styling.css";
-import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import NivoPieChartBase from "components/common/metrics/charts/nivo/pie/NivoPieChartBase";
 import { nivoChartLegendDefinitions } from "components/common/metrics/charts/nivo/nivoChartLegend.definitions";
@@ -18,10 +17,6 @@ import CummulativeTotalDefectsDataBlock from "./data_blocks/total_defects/Cummul
 import CummulativeTotalValidDefectsDataBlock from "./data_blocks/total_valid_defects/CummulativeTotalValidDefectsDataBlock";
 import CummulativeOpenDefectsHelpDocumentation from "components/common/help/documentation/insights/charts/CummulativeOpenDefectsHelpDocumentation";
 
-const CUMMULATIVE_OPEN_DEFECTS_DATA_POINT_IDENTIFIERS = {
-  OPEN: "Open",
-  CLOSED: "Closed",
-};
 
 function CummulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -30,8 +25,6 @@ function CummulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, d
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [notesData, setNotesData] = useState(undefined);
-  const [openDataPoint, setOpenDataPoint] = useState(undefined);
-  const [closedDataPoint, setClosedDataPoint] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -59,7 +52,6 @@ function CummulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, d
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       await loadChartMetrics(cancelSource);
-      await loadDataPoints(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -101,21 +93,6 @@ function CummulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, d
     }
   };
 
-  const loadDataPoints = async () => {
-    const dataPoints = kpiConfiguration?.dataPoints;
-
-    const openDataPoint = dataPointHelpers.getDataPoint(
-      dataPoints,
-      CUMMULATIVE_OPEN_DEFECTS_DATA_POINT_IDENTIFIERS.OPEN
-    );
-    setOpenDataPoint(openDataPoint);
-    const closedDataPoint = dataPointHelpers.getDataPoint(
-      dataPoints,
-      CUMMULATIVE_OPEN_DEFECTS_DATA_POINT_IDENTIFIERS.CLOSED
-    );
-    setClosedDataPoint(closedDataPoint);
-  };
-
   const getNotesRow = () => {
     if (hasStringValue(notesData)) {
       return (
@@ -136,26 +113,26 @@ function CummulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, d
     }
 
     return (
-      <div className="new-chart mb-3" style={{ height: "300px", display: "flex" }}>
-        <Container>
-          <Row className="p-0">
-            <Col xl={4} lg={6} md={8} className={"d-flex align-content-around"}>
+      <>
+        <div className="new-chart m-3 p-0" style={{ height: "300px", display: "flex" }}>
+          <Row>
+            <Col xl={6} lg={6} md={8} className={"d-flex align-content-around"}>
               <Row>
-                <Col lg={6} className={"my-2"}>
+                <Col lg={6} className={"my-3"}>
                   <CummulativeTotalDefectsDataBlock defects={metric?.totalTests?.toString()} />
                 </Col>
-                <Col lg={6} className={"my-2"}>
-                  <CummulativeOpenDefectsDataBlock defects={metric?.cumulativeDefects} dataPoint={openDataPoint} />
+                <Col lg={6} className={"my-3"}>
+                  <CummulativeOpenDefectsDataBlock defects={metric?.cumulativeDefects} />
                 </Col>
-                <Col lg={6} className={"mb-2"}>
+                <Col lg={6} className={"mb-3"}>
                   <CummulativeTotalValidDefectsDataBlock defects={metric?.passedTests} />
                 </Col>
-                <Col lg={6} className={"mb-2"}>
+                <Col lg={6} className={"mb-3"}>
                   <CummulativeOpenValidDefectsDataBlock defects={metric?.failedTests} />
                 </Col>
               </Row>
             </Col>
-            <Col xl={8} lg={6} md={4} className={"my-2"}>
+            <Col xl={6} lg={6} md={4} className={"my-2 p-2"}>
               <NivoPieChartBase
                 data={metric?.pairs}
                 onClickFunction={() => setShowModal(true)}
@@ -163,9 +140,10 @@ function CummulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, d
               />
             </Col>
           </Row>
-        </Container>
-        {getNotesRow()}
-      </div>
+
+          {getNotesRow()}
+        </div>
+      </>
     );
   };
 

@@ -7,7 +7,7 @@ function AutomatedTestAdoptionRateAdoptedTestsDataBlock({executedTestCount, exec
     <TwoLineScoreDataBlock
       score={executedTestCount}
       dataPoint={executedTestsDataPoint}
-      subtitle={"Automated Test Cases Executed"}
+      subtitle={"Automated Test Cases Executed1"}
     />
   );
 }
