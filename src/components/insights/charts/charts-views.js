@@ -240,7 +240,8 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
                               largeLeftSpaceRequired=false, largeBottomSpaceRequired=false,
                               leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false, symbol="square") => (
                                 {
-  margin: { },
+                                  margin: { top: 40, right: 20, bottom: largeBottomSpaceRequired ? 80 : 60,
+                                    left: largeLeftSpaceRequired ? 100 : 60},
   lineWidth: 3.5,
   pointSize: 8,
   pointBorderWidth: 8,
