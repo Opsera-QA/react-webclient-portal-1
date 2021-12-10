@@ -166,6 +166,9 @@ import ansibleStepMetadata from "./step_tool_configuration_forms/ansible/ansible
 import dotnetCliStepFormMetadata from "./step_tool_configuration_forms/dotnetcli/dotnet-cli-stepForm-metadata";
 import DotNetCliPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/dotnetcli/DotNetCliPipelineStepConfigurationSummaryPanel";
+import FlywayDatabasePipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/flyway_database/FlywayDatabasePipelineStepConfigurationSummaryPanel";
+import flywayDatabaseStepFormMetadata from "./step_tool_configuration_forms/flyway_database/flyway-database-stepForm-metadata";
+
 function PipelineStepConfigurationSummary({
   pipelineData,
 }) {
@@ -504,6 +507,13 @@ function PipelineStepConfigurationSummary({
             pipelineData={pipelineData}
             mongodbRealmPipelineDataObject={getModelWrappedObject(mongodbRealmStepFormMetadata)}
             />
+        );
+      case "flyway-database-migrator":
+        return (
+          <FlywayDatabasePipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            flywayPipelineDataObject={getModelWrappedObject(flywayDatabaseStepFormMetadata)}
+          />
         );
       default:
         return (
