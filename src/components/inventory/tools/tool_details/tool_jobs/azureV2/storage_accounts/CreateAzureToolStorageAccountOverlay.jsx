@@ -1,14 +1,14 @@
 import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
-import azureStorageMetadata from "./azure-storage-metadata";
-import AzureToolStorageEditorPanel from "./details/AzureToolStorageAccountEditorPanel";
+import azureStorageAccountMetadata from "components/inventory/tools/tool_details/tool_jobs/azureV2/storage_accounts/azureStorageAccount.metadata";
+import AzureToolStorageEditorPanel from "components/inventory/tools/tool_details/tool_jobs/azureV2/storage_accounts/details/AzureToolStorageAccountEditorPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import Model from "core/data_model/model";
 
 function CreateAzureStoragesOverlay({ loadData, toolId, isMounted }) {
   const toastContext = useContext(DialogToastContext);
-  const [azureStorageAccountsModel, setAzureStorageAccountsModel] = useState(new Model({...azureStorageMetadata.newObjectFields}, azureStorageMetadata, true));
+  const [azureStorageAccountsModel, setAzureStorageAccountsModel] = useState(new Model({...azureStorageAccountMetadata.newObjectFields}, azureStorageAccountMetadata, true));
 
   const handleClose = () => {
     if (isMounted?.current === true) {
@@ -26,7 +26,7 @@ function CreateAzureStoragesOverlay({ loadData, toolId, isMounted }) {
   return (
     <CreateCenterPanel 
       closePanel={handleClose} 
-      objectType={azureStorageMetadata.type} 
+      objectType={azureStorageAccountMetadata.type}
       loadData={loadData}
     >
       <AzureToolStorageEditorPanel

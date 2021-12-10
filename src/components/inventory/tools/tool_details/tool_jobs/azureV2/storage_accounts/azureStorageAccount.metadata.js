@@ -1,5 +1,4 @@
-
-const azureStorageMetadata = {
+export const azureStorageAccountMetadata = {
     type: "Azure Storage Account",
     fields: [
       {
@@ -17,8 +16,7 @@ const azureStorageMetadata = {
     ],
     newObjectFields: {
       storageAccountName: "",
-      azureStorageAccountToken:""
+      azureStorageAccountToken: "",
+      type: "storage",
     }
   };
-  
-  export default azureStorageMetadata;

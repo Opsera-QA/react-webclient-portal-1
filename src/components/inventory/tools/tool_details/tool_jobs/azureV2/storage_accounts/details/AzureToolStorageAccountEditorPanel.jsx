@@ -6,7 +6,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import azureStorageActions from "../../azureStorage.actions";
+import azureStorageAccountActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/storage_accounts/azureStorageAccount.actions";
 import StandaloneDeleteButtonWithConfirmationModal
   from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
@@ -36,15 +36,15 @@ function AzureToolStorageEditorPanel({ azureStorageAccountsModel, setAzureStorag
 
   const createAzureStorageCredentials = async () => {
     const {newAzureStorageAccountName, newAzureStorageAccountToken} = azureStorageAccountsModel.getPersistData();
-    return await azureStorageActions.createAzureToolStorageAccount(getAccessToken, cancelTokenSource, toolId, azureStorageAccountsModel, newAzureStorageAccountName, newAzureStorageAccountToken);
+    return await azureStorageAccountActions.createAzureToolStorageAccount(getAccessToken, cancelTokenSource, toolId, azureStorageAccountsModel, newAzureStorageAccountName, newAzureStorageAccountToken);
   };
 
   const updateAzureStorageCredentials = async () => {
-    return await azureStorageActions.updateAzureToolStorageAccount(getAccessToken, cancelTokenSource, toolId, azureStorageAccountsModel, currentAzureStorageAccountName); 
+    return await azureStorageAccountActions.updateAzureToolStorageAccount(getAccessToken, cancelTokenSource, toolId, azureStorageAccountsModel, currentAzureStorageAccountName);
   };
 
   const deleteAzureStorageCredentials = async () => {
-    return await azureStorageActions.deleteAzureToolStorageAccount(getAccessToken, cancelTokenSource, toolId, currentAzureStorageAccountName);
+    return await azureStorageAccountActions.deleteAzureToolStorageAccount(getAccessToken, cancelTokenSource, toolId, currentAzureStorageAccountName);
   };
 
   const getExtraButtons = () => {
