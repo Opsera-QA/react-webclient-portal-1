@@ -1,7 +1,7 @@
 import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
-import azureStorageAccountMetadata from "components/inventory/tools/tool_details/tool_jobs/azureV2/storage/azureStorageAccount.metadata";
-import AzureToolStorageEditorPanel from "components/inventory/tools/tool_details/tool_jobs/azureV2/storage/details/AzureToolStorageAccountEditorPanel";
+import azureStorageAccountMetadata from "components/inventory/tools/tool_details/tool_jobs/azureV2/storage_accounts/azureStorageAccount.metadata";
+import AzureToolStorageEditorPanel from "components/inventory/tools/tool_details/tool_jobs/azureV2/storage_accounts/details/AzureToolStorageAccountEditorPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import Model from "core/data_model/model";

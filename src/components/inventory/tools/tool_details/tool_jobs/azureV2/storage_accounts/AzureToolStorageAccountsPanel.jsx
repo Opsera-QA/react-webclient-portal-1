@@ -1,11 +1,11 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import AzureToolStorageAccountTable from "components/inventory/tools/tool_details/tool_jobs/azureV2/storage/AzureToolStorageAccountTable";
+import AzureToolStorageAccountTable from "components/inventory/tools/tool_details/tool_jobs/azureV2/storage_accounts/AzureToolStorageAccountTable";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import azureStorageActions from "../azureStorage.actions";
+import azureStorageAccountActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/storage_accounts/azureStorageAccount.actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import AzureToolStorageEditorPanel from "components/inventory/tools/tool_details/tool_jobs/azureV2/storage/details/AzureToolStorageAccountEditorPanel";
+import AzureToolStorageEditorPanel from "components/inventory/tools/tool_details/tool_jobs/azureV2/storage_accounts/details/AzureToolStorageAccountEditorPanel";
 
 function AzureToolStoragePanel({ toolId }) {
   const [azureStorageAccountsList, setAzureStorageAccountsList] = useState([]);
@@ -39,7 +39,7 @@ function AzureToolStoragePanel({ toolId }) {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await azureStorageActions.getAzureToolStorageAccounts(getAccessToken, cancelSource, toolId);  
+      const response = await azureStorageAccountActions.getAzureToolStorageAccounts(getAccessToken, cancelSource, toolId);
       const accounts = response?.data?.data;
 
       if(Array.isArray(accounts)) {
