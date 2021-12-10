@@ -29,6 +29,8 @@ import TwistlockToolConfiguration from "./tool_jobs/twistlock/TwistlockToolConfi
 import AzureV2ToolConfiguration from "./tool_jobs/azureV2/AzureV2ToolConfiguration";
 import AnsibleToolConfiguration from "./tool_jobs/ansible/AnsibleToolConfiguration";
 import MongodbRealmToolConfiguration from "./tool_jobs/mongodb_realm/MongodbRealmToolConfiguration";
+import FlywayDatabaseToolConfiguration from "./tool_jobs/flyway_database/FlywayDatabaseToolConfiguration";
+
 function ToolConfigurationPanel({ toolData }) {
   const getConfiguration = () => {
     if (toolData == null) {
@@ -93,6 +95,8 @@ function ToolConfigurationPanel({ toolData }) {
         return <AnsibleToolConfiguration toolData={toolData} />;
       case "mongodb_realm":        
         return <MongodbRealmToolConfiguration toolData={toolData} />;
+      case "flyway-database-migrator":
+        return <FlywayDatabaseToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
     }
