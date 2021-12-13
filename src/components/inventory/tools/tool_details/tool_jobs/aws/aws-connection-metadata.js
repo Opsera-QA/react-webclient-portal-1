@@ -25,7 +25,8 @@ const awsConnectionMetadata = {
       id: "awsAccountId",
       regexDefinitionName: "numericalField",
       maxLength: 12,
-      isRequired: true
+      isRequired: true,
+      isVaultField: true,
     },
   ],
   newObjectFields:
