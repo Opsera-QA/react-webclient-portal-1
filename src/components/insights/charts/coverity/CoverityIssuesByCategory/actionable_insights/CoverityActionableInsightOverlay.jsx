@@ -76,19 +76,15 @@ function CoverityActionableInsightOverlay({
         null,
         coveritySeverity
       );
-      console.log("response", response);
       let dataObject = response?.data ? response?.data?.data[0]?.coverityInsightsDatablocks?.data[0]?.data : [];
-      console.log("dataObject", dataObject);
       let dataCount = response?.data
         ? response?.data?.data[0]?.coverityInsightsDatablocks?.data[0]?.count[0]?.count
         : [];
-      console.log("dataCount", dataCount);
       let DataBlocks = response?.data ? response?.data?.data[0]?.coverityInsightsDatablocks?.data[0]?.DataBlocks[0] : [];
       dataObject = dataObject.map((bd, index) => ({
         ...bd,
         _blueprint: <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2" />,
       }));
-      console.log("summaryblocks", DataBlocks);
 
 
       let newFilterDto = filterDto;
