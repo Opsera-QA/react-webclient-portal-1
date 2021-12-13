@@ -62,7 +62,7 @@ function JfrogRepoSelectInput({ fieldName, dataObject, setDataObject, disabled, 
     try {
       const res = await JFrogToolRepositoriesActions.getMavenRepositories(getAccessToken, cancelSource, dataObject.getData("nexusToolId"));
       if (res && res.status === 200) {
-        setRepos(res.data);
+        setRepos(res?.data?.data);
         return;
       }
       setRepos([]);

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import InfoOverlayIcon from "components/common/icons/general/InfoOverlayIcon";
+import DataBlockInfoOverlayIcon from "components/common/icons/metric/info/DataBlockInfoOverlayIcon";
 
 function ThreeLineDataBlockBase(
   {
@@ -12,12 +12,12 @@ function ThreeLineDataBlockBase(
     topText,
     className,
     icon,
-    infoOverlay,
+    dataPoint,
   }) {
   const getLeftDataBlockIcon = () => {
     if (icon) {
       return (
-        <div className={"data-block-left-icon"}>
+        <div>
           <IconBase icon={icon}  />
         </div>
       );
@@ -25,16 +25,13 @@ function ThreeLineDataBlockBase(
   };
 
   const getInfoOverlayIcon = () => {
-    if (infoOverlay) {
-      return (
-        <div className={"data-block-right-icon"}>
-          <InfoOverlayIcon
-            infoOverlay={infoOverlay}
-          />
-        </div>
-      );
-    }
+    return (
+      <DataBlockInfoOverlayIcon
+        dataPoint={dataPoint}
+      />
+    );
   };
+
 
   const getTopText = () => {
     if (topText) {
@@ -70,10 +67,10 @@ function ThreeLineDataBlockBase(
   return (
     <div className={className}>
       <Row className={"w-100 h-100 mx-auto text-center"}>
-        {getLeftDataBlockIcon()}
-        {getInfoOverlayIcon()}
-        <Col xs={12} className={"mt-2 w-100 text-center"}>
-          {getTopText()}
+        <Col xs={12} className={"d-flex justify-content-between"}>
+          <div className={"data-block-icon"}>{getLeftDataBlockIcon()}</div>
+          <div>{getTopText()}</div>
+          <div className={"data-block-icon"}>{getInfoOverlayIcon()}</div>
         </Col>
         <Col xs={12} className={"my-auto text-center"}>
           {getMiddleText()}
@@ -92,7 +89,7 @@ ThreeLineDataBlockBase.propTypes = {
   bottomText: PropTypes.any,
   className: PropTypes.string,
   icon: PropTypes.object,
-  infoOverlay: PropTypes.any,
+  dataPoint: PropTypes.object,
 };
 
 export default ThreeLineDataBlockBase;

@@ -1,42 +1,36 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import InputContainer from "components/common/inputs/InputContainer";
-import {Form} from "react-bootstrap";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function RollbackToggleInput({dataObject, setDataObject, fieldName, disabled}) {
-  const [field, setField] = useState(dataObject.getFieldById(fieldName));
+function OctopusSpecifyDepVarsToggle({dataObject, setDataObject, fieldName, disabled}) {
 
-  const handleChange = () => {
+  const setDataFunction = (fieldName, value) => {
     let newDataObject = dataObject;
-    let sourceScriptFlag = !dataObject.getData("specifyDepVariables");
-    newDataObject.setData("specifyDepVariables", sourceScriptFlag);
+    let sourceScriptFlag = !dataObject.getData(fieldName);
+    newDataObject.setData(fieldName, sourceScriptFlag);
     newDataObject.setData("deploymentVariables", []);
+    newDataObject.setData("customVariableList", []);
     newDataObject.setData("structuredConfigVariablesPath", "");
     newDataObject.setData("xmlConfigTransformVariableValue", "");
     setDataObject({...newDataObject});
   };
 
   return (
-    <>
-      <InputContainer>
-        <Form.Check
-          type="switch"
-          id={field.id}
-          checked={!!dataObject.getData(fieldName)}
-          disabled={disabled}
-          label={field.label}
-          onChange={() => handleChange()}
-        />
-      </InputContainer>
-    </>
+    <BooleanToggleInput 
+      disabled={disabled}
+      fieldName={fieldName}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      setDataFunction={setDataFunction}
+    />    
   );
 }
 
-RollbackToggleInput.propTypes = {
+OctopusSpecifyDepVarsToggle.propTypes = {
   dataObject: PropTypes.object,
   fieldName: PropTypes.string,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool
 };
 
-export default RollbackToggleInput;
+export default OctopusSpecifyDepVarsToggle;

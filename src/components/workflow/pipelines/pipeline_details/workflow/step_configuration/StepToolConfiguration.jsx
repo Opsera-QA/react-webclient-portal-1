@@ -65,6 +65,8 @@ import AzureFunctionsStepConfiguration from "./step_tool_configuration_forms/azu
 import DotNetCliStepConfiguration from "./step_tool_configuration_forms/dotnetcli/DotNetCliStepConfiguration";
 import CypressStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/CypressStepConfiguration";
+import FlywayDatabaseStepConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/FlywayDatabaseStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -1038,6 +1040,17 @@ function StepToolConfiguration({
             setShowToast={setShowToast}
           />
         );
+        case "flyway-database-migrator":
+          return (
+            <FlywayDatabaseStepConfiguration
+              pipelineId={pipeline._id}
+              plan={pipeline.workflow.plan}
+              stepId={stepId}
+              stepTool={stepTool}
+              parentCallback={callbackFunction}
+              closeEditorPanel={closeEditorPanel}
+            />
+          );    
     }
   };
 

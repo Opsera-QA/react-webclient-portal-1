@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import MetricDataPointEvaluationRulesInput
   from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/MetricDataPointEvaluationRulesInput";
 
-// TODO Separate out data_point_evaluation_rules into sub-section
 function MetricStrategicCriteriaPanel({model, setModel, strategicCriteria}) {
   return (
     <div className={"mt-2"}>
