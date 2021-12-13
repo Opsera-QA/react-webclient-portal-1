@@ -141,8 +141,8 @@ toolsActions.getToolLogById = async (getAccessToken, cancelTokenSource, logId) =
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-toolsActions.getRelevantPipelinesV2 = async (getAccessToken, cancelTokenSource, toolDto) => {
-  const apiUrl = `/registry/${toolDto.getData("_id")}/pipelines`;
+toolsActions.getRelevantPipelinesV2 = async (getAccessToken, cancelTokenSource, toolId) => {
+  const apiUrl = `/registry/${toolId}/pipelines`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

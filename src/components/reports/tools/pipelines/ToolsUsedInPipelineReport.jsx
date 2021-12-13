@@ -65,7 +65,7 @@ function ToolsUsedInPipelineReport() {
       </Row>
       <Row className={"px-2"}>
         <Col>
-          <ToolUsedInPipelinesField dataObject={toolUsedInPipelineDto} showTable={true}/>
+          <ToolUsedInPipelinesField toolId={toolUsedInPipelineDto?.getData("_id")} showTable={true}/>
         </Col>
       </Row>
     </ScreenContainer>
