@@ -36,8 +36,8 @@ function CoverityActionableInsightTable({ data, isLoading, loadData, filterModel
   const onRowSelect = (rowData) => {
     toastContext.showOverlayPanel(
       <BlueprintLogOverlay
-        pipelineId={rowData?.original?.data.pipelineId}
-        runCount={rowData?.original?.data.run}
+        pipelineId={rowData?.original?.pipeline}
+        runCount={rowData?.original?.run}
       />
     );
   };

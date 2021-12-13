@@ -110,11 +110,6 @@ function CoverityActionableInsightOverlay({
     }
   };
 
-
-  const onRowSelect = (rowData) => {
-    history.push(`/blueprint/${rowData?.data?._id?.pipelineId}/${rowData?.data?._id?.run}`);
-  };
-
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
