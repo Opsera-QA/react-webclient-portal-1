@@ -119,7 +119,7 @@ import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/
 //QA Testing
 import ManualQaTestPieChart from "components/insights/charts/qa_metrics/ManualQaTestPieChart";
 import FirstPassYieldPieChart from "components/insights/charts/qa_metrics/FirstPassYieldPieChart";
-// import CummulativeOpenDefectsPieChart from "components/insights/charts/qa_metrics/CummulativeOpenDefectsPieChart";
+import CummulativeOpenDefectsPieChart from "components/insights/charts/qa_metrics/CummulativeOpenDefectsPieChart";
 import CummulativeOpenDefectsMetric from "components/insights/charts/cummulative_open_defects/CummulativeOpenDefectsMetric";
 import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieChart";
 import AdoptionTestPercentageMetricV1 from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AdoptionTestPercentageMetricV1";
@@ -1261,7 +1261,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "cumulative-open-defects":
         return (
           <>
-          {/* <Col md={12} className="p-2">
+          <Col md={12} className="p-2">
             <CummulativeOpenDefectsPieChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1269,7 +1269,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               setKpis={setKpis}
               index={index}
             />
-          </Col> */}
+          </Col>
           <Col md={12} className="p-2">
             <CummulativeOpenDefectsMetric
              kpiConfiguration={kpiConfig}

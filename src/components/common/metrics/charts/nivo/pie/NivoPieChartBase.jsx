@@ -61,6 +61,7 @@ function NivoPieChartBase(
       sliceLabelsTextColor={"#ffffff"}
       colors={["#ABA4CC", "#696969", "#B1AeA7"]}
       onClick={onClickFunction}
+      margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
       // activeInnerRadiusOffset={null}
       // activeOuterRadiusOffset={null}
       // arcLabel={null}

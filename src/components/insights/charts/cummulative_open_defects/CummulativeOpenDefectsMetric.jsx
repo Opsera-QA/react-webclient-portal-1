@@ -5,7 +5,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { assignStandardColors, shortenPieChartLegend } from "components/insights/charts/charts-views";
+import { assignStandardColors, shortenPieChartLegend, defaultConfig } from "components/insights/charts/charts-views";
 import { Col, Row } from "react-bootstrap";
 import "components/insights/charts/qa_metrics/Styling.css";
 import { hasStringValue } from "components/common/helpers/string-helpers";
@@ -16,7 +16,8 @@ import CummulativeOpenValidDefectsDataBlock from "./data_blocks/open_valid_defec
 import CummulativeTotalDefectsDataBlock from "./data_blocks/total_defects/CummulativeTotalDefectsDataBlock";
 import CummulativeTotalValidDefectsDataBlock from "./data_blocks/total_valid_defects/CummulativeTotalValidDefectsDataBlock";
 import CummulativeOpenDefectsHelpDocumentation from "components/common/help/documentation/insights/charts/CummulativeOpenDefectsHelpDocumentation";
-
+import { ResponsivePie } from "@nivo/pie";
+import config from "./cummulativeOpenDefectsPieChartConfig";
 
 function CummulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
