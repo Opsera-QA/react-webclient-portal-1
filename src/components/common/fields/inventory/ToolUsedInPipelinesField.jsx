@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import toolsActions from "components/inventory/tools/tools-actions";
 import Row from "react-bootstrap/Row";
@@ -15,8 +14,10 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
 import {getSingularOrPluralString} from "components/common/helpers/string-helpers";
 import ToolsUsedInPipelineTable from "components/reports/tools/pipelines/ToolsUsedInPipelineTable";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import IconBase from "components/common/icons/IconBase";
 
-function ToolUsedInPipelinesField({ dataObject, showTable }) {
+function ToolUsedInPipelinesField({ toolId, showTable }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [pipelines, setPipelines] = useState([]);
@@ -43,7 +44,7 @@ function ToolUsedInPipelinesField({ dataObject, showTable }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, [dataObject]);
+  }, [toolId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -64,8 +65,8 @@ function ToolUsedInPipelinesField({ dataObject, showTable }) {
   };
 
   const loadPipelines = async (cancelSource = cancelTokenSource) => {
-    if (dataObject.getData("_id") !== "") {
-      const response = await toolsActions.getRelevantPipelinesV2(getAccessToken, cancelSource, dataObject);
+    if (isMongoDbId(toolId)) {
+      const response = await toolsActions.getRelevantPipelinesV2(getAccessToken, cancelSource, toolId);
 
       if (isMounted?.current === true && response?.data != null) {
         setPipelines(response?.data?.data);
@@ -93,36 +94,46 @@ function ToolUsedInPipelinesField({ dataObject, showTable }) {
   const getDisplay = () => {
     if (showTable) {
       return (
-        <ToolsUsedInPipelineTable data={pipelines} loadData={loadData} isLoading={isLoading} isMounted={isMounted}/>
-        );
+        <ToolsUsedInPipelineTable
+          data={pipelines}
+          loadData={loadData}
+          isLoading={isLoading}
+          isMounted={isMounted}
+        />
+      );
     }
 
     return (getPipelineCards());
   };
 
   if (isLoading) {
-    return <LoadingDialog message={"Loading Pipelines"} size={"sm"} />;
+    return (
+      <LoadingDialog
+        message={"Loading Pipelines"}
+        size={"sm"}
+      />
+    );
   }
 
-  if (!isLoading && dataObject == null || dataObject.getData("_id") === "") {
+  if (isMongoDbId(toolId) !== true) {
     return <></>;
   }
 
-  if (!isLoading && (pipelines == null || pipelines.length === 0)) {
+  if (Array.isArray(pipelines) !== true || pipelines.length === 0) {
     return (
       <div className="form-text text-muted ml-3">
         <div>
-          <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          <span><IconBase icon={faExclamationCircle} className="mr-1" fixedWidth />
           This tool is not currently used in any pipelines</span>
         </div>
       </div>
     );
   }
-console.log(pipelines);
+
   return (
     <div>
       <div className="form-text text-muted mb-2">
-        <span>This tool is used in {pipelines.length} {getSingularOrPluralString(pipelines?.length, "pipeline","pipelines")}</span>
+        <span>This tool is used in {pipelines?.length} {getSingularOrPluralString(pipelines?.length, "pipeline","pipelines")}</span>
       </div>
       {getDisplay()}
     </div>
@@ -130,7 +141,7 @@ console.log(pipelines);
 }
 
 ToolUsedInPipelinesField.propTypes = {
-  dataObject: PropTypes.object,
+  toolId: PropTypes.string,
   showTable: PropTypes.bool
 };
 

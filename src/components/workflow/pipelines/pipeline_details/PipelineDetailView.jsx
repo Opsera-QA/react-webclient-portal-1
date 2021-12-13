@@ -76,9 +76,8 @@ function PipelineDetailView() {
   }, []);
 
   useEffect(() => {
-    setActivityData([]);
-
     if (tab === "summary") {
+      setActivityData([]);
       getActivityLogs().catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -88,7 +87,7 @@ function PipelineDetailView() {
   }, [tab]);
 
   useEffect(() => {
-    if (tab === "summary") {
+    if (tab === "summary" && Array.isArray(pipelineActivityTreeData) && pipelineActivityTreeData.length > 0) {
       pullLogData().catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -122,11 +121,6 @@ function PipelineDetailView() {
       await getPipeline();
     }
   };
-
-  useEffect(() => {
-    console.log("Effect  3: Pipeline update detected, determining status!!!");
-  }, [JSON.stringify(pipeline.workflow), refreshCount]);
-
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {

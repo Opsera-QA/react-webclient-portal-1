@@ -1,5 +1,6 @@
 import {isAlphaNumeric, isDomain, isOpseraPassword, isWebsite, matchesRegex, validateEmail, hasSpaces} from "utils/helpers";
 import regexDefinitions from "utils/regexDefinitions";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 // TODO: We need to rework this
 export const validateData = (data) => {
@@ -104,7 +105,7 @@ export const fieldValidation = (value, data, field) => {
     errorMessages.push("Does not meet field requirements.");
   }
 
-  if (field.regexDefinitionName != null && value !== "")
+  if ((field?.isVaultField !== true || hasStringValue(value) === true) && field.regexDefinitionName != null && value !== "")
   {
     const definitionName = field.regexDefinitionName;
     const regexDefinition = regexDefinitions[definitionName];

@@ -63,7 +63,7 @@ function ActionBarDeleteToolButton({ toolModel, className }) {
     if (toolModel?.getData("_id")) {
       try {
         setIsLoading(true);
-        const response = await toolsActions.getRelevantPipelinesV2(getAccessToken, cancelTokenSource, toolModel);
+        const response = await toolsActions.getRelevantPipelinesV2(getAccessToken, cancelTokenSource, toolModel?.getData("_id"));
 
         if (response?.data != null) {
           setRelevantPipelines(response?.data?.data);
