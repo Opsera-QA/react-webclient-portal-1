@@ -7,26 +7,33 @@ export const s3PipelineStepConfigurationMetadata = {
       isRequired: true,
     },
     {
+      label: "Bucket Name",
+      id: "bucketName",
+      isRequired: true,
+      maxLength: 150,
+    },
+    {
       label: "S3 Url",
       id: "s3Url",
+      maxLength: 150,
     },
     {
       label: "Job Type",
       id: "jobType",
     },
     {
-      label: "Build Step Info",
+      label: "Build Step",
       id: "buildStepId",
+      isRequired: true,
+    },
+    {
+      label: "Bucket Access Level",
+      id: "bucketAccess",
       isRequired: true,
     },
     {
       label: "Regions",
       id: "regions",
-      isRequired: true,
-    },
-    {
-      label: "Bucket Name",
-      id: "bucketName",
       isRequired: true,
     },
   ],
