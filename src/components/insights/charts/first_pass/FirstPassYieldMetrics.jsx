@@ -6,16 +6,14 @@ import ModalLogs from "components/common/modal/modalLogs";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
+import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import {
-  defaultConfig,
-  getColorByData,
-  assignStandardColors,
-  shortenPieChartLegend,
-} from "../charts-views";
+import { defaultConfig, getColorByData, assignStandardColors, shortenPieChartLegend } from "../charts-views";
 import { Col, Container, Row } from "react-bootstrap";
 import FirstPassYieldMetricDataBlockBase from "./data_blocks/FirstPassYieldMetricDataBlockBase";
 import FirstPassYieldPercentageDataBlock from "./data_blocks/FirstPassYieldPercentageDataBlock";
+
+const FIRST_PASS_YIELD = "first_pass_yield";
 
 function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -25,6 +23,7 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [firstPassYieldDataPoint, setFirstPassYieldDataPoint] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -49,23 +48,8 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      setIsLoading(true);
-      let dashboardTags =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken,
-        cancelSource,
-        "firstPassYield",
-        kpiConfiguration,
-        dashboardTags
-      );
-      let dataObject = response?.data ? response?.data?.data[0]?.firstPassYield?.data : [];
-      assignStandardColors(dataObject[0]?.pairs);
-      shortenPieChartLegend(dataObject[0]?.pairs);
-
-      if (isMounted?.current === true && dataObject) {
-        setMetrics(dataObject);
-      }
+      await loadChartMetrics(cancelSource);
+      await loadDataPoints(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -76,6 +60,32 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
         setIsLoading(false);
       }
     }
+  };
+
+  const loadChartMetrics = async (cancelSource = cancelTokenSource) => {
+    setIsLoading(true);
+    let dashboardTags =
+      dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+    const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+      getAccessToken,
+      cancelSource,
+      "firstPassYield",
+      kpiConfiguration,
+      dashboardTags
+    );
+    let dataObject = response?.data ? response?.data?.data[0]?.firstPassYield?.data : [];
+    assignStandardColors(dataObject[0]?.pairs);
+    shortenPieChartLegend(dataObject[0]?.pairs);
+
+    if (isMounted?.current === true && dataObject) {
+      setMetrics(dataObject);
+    }
+  };
+
+  const loadDataPoints = async () => {
+    const dataPoints = kpiConfiguration?.dataPoints;
+    const firstPassYieldPercentageDataPoint = dataPointHelpers.getDataPoint(dataPoints, FIRST_PASS_YIELD);
+    setFirstPassYieldDataPoint(firstPassYieldPercentageDataPoint);
   };
 
   const getChartBody = () => {
@@ -95,7 +105,7 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
             <Col xl={6} lg={6} sm={6} className={"my-3"}>
               <FirstPassYieldPercentageDataBlock
                 score={metrics[0]?.firstPassYield}
-                subtitle="First Pass Yield"
+                dataPoint={firstPassYieldDataPoint}
               />
             </Col>
             <Col xl={6} lg={6} sm={6} className={"my-3"}>
