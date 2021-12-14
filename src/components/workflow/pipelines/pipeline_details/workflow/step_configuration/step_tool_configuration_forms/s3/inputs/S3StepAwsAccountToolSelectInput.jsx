@@ -22,18 +22,10 @@ function S3StepAwsAccountToolSelectInput({className, fieldName, model, setModel,
     setModel({...newModel});
   };
 
-  const getTextField = (tool) => {
-    const toolUrl = tool?.configuration?.toolURL || "No Octopus URL Assigned";
-    const toolName = tool?.name;
-
-    return (`${toolName} (${toolUrl})`);
-  };
-
   return (
     <RoleRestrictedAwsAccountToolSelectInput
       fieldName={fieldName}
       configurationRequired={true}
-      textField={(tool) => getTextField(tool)}
       model={model}
       setModel={setModel}
       setDataFunction={setDataFunction}
