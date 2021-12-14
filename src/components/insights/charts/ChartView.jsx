@@ -148,6 +148,7 @@ import LegacySonarRatingMetrics from "components/insights/charts/sonar/sonar_rat
 import SonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings/SonarRatingMetrics";
 import AutomatedTestAdoptionRateMetric
   from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AutomatedTestAdoptionRateMetric";
+import FirstPassYieldMetrics from "./first_pass/FirstPassYieldMetrics";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1247,7 +1248,17 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "first-pass-yield":
         return (
-          <Col md={12} className="p-2">
+          <>
+           <Col md={12} className="p-2">
+            <FirstPassYieldMetrics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+            </Col>
+            <Col md={12} className="p-2">
             <FirstPassYieldPieChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1256,6 +1267,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               index={index}
             />
           </Col>
+          </>
         );
       case "cumulative-open-defects":
         return (
