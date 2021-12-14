@@ -8,7 +8,7 @@ function CoverityActionableDataBlockContainers({ data }) {
   let className = `p-2 dark-gray-text-primary`;
   return (
     <div>
-      <Row className="px-2">
+      <Row className="justify-content-sm-center px-2">
         <Col xl={2} lg={2} sm={4} className={"my-3"}>
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
