@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import { ResponsivePie } from "@nivo/pie";
-import config from "components/insights/charts/qa_metrics/adoption_test_percentage/adoptionTestPercentagePieChartConfig";
+import config from "components/insights/charts/qa_metrics/automation_test_adoption_rate/adoptionTestPercentagePieChartConfig";
 import ModalLogs from "components/common/modal/modalLogs";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
