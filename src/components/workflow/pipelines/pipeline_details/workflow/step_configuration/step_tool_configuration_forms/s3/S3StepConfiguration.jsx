@@ -19,6 +19,7 @@ function S3StepConfiguration(
     stepTool,
     parentCallback,
     closeEditorPanel,
+    plan,
   }) {
   const contextType = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -165,6 +166,7 @@ S3StepConfiguration.propTypes = {
   stepTool: PropTypes.string,
   parentCallback: PropTypes.func,
   closeEditorPanel: PropTypes.func,
+  plan: PropTypes.array,
 };
 
 export default S3StepConfiguration;
