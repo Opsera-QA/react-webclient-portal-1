@@ -5,6 +5,7 @@ import {faBoxesAlt} from "@fortawesome/pro-light-svg-icons";
 
 const STORAGE_SUPPORTED_TOOL_IDENTIFIERS = [
   "aws_account",
+  "azure",
 ];
 
 function ToolStorageTab({ toolModel, handleTabClick, activeTab }) {
