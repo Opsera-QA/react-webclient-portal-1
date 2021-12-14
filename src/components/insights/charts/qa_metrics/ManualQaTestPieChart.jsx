@@ -10,7 +10,12 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { defaultConfig, getColorByData, assignStandardColors, shortenPieChartLegend } from "../charts-views";
 import { Col, Container, Row } from "react-bootstrap";
 import TwoLineScoreDataBlock from "../../../common/metrics/score/TwoLineScoreDataBlock";
-import NewPercentageDataBlock from "../../../common/metrics/percentage/NewPercentageDataBlock";
+import TwoLinePercentageDataBlock from "../../../common/metrics/percentage/TwoLinePercentageDataBlock";
+import { dataPointHelpers } from "../../../common/helpers/metrics/data_point/dataPoint.helpers";
+
+const MANUAL_TESTING_RESULTS_DATA_POINT_IDENTIFIERS = {
+  passRateDataPoint: "manual-testing-results-quality-level",
+};
 
 function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -20,6 +25,7 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [passRateDataPoint, setPassRateDataPoint] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -58,6 +64,9 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
       assignStandardColors(dataObject[0]?.pairs);
       shortenPieChartLegend(dataObject[0]?.pairs);
 
+      // Loads the Data Points from the KPI Configuration
+      await loadDataPoints();
+
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
       }
@@ -71,6 +80,16 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
         setIsLoading(false);
       }
     }
+  };
+
+  const loadDataPoints = async () => {
+    const dataPoints = kpiConfiguration?.dataPoints;
+
+    const thisPassRateDataPoint = dataPointHelpers.getDataPoint(
+      dataPoints,
+      MANUAL_TESTING_RESULTS_DATA_POINT_IDENTIFIERS?.passRateDataPoint
+    );
+    setPassRateDataPoint(thisPassRateDataPoint);
   };
 
   const getChartBody = () => {
@@ -93,17 +112,11 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
           </Row>
           <Row className="p-1">
             <Col>
-              <NewPercentageDataBlock
+              <TwoLinePercentageDataBlock
                 percentage={metrics[0]?.passRate}
                 subtitle={"Pass Rate"}
-                qualityLevel={"success"}
+                dataPoint={passRateDataPoint}
               />
-              {/* <div className="metric-box text-center">
-                <div className="box-metric">
-                  <div className="green">{metrics[0]?.passRate + "%"}</div>
-                </div>
-                <div className="w-100 text-muted mb-1">Pass Rate</div>
-              </div> */}
             </Col>
           </Row>
         </Container>
