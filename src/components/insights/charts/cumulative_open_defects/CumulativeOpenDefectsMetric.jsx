@@ -5,21 +5,28 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { assignStandardColors, shortenPieChartLegend, defaultConfig } from "components/insights/charts/charts-views";
+import {
+  assignStandardColors,
+  shortenPieChartLegend,
+  defaultConfig,
+  getColorByData,
+} from "components/insights/charts/charts-views";
+import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import { Col, Row } from "react-bootstrap";
 import "components/insights/charts/qa_metrics/Styling.css";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import NivoPieChartBase from "components/common/metrics/charts/nivo/pie/NivoPieChartBase";
 import { nivoChartLegendDefinitions } from "components/common/metrics/charts/nivo/nivoChartLegend.definitions";
-import CummulativeOpenDefectsDataBlock from "./data_blocks/open_defects/CummulativeOpenDefectsDataBlock";
-import CummulativeOpenValidDefectsDataBlock from "./data_blocks/open_valid_defects/CummulativeOpenValidDefectsDataBlock";
-import CummulativeTotalDefectsDataBlock from "./data_blocks/total_defects/CummulativeTotalDefectsDataBlock";
-import CummulativeTotalValidDefectsDataBlock from "./data_blocks/total_valid_defects/CummulativeTotalValidDefectsDataBlock";
-import CummulativeOpenDefectsHelpDocumentation from "components/common/help/documentation/insights/charts/CummulativeOpenDefectsHelpDocumentation";
+import CumulativeOpenDefectsDataBlock from "./data_blocks/open_defects/CumulativeOpenDefectsDataBlock";
+import CumulativeOpenValidDefectsDataBlock from "./data_blocks/open_valid_defects/CumulativeOpenValidDefectsDataBlock";
+import CumulativeTotalDefectsDataBlock from "./data_blocks/total_defects/CumulativeTotalDefectsDataBlock";
+import CumulativeTotalValidDefectsDataBlock from "./data_blocks/total_valid_defects/CumulativeTotalValidDefectsDataBlock";
+import CumulativeOpenDefectsHelpDocumentation from "components/common/help/documentation/insights/charts/CumulativeOpenDefectsHelpDocumentation";
 import { ResponsivePie } from "@nivo/pie";
-import config from "./cummulativeOpenDefectsPieChartConfig";
+import config from "./cumulativeOpenDefectsPieChartConfig";
 
-function CummulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+const CUMILATIVE_OPEN_DEFECT = "cumulative_open_defect";
+
+function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metric, setMetric] = useState(undefined);
@@ -28,6 +35,7 @@ function CummulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, d
   const [notesData, setNotesData] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [openDefectDataPoint, setOpenDefectDataPoint] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -53,6 +61,7 @@ function CummulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, d
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       await loadChartMetrics(cancelSource);
+      await loadDataPoints(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -94,6 +103,14 @@ function CummulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, d
     }
   };
 
+  const loadDataPoints = async () => {
+    const dataPoints = kpiConfiguration?.dataPoints;
+
+    const openDefectPercentageDataPoint = dataPointHelpers.getDataPoint(dataPoints, CUMILATIVE_OPEN_DEFECT);
+    console.log(openDefectPercentageDataPoint, "***openDefectPercentageDataPoint");
+    setOpenDefectDataPoint(openDefectPercentageDataPoint);
+  };
+
   const getNotesRow = () => {
     if (hasStringValue(notesData)) {
       return (
@@ -104,12 +121,8 @@ function CummulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, d
     }
   };
 
-  const getLegendsConfiguration = () => {
-    return [nivoChartLegendDefinitions.getTopRightLegendDefinition()];
-  };
-
   const getChartBody = () => {
-    if (!Array.isArray(metric?.pairs) || metric?.pairs.length === 0) {
+    if (!metric) {
       return null;
     }
 
@@ -120,28 +133,28 @@ function CummulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, d
             <Col xl={6} lg={6} md={8} className={"d-flex align-content-around"}>
               <Row>
                 <Col lg={6} className={"my-3"}>
-                  <CummulativeTotalDefectsDataBlock defects={metric?.totalTests?.toString()} />
+                  <CumulativeTotalDefectsDataBlock defects={metric?.totalTests} />
                 </Col>
                 <Col lg={6} className={"my-3"}>
-                  <CummulativeOpenDefectsDataBlock defects={metric?.cumulativeDefects} />
+                  <CumulativeOpenDefectsDataBlock score={metric?.cumulativeDefects} dataPoint={openDefectDataPoint} />
                 </Col>
                 <Col lg={6} className={"mb-3"}>
-                  <CummulativeTotalValidDefectsDataBlock defects={metric?.passedTests} />
+                  <CumulativeTotalValidDefectsDataBlock defects={metric?.passedTests} />
                 </Col>
                 <Col lg={6} className={"mb-3"}>
-                  <CummulativeOpenValidDefectsDataBlock defects={metric?.failedTests} />
+                  <CumulativeOpenValidDefectsDataBlock defects={metric?.failedTests} />
                 </Col>
               </Row>
             </Col>
             <Col xl={6} lg={6} md={4} className={"my-2 p-2"}>
-              <NivoPieChartBase
+              <ResponsivePie
                 data={metric?.pairs}
-                onClickFunction={() => setShowModal(true)}
-                legendsConfiguration={getLegendsConfiguration()}
+                {...defaultConfig()}
+                {...config(getColorByData)}
+                onClick={() => setShowModal(true)}
               />
             </Col>
           </Row>
-
           {getNotesRow()}
         </div>
       </>
@@ -163,7 +176,7 @@ function CummulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, d
         setKpis={setKpis}
         isLoading={isLoading}
         chartHelpComponent={(closeHelpPanel) => (
-          <CummulativeOpenDefectsHelpDocumentation closeHelpPanel={closeHelpPanel} />
+          <CumulativeOpenDefectsHelpDocumentation closeHelpPanel={closeHelpPanel} />
         )}
       />
       <ModalLogs
@@ -178,7 +191,7 @@ function CummulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, d
   );
 }
 
-CummulativeOpenDefectsMetric.propTypes = {
+CumulativeOpenDefectsMetric.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -186,4 +199,4 @@ CummulativeOpenDefectsMetric.propTypes = {
   setKpis: PropTypes.func,
 };
 
-export default CummulativeOpenDefectsMetric;
+export default CumulativeOpenDefectsMetric;

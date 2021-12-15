@@ -117,10 +117,9 @@ import MetricbeatMemoryUsageByTimeLineChart from "./metricbeat/line_chart/memory
 import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/out_network_usage/MetricbeatOutNetworkTrafficByTimeLineChart";
 
 //QA Testing
+import CumulativeOpenDefectsMetric from "./cumulative_open_defects/CumulativeOpenDefectsMetric";
 import ManualQaTestPieChart from "components/insights/charts/qa_metrics/ManualQaTestPieChart";
 import FirstPassYieldPieChart from "components/insights/charts/qa_metrics/FirstPassYieldPieChart";
-import CummulativeOpenDefectsPieChart from "components/insights/charts/qa_metrics/CummulativeOpenDefectsPieChart";
-import CummulativeOpenDefectsMetric from "components/insights/charts/cummulative_open_defects/CummulativeOpenDefectsMetric";
 import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieChart";
 import AdoptionTestPercentageMetricV1 from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AdoptionTestPercentageMetricV1";
 import AutomatedTestResultsPieChart from "./qa_metrics/AutomatedTestResultsPieChart";
@@ -1260,9 +1259,8 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "cumulative-open-defects":
         return (
-          <>
           <Col md={12} className="p-2">
-            <CummulativeOpenDefectsPieChart
+            <CumulativeOpenDefectsMetric
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1270,16 +1268,6 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               index={index}
             />
           </Col>
-          <Col md={12} className="p-2">
-            <CummulativeOpenDefectsMetric
-             kpiConfiguration={kpiConfig}
-             setKpiConfiguration={setKpiConfig}
-             dashboardData={dashboardData}
-             setKpis={setKpis}
-             index={index}
-           />
-          </Col>
-          </>
         );
       case "automation-percentage":
         return (

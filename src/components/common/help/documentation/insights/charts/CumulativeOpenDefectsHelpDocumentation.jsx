@@ -2,7 +2,7 @@ import React from "react";
 import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
 import PropTypes from "prop-types";
 
-function CummulativeOpenDefectsHelpDocumentation({closeHelpPanel}) {
+function CumulativeOpenDefectsHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer
       closeHelpPanel={closeHelpPanel}
@@ -15,8 +15,8 @@ function CummulativeOpenDefectsHelpDocumentation({closeHelpPanel}) {
   );
 }
 
-CummulativeOpenDefectsHelpDocumentation.propTypes = {
+CumulativeOpenDefectsHelpDocumentation.propTypes = {
   closeHelpPanel: PropTypes.func,
 };
 
-export default React.memo(CummulativeOpenDefectsHelpDocumentation);
+export default React.memo(CumulativeOpenDefectsHelpDocumentation);

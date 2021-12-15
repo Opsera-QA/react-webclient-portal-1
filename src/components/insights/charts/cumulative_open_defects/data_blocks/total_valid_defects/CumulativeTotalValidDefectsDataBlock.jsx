@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/TwoLineDataBlockBase";
 
-function CummulativeTotalValidDefectsDataBlock({ defects }) {
+function CumulativeTotalValidDefectsDataBlock({ defects }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
       <div className={"p-3"}>
@@ -13,8 +13,8 @@ function CummulativeTotalValidDefectsDataBlock({ defects }) {
   );
 }
 
-CummulativeTotalValidDefectsDataBlock.propTypes = {
+CumulativeTotalValidDefectsDataBlock.propTypes = {
   defects: PropTypes.number,
 };
 
-export default CummulativeTotalValidDefectsDataBlock;
+export default CumulativeTotalValidDefectsDataBlock;
