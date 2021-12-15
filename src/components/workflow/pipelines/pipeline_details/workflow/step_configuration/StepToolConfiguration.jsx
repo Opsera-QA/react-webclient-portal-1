@@ -65,6 +65,8 @@ import JenkinsStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
 import CypressStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/CypressStepConfiguration";
+import AzureZipDeploymentStepConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -1033,7 +1035,15 @@ function StepToolConfiguration({
                 setShowToast={setShowToast}
                 closeEditorPanel={closeEditorPanel}
               />
-            );    
+            );
+      case "azure-zip-deployment":
+        return (
+          <AzureZipDeploymentStepConfiguration
+            closeEditorPanel={closeEditorPanel}
+            parentCallback={parentCallback}
+            stepTool={stepTool}
+          />
+        );
     }
   };
 
