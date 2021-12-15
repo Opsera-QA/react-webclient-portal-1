@@ -126,7 +126,7 @@ function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, da
 
     return (
       <>
-        <div className="new-chart m-3 p-0" style={{ height: "300px", display: "flex" }}>
+        <div className="new-chart m-3 p-0" style={{ minheight: "300px", display: "flex" }}>
           <Row>
             <Col xl={6} lg={6} md={8} className={"d-flex align-content-around"}>
               <Row>
