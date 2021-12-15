@@ -67,6 +67,8 @@ import CypressStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/CypressStepConfiguration";
 import FlywayDatabaseStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/FlywayDatabaseStepConfiguration";
+import AzureZipDeploymentStepConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -1050,7 +1052,15 @@ function StepToolConfiguration({
               parentCallback={callbackFunction}
               closeEditorPanel={closeEditorPanel}
             />
-          );    
+          );
+      case "azure-zip-deployment":
+        return (
+          <AzureZipDeploymentStepConfiguration
+            closeEditorPanel={closeEditorPanel}
+            parentCallback={callbackFunction}
+            stepTool={stepTool}
+          />
+        );
     }
   };
 
