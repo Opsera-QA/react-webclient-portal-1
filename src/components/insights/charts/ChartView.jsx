@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 
@@ -117,8 +117,8 @@ import MetricbeatMemoryUsageByTimeLineChart from "./metricbeat/line_chart/memory
 import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/out_network_usage/MetricbeatOutNetworkTrafficByTimeLineChart";
 
 //QA Testing
+import CumulativeOpenDefectsMetric from "./cumulative_open_defects/CumulativeOpenDefectsMetric";
 import ManualQaTestPieChart from "components/insights/charts/qa_metrics/ManualQaTestPieChart";
-import CummulativeOpenDefectsPieChart from "components/insights/charts/qa_metrics/CummulativeOpenDefectsPieChart";
 import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieChart";
 import AdoptionTestPercentageMetricV1 from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AdoptionTestPercentageMetricV1";
 import AutomatedTestResultsPieChart from "./qa_metrics/AutomatedTestResultsPieChart";
@@ -148,10 +148,24 @@ import SonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings/S
 import AutomatedTestAdoptionRateMetric
   from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AutomatedTestAdoptionRateMetric";
 import FirstPassYieldMetrics from "./first_pass/FirstPassYieldMetrics";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
-  const [kpiConfig, setKpiConfig] = useState(kpiConfiguration);
+  const [kpiConfig, setKpiConfig] = useState(undefined);
+  const isMounted = useRef(false);
+
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    setKpiConfig({...kpiConfiguration});
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, [JSON.stringify(kpiConfiguration)]);
+
   // TODO: This is only being used until each chart is updated to use ChartContainer inside.
   //  After everything is refactored,
   //  this should be deleted and we should just return getChart() at bottom of component instead
@@ -1260,7 +1274,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "cumulative-open-defects":
         return (
           <Col md={12} className="p-2">
-            <CummulativeOpenDefectsPieChart
+            <CumulativeOpenDefectsMetric
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1463,6 +1477,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
     }
   };
 
+  if (kpiConfig == null) {
+    return (<LoadingDialog size={"sm"} message={"Loading Insights"} />);
+  }
+
   // TODO: Chart container should be inside each chart component
   //  with loading passed in to allow chart to refresh while keeping existing data and also informing users it's updating.
   return getView();
@@ -1472,6 +1490,8 @@ ChartView.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
+  loadChart: PropTypes.func,
+  setKpis: PropTypes.func,
 };
 
 export default ChartView;

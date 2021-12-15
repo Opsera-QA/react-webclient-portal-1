@@ -9,10 +9,11 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleDown, faArrowCircleUp, faMinusCircle, faPauseCircle } from "@fortawesome/free-solid-svg-icons";
 import Model from "../../../../../core/data_model/model";
-import CoverityIssuesByCategoryActionableMetadata from "./coverity-issues-by-category-actionable-metadata.js";
+import CoverityIssuesByCategoryActionableMetadata from "./actionable_insights/coverity-actionable-insight-metadata";
 import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import CoverityIssuesByCategoryHelpDocumentation from "components/common/help/documentation/insights/charts/CoverityIssuesByCategoryHelpDocumentation";
+import CoverityActionableInsightOverlay from "./actionable_insights/CoverityActionableInsightOverlay";
 
 function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -86,11 +87,11 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
       false
     );
     toastContext.showOverlayPanel(
-      <ChartDetailsOverlay
-        dashboardData={dashboardData}
+      <CoverityActionableInsightOverlay
+        title={ stat + " Issues Insights"}
         kpiConfiguration={kpiConfiguration}
-        chartModel={chartModel}
-        kpiIdentifier={"coverity-issues" + "-" + stat}
+        dashboardData={dashboardData}
+        coveritySeverity={stat}
       />
     );
   };
@@ -150,7 +151,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
           <Row className="p-1">
             <Col>
               <div className="metric-box p-3 text-center">
-                <div className="box-metric pointer" onClick={() => onRowSelect("low")}>
+                <div className="box-metric pointer" onClick={() => onRowSelect("Low")}>
                   <div>{metrics[0].currentTotalLow}</div>
                 </div>
                 <div className="icon-box fa-pull-right">
@@ -168,7 +169,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
             </Col>
             <Col>
               <div className="metric-box p-3 text-center">
-                <div className="box-metric pointer" onClick={() => onRowSelect("medium")}>
+                <div className="box-metric pointer" onClick={() => onRowSelect("Medium")}>
                   <div>{metrics[0].currentTotalMedium}</div>
                 </div>
 
@@ -187,7 +188,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
             </Col>
             <Col>
               <div className="metric-box p-3 text-center">
-                <div className="box-metric pointer" onClick={() => onRowSelect("high")}>
+                <div className="box-metric pointer" onClick={() => onRowSelect("High")}>
                   <div>{metrics[0].currentTotalHigh}</div>
                 </div>
                 <div className="icon-box fa-pull-right">
