@@ -1,4 +1,4 @@
-import React, {useState, useContext, useRef, useEffect} from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Row, Col } from "react-bootstrap";
@@ -70,8 +70,7 @@ import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete
 import TextAreaInput from "../../../common/inputs/text/TextAreaInput";
 
 import axios from "axios";
-import ResetMetricConfirmationPanel
-  from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricConfirmationPanel";
+import ResetMetricConfirmationPanel from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricConfirmationPanel";
 import ResetButton from "components/common/buttons/reset/ResetButton";
 
 // TODO: After all KPIs are converted, don't do check and just convert this file to be the one that points to the separate editor panels
@@ -235,7 +234,6 @@ function KpiSettingsForm({
     };
   }, []);
 
-
   const tagFilterEnabled = [
     "opsera-pipeline-duration",
     "opsera-pipelines-by-user",
@@ -318,6 +316,7 @@ function KpiSettingsForm({
     "automation-percentage",
     "adoption-percentage",
     "automated-test-results",
+    "defect-removal-efficiency",
     "sfdc-manual-test",
     "sfdc-backups",
     "sfdc-profile-migrations",
@@ -973,15 +972,8 @@ function KpiSettingsForm({
   const getExtraButtons = () => {
     return (
       <div className={"d-flex"}>
-        <DeleteButtonWithInlineConfirmation
-          dataObject={kpiSettings}
-          deleteRecord={deleteKpi}
-        />
-        <ResetButton
-          className={"ml-2"}
-          model={kpiSettings}
-          resetFunction={() => setShowResetConfirmationPanel(true)}
-        />
+        <DeleteButtonWithInlineConfirmation dataObject={kpiSettings} deleteRecord={deleteKpi} />
+        <ResetButton className={"ml-2"} model={kpiSettings} resetFunction={() => setShowResetConfirmationPanel(true)} />
       </div>
     );
   };
@@ -1055,7 +1047,7 @@ function KpiSettingsForm({
       );
     }
 
-    return (getEditorPanel());
+    return getEditorPanel();
   };
 
   if (kpiSettings == null) {
