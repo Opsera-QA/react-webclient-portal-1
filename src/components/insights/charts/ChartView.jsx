@@ -1490,6 +1490,8 @@ ChartView.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
+  loadChart: PropTypes.func,
+  setKpis: PropTypes.func,
 };
 
 export default ChartView;
