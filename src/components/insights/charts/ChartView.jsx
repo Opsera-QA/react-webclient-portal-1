@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 
@@ -148,10 +148,24 @@ import LegacySonarRatingMetrics from "components/insights/charts/sonar/sonar_rat
 import SonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings/SonarRatingMetrics";
 import AutomatedTestAdoptionRateMetric
   from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AutomatedTestAdoptionRateMetric";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
-  const [kpiConfig, setKpiConfig] = useState(kpiConfiguration);
+  const [kpiConfig, setKpiConfig] = useState(undefined);
+  const isMounted = useRef(false);
+
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    setKpiConfig({...kpiConfiguration});
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, [JSON.stringify(kpiConfiguration)]);
+
   // TODO: This is only being used until each chart is updated to use ChartContainer inside.
   //  After everything is refactored,
   //  this should be deleted and we should just return getChart() at bottom of component instead
@@ -1462,6 +1476,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return null;
     }
   };
+
+  if (kpiConfig == null) {
+    return (<LoadingDialog size={"sm"} message={"Loading Insights"} />);
+  }
 
   // TODO: Chart container should be inside each chart component
   //  with loading passed in to allow chart to refresh while keeping existing data and also informing users it's updating.
