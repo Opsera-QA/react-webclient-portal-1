@@ -22,7 +22,7 @@ import CumulativeTotalDefectsDataBlock from "./data_blocks/total_defects/Cumulat
 import CumulativeTotalValidDefectsDataBlock from "./data_blocks/total_valid_defects/CumulativeTotalValidDefectsDataBlock";
 import CumulativeOpenDefectsHelpDocumentation from "components/common/help/documentation/insights/charts/CumulativeOpenDefectsHelpDocumentation";
 import { ResponsivePie } from "@nivo/pie";
-import config from "./cumulativeOpenDefectsPieChartConfig";
+import config from "./cumulativeOpenDefectsMetricsConfig";
 
 const CUMILATIVE_OPEN_DEFECT = "cumulative_open_defect";
 
@@ -105,9 +105,7 @@ function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, da
 
   const loadDataPoints = async () => {
     const dataPoints = kpiConfiguration?.dataPoints;
-
     const openDefectPercentageDataPoint = dataPointHelpers.getDataPoint(dataPoints, CUMILATIVE_OPEN_DEFECT);
-    console.log(openDefectPercentageDataPoint, "***openDefectPercentageDataPoint");
     setOpenDefectDataPoint(openDefectPercentageDataPoint);
   };
 
