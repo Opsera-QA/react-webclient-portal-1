@@ -18,6 +18,7 @@ function S3StepConfiguration(
     parentCallback,
     closeEditorPanel,
     plan,
+    stepId,
   }) {
   const [isLoading, setIsLoading] = useState(false);
   const [s3Model, setS3Model] = useState(undefined);
@@ -89,7 +90,7 @@ function S3StepConfiguration(
       <PipelineStepSelectInput
         fieldName={"buildStepId"}
         plan={plan}
-        stepId={stepTool?._id}
+        stepId={stepId}
         model={s3Model}
         setModel={setS3Model}
       />
@@ -107,6 +108,7 @@ S3StepConfiguration.propTypes = {
   parentCallback: PropTypes.func,
   closeEditorPanel: PropTypes.func,
   plan: PropTypes.array,
+  stepId: PropTypes.string,
 };
 
 export default S3StepConfiguration;
