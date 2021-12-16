@@ -12,6 +12,8 @@ function RoleRestrictedAwsAccountToolSelectInput(
     textField,
     disabled,
     filterDataFunction,
+    setDataFunction,
+    clearDataFunction,
   }) {
   return (
     <RoleRestrictedToolByIdentifierInputBase
@@ -21,6 +23,8 @@ function RoleRestrictedAwsAccountToolSelectInput(
       model={model}
       setModel={setModel}
       valueField={valueField}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
       textField={textField}
       disabled={disabled}
       filterDataFunction={filterDataFunction}
@@ -38,7 +42,9 @@ RoleRestrictedAwsAccountToolSelectInput.propTypes = {
     PropTypes.array,
   ]),
   valueField: PropTypes.string,
-  filterDataFunction: PropTypes.func
+  filterDataFunction: PropTypes.func,
+  setDataFunction: PropTypes.func,
+  clearDataFunction: PropTypes.func,
 };
 
 export default RoleRestrictedAwsAccountToolSelectInput;
