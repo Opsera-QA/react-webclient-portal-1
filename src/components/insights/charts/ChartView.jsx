@@ -123,7 +123,8 @@ import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieCh
 import AdoptionTestPercentageMetricV1 from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AdoptionTestPercentageMetricV1";
 import AutomatedTestResultsPieChart from "./qa_metrics/AutomatedTestResultsPieChart";
 import SFDCManualTestResultsPieChart from "./qa_metrics/SFDCManualTestResultsPieChart";
-import DefectRemovalEfficiencyPieChart from "./qa_metrics/DefectRemovalEfficiencyPieChart";
+// import DefectRemovalEfficiencyPieChart from "./qa_metrics/DefectRemovalEfficiencyPieChart";
+import DefectRemovalEfficiencyMetrics from "./defect_removal_efficiency/DefectRemovalEfficiencyMetrics";
 
 // SFDC KPIs
 import SalesforceBackupsAndRollbacksMetrics from "components/insights/charts/sfdc/salesforce_backups_and_rollbacks/SalesforceBackupsAndRollbacksMetrics";
@@ -1438,7 +1439,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "defect-removal-efficiency":
         return (
           <Col md={12} className="p-2">
-            <DefectRemovalEfficiencyPieChart
+            <DefectRemovalEfficiencyMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}

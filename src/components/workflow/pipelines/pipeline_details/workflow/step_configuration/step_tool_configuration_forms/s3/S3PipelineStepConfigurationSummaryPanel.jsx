@@ -4,11 +4,15 @@ import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function S3PipelineStepConfigurationSummaryPanel({ s3DataObject, pipelineData }) {
   return (
     <PipelineStepSummaryPanelContainer pipelineData={pipelineData}>
       <Row>
+        <Col lg={6}>
+          <ToolNameField dataObject={s3DataObject} fieldName={"awsToolConfigId"} />
+        </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={s3DataObject} fieldName={"jobType"} />
         </Col>
@@ -20,9 +24,6 @@ function S3PipelineStepConfigurationSummaryPanel({ s3DataObject, pipelineData })
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={s3DataObject} fieldName={"bucketName"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={s3DataObject} fieldName={"awsToolConfigId"} />
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
