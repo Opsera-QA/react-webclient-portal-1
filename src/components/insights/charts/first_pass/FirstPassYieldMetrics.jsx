@@ -93,41 +93,45 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
       return null;
     }
     return (
-      <div className="new-chart mb-3" style={{ height: "300px", display: "flex" }}>
-        <Container>
-          <Row className="px-4 justify-content-between">
-            <Col xl={6} lg={6} sm={6} className={"my-3"}>
-              <FirstPassYieldMetricDataBlockBase
-                score={metrics[0]?.totalTests}
-                subtitle="Total Test Cases Planned for First Run"
-              />
-            </Col>
-            <Col xl={6} lg={6} sm={6} className={"my-3"}>
-              <FirstPassYieldPercentageDataBlock
-                score={metrics[0]?.firstPassYield}
-                dataPoint={firstPassYieldDataPoint}
-              />
-            </Col>
-            <Col xl={6} lg={6} sm={6} className={"my-3"}>
-              <FirstPassYieldMetricDataBlockBase
-                score={metrics[0]?.passedTests}
-                subtitle="Total Test Cases Passed in First Run"
-              />
-            </Col>
-            <Col xl={6} lg={6} sm={6} className={"my-3"}>
-              <FirstPassYieldMetricDataBlockBase
-                score={metrics[0]?.failedTests}
-                subtitle="Total Test Cases Failed in First Run"
-              />
-            </Col>
-          </Row>
-        </Container>
-        <ResponsivePie
-          data={metrics[0]?.pairs}
-          {...defaultConfig()}
-          {...config(getColorByData)}
-          onClick={() => setShowModal(true)}
-        />
+      <div className="new-chart m-3 p-0" style={{ minHeight: "300px", display: "flex" }}>
+        <Row>
+          <Col xl={6} lg={6} md={8} className={"d-flex "}>
+            <Row>
+              <Col lg={6} className={"my-3"}>
+                <FirstPassYieldMetricDataBlockBase
+                  score={metrics[0]?.totalTests}
+                  subtitle="Total Test Cases Planned for First Run"
+                />
+              </Col>
+              <Col lg={6} className={"my-3"}>
+                <FirstPassYieldPercentageDataBlock
+                  score={metrics[0]?.firstPassYield}
+                  dataPoint={firstPassYieldDataPoint}
+                />
+              </Col>
+              <Col lg={6} className={"mb-3"}>
+                <FirstPassYieldMetricDataBlockBase
+                  score={metrics[0]?.passedTests}
+                  subtitle="Total Test Cases Passed in First Run"
+                />
+              </Col>
+              <Col lg={6} className={"mb-3"}>
+                <FirstPassYieldMetricDataBlockBase
+                  score={metrics[0]?.failedTests}
+                  subtitle="Total Test Cases Failed in First Run"
+                />
+              </Col>
+            </Row>
+          </Col>
+          <Col xl={6} lg={6} md={4} className={"my-2 p-2"}>
+            <ResponsivePie
+              data={metrics[0]?.pairs}
+              {...defaultConfig()}
+              {...config(getColorByData)}
+              onClick={() => setShowModal(true)}
+            />
+          </Col>
+        </Row>
       </div>
     );
   };
