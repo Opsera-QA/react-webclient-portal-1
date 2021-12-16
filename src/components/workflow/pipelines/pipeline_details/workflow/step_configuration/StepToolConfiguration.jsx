@@ -552,15 +552,10 @@ function StepToolConfiguration({
       case "s3":
         return (
           <S3StepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
+            plan={pipeline?.workflow?.plan}
             stepTool={stepTool}
             parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );
       case "databricks-notebook":

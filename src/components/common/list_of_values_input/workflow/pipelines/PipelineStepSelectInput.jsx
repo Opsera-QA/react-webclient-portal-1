@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
 function PipelineStepSelectInput({ fieldName, model, setModel, setDataFunction, disabled, plan, stepId }) {
   const [steps, setSteps] = useState([]);
@@ -19,7 +20,7 @@ function PipelineStepSelectInput({ fieldName, model, setModel, setDataFunction, 
     isMounted.current = true;
 
     setSteps([]);
-    if (plan && stepId) {
+    if (Array.isArray(plan) && isMongoDbId(stepId)) {
       const pipelineSteps = pipelineHelpers.formatStepOptions(plan, stepId);
       setSteps(pipelineSteps);
     }
