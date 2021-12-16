@@ -556,6 +556,7 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             closeEditorPanel={closeEditorPanel}
+            stepId={stepId}
           />
         );
       case "databricks-notebook":
