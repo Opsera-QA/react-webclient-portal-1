@@ -9,7 +9,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import { defaultConfig, getColorByData, assignStandardColors, shortenPieChartLegend } from "../charts-views";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import DefectRemovalEfficiencyPercentageDataBlock from "./data_blocks/DefectRemovalEfficiencyPercentageDataBlock";
 import DefectRemovalEfficiencyDataBlockBase from "./data_blocks/DefectRemovalEfficiencyDataBlockBase";
 
@@ -97,38 +97,42 @@ function DefectRemovalEfficiencyMetrics({ kpiConfiguration, setKpiConfiguration,
     }
 
     return (
-      <div className="new-chart mb-3" style={{ height: "300px", display: "flex" }}>
-        <Container>
-          <Row className="px-4 justify-content-between">
-            <Col xl={6} lg={6} sm={6} className={"my-3"}>
-              <DefectRemovalEfficiencyDataBlockBase
-                score={metrics[0]?.testingPhaseDefects}
-                subtitle={"Defects in Testing Phase"}
-              />
-            </Col>
-            <Col xl={6} lg={6} sm={6} className={"my-3"}>
-              <DefectRemovalEfficiencyPercentageDataBlock
-                score={metrics[0]?.dre}
-                dataPoint={defectRemovalEfficiencyDataPoint}
-              />
-            </Col>
-            <Col xl={6} lg={6} sm={6} className={"my-3"}>
-              <DefectRemovalEfficiencyDataBlockBase score={metrics[0]?.uatDefects} subtitle={"Defects in UAT"} />
-            </Col>
-            <Col xl={6} lg={6} sm={6} className={"my-3"}>
-              <DefectRemovalEfficiencyDataBlockBase
-                score={metrics[0]?.postProductionDefects}
-                subtitle={"Defects in Post Production"}
-              />
-            </Col>
-          </Row>
-        </Container>
-        <ResponsivePie
-          data={metrics[0]?.pairs}
-          {...defaultConfig()}
-          {...config(getColorByData)}
-          onClick={() => setShowModal(true)}
-        />
+      <div className="new-chart mb-1" style={{ minHeight: "300px", display: "flex" }}>
+        <Row>
+          <Col xl={6} lg={6} md={8} className={"d-flex align-content-around"}>
+            <Row className="px-4 justify-content-between">
+              <Col xl={6} lg={6} sm={6} className={"my-1"}>
+                <DefectRemovalEfficiencyDataBlockBase
+                  score={metrics[0]?.testingPhaseDefects}
+                  subtitle={"Defects in Testing Phase"}
+                />
+              </Col>
+              <Col xl={6} lg={6} sm={6} className={"my-1"}>
+                <DefectRemovalEfficiencyPercentageDataBlock
+                  score={metrics[0]?.dre}
+                  dataPoint={defectRemovalEfficiencyDataPoint}
+                />
+              </Col>
+              <Col xl={6} lg={6} sm={6} className={"my-1"}>
+                <DefectRemovalEfficiencyDataBlockBase score={metrics[0]?.uatDefects} subtitle={"Defects in UAT"} />
+              </Col>
+              <Col xl={6} lg={6} sm={6} className={"my-1"}>
+                <DefectRemovalEfficiencyDataBlockBase
+                  score={metrics[0]?.postProductionDefects}
+                  subtitle={"Defects in Post Production"}
+                />
+              </Col>
+            </Row>
+          </Col>
+          <Col xl={6} lg={6} md={4} className={"my-1"}>
+            <ResponsivePie
+              data={metrics[0]?.pairs}
+              {...defaultConfig()}
+              {...config(getColorByData)}
+              onClick={() => setShowModal(true)}
+            />
+          </Col>
+        </Row>
       </div>
     );
   };

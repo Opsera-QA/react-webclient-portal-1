@@ -6,7 +6,7 @@ import TwoLinePercentageDataBlock from "components/common/metrics/percentage/Two
 function DefectRemovalEfficiencyPercentageDataBlock({ score, dataPoint }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
-      <div className={"p-3"}>
+      <div className={"p-2"} style={{minHeight: '100px'}}>
         <TwoLinePercentageDataBlock dataPoint={dataPoint} percentage={score} subtitle={"Defect Removal Efficiency"} />
       </div>
     </DataBlockBoxContainer>

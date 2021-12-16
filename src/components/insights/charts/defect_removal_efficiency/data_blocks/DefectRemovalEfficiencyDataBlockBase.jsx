@@ -6,7 +6,7 @@ import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/Two
 function DefectRemovalEfficiencyDataBlockBase({ score, subtitle, onClickFunction }) {
   return (
     <DataBlockBoxContainer showBorder={true} onClickFunction={onClickFunction}>
-      <div className={"p-3"}>
+      <div className={"p-2"} style={{minHeight: '100px'}}>
         <TwoLineDataBlockBase className={"defect-removal-efficiency"} title={score} subtitle={subtitle} />
       </div>
     </DataBlockBoxContainer>
