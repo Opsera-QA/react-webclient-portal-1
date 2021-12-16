@@ -70,7 +70,8 @@ function ServiceNowMeanTimeToResolutionBarChart({
           kpiConfiguration,
           dashboardTags
         ),
-        dataObject = response?.data?.data[0]?.serviceNowMTTR?.data[0]?.docs;
+        dataObject = response?.data?.data[0]?.serviceNowMTTR?.data[0]?.docs,
+        overallMeanValue = response?.data?.data[0]?.serviceNowMTTR?.data[0]?.overallMttrMins;
 
       assignStandardColors(dataObject, true);
       if (dataObject && dataObject.length) {
@@ -79,7 +80,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
-        setOverallMean(response?.data?.data[0]?.serviceNowMTTR?.data[0]?.overallMttrMins);
+        setOverallMean(overallMeanValue);
       }
 
       if (!dataObject) {
