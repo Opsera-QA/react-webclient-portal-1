@@ -15,9 +15,9 @@ export const INFORMATICA_RUN_ASSISTANT_SCREENS = {
   COMPONENT_SELECTOR: "COMPONENT_SELECTOR", // TODO: Rename based on what makes sense in the context of Informatica.
 };
 
-const InformaticaPipelineRunAssistant = ({ pipeline, handlePipelineWizardRequest, handleClose, refreshPipelineActivityData, gitTaskData, pipelineOrientation }) => {
+const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, closePanelFunction, pipelineOrientation }) => {
   const [error, setError] = useState("");
-  const [pipelineWizardScreen, setPipelineWizardScreen] = useState(PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);
+  const [pipelineWizardScreen, setPipelineWizardScreen] = useState(INFORMATICA_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN);
   const [pipelineWizardModel, setPipelineWizardModel] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -122,12 +122,9 @@ const InformaticaPipelineRunAssistant = ({ pipeline, handlePipelineWizardRequest
 };
 
 InformaticaPipelineRunAssistant.propTypes = {
-  pipelineId: PropTypes.string,
   pipeline: PropTypes.object,
-  handlePipelineWizardRequest: PropTypes.func,
-  handleClose: PropTypes.func,
-  refreshPipelineActivityData: PropTypes.func,
-  gitTaskData: PropTypes.object,
+  startPipelineRunFunction: PropTypes.func,
+  closePanelFunction: PropTypes.func,
   pipelineOrientation: PropTypes.string,
 };
 

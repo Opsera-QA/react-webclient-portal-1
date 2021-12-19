@@ -25,6 +25,8 @@ import pipelineActions from "../../pipeline-actions";
 import CancelPipelineQueueConfirmationOverlay
   from "components/workflow/pipelines/pipeline_details/queuing/cancellation/CancelPipelineQueueConfirmationOverlay";
 import commonActions from "../../../common/common.actions";
+import InformaticaPipelineRunAssistantOverlay
+  from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistantOverlay";
 
 const delayCheckInterval = 8000;
 
@@ -386,17 +388,11 @@ function PipelineActionControls({
   };
 
   const launchInformaticaRunAssistant = (pipelineOrientation, pipelineId) => {
-    // TODO: Create Informatica Run Assistant
-    // toastContext.showOverlayPanel(
-    //   <PipelineStartWizard
-    //     pipelineOrientation={pipelineOrientation}
-    //     pipelineId={pipelineId}
-    //     pipeline={pipeline}
-    //     handleClose={handlePipelineStartWizardClose}
-    //     handlePipelineWizardRequest={handlePipelineWizardRequest}
-    //     refreshPipelineActivityData={fetchActivityLogs}
-    //   />,
-    // );
+    toastContext.showOverlayPanel(
+      <InformaticaPipelineRunAssistantOverlay
+        pipeline={pipeline}
+      />
+    );
   };
 
   const handleRunPipelineClick = async (pipelineId) => {
