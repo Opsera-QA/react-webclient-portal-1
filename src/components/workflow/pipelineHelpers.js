@@ -191,21 +191,6 @@ pipelineHelpers.getRegistryPopover = (data) => {
   }
 };
 
-pipelineHelpers.PIPELINE_TYPES = [
-  { id: "", name: "No Value", groupId: "Pipeline Types" },
-  { id: "sfdc", name: "Salesforce", groupId: "Pipeline Types" },
-  { id: "sdlc", name: "Software Development", groupId: "Pipeline Types" },
-  { id: "ai-ml", name: "Machine Learning (AI)", groupId: "Pipeline Types" },
-];
-
-// TODO: Make actual types file.
-pipelineHelpers.PIPELINE_TYPES_ = [
-  { value: "sfdc", text: "Salesforce", groupId: "Pipeline Types" },
-  { value: "sdlc", text: "Software Development", groupId: "Pipeline Types" },
-  { value: "ai-ml", text: "Machine Learning (AI)", groupId: "Pipeline Types" },
-  { value: "informatica", text: "Informatica", groupId: "Pipeline Types" },
-];
-
 pipelineHelpers.formatStepOptions = (plan, stepId) => {
   let STEP_OPTIONS = plan.slice(
     0,
