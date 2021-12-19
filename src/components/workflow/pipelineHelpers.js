@@ -198,10 +198,12 @@ pipelineHelpers.PIPELINE_TYPES = [
   { id: "ai-ml", name: "Machine Learning (AI)", groupId: "Pipeline Types" },
 ];
 
+// TODO: Make actual types file.
 pipelineHelpers.PIPELINE_TYPES_ = [
   { value: "sfdc", text: "Salesforce", groupId: "Pipeline Types" },
   { value: "sdlc", text: "Software Development", groupId: "Pipeline Types" },
   { value: "ai-ml", text: "Machine Learning (AI)", groupId: "Pipeline Types" },
+  { value: "informatica", text: "Informatica", groupId: "Pipeline Types" },
 ];
 
 pipelineHelpers.formatStepOptions = (plan, stepId) => {
