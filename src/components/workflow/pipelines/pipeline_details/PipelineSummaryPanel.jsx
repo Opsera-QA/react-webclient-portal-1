@@ -32,6 +32,7 @@ import PipelineScheduledTasksOverlay from "components/workflow/pipelines/schedul
 import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
 import PipelineDetailsOverviewOverlay from "components/workflow/pipelines/overview/PipelineDetailsOverviewOverlay";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import {PIPELINE_TYPE_SELECT_OPTIONS} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -489,7 +490,7 @@ function PipelineSummaryPanel(
             <div className="d-flex mt-1">
               <div className="w-75">
                 <StandaloneSelectInput
-                  selectOptions={pipelineHelpers.PIPELINE_TYPES}
+                  selectOptions={PIPELINE_TYPE_SELECT_OPTIONS}
                   defaultValue={pipeline.type[0]}
                   valueField={"id"}
                   textField={"name"}
