@@ -58,7 +58,7 @@ const flywayDatabaseStepFormMetadata = {
     {
       label: "Scripts Location",
       id: "scriptFilePath",
-      regexDefinitionName: "generalText",
+      regexDefinitionName: "pathField",
       maxLength: 50,
       formText: "point to a directory containing SQL migrations, scanned recursively"
     },  

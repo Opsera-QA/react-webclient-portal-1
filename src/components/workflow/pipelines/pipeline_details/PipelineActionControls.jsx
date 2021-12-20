@@ -25,6 +25,8 @@ import pipelineActions from "../../pipeline-actions";
 import CancelPipelineQueueConfirmationOverlay
   from "components/workflow/pipelines/pipeline_details/queuing/cancellation/CancelPipelineQueueConfirmationOverlay";
 import commonActions from "../../../common/common.actions";
+import InformaticaPipelineRunAssistantOverlay
+  from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistantOverlay";
 
 const delayCheckInterval = 8000;
 
@@ -385,6 +387,14 @@ function PipelineActionControls({
     await handleResumeWorkflowClick(pipelineId);
   };
 
+  // const launchInformaticaRunAssistant = (pipelineOrientation, pipelineId) => {
+  //   toastContext.showOverlayPanel(
+  //     <InformaticaPipelineRunAssistantOverlay
+  //       pipeline={pipeline}
+  //     />
+  //   );
+  // };
+
   const handleRunPipelineClick = async (pipelineId) => {
     //check type of pipeline to determine if pre-flight wizard is required
     // is pipeline at the beginning or stopped midway or end of prior?
@@ -407,6 +417,8 @@ function PipelineActionControls({
       launchFreeTrialPipelineStartWizard(pipelineId, "", handleCloseFreeTrialDeploy);
     } else if (pipelineType === "sfdc") {
       launchPipelineStartWizard(pipelineOrientation, pipelineType, pipelineId);
+    // } else if (pipelineType === "informatica") {
+    //   launchInformaticaRunAssistant(pipelineOrientation, pipelineType, pipelineId);
     } else {
       if (pipelineOrientation === "middle") {
         //this is the middle, so pop the new modal to confirm user wants to resume or offer reset/restart

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import pipelineHelpers from "components/workflow/pipelineHelpers";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
+import {PIPELINE_TYPE_SELECT_OPTIONS} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 
 function PipelineTypeFilter({ filterDto, setFilterDto, setDataFunction, className, inline, fieldName, isLoading }) {
   if (filterDto == null) {
@@ -17,7 +17,7 @@ function PipelineTypeFilter({ filterDto, setFilterDto, setDataFunction, classNam
         setDataFunction={setDataFunction}
         dataObject={filterDto}
         disabled={isLoading}
-        selectOptions={pipelineHelpers.PIPELINE_TYPES_}
+        selectOptions={PIPELINE_TYPE_SELECT_OPTIONS}
         inline={inline}
       />
     </div>

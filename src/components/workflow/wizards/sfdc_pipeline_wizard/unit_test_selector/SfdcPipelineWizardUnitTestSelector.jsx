@@ -74,7 +74,7 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
       if (Array.isArray(selectedTestClasses) && selectedTestClasses.length > 0) {
         setSelectedUnitTestClassesList(testClasses?.filter((testClasses)=> selectedTestClasses.includes(testClasses)));
       }
-        
+
       setUnitTestClassesList(testClasses);
     } catch (error) {
       console.error("Error getting API Data: ", error);
@@ -83,7 +83,7 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
       setUnitTestListLoading(false);
     }
   };
-  
+
   const handleStepClick = async (step) => {
     await getTestClasses(step);
   };

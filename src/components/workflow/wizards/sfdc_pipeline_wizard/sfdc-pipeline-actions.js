@@ -452,16 +452,16 @@ sfdcPipelineActions.getPackageXmlFromRun = async (getAccessToken, cancelTokenSou
 
   if (Array.isArray(logs) && logs.length > 0) {
     for (let i = 0; i < logs.length; i++) {
-      try {
-        const packageXml = parsePackageXml(logs[i]);
+     try {
+       const packageXml = parsePackageXml(logs[i]);
 
-        if (packageXml != null) {
-          return packageXml;
-        }
-      }
-      catch (error) {
-        console.error(error);
-      }
+       if (packageXml != null) {
+         return packageXml;
+       }
+     }
+     catch (error) {
+       console.error(error);
+     }
     }
   }
 

@@ -177,6 +177,6 @@ const maxLengthValidator = (value, maxLength) => {
 
 // TODO: THis probably doesn't work with boolean values,
 //  however boolean values by design should always have a value
-const requiredValidator = value => {
+const requiredValidator = (value) => {
   return value != null && !!value;
 };
