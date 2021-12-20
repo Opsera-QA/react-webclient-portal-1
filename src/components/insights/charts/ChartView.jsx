@@ -119,7 +119,6 @@ import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/
 //QA Testing
 import CumulativeOpenDefectsMetric from "./cumulative_open_defects/CumulativeOpenDefectsMetric";
 import ManualQaTestPieChart from "components/insights/charts/qa_metrics/ManualQaTestPieChart";
-import FirstPassYieldPieChart from "components/insights/charts/qa_metrics/FirstPassYieldPieChart";
 import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieChart";
 import AdoptionTestPercentageMetricV1 from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AdoptionTestPercentageMetricV1";
 import AutomatedTestResultsPieChart from "./qa_metrics/AutomatedTestResultsPieChart";
@@ -149,6 +148,7 @@ import LegacySonarRatingMetrics from "components/insights/charts/sonar/sonar_rat
 import SonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings/SonarRatingMetrics";
 import AutomatedTestAdoptionRateMetric
   from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AutomatedTestAdoptionRateMetric";
+import FirstPassYieldMetrics from "./first_pass/FirstPassYieldMetrics";
 import LoadingDialog from "components/common/status_notifications/loading";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
@@ -1263,7 +1263,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "first-pass-yield":
         return (
           <Col md={12} className="p-2">
-            <FirstPassYieldPieChart
+            <FirstPassYieldMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}

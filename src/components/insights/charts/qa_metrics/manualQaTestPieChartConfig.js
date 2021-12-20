@@ -1,8 +1,8 @@
-export default (getColor) => ({
+export default (getColor, METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY) => ({
   keys: ["tests"],
   sortByValue: true,
-  innerRadius: .5,
+  innerRadius: 0.5,
   sliceLabelsSkipAngle: 10,
   sliceLabelsTextColor: "#ffffff",
-  colors: ["#ABA4CC", "#696969", "#B1AeA7", "#7A756C"]
+  colors: METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY,
 });
