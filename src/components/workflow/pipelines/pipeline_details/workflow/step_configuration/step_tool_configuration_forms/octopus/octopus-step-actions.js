@@ -245,4 +245,9 @@ OctopusStepActions.getTenantsV2 = async (getAccessToken, cancelTokenSource, id, 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+OctopusStepActions.getVariableTypes = async (getAccessToken, cancelTokenSource, id, spaceId, deploymentType) => {
+  const apiUrl = `/tools/octopus/variableTypes/${id}/${spaceId}/${deploymentType}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 export default OctopusStepActions;
