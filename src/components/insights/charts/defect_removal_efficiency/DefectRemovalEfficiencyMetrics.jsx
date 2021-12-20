@@ -12,6 +12,7 @@ import { defaultConfig, getColorByData, assignStandardColors, shortenPieChartLeg
 import { Col, Row } from "react-bootstrap";
 import DefectRemovalEfficiencyPercentageDataBlock from "./data_blocks/DefectRemovalEfficiencyPercentageDataBlock";
 import DefectRemovalEfficiencyDataBlockBase from "./data_blocks/DefectRemovalEfficiencyDataBlockBase";
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 
 const DEFECT_REMOVAL_EFFICIENCY = "defect_removal_efficiency";
 
@@ -128,7 +129,7 @@ function DefectRemovalEfficiencyMetrics({ kpiConfiguration, setKpiConfiguration,
             <ResponsivePie
               data={metrics[0]?.pairs}
               {...defaultConfig()}
-              {...config(getColorByData)}
+              {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
               onClick={() => setShowModal(true)}
             />
           </Col>
