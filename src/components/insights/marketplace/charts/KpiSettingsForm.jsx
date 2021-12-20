@@ -917,7 +917,7 @@ function KpiSettingsForm({
 
     // TODO: This is forced because the dashboard detail view refresh doesn't work after saving.
     //  This needs to be addressed and removed.
-    setKpiConfiguration(kpiSettings?.getPersistData());
+    setKpiConfiguration({...kpiSettings?.getPersistData()});
 
     await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardData);
 
