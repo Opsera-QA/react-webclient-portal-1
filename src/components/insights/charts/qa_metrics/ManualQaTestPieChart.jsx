@@ -12,6 +12,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import TwoLineScoreDataBlock from "../../../common/metrics/score/TwoLineScoreDataBlock";
 import TwoLinePercentageDataBlock from "../../../common/metrics/percentage/TwoLinePercentageDataBlock";
 import { dataPointHelpers } from "../../../common/helpers/metrics/data_point/dataPoint.helpers";
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 
 const MANUAL_TESTING_RESULTS_DATA_POINT_IDENTIFIERS = {
   passRateDataPoint: "manual-testing-results-quality-level",
@@ -123,7 +124,7 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
         <ResponsivePie
           data={metrics[0]?.pairs}
           {...defaultConfig()}
-          {...config(getColorByData)}
+          {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
           onClick={() => setShowModal(true)}
         />
       </div>
