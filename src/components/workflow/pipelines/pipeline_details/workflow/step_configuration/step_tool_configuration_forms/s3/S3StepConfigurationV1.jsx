@@ -39,7 +39,7 @@ const BUCKET_ACCESS = [
   {name: "Private", value: "private"}
 ];
 
-// TODO: This needs a heavy refactor
+// TODO: Remove after a few releases with the new form
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
 function S3StepConfigurationV1({
