@@ -20,6 +20,7 @@ import OctopusDeployToIisView from "./OctopusDeployToIisView";
 import OctopusDeployToJavaArchiveView from "./OctopusDeployToJavaArchiveView";
 import OctopusKubernetesPlatform from "./OctopusKubernetesPlatform";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import OctopusCustomParametersInput from "../input/OctopusCustomParametersInput";
 
 function OctopusOpseraManagedProjectForm({
     dataObject, 
@@ -227,8 +228,8 @@ function OctopusOpseraManagedProjectForm({
           />
           {dataObject && dataObject.getData("specifyDepVariables") && (
             <>
-              <OctopusDeploymentVariables
-                fieldName={"deploymentVariables"}
+              <OctopusCustomParametersInput
+                fieldName={"customVariableList"}
                 dataObject={dataObject}
                 setDataObject={setDataObject}
               />
