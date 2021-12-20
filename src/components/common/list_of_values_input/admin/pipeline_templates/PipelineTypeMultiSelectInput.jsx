@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 
-function PipelineTypeMultiselectInput({ fieldName, dataObject, setDataObject, disabled }) {
+function PipelineTypeMultiSelectInput({ fieldName, dataObject, setDataObject, disabled }) {
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
@@ -17,15 +17,15 @@ function PipelineTypeMultiselectInput({ fieldName, dataObject, setDataObject, di
   );
 }
 
-PipelineTypeMultiselectInput.propTypes = {
+PipelineTypeMultiSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-PipelineTypeMultiselectInput.defaultProps = {
+PipelineTypeMultiSelectInput.defaultProps = {
   fieldName: "type"
 };
 
-export default PipelineTypeMultiselectInput;
+export default PipelineTypeMultiSelectInput;
