@@ -10,6 +10,7 @@ import ToolConfigurationEditorPanelContainer
 import Col from "react-bootstrap/Col";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
+import SonarEditionSelectInput from "components/common/list_of_values_input/tools/code_scan/SonarEditionSelectInput";
 
 function SonarToolConfiguration( { toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -41,6 +42,7 @@ function SonarToolConfiguration( { toolData }) {
     >
       <Row>
         <Col sm={12}>
+          <SonarEditionSelectInput dataObject={sonarConfigurationDto} setDataObject={setSonarConfigurationDto} fieldName={"sonarEdition"} />
           <TextInputBase dataObject={sonarConfigurationDto} setDataObject={setSonarConfigurationDto} fieldName={"sonarUrl"} />
           <TextInputBase dataObject={sonarConfigurationDto} setDataObject={setSonarConfigurationDto} fieldName={"sonarPort"} />
           <TextInputBase dataObject={sonarConfigurationDto} setDataObject={setSonarConfigurationDto} fieldName={"sonarUserId"} />
