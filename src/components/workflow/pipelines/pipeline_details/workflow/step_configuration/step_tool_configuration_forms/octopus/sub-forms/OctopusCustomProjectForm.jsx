@@ -7,9 +7,9 @@ import OctopusFeedSelectInput from "../input/OctopusFeedSelectInput";
 import RollbackToggleInput from "../input/RollbackToggleInput";
 import OctopusVersionSelectInput from "../input/OctopusVersionSelectInput";
 import OctopusSpecifyDepVarsToggle from "../input/OctopusSpecifyDepVarsToggle";
-import OctopusDeploymentVariables from "../input/OctopusDeploymentVariables";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import OctopusTenantInputBase from "components/common/inputs/object/pipelines/octopus/OctopusTenantInputBase";
+import OctopusCustomParametersInput from "../input/OctopusCustomParametersInput";
 
 // TODO: Refactor soon
 function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabled, pipelineId, listOfSteps }) {
@@ -106,13 +106,11 @@ function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabl
         fieldName={"specifyDepVariables"}
       />
       {dataObject && dataObject.getData("specifyDepVariables") && (
-        <>
-          <OctopusDeploymentVariables
-            fieldName={"deploymentVariables"}
-            dataObject={dataObject}
-            setDataObject={setDataObject}
-          />          
-        </>
+        <OctopusCustomParametersInput
+          fieldName={"customVariableList"}
+          dataObject={dataObject}
+          setDataObject={setDataObject}
+        />        
       )}
     </>
   );
