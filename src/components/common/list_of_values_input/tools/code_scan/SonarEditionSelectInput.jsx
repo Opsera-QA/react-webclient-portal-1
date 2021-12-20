@@ -22,7 +22,6 @@ export const SONAR_TOOL_IDENTIFIERS = [
 ];
 
 function SonarEditionSelectInput({dataObject, setDataObject, fieldName, disabled, setDataFunction, clearDataFunction}) {
-  console.log("sdcsd");
   return (
     <SelectInputBase
       setDataObject={setDataObject}
