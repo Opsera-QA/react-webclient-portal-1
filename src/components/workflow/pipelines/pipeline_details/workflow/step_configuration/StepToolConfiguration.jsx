@@ -1037,14 +1037,14 @@ function StepToolConfiguration({
                 closeEditorPanel={closeEditorPanel}
               />
             );
-      case "azure-zip-deployment":
-        return (
-          <AzureZipDeploymentStepConfiguration
-            closeEditorPanel={closeEditorPanel}
-            parentCallback={parentCallback}
-            stepTool={stepTool}
-          />
-        );
+      // case "azure-zip-deployment":
+      //   return (
+      //     <AzureZipDeploymentStepConfiguration
+      //       closeEditorPanel={closeEditorPanel}
+      //       parentCallback={callbackFunction}
+      //       stepTool={stepTool}
+      //     />
+      //   );
     }
   };
 

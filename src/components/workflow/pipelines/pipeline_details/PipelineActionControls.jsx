@@ -387,13 +387,13 @@ function PipelineActionControls({
     await handleResumeWorkflowClick(pipelineId);
   };
 
-  const launchInformaticaRunAssistant = (pipelineOrientation, pipelineId) => {
-    toastContext.showOverlayPanel(
-      <InformaticaPipelineRunAssistantOverlay
-        pipeline={pipeline}
-      />
-    );
-  };
+  // const launchInformaticaRunAssistant = (pipelineOrientation, pipelineId) => {
+  //   toastContext.showOverlayPanel(
+  //     <InformaticaPipelineRunAssistantOverlay
+  //       pipeline={pipeline}
+  //     />
+  //   );
+  // };
 
   const handleRunPipelineClick = async (pipelineId) => {
     //check type of pipeline to determine if pre-flight wizard is required
@@ -417,8 +417,8 @@ function PipelineActionControls({
       launchFreeTrialPipelineStartWizard(pipelineId, "", handleCloseFreeTrialDeploy);
     } else if (pipelineType === "sfdc") {
       launchPipelineStartWizard(pipelineOrientation, pipelineType, pipelineId);
-    }else if (pipelineType === "informatica") {
-      launchInformaticaRunAssistant(pipelineOrientation, pipelineType, pipelineId);
+    // } else if (pipelineType === "informatica") {
+    //   launchInformaticaRunAssistant(pipelineOrientation, pipelineType, pipelineId);
     } else {
       if (pipelineOrientation === "middle") {
         //this is the middle, so pop the new modal to confirm user wants to resume or offer reset/restart
