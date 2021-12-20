@@ -7,6 +7,10 @@ const CoverityActionableMetadata = {
       id: "project",
     },
     {
+      label: "Pipeline Name",
+      id: "pipelineName",
+    },
+    {
       label: "Recent Scan",
       id: "run",
     },

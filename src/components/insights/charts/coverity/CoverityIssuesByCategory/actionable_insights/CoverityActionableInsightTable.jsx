@@ -23,6 +23,7 @@ function CoverityActionableInsightTable({ data, isLoading, loadData, filterModel
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "project"), "project"),
+      getTableTextColumn(getField(fields, "pipelineName"), "pipelineName"),
       getTableTextColumn(getField(fields, "run"), "run"),
       getChartTrendStatusColumn(getField(fields, "trend"), "trend"),
       getTableTextColumn(getField(fields, "total_issues"), "total_issues"),
