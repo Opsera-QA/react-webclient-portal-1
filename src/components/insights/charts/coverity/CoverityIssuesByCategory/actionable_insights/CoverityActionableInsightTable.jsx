@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import CoverityActionableMetadata from "./coverity-actionable-insight-metadata";
 import {
-  getChartTrendStatusColumn,
+  getChartTrendStatusColumn, getTableDateTimeColumn,
   getTableTextColumn,
   getTableTextColumnWithoutField,
 } from "components/common/table/table-column-helpers";
@@ -12,6 +12,7 @@ import CustomTable from "components/common/table/CustomTable";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
+import { getFormattedTimestamp } from "../../../../../common/fields/date/DateFieldBase";
 
 // TODO: Convert to cards
 function CoverityActionableInsightTable({ data, isLoading, loadData, filterModel, setFilterModel, title }) {
@@ -23,7 +24,9 @@ function CoverityActionableInsightTable({ data, isLoading, loadData, filterModel
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "project"), "project"),
+      getTableTextColumn(getField(fields, "pipelineName"), "pipelineName"),
       getTableTextColumn(getField(fields, "run"), "run"),
+      getTableDateTimeColumn(getField(fields, "timestamp"), "timestamp"),
       getChartTrendStatusColumn(getField(fields, "trend"), "trend"),
       getTableTextColumn(getField(fields, "total_issues"), "total_issues"),
       getTableTextColumn(getField(fields, "quality_issues"), "quality_issues"),
