@@ -33,13 +33,18 @@ function ChartContainer(
   const [view, setView] = useState("chart");
   const [helpIsShown, setHelpIsShown] = useState(false);
   const isMounted = useRef(false);
+
   useEffect(() => {
     isMounted.current = true;
+
+    if (loadChart) {
+      loadChart();
+    }
 
     return () => {
       isMounted.current = false;
     };
-  }, []);
+  }, [JSON.stringify(kpiConfiguration)]);
 
   const closeHelpPanel = () => {
     setHelpIsShown(false);
@@ -66,7 +71,6 @@ function ChartContainer(
         settingsHelpComponent={settingsHelpComponent}
         dashboardData={dashboardData}
         index={index}
-        loadData={loadChart}
         setKpis={setKpis}
         setView={setView}
         isMounted={isMounted}

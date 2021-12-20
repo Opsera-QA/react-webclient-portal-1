@@ -9,10 +9,6 @@ function ChartSettingsOverlay({ kpiConfiguration, setKpiConfiguration, dashboard
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
-    if (isMounted?.current === true) {
-      loadData();
-    }
-
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
   };
