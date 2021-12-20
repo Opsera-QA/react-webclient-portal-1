@@ -57,7 +57,7 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
           }}
           tooltip={(node) => (            
             <ChartTooltip
-              titles={["Date Range", "Number of Builds", "Avg Daily Builds"]}
+              titles={["Date Range", "Number of Deployments", "Avg Daily Deployments"]}
               values={[node.point.data.range, node.point.data.total, node.point.data.y]}
             />
           )}          
