@@ -208,7 +208,7 @@ export class Model {
     // TODO: this is only at the top level, add support for trimming inner objects
     try {
       Object.keys(data).forEach(key => {
-        if (typeof data[key] == 'string') {
+        if (typeof data[key] === 'string') {
           data[key] = data[key].trim();
         }
       });

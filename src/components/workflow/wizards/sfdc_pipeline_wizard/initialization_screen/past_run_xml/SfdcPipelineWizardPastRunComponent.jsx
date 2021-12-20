@@ -10,8 +10,6 @@ import PipelineRunSelectInput
   from "components/common/list_of_values_input/workflow/pipelines/run/PipelineRunSelectInput";
 import SfdcPipelineWizardUploadComponentTypesRadioInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardUploadComponentTypesRadioInput";
-import SfdcComponentListInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcComponentListInput";
 import SfdcPipelineWizardIncludeDependenciesToggle
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
 
@@ -69,7 +67,7 @@ function SfdcPipelineWizardPastRunComponent({ pipelineWizardModel, setPipelineWi
       </>
     );
   };
-  
+
   const buttonContainer = () => {
     return (
       <SaveButtonContainer>
