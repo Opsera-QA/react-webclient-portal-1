@@ -1,22 +1,22 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { ResponsivePie } from "@nivo/pie";
-import config from "./defectRemovalEfficiencyMetricsConfig";
+import config from "./firstPassYieldMetricConfig";
 import ModalLogs from "components/common/modal/modalLogs";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
+import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColorByData, assignStandardColors, shortenPieChartLegend } from "../charts-views";
-import { Col, Row } from "react-bootstrap";
-import DefectRemovalEfficiencyPercentageDataBlock from "./data_blocks/DefectRemovalEfficiencyPercentageDataBlock";
-import DefectRemovalEfficiencyDataBlockBase from "./data_blocks/DefectRemovalEfficiencyDataBlockBase";
+import { Col, Container, Row } from "react-bootstrap";
+import FirstPassYieldMetricDataBlockBase from "./data_blocks/FirstPassYieldMetricDataBlockBase";
+import FirstPassYieldPercentageDataBlock from "./data_blocks/FirstPassYieldPercentageDataBlock";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 
-const DEFECT_REMOVAL_EFFICIENCY = "defect_removal_efficiency";
+const FIRST_PASS_YIELD = "first_pass_yield";
 
-function DefectRemovalEfficiencyMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -24,7 +24,7 @@ function DefectRemovalEfficiencyMetrics({ kpiConfiguration, setKpiConfiguration,
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [defectRemovalEfficiencyDataPoint, setDefectRemovalEfficiencyDataPoint] = useState(undefined);
+  const [firstPassYieldDataPoint, setFirstPassYieldDataPoint] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -47,35 +47,6 @@ function DefectRemovalEfficiencyMetrics({ kpiConfiguration, setKpiConfiguration,
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadChartMetrics = async (cancelSource = cancelTokenSource) => {
-    setIsLoading(true);
-    let dashboardTags =
-      dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-    const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-      getAccessToken,
-      cancelSource,
-      "defectRemovalEfficiency",
-      kpiConfiguration,
-      dashboardTags
-    );
-    let dataObject = response?.data ? response?.data?.data[0]?.defectRemovalEfficiencyData?.data : [];
-    assignStandardColors(dataObject[0]?.pairs);
-    shortenPieChartLegend(dataObject[0]?.pairs);
-
-    if (isMounted?.current === true && dataObject) {
-      setMetrics(dataObject);
-    }
-  };
-
-  const loadDataPoints = async () => {
-    const dataPoints = kpiConfiguration?.dataPoints;
-    const defectRemovalEfficiencyPercentageDataPoint = dataPointHelpers.getDataPoint(
-      dataPoints,
-      DEFECT_REMOVAL_EFFICIENCY
-    );
-    setDefectRemovalEfficiencyDataPoint(defectRemovalEfficiencyPercentageDataPoint);
-  };
-
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       await loadChartMetrics(cancelSource);
@@ -92,40 +63,68 @@ function DefectRemovalEfficiencyMetrics({ kpiConfiguration, setKpiConfiguration,
     }
   };
 
+  const loadChartMetrics = async (cancelSource = cancelTokenSource) => {
+    setIsLoading(true);
+    let dashboardTags =
+      dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+    const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+      getAccessToken,
+      cancelSource,
+      "firstPassYield",
+      kpiConfiguration,
+      dashboardTags
+    );
+    let dataObject = response?.data ? response?.data?.data[0]?.firstPassYield?.data : [];
+    assignStandardColors(dataObject[0]?.pairs);
+    shortenPieChartLegend(dataObject[0]?.pairs);
+
+    if (isMounted?.current === true && dataObject) {
+      setMetrics(dataObject);
+    }
+  };
+
+  const loadDataPoints = async () => {
+    const dataPoints = kpiConfiguration?.dataPoints;
+    const firstPassYieldPercentageDataPoint = dataPointHelpers.getDataPoint(dataPoints, FIRST_PASS_YIELD);
+    setFirstPassYieldDataPoint(firstPassYieldPercentageDataPoint);
+  };
+
   const getChartBody = () => {
-    if (!Array.isArray(metrics[0]?.pairs) || metrics[0]?.pairs.length === 0) {
+    if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
-
     return (
-      <div className="new-chart mb-1" style={{ minHeight: "300px", display: "flex" }}>
+      <div className="new-chart m-3 p-0" style={{ minHeight: "300px", display: "flex" }}>
         <Row>
-          <Col xl={6} lg={6} md={8} className={"d-flex align-content-around"}>
-            <Row className="px-4 justify-content-between">
-              <Col xl={6} lg={6} sm={6} className={"my-1"}>
-                <DefectRemovalEfficiencyDataBlockBase
-                  score={metrics[0]?.testingPhaseDefects}
-                  subtitle={"Defects in Testing Phase"}
+          <Col xl={6} lg={6} md={8} className={"d-flex "}>
+            <Row>
+              <Col lg={6} className={"my-3"}>
+                <FirstPassYieldMetricDataBlockBase
+                  score={metrics[0]?.totalTests}
+                  subtitle="Total Test Cases Planned for First Run"
                 />
               </Col>
-              <Col xl={6} lg={6} sm={6} className={"my-1"}>
-                <DefectRemovalEfficiencyPercentageDataBlock
-                  score={metrics[0]?.dre}
-                  dataPoint={defectRemovalEfficiencyDataPoint}
+              <Col lg={6} className={"my-3"}>
+                <FirstPassYieldPercentageDataBlock
+                  score={metrics[0]?.firstPassYield}
+                  dataPoint={firstPassYieldDataPoint}
                 />
               </Col>
-              <Col xl={6} lg={6} sm={6} className={"my-1"}>
-                <DefectRemovalEfficiencyDataBlockBase score={metrics[0]?.uatDefects} subtitle={"Defects in UAT"} />
+              <Col lg={6} className={"mb-3"}>
+                <FirstPassYieldMetricDataBlockBase
+                  score={metrics[0]?.passedTests}
+                  subtitle="Total Test Cases Passed in First Run"
+                />
               </Col>
-              <Col xl={6} lg={6} sm={6} className={"my-1"}>
-                <DefectRemovalEfficiencyDataBlockBase
-                  score={metrics[0]?.postProductionDefects}
-                  subtitle={"Defects in Post Production"}
+              <Col lg={6} className={"mb-3"}>
+                <FirstPassYieldMetricDataBlockBase
+                  score={metrics[0]?.failedTests}
+                  subtitle="Total Test Cases Failed in First Run"
                 />
               </Col>
             </Row>
           </Col>
-          <Col xl={6} lg={6} md={4} className={"my-1"}>
+          <Col xl={6} lg={6} md={4} className={"my-2 p-2"}>
             <ResponsivePie
               data={metrics[0]?.pairs}
               {...defaultConfig()}
@@ -164,7 +163,7 @@ function DefectRemovalEfficiencyMetrics({ kpiConfiguration, setKpiConfiguration,
   );
 }
 
-DefectRemovalEfficiencyMetrics.propTypes = {
+FirstPassYieldMetrics.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -172,4 +171,4 @@ DefectRemovalEfficiencyMetrics.propTypes = {
   setKpis: PropTypes.func,
 };
 
-export default DefectRemovalEfficiencyMetrics;
+export default FirstPassYieldMetrics;
