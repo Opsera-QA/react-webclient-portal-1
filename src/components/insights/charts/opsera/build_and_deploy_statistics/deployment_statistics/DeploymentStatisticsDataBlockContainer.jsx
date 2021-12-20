@@ -67,7 +67,7 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
           {...config()}
           tooltip={(node) => (            
             <ChartTooltip
-              titles={["Date Range", "Number of Builds", "Success Rate"]}
+              titles={["Date Range", "Number of Deployments", "Success Rate"]}
               values={[node.point.data.range, node.point.data.total, String(node.point.data.y) + " %"]}
             />
           )}          
