@@ -12,6 +12,7 @@ import { defaultConfig, getColorByData, assignStandardColors, shortenPieChartLeg
 import { Col, Container, Row } from "react-bootstrap";
 import FirstPassYieldMetricDataBlockBase from "./data_blocks/FirstPassYieldMetricDataBlockBase";
 import FirstPassYieldPercentageDataBlock from "./data_blocks/FirstPassYieldPercentageDataBlock";
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 
 const FIRST_PASS_YIELD = "first_pass_yield";
 
@@ -127,7 +128,7 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
             <ResponsivePie
               data={metrics[0]?.pairs}
               {...defaultConfig()}
-              {...config(getColorByData)}
+              {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
               onClick={() => setShowModal(true)}
             />
           </Col>
