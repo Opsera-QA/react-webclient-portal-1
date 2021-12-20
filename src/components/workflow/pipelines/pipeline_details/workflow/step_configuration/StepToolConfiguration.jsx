@@ -65,6 +65,8 @@ import JenkinsStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
 import CypressStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/CypressStepConfiguration";
+import AzureZipDeploymentStepConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -548,15 +550,11 @@ function StepToolConfiguration({
       case "s3":
         return (
           <S3StepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
+            plan={pipeline?.workflow?.plan}
             stepTool={stepTool}
             parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+            stepId={stepId}
           />
         );
       case "databricks-notebook":
@@ -1038,7 +1036,15 @@ function StepToolConfiguration({
                 setShowToast={setShowToast}
                 closeEditorPanel={closeEditorPanel}
               />
-            );    
+            );
+      // case "azure-zip-deployment":
+      //   return (
+      //     <AzureZipDeploymentStepConfiguration
+      //       closeEditorPanel={closeEditorPanel}
+      //       parentCallback={callbackFunction}
+      //       stepTool={stepTool}
+      //     />
+      //   );
     }
   };
 

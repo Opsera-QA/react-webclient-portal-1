@@ -1,0 +1,47 @@
+export const PIPELINE_TYPES = {
+  INFORMATICA: "informatica",
+  MACHINE_LEARNING: "ai-ml",
+  SALESFORCE: "sfdc",
+  SOFTWARE_DEVELOPMENT: "sdlc",
+};
+
+export const PIPELINE_TYPE_LABELS = {
+  INFORMATICA: "Informatica",
+  MACHINE_LEARNING: "Machine Learning (AI)",
+  SALESFORCE: "Salesforce",
+  SOFTWARE_DEVELOPMENT: "Software Development",
+};
+
+export const getPipelineTypeLabel = (pipelineType) => {
+  switch (pipelineType) {
+    case PIPELINE_TYPES.INFORMATICA:
+      return PIPELINE_TYPE_LABELS.INFORMATICA;
+    case PIPELINE_TYPES.MACHINE_LEARNING:
+      return PIPELINE_TYPE_LABELS.MACHINE_LEARNING;
+    case PIPELINE_TYPES.SALESFORCE:
+      return PIPELINE_TYPE_LABELS.SALESFORCE;
+    case PIPELINE_TYPES.SOFTWARE_DEVELOPMENT:
+      return PIPELINE_TYPE_LABELS.SOFTWARE_DEVELOPMENT;
+    default:
+      return pipelineType;
+  }
+};
+
+export const PIPELINE_TYPE_SELECT_OPTIONS = [
+  // {
+  //   text: PIPELINE_TYPE_LABELS.INFORMATICA,
+  //   value: PIPELINE_TYPES.INFORMATICA,
+  // },
+  {
+    text: PIPELINE_TYPE_LABELS.MACHINE_LEARNING,
+    value: PIPELINE_TYPES.MACHINE_LEARNING,
+  },
+  {
+    text: PIPELINE_TYPE_LABELS.SALESFORCE,
+    value: PIPELINE_TYPES.SALESFORCE,
+  },
+  {
+    text: PIPELINE_TYPE_LABELS.SOFTWARE_DEVELOPMENT,
+    value: PIPELINE_TYPES.SOFTWARE_DEVELOPMENT,
+  },
+];

@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
-import pipelineHelpers from "components/workflow/pipelineHelpers";
+import {PIPELINE_TYPE_SELECT_OPTIONS} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 
-function PipelineTypeMultiselectInput({ fieldName, dataObject, setDataObject, disabled }) {
+function PipelineTypeMultiSelectInput({ fieldName, dataObject, setDataObject, disabled }) {
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      selectOptions={pipelineHelpers.PIPELINE_TYPES_}
+      selectOptions={PIPELINE_TYPE_SELECT_OPTIONS}
       valueField="value"
       textField="text"
       disabled={disabled}
@@ -17,15 +17,15 @@ function PipelineTypeMultiselectInput({ fieldName, dataObject, setDataObject, di
   );
 }
 
-PipelineTypeMultiselectInput.propTypes = {
+PipelineTypeMultiSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-PipelineTypeMultiselectInput.defaultProps = {
+PipelineTypeMultiSelectInput.defaultProps = {
   fieldName: "type"
 };
 
-export default PipelineTypeMultiselectInput;
+export default PipelineTypeMultiSelectInput;
