@@ -15,6 +15,10 @@ const CoverityActionableMetadata = {
       id: "run",
     },
     {
+      label: "Timestamp",
+      id: "timestamp",
+    },
+    {
       label: "Trend",
       id: "trend",
     },
