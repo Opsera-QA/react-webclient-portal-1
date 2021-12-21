@@ -1,3 +1,5 @@
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
+
 export default () => ({
   enableGridX: false,
   enableGridY: false,  
@@ -9,7 +11,7 @@ export default () => ({
     reverse: false 
   },
   xFormat: "time:%Y-%m-%d",  
-  colors: "#00a8e8",
+  colors:  METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_1,
   axisLeft: {
     tickValues: [0, 50, 100],
     legend: 'Success Rate %',
