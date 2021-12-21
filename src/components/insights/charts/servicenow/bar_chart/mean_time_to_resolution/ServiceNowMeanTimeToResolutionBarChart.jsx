@@ -114,7 +114,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
           <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" /> Average MTTR <b>({overallMean} Minutes)</b>
           <br></br>
           <FontAwesomeIcon icon={faMinus} color={"#00897b"} size="lg" /> Goal
-          <b>({goalsData?.mttrAvgMeanTimeGoal} Minutes)</b>
+          <b> ({goalsData?.mttrAvgMeanTimeGoal} Minutes)</b>
         </div>
 
         <ResponsiveBar
