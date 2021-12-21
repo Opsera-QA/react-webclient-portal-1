@@ -6,9 +6,7 @@ import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/Two
 function SeleniumTestsCasesPassedDataBlock({ score }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
-      <div className={"p-3"}>
-      <TwoLineDataBlockBase title={score} subtitle={"Test Cases Passed"} />
-      </div>
+      <TwoLineDataBlockBase  className={"p-3"} title={score} subtitle={"Test Cases Passed"} />
     </DataBlockBoxContainer>
   );
 }

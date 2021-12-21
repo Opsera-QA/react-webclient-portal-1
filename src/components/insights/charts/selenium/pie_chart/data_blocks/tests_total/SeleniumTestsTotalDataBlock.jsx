@@ -6,9 +6,7 @@ import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlo
 function SeleniumTestsTotalDataBlock({ score }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
-      <div className={"p-3"}>
-        <TwoLineDataBlockBase title={score} subtitle={"Total Test Cases"} />
-      </div>
+        <TwoLineDataBlockBase className={"p-3"} title={score} subtitle={"Total Test Cases"} />
     </DataBlockBoxContainer>
   );
 }
