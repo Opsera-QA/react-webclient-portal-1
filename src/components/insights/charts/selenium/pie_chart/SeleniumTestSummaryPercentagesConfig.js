@@ -4,5 +4,5 @@ export default () => ({
   innerRadius: 0.5,
   sliceLabelsSkipAngle: 10,
   sliceLabelsTextColor: "#ffffff",
-  colors: ["#ABA4CC", "#696969", "#B1AeA7", "#E6E5E3"],
+  colors: ["#00A8E8", "#E76500", "#A24600", "#2E17E7","#2010A2"],
 });
