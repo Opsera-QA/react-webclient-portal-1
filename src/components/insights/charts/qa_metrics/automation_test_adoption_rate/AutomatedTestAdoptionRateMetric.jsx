@@ -21,6 +21,8 @@ import AutomatedTestAdoptionRateAdoptionRateDataBlock
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import NivoPieChartBase from "components/common/metrics/charts/nivo/pie/NivoPieChartBase";
 import {nivoChartLegendDefinitions} from "components/common/metrics/charts/nivo/nivoChartLegend.definitions";
+import AdoptionTestPercentageChartHelpDocumentation
+  from "../../../../common/help/documentation/insights/charts/AdoptionTestPercentageChartHelpDocumentation";
 
 const ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS = {
   ADOPTED_TESTS: "adopted_tests",
@@ -191,6 +193,7 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        chartHelpComponent={(closeHelpPanel) => <AdoptionTestPercentageChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
       <ModalLogs
         header="Unit Test Data Stats"

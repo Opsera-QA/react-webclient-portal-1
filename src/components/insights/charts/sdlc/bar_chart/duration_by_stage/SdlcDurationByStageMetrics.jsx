@@ -100,6 +100,7 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
           <Col xs={12} sm={6} key={`metric-build`}>
             <SdlcBuildDurationMetric
               metric={metrics[0]}
+              kpiConfiguration={kpiConfiguration}
               meanData={dataBlockValues[0]?.build_mean}
               countData={dataBlockValues[0]?.build_count}
               goalsData={goalsData?.average_builds}
@@ -108,6 +109,7 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
           <Col xs={12} sm={6} key="metric-deploy">
             <SdlcDeployDurationMetric
               metric={metrics[1]}
+              kpiConfiguration={kpiConfiguration}
               meanData={dataBlockValues[0]?.deploy_mean}
               countData={dataBlockValues[0]?.deploy_count}
               goalsData={goalsData?.average_deploy}
@@ -116,6 +118,7 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
           <Col xs={12} sm={6} key="metric-quality-scan">
             <SdlcQualityScanDurationMetric
               metric={metrics[2]}
+              kpiConfiguration={kpiConfiguration}
               meanData={dataBlockValues[0]?.code_scan_mean}
               countData={dataBlockValues[0]?.code_scan_count}
               goalsData={goalsData?.average_quality_scan}
@@ -132,6 +135,7 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
           <Col xs={12} sm={6} key="metric-test">
             <SdlcTestDurationMetric
               metric={metrics[4]}
+              kpiConfiguration={kpiConfiguration}
               meanData={dataBlockValues[0]?.testing_mean}
               countData={dataBlockValues[0]?.testing_count}
               goalsData={goalsData?.average_test}
@@ -140,6 +144,7 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
           <Col xs={12} sm={6} key="metric-scripts">
             <SdlcScriptsDurationMetric
               metric={metrics[5]}
+              kpiConfiguration={kpiConfiguration}
               meanData={dataBlockValues[0]?.script_mean}
               countData={dataBlockValues[0]?.script_count}
               goalsData={goalsData?.average_scripts}
