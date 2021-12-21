@@ -1,8 +1,14 @@
-export default () => ({
+export default (getColor, METRIC_THEME_CHART_PALETTE_COLORS)  => ({
   keys: ["testsSummary"],
   sortByValue: true,
   innerRadius: 0.5,
   sliceLabelsSkipAngle: 10,
   sliceLabelsTextColor: "#ffffff",
-  colors: ["#00A8E8", "#E76500", "#A24600", "#2E17E7","#2010A2"],
+  colors: [
+    METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_1,
+    METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2,
+    METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_3,
+    METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_4,
+    METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_5,
+  ],
 });
