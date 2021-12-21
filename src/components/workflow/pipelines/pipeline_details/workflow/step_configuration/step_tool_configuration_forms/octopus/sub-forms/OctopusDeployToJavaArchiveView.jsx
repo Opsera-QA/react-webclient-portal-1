@@ -9,7 +9,7 @@ import OctopusVersionSelectInput from "../input/OctopusVersionSelectInput";
 import OctopusSpecifyDepVarsToggle from "../input/OctopusSpecifyDepVarsToggle";
 import OctopusDeployPackageTypeInput from "../input/OctopusDeployPackageTypeInput";
 import OctopusCustomDeploymentDirectoryDetailsInput from "../input/OctopusCustomDeploymentDirectoryDetailsInput";
-import OctopuscustomVariableListInput from "../input/OctopuscustomVariableListInput";
+import OctopusCustomParametersInput from "../input/OctopusCustomParametersInput";
 
 function OctopusDeployToJavaArchiveView({dataObject, setDataObject, isLoading, disabled, platformType, pipelineId}) {
 
@@ -107,7 +107,7 @@ function OctopusDeployToJavaArchiveView({dataObject, setDataObject, isLoading, d
       />
       {dataObject && dataObject.getData("specifyDepVariables") && (
         <>
-          <OctopuscustomVariableListInput
+          <OctopusCustomParametersInput
             fieldName={"customVariableList"}
             dataObject={dataObject}
             setDataObject={setDataObject}
