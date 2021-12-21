@@ -29,6 +29,7 @@ function AnsibleToolConfiguration({ toolData }) {
     let newConfiguration = ansibleConfigurationDto.getPersistData();
     newConfiguration.secretKey = await toolsActions.savePasswordToVault(toolData, ansibleConfigurationDto,"accountPassword", newConfiguration.accountPassword, getAccessToken);
     newConfiguration.secretPrivateKey = await toolsActions.savePasswordToVault(toolData, ansibleConfigurationDto,"secretPrivateKey", newConfiguration.secretPrivateKey, getAccessToken);
+    newConfiguration.publicKey = await toolsActions.savePasswordToVault(toolData, ansibleConfigurationDto, "publicKey", newConfiguration.publicKey, getAccessToken, toolData.getData("_id"));
     const item = { configuration: newConfiguration };
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };
@@ -47,6 +48,7 @@ function AnsibleToolConfiguration({ toolData }) {
           <TextInputBase dataObject={ansibleConfigurationDto} setDataObject={setAnsibleConfigurationDto} fieldName={"port"} />
           <TextInputBase dataObject={ansibleConfigurationDto} setDataObject={setAnsibleConfigurationDto} fieldName={"userName"} />
           <TextInputBase dataObject={ansibleConfigurationDto} setDataObject={setAnsibleConfigurationDto} fieldName={"pubKeyPath"} />
+          <VaultTextInput dataObject={ansibleConfigurationDto} setDataObject={setAnsibleConfigurationDto} fieldName={"publicKey"} />
           {/* <VaultTextInput dataObject={ansibleConfigurationDto} setDataObject={setAnsibleConfigurationDto} fieldName={"accountPassword"} />
           <VaultTextAreaInput dataObject={ansibleConfigurationDto} setDataObject={setAnsibleConfigurationDto} fieldName={"secretPrivateKey"} /> */}
         </Col>
