@@ -13,6 +13,7 @@ import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth } f
 import ChartTooltip from "../../../ChartTooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/pro-solid-svg-icons";
+import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
 // import MeanTimeToResolutionSummaryPanelMetadata from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/serviceNowMeanTimeToResolutionSummaryPanelMetadata";
 // import Model from "../../../../../../core/data_model/model";
 // import ChartDetailsOverlay from "../../../detail_overlay/ChartDetailsOverlay";
@@ -35,6 +36,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [overallMean, setOverallMean] = useState(undefined);
+  const [goalsData, setGoalsData] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -63,6 +65,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
 
       const dashboardTags =
           dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value,
+        goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")]?.value,
         response = await chartsActions.parseConfigurationAndGetChartMetrics(
           getAccessToken,
           cancelSource,
@@ -73,6 +76,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
         dataObject = response?.data?.data[0]?.serviceNowMTTR?.data[0]?.docs,
         overallMeanValue = response?.data?.data[0]?.serviceNowMTTR?.data[0]?.overallMttrMins;
 
+      setGoalsData(goals);
       assignStandardColors(dataObject, true);
       if (dataObject && dataObject.length) {
         dataObject.forEach((data) => (data.Count = data?.number_of_incidents));
@@ -108,12 +112,15 @@ function ServiceNowMeanTimeToResolutionBarChart({
         <div style={{ float: "right", fontSize: "10px" }}>
           Total Number of Incidents - #<br></br>
           <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" /> Average MTTR <b>({overallMean} Minutes)</b>
+          <br></br>
+          <FontAwesomeIcon icon={faMinus} color={"#00897b"} size="lg" /> Goal
+          <b>({goalsData?.mttrAvgMeanTimeGoal} Minutes)</b>
         </div>
 
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Mean Time to Resolution (in minutes)", "Date", false, false, "wholeNumbers", "monthDate2")}
-          {...config(getColorByData)}
+          {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
           {...adjustBarWidth(metrics)}
           // onClick={(data) => onRowSelect(data)}
           tooltip={({ indexValue, value, data, color }) => (
@@ -130,6 +137,12 @@ function ServiceNowMeanTimeToResolutionBarChart({
               value: overallMean,
               lineStyle: { stroke: neutralColor, strokeWidth: 2 },
               legend: "Mean",
+            },
+            {
+              axis: "y",
+              value: goalsData?.mttrAvgMeanTimeGoal,
+              lineStyle: { stroke: "#00897b", strokeWidth: 2 },
+              legend: "Goal",
             },
           ]}
         />

@@ -13,6 +13,7 @@ import ChartTooltip from "../../../ChartTooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/pro-solid-svg-icons";
 import { neutralColor } from "../../../../charts/charts-views";
+import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
 // import MeanTimeToAcknowledgeSummaryPanelMetadata from "components/insights/charts/servicenow/bar_chart/mean_time_to_Acknowledge/serviceNowMeanTimeToAcknowledgeSummaryPanelMetadata";
 // import Model from "../../../../../../core/data_model/model";
 // import ChartDetailsOverlay from "../../../detail_overlay/ChartDetailsOverlay";
@@ -35,6 +36,7 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [overallMean, setOverallMean] = useState(undefined);
+  const [goalsData, setGoalsData] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -63,6 +65,7 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
 
       let dashboardTags =
           dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value,
+        goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type == "goals")]?.value,
         response = await chartsActions.parseConfigurationAndGetChartMetrics(
           getAccessToken,
           cancelSource,
@@ -73,6 +76,7 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
         dataObject = response?.data?.data[0]?.serviceNowMTTA?.data[0]?.docs,
         overallMeanValue = response?.data?.data[0]?.serviceNowMTTA?.data[0]?.overallMttaMins;
 
+      setGoalsData(goals);
       assignStandardColors(dataObject, true);
       if (dataObject && dataObject.length) {
         dataObject.forEach((data) => (data.Count = data?.number_of_incidents));
@@ -142,6 +146,9 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
           Total Number of Incidents - #<br></br>
           <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" />
           Average MTTA <b>({overallMean} Minutes)</b>
+          <br></br>
+          <FontAwesomeIcon icon={faMinus} color={"#00897b"} size="lg" /> Goal
+          <b>( {goalsData.mttaAvgMeanTimeGoal} Minutes )</b>
         </div>
         <ResponsiveBar
           data={metrics}
@@ -153,7 +160,7 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
             "wholeNumbers",
             "monthDate2"
           )}
-          {...config(getColorByData, getMaxValue(metrics))}
+          {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY, getMaxValue(metrics))}
           {...adjustBarWidth(metrics)}
           // onClick={(data) => onRowSelect(data)}
           tooltip={({ indexValue, value, data, color }) => (
@@ -170,6 +177,12 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
               value: overallMean,
               lineStyle: { stroke: neutralColor, strokeWidth: 3 },
               legend: "Mean",
+            },
+            {
+              axis: "y",
+              value: goalsData?.mttaAvgMeanTimeGoal,
+              lineStyle: { stroke: "#00897b", strokeWidth: 3 },
+              legend: "Goal",
             },
           ]}
         />
