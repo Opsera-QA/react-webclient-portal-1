@@ -144,8 +144,7 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
       <div className="new-chart mb-3 pointer" style={{ height: "300px" }}>
         <div style={{ float: "right", fontSize: "10px" }}>
           Total Number of Incidents - #<br></br>
-          <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" />
-          Average MTTA <b>({overallMean} Minutes)</b>
+          <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" /> Average MTTA <b>({overallMean} Minutes)</b>
           <br></br>
           <FontAwesomeIcon icon={faMinus} color={"#00897b"} size="lg" /> Goal
           <b> ({goalsData.mttaAvgMeanTimeGoal} Minutes)</b>
