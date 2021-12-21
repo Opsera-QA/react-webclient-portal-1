@@ -8,7 +8,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { neutralColor } from "../../../../charts/charts-views";
+import { neutralColor, goalSuccessColor } from "../../../../charts/charts-views";
 import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -113,7 +113,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
           Total Number of Incidents - #<br></br>
           <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" /> Average MTTR <b>({overallMean} Minutes)</b>
           <br></br>
-          <FontAwesomeIcon icon={faMinus} color={"#00897b"} size="lg" /> Goal
+          <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" /> Goal
           <b> ({goalsData?.mttrAvgMeanTimeGoal} Minutes)</b>
         </div>
 
@@ -141,7 +141,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
             {
               axis: "y",
               value: goalsData?.mttrAvgMeanTimeGoal,
-              lineStyle: { stroke: "#00897b", strokeWidth: 2 },
+              lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
               legend: "Goal",
             },
           ]}
