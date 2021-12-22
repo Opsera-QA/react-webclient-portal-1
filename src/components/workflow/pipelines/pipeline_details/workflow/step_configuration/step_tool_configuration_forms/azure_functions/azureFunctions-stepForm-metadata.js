@@ -24,7 +24,6 @@ const azureFunctionsStepFormMetadata = {
     {
       label: "Application Type",
       id: "applicationType",
-      isRequired: true
     },
     {
       label: "Artifact Tool",
