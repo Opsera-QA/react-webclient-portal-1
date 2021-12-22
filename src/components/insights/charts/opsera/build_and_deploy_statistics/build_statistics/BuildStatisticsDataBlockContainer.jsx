@@ -47,11 +47,15 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
     }  
   ];
 
+  const getMiddleText = () => {
+    return (metricData?.build?.count && metricData?.build?.count > 0 ? <MetricPercentageText percentage={metricData?.build?.successPercent || 0} qualityLevel={metricData?.build?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS} /> : "No Data");
+  };
+
   const getLeftDataBlock = () => {
     return (      
       <ThreeLineDataBlockNoFocusBase        
         topText={"Success Rate"}
-        middleText={<MetricPercentageText percentage={metricData?.build?.successPercent || 0} qualityLevel={metricData?.build?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS} />}
+        middleText={getMiddleText()}
         bottomText={`Goal: ${goalsData}`}
       />
     );
