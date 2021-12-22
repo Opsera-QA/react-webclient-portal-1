@@ -55,16 +55,14 @@ function AksResourceGroupSelectInput(
       setIsLoading(false);
     }
   };
-
-  // TODO: We should make a route on node where you can pass an azure tool ID and an azure Application ID
-  //  and return the resource groups instead of constructing the complex query here on React
+  
   const loadAzureRegistries = async (cancelSource = cancelTokenSource) => {
     const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, azureToolConfigId);
     const tool = response?.data?.data;
 
     if (tool == null) {
-      setPlaceholderText("Error Pulling Clusters!");
-      setErrorMessage("Could not find Tool to grab Clusters.");
+      setPlaceholderText("Error Pulling Resource Group!");
+      setErrorMessage("Could not find Tool to grab Resource Group.");
       return;
     }
 
@@ -72,7 +70,7 @@ function AksResourceGroupSelectInput(
     const applicationData = applicationResponse?.data?.data;
 
     if (applicationData == null) {
-      setPlaceholderText("Error Pulling Clusters!");
+      setPlaceholderText("Error Pulling Resource Group!");
       setErrorMessage(`
         The selected Application was not found. 
         It may have been deleted, or the Tool's access roles may have been updated.
@@ -99,8 +97,6 @@ function AksResourceGroupSelectInput(
       setErrorMessage("No Resource Groups found");
     }
   };
-
-  console.log("here");
 
   return (
       <SelectInputBase
