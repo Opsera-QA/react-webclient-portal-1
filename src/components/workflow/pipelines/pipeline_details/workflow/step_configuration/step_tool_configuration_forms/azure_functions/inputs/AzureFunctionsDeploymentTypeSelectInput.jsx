@@ -25,12 +25,22 @@ function AzureFunctionsDeploymentTypeSelectInput(
     setModel({...newDataObject});
   };
 
+  const clearDataFunction = () => {
+    let newDataObject = {...model};
+    newDataObject.setData(fieldName, "");
+    newDataObject.setData("resourceGroupName", "");
+    newDataObject.setData("artifactStepId", "");
+    newDataObject.setData("useCustomResourceGroup", "");
+    setModel({...newDataObject});
+  };
+
   return (
     <SelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
       setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
       selectOptions={JOB_TYPES}
       valueField={"value"}
       textField={"name"}
