@@ -119,7 +119,7 @@ import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/
 //QA Testing
 import CumulativeOpenDefectsMetric from "./cumulative_open_defects/CumulativeOpenDefectsMetric";
 import ManualQaTestPieChart from "components/insights/charts/qa_metrics/ManualQaTestPieChart";
-import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieChart";
+import AutomationPercentageMetric from "./automation_percentage/AutomationPercentageMetric";
 import AdoptionTestPercentageMetricV1 from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AdoptionTestPercentageMetricV1";
 import AutomatedTestResultsPieChart from "./qa_metrics/AutomatedTestResultsPieChart";
 import SFDCManualTestResultsPieChart from "./qa_metrics/SFDCManualTestResultsPieChart";
@@ -1287,7 +1287,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "automation-percentage":
         return (
           <Col md={12} className="p-2">
-            <AutomationPercentagePieChart
+            <AutomationPercentageMetric
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
