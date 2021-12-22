@@ -12,7 +12,7 @@ import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth } f
 import ChartTooltip from "../../../ChartTooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/pro-solid-svg-icons";
-import { neutralColor } from "../../../../charts/charts-views";
+import { neutralColor, goalSuccessColor } from "../../../../charts/charts-views";
 import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
 // import MeanTimeToAcknowledgeSummaryPanelMetadata from "components/insights/charts/servicenow/bar_chart/mean_time_to_Acknowledge/serviceNowMeanTimeToAcknowledgeSummaryPanelMetadata";
 // import Model from "../../../../../../core/data_model/model";
@@ -141,12 +141,12 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
     // };
 
     return (
-      <div className="new-chart mb-3 pointer" style={{ height: "300px" }}>
+      <div className="new-chart mb-3 pointer font-inter-light-300 dark-gray-text-primary" style={{ height: "300px" }}>
         <div style={{ float: "right", fontSize: "10px" }}>
           Total Number of Incidents - #<br></br>
           <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" /> Average MTTA <b>({overallMean} Minutes)</b>
           <br></br>
-          <FontAwesomeIcon icon={faMinus} color={"#00897b"} size="lg" /> Goal
+          <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" /> Goal
           <b> ({goalsData.mttaAvgMeanTimeGoal} Minutes)</b>
         </div>
         <ResponsiveBar
@@ -174,13 +174,13 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
             {
               axis: "y",
               value: overallMean,
-              lineStyle: { stroke: neutralColor, strokeWidth: 3 },
+              lineStyle: { stroke: neutralColor, strokeWidth: 2 },
               legend: "Mean",
             },
             {
               axis: "y",
               value: goalsData?.mttaAvgMeanTimeGoal,
-              lineStyle: { stroke: "#00897b", strokeWidth: 3 },
+              lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
               legend: "Goal",
             },
           ]}
