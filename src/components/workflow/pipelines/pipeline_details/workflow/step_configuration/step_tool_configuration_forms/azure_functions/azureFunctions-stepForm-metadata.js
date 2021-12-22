@@ -17,6 +17,11 @@ const azureFunctionsStepFormMetadata = {
       isRequired: true
     },
     {
+      label: "Deployment Type",
+      id: "deploymentType",
+      isRequired: true
+    },
+    {
       label: "Application Type",
       id: "applicationType",
       isRequired: true
@@ -66,6 +71,7 @@ const azureFunctionsStepFormMetadata = {
     dynamicServiceName: false,
     resourceGroupName: "",
     useCustomResourceGroup: false,
+    deploymentType: "",
     applicationType: ""
   }
 };

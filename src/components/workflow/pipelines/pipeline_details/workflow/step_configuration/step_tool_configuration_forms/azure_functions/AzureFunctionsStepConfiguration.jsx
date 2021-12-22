@@ -8,7 +8,7 @@ import AzureFunctionsStepApplicationSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/inputs/AzureFunctionsStepApplicationSelectInput";
 import AzureFunctionsStepDynamicNameToggleInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/inputs/AzureFunctionsStepDynamicNameToggleInput";
 import AzureFunctionsStepRegionSelectInput from "./inputs/AzureFunctionsRegionSelectInput";
-import AzureFunctionsStepApplicationTypeSelectInput from "./inputs/AzureFunctionsApplicationTypeSelectInput";
+import AzureFunctionsStepDeploymentTypeSelectInput from "./inputs/AzureFunctionsDeploymentTypeSelectInput";
 import AzureFunctionsStepAzureToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/inputs/AzureFunctionsStepAzureToolSelectInput";
 import AzureFunctionsZipDeployment from "./sub_forms/AzureFunctionsZipDeployment";
@@ -59,7 +59,7 @@ function AzureFunctionsStepConfiguration({ stepTool, closeEditorPanel, parentCal
       persistRecord={saveAzureFunctionsStepConfiguration}
       isLoading={isLoading}
     >
-      <AzureFunctionsStepApplicationTypeSelectInput
+      <AzureFunctionsStepDeploymentTypeSelectInput
         model={azureFunctionsModel}
         setModel={setAzureFunctionsModel}
       />

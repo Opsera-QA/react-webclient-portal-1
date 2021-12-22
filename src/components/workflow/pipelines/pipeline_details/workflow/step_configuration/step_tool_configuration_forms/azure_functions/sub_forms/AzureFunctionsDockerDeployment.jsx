@@ -5,7 +5,7 @@ import AzureFunctionsStepDockerStepSelectInput from "../inputs/AzureFunctionsSte
 
 function AzureFunctionsDockerDeployment({ model, setModel,plan,stepId }) {
 
-  if (!model?.getData("applicationType") || model?.getData("applicationType") === "zip") {
+  if (!model?.getData("deploymentType") || model?.getData("deploymentType") === "zip") {
     return null;
   }
 
