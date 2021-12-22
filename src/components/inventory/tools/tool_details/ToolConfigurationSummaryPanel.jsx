@@ -102,7 +102,10 @@ import mongodbeRealmConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/mongodb_realm/mongodb-realm-connection-metadata";
 import MongodbRealmToolConfigurationSummaryPanel 
   from "components/inventory/tools/tool_details/tool_jobs/mongodb_realm/MongodbRealmToolConfigurationSummaryPanel";
-
+import FlywayDatabaseConnectionMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/flyway_database/flyway-database-connection-metadata";
+import FlywayDatabaseToolConfigurationSummaryPanel 
+  from "components/inventory/tools/tool_details/tool_jobs/flyway_database/FlywayDatabaseToolConfigurationSummaryPanel";
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
     if (toolIdentifier == null || toolIdentifier === "" || toolConfiguration == null) {
@@ -263,6 +266,12 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
         return (
           <MongodbRealmToolConfigurationSummaryPanel
             mongodbRealmToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, mongodbeRealmConnectionMetadata)}
+          />
+        );
+      case "flyway-database-migrator":
+        return (
+          <FlywayDatabaseToolConfigurationSummaryPanel
+            flywayToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, FlywayDatabaseConnectionMetadata)}
           />
         );
         //TODO: We need to rename either the old or the new metadata

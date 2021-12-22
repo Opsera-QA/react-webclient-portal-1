@@ -65,8 +65,8 @@ import JenkinsStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
 import CypressStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/CypressStepConfiguration";
-import AzureZipDeploymentStepConfiguration
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfiguration";
+import FlywayDatabaseStepConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/FlywayDatabaseStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -1036,15 +1036,18 @@ function StepToolConfiguration({
                 setShowToast={setShowToast}
                 closeEditorPanel={closeEditorPanel}
               />
-            );
-      // case "azure-zip-deployment":
-      //   return (
-      //     <AzureZipDeploymentStepConfiguration
-      //       closeEditorPanel={closeEditorPanel}
-      //       parentCallback={callbackFunction}
-      //       stepTool={stepTool}
-      //     />
-      //   );
+            );  
+          case "flyway-database-migrator":
+            return (
+              <FlywayDatabaseStepConfiguration
+                pipelineId={pipeline._id}
+                plan={pipeline.workflow.plan}
+                stepId={stepId}
+                stepTool={stepTool}
+                parentCallback={callbackFunction}
+                closeEditorPanel={closeEditorPanel}
+              />
+            );    
     }
   };
 
