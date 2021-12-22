@@ -71,6 +71,22 @@ azureFunctionsActions.getApplicationType = async (getAccessToken, cancelTokenSou
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
 };
 
+azureFunctionsActions.getAzureResourceGroups = async (getAccessToken, cancelTokenSource, config, applicationData) => {
+  const apiUrl = `tools/azure/management/resourcebycluster`;
+  const cfg = config?.configuration;
+  const owner = config?.owner;
+  const postBody = {
+    "owner": owner,
+    "clientId": applicationData?.clientId?.vaultKey,
+    "clientSecret": applicationData?.clientSecret?.vaultKey,
+    "tenantId": cfg?.azureTenantId,
+    "subscriptionId": cfg?.azureSubscriptionId,
+    "resource": applicationData?.resource,
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 
 
 export default azureFunctionsActions;

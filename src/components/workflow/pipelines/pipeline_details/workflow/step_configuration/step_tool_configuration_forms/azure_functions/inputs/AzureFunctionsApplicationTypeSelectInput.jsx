@@ -1,40 +1,57 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AzureApplicationTypeSelectInput
-  from "components/common/list_of_values_input/tools/azure/application_types/AzureApplicationTypeSelectInput";
+import SelectInputBase from "../../../../../../../../common/inputs/select/SelectInputBase";
 
 function AzureFunctionsApplicationTypeSelectInput(
-  {
-    fieldName,
-    model,
-    setModel,
-    azureToolId,
-    azureApplicationId,
-    disabled,
-  }) {
+  {model, setModel, disabled, fieldName}) {
+
+  const JOB_TYPES = [
+    {
+      name: "Zip Deployment",
+      value: "zip",
+    },
+    {
+      name: "Docker Deployment",
+      value: "docker",
+    }
+  ];
+
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newDataObject = {...model};
+    newDataObject.setData(fieldName, selectedOption.value);
+    newDataObject.setData("resourceGroupName", "");
+    newDataObject.setData("artifactStepId", "");
+    newDataObject.setData("useCustomResourceGroup", "");
+    setModel({...newDataObject});
+  };
+
   return (
-    <AzureApplicationTypeSelectInput
+    <SelectInputBase
       fieldName={fieldName}
-      model={model}
-      setModel={setModel}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setDataFunction}
+      selectOptions={JOB_TYPES}
+      valueField={"value"}
+      textField={"name"}
+      placeholderText={"Select a Deployment Type"}
       disabled={disabled}
-      azureToolId={azureToolId}
-      azureToolApplicationId={azureApplicationId}
+      busy={disabled}
     />
   );
 }
+
 
 AzureFunctionsApplicationTypeSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
-  azureToolId: PropTypes.string,
-  azureApplicationId: PropTypes.string,
   disabled: PropTypes.bool,
 };
 
 AzureFunctionsApplicationTypeSelectInput.defaultProps = {
   fieldName: "applicationType",
+  disabled: false
 };
 
 export default AzureFunctionsApplicationTypeSelectInput;

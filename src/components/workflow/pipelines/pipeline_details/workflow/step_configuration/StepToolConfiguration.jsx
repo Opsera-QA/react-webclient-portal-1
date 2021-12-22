@@ -1055,6 +1055,8 @@ function StepToolConfiguration({
             closeEditorPanel={closeEditorPanel}
             parentCallback={callbackFunction}
             stepTool={stepTool}
+            plan={plan}
+            stepId={stepId}
           />
         );
     }
