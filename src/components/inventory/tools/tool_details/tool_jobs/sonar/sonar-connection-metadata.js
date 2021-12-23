@@ -3,6 +3,12 @@ const sonarConnectionMetadata = {
   idProperty: "_id",
   fields: [
     {
+      label: "Sonar Edition",
+      id: "sonarEdition",
+      isRequired: true,
+      maxLength: 100
+    },
+    {
       label: "Sonar URL",
       id: "sonarUrl",
       isRequired: true,
@@ -28,6 +34,7 @@ const sonarConnectionMetadata = {
   ],
   newObjectFields:
     {
+      sonarEdition: "community",
       sonarUrl: "",
       sonarPort : "",
       sonarUserId : "",

@@ -109,8 +109,28 @@ pipelineStepNotificationActions.getServiceNowGroups = async (toolId, getAccessTo
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+pipelineStepNotificationActions.getServiceNowGroupsByName = async (
+  toolId,
+  serviceName,
+  getAccessToken,
+  cancelTokenSource
+) => {
+  const apiUrl = `/connectors/servicenow/groupsByName/${toolId}/serviceName/${serviceName}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 pipelineStepNotificationActions.getServiceNowServiceOfferings = async (toolId, getAccessToken, cancelTokenSource) => {
   const apiUrl = `/connectors/servicenow/serviceOfferings/${toolId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+pipelineStepNotificationActions.getServiceNowServiceOfferingsByName = async (
+  toolId,
+  serviceName,
+  getAccessToken,
+  cancelTokenSource
+) => {
+  const apiUrl = `/connectors/servicenow/serviceOfferingsByName/${toolId}/serviceName/${serviceName}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
@@ -119,8 +139,28 @@ pipelineStepNotificationActions.getServiceNowConfigurationItems = async (toolId,
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+pipelineStepNotificationActions.getServiceNowConfigurationItemsByName = async (
+  toolId,
+  serviceName,
+  getAccessToken,
+  cancelTokenSource
+) => {
+  const apiUrl = `/connectors/servicenow/configurationItemsByName/${toolId}/serviceName/${serviceName}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 pipelineStepNotificationActions.getServiceNowBusinessServices = async (toolId, getAccessToken, cancelTokenSource) => {
   const apiUrl = `/connectors/servicenow/businessServices/${toolId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+pipelineStepNotificationActions.getServiceNowBusinessServicesByName = async (
+  toolId,
+  serviceName,
+  getAccessToken,
+  cancelTokenSource
+) => {
+  const apiUrl = `/connectors/servicenow/businessServicesByName/${toolId}/serviceName/${serviceName}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

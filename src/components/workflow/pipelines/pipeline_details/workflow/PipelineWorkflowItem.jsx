@@ -192,6 +192,10 @@ const PipelineWorkflowItem = ({
       "pipelineId": pipeline._id,
       "stepId": step._id,
       "toolIdentifier": step?.tool?.tool_identifier,
+      "configuration": {
+        "toolConfigId" : step?.tool?.configuration?.toolConfigId,
+        "jobName" : step?.tool?.configuration?.jobName
+      }
     };
     setShowDeleteModal(true);
     setModalDeleteIndex(index);

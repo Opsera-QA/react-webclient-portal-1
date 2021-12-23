@@ -158,12 +158,16 @@ import aksStepFormMetadata from "./step_tool_configuration_forms/aks_service_dep
 
 import AwsLambdaPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/aws_lambda_publish/AwsLambdaPipelineStepConfigurationSummary";
+import {s3PipelineStepConfigurationMetadata} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/s3/s3PipelineStepConfiguration.metadata";
 import awsLambdaStepFormMetadata from "./step_tool_configuration_forms/aws_lambda_publish/awsLambda-stepForm-metadata";
 import mongodbRealmStepFormMetadata from "./step_tool_configuration_forms/mongodb_realm/mongodb-realm-stepForm-metadata";
 import MongodbRealmStepConfigurationSummaryPanel from "./step_tool_configuration_forms/mongodb_realm/MongodbRealmStepConfigurationSummaryPanel";
 import AzureFunctionsStepConfigurationSummaryPanel from "./step_tool_configuration_forms/azure_functions/AzureFunctionsStepConfigurationSummaryPanel";
 import azureFunctionsStepFormMetadata from "./step_tool_configuration_forms/azure_functions/azureFunctions-stepForm-metadata";
-import {s3PipelineStepConfigurationMetadata} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/s3/s3PipelineStepConfiguration.metadata";
+import FlywayDatabasePipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/flyway_database/FlywayDatabasePipelineStepConfigurationSummaryPanel";
+import flywayDatabaseStepFormMetadata from "./step_tool_configuration_forms/flyway_database/flyway-database-stepForm-metadata";
+import InformaticaPipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/informatica/InformaticaPipelineStepConfigurationSummaryPanel";
+import InformaticaStepFormMetadata from "./step_tool_configuration_forms/informatica/informatica-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -496,6 +500,20 @@ function PipelineStepConfigurationSummary({
             pipelineData={pipelineData}
             azureFunctionsPipelineDataObject={getModelWrappedObject(azureFunctionsStepFormMetadata)}
             />
+        );
+      case "flyway-database-migrator":
+        return (
+          <FlywayDatabasePipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            flywayPipelineDataObject={getModelWrappedObject(flywayDatabaseStepFormMetadata)}
+          />
+        );
+      case "informatica":
+        return (
+          <InformaticaPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            informaticaPipelineDataObject={getModelWrappedObject(InformaticaStepFormMetadata)}
+          />
         );
       default:
         return (
