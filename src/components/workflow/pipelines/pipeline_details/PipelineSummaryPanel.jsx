@@ -32,7 +32,10 @@ import PipelineScheduledTasksOverlay from "components/workflow/pipelines/schedul
 import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
 import PipelineDetailsOverviewOverlay from "components/workflow/pipelines/overview/PipelineDetailsOverviewOverlay";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
-import {PIPELINE_TYPE_SELECT_OPTIONS} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
+import {
+  getPipelineTypeLabel,
+  PIPELINE_TYPE_SELECT_OPTIONS
+} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -481,7 +484,7 @@ function PipelineSummaryPanel(
 
           <Col lg className="py-2"><span className="text-muted mr-1">Org Account:</span> {pipeline.account}</Col>
           <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-2">Type:</span>
-            {pipeline.type && !editType && pipelineHelpers.displayPipelineType(pipeline.type)}
+            {pipeline?.type && !editType && getPipelineTypeLabel(pipeline?.type[0])}
             {authorizedAction("edit_pipeline_attribute", pipeline.owner)
             && parentWorkflowStatus !== "running" && !editType
               ? getEditIcon("type")
@@ -491,12 +494,12 @@ function PipelineSummaryPanel(
               <div className="w-75">
                 <StandaloneSelectInput
                   selectOptions={PIPELINE_TYPE_SELECT_OPTIONS}
-                  defaultValue={pipeline.type[0]}
-                  valueField={"id"}
-                  textField={"name"}
+                  defaultValue={pipeline?.type[0]}
+                  valueField={"value"}
+                  textField={"text"}
                   setDataFunction={e => {
                     let type = formData.type;
-                    type[0] = e.id;
+                    type[0] = e.value;
                     setFormData({ ...formData, type: type });
                   }}
                 />
