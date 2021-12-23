@@ -67,6 +67,7 @@ import CypressStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/CypressStepConfiguration";
 import FlywayDatabaseStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/FlywayDatabaseStepConfiguration";
+import InformaticaStepConfiguration from "./step_tool_configuration_forms/informatica/InformaticaStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -1048,6 +1049,17 @@ function StepToolConfiguration({
                 closeEditorPanel={closeEditorPanel}
               />
             );    
+          // case "informatica":
+          //   return (
+          //     <InformaticaStepConfiguration
+          //       pipelineId={pipeline._id}
+          //       plan={pipeline.workflow.plan}
+          //       stepId={stepId}
+          //       stepTool={stepTool}
+          //       parentCallback={callbackFunction}
+          //       closeEditorPanel={closeEditorPanel}
+          //     />
+          //   );
     }
   };
 
