@@ -1049,17 +1049,17 @@ function StepToolConfiguration({
                 closeEditorPanel={closeEditorPanel}
               />
             );    
-          // case "informatica":
-          //   return (
-          //     <InformaticaStepConfiguration
-          //       pipelineId={pipeline._id}
-          //       plan={pipeline.workflow.plan}
-          //       stepId={stepId}
-          //       stepTool={stepTool}
-          //       parentCallback={callbackFunction}
-          //       closeEditorPanel={closeEditorPanel}
-          //     />
-          //   );
+          case "informatica":
+            return (
+              <InformaticaStepConfiguration
+                pipelineId={pipeline._id}
+                plan={pipeline.workflow.plan}
+                stepId={stepId}
+                stepTool={stepTool}
+                parentCallback={callbackFunction}
+                closeEditorPanel={closeEditorPanel}
+              />
+            );
     }
   };
 

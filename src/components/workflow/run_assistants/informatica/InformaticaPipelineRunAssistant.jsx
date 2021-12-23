@@ -9,6 +9,7 @@ import OverlayPanelBodyContainer from "components/common/panels/detail_panel_con
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import {pipelineHelpers} from "components/common/helpers/pipelines/pipeline.helpers";
 
 export const INFORMATICA_RUN_ASSISTANT_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
@@ -41,6 +42,15 @@ const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, c
     //  after which I will remove this line
     newPipelineWizardModel.setData("selectedComponentTypes", []);
     setPipelineWizardModel({...newPipelineWizardModel});
+
+    const stepArrayIndex = pipelineHelpers.findStepIndex(pipeline, "informatica");
+    if (stepArrayIndex === -1) {
+      setError(
+        "Warning, this pipeline is missing the default Informatica Step needed. Please edit the workflow and add the Informatica step in order to run this pipeline."
+      );
+      return;
+    }
+
 
     return () => {
       source.cancel();
