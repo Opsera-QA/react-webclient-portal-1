@@ -69,6 +69,8 @@ import FlywayDatabaseStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/FlywayDatabaseStepConfiguration";
 import AzureZipDeploymentStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfiguration";
+import InformaticaStepConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/informatica/InformaticaStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -1055,6 +1057,17 @@ function StepToolConfiguration({
             closeEditorPanel={closeEditorPanel}
             parentCallback={callbackFunction}
             stepTool={stepTool}
+          />
+        );
+      case "informatica":
+        return (
+          <InformaticaStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            closeEditorPanel={closeEditorPanel}
           />
         );
     }

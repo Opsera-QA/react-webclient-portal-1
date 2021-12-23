@@ -30,6 +30,7 @@ import AzureV2ToolConfiguration from "./tool_jobs/azureV2/AzureV2ToolConfigurati
 import AnsibleToolConfiguration from "./tool_jobs/ansible/AnsibleToolConfiguration";
 import MongodbRealmToolConfiguration from "./tool_jobs/mongodb_realm/MongodbRealmToolConfiguration";
 import FlywayDatabaseToolConfiguration from "./tool_jobs/flyway_database/FlywayDatabaseToolConfiguration";
+import InformaticaToolConfiguration from "./tool_jobs/informatica/InformaticaToolConfiguration";
 
 function ToolConfigurationPanel({ toolData }) {
   const getConfiguration = () => {
@@ -97,6 +98,8 @@ function ToolConfigurationPanel({ toolData }) {
         return <MongodbRealmToolConfiguration toolData={toolData} />;
       case "flyway-database-migrator":
         return <FlywayDatabaseToolConfiguration toolData={toolData} />;
+      case "informatica":
+        return <InformaticaToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
     }
