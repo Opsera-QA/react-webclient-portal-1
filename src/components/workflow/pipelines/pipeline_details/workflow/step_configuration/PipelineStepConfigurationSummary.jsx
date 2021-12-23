@@ -167,6 +167,8 @@ import DotNetCliPipelineStepConfigurationSummaryPanel
 import FlywayDatabasePipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/flyway_database/FlywayDatabasePipelineStepConfigurationSummaryPanel";
 import flywayDatabaseStepFormMetadata from "./step_tool_configuration_forms/flyway_database/flyway-database-stepForm-metadata";
 import {s3PipelineStepConfigurationMetadata} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/s3/s3PipelineStepConfiguration.metadata";
+import InformaticaPipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/informatica/InformaticaPipelineStepConfigurationSummaryPanel";
+import InformaticaStepFormMetadata from "./step_tool_configuration_forms/informatica/informatica-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -512,6 +514,13 @@ function PipelineStepConfigurationSummary({
           <FlywayDatabasePipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             flywayPipelineDataObject={getModelWrappedObject(flywayDatabaseStepFormMetadata)}
+          />
+        );
+      case "informatica":
+        return (
+          <InformaticaPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            informaticaPipelineDataObject={getModelWrappedObject(InformaticaStepFormMetadata)}
           />
         );
       default:
