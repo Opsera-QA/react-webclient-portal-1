@@ -491,9 +491,9 @@ function PipelineSummaryPanel(
               <div className="w-75">
                 <StandaloneSelectInput
                   selectOptions={PIPELINE_TYPE_SELECT_OPTIONS}
-                  defaultValue={pipeline.type[0]}
-                  valueField={"id"}
-                  textField={"name"}
+                  defaultValue={pipeline?.type[0]}
+                  valueField={"value"}
+                  textField={"text"}
                   setDataFunction={e => {
                     let type = formData.type;
                     type[0] = e.id;
