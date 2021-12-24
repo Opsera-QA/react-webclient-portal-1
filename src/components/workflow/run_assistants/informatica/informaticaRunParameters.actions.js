@@ -3,7 +3,7 @@ import baseActions from "utils/actionsBase";
 export const informaticaRunParametersActions = {};
 
 informaticaRunParametersActions.findExistingRunParametersRecordV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
-  const apiUrl = `/pipelines/${pipelineId}/informatica/run-parameters`;
+  const apiUrl = `/pipelines/${pipelineId}/informatica/run-parameters/record`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

@@ -11,12 +11,12 @@ import IconBase from "components/common/icons/IconBase";
 import {faSync} from "@fortawesome/pro-light-svg-icons";
 import {informaticaRunParametersActions} from "components/workflow/run_assistants/informatica/informaticaRunParameters.actions";
 
-const InformaticaPipelineRunAssistantInitializationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, pipeline, setError }) => {
+const InformaticaPipelineRunAssistantInitializationScreen = ({ informaticaRunParametersModel, setInformaticaRunParametersModel, setPipelineWizardScreen, handleClose, pipeline, setError }) => {
   const { getAccessToken } = useContext(AuthContext);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [existingRecord, setExistingRecord] = useState(undefined);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -26,7 +26,7 @@ const InformaticaPipelineRunAssistantInitializationScreen = ({ pipelineWizardMod
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    loadData(pipelineWizardModel, pipeline?.workflow?.plan, source).catch((error) => {
+    loadData(informaticaRunParametersModel, pipeline?.workflow?.plan, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -55,28 +55,28 @@ const InformaticaPipelineRunAssistantInitializationScreen = ({ pipelineWizardMod
   };
 
 
-  const initializePipelineWizardRecord = async (newPipelineWizardModel = pipelineWizardModel, cancelSource = cancelTokenSource) => {
-    const result = await informaticaRunParametersActions.findExistingRunParametersRecordV2(getAccessToken, cancelSource, pipeline?._id);
-    const existingRecord = result?.data;
+  const initializePipelineWizardRecord = async (newPipelineWizardModel = informaticaRunParametersModel, cancelSource = cancelTokenSource) => {
+    const response = await informaticaRunParametersActions.findExistingRunParametersRecordV2(getAccessToken, cancelSource, pipeline?._id);
+    const existingRecord = response?.data;
 
     if (existingRecord) {
       setExistingRecord(existingRecord);
       newPipelineWizardModel.setData("recordId", existingRecord._id);
-      setPipelineWizardModel({...newPipelineWizardModel});
+      setInformaticaRunParametersModel({...newPipelineWizardModel});
     }
     else {
       await createNewPipelineWizardRecord(newPipelineWizardModel);
     }
   };
 
-  const createNewPipelineWizardRecord = async (newPipelineWizardModel = pipelineWizardModel, moveToNextScreen) => {
+  const createNewPipelineWizardRecord = async (newPipelineWizardModel = informaticaRunParametersModel, moveToNextScreen) => {
     try {
       const response = await informaticaRunParametersActions.getNewRunParametersRecordV2(getAccessToken, cancelTokenSource, pipeline?._id);
       const newRecord = response?.data;
 
       if (newRecord) {
         newPipelineWizardModel.setData("recordId", newRecord._id);
-        setPipelineWizardModel({...newPipelineWizardModel});
+        setInformaticaRunParametersModel({...newPipelineWizardModel});
       }
 
       if (moveToNextScreen === true) {
@@ -90,7 +90,7 @@ const InformaticaPipelineRunAssistantInitializationScreen = ({ pipelineWizardMod
   };
 
   const getBody = () => {
-    if (isLoading || pipelineWizardModel == null) {
+    if (isLoading || informaticaRunParametersModel == null) {
       return (
         <LoadingDialog message={"Initializing Informatica Pipeline Run Assistant"} size={"sm"} />
       );
@@ -118,8 +118,8 @@ const InformaticaPipelineRunAssistantInitializationScreen = ({ pipelineWizardMod
 InformaticaPipelineRunAssistantInitializationScreen.propTypes = {
   setPipelineWizardScreen: PropTypes.func,
   handleClose: PropTypes.func,
-  pipelineWizardModel: PropTypes.object,
-  setPipelineWizardModel: PropTypes.func,
+  informaticaRunParametersModel: PropTypes.object,
+  setInformaticaRunParametersModel: PropTypes.func,
   pipeline: PropTypes.object,
   gitTaskData: PropTypes.object,
   setError: PropTypes.func

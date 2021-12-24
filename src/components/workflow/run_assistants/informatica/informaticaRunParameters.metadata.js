@@ -14,10 +14,6 @@ export const informaticaRunParametersMetadata = {
       id: "configurations",
     },
     {
-      label: "Configurations",
-      id: "configurations",
-    },
-    {
       label: "Record ID",
       id: "recordId",
     },
