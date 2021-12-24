@@ -6,7 +6,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import {
-  assignStandardColors,
+  assignStandardColors, defaultConfig, getColorByData,
   shortenPieChartLegend,
 } from "components/insights/charts/charts-views";
 import { Col, Row } from "react-bootstrap";
@@ -21,8 +21,11 @@ import AutomatedTestAdoptionRateAdoptionRateDataBlock
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import NivoPieChartBase from "components/common/metrics/charts/nivo/pie/NivoPieChartBase";
 import {nivoChartLegendDefinitions} from "components/common/metrics/charts/nivo/nivoChartLegend.definitions";
+import config from "./adoptionTestPercentagePieChartConfig";
 import AdoptionTestPercentageChartHelpDocumentation
   from "../../../../common/help/documentation/insights/charts/AdoptionTestPercentageChartHelpDocumentation";
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "../../../../common/helpers/metrics/metricTheme.helpers";
+import { ResponsivePie } from "@nivo/pie";
 
 const ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS = {
   ADOPTED_TESTS: "adopted_tests",
@@ -142,39 +145,44 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
     }
 
     return (
-      <div className={"my-2"}>
+      <div className="new-chart m-3 p-0" style={{ minheight: "300px", display: "flex" }}>
         <Row>
-          <Col xl={4} lg={6} md={8} className={"d-flex align-content-around"}>
+          <Col xl={6} lg={6} md={8} className={"d-flex align-content-around"}>
             <Row>
-              <Col lg={12}>
+              <Col lg={6} className={"my-3"}>
                 <AutomatedTestAdoptionRateAdoptedTestsDataBlock
                   executedTestCount={metric?.executedTests}
                   executedTestsDataPoint={automatedTestsDataPoint}
                 />
               </Col>
-              <Col lg={12} className={"my-2"}>
+              <Col lg={6} className={"my-3"}>
                 <AutomatedTestAdoptionRateManualTestsDataBlock
                   manualTestCount={metric?.manualTests}
                   manualTestsDataPoint={manualTestsDataPoint}
                 />
               </Col>
-              <Col lg={12} className={"mb-2"}>
+              <Col lg={6} className={"centered mb-3"}>
                 <AutomatedTestAdoptionRateAdoptionRateDataBlock
-                  adoptionRatePercentage={metric?.adoptionRate}
+                  score= {metric?.adoptionRate}
                   adoptionRateDataPoint={adoptionRateDataPoint}
                 />
               </Col>
             </Row>
           </Col>
-          <Col xl={8} lg={6} md={4} className={"my-2"}>
-            <NivoPieChartBase
+          <Col xl={6} lg={6} md={4} className={"my-2 p-2"}>
+            <ResponsivePie
               data={metric?.pairs}
-              onClickFunction={() => setShowModal(true)}
-              legendsConfiguration={getLegendsConfiguration()}
+              {...defaultConfig()}
+              {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
+              onClick={() => setShowModal(true)}
             />
           </Col>
         </Row>
-        {getNotesRow()}
+        <Row className="p-3">
+          <Col className="text-center">
+            <small> {notesData} </small>
+          </Col>
+        </Row>
       </div>
     );
   };
