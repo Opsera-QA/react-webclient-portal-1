@@ -119,13 +119,12 @@ import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/
 //QA Testing
 import CumulativeOpenDefectsMetric from "./cumulative_open_defects/CumulativeOpenDefectsMetric";
 import ManualQaTestPieChart from "components/insights/charts/qa_metrics/ManualQaTestPieChart";
-import FirstPassYieldPieChart from "components/insights/charts/qa_metrics/FirstPassYieldPieChart";
+import FirstPassYieldMetrics from "components/insights/charts/first_pass/FirstPassYieldMetrics";
 import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieChart";
 import AdoptionTestPercentageMetricV1 from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AdoptionTestPercentageMetricV1";
 import AutomatedTestResultsPieChart from "./qa_metrics/AutomatedTestResultsPieChart";
 import SFDCManualTestResultsPieChart from "./qa_metrics/SFDCManualTestResultsPieChart";
-import DefectRemovalEfficiencyPieChart from "./qa_metrics/DefectRemovalEfficiencyPieChart";
-
+import DefectRemovalEfficiencyMetrics from "components/insights/charts/defect_removal_efficiency/DefectRemovalEfficiencyMetrics";
 // SFDC KPIs
 import SalesforceBackupAndRollbackMetrics from "components/insights/charts/sfdc/salesforce_backups_and_rollbacks/SalesforceBackupAndRollbackMetrics";
 import SFDCProfileMigrationsBarChart from "components/insights/charts/sfdc/bar_chart/profile_migrations/SFDCProfileMigrationsBarChart";
@@ -1278,7 +1277,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "first-pass-yield":
         return (
           <Col md={12} className="p-2">
-            <FirstPassYieldPieChart
+            <FirstPassYieldMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1454,7 +1453,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "defect-removal-efficiency":
         return (
           <Col md={12} className="p-2">
-            <DefectRemovalEfficiencyPieChart
+            <DefectRemovalEfficiencyMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
