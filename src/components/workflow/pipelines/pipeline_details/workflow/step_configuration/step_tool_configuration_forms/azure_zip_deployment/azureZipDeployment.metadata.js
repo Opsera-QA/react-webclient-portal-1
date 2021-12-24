@@ -20,11 +20,17 @@ const azureZipDeploymentMetadata = {
       id: "azureStorageAccountName",
       isRequired: true,
     },
+    {
+      label: "Build Step",
+      id: "buildStepId",
+      isRequired: true,
+    },
   ],
   newObjectFields: {
     azureToolId : "",
     azureCredentialId : "",
     azureStorageAccountName : "",
+    buildStepId: ""
   }
 };
 
