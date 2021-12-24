@@ -8,7 +8,7 @@ function AzureFunctionsStepApplicationSelectInput({fieldName, model, setModel, a
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...model};
     newDataObject.setData(fieldName, selectedOption._id);
-    newDataObject.setData("region", "");
+    newDataObject.setData("azureRegion", "");
     newDataObject.setData("machine_type", "");
     setApplicationData(selectedOption?.configuration);
     setModel({...newDataObject});
@@ -17,7 +17,7 @@ function AzureFunctionsStepApplicationSelectInput({fieldName, model, setModel, a
   const clearDataFunction = () => {
     let newDataObject = {...model};
     newDataObject.setData(fieldName, "");
-    newDataObject.setData("region", "");
+    newDataObject.setData("azureRegion", "");
     newDataObject.setData("applicationType", "");
     newDataObject.setData("artifactStepId", "");
     setApplicationData(null);
