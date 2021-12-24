@@ -10,10 +10,12 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {pipelineHelpers} from "components/common/helpers/pipelines/pipeline.helpers";
+import InformaticaPipelineRunAssistantInitializationScreen
+  from "components/workflow/run_assistants/informatica/initialization_screen/InformaticaPipelineRunAssistantInitializationScreen";
 
 export const INFORMATICA_RUN_ASSISTANT_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
-  COMPONENT_SELECTOR: "COMPONENT_SELECTOR", // TODO: Rename based on what makes sense in the context of Informatica.
+  MIGRATION_OBJECT_SELECTOR: "MIGRATION_OBJECT_SELECTOR",
 };
 
 const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, closePanelFunction, pipelineOrientation }) => {
@@ -51,7 +53,6 @@ const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, c
       return;
     }
 
-
     return () => {
       source.cancel();
       isMounted.current = false;
@@ -61,7 +62,12 @@ const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, c
   const getBody = () => {
     switch (pipelineWizardScreen) {
       case INFORMATICA_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
-      case INFORMATICA_RUN_ASSISTANT_SCREENS.COMPONENT_SELECTOR:
+        return (
+          <InformaticaPipelineRunAssistantInitializationScreen
+            pipeline={pipeline}
+          />
+        );
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTOR:
       default:
         return null;
     }
@@ -70,7 +76,7 @@ const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, c
   const getHelpComponent = () => {
     switch (pipelineWizardScreen) {
       case INFORMATICA_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
-      case INFORMATICA_RUN_ASSISTANT_SCREENS.COMPONENT_SELECTOR:
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTOR:
       default:
         return null;
     }
