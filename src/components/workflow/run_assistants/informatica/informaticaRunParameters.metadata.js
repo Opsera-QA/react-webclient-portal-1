@@ -31,13 +31,13 @@ export const informaticaRunParametersMetadata = {
     },
   ],
   newObjectFields: {
-    selectedMigrationObjects: [
+    selectedMigrationObjects: [],
+    selectedConfigurationIndex: 0,
+    configurations: [
       {...informaticaRunParameterConfigurationMetadata.newObjectFields},
       {...informaticaRunParameterConfigurationMetadata.newObjectFields},
       {...informaticaRunParameterConfigurationMetadata.newObjectFields},
     ],
-    selectedConfigurationIndex: 0,
-    configurations: [],
     recordId: "",
     pipelineId: "",
     stepId: "",

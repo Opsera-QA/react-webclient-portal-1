@@ -80,8 +80,8 @@ const InformaticaPipelineRunAssistantInitializationScreen = (
     }
   };
 
-  const initializeRunAssistantRecord = async (newRecord) => {
-    if (newRecord == null) {
+  const initializeRunAssistantRecord = async (pipelineStorageRecord) => {
+    if (pipelineStorageRecord == null) {
       setError("Could not find an existing or create a new Informatica Run Assistant record");
       return;
     }
@@ -94,8 +94,17 @@ const InformaticaPipelineRunAssistantInitializationScreen = (
       return;
     }
 
-    informaticaRunParametersModel.setData("recordId", newRecord?._id);
+    informaticaRunParametersModel.setData("recordId", pipelineStorageRecord?._id);
     informaticaRunParametersModel.setData("stepId", step?._id);
+
+    if (Array.isArray(pipelineStorageRecord?.configurations) && pipelineStorageRecord?.configurations?.length > 0) {
+      informaticaRunParametersModel.setData("configurations", pipelineStorageRecord?.configurations);
+    }
+
+    if (typeof pipelineStorageRecord?.selectedConfigurationIndex === "number") {
+      informaticaRunParametersModel.setData("selectedConfigurationIndex", pipelineStorageRecord?.selectedConfigurationIndex);
+    }
+
     setInformaticaRunParametersModel({...informaticaRunParametersModel});
     setRunAssistantScreen(INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN);
   };
