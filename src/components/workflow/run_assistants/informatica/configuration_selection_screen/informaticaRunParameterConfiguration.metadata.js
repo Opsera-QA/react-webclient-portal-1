@@ -10,10 +10,6 @@ export const informaticaRunParameterConfigurationMetadata = {
       id: "types",
     },
     {
-      label: "Selected Configuration",
-      id: "selectedConfiguration",
-    },
-    {
       label: "Location",
       id: "location",
     },
@@ -31,7 +27,7 @@ export const informaticaRunParameterConfigurationMetadata = {
     },
   ],
   newObjectFields: {
-    name: "",
+    name: "Configuration",
     types: [],
     updateBy: "",
     tag: "",
