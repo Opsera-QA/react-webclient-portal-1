@@ -12,7 +12,28 @@ informaticaRunParametersActions.getNewRunParametersRecordV2 = async (getAccessTo
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-informaticaRunParametersActions.getComponentTypesV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
-  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/get_component_types`;
+informaticaRunParametersActions.updateRunParametersRecordV2 = async (getAccessToken, cancelTokenSource, runParametersModel) => {
+  const pipelineId = runParametersModel?.getData("pipelineId");
+  const stepId = runParametersModel?.getData("stepId");
+  const selectedConfigurationIndex = runParametersModel?.getData("selectedConfigurationIndex");
+  const configurations = runParametersModel?.getData("configurations");
+
+  const postBody = {
+    stepId: stepId,
+    selectedConfigurationIndex: selectedConfigurationIndex,
+    configurations: configurations,
+  };
+
+  const apiUrl = `/pipelines/${pipelineId}/informatica/run-parameters/record/create`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+informaticaRunParametersActions.triggerMigrationObjectPullV2 = async (getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `/pipelines/informatica/run-parameters/record/${id}/trigger-migration-object-pull`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+informaticaRunParametersActions.getMigrationObjectsV2 = async (getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `/pipelines/informatica/run-parameters/${id}/migration-objects`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };

@@ -2,19 +2,21 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
-import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import LoadingDialog from "components/common/status_notifications/loading";
-import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
-import CancelButton from "components/common/buttons/CancelButton";
-import {Button} from "react-bootstrap";
-import IconBase from "components/common/icons/IconBase";
-import {faSync} from "@fortawesome/pro-light-svg-icons";
 import {informaticaRunParametersActions} from "components/workflow/run_assistants/informatica/informaticaRunParameters.actions";
+import {pipelineHelpers} from "components/common/helpers/pipelines/pipeline.helpers";
+import {INFORMATICA_RUN_ASSISTANT_SCREENS} from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistant";
 
-const InformaticaPipelineRunAssistantInitializationScreen = ({ informaticaRunParametersModel, setInformaticaRunParametersModel, setPipelineWizardScreen, handleClose, pipeline, setError }) => {
+const InformaticaPipelineRunAssistantInitializationScreen = (
+  {
+    informaticaRunParametersModel,
+    setInformaticaRunParametersModel,
+    setRunAssistantScreen,
+    pipeline,
+    setError,
+  }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [existingRecord, setExistingRecord] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -26,7 +28,7 @@ const InformaticaPipelineRunAssistantInitializationScreen = ({ informaticaRunPar
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    loadData(informaticaRunParametersModel, pipeline?.workflow?.plan, source).catch((error) => {
+    loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -38,14 +40,15 @@ const InformaticaPipelineRunAssistantInitializationScreen = ({ informaticaRunPar
     };
   }, [pipeline]);
 
-  const loadData = async (newPipelineWizardModel, gitTaskData, plan, cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await initializePipelineWizardRecord(newPipelineWizardModel, cancelSource);
+      const runAssistantRecord = await getRunAssistantRecord(cancelSource);
+      await initializeRunAssistantRecord(runAssistantRecord);
     }
     catch (error) {
       console.error(error);
-      // setError("Could not initialize Informatica Pipeline Assistant");
+      setError("Could not initialize Informatica Pipeline Assistant");
     }
     finally {
       if (isMounted?.current === true) {
@@ -54,39 +57,47 @@ const InformaticaPipelineRunAssistantInitializationScreen = ({ informaticaRunPar
     }
   };
 
-
-  const initializePipelineWizardRecord = async (newPipelineWizardModel = informaticaRunParametersModel, cancelSource = cancelTokenSource) => {
+  const getRunAssistantRecord = async (cancelSource = cancelTokenSource) => {
     const response = await informaticaRunParametersActions.findExistingRunParametersRecordV2(getAccessToken, cancelSource, pipeline?._id);
     const existingRecord = response?.data;
 
     if (existingRecord) {
-      setExistingRecord(existingRecord);
-      newPipelineWizardModel.setData("recordId", existingRecord._id);
-      setInformaticaRunParametersModel({...newPipelineWizardModel});
+      return existingRecord;
     }
     else {
-      await createNewPipelineWizardRecord(newPipelineWizardModel);
+      return await createNewRunAssistantRecord();
     }
   };
 
-  const createNewPipelineWizardRecord = async (newPipelineWizardModel = informaticaRunParametersModel, moveToNextScreen) => {
+  const createNewRunAssistantRecord = async () => {
     try {
       const response = await informaticaRunParametersActions.getNewRunParametersRecordV2(getAccessToken, cancelTokenSource, pipeline?._id);
-      const newRecord = response?.data;
-
-      if (newRecord) {
-        newPipelineWizardModel.setData("recordId", newRecord._id);
-        setInformaticaRunParametersModel({...newPipelineWizardModel});
-      }
-
-      if (moveToNextScreen === true) {
-        setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR);
-      }
+      return response?.data;
     }
     catch (error) {
       console.error(error);
       setError("Could not create new Informatica Run Assistant record");
     }
+  };
+
+  const initializeRunAssistantRecord = async (newRecord) => {
+    if (newRecord == null) {
+      setError("Could not find an existing or create a new Informatica Run Assistant record");
+      return;
+    }
+
+    const step = pipelineHelpers.findFirstStepWithIdentifier(pipeline, "informatica");
+    if (step == null) {
+      setError(
+        "Warning, this pipeline is missing the default Informatica Step needed. Please edit the workflow and add the Informatica step in order to run this pipeline."
+      );
+      return;
+    }
+
+    informaticaRunParametersModel.setData("recordId", newRecord?._id);
+    informaticaRunParametersModel.setData("stepId", step?._id);
+    setInformaticaRunParametersModel({...informaticaRunParametersModel});
+    setRunAssistantScreen(INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN);
   };
 
   const getBody = () => {
@@ -95,15 +106,8 @@ const InformaticaPipelineRunAssistantInitializationScreen = ({ informaticaRunPar
         <LoadingDialog message={"Initializing Informatica Pipeline Run Assistant"} size={"sm"} />
       );
     }
-
     return (
       <div>
-        <SaveButtonContainer>
-          <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading} onClick={() => createNewPipelineWizardRecord(undefined, true)}>
-            <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Instance</span>
-          </Button>
-          <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
-        </SaveButtonContainer>
       </div>
     );
   };
@@ -116,12 +120,11 @@ const InformaticaPipelineRunAssistantInitializationScreen = ({ informaticaRunPar
 };
 
 InformaticaPipelineRunAssistantInitializationScreen.propTypes = {
-  setPipelineWizardScreen: PropTypes.func,
+  setRunAssistantScreen: PropTypes.func,
   handleClose: PropTypes.func,
   informaticaRunParametersModel: PropTypes.object,
   setInformaticaRunParametersModel: PropTypes.func,
   pipeline: PropTypes.object,
-  gitTaskData: PropTypes.object,
   setError: PropTypes.func
 };
 

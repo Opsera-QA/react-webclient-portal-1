@@ -1,3 +1,7 @@
+import {
+  informaticaRunParameterConfigurationMetadata,
+} from "components/workflow/run_assistants/informatica/configuration_selection_screen/informaticaRunParameterConfiguration.metadata";
+
 export const informaticaRunParametersMetadata = {
   type: "Informatica Run Parameters",
   fields: [
@@ -7,7 +11,7 @@ export const informaticaRunParametersMetadata = {
     },
     {
       label: "Selected Configuration",
-      id: "selectedConfiguration",
+      id: "selectedConfigurationIndex",
     },
     {
       label: "Configurations",
@@ -27,8 +31,12 @@ export const informaticaRunParametersMetadata = {
     },
   ],
   newObjectFields: {
-    selectedMigrationObjects: [],
-    selectedConfiguration: "",
+    selectedMigrationObjects: [
+      {...informaticaRunParameterConfigurationMetadata.newObjectFields},
+      {...informaticaRunParameterConfigurationMetadata.newObjectFields},
+      {...informaticaRunParameterConfigurationMetadata.newObjectFields},
+    ],
+    selectedConfigurationIndex: 0,
     configurations: [],
     recordId: "",
     pipelineId: "",

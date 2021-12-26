@@ -5,19 +5,21 @@ import axios from "axios";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import {pipelineHelpers} from "components/common/helpers/pipelines/pipeline.helpers";
 import InformaticaPipelineRunAssistantInitializationScreen
   from "components/workflow/run_assistants/informatica/initialization_screen/InformaticaPipelineRunAssistantInitializationScreen";
 import {informaticaRunParametersMetadata} from "components/workflow/run_assistants/informatica/informaticaRunParameters.metadata";
+import InformaticaRunAssistantConfigurationSelectionScreen
+  from "components/workflow/run_assistants/informatica/configuration_selection_screen/InformaticaRunAssistantConfigurationSelectionScreen";
 
 export const INFORMATICA_RUN_ASSISTANT_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
-  MIGRATION_OBJECT_SELECTOR: "MIGRATION_OBJECT_SELECTOR",
+  CONFIGURATION_SELECTION_SCREEN: "CONFIGURATION_SELECTION_SCREEN",
+  MIGRATION_OBJECT_SELECTION_SCREEN: "MIGRATION_OBJECT_SELECTION_SCREEN",
 };
 
 const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, closePanelFunction, pipelineOrientation }) => {
   const [error, setError] = useState("");
-  const [pipelineWizardScreen, setPipelineWizardScreen] = useState(INFORMATICA_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN);
+  const [runAssistantScreen, setRunAssistantScreen] = useState(INFORMATICA_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN);
   const [informaticaRunParametersModel, setInformaticaRunParametersModel] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -34,14 +36,6 @@ const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, c
     const newRunParametersModel = new Model(informaticaRunParametersMetadata.newObjectFields, informaticaRunParametersMetadata, false);
     setInformaticaRunParametersModel({...newRunParametersModel});
 
-    const stepArrayIndex = pipelineHelpers.findStepIndex(pipeline, "informatica");
-    if (stepArrayIndex === -1) {
-      setError(
-        "Warning, this pipeline is missing the default Informatica Step needed. Please edit the workflow and add the Informatica step in order to run this pipeline."
-      );
-      return;
-    }
-
     return () => {
       source.cancel();
       isMounted.current = false;
@@ -49,25 +43,37 @@ const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, c
   }, []);
 
   const getBody = () => {
-    switch (pipelineWizardScreen) {
+    switch (runAssistantScreen) {
       case INFORMATICA_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
         return (
           <InformaticaPipelineRunAssistantInitializationScreen
             pipeline={pipeline}
             informaticaRunParametersModel={informaticaRunParametersModel}
             setInformaticaRunParametersModel={setInformaticaRunParametersModel}
+            setError={setError}
+            setRunAssistantScreen={setRunAssistantScreen}
           />
         );
-      case INFORMATICA_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTOR:
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN:
+        return (
+          <InformaticaRunAssistantConfigurationSelectionScreen
+            informaticaRunParametersModel={informaticaRunParametersModel}
+            setInformaticaRunParametersModel={setInformaticaRunParametersModel}
+            setRunAssistantScreen={setRunAssistantScreen}
+            closePanelFunction={closePanelFunction}
+          />
+        );
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTION_SCREEN:
       default:
         return null;
     }
   };
 
   const getHelpComponent = () => {
-    switch (pipelineWizardScreen) {
+    switch (runAssistantScreen) {
       case INFORMATICA_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
-      case INFORMATICA_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTOR:
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN:
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTION_SCREEN:
       default:
         return null;
     }
