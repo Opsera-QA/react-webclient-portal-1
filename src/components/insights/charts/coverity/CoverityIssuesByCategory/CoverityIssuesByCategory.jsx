@@ -14,6 +14,9 @@ import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import CoverityIssuesByCategoryHelpDocumentation from "components/common/help/documentation/insights/charts/CoverityIssuesByCategoryHelpDocumentation";
 import CoverityActionableInsightOverlay from "./actionable_insights/CoverityActionableInsightOverlay";
+import CoverityIssuesOverallLowTrendDataBlock from "./data_blocks/overall_low_trend/CoverityIssuesOverallLowTrendDataBlock";
+import CoverityIssuesOverallMediumTrendDataBlock from "./data_blocks/overall_medium_trend/CoverityIssuesOverallMediumTrendDataBlock";
+import CoverityIssuesOverallHighTrendDataBlock from "./data_blocks/overall_high_trend/CoverityIssuesOverallHighTrendDataBlock";
 
 function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -88,11 +91,77 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
     );
     toastContext.showOverlayPanel(
       <CoverityActionableInsightOverlay
-        title={ stat + " Issues Insights"}
+        title={stat + " Issues Insights"}
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
         coveritySeverity={stat}
       />
+    );
+  };
+
+  const getIcon = (severity) => {
+    switch (severity) {
+      case "Red":
+        return faArrowCircleUp;
+      case "Neutral":
+        return faPauseCircle;
+      case "Green":
+        return faArrowCircleDown;
+      case "-":
+        return faMinusCircle;
+      default:
+        break;
+    }
+  };
+
+  const getIconColor = (severity) => {
+    switch (severity) {
+      case "Red":
+        return "red";
+      case "Green":
+        return "green";
+      case "Neutral":
+      case "-":
+        return "black";
+      default:
+        break;
+    }
+  };
+
+  const getIconTitle = (severity) => {
+    switch (severity) {
+      case "Red":
+        return "Risk";
+      case "Green":
+        return "Success";
+      case "Neutral":
+        return "Same as Earlier";
+      case "-":
+        return "No Trend";
+      default:
+        break;
+    }
+  };
+  const getFooterLine = () => {
+    const topThreeDocs = metrics[0]?.docs?.length > 0 ? metrics[0].docs.slice(0, 3) : [];
+    return (
+      <>
+        <Row className="p-1 mt-3">
+          <Col lg={12}>Top 3 Projects with Highest number of Issues & their Trend: </Col>
+        </Row>
+        {topThreeDocs.map((doc, index) => (
+          <Row className="p-1" key={index}>
+            <Col lg={12}>
+              <FontAwesomeIcon
+                icon={getIcon(doc?.projectTotalIssuesTrend)}
+                color={getIconColor(doc?.projectTotalIssuesTrend)}
+                title={getIconTitle(doc?.projectTotalIssuesTrend)}
+              />{" "}
+              {doc?.coverityStreamName}
+            </Col>
+          </Row>
+        ))}
+      </>
     );
   };
 
@@ -101,161 +170,36 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
       return null;
     }
 
-    const getIcon = (severity) => {
-      switch (severity) {
-        case "Red":
-          return faArrowCircleUp;
-        case "Neutral":
-          return faPauseCircle;
-        case "Green":
-          return faArrowCircleDown;
-        case "-":
-          return faMinusCircle;
-        default:
-          break;
-      }
-    };
-
-    const getIconColor = (severity) => {
-      switch (severity) {
-        case "Red":
-          return "red";
-        case "Green":
-          return "green";
-        case "Neutral":
-        case "-":
-          return "black";
-        default:
-          break;
-      }
-    };
-
-    const getIconTitle = (severity) => {
-      switch (severity) {
-        case "Red":
-          return "Risk";
-        case "Green":
-          return "Success";
-        case "Neutral":
-          return "Same as Earlier";
-        case "-":
-          return "No Trend";
-        default:
-          break;
-      }
-    };
-
     return (
-      <div className="new-chart mb-3" style={{ height: "300px" }}>
+      <div className="new-chart mb-3" style={{ minHeight: "300px" }}>
         <Container>
           <Row className="p-1">
             <Col>
-              <div className="metric-box p-3 text-center">
-                <div className="box-metric pointer" onClick={() => onRowSelect("Low")}>
-                  <div>{metrics[0].currentTotalLow}</div>
-                </div>
-                <div className="icon-box fa-pull-right">
-                  <FontAwesomeIcon
-                    icon={getIcon(metrics[0].overallLowTrend)}
-                    className="fa-pull-right ml-0"
-                    size={"lg"}
-                    onClick={() => document.body.click()}
-                    color={getIconColor(metrics[0].overallLowTrend)}
-                    title={getIconTitle(metrics[0].overallLowTrend)}
-                  />
-                </div>
-                <div className="w-100 text-muted mb-1">Low</div>
-              </div>
+              <CoverityIssuesOverallLowTrendDataBlock
+                score={metrics[0].currentTotalLow}
+                icon={getIcon(metrics[0].overallLowTrend)}
+                className={getIconColor(metrics[0].overallLowTrend)}
+                onSelect={() => onRowSelect("Low")}
+              />
             </Col>
             <Col>
-              <div className="metric-box p-3 text-center">
-                <div className="box-metric pointer" onClick={() => onRowSelect("Medium")}>
-                  <div>{metrics[0].currentTotalMedium}</div>
-                </div>
-
-                <div className="icon-box fa-pull-right">
-                  <FontAwesomeIcon
-                    icon={getIcon(metrics[0].overallMediumTrend)}
-                    className="fa-pull-right ml-0"
-                    size={"lg"}
-                    onClick={() => document.body.click()}
-                    color={getIconColor(metrics[0].overallMediumTrend)}
-                    title={getIconTitle(metrics[0].overallMediumTrend)}
-                  />
-                </div>
-                <div className="w-100 text-muted mb-1">Medium</div>
-              </div>
+              <CoverityIssuesOverallMediumTrendDataBlock
+                score={metrics[0].currentTotalMedium}
+                icon={getIcon(metrics[0].overallMediumTrend)}
+                className={getIconColor(metrics[0].overallMediumTrend)}
+                onSelect={() => onRowSelect("Medium")}
+              />
             </Col>
             <Col>
-              <div className="metric-box p-3 text-center">
-                <div className="box-metric pointer" onClick={() => onRowSelect("High")}>
-                  <div>{metrics[0].currentTotalHigh}</div>
-                </div>
-                <div className="icon-box fa-pull-right">
-                  <FontAwesomeIcon
-                    icon={getIcon(metrics[0].overallHighTrend)}
-                    className="fa-pull-right ml-0"
-                    size={"lg"}
-                    onClick={() => document.body.click()}
-                    color={getIconColor(metrics[0].overallHighTrend)}
-                    title={getIconTitle(metrics[0].overallHighTrend)}
-                  />
-                </div>
-                <div className="w-100 text-muted mb-1">High</div>
-              </div>
+              <CoverityIssuesOverallHighTrendDataBlock
+                score={metrics[0].currentTotalHigh}
+                icon={getIcon(metrics[0].overallHighTrend)}
+                className={getIconColor(metrics[0].overallHighTrend)}
+                onSelect={() => onRowSelect("High")}
+              />
             </Col>
           </Row>
-          <Row>
-            <div className="p-4">
-              <div>Top 3 Projects with Highest number of Issues & their Trend: </div>
-              <br></br>
-              {(() => {
-                if (metrics[0]?.docs?.length && metrics[0]?.docs[0]) {
-                  return (
-                    <div>
-                      <FontAwesomeIcon
-                        // icon={faMinus}
-                        icon={getIcon(metrics[0]?.docs[0]?.projectTotalIssuesTrend)}
-                        color={getIconColor(metrics[0]?.docs[0]?.projectTotalIssuesTrend)}
-                        title={getIconTitle(metrics[0]?.docs[0]?.projectTotalIssuesTrend)}
-                      />{" "}
-                      {metrics[0]?.docs[0]?.coverityStreamName}
-                    </div>
-                  );
-                }
-              })()}
-              {(() => {
-                if (metrics[0]?.docs?.length && metrics[0]?.docs[1]) {
-                  return (
-                    <div>
-                      <FontAwesomeIcon
-                        // icon={faMinus}
-                        icon={getIcon(metrics[0]?.docs[1]?.projectTotalIssuesTrend)}
-                        color={getIconColor(metrics[0]?.docs[1]?.projectTotalIssuesTrend)}
-                        title={getIconTitle(metrics[0]?.docs[1]?.projectTotalIssuesTrend)}
-                      />{" "}
-                      {metrics[0]?.docs[1]?.coverityStreamName}
-                    </div>
-                  );
-                }
-              })()}
-              {(() => {
-                if (metrics[0]?.docs?.length && metrics[0]?.docs[2]) {
-                  return (
-                    <div>
-                      <FontAwesomeIcon
-                        // icon={faMinus}
-                        icon={getIcon(metrics[0]?.docs[2]?.projectTotalIssuesTrend)}
-                        color={getIconColor(metrics[0]?.docs[2]?.projectTotalIssuesTrend)}
-                        title={getIconTitle(metrics[0]?.docs[2]?.projectTotalIssuesTrend)}
-                      />{" "}
-                      {metrics[0]?.docs[2]?.coverityStreamName}
-                    </div>
-                  );
-                }
-              })()}
-            </div>
-          </Row>
+          {getFooterLine()}
         </Container>
       </div>
     );
