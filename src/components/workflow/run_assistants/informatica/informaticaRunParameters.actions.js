@@ -13,10 +13,11 @@ informaticaRunParametersActions.getNewRunParametersRecordV2 = async (getAccessTo
 };
 
 informaticaRunParametersActions.updateRunParametersRecordV2 = async (getAccessToken, cancelTokenSource, runParametersModel) => {
-  const pipelineId = runParametersModel?.getData("pipelineId");
   const stepId = runParametersModel?.getData("stepId");
+  const recordId = runParametersModel?.getData("recordId");
   const selectedConfigurationIndex = runParametersModel?.getData("selectedConfigurationIndex");
   const configurations = runParametersModel?.getData("configurations");
+  const apiUrl = `/pipelines/informatica/run-parameters/record/${recordId}/update/configurations`;
 
   const postBody = {
     stepId: stepId,
@@ -24,7 +25,6 @@ informaticaRunParametersActions.updateRunParametersRecordV2 = async (getAccessTo
     configurations: configurations,
   };
 
-  const apiUrl = `/pipelines/${pipelineId}/informatica/run-parameters/record/create`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 

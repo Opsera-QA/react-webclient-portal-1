@@ -46,6 +46,8 @@ const InformaticaRunAssistantConfigurationSelectionScreen = (
       <SaveButtonContainer>
         <InformaticaRunAssistantSelectConfigurationButton
           informaticaRunParametersModel={informaticaRunParametersModel}
+          setInformaticaRunParametersModel={setInformaticaRunParametersModel}
+          informaticaRunParameterConfigurationModel={informaticaRunParameterConfigurationModel}
           setRunAssistantScreen={setRunAssistantScreen}
         />
         <CancelButton

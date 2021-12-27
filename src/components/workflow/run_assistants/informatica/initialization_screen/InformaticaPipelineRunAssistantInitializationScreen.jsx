@@ -61,18 +61,18 @@ const InformaticaPipelineRunAssistantInitializationScreen = (
     const response = await informaticaRunParametersActions.findExistingRunParametersRecordV2(getAccessToken, cancelSource, pipeline?._id);
     const existingRecord = response?.data;
 
-    if (existingRecord) {
-      return existingRecord;
-    }
-    else {
+    // if (existingRecord) {
+    //   return existingRecord;
+    // }
+    // else {
       return await createNewRunAssistantRecord();
-    }
+    // }
   };
 
   const createNewRunAssistantRecord = async () => {
     try {
       const response = await informaticaRunParametersActions.getNewRunParametersRecordV2(getAccessToken, cancelTokenSource, pipeline?._id);
-      return response?.data;
+      return response?.data?.data;
     }
     catch (error) {
       console.error(error);
@@ -96,13 +96,14 @@ const InformaticaPipelineRunAssistantInitializationScreen = (
 
     informaticaRunParametersModel.setData("recordId", pipelineStorageRecord?._id);
     informaticaRunParametersModel.setData("stepId", step?._id);
+    const data = pipelineStorageRecord?.data;
 
-    if (Array.isArray(pipelineStorageRecord?.configurations) && pipelineStorageRecord?.configurations?.length > 0) {
-      informaticaRunParametersModel.setData("configurations", pipelineStorageRecord?.configurations);
+    if (Array.isArray(pipelineStorageRecord?.configurations) && data?.configurations?.length > 0) {
+      informaticaRunParametersModel.setData("configurations", data?.configurations);
     }
 
-    if (typeof pipelineStorageRecord?.selectedConfigurationIndex === "number") {
-      informaticaRunParametersModel.setData("selectedConfigurationIndex", pipelineStorageRecord?.selectedConfigurationIndex);
+    if (typeof data?.selectedConfigurationIndex === "number") {
+      informaticaRunParametersModel.setData("selectedConfigurationIndex", data?.selectedConfigurationIndex);
     }
 
     setInformaticaRunParametersModel({...informaticaRunParametersModel});

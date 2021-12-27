@@ -8,10 +8,14 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import {informaticaRunParametersActions} from "components/workflow/run_assistants/informatica/informaticaRunParameters.actions";
 import {INFORMATICA_RUN_ASSISTANT_SCREENS} from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistant";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import {hasDateValue} from "components/common/helpers/date.helpers";
 
 function InformaticaRunAssistantSelectConfigurationButton(
   {
     informaticaRunParametersModel,
+    setInformaticaRunParametersModel,
+    informaticaRunParameterConfigurationModel,
     setRunAssistantScreen,
     disable,
     size,
@@ -43,6 +47,13 @@ function InformaticaRunAssistantSelectConfigurationButton(
   const updateSelectedComponentTypes = async () => {
     try {
       setIsSaving(true);
+
+      const selectedConfigurationIndex = informaticaRunParametersModel?.getData("selectedConfigurationIndex");
+      const configuration = informaticaRunParameterConfigurationModel?.getPersistData();
+      const configurations = informaticaRunParametersModel?.getArrayData("configurations");
+      configurations[selectedConfigurationIndex] = configuration;
+      informaticaRunParametersModel.setData("configurations", configurations);
+      setInformaticaRunParametersModel({...informaticaRunParametersModel});
       const result = await informaticaRunParametersActions.updateRunParametersRecordV2(getAccessToken, cancelTokenSource, informaticaRunParametersModel);
 
       if (result?.data?.status === 500) {
@@ -55,7 +66,9 @@ function InformaticaRunAssistantSelectConfigurationButton(
       toastContext.showInlineErrorMessage(error);
     }
     finally {
-      setIsSaving(false);
+      if (isMounted.current === true) {
+        setIsSaving(false);
+      }
     }
   };
 
@@ -64,6 +77,25 @@ function InformaticaRunAssistantSelectConfigurationButton(
     if (isSaving) {
       return false;
     }
+
+    const configuration = informaticaRunParameterConfigurationModel?.getPersistData();
+    const selectedConfigurationIndex = informaticaRunParametersModel?.getData("selectedConfigurationIndex");
+
+    if (configuration == null || typeof configuration !== "object" || typeof selectedConfigurationIndex !== "number") {
+      return false;
+    }
+
+    if (
+         hasStringValue(configuration.location) !== true
+      && (!Array.isArray(configuration.types) || configuration.types.length === 0)
+      && hasStringValue(configuration.updateBy) !== true
+      && hasDateValue(configuration.updateTime) !== true
+      && hasStringValue(configuration.tag) !== true
+    ) {
+      return false;
+    }
+
+    return true;
   };
 
   if (informaticaRunParametersModel == null) {
@@ -89,6 +121,8 @@ function InformaticaRunAssistantSelectConfigurationButton(
 
 InformaticaRunAssistantSelectConfigurationButton.propTypes = {
   informaticaRunParametersModel: PropTypes.object,
+  setInformaticaRunParametersModel: PropTypes.func,
+  informaticaRunParameterConfigurationModel: PropTypes.object,
   setRunAssistantScreen: PropTypes.func,
   disable: PropTypes.bool,
   icon: PropTypes.object,
