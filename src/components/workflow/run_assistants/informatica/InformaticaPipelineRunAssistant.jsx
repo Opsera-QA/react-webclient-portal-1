@@ -10,6 +10,8 @@ import InformaticaPipelineRunAssistantInitializationScreen
 import {informaticaRunParametersMetadata} from "components/workflow/run_assistants/informatica/informaticaRunParameters.metadata";
 import InformaticaRunAssistantConfigurationSelectionScreen
   from "components/workflow/run_assistants/informatica/configuration_selection_screen/InformaticaRunAssistantConfigurationSelectionScreen";
+import InformaticaRunAssistantMigrationObjectSelectionScreen
+  from "components/workflow/run_assistants/informatica/migration_object_selection_screen/InformaticaRunAssistantMigrationObjectSelectionScreen";
 
 export const INFORMATICA_RUN_ASSISTANT_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
@@ -64,6 +66,14 @@ const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, c
           />
         );
       case INFORMATICA_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTION_SCREEN:
+        return (
+          <InformaticaRunAssistantMigrationObjectSelectionScreen
+            informaticaRunParametersModel={informaticaRunParametersModel}
+            setInformaticaRunParametersModel={setInformaticaRunParametersModel}
+            setRunAssistantScreen={setRunAssistantScreen}
+            closePanelFunction={closePanelFunction}
+          />
+        );
       default:
         return null;
     }
