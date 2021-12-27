@@ -87,6 +87,10 @@
   bottom: 0px;
 }
 
+.center-middle-block {
+  margin-left: 9.6rem;
+}
+
 /*  Start dashboard box modules */
 .metric-box {
   min-width: 120px;

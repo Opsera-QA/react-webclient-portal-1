@@ -145,7 +145,7 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
     }
 
     return (
-      <div className="new-chart m-3 p-0" style={{ minheight: "300px", display: "flex" }}>
+        <div className="new-chart m-3 p-0" style={{ minheight: "300px", display: "flex" }}>
         <Row>
           <Col xl={6} lg={6} md={8} className={"d-flex align-content-around"}>
             <Row>
@@ -161,7 +161,7 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
                   manualTestsDataPoint={manualTestsDataPoint}
                 />
               </Col>
-              <Col lg={6} className={"centered mb-3"}>
+              <Col lg={6} className={"center-middle-block"}>
                 <AutomatedTestAdoptionRateAdoptionRateDataBlock
                   score= {metric?.adoptionRate}
                   adoptionRateDataPoint={adoptionRateDataPoint}
@@ -178,12 +178,13 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
             />
           </Col>
         </Row>
-        <Row className="p-3">
-          <Col className="text-center">
-            <small> {notesData} </small>
-          </Col>
-        </Row>
-      </div>
+          <Row>
+            {getNotesRow()}
+          </Row>
+        </div>
+
+
+
     );
   };
 
