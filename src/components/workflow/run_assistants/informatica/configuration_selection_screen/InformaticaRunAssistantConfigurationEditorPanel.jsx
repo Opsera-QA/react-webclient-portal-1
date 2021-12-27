@@ -10,16 +10,20 @@ import InformaticaIntelligentCloudServiceTypeMultiSelectInputBase
 
 const InformaticaRunAssistantConfigurationEditorPanel = (
   {
+    informaticaRunParametersModel,
     informaticaRunParameterConfigurationModel,
     setInformaticaRunParameterConfigurationModel,
-    configuration,
+    index,
   }) => {
 
   useEffect(() => {
-    if (configuration) {
-      setInformaticaRunParameterConfigurationModel(new Model({...configuration}, informaticaRunParameterConfigurationMetadata, false));
+    if (index != null && informaticaRunParametersModel != null && setInformaticaRunParameterConfigurationModel) {
+      const configurations = informaticaRunParametersModel?.getArrayData("configurations");
+      const configuration = Array.isArray(configurations) && configurations.length > index ? configurations[index] : null;
+      const newModel = configuration ? new Model({...configuration}, informaticaRunParameterConfigurationMetadata, false) : null;
+      setInformaticaRunParameterConfigurationModel(newModel);
     }
-  }, [JSON.stringify(configuration)]);
+  }, [index]);
 
 
   if (informaticaRunParameterConfigurationModel == null) {
@@ -64,18 +68,16 @@ const InformaticaRunAssistantConfigurationEditorPanel = (
             setDataObject={setInformaticaRunParameterConfigurationModel}
           />
         </Col>
-        <Col xs={12}>
-
-        </Col>
       </Row>
     </div>
   );
 };
 
 InformaticaRunAssistantConfigurationEditorPanel.propTypes = {
-  configuration: PropTypes.object,
+  index: PropTypes.number,
   informaticaRunParameterConfigurationModel: PropTypes.object,
-  setInformaticaRunParameterConfigurationModel: PropTypes.func
+  setInformaticaRunParameterConfigurationModel: PropTypes.func,
+  informaticaRunParametersModel: PropTypes.object,
 };
 
 export default InformaticaRunAssistantConfigurationEditorPanel;
