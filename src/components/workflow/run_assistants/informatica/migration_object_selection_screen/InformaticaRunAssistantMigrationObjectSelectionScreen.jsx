@@ -7,6 +7,7 @@ import ErrorDialog from "components/common/status_notifications/error";
 import {informaticaRunParametersActions} from "components/workflow/run_assistants/informatica/informaticaRunParameters.actions";
 import InformaticaRunAssistantMigrationObjectSelector
   from "components/workflow/run_assistants/informatica/migration_object_selection_screen/InformaticaRunAssistantMigrationObjectSelector";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 const InformaticaRunAssistantMigrationObjectSelectionScreen = (
   { 
@@ -62,10 +63,10 @@ const InformaticaRunAssistantMigrationObjectSelectionScreen = (
   };
 
   const triggerInformaticaMigrationObjectPull = async (cancelSource = cancelTokenSource) => {
-    const result = await informaticaRunParametersActions.triggerMigrationObjectPullV2(getAccessToken, cancelSource, informaticaRunParametersModel.getData("recordId"));
+    const response = await informaticaRunParametersActions.triggerMigrationObjectPullV2(getAccessToken, cancelSource, informaticaRunParametersModel.getData("recordId"));
 
-    if (result?.data?.status === 500) {
-      const message = result?.data?.message;
+    if (response?.data?.status !== 200) {
+      const message = response?.data?.message;
       toastContext.showInlineErrorMessage("Service Error Triggering Migration Object List pull from Informatica: " + message);
     }
     else {
@@ -73,9 +74,27 @@ const InformaticaRunAssistantMigrationObjectSelectionScreen = (
     }
   };
 
-  if (!migrationObjectsPullTriggered) {
-    return <ErrorDialog error={"Service Error Triggering Migration Object List pull from Informatica"} />;
-  }
+  const getBody = () => {
+    if (isLoading === true) {
+      return (
+        <LoadingDialog message={"Triggering Migration Object List Pull from Informatica"} />
+      );
+    }
+
+    if (!migrationObjectsPullTriggered) {
+      return <ErrorDialog error={"Service Error Triggering Migration Object List pull from Informatica"} />;
+    }
+
+    return (
+      <InformaticaRunAssistantMigrationObjectSelector
+        setRunAssistantScreen={setRunAssistantScreen}
+        informaticaRunParametersModel={informaticaRunParametersModel}
+        setInformaticaRunParametersModel={setInformaticaRunParametersModel}
+        closePanelFunction={closePanelFunction}
+      />
+    );
+  };
+
 
   return (
     <div>
@@ -83,12 +102,7 @@ const InformaticaRunAssistantMigrationObjectSelectionScreen = (
       <div className="text-muted mb-2">
         Select which migration objects will have changes impacted.
       </div>
-      <InformaticaRunAssistantMigrationObjectSelector
-        setRunAssistantScreen={setRunAssistantScreen}
-        informaticaRunParametersModel={informaticaRunParametersModel}
-        setInformaticaRunParametersModel={setInformaticaRunParametersModel}
-        closePanelFunction={closePanelFunction}
-      />
+      {getBody()}
     </div>
   );
 };

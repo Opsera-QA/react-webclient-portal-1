@@ -6,13 +6,13 @@ const InformaticaRunAssistantMigrationObjectList = (
   { 
     informaticaRunParametersModel, 
     setInformaticaRunParametersModel, 
-    loadData, 
+    loadDataFunction,
     migrationObjects, 
     isLoading, 
     migrationObjectPullCompleted,
   }) => {
   const noDataFilesPulledMessage = "The Migration Objects pull has been completed. There is no data for the selected criteria.";
-  const noDataFilesNotPulledMessage = "The Migration Objects list has not been received from Informatica yet. Please click the table's refresh button to resume polling for the files.";
+  const noDataFilesNotPulledMessage = "The Migration Objects list has not been received from Informatica yet. Please click the refresh button to resume polling for the files.";
 
   return (
     <div>
@@ -23,6 +23,7 @@ const InformaticaRunAssistantMigrationObjectList = (
         dataObject={informaticaRunParametersModel}
         setDataObject={setInformaticaRunParametersModel}
         isLoading={isLoading}
+        loadDataFunction={loadDataFunction}
         noDataMessage={migrationObjectPullCompleted ? noDataFilesPulledMessage : noDataFilesNotPulledMessage}
       />
     </div>
@@ -33,7 +34,7 @@ const InformaticaRunAssistantMigrationObjectList = (
 InformaticaRunAssistantMigrationObjectList.propTypes = {
   isLoading: PropTypes.bool,
   migrationObjects: PropTypes.arrayOf(PropTypes.object),
-  loadData: PropTypes.func,
+  loadDataFunction: PropTypes.func,
   informaticaRunParametersModel: PropTypes.object,
   setInformaticaRunParametersModel: PropTypes.func,
   migrationObjectPullCompleted: PropTypes.bool

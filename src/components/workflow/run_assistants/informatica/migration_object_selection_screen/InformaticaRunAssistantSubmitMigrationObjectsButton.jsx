@@ -6,10 +6,19 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
-import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
+import {informaticaRunParametersActions} from "components/workflow/run_assistants/informatica/informaticaRunParameters.actions";
+import {INFORMATICA_RUN_ASSISTANT_SCREENS} from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistant";
 
-function InformaticaRunAssistantSubmitMigrationObjectsButton({pipelineWizardModel, setPipelineWizardScreen, filteredFileCount, size, className, icon, isLoading}) {
+function InformaticaRunAssistantSubmitMigrationObjectsButton(
+  {
+    informaticaRunParametersModel,
+    setRunAssistantScreen,
+    selectedMigrationObjectCount,
+    size,
+    className,
+    icon,
+    isLoading,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
@@ -32,20 +41,11 @@ function InformaticaRunAssistantSubmitMigrationObjectsButton({pipelineWizardMode
     };
   }, []);
 
-  const submitFilteredFiles = async () => {
+  const submitSelectedMigrationObjects = async () => {
     try {
       setIsSaving(true);
-
-      if (pipelineWizardModel.getData("fromFileUpload") === true) {
-        await generateXml();
-      }
-      else if (pipelineWizardModel.getData("isProfiles") === true) {
-        await setSfdcProfileFilesList();
-      }
-      else {
-        await sfdcPipelineActions.setSfdcFileListV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
-        await generateXml();
-      }
+      await informaticaRunParametersActions.setSelectedMigrationObjectsV2(getAccessToken, cancelTokenSource, informaticaRunParametersModel);
+      setRunAssistantScreen(INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIRMATION_SCREEN);
     } catch (error) {
       console.error(error);
       toastContext.showInlineErrorMessage(error);
@@ -57,53 +57,31 @@ function InformaticaRunAssistantSubmitMigrationObjectsButton({pipelineWizardMode
     }
   };
 
-  const setSfdcProfileFilesList = async () => {
-    await sfdcPipelineActions.setSfdcProfileFilesListV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
-    setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.PROFILE_COMPONENT_SELECTOR);
-  };
-
-  const generateXml = async () => {
-    if (pipelineWizardModel.getData("fromGitTasks") === true) {
-      await sfdcPipelineActions.generateGitTaskXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
-    }
-    else {
-      await sfdcPipelineActions.generateSfdcPackageXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
-    }
-
-    setPipelineWizardScreen(
-      pipelineWizardModel.getData("unitTestSteps").length > 0
-        ? PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR
-        : PIPELINE_WIZARD_SCREENS.XML_VIEWER
-    );
-  };
-
-  if (pipelineWizardModel == null) {
+  if (informaticaRunParametersModel == null) {
     return null;
   }
 
   const getLabel = () => {
     if (isSaving) {
-      return (`Saving ${filteredFileCount} SFDC Files`);
+      return (`Saving ${selectedMigrationObjectCount} Selected Migration Objects`);
     }
 
-    return (`Proceed with ${filteredFileCount} Files`);
+    return (`Proceed with ${selectedMigrationObjectCount} Migration Objects`);
   };
 
   return (
     <div className={className}>
-      <div className={"d-flex"}>
-        <Button size={size} variant="success" disabled={filteredFileCount === 0 || isSaving || isLoading} onClick={() => submitFilteredFiles()}>
-          <span><IconBase isLoading={isSaving} icon={icon} fixedWidth className="mr-2"/>{getLabel()}</span>
-        </Button>
-      </div>
+      <Button size={size} variant="success" disabled={selectedMigrationObjectCount === 0 || isSaving || isLoading} onClick={() => submitSelectedMigrationObjects()}>
+        <span><IconBase isLoading={isSaving} icon={icon} fixedWidth className="mr-2"/>{getLabel()}</span>
+      </Button>
     </div>
   );
 }
 
 InformaticaRunAssistantSubmitMigrationObjectsButton.propTypes = {
-  pipelineWizardModel: PropTypes.object,
-  setPipelineWizardScreen: PropTypes.func,
-  filteredFileCount: PropTypes.number,
+  informaticaRunParametersModel: PropTypes.object,
+  setRunAssistantScreen: PropTypes.func,
+  selectedMigrationObjectCount: PropTypes.number,
   icon: PropTypes.object,
   size: PropTypes.string,
   className: PropTypes.string,

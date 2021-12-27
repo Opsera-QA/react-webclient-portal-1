@@ -17,6 +17,7 @@ export const INFORMATICA_RUN_ASSISTANT_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
   CONFIGURATION_SELECTION_SCREEN: "CONFIGURATION_SELECTION_SCREEN",
   MIGRATION_OBJECT_SELECTION_SCREEN: "MIGRATION_OBJECT_SELECTION_SCREEN",
+  CONFIRMATION_SCREEN: "CONFIRMATION_SCREEN",
 };
 
 const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, closePanelFunction, pipelineOrientation }) => {
@@ -73,6 +74,10 @@ const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, c
             setRunAssistantScreen={setRunAssistantScreen}
             closePanelFunction={closePanelFunction}
           />
+        );
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIRMATION_SCREEN:
+        return (
+          <div>You have reached the confirmation screen.</div>
         );
       default:
         return null;

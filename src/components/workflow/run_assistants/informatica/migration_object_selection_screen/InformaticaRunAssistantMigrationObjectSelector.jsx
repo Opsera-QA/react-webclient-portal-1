@@ -5,15 +5,15 @@ import InlineWarning from "components/common/status_notifications/inline/InlineW
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
-import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faStepBackward} from "@fortawesome/free-solid-svg-icons";
 import CancelButton from "components/common/buttons/CancelButton";
-import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
-import SfdcPipelineWizardSubmitSfdcFilesButton
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSubmitSfdcFilesButton";
 import {parseError} from "components/common/helpers/error-helpers";
 import {informaticaRunParametersActions} from "components/workflow/run_assistants/informatica/informaticaRunParameters.actions";
+import InformaticaRunAssistantMigrationObjectList
+  from "components/workflow/run_assistants/informatica/migration_object_selection_screen/InformaticaRunAssistantMigrationObjectList";
+import {INFORMATICA_RUN_ASSISTANT_SCREENS} from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistant";
+import BackButton from "components/common/buttons/back/BackButton";
+import InformaticaRunAssistantSubmitMigrationObjectsButton
+  from "components/workflow/run_assistants/informatica/migration_object_selection_screen/InformaticaRunAssistantSubmitMigrationObjectsButton";
 
 const InformaticaRunAssistantMigrationObjectSelector = (
   { 
@@ -81,9 +81,9 @@ const InformaticaRunAssistantMigrationObjectSelector = (
       return;
     }
 
-    const sfdcCommitList = await getMigrationObjects(cancelSource);
+    const migrationObjectList = await getMigrationObjects(cancelSource);
 
-    if (!Array.isArray(sfdcCommitList) && count <= 5 && migrationObjectPullCompleted === false) {
+    if (!Array.isArray(migrationObjectList) && count <= 5 && migrationObjectPullCompleted === false) {
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
       return await migrationObjectPolling(cancelSource, count + 1);
     }
@@ -95,7 +95,6 @@ const InformaticaRunAssistantMigrationObjectSelector = (
 
     if (isMounted?.current === true && data) {
       const files = data.data;
-      console.log("files: " + JSON.stringify(files));
 
       if (data?.error) {
         const parsedError = parseError(data?.error);
@@ -120,16 +119,32 @@ const InformaticaRunAssistantMigrationObjectSelector = (
   return (
     <div>
       <InlineWarning warningMessage={migrationObjectErrorMessage} className="pl-3" />
+      <InformaticaRunAssistantMigrationObjectList
+        migrationObjects={migrationObjects}
+        informaticaRunParametersModel={informaticaRunParametersModel}
+        setInformaticaRunParametersModel={setInformaticaRunParametersModel}
+        loadDataFunction={loadData}
+        isLoading={isLoading}
+        migrationObjectPullCompleted={migrationObjectPullCompleted}
+      />
       <SaveButtonContainer>
-        <Button variant="secondary" size="sm" className="mr-2" onClick={() => {setRunAssistantScreen(PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR);}}>
-          <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>Back
-        </Button>
-        <SfdcPipelineWizardSubmitSfdcFilesButton
-          setRunAssistantScreen={setRunAssistantScreen}
-          informaticaRunParametersModel={informaticaRunParametersModel}
+        <BackButton
+          variant={"secondary"}
+          backButtonFunction={() => {setRunAssistantScreen(INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN);}}
           isLoading={isLoading}
         />
-        <CancelButton size={"sm"} className={"ml-2"} cancelFunction={closePanelFunction} />
+        <InformaticaRunAssistantSubmitMigrationObjectsButton
+          setRunAssistantScreen={setRunAssistantScreen}
+          informaticaRunParametersModel={informaticaRunParametersModel}
+          selectedMigrationObjectCount={informaticaRunParametersModel?.getArrayData("selectedMigrationObjects")?.length}
+          isLoading={isLoading}
+          className={"ml-2"}
+        />
+        <CancelButton
+          size={"sm"}
+          className={"ml-2"}
+          cancelFunction={closePanelFunction}
+        />
       </SaveButtonContainer>
     </div>
   );
