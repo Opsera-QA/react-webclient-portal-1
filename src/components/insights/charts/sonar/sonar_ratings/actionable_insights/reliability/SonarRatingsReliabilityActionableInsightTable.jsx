@@ -65,9 +65,9 @@ function SonarRatingsReliabilityActionableInsightTable(
   const columns = useMemo(
     () => [
       getKpiSonarPipelineTableTextColumn(getField(fields, "project")),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "pipelineId")),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "currentScanIssuesCount")),
+      getKpiSonarPipelineTableTextColumn(getField(fields, "pipelineName")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "runCount")),
+      getKpiSonarPipelineTableTextColumn(getField(fields, "endTimestamp")),
       getChartTrendStatusColumn(getField(fields, "status")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "critical"), "critical"),
       getKpiSonarPipelineTableTextColumn(getField(fields, "blocker"), "blocker"),

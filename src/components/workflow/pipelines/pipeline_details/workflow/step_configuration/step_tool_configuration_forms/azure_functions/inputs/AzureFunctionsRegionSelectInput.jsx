@@ -6,16 +6,12 @@ function AzureFunctionsRegionSelectInput({ fieldName, model, setModel, azureTool
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...model};
     newDataObject.setData(fieldName, selectedOption?.name);
-    newDataObject.setData("applicationType", "");
-    newDataObject.setData("artifactStepId", "");
     setModel({...newDataObject});
   };
 
   const clearDataFunction = () => {
     let newDataObject = {...model};
     newDataObject.setData(fieldName, "");
-    newDataObject.setData("applicationType", "");
-    newDataObject.setData("artifactStepId", "");
     setModel({...newDataObject});
   };
 

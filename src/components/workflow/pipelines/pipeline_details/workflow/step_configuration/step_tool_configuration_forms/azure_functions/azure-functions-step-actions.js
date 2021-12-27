@@ -32,7 +32,7 @@ azureFunctionsActions.getAzureMachineTypes = async (getAccessToken, cancelTokenS
     "tenantId": cfg?.azureTenantId,
     "subscriptionId": cfg?.azureSubscriptionId,
     "resource": applicationData?.resource,
-    "region": dataObject?.getData("region")
+    "region": dataObject?.getData("azureRegion")
   };
   const apiURL = `tools/azure/management/machineTypes`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
@@ -48,7 +48,7 @@ azureFunctionsActions.getKubeVersions = async (getAccessToken, cancelTokenSource
     "tenantId": cfg?.azureTenantId,
     "subscriptionId": cfg?.azureSubscriptionId,
     "resource": applicationData?.resource,
-    "region": dataObject?.getData("region")
+    "region": dataObject?.getData("azureRegion")
   };
   const apiURL = `tools/azure/management/kubeVersions`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
@@ -69,6 +69,22 @@ azureFunctionsActions.getApplicationType = async (getAccessToken, cancelTokenSou
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
+};
+
+azureFunctionsActions.getAzureResourceGroups = async (getAccessToken, cancelTokenSource, config, applicationData) => {
+  const apiUrl = `tools/azure/management/resourcebycluster`;
+  const cfg = config?.configuration;
+  const owner = config?.owner;
+  const postBody = {
+    "owner": owner,
+    "clientId": applicationData?.clientId?.vaultKey,
+    "clientSecret": applicationData?.clientSecret?.vaultKey,
+    "tenantId": cfg?.azureTenantId,
+    "subscriptionId": cfg?.azureSubscriptionId,
+    "resource": applicationData?.resource,
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 

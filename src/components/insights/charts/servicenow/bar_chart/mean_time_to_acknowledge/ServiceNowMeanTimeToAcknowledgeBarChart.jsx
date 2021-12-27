@@ -173,13 +173,13 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
           markers={[
             {
               axis: "y",
-              value: overallMean,
+              value: overallMean ? overallMean : 0,
               lineStyle: { stroke: neutralColor, strokeWidth: 2 },
               legend: "Mean",
             },
             {
               axis: "y",
-              value: goalsData?.mttaAvgMeanTimeGoal,
+              value: goalsData?.mttaAvgMeanTimeGoal ? goalsData?.mttaAvgMeanTimeGoal : 0,
               lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
               legend: "Goal",
             },
