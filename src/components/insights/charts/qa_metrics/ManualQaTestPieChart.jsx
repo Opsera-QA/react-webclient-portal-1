@@ -13,6 +13,7 @@ import TwoLineScoreDataBlock from "../../../common/metrics/score/TwoLineScoreDat
 import TwoLinePercentageDataBlock from "../../../common/metrics/percentage/TwoLinePercentageDataBlock";
 import { dataPointHelpers } from "../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
+import DataBlockBoxContainer from "../../../common/metrics/data_blocks/DataBlockBoxContainer";
 
 const MANUAL_TESTING_RESULTS_DATA_POINT_IDENTIFIERS = {
   passRateDataPoint: "manual-testing-results-quality-level",
@@ -102,22 +103,32 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
       <div className="new-chart mb-3" style={{ height: "300px", display: "flex" }}>
         <Container>
           <Row className="p-1">
-            <Col>
-              <TwoLineScoreDataBlock score={metrics[0]?.totalTests} subtitle={"Total Number of test Available"} />
+            <Col lg={6}>
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={"p-3"}>
+                  <TwoLineScoreDataBlock score={metrics[0]?.totalTests} subtitle={"Total Number of test Available"} />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col lg={6}>
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={"p-3"}>
+                  <TwoLineScoreDataBlock score={metrics[0].totalExecuted} subtitle={"Total Number of Tests executed"} />
+                </div>
+              </DataBlockBoxContainer>
             </Col>
           </Row>
           <Row className="p-1">
-            <Col>
-              <TwoLineScoreDataBlock score={metrics[0].totalExecuted} subtitle={"Total Number of Tests executed"} />
-            </Col>
-          </Row>
-          <Row className="p-1">
-            <Col>
-              <TwoLinePercentageDataBlock
-                percentage={metrics[0]?.passRate}
-                subtitle={"Pass Rate"}
-                dataPoint={passRateDataPoint}
-              />
+            <Col lg={6} className="w-100 mx-auto">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className="p-3">
+                  <TwoLinePercentageDataBlock
+                    percentage={metrics[0]?.passRate}
+                    subtitle={"Pass Rate"}
+                    dataPoint={passRateDataPoint}
+                  />
+                </div>
+              </DataBlockBoxContainer>
             </Col>
           </Row>
         </Container>
