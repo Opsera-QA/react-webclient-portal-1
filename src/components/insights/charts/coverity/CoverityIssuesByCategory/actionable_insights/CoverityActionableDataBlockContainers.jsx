@@ -3,6 +3,8 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
+import { faCheckCircle, faLockOpenAlt, faShieldCheck } from "@fortawesome/pro-light-svg-icons";
+import { faProjectDiagram } from "@fortawesome/free-solid-svg-icons";
 
 function CoverityActionableDataBlockContainers({ data }) {
   let className = `p-2 dark-gray-text-primary`;
@@ -22,6 +24,7 @@ function CoverityActionableDataBlockContainers({ data }) {
             <TwoLineScoreDataBlock
               className={className}
               score={data.totalProjects}
+              icon = {faProjectDiagram}
               subtitle={"Total Projects"}
             />
           </DataBlockBoxContainer>
@@ -31,6 +34,7 @@ function CoverityActionableDataBlockContainers({ data }) {
             <TwoLineScoreDataBlock
               className={className}
               score={data.totalScans}
+              icon = {faCheckCircle}
               subtitle={"Total Scans"}
             />
           </DataBlockBoxContainer>
@@ -40,6 +44,7 @@ function CoverityActionableDataBlockContainers({ data }) {
             <TwoLineScoreDataBlock
               className={className}
               score={data.totalQuality}
+              icon = {faShieldCheck}
               subtitle={"Total Quality Issues"} />
           </DataBlockBoxContainer>
         </Col>
@@ -48,6 +53,7 @@ function CoverityActionableDataBlockContainers({ data }) {
             <TwoLineScoreDataBlock
               className={className}
               score={data.totalSecurity}
+              icon = {faLockOpenAlt}
               subtitle={"Total Security Issues"}
             />
           </DataBlockBoxContainer>
