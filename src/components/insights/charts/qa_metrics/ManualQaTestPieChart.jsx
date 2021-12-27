@@ -119,7 +119,7 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
             </Col>
           </Row>
           <Row className="p-1">
-            <Col lg={6} className="center-data-block">
+            <Col lg={6} className="w-100 mx-auto">
               <DataBlockBoxContainer showBorder={true}>
                 <div className="p-3">
                   <TwoLinePercentageDataBlock
