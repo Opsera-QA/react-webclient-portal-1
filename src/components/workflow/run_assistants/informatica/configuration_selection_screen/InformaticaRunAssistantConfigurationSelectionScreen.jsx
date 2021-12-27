@@ -8,6 +8,8 @@ import InformaticaRunParameterConfigurationIndexSelectInput
 import Col from "react-bootstrap/Col";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import CancelButton from "components/common/buttons/CancelButton";
+import InformaticaRunAssistantSelectConfigurationButton
+  from "components/workflow/run_assistants/informatica/configuration_selection_screen/InformaticaRunAssistantSelectConfigurationButton";
 
 const InformaticaRunAssistantConfigurationSelectionScreen = (
   {
@@ -42,7 +44,7 @@ const InformaticaRunAssistantConfigurationSelectionScreen = (
         index={informaticaRunParametersModel?.getData("selectedConfigurationIndex")}
       />
       <SaveButtonContainer>
-        <InformaticaRunAssistantConfigurationEditorPanel
+        <InformaticaRunAssistantSelectConfigurationButton
           informaticaRunParametersModel={informaticaRunParametersModel}
           setRunAssistantScreen={setRunAssistantScreen}
         />

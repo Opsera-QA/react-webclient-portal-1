@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import DateTimeInputBase from "components/common/inputs/date/DateTimeInputBase";
 
 function DateInput({ fieldName, dataObject, setDataObject, disabled }) {
-  const setDataFunction = (value) => {
+  const setDataFunction = (fieldName, value) => {
     let newDataObject = dataObject;
     // cut off time value from date
     const dateWithoutTime = new Date(value).toISOString().split('T')[0];
