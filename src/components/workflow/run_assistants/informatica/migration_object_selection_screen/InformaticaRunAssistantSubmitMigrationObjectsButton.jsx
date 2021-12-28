@@ -13,6 +13,7 @@ function InformaticaRunAssistantSubmitMigrationObjectsButton(
   {
     informaticaRunParametersModel,
     setRunAssistantScreen,
+    startPipelineRunFunction,
     selectedMigrationObjectCount,
     size,
     className,
@@ -45,7 +46,9 @@ function InformaticaRunAssistantSubmitMigrationObjectsButton(
     try {
       setIsSaving(true);
       await informaticaRunParametersActions.setSelectedMigrationObjectsV2(getAccessToken, cancelTokenSource, informaticaRunParametersModel);
-      setRunAssistantScreen(INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIRMATION_SCREEN);
+      // TODO: Add confirmation screen
+      // setRunAssistantScreen(INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIRMATION_SCREEN);
+      await startPipelineRunFunction();
     } catch (error) {
       console.error(error);
       toastContext.showInlineErrorMessage(error);
@@ -86,6 +89,7 @@ InformaticaRunAssistantSubmitMigrationObjectsButton.propTypes = {
   size: PropTypes.string,
   className: PropTypes.string,
   isLoading: PropTypes.bool,
+  startPipelineRunFunction: PropTypes.func,
 };
 
 InformaticaRunAssistantSubmitMigrationObjectsButton.defaultProps = {

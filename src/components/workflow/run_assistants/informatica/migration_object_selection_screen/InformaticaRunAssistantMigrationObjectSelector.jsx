@@ -20,7 +20,8 @@ const InformaticaRunAssistantMigrationObjectSelector = (
     informaticaRunParametersModel, 
     setInformaticaRunParametersModel, 
     setRunAssistantScreen, 
-    closePanelFunction, 
+    closePanelFunction,
+    startPipelineRunFunction,
   }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -138,6 +139,7 @@ const InformaticaRunAssistantMigrationObjectSelector = (
           informaticaRunParametersModel={informaticaRunParametersModel}
           selectedMigrationObjectCount={informaticaRunParametersModel?.getArrayData("selectedMigrationObjects")?.length}
           isLoading={isLoading}
+          startPipelineRunFunction={startPipelineRunFunction}
           className={"ml-2"}
         />
         <CancelButton
@@ -155,6 +157,7 @@ InformaticaRunAssistantMigrationObjectSelector.propTypes = {
   setInformaticaRunParametersModel: PropTypes.func,
   setRunAssistantScreen: PropTypes.func,
   closePanelFunction: PropTypes.func,
+  startPipelineRunFunction: PropTypes.func,
 };
 
 export default InformaticaRunAssistantMigrationObjectSelector;

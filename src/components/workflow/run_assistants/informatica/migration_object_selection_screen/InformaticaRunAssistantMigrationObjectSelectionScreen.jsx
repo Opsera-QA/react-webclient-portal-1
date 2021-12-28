@@ -15,6 +15,7 @@ const InformaticaRunAssistantMigrationObjectSelectionScreen = (
     setInformaticaRunParametersModel, 
     setRunAssistantScreen, 
     closePanelFunction,
+    startPipelineRunFunction,
   }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -91,6 +92,7 @@ const InformaticaRunAssistantMigrationObjectSelectionScreen = (
         informaticaRunParametersModel={informaticaRunParametersModel}
         setInformaticaRunParametersModel={setInformaticaRunParametersModel}
         closePanelFunction={closePanelFunction}
+        startPipelineRunFunction={startPipelineRunFunction}
       />
     );
   };
@@ -111,7 +113,8 @@ InformaticaRunAssistantMigrationObjectSelectionScreen.propTypes = {
   setRunAssistantScreen: PropTypes.func,
   closePanelFunction: PropTypes.func,
   informaticaRunParametersModel: PropTypes.object,
-  setInformaticaRunParametersModel: PropTypes.func
+  setInformaticaRunParametersModel: PropTypes.func,
+  startPipelineRunFunction: PropTypes.func,
 };
 
 export default InformaticaRunAssistantMigrationObjectSelectionScreen;

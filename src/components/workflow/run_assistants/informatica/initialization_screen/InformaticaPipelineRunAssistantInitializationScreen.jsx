@@ -28,6 +28,7 @@ const InformaticaPipelineRunAssistantInitializationScreen = (
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
+
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -104,6 +105,8 @@ const InformaticaPipelineRunAssistantInitializationScreen = (
     if (typeof pipelineStorageRecord?.selectedConfigurationIndex === "number") {
       informaticaRunParametersModel.setData("selectedConfigurationIndex", pipelineStorageRecord?.selectedConfigurationIndex);
     }
+
+    informaticaRunParametersModel.setData("selectedMigrationObjects", []);
 
     setInformaticaRunParametersModel({...informaticaRunParametersModel});
     setRunAssistantScreen(INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN);

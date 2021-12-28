@@ -391,8 +391,21 @@ function PipelineActionControls({
     toastContext.showOverlayPanel(
       <InformaticaPipelineRunAssistantOverlay
         pipeline={pipeline}
+        startPipelineRunFunction={() => triggerInformaticaPipelineRun(pipelineOrientation, pipelineId)}
       />
     );
+  };
+
+  // TODO: Handle more gracefully
+  const triggerInformaticaPipelineRun = async (pipelineOrientation, pipelineId) => {
+    if (pipelineOrientation === "start") {
+      console.log("starting pipeline from scratch");
+      await runPipeline(pipelineId);
+    } else {
+      console.log("clearing pipeline activity and then starting over");
+      await resetPipelineState(pipelineId);
+      await runPipeline(pipelineId);
+    }
   };
 
   const handleRunPipelineClick = async (pipelineId) => {

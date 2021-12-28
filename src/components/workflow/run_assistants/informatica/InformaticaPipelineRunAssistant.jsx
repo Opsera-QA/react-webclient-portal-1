@@ -36,14 +36,17 @@ const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, c
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    const newRunParametersModel = new Model(informaticaRunParametersMetadata.newObjectFields, informaticaRunParametersMetadata, false);
-    setInformaticaRunParametersModel({...newRunParametersModel});
+
+    if (typeof pipeline === "object" && pipeline?._id) {
+      const newRunParametersModel = new Model(informaticaRunParametersMetadata.newObjectFields, informaticaRunParametersMetadata, false);
+      setInformaticaRunParametersModel({...newRunParametersModel});
+    }
 
     return () => {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [JSON.stringify(pipeline)]);
 
   const getBody = () => {
     switch (runAssistantScreen) {
@@ -72,6 +75,7 @@ const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, c
             informaticaRunParametersModel={informaticaRunParametersModel}
             setInformaticaRunParametersModel={setInformaticaRunParametersModel}
             setRunAssistantScreen={setRunAssistantScreen}
+            startPipelineRunFunction={startPipelineRunFunction}
             closePanelFunction={closePanelFunction}
           />
         );
