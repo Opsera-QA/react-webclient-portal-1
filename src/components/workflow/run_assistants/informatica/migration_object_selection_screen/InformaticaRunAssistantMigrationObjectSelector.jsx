@@ -140,6 +140,7 @@ const InformaticaRunAssistantMigrationObjectSelector = (
           selectedMigrationObjectCount={informaticaRunParametersModel?.getArrayData("selectedMigrationObjects")?.length}
           isLoading={isLoading}
           startPipelineRunFunction={startPipelineRunFunction}
+          closePanelFunction={closePanelFunction}
           className={"ml-2"}
         />
         <CancelButton
