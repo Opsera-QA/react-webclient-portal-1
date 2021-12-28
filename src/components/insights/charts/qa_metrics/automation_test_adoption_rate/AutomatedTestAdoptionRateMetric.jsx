@@ -26,6 +26,7 @@ import AdoptionTestPercentageChartHelpDocumentation
   from "../../../../common/help/documentation/insights/charts/AdoptionTestPercentageChartHelpDocumentation";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "../../../../common/helpers/metrics/metricTheme.helpers";
 import { ResponsivePie } from "@nivo/pie";
+import { Container } from "@nivo/core";
 
 const ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS = {
   ADOPTED_TESTS: "adopted_tests",
@@ -145,30 +146,32 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
     }
 
     return (
-        <div className="new-chart m-3 p-0" style={{ minheight: "300px", display: "flex" }}>
-        <Row>
-          <Col xl={6} lg={6} md={8} className={"d-flex align-content-around"}>
-            <Row>
-              <Col lg={6} className={"my-3"}>
-                <AutomatedTestAdoptionRateAdoptedTestsDataBlock
-                  executedTestCount={metric?.executedTests}
-                  executedTestsDataPoint={automatedTestsDataPoint}
-                />
-              </Col>
-              <Col lg={6} className={"my-3"}>
-                <AutomatedTestAdoptionRateManualTestsDataBlock
-                  manualTestCount={metric?.manualTests}
-                  manualTestsDataPoint={manualTestsDataPoint}
-                />
-              </Col>
-              <Col lg={6} className={"center-middle-block"}>
-                <AutomatedTestAdoptionRateAdoptionRateDataBlock
-                  score= {metric?.adoptionRate}
-                  adoptionRateDataPoint={adoptionRateDataPoint}
-                />
-              </Col>
-            </Row>
-          </Col>
+      <div>
+        <div className="new-chart mb-3 ml-3" style={{ height: "300px", display: "flex" }}>
+          <Container>
+          <Row className={"my-3"}>
+            <Col lg={6} >
+              <AutomatedTestAdoptionRateAdoptedTestsDataBlock
+                executedTestCount={metric?.executedTests}
+                executedTestsDataPoint={automatedTestsDataPoint}
+              />
+            </Col>
+            <Col lg={6}>
+              <AutomatedTestAdoptionRateManualTestsDataBlock
+                manualTestCount={metric?.manualTests}
+                manualTestsDataPoint={manualTestsDataPoint}
+              />
+            </Col>
+          </Row>
+          <Row className={"p-1"}>
+            <Col lg={6} className={"w-100 mx-auto"}>
+              <AutomatedTestAdoptionRateAdoptionRateDataBlock
+                score= {metric?.adoptionRate}
+                adoptionRateDataPoint={adoptionRateDataPoint}
+              />
+            </Col>
+          </Row>
+          </Container>
           <Col xl={6} lg={6} md={4} className={"my-2 p-2"}>
             <ResponsivePie
               data={metric?.pairs}
@@ -177,11 +180,11 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
               onClick={() => setShowModal(true)}
             />
           </Col>
-        </Row>
-          <Row>
-            {getNotesRow()}
-          </Row>
         </div>
+        <Row>
+          {getNotesRow()}
+        </Row>
+      </div>
 
 
 
