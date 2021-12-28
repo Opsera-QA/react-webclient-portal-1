@@ -431,7 +431,7 @@ function PipelineActionControls({
     } else if (pipelineType === "sfdc") {
       launchPipelineStartWizard(pipelineOrientation, pipelineType, pipelineId);
     } else if (pipelineType === "informatica") {
-      launchInformaticaRunAssistant(pipelineOrientation, pipelineType, pipelineId);
+      launchInformaticaRunAssistant(pipelineOrientation, pipelineId);
     } else {
       if (pipelineOrientation === "middle") {
         //this is the middle, so pop the new modal to confirm user wants to resume or offer reset/restart
