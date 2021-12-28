@@ -11,11 +11,8 @@ function GoalsInputBase({ dataObject, setDataObject, kpiName }) {
         <SalesforceDurationByStageGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />
       );
     case "sdlc-duration-statistics":
-      return (<SdlcDurationStatisticsGoals
-        kpiConfigurationData={dataObject}
-        setKpiConfigurationData={setDataObject} />
-      );
-  
+      return <SdlcDurationStatisticsGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />;
+
     case "build-deployment-statistics":
       return <BuildAndDeployGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />;
   }
