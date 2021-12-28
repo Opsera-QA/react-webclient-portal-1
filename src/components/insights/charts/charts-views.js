@@ -9,6 +9,7 @@ export const failColor = "#E57373";
 export const neutralColor = "#FFA500";
 export const successColor = "#26cf26";
 export const colorPalette1 = "#00a8e8";
+export const goalSuccessColor = "#00897b";
 
 // Color schema for Nivo charts
 export const standardColors = [
