@@ -134,13 +134,13 @@ function ServiceNowMeanTimeToResolutionBarChart({
           markers={[
             {
               axis: "y",
-              value: overallMean,
+              value: overallMean ? overallMean : 0,
               lineStyle: { stroke: neutralColor, strokeWidth: 2 },
               legend: "Mean",
             },
             {
               axis: "y",
-              value: goalsData?.mttrAvgMeanTimeGoal,
+              value: goalsData?.mttrAvgMeanTimeGoal ? goalsData?.mttrAvgMeanTimeGoal : 0,
               lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
               legend: "Goal",
             },
