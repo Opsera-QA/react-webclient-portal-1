@@ -2,7 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import DateTimeInputBase from "components/common/inputs/date/DateTimeInputBase";
 
-function DateTimeInput({ fieldName, dataObject, setDataObject, disabled, dropUp, minDate, maxDate, setDataFunction }) {
+function DateTimeInput(
+  {
+    fieldName,
+    dataObject,
+    setDataObject,
+    disabled,
+    minDate,
+    maxDate,
+    setDataFunction,
+    dropUp,
+    defaultToNull,
+  }) {
   return (
     <DateTimeInputBase
       disabled={disabled}
@@ -13,6 +24,7 @@ function DateTimeInput({ fieldName, dataObject, setDataObject, disabled, dropUp,
       dropUp={dropUp}
       setDataFunction={setDataFunction}
       setDataObject={setDataObject}
+      defaultToNull={defaultToNull}
     />
   );
 }
@@ -25,7 +37,8 @@ DateTimeInput.propTypes = {
   dropUp: PropTypes.bool,
   setDataFunction: PropTypes.func,
   minDate: PropTypes.any,
-  maxDate: PropTypes.any
+  maxDate: PropTypes.any,
+  defaultToNull: PropTypes.bool,
 };
 
 export default DateTimeInput;

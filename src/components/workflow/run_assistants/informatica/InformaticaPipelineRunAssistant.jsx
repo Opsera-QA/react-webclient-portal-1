@@ -1,24 +1,29 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import ErrorDialog from "components/common/status_notifications/error";
 import axios from "axios";
-import sfdcPipelineWizardMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-wizard-metadata";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import InformaticaPipelineRunAssistantInitializationScreen
+  from "components/workflow/run_assistants/informatica/initialization_screen/InformaticaPipelineRunAssistantInitializationScreen";
+import {informaticaRunParametersMetadata} from "components/workflow/run_assistants/informatica/informaticaRunParameters.metadata";
+import InformaticaRunAssistantConfigurationSelectionScreen
+  from "components/workflow/run_assistants/informatica/configuration_selection_screen/InformaticaRunAssistantConfigurationSelectionScreen";
+import InformaticaRunAssistantMigrationObjectSelectionScreen
+  from "components/workflow/run_assistants/informatica/migration_object_selection_screen/InformaticaRunAssistantMigrationObjectSelectionScreen";
 
 export const INFORMATICA_RUN_ASSISTANT_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
-  COMPONENT_SELECTOR: "COMPONENT_SELECTOR", // TODO: Rename based on what makes sense in the context of Informatica.
+  CONFIGURATION_SELECTION_SCREEN: "CONFIGURATION_SELECTION_SCREEN",
+  MIGRATION_OBJECT_SELECTION_SCREEN: "MIGRATION_OBJECT_SELECTION_SCREEN",
+  CONFIRMATION_SCREEN: "CONFIRMATION_SCREEN",
 };
 
 const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, closePanelFunction, pipelineOrientation }) => {
   const [error, setError] = useState("");
-  const [pipelineWizardScreen, setPipelineWizardScreen] = useState(INFORMATICA_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN);
-  const [pipelineWizardModel, setPipelineWizardModel] = useState(undefined);
+  const [runAssistantScreen, setRunAssistantScreen] = useState(INFORMATICA_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN);
+  const [informaticaRunParametersModel, setInformaticaRunParametersModel] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [helpIsShown, setHelpIsShown] = useState(false);
@@ -31,52 +36,66 @@ const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, c
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    let newPipelineWizardModel = new Model(sfdcPipelineWizardMetadata.newObjectFields, sfdcPipelineWizardMetadata, false);
-    // TODO: THe way objects are referenced is causing issues with this. I THINK creating an sfdcPipelineWizard model
-    //  with the metadata inside will resolve the issue with it getting instantiated and staying the same
-    //  but I need to do further testing to ensure. At that time remove this.
-    newPipelineWizardModel.setData("fromDate", new Date(new Date().setHours(0,0,0,0)));
-    newPipelineWizardModel.setData("toDate", new Date());
-    // TODO: This should be fixed now so setting this to empty array is probably not necessary. I need to do further testing
-    //  after which I will remove this line
-    newPipelineWizardModel.setData("selectedComponentTypes", []);
-    setPipelineWizardModel({...newPipelineWizardModel});
+
+    if (typeof pipeline === "object" && pipeline?._id) {
+      const newRunParametersModel = new Model(informaticaRunParametersMetadata.newObjectFields, informaticaRunParametersMetadata, false);
+      setInformaticaRunParametersModel({...newRunParametersModel});
+    }
 
     return () => {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [JSON.stringify(pipeline)]);
 
   const getBody = () => {
-    switch (pipelineWizardScreen) {
+    switch (runAssistantScreen) {
       case INFORMATICA_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
-      case INFORMATICA_RUN_ASSISTANT_SCREENS.COMPONENT_SELECTOR:
+        return (
+          <InformaticaPipelineRunAssistantInitializationScreen
+            pipeline={pipeline}
+            informaticaRunParametersModel={informaticaRunParametersModel}
+            setInformaticaRunParametersModel={setInformaticaRunParametersModel}
+            setError={setError}
+            setRunAssistantScreen={setRunAssistantScreen}
+          />
+        );
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN:
+        return (
+          <InformaticaRunAssistantConfigurationSelectionScreen
+            informaticaRunParametersModel={informaticaRunParametersModel}
+            setInformaticaRunParametersModel={setInformaticaRunParametersModel}
+            setRunAssistantScreen={setRunAssistantScreen}
+            closePanelFunction={closePanelFunction}
+          />
+        );
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTION_SCREEN:
+        return (
+          <InformaticaRunAssistantMigrationObjectSelectionScreen
+            informaticaRunParametersModel={informaticaRunParametersModel}
+            setInformaticaRunParametersModel={setInformaticaRunParametersModel}
+            setRunAssistantScreen={setRunAssistantScreen}
+            startPipelineRunFunction={startPipelineRunFunction}
+            closePanelFunction={closePanelFunction}
+          />
+        );
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIRMATION_SCREEN:
+        return (
+          <div>You have reached the confirmation screen.</div>
+        );
       default:
         return null;
     }
   };
 
   const getHelpComponent = () => {
-    switch (pipelineWizardScreen) {
+    switch (runAssistantScreen) {
       case INFORMATICA_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
-      case INFORMATICA_RUN_ASSISTANT_SCREENS.COMPONENT_SELECTOR:
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN:
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTION_SCREEN:
       default:
         return null;
     }
-  };
-
-  const getFields = () => {
-    return (
-      <Row>
-        <Col sm={6}>
-          <TextFieldBase dataObject={pipelineWizardModel} fieldName={"accountUsername"} />
-        </Col>
-        <Col sm={6}>
-          <TextFieldBase dataObject={pipelineWizardModel} fieldName={"gitBranch"} />
-        </Col>
-      </Row>
-    );
   };
 
   const getWarningMessage = () => {
@@ -90,9 +109,9 @@ const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, c
     }
   };
 
-  if (pipelineWizardModel == null) {
+  if (informaticaRunParametersModel == null) {
     return (
-      <LoadingDialog message={"Initializing SFDC Pipeline Wizard"} size={"sm"} />
+      <LoadingDialog message={"Initializing Informatica Run Parameter Assistant"} size={"sm"} />
     );
   }
 
@@ -111,9 +130,8 @@ const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, c
       setHelpIsShown={setHelpIsShown}
       hideCloseButton={true}
       leftSideItems={getWarningMessage()}
-      isLoading={pipelineWizardModel?.getData("recordId")?.length === ""}
+      isLoading={informaticaRunParametersModel?.getData("recordId")?.length === ""}
     >
-      {/*{getFields()}*/}
       <div className={"m-3"}>
         {getBody()}
       </div>
