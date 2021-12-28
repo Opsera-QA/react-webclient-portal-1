@@ -34,9 +34,9 @@ export const informaticaRunParametersMetadata = {
     selectedMigrationObjects: [],
     selectedConfigurationIndex: 0,
     configurations: [
-      {...informaticaRunParameterConfigurationMetadata.newObjectFields},
-      {...informaticaRunParameterConfigurationMetadata.newObjectFields},
-      {...informaticaRunParameterConfigurationMetadata.newObjectFields},
+      {...informaticaRunParameterConfigurationMetadata.newObjectFields, name: "Configuration 1"},
+      {...informaticaRunParameterConfigurationMetadata.newObjectFields, name: "Configuration 2"},
+      {...informaticaRunParameterConfigurationMetadata.newObjectFields, name: "Configuration 3"},
     ],
     recordId: "",
     pipelineId: "",

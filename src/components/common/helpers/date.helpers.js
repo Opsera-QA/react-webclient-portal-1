@@ -178,6 +178,20 @@ export function hasDateValue(potentialDate) {
 
   try {
     const date = new Date(potentialDate);
+    return date && Object.prototype.toString.call(date) === "[object Date]";
+  }
+  catch (error) {
+    return false;
+  }
+}
+
+export function hasNumericDateValue(potentialDate) {
+  if (potentialDate == null) {
+    return false;
+  }
+
+  try {
+    const date = new Date(potentialDate);
     return date && Object.prototype.toString.call(date) === "[object Date]" && !isNaN(potentialDate);
   }
   catch (error) {

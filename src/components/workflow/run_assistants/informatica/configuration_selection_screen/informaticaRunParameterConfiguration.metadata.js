@@ -27,7 +27,7 @@ export const informaticaRunParameterConfigurationMetadata = {
     },
   ],
   newObjectFields: {
-    name: "Configuration",
+    name: "",
     types: [],
     updateBy: "",
     tag: "",
