@@ -15,6 +15,7 @@ import SourceRepositoryPrimaryBranchSelectInput from "components/workflow/pipeli
 import RoleRestrictedToolByIdentifierInputBase
   from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 import InformaticaConfigTypeSelectInput from "./inputs/InformaticaConfigTypeSelectInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
   function InformaticaStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -93,6 +94,11 @@ import InformaticaConfigTypeSelectInput from "./inputs/InformaticaConfigTypeSele
             <SourceRepositoryPrimaryBranchSelectInput
               model={informaticaStepConfigurationDto}
               setModel={setInformaticaStepConfigurationDataDto}
+            />
+            <BooleanToggleInput
+              fieldName={"includeDependencies"}
+              dataObject={informaticaStepConfigurationDto}
+              setDataObject={setInformaticaStepConfigurationDataDto}
             />
           </div>
         );
