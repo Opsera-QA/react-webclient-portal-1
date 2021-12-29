@@ -6,7 +6,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import {
-  assignStandardColors,
+  assignStandardColors, defaultConfig, getColorByData,
   shortenPieChartLegend,
 } from "components/insights/charts/charts-views";
 import { Col, Row } from "react-bootstrap";
@@ -21,8 +21,12 @@ import AutomatedTestAdoptionRateAdoptionRateDataBlock
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import NivoPieChartBase from "components/common/metrics/charts/nivo/pie/NivoPieChartBase";
 import {nivoChartLegendDefinitions} from "components/common/metrics/charts/nivo/nivoChartLegend.definitions";
+import config from "./adoptionTestPercentagePieChartConfig";
 import AdoptionTestPercentageChartHelpDocumentation
   from "../../../../common/help/documentation/insights/charts/AdoptionTestPercentageChartHelpDocumentation";
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "../../../../common/helpers/metrics/metricTheme.helpers";
+import { ResponsivePie } from "@nivo/pie";
+import { Container } from "@nivo/core";
 
 const ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS = {
   ADOPTED_TESTS: "adopted_tests",
@@ -142,40 +146,48 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
     }
 
     return (
-      <div className={"my-2"}>
-        <Row>
-          <Col xl={4} lg={6} md={8} className={"d-flex align-content-around"}>
-            <Row>
-              <Col lg={12}>
-                <AutomatedTestAdoptionRateAdoptedTestsDataBlock
-                  executedTestCount={metric?.executedTests}
-                  executedTestsDataPoint={automatedTestsDataPoint}
-                />
-              </Col>
-              <Col lg={12} className={"my-2"}>
-                <AutomatedTestAdoptionRateManualTestsDataBlock
-                  manualTestCount={metric?.manualTests}
-                  manualTestsDataPoint={manualTestsDataPoint}
-                />
-              </Col>
-              <Col lg={12} className={"mb-2"}>
-                <AutomatedTestAdoptionRateAdoptionRateDataBlock
-                  adoptionRatePercentage={metric?.adoptionRate}
-                  adoptionRateDataPoint={adoptionRateDataPoint}
-                />
-              </Col>
-            </Row>
-          </Col>
-          <Col xl={8} lg={6} md={4} className={"my-2"}>
-            <NivoPieChartBase
+      <div>
+        <div className="new-chart mb-3 ml-3" style={{ height: "300px", display: "flex" }}>
+          <Container>
+          <Row className={"my-3"}>
+            <Col lg={6} >
+              <AutomatedTestAdoptionRateAdoptedTestsDataBlock
+                executedTestCount={metric?.executedTests}
+                executedTestsDataPoint={automatedTestsDataPoint}
+              />
+            </Col>
+            <Col lg={6}>
+              <AutomatedTestAdoptionRateManualTestsDataBlock
+                manualTestCount={metric?.manualTests}
+                manualTestsDataPoint={manualTestsDataPoint}
+              />
+            </Col>
+          </Row>
+          <Row className={"p-1"}>
+            <Col lg={6} className={"w-100 mx-auto"}>
+              <AutomatedTestAdoptionRateAdoptionRateDataBlock
+                score= {metric?.adoptionRate}
+                adoptionRateDataPoint={adoptionRateDataPoint}
+              />
+            </Col>
+          </Row>
+          </Container>
+          <Col xl={6} lg={6} md={4} className={"my-2 p-2"}>
+            <ResponsivePie
               data={metric?.pairs}
-              onClickFunction={() => setShowModal(true)}
-              legendsConfiguration={getLegendsConfiguration()}
+              {...defaultConfig()}
+              {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
+              onClick={() => setShowModal(true)}
             />
           </Col>
+        </div>
+        <Row>
+          {getNotesRow()}
         </Row>
-        {getNotesRow()}
       </div>
+
+
+
     );
   };
 

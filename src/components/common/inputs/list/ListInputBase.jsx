@@ -13,13 +13,28 @@ import ComponentLoadingWrapper from "components/common/loading/ComponentLoadingW
 // TODO: Refactor
 function ListInputBase(
   {
-    fieldName, dataObject, setDataObject,
-    selectOptions, valueField, textField,
-    setDataFunction, isLoading, disabled, clearDataFunction,
-    showClearValueButton, getCurrentValue,
-    height, icon, searchFunction, showSelectAllButton, customTemplate, disabledOptions, noDataMessage,
-    customTitle
-  }) {
+    fieldName,
+    dataObject,
+    setDataObject,
+    selectOptions,
+    valueField,
+    textField,
+    setDataFunction,
+    isLoading,
+    disabled,
+    clearDataFunction,
+    showClearValueButton,
+    getCurrentValue,
+    height,
+    icon,
+    searchFunction,
+    showSelectAllButton,
+    customTemplate,
+    disabledOptions,
+    noDataMessage,
+    customTitle,
+    loadDataFunction,
+}) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [list, setList] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");
@@ -289,6 +304,7 @@ function ListInputBase(
           setSearchTerm={setSearchTerm}
           searchTerm={searchTerm}
           showSearchBar={searchFunction != null}
+          loadDataFunction={loadDataFunction}
         />
         {getExtraRow()}
         {getBody()}
@@ -329,7 +345,8 @@ ListInputBase.propTypes = {
   customTemplate: PropTypes.func,
   disabledOptions: PropTypes.array,
   noDataMessage: PropTypes.string,
-  customTitle: PropTypes.string
+  customTitle: PropTypes.string,
+  loadDataFunction: PropTypes.func,
 };
 
 ListInputBase.defaultProps = {

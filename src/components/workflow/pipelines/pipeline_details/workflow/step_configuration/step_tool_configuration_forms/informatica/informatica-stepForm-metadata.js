@@ -66,6 +66,10 @@ const InformaticaStepFormMetadata = {
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
+    {
+      label: "Include Dependencies",
+      id: "includeDependencies",
+    },
   ],
   newObjectFields: {
     toolConfigId : "",
@@ -76,6 +80,7 @@ const InformaticaStepFormMetadata = {
     repository: "",
     workspace: "",
     gitBranch: "",
+    includeDependencies: false,
   }
 };
 

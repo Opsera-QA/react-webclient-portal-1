@@ -147,7 +147,7 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
           <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" /> Average MTTA <b>({overallMean} Minutes)</b>
           <br></br>
           <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" /> Goal
-          <b> ({goalsData.mttaAvgMeanTimeGoal} Minutes)</b>
+          <b> ({goalsData?.mttaAvgMeanTimeGoal} Minutes)</b>
         </div>
         <ResponsiveBar
           data={metrics}

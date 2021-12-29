@@ -122,7 +122,7 @@ function CoverityActionableInsightOverlay({
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
-        <CoverityActionableDataBlockContainers data={dataBlockValues} />
+        <CoverityActionableDataBlockContainers data={dataBlockValues} level={coveritySeverity} />
         <CoverityActionableInsightTable
           data={metrics}
           isLoading={isLoading}

@@ -30,26 +30,16 @@ import {
 
 const chartsActions = {};
 
-chartsActions.getChart = async (request, metric, date, getAccessToken) => {
-  const apiUrl = "/analytics/data";
 
-  const postBody = {
-    data: [
-      {
-        request: request,
-        metric: metric,
-      },
-    ],
-    startDate: date.start,
-    endDate: date.end,
-  };
-
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+// TODO: Don't use for new metrics
+chartsActions.getLegacyMetrics = async (getAccessToken, cancelTokenSource, postBody) => {
+  const apiUrl = "/analytics/metrics";
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-chartsActions.getChartData = async (getAccessToken, cancelTokenSource, request, metric, kpiConfiguration) => {
+// TODO: Don't use.
+chartsActions.getLegacyChartData = async (getAccessToken, cancelTokenSource, request, metric, date) => {
   const apiUrl = "/analytics/data";
-  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
 
   const postBody = {
     data: [
@@ -62,7 +52,7 @@ chartsActions.getChartData = async (getAccessToken, cancelTokenSource, request, 
     endDate: date.end,
   };
 
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessToken) => {
@@ -75,9 +65,7 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
     tags: tags,
   };
 
-  // TODO: Wire up v2
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, apiUrl, postBody);
-  // return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 chartsActions.parseConfigurationAndGetChartMetrics = async (
@@ -169,9 +157,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     coveritySeverity: coveritySeverity
   };
 
-  // TODO: Wire up v2
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
-  // return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 export default chartsActions;

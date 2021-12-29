@@ -14,6 +14,8 @@ import SdlcSecurityScanDurationMetric from "./metrics/security_scan/SdlcSecurity
 import SdlcScriptsDurationMetric from "./metrics/scripts/SdlcScriptsDurationMetric";
 import SdlcTestDurationMetric from "./metrics/test/SdlcTestDurationMetric";
 import { assignStandardLineColors } from "components/insights/charts/charts-views";
+import SdlcDurationStatisticsHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/SdlcDurationStatisticsHelpDocumentation";
 
 function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const history = useHistory();
@@ -170,6 +172,7 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        chartHelpComponent={(closeHelpPanel) => <SdlcDurationStatisticsHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
       <ModalLogs
         header="Build Duration By Stage"
