@@ -3,74 +3,75 @@ import { ResponsiveLine } from "@nivo/line";
 import config from "./metricbeatInNetworkTrafficByTimeLineChartConfigs";
 import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
-import React, { useState, useEffect, useContext, useCallback } from "react";
-import { AuthContext } from "../../../../../../contexts/AuthContext";
-import { axiosApiService } from "../../../../../../api/apiService";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ErrorDialog from "components/common/status_notifications/error";
+import axios from "axios";
+import chartsActions from "components/insights/charts/charts-actions";
+import {AuthContext} from "contexts/AuthContext";
 
 function MetricbeatInNetworkTrafficByTimeLineChart({ persona, date ,tags }) {
-  const contextType = useContext(AuthContext);
-  const {featureFlagHideItemInProd, featureFlagHideItemInTest} = useContext(AuthContext);
+  const {getAccessToken, featureFlagHideItemInProd, featureFlagHideItemInTest} = useContext(AuthContext);
   const envIsProd = featureFlagHideItemInProd();
   const envIsTest = featureFlagHideItemInTest(); 
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    let apiUrl = "/analytics/metrics";
-    let postBody = {
-      request: "metricbeatInNetworkTrafficByTime",
-      startDate: date.start,
-      endDate: date.end,
-      tags: tags
-    };
-    if (envIsProd || envIsTest) {
-      apiUrl = "/analytics/data";
-      postBody = {
-        data: [
-          {
-            request: "InNetworkTrafficByTime",
-            metric: "line",
-          },
-        ],
-        startDate: date.start,
-        endDate: date.end,
-      };
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
     }
 
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+
+    if (date) {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [date]);
+
+  const loadData = async (cancelSource) => {
     try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = (envIsProd || envIsTest) ? res && res.data ? res.data.data[0].InNetworkTrafficByTime : [] : res && res.data ? res.data.data[0].metricbeatInNetworkTrafficByTime : [];
-      setData(dataObject);
-      setLoading(false);
+      setLoading(true);
+      if (envIsProd || envIsTest) {
+        const response = await chartsActions.getLegacyChartData(getAccessToken, cancelSource,"InNetworkTrafficByTime", "line", date);
+        const dataObject = response?.data?.data[0]?.InNetworkTrafficByTime || [];
+        setData(dataObject);
+      }
+      else {
+        const postBody = {
+          request: "metricbeatInNetworkTrafficByTime",
+          startDate: date.start,
+          endDate: date.end,
+          tags: tags
+        };
+
+        const response = await chartsActions.getLegacyMetrics(getAccessToken, cancelSource, postBody);
+        const dataObject = response?.data?.data[0]?.metricbeatInNetworkTrafficByTime || [];
+        setData(dataObject);
+        setLoading(false);
+      }
     } catch (err) {
       setLoading(false);
       setErrors(err.message);
     }
-  }, [contextType]);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        await fetchData();
-      } catch (err) {
-        if (err.name === "AbortError") return;
-      }
-    };
-    runEffect();
-
-    return () => {
-      controller.abort();
-    };
-  }, [fetchData, date]);
+  };
 
   if (loading) return <LoadingDialog size="sm" />;
   if (error) return <ErrorDialog error={error} />;
