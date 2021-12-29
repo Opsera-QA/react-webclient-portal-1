@@ -8,9 +8,8 @@ import {
   faExclamationTriangle,
   faFolders,
   faLockOpenAlt,
-  faShieldCheck, faSirenOn,
+  faShieldCheck, faSirenOn,faExclamation
 } from "@fortawesome/pro-light-svg-icons";
-import { faExclamation, faProjectDiagram } from "@fortawesome/free-solid-svg-icons";
 
 function CoverityActionableDataBlockContainers({ data , level }) {
   let className = `p-2 dark-gray-text-primary`;
