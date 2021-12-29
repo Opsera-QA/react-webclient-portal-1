@@ -50,7 +50,7 @@ function DashboardViewer({dashboardData}) {
     setDashboardDataDto({...newDashboardData});
     const newDashboardFilterModel = modelHelpers.getDashboardFilterModel(dashboardDataDto, "tags", dashboardFiltersMetadata);
     setDashboardFilterTagsModel(newDashboardFilterModel);
-    setKpis(newDashboardData.getData("configuration"));
+    setKpis(newDashboardData?.getData("configuration"));
   };
 
   const gotoMarketplace = () => {
@@ -113,7 +113,7 @@ function DashboardViewer({dashboardData}) {
             className={"mx-2"}
             dashboardData={dashboardDataDto}
           />
-          <NewRecordButton addRecordFunction={gotoMarketplace} disabled={kpis.length >= 10} type={"Kpi"} />
+          <NewRecordButton addRecordFunction={gotoMarketplace} disabled={kpis?.length >= 10} type={"Kpi"} />
         </div>
       </ActionBarContainer>
       {getKpiView()}
