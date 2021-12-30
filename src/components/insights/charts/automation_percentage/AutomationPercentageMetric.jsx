@@ -163,7 +163,6 @@ function AutomationPercentageMetric({ kpiConfiguration, setKpiConfiguration, das
               />
             </Col>
           </Row>
-          {getNotesRow()}
         </div>
           <Row>
             {getNotesRow()}
