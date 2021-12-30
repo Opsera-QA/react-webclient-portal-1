@@ -147,7 +147,7 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
 
     return (
       <div>
-        <div className="new-chart mb-3 ml-3" style={{ height: "300px", display: "flex" }}>
+        <div className="new-chart mt-3 mb-3 ml-4" style={{ height: "300px", display: "flex" }}>
           <Container>
           <Row className={"my-3"}>
             <Col lg={6} >
