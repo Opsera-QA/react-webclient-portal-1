@@ -85,7 +85,7 @@ function SeleniumTestSummaryPercentages({ kpiConfiguration, setKpiConfiguration,
     return (
       <div className="new-chart m-3 p-0" style={{ minHeight: "300px", display: "flex" }}>
         <Row>
-          <Col xl={6} lg={6} md={6} className={"d-flex align-content-around"}>
+          <Col xl={6} lg={6} md={6}>
             <Row>
               <Col xl={6} lg={6} className={"mb-3"} >
                 <SeleniumTestsTotalDataBlock score={metrics[0]?.testsRun?.toString()} />
@@ -99,7 +99,9 @@ function SeleniumTestSummaryPercentages({ kpiConfiguration, setKpiConfiguration,
               <Col xl={6} lg={6} className={"mb-3"} >
                 <SeleniumTestsCasesBlockedDataBlock score={metrics[0]?.blockedTests?.toString()} />
               </Col>
-              <Col xl={6} lg={6} className={"mb-3"} >
+            </Row>
+            <Row>
+              <Col xl={12} lg={12} className={"mb-3"} >
                 <SeleniumTestsCasesNotExecutedBlock score={metrics[0]?.notExecutedTests?.toString()} />
               </Col>
             </Row>

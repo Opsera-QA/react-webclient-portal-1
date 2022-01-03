@@ -128,8 +128,7 @@ function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, da
     }
 
     return (
-      <>
-        <div>
+      <div>
         <div className="new-chart m-3 p-0" style={{ minheight: "300px", display: "flex" }}>
           <Row>
             <Col xl={6} lg={6} md={8} className={"d-flex align-content-around"}>
@@ -155,21 +154,21 @@ function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, da
               </Row>
             </Col>
             <Col xl={6} lg={4} md={3} className={"my-2 p-2"}>
-              <ResponsivePie
-                data={metric?.pairs}
-                {...defaultConfig()}
-                {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={() => setShowModal(true)}
-              />
+              <div style={{ height: "300px" }}>
+                <ResponsivePie
+                  data={metric?.pairs}
+                  {...defaultConfig()}
+                  {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
+                  onClick={() => setShowModal(true)}
+                />
+              </div>
             </Col>
           </Row>
         </div>
           <Row>
             {getNotesRow()}
           </Row>
-        </div>
-
-      </>
+      </div>
     );
   };
 

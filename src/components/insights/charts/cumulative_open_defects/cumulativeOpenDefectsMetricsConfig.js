@@ -11,6 +11,5 @@ export default (getColor, METRIC_THEME_CHART_PALETTE_COLORS) => ({
     METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_4,
     METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_5,
   ],
-  margin: {top: 10, right: 10, bottom: 10, left: 10}   
             
 });
