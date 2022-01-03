@@ -29,17 +29,13 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
       "id": "average daily builds",
       "data": chartData?.avgBuilds
     }  
-  ];
-
-  const getMiddleText = () => {
-    return (metricData?.build?.count && metricData?.build?.count > 0 ? <MetricScoreText score={metricData?.build?.perDayAverage || 0} qualityLevel={metricData?.build?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS} /> : "No Data");
-  };
+  ];  
 
   const getLeftDataBlock = () => {    
     return (      
       <ThreeLineDataBlockNoFocusBase        
         topText={"Average Daily Builds"}
-        middleText={getMiddleText()}
+        middleText={<MetricScoreText score={metricData?.build?.perDayAverage} qualityLevel={metricData?.build?.count && metricData?.build?.count > 0 ? metricData?.build?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null } />}
         bottomText={`Goal: ${goalsData}`}
       />
     );
