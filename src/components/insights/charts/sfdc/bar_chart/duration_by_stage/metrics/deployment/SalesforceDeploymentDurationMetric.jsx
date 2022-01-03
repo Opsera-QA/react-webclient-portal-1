@@ -6,13 +6,19 @@ import SalesforceDeploymentDurationDataBlock from "components/insights/charts/sf
 function SalesforceDeploymentDurationMetric({
   kpiConfiguration,
   dashboardData,
-  meanData,
-  countData,
+  deploymentDurationMeanInMinutes,
+  deploymentTotalRunCount,
   goalsData,
   metric,
 }) {
   const getDataBlock = () => {
-    return <SalesforceDeploymentDurationDataBlock meanData={meanData} countData={countData} goalsData={goalsData} />;
+    return (
+      <SalesforceDeploymentDurationDataBlock
+        deploymentDurationMeanInMinutes={deploymentDurationMeanInMinutes}
+        deploymentTotalRunCount={deploymentTotalRunCount}
+        goalsData={goalsData}
+      />
+    );
   };
 
   const getChart = () => {
@@ -31,8 +37,8 @@ function SalesforceDeploymentDurationMetric({
 SalesforceDeploymentDurationMetric.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  meanData: PropTypes.number,
-  countData: PropTypes.number,
+  deploymentDurationMeanInMinutes: PropTypes.number,
+  deploymentTotalRunCount: PropTypes.number,
   goalsData: PropTypes.number,
   metric: PropTypes.array,
 };

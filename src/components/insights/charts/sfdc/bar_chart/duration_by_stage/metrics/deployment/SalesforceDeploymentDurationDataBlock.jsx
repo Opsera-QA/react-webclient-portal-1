@@ -1,24 +1,62 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
-import { statusColors } from "components/insights/charts/charts-views";
 import "../../salesforce-duration-by-stage-kpi.css";
-import { getMiddleText, getMiddleStyle } from "../../salesforce-duration-by-stage-utility";
+import MetricTextBase, { METRIC_QUALITY_LEVELS } from "components/common/metrics/text/MetricTextBase";
 
-function SalesforceDeploymentDurationDataBlock({ meanData, countData, goalsData }) {
+function SalesforceDeploymentDurationDataBlock({
+  deploymentDurationMeanInMinutes,
+  deploymentTotalRunCount,
+  goalsData,
+}) {
+  const hasNumberValue = (potentialNumber) => {
+    return potentialNumber == undefined || potentialNumber == null || typeof potentialNumber !== "number"
+      ? false
+      : true;
+  };
+
+  const getMetricQualityLevel = () => {
+    if (!hasNumberValue(deploymentDurationMeanInMinutes) || !hasNumberValue(goalsData)) {
+      return;
+    }
+    if (goalsData > deploymentDurationMeanInMinutes) {
+      return METRIC_QUALITY_LEVELS.GREEN;
+    } else if (goalsData < deploymentDurationMeanInMinutes) {
+      return METRIC_QUALITY_LEVELS.DANGER;
+    } else if (goalsData == deploymentDurationMeanInMinutes) {
+      return METRIC_QUALITY_LEVELS.WARNING;
+    }
+  };
+
+  const getDeploymentMeanBlock = () => {
+    if (hasNumberValue(deploymentDurationMeanInMinutes) && hasNumberValue(deploymentTotalRunCount)) {
+      const qualityLevel = getMetricQualityLevel();
+      return (
+        <>
+          <div>
+            <MetricTextBase formattedText={`${deploymentDurationMeanInMinutes} min`} qualityLevel={qualityLevel} />
+          </div>
+          <div>
+            <MetricTextBase formattedText={`${deploymentTotalRunCount} runs`} qualityLevel={qualityLevel} />
+          </div>
+        </>
+      );
+    }
+    return "Error!";
+  };
   return (
     <ThreeLineDataBlockNoFocusBase
       className="salesforce-duration-by-stage-kpi"
       topText={"Deployment"}
-      middleText={getMiddleText(meanData, countData, goalsData)}
-      bottomText={goalsData ? "Goal: " + goalsData + " min" : "No Goal"}
+      middleText={getDeploymentMeanBlock()}
+      bottomText={hasNumberValue(goalsData) ? `Goal: ${goalsData}  min` : "No Goal"}
     />
   );
 }
 
 SalesforceDeploymentDurationDataBlock.propTypes = {
-  meanData: PropTypes.number,
-  countData: PropTypes.number,
+  deploymentDurationMeanInMinutes: PropTypes.number,
+  deploymentTotalRunCount: PropTypes.number,
   goalsData: PropTypes.number,
 };
 

@@ -5,6 +5,7 @@ import config from "./sdlcDurationByStageBarChartConfigs";
 import { defaultConfig } from "components/insights/charts/charts-views";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
 import SdlcDurationByStageActionableInsightOverlay from "./actionable_insights/SdlcDurationByStageActionableInsightOverlay";
 function SdlcDurationByStageBarChartBase({ metric, kpiConfiguration, dashboardData }) {
   const toastContext = useContext(DialogToastContext);
@@ -23,7 +24,7 @@ function SdlcDurationByStageBarChartBase({ metric, kpiConfiguration, dashboardDa
     <ResponsiveLine
       data={metric}
       {...defaultConfig("Duration (min)", "Date", false, true, "wholeNumbers", "monthDate")}
-      {...config()}
+      {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
       enableGridX={false}
       enableGridY={false}
       tooltip={(node) => (

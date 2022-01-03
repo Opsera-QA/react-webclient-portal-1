@@ -7,14 +7,16 @@ import SalesforcePackageValidationDurationDataBlock from "components/insights/ch
 function SalesforcePackageValidationDurationMetric({
   kpiConfiguration,
   dashboardData,
-  meanData,
-  countData,
-  goalsData,
+  packageValidationDurationMeanInMinutes,
+  packageValidationTotalRunCount,
   metric,
 }) {
   const getDataBlock = () => {
     return (
-      <SalesforcePackageValidationDurationDataBlock meanData={meanData} countData={countData} goalsData={goalsData} />
+      <SalesforcePackageValidationDurationDataBlock
+        packageValidationDurationMeanInMinutes={packageValidationDurationMeanInMinutes}
+        packageValidationTotalRunCount={packageValidationTotalRunCount}
+      />
     );
   };
 
@@ -34,9 +36,8 @@ function SalesforcePackageValidationDurationMetric({
 SalesforcePackageValidationDurationMetric.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  meanData: PropTypes.number,
-  countData: PropTypes.number,
-  goalsData: PropTypes.object,
+  packageValidationDurationMeanInMinutes: PropTypes.number,
+  packageValidationTotalRunCount: PropTypes.number,
   metric: PropTypes.array,
 };
 
