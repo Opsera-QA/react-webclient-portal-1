@@ -35,7 +35,7 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
     return (
       <ThreeLineDataBlockNoFocusBase        
         topText={"Average Daily Builds"}
-        middleText={<MetricScoreText score={metricData?.build?.perDayAverage || 0} qualityLevel={metricData?.build?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS} />}
+        middleText={<MetricScoreText score={metricData?.build?.perDayAverage} qualityLevel={metricData?.build?.count && metricData?.build?.count > 0 ? metricData?.build?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null } />}
         bottomText={`Goal: ${goalsData}`}
       />
     );
