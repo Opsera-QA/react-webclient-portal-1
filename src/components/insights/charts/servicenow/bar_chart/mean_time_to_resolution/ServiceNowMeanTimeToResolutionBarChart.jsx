@@ -109,7 +109,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
 
     return (
       <div className="new-chart mb-3 pointer font-inter-light-300 dark-gray-text-primary" style={{ height: "300px" }}>
-        <div style={{ float: "right", fontSize: "10px" }}>
+        <div style={{ float: "right", fontSize: "10px", marginTop: "-20px" }}>
           Total Number of Incidents - #<br></br>
           <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" /> Average MTTR <b>({overallMean} Minutes)</b>
           <br></br>
