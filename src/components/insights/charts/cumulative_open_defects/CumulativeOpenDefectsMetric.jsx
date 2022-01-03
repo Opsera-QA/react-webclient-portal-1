@@ -15,7 +15,6 @@ import { dataPointHelpers } from "components/common/helpers/metrics/data_point/d
 import { Col, Row } from "react-bootstrap";
 import "components/insights/charts/qa_metrics/Styling.css";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import { nivoChartLegendDefinitions } from "components/common/metrics/charts/nivo/nivoChartLegend.definitions";
 import CumulativeOpenDefectsDataBlock from "./data_blocks/open_defects/CumulativeOpenDefectsDataBlock";
 import CumulativeOpenValidDefectsDataBlock from "./data_blocks/open_valid_defects/CumulativeOpenValidDefectsDataBlock";
 import CumulativeTotalDefectsDataBlock from "./data_blocks/total_defects/CumulativeTotalDefectsDataBlock";
@@ -146,12 +145,14 @@ function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, da
               </Row>
             </Col>
             <Col xl={6} lg={6} md={4} className={"my-2 p-2"}>
-              <ResponsivePie
-                data={metric?.pairs}
-                {...defaultConfig()}
-                {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={() => setShowModal(true)}
-              />
+              <div style={{ height: "300px" }}>
+                <ResponsivePie
+                  data={metric?.pairs}
+                  {...defaultConfig()}
+                  {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
+                  onClick={() => setShowModal(true)}
+                />
+              </div>
             </Col>
           </Row>
           {getNotesRow()}
