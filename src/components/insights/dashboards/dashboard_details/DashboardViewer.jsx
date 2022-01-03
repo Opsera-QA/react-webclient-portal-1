@@ -21,7 +21,7 @@ function DashboardViewer({dashboardData}) {
   const history = useHistory();
   const [dashboardDataDto, setDashboardDataDto] = useState(dashboardData);
   const [kpis, setKpis] = useState([]);
-  const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(modelHelpers.getDashboardFilterModel(dashboardDataDto, "tags", dashboardFiltersMetadata));
+  const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(modelHelpers.getDashboardFilterModel(dashboardDataDto?.getPersistData(), "tags", dashboardFiltersMetadata));
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -48,7 +48,7 @@ function DashboardViewer({dashboardData}) {
 
   const loadData = async (newDashboardData) => {
     setDashboardDataDto({...newDashboardData});
-    const newDashboardFilterModel = modelHelpers.getDashboardFilterModel(dashboardDataDto, "tags", dashboardFiltersMetadata);
+    const newDashboardFilterModel = modelHelpers.getDashboardFilterModel(dashboardDataDto?.getPersistData(), "tags", dashboardFiltersMetadata);
     setDashboardFilterTagsModel(newDashboardFilterModel);
     setKpis(newDashboardData?.getData("configuration"));
   };
