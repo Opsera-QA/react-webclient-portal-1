@@ -26,8 +26,8 @@ const InformaticaRunAssistantMigrationObjectList = (
     return (`
       <div>
         <div class="d-flex justify-content-between mb-2">
-            <div>${type}</div>
             <div>${path}</div>
+            <div>${type}</div>
         </div>
         <div>${description}</div>
         <div class="d-flex justify-content-between mt-2">
