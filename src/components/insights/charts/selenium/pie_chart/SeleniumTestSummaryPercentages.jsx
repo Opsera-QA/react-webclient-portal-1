@@ -100,8 +100,8 @@ function SeleniumTestSummaryPercentages({ kpiConfiguration, setKpiConfiguration,
                 <SeleniumTestsCasesBlockedDataBlock score={metrics[0]?.blockedTests?.toString()} />
               </Col>
             </Row>
-            <Row>
-              <Col xl={12} lg={12} className={"mb-3"} >
+            <Row className={"justify-content-center"}>
+              <Col xl={6} lg={6} className={"mb-3"}>
                 <SeleniumTestsCasesNotExecutedBlock score={metrics[0]?.notExecutedTests?.toString()} />
               </Col>
             </Row>
