@@ -39,7 +39,7 @@ function CoverityActionableDataBlockContainers({ data , level }) {
         <Col xl={2} lg={2} sm={4} className={"my-3"}>
           <DataBlockBoxContainer showBorder={true} >
             <TwoLineScoreDataBlock
-              className={`p-2 ${getColor()}`}
+              className={`p-2 ${getColor(data?.totalIssues)}`}
               score={data.totalIssues}
               icon={getIcon(level)}
               subtitle={"Total Issues"} />
@@ -68,7 +68,7 @@ function CoverityActionableDataBlockContainers({ data , level }) {
         <Col xl={2} lg={2} sm={4} className={"my-3"}>
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
-              className={`p-2 ${getColor()}`}
+              className={`p-2 ${getColor(data?.totalQuality)}`}
               score={data.totalQuality}
               icon = {faShieldCheck}
               subtitle={"Total Quality Issues"} />
@@ -77,7 +77,7 @@ function CoverityActionableDataBlockContainers({ data , level }) {
         <Col xl={2} lg={2} sm={4} className={"my-3"}>
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
-              className={`p-2 ${getColor()}`}
+              className={`p-2 ${getColor(data?.totalSecurity)}`}
               score={data.totalSecurity}
               icon = {faLockOpenAlt}
               subtitle={"Total Security Issues"}
