@@ -30,15 +30,11 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
     }  
   ];
 
-  const getMiddleText = () => {
-    return (metricData?.deploy?.count && metricData?.deploy?.count > 0 ? <MetricScoreText score={metricData?.deploy?.perDayAverage || 0} qualityLevel={metricData?.deploy?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS} /> : "No Data");
-  };
-
   const getLeftDataBlock = () => {
     return (      
       <ThreeLineDataBlockNoFocusBase        
         topText={"Average Daily Deployments"}
-        middleText={getMiddleText()}
+        middleText={<MetricScoreText score={metricData?.deploy?.perDayAverage} qualityLevel={metricData?.deploy?.count && metricData?.deploy?.count > 0 ? metricData?.deploy?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null } />}
         bottomText={`Goal: ${goalsData}`}
       />
     );
