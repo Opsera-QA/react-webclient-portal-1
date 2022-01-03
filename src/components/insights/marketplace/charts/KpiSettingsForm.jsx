@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Row, Col } from "react-bootstrap";
 import DateRangeInput from "components/common/inputs/date/DateRangeInput";
+import ThreeMonthsRestrictedDateRangeInput from "components/common/inputs/date/ThreeMonthsRestrictedDateRangeInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import kpiConfigurationMetadata from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import {
@@ -337,11 +338,19 @@ function KpiSettingsForm({
   const getKpiFilters = (filter) => {
     switch (filter.type) {
       case "date":
-        return (
-          <div>
-            <DateRangeInput dataObject={kpiDateFilter} setDataObject={setKpiDateFilter} fieldName={"value"} />
-          </div>
-        );
+        if(kpiConfiguration.kpi_identifier === "jira-lead-time"){
+          return (
+            <div>
+              <ThreeMonthsRestrictedDateRangeInput dataObject={kpiDateFilter} setDataObject={setKpiDateFilter} fieldName={"value"} />
+            </div>
+          );
+        } else {
+          return (
+            <div>
+              <DateRangeInput dataObject={kpiDateFilter} setDataObject={setKpiDateFilter} fieldName={"value"} />
+            </div>
+          );
+        }        
       case "tags":
         return (
           <div>
