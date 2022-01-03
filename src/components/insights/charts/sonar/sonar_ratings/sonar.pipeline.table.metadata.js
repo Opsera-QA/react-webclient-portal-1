@@ -7,8 +7,16 @@ const SonarPipelineTableMetadata = {
       id: "project",
     },
     {
-      label: "Last Scan",
+      label: "Pipeline Name",
+      id: "pipelineName",
+    },
+    {
+      label: "Run Count",
       id: "runCount",
+    },
+    {
+      label: "Timestamp",
+      id: "endTimestamp",
     },
     {
       label: "Trend",

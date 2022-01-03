@@ -76,8 +76,6 @@ const getNodeAnalyticsAxiosInstance = (token, cancelToken) => {
     cancelToken: cancelToken
   };
 
-  console.log("axiosConfig: " + JSON.stringify(axiosConfig));
-
   const axiosInstance = axios.create(axiosConfig);
 
 

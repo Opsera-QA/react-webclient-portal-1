@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import MetricTextBase from "components/common/metrics/text/MetricTextBase";
 import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
+import {numberHelpers} from "components/common/helpers/number/number.helpers";
 
 function MetricPercentageText(
   {
@@ -24,16 +25,24 @@ function MetricPercentageText(
     return evaluation;
   };
 
+  const getPercentageText = () => {
+    if (numberHelpers.hasNumberValue(percentage) === true || !isNaN(percentage)) {
+      return `${percentage}%`;
+    }
+
+    return percentage;
+  };
+
   return (
     <MetricTextBase
-      formattedText={`${percentage}%`}
+      formattedText={getPercentageText()}
       qualityLevel={getQualityLevel()}
     />
   );
 }
 
 MetricPercentageText.propTypes = {
-  percentage: PropTypes.number,
+  percentage: PropTypes.any,
   dataPoint: PropTypes.object,
   qualityLevel: PropTypes.string,
 };

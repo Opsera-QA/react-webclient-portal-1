@@ -8,15 +8,12 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-// import { line } from "d3-shape";
-import {
-  defaultConfig,
-  getColorByData,
-  assignStandardColors,
-  adjustBarWidth,
-  // accentColor,
-} from "../../../charts-views";
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinus } from "@fortawesome/pro-solid-svg-icons";
+import { neutralColor, goalSuccessColor } from "../../../../charts/charts-views";
+import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
 // import MeanTimeToAcknowledgeSummaryPanelMetadata from "components/insights/charts/servicenow/bar_chart/mean_time_to_Acknowledge/serviceNowMeanTimeToAcknowledgeSummaryPanelMetadata";
 // import Model from "../../../../../../core/data_model/model";
 // import ChartDetailsOverlay from "../../../detail_overlay/ChartDetailsOverlay";
@@ -38,6 +35,8 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [overallMean, setOverallMean] = useState(undefined);
+  const [goalsData, setGoalsData] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -63,16 +62,21 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+
       let dashboardTags =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken,
-        cancelSource,
-        "serviceNowMTTA",
-        kpiConfiguration,
-        dashboardTags
-      );
-      let dataObject = response?.data?.data[0]?.serviceNowMTTA?.data[0]?.docs;
+          dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value,
+        goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type == "goals")]?.value,
+        response = await chartsActions.parseConfigurationAndGetChartMetrics(
+          getAccessToken,
+          cancelSource,
+          "serviceNowMTTA",
+          kpiConfiguration,
+          dashboardTags
+        ),
+        dataObject = response?.data?.data[0]?.serviceNowMTTA?.data[0]?.docs,
+        overallMeanValue = response?.data?.data[0]?.serviceNowMTTA?.data[0]?.overallMttaMins;
+
+      setGoalsData(goals);
       assignStandardColors(dataObject, true);
       if (dataObject && dataObject.length) {
         dataObject.forEach((data) => (data.Count = data?.number_of_incidents));
@@ -80,6 +84,7 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+        setOverallMean(overallMeanValue);
       }
 
       if (!dataObject) {
@@ -118,37 +123,6 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
       return max;
     };
 
-    // const MeanLineLayer = ({ bars, xScale, yScale }) => {
-    //   const lineColor = accentColor;
-    //   const lineGenerator = line()
-    //     .x((d) => xScale(d.data.data._id))
-    //     .y((d) => yScale(d.data.data["mtta"]));
-    //   return (
-    //     <Fragment>
-    //       <path
-    //         d={lineGenerator(bars)}
-    //         fill="none"
-    //         stroke={lineColor}
-    //         strokeWidth="3"
-    //         style={{ pointerEvents: "none" }}
-    //       />
-    //       {bars.map((bar) => {
-    //         return (
-    //           <circle
-    //             key={bar.key}
-    //             cx={xScale(bar.data.data._id)}
-    //             cy={yScale(bar.data.data["mtta"])}
-    //             r={4}
-    //             fill={lineColor}
-    //             stroke={lineColor}
-    //             style={{ pointerEvents: "none" }}
-    //           />
-    //         );
-    //       })}
-    //     </Fragment>
-    //   );
-    // };
-
     // const onRowSelect = (data) => {
     // const chartModel = new Model(
     //   { ...MeanTimeToAcknowledgeSummaryPanelMetadata.newObjectFields },
@@ -167,8 +141,14 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
     // };
 
     return (
-      <div className="new-chart mb-3 pointer" style={{ height: "300px" }}>
-        <div style={{ float: "right", fontSize: "10px" }}>Total Number of Incidents - #</div>
+      <div className="new-chart mb-3 pointer font-inter-light-300 dark-gray-text-primary" style={{ height: "300px" }}>
+        <div style={{ float: "right", fontSize: "10px" }}>
+          Total Number of Incidents - #<br></br>
+          <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" /> Average MTTA <b>({overallMean} Minutes)</b>
+          <br></br>
+          <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" /> Goal
+          <b> ({goalsData?.mttaAvgMeanTimeGoal} Minutes)</b>
+        </div>
         <ResponsiveBar
           data={metrics}
           {...defaultConfig(
@@ -179,7 +159,7 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
             "wholeNumbers",
             "monthDate2"
           )}
-          {...config(getColorByData, getMaxValue(metrics))}
+          {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY, getMaxValue(metrics))}
           {...adjustBarWidth(metrics)}
           // onClick={(data) => onRowSelect(data)}
           tooltip={({ indexValue, value, data, color }) => (
@@ -190,6 +170,20 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
               color={color}
             />
           )}
+          markers={[
+            {
+              axis: "y",
+              value: overallMean ? overallMean : 0,
+              lineStyle: { stroke: neutralColor, strokeWidth: 2 },
+              legend: "Mean",
+            },
+            {
+              axis: "y",
+              value: goalsData?.mttaAvgMeanTimeGoal ? goalsData?.mttaAvgMeanTimeGoal : 0,
+              lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
+              legend: "Goal",
+            },
+          ]}
         />
       </div>
     );
@@ -230,7 +224,7 @@ ServiceNowMeanTimeToAcknowledgeBarChart.propTypes = {
   bars: PropTypes.any,
   xScale: PropTypes.any,
   yScale: PropTypes.any,
-  showSettingsToggle:PropTypes.bool
+  showSettingsToggle: PropTypes.bool,
 };
 
 export default ServiceNowMeanTimeToAcknowledgeBarChart;
