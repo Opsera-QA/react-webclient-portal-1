@@ -51,7 +51,7 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
     return (
       <ThreeLineDataBlockNoFocusBase        
         topText={"Success Rate"}
-        middleText={<MetricPercentageText percentage={metricData?.deploy?.successPercent || 0} qualityLevel={metricData?.deploy?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS} />}
+        middleText={<MetricPercentageText percentage={metricData?.deploy?.successPercent} qualityLevel={metricData?.deploy?.count && metricData?.deploy?.count > 0 ? metricData?.deploy?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null } />}
         bottomText={`Goal: ${goalsData}`}
       />
     );
@@ -67,7 +67,7 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
           {...config()}
           tooltip={(node) => (            
             <ChartTooltip
-              titles={["Date Range", "Number of Builds", "Success Rate"]}
+              titles={["Date Range", "Number of Deployments", "Success Rate"]}
               values={[node.point.data.range, node.point.data.total, String(node.point.data.y) + " %"]}
             />
           )}          
