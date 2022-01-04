@@ -12,7 +12,7 @@ function InformaticaIntelligentCloudServiceTypeSelectInputBase(
     setDataFunction,
     clearDataFunction,
     disabled,
-  }) { 
+  }) {
   return (
     <SelectInputBase
       fieldName={fieldName}

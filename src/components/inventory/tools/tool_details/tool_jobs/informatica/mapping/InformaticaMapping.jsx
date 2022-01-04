@@ -1,16 +1,21 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import informaticaTypeMappingMetadata from "./informatica-mappping-metadata";
+import InformaticaMappingInput from "./inputs/InformaticaMappingInput";
+import Model from "core/data_model/model";
 
 function InformaticaMapping({ toolData, loadData, isLoading, toolActions }) {
   const toastContext = useContext(DialogToastContext);
-  const [toolMappings, setToolMappings] = useState([]);
+  const [toolMappingsDto, setToolMappingsDto] = useState(undefined);
+  const [isaLoading, setIsaLoading] = useState(true);
 
   useEffect(() => {
     unpackMappings(toolActions);
   }, [toolActions]);
 
   const unpackMappings = (toolActions) => {
+    setIsaLoading(true);
     const newMapList = [];
 
     if (Array.isArray(toolActions)) {
@@ -21,13 +26,19 @@ function InformaticaMapping({ toolData, loadData, isLoading, toolActions }) {
         newMapList?.push(map);
       });
     }
-    console.log(newMapList);
-    setToolMappings(newMapList);
+    
+    console.log(new Model(newMapList, informaticaTypeMappingMetadata, false));
+    setToolMappingsDto(new Model(newMapList, informaticaTypeMappingMetadata, true));
+    setIsaLoading(false);
   };
 
 
   return (
-    <>sdsdf</>
+    <InformaticaMappingInput
+      model={toolMappingsDto}
+      setModel={setToolMappingsDto}
+      visible={!isaLoading}
+    />
   );
 }
 
