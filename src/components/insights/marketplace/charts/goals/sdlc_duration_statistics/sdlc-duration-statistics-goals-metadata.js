@@ -2,27 +2,27 @@ const sdlcDurationByStageMetadata = {
     type: "Sdlc Duration By Stage Goals",
     fields: [
       {
-        label: "Average Duration of Build (minutes)",
+        label: "Goal: Average Duration of Build (minutes)",
         id: "average_builds"
       },
       {
-        label: "Average Duration of Deploy (minutes)",
+        label: "Goal: Average Duration of Deploy (minutes)",
         id: "average_deploy"
       },
       {
-        label: "Average Duration of Quality Scan (minutes)",
+        label: "Goal: Average Duration of Quality Scan (minutes)",
         id: "average_quality_scan"
       },
       {
-        label: "Average Duration of Security Scan (minutes)",
+        label: "Goal: Average Duration of Security Scan (minutes)",
         id: "average_security_scan"
       },
       {
-        label: "Average Duration of Test (minutes)",
+        label: "Goal: Average Duration of Test (minutes)",
         id: "average_test"
       },
       {
-        label: "Average Duration of Scripts (minutes)",
+        label: "Goal: Average Duration of Scripts (minutes)",
         id: "average_scripts"
       },
     ],
