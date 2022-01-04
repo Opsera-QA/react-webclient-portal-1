@@ -13,7 +13,7 @@ import FullScreenCenterOverlayContainer from "components/common/overlays/center/
 import CoverityActionableInsightTable from "./CoverityActionableInsightTable";
 import CoverityActionableDataBlockContainers from "./CoverityActionableDataBlockContainers";
 import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
-import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 function CoverityActionableInsightOverlay({
                                                        title,
                                                        coveritySeverity,
@@ -31,7 +31,7 @@ function CoverityActionableInsightOverlay({
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [filterModel, setFilterModel] = useState(
-    new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
+    new Model({ ...actionableInsightsGenericChartFilterMetadata.newObjectFields }, actionableInsightsGenericChartFilterMetadata, false)
   );
 
   useEffect(() => {
