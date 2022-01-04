@@ -128,7 +128,6 @@ function AutomationPercentageMetric({ kpiConfiguration, setKpiConfiguration, das
     }
 
     return (
-      <>
         <div>
         <div className="new-chart m-3 p-0" style={{ minheight: "300px", display: "flex" }}>
           <Row>
@@ -155,12 +154,14 @@ function AutomationPercentageMetric({ kpiConfiguration, setKpiConfiguration, das
               </Row>
             </Col>
             <Col xl={6} lg={4} md={3} className={"my-2 p-2"}>
-              <ResponsivePie
-                data={metric?.pairs}
-                {...defaultConfig()}
-                {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={() => setShowModal(true)}
-              />
+              <div style={{ height: "300px" }}>
+                <ResponsivePie
+                  data={metric?.pairs}
+                  {...defaultConfig()}
+                  {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
+                  onClick={() => setShowModal(true)}
+                />
+              </div>
             </Col>
           </Row>
         </div>
@@ -168,7 +169,6 @@ function AutomationPercentageMetric({ kpiConfiguration, setKpiConfiguration, das
             {getNotesRow()}
           </Row>
         </div>
-      </>
     );
   };
 

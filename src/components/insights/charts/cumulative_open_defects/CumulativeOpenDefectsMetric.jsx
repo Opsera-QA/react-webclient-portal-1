@@ -146,12 +146,14 @@ function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, da
               </Row>
             </Col>
             <Col xl={6} lg={6} md={4} className={"my-2 p-2"}>
-              <ResponsivePie
-                data={metric?.pairs}
-                {...defaultConfig()}
-                {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={() => setShowModal(true)}
-              />
+              <div style={{ height: "300px" }}>
+                <ResponsivePie
+                  data={metric?.pairs}
+                  {...defaultConfig()}
+                  {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
+                  onClick={() => setShowModal(true)}
+                />
+              </div>
             </Col>
           </Row>
           {getNotesRow()}
