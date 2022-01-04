@@ -1,5 +1,5 @@
 export default (getColor) => ({
-  keys: ["mttr"],
+  keys: ["mttrHours"],
   indexBy: "_id",
   colorBy: "id",
   minValue: 0,
