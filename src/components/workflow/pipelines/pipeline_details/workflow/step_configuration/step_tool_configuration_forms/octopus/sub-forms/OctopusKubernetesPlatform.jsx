@@ -53,11 +53,13 @@ function OctopusKubernetesPlatform({ dataObject, setDataObject, isLoading, plan,
           setDataObject={setDataObject}
           fieldName={"specifyDepVariables"}
         />
-        <OctopusCustomParametersInput
-          fieldName={"customVariableList"}
-          dataObject={dataObject}
-          setDataObject={setDataObject}
-        />
+        {dataObject && dataObject.getData("specifyDepVariables") && (
+          <OctopusCustomParametersInput
+            fieldName={"customVariableList"}
+            dataObject={dataObject}
+            setDataObject={setDataObject}
+          />
+        )}
       </>
     </>
   );
