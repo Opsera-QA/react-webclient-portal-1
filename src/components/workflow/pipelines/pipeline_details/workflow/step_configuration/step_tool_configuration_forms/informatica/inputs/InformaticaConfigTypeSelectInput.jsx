@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const STEP_TYPE = [
-  { value: "build", text: "Build" },
-  { value: "deploy", text: "Deploy" },
+  { value: "export", text: "Export Objects" },
+  { value: "import", text: "Import Objects" },
 ];
 
 function InformaticaConfigTypeSelectInput({ fieldName, model, setModel, setDataFunction, clearDataFunction, disabled }) {
