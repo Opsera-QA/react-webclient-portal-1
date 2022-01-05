@@ -3,9 +3,10 @@
     font-size: 13px;
 }
 
-.item-field .tag-badge {
+.tag-badge, .metric-badge {
     font-weight: normal;
-    background: #b2dbff;
+    background: #00a8e8;
+    color: white;
     padding: 5px;
 }
 
@@ -28,6 +29,11 @@
     font-weight: normal;
     background-color: #453191;
     color: #fff;
+}
+
+.standard-badge {
+    font-weight: normal;
+    letter-spacing: 1px;
 }
 
 /* End Item Field */
