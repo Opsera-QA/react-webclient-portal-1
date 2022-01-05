@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import DataBlockInfoOverlayIcon from "components/common/icons/metric/info/DataBlockInfoOverlayIcon";
+import DataPointInfoOverlayIcon from "components/common/icons/metric/info/DataPointInfoOverlayIcon";
 
 function TwoLineDataBlockBase(
   {
@@ -25,7 +25,7 @@ function TwoLineDataBlockBase(
 
   const getInfoOverlayIcon = () => {
     return (
-      <DataBlockInfoOverlayIcon
+      <DataPointInfoOverlayIcon
         dataPoint={dataPoint}
       />
     );

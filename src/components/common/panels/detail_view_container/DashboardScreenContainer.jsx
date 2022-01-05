@@ -172,7 +172,7 @@ function DashboardScreenContainer(
   }
 
   return (
-    <div className="max-content-width ml-2 max-content-height scroll-y">
+    <div className="max-content-width ml-2 max-content-height scroll-y" style={{ overflowX: "hidden" }}>
       <div className="mb-3">
         {<InsightsSubNavigationBar currentTab={"dashboardViewer"} />}
       </div>
@@ -180,7 +180,7 @@ function DashboardScreenContainer(
         <div className="px-2 dashboard-container-header title-text-header-1">
           {getTitleBar()}
         </div>
-        <div className="detail-container-body">
+        <div className={tab === "settings" ? `detail-container-body` : `detail-container-body shaded-container`}>
           {getBody()}
         </div>
         <div className="content-block-footer"/>
