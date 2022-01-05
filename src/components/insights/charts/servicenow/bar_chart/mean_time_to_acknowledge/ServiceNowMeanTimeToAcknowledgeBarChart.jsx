@@ -165,7 +165,7 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
               titles={["Date", "Mean Time to Acknowledge", "Number of Incidents"]}
               values={[new Date(indexValue).toDateString(), `${value} hours`, data.Count]}
               style={false}
-              color={color}
+              // color={color}
             />
           )}
           markers={[

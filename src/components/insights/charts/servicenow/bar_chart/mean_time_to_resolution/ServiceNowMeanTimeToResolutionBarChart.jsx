@@ -133,7 +133,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
               titles={["Date", "Mean Time to Resolution", "Number of Incidents"]}
               values={[new Date(indexValue).toDateString(), `${value} hours`, data.Count]}
               style={false}
-              color={color}
+              // color={color}
             />
           )}
           markers={[
