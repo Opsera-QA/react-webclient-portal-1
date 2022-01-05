@@ -23,7 +23,7 @@ import CumulativeTotalValidDefectsDataBlock from "./data_blocks/total_valid_defe
 import CumulativeOpenDefectsHelpDocumentation from "components/common/help/documentation/insights/charts/CumulativeOpenDefectsHelpDocumentation";
 import { ResponsivePie } from "@nivo/pie";
 import config from "./cumulativeOpenDefectsMetricsConfig";
-import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
+import { METRIC_THEME_CHART_PALETTE_COLORS, METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 
 const CUMILATIVE_OPEN_DEFECT = "cumulative_open_defect";
 
@@ -146,12 +146,14 @@ function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, da
               </Row>
             </Col>
             <Col xl={6} lg={6} md={4} className={"my-2 p-2"}>
-              <ResponsivePie
-                data={metric?.pairs}
-                {...defaultConfig()}
-                {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={() => setShowModal(true)}
-              />
+            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
+                <ResponsivePie
+                  data={metric?.pairs}
+                  {...defaultConfig()}
+                  {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
+                  onClick={() => setShowModal(true)}
+                />
+              </div>
             </Col>
           </Row>
           {getNotesRow()}

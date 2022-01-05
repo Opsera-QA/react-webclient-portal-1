@@ -14,7 +14,7 @@ import SeleniumTestsCasesPassedDataBlock from "./data_blocks/tests_passed/Seleni
 import SeleniumTestsCasesFailedDataBlock from "./data_blocks/tests_failed/SeleniumTestsCasesFailedDataBlock";
 import SeleniumTestsCasesBlockedDataBlock from "./data_blocks/tests_blocked/SeleniumTestsCasesBlockedDataBlock";
 import SeleniumTestsCasesNotExecutedBlock from "./data_blocks/tests_not_executed/SeleniumTestsCasesNotExecutedBlock";
-import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
+import { METRIC_THEME_CHART_PALETTE_COLORS, METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 
 function SeleniumTestSummaryPercentages({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -85,7 +85,7 @@ function SeleniumTestSummaryPercentages({ kpiConfiguration, setKpiConfiguration,
     return (
       <div className="new-chart m-3 p-0" style={{ minHeight: "300px", display: "flex" }}>
         <Row>
-          <Col xl={6} lg={6} md={6} className={"d-flex align-content-around"}>
+          <Col xl={6} lg={6} md={6}>
             <Row>
               <Col xl={6} lg={6} className={"mb-3"} >
                 <SeleniumTestsTotalDataBlock score={metrics[0]?.testsRun?.toString()} />
@@ -99,13 +99,15 @@ function SeleniumTestSummaryPercentages({ kpiConfiguration, setKpiConfiguration,
               <Col xl={6} lg={6} className={"mb-3"} >
                 <SeleniumTestsCasesBlockedDataBlock score={metrics[0]?.blockedTests?.toString()} />
               </Col>
-              <Col xl={6} lg={6} className={"mb-3"} >
+            </Row>
+            <Row className={"justify-content-center"}>
+              <Col xl={6} lg={6} className={"mb-3"}>
                 <SeleniumTestsCasesNotExecutedBlock score={metrics[0]?.notExecutedTests?.toString()} />
               </Col>
             </Row>
           </Col>
           <Col xl={6} lg={6} md={6} className={"my-2 p-2"}>
-            <div style={{ height: "300px" }}>
+            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
               <ResponsivePie
                 data={metrics[0]?.testsSummary}
                 {...defaultConfig()}
