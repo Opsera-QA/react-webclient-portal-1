@@ -14,6 +14,8 @@ import SalesforceUnitTestingDurationMetric from "components/insights/charts/sfdc
 import SalesforcePackageValidationDurationMetric from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/validation/SalesforcePackageValidationDurationMetric";
 import SalesforceDeploymentDurationMetric from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/deployment/SalesforceDeploymentDurationMetric";
 import { assignStandardLineColors } from "components/insights/charts/charts-views";
+import SalesforceDurationByStageHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/SalesforceDurationByStageHelpDocumentation";
 
 function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const history = useHistory();
@@ -168,6 +170,7 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        chartHelpComponent={(closeHelpPanel) => <SalesforceDurationByStageHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
       <ModalLogs
         header="Build Duration By Stage"
