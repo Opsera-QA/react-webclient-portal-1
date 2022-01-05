@@ -1,19 +1,23 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { ResponsivePie } from "@nivo/pie";
 import config from "components/insights/charts/qa_metrics/manualQaTestPieChartConfig";
 import ModalLogs from "components/common/modal/modalLogs";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import {
-  defaultConfig, getColorByData, getColor, assignStandardColors,
-  shortenPieChartLegend, mainColor, getColorById,
-} from "../charts-views";
-import ChartTooltip from "../ChartTooltip";
+import { defaultConfig, getColorByData, assignStandardColors, shortenPieChartLegend } from "../charts-views";
 import { Col, Container, Row } from "react-bootstrap";
-import DataBlockWrapper from "../../../common/data_boxes/DataBlockWrapper";
+import TwoLineScoreDataBlock from "../../../common/metrics/score/TwoLineScoreDataBlock";
+import TwoLinePercentageDataBlock from "../../../common/metrics/percentage/TwoLinePercentageDataBlock";
+import { dataPointHelpers } from "../../../common/helpers/metrics/data_point/dataPoint.helpers";
+import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
+import DataBlockBoxContainer from "../../../common/metrics/data_blocks/DataBlockBoxContainer";
+
+const MANUAL_TESTING_RESULTS_DATA_POINT_IDENTIFIERS = {
+  passRateDataPoint: "manual-testing-results-quality-level",
+};
 
 function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -23,6 +27,7 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [passRateDataPoint, setPassRateDataPoint] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -48,28 +53,45 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "manualTestData", kpiConfiguration, dashboardTags);
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "manualTestData",
+        kpiConfiguration,
+        dashboardTags
+      );
       let dataObject = response?.data ? response?.data?.data[0]?.manualTestData?.data : [];
       assignStandardColors(dataObject[0]?.pairs);
       shortenPieChartLegend(dataObject[0]?.pairs);
 
+      // Loads the Data Points from the KPI Configuration
+      await loadDataPoints();
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
       }
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
     }
+  };
+
+  const loadDataPoints = async () => {
+    const dataPoints = kpiConfiguration?.dataPoints;
+
+    const thisPassRateDataPoint = dataPointHelpers.getDataPoint(
+      dataPoints,
+      MANUAL_TESTING_RESULTS_DATA_POINT_IDENTIFIERS?.passRateDataPoint
+    );
+    setPassRateDataPoint(thisPassRateDataPoint);
   };
 
   const getChartBody = () => {
@@ -78,38 +100,42 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
     }
 
     return (
-
-      <div className="new-chart mb-3" style={{height: "300px", display: "flex"}}>
+      <div className="new-chart mb-3" style={{ height: "300px", display: "flex" }}>
         <Container>
           <Row className="p-1">
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                <div>{metrics[0]?.totalTests}</div>
-              </div>
-              <div className="w-100 text-muted mb-1">Total Number of Tests Available</div>
-            </div></Col>
+            <Col lg={6}>
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={"p-3"}>
+                  <TwoLineScoreDataBlock score={metrics[0]?.totalTests} subtitle={"Total Number of test Available"} />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col lg={6}>
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={"p-3"}>
+                  <TwoLineScoreDataBlock score={metrics[0].totalExecuted} subtitle={"Total Number of Tests executed"} />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
           </Row>
           <Row className="p-1">
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                <div>{metrics[0]?.totalExecuted}</div>
-              </div>
-              <div className="w-100 text-muted mb-1">Total Number of Tests executed</div>
-            </div></Col>
-          </Row>
-          <Row className="p-1">
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                <div className="green">{metrics[0]?.passRate+ "%"}</div>
-              </div>
-              <div className="w-100 text-muted mb-1">Pass Rate</div>
-            </div></Col>
+            <Col lg={6} className="w-100 mx-auto">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className="p-3">
+                  <TwoLinePercentageDataBlock
+                    percentage={metrics[0]?.passRate}
+                    subtitle={"Pass Rate"}
+                    dataPoint={passRateDataPoint}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
           </Row>
         </Container>
         <ResponsivePie
           data={metrics[0]?.pairs}
           {...defaultConfig()}
-          {...config(getColorByData)}
+          {...config(getColorByData, METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
           onClick={() => setShowModal(true)}
         />
       </div>
@@ -147,6 +173,7 @@ ManualQaTestPieChart.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func};
+  setKpis: PropTypes.func,
+};
 
 export default ManualQaTestPieChart;

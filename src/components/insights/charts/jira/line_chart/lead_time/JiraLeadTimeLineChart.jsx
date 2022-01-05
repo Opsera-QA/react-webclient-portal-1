@@ -6,17 +6,19 @@ import ModalLogs from "components/common/modal/modalLogs";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
-import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { line } from "d3-shape";
-import { defaultConfig, getColor, assignStandardColors, mainPurple, accentColor } from '../../../charts-views';
+import { defaultConfig, getColor, assignStandardColors } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
-import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
-import DataBlock from "components/common/data_boxes/DataBlock";
-import {Col, Row, Container} from "react-bootstrap";
-import {OverlayTrigger, Popover} from "react-bootstrap";
-import InputPopover from "components/common/inputs/info_text/InputPopover";
+import {Col, Row} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/pro-solid-svg-icons";
+import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
+import JiraBugsCompletedDataBlock from "../../data_blocks/JiraBugsCompletedDataBlock";
+import JiraIssuesCompletedDataBlock from "../../data_blocks/JiraIssuesCompletedDataBlock";
+import JiraMeanLeadTimeDataBlock from "../../data_blocks/JiraMeanLeadTimeDataBlock";
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
+import JiraLeadTimeChartHelpDocumentation
+  from "components/common/help/documentation/insights/charts/JiraLeadTimeChartHelpDocumentation";
 function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -87,7 +89,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
         .x(d => xScale(d.data.x))
         .y(d => yScale(d.data.mean));
       return (
-        <path d={lineGenerator(nodes)} fill="none" stroke={mainPurple} strokeWidth="3" />
+        <path d={lineGenerator(nodes)} fill="none" stroke={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2} strokeWidth="3" />
       );
     };
 
@@ -97,7 +99,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
         .x(d => xScale(d.data.x))
         .y(d => yScale(d.data.rolling_mean));
       return (
-        <path d={lineGenerator(nodes)} fill="none" stroke={accentColor} strokeWidth="2" />
+        <path d={lineGenerator(nodes)} fill="none" stroke={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_3} strokeWidth="2" />
       );
     };
     const onNodeSelect = (node) => {
@@ -105,69 +107,51 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
       setShowModal(true);
     };
 
-    const getPopoverBody = () => {
-      return (
-        <ul>
-          <li><span>The purple line represents the average lead time</span></li>
-          <li><span>The turquoise line represents the rolling average lead time</span></li>
-          <li><span>Each point represents the cluster of issues completed on that specific date in that many days</span></li>
-          <li><span>Click on a specific point to see which Jira issues with that lead time were completed that day</span></li>
-          <li><span>The default issue displayed is Story. If you are interested in the lead time for a specific Jira issue type (Epic, Bug, etc.), configure in the KPI Settings Form</span></li>
-          <li><span>The default completion status is Done. Configure which statuses indicate ticket completion in the KPI Settings Form</span></li>
-        </ul>
-      );
-    };
-
     return (
-      <div className="new-chart mb-3" style={{height: "300px", display:"flex"}}>
-        <Col><InputPopover tooltipTitle={"Info"} tooltipBody={getPopoverBody()} /></Col>
-        <Col xl={6} md={12} className="p-2">
-        <ResponsiveScatterPlot
-          data={metrics}
-          {...defaultConfig("Elapsed Time (Days)", "Completion Date", 
-                      false, true, "wholeNumbers", "monthDate", false, "circle")}
-          {...config(getColor, MeanLineLayer, RollingMeanLineLayer)}
-          onClick={(node) => onNodeSelect(node)}
-          tooltip={({node, color}) => <ChartTooltip 
-                                        titles = {["Date Completed", "Lead Time", "Issues Completed"]}
-                                        values = {[String(node.data.date_finished), 
-                                                  `${node.data.y} ${node.data.y > 1 ? "days" : "day"}`, String(node.data.count)]}
-                                        color = {color} />}
-        />
-
-        </Col>
-        <Container>
-        <Row>
-        <DataBlockWrapper padding={0}>
-        <DataBlock 
-        title={metrics[0].data[0].mean}
-        subTitle="Mean Lead Time (Days)"
-        toolTipText="Average time (in days) taken for a Jira ticket to transition from creation to completion status"
-      />
-      <DataBlock 
-        title={issueData.length}
-        subTitle="Issues Completed"
-        toolTipText="Total number of issues completed in specified time period"
-      />
-      <DataBlock 
-        title={issueData.filter(function(item) {return item.issueType === "Bug";}).length}
-        subTitle="Bugs Completed"
-        toolTipText="Total number of bugs completed in this time period"
-      />
-      </DataBlockWrapper>
-      <div className="p-3">
-      <FontAwesomeIcon icon={faMinus} color={mainPurple} size="lg"/> Mean Lead Time<br></br>
-      <FontAwesomeIcon icon={faMinus} color={accentColor} size="lg"/> Rolling Mean Lead Time
-      </div>
-      </Row>
-      </Container>
-      </div>
+      <>
+        <div className="new-chart m-3 p-0" style={{ minheight: "300px", display: "flex" }}>
+          <Row>
+            <Col xl={3} lg={3} md={4} className={"d-flex align-content-around"}>
+              <Row>
+                <Col lg={12} className={"my-3"}>
+                  <JiraMeanLeadTimeDataBlock data={metrics[0].data[0].mean} />
+                </Col>
+                <Col lg={12} className={"my-3"}>
+                  <JiraIssuesCompletedDataBlock data={issueData.length} />
+                </Col>
+                <Col lg={12} className={"mb-3"}>
+                  <JiraBugsCompletedDataBlock data={issueData.filter((item) => item.issueType.toLowerCase() === "bug").length} />
+                </Col>                
+              </Row>
+            </Col>            
+            <Col xl={9} lg={9} md={8} className={"my-2 p-2 d-flex flex-column"}>
+              <div className="px-3">
+                <FontAwesomeIcon icon={faMinus} color={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2} size="lg"/> Mean Lead Time<br></br>
+                <FontAwesomeIcon icon={faMinus} color={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_3} size="lg"/> Rolling Mean Lead Time
+              </div>
+              <ResponsiveScatterPlot
+                data={metrics}
+                {...defaultConfig("Elapsed Time (Days)", "Completion Date", 
+                            false, true, "wholeNumbers", "monthDate", false, "circle")}
+                {...config(getColor, MeanLineLayer, RollingMeanLineLayer)}
+                onClick={(node) => onNodeSelect(node)}
+                tooltip={({node, color}) => <ChartTooltip 
+                titles = {["Date Completed", "Lead Time", "Issues Completed"]}
+                values = {[String(node.data.date_finished), 
+                          `${node.data.y} ${node.data.y > 1 ? "days" : "day"}`, String(node.data.count)]}
+                color = {color} />}
+              />
+            </Col>            
+          </Row>          
+        </div>
+      </>
     );
   };
 
   return (
-    <>
-      <ChartContainer
+    <div>
+      <VanityMetricContainer
+        title={"Jira Lead Time"}
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
         chart={getChartBody()}
@@ -177,9 +161,10 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        chartHelpComponent={(closeHelpPanel) => <JiraLeadTimeChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
       <ModalLogs header="Jira Lead Time" size="lg" jsonMessage={modalData} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
-    </>
+    </div>
   );
 }
 JiraLeadTimeLineChart.propTypes = {
