@@ -86,7 +86,7 @@ function CoverityActionableDataBlockContainers({ data , level }) {
             <TwoLineScoreDataBlock
               className={`p-2 ${getColor(data?.totalSecurity)}`}
               score={data.totalSecurity}
-              icon = {securityIcon(data.totalSecurity)}
+              icon = {securityIcon(data?.totalSecurity)}
               subtitle={"Total Security Issues"}
             />
           </DataBlockBoxContainer>
