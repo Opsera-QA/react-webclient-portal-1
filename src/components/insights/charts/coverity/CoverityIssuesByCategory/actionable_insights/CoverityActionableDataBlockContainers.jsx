@@ -8,7 +8,7 @@ import {
   faExclamationTriangle,
   faFolders,
   faLockOpenAlt,
-  faShieldCheck, faSirenOn,faExclamation
+  faShieldCheck, faSirenOn, faExclamation, faLockAlt, faLock,
 } from "@fortawesome/pro-light-svg-icons";
 
 function CoverityActionableDataBlockContainers({ data , level }) {
@@ -31,6 +31,13 @@ function CoverityActionableDataBlockContainers({ data , level }) {
     if (level == "High") {
       return faSirenOn;
     }
+  };
+
+  const securityIcon = (metric) => {
+    if (metric > 0) {
+      return faLockOpenAlt;
+    }
+    return faLock;
   };
 
   return (
@@ -79,7 +86,7 @@ function CoverityActionableDataBlockContainers({ data , level }) {
             <TwoLineScoreDataBlock
               className={`p-2 ${getColor(data?.totalSecurity)}`}
               score={data.totalSecurity}
-              icon = {faLockOpenAlt}
+              icon = {securityIcon(data.totalSecurity)}
               subtitle={"Total Security Issues"}
             />
           </DataBlockBoxContainer>
