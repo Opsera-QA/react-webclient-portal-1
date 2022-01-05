@@ -173,12 +173,14 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
           </Row>
           </Container>
           <Col xl={6} lg={6} md={4} className={"my-2 p-2"}>
+            <div style={{ height: "300px" }}>
             <ResponsivePie
               data={metric?.pairs}
               {...defaultConfig()}
               {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
               onClick={() => setShowModal(true)}
             />
+            </div>
           </Col>
         </div>
         <Row>
