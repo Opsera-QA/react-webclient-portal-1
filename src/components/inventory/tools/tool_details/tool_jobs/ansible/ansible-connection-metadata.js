@@ -30,6 +30,11 @@ const ansibleConnectionMetadata = {
     {
       label:"Ansible Public Key Path",
       id:"pubKeyPath"
+    },
+    {
+      label: "Public Key",
+      id: "publicKey",
+      maxLength: 10000,
     }
 ],
   newObjectFields: {
