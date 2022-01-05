@@ -94,6 +94,7 @@ function SonarRatingsMaintainabilityActionableInsightTable(
         data={maintainabilityData}
         noDataMessage={noDataMessage}
         onRowSelect={onRowSelect}
+        paginationDto={filterModel}
       />
     );
   };
