@@ -8,7 +8,7 @@ import TagMultiSelectInput from "components/common/list_of_values_input/settings
 import TagManager from "components/common/inputs/tags/TagManager";
 import ModalBase from "components/common/modal/ModalBase";
 
-function EditTagsModal({showModal, dataObject, fieldName, handleClose, saveData, type}) {
+function TagMultiSelectOverlay({showModal, dataObject, fieldName, handleClose, saveDataFunction, type}) {
   const toastContext = useContext(DialogToastContext);
   const [temporaryDataObject, setTemporaryDataObject] = useState(undefined);
 
@@ -19,7 +19,7 @@ function EditTagsModal({showModal, dataObject, fieldName, handleClose, saveData,
 
   const handleSave = async () => {
     dataObject.setData(fieldName, temporaryDataObject.getArrayData("tags"));
-    return await saveData(dataObject);
+    return await saveDataFunction(dataObject);
   };
 
   const getTagInput = () => {
@@ -67,15 +67,15 @@ function EditTagsModal({showModal, dataObject, fieldName, handleClose, saveData,
   );
 }
 
-EditTagsModal.propTypes = {
+TagMultiSelectOverlay.propTypes = {
   showModal: PropTypes.bool,
   handleClose: PropTypes.func,
-  saveData: PropTypes.func,
+  saveDataFunction: PropTypes.func,
   dataObject: PropTypes.object,
   fieldName: PropTypes.string,
   type: PropTypes.string
 };
 
-export default EditTagsModal;
+export default TagMultiSelectOverlay;
 
 

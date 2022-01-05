@@ -11,7 +11,7 @@ function SpyglassBadge({badgeText, className}) {
 
   return (
     <BadgeBase
-      className={`${className} badge-light group-badge`}
+      className={className}
       icon={faSearch}
       badgeText={badgeText}
     />

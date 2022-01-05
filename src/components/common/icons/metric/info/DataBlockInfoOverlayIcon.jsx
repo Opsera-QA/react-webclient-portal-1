@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import HelpInfoOverlayIcon from "components/common/icons/general/HelpInfoOverlayIcon";
 import DataBlockInfoOverlay from "components/common/inputs/metric/DataBlockInfoOverlay";
 import {objectHelpers} from "components/common/helpers/object/object.helpers";
+import InfoOverlayIcon from "components/common/icons/info/InfoOverlayIcon";
 
 function DataBlockInfoOverlayIcon(
   {
@@ -24,7 +25,7 @@ function DataBlockInfoOverlayIcon(
   };
 
   return (
-    <HelpInfoOverlayIcon
+    <InfoOverlayIcon
       title={title}
       infoOverlay={getInfoOverlay()}
       className={className}

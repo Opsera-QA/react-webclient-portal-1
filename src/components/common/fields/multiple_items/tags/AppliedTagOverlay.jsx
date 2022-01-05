@@ -3,10 +3,8 @@ import PropTypes from "prop-types";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import TagBadge from "components/common/badges/tag/TagBadge";
-import TagBadgeBase from "components/common/badges/tag/TagBadgeBase";
-import SpyglassBadge from "components/common/badges/spyglass/SpyglassBadge";
 
-function TagDisplayer({tags, className, showNoTagsAppliedBadge}) {
+function AppliedTagOverlay({tags, className, children}) {
   const getTagPopover = () => {
     if (Array.isArray(tags) && tags.length > 0) {
       return (
@@ -16,6 +14,7 @@ function TagDisplayer({tags, className, showNoTagsAppliedBadge}) {
               return (
                 // <div>
                 <TagBadge
+                  className={"mr-2"}
                   tag={tag}
                   key={index}
                 />
@@ -29,43 +28,28 @@ function TagDisplayer({tags, className, showNoTagsAppliedBadge}) {
   };
 
   if (!Array.isArray(tags) || tags.length === 0) {
-    if (showNoTagsAppliedBadge === true) {
-      return (
-        <div className={className}>
-          <span className="item-field">
-            <TagBadgeBase
-              badgeText={"No Tags Applied"}
-            />
-          </span>
-        </div>
-      );
-    }
-
     return null;
   }
+
 
   return (
     <TooltipWrapper
       innerText={getTagPopover()}
-      title={"Tags"}
+      title={"Applied Tags"}
       showCloseButton={false}
       className={"popover-filter"}
     >
       <div className={className}>
-        <span className="item-field">
-          <SpyglassBadge
-            badgeText={`${tags.length} Tag${tags.length !== 1 ? "s" : ""} Applied`}
-          />
-        </span>
+        {children}
       </div>
     </TooltipWrapper>
   );
 }
 
-TagDisplayer.propTypes = {
+AppliedTagOverlay.propTypes = {
   tags: PropTypes.array,
   className: PropTypes.string,
-  showNoTagsAppliedBadge: PropTypes.bool,
+  children: PropTypes.any,
 };
 
-export default TagDisplayer;
+export default AppliedTagOverlay;

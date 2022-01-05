@@ -131,3 +131,23 @@
 }
 
 /* Console Log Container Styling */
+
+/* Metric Container Styling */
+.metric-chart-container {
+    margin: 0 auto;
+    /*border: 1px solid #E6E5E3;*/
+    border-radius: 6px;
+    /*box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);*/
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.metric-chart-container > .metric-title-bar {
+    /*background-color: #E6E5E3;*/
+    /*color: #3D3B36;*/
+    background-color: #00a8e8;
+    color: #fff;
+    line-height: 2.4em;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+/* End Metric Container Styling */

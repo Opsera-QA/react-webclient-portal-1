@@ -77,7 +77,7 @@ function LegacySonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashb
     }
 
     return (
-      <ThreeStackedHorizontalMetricsContainer
+      <ThreeStackedHorizontalMetricsContainer className={"mx-2"}
         topDataBlock={
           <LegacySonarRatingsVulnerabilityDataBlockContainer
             kpiConfiguration={kpiConfiguration}

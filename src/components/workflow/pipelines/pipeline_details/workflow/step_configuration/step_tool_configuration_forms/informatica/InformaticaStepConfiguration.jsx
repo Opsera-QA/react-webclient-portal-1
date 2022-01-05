@@ -62,9 +62,17 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 
   const getDynamicFields = () => {
     switch (informaticaStepConfigurationDto.getData("type")) {
-      case "build":
+      case "export":
         return (
           <div>
+            <RoleRestrictedToolByIdentifierInputBase
+        toolIdentifier={"informatica"}
+        toolFriendlyName={"informatica"}
+        fieldName={"toolConfigId"}
+        model={informaticaStepConfigurationDto}
+        setModel={setInformaticaStepConfigurationDataDto}
+        placeholderText={"Select Source Informatica Tool"}
+      />
             <SourceRepositoryTypeSelectInput
               model={informaticaStepConfigurationDto}
               setModel={setInformaticaStepConfigurationDataDto}
@@ -102,17 +110,28 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
             />
           </div>
         );
-      case "deploy":
+      case "import":
         return (
-          <SelectInputBase
-            setDataObject={setInformaticaStepConfigurationDataDto}
-            textField={"name"}
-            valueField={"_id"}
-            dataObject={informaticaStepConfigurationDto}
-            filter={"contains"}
-            selectOptions={listOfSteps ? listOfSteps : []}
-            fieldName={"buildStepId"}
-          />
+          <div>
+            <RoleRestrictedToolByIdentifierInputBase
+              toolIdentifier={"informatica"}
+              toolFriendlyName={"informatica"}
+              fieldName={"toolConfigId"}
+              model={informaticaStepConfigurationDto}
+              setModel={setInformaticaStepConfigurationDataDto}
+              placeholderText={"Select Destination Informatica Tool"}
+            />
+            <SelectInputBase
+              setDataObject={setInformaticaStepConfigurationDataDto}
+              textField={"name"}
+              valueField={"_id"}
+              dataObject={informaticaStepConfigurationDto}
+              filter={"contains"}
+              selectOptions={listOfSteps ? listOfSteps : []}
+              fieldName={"buildStepId"}
+            />
+          </div>
+          
         );
       default :
       return (
@@ -132,14 +151,6 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
       persistRecord={handleSaveStepConfig}
       isLoading={isLoading}
     >
-      <RoleRestrictedToolByIdentifierInputBase
-        toolIdentifier={"informatica"}
-        toolFriendlyName={"informatica"}
-        fieldName={"toolConfigId"}
-        model={informaticaStepConfigurationDto}
-        setModel={setInformaticaStepConfigurationDataDto}
-        placeholderText={"Select a Tool"}
-      />
       <InformaticaConfigTypeSelectInput
         model={informaticaStepConfigurationDto}
         setModel={setInformaticaStepConfigurationDataDto}

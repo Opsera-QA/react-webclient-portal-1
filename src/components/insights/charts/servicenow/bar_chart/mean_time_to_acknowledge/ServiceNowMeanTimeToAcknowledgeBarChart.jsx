@@ -74,7 +74,7 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
           dashboardTags
         ),
         dataObject = response?.data?.data[0]?.serviceNowMTTA?.data[0]?.docs,
-        overallMeanValue = response?.data?.data[0]?.serviceNowMTTA?.data[0]?.overallMttaMins;
+        overallMeanValue = response?.data?.data[0]?.serviceNowMTTA?.data[0]?.overallMttaHours;
 
       setGoalsData(goals);
       assignStandardColors(dataObject, true);
@@ -116,7 +116,7 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
       let mttaMax = Math.max.apply(
         Math,
         data.map(function (o) {
-          return o["mtta"];
+          return o["MTTA"];
         })
       );
       let max = Math.ceil(Math.max(countsMax, mttaMax));
@@ -141,31 +141,24 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
     // };
 
     return (
-      <div className="new-chart mb-3 pointer font-inter-light-300 dark-gray-text-primary" style={{ height: "300px" }}>
-        <div style={{ float: "right", fontSize: "10px" }}>
+      <div className="new-chart mb-3 pointer font-inter-light-400 dark-gray-text-primary" style={{ height: "300px" }}>
+        <div style={{ float: "right", fontSize: "10px", marginTop: "-30px" }}>
           Total Number of Incidents - #<br></br>
-          <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" /> Average MTTA <b>({overallMean} Minutes)</b>
+          <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" /> Average MTTA <b>({overallMean} Hours)</b>
           <br></br>
           <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" /> Goal
-          <b> ({goalsData?.mttaAvgMeanTimeGoal} Minutes)</b>
+          <b> ({goalsData?.mttaAvgMeanTimeGoal} Hours)</b>
         </div>
         <ResponsiveBar
           data={metrics}
-          {...defaultConfig(
-            "Mean Time to Acknowledge (in minutes)",
-            "Date",
-            false,
-            false,
-            "wholeNumbers",
-            "monthDate2"
-          )}
+          {...defaultConfig("Mean Time to Acknowledge (in hours)", "Date", false, false, "wholeNumbers", "monthDate2")}
           {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY, getMaxValue(metrics))}
           {...adjustBarWidth(metrics)}
           // onClick={(data) => onRowSelect(data)}
           tooltip={({ indexValue, value, data, color }) => (
             <ChartTooltip
               titles={["Date", "Mean Time to Acknowledge", "Number of Incidents"]}
-              values={[new Date(indexValue).toDateString(), `${value} minutes`, data.Count]}
+              values={[new Date(indexValue).toDateString(), `${value} hours`, data.Count]}
               style={false}
               color={color}
             />
@@ -175,13 +168,13 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
               axis: "y",
               value: overallMean ? overallMean : 0,
               lineStyle: { stroke: neutralColor, strokeWidth: 2 },
-              legend: "Mean",
+              legend: "",
             },
             {
               axis: "y",
               value: goalsData?.mttaAvgMeanTimeGoal ? goalsData?.mttaAvgMeanTimeGoal : 0,
               lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
-              legend: "Goal",
+              legend: "",
             },
           ]}
         />
