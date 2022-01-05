@@ -24,7 +24,10 @@ import {nivoChartLegendDefinitions} from "components/common/metrics/charts/nivo/
 import config from "./adoptionTestPercentagePieChartConfig";
 import AdoptionTestPercentageChartHelpDocumentation
   from "../../../../common/help/documentation/insights/charts/AdoptionTestPercentageChartHelpDocumentation";
-import { METRIC_THEME_CHART_PALETTE_COLORS } from "../../../../common/helpers/metrics/metricTheme.helpers";
+import {
+  METRIC_CHART_STANDARD_HEIGHT,
+  METRIC_THEME_CHART_PALETTE_COLORS,
+} from "../../../../common/helpers/metrics/metricTheme.helpers";
 import { ResponsivePie } from "@nivo/pie";
 import { Container } from "@nivo/core";
 
@@ -173,7 +176,7 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
           </Row>
           </Container>
           <Col xl={6} lg={6} md={4} className={"my-2 p-2"}>
-            <div style={{ height: "300px" }}>
+            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
             <ResponsivePie
               data={metric?.pairs}
               {...defaultConfig()}
