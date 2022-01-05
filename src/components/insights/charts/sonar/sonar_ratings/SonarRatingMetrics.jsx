@@ -79,7 +79,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
 
     return (
       <>
-        <ThreeStackedHorizontalMetricsContainer
+        <ThreeStackedHorizontalMetricsContainer className={"mx-2"}
           topDataBlock={
             <SonarRatingsVulnerabilityDataBlockContainer
               kpiConfiguration={kpiConfiguration}
