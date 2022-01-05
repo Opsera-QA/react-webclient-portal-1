@@ -60,6 +60,7 @@ function VanityMetricContainer(
           toggleHelp={() => setHelpIsShown(!helpIsShown)}
           visible={!helpIsShown}
           size={"1x"}
+          className={"ml-3"}
         />
       );
     }
@@ -85,7 +86,7 @@ function VanityMetricContainer(
     if (showSettingsToggle !== false) {
       return (
         <ToggleSettingsIcon
-          className={"ml-2"}
+          className={"ml-3"}
           visible={!helpIsShown}
           activeTab={view}
           setActiveTab={() => showSettingsPanel()}
