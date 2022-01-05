@@ -34,7 +34,7 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
     return (
       <ThreeLineDataBlockNoFocusBase        
         topText={"Average Daily Deployments"}
-        middleText={<MetricScoreText score={metricData?.deploy?.perDayAverage || 0} qualityLevel={metricData?.deploy?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS} />}
+        middleText={<MetricScoreText score={metricData?.deploy?.perDayAverage} qualityLevel={metricData?.deploy?.count && metricData?.deploy?.count > 0 ? metricData?.deploy?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null } />}
         bottomText={`Goal: ${goalsData}`}
       />
     );
@@ -57,7 +57,7 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
           }}
           tooltip={(node) => (            
             <ChartTooltip
-              titles={["Date Range", "Number of Builds", "Avg Daily Builds"]}
+              titles={["Date Range", "Number of Deployments", "Avg Daily Deployments"]}
               values={[node.point.data.range, node.point.data.total, node.point.data.y]}
             />
           )}          
