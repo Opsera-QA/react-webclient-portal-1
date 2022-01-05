@@ -116,7 +116,7 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
       let mttaMax = Math.max.apply(
         Math,
         data.map(function (o) {
-          return o["mtta"];
+          return o["MTTA"];
         })
       );
       let max = Math.ceil(Math.max(countsMax, mttaMax));
