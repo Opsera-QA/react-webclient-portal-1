@@ -11,9 +11,12 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMinus } from "@fortawesome/pro-solid-svg-icons";
-import { neutralColor, goalSuccessColor } from "../../../../charts/charts-views";
-import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
+import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
+import { neutralColor, goalSuccessColor, mainColor } from "../../../../charts/charts-views";
+import {
+  METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY,
+  METRIC_THEME_CHART_PALETTE_COLORS,
+} from "components/common/helpers/metrics/metricTheme.helpers";
 // import MeanTimeToAcknowledgeSummaryPanelMetadata from "components/insights/charts/servicenow/bar_chart/mean_time_to_Acknowledge/serviceNowMeanTimeToAcknowledgeSummaryPanelMetadata";
 // import Model from "../../../../../../core/data_model/model";
 // import ChartDetailsOverlay from "../../../detail_overlay/ChartDetailsOverlay";
@@ -142,12 +145,14 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
 
     return (
       <div className="new-chart mb-3 pointer font-inter-light-400 dark-gray-text-primary" style={{ height: "300px" }}>
-        <div style={{ float: "right", fontSize: "10px", marginTop: "-30px" }}>
-          Total Number of Incidents - #<br></br>
-          <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" /> Average MTTA <b>({overallMean} Hours)</b>
+        <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
+          Average MTTA <b>({overallMean} Hours)</b> <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" />
           <br></br>
-          <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" /> Goal
-          <b> ({goalsData?.mttaAvgMeanTimeGoal} Hours)</b>
+          Goal<b> ({goalsData?.mttaAvgMeanTimeGoal} Hours)</b>{" "}
+          <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" />
+          <br></br>
+          MTTA{" "}
+          <FontAwesomeIcon icon={faSquare} color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} size="lg" />
         </div>
         <ResponsiveBar
           data={metrics}
