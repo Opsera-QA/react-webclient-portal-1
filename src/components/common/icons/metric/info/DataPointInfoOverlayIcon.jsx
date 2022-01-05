@@ -1,15 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import HelpInfoOverlayIcon from "components/common/icons/general/HelpInfoOverlayIcon";
 import DataBlockInfoOverlay from "components/common/inputs/metric/DataBlockInfoOverlay";
 import {objectHelpers} from "components/common/helpers/object/object.helpers";
 import InfoOverlayIcon from "components/common/icons/info/InfoOverlayIcon";
 
-function DataBlockInfoOverlayIcon(
+function DataPointInfoOverlayIcon(
   {
     dataPoint,
     title,
-    className,
     overlayPlacement,
   }) {
   const getInfoOverlay = () => {
@@ -28,22 +26,22 @@ function DataBlockInfoOverlayIcon(
     <InfoOverlayIcon
       title={title}
       infoOverlay={getInfoOverlay()}
-      className={className}
+      className={"light-gray-text-secondary"}
       overlayPlacement={overlayPlacement}
     />
   );
 }
 
-DataBlockInfoOverlayIcon.propTypes = {
+DataPointInfoOverlayIcon.propTypes = {
   title: PropTypes.string,
   className: PropTypes.string,
   dataPoint: PropTypes.object,
   overlayPlacement: PropTypes.string,
 };
 
-DataBlockInfoOverlayIcon.defaultProps = {
+DataPointInfoOverlayIcon.defaultProps = {
   title: "Metric Details",
   overlayPlacement: "right",
 };
 
-export default DataBlockInfoOverlayIcon;
+export default DataPointInfoOverlayIcon;
