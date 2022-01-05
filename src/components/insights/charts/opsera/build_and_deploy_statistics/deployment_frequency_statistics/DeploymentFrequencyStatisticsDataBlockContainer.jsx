@@ -60,15 +60,7 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
               titles={["Date Range", "Number of Deployments", "Avg Daily Deployments"]}
               values={[node.point.data.range, node.point.data.total, node.point.data.y]}
             />
-          )}          
-          markers={[
-            {
-                axis: 'y',
-                value: goalsData,
-                lineStyle: { stroke: '#00897b', strokeWidth: 2 },
-                legend: 'Goal',
-            }            
-          ]}
+          )}
         />
       </div>
     );
@@ -78,6 +70,7 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
     <HorizontalDataBlocksContainer
       title={"Deployment Frequency Statistics"}
       // onClick={() => onRowSelect()}
+      className="align-items-center"
     >      
         <Col sm={3} className={"p-2"}>
           {getLeftDataBlock()}          

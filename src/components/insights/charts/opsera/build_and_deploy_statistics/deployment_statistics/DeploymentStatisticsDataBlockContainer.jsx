@@ -70,15 +70,7 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
               titles={["Date Range", "Number of Deployments", "Success Rate"]}
               values={[node.point.data.range, node.point.data.total, String(node.point.data.y) + " %"]}
             />
-          )}          
-          markers={[
-            {
-                axis: 'y',
-                value: goalsData,
-                lineStyle: { stroke: '#00897b', strokeWidth: 2 },
-                legend: 'Goal',
-            }            
-          ]}
+          )}
         />
       </div>
     );

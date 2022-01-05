@@ -71,15 +71,7 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
               titles={["Date Range", "Number of Builds", "Success Rate"]}
               values={[node.point.data.range, node.point.data.total, String(node.point.data.y) + " %"]}
             />
-          )}          
-          markers={[
-            {
-                axis: 'y',
-                value: goalsData,
-                lineStyle: { stroke: '#00897b', strokeWidth: 2 },
-                legend: 'Goal',
-            }         
-          ]}
+          )}
         />
       </div>
     );
@@ -89,6 +81,7 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
     <HorizontalDataBlocksContainer
       title={"Build Statistics"}
       onClick={() => onRowSelect()}
+      className="align-items-center"
     >      
       <Col sm={3} className={"p-2"}>
         {getLeftDataBlock()}        

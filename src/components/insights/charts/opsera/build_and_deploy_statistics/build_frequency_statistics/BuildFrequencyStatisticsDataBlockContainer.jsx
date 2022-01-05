@@ -61,15 +61,7 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
               titles={["Date Range", "Number of Builds", "Avg Daily Builds"]}
               values={[node.point.data.range, node.point.data.total, node.point.data.y]}
             />
-          )}          
-          markers={[
-            {
-                axis: 'y',
-                value: goalsData,
-                lineStyle: { stroke: '#00897b', strokeWidth: 2 },
-                legend: 'Goal',
-            }            
-          ]}
+          )}
         />
       </div>
     );
