@@ -8,7 +8,7 @@ function AutomatedTestAdoptionRateManualTestsDataBlock({manualTestCount, manualT
   return (
     <DataBlockBoxContainer showBorder={true}>
       <div className={"p-3"}>
-        <TwoLineDataBlockBase title={manualTestCount} dataPoint={manualTestsDataPoint} subtitle={"Total Valid Defects Open"} />
+        <TwoLineDataBlockBase title={manualTestCount} dataPoint={manualTestsDataPoint} subtitle={"Automated Test Cases Executed Manually"} />
       </div>
     </DataBlockBoxContainer>
   );
