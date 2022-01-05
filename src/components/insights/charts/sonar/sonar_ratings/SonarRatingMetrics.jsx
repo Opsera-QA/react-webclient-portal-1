@@ -10,6 +10,7 @@ import SonarRatingsVulnerabilityDataBlockContainer from "components/insights/cha
 import ThreeStackedHorizontalMetricsContainer from "components/common/metrics/data_blocks/horizontal/ThreeStackedHorizontalMetricsContainer";
 import SonarRatingsReliabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlockContainer";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
+import BadgeBase from "components/common/badges/BadgeBase";
 
 function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -104,7 +105,10 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
             />
           }
         />
-        <div className={"m-1"}>Results of scans from 25th November 2021 onward</div>
+        <BadgeBase
+          className={"mx-2"}
+          badgeText={"Results of scans from 25th November 2021 onward"}
+        />
       </>
     );
   };
