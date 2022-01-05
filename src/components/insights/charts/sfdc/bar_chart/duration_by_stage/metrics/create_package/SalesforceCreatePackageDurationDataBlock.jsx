@@ -8,18 +8,21 @@ function SalesforceCreatePackageDurationDataBlock({
   createPackageTotalRunCount,
   goalsData,
 }) {
-  const hasNumberValue = (potentialNumber) => {
-    return potentialNumber == undefined || potentialNumber == null || typeof potentialNumber !== "number"
+  const hasPositiveNumberValue = (potentialNumber) => {
+    return potentialNumber == undefined ||
+      potentialNumber == null ||
+      typeof potentialNumber !== "number" ||
+      potentialNumber === 0
       ? false
       : true;
   };
 
   const getMetricQualityLevel = () => {
-    if (!hasNumberValue(createPackageDurationMeanInMinutes) || !hasNumberValue(goalsData)) {
+    if (!hasPositiveNumberValue(createPackageDurationMeanInMinutes) || !hasPositiveNumberValue(goalsData)) {
       return;
     }
     if (goalsData > createPackageDurationMeanInMinutes) {
-      return METRIC_QUALITY_LEVELS.GREEN;
+      return METRIC_QUALITY_LEVELS.SUCCESS;
     } else if (goalsData < createPackageDurationMeanInMinutes) {
       return METRIC_QUALITY_LEVELS.DANGER;
     } else if (goalsData == createPackageDurationMeanInMinutes) {
@@ -28,7 +31,10 @@ function SalesforceCreatePackageDurationDataBlock({
   };
 
   const getCreatePackageMeanData = () => {
-    if (hasNumberValue(createPackageDurationMeanInMinutes) && hasNumberValue(createPackageTotalRunCount)) {
+    if (
+      hasPositiveNumberValue(createPackageDurationMeanInMinutes) &&
+      hasPositiveNumberValue(createPackageTotalRunCount)
+    ) {
       const qualityLevel = getMetricQualityLevel();
       return (
         <>
@@ -41,7 +47,7 @@ function SalesforceCreatePackageDurationDataBlock({
         </>
       );
     }
-    if (hasNumberValue(createPackageDurationMeanInMinutes)) {
+    if (hasPositiveNumberValue(createPackageDurationMeanInMinutes)) {
       return <MetricTextBase formattedText={`${createPackageDurationMeanInMinutes} min`} />;
     }
     return "No runs";
@@ -52,7 +58,7 @@ function SalesforceCreatePackageDurationDataBlock({
       className="salesforce-duration-by-stage-kpi"
       topText={"Package Creation"}
       middleText={getCreatePackageMeanData()}
-      bottomText={hasNumberValue(goalsData) ? `Goal: ${goalsData} min` : "No Goal"}
+      bottomText={hasPositiveNumberValue(goalsData) ? `Goal: < ${goalsData} min` : "No Goal"}
     />
   );
 }

@@ -9,18 +9,21 @@ function SalesforceDeploymentDurationDataBlock({
   deploymentTotalRunCount,
   goalsData,
 }) {
-  const hasNumberValue = (potentialNumber) => {
-    return potentialNumber == undefined || potentialNumber == null || typeof potentialNumber !== "number"
+  const hasPositiveNumberValue = (potentialNumber) => {
+    return potentialNumber == undefined ||
+      potentialNumber == null ||
+      typeof potentialNumber !== "number" ||
+      potentialNumber === 0
       ? false
       : true;
   };
 
   const getMetricQualityLevel = () => {
-    if (!hasNumberValue(deploymentDurationMeanInMinutes) || !hasNumberValue(goalsData)) {
+    if (!hasPositiveNumberValue(deploymentDurationMeanInMinutes) || !hasPositiveNumberValue(goalsData)) {
       return;
     }
     if (goalsData > deploymentDurationMeanInMinutes) {
-      return METRIC_QUALITY_LEVELS.GREEN;
+      return METRIC_QUALITY_LEVELS.SUCCESS;
     } else if (goalsData < deploymentDurationMeanInMinutes) {
       return METRIC_QUALITY_LEVELS.DANGER;
     } else if (goalsData == deploymentDurationMeanInMinutes) {
@@ -29,7 +32,7 @@ function SalesforceDeploymentDurationDataBlock({
   };
 
   const getDeploymentMeanBlock = () => {
-    if (hasNumberValue(deploymentDurationMeanInMinutes) && hasNumberValue(deploymentTotalRunCount)) {
+    if (hasPositiveNumberValue(deploymentDurationMeanInMinutes) && hasPositiveNumberValue(deploymentTotalRunCount)) {
       const qualityLevel = getMetricQualityLevel();
       return (
         <>
@@ -49,7 +52,7 @@ function SalesforceDeploymentDurationDataBlock({
       className="salesforce-duration-by-stage-kpi"
       topText={"Deployment"}
       middleText={getDeploymentMeanBlock()}
-      bottomText={hasNumberValue(goalsData) ? `Goal: ${goalsData}  min` : "No Goal"}
+      bottomText={hasPositiveNumberValue(goalsData) ? `Goal: < ${goalsData}  min` : "No Goal"}
     />
   );
 }
