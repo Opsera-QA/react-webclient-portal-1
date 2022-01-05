@@ -14,7 +14,7 @@ import SeleniumTestsCasesPassedDataBlock from "./data_blocks/tests_passed/Seleni
 import SeleniumTestsCasesFailedDataBlock from "./data_blocks/tests_failed/SeleniumTestsCasesFailedDataBlock";
 import SeleniumTestsCasesBlockedDataBlock from "./data_blocks/tests_blocked/SeleniumTestsCasesBlockedDataBlock";
 import SeleniumTestsCasesNotExecutedBlock from "./data_blocks/tests_not_executed/SeleniumTestsCasesNotExecutedBlock";
-import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
+import { METRIC_THEME_CHART_PALETTE_COLORS, METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 
 function SeleniumTestSummaryPercentages({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -107,7 +107,7 @@ function SeleniumTestSummaryPercentages({ kpiConfiguration, setKpiConfiguration,
             </Row>
           </Col>
           <Col xl={6} lg={6} md={6} className={"my-2 p-2"}>
-            <div style={{ height: "300px" }}>
+            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
               <ResponsivePie
                 data={metrics[0]?.testsSummary}
                 {...defaultConfig()}
