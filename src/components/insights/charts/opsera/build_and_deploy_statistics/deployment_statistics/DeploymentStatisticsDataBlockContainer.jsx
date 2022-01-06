@@ -74,7 +74,7 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
         <ResponsiveLine
           data={successChartData}
           {...defaultConfig("", "Date", 
-                false, false, "wholeNumbers", "monthDate2")}
+                false, true, "wholeNumbers", "monthDate2")}
           {...config()}
           tooltip={(node) => (            
             <ChartTooltip

@@ -63,7 +63,7 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
 
   const getSuccessTrendChart = () => {
     return(
-      <div className="new-chart p-0" style={{height: "150px"}}>
+      <div className="new-chart p-0" >
         <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
           Goal<b> ({goalsData} %)</b>{" "}
           <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" />
@@ -71,27 +71,29 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
           Success Rate{" "}
           <FontAwesomeIcon icon={faSquare} color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} size="lg" />
         </div>
-        <ResponsiveLine
-          data={successChartData}
-          {...defaultConfig("", "Date", 
-                false, false, "wholeNumbers", "monthDate2")}          
-          {...config()}
-          tooltip={(node) => (            
-            <ChartTooltip
-              key={node.point.data.range}
-              titles={["Date Range", "Number of Builds", "Success Rate"]}
-              values={[node.point.data.range, node.point.data.total, String(node.point.data.y) + " %"]}
-            />
-          )}
-          markers={[
-            {
-                axis: 'y',
-                value: goalsData,
-                lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
-                legend: '',
-            }         
-          ]}
-        />
+        <div style={{height: "150px"}}>
+          <ResponsiveLine
+            data={successChartData}
+            {...defaultConfig("", "Date", 
+                  false, true, "wholeNumbers", "monthDate2")}          
+            {...config()}
+            tooltip={(node) => (            
+              <ChartTooltip
+                key={node.point.data.range}
+                titles={["Date Range", "Number of Builds", "Success Rate"]}
+                values={[node.point.data.range, node.point.data.total, String(node.point.data.y) + " %"]}
+              />
+            )}
+            markers={[
+              {
+                  axis: 'y',
+                  value: goalsData,
+                  lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
+                  legend: '',
+              }         
+            ]}
+          />
+        </div>
       </div>
     );
   };

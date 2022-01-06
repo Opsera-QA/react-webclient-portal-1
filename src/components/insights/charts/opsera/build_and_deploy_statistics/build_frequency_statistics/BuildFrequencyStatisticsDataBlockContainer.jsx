@@ -58,7 +58,7 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
         <ResponsiveLine
           data={dailyBuildsChartData}
           {...defaultConfig("Count", "Date", 
-                false, false, "numbers", "monthDate2")}
+                false, true, "numbers", "monthDate2")}
           {...config()}
           yScale={{ type: 'linear', min: '0', max: maxVal, stacked: false, reverse: false }}
           axisLeft={{
