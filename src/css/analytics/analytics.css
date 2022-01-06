@@ -33,19 +33,12 @@
 }
 
 
-.data-block-container {
+.data-block-container, .data-block-box {
     background: white;
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 6px;
-}
-
-.data-block-box {
-    background-color: #fff;
-    background-clip: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.125);
     /*border: 1px solid #00a8e8;*/
-    border-radius: .5rem;
+    border-radius: 6px;
 }
 
 .data-block-icon {

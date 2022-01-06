@@ -247,8 +247,8 @@ function ChartContainer(
           {getDateBadge()}
         </div>
         <div className={"d-flex"}>
-          {getKpiTagsBadge()}
-          {getDashboardTagsBadge()}
+          <div className={"mr-2"}>{getKpiTagsBadge()}</div>
+          <div>{getDashboardTagsBadge()}</div>
         </div>
       </div>
     </div>
