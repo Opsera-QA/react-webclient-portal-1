@@ -97,8 +97,8 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
           <Col xs={12} sm={6}>
             <SalesforceCreatePackageDurationMetric
               metric={metrics[0]}
-              meanData={dataBlockValues[0]?.create_package_mean}
-              countData={dataBlockValues[0]?.create_package_count}
+              createPackageDurationMeanInMinutes={dataBlockValues[0]?.create_package_mean}
+              createPackageTotalRunCount={dataBlockValues[0]?.create_package_count}
               goalsData={goalsData?.average_builds}
               kpiConfiguration={kpiConfiguration}
               dashboardData={dashboardData}
@@ -107,8 +107,8 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
           <Col xs={12} sm={6}>
             <SalesforcePackageValidationDurationMetric
               metric={metrics[1]}
-              meanData={dataBlockValues[0]?.validate_package_mean}
-              countData={dataBlockValues[0]?.validate_package_count}
+              packageValidationDurationMeanInMinutes={dataBlockValues[0]?.validate_package_mean}
+              packageValidationTotalRunCount={dataBlockValues[0]?.validate_package_count}
               kpiConfiguration={kpiConfiguration}
               dashboardData={dashboardData}
             />
@@ -116,8 +116,8 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
           <Col xs={12} sm={6}>
             <SalesforceProfileMigrationDurationMetrics
               metric={metrics[2]}
-              meanData={dataBlockValues[0]?.profile_migration_mean}
-              countData={dataBlockValues[0]?.profile_migration_count}
+              profileMigrationDurationMeanInMinutes={dataBlockValues[0]?.profile_migration_mean}
+              profileMigrationTotalRunCount={dataBlockValues[0]?.profile_migration_count}
               kpiConfiguration={kpiConfiguration}
               dashboardData={dashboardData}
             />
@@ -125,8 +125,8 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
           <Col xs={12} sm={6}>
             <SalesforceBackupDurationMetric
               metric={metrics[3]}
-              meanData={dataBlockValues[0]?.backup_mean}
-              countData={dataBlockValues[0]?.backup_count}
+              backupDurationMeanInMinutes={dataBlockValues[0]?.backup_mean}
+              backupTotalRunCount={dataBlockValues[0]?.backup_count}
               kpiConfiguration={kpiConfiguration}
               dashboardData={dashboardData}
             />
@@ -134,8 +134,8 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
           <Col xs={12} sm={6}>
             <SalesforceUnitTestingDurationMetric
               metric={metrics[4]}
-              meanData={dataBlockValues[0]?.unit_testing_mean}
-              countData={dataBlockValues[0]?.unit_testing_count}
+              unitTestingDurationMeanInMinutes={dataBlockValues[0]?.unit_testing_mean}
+              unitTestingTotalRunCount={dataBlockValues[0]?.unit_testing_count}
               kpiConfiguration={kpiConfiguration}
               dashboardData={dashboardData}
             />
@@ -143,8 +143,8 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
           <Col xs={12} sm={6}>
             <SalesforceDeploymentDurationMetric
               metric={metrics[5]}
-              meanData={dataBlockValues[0]?.deploy_mean}
-              countData={dataBlockValues[0]?.deploy_count}
+              deploymentDurationMeanInMinutes={dataBlockValues[0]?.deploy_mean}
+              deploymentTotalRunCount={dataBlockValues[0]?.deploy_count}
               goalsData={goalsData?.average_deployments}
               kpiConfiguration={kpiConfiguration}
               dashboardData={dashboardData}

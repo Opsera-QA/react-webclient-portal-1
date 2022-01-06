@@ -4,9 +4,20 @@ import DataBlockAndChartContainer from "components/common/metrics/container/Data
 import SalesforceDurationByStageBarChartBase from "components/insights/charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageBarChartBase";
 import SalesforceBackupDurationDataBlock from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/backup/SalesforceBackupDurationDataBlock";
 
-function SalesforceBackupDurationMetric({ kpiConfiguration, dashboardData, meanData, countData, metric }) {
+function SalesforceBackupDurationMetric({
+  kpiConfiguration,
+  dashboardData,
+  backupDurationMeanInMinutes,
+  backupTotalRunCount,
+  metric,
+}) {
   const getDataBlock = () => {
-    return <SalesforceBackupDurationDataBlock meanData={meanData} countData={countData} />;
+    return (
+      <SalesforceBackupDurationDataBlock
+        backupDurationMeanInMinutes={backupDurationMeanInMinutes}
+        backupTotalRunCount={backupTotalRunCount}
+      />
+    );
   };
 
   const getChart = () => {
@@ -25,8 +36,8 @@ function SalesforceBackupDurationMetric({ kpiConfiguration, dashboardData, meanD
 SalesforceBackupDurationMetric.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  meanData: PropTypes.number,
-  countData: PropTypes.number,
+  backupDurationMeanInMinutes: PropTypes.number,
+  backupTotalRunCount: PropTypes.number,
   metric: PropTypes.array,
 };
 

@@ -7,13 +7,17 @@ import SalesforceUnitTestingDurationDataBlock from "components/insights/charts/s
 function SalesforceProfileMigrationDurationMetric({
   kpiConfiguration,
   dashboardData,
-  meanData,
-  countData,
-  goalsData,
+  unitTestingDurationMeanInMinutes,
+  unitTestingTotalRunCount,
   metric,
 }) {
   const getDataBlock = () => {
-    return <SalesforceUnitTestingDurationDataBlock meanData={meanData} countData={countData} goalsData={goalsData} />;
+    return (
+      <SalesforceUnitTestingDurationDataBlock
+        unitTestingDurationMeanInMinutes={unitTestingDurationMeanInMinutes}
+        unitTestingTotalRunCount={unitTestingTotalRunCount}
+      />
+    );
   };
 
   const getChart = () => {
@@ -32,9 +36,8 @@ function SalesforceProfileMigrationDurationMetric({
 SalesforceProfileMigrationDurationMetric.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  meanData: PropTypes.number,
-  countData: PropTypes.number,
-  goalsData: PropTypes.object,
+  unitTestingDurationMeanInMinutes: PropTypes.number,
+  unitTestingTotalRunCount: PropTypes.number,
   metric: PropTypes.array,
 };
 
