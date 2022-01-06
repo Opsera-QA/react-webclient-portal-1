@@ -115,12 +115,10 @@ function ChartContainer(
 
     return (
       <div className="d-flex justify-content-between">
-        <div className={"d-flex"}>
-          <div>
-            {kpiConfiguration?.kpi_name}
-          </div>
-      </div>
-        <div className={"d-flex"}>
+        <div>
+          {kpiConfiguration?.kpi_name}
+        </div>
+        <div className={"d-flex my-auto"}>
           {getHelpToggle()}
           {getSettingsToggle()}
         </div>
@@ -132,7 +130,9 @@ function ChartContainer(
   const getChartBody = () => {
     if (error) {
       return (
-        <span>There was an error loading this chart: {parseError(error?.message)}. Please check logs for more details.</span>
+        <div className="new-chart mb-3" style={{ height: "300px" }}>
+          <span>There was an error loading this chart: {parseError(error?.message)}. Please check logs for more details.</span>
+        </div>
       );
     }
 
