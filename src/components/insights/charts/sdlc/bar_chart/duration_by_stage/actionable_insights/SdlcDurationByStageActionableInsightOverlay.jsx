@@ -14,6 +14,10 @@ import SdlcDurationByStageActionableInsightTable from "./SdlcDurationByStageActi
 import SdlcDurationByStageOverviewDataBlockContainer from "./SdlcDurationByStageOverviewDataBlockContainer";
 import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
+import { formatDate } from "components/common/helpers/date/date.helpers";
+import DateBadge from "components/common/badges/date/DateBadge";
+import { addDays, isSameDay } from "date-fns";
+
 function SdlcDurationByStageActionableInsightOverlay({
   title,
   actionableInsightsQueryData,
@@ -63,9 +67,7 @@ function SdlcDurationByStageActionableInsightOverlay({
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      let dashboardOrgs =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-          ?.value;
+
       let request = "opseraSdlcPipelineStageDurationByMonth";
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
@@ -75,7 +77,7 @@ function SdlcDurationByStageActionableInsightOverlay({
         dashboardTags,
         filterDto,
         null,
-        dashboardOrgs,
+        null,
         null,
         null,
         null,
@@ -142,6 +144,28 @@ function SdlcDurationByStageActionableInsightOverlay({
     toastContext.clearOverlayPanel();
   };
 
+  const getDateBadge = () => {
+    const date = actionableInsightsQueryData?.data;
+
+    if (date == null) {
+      const formattedStartDate = formatDate(addDays(new Date(), -90));
+      const formattedEndDate = formatDate(new Date());
+      return <DateBadge badgeText={`${formattedStartDate} to ${formattedEndDate}`} />;
+    }
+
+    const startDate = date?.lowerBound;
+    const endDate = date?.upperBound;
+
+    if (isSameDay(new Date(startDate), new Date(date.endDate))) {
+      return <DateBadge badgeText={formatDate(startDate)} />;
+    }
+
+    const formattedStartDate = formatDate(startDate);
+    const formattedEndDate = formatDate(endDate);
+
+    return <DateBadge badgeText={`${formattedStartDate} to ${formattedEndDate}`} />;
+  };
+
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
@@ -153,6 +177,7 @@ function SdlcDurationByStageActionableInsightOverlay({
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
+        {getDateBadge()}
         <SdlcDurationByStageOverviewDataBlockContainer data={dataBlockValues} />
         <SdlcDurationByStageActionableInsightTable
           data={metrics}
