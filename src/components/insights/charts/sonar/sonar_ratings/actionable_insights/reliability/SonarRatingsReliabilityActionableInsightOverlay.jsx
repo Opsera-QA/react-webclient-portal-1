@@ -90,7 +90,7 @@ function SonarRatingsReliabilityActionableInsightOverlay({ kpiConfiguration, das
           }))
         );
         let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", sonarBugs.length);
+        newFilterDto.setData("totalCount", response?.data?.data[0]?.sonarBugs?.data[0]?.count[0]?.count);
         setFilterModel({ ...newFilterDto });
         setIssueTypeData(response?.data?.data[0]?.sonarBugs?.data[0]?.typeData[0]);
         setFooterData(response?.data?.data[0]?.sonarBugs?.data[0]?.debtData[0]);
