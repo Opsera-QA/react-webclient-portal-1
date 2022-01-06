@@ -7,6 +7,7 @@ const InformaticaStepFormMetadata = {
       isRequired: true,
       maxLength: 24,
       regexDefinitionName: "mongoId",
+      formText:" "
     }, 
     {
       label: "Type of Execution",
