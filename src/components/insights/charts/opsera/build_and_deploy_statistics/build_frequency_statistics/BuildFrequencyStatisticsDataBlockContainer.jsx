@@ -4,13 +4,17 @@ import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
 import { Container, Col, Row } from "react-bootstrap";
 import { ResponsiveLine } from '@nivo/line';
-import { defaultConfig, getColor, assignStandardColors } from 'components/insights/charts/charts-views';
+import { defaultConfig } from 'components/insights/charts/charts-views';
 import "../build-and-deploy-kpi.css";
 import _ from "lodash";
+import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import config from "../OpseraBuildAndDeployLineChartConfig";
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
+import { goalSuccessColor } from "../../../../charts/charts-views";
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData }) {    
@@ -44,6 +48,13 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
   const getTrendChart = () => {
     return(
       <div className="new-chart p-0" style={{height: "150px"}}>
+        <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
+          Goal<b> ({goalsData})</b>{" "}
+          <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" />
+          <br></br>
+          Average Daily Builds{" "}
+          <FontAwesomeIcon icon={faSquare} color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} size="lg" />
+        </div>
         <ResponsiveLine
           data={dailyBuildsChartData}
           {...defaultConfig("Count", "Date", 
@@ -66,8 +77,8 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
             {
                 axis: 'y',
                 value: goalsData,
-                lineStyle: { stroke: '#00897b', strokeWidth: 2 },
-                legend: 'Goal',
+                lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
+                legend: '',
             }            
           ]}
         />
