@@ -1,8 +1,9 @@
-import React, { useState} from "react";
+import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
 import EditIcon from "components/common/icons/field/EditIcon";
 import TagMultiSelectOverlay from "components/common/inputs/tags/inline/modal/TagMultiSelectOverlay";
 import AppliedTagBadge from "components/common/badges/tag/AppliedTagBadge";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function TagsInlineInputBase(
   {
@@ -14,14 +15,18 @@ function TagsInlineInputBase(
     type,
     tagLocation,
   }) {
-  const [showModal, setShowModal] = useState(false);
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
+  const toastContext = useContext(DialogToastContext);
 
   const showEditor = () => {
-    setShowModal(true);
+    toastContext.showOverlayPanel(
+      <TagMultiSelectOverlay
+        type={type}
+        dataObject={model}
+        fieldName={fieldName}
+        saveDataFunction={saveDataFunction}
+        showModal={true}
+      />
+    );
   };
 
   if (visible === false || model == null) {
@@ -47,14 +52,6 @@ function TagsInlineInputBase(
           />
         </div>
       </div>
-      <TagMultiSelectOverlay
-        type={type}
-        dataObject={model}
-        fieldName={fieldName}
-        saveDataFunction={saveDataFunction}
-        showModal={showModal}
-        handleClose={closeModal}
-      />
     </div>
   );
 }
