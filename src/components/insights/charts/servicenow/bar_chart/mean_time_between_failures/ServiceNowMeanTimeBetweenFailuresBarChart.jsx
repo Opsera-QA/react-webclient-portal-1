@@ -66,12 +66,18 @@ function ServiceNowMeanTimeBetweenFailuresBarChart({
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "serviceNowMTBF",
         kpiConfiguration,
-        dashboardTags
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
       );
       let dataObject = response?.data?.data[0]?.serviceNowMTBF?.data[0]?.docs;
       assignStandardColors(dataObject, true);
