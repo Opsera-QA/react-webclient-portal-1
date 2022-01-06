@@ -199,4 +199,10 @@ regexDefinitions.argumentList = {
   errorFormText: "Only letters, numbers, dashes, underscores, equals sign, dollar sign, periods and new lines are allowed"
 };
 
+regexDefinitions.informaticaValidationRules = {
+  regex: /^[A-Za-z0-9\-_?*]*$/,
+  formText: "Letters, numbers, dashes, underscores, astrix and question mark are allowed",
+  errorFormText: "Only Letters, numbers, dashes, underscores, astrix and question marks are allowed"
+};
+
 export default regexDefinitions;
