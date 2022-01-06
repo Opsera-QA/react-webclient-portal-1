@@ -185,7 +185,7 @@ function InformaticaMappingInputBase({ fieldName, model, setModel, helpComponent
 
   const getIncompleteMessage = () => {
     if (!lastMappingComplete()) {
-      return (`Incomplete Rule validations Will Be Removed Upon Saving and DUPLICATE TYPES are not allowed`);
+      return (`Incomplete Rule validations Will Be Removed Upon Saving, DUPLICATE TYPES are not allowed and Letters, numbers, dashes, underscores, astrix and question mark are allowed for Rules`);
     }
   };
 

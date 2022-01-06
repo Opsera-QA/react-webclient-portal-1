@@ -5,8 +5,10 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faTimes,
 } from "@fortawesome/pro-light-svg-icons";
+import {matchesRegex} from "utils/helpers";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import regexDefinitions from "utils/regexDefinitions";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import {INFORMATICA_INTELLIGENT_CLOUD_SERVICE_TYPE_SELECT_OPTIONS} from "components/common/list_of_values_input/tools/informatica/iics_types/informaticaIntelligentCloudService.types";
 
@@ -27,7 +29,14 @@ function InformaticaMappingInputRow(
     const value = event.target.value;
 
     if (value == null || value === "") {
-      updateRule(null);
+      // updateRule(null);
+      return;
+    }
+
+    const numericalFieldRegex = regexDefinitions.informaticaValidationRules.regex;
+
+    if (!matchesRegex(numericalFieldRegex, value)) {
+      // updateRule(value);
       return;
     }
 
