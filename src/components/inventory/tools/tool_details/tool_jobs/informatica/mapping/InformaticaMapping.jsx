@@ -3,19 +3,20 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import informaticaTypeMappingMetadata from "./informatica-mappping-metadata";
 import InformaticaMappingInput from "./inputs/InformaticaMappingInput";
-import Model from "core/data_model/model";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import modelHelpers from "components/common/model/modelHelpers";
 
 function InformaticaMapping({ toolData, loadData, isLoading, toolActions }) {
   const toastContext = useContext(DialogToastContext);
   const [toolMappingsDto, setToolMappingsDto] = useState(undefined);
-  const [isaLoading, setIsaLoading] = useState(true);
+  const [isMapLoading, setIsMapLoading] = useState(true);
 
   useEffect(() => {
     unpackMappings(toolActions);
   }, [toolActions]);
 
   const unpackMappings = (toolActions) => {
-    setIsaLoading(true);
+    setIsMapLoading(true);
     const newMapList = [];
 
     if (Array.isArray(toolActions)) {
@@ -26,19 +27,34 @@ function InformaticaMapping({ toolData, loadData, isLoading, toolActions }) {
         newMapList?.push(map);
       });
     }
-    
-    console.log(new Model(newMapList, informaticaTypeMappingMetadata, false));
-    setToolMappingsDto(new Model(newMapList, informaticaTypeMappingMetadata, true));
-    setIsaLoading(false);
+    const parsedModel = modelHelpers.parseObjectIntoModel(newMapList, informaticaTypeMappingMetadata);
+    // console.log({...parsedModel});
+    setToolMappingsDto({...parsedModel});
+    setIsMapLoading(false);
   };
 
+  const createJob = async () => {
+    console.log("create mapping");
+    console.log(toolMappingsDto.getPersistData());
+  };
 
   return (
-    <InformaticaMappingInput
-      model={toolMappingsDto}
-      setModel={setToolMappingsDto}
-      visible={!isaLoading}
-    />
+    <EditorPanelContainer
+      recordDto={toolMappingsDto}
+      createRecord={createJob}
+      // updateRecord={updateJob}
+      addAnotherOption={false}
+      showRequiredFieldsMessage={false}
+      lenient={true}
+      disable={toolMappingsDto?.checkCurrentValidity() !== true|| !toolMappingsDto?.getData("mapping").length > 0}
+      setRecordDto={setToolMappingsDto}
+    >
+      <InformaticaMappingInput
+        model={toolMappingsDto}
+        setModel={setToolMappingsDto}
+        visible={!isMapLoading}
+      />
+    </EditorPanelContainer>
   );
 }
 

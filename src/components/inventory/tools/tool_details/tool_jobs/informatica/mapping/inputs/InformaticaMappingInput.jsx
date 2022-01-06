@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineThresholdInputBase
-  from "components/common/inputs/object/pipelines/threshhold/PipelineThresholdInputBase";
+import InformaticaMappingInputBase
+  from "./map_input/InformaticaMappingInputBase";
 
 function InformaticaMappingInput(
   {
@@ -17,7 +17,7 @@ function InformaticaMappingInput(
   }
 
   return (
-    <PipelineThresholdInputBase
+    <InformaticaMappingInputBase
       fieldName={fieldName}
       model={model}
       className={"mb-3"}
