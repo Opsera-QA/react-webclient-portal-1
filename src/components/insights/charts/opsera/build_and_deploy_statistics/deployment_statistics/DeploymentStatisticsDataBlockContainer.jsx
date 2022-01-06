@@ -3,16 +3,20 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
-import Col from "react-bootstrap/Col";
+import { Container, Col, Row } from "react-bootstrap";
 import { ResponsiveLine } from '@nivo/line';
-import { defaultConfig, getColor, assignStandardColors } from 'components/insights/charts/charts-views';
+import { defaultConfig } from 'components/insights/charts/charts-views';
 import DeploymentStatisticsActionableInsightsTable from "./DeploymentStatisticsActionableInsightsTable";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import { faTable } from "@fortawesome/pro-light-svg-icons";
+import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import config from "../OpseraBuildAndDeployLineChartConfig";
 import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
 import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
+import { goalSuccessColor } from "../../../../charts/charts-views";
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData }) {
@@ -60,23 +64,30 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
   const getSuccessTrendChart = () => {
     return(
       <div className="new-chart p-0" style={{height: "150px"}}>
+        <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
+          Goal<b> ({goalsData} %)</b>{" "}
+          <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" />
+          <br></br>
+          Success Rate{" "}
+          <FontAwesomeIcon icon={faSquare} color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} size="lg" />
+        </div>
         <ResponsiveLine
           data={successChartData}
           {...defaultConfig("", "Date", 
-                false, false, "wholeNumbers", "monthDate2")}
+                false, true, "wholeNumbers", "monthDate2")}
           {...config()}
           tooltip={(node) => (            
             <ChartTooltip
               titles={["Date Range", "Number of Deployments", "Success Rate"]}
               values={[node.point.data.range, node.point.data.total, String(node.point.data.y) + " %"]}
             />
-          )}          
+          )}
           markers={[
             {
                 axis: 'y',
                 value: goalsData,
-                lineStyle: { stroke: '#00897b', strokeWidth: 2 },
-                legend: 'Goal',
+                lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
+                legend: '',
             }            
           ]}
         />
@@ -85,16 +96,17 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
   };
 
   return (
-    <HorizontalDataBlocksContainer
-      title={"Deployment Statistics"}
-      onClick={() => onRowSelect()}
-    >
-      <Col sm={3} className={"p-2"}>
-        {getLeftDataBlock()}        
-      </Col>      
-      <Col sm={9} className={"p-2"}>
-        {getSuccessTrendChart()}
-      </Col>      
+    <HorizontalDataBlocksContainer title={"Deployment Statistics"} onClick={() => onRowSelect()}>
+      <Container>
+        <Row className="align-items-center">
+          <Col sm={3} className={"p-2"}>
+            {getLeftDataBlock()}
+          </Col>
+          <Col sm={9} className={"p-2"}>
+            {getSuccessTrendChart()}
+          </Col>
+        </Row>
+      </Container>
     </HorizontalDataBlocksContainer>
   );
 }

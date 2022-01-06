@@ -2,14 +2,18 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
-import Col from "react-bootstrap/Col";
+import { Container, Col, Row } from "react-bootstrap";
 import { ResponsiveLine } from '@nivo/line';
-import { defaultConfig, getColor, assignStandardColors } from 'components/insights/charts/charts-views';
+import { defaultConfig } from 'components/insights/charts/charts-views';
 import _ from "lodash";
+import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import config from "../OpseraBuildAndDeployLineChartConfig";
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
+import { goalSuccessColor } from "../../../../charts/charts-views";
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData }) {
@@ -43,10 +47,17 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
   const getTrendChart = () => {
     return(
       <div className="new-chart p-0" style={{height: "150px"}}>
+        <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
+          Goal<b> ({goalsData})</b>{" "}
+          <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" />
+          <br></br>
+          Average Daily Builds{" "}
+          <FontAwesomeIcon icon={faSquare} color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} size="lg" />
+        </div>
         <ResponsiveLine
           data={dailyDeploymentsChartData}
           {...defaultConfig("", "Date", 
-                false, false, "numbers", "monthDate2")}
+                false, true, "numbers", "monthDate2")}
           {...config()}
           yScale={{ type: 'linear', min: '0', max: maxVal, stacked: false, reverse: false }}
           axisLeft={{            
@@ -60,13 +71,13 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
               titles={["Date Range", "Number of Deployments", "Avg Daily Deployments"]}
               values={[node.point.data.range, node.point.data.total, node.point.data.y]}
             />
-          )}          
+          )}
           markers={[
             {
                 axis: 'y',
                 value: goalsData,
-                lineStyle: { stroke: '#00897b', strokeWidth: 2 },
-                legend: 'Goal',
+                lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
+                legend: '',
             }            
           ]}
         />
@@ -78,13 +89,17 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
     <HorizontalDataBlocksContainer
       title={"Deployment Frequency Statistics"}
       // onClick={() => onRowSelect()}
-    >      
-        <Col sm={3} className={"p-2"}>
-          {getLeftDataBlock()}          
-        </Col>        
-        <Col sm={9} className={"p-2"}>
-          {getTrendChart()}
-        </Col>              
+    >
+      <Container>
+        <Row className="align-items-center">
+          <Col sm={3} className={"p-2"}>
+            {getLeftDataBlock()}
+          </Col>
+          <Col sm={9} className={"p-2"}>
+            {getTrendChart()}
+          </Col>
+        </Row>
+      </Container>
     </HorizontalDataBlocksContainer>
   );
 }
