@@ -108,7 +108,6 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
         return faArrowCircleUp;
       case "Green":
         return faArrowCircleDown;
-      case "Neutral":
       case "-":
         return faMinusCircle;
       default:
@@ -178,16 +177,18 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
       // </>
       <HorizontalDataBlocksContainer title={"Highest Issue Projects:"}>
         {topThreeDocs.map((doc, index) => (
-              <Row className="p-1" key={index}>
-                <Col lg={12} className={"fa-fw"} onMouseOver ={getDescription(doc?.projectTotalIssuesTrend)}>
-                  <FontAwesomeIcon onPointerEnter={getDescription(doc?.projectTotalIssuesTrend)} className={"fa-fw"}
-                    icon={getIcon(doc?.projectTotalIssuesTrend)}
-                    color={getIconColor(doc?.projectTotalIssuesTrend)}
-                    title={getIconTitle(doc?.projectTotalIssuesTrend)}
-                  />{" "}
-                  {doc?.coverityStreamName}
-                </Col>
-              </Row>
+          <Row className="p-1" key={index}>
+            <Col lg={12}>
+              {(getIcon(doc?.projectTotalIssuesTrend) !== "Neutral") != null &&
+                <FontAwesomeIcon
+                icon={getIcon(doc?.projectTotalIssuesTrend)}
+                color={getIconColor(doc?.projectTotalIssuesTrend)}
+                title={getIconTitle(doc?.projectTotalIssuesTrend)}
+                />
+              }
+              <span style={{paddingLeft: "10px"}}>{doc?.coverityStreamName}</span>
+            </Col>
+          </Row>
             ))}
       </HorizontalDataBlocksContainer>
     );
