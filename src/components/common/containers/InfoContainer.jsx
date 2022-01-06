@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 
+// TODO: We should probably combine with MetricInfoContainer for new UI overhaul if approved after use in Insights
 function InfoContainer({ children, isLoading, titleIcon, titleText, helpComponent, className }) {
   return (
     <div className={className}>

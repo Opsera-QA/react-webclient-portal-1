@@ -11,7 +11,7 @@ import { defaultConfig, getColor, assignStandardColors } from "../../../charts-v
 import ChartTooltip from "../../../ChartTooltip";
 import { Col, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMinus } from "@fortawesome/pro-solid-svg-icons";
+import { faMinus, faCircle } from "@fortawesome/pro-solid-svg-icons";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import JiraBugsCompletedDataBlock from "../../data_blocks/JiraBugsCompletedDataBlock";
 import JiraIssuesCompletedDataBlock from "../../data_blocks/JiraIssuesCompletedDataBlock";
@@ -157,20 +157,31 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
                 </Col>
               </Row>
             </Col>
-            <Col xl={9} lg={9} md={8} className={"my-2 p-2 d-flex flex-column"}>
-              <div className="px-3">
+            <Col xl={9} lg={9} md={8} className={"my-2 p-2 d-flex flex-column align-items-end"}>
+              <div
+                className="px-3 font-inter-light-400 dark-gray-text-primary"
+                style={{ float: "right", fontSize: "10px" }}
+              >
+                Rolling Mean Lead Time{" "}
                 <FontAwesomeIcon
                   icon={faMinus}
-                  color={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2}
+                  color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_3}
                   size="lg"
-                />{" "}
-                Mean Lead Time<br></br>
+                />
+                <br></br>
+                Mean Lead Time{" "}
                 <FontAwesomeIcon
                   icon={faMinus}
-                  color={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_3}
+                  color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_2}
                   size="lg"
-                />{" "}
-                Rolling Mean Lead Time
+                />
+                <br></br>
+                Issues{" "}
+                <FontAwesomeIcon
+                  icon={faCircle}
+                  color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1}
+                  size="xs"
+                />
               </div>
               <ResponsiveScatterPlot
                 data={metrics}
