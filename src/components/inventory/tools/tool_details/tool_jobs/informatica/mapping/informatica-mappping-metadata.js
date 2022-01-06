@@ -3,7 +3,7 @@ const informaticaTypeMappingMetadata = {
     type: "Informatica Mapping",
     fields: [
       {
-        label: "Type Mapping",
+        label: "Rule Mapping",
         id: "mapping",
       },
     ],

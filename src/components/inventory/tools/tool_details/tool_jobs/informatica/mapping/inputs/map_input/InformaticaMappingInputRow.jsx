@@ -16,21 +16,21 @@ function InformaticaMappingInputRow(
     index,
     disabled,
     updateType,
-    updateRegex,
+    updateRule,
     deleteRow,
     type,
-    regex
+    rule
   }) {
 
   const validateAndSetData = (event) => {
     const value = event.target.value;
 
     if (value == null || value === "") {
-      updateRegex(null);
+      updateRule(null);
       return;
     }
 
-    updateRegex(value);
+    updateRule(value);
   };
   
   const getThresholdLevelInput = () => {
@@ -67,7 +67,7 @@ function InformaticaMappingInputRow(
           <Col sm={6} className={"pl-1 pr-0"}>
             <input
               disabled={disabled}
-              value={regex}
+              value={rule}
               className="form-control"
               onChange={(event) => validateAndSetData(event)}
               autoComplete="off"
@@ -86,10 +86,10 @@ InformaticaMappingInputRow.propTypes = {
   disabledMappings: PropTypes.array,
   index: PropTypes.number,
   updateType: PropTypes.func,
-  updateRegex: PropTypes.func,
+  updateRule: PropTypes.func,
   deleteRow: PropTypes.func,
   disabled: PropTypes.bool,
-  regex: PropTypes.string,
+  rule: PropTypes.string,
   type: PropTypes.string,
 };
 

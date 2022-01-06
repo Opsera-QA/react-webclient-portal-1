@@ -1,48 +1,57 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import informaticaTypeMappingMetadata from "./informatica-mappping-metadata";
 import InformaticaMappingInput from "./inputs/InformaticaMappingInput";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import modelHelpers from "components/common/model/modelHelpers";
-
+import toolsActions from "components/inventory/tools/tools-actions";
+import {AuthContext} from "contexts/AuthContext";
+import axios from "axios";
 function InformaticaMapping({ toolData, loadData, isLoading, toolActions }) {
-  const toastContext = useContext(DialogToastContext);
-  const [toolMappingsDto, setToolMappingsDto] = useState(undefined);
+  const { getAccessToken } = useContext(AuthContext); 
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isMapLoading, setIsMapLoading] = useState(true);
+  const [toolMappingsDto, setToolMappingsDto] = useState(undefined); 
 
   useEffect(() => {
-    unpackMappings(toolActions);
-  }, [toolActions]);
-
-  const unpackMappings = (toolActions) => {
-    setIsMapLoading(true);
-    const newMapList = [];
-
-    if (Array.isArray(toolActions)) {
-      toolActions.forEach((toolAction, index) => {
-        let map = toolAction?.configuration;
-        map = {...map, mapId: toolAction?._id};
-        map = {...map, index: index};
-        newMapList?.push(map);
-      });
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
     }
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+    unpackMappings().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
+
+  const unpackMappings = async () => {
+    setIsMapLoading(true);
+    const newMapList = {};
+    newMapList.mapping = toolActions;
     const parsedModel = modelHelpers.parseObjectIntoModel(newMapList, informaticaTypeMappingMetadata);
-    // console.log({...parsedModel});
     setToolMappingsDto({...parsedModel});
     setIsMapLoading(false);
   };
 
   const createJob = async () => {
-    console.log("create mapping");
-    console.log(toolMappingsDto.getPersistData());
+    let newMappings = toolMappingsDto.getData("mapping");
+    const item = {actions: newMappings};
+    return await toolsActions.saveToolActions(toolData, item, getAccessToken);
   };
 
   return (
     <EditorPanelContainer
       recordDto={toolMappingsDto}
       createRecord={createJob}
-      // updateRecord={updateJob}
+      updateRecord={createJob}
       addAnotherOption={false}
       showRequiredFieldsMessage={false}
       lenient={true}

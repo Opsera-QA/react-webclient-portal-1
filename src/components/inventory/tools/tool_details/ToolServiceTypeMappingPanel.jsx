@@ -36,8 +36,8 @@ function ToolServiceTypeMappingPanel({ toolData, loadData, isLoading }) {
   return (
     <>
       <div className="text-muted p-3">
-        <div className="h6">Manage Tool Mapping</div>
-        <div className="mb-3">Use this feature to map service types tool.</div>
+        <div className="h6">Manage Rule Validation</div>
+        <div className="mb-3">Use this feature to add Rule validations on individual Informatica type.</div>
         {getBody()}
       </div>
     </>

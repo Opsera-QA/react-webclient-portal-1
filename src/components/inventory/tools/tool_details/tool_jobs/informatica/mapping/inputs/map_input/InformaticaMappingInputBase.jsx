@@ -39,7 +39,7 @@ function InformaticaMappingInputBase({ fieldName, model, setModel, helpComponent
     if (Array.isArray(currentData) && currentData.length > 0) {
       unpackedRoles = currentData;
     } else {
-      unpackedRoles.push({type: "", regex: ""});
+      unpackedRoles.push({type: "", rule: ""});
     }
 
     setMapRows([...unpackedRoles]);
@@ -59,9 +59,9 @@ function InformaticaMappingInputBase({ fieldName, model, setModel, helpComponent
     if (newRoleList && newRoleList.length > 0) {
       newRoleList.map((item) => {
         const type = item?.type;
-        const regex = item?.regex;
+        const rule = item?.rule;
 
-        if (type === "" || regex === "") {
+        if (type === "" || rule === "") {
           return;
         }
         newArray.push(item);      
@@ -73,7 +73,7 @@ function InformaticaMappingInputBase({ fieldName, model, setModel, helpComponent
   };
 
   const isMappingComplete = (threshold) => {
-    return threshold?.type !== "" && threshold?.regex !== "";
+    return threshold?.type !== "" && threshold?.rule !== "";
   };
 
   const lastMappingComplete = () => {
@@ -101,7 +101,7 @@ function InformaticaMappingInputBase({ fieldName, model, setModel, helpComponent
     let newMappingList = mapRows;
 
     if (lastMappingComplete()) {
-      let newRow = {type: "", regex: ""};
+      let newRow = {type: "", rule: ""};
       newMappingList.push(newRow);
       validateAndSetData(newMappingList);
     }
@@ -137,7 +137,7 @@ function InformaticaMappingInputBase({ fieldName, model, setModel, helpComponent
     if (!mapRows || mapRows.length === 0) {
       return (
         <div className="roles-input">
-          <div className="text-center text-muted no-data-message">No Mapping have been added yet.</div>
+          <div className="text-center text-muted no-data-message">No Validation Rule have been added yet.</div>
         </div>
       );
     }
@@ -153,9 +153,9 @@ function InformaticaMappingInputBase({ fieldName, model, setModel, helpComponent
                 deleteRow={deleteRow}
                 disabledMappings={getDisabledMappings()}
                 type={threshold?.type}
-                regex={threshold?.regex}
+                rule={threshold?.rule}
                 updateType={(newValue) => updateRow(index, "type", newValue)}
-                updateRegex={(newValue) => updateRow(index, "regex", newValue)}
+                updateRule={(newValue) => updateRow(index, "rule", newValue)}
               />
             </div>
           );
@@ -170,10 +170,10 @@ function InformaticaMappingInputBase({ fieldName, model, setModel, helpComponent
         <Col sm={11}>
           <Row>
             <Col sm={6}>
-              <span className="text-muted ml-5">Type</span>
+              <span className="text-muted ml-5">Informatica Type</span>
             </Col>
             <Col sm={6} className={"mx-auto"}>
-              <span className="text-muted">Regex</span>
+              <span className="text-muted">Rule</span>
             </Col>
           </Row>
         </Col>
@@ -184,7 +184,7 @@ function InformaticaMappingInputBase({ fieldName, model, setModel, helpComponent
 
   const getIncompleteMessage = () => {
     if (!lastMappingComplete()) {
-      return (`Incomplete Mappings Will Be Removed Upon Saving and Duplicate Types are not allowed`);
+      return (`Incomplete Rule validations Will Be Removed Upon Saving and Duplicate Types are not allowed`);
     }
   };
 
@@ -195,7 +195,7 @@ function InformaticaMappingInputBase({ fieldName, model, setModel, helpComponent
   };
 
   const getThresholdMessage = () => {
-    return (`If a Mapping Type is not assigned, regex validation will be ignored.`);
+    return (`If Informatica Type is not assigned, Rule validation will be ignored.`);
   };
 
   if (field == null) {
@@ -210,7 +210,7 @@ function InformaticaMappingInputBase({ fieldName, model, setModel, helpComponent
         addProperty={addRow}
         titleText={field?.label}
         errorMessage={errorMessage}
-        type={"Mapping"}
+        type={"Rule"}
         addAllowed={lastMappingComplete() && disabled !== true}
         helpComponent={getHelpComponent()}
         incompleteRowMessage={getIncompleteMessage()}
