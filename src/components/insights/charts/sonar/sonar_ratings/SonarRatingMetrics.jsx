@@ -48,12 +48,18 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "sonarRatingsV2",
         kpiConfiguration,
-        dashboardTags
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
       );
       const metrics = response?.data?.data[0]?.sonarRatings?.data;
 
@@ -79,7 +85,8 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
 
     return (
       <>
-        <ThreeStackedHorizontalMetricsContainer className={"mx-2"}
+        <ThreeStackedHorizontalMetricsContainer
+          className={"mx-2"}
           topDataBlock={
             <SonarRatingsVulnerabilityDataBlockContainer
               kpiConfiguration={kpiConfiguration}
@@ -105,10 +112,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
             />
           }
         />
-        <BadgeBase
-          className={"mx-2"}
-          badgeText={"Results of scans from 25th November 2021 onward"}
-        />
+        <BadgeBase className={"mx-2"} badgeText={"Results of scans from 25th November 2021 onward"} />
       </>
     );
   };
