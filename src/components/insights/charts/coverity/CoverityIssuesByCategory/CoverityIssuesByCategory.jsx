@@ -107,7 +107,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
       case "Red":
         return faArrowCircleUp;
       case "Neutral":
-        return faArrowCircleDown;
+        return faMinusCircle;
       case "Green":
         return faArrowCircleDown;
       case "-":
