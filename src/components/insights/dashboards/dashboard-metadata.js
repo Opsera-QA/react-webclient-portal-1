@@ -36,6 +36,10 @@ const dashboardMetadata = {
       id: "tags",
     },
     {
+      label: "Organizations",
+      id: "organizations",
+    },
+    {
       label: "Attributes",
       id: "attributes",
     },
