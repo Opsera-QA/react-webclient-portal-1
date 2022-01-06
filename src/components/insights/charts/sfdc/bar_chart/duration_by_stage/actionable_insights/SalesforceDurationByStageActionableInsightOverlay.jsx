@@ -14,6 +14,10 @@ import SalesforceDurationByStageActionableInsightsTable from "./SalesforceDurati
 import SalesforceDurationByStageOverviewDataBlockContainer from "./SalesforceDurationByStageOverviewDataBlockContainer";
 import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
+import { formatDate } from "components/common/helpers/date/date.helpers";
+import DateBadge from "components/common/badges/date/DateBadge";
+import { addDays, isSameDay } from "date-fns";
+
 function SalesforceDurationByStageActionableInsightsOverlay({
   title,
   actionableInsightsQueryData,
@@ -31,7 +35,11 @@ function SalesforceDurationByStageActionableInsightsOverlay({
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [filterModel, setFilterModel] = useState(
-    new Model({ ...actionableInsightsGenericChartFilterMetadata.newObjectFields }, actionableInsightsGenericChartFilterMetadata, false)
+    new Model(
+      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+      actionableInsightsGenericChartFilterMetadata,
+      false
+    )
   );
 
   useEffect(() => {
@@ -136,6 +144,28 @@ function SalesforceDurationByStageActionableInsightsOverlay({
     toastContext.clearOverlayPanel();
   };
 
+  const getDateBadge = () => {
+    const date = actionableInsightsQueryData?.data;
+
+    if (date == null) {
+      const formattedStartDate = formatDate(addDays(new Date(), -90));
+      const formattedEndDate = formatDate(new Date());
+      return <DateBadge badgeText={`${formattedStartDate} to ${formattedEndDate}`} />;
+    }
+
+    const startDate = date?.lowerBound;
+    const endDate = date?.upperBound;
+
+    if (isSameDay(new Date(startDate), new Date(date.endDate))) {
+      return <DateBadge badgeText={formatDate(startDate)} />;
+    }
+
+    const formattedStartDate = formatDate(startDate);
+    const formattedEndDate = formatDate(endDate);
+
+    return <DateBadge badgeText={`${formattedStartDate} to ${formattedEndDate}`} />;
+  };
+
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
@@ -147,6 +177,7 @@ function SalesforceDurationByStageActionableInsightsOverlay({
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
+        {getDateBadge()}
         <SalesforceDurationByStageOverviewDataBlockContainer data={dataBlockValues} />
         <SalesforceDurationByStageActionableInsightsTable
           data={metrics}
