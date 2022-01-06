@@ -1,19 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TwoLinePercentageDataBlock from "components/common/metrics/percentage/TwoLinePercentageDataBlock";
+import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 
-function AutomatedTestAdoptionRateAdoptionRateDataBlock({adoptionRatePercentage, adoptionRateDataPoint}) {
+function AutomatedTestAdoptionRateAdoptionRateDataBlock({ score, adoptionRateDataPoint }) {
   return (
-    <TwoLinePercentageDataBlock
-      percentage={adoptionRatePercentage}
-      subtitle={"Adoption Percentage"}
-      dataPoint={adoptionRateDataPoint}
-    />
+    <DataBlockBoxContainer showBorder={true}>
+      <div className={"p-3"}>
+        <TwoLinePercentageDataBlock dataPoint={adoptionRateDataPoint} percentage={score} subtitle={"Adoption Percentage"} />
+      </div>
+    </DataBlockBoxContainer>
   );
 }
 
 AutomatedTestAdoptionRateAdoptionRateDataBlock.propTypes = {
-  adoptionRatePercentage: PropTypes.number,
+  score: PropTypes.string,
   adoptionRateDataPoint: PropTypes.object,
 };
 
