@@ -106,10 +106,9 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
     switch (severity) {
       case "Red":
         return faArrowCircleUp;
-      case "Neutral":
-        return faMinusCircle;
       case "Green":
         return faArrowCircleDown;
+      case "Neutral":
       case "-":
         return faMinusCircle;
       default:
@@ -145,6 +144,18 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
         break;
     }
   };
+
+  const getDescription = (severity) => {
+    switch (severity) {
+      case "Red":
+        return "This project's issues are trending upward";
+      case "Green":
+        return "This project's issues are trending downward";
+      case "Neutral":
+        return "This project's issues are trending downward";
+    }
+  };
+
   const getFooterLine = () => {
     const topThreeDocs = metrics[0]?.docs?.length > 0 ? metrics[0].docs.slice(0, 3) : [];
     return (
@@ -168,8 +179,8 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
       <HorizontalDataBlocksContainer title={"Highest Issue Projects:"}>
         {topThreeDocs.map((doc, index) => (
               <Row className="p-1" key={index}>
-                <Col lg={12}>
-                  <FontAwesomeIcon
+                <Col lg={12} className={"fa-fw"} onMouseOver ={getDescription(doc?.projectTotalIssuesTrend)}>
+                  <FontAwesomeIcon onPointerEnter={getDescription(doc?.projectTotalIssuesTrend)} className={"fa-fw"}
                     icon={getIcon(doc?.projectTotalIssuesTrend)}
                     color={getIconColor(doc?.projectTotalIssuesTrend)}
                     title={getIconTitle(doc?.projectTotalIssuesTrend)}
