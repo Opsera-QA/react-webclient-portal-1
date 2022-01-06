@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import EditIcon from "components/common/icons/field/EditIcon";
-import TagMultiSelectOverlay from "components/common/inputs/tags/inline/modal/TagMultiSelectOverlay";
-import AppliedTagBadge from "components/common/badges/tag/AppliedTagBadge";
 import OrganizationMultiSelectOverlay from "components/common/inputs/tags/inline/modal/OrganizationMultiSelectOverlay";
+import AppliedOrganizationsBadge from "components/common/badges/tag/AppliedOrganizationsBadge";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 function OrganizationsInlineInputBase({ model, fieldName, disabled, saveDataFunction, visible, type, tagLocation }) {
-  const [showModal, setShowModal] = useState(false);
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
+  const toastContext = useContext(DialogToastContext);
 
   const showEditor = () => {
-    setShowModal(true);
+    toastContext.showOverlayPanel(
+      <OrganizationMultiSelectOverlay
+        type={type}
+        dataObject={model}
+        fieldName={fieldName}
+        saveDataFunction={saveDataFunction}
+        showModal={true}
+      />
+    );
   };
 
   if (visible === false || model == null) {
@@ -24,7 +28,11 @@ function OrganizationsInlineInputBase({ model, fieldName, disabled, saveDataFunc
     <div className="role-access">
       <div className="d-flex">
         <div>
-          <AppliedTagBadge tags={model?.getData(fieldName)} tagLocation={tagLocation} showNoTagsAppliedBadge={true} />
+          <AppliedOrganizationsBadge
+            tags={model?.getData(fieldName)}
+            tagLocation={tagLocation}
+            showNoTagsAppliedBadge={true}
+          />
         </div>
         <div>
           <EditIcon
@@ -35,14 +43,6 @@ function OrganizationsInlineInputBase({ model, fieldName, disabled, saveDataFunc
           />
         </div>
       </div>
-      <OrganizationMultiSelectOverlay
-        type={type}
-        dataObject={model}
-        fieldName={fieldName}
-        saveDataFunction={saveDataFunction}
-        showModal={showModal}
-        handleClose={closeModal}
-      />
     </div>
   );
 }

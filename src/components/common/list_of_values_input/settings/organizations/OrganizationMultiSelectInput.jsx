@@ -80,7 +80,6 @@ function OrganizationMultiSelectInput({
   if (field == null) {
     return null;
   }
-  console.log(organizations);
   return (
     <MultiSelectInputBase
       className={className}
