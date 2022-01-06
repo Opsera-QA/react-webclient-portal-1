@@ -5,10 +5,12 @@ const InformaticaConnectionMetadata = {
     {
       label: "Username",
       id: "userName",
+      isRequired: true
     },
     {
       label: "Password",
       id: "password",
+      isRequired: true
     },
     {
       label: "Regions",

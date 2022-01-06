@@ -6,9 +6,12 @@ import ModalSaveButtonBase from "components/common/buttons/saving/ModalSaveButto
 import CancelButton from "components/common/buttons/CancelButton";
 import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
 import TagManager from "components/common/inputs/tags/TagManager";
-import ModalBase from "components/common/modal/ModalBase";
+import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
+import {faTags} from "@fortawesome/pro-light-svg-icons/faTags";
+import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
+import LenientSaveButton from "components/common/buttons/saving/LenientSaveButton";
 
-function TagMultiSelectOverlay({showModal, dataObject, fieldName, handleClose, saveDataFunction, type}) {
+function TagMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFunction, type}) {
   const toastContext = useContext(DialogToastContext);
   const [temporaryDataObject, setTemporaryDataObject] = useState(undefined);
 
@@ -19,7 +22,9 @@ function TagMultiSelectOverlay({showModal, dataObject, fieldName, handleClose, s
 
   const handleSave = async () => {
     dataObject.setData(fieldName, temporaryDataObject.getArrayData("tags"));
-    return await saveDataFunction(dataObject);
+    const response = await saveDataFunction(dataObject);
+    closePanel();
+    return response;
   };
 
   const getTagInput = () => {
@@ -35,41 +40,62 @@ function TagMultiSelectOverlay({showModal, dataObject, fieldName, handleClose, s
     }
 
     return (
-      <TagMultiSelectInput dataObject={temporaryDataObject} setDataObject={setTemporaryDataObject} fieldName={fieldName} />
+      <TagMultiSelectInput
+        dataObject={temporaryDataObject}
+        setDataObject={setTemporaryDataObject}
+        fieldName={fieldName}
+      />
     );
   };
 
-  const getModalButtons = () => {
+  const getButtonContainer = () => {
     return (
-      <>
-        <CancelButton cancelFunction={handleClose} size={"sm"} />
-        <ModalSaveButtonBase updateRecord={handleSave} recordDto={temporaryDataObject} handleClose={handleClose} />
-      </>
+      <div className={"p-3 bg-white"}>
+        <SaveButtonContainer>
+          <CancelButton
+            cancelFunction={closePanel}
+            size={"md"}
+            className={"mr-2"}
+          />
+          <LenientSaveButton
+            recordDto={temporaryDataObject}
+            updateRecord={handleSave}
+          />
+        </SaveButtonContainer>
+      </div>
     );
   };
+
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
+
+  if (temporaryDataObject == null) {
+    return null;
+  }
 
   return (
-    <ModalBase
-      handleClose={handleClose}
-      size={"lg"}
-      title={"Edit Tags"}
-      showModal={showModal}
-      buttonContainer={getModalButtons()}
-      className={"tag-modal"}
+    <CenterOverlayContainer
+      closePanel={closePanel}
+      titleIcon={faTags}
+      titleText={`Edit Tags`}
+      showCloseButton={false}
+      showPanel={true}
+      buttonContainer={getButtonContainer()}
     >
-      <div className="content-block-shaded m-3">
+      <div className="m-3">
         {toastContext.getInlineBanner()}
         <div className="p-3">
           {getTagInput()}
         </div>
       </div>
-    </ModalBase>
+    </CenterOverlayContainer>
   );
 }
 
 TagMultiSelectOverlay.propTypes = {
   showModal: PropTypes.bool,
-  handleClose: PropTypes.func,
   saveDataFunction: PropTypes.func,
   dataObject: PropTypes.object,
   fieldName: PropTypes.string,

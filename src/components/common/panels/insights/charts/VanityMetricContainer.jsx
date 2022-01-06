@@ -116,12 +116,10 @@ function VanityMetricContainer(
 
     return (
       <div className="d-flex justify-content-between">
-        <div className={"d-flex"}>
-          <div>
-            {kpiConfiguration?.kpi_name}
-          </div>
+        <div>
+          {kpiConfiguration?.kpi_name}
         </div>
-        <div className={"d-flex"}>
+        <div className={"d-flex my-auto"}>
           {getHelpToggle()}
           {getSettingsToggle()}
         </div>
@@ -133,7 +131,9 @@ function VanityMetricContainer(
   const getChartBody = () => {
     if (error) {
       return (
-        <span>There was an error loading this chart: {parseError(error?.message)}. Please check logs for more details.</span>
+        <div className="new-chart mb-3" style={{ height: "300px" }}>
+          <span>There was an error loading this chart: {parseError(error?.message)}. Please check logs for more details.</span>
+        </div>
       );
     }
 
@@ -248,8 +248,8 @@ function VanityMetricContainer(
           {getDateBadge()}
         </div>
         <div className={"d-flex"}>
-          {getKpiTagsBadge()}
-          {getDashboardTagsBadge()}
+          <div className={"mr-2"}>{getKpiTagsBadge()}</div>
+          <div>{getDashboardTagsBadge()}</div>
         </div>
       </div>
     </div>
