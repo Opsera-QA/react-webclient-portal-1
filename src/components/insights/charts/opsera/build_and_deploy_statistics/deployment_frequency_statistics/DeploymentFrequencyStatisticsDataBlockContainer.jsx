@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
-import Col from "react-bootstrap/Col";
+import { Container, Col, Row } from "react-bootstrap";
 import { ResponsiveLine } from '@nivo/line';
 import { defaultConfig, getColor, assignStandardColors } from 'components/insights/charts/charts-views';
 import _ from "lodash";
@@ -61,6 +61,14 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
               values={[node.point.data.range, node.point.data.total, node.point.data.y]}
             />
           )}
+          markers={[
+            {
+                axis: 'y',
+                value: goalsData,
+                lineStyle: { stroke: '#00897b', strokeWidth: 2 },
+                legend: 'Goal',
+            }            
+          ]}
         />
       </div>
     );
@@ -70,14 +78,17 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
     <HorizontalDataBlocksContainer
       title={"Deployment Frequency Statistics"}
       // onClick={() => onRowSelect()}
-      className="align-items-center"
-    >      
-        <Col sm={3} className={"p-2"}>
-          {getLeftDataBlock()}          
-        </Col>        
-        <Col sm={9} className={"p-2"}>
-          {getTrendChart()}
-        </Col>              
+    >
+      <Container>
+        <Row className="align-items-center">
+          <Col sm={3} className={"p-2"}>
+            {getLeftDataBlock()}
+          </Col>
+          <Col sm={9} className={"p-2"}>
+            {getTrendChart()}
+          </Col>
+        </Row>
+      </Container>
     </HorizontalDataBlocksContainer>
   );
 }

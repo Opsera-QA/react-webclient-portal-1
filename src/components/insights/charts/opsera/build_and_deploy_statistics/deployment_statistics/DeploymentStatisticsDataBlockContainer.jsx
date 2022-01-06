@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
-import Col from "react-bootstrap/Col";
+import { Container, Col, Row } from "react-bootstrap";
 import { ResponsiveLine } from '@nivo/line';
 import { defaultConfig, getColor, assignStandardColors } from 'components/insights/charts/charts-views';
 import DeploymentStatisticsActionableInsightsTable from "./DeploymentStatisticsActionableInsightsTable";
@@ -71,22 +71,31 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
               values={[node.point.data.range, node.point.data.total, String(node.point.data.y) + " %"]}
             />
           )}
+          markers={[
+            {
+                axis: 'y',
+                value: goalsData,
+                lineStyle: { stroke: '#00897b', strokeWidth: 2 },
+                legend: 'Goal',
+            }            
+          ]}
         />
       </div>
     );
   };
 
   return (
-    <HorizontalDataBlocksContainer
-      title={"Deployment Statistics"}
-      onClick={() => onRowSelect()}
-    >
-      <Col sm={3} className={"p-2"}>
-        {getLeftDataBlock()}        
-      </Col>      
-      <Col sm={9} className={"p-2"}>
-        {getSuccessTrendChart()}
-      </Col>      
+    <HorizontalDataBlocksContainer title={"Deployment Statistics"} onClick={() => onRowSelect()}>
+      <Container>
+        <Row className="align-items-center">
+          <Col sm={3} className={"p-2"}>
+            {getLeftDataBlock()}
+          </Col>
+          <Col sm={9} className={"p-2"}>
+            {getSuccessTrendChart()}
+          </Col>
+        </Row>
+      </Container>
     </HorizontalDataBlocksContainer>
   );
 }
