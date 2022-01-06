@@ -82,10 +82,14 @@ function DashboardViewer({ dashboardModel, loadData }) {
             icon={faUsers}
           />
         </div>
-        <div>
+        <div className={"d-flex"}>
           {/*TODO: Make version for dashboards, wire that up instead*/}
-          <DashboardTagsInlineInput model={dashboardModel} loadData={loadData} className={"mr-2"} />
-          <DashboardOrganizationsInlineInput model={dashboardModel} loadData={loadData} className={"mr-2"} />
+          <div className={"mr-2"}>
+            <DashboardTagsInlineInput model={dashboardModel} loadData={loadData} className={"mr-2"} />
+          </div>
+          <div>
+            <DashboardOrganizationsInlineInput model={dashboardModel} loadData={loadData} className={"mr-2"} />
+          </div>
         </div>
       </div>
       {getKpiView()}

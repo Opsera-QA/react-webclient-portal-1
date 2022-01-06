@@ -4,12 +4,13 @@ import Model from "core/data_model/model";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import ModalSaveButtonBase from "components/common/buttons/saving/ModalSaveButtonBase";
 import CancelButton from "components/common/buttons/CancelButton";
-import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
-import TagManager from "components/common/inputs/tags/TagManager";
-import ModalBase from "components/common/modal/ModalBase";
 import OrganizationMultiSelectInput from "components/common/list_of_values_input/settings/organizations/OrganizationMultiSelectInput";
+import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
+import { faSitemap } from "@fortawesome/pro-light-svg-icons/faSitemap";
+import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
+import LenientSaveButton from "components/common/buttons/saving/LenientSaveButton";
 
-function OrganizationMultiSelectOverlay({ showModal, dataObject, fieldName, handleClose, saveDataFunction }) {
+function OrganizationMultiSelectOverlay({ showModal, dataObject, fieldName, saveDataFunction, type }) {
   const toastContext = useContext(DialogToastContext);
   const [temporaryDataObject, setTemporaryDataObject] = useState(undefined);
 
@@ -20,10 +21,12 @@ function OrganizationMultiSelectOverlay({ showModal, dataObject, fieldName, hand
 
   const handleSave = async () => {
     dataObject.setData(fieldName, temporaryDataObject.getArrayData("organizations"));
-    return await saveDataFunction(dataObject);
+    const response = await saveDataFunction(dataObject);
+    closePanel();
+    return response;
   };
 
-  const getOrganizationInput = () => {
+  const getTagInput = () => {
     return (
       <OrganizationMultiSelectInput
         dataObject={temporaryDataObject}
@@ -33,38 +36,49 @@ function OrganizationMultiSelectOverlay({ showModal, dataObject, fieldName, hand
     );
   };
 
-  const getModalButtons = () => {
+  const getButtonContainer = () => {
     return (
-      <>
-        <CancelButton cancelFunction={handleClose} size={"sm"} />
-        <ModalSaveButtonBase updateRecord={handleSave} recordDto={temporaryDataObject} handleClose={handleClose} />
-      </>
+      <div className={"p-3 bg-white"}>
+        <SaveButtonContainer>
+          <CancelButton cancelFunction={closePanel} size={"md"} className={"mr-2"} />
+          <LenientSaveButton recordDto={temporaryDataObject} updateRecord={handleSave} />
+        </SaveButtonContainer>
+      </div>
     );
   };
 
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
+
+  if (temporaryDataObject == null) {
+    return null;
+  }
+
   return (
-    <ModalBase
-      handleClose={handleClose}
-      size={"lg"}
-      title={"Edit Organizations"}
-      showModal={showModal}
-      buttonContainer={getModalButtons()}
-      className={"tag-modal"}
+    <CenterOverlayContainer
+      closePanel={closePanel}
+      titleIcon={faSitemap}
+      titleText={`Edit Organizations`}
+      showCloseButton={false}
+      showPanel={true}
+      buttonContainer={getButtonContainer()}
     >
-      <div className="content-block-shaded m-3">
+      <div className="m-3">
         {toastContext.getInlineBanner()}
-        <div className="p-3">{getOrganizationInput()}</div>
+        <div className="p-3">{getTagInput()}</div>
       </div>
-    </ModalBase>
+    </CenterOverlayContainer>
   );
 }
 
 OrganizationMultiSelectOverlay.propTypes = {
   showModal: PropTypes.bool,
-  handleClose: PropTypes.func,
   saveDataFunction: PropTypes.func,
   dataObject: PropTypes.object,
   fieldName: PropTypes.string,
+  type: PropTypes.string,
 };
 
 export default OrganizationMultiSelectOverlay;

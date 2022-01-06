@@ -117,6 +117,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   }
   if (!useDashboardTags) {
     dashboardTags = null;
+    dashboardOrgs = null;
   }
 
   const postBody = {
