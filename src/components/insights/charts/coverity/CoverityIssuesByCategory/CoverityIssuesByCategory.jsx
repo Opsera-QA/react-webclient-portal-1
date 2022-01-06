@@ -17,6 +17,9 @@ import CoverityActionableInsightOverlay from "./actionable_insights/CoverityActi
 import CoverityIssuesOverallLowTrendDataBlock from "./data_blocks/overall_low_trend/CoverityIssuesOverallLowTrendDataBlock";
 import CoverityIssuesOverallMediumTrendDataBlock from "./data_blocks/overall_medium_trend/CoverityIssuesOverallMediumTrendDataBlock";
 import CoverityIssuesOverallHighTrendDataBlock from "./data_blocks/overall_high_trend/CoverityIssuesOverallHighTrendDataBlock";
+import { faMehBlank, faTag } from "@fortawesome/pro-light-svg-icons";
+import HorizontalDataBlocksContainer
+  from "../../../../common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 
 function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -104,7 +107,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
       case "Red":
         return faArrowCircleUp;
       case "Neutral":
-        return faPauseCircle;
+        return faArrowCircleDown;
       case "Green":
         return faArrowCircleDown;
       case "-":
@@ -145,23 +148,37 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
   const getFooterLine = () => {
     const topThreeDocs = metrics[0]?.docs?.length > 0 ? metrics[0].docs.slice(0, 3) : [];
     return (
-      <>
-        <Row className="p-1 mt-3">
-          <Col lg={12}>Top 3 Projects with Highest number of Issues & their Trend: </Col>
-        </Row>
+      // <>
+      //   <Row className="p-1 mt-3">
+      //     <Col lg={12}>Highest Issue Projects: </Col>
+      //   </Row>
+      //   {topThreeDocs.map((doc, index) => (
+      //     <Row className="p-1" key={index}>
+      //       <Col lg={12}>
+      //         <FontAwesomeIcon
+      //           icon={getIcon(doc?.projectTotalIssuesTrend)}
+      //           color={getIconColor(doc?.projectTotalIssuesTrend)}
+      //           title={getIconTitle(doc?.projectTotalIssuesTrend)}
+      //         />{" "}
+      //         {doc?.coverityStreamName}
+      //       </Col>
+      //     </Row>
+      //   ))}
+      // </>
+      <HorizontalDataBlocksContainer title={"Highest Issue Projects:"}>
         {topThreeDocs.map((doc, index) => (
-          <Row className="p-1" key={index}>
-            <Col lg={12}>
-              <FontAwesomeIcon
-                icon={getIcon(doc?.projectTotalIssuesTrend)}
-                color={getIconColor(doc?.projectTotalIssuesTrend)}
-                title={getIconTitle(doc?.projectTotalIssuesTrend)}
-              />{" "}
-              {doc?.coverityStreamName}
-            </Col>
-          </Row>
-        ))}
-      </>
+              <Row className="p-1" key={index}>
+                <Col lg={12}>
+                  <FontAwesomeIcon
+                    icon={getIcon(doc?.projectTotalIssuesTrend)}
+                    color={getIconColor(doc?.projectTotalIssuesTrend)}
+                    title={getIconTitle(doc?.projectTotalIssuesTrend)}
+                  />{" "}
+                  {doc?.coverityStreamName}
+                </Col>
+              </Row>
+            ))}
+      </HorizontalDataBlocksContainer>
     );
   };
 
@@ -199,7 +216,9 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
               />
             </Col>
           </Row>
+          <div className={"mt-5"}>
           {getFooterLine()}
+          </div>
         </Container>
       </div>
     );
