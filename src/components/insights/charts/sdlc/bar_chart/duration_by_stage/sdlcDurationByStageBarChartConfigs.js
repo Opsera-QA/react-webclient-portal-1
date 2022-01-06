@@ -1,4 +1,4 @@
-export default () => ({
+export default (METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY) => ({
   xScale: {
     type: "time",
     format: "%Y-%m-%d",
@@ -10,7 +10,7 @@ export default () => ({
   },
   xFormat: "time:%Y-%m-%d",
   // legends: [],
-  colors: { datum: 'color' },
+  colors: METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY,
   axisLeft: {
     "format": d => (typeof d === "number") && (Math.floor(d) === d && d),
     "orient": "left",
