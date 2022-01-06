@@ -56,47 +56,6 @@
 
 /* End Role Access Input Styling */
 
-/* Property Input Styling */
-.object-properties-input .property-header, .input-title-bar {
-    background-color: #E6E5E3;
-    color: #3D3B36;
-    min-height: 42px;
-    font-size: 1.1rem;
-}
-
-.object-properties-input .delete-button {
-    margin-left: 2px;
-}
-
-.object-properties-input .properties-body {
-    height: 195px;
-    overflow-y: auto;
-    overflow-x: hidden
-}
-
-.object-properties-input .properties-body-alt {
-    min-height: 195px;
-}
-
-.object-properties-input .rules-input, .object-properties-input .roles-input {
-    min-height: 55px;
-}
-
-.object-properties-input .no-data-message {
-    padding: 2%;
-}
-
-.object-properties-footer {
-    background-color: #E6E5E3;
-    min-height: 1em;
-}
-
-.object-properties-footer .form-text {
-    margin: 0
-}
-
-/* End Property Input Styling */
-
 /* Group Membership Input Panel */
 .membership-list {
     min-height: 370px;
