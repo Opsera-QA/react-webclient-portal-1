@@ -17,7 +17,11 @@ import actionableInsightsGenericChartFilterMetadata from "components/insights/ch
 function SonarRatingsReliabilityActionableInsightOverlay({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [filterModel, setFilterModel] = useState(
-    new Model({ ...actionableInsightsGenericChartFilterMetadata.newObjectFields }, actionableInsightsGenericChartFilterMetadata, false)
+    new Model(
+      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+      actionableInsightsGenericChartFilterMetadata,
+      false
+    )
   );
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -66,6 +70,9 @@ function SonarRatingsReliabilityActionableInsightOverlay({ kpiConfiguration, das
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -74,7 +81,7 @@ function SonarRatingsReliabilityActionableInsightOverlay({ kpiConfiguration, das
         dashboardTags,
         filterDto,
         undefined,
-        undefined,
+        dashboardOrgs,
         undefined,
         undefined,
         undefined,

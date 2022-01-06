@@ -14,7 +14,10 @@ import SeleniumTestsCasesPassedDataBlock from "./data_blocks/tests_passed/Seleni
 import SeleniumTestsCasesFailedDataBlock from "./data_blocks/tests_failed/SeleniumTestsCasesFailedDataBlock";
 import SeleniumTestsCasesBlockedDataBlock from "./data_blocks/tests_blocked/SeleniumTestsCasesBlockedDataBlock";
 import SeleniumTestsCasesNotExecutedBlock from "./data_blocks/tests_not_executed/SeleniumTestsCasesNotExecutedBlock";
-import { METRIC_THEME_CHART_PALETTE_COLORS, METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
+import {
+  METRIC_THEME_CHART_PALETTE_COLORS,
+  METRIC_CHART_STANDARD_HEIGHT,
+} from "components/common/helpers/metrics/metricTheme.helpers";
 
 function SeleniumTestSummaryPercentages({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -51,12 +54,18 @@ function SeleniumTestSummaryPercentages({ kpiConfiguration, setKpiConfiguration,
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "seleniumTestPercentageResults",
         kpiConfiguration,
-        dashboardTags
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
       );
       let dataObject = response?.data ? response?.data?.data[0]?.seleniumTestPercentageResults?.data : [];
       assignStandardColors(dataObject[0]?.testsSummary);
@@ -87,16 +96,16 @@ function SeleniumTestSummaryPercentages({ kpiConfiguration, setKpiConfiguration,
         <Row>
           <Col xl={6} lg={6} md={6}>
             <Row>
-              <Col xl={6} lg={6} className={"mb-3"} >
+              <Col xl={6} lg={6} className={"mb-3"}>
                 <SeleniumTestsTotalDataBlock score={metrics[0]?.testsRun?.toString()} />
               </Col>
-              <Col xl={6} lg={6} className={"mb-3"} >
+              <Col xl={6} lg={6} className={"mb-3"}>
                 <SeleniumTestsCasesPassedDataBlock score={metrics[0]?.testsPassed?.toString()} />
               </Col>
-              <Col xl={6} lg={6} className={"mb-3"} >
+              <Col xl={6} lg={6} className={"mb-3"}>
                 <SeleniumTestsCasesFailedDataBlock score={metrics[0]?.testsFailed?.toString()} />
               </Col>
-              <Col xl={6} lg={6} className={"mb-3"} >
+              <Col xl={6} lg={6} className={"mb-3"}>
                 <SeleniumTestsCasesBlockedDataBlock score={metrics[0]?.blockedTests?.toString()} />
               </Col>
             </Row>

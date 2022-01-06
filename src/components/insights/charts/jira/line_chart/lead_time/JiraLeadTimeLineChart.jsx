@@ -1,15 +1,15 @@
 import PropTypes from "prop-types";
-import { ResponsiveScatterPlot } from '@nivo/scatterplot';
+import { ResponsiveScatterPlot } from "@nivo/scatterplot";
 import config from "./jiraLeadTimeLineChartConfigs";
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import ModalLogs from "components/common/modal/modalLogs";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import { line } from "d3-shape";
-import { defaultConfig, getColor, assignStandardColors } from '../../../charts-views';
-import ChartTooltip from '../../../ChartTooltip';
-import {Col, Row} from "react-bootstrap";
+import { defaultConfig, getColor, assignStandardColors } from "../../../charts-views";
+import ChartTooltip from "../../../ChartTooltip";
+import { Col, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/pro-solid-svg-icons";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
@@ -17,11 +17,10 @@ import JiraBugsCompletedDataBlock from "../../data_blocks/JiraBugsCompletedDataB
 import JiraIssuesCompletedDataBlock from "../../data_blocks/JiraIssuesCompletedDataBlock";
 import JiraMeanLeadTimeDataBlock from "../../data_blocks/JiraMeanLeadTimeDataBlock";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
-import JiraLeadTimeChartHelpDocumentation
-  from "components/common/help/documentation/insights/charts/JiraLeadTimeChartHelpDocumentation";
+import JiraLeadTimeChartHelpDocumentation from "components/common/help/documentation/insights/charts/JiraLeadTimeChartHelpDocumentation";
 
 function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
-  const {getAccessToken} = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [issueData, setIssueData] = useState([]);
@@ -55,24 +54,41 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "jiraLeadTime", kpiConfiguration, dashboardTags);
-      const dataObject = response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200 ? response?.data?.data[0]?.jiraLeadTime?.data : [];
-      const issueDataObject = response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200 ? response?.data?.data[0]?.jiraLeadTime?.issueData : [];
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "jiraLeadTime",
+        kpiConfiguration,
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
+      );
+      const dataObject =
+        response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200
+          ? response?.data?.data[0]?.jiraLeadTime?.data
+          : [];
+      const issueDataObject =
+        response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200
+          ? response?.data?.data[0]?.jiraLeadTime?.issueData
+          : [];
       assignStandardColors(dataObject && dataObject[0]?.data, true);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         setIssueData(issueDataObject);
       }
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -87,24 +103,38 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
     //TODO: Do these need to be passed in via object props?
     const MeanLineLayer = ({ nodes, xScale, yScale }) => {
       const lineGenerator = line()
-        .x(d => xScale(d.data.x))
-        .y(d => yScale(d.data.mean));
+        .x((d) => xScale(d.data.x))
+        .y((d) => yScale(d.data.mean));
       return (
-        <path d={lineGenerator(nodes)} fill="none" stroke={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2} strokeWidth="3" />
+        <path
+          d={lineGenerator(nodes)}
+          fill="none"
+          stroke={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2}
+          strokeWidth="3"
+        />
       );
     };
 
     //TODO: Do these need to be passed in via object props?
     const RollingMeanLineLayer = ({ nodes, xScale, yScale }) => {
       const lineGenerator = line()
-        .x(d => xScale(d.data.x))
-        .y(d => yScale(d.data.rolling_mean));
+        .x((d) => xScale(d.data.x))
+        .y((d) => yScale(d.data.rolling_mean));
       return (
-        <path d={lineGenerator(nodes)} fill="none" stroke={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_3} strokeWidth="2" />
+        <path
+          d={lineGenerator(nodes)}
+          fill="none"
+          stroke={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_3}
+          strokeWidth="2"
+        />
       );
     };
     const onNodeSelect = (node) => {
-      setModalData(issueData.filter(function (item) {return item.y === node.data.y && item.date_finished === node.data.date_finished;}));
+      setModalData(
+        issueData.filter(function (item) {
+          return item.y === node.data.y && item.date_finished === node.data.date_finished;
+        })
+      );
       setShowModal(true);
     };
 
@@ -121,29 +151,55 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
                   <JiraIssuesCompletedDataBlock data={issueData.length} />
                 </Col>
                 <Col lg={12} className={"mb-3"}>
-                  <JiraBugsCompletedDataBlock data={issueData.filter((item) => item.issueType.toLowerCase() === "bug").length} />
-                </Col>                
+                  <JiraBugsCompletedDataBlock
+                    data={issueData.filter((item) => item.issueType.toLowerCase() === "bug").length}
+                  />
+                </Col>
               </Row>
-            </Col>            
+            </Col>
             <Col xl={9} lg={9} md={8} className={"my-2 p-2 d-flex flex-column"}>
               <div className="px-3">
-                <FontAwesomeIcon icon={faMinus} color={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2} size="lg"/> Mean Lead Time<br></br>
-                <FontAwesomeIcon icon={faMinus} color={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_3} size="lg"/> Rolling Mean Lead Time
+                <FontAwesomeIcon
+                  icon={faMinus}
+                  color={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2}
+                  size="lg"
+                />{" "}
+                Mean Lead Time<br></br>
+                <FontAwesomeIcon
+                  icon={faMinus}
+                  color={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_3}
+                  size="lg"
+                />{" "}
+                Rolling Mean Lead Time
               </div>
               <ResponsiveScatterPlot
                 data={metrics}
-                {...defaultConfig("Elapsed Time (Days)", "Completion Date", 
-                            false, true, "wholeNumbers", "monthDate", false, "circle")}
+                {...defaultConfig(
+                  "Elapsed Time (Days)",
+                  "Completion Date",
+                  false,
+                  true,
+                  "wholeNumbers",
+                  "monthDate",
+                  false,
+                  "circle"
+                )}
                 {...config(getColor, MeanLineLayer, RollingMeanLineLayer)}
                 onClick={(node) => onNodeSelect(node)}
-                tooltip={({node, color}) => <ChartTooltip 
-                titles = {["Date Completed", "Lead Time", "Issues Completed"]}
-                values = {[String(node.data.date_finished), 
-                          `${node.data.y} ${node.data.y > 1 ? "days" : "day"}`, String(node.data.count)]}
-                color = {color} />}
+                tooltip={({ node, color }) => (
+                  <ChartTooltip
+                    titles={["Date Completed", "Lead Time", "Issues Completed"]}
+                    values={[
+                      String(node.data.date_finished),
+                      `${node.data.y} ${node.data.y > 1 ? "days" : "day"}`,
+                      String(node.data.count),
+                    ]}
+                    color={color}
+                  />
+                )}
               />
-            </Col>            
-          </Row>          
+            </Col>
+          </Row>
         </div>
       </>
     );
@@ -164,7 +220,14 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
         isLoading={isLoading}
         chartHelpComponent={(closeHelpPanel) => <JiraLeadTimeChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
-      <ModalLogs header="Jira Lead Time" size="lg" jsonMessage={modalData} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+      <ModalLogs
+        header="Jira Lead Time"
+        size="lg"
+        jsonMessage={modalData}
+        dataType="bar"
+        show={showModal}
+        setParentVisibility={setShowModal}
+      />
     </div>
   );
 }
@@ -176,7 +239,7 @@ JiraLeadTimeLineChart.propTypes = {
   setKpis: PropTypes.func,
   nodes: PropTypes.any,
   xScale: PropTypes.any,
-  yScale: PropTypes.any
+  yScale: PropTypes.any,
 };
 
 export default JiraLeadTimeLineChart;
