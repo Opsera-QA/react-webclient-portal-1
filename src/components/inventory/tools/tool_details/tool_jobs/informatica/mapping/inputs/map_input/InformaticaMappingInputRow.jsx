@@ -15,6 +15,7 @@ function InformaticaMappingInputRow(
     disabledMappings,
     index,
     disabled,
+    duplicates,
     updateType,
     updateRule,
     deleteRow,
@@ -66,7 +67,7 @@ function InformaticaMappingInputRow(
           </Col>
           <Col sm={6} className={"pl-1 pr-0"}>
             <input
-              disabled={disabled}
+              disabled={disabled||duplicates}
               value={rule}
               className="form-control"
               onChange={(event) => validateAndSetData(event)}
@@ -89,6 +90,7 @@ InformaticaMappingInputRow.propTypes = {
   updateRule: PropTypes.func,
   deleteRow: PropTypes.func,
   disabled: PropTypes.bool,
+  duplicates: PropTypes.bool,
   rule: PropTypes.string,
   type: PropTypes.string,
 };

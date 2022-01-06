@@ -149,6 +149,7 @@ function InformaticaMappingInputBase({ fieldName, model, setModel, helpComponent
             <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
               <InformaticaMappingInputRow
                 disabled={disabled}
+                duplicates={hasDuplicates(mapRows)}
                 index={index}
                 deleteRow={deleteRow}
                 disabledMappings={getDisabledMappings()}
@@ -184,7 +185,7 @@ function InformaticaMappingInputBase({ fieldName, model, setModel, helpComponent
 
   const getIncompleteMessage = () => {
     if (!lastMappingComplete()) {
-      return (`Incomplete Rule validations Will Be Removed Upon Saving and Duplicate Types are not allowed`);
+      return (`Incomplete Rule validations Will Be Removed Upon Saving and DUPLICATE TYPES are not allowed`);
     }
   };
 
