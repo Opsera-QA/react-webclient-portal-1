@@ -19,7 +19,7 @@ import { nivoChartLegendDefinitions } from "components/common/metrics/charts/niv
 import AutomationPercentageChartHelpDocumentation from "components/common/help/documentation/insights/charts/AutomationPercentageChartHelpDocumentation";
 import { ResponsivePie } from "@nivo/pie";
 import config from "./automationPercentageMetricConfig";
-import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
+import { METRIC_THEME_CHART_PALETTE_COLORS, METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 import AutomationPercentageDataBlock from "./data_blocks/AutomationPercentageDataBlock";
 import TotalAutomationCandidatesDataBlock from "./data_blocks/TotalAutomationCandidatesDataBlock";
 import TotalFunctionalTestsDataBlock from "./data_blocks/TotalFunctionalTestsDataBlock";
@@ -154,7 +154,7 @@ function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, da
               </Row>
             </Col>
             <Col xl={6} lg={4} md={3} className={"my-2 p-2"}>
-              <div style={{ height: "300px" }}>
+              <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
                 <ResponsivePie
                   data={metric?.pairs}
                   {...defaultConfig()}

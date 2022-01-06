@@ -43,15 +43,15 @@
 .data-block-box {
     background-color: #fff;
     background-clip: border-box;
-    /*border: 1px solid rgba(0, 0, 0, 0.125);*/
-    border: 1px solid #00a8e8;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    /*border: 1px solid #00a8e8;*/
     border-radius: .5rem;
 }
 
 .data-block-icon {
     width: 1.75rem;
     max-width: 1.75rem;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     z-index: 500;
 }
 

@@ -8,7 +8,7 @@ function AutomatedTestAdoptionRateAdoptedTestsDataBlock({ executedTestsDataPoint
   return (
     <DataBlockBoxContainer showBorder={true}>
       <div className={"p-3"}>
-        <TwoLineDataBlockBase title={executedTestCount} dataPoint={executedTestsDataPoint} subtitle={"Total Valid Defects Open"} />
+        <TwoLineDataBlockBase title={executedTestCount} dataPoint={executedTestsDataPoint} subtitle={"Automated Test Cases Executed"} />
       </div>
     </DataBlockBoxContainer>
   );
