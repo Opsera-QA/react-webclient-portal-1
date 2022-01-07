@@ -31,7 +31,7 @@ function SfdcPipelineWizardFileSelectionDateTimeRange({ pipelineWizardModel, set
     }
   };
 
-  const setFromDateFunction = (value) => {
+  const setFromDateFunction = (fieldName, value) => {
     let newDataObject = {...pipelineWizardModel};
     newDataObject.setData("fromDate", value);
     checkFromToDateLimit(value, newDataObject.getData("toDate"));
@@ -39,7 +39,7 @@ function SfdcPipelineWizardFileSelectionDateTimeRange({ pipelineWizardModel, set
     return newDataObject;
   };
 
-  const setToDateFunction = (value) => {
+  const setToDateFunction = (fieldName, value) => {
     let newDataObject = {...pipelineWizardModel};
     newDataObject.setData("toDate", value);
     checkFromToDateLimit(newDataObject.getData("fromDate"), value);
