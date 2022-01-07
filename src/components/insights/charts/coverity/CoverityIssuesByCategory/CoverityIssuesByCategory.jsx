@@ -17,6 +17,9 @@ import CoverityActionableInsightOverlay from "./actionable_insights/CoverityActi
 import CoverityIssuesOverallLowTrendDataBlock from "./data_blocks/overall_low_trend/CoverityIssuesOverallLowTrendDataBlock";
 import CoverityIssuesOverallMediumTrendDataBlock from "./data_blocks/overall_medium_trend/CoverityIssuesOverallMediumTrendDataBlock";
 import CoverityIssuesOverallHighTrendDataBlock from "./data_blocks/overall_high_trend/CoverityIssuesOverallHighTrendDataBlock";
+import { faMehBlank, faTag } from "@fortawesome/pro-light-svg-icons";
+import HorizontalDataBlocksContainer
+  from "../../../../common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 
 function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -109,8 +112,6 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
     switch (severity) {
       case "Red":
         return faArrowCircleUp;
-      case "Neutral":
-        return faPauseCircle;
       case "Green":
         return faArrowCircleDown;
       case "-":
@@ -148,26 +149,37 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
         break;
     }
   };
+
+  const getDescription = (severity) => {
+    switch (severity) {
+      case "Red":
+        return "This project's issues are trending upward";
+      case "Green":
+        return "This project's issues are trending downward";
+      case "Neutral":
+        return "This project's issues are trending downward";
+    }
+  };
+
   const getFooterLine = () => {
     const topThreeDocs = metrics[0]?.docs?.length > 0 ? metrics[0].docs.slice(0, 3) : [];
     return (
-      <>
-        <Row className="p-1 mt-3">
-          <Col lg={12}>Top 3 Projects with Highest number of Issues & their Trend: </Col>
-        </Row>
+      <HorizontalDataBlocksContainer title={"Highest Issue Projects:"}>
         {topThreeDocs.map((doc, index) => (
           <Row className="p-1" key={index}>
             <Col lg={12}>
-              <FontAwesomeIcon
+              {(getIcon(doc?.projectTotalIssuesTrend) !== "Neutral") != null &&
+                <FontAwesomeIcon
                 icon={getIcon(doc?.projectTotalIssuesTrend)}
                 color={getIconColor(doc?.projectTotalIssuesTrend)}
                 title={getIconTitle(doc?.projectTotalIssuesTrend)}
-              />{" "}
-              {doc?.coverityStreamName}
+                />
+              }
+              <span style={{paddingLeft: "10px"}}>{doc?.coverityStreamName}</span>
             </Col>
           </Row>
-        ))}
-      </>
+            ))}
+      </HorizontalDataBlocksContainer>
     );
   };
 
@@ -205,7 +217,9 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
               />
             </Col>
           </Row>
+          <div className={"mt-5"}>
           {getFooterLine()}
+          </div>
         </Container>
       </div>
     );
