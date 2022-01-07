@@ -4,7 +4,7 @@ import {faTh} from "@fortawesome/pro-light-svg-icons";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import IconBase from "components/common/icons/IconBase";
 
-function MetricContainer({ isLoading, children, title, chartHelpComponent }) {
+function MetricContainerV1({ isLoading, children, title, chartHelpComponent }) {
   const [helpIsShown, setHelpIsShown] = useState(false);
 
   const closeHelpPanel = () => {
@@ -64,11 +64,11 @@ function MetricContainer({ isLoading, children, title, chartHelpComponent }) {
 }
 
 
-MetricContainer.propTypes = {
+MetricContainerV1.propTypes = {
   isLoading: PropTypes.bool,
   children: PropTypes.any,
   title: PropTypes.string,
   chartHelpComponent: PropTypes.func
 };
 
-export default MetricContainer;
+export default MetricContainerV1;

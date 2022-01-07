@@ -20,6 +20,11 @@ primary analytics font*/
     font-weight: 300;
 }
 
+.font-inter-light-400 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+}
+
 .font-inter-light-500 {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
@@ -27,14 +32,17 @@ primary analytics font*/
 
 .metric-block-header-text {
     font-size: 1rem;
+    letter-spacing: 1px;
 }
 
 .metric-block-content-text {
     font-size: 2rem;
+    letter-spacing: 1px;
 }
 
 .metric-block-footer-text {
-    font-size: .7rem;
+    font-size: .85rem;
+    letter-spacing: 1px;
 }
 
 .chart-header-name-text {
@@ -128,7 +136,7 @@ primary analytics font*/
 }
 
 .light-gray-text-secondary {
-    color: #8798ad;
+    color: #67788d;
 }
 
 .chart-palette-1 {
@@ -211,6 +219,10 @@ a:hover, .active, .link-text:hover {
 
 .title-text-header-2 {
     font-size: 1.1rem;
+}
+
+.title-text-header-3 {
+    font-size: 1.25rem;
 }
 
 .title-text-5 {

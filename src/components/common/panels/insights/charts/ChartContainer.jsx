@@ -1,17 +1,19 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import {faTag, faExclamationCircle, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import "components/analytics/charts/charts.css";
-import {getChartIconFromKpiConfiguration} from "components/insights/charts/charts-helpers";
 import InfoDialog from "components/common/status_notifications/info";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";
-import CustomBadge from "components/common/badges/CustomBadge";
-import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ChartSettingsOverlay from "components/insights/marketplace/charts/ChartSettingsOverlay";
 import { addDays, isSameDay } from "date-fns";
+import IconBase from "components/common/icons/IconBase";
+import {parseError} from "components/common/helpers/error-helpers";
+import {formatDate} from "components/common/helpers/date/date.helpers";
+import {getMetricFilterValue} from "components/common/helpers/metrics/metricFilter.helpers";
+import DateBadge from "components/common/badges/date/DateBadge";
+import MetricTagBadge from "components/common/badges/tag/MetricTagBadge";
 
 function ChartContainer(
   {
@@ -24,7 +26,6 @@ function ChartContainer(
     error,
     loadChart,
     setKpis,
-    tableChart,
     chartHelpComponent,
     settingsHelpComponent,
     showSettingsToggle,
@@ -58,6 +59,7 @@ function ChartContainer(
           toggleHelp={() => setHelpIsShown(!helpIsShown)}
           visible={!helpIsShown}
           size={"1x"}
+          className={"ml-3"}
         />
       );
     }
@@ -83,7 +85,7 @@ function ChartContainer(
     if (showSettingsToggle !== false) {
       return (
         <ToggleSettingsIcon
-          className={"ml-2"}
+          className={"ml-3"}
           visible={!helpIsShown}
           activeTab={view}
           setActiveTab={() => showSettingsPanel()}
@@ -94,14 +96,14 @@ function ChartContainer(
 
   const getTitleBar = () => {
     if (isLoading) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Chart</span>);
+      return (<span><IconBase isLoading={true} className="mr-1"/>Loading Chart</span>);
     }
 
     if (error) {
       return (
         <div className="d-flex justify-content-between">
           <span>
-            <FontAwesomeIcon icon={faExclamationCircle} spin fixedWidth className="mr-1"/>
+            <IconBase icon={faExclamationCircle} fixedWidth className="mr-1"/>
             Error Loading Chart!
           </span>
           <div>
@@ -112,14 +114,11 @@ function ChartContainer(
     }
 
     return (
-      <div className="d-flex justify-content-between">
-        <div className={"d-flex"}>
-          <div>
-            <FontAwesomeIcon icon={getChartIconFromKpiConfiguration(kpiConfiguration)} fixedWidth className="mr-1"/>
-            {kpiConfiguration?.kpi_name + getDate()}
-          </div>
-      </div>
-        <div className={"d-flex"}>
+      <div className="d-flex justify-content-between my-auto">
+        <div className={"my-auto"}>
+          {kpiConfiguration?.kpi_name}
+        </div>
+        <div className={"d-flex my-auto"}>
           {getHelpToggle()}
           {getSettingsToggle()}
         </div>
@@ -131,7 +130,9 @@ function ChartContainer(
   const getChartBody = () => {
     if (error) {
       return (
-        <span>There was an error loading this chart: {error.message}. Please check logs for more details.</span>
+        <div className="new-chart mb-3" style={{ height: "300px" }}>
+          <span>There was an error loading this chart: {parseError(error?.message)}. Please check logs for more details.</span>
+        </div>
       );
     }
 
@@ -159,97 +160,97 @@ function ChartContainer(
     }
 
     return (
-      <div className={tableChart === true ? "shaded-panel" : "new-chart m-2 shaded-panel"}>
+      <div>
         {chart}
       </div>
     );
   };
 
-  const getTagBadges = () => {
-    let kpiConfigTags = kpiConfiguration?.filters[kpiConfiguration?.filters?.findIndex((obj) => obj.type === "tags")]?.value;
-    let kpiConfigDashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters?.findIndex((obj) => obj.type === "tags")]?.value;
-
-    const tags = kpiConfigTags && Array.isArray(kpiConfigTags) ? kpiConfigTags : [];
-    const dashboardTags = kpiConfigDashboardTags && Array.isArray(kpiConfigDashboardTags) ? kpiConfigDashboardTags : []; 
-    let totalTags;
-
-    if (Array.isArray(dashboardTags) && dashboardTags.length > 0) {
-      totalTags = [...tags, ...dashboardTags];
-    }
-    else {
-      totalTags = [...tags];
-    }
-
-    const finalTags = totalTags.filter((item, pos) => totalTags.indexOf(item) === pos);
-    const useKpiTags = kpiConfiguration?.settings?.useKpiTags !== false;
+  const getDashboardTagsBadge = () => {
     const useDashboardTags = kpiConfiguration?.settings?.useDashboardTags !== false;
+    const kpiConfigDashboardTags = getMetricFilterValue(dashboardData?.getData("filters"), "tags");
 
-    if (Array.isArray(tags) && tags.length > 0 && useKpiTags &&
-        Array.isArray(dashboardTags) && dashboardTags.length > 0 && useDashboardTags) {
+    if (useDashboardTags === true) {
       return (
-        <div>
-        <div className={"m-1 p-2"}>{"Dashboard & KPI Tags Applied"}</div>
-        <CustomBadgeContainer>
-          {finalTags.map((item, index) => {
-            if (typeof item !== "string")
-              return (
-                <CustomBadge key={index} className={"mx-1 mb-1"} icon={faTag} badgeText={`${item.type}: ${item.value}`}/>
-              );
-          })}
-        </CustomBadgeContainer>
-        </div>
-      );
-    }
-
-    if (Array.isArray(tags) && tags.length > 0 && useKpiTags) {
-      return (
-        <div>
-        <div className={"m-1 p-2"}>{"KPI Tags Applied"}</div>
-        <CustomBadgeContainer>
-          {tags.map((item, index) => {
-            if (typeof item !== "string")
-              return (
-                <CustomBadge key={index} className={"mx-1 mb-1"} icon={faTag} badgeText={`${item.type}: ${item.value}`}/>
-              );
-          })}
-        </CustomBadgeContainer>
-        </div>
-      );
-    }
-    if (Array.isArray(dashboardTags) && dashboardTags.length > 0 && useDashboardTags) {
-      return (
-      <div>
-      <div className={"m-1 p-2"}>{"Dashboard Tags Applied"}</div>
-      <CustomBadgeContainer>
-          {dashboardTags.map((item, index) => {
-            if (typeof item !== "string")
-              return (
-                <CustomBadge key={index} className={"mx-1 mb-1"} icon={faTag} badgeText={`${item.type}: ${item.value}`}/>
-              );
-          })}
-        </CustomBadgeContainer>
-      </div>
+        <MetricTagBadge
+          type={"Dashboard"}
+          tags={kpiConfigDashboardTags}
+          showNoTagsAppliedBadge={true}
+        />
       );
     }
   };
 
-  const getDate = () => {
-    const date = kpiConfiguration?.filters[kpiConfiguration?.filters?.findIndex((obj) => obj.type === "date")]?.value;
-    return (
-        date ? isSameDay(new Date(date.startDate), new Date(date.endDate)) ? " for " + new Date(date.startDate).toDateString().split(' ').slice(1).join(' ') : " from " + new Date(date.startDate).toDateString().split(' ').slice(1).join(' ') + " to " + new Date(date.endDate).toDateString().split(' ').slice(1).join(' ') : 
-        " from " + addDays(new Date(), -90).toDateString().split(' ').slice(1).join(' ') + " to " + new Date().toDateString().split(' ').slice(1).join(' ')
+  const getKpiTagsBadge = () => {
+    const useKpiTags = kpiConfiguration?.settings?.useKpiTags !== false;
+    const kpiConfigTags = getMetricFilterValue(kpiConfiguration?.filters, "tags");
+
+    if (useKpiTags === true) {
+      return (
+        <MetricTagBadge
+          type={"KPI"}
+          tags={kpiConfigTags}
+          showNoTagsAppliedBadge={true}
+        />
       );
+    }
+  };
+
+  // TODO: Make date badge component and also date range badge component
+  // TODO: Add date verifier
+  const getDateBadge = () => {
+    const date = getMetricFilterValue(kpiConfiguration?.filters, "date");
+
+    if (date == null) {
+      const formattedStartDate = formatDate(addDays(new Date(), -90));
+      const formattedEndDate = formatDate(new Date());
+      return (
+        <DateBadge
+          badgeText={`${formattedStartDate} to ${formattedEndDate}`}
+        />
+      );
+    }
+
+    const startDate = date?.startDate;
+    const endDate = date?.endDate;
+
+    // TODO: Add date check
+
+    if (isSameDay(new Date(startDate), new Date(date.endDate))) {
+      return (
+        <DateBadge
+          badgeText={formatDate(startDate)}
+        />
+      );
+    }
+
+    const formattedStartDate = formatDate(startDate);
+    const formattedEndDate = formatDate(endDate);
+
+    return (
+      <DateBadge
+        badgeText={`${formattedStartDate} to ${formattedEndDate}`}
+      />
+    );
   };
 
   return (
-    <div className="content-container content-card-1">
-      <div className="px-2 content-block-header-inverse title-text-header-2">
+    <div className="metric-chart-container bg-white">
+      <div className="px-3 metric-title-bar title-text-header-1 chart-header-name-text">
         {getTitleBar()}
       </div>
       <div>
         {getChartBody()}
       </div>
-      {getTagBadges()}
+      <div className={"d-flex p-2 justify-content-between chart-footer-text"}>
+        <div>
+          {getDateBadge()}
+        </div>
+        <div className={"d-flex"}>
+          <div className={"mr-2"}>{getKpiTagsBadge()}</div>
+          <div>{getDashboardTagsBadge()}</div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -264,7 +265,6 @@ ChartContainer.propTypes = {
   setKpiConfiguration: PropTypes.func,
   setKpis: PropTypes.func,
   loadChart: PropTypes.func,
-  tableChart: PropTypes.bool,
   chartHelpComponent: PropTypes.func,
   settingsHelpComponent: PropTypes.func,
   showSettingsToggle: PropTypes.bool,
