@@ -155,14 +155,6 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
     }
   };
 
-  // const getSpacing= (trend) => {
-  //   if(trend == "Neutral"){
-  //     let temp = style={{paddingLeft: "10px"}}
-  //     return temp
-  //   }
-  //   else { let temp = null
-  //   return temp}
-  // }
 
   const getFooterLine = () => {
     const topThreeDocs = metrics[0]?.docs?.length > 0 ? metrics[0].docs.slice(0, 3) : [];
