@@ -18,13 +18,18 @@ import {
 import ChartTooltip from "../ChartTooltip";
 import { Col, Container, Row } from "react-bootstrap";
 import DataBlockWrapper from "../../../common/data_boxes/DataBlockWrapper";
+import TwoLineScoreDataBlock from "../../../common/metrics/score/TwoLineScoreDataBlock";
+import PercentageDataBlock from "../../../common/metrics/percentage/PercentageDataBlock";
+import { METRIC_QUALITY_LEVELS } from "../../../common/metrics/text/MetricTextBase";
+import NewPercentageDataBlock from "../../../common/metrics/percentage/NewPercentageDataBlock";
 
-function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function AdoptionPercentagePieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [notesData, setNotesData] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -51,23 +56,19 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
+      let notes = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "notes")]?.value;
+      setNotesData(notes);
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      let dashboardOrgs =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "cumulativeOpenDefects",
+        "adoptionPercentage",
         kpiConfiguration,
-        dashboardTags,
-        null,
-        null,
-        dashboardOrgs
+        dashboardTags
       );
-      let dataObject = response?.data ? response?.data?.data[0]?.cumulativeOpenDefects?.data : [];
+      let dataObject = response?.data ? response?.data?.data[0]?.adoptionPercentage?.data : [];
       assignStandardColors(dataObject[0]?.pairs);
       shortenPieChartLegend(dataObject[0]?.pairs);
 
@@ -95,52 +96,37 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
       <div className="new-chart mb-3" style={{ height: "300px", display: "flex" }}>
         <Container>
           <Row className="p-1">
-            <Col>
-              <div className="metric-box text-center">
-                <div className="box-metric">
-                  <div>{metrics[0]?.totalTests}</div>
-                </div>
-                <div className="w-100 text-muted mb-1">Total No of Defects</div>
-              </div>
+            <Col lg={6} md={8}>
+              <TwoLineScoreDataBlock
+                className={"test-percentage"}
+                score={metrics[0]?.executedTests}
+                subtitle={"No of Automated Test Cases Executed"}
+              />
             </Col>
-            <Col>
-              <div className="metric-box text-center">
-                <div className="box-metric">
-                  {metrics[0]?.cumulativeDefects ? (
-                    <div className={metrics[0]?.cumulativeDefects < 10 ? "green" : "red"}>
-                      {metrics[0]?.cumulativeDefects + "%"}
-                    </div>
-                  ) : (
-                    <div>{"N/A"}</div>
-                  )}
-                </div>
-                <div className="w-100 text-muted mb-1">Cumulative Open Defects</div>
-              </div>
+            <Col lg={6} md={8}>
+              <TwoLineScoreDataBlock
+                className={"test-percentage"}
+                score={metrics[0]?.manualTests}
+                subtitle={"No of Automated Test Cases Executed Manually"}
+              />
             </Col>
           </Row>
-          <Row className="p-1">
-            <Col>
-              <div className="metric-box text-center">
-                <div className="box-metric">
-                  <div>{metrics[0]?.passedTests}</div>
-                </div>
-                <div className="w-100 text-muted mb-1">Total Valid Defects Closed</div>
-              </div>
-            </Col>
-            <Col>
-              <div className="metric-box text-center">
-                <div className="box-metric">
-                  <div>{metrics[0]?.failedTests}</div>
-                </div>
-                <div className="w-100 text-muted mb-1">Total Valid Defects Open</div>
-              </div>
+          <Row className="p-1 text-center">
+            <Col lg={6} md={8}>
+              <NewPercentageDataBlock
+                className={"test-percentage"}
+                percentage={metrics[0]?.adoptionRate}
+                subtitle={"Adoption Percentage"}
+                qualityLevel={
+                  metrics[0]?.adoptionRate < 98 ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS
+                }
+                goal={"Goal: Adoption Percentage > 98%"}
+              />
             </Col>
           </Row>
-          <Row className="p-1">
+          <Row className="p-3">
             <Col className="text-center">
-              <small>
-                <span className="font-weight-bold">Goal:</span> Cumulative Open Defects &lt; 10%
-              </small>
+              <small> {notesData} </small>
             </Col>
           </Row>
         </Container>
@@ -180,7 +166,7 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
   );
 }
 
-ManualQaTestPieChart.propTypes = {
+AdoptionPercentagePieChart.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -188,4 +174,4 @@ ManualQaTestPieChart.propTypes = {
   setKpis: PropTypes.func,
 };
 
-export default ManualQaTestPieChart;
+export default AdoptionPercentagePieChart;

@@ -19,7 +19,10 @@ import { nivoChartLegendDefinitions } from "components/common/metrics/charts/niv
 import AutomationPercentageChartHelpDocumentation from "components/common/help/documentation/insights/charts/AutomationPercentageChartHelpDocumentation";
 import { ResponsivePie } from "@nivo/pie";
 import config from "./automationPercentageMetricConfig";
-import { METRIC_THEME_CHART_PALETTE_COLORS, METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
+import {
+  METRIC_THEME_CHART_PALETTE_COLORS,
+  METRIC_CHART_STANDARD_HEIGHT,
+} from "components/common/helpers/metrics/metricTheme.helpers";
 import AutomationPercentageDataBlock from "./data_blocks/AutomationPercentageDataBlock";
 import TotalAutomationCandidatesDataBlock from "./data_blocks/TotalAutomationCandidatesDataBlock";
 import TotalFunctionalTestsDataBlock from "./data_blocks/TotalFunctionalTestsDataBlock";
@@ -29,7 +32,7 @@ import RegressionTestsToBeAutomated from "./data_blocks/RegressionTestsToBeAutom
 
 const AUTOMATION_PERCENTAGE = "automation_percentage";
 
-function AutomationPercentageMetric({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metric, setMetric] = useState(undefined);
@@ -84,12 +87,18 @@ function AutomationPercentageMetric({ kpiConfiguration, setKpiConfiguration, das
 
     let dashboardTags =
       dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+    let dashboardOrgs =
+      dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+        ?.value;
     const response = await chartsActions.parseConfigurationAndGetChartMetrics(
       getAccessToken,
       cancelSource,
       "automationPercentage",
       kpiConfiguration,
-      dashboardTags
+      dashboardTags,
+      null,
+      null,
+      dashboardOrgs
     );
 
     const metrics = response?.data ? response?.data?.data[0]?.automationPercentage?.data : [];
@@ -128,7 +137,7 @@ function AutomationPercentageMetric({ kpiConfiguration, setKpiConfiguration, das
     }
 
     return (
-        <div>
+      <div>
         <div className="new-chart m-3 p-0" style={{ minheight: "300px", display: "flex" }}>
           <Row>
             <Col xl={6} lg={6} md={8} className={"d-flex align-content-around"}>
@@ -165,10 +174,8 @@ function AutomationPercentageMetric({ kpiConfiguration, setKpiConfiguration, das
             </Col>
           </Row>
         </div>
-          <Row>
-            {getNotesRow()}
-          </Row>
-        </div>
+        <Row>{getNotesRow()}</Row>
+      </div>
     );
   };
 
@@ -202,7 +209,7 @@ function AutomationPercentageMetric({ kpiConfiguration, setKpiConfiguration, das
   );
 }
 
-AutomationPercentageMetric.propTypes = {
+CumulativeOpenDefectsMetric.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -210,4 +217,4 @@ AutomationPercentageMetric.propTypes = {
   setKpis: PropTypes.func,
 };
 
-export default AutomationPercentageMetric;
+export default CumulativeOpenDefectsMetric;

@@ -12,7 +12,10 @@ import { defaultConfig, getColorByData, assignStandardColors, shortenPieChartLeg
 import { Col, Container, Row } from "react-bootstrap";
 import FirstPassYieldMetricDataBlockBase from "./data_blocks/FirstPassYieldMetricDataBlockBase";
 import FirstPassYieldPercentageDataBlock from "./data_blocks/FirstPassYieldPercentageDataBlock";
-import { METRIC_THEME_CHART_PALETTE_COLORS, METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
+import {
+  METRIC_THEME_CHART_PALETTE_COLORS,
+  METRIC_CHART_STANDARD_HEIGHT,
+} from "components/common/helpers/metrics/metricTheme.helpers";
 
 const FIRST_PASS_YIELD = "first_pass_yield";
 
@@ -67,12 +70,18 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
     setIsLoading(true);
     let dashboardTags =
       dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+    let dashboardOrgs =
+      dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+        ?.value;
     const response = await chartsActions.parseConfigurationAndGetChartMetrics(
       getAccessToken,
       cancelSource,
       "firstPassYield",
       kpiConfiguration,
-      dashboardTags
+      dashboardTags,
+      null,
+      null,
+      dashboardOrgs
     );
     let dataObject = response?.data ? response?.data?.data[0]?.firstPassYield?.data : [];
     assignStandardColors(dataObject[0]?.pairs);
