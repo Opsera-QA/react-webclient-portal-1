@@ -14,6 +14,7 @@ import {formatDate} from "components/common/helpers/date/date.helpers";
 import {getMetricFilterValue} from "components/common/helpers/metrics/metricFilter.helpers";
 import DateBadge from "components/common/badges/date/DateBadge";
 import MetricTagBadge from "components/common/badges/tag/MetricTagBadge";
+import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 
 function ChartContainer(
   {
@@ -205,40 +206,13 @@ function ChartContainer(
     }
   };
 
-  // TODO: Make date badge component and also date range badge component
-  // TODO: Add date verifier
   const getDateBadge = () => {
     const date = getMetricFilterValue(kpiConfiguration?.filters, "date");
 
-    if (date == null) {
-      const formattedStartDate = formatDate(addDays(new Date(), -90));
-      const formattedEndDate = formatDate(new Date());
-      return (
-        <DateBadge
-          badgeText={`${formattedStartDate} to ${formattedEndDate}`}
-        />
-      );
-    }
-
-    const startDate = date?.startDate;
-    const endDate = date?.endDate;
-
-    // TODO: Add date check
-
-    if (isSameDay(new Date(startDate), new Date(date.endDate))) {
-      return (
-        <DateBadge
-          badgeText={formatDate(startDate)}
-        />
-      );
-    }
-
-    const formattedStartDate = formatDate(startDate);
-    const formattedEndDate = formatDate(endDate);
-
     return (
-      <DateBadge
-        badgeText={`${formattedStartDate} to ${formattedEndDate}`}
+      <MetricDateRangeBadge
+        startDate={date?.startDate}
+        endDate={date?.endDate}
       />
     );
   };
