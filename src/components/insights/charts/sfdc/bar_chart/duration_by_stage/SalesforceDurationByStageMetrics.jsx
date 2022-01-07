@@ -100,7 +100,7 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
 
     return (
       <div className="new-chart mb-3" style={{ minHeight: "450px", display: "flex" }}>
-        <Row>
+        <Row className="mr-1">
           <Col xs={12} sm={6}>
             <SalesforceCreatePackageDurationMetric
               metric={metrics[0]}
