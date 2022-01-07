@@ -158,23 +158,6 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
   const getFooterLine = () => {
     const topThreeDocs = metrics[0]?.docs?.length > 0 ? metrics[0].docs.slice(0, 3) : [];
     return (
-      // <>
-      //   <Row className="p-1 mt-3">
-      //     <Col lg={12}>Highest Issue Projects: </Col>
-      //   </Row>
-      //   {topThreeDocs.map((doc, index) => (
-      //     <Row className="p-1" key={index}>
-      //       <Col lg={12}>
-      //         <FontAwesomeIcon
-      //           icon={getIcon(doc?.projectTotalIssuesTrend)}
-      //           color={getIconColor(doc?.projectTotalIssuesTrend)}
-      //           title={getIconTitle(doc?.projectTotalIssuesTrend)}
-      //         />{" "}
-      //         {doc?.coverityStreamName}
-      //       </Col>
-      //     </Row>
-      //   ))}
-      // </>
       <HorizontalDataBlocksContainer title={"Highest Issue Projects:"}>
         {topThreeDocs.map((doc, index) => (
           <Row className="p-1" key={index}>
