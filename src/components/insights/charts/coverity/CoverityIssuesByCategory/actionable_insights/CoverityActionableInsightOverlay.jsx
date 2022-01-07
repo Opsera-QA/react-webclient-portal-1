@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
-import { Col, Row } from "react-bootstrap";
+// import { Col, Row } from "react-bootstrap";
 import Model from "core/data_model/model";
 import { AuthContext } from "contexts/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,8 +12,11 @@ import { useHistory } from "react-router-dom";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import CoverityActionableInsightTable from "./CoverityActionableInsightTable";
 import CoverityActionableDataBlockContainers from "./CoverityActionableDataBlockContainers";
-import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
+// import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
+import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
+import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
+
 function CoverityActionableInsightOverlay({ title, coveritySeverity, kpiConfiguration, dashboardData }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
@@ -113,6 +116,11 @@ function CoverityActionableInsightOverlay({ title, coveritySeverity, kpiConfigur
     toastContext.clearOverlayPanel();
   };
 
+  const getDateRange = () => {
+    const date = getMetricFilterValue(kpiConfiguration?.filters, "date");
+    return <MetricDateRangeBadge startDate={date?.startDate} endDate={date?.endDate} />;
+  };
+
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
@@ -124,6 +132,7 @@ function CoverityActionableInsightOverlay({ title, coveritySeverity, kpiConfigur
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
+        {getDateRange()}
         <CoverityActionableDataBlockContainers data={dataBlockValues} level={coveritySeverity} />
         <CoverityActionableInsightTable
           data={metrics}
