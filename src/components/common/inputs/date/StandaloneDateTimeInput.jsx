@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Moment from "moment";
 import DatePicker from "react-widgets/DatePicker";
-import {hasDateValue} from "components/common/helpers/date.helpers";
+import {hasDateValue} from "components/common/helpers/date/date.helpers";
 
 function StandaloneDatePickerInput({ value, setDataFunction, disabled, showTime, minDate, maxDate, dropUp, defaultToNull }) {
   Moment.locale("en");
