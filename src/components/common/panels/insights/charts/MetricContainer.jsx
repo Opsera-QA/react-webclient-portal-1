@@ -1,10 +1,8 @@
-import React, {useContext, useState} from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {faSpinner, faTh} from "@fortawesome/pro-light-svg-icons";
-import "components/analytics/charts/charts.css";
+import {faTh} from "@fortawesome/pro-light-svg-icons";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
-import {AuthContext} from "contexts/AuthContext";
+import IconBase from "components/common/icons/IconBase";
 
 function MetricContainer({ isLoading, children, title, chartHelpComponent }) {
   const [helpIsShown, setHelpIsShown] = useState(false);
@@ -28,12 +26,12 @@ function MetricContainer({ isLoading, children, title, chartHelpComponent }) {
 
   const getTitleBar = () => {
     if (isLoading) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Metric</span>);
+      return (<span><IconBase isLoading={true} className="mr-1"/>Loading Metric</span>);
     }
 
     return (
       <div className="d-flex justify-content-between">
-        <div><FontAwesomeIcon icon={faTh} fixedWidth className="mr-1"/>{title}</div>
+        <div><IconBase icon={faTh} fixedWidth className="mr-1"/>{title}</div>
         <div className={"d-flex"}>
           {getHelpToggle()}
         </div>

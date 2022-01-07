@@ -6,7 +6,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import {
-  assignStandardColors,
+  assignStandardColors, defaultConfig, getColorByData,
   shortenPieChartLegend,
 } from "components/insights/charts/charts-views";
 import { Col, Row } from "react-bootstrap";
@@ -21,8 +21,15 @@ import AutomatedTestAdoptionRateAdoptionRateDataBlock
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import NivoPieChartBase from "components/common/metrics/charts/nivo/pie/NivoPieChartBase";
 import {nivoChartLegendDefinitions} from "components/common/metrics/charts/nivo/nivoChartLegend.definitions";
+import config from "./adoptionTestPercentagePieChartConfig";
 import AdoptionTestPercentageChartHelpDocumentation
   from "../../../../common/help/documentation/insights/charts/AdoptionTestPercentageChartHelpDocumentation";
+import {
+  METRIC_CHART_STANDARD_HEIGHT,
+  METRIC_THEME_CHART_PALETTE_COLORS,
+} from "../../../../common/helpers/metrics/metricTheme.helpers";
+import { ResponsivePie } from "@nivo/pie";
+import { Container } from "@nivo/core";
 
 const ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS = {
   ADOPTED_TESTS: "adopted_tests",
@@ -121,9 +128,9 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
   const getNotesRow = () => {
     if (hasStringValue(notesData)) {
       return (
-          <Col className="px-4 pb-4 text-center">
-            <small> {notesData} </small>
-          </Col>
+        <Col className="px-4 pb-4 text-center">
+          <small> {notesData} </small>
+        </Col>
       );
     }
   };
@@ -142,40 +149,50 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
     }
 
     return (
-      <div className={"my-2"}>
-        <Row>
-          <Col xl={4} lg={6} md={8} className={"d-flex align-content-around"}>
-            <Row>
-              <Col lg={12}>
+      <div>
+        <div className="new-chart mt-3 mb-3 ml-4" style={{ height: "300px", display: "flex" }}>
+          <Container>
+            <Row className={"my-3"}>
+              <Col lg={6} >
                 <AutomatedTestAdoptionRateAdoptedTestsDataBlock
                   executedTestCount={metric?.executedTests}
                   executedTestsDataPoint={automatedTestsDataPoint}
                 />
               </Col>
-              <Col lg={12} className={"my-2"}>
+              <Col lg={6}>
                 <AutomatedTestAdoptionRateManualTestsDataBlock
                   manualTestCount={metric?.manualTests}
                   manualTestsDataPoint={manualTestsDataPoint}
                 />
               </Col>
-              <Col lg={12} className={"mb-2"}>
+            </Row>
+            <Row className={"p-1"}>
+              <Col lg={6} className={"w-100 mx-auto"}>
                 <AutomatedTestAdoptionRateAdoptionRateDataBlock
-                  adoptionRatePercentage={metric?.adoptionRate}
+                  score= {metric?.adoptionRate}
                   adoptionRateDataPoint={adoptionRateDataPoint}
                 />
               </Col>
             </Row>
+          </Container>
+          <Col xl={6} lg={6} md={4} className={"my-2 p-2"}>
+            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
+              <ResponsivePie
+                data={metric?.pairs}
+                {...defaultConfig()}
+                {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
+                onClick={() => setShowModal(true)}
+              />
+            </div>
           </Col>
-          <Col xl={8} lg={6} md={4} className={"my-2"}>
-            <NivoPieChartBase
-              data={metric?.pairs}
-              onClickFunction={() => setShowModal(true)}
-              legendsConfiguration={getLegendsConfiguration()}
-            />
-          </Col>
+        </div>
+        <Row>
+          {getNotesRow()}
         </Row>
-        {getNotesRow()}
       </div>
+
+
+
     );
   };
 

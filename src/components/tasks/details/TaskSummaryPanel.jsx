@@ -11,7 +11,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TaskTypeField from "components/common/fields/tasks/TaskTypeField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
-import TagsInlineInputBase from "components/common/inline_inputs/tags/TagsInlineInputBase";
+import TagsInlineInputBase from "components/common/inputs/tags/inline/TagsInlineInputBase";
 import TaskRoleAccessInput from "components/tasks/details/TaskRoleAccessInput";
 import ECSActionButtons from "components/tasks/ECSActionButtons";
 import AKSActionButtons from "components/tasks/AKSActionButtons";
@@ -80,9 +80,10 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         <Col md={12} className={"pt-1"}>
           <TagsInlineInputBase
             type={"task"}
-            dataObject={gitTasksData}
+            model={gitTasksData}
             fieldName={"tags"}
-            saveData={updateRecord}
+            saveDataFunction={updateRecord}
+            tags={gitTasksData?.getData("tags")}
             disabled={!actionAllowed("edit_settings")}
           />
         </Col>

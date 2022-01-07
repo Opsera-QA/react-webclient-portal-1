@@ -5,12 +5,8 @@ import OverlayTitleBar from "components/common/overlays/OverlayTitleBar";
 import CloseButton from "components/common/buttons/CloseButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
-import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
-import IconBase from "components/common/icons/IconBase";
-import {Col, Row} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-function ConfirmationOverlay({ children, actionBar, icon, titleText, titleIcon, showPanel, closePanel, isLoading, showToasts, showCloseButton, buttonContainer, fullWidth, pageLink, linkTooltipText }) {
+function ConfirmationOverlay({ children, actionBar, titleText, titleIcon, showPanel, closePanel, isLoading, showToasts, showCloseButton, buttonContainer, pageLink, linkTooltipText }) {
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -27,7 +23,12 @@ function ConfirmationOverlay({ children, actionBar, icon, titleText, titleIcon, 
     if (showCloseButton === true) {
       return (
         <SaveButtonContainer>
-          <CloseButton className={"p-3"} size={"sm"} closeEditorCallback={closePanel} showUnsavedChangesMessage={false} />
+          <CloseButton
+            className={"p-3"}
+            size={"sm"}
+            closeEditorCallback={closePanel}
+            showUnsavedChangesMessage={false}
+          />
         </SaveButtonContainer>
       );
     }
@@ -84,10 +85,8 @@ ConfirmationOverlay.propTypes = {
   actionBar: PropTypes.object,
   showCloseButton: PropTypes.bool,
   buttonContainer: PropTypes.object,
-  fullWidth: PropTypes.bool,
   pageLink: PropTypes.string,
   linkTooltipText: PropTypes.string,
-  icon: PropTypes.object,
 };
 
 ConfirmationOverlay.defaultProps = {

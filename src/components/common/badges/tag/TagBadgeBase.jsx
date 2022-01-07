@@ -2,7 +2,7 @@ import React  from "react";
 import PropTypes from "prop-types";
 import {faTag} from "@fortawesome/pro-light-svg-icons";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import CustomBadge from "components/common/badges/CustomBadge";
+import BadgeBase from "components/common/badges/BadgeBase";
 
 function TagBadgeBase({badgeText, className}) {
   if (hasStringValue(badgeText) !== true) {
@@ -10,8 +10,8 @@ function TagBadgeBase({badgeText, className}) {
   }
 
   return (
-    <CustomBadge
-      className={`${className} badge-light group-badge`}
+    <BadgeBase
+      className={`${className} tag-badge`}
       icon={faTag}
       badgeText={badgeText}
     />

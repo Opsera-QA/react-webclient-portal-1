@@ -15,7 +15,7 @@ import {useHistory} from "react-router-dom";
 import ExpireTokenModal from "components/user/user_settings/access_tokens/ExpireTokenModal";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faKey} from "@fortawesome/pro-light-svg-icons";
-import {convertFutureDateToDhmsFromNowString, getDaysUntilDate} from "components/common/helpers/date.helpers";
+import {convertFutureDateToDhmsFromNowString, getDaysUntilDate} from "components/common/helpers/date/date.helpers";
 
 function AccessTokenTable({accessTokenData, loadData, isMounted, isLoading, cancelTokenSource, setFilterModel, filterModel}) {
   let fields = accessTokenMetadata.fields;
