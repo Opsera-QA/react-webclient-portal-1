@@ -1,4 +1,6 @@
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import { format } from "date-fns";
+import {parseError} from "components/common/helpers/error-helpers";
 
 export function convertFutureDateToDhmsFromNowString(date) {
   const currentDateInSeconds = new Date().getTime() / 1000;
@@ -108,8 +110,6 @@ function smartHoursFormatter(hours) {
 function smartMinutesFormatter(minutes) {
   const hoursRemainder = minutes % 60;
 
-  console.log("minutes: " + minutes);
-
   if (hoursRemainder === 0 || minutes > 90) {
     const convertedHours = minutes / 60;
     return smartHoursFormatter(convertedHours);
@@ -171,30 +171,22 @@ export function smartTimeFormatter(value, timeFormat) {
   }
 }
 
-export function hasDateValue(potentialDate) {
-  if (potentialDate == null) {
-    return false;
-  }
-
+export function formatDateWithTime(date) {
   try {
-    const date = new Date(potentialDate);
-    return date && Object.prototype.toString.call(date) === "[object Date]";
-  }
-  catch (error) {
-    return false;
+    return format(date, "yyyy-MM-dd', 'hh:mm a");
+  } catch (error) {
+    const parsedError = parseError(error);
+    console.error(`Could not format date: ${parsedError}`);
+    return date;
   }
 }
 
-export function hasNumericDateValue(potentialDate) {
-  if (potentialDate == null) {
-    return false;
-  }
-
+export function formatDate(date) {
   try {
-    const date = new Date(potentialDate);
-    return date && Object.prototype.toString.call(date) === "[object Date]" && !isNaN(potentialDate);
-  }
-  catch (error) {
-    return false;
+    return format(new Date(date), "MMM dd yyyy");
+  } catch (error) {
+    const parsedError = parseError(error);
+    console.error(`Could not format date: ${parsedError}`);
+    return date;
   }
 }

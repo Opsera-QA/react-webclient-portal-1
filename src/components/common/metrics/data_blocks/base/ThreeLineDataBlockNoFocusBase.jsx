@@ -15,7 +15,7 @@ function ThreeLineDataBlockNoFocusBase({
   const getTopText = () => {
     if (topText) {
       return (
-        <div className={`light-gray-text-secondary font-inter-light-300 metric-block-header-text ${topStyle}`}>
+        <div className={`light-gray-text-secondary font-inter-light-400 metric-block-header-text ${topStyle}`}>
           {topText}
         </div>
       );
@@ -36,7 +36,7 @@ function ThreeLineDataBlockNoFocusBase({
   const getSubtitle = () => {
     if (bottomText) {
       return (
-        <div className={`light-gray-text-secondary font-inter-light-300 metric-block-footer-text ${bottomStyle}`}>
+        <div className={`light-gray-text-secondary font-inter-light-400 metric-block-footer-text ${bottomStyle}`}>
           {bottomText}
         </div>
       );

@@ -4,15 +4,21 @@ import DataBlockAndChartContainer from "components/common/metrics/container/Data
 import SalesforceCreatePackageDurationDataBlock from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/create_package/SalesforceCreatePackageDurationDataBlock";
 import SalesforceDurationByStageBarChartBase from "components/insights/charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageBarChartBase";
 function SalesforceCreatePackageDurationMetric({
-  meanData,
-  countData,
+  createPackageDurationMeanInMinutes,
+  createPackageTotalRunCount,
   goalsData,
   metric,
   kpiConfiguration,
   dashboardData,
 }) {
   const getDataBlock = () => {
-    return <SalesforceCreatePackageDurationDataBlock meanData={meanData} countData={countData} goalsData={goalsData} />;
+    return (
+      <SalesforceCreatePackageDurationDataBlock
+        createPackageDurationMeanInMinutes={createPackageDurationMeanInMinutes}
+        createPackageTotalRunCount={createPackageTotalRunCount}
+        goalsData={goalsData}
+      />
+    );
   };
 
   const getChart = () => {
@@ -31,8 +37,8 @@ function SalesforceCreatePackageDurationMetric({
 SalesforceCreatePackageDurationMetric.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  meanData: PropTypes.number,
-  countData: PropTypes.number,
+  createPackageDurationMeanInMinutes: PropTypes.number,
+  createPackageTotalRunCount: PropTypes.number,
   goalsData: PropTypes.number,
   metric: PropTypes.array,
 };

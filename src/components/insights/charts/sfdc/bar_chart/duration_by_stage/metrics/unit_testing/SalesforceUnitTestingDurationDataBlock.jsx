@@ -1,22 +1,47 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
 import "../../salesforce-duration-by-stage-kpi.css";
-import { getMiddleText, getMiddleStyle } from "../../salesforce-duration-by-stage-utility";
+import MetricTextBase from "components/common/metrics/text/MetricTextBase";
 
-function SalesforceUnitTestingDurationDataBlock({ meanData, countData }) {
+function SalesforceUnitTestingDurationDataBlock({ unitTestingDurationMeanInMinutes, unitTestingTotalRunCount }) {
+  const hasNumberValue = (potentialNumber) => {
+    return potentialNumber == undefined || potentialNumber == null || typeof potentialNumber !== "number"
+      ? false
+      : true;
+  };
+
+  const getUnitTestingMeanData = () => {
+    if (hasNumberValue(unitTestingDurationMeanInMinutes) && hasNumberValue(unitTestingTotalRunCount)) {
+      return (
+        <>
+          <div>
+            <MetricTextBase formattedText={`${unitTestingDurationMeanInMinutes} min`} />
+          </div>
+          <div>
+            <MetricTextBase formattedText={`${unitTestingTotalRunCount} runs`} />
+          </div>
+        </>
+      );
+    }
+    if (hasNumberValue(unitTestingDurationMeanInMinutes)) {
+      return <MetricTextBase formattedText={`${unitTestingDurationMeanInMinutes} min`} />;
+    }
+    return "No runs";
+  };
+
   return (
     <ThreeLineDataBlockNoFocusBase
       className="salesforce-duration-by-stage-kpi"
       topText={"Unit Testing"}
-      middleText={getMiddleText(meanData, countData)}
+      middleText={getUnitTestingMeanData()}
     />
   );
 }
 
 SalesforceUnitTestingDurationDataBlock.propTypes = {
-  meanData: PropTypes.number,
-  countData: PropTypes.number,
+  unitTestingDurationMeanInMinutes: PropTypes.number,
+  unitTestingTotalRunCount: PropTypes.number,
 };
 
 export default SalesforceUnitTestingDurationDataBlock;

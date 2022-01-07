@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import CoverityActionableMetadata from "./coverity-actionable-insight-metadata";
 import {
-  getChartTrendStatusColumn, getTableDateTimeColumn,
+  getChartTrendStatusColumn, getCustomTableAccessor, getCustomTableHeader, getTableDateTimeColumn,
   getTableTextColumn,
   getTableTextColumnWithoutField,
 } from "components/common/table/table-column-helpers";
@@ -21,6 +21,34 @@ function CoverityActionableInsightTable({ data, isLoading, loadData, filterModel
   const tableTitle = "Coverity " + title + " Report";
   const noDataMessage = "Coverity " + title + " report is currently unavailable at this time";
 
+  const getCoverityTableTextColumn = (field, block) => {
+    return {
+      Header: getCustomTableHeader(field),
+      accessor: getCustomTableAccessor(field),
+      Cell: function parseText(row) {
+        let classNm = "dark-gray-text-primary";
+        const value = row?.value;
+        switch (block) {
+          case "total_issues":
+            classNm = value <= 0 ? 'green' : "danger-red";
+            break;
+          case "quality_issues":
+            classNm = value <= 0 ? 'green' : "danger-red";
+            break;
+          case "security_issues":
+            classNm = value <= 0 ? 'green' : "danger-red";
+            break;
+          default:
+            classNm = "dark-gray-text-primary";
+        }
+
+        return (<div className={`${classNm}`}>
+          {value}
+        </div>);
+      },
+    };
+  };
+
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "project"), "project"),
@@ -28,9 +56,9 @@ function CoverityActionableInsightTable({ data, isLoading, loadData, filterModel
       getTableTextColumn(getField(fields, "run"), "run"),
       getTableDateTimeColumn(getField(fields, "timestamp"), "timestamp"),
       getChartTrendStatusColumn(getField(fields, "trend"), "trend"),
-      getTableTextColumn(getField(fields, "total_issues"), "total_issues"),
-      getTableTextColumn(getField(fields, "quality_issues"), "quality_issues"),
-      getTableTextColumn(getField(fields, "security_issues"), "security_issues"),
+      getCoverityTableTextColumn(getField(fields, "total_issues"), "total_issues"),
+      getCoverityTableTextColumn(getField(fields, "quality_issues"), "quality_issues"),
+      getCoverityTableTextColumn(getField(fields, "security_issues"), "security_issues"),
       getTableTextColumnWithoutField("Actions", "_blueprint", "text-center"),
     ],
     []

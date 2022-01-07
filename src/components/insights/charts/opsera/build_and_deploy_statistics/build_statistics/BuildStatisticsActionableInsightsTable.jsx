@@ -20,12 +20,12 @@ import FailedBuildsDeployments from "../data_blocks/FailedBuildsDeployments";
 import AverageDuration from "../data_blocks/AverageDuration";
 import AverageDurationToResolve from "../data_blocks/AverageDurationToResolve";
 import TotalDurationToResolve from "../data_blocks/TotalDurationToResolve";
-import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 
 function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [tableFilterDto, setTableFilterDto] = useState(
-    new Model({...genericChartFilterMetadata.newObjectFields}, genericChartFilterMetadata, false)
+    new Model({...actionableInsightsGenericChartFilterMetadata.newObjectFields}, actionableInsightsGenericChartFilterMetadata, false)
   );
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);

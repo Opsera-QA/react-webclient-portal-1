@@ -12,8 +12,11 @@ import { neutralColor, goalSuccessColor } from "../../../../charts/charts-views"
 import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMinus } from "@fortawesome/pro-solid-svg-icons";
-import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
+import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
+import {
+  METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY,
+  METRIC_THEME_CHART_PALETTE_COLORS,
+} from "components/common/helpers/metrics/metricTheme.helpers";
 // import MeanTimeToResolutionSummaryPanelMetadata from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/serviceNowMeanTimeToResolutionSummaryPanelMetadata";
 // import Model from "../../../../../../core/data_model/model";
 // import ChartDetailsOverlay from "../../../detail_overlay/ChartDetailsOverlay";
@@ -74,7 +77,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
           dashboardTags
         ),
         dataObject = response?.data?.data[0]?.serviceNowMTTR?.data[0]?.docs,
-        overallMeanValue = response?.data?.data[0]?.serviceNowMTTR?.data[0]?.overallMttrMins;
+        overallMeanValue = response?.data?.data[0]?.serviceNowMTTR?.data[0]?.overallMttrHours;
 
       setGoalsData(goals);
       assignStandardColors(dataObject, true);
@@ -108,27 +111,29 @@ function ServiceNowMeanTimeToResolutionBarChart({
     }
 
     return (
-      <div className="new-chart mb-3 pointer font-inter-light-300 dark-gray-text-primary" style={{ height: "300px" }}>
-        <div style={{ float: "right", fontSize: "10px" }}>
-          Total Number of Incidents - #<br></br>
-          <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" /> Average MTTR <b>({overallMean} Minutes)</b>
+      <div className="new-chart mb-4 pointer font-inter-light-400 dark-gray-text-primary" style={{ height: "300px" }}>
+        <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
+          Average MTTR <b>({overallMean} Hours)</b> <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" />
           <br></br>
-          <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" /> Goal
-          <b> ({goalsData?.mttrAvgMeanTimeGoal} Minutes)</b>
+          Goal<b> ({goalsData?.mttrAvgMeanTimeGoal} Hours)</b>{" "}
+          <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" />
+          <br></br>
+          MTTR{" "}
+          <FontAwesomeIcon icon={faSquare} color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} size="lg" />
         </div>
 
         <ResponsiveBar
           data={metrics}
-          {...defaultConfig("Mean Time to Resolution (in minutes)", "Date", false, false, "wholeNumbers", "monthDate2")}
+          {...defaultConfig("Mean Time to Resolution (in hours)", "Date", false, false, "wholeNumbers", "monthDate2")}
           {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
           {...adjustBarWidth(metrics)}
           // onClick={(data) => onRowSelect(data)}
           tooltip={({ indexValue, value, data, color }) => (
             <ChartTooltip
               titles={["Date", "Mean Time to Resolution", "Number of Incidents"]}
-              values={[new Date(indexValue).toDateString(), `${value} minutes`, data.Count]}
+              values={[new Date(indexValue).toDateString(), `${value} hours`, data.Count]}
               style={false}
-              color={color}
+              // color={color}
             />
           )}
           markers={[
@@ -136,13 +141,13 @@ function ServiceNowMeanTimeToResolutionBarChart({
               axis: "y",
               value: overallMean ? overallMean : 0,
               lineStyle: { stroke: neutralColor, strokeWidth: 2 },
-              legend: "Mean",
+              legend: "",
             },
             {
               axis: "y",
               value: goalsData?.mttrAvgMeanTimeGoal ? goalsData?.mttrAvgMeanTimeGoal : 0,
               lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
-              legend: "Goal",
+              legend: "",
             },
           ]}
         />

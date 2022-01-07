@@ -2,11 +2,11 @@ const salesforceDurationByStageMetadata = {
     type: "Salesforce Duration By Stage Goals",
     fields: [
       {
-        label: "Goal for average duration of Package Creation in minutes:",
+        label: "Goal: Average Duration of Build (minutes)",
         id: "average_builds"
       },
       {
-        label: "Goal for average duration of Deployments in minutes:",
+        label: "Goal: Average Duration of Deployment (minutes)",
         id: "average_deployments"
       },
     ],

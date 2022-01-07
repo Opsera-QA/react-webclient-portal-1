@@ -7,14 +7,16 @@ import SalesforceProfileMigrationDurationDataBlock from "components/insights/cha
 function SalesforceProfileMigrationDurationMetrics({
   kpiConfiguration,
   dashboardData,
-  meanData,
-  countData,
-  goalsData,
+  profileMigrationDurationMeanInMinutes,
+  profileMigrationTotalRunCount,
   metric,
 }) {
   const getDataBlock = () => {
     return (
-      <SalesforceProfileMigrationDurationDataBlock meanData={meanData} countData={countData} goalsData={goalsData} />
+      <SalesforceProfileMigrationDurationDataBlock
+        profileMigrationDurationMeanInMinutes={profileMigrationDurationMeanInMinutes}
+        profileMigrationTotalRunCount={profileMigrationTotalRunCount}
+      />
     );
   };
 
@@ -34,9 +36,8 @@ function SalesforceProfileMigrationDurationMetrics({
 SalesforceProfileMigrationDurationMetrics.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  meanData: PropTypes.number,
-  countData: PropTypes.number,
-  goalsData: PropTypes.object,
+  profileMigrationDurationMeanInMinutes: PropTypes.number,
+  profileMigrationTotalRunCount: PropTypes.number,
   metric: PropTypes.array,
 };
 
