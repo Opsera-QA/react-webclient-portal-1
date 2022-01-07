@@ -168,7 +168,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
       <HorizontalDataBlocksContainer title={"Highest Issue Projects:"}>
         {topThreeDocs.map((doc, index) => (
           <>
-          <span style={{paddingLeft: "10px"}}></span>
+          <span style={{paddingLeft: "11px"}}></span>
           <Row className="p-1" key={index}>
             <Col lg={12}>
               {(getIcon(doc?.projectTotalIssuesTrend) !== "Neutral") != null &&
@@ -178,6 +178,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 title={getIconTitle(doc?.projectTotalIssuesTrend)}
                 />
               }
+              <span style={{paddingLeft: "2px"}}></span>
               {doc?.coverityStreamName}
             </Col>
           </Row>
