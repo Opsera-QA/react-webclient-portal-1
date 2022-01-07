@@ -21,6 +21,8 @@ import AverageDuration from "../data_blocks/AverageDuration";
 import AverageDurationToResolve from "../data_blocks/AverageDurationToResolve";
 import TotalDurationToResolve from "../data_blocks/TotalDurationToResolve";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
+import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
+import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 
 function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -125,9 +127,15 @@ function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardDat
     }
   };
 
+  const getDateRange = () => {
+    const date = getMetricFilterValue(kpiConfiguration?.filters, "date");
+    return <MetricDateRangeBadge startDate={date?.startDate} endDate={date?.endDate} />;
+  };
+
   const getBody = () => {
     return (
       <>
+        {getDateRange()}
         {getBuildSummaryDetails()}
         <FilterContainer
           isLoading={isLoading}
