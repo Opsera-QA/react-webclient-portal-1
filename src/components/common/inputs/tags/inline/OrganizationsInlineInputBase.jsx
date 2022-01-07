@@ -1,26 +1,16 @@
-import React, {useContext} from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import EditIcon from "components/common/icons/field/EditIcon";
-import TagMultiSelectOverlay from "components/common/inputs/tags/inline/modal/TagMultiSelectOverlay";
-import AppliedTagBadge from "components/common/badges/tag/AppliedTagBadge";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import OrganizationMultiSelectOverlay from "components/common/inputs/tags/inline/modal/OrganizationMultiSelectOverlay";
+import AppliedOrganizationsBadge from "components/common/badges/tag/AppliedOrganizationsBadge";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
-function TagsInlineInputBase(
-  {
-    model,
-    fieldName,
-    disabled,
-    saveDataFunction,
-    badgeClassName,
-    visible,
-    type,
-    tagLocation,
-  }) {
+function OrganizationsInlineInputBase({ model, fieldName, disabled, saveDataFunction, visible, type, tagLocation }) {
   const toastContext = useContext(DialogToastContext);
 
   const showEditor = () => {
     toastContext.showOverlayPanel(
-      <TagMultiSelectOverlay
+      <OrganizationMultiSelectOverlay
         type={type}
         dataObject={model}
         fieldName={fieldName}
@@ -38,11 +28,10 @@ function TagsInlineInputBase(
     <div className="role-access">
       <div className="d-flex">
         <div>
-          <AppliedTagBadge
+          <AppliedOrganizationsBadge
             tags={model?.getData(fieldName)}
             tagLocation={tagLocation}
             showNoTagsAppliedBadge={true}
-            badgeClassName={badgeClassName}
           />
         </div>
         <div>
@@ -50,7 +39,7 @@ function TagsInlineInputBase(
             className={"ml-2 text-muted"}
             handleEditFunction={showEditor}
             disabled={disabled || saveDataFunction == null}
-            tooltipBody={`Select ${tagLocation ? `${tagLocation} ` : ""}Tags`}
+            tooltipBody={`Select ${tagLocation ? `${tagLocation} ` : ""}Organizations`}
           />
         </div>
       </div>
@@ -58,7 +47,7 @@ function TagsInlineInputBase(
   );
 }
 
-TagsInlineInputBase.propTypes = {
+OrganizationsInlineInputBase.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   disabled: PropTypes.bool,
@@ -66,11 +55,10 @@ TagsInlineInputBase.propTypes = {
   tagLocation: PropTypes.string,
   saveDataFunction: PropTypes.func,
   type: PropTypes.string,
-  badgeClassName: PropTypes.string,
 };
 
-TagsInlineInputBase.defaultProps = {
-  fieldName: "tags",
+OrganizationsInlineInputBase.defaultProps = {
+  fieldName: "organizations",
 };
 
-export default TagsInlineInputBase;
+export default OrganizationsInlineInputBase;

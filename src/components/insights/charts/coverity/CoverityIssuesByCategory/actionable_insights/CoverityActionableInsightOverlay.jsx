@@ -14,12 +14,7 @@ import CoverityActionableInsightTable from "./CoverityActionableInsightTable";
 import CoverityActionableDataBlockContainers from "./CoverityActionableDataBlockContainers";
 import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
-function CoverityActionableInsightOverlay({
-                                                       title,
-                                                       coveritySeverity,
-                                                       kpiConfiguration,
-                                                       dashboardData,
-                                                     }) {
+function CoverityActionableInsightOverlay({ title, coveritySeverity, kpiConfiguration, dashboardData }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   const { getAccessToken } = useContext(AuthContext);
@@ -31,7 +26,11 @@ function CoverityActionableInsightOverlay({
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [filterModel, setFilterModel] = useState(
-    new Model({ ...actionableInsightsGenericChartFilterMetadata.newObjectFields }, actionableInsightsGenericChartFilterMetadata, false)
+    new Model(
+      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+      actionableInsightsGenericChartFilterMetadata,
+      false
+    )
   );
 
   useEffect(() => {
@@ -59,7 +58,9 @@ function CoverityActionableInsightOverlay({
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       let request = "coverityInsightsDatablocks";
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
@@ -69,7 +70,7 @@ function CoverityActionableInsightOverlay({
         dashboardTags,
         filterDto,
         null,
-        null,
+        dashboardOrgs,
         null,
         null,
         null,
@@ -80,12 +81,13 @@ function CoverityActionableInsightOverlay({
       let dataCount = response?.data
         ? response?.data?.data[0]?.coverityInsightsDatablocks?.data[0]?.count[0]?.count
         : [];
-      let DataBlocks = response?.data ? response?.data?.data[0]?.coverityInsightsDatablocks?.data[0]?.DataBlocks[0] : [];
+      let DataBlocks = response?.data
+        ? response?.data?.data[0]?.coverityInsightsDatablocks?.data[0]?.DataBlocks[0]
+        : [];
       dataObject = dataObject.map((bd, index) => ({
         ...bd,
         _blueprint: <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2" />,
       }));
-
 
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataCount);

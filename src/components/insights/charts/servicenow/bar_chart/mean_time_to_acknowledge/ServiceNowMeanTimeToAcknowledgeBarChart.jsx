@@ -65,7 +65,9 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       let dashboardTags =
           dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value,
         goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type == "goals")]?.value,
@@ -74,7 +76,10 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
           cancelSource,
           "serviceNowMTTA",
           kpiConfiguration,
-          dashboardTags
+          dashboardTags,
+          null,
+          null,
+          dashboardOrgs
         ),
         dataObject = response?.data?.data[0]?.serviceNowMTTA?.data[0]?.docs,
         overallMeanValue = response?.data?.data[0]?.serviceNowMTTA?.data[0]?.overallMttaHours;
@@ -144,7 +149,7 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
     // };
 
     return (
-      <div className="new-chart mb-3 pointer font-inter-light-400 dark-gray-text-primary" style={{ height: "300px" }}>
+      <div className="new-chart mb-4 pointer font-inter-light-400 dark-gray-text-primary" style={{ height: "300px" }}>
         <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
           Average MTTA <b>({overallMean} Hours)</b> <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" />
           <br></br>

@@ -184,6 +184,7 @@ export const getTagColumn = (field, className) => {
 
       return (
         <AppliedTagBadge
+          className={"group-badge"}
           tags={tags}
         />
       );
