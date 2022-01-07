@@ -26,7 +26,7 @@ function ContainedThreeLineDataBlockBase({ middleText, bottomText, titleText, cl
 
   return (
     <div className={className}>
-      <div className={"text-center h-100 font-inter-light-300"}>
+      <div className={"text-center h-100 font-inter-light-400"}>
         <DataBlockContainer title={titleText}>
           <div className="my-auto dark-gray-text-primary">
             {getMiddleText()}

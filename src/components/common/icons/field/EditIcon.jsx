@@ -4,9 +4,16 @@ import {faPencilAlt} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 import IconBase from "components/common/icons/IconBase";
 
-function EditIcon({ editFunction, className, tooltipBody, disabled }) {
+function EditIcon(
+  {
+    handleEditFunction,
+    className,
+    tooltipBody,
+    disabled,
+    iconClassName,
+  }) {
 
-  if (disabled === true) {
+  if (disabled === true || handleEditFunction == null) {
     return null;
   }
 
@@ -14,9 +21,10 @@ function EditIcon({ editFunction, className, tooltipBody, disabled }) {
     <div className={className}>
       <ButtonTooltip innerText={tooltipBody}>
         <IconBase
-          onClickFunction={() => {editFunction();}}
+          onClickFunction={() => {handleEditFunction();}}
           icon={faPencilAlt}
           className={"pointer"}
+          iconClassName={iconClassName}
         />
       </ButtonTooltip>
     </div>
@@ -24,10 +32,11 @@ function EditIcon({ editFunction, className, tooltipBody, disabled }) {
 }
 
 EditIcon.propTypes = {
-  editFunction: PropTypes.func,
+  handleEditFunction: PropTypes.func,
   className: PropTypes.string,
   tooltipBody: PropTypes.any,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  iconClassName: PropTypes.string,
 };
 
 export default EditIcon;
