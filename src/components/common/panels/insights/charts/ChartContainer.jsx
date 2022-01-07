@@ -114,8 +114,8 @@ function ChartContainer(
     }
 
     return (
-      <div className="d-flex justify-content-between">
-        <div>
+      <div className="d-flex justify-content-between my-auto">
+        <div className={"my-auto"}>
           {kpiConfiguration?.kpi_name}
         </div>
         <div className={"d-flex my-auto"}>
