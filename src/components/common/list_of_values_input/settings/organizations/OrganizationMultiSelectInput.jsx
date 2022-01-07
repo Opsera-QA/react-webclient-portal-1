@@ -1,11 +1,20 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import organizationActions from "components/settings/organizations/organization-actions";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
-function OrganizationMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction, className, clearDataFunction, showLabel}) {
+function OrganizationMultiSelectInput({
+  fieldName,
+  dataObject,
+  setDataObject,
+  disabled,
+  setDataFunction,
+  className,
+  clearDataFunction,
+  showLabel,
+}) {
   const { getAccessToken } = useContext(AuthContext);
   const [field] = useState(dataObject.getFieldById(fieldName));
   const [organizations, setOrganizations] = useState([]);
@@ -39,14 +48,12 @@ function OrganizationMultiSelectInput({ fieldName, dataObject, setDataObject, di
     try {
       setIsLoading(true);
       await getOrganizations(cancelSource);
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         setErrorMessage("Could not load organizations.");
         console.error(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -73,7 +80,6 @@ function OrganizationMultiSelectInput({ fieldName, dataObject, setDataObject, di
   if (field == null) {
     return null;
   }
-
   return (
     <MultiSelectInputBase
       className={className}
@@ -83,7 +89,7 @@ function OrganizationMultiSelectInput({ fieldName, dataObject, setDataObject, di
       setDataObject={setDataObject}
       clearDataFunction={clearDataFunction}
       textField={"name"}
-      valueField={"_id"}
+      value={[...dataObject?.getArrayData(fieldName)]}
       busy={isLoading}
       dataObject={dataObject}
       showLabel={showLabel}
@@ -101,7 +107,7 @@ OrganizationMultiSelectInput.propTypes = {
   clearDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string,
-  showLabel: PropTypes.bool
+  showLabel: PropTypes.bool,
 };
 
 export default OrganizationMultiSelectInput;

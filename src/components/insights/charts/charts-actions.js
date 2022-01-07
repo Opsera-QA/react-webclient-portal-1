@@ -65,7 +65,7 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
     tags: tags,
   };
 
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, undefined, apiUrl, postBody);
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, apiUrl, postBody);
 };
 
 chartsActions.parseConfigurationAndGetChartMetrics = async (
@@ -117,6 +117,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   }
   if (!useDashboardTags) {
     dashboardTags = null;
+    dashboardOrgs = null;
   }
 
   const postBody = {

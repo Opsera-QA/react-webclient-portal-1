@@ -1,34 +1,33 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
+import { faExclamationCircle } from "@fortawesome/pro-light-svg-icons";
 import InfoDialog from "components/common/status_notifications/info";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import ChartSettingsOverlay from "components/insights/marketplace/charts/ChartSettingsOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
-import {parseError} from "components/common/helpers/error-helpers";
-import {getMetricFilterValue} from "components/common/helpers/metrics/metricFilter.helpers";
+import { parseError } from "components/common/helpers/error-helpers";
+import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricTagBadge from "components/common/badges/tag/MetricTagBadge";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 
 // TODO: Clean up and combine with ChartContainer for a v2 container
-function VanityMetricContainer(
-  {
-    kpiConfiguration,
-    setKpiConfiguration,
-    dashboardData,
-    index,
-    chart,
-    isLoading,
-    error,
-    loadChart,
-    setKpis,
-    chartHelpComponent,
-    settingsHelpComponent,
-    showSettingsToggle,
-    className,
-  }) {
+function VanityMetricContainer({
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  chart,
+  isLoading,
+  error,
+  loadChart,
+  setKpis,
+  chartHelpComponent,
+  settingsHelpComponent,
+  showSettingsToggle,
+  className,
+}) {
   const toastContext = useContext(DialogToastContext);
   const [view, setView] = useState("chart");
   const [helpIsShown, setHelpIsShown] = useState(false);
