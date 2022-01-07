@@ -177,7 +177,7 @@ function DashboardScreenContainer(
         {<InsightsSubNavigationBar currentTab={"dashboardViewer"} />}
       </div>
       <div>
-        <div className="px-2 dashboard-container-header title-text-header-1">
+        <div className="px-2 dashboard-container-header chart-header-name-text title-text-header-1">
           {getTitleBar()}
         </div>
         <div className={tab === "settings" ? `detail-container-body` : `detail-container-body dashboard-screen-container-body mb-2`}>
