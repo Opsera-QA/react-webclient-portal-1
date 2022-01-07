@@ -14,9 +14,7 @@ import SalesforceDurationByStageActionableInsightsTable from "./SalesforceDurati
 import SalesforceDurationByStageOverviewDataBlockContainer from "./SalesforceDurationByStageOverviewDataBlockContainer";
 import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
-import { formatDate } from "components/common/helpers/date/date.helpers";
-import DateBadge from "components/common/badges/date/DateBadge";
-import { addDays, isSameDay } from "date-fns";
+import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 
 function SalesforceDurationByStageActionableInsightsOverlay({
   title,
@@ -146,24 +144,7 @@ function SalesforceDurationByStageActionableInsightsOverlay({
 
   const getDateBadge = () => {
     const date = actionableInsightsQueryData?.data;
-
-    if (date == null) {
-      const formattedStartDate = formatDate(addDays(new Date(), -90));
-      const formattedEndDate = formatDate(new Date());
-      return <DateBadge badgeText={`${formattedStartDate} to ${formattedEndDate}`} />;
-    }
-
-    const startDate = date?.lowerBound;
-    const endDate = date?.upperBound;
-
-    if (isSameDay(new Date(startDate), new Date(date.endDate))) {
-      return <DateBadge badgeText={formatDate(startDate)} />;
-    }
-
-    const formattedStartDate = formatDate(startDate);
-    const formattedEndDate = formatDate(endDate);
-
-    return <DateBadge badgeText={`${formattedStartDate} to ${formattedEndDate}`} />;
+    return <MetricDateRangeBadge startDate={date?.lowerBound} endDate={date?.upperBound} />;
   };
 
   return (
