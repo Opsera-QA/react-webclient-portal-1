@@ -176,14 +176,13 @@ function DashboardScreenContainer(
       <div className="mb-3">
         {<InsightsSubNavigationBar currentTab={"dashboardViewer"} />}
       </div>
-      <div className="content-container content-card-1">
+      <div>
         <div className="px-2 dashboard-container-header title-text-header-1">
           {getTitleBar()}
         </div>
-        <div className={tab === "settings" ? `detail-container-body` : `detail-container-body shaded-container`}>
+        <div className={tab === "settings" ? `detail-container-body` : `detail-container-body dashboard-screen-container-body mb-2`}>
           {getBody()}
         </div>
-        <div className="content-block-footer"/>
       </div>
     </div>
   );

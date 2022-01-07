@@ -85,7 +85,7 @@ function VanityMetricContainer({
     if (showSettingsToggle !== false) {
       return (
         <ToggleSettingsIcon
-          className={"ml-3"}
+          className={"ml-3 my-auto"}
           visible={!helpIsShown}
           activeTab={view}
           setActiveTab={() => showSettingsPanel()}
@@ -97,28 +97,34 @@ function VanityMetricContainer({
   const getTitleBar = () => {
     if (isLoading) {
       return (
-        <span>
-          <IconBase isLoading={true} className="mr-1" />
-          Loading Chart
-        </span>
+        <div className={"h-100 d-flex justify-content-between"}>
+          <span className={"my-auto"}>
+            <IconBase isLoading={true} className="mr-1"/>
+            Loading Chart
+          </span>
+        </div>
       );
     }
 
     if (error) {
       return (
-        <div className="d-flex justify-content-between">
+        <div className={"h-100 d-flex justify-content-between"}>
           <span>
-            <IconBase icon={faExclamationCircle} fixedWidth className="mr-1" />
+            <IconBase icon={faExclamationCircle} fixedWidth className="mr-1"/>
             Error Loading Chart!
           </span>
-          <div>{getSettingsToggle()}</div>
+          <div>
+            {getSettingsToggle()}
+          </div>
         </div>
       );
     }
 
     return (
-      <div className="d-flex justify-content-between">
-        <div>{kpiConfiguration?.kpi_name}</div>
+      <div className={"h-100 d-flex justify-content-between"}>
+        <div className={"my-auto"}>
+          {kpiConfiguration?.kpi_name}
+        </div>
         <div className={"d-flex my-auto"}>
           {getHelpToggle()}
           {getSettingsToggle()}
@@ -131,26 +137,27 @@ function VanityMetricContainer({
   const getChartBody = () => {
     if (error) {
       return (
-        <div className="new-chart mb-3" style={{ height: "300px" }}>
-          <span>
-            There was an error loading this chart: {parseError(error?.message)}. Please check logs for more details.
-          </span>
+        <div className="new-chart mb-3" style={{height: "300px"}}>
+          <div className="max-content-width p-5 mt-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <span className={"-5"}>There was an error loading this chart: {parseError(error?.message)}. Please check logs for more details.</span>
+          </div>
         </div>
       );
     }
 
     if (helpIsShown) {
-      return <div className={"m-2"}>{chartHelpComponent(closeHelpPanel)}</div>;
+      return (
+        <div className={"m-2"}>
+          {chartHelpComponent(closeHelpPanel)}
+        </div>
+      );
     }
 
     // TODO: Rework when all are updated
     if (chart === null && !isLoading) {
       return (
         <div className="new-chart mb-3" style={{ height: "300px" }}>
-          <div
-            className="max-content-width p-5 mt-5"
-            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-          >
+          <div className="max-content-width p-5 mt-5" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <InfoDialog message="No Data is available for this chart at this time." />
           </div>
         </div>
@@ -161,20 +168,25 @@ function VanityMetricContainer({
       return <div className="m-3" />;
     }
 
-    return <div>{chart}</div>;
+    return (
+      <div>
+        {chart}
+      </div>
+    );
   };
 
   const getDashboardTagsBadge = () => {
     const useDashboardTags = kpiConfiguration?.settings?.useDashboardTags !== false;
-    let kpiConfigDashboardTags = getMetricFilterValue(dashboardData?.getData("filters"), "tags");
-    const kpiConfigDashboardOrgs = getMetricFilterValue(dashboardData?.getData("filters"), "organizations");
-    if (Array.isArray(kpiConfigDashboardOrgs)) {
-      kpiConfigDashboardOrgs.forEach((org) => {
-        kpiConfigDashboardTags = [...kpiConfigDashboardTags, ...org.tags];
-      });
-    }
+    const kpiConfigDashboardTags = getMetricFilterValue(dashboardData?.getData("filters"), "tags");
+
     if (useDashboardTags === true) {
-      return <MetricTagBadge type={"Dashboard"} tags={kpiConfigDashboardTags} showNoTagsAppliedBadge={true} />;
+      return (
+        <MetricTagBadge
+          type={"Dashboard"}
+          tags={kpiConfigDashboardTags}
+          showNoTagsAppliedBadge={true}
+        />
+      );
     }
   };
 
@@ -183,7 +195,13 @@ function VanityMetricContainer({
     const kpiConfigTags = getMetricFilterValue(kpiConfiguration?.filters, "tags");
 
     if (useKpiTags === true) {
-      return <MetricTagBadge type={"KPI"} tags={kpiConfigTags} showNoTagsAppliedBadge={true} />;
+      return (
+        <MetricTagBadge
+          type={"KPI"}
+          tags={kpiConfigTags}
+          showNoTagsAppliedBadge={true}
+        />
+      );
     }
   };
 
@@ -195,7 +213,11 @@ function VanityMetricContainer({
     if (date == null) {
       const formattedStartDate = formatDate(addDays(new Date(), -90));
       const formattedEndDate = formatDate(new Date());
-      return <DateBadge badgeText={`${formattedStartDate} to ${formattedEndDate}`} />;
+      return (
+        <DateBadge
+          badgeText={`${formattedStartDate} to ${formattedEndDate}`}
+        />
+      );
     }
 
     const startDate = date?.startDate;
@@ -204,21 +226,35 @@ function VanityMetricContainer({
     // TODO: Add date check
 
     if (isSameDay(new Date(startDate), new Date(date.endDate))) {
-      return <DateBadge badgeText={formatDate(startDate)} />;
+      return (
+        <DateBadge
+          badgeText={formatDate(startDate)}
+        />
+      );
     }
 
     const formattedStartDate = formatDate(startDate);
     const formattedEndDate = formatDate(endDate);
 
-    return <DateBadge badgeText={`${formattedStartDate} to ${formattedEndDate}`} />;
+    return (
+      <DateBadge
+        badgeText={`${formattedStartDate} to ${formattedEndDate}`}
+      />
+    );
   };
 
   return (
     <div className="metric-chart-container bg-white">
-      <div className="px-3 metric-title-bar title-text-header-1 chart-header-name-text">{getTitleBar()}</div>
-      <div>{getChartBody()}</div>
+      <div className="px-3 metric-title-bar title-text-header-1 chart-header-name-text">
+        {getTitleBar()}
+      </div>
+      <div>
+        {getChartBody()}
+      </div>
       <div className={"d-flex p-2 justify-content-between chart-footer-text"}>
-        <div>{getDateBadge()}</div>
+        <div>
+          {getDateBadge()}
+        </div>
         <div className={"d-flex"}>
           <div className={"mr-2"}>{getKpiTagsBadge()}</div>
           <div>{getDashboardTagsBadge()}</div>
