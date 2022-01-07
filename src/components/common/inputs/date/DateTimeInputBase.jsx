@@ -5,31 +5,45 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneDatePickerInput from "components/common/inputs/date/StandaloneDateTimeInput";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import {hasDateValue} from "components/common/helpers/date/date.helpers";
 
-function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFunction, disabled, showTime, minDate, maxDate, dropUp }) {
+function DateTimeInputBase(
+  {
+    fieldName,
+    dataObject,
+    setDataObject,
+    setDataFunction,
+    disabled,
+    showTime,
+    minDate,
+    maxDate,
+    dropUp,
+    defaultToNull,
+  }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   Moment.locale("en");
 
   useEffect(() => {
-    if (dataObject.getData(fieldName) !== "") {
+    if (hasStringValue(dataObject.getData(fieldName)) === true) {
       setErrorMessage(dataObject.getFieldError(fieldName));
     }
   }, [dataObject]);
 
-  // TODO: When creating next date input, ensure fieldName is sent back for more complex functions
   const validateAndSetData = (value) => {
-    let newDataObject;
-    if (setDataFunction) {
-      newDataObject = setDataFunction(value);
-    }
-    else {
-      newDataObject = {...dataObject};
-      newDataObject.setData(fieldName, value);
-      setDataObject({...newDataObject});
-    }
+    if (value) {
+      let newDataObject;
+      if (setDataFunction) {
+        newDataObject = setDataFunction(fieldName, value);
+      } else {
+        newDataObject = {...dataObject};
+        newDataObject.setData(fieldName, value);
+        setDataObject({...newDataObject});
+      }
 
-    setErrorMessage(newDataObject.getFieldError(fieldName));
+      setErrorMessage(newDataObject.getFieldError(fieldName));
+    }
   };
 
   if (field == null) {
@@ -45,8 +59,9 @@ function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFuncti
         showTime={showTime}
         disabled={disabled}
         dropUp={dropUp}
-        value={new Date(dataObject?.getData(fieldName))}
+        value={hasDateValue(dataObject?.getData(fieldName)) === true ? new Date(dataObject?.getData(fieldName)) : null}
         setDataFunction={validateAndSetData}
+        defaultToNull={defaultToNull}
       />
       <InfoText field={field} errorMessage={errorMessage}/>
     </InputContainer>
@@ -62,7 +77,8 @@ DateTimeInputBase.propTypes = {
   showTime: PropTypes.bool,
   minDate: PropTypes.any,
   maxDate: PropTypes.any,
-  dropUp: PropTypes.bool
+  dropUp: PropTypes.bool,
+  defaultToNull: PropTypes.bool,
 };
 
 DateTimeInputBase.defaultProps = {

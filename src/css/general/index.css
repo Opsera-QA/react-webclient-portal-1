@@ -49,7 +49,8 @@ primary analytics font*/
     font-family: 'Inter', sans-serif;
     font-weight: 100;
     text-transform: capitalize;
-    color: #8798ad;
+    /*color: #8798ad;*/
+    color: white;
 }
 
 .chart-footer-text {
