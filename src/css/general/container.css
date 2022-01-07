@@ -146,7 +146,9 @@
     /*color: #3D3B36;*/
     background-color: #00a8e8;
     color: #fff;
-    line-height: 2.4em;
+    font-size: 1.4em;
+    height: 48px;
+    max-height: 48px;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
 }
