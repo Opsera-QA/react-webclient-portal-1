@@ -168,22 +168,22 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
       <HorizontalDataBlocksContainer title={"Highest Issue Projects:"}>
         {topThreeDocs.map((doc, index) => (
           <>
-            <span style={{paddingLeft: "11px"}}></span>
-            <Row className="p-1" key={index}>
-              <Col lg={12}>
-                {(getIcon(doc?.projectTotalIssuesTrend) !== "Neutral") != null &&
+          <span style={{paddingLeft: "11px"}}></span>
+          <Row className="p-1" key={index}>
+            <Col lg={12}>
+              {(getIcon(doc?.projectTotalIssuesTrend) !== "Neutral") != null &&
                 <FontAwesomeIcon
-                  icon={getIcon(doc?.projectTotalIssuesTrend)}
-                  color={getIconColor(doc?.projectTotalIssuesTrend)}
-                  title={getIconTitle(doc?.projectTotalIssuesTrend)}
+                icon={getIcon(doc?.projectTotalIssuesTrend)}
+                color={getIconColor(doc?.projectTotalIssuesTrend)}
+                title={getIconTitle(doc?.projectTotalIssuesTrend)}
                 />
-                }
-                <span style={{paddingLeft: "2px"}}></span>
-                {doc?.coverityStreamName}
-              </Col>
-            </Row>
+              }
+              <span style={{paddingLeft: "2px"}}></span>
+              {doc?.coverityStreamName}
+            </Col>
+          </Row>
           </>
-        ))}
+            ))}
       </HorizontalDataBlocksContainer>
 
     );
@@ -224,7 +224,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
             </Col>
           </Row>
           <div className={"mt-5"}>
-            {getFooterLine()}
+          {getFooterLine()}
           </div>
         </Container>
       </div>
