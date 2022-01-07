@@ -6,13 +6,11 @@ import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIc
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import ChartSettingsOverlay from "components/insights/marketplace/charts/ChartSettingsOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import { addDays, isSameDay } from "date-fns";
 import IconBase from "components/common/icons/IconBase";
 import {parseError} from "components/common/helpers/error-helpers";
 import {getMetricFilterValue} from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricTagBadge from "components/common/badges/tag/MetricTagBadge";
-import {formatDate} from "components/common/helpers/date/date.helpers";
-import DateBadge from "components/common/badges/date/DateBadge";
+import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 
 // TODO: Clean up and combine with ChartContainer for a v2 container
 function VanityMetricContainer(
@@ -206,40 +204,13 @@ function VanityMetricContainer(
     }
   };
 
-  // TODO: Make date badge component and also date range badge component
-  // TODO: Add date verifier
   const getDateBadge = () => {
     const date = getMetricFilterValue(kpiConfiguration?.filters, "date");
 
-    if (date == null) {
-      const formattedStartDate = formatDate(addDays(new Date(), -90));
-      const formattedEndDate = formatDate(new Date());
-      return (
-        <DateBadge
-          badgeText={`${formattedStartDate} to ${formattedEndDate}`}
-        />
-      );
-    }
-
-    const startDate = date?.startDate;
-    const endDate = date?.endDate;
-
-    // TODO: Add date check
-
-    if (isSameDay(new Date(startDate), new Date(date.endDate))) {
-      return (
-        <DateBadge
-          badgeText={formatDate(startDate)}
-        />
-      );
-    }
-
-    const formattedStartDate = formatDate(startDate);
-    const formattedEndDate = formatDate(endDate);
-
     return (
-      <DateBadge
-        badgeText={`${formattedStartDate} to ${formattedEndDate}`}
+      <MetricDateRangeBadge
+        startDate={date?.startDate}
+        endDate={date?.endDate}
       />
     );
   };
