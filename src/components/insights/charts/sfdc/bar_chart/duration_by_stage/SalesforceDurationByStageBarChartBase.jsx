@@ -23,24 +23,26 @@ function SalesforceDurationByStageBarChartBase({ metric, kpiConfiguration, dashb
   };
 
   return (
-    <ResponsiveLine
-      data={metric}
-      {...defaultConfig("Duration (min)", "Date", false, true, "wholeNumbers", "monthDate")}
-      {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
-      enableGridX={false}
-      enableGridY={false}
-      tooltip={(node) => (
-        <ChartTooltip
-          titles={["Date Range", "Average Duration", "Number of Executions"]}
-          values={[
-            node.point.data.range,
-            String(node.point.data.yFormatted) + " minutes",
-            node.point.data.count + " runs",
-          ]}
-        />
-      )}
-      onClick={(node) => onNodeSelect(node)}
-    />
+    <div style={{ height: "150px" }}>
+      <ResponsiveLine
+        data={metric}
+        {...defaultConfig("Duration (min)", "Date", false, true, "wholeNumbers", "monthDate")}
+        {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
+        enableGridX={false}
+        enableGridY={false}
+        tooltip={(node) => (
+          <ChartTooltip
+            titles={["Date Range", "Average Duration", "Number of Executions"]}
+            values={[
+              node.point.data.range,
+              String(node.point.data.yFormatted) + " minutes",
+              node.point.data.count + " runs",
+            ]}
+          />
+        )}
+        onClick={(node) => onNodeSelect(node)}
+      />
+    </div>
   );
 }
 
