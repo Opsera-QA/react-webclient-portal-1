@@ -168,6 +168,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
     const topThreeDocs = metrics[0]?.docs?.length > 0 ? metrics[0].docs.slice(0, 3) : [];
     return (
       <HorizontalDataBlocksContainer title={"Highest Issue Projects:"}>
+        <span style={{paddingLeft: "10px"}}></span>
         {topThreeDocs.map((doc, index) => (
           <Row className="p-1" key={index}>
             <Col lg={12}>
@@ -178,8 +179,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 title={getIconTitle(doc?.projectTotalIssuesTrend)}
                 />
               }
-              {/*{getSpacing(doc?.projectTotalIssuesTrend)}*/}
-              {/*<span style={{paddingLeft: "10px"}}>{doc?.coverityStreamName}</span>*/}
+              {doc?.coverityStreamName}
             </Col>
           </Row>
             ))}
