@@ -13,7 +13,7 @@ import { faDraftingCompass, faExternalLink } from "@fortawesome/pro-light-svg-ic
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TotalBuilds from "../data_blocks/TotalBuilds";
 import SuccessfulBuildsDeployments from "../data_blocks/SuccessfulBuildsDeployments";
 import FailedBuildsDeployments from "../data_blocks/FailedBuildsDeployments";
@@ -21,20 +21,25 @@ import AverageDuration from "../data_blocks/AverageDuration";
 import AverageDurationToResolve from "../data_blocks/AverageDurationToResolve";
 import TotalDurationToResolve from "../data_blocks/TotalDurationToResolve";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
+import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
+import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 
 function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [tableFilterDto, setTableFilterDto] = useState(
-    new Model({...actionableInsightsGenericChartFilterMetadata.newObjectFields}, actionableInsightsGenericChartFilterMetadata, false)
+    new Model(
+      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+      actionableInsightsGenericChartFilterMetadata,
+      false
+    )
   );
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [buildStatsData, setBuildStatsData] = useState([]);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
-  const [error, setError] = useState(undefined);  
-  const [buildSummaryData, setBuildSummaryData]=useState(undefined);
-
+  const [error, setError] = useState(undefined);
+  const [buildSummaryData, setBuildSummaryData] = useState(undefined);
 
   const noDataMessage = "Opsera Build Statistics report is currently unavailable at this time";
 
@@ -48,8 +53,7 @@ function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardDat
       getTableTextColumn(getField(fields, "failure")),
       getTableTextColumn(getField(fields, "duration")),
       getTableTextColumn(getField(fields, "timeToResolve")),
-      getTableTextColumnWithoutField('Actions','_blueprint')
-
+      getTableTextColumnWithoutField("Actions", "_blueprint"),
     ],
     []
   );
@@ -75,35 +79,38 @@ function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardDat
     };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {    
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "opseraBuildActionableInsights",
         kpiConfiguration,
-        dashboardTags,        
-        filterDto        
+        dashboardTags,
+        filterDto
       );
-      
+
       if (isMounted?.current === true && response?.status === 200) {
         const buildData = response?.data?.data[0]?.opseraBuildActionableInsights?.data[0]?.data;
-        
-        await setBuildStatsData(buildData.map((bd,index)=>({
-              ...bd,              
-              "_blueprint": <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2"/> ,
-            })));
+
+        await setBuildStatsData(
+          buildData.map((bd, index) => ({
+            ...bd,
+            _blueprint: <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2" />,
+          }))
+        );
         let newFilterDto = filterDto;
         newFilterDto.setData(
           "totalCount",
           response?.data?.data[0]?.opseraBuildActionableInsights?.data[0]?.count[0]?.count
         );
         setTableFilterDto({ ...newFilterDto });
-        setBuildSummaryData( response?.data?.data[0]?.opseraBuildActionableInsights?.data[0]?.summaryData[0]);        
+        setBuildSummaryData(response?.data?.data[0]?.opseraBuildActionableInsights?.data[0]?.summaryData[0]);
       }
-    } catch (error) {      
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
@@ -115,90 +122,77 @@ function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardDat
     }
   };
 
+  const getDateRange = () => {
+    const date = getMetricFilterValue(kpiConfiguration?.filters, "date");
+    return <MetricDateRangeBadge startDate={date?.startDate} endDate={date?.endDate} />;
+  };
+
   const getBody = () => {
     return (
       <>
-        
+        {getDateRange()}
         {getBuildSummaryDetails()}
         <FilterContainer
           isLoading={isLoading}
           showBorder={false}
           title={`Opsera Build Statistics Report`}
           titleIcon={faDraftingCompass}
-          body={getTable()}          
+          body={getTable()}
           className={"px-2 pb-2"}
-        />        
+        />
       </>
     );
   };
 
   const getBuildSummaryDetails = () => {
-    if (!buildSummaryData){
+    if (!buildSummaryData) {
       return null;
     }
     return (
-      <Row className="pb-3 px-2">        
+      <Row className="pb-3 px-2">
         <Col lg={4} md={6} className="mt-3">
-          <TotalBuilds 
-            displayValue={buildSummaryData?.total}
-            displayText="Total Builds"
-          />          
+          <TotalBuilds displayValue={buildSummaryData?.total} displayText="Total Builds" />
         </Col>
         <Col lg={4} md={6} className="mt-3">
-          <SuccessfulBuildsDeployments 
-            displayValue={buildSummaryData?.success}
-            displayText="Successful Builds"
-          />          
+          <SuccessfulBuildsDeployments displayValue={buildSummaryData?.success} displayText="Successful Builds" />
         </Col>
         <Col lg={4} md={6} className="mt-3">
-          <FailedBuildsDeployments 
-            displayValue={buildSummaryData?.failure}
-            displayText="Failed Builds"
-          />          
+          <FailedBuildsDeployments displayValue={buildSummaryData?.failure} displayText="Failed Builds" />
         </Col>
         <Col lg={4} md={6} className="mt-3">
-          <AverageDuration 
-            displayValue={buildSummaryData?.avgDuration}
-          />          
+          <AverageDuration displayValue={buildSummaryData?.avgDuration} />
         </Col>
         <Col lg={4} md={6} className="mt-3">
-          <AverageDurationToResolve 
-            displayValue={buildSummaryData?.avgTimeToResolve}
-          />          
+          <AverageDurationToResolve displayValue={buildSummaryData?.avgTimeToResolve} />
         </Col>
         <Col lg={4} md={6} className="mt-3">
-          <TotalDurationToResolve 
-            displayValue={buildSummaryData?.timeToResolve}
-          />          
-        </Col>        
+          <TotalDurationToResolve displayValue={buildSummaryData?.timeToResolve} />
+        </Col>
       </Row>
     );
   };
 
   const onRowSelect = (rowData) => {
-      toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount} />);
+    toastContext.showOverlayPanel(
+      <BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount} />
+    );
   };
 
-  const getTable = () => {    
+  const getTable = () => {
     return (
-      <CustomTable        
+      <CustomTable
         columns={columns}
         data={buildStatsData}
         noDataMessage={noDataMessage}
         paginationDto={tableFilterDto}
-        setPaginationDto={setTableFilterDto}        
+        setPaginationDto={setTableFilterDto}
         loadData={loadData}
         onRowSelect={onRowSelect}
-      />      
+      />
     );
   };
 
-  return (
-    <>
-      {getBody()}      
-    </>
-  );
-
+  return <>{getBody()}</>;
 }
 
 BuildStatisticsActionableInsightsTable.propTypes = {

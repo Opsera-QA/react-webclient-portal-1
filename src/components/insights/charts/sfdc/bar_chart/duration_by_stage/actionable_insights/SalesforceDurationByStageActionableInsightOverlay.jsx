@@ -14,6 +14,8 @@ import SalesforceDurationByStageActionableInsightsTable from "./SalesforceDurati
 import SalesforceDurationByStageOverviewDataBlockContainer from "./SalesforceDurationByStageOverviewDataBlockContainer";
 import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
+import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
+
 function SalesforceDurationByStageActionableInsightsOverlay({
   title,
   actionableInsightsQueryData,
@@ -31,7 +33,11 @@ function SalesforceDurationByStageActionableInsightsOverlay({
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [filterModel, setFilterModel] = useState(
-    new Model({ ...actionableInsightsGenericChartFilterMetadata.newObjectFields }, actionableInsightsGenericChartFilterMetadata, false)
+    new Model(
+      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+      actionableInsightsGenericChartFilterMetadata,
+      false
+    )
   );
 
   useEffect(() => {
@@ -136,6 +142,11 @@ function SalesforceDurationByStageActionableInsightsOverlay({
     toastContext.clearOverlayPanel();
   };
 
+  const getDateBadge = () => {
+    const date = actionableInsightsQueryData?.data;
+    return <MetricDateRangeBadge startDate={date?.lowerBound} endDate={date?.upperBound} />;
+  };
+
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
@@ -147,6 +158,7 @@ function SalesforceDurationByStageActionableInsightsOverlay({
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
+        {getDateBadge()}
         <SalesforceDurationByStageOverviewDataBlockContainer data={dataBlockValues} />
         <SalesforceDurationByStageActionableInsightsTable
           data={metrics}
