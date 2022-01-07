@@ -123,18 +123,13 @@ function KpiIdentifierEditorPanel({ kpiData, handleClose }) {
           />
         </Col>
         <Col lg={12}>
-          <TextInputBase
+          <ImagePathTextInput
             fieldName={"thumbnailPath"}
-            dataObject={kpiDataDto}
-            setDataObject={setKpiDataDto}
+            model={kpiDataDto}
+            setModel={setKpiDataDto}
+            imageAltText={"KPI Identifier Thumbnail"}
+            imageTitle={"KPI Identifier Thumbnail"}
           />
-          {/*<ImagePathTextInput*/}
-          {/*  fieldName={"thumbnailPath"}*/}
-          {/*  model={kpiDataDto}*/}
-          {/*  setModel={setKpiDataDto}*/}
-          {/*  imageAltText={"KPI Identifier Thumbnail"}*/}
-          {/*  imageTitle={"KPI Identifier Thumbnail"}*/}
-          {/*/>*/}
         </Col>
         <Col lg={6}>
           <JsonInput
