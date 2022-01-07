@@ -23,6 +23,7 @@ import TerraformS3BucketSelectInput from "components/workflow/pipelines/pipeline
 import TerraformS3BucketRegionSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformS3BucketRegionSelectInput";
 import TerraformCloudProviderSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCloudProviderSelectInput";
 import TerraformTagSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformTagSelectInput";
+import TerraformStateSubForm from "./sub_forms/TerraformStateSubForm";
 
 function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -93,16 +94,16 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
     );
   };
 
-  const getS3BucketFields = () => {
-    if(terraformStepConfigurationModel?.getData('storeStateInBucket')) {
-      return (
-        <>
-          <TerraformS3BucketSelectInput dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} />
-          <TerraformS3BucketRegionSelectInput dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName="bucketRegion" />
-        </>
-      );
-    }
-  };
+  // const getS3BucketFields = () => {
+  //   if(terraformStepConfigurationModel?.getData('storeStateInBucket')) {
+  //     return (
+  //       <>
+  //         <TerraformS3BucketSelectInput dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} />
+  //         <TerraformS3BucketRegionSelectInput dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName="bucketRegion" />
+  //       </>
+  //     );
+  //   }
+  // };
  
   if (isLoading || terraformStepConfigurationModel == null) {
     return <DetailPanelLoadingDialog />;
@@ -132,8 +133,9 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
         model={terraformStepConfigurationModel}
         setModel={setTerraformStepConfigurationModel}
       />
-      <TerraformStoreStateInS3Toggle dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName="storeStateInBucket" />
-      {getS3BucketFields()}
+      {/*<TerraformStoreStateInS3Toggle dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName="storeStateInBucket" />*/}
+      {/*{getS3BucketFields()}*/}
+      <TerraformStateSubForm model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
     </PipelineStepEditorPanelContainer>
   );
 }

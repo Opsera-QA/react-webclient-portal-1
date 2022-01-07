@@ -97,6 +97,38 @@ const TerraformStepFormMetadata = {
       id: "tag",
       isRequired: true
     },
+    {
+      label: "Resource Group",
+      id: "resourceGroup",
+    },
+    {
+      label: "Storage Account Name",
+      id: "storageName",
+    },
+    {
+      label: "Container",
+      id: "containerName",
+    },
+    {
+      label: "Azure Tool",
+      id: "azureToolConfigId",
+    },
+    {
+      label: "Terraform Cloud Tool",
+      id: "terraformCloudId",
+    },
+    {
+      label: "Organization Name",
+      id: "organizationName",
+    },
+    {
+      label: "Backend State",
+      id: "backendState",
+    },
+    {
+      label: "Azure Credential",
+      id: "azureCredentialId",
+    }
   ],
   fieldsAlt: [
     {
@@ -201,6 +233,38 @@ const TerraformStepFormMetadata = {
       id: "tag",
       isRequired: true
     },
+    {
+      label: "Backend State",
+      id: "backendState",
+    },
+    {
+      label: "Resource Group",
+      id: "resourceGroup",
+    },
+    {
+      label: "Storage Account Name",
+      id: "storageName",
+    },
+    {
+      label: "Container",
+      id: "containerName",
+    },
+    {
+      label: "Azure Tool",
+      id: "azureToolConfigId",
+    },
+    {
+      label: "Terraform Cloud Tool",
+      id: "terraformCloudId",
+    },
+    {
+      label: "Organization Name",
+      id: "organizationName",
+    },
+    {
+      label: "Azure Credential",
+      id: "azureCredentialId",
+    },
   ],
   newObjectFields: {
     toolActionType: "EXECUTE",
@@ -229,6 +293,14 @@ const TerraformStepFormMetadata = {
     bucketRegion: "",
     cloudProvider: "aws",
     tag: "",
+    resourceGroup : "",
+    storageName : "",
+    containerName : "",
+    azureToolConfigId : "",
+    terraformCloudId : "",
+    organizationName : "",
+    backendState: "",
+    azureCredentialId: ""
   }
 };
 
