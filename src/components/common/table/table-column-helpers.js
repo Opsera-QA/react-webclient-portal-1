@@ -347,7 +347,7 @@ export const getChartTrendStatusColumn = (field, className) => {
         case "red":
           return (<DangerMetricIcon />);
         case "neutral":
-          return (<UnchangedMetricIcon />);
+          return null;
         case "green":
         return (<SuccessMetricIcon />);
         case "-":
