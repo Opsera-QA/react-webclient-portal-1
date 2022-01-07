@@ -86,7 +86,7 @@ function VanityMetricContainer(
     if (showSettingsToggle !== false) {
       return (
         <ToggleSettingsIcon
-          className={"ml-3"}
+          className={"ml-3 my-auto"}
           visible={!helpIsShown}
           activeTab={view}
           setActiveTab={() => showSettingsPanel()}
@@ -97,12 +97,19 @@ function VanityMetricContainer(
 
   const getTitleBar = () => {
     if (isLoading) {
-      return (<span><IconBase isLoading={true} className="mr-1"/>Loading Chart</span>);
+      return (
+        <div className={"h-100 d-flex justify-content-between"}>
+          <span className={"my-auto"}>
+            <IconBase isLoading={true} className="mr-1"/>
+            Loading Chart
+          </span>
+        </div>
+      );
     }
 
     if (error) {
       return (
-        <div className="d-flex justify-content-between">
+        <div className={"h-100 d-flex justify-content-between"}>
           <span>
             <IconBase icon={faExclamationCircle} fixedWidth className="mr-1"/>
             Error Loading Chart!
@@ -115,8 +122,8 @@ function VanityMetricContainer(
     }
 
     return (
-      <div className="d-flex justify-content-between">
-        <div>
+      <div className={"h-100 d-flex justify-content-between"}>
+        <div className={"my-auto"}>
           {kpiConfiguration?.kpi_name}
         </div>
         <div className={"d-flex my-auto"}>
@@ -131,8 +138,10 @@ function VanityMetricContainer(
   const getChartBody = () => {
     if (error) {
       return (
-        <div className="new-chart mb-3" style={{ height: "300px" }}>
-          <span>There was an error loading this chart: {parseError(error?.message)}. Please check logs for more details.</span>
+        <div className="new-chart mb-3" style={{height: "300px"}}>
+          <div className="max-content-width p-5 mt-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <span className={"-5"}>There was an error loading this chart: {parseError(error?.message)}. Please check logs for more details.</span>
+          </div>
         </div>
       );
     }
