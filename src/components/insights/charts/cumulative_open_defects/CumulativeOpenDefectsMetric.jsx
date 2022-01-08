@@ -15,7 +15,6 @@ import { dataPointHelpers } from "components/common/helpers/metrics/data_point/d
 import { Col, Row } from "react-bootstrap";
 import "components/insights/charts/qa_metrics/Styling.css";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import { nivoChartLegendDefinitions } from "components/common/metrics/charts/nivo/nivoChartLegend.definitions";
 import CumulativeOpenDefectsDataBlock from "./data_blocks/open_defects/CumulativeOpenDefectsDataBlock";
 import CumulativeOpenValidDefectsDataBlock from "./data_blocks/open_valid_defects/CumulativeOpenValidDefectsDataBlock";
 import CumulativeTotalDefectsDataBlock from "./data_blocks/total_defects/CumulativeTotalDefectsDataBlock";
@@ -23,7 +22,10 @@ import CumulativeTotalValidDefectsDataBlock from "./data_blocks/total_valid_defe
 import CumulativeOpenDefectsHelpDocumentation from "components/common/help/documentation/insights/charts/CumulativeOpenDefectsHelpDocumentation";
 import { ResponsivePie } from "@nivo/pie";
 import config from "./cumulativeOpenDefectsMetricsConfig";
-import { METRIC_THEME_CHART_PALETTE_COLORS, METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
+import {
+  METRIC_THEME_CHART_PALETTE_COLORS,
+  METRIC_CHART_STANDARD_HEIGHT,
+} from "components/common/helpers/metrics/metricTheme.helpers";
 
 const CUMILATIVE_OPEN_DEFECT = "cumulative_open_defect";
 
@@ -82,12 +84,18 @@ function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, da
 
     let dashboardTags =
       dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+    let dashboardOrgs =
+      dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+        ?.value;
     const response = await chartsActions.parseConfigurationAndGetChartMetrics(
       getAccessToken,
       cancelSource,
       "cumulativeOpenDefects",
       kpiConfiguration,
-      dashboardTags
+      dashboardTags,
+      null,
+      null,
+      dashboardOrgs
     );
 
     const metrics = response?.data ? response?.data?.data[0]?.cumulativeOpenDefects?.data : [];
@@ -146,7 +154,7 @@ function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, da
               </Row>
             </Col>
             <Col xl={6} lg={6} md={4} className={"my-2 p-2"}>
-            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
+              <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
                 <ResponsivePie
                   data={metric?.pairs}
                   {...defaultConfig()}
