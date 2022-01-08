@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import TerraformCloudToolSelectInput from "../inputs/TerraformCloudToolSelectInput";
-import TerraformCloudOrganizationsSelectInput from "../inputs/TerraformCloudOrganizationsSelectInput";
+import TerraformCloudToolSelectInput from "../inputs/terraform_cloud/TerraformCloudToolSelectInput";
+import TerraformCloudOrganizationsSelectInput from "../inputs/terraform_cloud/TerraformCloudOrganizationsSelectInput";
 
 function BackendStateAzure({ model, setModel }) {
   if (!model?.getData("backendState") || model?.getData("backendState") !== "TERRAFORM_CLOUD") {

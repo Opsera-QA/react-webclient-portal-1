@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import RoleRestrictedToolByIdentifierInputBase from "../../../../../../../../common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+import RoleRestrictedToolByIdentifierInputBase from "../../../../../../../../../common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
 function TerraformCloudToolSelectInput({ fieldName, model, setModel, disabled, textField, valueField }) {
   const setDataFunction = (fieldName, selectedOption) => {

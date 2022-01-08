@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import AksServiceDeployStepAzureToolSelectInput from "../inputs/AzureToolSelectInput";
-import AksServiceDeployStepApplicationSelectInput from "../inputs/AzureApplicationSelectInput";
-import AksServiceDeployStepClusterSelectInput from "../inputs/AzureClusterSelectInput";
-import AksResourceGroupSelectInput from "../inputs/AzureResourceGroupSelect";
+import AksServiceDeployStepAzureToolSelectInput from "../inputs/azure/AzureToolSelectInput";
+import AksServiceDeployStepApplicationSelectInput from "../inputs/azure/AzureApplicationSelectInput";
+import AksServiceDeployStepClusterSelectInput from "../inputs/azure/AzureClusterSelectInput";
+import AksResourceGroupSelectInput from "../inputs/azure/AzureResourceGroupSelect";
 import AzureToolStorageAccountSelectInput from "../../../../../../../../common/list_of_values_input/tools/azure/accounts/storage/AzureToolStorageAccountSelectInput";
 
 function BackendStateAzure({ model, setModel }) {

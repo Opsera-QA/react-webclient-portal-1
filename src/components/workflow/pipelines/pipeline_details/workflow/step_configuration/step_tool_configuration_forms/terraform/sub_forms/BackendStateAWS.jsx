@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import TerraformS3BucketSelectInput from "../inputs/TerraformS3BucketSelectInput";
-import TerraformS3BucketRegionSelectInput from "../inputs/TerraformS3BucketRegionSelectInput";
+import TerraformS3BucketSelectInput from "../inputs/aws/TerraformS3BucketSelectInput";
+import TerraformS3BucketRegionSelectInput from "../inputs/aws/TerraformS3BucketRegionSelectInput";
 
 function BackendStateAzure({ model, setModel}) {
 
