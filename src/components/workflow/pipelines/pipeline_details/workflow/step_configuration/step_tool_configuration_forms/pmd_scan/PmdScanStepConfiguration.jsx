@@ -17,8 +17,17 @@ import PipelineStepEditorPanelContainer
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PmdScanThresholdInputBase
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/inputs/PmdScanThresholdInputBase";
+import PMDScanHelper
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/pmd-scan-helper";
 
-
+const RULE_LIST_VALUES = [
+  "bestPracticeThreshold",
+  "codeStyleThreshold",
+  "designThreshold",
+  "errorProneThreshold",
+  "securityThreshold",
+];
+  
 function PmdScanStepConfiguration({
   stepTool,
   pipelineId,
@@ -79,6 +88,14 @@ function PmdScanStepConfiguration({
   };
 
   console.log(jmeterStepConfigurationDto);
+
+  const constructPMDQualityGates = async () => {
+
+    let qualityGates = await PMDScanHelper.constructQualityGate(jmeterStepConfigurationDto.getPersistData());
+    console.log(qualityGates);
+
+    jmeterStepConfigurationDto.setData("qualityGate", qualityGates);
+  };
   
   const handleCreateAndSave = async () => {
 
@@ -86,7 +103,8 @@ function PmdScanStepConfiguration({
 
     if (toolId) {
       // setLoading(true);
-
+      await constructPMDQualityGates();
+      
       const createJobPostBody = {
         pipelineId: pipelineId,
         stepId: stepId,
@@ -124,45 +142,20 @@ function PmdScanStepConfiguration({
       <StepConfigGitBranchInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} />
       <StepConfigWorkspaceDeleteToggleInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} fieldName={"workspaceDeleteFlag"} />
       
-      <PmdScanThresholdInputBase
-        fieldName={"bestPracticeThreshold"}
-        model={jmeterStepConfigurationDto}
-        className={"mb-3"}
-        setModel={setJmeterStepConfigurationDto}
-        // disabled={disabled}
-      />
-      
-      <PmdScanThresholdInputBase
-        fieldName={"codeStyleThreshold"}
-        model={jmeterStepConfigurationDto}
-        className={"mb-3"}
-        setModel={setJmeterStepConfigurationDto}
-        // disabled={disabled}
-      />
-      
-      <PmdScanThresholdInputBase
-        fieldName={"designThreshold"}
-        model={jmeterStepConfigurationDto}
-        className={"mb-3"}
-        setModel={setJmeterStepConfigurationDto}
-        // disabled={disabled}
-      />
-      
-      <PmdScanThresholdInputBase
-        fieldName={"errorProneThreshold"}
-        model={jmeterStepConfigurationDto}
-        className={"mb-3"}
-        setModel={setJmeterStepConfigurationDto}
-        // disabled={disabled}
-      />
-      
-      <PmdScanThresholdInputBase
-        fieldName={"securityThreshold"}
-        model={jmeterStepConfigurationDto}
-        className={"mb-3"}
-        setModel={setJmeterStepConfigurationDto}
-        // disabled={disabled}
-      />
+      {RULE_LIST_VALUES.map((rule, idx) => {
+        return(
+          <div key={idx}>
+            <PmdScanThresholdInputBase
+              fieldName={rule}
+              model={jmeterStepConfigurationDto}
+              className={"mb-3"}
+              setModel={setJmeterStepConfigurationDto}
+              // disabled={disabled}
+            />
+          </div>
+        );
+      })}
+
     </PipelineStepEditorPanelContainer>
   );
 }
