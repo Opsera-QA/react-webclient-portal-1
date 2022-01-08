@@ -54,16 +54,21 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       let goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "opseraSdlcPipelineStageDuration",
         kpiConfiguration,
-        dashboardTags
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
       );
       let dataObject = response?.data?.data ? response?.data?.data[0]?.opseraSdlcDurationByStage?.data : [];
-      console.log(dataObject);
       const objectLength = response?.data?.data ? response?.data?.data[0]?.opseraSdlcDurationByStage?.data.length : 0;
       let means = response?.data?.data
         ? response?.data?.data[0]?.opseraSdlcDurationByStage?.data[objectLength - 1]
@@ -106,6 +111,7 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
               meanData={dataBlockValues[0]?.build_mean}
               countData={dataBlockValues[0]?.build_count}
               goalsData={goalsData?.average_builds}
+              dashboardData={dashboardData}
             />
           </Col>
           <Col xs={12} sm={6} key="metric-deploy">
@@ -115,6 +121,7 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
               meanData={dataBlockValues[0]?.deploy_mean}
               countData={dataBlockValues[0]?.deploy_count}
               goalsData={goalsData?.average_deploy}
+              dashboardData={dashboardData}
             />
           </Col>
           <Col xs={12} sm={6} key="metric-quality-scan">
@@ -124,6 +131,7 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
               meanData={dataBlockValues[0]?.code_scan_mean}
               countData={dataBlockValues[0]?.code_scan_count}
               goalsData={goalsData?.average_quality_scan}
+              dashboardData={dashboardData}
             />
           </Col>
           <Col xs={12} sm={6} key="metric-security-scan">
@@ -133,6 +141,7 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
               meanData={dataBlockValues[0]?.container_scan_mean}
               countData={dataBlockValues[0]?.container_scan_count}
               goalsData={goalsData?.average_security_scan}
+              dashboardData={dashboardData}
             />
           </Col>
           <Col xs={12} sm={6} key="metric-test">
@@ -142,6 +151,7 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
               meanData={dataBlockValues[0]?.testing_mean}
               countData={dataBlockValues[0]?.testing_count}
               goalsData={goalsData?.average_test}
+              dashboardData={dashboardData}
             />
           </Col>
           <Col xs={12} sm={6} key="metric-scripts">
@@ -151,6 +161,7 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
               meanData={dataBlockValues[0]?.script_mean}
               countData={dataBlockValues[0]?.script_count}
               goalsData={goalsData?.average_scripts}
+              dashboardData={dashboardData}
             />
           </Col>
         </Row>
