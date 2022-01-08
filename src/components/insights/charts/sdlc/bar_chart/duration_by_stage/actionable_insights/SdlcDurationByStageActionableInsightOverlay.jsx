@@ -65,7 +65,9 @@ function SdlcDurationByStageActionableInsightOverlay({
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       let request = "opseraSdlcPipelineStageDurationByMonth";
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
@@ -75,7 +77,7 @@ function SdlcDurationByStageActionableInsightOverlay({
         dashboardTags,
         filterDto,
         null,
-        null,
+        dashboardOrgs,
         null,
         null,
         null,
