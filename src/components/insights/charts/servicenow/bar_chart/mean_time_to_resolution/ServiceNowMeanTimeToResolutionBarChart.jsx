@@ -65,7 +65,9 @@ function ServiceNowMeanTimeToResolutionBarChart({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       const dashboardTags =
           dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value,
         goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")]?.value,
@@ -74,7 +76,10 @@ function ServiceNowMeanTimeToResolutionBarChart({
           cancelSource,
           "serviceNowMTTR",
           kpiConfiguration,
-          dashboardTags
+          dashboardTags,
+          null,
+          null,
+          dashboardOrgs
         ),
         dataObject = response?.data?.data[0]?.serviceNowMTTR?.data[0]?.docs,
         overallMeanValue = response?.data?.data[0]?.serviceNowMTTR?.data[0]?.overallMttrHours;
