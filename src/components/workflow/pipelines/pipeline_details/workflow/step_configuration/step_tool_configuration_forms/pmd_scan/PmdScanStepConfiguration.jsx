@@ -9,7 +9,7 @@ import StepConfigJenkinsAccountInput from "../common/inputs/StepConfigJenkinsAcc
 import StepConfigJenkinsJobInput from "../common/inputs/StepConfigJenkinsJobInput";
 import StepConfigJenkinsToolInput from "../common/inputs/StepConfigJenkinsToolInput";
 import StepConfigWorkspaceDeleteToggleInput from "../common/inputs/StepConfigWorkspaceDeleteToggleInput";
-
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer
@@ -104,7 +104,7 @@ function PmdScanStepConfiguration({
     if (toolId) {
       // setLoading(true);
       await constructPMDQualityGates();
-      
+
       const createJobPostBody = {
         pipelineId: pipelineId,
         stepId: stepId,
@@ -135,16 +135,24 @@ function PmdScanStepConfiguration({
       isLoading={isLoading}
     >
       <StepConfigJenkinsToolInput model={jmeterStepConfigurationDto} setModel={setJmeterStepConfigurationDto} />
-      <StepConfigJenkinsJobInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} typeFilter={""} />
-      <StepConfigJenkinsAccountInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} />
+      <StepConfigJenkinsJobInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} typeFilter={"PMD_SCAN"} />
+      {/* <StepConfigJenkinsAccountInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} />
       <StepConfigBitbucketWorkspaceInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} />
       <StepConfigGitRepositoryInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} />
       <StepConfigGitBranchInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} />
-      <StepConfigWorkspaceDeleteToggleInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} fieldName={"workspaceDeleteFlag"} />
-      
-      {RULE_LIST_VALUES.map((rule, idx) => {
+      <StepConfigWorkspaceDeleteToggleInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} fieldName={"workspaceDeleteFlag"} /> */}
+      <SelectInputBase
+        setDataObject={setJmeterStepConfigurationDto}
+        textField={"name"}
+        valueField={"_id"}
+        dataObject={jmeterStepConfigurationDto}
+        filter={"contains"}
+        selectOptions={listOfSteps ? listOfSteps : []}
+        fieldName={"stepIdXML"}
+      />
+      {RULE_LIST_VALUES.map((rule, index) => {
         return(
-          <div key={idx}>
+          <div key={index}>
             <PmdScanThresholdInputBase
               fieldName={rule}
               model={jmeterStepConfigurationDto}

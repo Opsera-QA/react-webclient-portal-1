@@ -19,7 +19,7 @@ const pmdScanStepFormMetadata = {
     {
       label: "Jenkins Job",
       id: "toolJobName",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Job",
@@ -29,7 +29,7 @@ const pmdScanStepFormMetadata = {
     {
       label: "Account",
       id: "gitCredential",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Workspace",
@@ -44,11 +44,16 @@ const pmdScanStepFormMetadata = {
     {
       label: "Repository",
       id: "repository",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Branch Name",
       id: "gitBranch",
+      // isRequired: true
+    },
+    {
+      label: "Build/Package Step",
+      id: "stepIdXML",
       isRequired: true
     },
     {
@@ -100,13 +105,13 @@ const pmdScanStepFormMetadata = {
     repository: "",
     branch: "",
     workspace: "",
+    stepIdXML: "",
     qualityGate: [],
     bestPracticeThreshold: [],
     codeStyleThreshold: [],
     designThreshold: [],
     errorProneThreshold: [],
     securityThreshold: [],
-    
     workspaceDeleteFlag: false
   }
 };
