@@ -68,23 +68,28 @@ const pmdScanStepFormMetadata = {
     {
       label: "Best Practice Threshold",
       id: "bestPracticeThreshold",
+      maxItems: 4
     },
     {
       label: "Code Style Threshold",
       id: "codeStyleThreshold",
+      maxItems: 4
     },
     
     {
       label: "Design Threshold",
       id: "designThreshold",
+      maxItems: 4
     },
     {
       label: "Error Prone Threshold",
       id: "errorProneThreshold",
+      maxItems: 4
     },
     {
       label: "Security Threshold",
       id: "securityThreshold",
+      maxItems: 4
     },
   ],
   newObjectFields: {

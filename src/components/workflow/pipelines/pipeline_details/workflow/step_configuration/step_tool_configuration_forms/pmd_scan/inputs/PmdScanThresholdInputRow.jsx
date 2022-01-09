@@ -24,6 +24,7 @@ function PmdScanThresholdInputRow(
     disabledThresholdLevels,
     index,
     disabled,
+    duplicates,
     updateThresholdCount,
     updateThresholdLevel,
     deleteThresholdRow,
@@ -65,7 +66,7 @@ function PmdScanThresholdInputRow(
           <Col sm={6} className={"pl-1 pr-0"}>
             <StandalonePositiveIntegerNumberTextInput
               setDataFunction={(newValue) => updateThresholdCount(newValue)}
-              disabled={disabled}
+              disabled={disabled||duplicates}
               value={count}
             />
           </Col>
@@ -84,6 +85,7 @@ PmdScanThresholdInputRow.propTypes = {
   updateThresholdCount: PropTypes.func,
   updateThresholdLevel: PropTypes.func,
   deleteThresholdRow: PropTypes.func,
+  duplicates: PropTypes.bool,
   disabled: PropTypes.bool,
   count: PropTypes.oneOfType([
     PropTypes.string,

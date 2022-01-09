@@ -99,6 +99,7 @@ function PmdScanThresholdInputBase({ fieldName, model, setModel, helpComponent, 
   };
 
   const deleteThresholdRow = (index) => {
+    setErrorMessage("");
     let newThresholdList = thresholdRows;
     newThresholdList.splice(index, 1);
     validateAndSetData(newThresholdList);
@@ -111,6 +112,13 @@ function PmdScanThresholdInputBase({ fieldName, model, setModel, helpComponent, 
       newPropertyList[index][innerField] = newValue;
       validateAndSetData(newPropertyList);
     }
+  };
+
+  const hasDuplicates = (thresholdRows) => {
+    let permittedValues = thresholdRows.map(value => value.level);
+    const noDups = new Set(permittedValues);
+    // console.log(permittedValues.length !== noDups.size);
+    return permittedValues.length !== noDups.size;
   };
 
   const getDisabledThresholdLevels = () => {
@@ -139,6 +147,7 @@ function PmdScanThresholdInputBase({ fieldName, model, setModel, helpComponent, 
             <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
               <PmdScanThresholdInputRow
                 disabled={disabled}
+                duplicates={hasDuplicates(thresholdRows)}
                 index={index}
                 deleteThresholdRow={deleteThresholdRow}
                 disabledThresholdLevels={getDisabledThresholdLevels()}
