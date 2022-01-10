@@ -69,8 +69,12 @@ const TerraformStepFormMetadata = {
       maxItems: 15,
     },
     {
-      label: "Save Output Parameters?",
+      label: "Save Output Parameters",
       id: "saveParameters"
+    },
+    {
+      label: "Define Input Parameters",
+      id: "saveInputParameters"
     },
     {
       label: "IAM Roles", 
@@ -128,7 +132,11 @@ const TerraformStepFormMetadata = {
     {
       label: "Azure Credential",
       id: "azureCredentialId",
-    }
+    },
+    {
+      label: "Input Parameters",
+      id: "inputParameters",
+    },
   ],
   fieldsAlt: [
     {
@@ -199,8 +207,12 @@ const TerraformStepFormMetadata = {
       maxItems: 15,
     },
     {
-      label: "Save Output Parameters?",
+      label: "Save Output Parameters",
       id: "saveParameters"
+    },
+    {
+      label: "Define Input Parameters",
+      id: "saveInputParameters"
     },
     {
       label: "IAM Roles", 
@@ -265,6 +277,10 @@ const TerraformStepFormMetadata = {
       label: "Azure Credential",
       id: "azureCredentialId",
     },
+    {
+      label: "Input Parameters",
+      id: "inputParameters",
+    },
   ],
   newObjectFields: {
     toolActionType: "EXECUTE",
@@ -300,7 +316,9 @@ const TerraformStepFormMetadata = {
     terraformCloudId : "",
     organizationName : "",
     backendState: "",
-    azureCredentialId: ""
+    azureCredentialId: "",
+    inputParameters: "",
+    saveInputParameters: false
   }
 };
 
