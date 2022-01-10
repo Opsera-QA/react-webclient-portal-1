@@ -42,11 +42,10 @@ function PmdScanStepConfiguration({
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [jobType, setJobType] = useState("");
-  const [jmeterStepConfigurationDto, setJmeterStepConfigurationDto] = useState(undefined);
+  const [pmdStepConfigurationDto, setPmdStepConfigurationDto] = useState(undefined);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [listOfSteps, setListOfSteps] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -71,9 +70,9 @@ function PmdScanStepConfiguration({
   const loadData = async () => {
     setIsLoading(true);
     let { threshold, job_type } = stepTool;
-    let jmeterConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, pmdScanStepFormMetadata);
+    let pmdConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, pmdScanStepFormMetadata);
 
-    setJmeterStepConfigurationDto(jmeterConfigurationData);
+    setPmdStepConfigurationDto(pmdConfigurationData);
 
     if (job_type) {
         setJobType(job_type);
@@ -87,19 +86,18 @@ function PmdScanStepConfiguration({
     setIsLoading(false);
   };
 
-  console.log(jmeterStepConfigurationDto);
+  // console.log(pmdStepConfigurationDto);
 
   const constructPMDQualityGates = async () => {
 
-    let qualityGates = await PMDScanHelper.constructQualityGate(jmeterStepConfigurationDto.getPersistData());
-    console.log(qualityGates);
+    let qualityGates = await PMDScanHelper.constructQualityGate(pmdStepConfigurationDto.getPersistData());
 
-    jmeterStepConfigurationDto.setData("qualityGate", qualityGates);
+    pmdStepConfigurationDto.setData("qualityGate", qualityGates);
   };
   
   const handleCreateAndSave = async () => {
 
-    const toolId = jmeterStepConfigurationDto.getData("toolConfigId");
+    const toolId = pmdStepConfigurationDto.getData("toolConfigId");
 
     if (toolId) {
       // setLoading(true);
@@ -111,7 +109,7 @@ function PmdScanStepConfiguration({
       };
 
       const toolConfiguration = {
-        configuration: jmeterStepConfigurationDto.getPersistData(),
+        configuration: pmdStepConfigurationDto.getPersistData(),
         threshold: {
           type: thresholdType,
           value: thresholdVal,
@@ -123,29 +121,29 @@ function PmdScanStepConfiguration({
     }
   };
 
-  if (isLoading || jmeterStepConfigurationDto == null) {
+  if (isLoading || pmdStepConfigurationDto == null) {
     return <DetailPanelLoadingDialog />;
   }
 
   return (
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
-      recordDto={jmeterStepConfigurationDto}
+      recordDto={pmdStepConfigurationDto}
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <StepConfigJenkinsToolInput model={jmeterStepConfigurationDto} setModel={setJmeterStepConfigurationDto} />
-      <StepConfigJenkinsJobInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} typeFilter={"PMD_SCAN"} />
-      {/* <StepConfigJenkinsAccountInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} />
-      <StepConfigBitbucketWorkspaceInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} />
-      <StepConfigGitRepositoryInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} />
-      <StepConfigGitBranchInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} />
-      <StepConfigWorkspaceDeleteToggleInput dataObject={jmeterStepConfigurationDto} setDataObject={setJmeterStepConfigurationDto} fieldName={"workspaceDeleteFlag"} /> */}
+      <StepConfigJenkinsToolInput model={pmdStepConfigurationDto} setModel={setPmdStepConfigurationDto} />
+      <StepConfigJenkinsJobInput dataObject={pmdStepConfigurationDto} setDataObject={setPmdStepConfigurationDto} typeFilter={"PMD_SCAN"} />
+      {/* <StepConfigJenkinsAccountInput dataObject={pmdStepConfigurationDto} setDataObject={setPmdStepConfigurationDto} />
+      <StepConfigBitbucketWorkspaceInput dataObject={pmdStepConfigurationDto} setDataObject={setPmdStepConfigurationDto} />
+      <StepConfigGitRepositoryInput dataObject={pmdStepConfigurationDto} setDataObject={setPmdStepConfigurationDto} />
+      <StepConfigGitBranchInput dataObject={pmdStepConfigurationDto} setDataObject={setPmdStepConfigurationDto} />
+      <StepConfigWorkspaceDeleteToggleInput dataObject={pmdStepConfigurationDto} setDataObject={setPmdStepConfigurationDto} fieldName={"workspaceDeleteFlag"} /> */}
       <SelectInputBase
-        setDataObject={setJmeterStepConfigurationDto}
+        setDataObject={setPmdStepConfigurationDto}
         textField={"name"}
         valueField={"_id"}
-        dataObject={jmeterStepConfigurationDto}
+        dataObject={pmdStepConfigurationDto}
         filter={"contains"}
         selectOptions={listOfSteps ? listOfSteps : []}
         fieldName={"stepIdXML"}
@@ -155,9 +153,9 @@ function PmdScanStepConfiguration({
           <div key={index}>
             <PmdScanThresholdInputBase
               fieldName={rule}
-              model={jmeterStepConfigurationDto}
+              model={pmdStepConfigurationDto}
               className={"mb-3"}
-              setModel={setJmeterStepConfigurationDto}
+              setModel={setPmdStepConfigurationDto}
               // disabled={disabled}
             />
           </div>
