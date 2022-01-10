@@ -168,7 +168,8 @@ import FlywayDatabasePipelineStepConfigurationSummaryPanel from "./step_tool_con
 import flywayDatabaseStepFormMetadata from "./step_tool_configuration_forms/flyway_database/flyway-database-stepForm-metadata";
 import InformaticaPipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/informatica/InformaticaPipelineStepConfigurationSummaryPanel";
 import InformaticaStepFormMetadata from "./step_tool_configuration_forms/informatica/informatica-stepForm-metadata";
-
+import PmdScanPipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/pmd_scan/PmdScanPipelineStepConfigurationSummaryPanel";
+import pmdScanStepFormMetadata from "./step_tool_configuration_forms/pmd_scan/pmdScan-stepForm-metadata";
 function PipelineStepConfigurationSummary({
   pipelineData,
 }) {
@@ -513,6 +514,13 @@ function PipelineStepConfigurationSummary({
           <InformaticaPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             informaticaPipelineDataObject={getModelWrappedObject(InformaticaStepFormMetadata)}
+          />
+        );
+      case "pmd":
+        return (
+          <PmdScanPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            pmdScanPipelineDataObject={getModelWrappedObject(pmdScanStepFormMetadata)}
           />
         );
       default:
