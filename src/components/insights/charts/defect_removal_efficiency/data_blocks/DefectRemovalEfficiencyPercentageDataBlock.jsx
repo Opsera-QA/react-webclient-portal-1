@@ -1,18 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
-import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
+import TwoLinePercentageDataBlock from "../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
 
 function DefectRemovalEfficiencyPercentageDataBlock({ score, dataPoint }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
-        <TwoLineScoreDataBlock
-          className="m-2"
-          score={score} 
-          subtitle={"Defect Removal Efficiency"}
-          dataPoint={dataPoint}
-        />
-      
+      <div className={"p-2"} style={{minHeight: '100px'}}>
+        <TwoLinePercentageDataBlock dataPoint={dataPoint} percentage={score} subtitle={"Defect Removal Efficiency"} />
+      </div>
     </DataBlockBoxContainer>
   );
 }
