@@ -10,7 +10,7 @@ import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadi
 import toolPathMetadata from "components/inventory/tools/tool_details/paths/toolPath.metadata";
 import ToolPathEditorPanel from "components/inventory/tools/tool_details/paths/ToolPathEditorPanel";
 
-function GitToolPathsPanel({ toolData, toolId }) {
+function GitToolPathsPanel({ toolModel, toolId }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [toolPathModel, setToolPathModel] = useState(undefined);
@@ -85,7 +85,7 @@ function GitToolPathsPanel({ toolData, toolId }) {
   return (
     <div>
       <ToolPathEditorPanel
-        toolModel={toolData}
+        toolModel={toolModel}
         toolPathModel={toolPathModel}
         setToolPathModel={setToolPathModel}
       />
@@ -94,7 +94,7 @@ function GitToolPathsPanel({ toolData, toolId }) {
 }
 
 GitToolPathsPanel.propTypes = {
-  toolData: PropTypes.object,
+  toolModel: PropTypes.object,
   toolId: PropTypes.string,
 };
 

@@ -118,7 +118,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case TOOL_DETAIL_PANEL_TABS.PATHS:
         return (
           <ToolPathsPanel
-            toolData={toolData}
+            toolModel={toolData}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.PROJECTS:

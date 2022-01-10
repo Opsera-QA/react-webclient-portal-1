@@ -2,15 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitToolPathsPanel from "components/inventory/tools/tool_details/paths/git/GitToolPathsPanel";
 
-function ToolPathsPanel({toolData}) {
+function ToolPathsPanel({toolModel}) {
   const getPathsPanel = () => {
-    switch (toolData?.getData("tool_identifier")) {
+    switch (toolModel?.getData("tool_identifier")) {
       case "gitlab":
       case "github":
         return (
           <GitToolPathsPanel
-            toolData={toolData}
-            toolId={toolData?.getData("_id")}
+            toolModel={toolModel}
+            toolId={toolModel?.getData("_id")}
           />
         );
       default:
@@ -22,7 +22,7 @@ function ToolPathsPanel({toolData}) {
     }
   };
 
-  if (toolData == null) {
+  if (toolModel == null) {
     return null;
   }
 
@@ -35,7 +35,7 @@ function ToolPathsPanel({toolData}) {
 }
 
 ToolPathsPanel.propTypes = {
-  toolData: PropTypes.object,
+  toolModel: PropTypes.object,
 };
 
 

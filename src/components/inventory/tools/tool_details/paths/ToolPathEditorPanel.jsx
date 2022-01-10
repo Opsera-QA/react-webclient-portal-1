@@ -42,7 +42,7 @@ function ToolPathEditorPanel({ toolModel, toolPathModel, setToolPathModel }) {
 
   return (
     <EditorPanelContainer
-      recordDto={toolModel}
+      recordDto={toolPathModel}
       createRecord={updatePath}
       updateRecord={updatePath}
     >

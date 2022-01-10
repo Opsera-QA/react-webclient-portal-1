@@ -28,7 +28,7 @@ const toolPathMetadata = {
   newObjectFields: {
     name: "",
     description: "",
-    path: "",
+    path: "src",
     type: "repository-package-structure",
   }
 };
