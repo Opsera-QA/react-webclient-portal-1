@@ -14,6 +14,26 @@ import ToolConnectionTab from "components/inventory/tools/tool_details/tab_conta
 import ToolProjectsTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolProjectsTab";
 import ToolStorageTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolStorageTab";
 import ToolUsageTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolUsageTab";
+import ToolPathsTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolPathsTab";
+
+export const TOOL_DETAIL_PANEL_TABS = {
+  ACCOUNTS: "accounts",
+  APPLICATIONS: "applications",
+  ATTRIBUTES: "attributes",
+  ATTRIBUTE_SETTINGS: "attribute_settings",
+  CONNECTION: "connection",
+  JOBS: "jobs",
+  LOGS: "logs",
+  PATHS: "paths",
+  PROJECTS: "projects",
+  REPOSITORIES: "repositories",
+  SETTINGS: "settings",
+  STORAGE: "storage",
+  SUMMARY: "summary",
+  USAGE: "usage",
+  VAULT: "vault",
+};
+
 
 function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
   return (
@@ -62,6 +82,11 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         handleTabClick={handleTabClick}
       />
       <ToolProjectsTab
+        toolModel={toolModel}
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+      />
+      <ToolPathsTab
         toolModel={toolModel}
         activeTab={activeTab}
         handleTabClick={handleTabClick}
