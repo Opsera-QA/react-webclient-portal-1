@@ -14,7 +14,7 @@ function AppliedTagOverlay({tags, className, children}) {
               return (
                 // <div>
                 <TagBadge
-                  className={"mr-2"}
+                  className={"mr-2 mb-2"}
                   tag={tag}
                   key={index}
                 />

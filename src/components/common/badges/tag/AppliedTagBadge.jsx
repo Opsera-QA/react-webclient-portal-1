@@ -5,7 +5,7 @@ import SpyglassBadge from "components/common/badges/spyglass/SpyglassBadge";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import AppliedTagOverlay from "components/common/fields/multiple_items/tags/AppliedTagOverlay";
 
-function AppliedTagBadge({tags, tagLocation, className, showNoTagsAppliedBadge}) {
+function AppliedTagBadge({tags, badgeClassName, tagLocation, className, showNoTagsAppliedBadge}) {
   const getTagLabel = () => {
     let tagText = `${tags?.length} `;
 
@@ -21,7 +21,7 @@ function AppliedTagBadge({tags, tagLocation, className, showNoTagsAppliedBadge})
       return (
         <div className={className}>
           <TagBadgeBase
-            className={"metric-badge"}
+            className={badgeClassName}
             badgeText={`No ${tagLocation ? `${tagLocation} ` : ""}Tags Applied`}
           />
         </div>
@@ -37,7 +37,7 @@ function AppliedTagBadge({tags, tagLocation, className, showNoTagsAppliedBadge})
       tags={tags}
     >
       <SpyglassBadge
-        className={"metric-badge"}
+        className={badgeClassName}
         badgeText={getTagLabel()}
       />
     </AppliedTagOverlay>
@@ -49,6 +49,7 @@ AppliedTagBadge.propTypes = {
   className: PropTypes.string,
   showNoTagsAppliedBadge: PropTypes.bool,
   tagLocation: PropTypes.string,
+  badgeClassName: PropTypes.string,
 };
 
 export default AppliedTagBadge;

@@ -32,7 +32,7 @@ function TwoLineDataBlockBase(
   };
 
   const getTitle = () => {
-    if (title) {
+    if (title || title == 0) {
       return (
         <div className={"font-inter-light-400 metric-block-content-text dark-gray-text-primary"}>
           {title}

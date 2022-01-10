@@ -8,6 +8,8 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import InformaticaIntelligentCloudServiceTypeMultiSelectInputBase
   from "components/common/list_of_values_input/tools/informatica/iics_types/InformaticaIntelligentCloudServiceTypeMultiSelectInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
+import InformaticaRunParameterUpdateTimeDateTimeInput
+  from "components/workflow/run_assistants/informatica/configuration_selection_screen/inputs/InformaticaRunParameterUpdateTimeDateTimeInput";
 
 const InformaticaRunAssistantConfigurationEditorPanel = (
   {
@@ -63,12 +65,9 @@ const InformaticaRunAssistantConfigurationEditorPanel = (
           />
         </Col>
         <Col xs={12}>
-          <DateTimeInput
-            fieldName={"updateTime"}
-            dataObject={informaticaRunParameterConfigurationModel}
-            setDataObject={setInformaticaRunParameterConfigurationModel}
-            defaultToNull={true}
-            maxDate={new Date()}
+          <InformaticaRunParameterUpdateTimeDateTimeInput
+            informaticaRunParameterConfigurationModel={informaticaRunParameterConfigurationModel}
+            setInformaticaRunParameterConfigurationModel={setInformaticaRunParameterConfigurationModel}
           />
         </Col>
         <Col xs={12}>

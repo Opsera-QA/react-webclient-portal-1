@@ -14,8 +14,7 @@ import SalesforceUnitTestingDurationMetric from "components/insights/charts/sfdc
 import SalesforcePackageValidationDurationMetric from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/validation/SalesforcePackageValidationDurationMetric";
 import SalesforceDeploymentDurationMetric from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/deployment/SalesforceDeploymentDurationMetric";
 import { assignStandardLineColors } from "components/insights/charts/charts-views";
-import SalesforceDurationByStageHelpDocumentation
-  from "../../../../../common/help/documentation/insights/charts/SalesforceDurationByStageHelpDocumentation";
+import SalesforceDurationByStageHelpDocumentation from "../../../../../common/help/documentation/insights/charts/SalesforceDurationByStageHelpDocumentation";
 
 function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const history = useHistory();
@@ -55,6 +54,9 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       let goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")]?.value;
       setGoalsData(goals);
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
@@ -62,7 +64,10 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
         cancelSource,
         "salesforceDurationByStage",
         kpiConfiguration,
-        dashboardTags
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
       );
       let dataObject = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data : [];
       let means = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data[6] : [];
@@ -95,7 +100,7 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
 
     return (
       <div className="new-chart mb-3" style={{ minHeight: "450px", display: "flex" }}>
-        <Row>
+        <Row className="mr-1">
           <Col xs={12} sm={6}>
             <SalesforceCreatePackageDurationMetric
               metric={metrics[0]}
@@ -170,7 +175,9 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
-        chartHelpComponent={(closeHelpPanel) => <SalesforceDurationByStageHelpDocumentation closeHelpPanel={closeHelpPanel} />}
+        chartHelpComponent={(closeHelpPanel) => (
+          <SalesforceDurationByStageHelpDocumentation closeHelpPanel={closeHelpPanel} />
+        )}
       />
       <ModalLogs
         header="Build Duration By Stage"

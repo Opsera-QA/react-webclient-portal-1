@@ -184,6 +184,7 @@ export const getTagColumn = (field, className) => {
 
       return (
         <AppliedTagBadge
+          className={"group-badge"}
           tags={tags}
         />
       );
@@ -346,7 +347,7 @@ export const getChartTrendStatusColumn = (field, className) => {
         case "red":
           return (<DangerMetricIcon />);
         case "neutral":
-          return (<UnchangedMetricIcon />);
+          return null;
         case "green":
         return (<SuccessMetricIcon />);
         case "-":
