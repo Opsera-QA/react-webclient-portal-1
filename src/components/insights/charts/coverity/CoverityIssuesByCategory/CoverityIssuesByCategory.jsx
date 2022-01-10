@@ -10,21 +10,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleDown, faArrowCircleUp, faMinusCircle, faPauseCircle } from "@fortawesome/free-solid-svg-icons";
 import Model from "../../../../../core/data_model/model";
 import CoverityIssuesByCategoryActionableMetadata from "./actionable_insights/coverity-actionable-insight-metadata";
-import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
+// import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import CoverityIssuesByCategoryHelpDocumentation from "components/common/help/documentation/insights/charts/CoverityIssuesByCategoryHelpDocumentation";
 import CoverityActionableInsightOverlay from "./actionable_insights/CoverityActionableInsightOverlay";
 import CoverityIssuesOverallLowTrendDataBlock from "./data_blocks/overall_low_trend/CoverityIssuesOverallLowTrendDataBlock";
 import CoverityIssuesOverallMediumTrendDataBlock from "./data_blocks/overall_medium_trend/CoverityIssuesOverallMediumTrendDataBlock";
 import CoverityIssuesOverallHighTrendDataBlock from "./data_blocks/overall_high_trend/CoverityIssuesOverallHighTrendDataBlock";
-import { faMehBlank, faTag } from "@fortawesome/pro-light-svg-icons";
-import HorizontalDataBlocksContainer
-  from "../../../../common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
+// import { faMehBlank, faTag } from "@fortawesome/pro-light-svg-icons";
+import HorizontalDataBlocksContainer from "../../../../common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 
 function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
+  const [lowIssues, setLowIssues] = useState(0);
+  const [mediumIssues, setMediumIssues] = useState(0);
+  const [highIssues, setHighIssues] = useState(0);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -61,24 +63,41 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken,
-        cancelSource,
-        "overallCoverityIssuesTrend",
-        kpiConfiguration,
-        dashboardTags,
-        null,
-        null,
-        dashboardOrgs
-      );
-      let dataObject = response?.data ? response?.data?.data[0]?.overallCoverityIssuesTrend?.data : [];
+          getAccessToken,
+          cancelSource,
+          "overallCoverityIssuesTrend",
+          kpiConfiguration,
+          dashboardTags,
+          null,
+          null,
+          dashboardOrgs
+        ),
+        responseBaseKPIBlockValues = await chartsActions.parseConfigurationAndGetChartMetrics(
+          getAccessToken,
+          cancelSource,
+          "coverityBaseKPIDataBlocks",
+          kpiConfiguration,
+          dashboardTags,
+          null,
+          null,
+          dashboardOrgs
+        );
 
-      if (isMounted?.current === true && dataObject) {
+      const dataObject = response?.data ? response?.data?.data[0]?.overallCoverityIssuesTrend?.data : [],
+        dataObjectBaseKPIDataBlocks = responseBaseKPIBlockValues?.data
+          ? responseBaseKPIBlockValues?.data?.data[0]?.coverityBaseKPIDataBlocks?.data
+          : [];
+
+      if (isMounted?.current === true && dataObject && dataObjectBaseKPIDataBlocks) {
         dataObject[0]?.docs?.sort((a, b) =>
           a.currentTotalIssues < b.currentTotalIssues ? 1 : b.currentTotalIssues < a.currentTotalIssues ? -1 : 0
         );
         dataObject[0]?.docs?.slice(0, 2);
 
         setMetrics(dataObject);
+        setLowIssues(dataObjectBaseKPIDataBlocks?.lowIssues[0]?.DataBlocks[0]?.totalIssues);
+        setMediumIssues(dataObjectBaseKPIDataBlocks?.mediumIssues[0]?.DataBlocks[0]?.totalIssues);
+        setHighIssues(dataObjectBaseKPIDataBlocks?.highIssues[0]?.DataBlocks[0]?.totalIssues);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -161,31 +180,29 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
     }
   };
 
-
   const getFooterLine = () => {
     const topThreeDocs = metrics[0]?.docs?.length > 0 ? metrics[0].docs.slice(0, 3) : [];
     return (
       <HorizontalDataBlocksContainer title={"Highest Issue Projects:"}>
         {topThreeDocs.map((doc, index) => (
           <>
-          <span style={{paddingLeft: "11px"}}></span>
-          <Row className="p-1" key={index}>
-            <Col lg={12}>
-              {(getIcon(doc?.projectTotalIssuesTrend) !== "Neutral") != null &&
-                <FontAwesomeIcon
-                icon={getIcon(doc?.projectTotalIssuesTrend)}
-                color={getIconColor(doc?.projectTotalIssuesTrend)}
-                title={getIconTitle(doc?.projectTotalIssuesTrend)}
-                />
-              }
-              <span style={{paddingLeft: "2px"}}></span>
-              {doc?.coverityStreamName}
-            </Col>
-          </Row>
+            <span style={{ paddingLeft: "11px" }}></span>
+            <Row className="p-1" key={index}>
+              <Col lg={12}>
+                {(getIcon(doc?.projectTotalIssuesTrend) !== "Neutral") != null && (
+                  <FontAwesomeIcon
+                    icon={getIcon(doc?.projectTotalIssuesTrend)}
+                    color={getIconColor(doc?.projectTotalIssuesTrend)}
+                    title={getIconTitle(doc?.projectTotalIssuesTrend)}
+                  />
+                )}
+                <span style={{ paddingLeft: "2px" }}></span>
+                {doc?.coverityStreamName}
+              </Col>
+            </Row>
           </>
-            ))}
+        ))}
       </HorizontalDataBlocksContainer>
-
     );
   };
 
@@ -200,7 +217,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
           <Row className="p-1">
             <Col>
               <CoverityIssuesOverallLowTrendDataBlock
-                score={metrics[0].currentTotalLow}
+                score={lowIssues ? lowIssues : 0}
                 icon={getIcon(metrics[0].overallLowTrend)}
                 className={getIconColor(metrics[0].overallLowTrend)}
                 onSelect={() => onRowSelect("Low")}
@@ -208,7 +225,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
             </Col>
             <Col>
               <CoverityIssuesOverallMediumTrendDataBlock
-                score={metrics[0].currentTotalMedium}
+                score={mediumIssues ? mediumIssues : 0}
                 icon={getIcon(metrics[0].overallMediumTrend)}
                 className={getIconColor(metrics[0].overallMediumTrend)}
                 onSelect={() => onRowSelect("Medium")}
@@ -216,16 +233,14 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
             </Col>
             <Col>
               <CoverityIssuesOverallHighTrendDataBlock
-                score={metrics[0].currentTotalHigh}
+                score={highIssues ? highIssues : 0}
                 icon={getIcon(metrics[0].overallHighTrend)}
                 className={getIconColor(metrics[0].overallHighTrend)}
                 onSelect={() => onRowSelect("High")}
               />
             </Col>
           </Row>
-          <div className={"mt-5"}>
-          {getFooterLine()}
-          </div>
+          <div className={"mt-5"}>{getFooterLine()}</div>
         </Container>
       </div>
     );
