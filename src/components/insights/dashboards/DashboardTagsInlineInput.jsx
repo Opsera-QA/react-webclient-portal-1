@@ -59,6 +59,7 @@ function DashboardTagsInlineInput(
       visible={visible}
       model={temporaryModel}
       fieldName={"tags"}
+      badgeClassName={"metric-badge"}
       saveDataFunction={updateDashboardTags}
     />
   );

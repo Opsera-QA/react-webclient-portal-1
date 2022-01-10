@@ -1,33 +1,38 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import ModalLogs from "components/common/modal/modalLogs";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import {
   assignStandardColors,
+  defaultConfig,
+  getColorByData,
   shortenPieChartLegend,
 } from "components/insights/charts/charts-views";
 import { Col, Row } from "react-bootstrap";
 import "components/insights/charts/qa_metrics/Styling.css";
-import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
-import AutomatedTestAdoptionRateAdoptedTestsDataBlock
-  from "components/insights/charts/qa_metrics/automation_test_adoption_rate/data_blocks/AutomatedTestAdoptionRateAdoptedTestsDataBlock";
-import AutomatedTestAdoptionRateManualTestsDataBlock
-  from "components/insights/charts/qa_metrics/automation_test_adoption_rate/data_blocks/AutomatedTestAdoptionRateManualTestsDataBlock";
-import AutomatedTestAdoptionRateAdoptionRateDataBlock
-  from "components/insights/charts/qa_metrics/automation_test_adoption_rate/data_blocks/AutomatedTestAdoptionRateAdoptionRateDataBlock";
-import {hasStringValue} from "components/common/helpers/string-helpers";
+import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
+import AutomatedTestAdoptionRateAdoptedTestsDataBlock from "components/insights/charts/qa_metrics/automation_test_adoption_rate/data_blocks/AutomatedTestAdoptionRateAdoptedTestsDataBlock";
+import AutomatedTestAdoptionRateManualTestsDataBlock from "components/insights/charts/qa_metrics/automation_test_adoption_rate/data_blocks/AutomatedTestAdoptionRateManualTestsDataBlock";
+import AutomatedTestAdoptionRateAdoptionRateDataBlock from "components/insights/charts/qa_metrics/automation_test_adoption_rate/data_blocks/AutomatedTestAdoptionRateAdoptionRateDataBlock";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 import NivoPieChartBase from "components/common/metrics/charts/nivo/pie/NivoPieChartBase";
-import {nivoChartLegendDefinitions} from "components/common/metrics/charts/nivo/nivoChartLegend.definitions";
-import AdoptionTestPercentageChartHelpDocumentation
-  from "../../../../common/help/documentation/insights/charts/AdoptionTestPercentageChartHelpDocumentation";
+import { nivoChartLegendDefinitions } from "components/common/metrics/charts/nivo/nivoChartLegend.definitions";
+import config from "./adoptionTestPercentagePieChartConfig";
+import AdoptionTestPercentageChartHelpDocumentation from "../../../../common/help/documentation/insights/charts/AdoptionTestPercentageChartHelpDocumentation";
+import {
+  METRIC_CHART_STANDARD_HEIGHT,
+  METRIC_THEME_CHART_PALETTE_COLORS,
+} from "../../../../common/helpers/metrics/metricTheme.helpers";
+import { ResponsivePie } from "@nivo/pie";
+import { Container } from "@nivo/core";
 
 const ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS = {
   ADOPTED_TESTS: "adopted_tests",
   MANUAL_TESTS: "manual_tests",
-  ADOPTION_RATE: "adoption_rate"
+  ADOPTION_RATE: "adoption_rate",
 };
 
 function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -68,14 +73,12 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
     try {
       await loadChartMetrics(cancelSource);
       await loadDataPoints(cancelSource);
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -88,10 +91,22 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
     setIsLoading(true);
 
     // TODO: Just save as tags inside the data object.
-    let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-
+    let dashboardTags =
+      dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+    let dashboardOrgs =
+      dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+        ?.value;
     // TODO: Just return individual metric. Don't send it as this complicated data object
-    const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "adoptionPercentage", kpiConfiguration, dashboardTags);
+    const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+      getAccessToken,
+      cancelSource,
+      "adoptionPercentage",
+      kpiConfiguration,
+      dashboardTags,
+      null,
+      null,
+      dashboardOrgs
+    );
     const metrics = response?.data ? response?.data?.data[0]?.adoptionPercentage?.data : [];
 
     if (Array.isArray(metrics) && metrics.length > 0) {
@@ -99,7 +114,6 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
 
       assignStandardColors(metric.pairs);
       shortenPieChartLegend(metric?.pairs);
-
 
       if (isMounted?.current === true) {
         setMetric(metric);
@@ -110,30 +124,35 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
   const loadDataPoints = async () => {
     const dataPoints = kpiConfiguration?.dataPoints;
 
-    const newAdoptionPercentageDataPoint = dataPointHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.ADOPTION_RATE);
+    const newAdoptionPercentageDataPoint = dataPointHelpers.getDataPoint(
+      dataPoints,
+      ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.ADOPTION_RATE
+    );
     setAdoptionRateDataPoint(newAdoptionPercentageDataPoint);
-    const newExecutedTestsDataPoint = dataPointHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.ADOPTED_TESTS);
+    const newExecutedTestsDataPoint = dataPointHelpers.getDataPoint(
+      dataPoints,
+      ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.ADOPTED_TESTS
+    );
     setAutomatedTestsDataPoint(newExecutedTestsDataPoint);
-    const newManualTestDataPoint = dataPointHelpers.getDataPoint(dataPoints, ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.MANUAL_TESTS);
+    const newManualTestDataPoint = dataPointHelpers.getDataPoint(
+      dataPoints,
+      ADOPTION_TEST_PERCENTAGE_DATA_POINT_IDENTIFIERS.MANUAL_TESTS
+    );
     setManualTestsDataPoint(newManualTestDataPoint);
   };
 
   const getNotesRow = () => {
     if (hasStringValue(notesData)) {
       return (
-          <Col className="px-4 pb-4 text-center">
-            <small> {notesData} </small>
-          </Col>
+        <Col className="px-4 pb-4 text-center">
+          <small> {notesData} </small>
+        </Col>
       );
     }
   };
 
   const getLegendsConfiguration = () => {
-    return (
-      [
-        nivoChartLegendDefinitions.getTopRightLegendDefinition(),
-      ]
-    );
+    return [nivoChartLegendDefinitions.getTopRightLegendDefinition()];
   };
 
   const getChartBody = () => {
@@ -142,39 +161,44 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
     }
 
     return (
-      <div className={"my-2"}>
-        <Row>
-          <Col xl={4} lg={6} md={8} className={"d-flex align-content-around"}>
-            <Row>
-              <Col lg={12}>
+      <div>
+        <div className="new-chart mt-3 mb-3 ml-4" style={{ height: "300px", display: "flex" }}>
+          <Container>
+            <Row className={"my-3"}>
+              <Col lg={6}>
                 <AutomatedTestAdoptionRateAdoptedTestsDataBlock
                   executedTestCount={metric?.executedTests}
                   executedTestsDataPoint={automatedTestsDataPoint}
                 />
               </Col>
-              <Col lg={12} className={"my-2"}>
+              <Col lg={6}>
                 <AutomatedTestAdoptionRateManualTestsDataBlock
                   manualTestCount={metric?.manualTests}
                   manualTestsDataPoint={manualTestsDataPoint}
                 />
               </Col>
-              <Col lg={12} className={"mb-2"}>
+            </Row>
+            <Row className={"p-1"}>
+              <Col lg={6} className={"w-100 mx-auto"}>
                 <AutomatedTestAdoptionRateAdoptionRateDataBlock
-                  adoptionRatePercentage={metric?.adoptionRate}
+                  score={metric?.adoptionRate}
                   adoptionRateDataPoint={adoptionRateDataPoint}
                 />
               </Col>
             </Row>
+          </Container>
+          <Col xl={6} lg={6} md={4} className={"my-2 p-2"}>
+            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
+              <ResponsivePie
+                data={metric?.pairs}
+                {...defaultConfig()}
+                {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
+                onClick={() => setShowModal(true)}
+              />
+            </div>
           </Col>
-          <Col xl={8} lg={6} md={4} className={"my-2"}>
-            <NivoPieChartBase
-              data={metric?.pairs}
-              onClickFunction={() => setShowModal(true)}
-              legendsConfiguration={getLegendsConfiguration()}
-            />
-          </Col>
-        </Row>
-        {getNotesRow()}
+        </div>
+        <Row>{getNotesRow()}</Row>
       </div>
     );
   };
@@ -193,7 +217,9 @@ function AutomatedTestAdoptionRateMetric({ kpiConfiguration, setKpiConfiguration
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
-        chartHelpComponent={(closeHelpPanel) => <AdoptionTestPercentageChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
+        chartHelpComponent={(closeHelpPanel) => (
+          <AdoptionTestPercentageChartHelpDocumentation closeHelpPanel={closeHelpPanel} />
+        )}
       />
       <ModalLogs
         header="Unit Test Data Stats"
@@ -212,7 +238,7 @@ AutomatedTestAdoptionRateMetric.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func
+  setKpis: PropTypes.func,
 };
 
 export default AutomatedTestAdoptionRateMetric;

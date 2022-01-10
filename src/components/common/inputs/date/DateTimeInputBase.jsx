@@ -6,7 +6,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneDatePickerInput from "components/common/inputs/date/StandaloneDateTimeInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import {hasDateValue} from "components/common/helpers/date.helpers";
+import {hasDateValue} from "components/common/helpers/date/date.helpers";
 
 function DateTimeInputBase(
   {

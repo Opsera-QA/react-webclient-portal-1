@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import EditIcon from "components/common/icons/field/EditIcon";
 import TagMultiSelectOverlay from "components/common/inputs/tags/inline/modal/TagMultiSelectOverlay";
@@ -11,6 +11,7 @@ function TagsInlineInputBase(
     fieldName,
     disabled,
     saveDataFunction,
+    badgeClassName,
     visible,
     type,
     tagLocation,
@@ -41,6 +42,7 @@ function TagsInlineInputBase(
             tags={model?.getData(fieldName)}
             tagLocation={tagLocation}
             showNoTagsAppliedBadge={true}
+            badgeClassName={badgeClassName}
           />
         </div>
         <div>
@@ -64,6 +66,7 @@ TagsInlineInputBase.propTypes = {
   tagLocation: PropTypes.string,
   saveDataFunction: PropTypes.func,
   type: PropTypes.string,
+  badgeClassName: PropTypes.string,
 };
 
 TagsInlineInputBase.defaultProps = {

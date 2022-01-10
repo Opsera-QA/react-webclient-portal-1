@@ -53,6 +53,9 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       let goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")]?.value;
       setGoalsData(goals);
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
@@ -60,7 +63,10 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
         cancelSource,
         "salesforceDurationByStage",
         kpiConfiguration,
-        dashboardTags
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
       );
       let dataObject = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data : [];
       let means = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data[6] : [];
@@ -93,7 +99,7 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
 
     return (
       <div className="new-chart mb-3" style={{ minHeight: "450px", display: "flex" }}>
-        <Row>
+        <Row className="mr-1">
           <Col xs={12} sm={6}>
             <SalesforceCreatePackageDurationMetric
               metric={metrics[0]}
