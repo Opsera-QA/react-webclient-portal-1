@@ -42,7 +42,9 @@ function DateTimeInputBase(
         setDataObject({...newDataObject});
       }
 
-      setErrorMessage(newDataObject.getFieldError(fieldName));
+      if (newDataObject) {
+        setErrorMessage(newDataObject.getFieldError(fieldName));
+      }
     }
   };
 
