@@ -98,6 +98,8 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
     setFirstPassYieldDataPoint(firstPassYieldPercentageDataPoint);
   };
 
+  console.log(metrics);
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
