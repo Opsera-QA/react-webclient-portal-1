@@ -4,19 +4,16 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import jenkinsToolJobActions
-  from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/jenkinsToolJob.actions";
 import modelHelpers from "components/common/model/modelHelpers";
-import JenkinsJobMetadata from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/jenkins-job-metadata";
-import JenkinsJobEditorPanel
-  from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/JenkinsJobEditorPanel";
-import JenkinsJobsTable from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/JenkinsJobsTable";
+import toolPathsActions from "components/inventory/tools/tool_details/paths/toolPaths.actions";
+import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
+import toolPathMetadata from "components/inventory/tools/tool_details/paths/toolPath.metadata";
+import ToolPathEditorPanel from "components/inventory/tools/tool_details/paths/ToolPathEditorPanel";
 
 function GitToolPathsPanel({ toolData, toolId }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [toolPaths, setToolPaths] = useState([]);
-  const [jenkinsJobModel, setJenkinsJobModel] = useState(undefined);
+  const [toolPathModel, setToolPathModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -30,7 +27,6 @@ function GitToolPathsPanel({ toolData, toolId }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    setToolPaths([]);
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -48,7 +44,7 @@ function GitToolPathsPanel({ toolData, toolId }) {
       setIsLoading(true);
 
       if (isMongoDbId(toolId)) {
-        await getJenkinsJobs(cancelSource);
+        await getToolPaths(cancelSource);
       }
     }
     catch (error) {
@@ -64,52 +60,35 @@ function GitToolPathsPanel({ toolData, toolId }) {
     }
   };
 
-  const getJenkinsJobs = async (cancelSource = cancelTokenSource) => {
-    const response = await jenkinsToolJobActions.getJenkinsJobs(getAccessToken, cancelSource, toolId);
-    const jenkinsJobArray = response?.data?.data;
+  const getToolPaths = async (cancelSource = cancelTokenSource) => {
+    const response = await toolPathsActions.getToolPathsV2(getAccessToken, cancelSource, toolId);
+    const toolPathArray = response?.data?.data;
 
-    if (isMounted?.current === true && Array.isArray(jenkinsJobArray)) {
-      setToolPaths(jenkinsJobArray);
+    if (isMounted?.current === true) {
+      unpackPath(toolPathArray);
     }
   };
 
-  const selectedJobRow = (rowData) => {
-    const parsedModel = modelHelpers.parseObjectIntoModel(rowData?.original, JenkinsJobMetadata);
-    setJenkinsJobModel({...parsedModel});
+  const unpackPath = (toolPathArray) => {
+    const toolPathObject = Array.isArray(toolPathArray) && toolPathArray.length > 0 ? toolPathArray[0] : {...toolPathMetadata.newObjectFields};
+
+    const parsedModel = modelHelpers.parseObjectIntoModel(toolPathObject, toolPathMetadata);
+    setToolPathModel({...parsedModel});
   };
 
-  const togglePanel = async () => {
-    setJenkinsJobModel(null);
-    await loadData();
-  };
-
-  const getBody = () => {
-    if (jenkinsJobModel != null) {
-      return (
-        <JenkinsJobEditorPanel
-          toolData={toolData}
-          handleClose={togglePanel}
-          jenkinsJobModel={jenkinsJobModel}
-          setJenkinsJobModel={setJenkinsJobModel}
-          loadData={loadData}
-        />
-      );
-    }
-
+  if (isLoading === true || toolPathModel == null) {
     return (
-      <JenkinsJobsTable
-        isLoading={isLoading}
-        jenkinsJobs={jenkinsJobs}
-        toolData={toolData}
-        loadData={loadData}
-        onRowSelect={selectedJobRow}
-      />
+      <DetailPanelLoadingDialog type={"Path"} />
     );
-  };
+  }
 
   return (
     <div>
-      {getBody()}
+      <ToolPathEditorPanel
+        toolModel={toolData}
+        toolPathModel={toolPathModel}
+        setToolPathModel={setToolPathModel}
+      />
     </div>
   );
 }

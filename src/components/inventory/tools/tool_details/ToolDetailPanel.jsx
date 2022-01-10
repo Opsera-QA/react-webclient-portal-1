@@ -119,8 +119,6 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         return (
           <ToolPathsPanel
             toolData={toolData}
-            isLoading={isLoading}
-            loadData={loadData}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.PROJECTS:
