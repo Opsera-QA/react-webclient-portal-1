@@ -1,14 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/TwoLineDataBlockBase";
+import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 
 function CumulativeOpenValidDefectsDataBlock({ defects }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
-      <div className={"p-3"}>
-        <TwoLineDataBlockBase title={defects} subtitle={"Total Valid Defects Open"} />
-      </div>
+        <TwoLineScoreDataBlock
+          className="m-3"
+          score={defects} 
+          subtitle={"Total Valid Defects Open"}
+        />
     </DataBlockBoxContainer>
   );
 }
