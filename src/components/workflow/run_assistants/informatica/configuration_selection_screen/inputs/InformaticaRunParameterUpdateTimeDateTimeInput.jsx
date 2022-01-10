@@ -10,7 +10,6 @@ const InformaticaRunParameterUpdateTimeDateTimeInput = (
   const setDataFunction = (fieldName, newDate) => {
     const newModel = {...informaticaRunParameterConfigurationModel};
     const parsedDate = newDate.toISOString().split('.')[0] + "Z";
-    console.log("parsedDate: " + JSON.stringify(parsedDate));
     newModel.setData(fieldName, parsedDate);
     setInformaticaRunParameterConfigurationModel({...newModel});
   };
