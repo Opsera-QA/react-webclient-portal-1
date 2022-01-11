@@ -18,7 +18,7 @@ function OneLineGoalDataBlockBase({ goal, className, icon, }) {
 
   return (
     <div className={className}>
-      <Row className={"w-100 h-100 text-center mx-auto font-inter-light-300"}>
+      <Row className={"w-100 h-100 text-center mx-auto font-inter-light-400"}>
         {getLeftDataBlockIcon()}
         <Col xs={12} className={"mt-2 my-auto dark-gray-text-primary metric-block-content-text"}>
           {goal}

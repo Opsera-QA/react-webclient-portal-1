@@ -33,34 +33,18 @@
 }
 
 
-.data-block-container {
+.data-block-container, .data-block-box {
     background: white;
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
-}
-
-.data-block-container:hover {
-    box-shadow: 0 2px 2px 0 rgba(46,41,60,0.2);
-    transition: 0.3s;
-}
-
-.data-block-container-title {
-    background-color: #46415C;
-    color: white;
-}
-
-.data-block-box {
-    background-color: #fff;
-    background-clip: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
+    /*border: 1px solid #00a8e8;*/
+    border-radius: 6px;
 }
 
 .data-block-icon {
     width: 1.75rem;
     max-width: 1.75rem;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     z-index: 500;
 }
 

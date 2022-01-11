@@ -38,7 +38,7 @@ const StepConfigJenkinsJobInput = ({dataObject, setDataObject, disabled, typeFil
 
   return (
     <JenkinsRegistryToolJobSelectInput
-      fieldName={"toolJobName"}
+      fieldName={"toolJobId"}
       jenkinsToolId={dataObject?.getData("toolConfigId")}
       typeFilter={typeFilter}
       configurationRequired={true}

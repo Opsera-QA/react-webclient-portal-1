@@ -131,3 +131,87 @@
 }
 
 /* Console Log Container Styling */
+
+/* Metric Container Styling */
+.metric-chart-container {
+    margin: 0 auto;
+    /*border: 1px solid #E6E5E3;*/
+    border-radius: 6px;
+    /*box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);*/
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.metric-chart-container > .metric-title-bar, .metric-info-container > .metric-title-bar, .dashboard-container-header {
+    /*background-color: #E6E5E3;*/
+    /*color: #3D3B36;*/
+    background-color: #00a8e8;
+    color: #fff;
+    font-size: 1.4em;
+    height: 48px;
+    max-height: 48px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+/* End Metric Container Styling */
+
+.dashboard-screen-container-body {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    background-clip: border-box;
+    background-color: #e6e5e3;
+    border: 1px solid #e6e5e3;
+}
+
+/* Metric Info Container Styling */
+.metric-info-container .metric-info-container-body {
+    border: 1px solid #E6E5E3;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.metric-info-container-footer {
+    background-color: #E6E5E3;
+    min-height: 1em;
+}
+/* End Metric Info Container Styling */
+
+/* Property Input Container Styling */
+.object-properties-input .property-header, .input-title-bar {
+    background-color: #E6E5E3;
+    color: #3D3B36;
+    min-height: 42px;
+    font-size: 1.1rem;
+}
+
+.object-properties-input .delete-button {
+    margin-left: 2px;
+}
+
+.object-properties-input .properties-body {
+    height: 195px;
+    overflow-y: auto;
+    overflow-x: hidden
+}
+
+.object-properties-input .properties-body-alt {
+    min-height: 195px;
+}
+
+.object-properties-input .rules-input, .object-properties-input .roles-input {
+    min-height: 55px;
+}
+
+.object-properties-input .no-data-message {
+    padding: 2%;
+}
+
+.object-properties-footer {
+    background-color: #E6E5E3;
+    min-height: 1em;
+}
+
+.object-properties-footer .form-text {
+    margin: 0
+}
+
+/* End Property Input Container Styling */

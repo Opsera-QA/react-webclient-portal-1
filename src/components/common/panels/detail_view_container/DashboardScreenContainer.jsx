@@ -1,67 +1,124 @@
-import React, {useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import TitleBar from "components/common/fields/TitleBar";
 import {getBreadcrumb, getParentBreadcrumb} from "components/common/navigation/trails";
-import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
-import {meetsRequirements} from "components/common/helpers/role-helpers";
-import AccessRoleLevelField from "components/common/fields/access/AccessRoleLevelField";
 import ScreenContainerBodyLoadingDialog
   from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
+import TitleActionBarContainer from "components/common/actions/TitleActionBarContainer";
+import PublishDashboardToPrivateCatalogIcon
+  from "components/common/icons/dashboards/PublishDashboardToPrivateCatalogIcon";
+import PublishDashboardToPublicMarketplaceIcon
+  from "components/common/icons/dashboards/PublishDashboardToPublicMarketplaceIcon";
+import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import FavoriteInput from "components/common/inputs/boolean/FavoriteInput";
+import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
+import DashboardEditorPanel from "components/insights/dashboards/dashboard_details/DashboardEditorPanel";
+import DashboardViewer from "components/insights/dashboards/dashboard_details/DashboardViewer";
+import axios from "axios";
+import {AuthContext} from "contexts/AuthContext";
+import dashboardsActions from "components/insights/dashboards/dashboards-actions";
+import AddKpiIcon from "components/common/icons/metrics/AddKpiIcon";
 
-// TODO: Keep aligned with DetailScreenContainer/VanitySetDetailScreenContainer
 function DashboardScreenContainer(
   {
-    breadcrumbDestination,
-    actionBar,
-    dataObject,
-    detailPanel,
+    tab,
+    dashboardModel,
+    setDashboardModel,
     isLoading,
-    accessDenied,
-    metadata,
-    showBreadcrumbTrail,
-    navigationTabContainer,
-    accessRoleData,
-    roleRequirement,
-    titleActionBar,
-    objectRoles,
-    helpComponent
+    loadData,
   }) {
-  const [breadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
-  const [parentBreadcrumb] = useState(getParentBreadcrumb(breadcrumbDestination));
+  const { getAccessToken } = useContext(AuthContext);
+  const [breadcrumb] = useState(getBreadcrumb("dashboardDetails"));
+  const [parentBreadcrumb] = useState(getParentBreadcrumb("dashboardDetails"));
+  const [activeTab, setActiveTab] = useState(tab  === "settings" ? tab : "viewer");
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-  const getTopNavigation = () => {
-    if (showBreadcrumbTrail) {
-      return (<BreadcrumbTrail destination={breadcrumbDestination} />);
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
     }
 
-    if (navigationTabContainer) {
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
+
+  const handleClose = async () => {
+    setActiveTab("viewer");
+  };
+
+  const handleDelete = async () => {
+    return await dashboardsActions.deleteDashboardV2(getAccessToken, cancelTokenSource, dashboardModel);
+  };
+
+  const getTitleActionBar = () => {
+    if (activeTab !== "settings") {
       return (
-        <div className="mb-3">
-          {navigationTabContainer}
+        <TitleActionBarContainer>
+          <AddKpiIcon
+            className={"mr-3"}
+            dashboardModel={dashboardModel}
+            kpis={dashboardModel?.getData("configuration")}
+          />
+          <PublishDashboardToPrivateCatalogIcon
+            dashboardData={dashboardModel}
+            className={"mr-3"}
+          />
+          <PublishDashboardToPublicMarketplaceIcon
+            dashboardData={dashboardModel}
+            className={"mr-3"}
+          />
+          <ToggleSettingsIcon
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+        </TitleActionBarContainer>
+      );
+    }
+  };
+
+  const getActionBar = () => {
+    if (dashboardModel != null && activeTab === "settings") {
+      return (
+        <div className="mb-1">
+          <ActionBarContainer>
+            <div/>
+            <div className="d-inline-flex float-right">
+              <FavoriteInput dataObject={dashboardModel} setDataObject={setDashboardModel} fieldName={"isFavorite"}/>
+              <ActionBarDeleteButton2
+                relocationPath={"/insights"}
+                dataObject={dashboardModel}
+                handleDelete={handleDelete}
+              />
+            </div>
+          </ActionBarContainer>
         </div>
       );
     }
 
-    return (
-      <div className="mb-3">
-        <div className="sub-navigation-block" />
-      </div>
-    );
+    return null;
   };
 
+
   const getTitleBar = () => {
-    const activeField = dataObject?.getActiveField();
+    const activeField = dashboardModel?.getActiveField();
     return (
       <TitleBar
         isLoading={isLoading}
         parentBreadcrumb={parentBreadcrumb}
         titleIcon={breadcrumb?.icon}
-        title={dataObject?.getDetailViewTitle()}
-        inactive={activeField ? dataObject?.getData(activeField) === false : false}
-        titleActionBar={titleActionBar}
-        helpComponent={helpComponent}
+        title={dashboardModel?.getDetailViewTitle()}
+        inactive={activeField ? dashboardModel?.getData(activeField) === false : false}
+        titleActionBar={activeTab !== "settings" ? getTitleActionBar() : undefined}
       />
     );
   };
@@ -73,106 +130,70 @@ function DashboardScreenContainer(
       );
     }
 
+    if (activeTab === "settings") {
+      return (
+        <div>
+          {getActionBar()}
+          <div>
+            <DashboardEditorPanel
+              dashboardData={dashboardModel}
+              setDashboardData={setDashboardModel}
+              handleClose={handleClose}
+            />
+          </div>
+        </div>
+      );
+    }
+
     return (
-      <div>
+      <div className={"shaded-container"}>
         {getActionBar()}
         <div>
-          {detailPanel}
+          <DashboardViewer
+            dashboardModel={dashboardModel}
+            setDashboardModel={setDashboardModel}
+            breadcrumbDestination={"dashboardDetails"}
+            managementViewLink={"/insights"}
+            managementTitle={"Dashboards"}
+            type={"Dashboard"}
+            loadData={loadData}
+          />
         </div>
       </div>
     );
   };
 
-  const getActionBar = () => {
-    if (dataObject != null) {
-      return <div className="mb-1">{actionBar}</div>;
-    }
-
-    return <div className="py-2" />;
-  };
-
-  const getAccessBasedField = () => {
-    if (objectRoles != null) {
-      return (
-        <div className="content-block-footer-text-container pt-2">
-          <AccessRoleLevelField
-            className={"mx-2"}
-            accessRoleData={accessRoleData}
-            objectRoles={objectRoles}
-            dataObject={dataObject}
-          />
-        </div>
-      );
-    }
-
-    if (roleRequirement) {
-      return (
-        <div className="content-block-footer-text-container pt-2">
-          <RoleRequirementField
-            className={"mx-2"}
-            roleRequirement={roleRequirement}
-          />
-        </div>
-      );
-    }
-  };
-
-  if (!isLoading && accessDenied) {
+  if (!isLoading && dashboardModel == null) {
     return (
       <AccessDeniedContainer
-        navigationTabContainer={navigationTabContainer}
-      />
-    );
-  }
-
-  if (!isLoading && accessRoleData && roleRequirement && !meetsRequirements(roleRequirement, accessRoleData)) {
-    return (
-      <AccessDeniedContainer
-        navigationTabContainer={navigationTabContainer}
-      />
-    );
-  }
-
-  if (!isLoading && dataObject == null) {
-    return (
-      <AccessDeniedContainer
-        navigationTabContainer={navigationTabContainer}
+        navigationTabContainer={<InsightsSubNavigationBar currentTab={"dashboardViewer"} />}
       />
     );
   }
 
   return (
-    <div className="max-content-width ml-2 max-content-height scroll-y">
-      {getTopNavigation()}
-      <div className="content-container content-card-1">
-        <div className="px-2 content-block-header title-text-header-1">
+    <div className="max-content-width ml-2 max-content-height scroll-y" style={{ overflowX: "hidden" }}>
+      <div className="mb-3">
+        {<InsightsSubNavigationBar currentTab={"dashboardViewer"} />}
+      </div>
+      <div>
+        <div className="px-2 dashboard-container-header chart-header-name-text title-text-header-1">
           {getTitleBar()}
         </div>
-        <div className="detail-container-body">
+        <div className={tab === "settings" ? `detail-container-body` : `detail-container-body dashboard-screen-container-body mb-2`}>
           {getBody()}
         </div>
-        {getAccessBasedField()}
-        <div className="content-block-footer"/>
       </div>
     </div>
   );
 }
 
 DashboardScreenContainer.propTypes = {
-  showBreadcrumbTrail: PropTypes.bool,
-  navigationTabContainer: PropTypes.object,
-  breadcrumbDestination: PropTypes.string,
-  detailPanel: PropTypes.object,
-  dataObject: PropTypes.object,
-  actionBar: PropTypes.object,
+  tab: PropTypes.string,
+  dashboardModel: PropTypes.object,
+  setDashboardModel: PropTypes.func,
   isLoading: PropTypes.bool,
-  accessDenied: PropTypes.bool,
-  metadata: PropTypes.object,
-  accessRoleData: PropTypes.object,
-  roleRequirement: PropTypes.string,
-  titleActionBar: PropTypes.object,
-  objectRoles: PropTypes.array,
-  helpComponent: PropTypes.object
+  loadData: PropTypes.func,
 };
 
 export default DashboardScreenContainer;

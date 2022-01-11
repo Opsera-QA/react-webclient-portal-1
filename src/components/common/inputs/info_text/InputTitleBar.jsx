@@ -16,6 +16,7 @@ function InputTitleBar(
     disabled,
     customTitle,
     loadDataFunction,
+    className,
   }) {
   const getTitle = () => {
     if (customTitle) {
@@ -67,13 +68,13 @@ function InputTitleBar(
 
 
   return (
-    <div className="px-2 d-flex input-title-bar justify-content-between">
+    <div className={`${className} px-2 d-flex justify-content-between`}>
       {getFormattedLabel()}
       <div className={"d-flex"}>
         {getSearchBar()}
         {getLoadDataButton()}
         <div className={"my-auto"}>
-          <LaunchHelpIcon helpComponent={helpComponent} />
+          <LaunchHelpIcon helpComponent={helpComponent}/>
         </div>
       </div>
     </div>
@@ -91,6 +92,11 @@ InputTitleBar.propTypes = {
   customTitle: PropTypes.string,
   helpComponent: PropTypes.object,
   loadDataFunction: PropTypes.func,
+  className: PropTypes.string,
+};
+
+InputTitleBar.defaultProps = {
+  className: "input-title-bar",
 };
 
 export default InputTitleBar;

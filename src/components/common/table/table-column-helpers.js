@@ -20,12 +20,12 @@ import DashboardFavoritesIcon from "components/common/icons/dashboards/Dashboard
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import {Button} from "react-bootstrap";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
-import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date.helpers";
+import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date/date.helpers";
 import {capitalizeFirstLetter, hasStringValue, truncateString} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
 import { getPipelineStateFieldBase} from "components/common/fields/pipelines/state/PipelineStateField";
-import TagDisplayer from "components/common/fields/multiple_items/tags/TagDisplayer";
+import AppliedTagBadge from "components/common/badges/tag/AppliedTagBadge";
 import UnchangedMetricIcon from "components/common/icons/metric/unchanged/UnchangedMetricIcon";
 import NoTrendMetricIcon from "components/common/icons/metric/trend/NoTrendMetricIcon";
 import IconBase from "components/common/icons/IconBase";
@@ -183,7 +183,8 @@ export const getTagColumn = (field, className) => {
       const tags = row?.value;
 
       return (
-        <TagDisplayer
+        <AppliedTagBadge
+          className={"group-badge"}
           tags={tags}
         />
       );
@@ -346,7 +347,7 @@ export const getChartTrendStatusColumn = (field, className) => {
         case "red":
           return (<DangerMetricIcon />);
         case "neutral":
-          return (<UnchangedMetricIcon />);
+          return null;
         case "green":
         return (<SuccessMetricIcon />);
         case "-":

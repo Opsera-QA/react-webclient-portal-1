@@ -12,6 +12,10 @@ const JENKINS_JOB_TYPES = [
     value: "SFDC"
   },
   {
+    label: "PMD Scan",
+    value: "PMD_SCAN"
+  },
+  {
     label: "Code Scan",
     value: "CODE SCAN"
   },

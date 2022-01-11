@@ -1,14 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
-import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/TwoLineDataBlockBase";
+import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 
 function FirstPassYieldMetricDataBlockBase({ score, subtitle, onClickFunction }) {
   return (
     <DataBlockBoxContainer showBorder={true} onClickFunction={onClickFunction}>
-      <div className={"p-2"} style={{minHeight: '100px'}}>
-        <TwoLineDataBlockBase className={"first-pass-yield"} title={score} subtitle={subtitle} />
-      </div>
+      <TwoLineScoreDataBlock
+        className="m-3"
+        score={score} 
+        subtitle={subtitle} 
+      />
     </DataBlockBoxContainer>
   );
 }

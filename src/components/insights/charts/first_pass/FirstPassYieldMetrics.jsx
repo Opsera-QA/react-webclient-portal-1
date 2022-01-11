@@ -12,7 +12,10 @@ import { defaultConfig, getColorByData, assignStandardColors, shortenPieChartLeg
 import { Col, Container, Row } from "react-bootstrap";
 import FirstPassYieldMetricDataBlockBase from "./data_blocks/FirstPassYieldMetricDataBlockBase";
 import FirstPassYieldPercentageDataBlock from "./data_blocks/FirstPassYieldPercentageDataBlock";
-import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
+import {
+  METRIC_THEME_CHART_PALETTE_COLORS,
+  METRIC_CHART_STANDARD_HEIGHT,
+} from "components/common/helpers/metrics/metricTheme.helpers";
 
 const FIRST_PASS_YIELD = "first_pass_yield";
 
@@ -67,12 +70,18 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
     setIsLoading(true);
     let dashboardTags =
       dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+    let dashboardOrgs =
+      dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+        ?.value;
     const response = await chartsActions.parseConfigurationAndGetChartMetrics(
       getAccessToken,
       cancelSource,
       "firstPassYield",
       kpiConfiguration,
-      dashboardTags
+      dashboardTags,
+      null,
+      null,
+      dashboardOrgs
     );
     let dataObject = response?.data ? response?.data?.data[0]?.firstPassYield?.data : [];
     assignStandardColors(dataObject[0]?.pairs);
@@ -94,7 +103,7 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
       return null;
     }
     return (
-     <div className="new-chart mb-1" style={{ minHeight: "300px", display: "flex" }}>
+      <div className="new-chart mb-1" style={{ minHeight: "300px", display: "flex" }}>
         <Row>
           <Col xl={6} lg={6} md={8} className={"d-flex align-content-around"}>
             <Row className="px-4 justify-content-between">
@@ -125,7 +134,7 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
             </Row>
           </Col>
           <Col xl={6} lg={6} md={4} className={"my-1"}>
-            <div style={{ height: "300px" }}>
+            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
               <ResponsivePie
                 data={metrics[0]?.pairs}
                 {...defaultConfig()}

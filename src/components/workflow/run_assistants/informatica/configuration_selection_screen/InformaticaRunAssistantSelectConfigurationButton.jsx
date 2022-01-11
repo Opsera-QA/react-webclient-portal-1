@@ -9,7 +9,7 @@ import axios from "axios";
 import {informaticaRunParametersActions} from "components/workflow/run_assistants/informatica/informaticaRunParameters.actions";
 import {INFORMATICA_RUN_ASSISTANT_SCREENS} from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistant";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import {hasDateValue} from "components/common/helpers/date.helpers";
+import {hasDateValue} from "components/common/helpers/date/date.helpers";
 
 function InformaticaRunAssistantSelectConfigurationButton(
   {

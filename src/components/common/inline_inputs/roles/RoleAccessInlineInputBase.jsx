@@ -35,7 +35,7 @@ function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData, v
         <div className="edit-button d-flex">
           <EditIcon
             className={"ml-2 mt-2 text-muted"}
-            editFunction={showEditor}
+            handleEditFunction={showEditor}
             disabled={disabled}
             tooltipBody={"Edit Access Rules"}
           />

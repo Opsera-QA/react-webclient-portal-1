@@ -12,8 +12,11 @@ import { neutralColor, goalSuccessColor } from "../../../../charts/charts-views"
 import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMinus } from "@fortawesome/pro-solid-svg-icons";
-import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
+import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
+import {
+  METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY,
+  METRIC_THEME_CHART_PALETTE_COLORS,
+} from "components/common/helpers/metrics/metricTheme.helpers";
 // import MeanTimeToResolutionSummaryPanelMetadata from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/serviceNowMeanTimeToResolutionSummaryPanelMetadata";
 // import Model from "../../../../../../core/data_model/model";
 // import ChartDetailsOverlay from "../../../detail_overlay/ChartDetailsOverlay";
@@ -62,7 +65,9 @@ function ServiceNowMeanTimeToResolutionBarChart({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       const dashboardTags =
           dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value,
         goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")]?.value,
@@ -71,7 +76,10 @@ function ServiceNowMeanTimeToResolutionBarChart({
           cancelSource,
           "serviceNowMTTR",
           kpiConfiguration,
-          dashboardTags
+          dashboardTags,
+          null,
+          null,
+          dashboardOrgs
         ),
         dataObject = response?.data?.data[0]?.serviceNowMTTR?.data[0]?.docs,
         overallMeanValue = response?.data?.data[0]?.serviceNowMTTR?.data[0]?.overallMttrHours;
@@ -108,13 +116,15 @@ function ServiceNowMeanTimeToResolutionBarChart({
     }
 
     return (
-      <div className="new-chart mb-3 pointer font-inter-light-300 dark-gray-text-primary" style={{ height: "300px" }}>
-        <div style={{ float: "right", fontSize: "10px", marginTop: "-30px" }}>
-          Total Number of Incidents - #<br></br>
-          <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" /> Average MTTR <b>({overallMean} Hours)</b>
+      <div className="new-chart mb-4 pointer font-inter-light-400 dark-gray-text-primary" style={{ height: "300px" }}>
+        <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
+          Average MTTR <b>({overallMean} Hours)</b> <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" />
           <br></br>
-          <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" /> Goal
-          <b> ({goalsData?.mttrAvgMeanTimeGoal} Hours)</b>
+          Goal<b> ({goalsData?.mttrAvgMeanTimeGoal} Hours)</b>{" "}
+          <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" />
+          <br></br>
+          MTTR{" "}
+          <FontAwesomeIcon icon={faSquare} color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} size="lg" />
         </div>
 
         <ResponsiveBar
@@ -128,7 +138,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
               titles={["Date", "Mean Time to Resolution", "Number of Incidents"]}
               values={[new Date(indexValue).toDateString(), `${value} hours`, data.Count]}
               style={false}
-              color={color}
+              // color={color}
             />
           )}
           markers={[
