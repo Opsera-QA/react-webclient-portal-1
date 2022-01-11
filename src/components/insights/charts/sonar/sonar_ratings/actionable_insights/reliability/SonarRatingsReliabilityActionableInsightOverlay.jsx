@@ -57,13 +57,13 @@ function SonarRatingsReliabilityActionableInsightOverlay({ kpiConfiguration, das
 
   const calculateTrend = (bug) => {
     if (bug.currentScanIssuesCount || !bug.previousScanIssuesCount) {
-      return "-";
+      return "";
     } else if (bug.currentScanIssuesCount > bug.previousScanIssuesCount) {
-      return "green";
+      return "Green";
     } else if (bug.currentScanIssuesCount < bug.previousScanIssuesCount) {
-      return "red";
+      return "Red";
     } else {
-      return "neutral";
+      return "Neutral";
     }
   };
 
