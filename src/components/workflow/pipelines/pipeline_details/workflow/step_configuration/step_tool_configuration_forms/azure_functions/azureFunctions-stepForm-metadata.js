@@ -48,7 +48,7 @@ const azureFunctionsStepFormMetadata = {
       regexDefinitionName: "azureFunctionsLabel",
     },
     {
-      label: "Generate Dynamic Service Name?",
+      label: "Generate Dynamic Service Name",
       id: "dynamicServiceName",
     },
     {
@@ -57,7 +57,7 @@ const azureFunctionsStepFormMetadata = {
       formText: "Resource group is mandatory if the Specify Resource Group toggle is selected"
     },
     {
-      label: "Specify Resource Group?",
+      label: "Specify Resource Group",
       id: "useCustomResourceGroup"
     },
   ],
