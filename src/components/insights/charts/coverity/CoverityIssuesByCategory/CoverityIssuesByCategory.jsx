@@ -24,9 +24,10 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
-  const [lowIssues, setLowIssues] = useState(0);
-  const [mediumIssues, setMediumIssues] = useState(0);
-  const [highIssues, setHighIssues] = useState(0);
+  const [dataMetrics, setDataMetrics] = useState([]);
+  // const [lowIssues, setLowIssues] = useState(0);
+  // const [mediumIssues, setMediumIssues] = useState(0);
+  // const [highIssues, setHighIssues] = useState(0);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -95,9 +96,11 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
         dataObject[0]?.docs?.slice(0, 2);
 
         setMetrics(dataObject);
-        setLowIssues(dataObjectBaseKPIDataBlocks?.lowIssues[0]?.DataBlocks[0]?.totalIssues);
-        setMediumIssues(dataObjectBaseKPIDataBlocks?.mediumIssues[0]?.DataBlocks[0]?.totalIssues);
-        setHighIssues(dataObjectBaseKPIDataBlocks?.highIssues[0]?.DataBlocks[0]?.totalIssues);
+        setDataMetrics(dataObjectBaseKPIDataBlocks);
+
+        // setLowIssues(dataObjectBaseKPIDataBlocks?.lowIssues[0]?.DataBlocks[0]?.totalIssues);
+        // setMediumIssues(dataObjectBaseKPIDataBlocks?.mediumIssues[0]?.DataBlocks[0]?.totalIssues);
+        // setHighIssues(dataObjectBaseKPIDataBlocks?.highIssues[0]?.DataBlocks[0]?.totalIssues);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -207,7 +210,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
   };
 
   const getChartBody = () => {
-    if (!Array.isArray(metrics) || metrics.length === 0) {
+    if (!Array.isArray(metrics) || metrics.length === 0 || dataMetrics.length === 0) {
       return null;
     }
 
@@ -217,7 +220,11 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
           <Row className="p-1">
             <Col>
               <CoverityIssuesOverallLowTrendDataBlock
-                score={lowIssues ? lowIssues : 0}
+                score={
+                  dataMetrics?.lowIssues[0]?.DataBlocks[0]?.totalIssues
+                    ? dataMetrics?.lowIssues[0]?.DataBlocks[0]?.totalIssues
+                    : 0
+                }
                 icon={getIcon(metrics[0].overallLowTrend)}
                 className={getIconColor(metrics[0].overallLowTrend)}
                 onSelect={() => onRowSelect("Low")}
@@ -225,7 +232,11 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
             </Col>
             <Col>
               <CoverityIssuesOverallMediumTrendDataBlock
-                score={mediumIssues ? mediumIssues : 0}
+                score={
+                  dataMetrics?.mediumIssues[0]?.DataBlocks[0]?.totalIssues
+                    ? dataMetrics?.mediumIssues[0]?.DataBlocks[0]?.totalIssues
+                    : 0
+                }
                 icon={getIcon(metrics[0].overallMediumTrend)}
                 className={getIconColor(metrics[0].overallMediumTrend)}
                 onSelect={() => onRowSelect("Medium")}
@@ -233,7 +244,11 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
             </Col>
             <Col>
               <CoverityIssuesOverallHighTrendDataBlock
-                score={highIssues ? highIssues : 0}
+                score={
+                  dataMetrics?.highIssues[0]?.DataBlocks[0]?.totalIssues
+                    ? dataMetrics?.highIssues[0]?.DataBlocks[0]?.totalIssues
+                    : 0
+                }
                 icon={getIcon(metrics[0].overallHighTrend)}
                 className={getIconColor(metrics[0].overallHighTrend)}
                 onSelect={() => onRowSelect("High")}
