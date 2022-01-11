@@ -94,7 +94,8 @@ const TerraformStepFormMetadata = {
     },
     {
       label: "Terraform Version",
-      id: "tag"
+      id: "tag",
+      isRequired: true
     },
   ],
   fieldsAlt: [
@@ -197,7 +198,8 @@ const TerraformStepFormMetadata = {
     },
     {
       label: "Terraform Version",
-      id: "tag"
+      id: "tag",
+      isRequired: true
     },
   ],
   newObjectFields: {
