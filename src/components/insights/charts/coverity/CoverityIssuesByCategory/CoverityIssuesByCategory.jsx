@@ -25,9 +25,6 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [dataMetrics, setDataMetrics] = useState([]);
-  // const [lowIssues, setLowIssues] = useState(0);
-  // const [mediumIssues, setMediumIssues] = useState(0);
-  // const [highIssues, setHighIssues] = useState(0);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -97,10 +94,6 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
 
         setMetrics(dataObject);
         setDataMetrics(dataObjectBaseKPIDataBlocks);
-
-        // setLowIssues(dataObjectBaseKPIDataBlocks?.lowIssues[0]?.DataBlocks[0]?.totalIssues);
-        // setMediumIssues(dataObjectBaseKPIDataBlocks?.mediumIssues[0]?.DataBlocks[0]?.totalIssues);
-        // setHighIssues(dataObjectBaseKPIDataBlocks?.highIssues[0]?.DataBlocks[0]?.totalIssues);
       }
     } catch (error) {
       if (isMounted?.current === true) {
