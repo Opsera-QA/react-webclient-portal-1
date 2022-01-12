@@ -107,11 +107,11 @@ function VanityMetricContainer({
     if (error) {
       return (
         <div className={"h-100 d-flex justify-content-between"}>
-          <span>
+          <div className={"my-auto"}>
             <IconBase icon={faExclamationCircle} fixedWidth className="mr-1"/>
             Error Loading Chart!
-          </span>
-          <div>
+          </div>
+          <div className={"d-flex my-auto"}>
             {getSettingsToggle()}
           </div>
         </div>
