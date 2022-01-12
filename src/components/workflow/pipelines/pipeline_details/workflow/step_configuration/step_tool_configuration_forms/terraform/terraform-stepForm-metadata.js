@@ -96,6 +96,11 @@ const TerraformStepFormMetadata = {
       label: "Cloud Provider",
       id: "cloudProvider"
     },
+    {
+      label: "Terraform Version",
+      id: "tag",
+      isRequired: true
+    },
   ],
   fieldsAlt:[
     {
@@ -194,6 +199,11 @@ const TerraformStepFormMetadata = {
       label: "Cloud Provider",
       id: "cloudProvider"
     },
+    {
+      label: "Terraform Version",
+      id: "tag",
+      isRequired: true
+    },
   ],
   newObjectFields: {
     toolActionType: "EXECUTE",
@@ -221,6 +231,7 @@ const TerraformStepFormMetadata = {
     bucketName: "",
     bucketRegion: "",
     cloudProvider: "aws",
+    tag: "",
   }
 };
 
