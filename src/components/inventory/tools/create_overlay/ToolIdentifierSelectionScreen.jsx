@@ -119,12 +119,14 @@ function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
 
   const getTableView = () => {
     return (
-      <ToolIdentifierTable
-        isMounted={isMounted}
-        toolIdentifiers={getFilteredData()}
-        isLoading={isLoading}
-        loadData={loadData}
-      />
+      <div className={"scroll-y full-screen-overlay-selection-container hide-x-overflow"}>
+        <ToolIdentifierTable
+          isMounted={isMounted}
+          toolIdentifiers={getFilteredData()}
+          isLoading={isLoading}
+          loadData={loadData}
+        />
+      </div>
     );
   };
 
