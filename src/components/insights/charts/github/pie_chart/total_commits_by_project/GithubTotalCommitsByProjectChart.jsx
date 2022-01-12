@@ -7,8 +7,10 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors,
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
+import { defaultConfig, assignStandardColors,
          shortenPieChartLegend } from '../../../charts-views';
+
 function GithubTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -75,11 +77,11 @@ function GithubTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
           <ResponsivePie
             data={metrics}
             {...defaultConfig()}
-            {...config(getColorByData)}
+            {...config(METRIC_THEME_CHART_PALETTE_COLORS)}
             onClick={() => setShowModal(true)}
           />
       </div>
-  );
+    );
   };
 
   return (
