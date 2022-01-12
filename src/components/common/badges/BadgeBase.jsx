@@ -1,6 +1,7 @@
 import React  from "react";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function BadgeBase({icon, badgeText, className}) {
   const getIcon = () => {
@@ -14,12 +15,12 @@ function BadgeBase({icon, badgeText, className}) {
     }
   };
 
-  if (badgeText == null || badgeText === "") {
+  if (hasStringValue(badgeText) !== true) {
     return null;
   }
 
   return (
-    <span className={`badge ${className}`}>
+    <span className={`badge standard-badge ${className} p-1`}>
       <span>{getIcon()}{badgeText}</span>
     </span>
   );

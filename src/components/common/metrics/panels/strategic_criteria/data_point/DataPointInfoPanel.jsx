@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import InfoContainer from "components/common/containers/InfoContainer";
 import {faBezierCurve} from "@fortawesome/pro-light-svg-icons";
 import DataPointStrategicCriteriaInfoPanel
   from "components/common/metrics/panels/strategic_criteria/data_point/DataPointStrategicCriteriaInfoPanel";
 import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import {objectHelpers} from "components/common/helpers/object/object.helpers";
+import MetricInfoContainer from "components/common/containers/MetricInfoContainer";
 
 function DataPointInfoPanel({ dataPoint, className }) {
   const getDescription = () => {
@@ -24,7 +24,7 @@ function DataPointInfoPanel({ dataPoint, className }) {
 
   // TODO: The body should probably be a summary panel. Should we show attributes like type?
   return (
-    <InfoContainer
+    <MetricInfoContainer
       className={className}
       titleIcon={faBezierCurve}
       titleText={dataPoint?.name}
@@ -33,7 +33,7 @@ function DataPointInfoPanel({ dataPoint, className }) {
       <DataPointStrategicCriteriaInfoPanel
         strategicCriteria={dataPointHelpers.getDataPointStrategicCriteria(dataPoint)}
       />
-    </InfoContainer>
+    </MetricInfoContainer>
   );
 }
 

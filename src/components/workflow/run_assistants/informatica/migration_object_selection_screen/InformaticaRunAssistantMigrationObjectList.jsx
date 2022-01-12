@@ -22,6 +22,7 @@ const InformaticaRunAssistantMigrationObjectList = (
     const description = item["description"] !== "" ? item["description"] : "";
     const updatedBy = item["updatedBy"] !== "" ? item["updatedBy"] : "";
     const updateTime = item["updateTime"] !== "" ? item["updateTime"] : "";
+    const validationStatus = item["validationStatus"] === true ? "Pass" : "Fail";
 
     return (`
       <div>
@@ -30,6 +31,7 @@ const InformaticaRunAssistantMigrationObjectList = (
             <div>${type}</div>
         </div>
         <div>${description}</div>
+        <div>Rule Validation: ${validationStatus}</div>
         <div class="d-flex justify-content-between mt-2">
             <div>${updatedBy}</div>
             <div>${updateTime}</div>

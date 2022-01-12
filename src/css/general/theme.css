@@ -999,6 +999,15 @@ a.nav-link {
     line-height: 2.4em;
 }
 
+.dashboard-container-header {
+    /*background-color: #2010a2;*/
+    background-color: #00a8e8;
+    /*background-color: #a24600;*/
+    /*background-color: #e76500;*/
+    color: #fef7fd;
+    line-height: 2.4em;
+}
+
 .content-card-1 > .content-block-header-inverse {
     background-color: #E6E5E3;
     color: #3D3B36;
@@ -1280,7 +1289,7 @@ div.data-blocks-ellipses {
 }
 
 .shaded-container {
-    background-color: #FCFCFC;
+    background-color: #e6e5e3;
 }
 
 /* End Detail View Styling */

@@ -5,7 +5,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import dashboardTemplatesActions from "components/insights/marketplace/dashboards/dashboard-template-actions";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import IconBase from "components/common/icons/IconBase";
 
 function PublishDashboardIconBase({dashboardData, catalog, popoverText, className, icon}) {
   const isMounted = useRef(false);
@@ -43,12 +43,13 @@ function PublishDashboardIconBase({dashboardData, catalog, popoverText, classNam
   return (
     <div className={className}>
       <TooltipWrapper innerText={popoverText}>
-        <FontAwesomeIcon
-          onClick={() => {addDashboardToPrivateCatalog();}}
-          icon={icon}
-          fixedWidth
-          className={"pointer"}
-        />
+        <div>
+          <IconBase
+            onClickFunction={() => {addDashboardToPrivateCatalog();}}
+            icon={icon}
+            className={"pointer"}
+          />
+        </div>
       </TooltipWrapper>
     </div>
   );

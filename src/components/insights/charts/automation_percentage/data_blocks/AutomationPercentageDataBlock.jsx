@@ -7,13 +7,17 @@ function AutomationPercentageDataBlock({ score, dataPoint }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
       <div className={"p-3"}>
-        <TwoLinePercentageDataBlock dataPoint={dataPoint} percentage={score} subtitle={"Automation Percentage"} />
+        <TwoLinePercentageDataBlock
+          dataPoint={dataPoint}
+          percentage={score}
+          subtitle={"Automation Percentage"}
+        />
       </div>
     </DataBlockBoxContainer>
   );
 }
 AutomationPercentageDataBlock.propTypes = {
-  score: PropTypes.string,
+  score: PropTypes.any,
   dataPoint: PropTypes.object,
 };
 

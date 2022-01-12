@@ -14,11 +14,17 @@ import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/d
 import SonarRatingsMaintainabilityOverviewDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityOverviewDataBlockContainer";
 import SonarRatingsMaintainabilityActionableInsightTable from "components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityActionableInsightTable";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
+import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
+import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 
 function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [filterModel, setFilterModel] = useState(
-    new Model({ ...actionableInsightsGenericChartFilterMetadata.newObjectFields }, actionableInsightsGenericChartFilterMetadata, false)
+    new Model(
+      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+      actionableInsightsGenericChartFilterMetadata,
+      false
+    )
   );
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -52,13 +58,13 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
 
   const calculateTrend = (maintainibility) => {
     if (maintainibility.currentScanIssuesCount || !maintainibility.previousScanIssuesCount) {
-      return "-";
+      return "";
     } else if (maintainibility.currentScanIssuesCount > maintainibility.previousScanIssuesCount) {
-      return "green";
+      return "Green";
     } else if (maintainibility.currentScanIssuesCount < maintainibility.previousScanIssuesCount) {
-      return "red";
+      return "Red";
     } else {
-      return "neutral";
+      return "Neutral";
     }
   };
 
@@ -67,6 +73,9 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -75,7 +84,7 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
         dashboardTags,
         filterDto,
         undefined,
-        undefined,
+        dashboardOrgs,
         undefined,
         undefined,
         undefined,
@@ -91,7 +100,7 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
           }))
         );
         let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", sonarMaintainability.length);
+        newFilterDto.setData("totalCount", response?.data?.data[0]?.sonarCodeSmells?.data[0]?.count[0]?.count);
         setFilterModel({ ...newFilterDto });
         setIssueTypeData(response?.data?.data[0]?.sonarCodeSmells?.data[0]?.typeData[0]);
         setFooterData(response?.data?.data[0]?.sonarCodeSmells?.data[0]?.debtData[0]);
@@ -131,6 +140,11 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
     );
   };
 
+  const getDateBadge = () => {
+    const date = getMetricFilterValue(kpiConfiguration?.filters, "date");
+    return <MetricDateRangeBadge startDate={date?.startDate} endDate={date?.endDate} />;
+  };
+
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
@@ -147,6 +161,7 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
+        {getDateBadge()}
         <SonarRatingsMaintainabilityOverviewDataBlockContainer sonarMetric={issueTypeData} />
         <SonarRatingsMaintainabilityActionableInsightTable
           isLoading={isLoading}
