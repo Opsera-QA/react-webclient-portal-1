@@ -32,8 +32,8 @@ import MongodbRealmToolConfiguration from "./tool_jobs/mongodb_realm/MongodbReal
 import FlywayDatabaseToolConfiguration from "./tool_jobs/flyway_database/FlywayDatabaseToolConfiguration";
 import InformaticaToolConfiguration from "./tool_jobs/informatica/InformaticaToolConfiguration";
 
-function ToolConfigurationPanel({ toolData }) {
-  const getConfiguration = () => {
+function ToolConnectionPanel({ toolData }) {
+  const getConnectionPanel = () => {
     if (toolData == null) {
       return <></>;
     }
@@ -107,15 +107,15 @@ function ToolConfigurationPanel({ toolData }) {
   
   return (
     <div className="p-3">
-      {getConfiguration() }
+      {getConnectionPanel() }
     </div>
   );
 }
 
-ToolConfigurationPanel.propTypes = {
+ToolConnectionPanel.propTypes = {
   toolId: PropTypes.string,
   toolData: PropTypes.object,
 };
 
 
-export default ToolConfigurationPanel;
+export default ToolConnectionPanel;
