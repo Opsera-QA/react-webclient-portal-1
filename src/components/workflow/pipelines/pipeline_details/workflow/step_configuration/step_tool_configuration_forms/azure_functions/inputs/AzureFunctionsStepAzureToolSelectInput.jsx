@@ -9,8 +9,9 @@ function AzureFunctionsStepAzureToolSelectInput({ fieldName, model, setModel, di
     setAzureConfig(selectedOption);
     let newDataObject = {...model};
     newDataObject.setData("azureCredentialId", "");
-    newDataObject.setData("region", "");
+    newDataObject.setData("azureRegion", "");
     newDataObject.setData("machine_type", "");
+    newDataObject.setData("resourceGroupName", "");
     newDataObject.setData(fieldName, selectedOption?._id);
     setModel({...newDataObject});
   };
@@ -19,9 +20,10 @@ function AzureFunctionsStepAzureToolSelectInput({ fieldName, model, setModel, di
     let newDataObject = {...model};
     newDataObject.setData(fieldName, "");
     newDataObject.setData("azureCredentialId", "");
-    newDataObject.setData("region", "");
+    newDataObject.setData("azureRegion", "");
     newDataObject.setData("applicationType", "");
     newDataObject.setData("artifactStepId", "");
+    newDataObject.setData("resourceGroupName", "");
     setAzureConfig(null);
     setModel({...newDataObject});
   };

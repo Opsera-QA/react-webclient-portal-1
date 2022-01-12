@@ -17,6 +17,11 @@ const azureFunctionsStepFormMetadata = {
       isRequired: true
     },
     {
+      label: "Deployment Type",
+      id: "deploymentType",
+      isRequired: true
+    },
+    {
       label: "Application Type",
       id: "applicationType",
     },
@@ -43,8 +48,17 @@ const azureFunctionsStepFormMetadata = {
       regexDefinitionName: "azureFunctionsLabel",
     },
     {
-      label: "Generate Dynamic Service Name?",
+      label: "Generate Dynamic Service Name",
       id: "dynamicServiceName",
+    },
+    {
+      label: "Resource Group",
+      id: "resourceGroupName",
+      formText: "Resource group is mandatory if the Specify Resource Group toggle is selected"
+    },
+    {
+      label: "Specify Resource Group",
+      id: "useCustomResourceGroup"
     },
   ],
   newObjectFields: {
@@ -53,7 +67,11 @@ const azureFunctionsStepFormMetadata = {
     artifactToolId : "",
     artifactStepId : "",
     namePretext: "",
-    dynamicServiceName: false
+    dynamicServiceName: false,
+    resourceGroupName: "",
+    useCustomResourceGroup: false,
+    deploymentType: "",
+    applicationType: ""
   }
 };
 
