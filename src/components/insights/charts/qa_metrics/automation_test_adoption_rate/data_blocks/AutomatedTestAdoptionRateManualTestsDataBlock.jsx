@@ -7,9 +7,11 @@ import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/Dat
 function AutomatedTestAdoptionRateManualTestsDataBlock({manualTestCount, manualTestsDataPoint}) {
   return (
     <DataBlockBoxContainer showBorder={true}>
-      <div className={"p-3"}>
-        <TwoLineDataBlockBase title={manualTestCount} dataPoint={manualTestsDataPoint} subtitle={"Automated Test Cases Executed Manually"} />
-      </div>
+        <TwoLineScoreDataBlock
+          className={"p-3"}
+          score={manualTestCount}
+          dataPoint={manualTestsDataPoint}
+          subtitle={"Automated Test Cases Executed Manually"} />
     </DataBlockBoxContainer>
   );
 }

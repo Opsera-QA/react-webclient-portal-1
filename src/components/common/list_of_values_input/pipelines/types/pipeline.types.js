@@ -28,10 +28,10 @@ export const getPipelineTypeLabel = (pipelineType) => {
 };
 
 export const PIPELINE_TYPE_SELECT_OPTIONS = [
-  // {
-  //   text: PIPELINE_TYPE_LABELS.INFORMATICA,
-  //   value: PIPELINE_TYPES.INFORMATICA,
-  // },
+  {
+    text: PIPELINE_TYPE_LABELS.INFORMATICA,
+    value: PIPELINE_TYPES.INFORMATICA,
+  },
   {
     text: PIPELINE_TYPE_LABELS.MACHINE_LEARNING,
     value: PIPELINE_TYPES.MACHINE_LEARNING,
