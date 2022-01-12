@@ -9,6 +9,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
          spaceOutMergeRequestTimeTakenLegend } from '../../../charts-views';
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 
 function GithubMergeRequestByMaximumTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -77,7 +78,7 @@ function GithubMergeRequestByMaximumTimeChart({ kpiConfiguration, setKpiConfigur
           data={metrics}
             {...defaultConfig("Time (Hours)", "Project", 
                         false, false, "values", "cutoffString")}
-            {...config(getColorByData)}
+            {...config(METRIC_THEME_CHART_PALETTE_COLORS)}
             {...adjustBarWidth(metrics)}
             onClick={() => setShowModal(true)}
           />
