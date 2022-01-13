@@ -29,8 +29,10 @@ import sonarPipelineStepMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStep.metadata";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SonarStepJobTypeSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepJobTypeSelectInput";
+  , {SONAR_JOB_TYPES} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepJobTypeSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import SonarStepSonarToolSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepSonarToolSelectInput";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -98,7 +100,6 @@ function SonarStepConfiguration({
   const [isRepoSearching, setIsRepoSearching] = useState(false);
   const [branchList, setBranchList] = useState([]);
   const [isBranchSearching, setIsBranchSearching] = useState(false);
-  const [listOfSteps, setListOfSteps] = useState([]);
 
   const [workspacesList, setWorkspacesList] = useState([]);
   const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
@@ -130,21 +131,6 @@ function SonarStepConfiguration({
     }
 
     setIsLoading(false);
-  };
-
-  useEffect(() => {
-    if (plan && stepId) {
-      setListOfSteps(formatStepOptions(plan, stepId));
-    }
-  }, [plan, stepId]);
-
-  const formatStepOptions = (plan, stepId) => {
-    let STEP_OPTIONS = plan.slice(
-      0,
-      plan.findIndex((element) => element._id === stepId),
-    );
-    STEP_OPTIONS.unshift({ _id: "", name: "Select One", isDisabled: "yes" });
-    return STEP_OPTIONS;
   };
 
   useEffect(() => {
@@ -566,17 +552,23 @@ function SonarStepConfiguration({
   };
 
   const getDynamicFields = () => {
-    if (sonarStepModel?.getData("jobType") === "job") {
+    if (sonarStepModel?.getData("jobType") === SONAR_JOB_TYPES.CODE_SCAN_JOB) {
       return (
-        <TextInputBase
-          fieldName={"jobName"}
-          dataObject={sonarStepModel}
-          setDataObject={setSonarStepModel}
-        />
+        <>
+          <TextInputBase
+            fieldName={"jobName"}
+            dataObject={sonarStepModel}
+            setDataObject={setSonarStepModel}
+          />
+          <SonarStepSonarToolSelectInput
+            model={sonarStepModel}
+            setModel={setSonarStepModel}
+          />
+        </>
       );
     }
 
-    if (sonarStepModel?.getData("jobType") === "opsera-job") {
+    if (sonarStepModel?.getData("jobType") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB) {
       return (
           <>
             {formData.jenkinsUrl && (
@@ -649,93 +641,9 @@ function SonarStepConfiguration({
         />
         {getDynamicFields()}
         {jobType === "job" ? (
-            <Form.Group controlId="branchField">
-              <Form.Label>Job Name*</Form.Label>
-              <Form.Control
-                maxLength="150"
-                disabled={false}
-                type="text"
-                placeholder=""
-                value={formData.jobName || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, jobName: e.target.value })
-                }
-              />
-            </Form.Group>
+            <></>
           ) :
           <>
-
-
-            {(formData.jobType === "CODE SCAN") && (
-              <Form.Group controlId="jenkinsList">
-                <Form.Label className="w-100">
-                  Sonar Credentials*
-                </Form.Label>
-                {isSonarSearching ? (
-                  <div className="form-text text-muted mt-2 p-2">
-                    <FontAwesomeIcon
-                      icon={faSpinner}
-                      spin
-                      className="text-muted mr-1"
-                      fixedWidth
-                    />
-                    Loading Sonar accounts from Tool Registry
-                  </div>
-                ) : (
-                  <>
-                    {renderForm && sonarList && sonarList.length > 0 ? (
-                      <>
-                        <StandaloneSelectInput
-                          selectOptions={sonarList}
-                          value={
-                            sonarList[
-                              sonarList.findIndex(
-                                (x) => x.id === formData.sonarToolConfigId,
-                              )
-                              ]
-                          }
-                          valueField="id"
-                          textField="name"
-                          filter="contains"
-                          setDataFunction={handleSonarChange}
-                        />
-                        <br></br>
-                        <Form.Group controlId="projectKey">
-                          <Form.Label>Project Key*</Form.Label>
-                          <Form.Control maxLength="150" type="text" placeholder="" value={formData.projectKey || ""}
-                                        onChange={e => 
-                                          {
-                                            if(e.target.value.match("^\\S*$") != null){
-                                              setFormData({ ...formData, projectKey: e.target.value });
-                                          } else {
-                                            setErrors("ProjectKey is invalid, No Space allowed");
-                                            }
-                                          }
-                                        
-                                        }/>
-                          {/* <Form.Text className="text-muted">Spaces are not allowed.</Form.Text> */}
-                        </Form.Group>
-                      </>
-                    ) : (
-                      <>
-                        <div className="form-text text-muted p-2">
-                          <FontAwesomeIcon
-                            icon={faExclamationCircle}
-                            className="text-muted mr-1"
-                            fixedWidth
-                          />
-                          No accounts have been registered for Code Scan. Please go
-                          to
-                          <Link to="/inventory/tools">Tool Registry</Link> and add a
-                          Code Scan Account entry in order to proceed.
-                        </div>
-                      </>
-                    )}
-                  </>
-                )}
-              </Form.Group>
-            )}
-
             {formData.jenkinsUrl && (
               <Form.Group controlId="formBasicEmail">
                 <Form.Label className="w-100">

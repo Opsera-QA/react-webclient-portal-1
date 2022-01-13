@@ -21,7 +21,6 @@ function SonarStepJobTypeSelectInput({ model, setModel }) {
     newModel.setDefaultValue("jobName");
     newModel.setDefaultValue("buildType");
     newModel.setDefaultValue("jobDescription");
-    newModel.setDefaultValue("jobType");
     newModel.setDefaultValue("toolJobId");
     newModel.setDefaultValue("toolJobType");
     setModel({...newModel});
