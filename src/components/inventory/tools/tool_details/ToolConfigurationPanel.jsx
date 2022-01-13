@@ -31,6 +31,7 @@ import AnsibleToolConfiguration from "./tool_jobs/ansible/AnsibleToolConfigurati
 import MongodbRealmToolConfiguration from "./tool_jobs/mongodb_realm/MongodbRealmToolConfiguration";
 import FlywayDatabaseToolConfiguration from "./tool_jobs/flyway_database/FlywayDatabaseToolConfiguration";
 import InformaticaToolConfiguration from "./tool_jobs/informatica/InformaticaToolConfiguration";
+import TerraformCloudToolConfiguration from "./tool_jobs/terraform_cloud/TerraformCloudToolConfiguration";
 
 function ToolConfigurationPanel({ toolData }) {
   const getConfiguration = () => {
@@ -100,6 +101,8 @@ function ToolConfigurationPanel({ toolData }) {
         return <FlywayDatabaseToolConfiguration toolData={toolData} />;
       case "informatica":
         return <InformaticaToolConfiguration toolData={toolData} />;
+      case "terraform-cloud":
+        return <TerraformCloudToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
     }
