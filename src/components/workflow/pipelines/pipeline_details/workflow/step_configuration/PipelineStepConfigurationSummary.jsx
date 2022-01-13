@@ -91,8 +91,8 @@ import PowershellPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/powershell/PowershellPipelineStepConfigurationSummaryPanel";
 import SonarPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/SonarPipelineStepConfigurationSummaryPanel";
-import sonarPipelineStepConfigurationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStepConfigurationMetadata";
+import sonarPipelineStepMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStep.metadata";
 import JmeterPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jmeter/JmeterPipelineStepConfigurationSummaryPanel";
 import jmeterPipelineStepConfigurationMetadata
@@ -366,7 +366,7 @@ function PipelineStepConfigurationSummary({
         return (
           <SonarPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            sonarDataObject={getModelWrappedObject(sonarPipelineStepConfigurationMetadata)}
+            sonarDataObject={getModelWrappedObject(sonarPipelineStepMetadata)}
           />
         );
       case "jmeter":

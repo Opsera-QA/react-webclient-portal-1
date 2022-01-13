@@ -1,20 +1,21 @@
-const sonarPipelineStepConfigurationMetadata = {
+const sonarPipelineStepMetadata = {
   type: "Sonar Pipeline Step Configuration",
   fields: [
     {
-      label: "Step Tool",
+      label: "Jenkins Tool",
       id: "toolConfigId",
-      isRequired: true
+      isRequired: true,
     },
     {
       label: "Job Type",
       id: "jobType",
-      isRequired: true
+      isRequired: true,
     },
     {
       label: "Job Name",
       id: "jobName",
-      isRequired: true
+      isRequired: true,
+      maxLength: 150,
     },
     {
       label: "Job",
@@ -57,7 +58,7 @@ const sonarPipelineStepConfigurationMetadata = {
     },
   ],
   newObjectFields: {
-    jobType: "", //hardcoded, every step wil have a hardcoded jobType is what i know needs to check with Todd.
+    jobType: "",
     toolConfigId: "",
     jenkinsUrl: "",
     jenkinsPort: "",
@@ -73,7 +74,7 @@ const sonarPipelineStepConfigurationMetadata = {
     defaultBranch: "",
     dockerName: "",
     dockerTagName: "",
-    buildType: "gradle", //hardcoded now but needs to get it from a dropdown
+    buildType: "gradle",
     gitToolId: "",
     repoId: "",
     gitUrl: "",
@@ -85,8 +86,12 @@ const sonarPipelineStepConfigurationMetadata = {
     branch: "",
     sonarSourcePath: "",
     workspace: "",
+    workspaceName: "",
+    sonarToolConfigId: "",
+    workspaceDeleteFlag: false,
+    jobDescription: "",
     // agentLabels : "",
   }
 };
 
-export default sonarPipelineStepConfigurationMetadata;
+export default sonarPipelineStepMetadata;

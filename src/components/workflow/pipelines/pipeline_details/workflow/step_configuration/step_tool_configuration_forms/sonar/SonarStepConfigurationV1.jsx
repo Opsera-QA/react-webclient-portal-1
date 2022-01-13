@@ -3,34 +3,34 @@ import PropTypes from "prop-types";
 import {
   Button,
   Form,
+  OverlayTrigger,
+  Popover,
+  Tooltip,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExclamationCircle,
+  faExclamationTriangle,
+  faTimes,
   faSave,
   faSpinner,
+  faEllipsisH,
+  faTools,
 } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
+import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
 import ErrorDialog from "../../../../../../../common/status_notifications/error";
 import {
   getErrorDialog,
   getMissingRequiredFieldsErrorDialog,
+  getServiceUnavailableDialog
 } from "../../../../../../../common/toasts/toasts";
 
 import pipelineActions from "components/workflow/pipeline-actions";
-import { DialogToastContext } from "contexts/DialogToastContext";
+import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import toolsActions from "components/inventory/tools/tools-actions";
-import SonarStepJenkinsToolSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepJenkinsToolSelectInput";
-import modelHelpers from "components/common/model/modelHelpers";
-import sonarPipelineStepMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStep.metadata";
-import LoadingDialog from "components/common/status_notifications/loading";
-import SonarStepJobTypeSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepJobTypeSelectInput";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -75,7 +75,7 @@ const INITIAL_DATA = {
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function SonarStepConfiguration({
+function SonarStepConfigurationV1({
   stepTool,
   pipelineId,
   plan,
@@ -93,6 +93,7 @@ function SonarStepConfiguration({
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [renderForm, setRenderForm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [jenkinsList, setJenkinsList] = useState([]);
   const [isJenkinsSearching, setisJenkinsSearching] = useState(false);
   const [repoList, setRepoList] = useState([]);
   const [isRepoSearching, setIsRepoSearching] = useState(false);
@@ -110,27 +111,6 @@ function SonarStepConfiguration({
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [jobType, setJobType] = useState("");
-  const [sonarStepModel, setSonarStepModel] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(undefined);
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = async () => {
-    setIsLoading(true);
-    let { threshold } = stepTool;
-    const newSonarStepModel = modelHelpers.getPipelineStepConfigurationModel(stepTool, sonarPipelineStepMetadata);
-
-    setSonarStepModel(newSonarStepModel);
-
-    if (threshold) {
-      setThresholdType(threshold?.type);
-      setThresholdValue(threshold?.value);
-    }
-
-    setIsLoading(false);
-  };
 
   useEffect(() => {
     if (plan && stepId) {
@@ -166,6 +146,48 @@ function SonarStepConfiguration({
       controller.abort();
     };
   }, [stepTool]);
+
+  useEffect(() => {
+    setShowToast(false);
+
+    // Fire off our API call
+    getJenkinsList();
+  }, []);
+
+  const getJenkinsList = async () => {
+    setisJenkinsSearching(true);
+    let results = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, undefined, "jenkins");
+    const tools = results?.data?.data;
+    let respObj = [];
+
+    if (Array.isArray(tools)) {
+      tools.map((item) => {
+        if (item.configuration == null) {
+          return;
+        }
+
+        respObj.push({
+          name: item.name,
+          id: item._id,
+          configuration: item.configuration,
+          accounts: item.accounts,
+          jobs: item.jobs,
+        });
+      });
+    }
+
+    if (typeof(results) != "object") {
+      setJenkinsList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+      let errorMessage =
+        "Jenkins information is missing or unavailable!";
+      toastContext.showErrorDialog(errorMessage);
+      setisJenkinsSearching(false);
+      return;
+    }
+
+    setJenkinsList(respObj);
+    setisJenkinsSearching(false);
+  };
 
   // search sonar
   useEffect(() => {
@@ -315,32 +337,32 @@ function SonarStepConfiguration({
     }
   }, [formData.repoId]);
 
-  // useEffect(() => {
-  //   if (formData.toolConfigId) {
-  //     // console.log(jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)].accounts);
-  //     setAccountsList(
-  //       jenkinsList[
-  //         jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-  //         ] ?
-  //         jenkinsList[
-  //           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-  //           ].accounts : [],
-  //     );
-  //   }
-  // }, [jenkinsList, formData.toolConfigId]);
+  useEffect(() => {
+    if (formData.toolConfigId) {
+      // console.log(jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)].accounts);
+      setAccountsList(
+        jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+          ] ?
+          jenkinsList[
+            jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+            ].accounts : [],
+      );
+    }
+  }, [jenkinsList, formData.toolConfigId]);
 
-  // useEffect(() => {
-  //   if (formData.toolConfigId) {
-  //     setJobsList(
-  //       jenkinsList[
-  //         jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-  //         ] ?
-  //         jenkinsList[
-  //           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-  //           ].jobs : [],
-  //     );
-  //   }
-  // }, [jenkinsList, formData.toolConfigId]);
+  useEffect(() => {
+    if (formData.toolConfigId) {
+      setJobsList(
+        jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+          ] ?
+          jenkinsList[
+            jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+            ].jobs : [],
+      );
+    }
+  }, [jenkinsList, formData.toolConfigId]);
 
   
   useEffect(() => {
@@ -473,6 +495,48 @@ function SonarStepConfiguration({
     }
   };
 
+  //todo: can this use the initial value const above to reset everything?  Right now this means we have ot maintain the values in two places.
+  const handleJenkinsChange = (selectedOption) => {
+    if (!selectedOption.configuration) {
+      let errorMessage = "Connection information missing for this tool!  This Jenkins tool does not have connection details defined in its Tool Registry record.  Please go into Tool Registry and add connection information in order for Opsera to work with this tool.";
+      let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
+      setToast(toast);
+      setShowToast(true);
+      return;
+    }
+
+    if (selectedOption.id && selectedOption.configuration) {
+      setFormData({
+        ...formData,
+        toolConfigId: selectedOption.id,
+        jenkinsUrl: selectedOption.configuration.jenkinsUrl,
+        jUserId: selectedOption.configuration.jUserId,
+        jenkinsPort: selectedOption.configuration.jenkinsPort,
+        jAuthToken: selectedOption.configuration.jAuthToken,
+        gitToolId: "",
+        repoId: "",
+        gitUrl: "",
+        sshUrl: "",
+        service: "",
+        gitCredential: "",
+        gitUserName: "",
+        repository: "",
+        workspace:"",
+        workspaceName: "",
+        branch: "",
+        toolJobId: "",
+        toolJobType: "",
+        accountUsername: "",
+        projectId: "",
+        defaultBranch: "",
+      });
+    }
+    if (selectedOption.accounts && selectedOption.jobs) {
+      setAccountsList(selectedOption.accounts);
+      setJobsList(selectedOption.jobs);
+    }
+  };
+
   const handleSonarChange = (selectedOption) => {
     if (selectedOption.id && selectedOption.configuration) {
       setFormData({
@@ -565,89 +629,190 @@ function SonarStepConfiguration({
     });
   };
 
-  const getDynamicFields = () => {
-    if (sonarStepModel?.getData("jobType") === "job") {
-      return (
-        <TextInputBase
-          fieldName={"jobName"}
-          dataObject={sonarStepModel}
-          setDataObject={setSonarStepModel}
-        />
-      );
-    }
+  const handleJobTypeChange = (selectedOption) => {
+    setShowToast(false);
+    setJobType(selectedOption.value);
+    setFormData({
+      ...formData,
+      sonarToolConfigId: "",
+      jobName: "",
+      buildType: "",
+      jobDescription: "",
+      jobType: "",
+      toolJobId: "",
+      toolJobType: "",
+    });
+  };
 
-    if (sonarStepModel?.getData("jobType") === "opsera-job") {
+  const RegistryPopover = (data) => {
+    if (data) {
       return (
-          <>
-            {formData.jenkinsUrl && (
+        <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+          <Popover.Title as="h3">
+            Tool and Account Details{" "}
+            <FontAwesomeIcon
+              icon={faTimes}
+              className="fa-pull-right pointer"
+              onClick={() => document.body.click()}
+            />
+          </Popover.Title>
+
+          <Popover.Content>
+            <div className="text-muted mb-2">
+              Configuration details for this item are listed below. Tool and
+              account specific settings are stored in the
+              <Link to="/inventory/tools">Tool Registry</Link>. To add a new
+              entry to a dropdown or update settings, make those changes there.
+            </div>
+            {data.configuration && (
               <>
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Label className="w-100">
-                    Job*
-                  </Form.Label>
-                  {jobsList.length < 1 && (
-                    <div className="form-text text-muted p-2">
-                      <FontAwesomeIcon
-                        icon={faExclamationCircle}
-                        className="text-muted mr-1"
-                        fixedWidth
-                      />
-                      No jobs have been created for{" "}
-                      <span>{formData.jenkinsUrl}</span>. Please go to
-                      <Link to={"/inventory/tools/details/" + formData.toolConfigId}>
-                        {" "}
-                        Tool Registry
-                      </Link>{" "}
-                      and add credentials and register a job for this Jenkins in
-                      order to proceed.{" "}
+                {Object.entries(data.configuration).map(function(a) {
+                  return (
+                    <div key={a}>
+                      {a[1].length > 0 && (
+                        <>
+                          <span className="text-muted pr-1">{a[0]}: </span>{" "}
+                          {a[1]}
+                        </>
+                      )}
                     </div>
-                  )}
-                  {jobsList !== undefined && jobsList.length > 0 ? (
-                    <StandaloneSelectInput
-                      selectOptions={jobsList}
-                      valueField="id"
-                      textField="name"
-                      value={
-                        jobsList && jobsList.length > 0 &&
-                        jobsList[
-                          jobsList.findIndex((x) => x._id === formData.toolJobId)
-                          ]
-                      }
-                      filter="contains"
-                      setDataFunction={handleJobChange}
-                    />
-                  ) : null}
-                </Form.Group>
+                  );
+                })}
               </>
             )}
-          </>
+          </Popover.Content>
+        </Popover>
+      );
+    } else {
+      return (
+        <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+          <Popover.Title as="h3">
+            Tool and Account Details{" "}
+            <FontAwesomeIcon
+              icon={faTimes}
+              className="fa-pull-right pointer"
+              onClick={() => document.body.click()}
+            />
+          </Popover.Title>
+
+          <Popover.Content>
+            <div className="text-muted mb-2">
+              Please select any tool/account to get the details.
+            </div>
+          </Popover.Content>
+        </Popover>
       );
     }
   };
-
-  if (isLoading === true || sonarStepModel == null) {
-    return (
-      <LoadingDialog
-        size={"sm"}
-        message={"Loading Sonar Step"}
-      />
-    );
-  }
 
   return (
     <>
       {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
 
       <Form>
-        <SonarStepJenkinsToolSelectInput
-          model={sonarStepModel}
-          setModel={setSonarStepModel}
-        />
-        <SonarStepJobTypeSelectInput
-          model={sonarStepModel}
-          setModel={setSonarStepModel}
-        />
-        {getDynamicFields()}
+        <Form.Group controlId="jenkinsList">
+          <Form.Label className="w-100">
+            Step Tool*
+            <OverlayTrigger
+              trigger="click"
+              rootClose
+              placement="left"
+              overlay={RegistryPopover(
+                jenkinsList[
+                  jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+                  ],
+              )}
+            >
+              <FontAwesomeIcon
+                icon={faEllipsisH}
+                className="fa-pull-right pointer pr-1"
+                onClick={() => document.body.click()}
+              />
+            </OverlayTrigger>
+          </Form.Label>
+          {isJenkinsSearching ? (
+            <div className="form-text text-muted mt-2 p-2">
+              <FontAwesomeIcon
+                icon={faSpinner}
+                spin
+                className="text-muted mr-1"
+                fixedWidth
+              />
+              Loading Jenkins accounts from registry
+            </div>
+          ) : (
+            <>
+              {renderForm && jenkinsList && jenkinsList.length > 0 ? (
+                <>
+                  <StandaloneSelectInput
+                    selectOptions={jenkinsList}
+                    value={
+                      jenkinsList[
+                        jenkinsList.findIndex(
+                          (x) => x.id === formData.toolConfigId,
+                        )
+                        ]
+                    }
+                    valueField="id"
+                    textField="name"
+                    placeholder="Please select an account"
+                    filter="contains"
+                    setDataFunction={handleJenkinsChange}
+                  />
+                </>
+              ) : (
+                <>
+                  <div className="form-text text-muted p-2">
+                    <FontAwesomeIcon
+                      icon={faExclamationCircle}
+                      className="text-muted mr-1"
+                      fixedWidth
+                    />
+                    No accounts have been registered for{" "}
+                    <span className="upper-case-first">{formData.service}</span>
+                    . Please go to
+                    <Link to="/inventory/tools"> Tool Registry</Link> and add an
+                    entry for this repository in order to proceed.
+                  </div>
+                </>
+              )}
+            </>
+          )}
+          {formData.toolConfigId && formData.toolConfigId.length > 0 && (
+            <Form.Label className="mt-2 pl-1">
+              <Link to={"/inventory/tools/details/" + formData.toolConfigId}>
+                <FontAwesomeIcon icon={faTools} className="pr-1"/> View/edit
+                this tool&apos;s Registry settings
+              </Link>
+            </Form.Label>
+          )}
+        </Form.Group>
+
+        {/*{(!formData.toolConfigId && formData.jenkinsUrl) &&
+      <div className="form-text text-muted mb-3">
+        <FontAwesomeIcon icon={faExclamationTriangle} className="mr-1 yellow" fixedWidth/>
+        Unregistered Tool settings in use. The settings below can be used in this step, but cannot be updated. You
+        must register
+        a new Jenkins server in the
+        <Link to="/inventory/tools"> Tool Registry</Link> and add its configuration details. </div>}
+*/}
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>Job Type*</Form.Label>
+          {jobType !== undefined ? (
+            <StandaloneSelectInput
+              selectOptions={JOB_OPTIONS}
+              valueField="id"
+              textField="label"
+              value={
+                JOB_OPTIONS[JOB_OPTIONS.findIndex((x) => x.value === jobType)]
+              }
+              filter="contains"
+              placeholderText="Please select an account"
+              setDataFunction={handleJobTypeChange}
+            />
+          ) : null}
+        </Form.Group>
+
         {jobType === "job" ? (
             <Form.Group controlId="branchField">
               <Form.Label>Job Name*</Form.Label>
@@ -664,12 +829,105 @@ function SonarStepConfiguration({
             </Form.Group>
           ) :
           <>
-
+            {jobType === "opsera-job" && (
+              <>
+                {formData.jenkinsUrl && jenkinsList.length > 0 && (
+                  <>
+                  <Form.Group controlId="formBasicEmail">
+                    <Form.Label className="w-100">
+                      Job*
+                      <OverlayTrigger
+                        trigger="click"
+                        rootClose
+                        placement="left"
+                        overlay={RegistryPopover(
+                          jobsList[
+                            jobsList.findIndex((x) => x._id === formData.toolJobId)
+                            ],
+                        )}
+                      >
+                        <FontAwesomeIcon
+                          icon={faEllipsisH}
+                          className="fa-pull-right pointer pr-1"
+                          onClick={() => document.body.click()}
+                        />
+                      </OverlayTrigger>
+                    </Form.Label>
+                    {jobsList.length < 1 && (
+                      <div className="form-text text-muted p-2">
+                        <FontAwesomeIcon
+                          icon={faExclamationCircle}
+                          className="text-muted mr-1"
+                          fixedWidth
+                        />
+                        No jobs have been created for{" "}
+                        <span>{formData.jenkinsUrl}</span>. Please go to
+                        <Link to={"/inventory/tools/details/" + formData.toolConfigId}>
+                          {" "}
+                          Tool Registry
+                        </Link>{" "}
+                        and add credentials and register a job for this Jenkins in
+                        order to proceed.{" "}
+                      </div>
+                    )}
+                    {jobsList !== undefined && jobsList.length > 0 ? (
+                      <StandaloneSelectInput
+                        selectOptions={jobsList}
+                        valueField="id"
+                        textField="name"
+                        value={
+                          jobsList && jobsList.length > 0 &&
+                          jobsList[
+                            jobsList.findIndex((x) => x._id === formData.toolJobId)
+                            ]
+                        }
+                        filter="contains"
+                        setDataFunction={handleJobChange}
+                      />
+                    ) : null}
+                  </Form.Group>
+                  {/* <Form.Group controlId="formJenkinsAgent">
+                    <Form.Label className="w-100">
+                      Jenkins Agent
+                    </Form.Label>
+                  
+                    <StandaloneSelectInput
+                      selectOptions={jenkinsAgentArray}
+                      groupBy="env"
+                      valueField="agentLabel"
+                      textField="name"
+                      value={jenkinsAgentArray[
+                        jenkinsAgentArray.findIndex((x) => x.agentLabel === formData.agentLabels)
+                      ]}
+                      filter="contains"
+                      setDataFunction={(item)=> setFormData({...formData, agentLabels: item.agentLabel }) }
+                    />
+                  </Form.Group> */}
+                  </>
+                )}
+              </>
+            )}
 
             {(formData.jobType === "CODE SCAN") && (
               <Form.Group controlId="jenkinsList">
                 <Form.Label className="w-100">
                   Sonar Credentials*
+                  <OverlayTrigger
+                    trigger="click"
+                    rootClose
+                    placement="left"
+                    overlay={RegistryPopover(
+                      sonarList[
+                        sonarList.findIndex((x) => x.id === formData.sonarToolConfigId)
+                        ],
+                    )}
+                  >
+                    <FontAwesomeIcon
+                      icon={faEllipsisH}
+                      className="fa-pull-right pointer pr-1"
+                      onClick={() => document.body.click()}
+                    />
+                  </OverlayTrigger>
                 </Form.Label>
                 {isSonarSearching ? (
                   <div className="form-text text-muted mt-2 p-2">
@@ -736,10 +994,28 @@ function SonarStepConfiguration({
               </Form.Group>
             )}
 
-            {formData.jenkinsUrl && (
+            {formData.jenkinsUrl && jenkinsList.length > 0 && (
               <Form.Group controlId="formBasicEmail">
                 <Form.Label className="w-100">
                   Account*
+                  <OverlayTrigger
+                    trigger="click"
+                    rootClose
+                    placement="left"
+                    overlay={RegistryPopover(
+                      accountsList[
+                        accountsList.findIndex(
+                          (x) => x.gitCredential === formData.gitCredential,
+                        )
+                        ],
+                    )}
+                  >
+                    <FontAwesomeIcon
+                      icon={faEllipsisH}
+                      className="fa-pull-right pointer pr-1"
+                      onClick={() => document.body.click()}
+                    />
+                  </OverlayTrigger>
                 </Form.Label>
                 {accountsList.length < 1 && (
                   <div className="form-text text-muted p-2">
@@ -814,6 +1090,7 @@ function SonarStepConfiguration({
                     )}
                   </>
                 )}
+                {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
               </Form.Group>
             )}
 
@@ -1008,7 +1285,7 @@ function SonarStepConfiguration({
   );
 }
 
-SonarStepConfiguration.propTypes = {
+SonarStepConfigurationV1.propTypes = {
   stepTool: PropTypes.string,
   pipelineId: PropTypes.string,
   plan: PropTypes.object,
@@ -1020,4 +1297,4 @@ SonarStepConfiguration.propTypes = {
   setShowToast: PropTypes.func
 };
 
-export default SonarStepConfiguration;
+export default SonarStepConfigurationV1;
