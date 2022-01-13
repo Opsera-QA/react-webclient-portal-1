@@ -4,29 +4,26 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSync} from "@fortawesome/pro-light-svg-icons";
-import aksStepActions from "../aks-step-actions";
+import azureFunctionsActions from "../azure-functions-step-actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import toolsActions from "components/inventory/tools/tools-actions";
 
 function AksResourceGroupSelectInput(
   {
     fieldName,
-    dataObject,
-    setDataObject,
+    model,
+    setModel,
     azureToolConfigId,
     azureApplication,
     textField,
     valueField,
-    clusterName,
     disabled
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [azureRegionList, setAzureRegionList] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Cluster");
+  const [placeholder, setPlaceholderText] = useState("Select Resource Group");
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
 
@@ -38,12 +35,12 @@ function AksResourceGroupSelectInput(
     setCancelTokenSource(source);
     setAzureRegionList([]);
 
-    if (hasStringValue(azureToolConfigId) && hasStringValue(azureApplication) && hasStringValue(clusterName) && !disabled) {
+    if (hasStringValue(azureToolConfigId) && hasStringValue(azureApplication) && !disabled) {
       loadData(source).catch((error) => {
         throw error;
       });
     }
-  }, [azureToolConfigId, azureApplication, clusterName]);
+  }, [azureToolConfigId, azureApplication]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -58,16 +55,14 @@ function AksResourceGroupSelectInput(
       setIsLoading(false);
     }
   };
-
-  // TODO: We should make a route on node where you can pass an azure tool ID and an azure Application ID
-  //  and return the resource groups instead of constructing the complex query here on React
+  
   const loadAzureRegistries = async (cancelSource = cancelTokenSource) => {
     const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, azureToolConfigId);
     const tool = response?.data?.data;
 
     if (tool == null) {
-      setPlaceholderText("Error Pulling Clusters!");
-      setErrorMessage("Could not find Tool to grab Clusters.");
+      setPlaceholderText("Error Pulling Resource Group!");
+      setErrorMessage("Could not find Tool to grab Resource Group.");
       return;
     }
 
@@ -75,7 +70,7 @@ function AksResourceGroupSelectInput(
     const applicationData = applicationResponse?.data?.data;
 
     if (applicationData == null) {
-      setPlaceholderText("Error Pulling Clusters!");
+      setPlaceholderText("Error Pulling Resource Group!");
       setErrorMessage(`
         The selected Application was not found. 
         It may have been deleted, or the Tool's access roles may have been updated.
@@ -84,12 +79,11 @@ function AksResourceGroupSelectInput(
       return;
     }
 
-    const resourceGroupResponse = await aksStepActions.getAzureResourceGroups(
+    const resourceGroupResponse = await azureFunctionsActions.getAzureResourceGroups(
       getAccessToken,
       cancelSource,
       tool,
-      applicationData?.configuration,
-      clusterName
+      applicationData?.configuration
     );
     const result = resourceGroupResponse?.data?.data;
 
@@ -104,23 +98,11 @@ function AksResourceGroupSelectInput(
     }
   };
 
-  const getInfoText = () => {
-    if (dataObject?.getData("resource")?.length > 0) {
-      return (
-        <small>
-          <FontAwesomeIcon icon={faSync} className="pr-1" />
-          Click here to refresh Resource Groups
-        </small>
-      );
-    }
-  };
-
   return (
-    <>
       <SelectInputBase
         fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
+        dataObject={model}
+        setDataObject={setModel}
         selectOptions={azureRegionList}
         busy={isLoading}
         disabled={isLoading || disabled}
@@ -129,22 +111,17 @@ function AksResourceGroupSelectInput(
         valueField={valueField}
         errorMessage={errorMessage}
       />
-      <div onClick={() => loadData()} className="text-muted ml-3 dropdown-data-fetch">
-        {getInfoText()}
-      </div>
-    </>
   );
 }
 
 AksResourceGroupSelectInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   azureToolConfigId: PropTypes.string,
   azureApplication: PropTypes.string,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  clusterName: PropTypes.string,
   disabled: PropTypes.bool
 };
 

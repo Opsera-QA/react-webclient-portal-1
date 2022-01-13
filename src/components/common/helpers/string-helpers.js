@@ -21,6 +21,10 @@ export function hasStringValue(string) {
   return (typeof string === "string" && string !== "");
 }
 
+export function stringIncludesValue(string, searchTerm) {
+  return hasStringValue(string) && hasStringValue(searchTerm) && string.toLowerCase().includes(searchTerm.toLowerCase());
+}
+
 export function truncateString(string, maxLength){
   if (hasStringValue(string) !== true) {
     return "";
