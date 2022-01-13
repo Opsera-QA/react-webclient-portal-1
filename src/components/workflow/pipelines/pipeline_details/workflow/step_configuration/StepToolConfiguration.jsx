@@ -71,7 +71,8 @@ import AzureZipDeploymentStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfiguration";
 import InformaticaStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/informatica/InformaticaStepConfiguration";
-
+import PmdScanStepConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/PmdScanStepConfiguration";
 function StepToolConfiguration({
   pipeline,
   editItem,
@@ -1069,6 +1070,21 @@ function StepToolConfiguration({
             stepId={stepId}
             stepTool={stepTool}
             parentCallback={callbackFunction}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "pmd":
+        return (
+          <PmdScanStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
           />
         );

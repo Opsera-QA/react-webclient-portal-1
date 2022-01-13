@@ -78,6 +78,12 @@ const getNodeAnalyticsAxiosInstance = (token, cancelToken) => {
 
   const axiosInstance = axios.create(axiosConfig);
 
+  axiosInstance.defaults.timeoutErrorMessage = `
+    Access timeout reached. A timeout like this can occur due to intermittent networking or connectivity issues.  
+    Please try refreshing the page or waiting a few moments and trying again.  
+    If this issue persists for an extended period of time, please report it to Opsera for further investigation.
+  `;
+
 
   if (token) {
     axiosInstance.defaults.headers.common['authorization'] = `Bearer ${token}`;

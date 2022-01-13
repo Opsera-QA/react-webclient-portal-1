@@ -33,8 +33,8 @@ import FlywayDatabaseToolConfiguration from "./tool_jobs/flyway_database/FlywayD
 import InformaticaToolConfiguration from "./tool_jobs/informatica/InformaticaToolConfiguration";
 import TerraformCloudToolConfiguration from "./tool_jobs/terraform_cloud/TerraformCloudToolConfiguration";
 
-function ToolConfigurationPanel({ toolData }) {
-  const getConfiguration = () => {
+function ToolConnectionPanel({ toolData }) {
+  const getConnectionPanel = () => {
     if (toolData == null) {
       return <></>;
     }
@@ -110,15 +110,15 @@ function ToolConfigurationPanel({ toolData }) {
   
   return (
     <div className="p-3">
-      {getConfiguration() }
+      {getConnectionPanel() }
     </div>
   );
 }
 
-ToolConfigurationPanel.propTypes = {
+ToolConnectionPanel.propTypes = {
   toolId: PropTypes.string,
   toolData: PropTypes.object,
 };
 
 
-export default ToolConfigurationPanel;
+export default ToolConnectionPanel;

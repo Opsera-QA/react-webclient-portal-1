@@ -4,6 +4,8 @@ export const informaticaRunParameterConfigurationMetadata = {
     {
       label: "Name",
       id: "name",
+      maxLength: 100,
+      regexDefinitionName: "generalTextWithSpaces",
     },
     {
       label: "Types",
@@ -12,10 +14,13 @@ export const informaticaRunParameterConfigurationMetadata = {
     {
       label: "Location",
       id: "location",
+      regexDefinitionName: "alphanumericPlusSpacesAndForwardSlash",
     },
     {
       label: "Update By",
       id: "updateBy",
+      regexDefinitionName: "generalTextWithSpaces",
+      maxLength: 1000,
     },
     {
       label: "Tag",
