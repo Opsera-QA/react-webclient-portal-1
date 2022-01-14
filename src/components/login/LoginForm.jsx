@@ -159,8 +159,9 @@ const LoginForm = ({ authClient }) => {
       username: lookupAccountEmail,
       i18n: {
         en: {
-          'primaryauth.title': ldapOrgName + " Sign in",
+          'primaryauth.title': ldapOrgName + " Account Activation",
           'primaryauth.username.placeholder': "Email Address",
+          'primaryauth.username.tooltip': "The login form below follows your organizations defined sign in flow once your account is activated."
         }
       },
     });
