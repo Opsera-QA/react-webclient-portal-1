@@ -129,7 +129,7 @@ const LoginForm = ({ authClient }) => {
     let idpValues = [];
     if (federatedIdpIdentifier && federatedIdpIdentifier !== "0") {
       idpValues = [
-        { text: ldapOrgName, id: federatedIdpIdentifier },//IDP of LDAP object
+        { text: ldapOrgName + " SSO", id: federatedIdpIdentifier },//IDP of LDAP object
         //{ text: "Opsera DEV DEMO", id: "0oa10wlxrgdHnKvOJ0h8" }, //IDP of our PROD Okta Federated for use via DEV/LOCALHOST for developerment
         //{ text: "Opsera Inc", id: "0oa44bjfqlK7gTwnz4x7" }, //IDP of our DEV Okta Federated for use via PROD for Smoke Testing
         //{ type: "GOOGLE", id: "0oa1njfc0lFlSp0mM4x7" }, //IDP of our GSuite as opposed to pure google
