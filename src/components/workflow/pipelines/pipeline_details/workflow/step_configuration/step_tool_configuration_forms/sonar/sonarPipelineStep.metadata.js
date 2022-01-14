@@ -52,6 +52,9 @@ const sonarPipelineStepMetadata = {
       label: "Workspace/Project",
       id: "workspaceName",
       // isRequired: true
+    },{
+      label: "Delete Jenkins workspace before building",
+      id: "workspaceDeleteFlag",
     },
     {
       label: "Repository",
@@ -102,6 +105,7 @@ const sonarPipelineStepMetadata = {
     workspaceDeleteFlag: false,
     jobDescription: "",
     opsera_job_type: "",
+    gitBranch: "",
 
     // agentLabels : "",
   }

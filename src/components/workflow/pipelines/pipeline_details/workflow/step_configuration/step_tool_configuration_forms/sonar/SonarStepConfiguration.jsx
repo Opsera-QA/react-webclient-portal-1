@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {
   Button,
@@ -6,15 +6,12 @@ import {
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faExclamationCircle,
   faSave,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
-import { Link } from "react-router-dom";
 import ErrorDialog from "../../../../../../../common/status_notifications/error";
 import {
-  getErrorDialog,
   getMissingRequiredFieldsErrorDialog,
 } from "../../../../../../../common/toasts/toasts";
 
@@ -36,6 +33,16 @@ import SonarStepJenkinsToolJobSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepJenkinsToolJobSelectInput";
 import SonarStepJenkinsToolAccountSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepJenkinsToolAccountSelectInput";
+import axios from "axios";
+import PipelineStepEditorPanelContainer
+  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import SonarStepBitbucketWorkspaceSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepBitbucketWorkspaceSelectInput";
+import SonarStepRepositorySelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepRepositorySelectInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import SonarStepBranchSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepBranchSelectInput";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -79,13 +86,11 @@ function SonarStepConfiguration({
   stepId,
   parentCallback,
   callbackSaveToVault,
+  handleCloseFunction,
   createJob,
-  setToast,
-  setShowToast
 }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [error, setErrors] = useState(false);
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [loading, setLoading] = useState(false);
   const [repoList, setRepoList] = useState([]);
@@ -100,9 +105,28 @@ function SonarStepConfiguration({
   const [jobType, setJobType] = useState("");
   const [sonarStepModel, setSonarStepModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(undefined);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
   const loadData = async () => {
@@ -120,27 +144,8 @@ function SonarStepConfiguration({
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        await loadFormData(stepTool);
-      } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }
-      }
-    };
-    runEffect();
-    return () => {
-      controller.abort();
-    };
-  }, [stepTool]);
-
   // fetch repos
   useEffect(() => {
-    setShowToast(false);
 
     async function fetchRepos(service, gitToolId) {
       setIsWorkspacesSearching(true);
@@ -174,7 +179,6 @@ function SonarStepConfiguration({
 
   // fetch repos
   useEffect(() => {
-    setShowToast(false);
 
     async function fetchRepos(service, gitToolId, workspaces) {
       setIsRepoSearching(true);
@@ -210,7 +214,6 @@ function SonarStepConfiguration({
 
   // fetch branches
   useEffect(() => {
-    setShowToast(false);
 
     async function fetchBranches(service, gitToolId, repoId, workspaces) {
       setIsBranchSearching(true);
@@ -243,24 +246,6 @@ function SonarStepConfiguration({
       setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
     }
   }, [formData.repoId]);
-
-  const loadFormData = async (step) => {
-    let { configuration, threshold, job_type } = step;
-    if (typeof configuration !== "undefined") {
-      if (typeof configuration !== "undefined") {
-        setFormData(configuration);
-      }
-      if (typeof threshold !== "undefined") {
-        setThresholdType(threshold.type);
-        setThresholdValue(threshold.value);
-      }
-      if (typeof job_type !== "undefined") {
-        setJobType(job_type);
-      }
-    } else {
-      setFormData(INITIAL_DATA);
-    }
-  };
 
   const handleCreateAndSave = async (pipelineId, stepId, toolId) => {
     if (validateRequiredFields() && toolId) {
@@ -319,9 +304,9 @@ function SonarStepConfiguration({
 
     if (jobType === "job") {
       if (jobName.length === 0) {
-        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
-        setToast(toast);
-        setShowToast(true);
+        // let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
+        // setToast(toast);
+        // setShowToast(true);
         return false;
       } else {
         return true;
@@ -337,44 +322,14 @@ function SonarStepConfiguration({
           ? dockerName.length === 0 || dockerTagName.length === 0
           : false)
       ) {
-        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
-        setToast(toast);
-        setShowToast(true);
+        // let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
+        // setToast(toast);
+        // setShowToast(true);
         return false;
       } else {
         return true;
       }
     }
-  };
-
-  const handleWorkspacesChange = (selectedOption) => {
-    setFormData({
-      ...formData,
-      workspace: selectedOption.key,
-      workspaceName: selectedOption.name,
-      repository: "",
-      repoId: "",
-      projectId: "",
-      gitUrl: "",
-      sshUrl: "",
-      branch: "",
-      defaultBranch: "",
-      gitBranch: "",
-    });
-  };
-
-  const handleRepoChange = (selectedOption) => {
-    setFormData({
-      ...formData,
-      repository: selectedOption.name,
-      repoId: selectedOption.id,
-      projectId: selectedOption.id,
-      gitUrl: selectedOption.httpUrl || "",
-      sshUrl: selectedOption.sshUrl || "",
-      branch: "",
-      defaultBranch: "",
-      gitBranch: "",
-    });
   };
 
   const handleBranchChange = (selectedOption) => {
@@ -418,6 +373,23 @@ function SonarStepConfiguration({
             model={sonarStepModel}
             setModel={setSonarStepModel}
           />
+          <SonarStepBitbucketWorkspaceSelectInput
+            model={sonarStepModel}
+            setModel={setSonarStepModel}
+          />
+          <SonarStepRepositorySelectInput
+            model={sonarStepModel}
+            setModel={setSonarStepModel}
+          />
+          <SonarStepBranchSelectInput
+            model={sonarStepModel}
+            setModel={setSonarStepModel}
+          />
+          <BooleanToggleInput
+            dataObject={sonarStepModel}
+            setDataObject={setSonarStepModel}
+            fieldName={"workspaceDeleteFlag"}
+          />
         </>
       );
     }
@@ -433,10 +405,12 @@ function SonarStepConfiguration({
   }
 
   return (
-    <>
-      {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
-
-      <Form>
+    <PipelineStepEditorPanelContainer
+      handleClose={handleCloseFunction}
+      recordDto={sonarStepModel}
+      persistRecord={handleCreateAndSave}
+      isLoading={isLoading}
+    >
         <SonarStepJenkinsToolSelectInput
           model={sonarStepModel}
           setModel={setSonarStepModel}
@@ -450,97 +424,6 @@ function SonarStepConfiguration({
             <></>
           ) :
           <>
-            {formData.service && formData.service === "bitbucket" && formData.gitToolId && (
-              <Form.Group controlId="account" className="mt-2">
-                <Form.Label>Workspace/Project*</Form.Label>
-                {isWorkspacesSearching ? (
-                  <div className="form-text text-muted mt-2 p-2">
-                    <FontAwesomeIcon
-                      icon={faSpinner}
-                      spin
-                      className="text-muted mr-1"
-                      fixedWidth
-                    />
-                    Loading workspaces from registry
-                  </div>
-                ) : (
-                  <>
-                    {workspacesList ? (
-                      <StandaloneSelectInput
-                        selectOptions={workspacesList}
-                        value={
-                          workspacesList[
-                            workspacesList.findIndex(
-                              (x) => x.key === formData.workspace,
-                            )
-                            ]
-                        }
-                        valueField="key"
-                        textField="name"
-                        filter="contains"
-                        setDataFunction={handleWorkspacesChange}
-                      />
-                    ) : (
-                      <FontAwesomeIcon
-                        icon={faSpinner}
-                        spin
-                        className="text-muted mr-1"
-                        fixedWidth
-                      />
-                    )}
-                  </>
-                )}
-              </Form.Group>
-            )}
-
-            {formData.service && 
-            formData.gitToolId && 
-            (formData.service === "bitbucket"? 
-              formData.workspace 
-              && formData.workspace.length > 0 : true ) && (
-              <Form.Group controlId="account" className="mt-2">
-                <Form.Label>Repository*</Form.Label>
-                {isRepoSearching ? (
-                  <div className="form-text text-muted mt-2 p-2">
-                    <FontAwesomeIcon
-                      icon={faSpinner}
-                      spin
-                      className="text-muted mr-1"
-                      fixedWidth
-                    />
-                    Loading repositories from registry
-                  </div>
-                ) : (
-                  <>
-                    {repoList ? (
-                      <StandaloneSelectInput
-                        selectOptions={repoList}
-                        value={
-                          repoList[
-                            repoList.findIndex(
-                              (x) => x.name === formData.repository,
-                            )
-                            ]
-                        }
-                        valueField="value"
-                        textField="name"
-                        filter="contains"
-                        setDataFunction={handleRepoChange}
-                      />
-                    ) : (
-                      <FontAwesomeIcon
-                        icon={faSpinner}
-                        spin
-                        className="text-muted mr-1"
-                        fixedWidth
-                      />
-                    )}
-                  </>
-                )}
-                {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-              </Form.Group>
-            )}
-
             {formData.service && formData.gitToolId && formData.repoId && (
               <>
               <Form.Group controlId="account" className="mt-2">
@@ -675,12 +558,7 @@ function SonarStepConfiguration({
             )}
           </Button>
         )}
-
-        <small className="form-text text-muted mt-2 text-right">
-          * Required Fields
-        </small>
-      </Form>
-    </>
+    </PipelineStepEditorPanelContainer>
   );
 }
 
@@ -692,8 +570,7 @@ SonarStepConfiguration.propTypes = {
   parentCallback: PropTypes.func,
   callbackSaveToVault: PropTypes.func,
   createJob: PropTypes.func,
-  setToast: PropTypes.func,
-  setShowToast: PropTypes.func
+  handleCloseFunction: PropTypes.func,
 };
 
 export default SonarStepConfiguration;
