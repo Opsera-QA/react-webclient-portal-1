@@ -45,9 +45,9 @@ function TestToolConnectionButton({ toolModel, disabled, toolName }) {
 
       const response = await toolsActions.checkToolConnectivityV2(getAccessToken, cancelTokenSource, toolModel?.getData("_id"), toolName);
 
-      if (response?.data?.status === 200) {
+      if (response?.status === 200) {
         const message = JSON.stringify(response?.data?.message);
-        const status = response?.data?.status;
+        const status = response?.status;
 
       setLogs([
         ...logs,
@@ -60,7 +60,7 @@ function TestToolConnectionButton({ toolModel, disabled, toolName }) {
       }
       else {
         const message = JSON.stringify(response?.data?.message);
-        let status = response?.data?.status;
+        let status = response?.status;
 
         setLogs([
           ...logs,
