@@ -1,23 +1,5 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {
-  Button,
-  Form,
-} from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSave,
-  faSpinner,
-} from "@fortawesome/free-solid-svg-icons";
-import { AuthContext } from "../../../../../../../../contexts/AuthContext";
-import ErrorDialog from "../../../../../../../common/status_notifications/error";
-import {
-  getMissingRequiredFieldsErrorDialog,
-} from "../../../../../../../common/toasts/toasts";
-
-import pipelineActions from "components/workflow/pipeline-actions";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import SonarStepJenkinsToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepJenkinsToolSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
@@ -43,44 +25,8 @@ import SonarStepRepositorySelectInput
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import SonarStepBranchSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepBranchSelectInput";
-import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import SonarStepSonarSourcePathTextAreaInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepSonarSourcePathTextAreaInput";
-
-//This must match the form below and the data object expected.  Each tools' data object is different
-const INITIAL_DATA = {
-  jobType: "", //hardcoded, every step wil have a hardcoded jobType is what i know needs to check with Todd.
-  toolConfigId: "",
-  jenkinsUrl: "",
-  jenkinsPort: "",
-  jUserId: "",
-  jAuthToken: "",
-  jobName: "",
-  toolJobId: "",
-  toolJobType: "",
-  projectKey: "",
-  sonarToolConfigId: "",
-  accountUsername: "",
-  projectId: "",
-  defaultBranch: "",
-  dockerName: "",
-  dockerTagName: "",
-  buildType: "gradle", //hardcoded now but needs to get it from a dropdown
-  gitToolId: "",
-  repoId: "",
-  gitUrl: "",
-  sshUrl: "",
-  service: "",
-  gitCredential: "",
-  gitUserName: "",
-  repository: "",
-  branch: "",
-  sonarSourcePath: "",
-  workspace: "",
-  workspaceName: "",
-  workspaceDeleteFlag: false
-  // agentLabels : "",
-};
 
 function SonarStepConfiguration({
   stepTool,
@@ -88,15 +34,11 @@ function SonarStepConfiguration({
   plan,
   stepId,
   parentCallback,
-  callbackSaveToVault,
   handleCloseFunction,
   createJob,
 }) {
-  const [formData, setFormData] = useState(INITIAL_DATA);
-  const [loading, setLoading] = useState(false);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
-  const [jobType, setJobType] = useState("");
   const [sonarStepModel, setSonarStepModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(undefined);
   const isMounted = useRef(false);
@@ -138,98 +80,81 @@ function SonarStepConfiguration({
     setIsLoading(false);
   };
 
-  const handleCreateAndSave = async (pipelineId, stepId, toolId) => {
-    if (validateRequiredFields() && toolId) {
-      setLoading(true);
+  const handleCreateAndSave = async () => {
+    const createJobPostBody = {
+      jobId: "",
+      pipelineId: pipelineId,
+      stepId: stepId,
+      buildParams: {
+        stepId: sonarStepModel?.getData("stepIdXML"),
+      },
+    };
 
-      const createJobPostBody = {
-        jobId: "",
-        pipelineId: pipelineId,
-        stepId: stepId,
-        buildParams: {
-          stepId: formData?.stepIdXML,
-        },
-      };
+    const toolConfiguration = {
+      configuration: sonarStepModel?.getPersistData(),
+      threshold: {
+        type: thresholdType,
+        value: thresholdVal,
+      },
+      job_type: sonarStepModel?.getData("job_type"),
+    };
 
-      const toolConfiguration = {
-        configuration: formData,
-        threshold: {
-          type: thresholdType,
-          value: thresholdVal,
-        },
-        job_type: jobType,
-      };
-
-      await createJob(toolId, toolConfiguration, stepId, createJobPostBody);
-    }
+    return await createJob(sonarStepModel?.getData("toolConfigId"), toolConfiguration, stepId, createJobPostBody);
   };
 
   const callbackFunction = async () => {
-    if (validateRequiredFields()) {
-      setLoading(true);
+    const item = {
+      configuration: sonarStepModel?.getPersistData(),
+      threshold: {
+        type: thresholdType,
+        value: thresholdVal,
+      },
+      job_type: sonarStepModel?.getData("job_type"),
+    };
 
-      const item = {
-        configuration: formData,
-        threshold: {
-          type: thresholdType,
-          value: thresholdVal,
-        },
-        job_type: jobType,
-      };
-      setLoading(false);
-      parentCallback(item);
-    }
+    return await parentCallback(item);
   };
 
   const validateRequiredFields = () => {
-    let {
-      toolConfigId,
-      jenkinsUrl,
-      jUserId,
-      jAuthToken,
-      jobName,
-      buildType,
-      dockerName,
-      dockerTagName,
-    } = formData;
+    // let {
+    //   toolConfigId,
+    //   jenkinsUrl,
+    //   jUserId,
+    //   jAuthToken,
+    //   jobName,
+    //   buildType,
+    //   dockerName,
+    //   dockerTagName,
+    // } = formData;
 
-    if (jobType === "job") {
-      if (jobName.length === 0) {
-        // let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
-        // setToast(toast);
-        // setShowToast(true);
-        return false;
-      } else {
-        return true;
-      }
-    } else {
-      if (
-        toolConfigId.length === 0 ||
-        jenkinsUrl.length === 0 ||
-        jUserId.length === 0 ||
-        jAuthToken.length === 0 ||
-        // jobName.length === 0 ||
-        (buildType === "docker"
-          ? dockerName.length === 0 || dockerTagName.length === 0
-          : false)
-      ) {
-        // let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
-        // setToast(toast);
-        // setShowToast(true);
-        return false;
-      } else {
-        return true;
-      }
-    }
-  };
-
-  const handleBranchChange = (selectedOption) => {
-    setFormData({
-      ...formData,
-      branch: selectedOption.value,
-      defaultBranch: selectedOption.value,
-      gitBranch: selectedOption.value,
-    });
+    // if (jobType === "job") {
+    //   if (jobName.length === 0) {
+    //     // let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
+    //     // setToast(toast);
+    //     // setShowToast(true);
+    //     return false;
+    //   } else {
+    //     return true;
+    //   }
+    // } else {
+    //   if (
+    //     toolConfigId.length === 0 ||
+    //     jenkinsUrl.length === 0 ||
+    //     jUserId.length === 0 ||
+    //     jAuthToken.length === 0 ||
+    //     // jobName.length === 0 ||
+    //     (buildType === "docker"
+    //       ? dockerName.length === 0 || dockerTagName.length === 0
+    //       : false)
+    //   ) {
+    //     // let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
+    //     // setToast(toast);
+    //     // setShowToast(true);
+    //     return false;
+    //   } else {
+    //     return true;
+    //   }
+    // }
   };
 
   const getDynamicFields = () => {
@@ -309,7 +234,7 @@ function SonarStepConfiguration({
     <PipelineStepEditorPanelContainer
       handleClose={handleCloseFunction}
       recordDto={sonarStepModel}
-      persistRecord={handleCreateAndSave}
+      persistRecord={sonarStepModel.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB ? handleCreateAndSave : callbackFunction}
       isLoading={isLoading}
     >
         <SonarStepJenkinsToolSelectInput
@@ -321,58 +246,6 @@ function SonarStepConfiguration({
           setModel={setSonarStepModel}
         />
         {getDynamicFields()}
-        {jobType === "opsera-job" ? (
-          <Button
-            variant="primary"
-            type="button"
-            className="mt-3"
-            onClick={() => {
-              handleCreateAndSave(pipelineId, stepId, formData.toolConfigId);
-            }}
-          >
-            {loading ? (
-              <>
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="mr-1"
-                  fixedWidth
-                />{" "}
-                Working
-              </>
-            ) : (
-              <>
-                <FontAwesomeIcon icon={faSave} className="mr-1"/>
-                Create Job and Save
-              </>
-            )}
-          </Button>
-        ) : (
-          <Button
-            variant="primary"
-            type="button"
-            className="mt-3"
-            onClick={() => {
-              callbackFunction();
-            }}
-          >
-            {loading ? (
-              <>
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="mr-1"
-                  fixedWidth
-                />{" "}
-                Saving
-              </>
-            ) : (
-              <>
-                <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
-              </>
-            )}
-          </Button>
-        )}
     </PipelineStepEditorPanelContainer>
   );
 }

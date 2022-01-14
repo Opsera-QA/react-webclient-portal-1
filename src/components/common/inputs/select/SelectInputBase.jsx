@@ -82,6 +82,7 @@ function SelectInputBase(
   };
 
   if (field == null) {
+    console.log("no field: " + fieldName);
     return null;
   }
 

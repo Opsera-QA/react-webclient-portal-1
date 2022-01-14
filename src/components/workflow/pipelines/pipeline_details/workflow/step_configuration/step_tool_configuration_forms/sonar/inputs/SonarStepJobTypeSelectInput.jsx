@@ -30,7 +30,7 @@ function SonarStepJobTypeSelectInput({ model, setModel }) {
   
   return (
     <SelectInputBase
-      fieldName={"opsera_job_type"}
+      fieldName={"job_type"}
       dataObject={model}
       setDataObject={setModel}
       setDataFunction={setDataFunction}

@@ -13,7 +13,7 @@ function SonarStepBranchSelectInput({model, setModel, disabled}) {
 
   return (
     <GitBranchInput
-      fieldName={"gitBranch"}
+      fieldName={"branch"}
       service={model?.getData("service")}
       gitToolId={model?.getData("gitToolId")}
       workspace={model?.getData("workspace")}

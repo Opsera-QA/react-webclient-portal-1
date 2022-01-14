@@ -13,7 +13,7 @@ const sonarPipelineStepMetadata = {
     },
     {
       label: "Job Type",
-      id: "opsera_job_type",
+      id: "job_type",
       isRequired: true,
     },{
       label: "Project Key",
@@ -106,7 +106,7 @@ const sonarPipelineStepMetadata = {
     sonarToolConfigId: "",
     workspaceDeleteFlag: false,
     jobDescription: "",
-    opsera_job_type: "",
+    job_type: "",
     gitBranch: "",
     successThreshold: "",
   }
