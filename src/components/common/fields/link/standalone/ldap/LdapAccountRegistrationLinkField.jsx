@@ -11,7 +11,7 @@ function LdapAccountRegistrationLinkField({fieldName, model, className}) {
       <div className="w-100 d-flex">
         <StandaloneLinkField
           label={"New User Registration URL"}
-          link={`${process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL}/account/registration/${model?.orgDomain}`}
+          link={`${process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL}/account/registration/${model?.getData("orgDomain")}`}
           openInNewWindow={true}
           showClipboardButton={true}
           formText={field?.formText}
