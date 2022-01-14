@@ -6,15 +6,10 @@ import GenericItemField from "components/common/fields/multiple_items/GenericIte
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
-import StandaloneLinkField from "components/common/fields/link/standalone/StandaloneLinkField";
+import LdapAccountRegistrationLinkField
+  from "components/common/fields/link/standalone/ldap/LdapAccountRegistrationLinkField";
 
 function LdapOrganizationAccountSummaryPanel({ ldapOrganizationAccountData, setActiveTab }) {
-  const getUrlString = () => {
-    const urlString = "" + process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL + "/account/registration/" + ldapOrganizationAccountData?.orgDomain;
-    return (
-      <StandaloneLinkField label={"New User Registration URL"} link={urlString} openInNewWindow={true} showClipboardButton={true} />
-    );
-  };
 
   if (ldapOrganizationAccountData == null) {
     return (<LoadingDialog size="sm"/>);
@@ -71,8 +66,11 @@ function LdapOrganizationAccountSummaryPanel({ ldapOrganizationAccountData, setA
         <Col lg={6}>
           <TextFieldBase dataObject={ldapOrganizationAccountData} fieldName={"idpBaseUrl"}/>
         </Col>
-        <Col lg={6}>
-          {getUrlString()}
+        <Col lg={12}>
+          <LdapAccountRegistrationLinkField
+            model={ldapOrganizationAccountData}
+            fieldName={"urlString"}
+          />
         </Col>
       </Row>
     </SummaryPanelContainer>
