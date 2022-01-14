@@ -5,11 +5,11 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 // TODO: Should we move these to a sonarJob.types.js helper file?
 export const SONAR_JOB_TYPES = {
   OPSERA_MANAGED_JOB: "opsera-job",
-  CODE_SCAN_JOB: "CODE SCAN",
+  CUSTOM_JOB: "job",
 };
 
 export const SONAR_JOB_TYPE_SELECT_OPTIONS = [
-  { value: SONAR_JOB_TYPES.CODE_SCAN_JOB, label: "Custom Job" },
+  { value: SONAR_JOB_TYPES.CUSTOM_JOB, label: "Custom Job" },
   { value: SONAR_JOB_TYPES.OPSERA_MANAGED_JOB, label: "Opsera Managed Job" },
 ];
 
@@ -23,12 +23,14 @@ function SonarStepJobTypeSelectInput({ model, setModel }) {
     newModel.setDefaultValue("jobDescription");
     newModel.setDefaultValue("toolJobId");
     newModel.setDefaultValue("toolJobType");
+    const jobType = selectedOption?.value === SONAR_JOB_TYPES.CUSTOM_JOB ? "CODE SCAN" : "";
+    newModel.setData("jobType", jobType);
     setModel({...newModel});
   };
   
   return (
     <SelectInputBase
-      fieldName={"jobType"}
+      fieldName={"opsera_job_type"}
       dataObject={model}
       setDataObject={setModel}
       setDataFunction={setDataFunction}

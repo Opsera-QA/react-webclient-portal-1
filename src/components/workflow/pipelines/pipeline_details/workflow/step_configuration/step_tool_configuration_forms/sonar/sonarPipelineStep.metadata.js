@@ -12,6 +12,17 @@ const sonarPipelineStepMetadata = {
       isRequired: true,
     },
     {
+      label: "Job Type",
+      id: "opsera_job_type",
+      isRequired: true,
+    },{
+      label: "Project Key",
+      id: "projectKey",
+      isRequired: true,
+      maxLength: 150,
+      // TODO: Don't allow spaces
+    },
+    {
       label: "Job Name",
       id: "jobName",
       isRequired: true,
@@ -90,6 +101,7 @@ const sonarPipelineStepMetadata = {
     sonarToolConfigId: "",
     workspaceDeleteFlag: false,
     jobDescription: "",
+    opsera_job_type: "",
     // agentLabels : "",
   }
 };

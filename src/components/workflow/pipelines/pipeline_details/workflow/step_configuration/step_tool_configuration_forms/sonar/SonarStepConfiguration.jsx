@@ -21,7 +21,6 @@ import {
 import pipelineActions from "components/workflow/pipeline-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
-import toolsActions from "components/inventory/tools/tools-actions";
 import SonarStepJenkinsToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepJenkinsToolSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
@@ -33,12 +32,8 @@ import SonarStepJobTypeSelectInput
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import SonarStepSonarToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepSonarToolSelectInput";
-
-const JOB_OPTIONS = [
-  { value: "", label: "Select One", isDisabled: "yes" },
-  { value: "job", label: "Custom Job" },
-  { value: "opsera-job", label: "Opsera Managed Jobs" },
-];
+import SonarStepJenkinsToolJobSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepJenkinsToolJobSelectInput";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -88,14 +83,11 @@ function SonarStepConfiguration({
   setToast,
   setShowToast
 }) {
-  const contextType = useContext(AuthContext);
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [error, setErrors] = useState(false);
   const [formData, setFormData] = useState(INITIAL_DATA);
-  const [renderForm, setRenderForm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isJenkinsSearching, setisJenkinsSearching] = useState(false);
   const [repoList, setRepoList] = useState([]);
   const [isRepoSearching, setIsRepoSearching] = useState(false);
   const [branchList, setBranchList] = useState([]);
@@ -103,11 +95,7 @@ function SonarStepConfiguration({
 
   const [workspacesList, setWorkspacesList] = useState([]);
   const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
-
-  const [sonarList, setSonarList] = useState([]);
-  const [isSonarSearching, setIsSonarSearching] = useState(false);
   const [accountsList, setAccountsList] = useState([]);
-  const [jobsList, setJobsList] = useState([]);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [jobType, setJobType] = useState("");
@@ -138,7 +126,6 @@ function SonarStepConfiguration({
     const runEffect = async () => {
       try {
         await loadFormData(stepTool);
-        setRenderForm(true);
       } catch (err) {
         if (err.name === "AbortError") {
           console.log("Request was canceled via controller.abort");
@@ -148,52 +135,9 @@ function SonarStepConfiguration({
     };
     runEffect();
     return () => {
-      setRenderForm(false);
       controller.abort();
     };
   }, [stepTool]);
-
-  // search sonar
-  useEffect(() => {
-    setShowToast(false);
-    // Fire off our API call
-    getSonarList("sonar");
-  }, []);
-
-  const getSonarList = async () => {
-    setisJenkinsSearching(true);
-    let results = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, undefined, "sonar");
-    const tools = results?.data?.data;
-    let respObj = [];
-
-    if (Array.isArray(tools)) {
-      tools.map((item) => {
-        if (item.configuration == null) {
-          return;
-        }
-
-        respObj.push({
-          name: item.name,
-          id: item._id,
-          configuration: item.configuration,
-          accounts: item.accounts,
-          jobs: item.jobs,
-        });
-      });
-    }
-
-    if (typeof(results) != "object") {
-      setSonarList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-      let errorMessage =
-        "Jenkins information is missing or unavailable!";
-      toastContext.showErrorDialog(errorMessage);
-      setIsSonarSearching(false);
-      return;
-    }
-
-    setSonarList(respObj);
-    setIsSonarSearching(false);
-  };
 
   // fetch repos
   useEffect(() => {
@@ -328,33 +272,6 @@ function SonarStepConfiguration({
   //   }
   // }, [jenkinsList, formData.toolConfigId]);
 
-  
-  useEffect(() => {
-    if (jobsList && jobsList.length > 0 && formData.toolJobId && formData.toolJobId.length > 0  && !jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]) {
-     let toast = getErrorDialog(
-        "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Registry.",
-        setShowToast,
-        "detailPanelTop"
-      );
-      setToast(toast);
-      setShowToast(true);
-      return;
-    }
-    setShowToast(false);
-  }, [jobsList, formData.toolJobId]);
-
-  useEffect(() => {
-    if (formData.toolJobType && formData.toolJobType.includes("SFDC")) {
-      setFormData({ ...formData, buildType: "ant" });
-    }
-  }, [formData.toolJobType]);
-
-  useEffect(() => {
-    if (jobType === "job") {
-      setFormData({ ...formData, jobType: "CODE SCAN" });
-    }
-  }, [jobType]);
-
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -459,40 +376,6 @@ function SonarStepConfiguration({
     }
   };
 
-  const handleSonarChange = (selectedOption) => {
-    if (selectedOption.id && selectedOption.configuration) {
-      setFormData({
-        ...formData,
-        sonarToolConfigId: selectedOption.id,
-        sonarUrl: selectedOption.configuration ? selectedOption.configuration.sonarUrl : "",
-        sonarPort: selectedOption.configuration ? selectedOption.configuration.sonarPort : "",
-        sonarUserId: selectedOption.configuration ? selectedOption.configuration.sonarUserId : "",
-        // sonarAuthToken: selectedOption.configuration ? selectedOption.configuration.sonarAuthToken : ""
-      });
-    }
-  };
-
-  const handleJobChange = (selectedOption) => {
-    console.log(selectedOption);
-    if (selectedOption.type[0] === "CODE SCAN") {
-      setFormData({
-        ...formData,
-        toolJobId: selectedOption._id,
-        toolJobType: selectedOption.type,
-        jobType: selectedOption.type[0],
-        ...selectedOption.configuration,
-        buildToolVersion: "6.3",
-        projectKey: "",
-        buildArgs: {},
-      });
-    } else {
-      let errorMessage= "Selected Job is not a Sonar Job!  Please ensure the selected job has sonar code configurations.";
-      let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
-      setToast(toast);
-      setShowToast(true);
-    }
-  };
-
   const handleAccountChange = (selectedOption) => {
     setFormData({
       ...formData,
@@ -551,68 +434,46 @@ function SonarStepConfiguration({
     });
   };
 
-  const getDynamicFields = () => {
-    if (sonarStepModel?.getData("jobType") === SONAR_JOB_TYPES.CODE_SCAN_JOB) {
+  const getJobTypeRelatedFields = () => {
+    if (sonarStepModel?.getData("jobType") === "CODE SCAN") {
       return (
         <>
-          <TextInputBase
-            fieldName={"jobName"}
-            dataObject={sonarStepModel}
-            setDataObject={setSonarStepModel}
-          />
           <SonarStepSonarToolSelectInput
             model={sonarStepModel}
             setModel={setSonarStepModel}
           />
+          <TextInputBase
+            fieldName={"projectKey"}
+            dataObject={sonarStepModel}
+            setDataObject={setSonarStepModel}
+          />
         </>
       );
     }
+  };
 
-    if (sonarStepModel?.getData("jobType") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB) {
+
+  const getDynamicFields = () => {
+    if (sonarStepModel?.getData("opsera_job_type") === SONAR_JOB_TYPES.CUSTOM_JOB) {
       return (
-          <>
-            {formData.jenkinsUrl && (
-              <>
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Label className="w-100">
-                    Job*
-                  </Form.Label>
-                  {jobsList.length < 1 && (
-                    <div className="form-text text-muted p-2">
-                      <FontAwesomeIcon
-                        icon={faExclamationCircle}
-                        className="text-muted mr-1"
-                        fixedWidth
-                      />
-                      No jobs have been created for{" "}
-                      <span>{formData.jenkinsUrl}</span>. Please go to
-                      <Link to={"/inventory/tools/details/" + formData.toolConfigId}>
-                        {" "}
-                        Tool Registry
-                      </Link>{" "}
-                      and add credentials and register a job for this Jenkins in
-                      order to proceed.{" "}
-                    </div>
-                  )}
-                  {jobsList !== undefined && jobsList.length > 0 ? (
-                    <StandaloneSelectInput
-                      selectOptions={jobsList}
-                      valueField="id"
-                      textField="name"
-                      value={
-                        jobsList && jobsList.length > 0 &&
-                        jobsList[
-                          jobsList.findIndex((x) => x._id === formData.toolJobId)
-                          ]
-                      }
-                      filter="contains"
-                      setDataFunction={handleJobChange}
-                    />
-                  ) : null}
-                </Form.Group>
-              </>
-            )}
-          </>
+        <TextInputBase
+          fieldName={"jobName"}
+          dataObject={sonarStepModel}
+          setDataObject={setSonarStepModel}
+        />
+      );
+    }
+
+    if (sonarStepModel?.getData("opsera_job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB) {
+      return (
+        <>
+          <SonarStepJenkinsToolJobSelectInput
+            model={sonarStepModel}
+            setModel={setSonarStepModel}
+            jenkinsToolId={sonarStepModel?.getData("toolConfigId")}
+          />
+          {getJobTypeRelatedFields()}
+        </>
       );
     }
   };
@@ -644,44 +505,6 @@ function SonarStepConfiguration({
             <></>
           ) :
           <>
-            {formData.jenkinsUrl && (
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label className="w-100">
-                  Account*
-                </Form.Label>
-                {accountsList.length < 1 && (
-                  <div className="form-text text-muted p-2">
-                    <FontAwesomeIcon
-                      icon={faExclamationCircle}
-                      className="text-muted mr-1"
-                      fixedWidth
-                    />
-                    No Credentials have been created for{" "}
-                    <span>{formData.jenkinsUrl}</span>. Please go to
-                    <Link to="/inventory/tools"> Tool Registry</Link> and add
-                    credentials for this Jenkins in order to proceed.
-                  </div>
-                )}
-                {accountsList !== undefined && accountsList.length > 0 ? (
-                  <StandaloneSelectInput
-                    selectOptions={accountsList}
-                    valueField="gitCredential"
-                    textField="gitCredential"
-                    defaultValue={
-                      accountsList && accountsList.length > 0 &&
-                      accountsList[
-                        accountsList.findIndex(
-                          (x) => x.gitCredential === formData.gitCredential,
-                        )
-                        ]
-                    }
-                    filter="contains"
-                    setDataFunction={handleAccountChange}
-                  />
-                ) : null}
-              </Form.Group>
-            )}
-
             {formData.service && formData.service === "bitbucket" && formData.gitToolId && (
               <Form.Group controlId="account" className="mt-2">
                 <Form.Label>Workspace/Project*</Form.Label>
