@@ -6,13 +6,7 @@ function ToolRegistryConnectionLogOverlay({ handleCloseFunction, logs }) {
   const formatData = () => {
     if (Array.isArray(logs)) {
       return (
-        logs.map((log, index) => {
-          return (
-            <div key={index}>
-              {log}
-            </div>
-          );
-        })
+        {logs}
       );
     }
   };
