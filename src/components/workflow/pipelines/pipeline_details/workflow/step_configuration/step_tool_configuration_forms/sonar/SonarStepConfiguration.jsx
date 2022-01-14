@@ -34,6 +34,8 @@ import SonarStepSonarToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepSonarToolSelectInput";
 import SonarStepJenkinsToolJobSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepJenkinsToolJobSelectInput";
+import SonarStepJenkinsToolAccountSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepJenkinsToolAccountSelectInput";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -70,8 +72,6 @@ const INITIAL_DATA = {
   // agentLabels : "",
 };
 
-//data is JUST the tool object passed from parent component, that's returned through parent Callback
-// ONLY allow changing of the configuration and threshold properties of "tool"!
 function SonarStepConfiguration({
   stepTool,
   pipelineId,
@@ -95,7 +95,6 @@ function SonarStepConfiguration({
 
   const [workspacesList, setWorkspacesList] = useState([]);
   const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
-  const [accountsList, setAccountsList] = useState([]);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [jobType, setJobType] = useState("");
@@ -245,34 +244,6 @@ function SonarStepConfiguration({
     }
   }, [formData.repoId]);
 
-  // useEffect(() => {
-  //   if (formData.toolConfigId) {
-  //     // console.log(jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)].accounts);
-  //     setAccountsList(
-  //       jenkinsList[
-  //         jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-  //         ] ?
-  //         jenkinsList[
-  //           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-  //           ].accounts : [],
-  //     );
-  //   }
-  // }, [jenkinsList, formData.toolConfigId]);
-
-  // useEffect(() => {
-  //   if (formData.toolConfigId) {
-  //     setJobsList(
-  //       jenkinsList[
-  //         jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-  //         ] ?
-  //         jenkinsList[
-  //           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-  //           ].jobs : [],
-  //     );
-  //   }
-  // }, [jenkinsList, formData.toolConfigId]);
-
-
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
     if (typeof configuration !== "undefined") {
@@ -376,25 +347,6 @@ function SonarStepConfiguration({
     }
   };
 
-  const handleAccountChange = (selectedOption) => {
-    setFormData({
-      ...formData,
-      gitToolId: selectedOption.toolId,
-      gitCredential: selectedOption.gitCredential,
-      gitUserName: selectedOption.gitUserName,
-      service: selectedOption.service,
-      repoId: "",
-      gitUrl: "",
-      sshUrl: "",
-      repository: "",
-      workspace:"",
-      workspaceName: "",
-      branch: "",
-      projectId: "",
-      defaultBranch: "",
-    });
-  };
-
   const handleWorkspacesChange = (selectedOption) => {
     setFormData({
       ...formData,
@@ -434,25 +386,6 @@ function SonarStepConfiguration({
     });
   };
 
-  const getJobTypeRelatedFields = () => {
-    if (sonarStepModel?.getData("jobType") === "CODE SCAN") {
-      return (
-        <>
-          <SonarStepSonarToolSelectInput
-            model={sonarStepModel}
-            setModel={setSonarStepModel}
-          />
-          <TextInputBase
-            fieldName={"projectKey"}
-            dataObject={sonarStepModel}
-            setDataObject={setSonarStepModel}
-          />
-        </>
-      );
-    }
-  };
-
-
   const getDynamicFields = () => {
     if (sonarStepModel?.getData("opsera_job_type") === SONAR_JOB_TYPES.CUSTOM_JOB) {
       return (
@@ -472,7 +405,19 @@ function SonarStepConfiguration({
             setModel={setSonarStepModel}
             jenkinsToolId={sonarStepModel?.getData("toolConfigId")}
           />
-          {getJobTypeRelatedFields()}
+          <SonarStepSonarToolSelectInput
+            model={sonarStepModel}
+            setModel={setSonarStepModel}
+          />
+          <TextInputBase
+            fieldName={"projectKey"}
+            dataObject={sonarStepModel}
+            setDataObject={setSonarStepModel}
+          />
+          <SonarStepJenkinsToolAccountSelectInput
+            model={sonarStepModel}
+            setModel={setSonarStepModel}
+          />
         </>
       );
     }

@@ -102,6 +102,7 @@ const sonarPipelineStepMetadata = {
     workspaceDeleteFlag: false,
     jobDescription: "",
     opsera_job_type: "",
+
     // agentLabels : "",
   }
 };
