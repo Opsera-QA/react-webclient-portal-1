@@ -5,9 +5,7 @@ import ConsoleLogOverlay from "components/common/overlays/log/ConsoleLogOverlay"
 function ToolRegistryConnectionLogOverlay({ handleCloseFunction, logs }) {
   const formatData = () => {
     if (Array.isArray(logs)) {
-      return (
-        {logs}
-      );
+      return (logs);
     }
   };
 
