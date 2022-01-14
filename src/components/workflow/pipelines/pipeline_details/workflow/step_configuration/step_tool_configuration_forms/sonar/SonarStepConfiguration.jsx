@@ -43,6 +43,9 @@ import SonarStepRepositorySelectInput
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import SonarStepBranchSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepBranchSelectInput";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
+import SonarStepSonarSourcePathTextAreaInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepSonarSourcePathTextAreaInput";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -89,17 +92,8 @@ function SonarStepConfiguration({
   handleCloseFunction,
   createJob,
 }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [loading, setLoading] = useState(false);
-  const [repoList, setRepoList] = useState([]);
-  const [isRepoSearching, setIsRepoSearching] = useState(false);
-  const [branchList, setBranchList] = useState([]);
-  const [isBranchSearching, setIsBranchSearching] = useState(false);
-
-  const [workspacesList, setWorkspacesList] = useState([]);
-  const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [jobType, setJobType] = useState("");
@@ -143,109 +137,6 @@ function SonarStepConfiguration({
 
     setIsLoading(false);
   };
-
-  // fetch repos
-  useEffect(() => {
-
-    async function fetchRepos(service, gitToolId) {
-      setIsWorkspacesSearching(true);
-      // Set results state
-      let results = await pipelineActions.searchWorkSpaces(service, gitToolId, getAccessToken);
-      if (typeof(results) != "object") {
-        setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-        let errorMessage =
-          "Workspace information is missing or unavailable!";
-        toastContext.showErrorDialog(errorMessage);
-        setIsWorkspacesSearching(false);
-        return;
-      }
-        //console.log(results);
-        setWorkspacesList(results);
-        setIsWorkspacesSearching(false);
-    }
-
-    if (
-      formData.service === "bitbucket" &&
-      formData.gitToolId &&
-      formData.gitToolId.length > 0
-    ) {
-      // Fire off our API call
-      fetchRepos(formData.service, formData.gitToolId);
-    } else {
-      setIsWorkspacesSearching(true);
-      setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-    }
-  }, [formData.service, formData.gitToolId, formData.gitCredential]);
-
-  // fetch repos
-  useEffect(() => {
-
-    async function fetchRepos(service, gitToolId, workspaces) {
-      setIsRepoSearching(true);
-      // Set results state
-      let results = await pipelineActions.searchRepositories(service, gitToolId, workspaces, getAccessToken);
-      if (typeof(results) != "object") {
-        setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-        let errorMessage =
-          "Repository information is missing or unavailable!";
-        toastContext.showErrorDialog(errorMessage);
-        setIsRepoSearching(false);
-        return;
-      }
-        //console.log(results);
-        setRepoList(results);
-        setIsRepoSearching(false);
-    }
-
-    if (
-      formData.service &&
-      formData.service.length > 0 &&
-      formData.gitToolId &&
-      formData.gitToolId.length > 0
-    ) {
-      // Fire off our API call
-      fetchRepos(formData.service, formData.gitToolId, formData.workspace);
-    } else {
-      setIsRepoSearching(true);
-      setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-    }
-  }, [formData.service, formData.gitToolId, formData.gitCredential, formData.workspace]);
-
-
-  // fetch branches
-  useEffect(() => {
-
-    async function fetchBranches(service, gitToolId, repoId, workspaces) {
-      setIsBranchSearching(true);
-      // Set results state
-      let results = await pipelineActions.searchBranches(service, gitToolId, repoId, workspaces, getAccessToken);
-      if (typeof(results) != "object") {
-        setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-        let errorMessage =
-          "Branch information is missing or unavailable!";
-        toastContext.showErrorDialog(errorMessage);
-        setIsBranchSearching(false);
-        return;
-      }
-        setBranchList(results);
-        setIsBranchSearching(false);
-    }
-
-    if (
-      formData.service &&
-      formData.service.length > 0 &&
-      formData.gitToolId &&
-      formData.gitToolId.length > 0 &&
-      formData.repoId &&
-      formData.repoId.length > 0
-    ) {
-      // Fire off our API call
-      fetchBranches(formData.service, formData.gitToolId, formData.repoId, formData.workspace);
-    } else {
-      setIsRepoSearching(true);
-      setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-    }
-  }, [formData.repoId]);
 
   const handleCreateAndSave = async (pipelineId, stepId, toolId) => {
     if (validateRequiredFields() && toolId) {
@@ -386,9 +277,19 @@ function SonarStepConfiguration({
             setModel={setSonarStepModel}
           />
           <BooleanToggleInput
+            fieldName={"workspaceDeleteFlag"}
             dataObject={sonarStepModel}
             setDataObject={setSonarStepModel}
-            fieldName={"workspaceDeleteFlag"}
+          />
+          <SonarStepSonarSourcePathTextAreaInput
+            model={sonarStepModel}
+            setModel={setSonarStepModel}
+          />
+          <TextInputBase
+            fieldName={"successThreshold"}
+            dataObject={sonarStepModel}
+            setDataObject={setSonarStepModel}
+            disabled={true}
           />
         </>
       );
@@ -420,92 +321,6 @@ function SonarStepConfiguration({
           setModel={setSonarStepModel}
         />
         {getDynamicFields()}
-        {jobType === "job" ? (
-            <></>
-          ) :
-          <>
-            {formData.service && formData.gitToolId && formData.repoId && (
-              <>
-              <Form.Group controlId="account" className="mt-2">
-                <Form.Label>Branch*</Form.Label>
-                {isBranchSearching ? (
-                  <div className="form-text text-muted mt-2 p-2">
-                    <FontAwesomeIcon
-                      icon={faSpinner}
-                      spin
-                      className="text-muted mr-1"
-                      fixedWidth
-                    />
-                    Loading branches from selected repository
-                  </div>
-                ) : (
-                  <>
-                    {branchList ? (
-                      <StandaloneSelectInput
-                        selectOptions={branchList}
-                        value={
-                          branchList[
-                            branchList.findIndex((x) => x.value === formData.branch)
-                            ]
-                        }
-                        valueField="value"
-                        textField="name"
-                        filter="contains"
-                        setDataFunction={handleBranchChange}
-                      />
-                    ) : (
-                      <FontAwesomeIcon
-                        icon={faSpinner}
-                        spin
-                        className="text-muted mr-1"
-                        fixedWidth
-                      />
-                    )}
-                  </>
-                )}
-                {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-              </Form.Group>
-                <Form.Group controlId="workspaceDeleteFlag">
-                  <Form.Check inline
-                              type="checkbox"
-                              label={"Delete workspace before building"}
-                              id={`workspaceDeleteFlag`}
-                              checked={formData.workspaceDeleteFlag}
-                              onChange={(e) =>
-                                setFormData({
-                                  ...formData,
-                                  workspaceDeleteFlag: e.target.checked
-                                })
-                              }
-                  />
-                  <Form.Text className="text-muted">Deletes the Jenkins workspace before building.</Form.Text>
-                </Form.Group>
-              </>
-            )}
-            <Form.Group controlId="path">
-              <Form.Label>Sonar Source Path</Form.Label>
-              <Form.Control
-                // maxLength="50"
-                as="textarea" rows={2}
-                placeholder=""
-                value={formData.sonarSourcePath || ""}
-                onChange={(e) => setFormData({ ...formData, sonarSourcePath: (e.target.value).replace(/\r?\n/g, ',') })}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="threshold">
-              <Form.Label>Success Threshold</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder=""
-                value={thresholdVal || ""}
-                onChange={(e) => setThresholdValue(e.target.value)}
-                disabled={true}
-              />
-            </Form.Group>
-          </>
-        }
-
         {jobType === "opsera-job" ? (
           <Button
             variant="primary"

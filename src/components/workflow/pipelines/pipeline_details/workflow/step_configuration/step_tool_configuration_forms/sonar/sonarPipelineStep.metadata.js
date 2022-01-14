@@ -69,6 +69,9 @@ const sonarPipelineStepMetadata = {
     {
       label: "Sonar Source Path",
       id: "sonarSourcePath",
+    },{
+      label: "Success Threshold",
+      id: "successThreshold",
     },
   ],
   newObjectFields: {
@@ -82,7 +85,6 @@ const sonarPipelineStepMetadata = {
     toolJobId: "",
     toolJobType: "",
     projectKey: "",
-
     accountUsername: "",
     projectId: "",
     defaultBranch: "",
@@ -106,8 +108,7 @@ const sonarPipelineStepMetadata = {
     jobDescription: "",
     opsera_job_type: "",
     gitBranch: "",
-
-    // agentLabels : "",
+    successThreshold: "",
   }
 };
 
