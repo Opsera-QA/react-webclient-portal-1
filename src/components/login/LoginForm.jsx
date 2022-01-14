@@ -148,10 +148,11 @@ const LoginForm = ({ authClient }) => {
       idps: idpValues,
       idpDisplay: "PRIMARY",
       idpDiscovery: {
-        requestContext: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
+        requestContext: window.location.href, //process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
       },
       features: {
         idpDiscovery: true,
+        rememberMe: false,
       },
       logoText: ldapOrgName + " Sign in",
       logo: '/img/logos/opsera_bird_infinity_171_126.png',
