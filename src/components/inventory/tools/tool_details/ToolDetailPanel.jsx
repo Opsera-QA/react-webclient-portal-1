@@ -19,6 +19,7 @@ import ToolStoragePanel from "components/inventory/tools/tool_details/ToolStorag
 import ToolDetailPanelTabContainer
   , {TOOL_DETAIL_PANEL_TABS} from "components/inventory/tools/tool_details/tab_container/ToolDetailPanelTabContainer";
 import ToolPathsPanel from "components/inventory/tools/tool_details/paths/ToolPathsPanel";
+import ToolOrganizationsPanel from "components/inventory/tools/tool_details/ToolOrganizationsPanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
@@ -150,6 +151,14 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case TOOL_DETAIL_PANEL_TABS.STORAGE:
         return (
           <ToolStoragePanel
+            toolData={toolData}
+            setToolData={setToolData}
+            loadData={loadData}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.ORGANIZATIONS:
+        return (
+          <ToolOrganizationsPanel
             toolData={toolData}
             setToolData={setToolData}
             loadData={loadData}

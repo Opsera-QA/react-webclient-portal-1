@@ -34,7 +34,6 @@ function TerraformCloudToolConfiguration({ toolData }) {
       setModel={setTerraformCloudConfigurationDto}
       persistRecord={saveTerraformCloudToolConfiguration}
       toolData={toolData}
-      // toolConnectionCheckName={"azure"}
     >
       <Row>
         <Col sm={12}>
