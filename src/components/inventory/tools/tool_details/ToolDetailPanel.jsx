@@ -19,7 +19,7 @@ import ToolRepositoriesPanel from "./ToolRepositoriesPanel";
 import ToolStoragePanel from "components/inventory/tools/tool_details/ToolStoragePanel";
 import ToolDetailPanelTabContainer
   from "components/inventory/tools/tool_details/tab_container/ToolDetailPanelTabContainer";
-
+import ToolServiceTypeMappingPanel from "components/inventory/tools/tool_details/ToolServiceTypeMappingPanel";
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
@@ -97,6 +97,8 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         return <ToolRepositoriesPanel toolData={toolData} setToolData={setToolData} loadData={loadData} isLoading={isLoading} />;
       case "storage":
         return <ToolStoragePanel toolData={toolData} setToolData={setToolData} loadData={loadData} />;
+      case "mapping":
+        return <ToolServiceTypeMappingPanel toolData={toolData} setToolData={setToolData} loadData={loadData} />;
       default:
         return null;
     }
