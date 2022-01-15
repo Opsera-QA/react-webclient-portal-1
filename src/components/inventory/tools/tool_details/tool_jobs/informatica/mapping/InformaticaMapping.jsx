@@ -55,7 +55,7 @@ function InformaticaMapping({ toolData, loadData, isLoading, toolActions }) {
       addAnotherOption={false}
       showRequiredFieldsMessage={false}
       lenient={true}
-      disable={toolMappingsDto?.checkCurrentValidity() !== true|| !toolMappingsDto?.getData("mapping").length > 0}
+      disable={toolMappingsDto?.checkCurrentValidity() !== true}
       setRecordDto={setToolMappingsDto}
     >
       <InformaticaMappingInput
