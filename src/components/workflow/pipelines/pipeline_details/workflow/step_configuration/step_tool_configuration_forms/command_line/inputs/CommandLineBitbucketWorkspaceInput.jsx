@@ -5,7 +5,6 @@ import BitbucketWorkspaceInput from "components/common/list_of_values_input/tool
 function CommandLineBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
   const setWorkspace = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
-    console.log(selectedOption);
     newDataObject.setData("workspace", selectedOption.key);
     newDataObject.setData("workspaceName", selectedOption.name);
     setDataObject({...newDataObject});
