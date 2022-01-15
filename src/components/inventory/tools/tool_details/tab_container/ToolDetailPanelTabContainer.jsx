@@ -88,11 +88,11 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         activeTab={activeTab}
         handleTabClick={handleTabClick}
       />
-      <ToolPathsTab
-        toolModel={toolModel}
-        activeTab={activeTab}
-        handleTabClick={handleTabClick}
-      />
+      {/*<ToolPathsTab*/}
+      {/*  toolModel={toolModel}*/}
+      {/*  activeTab={activeTab}*/}
+      {/*  handleTabClick={handleTabClick}*/}
+      {/*/>*/}
       <ToolStorageTab
         toolModel={toolModel}
         activeTab={activeTab}
