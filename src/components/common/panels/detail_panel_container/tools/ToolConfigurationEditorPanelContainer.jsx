@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
-import TestToolConnectionButton from "components/common/buttons/connection/TestToolConnectionButton";
+import TestToolConnectionButton from "components/common/buttons/connection/tool/TestToolConnectionButton";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import StrictSaveButton from "components/common/buttons/saving/StrictSaveButton";
@@ -12,7 +12,7 @@ function ToolConfigurationEditorPanelContainer({children, isLoading, persistReco
     if (toolConnectionCheckName != null && toolData != null) {
      return (
         <TestToolConnectionButton
-          toolDataDto={toolData}
+          toolModel={toolData}
           toolName={toolConnectionCheckName}
           disabled={model?.checkCurrentValidity() !== true || model?.isChanged()}
         />

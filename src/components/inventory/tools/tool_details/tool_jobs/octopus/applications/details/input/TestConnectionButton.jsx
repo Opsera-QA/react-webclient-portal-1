@@ -7,7 +7,7 @@ import {faExclamationTriangle} from "@fortawesome/pro-solid-svg-icons/faExclamat
 import {AuthContext} from "contexts/AuthContext";
 import OctopusStepActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
-import ToolRegisteryConnectionLogModal from "components/common/modal/ToolRegisteryConnectionLogModal";
+import ToolRegistryConnectionLogOverlay from "components/common/buttons/connection/tool/ToolRegistryConnectionLogOverlay";
 import { isObject } from "@okta/okta-auth-js";
 import OctopusFeedPackageIdInputModal from "./OctopusFeedPackageIdInputModal";
 import Model from "core/data_model/model";
@@ -131,7 +131,7 @@ function TestConnectionButton({ toolDataDto, disable }) {
   const getConnectionModal = () => {    
     if(showConnectionLog){
       return(
-        <ToolRegisteryConnectionLogModal
+        <ToolRegistryConnectionLogOverlay
           isLoading={false}
           handleClose={() => {
             setShowConnectionLog(false);
