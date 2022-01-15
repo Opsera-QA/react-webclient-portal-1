@@ -226,6 +226,11 @@ toolsActions.saveToolConfigurationV2 = async (toolData, configurationItem, getAc
   return await toolsActions.updateToolConfigurationV2(newToolData, getAccessToken, cancelTokenSource);
 };
 
+toolsActions.saveToolActions = async (toolData, configurationItem, getAccessToken, cancelTokenSource) => {
+  let newToolData = toolData.getPersistData();
+  newToolData["actions"] = configurationItem.actions;
+  return await toolsActions.updateToolConfiguration(newToolData, getAccessToken, cancelTokenSource);
+};
 
 toolsActions.getToolCounts = async (getAccessToken) => {
   const apiUrl = `/reports/tools/counts`;

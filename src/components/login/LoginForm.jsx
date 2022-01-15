@@ -129,7 +129,7 @@ const LoginForm = ({ authClient }) => {
     let idpValues = [];
     if (federatedIdpIdentifier && federatedIdpIdentifier !== "0") {
       idpValues = [
-        { text: ldapOrgName, id: federatedIdpIdentifier },//IDP of LDAP object
+        { text: ldapOrgName + " SSO", id: federatedIdpIdentifier },//IDP of LDAP object
         //{ text: "Opsera DEV DEMO", id: "0oa10wlxrgdHnKvOJ0h8" }, //IDP of our PROD Okta Federated for use via DEV/LOCALHOST for developerment
         //{ text: "Opsera Inc", id: "0oa44bjfqlK7gTwnz4x7" }, //IDP of our DEV Okta Federated for use via PROD for Smoke Testing
         //{ type: "GOOGLE", id: "0oa1njfc0lFlSp0mM4x7" }, //IDP of our GSuite as opposed to pure google
@@ -148,10 +148,11 @@ const LoginForm = ({ authClient }) => {
       idps: idpValues,
       idpDisplay: "PRIMARY",
       idpDiscovery: {
-        requestContext: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
+        requestContext: window.location.href, //process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
       },
       features: {
         idpDiscovery: true,
+        rememberMe: false,
       },
       logoText: ldapOrgName + " Sign in",
       logo: '/img/logos/opsera_bird_infinity_171_126.png',
@@ -159,8 +160,9 @@ const LoginForm = ({ authClient }) => {
       username: lookupAccountEmail,
       i18n: {
         en: {
-          'primaryauth.title': ldapOrgName + " Sign in",
+          'primaryauth.title': ldapOrgName + " Account Activation",
           'primaryauth.username.placeholder': "Email Address",
+          'primaryauth.username.tooltip': "The login form below follows your organizations defined sign in flow once your account is activated."
         }
       },
     });

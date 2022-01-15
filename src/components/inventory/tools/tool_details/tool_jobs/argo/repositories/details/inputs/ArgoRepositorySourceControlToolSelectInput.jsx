@@ -17,7 +17,7 @@ function ArgoRepositorySourceControlToolSelectInput({model, setModel, disabled})
 
   return (
      <RoleRestrictedToolByIdentifierInputBase
-       toolType={model?.getData("service")}
+       toolIdentifier={model?.getData("service")}
        toolFriendlyName={"Source Control Tool"}
        fieldName={"gitToolId"}
        configurationRequired={true}

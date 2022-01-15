@@ -7,6 +7,7 @@ const InformaticaStepFormMetadata = {
       isRequired: true,
       maxLength: 24,
       regexDefinitionName: "mongoId",
+      formText:" "
     }, 
     {
       label: "Type of Execution",
@@ -23,6 +24,7 @@ const InformaticaStepFormMetadata = {
       },
       maxLength: 24,
       regexDefinitionName: "mongoId",
+      formText:" "
     },    
     {
       label: "SCM Type",
@@ -41,6 +43,7 @@ const InformaticaStepFormMetadata = {
       },
       maxLength: 24,
       regexDefinitionName: "mongoId",
+      formText:" "
     }, 
     {
       label: "Repository",
@@ -50,12 +53,14 @@ const InformaticaStepFormMetadata = {
       },
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
+      formText:" "
     },
     {
       label: "Workspace/Project",
       id: "workspace",
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
+      formText:" "
     },
     {
       label: "Branch",
@@ -65,6 +70,7 @@ const InformaticaStepFormMetadata = {
       },
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
+      formText:" "
     },
     {
       label: "Include Dependencies",
