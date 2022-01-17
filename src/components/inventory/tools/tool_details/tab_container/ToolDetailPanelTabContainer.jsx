@@ -16,6 +16,7 @@ import ToolStorageTab from "components/inventory/tools/tool_details/tab_containe
 import ToolUsageTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolUsageTab";
 import ToolServiceTypeMappingTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolServiceTypeMappingTab";
 import ToolPathsTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolPathsTab";
+import ToolClustersTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolClustersTab";
 
 export const TOOL_DETAIL_PANEL_TABS = {
   ACCOUNTS: "accounts",
@@ -33,6 +34,7 @@ export const TOOL_DETAIL_PANEL_TABS = {
   SUMMARY: "summary",
   USAGE: "usage",
   VAULT: "vault",
+  CLUSTERS: "clusters",
 };
 
 
@@ -102,6 +104,11 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         activeTab={activeTab}
       />
       <ToolServiceTypeMappingTab
+        toolModel={toolModel}
+        activeTab={activeTab}      
+        handleTabClick={handleTabClick}
+      />
+      <ToolClustersTab 
         toolModel={toolModel}
         activeTab={activeTab}      
         handleTabClick={handleTabClick}
