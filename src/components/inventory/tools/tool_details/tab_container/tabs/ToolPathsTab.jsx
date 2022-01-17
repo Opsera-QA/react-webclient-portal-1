@@ -7,6 +7,7 @@ import {TOOL_DETAIL_PANEL_TABS} from "components/inventory/tools/tool_details/ta
 const PATHS_TAB_SUPPORTED_TOOL_IDENTIFIERS = [
   "gitlab",
   "github",
+  "bitbucket",
 ];
 
 function ToolPathsTab({ toolModel, handleTabClick, activeTab }) {

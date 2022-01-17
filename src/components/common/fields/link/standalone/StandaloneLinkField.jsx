@@ -3,8 +3,17 @@ import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import CopyToClipboardIcon from "components/common/icons/CopyToClipboardIcon";
 import {useHistory} from "react-router-dom";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
-function StandaloneLinkField({link, label, className, openInNewWindow, showClipboardButton}) {
+function StandaloneLinkField(
+  {
+    link,
+    label,
+    className,
+    openInNewWindow,
+    showClipboardButton,
+    formText,
+  }) {
   let history = useHistory();
 
   const openLink = () => {
@@ -35,6 +44,7 @@ function StandaloneLinkField({link, label, className, openInNewWindow, showClipb
         {getLink()}
         {getClipboardButton()}
       </div>
+      <InfoText customMessage={formText} />
     </FieldContainer>
   );
 }
@@ -42,6 +52,7 @@ function StandaloneLinkField({link, label, className, openInNewWindow, showClipb
 StandaloneLinkField.propTypes = {
   link: PropTypes.string,
   label: PropTypes.string,
+  formText: PropTypes.string,
   className: PropTypes.string,
   showClipboardButton: PropTypes.bool,
   openInNewWindow: PropTypes.bool
