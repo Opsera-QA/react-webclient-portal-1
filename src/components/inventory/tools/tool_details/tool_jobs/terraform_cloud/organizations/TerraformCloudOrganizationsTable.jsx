@@ -33,7 +33,7 @@ function TerraformCloudOrganizationsTable({
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "storageAccountName")),
+      getTableTextColumn(getField(fields, "organizationName")),
     ],
     []
   );
@@ -65,7 +65,7 @@ function TerraformCloudOrganizationsTable({
       metaData={terraformCloudOrganizationsMetadata}
       titleIcon={faBrowser}
       title={"Terraform Cloud Organizations"}
-      type={"terraformCloud"}
+      type={"Terraform Cloud Organization"}
     />
   );
 }

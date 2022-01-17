@@ -38,8 +38,7 @@ function TerraformCloudOrganizationsEditorPanel({ terraformCloudOrganizationsMod
   };
 
   const deleteAzureStorageCredentials = async () => {
-    return await terraformCloudOrganizationsActions.deleteTerraformCloudOrganization(getAccessToken, cancelTokenSource, toolId, currentTerraformCloudOrganizationName
-        );
+    return await terraformCloudOrganizationsActions.deleteTerraformCloudOrganization(getAccessToken, cancelTokenSource, toolId, currentTerraformCloudOrganizationName);
   };
 
   const getExtraButtons = () => {
