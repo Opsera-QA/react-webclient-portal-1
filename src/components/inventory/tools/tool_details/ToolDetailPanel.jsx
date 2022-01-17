@@ -19,6 +19,7 @@ import ToolStoragePanel from "components/inventory/tools/tool_details/ToolStorag
 import ToolDetailPanelTabContainer
   , {TOOL_DETAIL_PANEL_TABS} from "components/inventory/tools/tool_details/tab_container/ToolDetailPanelTabContainer";
 import ToolPathsPanel from "components/inventory/tools/tool_details/paths/ToolPathsPanel";
+import ToolServiceTypeMappingPanel from "components/inventory/tools/tool_details/ToolServiceTypeMappingPanel";
 import ToolClustersPanel from "components/inventory/tools/tool_details/clusters/ToolClustersPanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
@@ -176,6 +177,14 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
           <ToolVaultPanel
             toolData={toolData}
             setToolData={setToolData}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.MAPPING:
+        return (
+          <ToolServiceTypeMappingPanel 
+            toolData={toolData}
+            setToolData={setToolData}
+            loadData={loadData}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.CLUSTERS:

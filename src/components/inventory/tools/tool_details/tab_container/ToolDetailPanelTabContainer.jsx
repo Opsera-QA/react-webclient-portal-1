@@ -34,6 +34,7 @@ export const TOOL_DETAIL_PANEL_TABS = {
   SUMMARY: "summary",
   USAGE: "usage",
   VAULT: "vault",
+  MAPPING: "mapping",
   CLUSTERS: "clusters",
 };
 
@@ -90,6 +91,11 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         handleTabClick={handleTabClick}
       />
       <ToolPathsTab
+        toolModel={toolModel}
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+      />
+      <ToolStorageTab
         toolModel={toolModel}
         activeTab={activeTab}
         handleTabClick={handleTabClick}
