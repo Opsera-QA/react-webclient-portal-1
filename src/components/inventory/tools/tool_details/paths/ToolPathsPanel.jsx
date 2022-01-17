@@ -7,6 +7,7 @@ function ToolPathsPanel({toolModel}) {
     switch (toolModel?.getData("tool_identifier")) {
       case "gitlab":
       case "github":
+      case "bitbucket":
         return (
           <GitToolPathsPanel
             toolModel={toolModel}
