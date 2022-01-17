@@ -33,6 +33,7 @@ export const TOOL_DETAIL_PANEL_TABS = {
   SUMMARY: "summary",
   USAGE: "usage",
   VAULT: "vault",
+  MAPPING: "mapping",
 };
 
 
