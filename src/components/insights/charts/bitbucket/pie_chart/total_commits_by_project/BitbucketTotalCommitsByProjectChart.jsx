@@ -40,7 +40,7 @@ function BitbucketTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfigura
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      let response = await chartsActions.parseConfigurationAndGetChartMetrics(
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "bitbucketTotalCommitsChart",
@@ -48,7 +48,6 @@ function BitbucketTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfigura
         dashboardTags
       );
       let dataObject = response?.data?.data[0]?.bitbucketTotalCommitsChart?.data;
-
       assignStandardColors(dataObject);
       shortenPieChartLegend(dataObject);
 
