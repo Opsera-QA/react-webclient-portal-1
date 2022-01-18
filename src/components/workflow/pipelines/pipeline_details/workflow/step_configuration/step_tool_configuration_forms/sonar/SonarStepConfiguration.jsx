@@ -27,6 +27,7 @@ import SonarStepBranchSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepBranchSelectInput";
 import SonarStepSonarSourcePathTextAreaInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepSonarSourcePathTextAreaInput";
+import PipelineStepSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineStepSelectInput";
 
 function SonarStepConfiguration({
   stepTool,
@@ -67,7 +68,7 @@ function SonarStepConfiguration({
 
   const loadData = async () => {
     setIsLoading(true);
-    let { threshold } = stepTool;
+    const  threshold = stepTool?.threshold;
     const newSonarStepModel = modelHelpers.getPipelineStepConfigurationModel(stepTool, sonarPipelineStepMetadata);
 
     setSonarStepModel(newSonarStepModel);
@@ -115,50 +116,39 @@ function SonarStepConfiguration({
     return await parentCallback(item);
   };
 
-  const validateRequiredFields = () => {
-    // let {
-    //   toolConfigId,
-    //   jenkinsUrl,
-    //   jUserId,
-    //   jAuthToken,
-    //   jobName,
-    //   buildType,
-    //   dockerName,
-    //   dockerTagName,
-    // } = formData;
+  const getBranchScanToggleOptionDynamicFields = () => {
+    if (sonarStepModel?.getData("isScanBranch") === false) {
+      return (
+        <PipelineStepSelectInput
+          model={sonarStepModel}
+          setModel={setSonarStepModel}
+          fieldName={"stepIdXml"}
+          plan={plan}
+          stepId={stepId}
+        />
+      );
+    }
 
-    // if (jobType === "job") {
-    //   if (jobName.length === 0) {
-    //     // let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
-    //     // setToast(toast);
-    //     // setShowToast(true);
-    //     return false;
-    //   } else {
-    //     return true;
-    //   }
-    // } else {
-    //   if (
-    //     toolConfigId.length === 0 ||
-    //     jenkinsUrl.length === 0 ||
-    //     jUserId.length === 0 ||
-    //     jAuthToken.length === 0 ||
-    //     // jobName.length === 0 ||
-    //     (buildType === "docker"
-    //       ? dockerName.length === 0 || dockerTagName.length === 0
-    //       : false)
-    //   ) {
-    //     // let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
-    //     // setToast(toast);
-    //     // setShowToast(true);
-    //     return false;
-    //   } else {
-    //     return true;
-    //   }
-    // }
+    return (
+      <>
+        <SonarStepBitbucketWorkspaceSelectInput
+          model={sonarStepModel}
+          setModel={setSonarStepModel}
+        />
+        <SonarStepRepositorySelectInput
+          model={sonarStepModel}
+          setModel={setSonarStepModel}
+        />
+        <SonarStepBranchSelectInput
+          model={sonarStepModel}
+          setModel={setSonarStepModel}
+        />
+      </>
+    );
   };
 
   const getDynamicFields = () => {
-    if (sonarStepModel?.getData("opsera_job_type") === SONAR_JOB_TYPES.CUSTOM_JOB) {
+    if (sonarStepModel?.getData("job_type") === SONAR_JOB_TYPES.CUSTOM_JOB) {
       return (
         <TextInputBase
           fieldName={"jobName"}
@@ -168,13 +158,17 @@ function SonarStepConfiguration({
       );
     }
 
-    if (sonarStepModel?.getData("opsera_job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB) {
+    if (sonarStepModel?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB) {
       return (
         <>
           <SonarStepJenkinsToolJobSelectInput
             model={sonarStepModel}
             setModel={setSonarStepModel}
             jenkinsToolId={sonarStepModel?.getData("toolConfigId")}
+          />
+          <SonarStepJenkinsToolAccountSelectInput
+            model={sonarStepModel}
+            setModel={setSonarStepModel}
           />
           <SonarStepSonarToolSelectInput
             model={sonarStepModel}
@@ -185,30 +179,20 @@ function SonarStepConfiguration({
             dataObject={sonarStepModel}
             setDataObject={setSonarStepModel}
           />
-          <SonarStepJenkinsToolAccountSelectInput
-            model={sonarStepModel}
-            setModel={setSonarStepModel}
-          />
-          <SonarStepBitbucketWorkspaceSelectInput
-            model={sonarStepModel}
-            setModel={setSonarStepModel}
-          />
-          <SonarStepRepositorySelectInput
-            model={sonarStepModel}
-            setModel={setSonarStepModel}
-          />
-          <SonarStepBranchSelectInput
+          <SonarStepSonarSourcePathTextAreaInput
             model={sonarStepModel}
             setModel={setSonarStepModel}
           />
           <BooleanToggleInput
-            fieldName={"workspaceDeleteFlag"}
+            fieldName={"isScanBranch"}
             dataObject={sonarStepModel}
             setDataObject={setSonarStepModel}
           />
-          <SonarStepSonarSourcePathTextAreaInput
-            model={sonarStepModel}
-            setModel={setSonarStepModel}
+          {getBranchScanToggleOptionDynamicFields()}
+          <BooleanToggleInput
+            fieldName={"workspaceDeleteFlag"}
+            dataObject={sonarStepModel}
+            setDataObject={setSonarStepModel}
           />
           <TextInputBase
             fieldName={"successThreshold"}
@@ -237,6 +221,7 @@ function SonarStepConfiguration({
       persistRecord={sonarStepModel.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB ? handleCreateAndSave : callbackFunction}
       isLoading={isLoading}
     >
+      <div className={"mb-5"}>
         <SonarStepJenkinsToolSelectInput
           model={sonarStepModel}
           setModel={setSonarStepModel}
@@ -246,6 +231,7 @@ function SonarStepConfiguration({
           setModel={setSonarStepModel}
         />
         {getDynamicFields()}
+      </div>
     </PipelineStepEditorPanelContainer>
   );
 }

@@ -23,8 +23,25 @@ function SonarStepJobTypeSelectInput({ model, setModel }) {
     newModel.setDefaultValue("jobDescription");
     newModel.setDefaultValue("toolJobId");
     newModel.setDefaultValue("toolJobType");
-    const jobType = selectedOption?.value === SONAR_JOB_TYPES.CUSTOM_JOB ? "CODE SCAN" : "";
+    newModel.setDefaultValue("gitToolId");
+    newModel.setDefaultValue("repoId");
+    newModel.setDefaultValue("gitUrl");
+    newModel.setDefaultValue("sshUrl");
+    newModel.setDefaultValue("service");
+    newModel.setDefaultValue("gitCredential");
+    newModel.setDefaultValue("gitUserName");
+    newModel.setDefaultValue("repository");
+    newModel.setDefaultValue("workspace");
+    newModel.setDefaultValue("workspaceName");
+    newModel.setDefaultValue("branch");
+    newModel.setDefaultValue("accountUsername");
+    newModel.setDefaultValue("projectId");
+    newModel.setDefaultValue("defaultBranch");
+
+    const jobType = selectedOption?.value === SONAR_JOB_TYPES.CUSTOM_JOB ? "CODE SCAN" : "job";
+
     newModel.setData("jobType", jobType);
+
     setModel({...newModel});
   };
   
