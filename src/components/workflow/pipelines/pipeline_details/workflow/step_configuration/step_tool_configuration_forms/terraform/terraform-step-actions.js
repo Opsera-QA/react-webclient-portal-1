@@ -49,4 +49,20 @@ terraformStepActions.getAzureResourceGroups = async (getAccessToken, cancelToken
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+terraformStepActions.getAzureStorageAccounts = async (getAccessToken, cancelTokenSource, config, applicationData, clusterName) => {
+    const apiUrl = `tools/azure/management/storageAccounts`;
+    const cfg = config?.configuration;
+    const owner = config?.owner;
+    const postBody = {
+      "owner": owner,
+      "clientId": applicationData?.clientId?.vaultKey,
+      "clientSecret": applicationData?.clientSecret?.vaultKey,
+      "tenantId": cfg?.azureTenantId,
+      "subscriptionId": cfg?.azureSubscriptionId,
+      "resource": applicationData?.resource,
+    };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default terraformStepActions;

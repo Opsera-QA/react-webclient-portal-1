@@ -5,6 +5,7 @@ import AksServiceDeployStepApplicationSelectInput from "../inputs/azure/AzureApp
 import AksServiceDeployStepClusterSelectInput from "../inputs/azure/AzureClusterSelectInput";
 import AksResourceGroupSelectInput from "../inputs/azure/AzureResourceGroupSelect";
 import AzureToolStorageAccountSelectInput from "../../../../../../../../common/list_of_values_input/tools/azure/accounts/storage/AzureToolStorageAccountSelectInput";
+import AzureStorageAccountInput from "../inputs/azure/AzureStorageAccountSelectInput";
 
 function BackendStateAzure({ model, setModel }) {
   if (!model?.getData("backendState") || model?.getData("backendState") !== "AZUREM") {
@@ -15,11 +16,11 @@ function BackendStateAzure({ model, setModel }) {
     <>
       <AksServiceDeployStepAzureToolSelectInput model={model} setModel={setModel} />
       <AksServiceDeployStepApplicationSelectInput model={model} setModel={setModel} />
-      <AzureToolStorageAccountSelectInput
-        model={model}
-        setModel={setModel}
-        azureToolId={model?.getData("azureToolConfigId")}
-        fieldName={"storageName"}
+      <AzureStorageAccountInput
+        dataObject={model}
+        setDataObject={setModel}
+        azureToolConfigId={model?.getData("azureToolConfigId")}
+        applicationId={model?.getData("azureCredentialId")}
       />
       <AksServiceDeployStepClusterSelectInput
         dataObject={model}
