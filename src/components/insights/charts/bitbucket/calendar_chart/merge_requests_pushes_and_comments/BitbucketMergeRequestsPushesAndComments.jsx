@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveCalendar } from "@nivo/calendar";
 import config from "./bitbucketMergeRequestsPushesAndCommentsConfig";
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import ModalLogs from "components/common/modal/modalLogs";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
@@ -80,7 +81,7 @@ function BitbucketMergeRequestsPushesAndComments({
         <ResponsiveCalendar
           data={metrics}
           {...defaultConfig("", "", false, false, "", "", true)}
-          {...config(gradationalColors, new Date())}
+          {...config(gradationalColors, new Date(), METRIC_THEME_CHART_PALETTE_COLORS)}
           onClick={() => setShowModal(true)}
           tooltip={({ day, value, color }) => <ChartTooltip 
                                         titles = {[day]}
