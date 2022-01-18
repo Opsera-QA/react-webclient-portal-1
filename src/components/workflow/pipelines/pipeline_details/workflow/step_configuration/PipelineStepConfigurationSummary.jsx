@@ -171,6 +171,8 @@ import InformaticaPipelineStepConfigurationSummaryPanel from "./step_tool_config
 import InformaticaStepFormMetadata from "./step_tool_configuration_forms/informatica/informatica-stepForm-metadata";
 import PmdScanPipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/pmd_scan/PmdScanPipelineStepConfigurationSummaryPanel";
 import pmdScanStepFormMetadata from "./step_tool_configuration_forms/pmd_scan/pmdScan-stepForm-metadata";
+import SentinelStepConfigurationSummaryPanel from "./step_tool_configuration_forms/sentenial/SentinelStepConfigurationSummaryPanel";
+import SentenialStepFormMetadata from "./step_tool_configuration_forms/sentenial/sentinel-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -530,6 +532,13 @@ function PipelineStepConfigurationSummary({
           <PmdScanPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             pmdScanPipelineDataObject={getModelWrappedObject(pmdScanStepFormMetadata)}
+          />
+        );
+      case "sentinel":
+        return (
+          <SentinelStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            sentenialStepFormMetadata={getModelWrappedObject(SentenialStepFormMetadata)}
           />
         );
       default:
