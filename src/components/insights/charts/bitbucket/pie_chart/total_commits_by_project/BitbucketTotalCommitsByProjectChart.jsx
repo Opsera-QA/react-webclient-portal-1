@@ -7,6 +7,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import { defaultConfig, getColorByData, assignStandardColors,
          shortenPieChartLegend } from '../../../charts-views';
 function BitbucketTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -39,15 +40,31 @@ function BitbucketTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfigura
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+      let response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "bitbucketTotalCommitsChart",
         kpiConfiguration,
         dashboardTags
       );
-
-      let dataObject = response?.data?.data[0]?.bitbucketTotalCommitsChart?.data;
+      //response = {"status":200,"status_text":"ES Pipeline Summary Query Results","message":"ES Query Response from Living Connection","data":[{"bitbucketTotalCommitsChart":{"tool":"bitbucket","data":[{"_id":"bitbucket-webhook","commits":91,"id":"bitbucket-webhook","label":"bitbucket-webhook","value":91},{"_id":"opsera","commits":38,"id":"opsera","label":"opsera","value":38}],"length":2,"status":200,"status_text":"OK"}}]};
+      //let dataObject = response?.data?.data[0]?.bitbucketTotalCommitsChart?.data;
+      let dataObject = [
+        {
+          "_id": "bitbucket-webhook",
+          "commits": 91,
+          "id": "bitbucket-webhook",
+          "label": "bitbucket-webhook",
+          "value": 91
+        },
+        {
+          "_id": "opsera",
+          "commits": 38,
+          "id": "opsera",
+          "label": "opsera",
+          "value": 38
+        }
+      ];
       assignStandardColors(dataObject);
       shortenPieChartLegend(dataObject);
 
@@ -73,7 +90,7 @@ function BitbucketTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfigura
         <ResponsivePie
           data={metrics}
           {...defaultConfig()}
-          {...config(getColorByData)}
+          {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
           onClick={() => setShowModal(true)}
         />
       </div>
