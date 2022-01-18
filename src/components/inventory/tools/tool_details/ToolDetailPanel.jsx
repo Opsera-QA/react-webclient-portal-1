@@ -157,6 +157,14 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
             loadData={loadData}
           />
         );
+      case TOOL_DETAIL_PANEL_TABS.ORGANIZATIONS:
+        return (
+          <ToolOrganizationsPanel
+            toolData={toolData}
+            setToolData={setToolData}
+            loadData={loadData}
+          />
+        );
       case TOOL_DETAIL_PANEL_TABS.SUMMARY:
         return (
           <ToolSummaryPanel

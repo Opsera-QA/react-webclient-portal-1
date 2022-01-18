@@ -26,6 +26,7 @@ export const TOOL_DETAIL_PANEL_TABS = {
   CONNECTION: "connection",
   JOBS: "jobs",
   LOGS: "logs",
+  ORGANIZATIONS: "organizations",
   PATHS: "paths",
   PROJECTS: "projects",
   REPOSITORIES: "repositories",
