@@ -47,24 +47,8 @@ function BitbucketTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfigura
         kpiConfiguration,
         dashboardTags
       );
-      //response = {"status":200,"status_text":"ES Pipeline Summary Query Results","message":"ES Query Response from Living Connection","data":[{"bitbucketTotalCommitsChart":{"tool":"bitbucket","data":[{"_id":"bitbucket-webhook","commits":91,"id":"bitbucket-webhook","label":"bitbucket-webhook","value":91},{"_id":"opsera","commits":38,"id":"opsera","label":"opsera","value":38}],"length":2,"status":200,"status_text":"OK"}}]};
-      //let dataObject = response?.data?.data[0]?.bitbucketTotalCommitsChart?.data;
-      let dataObject = [
-        {
-          "_id": "bitbucket-webhook",
-          "commits": 91,
-          "id": "bitbucket-webhook",
-          "label": "bitbucket-webhook",
-          "value": 91
-        },
-        {
-          "_id": "opsera",
-          "commits": 38,
-          "id": "opsera",
-          "label": "opsera",
-          "value": 38
-        }
-      ];
+      let dataObject = response?.data?.data[0]?.bitbucketTotalCommitsChart?.data;
+
       assignStandardColors(dataObject);
       shortenPieChartLegend(dataObject);
 
