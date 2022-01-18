@@ -114,7 +114,7 @@ const sonarPipelineStepMetadata = {
     {
       label: "Scan Entire Branch",
       id: "isScanBranch",
-      formText: "If entire branch is not scanned, only selected artifact components will be scanned based on the build step selected"
+      formText: "If the entire branch is not scanned, only selected artifact components will be scanned based on the build step selected"
     },
     {
       label: "Build Step",
