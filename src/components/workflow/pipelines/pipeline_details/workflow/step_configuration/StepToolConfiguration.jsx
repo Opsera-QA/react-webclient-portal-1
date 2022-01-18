@@ -468,8 +468,6 @@ function StepToolConfiguration({
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
             createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
           />
         );

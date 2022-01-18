@@ -170,6 +170,12 @@ function SonarStepConfiguration({
             model={sonarStepModel}
             setModel={setSonarStepModel}
           />
+          <BooleanToggleInput
+            fieldName={"isScanBranch"}
+            dataObject={sonarStepModel}
+            setDataObject={setSonarStepModel}
+          />
+          {getBranchScanToggleOptionDynamicFields()}
           <SonarStepSonarToolSelectInput
             model={sonarStepModel}
             setModel={setSonarStepModel}
@@ -183,12 +189,6 @@ function SonarStepConfiguration({
             model={sonarStepModel}
             setModel={setSonarStepModel}
           />
-          <BooleanToggleInput
-            fieldName={"isScanBranch"}
-            dataObject={sonarStepModel}
-            setDataObject={setSonarStepModel}
-          />
-          {getBranchScanToggleOptionDynamicFields()}
           <BooleanToggleInput
             fieldName={"workspaceDeleteFlag"}
             dataObject={sonarStepModel}
