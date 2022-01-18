@@ -21,6 +21,7 @@ import ToolDetailPanelTabContainer
 import ToolPathsPanel from "components/inventory/tools/tool_details/paths/ToolPathsPanel";
 import ToolServiceTypeMappingPanel from "components/inventory/tools/tool_details/ToolServiceTypeMappingPanel";
 import ToolClustersPanel from "components/inventory/tools/tool_details/clusters/ToolClustersPanel";
+import ToolOrganizationsPanel from "components/inventory/tools/tool_details/ToolOrganizationsPanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
