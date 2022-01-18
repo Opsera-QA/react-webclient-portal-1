@@ -70,6 +70,8 @@ import FlywayDatabaseStepConfiguration
 import InformaticaStepConfiguration from "./step_tool_configuration_forms/informatica/InformaticaStepConfiguration";
 import PmdScanStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/PmdScanStepConfiguration";
+import AzureZipDeploymentStepConfiguration
+  from "./step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfiguration";
 function StepToolConfiguration({
   pipeline,
   editItem,
@@ -1076,6 +1078,21 @@ function StepToolConfiguration({
           closeEditorPanel={closeEditorPanel}
         />
       );
+      case "azure-zip-deployment":
+        return (
+          <AzureZipDeploymentStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
     }
   };
 

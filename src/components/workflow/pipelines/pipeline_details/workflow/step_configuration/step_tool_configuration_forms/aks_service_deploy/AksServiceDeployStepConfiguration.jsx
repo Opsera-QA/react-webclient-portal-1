@@ -95,6 +95,8 @@ function AksServiceDeployStepConfiguration({ stepTool, closeEditorPanel, parentC
           setDataObject={setAksModel}
           azureToolConfigId={aksModel?.getData("azureToolConfigId")}
           azureApplication={aksModel?.getData("azureCredentialId")}
+          clusterName={aksModel?.getData("aksClusterName")}
+          disabled={aksModel?.getData("aksClusterName")?.length === 0}
         />
       )
       }

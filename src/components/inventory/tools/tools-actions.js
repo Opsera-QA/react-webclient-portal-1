@@ -3,9 +3,9 @@ import pipelineActions from "components/workflow/pipeline-actions";
 
 const toolsActions = {};
 
-toolsActions.checkToolConnectivity = async (toolId, toolName, getAccessToken) => {
-  const apiUrl = `/tools/${toolId}/check-connectivity?name=${toolName}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+toolsActions.checkToolConnectivityV2 = async (getAccessToken, cancelTokenSource, toolId, toolName) => {
+  const apiUrl = `/tools/${toolId}/check-connectivity/${toolName}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 toolsActions.deleteToolV2 = async (getAccessToken, cancelToken, toolModel) => {
@@ -226,6 +226,11 @@ toolsActions.saveToolConfigurationV2 = async (toolData, configurationItem, getAc
   return await toolsActions.updateToolConfigurationV2(newToolData, getAccessToken, cancelTokenSource);
 };
 
+toolsActions.saveToolActions = async (toolData, configurationItem, getAccessToken, cancelTokenSource) => {
+  let newToolData = toolData.getPersistData();
+  newToolData["actions"] = configurationItem.actions;
+  return await toolsActions.updateToolConfiguration(newToolData, getAccessToken, cancelTokenSource);
+};
 
 toolsActions.getToolCounts = async (getAccessToken) => {
   const apiUrl = `/reports/tools/counts`;

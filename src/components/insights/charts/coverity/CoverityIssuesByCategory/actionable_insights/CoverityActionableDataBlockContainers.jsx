@@ -8,10 +8,13 @@ import {
   faExclamationTriangle,
   faFolders,
   faLockOpenAlt,
-  faShieldCheck, faSirenOn, faExclamation, faLockAlt, faLock,
+  faShieldCheck,
+  faSirenOn,
+  faExclamation,
+  faLock,
 } from "@fortawesome/pro-light-svg-icons";
 
-function CoverityActionableDataBlockContainers({ data , level }) {
+function CoverityActionableDataBlockContainers({ data, level }) {
   let className = `p-2 dark-gray-text-primary`;
 
   const getColor = (metric) => {
@@ -44,20 +47,21 @@ function CoverityActionableDataBlockContainers({ data , level }) {
     <div>
       <Row className="justify-content-sm-center px-2">
         <Col xl={2} lg={2} sm={4} className={"my-3"}>
-          <DataBlockBoxContainer showBorder={true} >
+          <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={`p-2 ${getColor(data?.totalIssues)}`}
-              score={data.totalIssues}
+              score={data?.totalIssues}
               icon={getIcon(level)}
-              subtitle={"Total Issues"} />
+              subtitle={"Total Issues"}
+            />
           </DataBlockBoxContainer>
         </Col>
         <Col xl={2} lg={2} sm={4} className={"my-3"}>
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
-              score={data.totalProjects}
-              icon = {faFolders}
+              score={data?.totalProjects}
+              icon={faFolders}
               subtitle={"Total Projects"}
             />
           </DataBlockBoxContainer>
@@ -66,8 +70,8 @@ function CoverityActionableDataBlockContainers({ data , level }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
-              score={data.totalScans}
-              icon = {faCheckCircle}
+              score={data?.totalScans}
+              icon={faCheckCircle}
               subtitle={"Total Scans"}
             />
           </DataBlockBoxContainer>
@@ -76,18 +80,28 @@ function CoverityActionableDataBlockContainers({ data , level }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={`p-2 ${getColor(data?.totalQuality)}`}
-              score={data.totalQuality}
-              icon = {faShieldCheck}
-              subtitle={"Total Quality Issues"} />
+              score={data?.totalQuality}
+              icon={faShieldCheck}
+              subtitle={"Total Quality Issues"}
+            />
           </DataBlockBoxContainer>
         </Col>
         <Col xl={2} lg={2} sm={4} className={"my-3"}>
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={`p-2 ${getColor(data?.totalSecurity)}`}
-              score={data.totalSecurity}
-              icon = {securityIcon(data?.totalSecurity)}
+              score={data?.totalSecurity}
+              icon={securityIcon(data?.totalSecurity)}
               subtitle={"Total Security Issues"}
+            />
+          </DataBlockBoxContainer>
+        </Col>
+        <Col xl={2} lg={2} sm={4} className={"my-3"}>
+          <DataBlockBoxContainer showBorder={true}>
+            <TwoLineScoreDataBlock
+              className={`p-2 ${getColor(data?.totalVarious)}`}
+              score={data?.totalVarious}
+              subtitle={"Total Various Issues"}
             />
           </DataBlockBoxContainer>
         </Col>

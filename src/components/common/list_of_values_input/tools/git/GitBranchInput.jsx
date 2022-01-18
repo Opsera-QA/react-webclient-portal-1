@@ -6,7 +6,9 @@ import {AuthContext} from "contexts/AuthContext";
 import GitActionsHelper
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
 import axios from "axios";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
+// TODO: This needs to be reworked. We should not be using the /tools/properties routes
 function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -25,7 +27,7 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
     isMounted.current = true;
 
     setBranches([]);
-    if (service && service !== "" && gitToolId  && gitToolId !== "" && repoId && repoId !== "") {
+    if (hasStringValue(service) === true && hasStringValue(gitToolId) === true && hasStringValue(repoId) === true) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -63,7 +65,7 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
   };
 
   const getNoBranchesMessage = () => {
-    if (!isLoading && (branches == null || branches.length === 0) && service !== "" && gitToolId !== "" && repoId !== "") {
+    if (!isLoading && (!Array.isArray(branches) || branches.length === 0) && hasStringValue(service) === true && hasStringValue(gitToolId) === true && hasStringValue(repoId) === true) {
       return ("No Branches Found!");
     }
   };
