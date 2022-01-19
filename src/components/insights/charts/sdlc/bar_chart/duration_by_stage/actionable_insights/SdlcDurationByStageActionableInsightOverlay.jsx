@@ -14,6 +14,8 @@ import SdlcDurationByStageActionableInsightTable from "./SdlcDurationByStageActi
 import SdlcDurationByStageOverviewDataBlockContainer from "./SdlcDurationByStageOverviewDataBlockContainer";
 import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
+import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
+
 function SdlcDurationByStageActionableInsightOverlay({
   title,
   actionableInsightsQueryData,
@@ -31,7 +33,11 @@ function SdlcDurationByStageActionableInsightOverlay({
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [filterModel, setFilterModel] = useState(
-    new Model({ ...actionableInsightsGenericChartFilterMetadata.newObjectFields }, actionableInsightsGenericChartFilterMetadata, false)
+    new Model(
+      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+      actionableInsightsGenericChartFilterMetadata,
+      false
+    )
   );
 
   useEffect(() => {
@@ -59,7 +65,9 @@ function SdlcDurationByStageActionableInsightOverlay({
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       let request = "opseraSdlcPipelineStageDurationByMonth";
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
@@ -69,7 +77,7 @@ function SdlcDurationByStageActionableInsightOverlay({
         dashboardTags,
         filterDto,
         null,
-        null,
+        dashboardOrgs,
         null,
         null,
         null,
@@ -136,6 +144,11 @@ function SdlcDurationByStageActionableInsightOverlay({
     toastContext.clearOverlayPanel();
   };
 
+  const getDateBadge = () => {
+    const date = actionableInsightsQueryData?.data;
+    return <MetricDateRangeBadge startDate={date?.lowerBound} endDate={date?.upperBound} />;
+  };
+
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
@@ -147,6 +160,7 @@ function SdlcDurationByStageActionableInsightOverlay({
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
+        {getDateBadge()}
         <SdlcDurationByStageOverviewDataBlockContainer data={dataBlockValues} />
         <SdlcDurationByStageActionableInsightTable
           data={metrics}

@@ -79,6 +79,12 @@ regexDefinitions.alphanumericPlusSpaces = {
   errorFormText: "Only letters, numbers, and spaces are allowed",
 };
 
+regexDefinitions.alphanumericPlusSpacesAndForwardSlash = {
+  regex: /^[A-Za-z0-9 /]*$/,
+  formText: "Letters, numbers, forward slashes, and spaces are allowed",
+  errorFormText: "Only letters, numbers, forward slashes, and spaces are allowed",
+};
+
 regexDefinitions.gitBranchName = {
   regex: /^[A-Za-z0-9\-_./']*[A-Za-z0-9'\-_]$/,
   formText: "Letters, numbers, dashes, forward slashes, apostrophes, underscores, and periods are allowed. The inputted value cannot end with a slash or period",
@@ -197,6 +203,12 @@ regexDefinitions.argumentList = {
   regex: /^[A-Za-z0-9-_.$=\n]*$/,
   formText: "Letters, numbers, dashes, underscores, equals sign, dollar sign, periods and new lines are allowed",
   errorFormText: "Only letters, numbers, dashes, underscores, equals sign, dollar sign, periods and new lines are allowed"
+};
+
+regexDefinitions.informaticaValidationRules = {
+  regex: /^[A-Za-z0-9\-_?*]*$/,
+  formText: "Letters, numbers, dashes, underscores, astrix and question mark are allowed",
+  errorFormText: "Only Letters, numbers, dashes, underscores, astrix and question marks are allowed"
 };
 
 export default regexDefinitions;

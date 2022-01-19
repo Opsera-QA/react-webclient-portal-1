@@ -171,6 +171,33 @@ export function smartTimeFormatter(value, timeFormat) {
   }
 }
 
+export function hasDateValue(potentialDate) {
+  if (potentialDate == null) {
+    return false;
+  }
+
+  try {
+    const date = new Date(potentialDate);
+    return date && Object.prototype.toString.call(date) === "[object Date]";
+  }
+  catch (error) {
+    return false;
+  }
+}
+
+export function hasNumericDateValue(potentialDate) {
+  if (potentialDate == null) {
+    return false;
+  }
+
+  try {
+    const date = new Date(potentialDate);
+    return date && Object.prototype.toString.call(date) === "[object Date]" && !isNaN(potentialDate);
+  } catch (error) {
+    return false;
+  }
+}
+
 export function formatDateWithTime(date) {
   try {
     return format(date, "yyyy-MM-dd', 'hh:mm a");

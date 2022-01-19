@@ -68,7 +68,11 @@ import CypressStepConfiguration
 import FlywayDatabaseStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/FlywayDatabaseStepConfiguration";
 import InformaticaStepConfiguration from "./step_tool_configuration_forms/informatica/InformaticaStepConfiguration";
-
+import PmdScanStepConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/PmdScanStepConfiguration";
+import AzureZipDeploymentStepConfiguration
+  from "./step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfiguration";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 function StepToolConfiguration({
   pipeline,
   editItem,
@@ -950,38 +954,23 @@ function StepToolConfiguration({
             closeEditorPanel={closeEditorPanel}
           />
         );
-        case "coverity":
-          return (
-            <CoverityStepConfiguration 
-              pipelineId={pipeline._id}
-              plan={pipeline.workflow.plan}
-              stepId={stepId}
-              stepTool={stepTool}
-              parentCallback={callbackFunction}
-              callbackSaveToVault={saveToVault}
-              createJob={createCoverityJob}
-              setToast={setToast}
-              setShowToast={setShowToast}
-              closeEditorPanel={closeEditorPanel}
-            />
-          );
-        case "azure_acr_push":
-          return(<AzureAcrPushStepConfiguration
-              pipelineId={pipeline._id}
-              plan={pipeline.workflow.plan}
-              stepId={stepId}
-              stepTool={stepTool}
-              parentCallback={callbackFunction}
-              callbackSaveToVault={saveToVault}
-              createJob={createJob}
-              setToast={setToast}
-              setShowToast={setShowToast}
-              closeEditorPanel={closeEditorPanel}
-            />
-          );
-      case "aws_lambda":
+      case "coverity":
         return (
-          <AwsLambdaDeployStepConfiguration
+          <CoverityStepConfiguration 
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            createJob={createCoverityJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "azure_acr_push":
+        return(<AzureAcrPushStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}
@@ -994,80 +983,138 @@ function StepToolConfiguration({
             closeEditorPanel={closeEditorPanel}
           />
         );
-      case "mongodb_realm":
+    case "aws_lambda":
+      return (
+        <AwsLambdaDeployStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "mongodb_realm":
+      return (
+        <MongodbRealmStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createMongodbRealmJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+        />
+      );
+    case "azure_aks_deploy":
+      return (
+        <AksServiceDeployStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "azure-functions":
+      return (
+        <AzureFunctionsStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );  
+    case "flyway-database-migrator":
+      return (
+        <FlywayDatabaseStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );    
+    case "informatica":
+      return (
+        <InformaticaStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "pmd":
+      return (
+        <PmdScanStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+      case "azure-zip-deployment":
         return (
-          <MongodbRealmStepConfiguration
+          <AzureZipDeploymentStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            createJob={createMongodbRealmJob}
+            createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );
-        case "azure_aks_deploy":
-          return (
-            <AksServiceDeployStepConfiguration
-              pipelineId={pipeline._id}
-              plan={pipeline.workflow.plan}
-              stepId={stepId}
-              stepTool={stepTool}
-              parentCallback={callbackFunction}
-              callbackSaveToVault={saveToVault}
-              createJob={createJob}
-              setToast={setToast}
-              setShowToast={setShowToast}
-              closeEditorPanel={closeEditorPanel}
-            />
-          );
-          case "azure-functions":
-            return (
-              <AzureFunctionsStepConfiguration
-                pipelineId={pipeline._id}
-                plan={pipeline.workflow.plan}
-                stepId={stepId}
-                stepTool={stepTool}
-                parentCallback={callbackFunction}
-                callbackSaveToVault={saveToVault}
-                createJob={createJob}
-                setToast={setToast}
-                setShowToast={setShowToast}
-                closeEditorPanel={closeEditorPanel}
-              />
-            );  
-          case "flyway-database-migrator":
-            return (
-              <FlywayDatabaseStepConfiguration
-                pipelineId={pipeline._id}
-                plan={pipeline.workflow.plan}
-                stepId={stepId}
-                stepTool={stepTool}
-                parentCallback={callbackFunction}
-                closeEditorPanel={closeEditorPanel}
-              />
-            );    
-          // case "informatica":
-          //   return (
-          //     <InformaticaStepConfiguration
-          //       pipelineId={pipeline._id}
-          //       plan={pipeline.workflow.plan}
-          //       stepId={stepId}
-          //       stepTool={stepTool}
-          //       parentCallback={callbackFunction}
-          //       closeEditorPanel={closeEditorPanel}
-          //     />
-          //   );
     }
+  };
+
+  const getTitleText = () => {
+    let titleText = "";
+
+    if (hasStringValue(stepName) === true) {
+      titleText += `${stepName}: `;
+    }
+
+    if (hasStringValue(stepTool?.tool_identifier)) {
+      titleText += stepTool.tool_identifier;
+    }
+
+    return titleText;
   };
 
   return (
     <div>
       <div className="title-text-5 upper-case-first mb-3">
-        {typeof stepName !== "undefined" ? stepName + ": " : null}
-        {typeof stepTool !== "undefined" ? stepTool.tool_identifier : null}
+        {getTitleText()}
       </div>
 
       {typeof stepTool !== "undefined" ? (

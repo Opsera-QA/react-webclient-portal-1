@@ -23,33 +23,6 @@ analyticsActions.getAnalyticsSettingsV2 = async (getAccessToken, cancelTokenSour
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-analyticsActions.getAnalyticsToolsV2 = async (getAccessToken, cancelTokenSource) => {
-  // TODO: Pass in, if necessary
-  const INDICES = [
-    "jenkins",
-    "opsera-pipeline",
-    "jira",
-    "sonar",
-    "xunit",
-    "junit",
-    "jmeter",
-    "heartbeat",
-    "codeship",
-    "gitlab",
-    "metricbeat",
-    "cypress",
-    "anchore",
-    "selenium",
-  ];
-
-  const urlParams = {
-    index: INDICES,
-  };
-
-  const apiUrl = `/analytics/index`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
-};
-
 analyticsActions.getBlueprintFilterData = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = `/analytics/search/filter`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);

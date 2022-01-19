@@ -10,8 +10,10 @@ import AzureZipDeploymentStepAzureToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_zip_deployment/inputs/AzureZipDeploymentStepAzureToolSelectInput";
 import AzureToolStorageAccountSelectInput
   from "components/common/list_of_values_input/tools/azure/accounts/storage/AzureToolStorageAccountSelectInput";
+import PipelineStepSelectInput
+  from "../../../../../../../common/list_of_values_input/workflow/pipelines/PipelineStepSelectInput";
 
-function AzureZipDeploymentStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
+function AzureZipDeploymentStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan, stepId }) {
   const [isLoading, setIsLoading] = useState(false);
   const [azureZipDeploymentModel, setAzureZipDeploymentModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -81,12 +83,21 @@ function AzureZipDeploymentStepConfiguration({ stepTool, closeEditorPanel, paren
         azureToolId={azureZipDeploymentModel?.getData("azureToolId")}
         fieldName={"azureStorageAccountName"}
       />
+      <PipelineStepSelectInput
+        fieldName={"buildStepId"}
+        plan={plan}
+        stepId={stepId}
+        model={azureZipDeploymentModel}
+        setModel={setAzureZipDeploymentModel}
+      />
     </PipelineStepEditorPanelContainer>
   );
 }
 
 AzureZipDeploymentStepConfiguration.propTypes = {
   stepTool: PropTypes.object,
+  plan: PropTypes.array,
+  stepId: PropTypes.string,
   closeEditorPanel: PropTypes.func,
   parentCallback: PropTypes.func,
 };

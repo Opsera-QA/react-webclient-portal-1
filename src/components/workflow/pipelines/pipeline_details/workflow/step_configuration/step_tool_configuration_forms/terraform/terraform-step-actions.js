@@ -11,4 +11,9 @@ terraformStepActions.getIAMRoles = async (getAccessToken, cancelTokenSource, dat
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+terraformStepActions.getTerraformTags = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = "tools/terraform/tags";
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 export default terraformStepActions;

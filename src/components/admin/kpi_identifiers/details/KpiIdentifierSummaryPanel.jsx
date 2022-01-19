@@ -10,6 +10,7 @@ import ActivityField from "components/common/fields/boolean/ActivityField";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
+import ImageField from "components/common/fields/image/ImageField";
 
 function KpiIdentifierSummaryPanel({ kpiData, setActiveTab }) {
   if (kpiData == null) {
@@ -35,9 +36,6 @@ function KpiIdentifierSummaryPanel({ kpiData, setActiveTab }) {
           <DateFieldBase dataObject={kpiData} fieldName={"createdAt"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={kpiData} fieldName={"thumbnailPath"} />
-        </Col>
-        <Col lg={6}>
           <TextFieldBase dataObject={kpiData} fieldName={"type"} />
         </Col>
         <Col lg={6}>
@@ -54,6 +52,13 @@ function KpiIdentifierSummaryPanel({ kpiData, setActiveTab }) {
         </Col>
         <Col lg={12}>
           <GenericItemField dataObject={kpiData} fieldName={"category"} />
+        </Col>
+        <Col lg={12}>
+          <ImageField
+            model={kpiData}
+            fieldName={"thumbnailPath"}
+            imageTitle={"KPI Identifier Image"}
+          />
         </Col>
         <Col lg={4}>
           <JsonField dataObject={kpiData} fieldName={"supported_filters"} />

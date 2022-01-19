@@ -13,11 +13,17 @@ import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/d
 import SonarRatingsReliabilityOverviewDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/actionable_insights/reliability/SonarRatingsReliabilityOverviewDataBlockContainer";
 import SonarRatingsReliabilityActionableInsightTable from "components/insights/charts/sonar/sonar_ratings/actionable_insights/reliability/SonarRatingsReliabilityActionableInsightTable";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
+import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
+import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 
 function SonarRatingsReliabilityActionableInsightOverlay({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [filterModel, setFilterModel] = useState(
-    new Model({ ...actionableInsightsGenericChartFilterMetadata.newObjectFields }, actionableInsightsGenericChartFilterMetadata, false)
+    new Model(
+      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+      actionableInsightsGenericChartFilterMetadata,
+      false
+    )
   );
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -66,6 +72,9 @@ function SonarRatingsReliabilityActionableInsightOverlay({ kpiConfiguration, das
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -74,7 +83,7 @@ function SonarRatingsReliabilityActionableInsightOverlay({ kpiConfiguration, das
         dashboardTags,
         filterDto,
         undefined,
-        undefined,
+        dashboardOrgs,
         undefined,
         undefined,
         undefined,
@@ -127,6 +136,11 @@ function SonarRatingsReliabilityActionableInsightOverlay({ kpiConfiguration, das
     toastContext.clearOverlayPanel();
   };
 
+  const getDateBadge = () => {
+    const date = getMetricFilterValue(kpiConfiguration?.filters, "date");
+    return <MetricDateRangeBadge startDate={date?.startDate} endDate={date?.endDate} />;
+  };
+
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
@@ -138,6 +152,7 @@ function SonarRatingsReliabilityActionableInsightOverlay({ kpiConfiguration, das
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
+        {getDateBadge()}
         <SonarRatingsReliabilityOverviewDataBlockContainer sonarMetric={issueTypeData} />
         <SonarRatingsReliabilityActionableInsightTable
           bugsData={bugsData}

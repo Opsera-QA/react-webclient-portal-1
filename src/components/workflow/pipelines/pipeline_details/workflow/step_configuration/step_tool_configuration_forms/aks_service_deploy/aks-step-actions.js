@@ -20,8 +20,8 @@ aksStepActions.getAzureClusters = async (getAccessToken, cancelTokenSource, conf
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-aksStepActions.getAzureResourceGroups = async (getAccessToken, cancelTokenSource, config, applicationData) => {
-  const apiUrl = `tools/azure/management/resourceGroups`;
+aksStepActions.getAzureResourceGroups = async (getAccessToken, cancelTokenSource, config, applicationData, clusterName) => {
+  const apiUrl = `tools/azure/management/resourcebycluster`;
   const cfg = config?.configuration;
   const owner = config?.owner;
   const postBody = {
@@ -31,7 +31,7 @@ aksStepActions.getAzureResourceGroups = async (getAccessToken, cancelTokenSource
     "tenantId": cfg?.azureTenantId,
     "subscriptionId": cfg?.azureSubscriptionId,
     "resource": applicationData?.resource,
-    "type": "v2"
+    "cluster": clusterName
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);

@@ -91,8 +91,8 @@ import PowershellPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/powershell/PowershellPipelineStepConfigurationSummaryPanel";
 import SonarPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/SonarPipelineStepConfigurationSummaryPanel";
-import sonarPipelineStepConfigurationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStepConfigurationMetadata";
+import sonarPipelineStepMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStep.metadata";
 import JmeterPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jmeter/JmeterPipelineStepConfigurationSummaryPanel";
 import jmeterPipelineStepConfigurationMetadata
@@ -168,7 +168,8 @@ import FlywayDatabasePipelineStepConfigurationSummaryPanel from "./step_tool_con
 import flywayDatabaseStepFormMetadata from "./step_tool_configuration_forms/flyway_database/flyway-database-stepForm-metadata";
 import InformaticaPipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/informatica/InformaticaPipelineStepConfigurationSummaryPanel";
 import InformaticaStepFormMetadata from "./step_tool_configuration_forms/informatica/informatica-stepForm-metadata";
-
+import PmdScanPipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/pmd_scan/PmdScanPipelineStepConfigurationSummaryPanel";
+import pmdScanStepFormMetadata from "./step_tool_configuration_forms/pmd_scan/pmdScan-stepForm-metadata";
 function PipelineStepConfigurationSummary({
   pipelineData,
 }) {
@@ -365,7 +366,7 @@ function PipelineStepConfigurationSummary({
         return (
           <SonarPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            sonarDataObject={getModelWrappedObject(sonarPipelineStepConfigurationMetadata)}
+            sonarDataObject={getModelWrappedObject(sonarPipelineStepMetadata)}
           />
         );
       case "jmeter":
@@ -513,6 +514,13 @@ function PipelineStepConfigurationSummary({
           <InformaticaPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             informaticaPipelineDataObject={getModelWrappedObject(InformaticaStepFormMetadata)}
+          />
+        );
+      case "pmd":
+        return (
+          <PmdScanPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            pmdScanPipelineDataObject={getModelWrappedObject(pmdScanStepFormMetadata)}
           />
         );
       default:

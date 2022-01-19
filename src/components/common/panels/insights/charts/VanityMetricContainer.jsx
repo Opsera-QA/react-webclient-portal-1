@@ -6,13 +6,11 @@ import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIc
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import ChartSettingsOverlay from "components/insights/marketplace/charts/ChartSettingsOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import { addDays, isSameDay } from "date-fns";
 import IconBase from "components/common/icons/IconBase";
 import {parseError} from "components/common/helpers/error-helpers";
 import {getMetricFilterValue} from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricTagBadge from "components/common/badges/tag/MetricTagBadge";
-import {formatDate} from "components/common/helpers/date/date.helpers";
-import DateBadge from "components/common/badges/date/DateBadge";
+import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 
 // TODO: Clean up and combine with ChartContainer for a v2 container
 function VanityMetricContainer(
@@ -86,7 +84,7 @@ function VanityMetricContainer(
     if (showSettingsToggle !== false) {
       return (
         <ToggleSettingsIcon
-          className={"ml-3"}
+          className={"ml-3 my-auto"}
           visible={!helpIsShown}
           activeTab={view}
           setActiveTab={() => showSettingsPanel()}
@@ -97,17 +95,24 @@ function VanityMetricContainer(
 
   const getTitleBar = () => {
     if (isLoading) {
-      return (<span><IconBase isLoading={true} className="mr-1"/>Loading Chart</span>);
+      return (
+        <div className={"h-100 d-flex justify-content-between"}>
+          <span className={"my-auto"}>
+            <IconBase isLoading={true} className="mr-1"/>
+            Loading Chart
+          </span>
+        </div>
+      );
     }
 
     if (error) {
       return (
-        <div className="d-flex justify-content-between">
-          <span>
+        <div className={"h-100 d-flex justify-content-between"}>
+          <div className={"my-auto"}>
             <IconBase icon={faExclamationCircle} fixedWidth className="mr-1"/>
             Error Loading Chart!
-          </span>
-          <div>
+          </div>
+          <div className={"d-flex my-auto"}>
             {getSettingsToggle()}
           </div>
         </div>
@@ -115,8 +120,8 @@ function VanityMetricContainer(
     }
 
     return (
-      <div className="d-flex justify-content-between">
-        <div>
+      <div className={"h-100 d-flex justify-content-between"}>
+        <div className={"my-auto"}>
           {kpiConfiguration?.kpi_name}
         </div>
         <div className={"d-flex my-auto"}>
@@ -131,8 +136,10 @@ function VanityMetricContainer(
   const getChartBody = () => {
     if (error) {
       return (
-        <div className="new-chart mb-3" style={{ height: "300px" }}>
-          <span>There was an error loading this chart: {parseError(error?.message)}. Please check logs for more details.</span>
+        <div className="new-chart mb-3" style={{height: "300px"}}>
+          <div className="max-content-width p-5 mt-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <span className={"-5"}>There was an error loading this chart: {parseError(error?.message)}. Please check logs for more details.</span>
+          </div>
         </div>
       );
     }
@@ -197,40 +204,13 @@ function VanityMetricContainer(
     }
   };
 
-  // TODO: Make date badge component and also date range badge component
-  // TODO: Add date verifier
   const getDateBadge = () => {
     const date = getMetricFilterValue(kpiConfiguration?.filters, "date");
 
-    if (date == null) {
-      const formattedStartDate = formatDate(addDays(new Date(), -90));
-      const formattedEndDate = formatDate(new Date());
-      return (
-        <DateBadge
-          badgeText={`${formattedStartDate} to ${formattedEndDate}`}
-        />
-      );
-    }
-
-    const startDate = date?.startDate;
-    const endDate = date?.endDate;
-
-    // TODO: Add date check
-
-    if (isSameDay(new Date(startDate), new Date(date.endDate))) {
-      return (
-        <DateBadge
-          badgeText={formatDate(startDate)}
-        />
-      );
-    }
-
-    const formattedStartDate = formatDate(startDate);
-    const formattedEndDate = formatDate(endDate);
-
     return (
-      <DateBadge
-        badgeText={`${formattedStartDate} to ${formattedEndDate}`}
+      <MetricDateRangeBadge
+        startDate={date?.startDate}
+        endDate={date?.endDate}
       />
     );
   };

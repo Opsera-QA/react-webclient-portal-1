@@ -7,6 +7,7 @@ import RefreshButton from "components/common/buttons/data/RefreshButton";
 import FilterTitleBar from "components/common/table/FilterTitleBar";
 import ActiveFilterDisplayer from "components/common/filters/ActiveFilterDisplayer";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
+import InlineClientSideSearchFilter from "components/common/filters/search/InlineClientSideSearchFilter";
 
 function FilterContainer(
   {
@@ -27,6 +28,7 @@ function FilterContainer(
     metadata,
     exportButton,
     showBorder,
+    supportClientSideSearching,
 
     // TODO: Remove after filters are used everywhere
     type
@@ -51,6 +53,13 @@ function FilterContainer(
             loadData={loadData}
             className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
             metadata={metadata}
+          />
+          <InlineClientSideSearchFilter
+            filterModel={filterDto}
+            setFilterModel={setFilterDto}
+            isLoading={isLoading}
+            supportClientSideSearching={supportClientSideSearching}
+            className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
           />
           <ViewToggle
             supportViewToggle={supportViewToggle}
@@ -111,7 +120,8 @@ FilterContainer.propTypes = {
   className: PropTypes.string,
   metadata: PropTypes.object,
   exportButton: PropTypes.object,
-  showBorder: PropTypes.bool
+  showBorder: PropTypes.bool,
+  supportClientSideSearching: PropTypes.bool,
 };
 
 export default FilterContainer;

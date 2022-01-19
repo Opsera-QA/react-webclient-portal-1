@@ -7,6 +7,7 @@ const InformaticaStepFormMetadata = {
       isRequired: true,
       maxLength: 24,
       regexDefinitionName: "mongoId",
+      formText:" "
     }, 
     {
       label: "Type of Execution",
@@ -16,19 +17,20 @@ const InformaticaStepFormMetadata = {
       lowercase: true,
     },  
     {
-      label: "Informatica Build Step",
+      label: "Informatica Export Object Step",
       id: "buildStepId",
       isRequiredFunction: (model) => {
-        return model?.getData("type") === "deploy";
+        return model?.getData("type") === "import";
       },
       maxLength: 24,
       regexDefinitionName: "mongoId",
+      formText:" "
     },    
     {
       label: "SCM Type",
       id: "service",
       isRequiredFunction: (model) => {
-        return model?.getData("type") === "build";
+        return model?.getData("type") === "export";
       },
       maxLength: 10,
       lowercase: true,
@@ -37,34 +39,38 @@ const InformaticaStepFormMetadata = {
       label: "SCM Account",
       id: "gitToolId",
       isRequiredFunction: (model) => {
-        return model?.getData("type") === "build";
+        return model?.getData("type") === "export";
       },
       maxLength: 24,
       regexDefinitionName: "mongoId",
+      formText:" "
     }, 
     {
       label: "Repository",
       id: "repository",
       isRequiredFunction: (model) => {
-        return model?.getData("type") === "build";
+        return model?.getData("type") === "export";
       },
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
+      formText:" "
     },
     {
       label: "Workspace/Project",
       id: "workspace",
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
+      formText:" "
     },
     {
       label: "Branch",
       id: "gitBranch",
       isRequiredFunction: (model) => {
-        return model?.getData("type") === "build";
+        return model?.getData("type") === "export";
       },
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
+      formText:" "
     },
     {
       label: "Include Dependencies",

@@ -25,5 +25,6 @@ export default () => ({
     legendOffset: 55,
     legendPosition: 'middle'
   },
+  layers: ['grid', 'markers', 'axes', 'areas', 'crosshair', 'lines', 'points', 'slices', 'mesh'],
   pointSize: 6
 });

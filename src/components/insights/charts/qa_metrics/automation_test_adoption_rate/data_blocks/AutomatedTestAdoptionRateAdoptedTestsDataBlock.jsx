@@ -1,14 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
+import TwoLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/TwoLineDataBlockBase";
+import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 
-function AutomatedTestAdoptionRateAdoptedTestsDataBlock({executedTestCount, executedTestsDataPoint}) {
+function AutomatedTestAdoptionRateAdoptedTestsDataBlock({ executedTestsDataPoint, executedTestCount}) {
   return (
-    <TwoLineScoreDataBlock
-      score={executedTestCount}
-      dataPoint={executedTestsDataPoint}
-      subtitle={"Automated Test Cases Executed"}
-    />
+    <DataBlockBoxContainer showBorder={true}>
+        <TwoLineScoreDataBlock
+          className={"p-3"}
+          score={executedTestCount}
+          dataPoint={executedTestsDataPoint}
+          subtitle={"Automated Test Cases Executed"} />
+    </DataBlockBoxContainer>
   );
 }
 
