@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase
   from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
-function RoleRestrictedJenkinsToolSelectInput(
+function RoleRestrictedSonarToolSelectInput(
   {
     model,
     setModel,
@@ -27,7 +27,7 @@ function RoleRestrictedJenkinsToolSelectInput(
   );
 }
 
-RoleRestrictedJenkinsToolSelectInput.propTypes = {
+RoleRestrictedSonarToolSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
@@ -36,4 +36,4 @@ RoleRestrictedJenkinsToolSelectInput.propTypes = {
   setDataFunction: PropTypes.func,
 };
 
-export default RoleRestrictedJenkinsToolSelectInput;
+export default RoleRestrictedSonarToolSelectInput;
