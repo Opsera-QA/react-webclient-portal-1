@@ -61,16 +61,6 @@ function TaskLogChunkDisplayer(
     }
   };
 
-<<<<<<< Updated upstream:src/components/common/fields/log/GridFsLogField.jsx
-  const getPipelineTaskData = async (cancelSource = cancelTokenSource) => {
-    const response = await taskActions.getTaskActivityGridFsLogContentById(getAccessToken, cancelSource, gridFsLogRecordId);
-    console.log("response: " + JSON.stringify(response));
-    const pipelineActivityLogData = response?.data?.data;
-
-    if (pipelineActivityLogData) {
-      setLogData(pipelineActivityLogData);
-    }
-=======
   const getTaskChunk = async (cancelSource = cancelTokenSource) => {
     const response = await taskActions.getTaskActivityChunk(getAccessToken, cancelSource, logMetaRecordId, chunkNumber);
     const taskLogChunk = response?.data?.data?.data;
@@ -96,29 +86,11 @@ function TaskLogChunkDisplayer(
     }
 
     return (logData);
->>>>>>> Stashed changes:src/components/common/fields/log/tasks/TaskLogChunkDisplayer.jsx
   };
 
   return (
     <div>
-<<<<<<< Updated upstream:src/components/common/fields/log/GridFsLogField.jsx
-      <div className="m-2">
-        {/*<div className="float-right mr-2">*/}
-        {/*  <span>{getFormattedTimestamp(dataObject?.createdAt)}</span>*/}
-        {/*</div>*/}
-        {/*<span><span className="text-muted ml-2">Step: </span> {dataObject?.step_name}</span>*/}
-      </div>
-      <div className={"my-2"}>
-        {JSON.stringify(logData)}
-      </div>
-      <div className={"my-2"}>
-        {/*<StandaloneConsoleLogsDisplayer*/}
-        {/*  consoleLogs={consoleLogs}*/}
-        {/*/>*/}
-      </div>
-=======
       {getBody()}
->>>>>>> Stashed changes:src/components/common/fields/log/tasks/TaskLogChunkDisplayer.jsx
     </div>
   );
 }
