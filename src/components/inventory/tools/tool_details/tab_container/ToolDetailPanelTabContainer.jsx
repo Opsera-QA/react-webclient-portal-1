@@ -71,12 +71,7 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         toolModel={toolModel}
         activeTab={activeTab}
         handleTabClick={handleTabClick}
-      />
-      <ToolLogsTab
-        toolModel={toolModel}
-        activeTab={activeTab}
-        handleTabClick={handleTabClick}
-      />
+      />      
       <ToolApplicationsTab
         toolModel={toolModel}
         activeTab={activeTab}
@@ -102,10 +97,6 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         activeTab={activeTab}
         handleTabClick={handleTabClick}
       />      
-      <ToolUsageTab
-        handleTabClick={handleTabClick}
-        activeTab={activeTab}
-      />
       <ToolServiceTypeMappingTab
         toolModel={toolModel}
         activeTab={activeTab}      
@@ -120,6 +111,15 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         toolModel={toolModel}
         activeTab={activeTab}
         handleTabClick={handleTabClick}
+      />
+      <ToolLogsTab
+        toolModel={toolModel}
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+      />
+      <ToolUsageTab
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
       />
     </CustomTabContainer>
   );
