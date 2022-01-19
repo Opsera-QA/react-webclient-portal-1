@@ -110,7 +110,7 @@ const TerraformStepFormMetadata = {
       id: "storageName",
     },
     {
-      label: "Container",
+      label: "Storage Container",
       id: "containerName",
     },
     {
@@ -258,7 +258,7 @@ const TerraformStepFormMetadata = {
       id: "storageName",
     },
     {
-      label: "Container",
+      label: "Storage Container",
       id: "containerName",
     },
     {

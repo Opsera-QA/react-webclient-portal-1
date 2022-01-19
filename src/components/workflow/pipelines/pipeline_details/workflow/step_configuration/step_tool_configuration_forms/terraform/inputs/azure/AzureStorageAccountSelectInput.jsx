@@ -96,10 +96,11 @@ function AzureStorageAccountInput(
   };
 
   return (
-    <>
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
+        textField={"name"}
+        valueField={"name"}
         setDataObject={setDataObject}
         selectOptions={azureRegionList}
         busy={isLoading}
@@ -107,7 +108,6 @@ function AzureStorageAccountInput(
         placeholder={placeholder}
         errorMessage={errorMessage}
       />
-    </>
   );
 }
 
@@ -120,9 +120,7 @@ AzureStorageAccountInput.propTypes = {
 };
 
 AzureStorageAccountInput.defaultProps = {
-  fieldName: "clusterName",
-  textField: "clusterName",
-  valueField: "clusterName",
+  fieldName: "storageName",
 };
 
 export default AzureStorageAccountInput;

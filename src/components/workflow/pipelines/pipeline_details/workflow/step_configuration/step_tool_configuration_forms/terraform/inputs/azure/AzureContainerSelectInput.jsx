@@ -10,19 +10,21 @@ import terraformStepActions from "../../terraform-step-actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import toolsActions from "components/inventory/tools/tools-actions";
 
-function AksServiceDeployStepClusterSelectInput(
+function AzureContainerSelectInput(
   {
     fieldName,
     dataObject,
     setDataObject,
     azureToolConfigId,
     applicationId,
+    storageName,
+    resourceGroup
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [azureRegionList, setAzureRegionList] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Cluster");
+  const [placeholder, setPlaceholderText] = useState("Select Container");
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
 
@@ -34,20 +36,20 @@ function AksServiceDeployStepClusterSelectInput(
     setCancelTokenSource(source);
 
     setAzureRegionList([]);
-    if (hasStringValue(applicationId) === true && hasStringValue(azureToolConfigId) === true) {
+    if (hasStringValue(applicationId) === true && hasStringValue(azureToolConfigId) === true && hasStringValue(storageName) === true && hasStringValue(resourceGroup) === true) {
       loadData(source).catch((error) => {
         throw error;
       });
     }
-  }, [azureToolConfigId, applicationId]);
+  }, [azureToolConfigId, applicationId, storageName, resourceGroup]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       await loadAzureRegistries(cancelSource);
     } catch (error) {
-      setPlaceholderText("There was an error pulling Clusters");
-      setErrorMessage("No Clusters available.");
+      setPlaceholderText("There was an error pulling Containers");
+      setErrorMessage("No Containers available.");
       toastContext.showErrorDialog(error);
       console.error(error);
     } finally {
@@ -56,14 +58,14 @@ function AksServiceDeployStepClusterSelectInput(
   };
 
   // TODO: We should make a route on node where you can pass an azure tool ID and an azure Application ID
-  //  and return the clusters instead of constructing the complex query here on React
+  //  and return the containers instead of constructing the complex query here on React
   const loadAzureRegistries = async (cancelSource = cancelTokenSource) => {
     const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, azureToolConfigId);
     const tool = response?.data?.data;
 
     if (tool == null) {
-      setPlaceholderText("Error Pulling Clusters!");
-      setErrorMessage("Could not find Tool to grab Clusters.");
+      setPlaceholderText("Error Pulling Containers!");
+      setErrorMessage("Could not find Tool to grab Containers.");
       return;
     }
 
@@ -71,7 +73,7 @@ function AksServiceDeployStepClusterSelectInput(
     const applicationData = applicationResponse?.data?.data;
 
     if (applicationData == null) {
-      setPlaceholderText("Error Pulling Clusters!");
+      setPlaceholderText("Error Pulling Containers!");
       setErrorMessage(`
         The selected Application was not found. 
         It may have been deleted, or the Tool's access roles may have been updated.
@@ -80,11 +82,13 @@ function AksServiceDeployStepClusterSelectInput(
       return;
     }
 
-    const azureResponse = await terraformStepActions.getAzureClusters(
+    const azureResponse = await terraformStepActions.getAzureContainers(
       getAccessToken,
       cancelSource,
       tool,
-      applicationData?.configuration
+      applicationData?.configuration,
+      storageName,
+      resourceGroup
     );
 
     const result = azureResponse?.data?.data;
@@ -94,24 +98,12 @@ function AksServiceDeployStepClusterSelectInput(
     }
 
     if (result?.length === 0) {
-      setPlaceholderText("No clusters found with this azure configuration");
-      setErrorMessage("No Clusters found");
-    }
-  };
-
-  const getInfoText = () => {
-    if (dataObject?.getData("resource")?.length > 0) {
-      return (
-        <small>
-          <FontAwesomeIcon icon={faSync} className="pr-1" />
-          Click here to refresh Clusters
-        </small>
-      );
+      setPlaceholderText("No containers found with this azure configuration");
+      setErrorMessage("No Containers found");
     }
   };
 
   return (
-    <>
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
@@ -122,25 +114,23 @@ function AksServiceDeployStepClusterSelectInput(
         placeholder={placeholder}
         errorMessage={errorMessage}
       />
-      <div onClick={() => loadData()} className="text-muted ml-3 dropdown-data-fetch">
-        {getInfoText()}
-      </div>
-    </>
   );
 }
 
-AksServiceDeployStepClusterSelectInput.propTypes = {
+AzureContainerSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   azureToolConfigId: PropTypes.string,
   applicationId: PropTypes.string,
+  storageName: PropTypes.string,
+  resourceGroup: PropTypes.string,
 };
 
-AksServiceDeployStepClusterSelectInput.defaultProps = {
-  fieldName: "clusterName",
+AzureContainerSelectInput.defaultProps = {
+  fieldName: "containerName",
   textField: "clusterName",
   valueField: "clusterName",
 };
 
-export default AksServiceDeployStepClusterSelectInput;
+export default AzureContainerSelectInput;

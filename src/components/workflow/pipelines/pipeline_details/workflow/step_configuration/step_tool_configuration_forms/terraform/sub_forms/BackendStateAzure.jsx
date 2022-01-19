@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import AksServiceDeployStepAzureToolSelectInput from "../inputs/azure/AzureToolSelectInput";
 import AksServiceDeployStepApplicationSelectInput from "../inputs/azure/AzureApplicationSelectInput";
-import AksServiceDeployStepClusterSelectInput from "../inputs/azure/AzureClusterSelectInput";
+import AksServiceDeployStepClusterSelectInput from "../inputs/azure/AzureContainerSelectInput";
 import AksResourceGroupSelectInput from "../inputs/azure/AzureResourceGroupSelect";
-import AzureToolStorageAccountSelectInput from "../../../../../../../../common/list_of_values_input/tools/azure/accounts/storage/AzureToolStorageAccountSelectInput";
 import AzureStorageAccountInput from "../inputs/azure/AzureStorageAccountSelectInput";
+import AzureContainerSelectInput from "../inputs/azure/AzureContainerSelectInput";
 
 function BackendStateAzure({ model, setModel }) {
   if (!model?.getData("backendState") || model?.getData("backendState") !== "AZUREM") {
@@ -22,17 +22,19 @@ function BackendStateAzure({ model, setModel }) {
         azureToolConfigId={model?.getData("azureToolConfigId")}
         applicationId={model?.getData("azureCredentialId")}
       />
-      <AksServiceDeployStepClusterSelectInput
-        dataObject={model}
-        setDataObject={setModel}
-        azureToolConfigId={model?.getData("azureToolConfigId")}
-        applicationId={model?.getData("azureCredentialId")}
-      />
       <AksResourceGroupSelectInput
         dataObject={model}
         setDataObject={setModel}
         azureToolConfigId={model?.getData("azureToolConfigId")}
         azureApplication={model?.getData("azureCredentialId")}
+      />
+      <AzureContainerSelectInput
+        dataObject={model}
+        setDataObject={setModel}
+        azureToolConfigId={model?.getData("azureToolConfigId")}
+        applicationId={model?.getData("azureCredentialId")}
+        storageName={model?.getData("storageName")}
+        resourceGroup={model?.getData("resourceGroup")}
       />
     </>
   );
