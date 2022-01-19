@@ -186,8 +186,18 @@ taskActions.getTaskActivityLogById = async (getAccessToken, cancelTokenSource, i
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-taskActions.getTaskActivityGridFsLogRecordById = async (getAccessToken, cancelTokenSource, id) => {
-  const apiUrl = `/tasks/logs/files/${id}`;
+taskActions.getTaskActivityMetaRecord = async (getAccessToken, cancelTokenSource, taskId, taskRunCount) => {
+  const apiUrl = `/tasks/logs/bulk-migration/${taskId}/activity/${taskRunCount}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+taskActions.getTaskActivityChunk = async (getAccessToken, cancelTokenSource, recordId, n) => {
+  const apiUrl = `/tasks/logs/bulk-migration/chunk/${recordId}/${n}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+taskActions.getTaskActivityChunkCount = async (getAccessToken, cancelTokenSource, recordId) => {
+  const apiUrl = `/tasks/logs/bulk-migration/chunk/${recordId}/count`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

@@ -74,6 +74,8 @@ import InformaticaStepConfiguration
 import PmdScanStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/PmdScanStepConfiguration";
 import SentinelStepConfiguration from "./step_tool_configuration_forms/sentenial/SentinelStepConfiguration";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+
 function StepToolConfiguration({
   pipeline,
   editItem,
@@ -1103,11 +1105,24 @@ function StepToolConfiguration({
     }
   };
 
+  const getTitleText = () => {
+    let titleText = "";
+
+    if (hasStringValue(stepName) === true) {
+      titleText += `${stepName}: `;
+    }
+
+    if (hasStringValue(stepTool?.tool_identifier)) {
+      titleText += stepTool.tool_identifier;
+    }
+
+    return titleText;
+  };
+
   return (
     <div>
       <div className="title-text-5 upper-case-first mb-3">
-        {typeof stepName !== "undefined" ? stepName + ": " : null}
-        {typeof stepTool !== "undefined" ? stepTool.tool_identifier : null}
+        {getTitleText()}
       </div>
 
       {typeof stepTool !== "undefined" ? (
