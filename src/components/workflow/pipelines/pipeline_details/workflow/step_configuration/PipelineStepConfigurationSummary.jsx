@@ -171,7 +171,8 @@ import PmdScanPipelineStepConfigurationSummaryPanel from "./step_tool_configurat
 import pmdScanStepFormMetadata from "./step_tool_configuration_forms/pmd_scan/pmdScan-stepForm-metadata";
 import SentinelStepConfigurationSummaryPanel from "./step_tool_configuration_forms/sentenial/SentinelStepConfigurationSummaryPanel";
 import SentenialStepFormMetadata from "./step_tool_configuration_forms/sentenial/sentinel-stepForm-metadata";
-import {sonarPipelineStepMetadata} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStepConfigurationMetadata";
+import sonarPipelineStepMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStep.metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
