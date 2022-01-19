@@ -1,6 +1,6 @@
-export default (keys, colors) => ({
+export default (keys, colors, newChartColors) => ({
   keys,
-  colors,
+  colors: newChartColors,
   indexBy: "date",
   forceSquare: true,
   cellOpacity: 1,
