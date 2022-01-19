@@ -112,6 +112,7 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         activeTab={activeTab}
         handleTabClick={handleTabClick}
       />
+      {/* Keep logs and usage as last tabs */}
       <ToolLogsTab
         toolModel={toolModel}
         activeTab={activeTab}
