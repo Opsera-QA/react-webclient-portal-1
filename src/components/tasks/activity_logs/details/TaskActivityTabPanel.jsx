@@ -53,7 +53,7 @@ function TaskActivityTabPanel({ gitTaskActivityData }) {
       case "log":
         return (
           <TaskActivityConsoleLogPanel
-            task={gitTaskActivityData}
+            logRecord={gitTaskActivityData}
           />
         );
       case "json":
