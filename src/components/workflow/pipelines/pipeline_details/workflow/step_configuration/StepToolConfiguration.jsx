@@ -451,15 +451,13 @@ function StepToolConfiguration({
       case "sonar":
         return (
           <SonarStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
+            pipelineId={pipeline?._id}
+            plan={pipeline?.workflow?.plan}
             stepId={stepId}
             stepTool={stepTool}
             parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
             createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
+            handleCloseFunction={closeEditorPanel}
           />
         );
       case "command-line":
@@ -472,8 +470,6 @@ function StepToolConfiguration({
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
             createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
           />
         );
