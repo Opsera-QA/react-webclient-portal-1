@@ -40,7 +40,7 @@ export const getTableTextColumnWithoutField = (header, id, maxWidth) => {
   };
 };
 
-export const getTableTextColumn = (field, className, maxWidth = undefined, filterType ) => {
+export const getTableTextColumn = (field, className, maxWidth = undefined, filterType, tooltipTemplateFunction ) => {
   let header = getColumnHeader(field);
 
   if (filterType) {
@@ -51,6 +51,7 @@ export const getTableTextColumn = (field, className, maxWidth = undefined, filte
     header: header,
     id: getColumnId(field),
     class: className ? className : undefined,
+    tooltipTemplate: tooltipTemplateFunction,
     maxWidth: maxWidth,
     template: function (rawData, row) {
       return row ? row.getData(field?.id) : "";

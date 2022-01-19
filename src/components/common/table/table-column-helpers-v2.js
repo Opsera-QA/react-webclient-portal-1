@@ -38,7 +38,7 @@ export const getTableTextColumnWithoutField = (header, id) => {
   };
 };
 
-export const getTableTextColumn = (field, className, maxWidth = undefined, filterType ) => {
+export const getTableTextColumn = (field, className, maxWidth = undefined, filterType, tooltipTemplateFunction ) => {
   let header = getColumnHeader(field);
 
   if (filterType) {
@@ -48,6 +48,7 @@ export const getTableTextColumn = (field, className, maxWidth = undefined, filte
   return {
     header: header,
     id: getColumnId(field),
+    tooltipTemplate: tooltipTemplateFunction,
     class: className,
     maxWidth: maxWidth
   };
@@ -116,7 +117,7 @@ export const getTableDateColumn = (field, className, width = 150) => {
   };
 };
 
-export const getTableDateTimeColumn = (field, className, width = 175, showFilter) => {
+export const getTableDateTimeColumn = (field, className, width = 175, showFilter, tooltipTemplateFunction) => {
   let header = getColumnHeader(field);
 
   if (showFilter) {
@@ -130,6 +131,7 @@ export const getTableDateTimeColumn = (field, className, width = 175, showFilter
     // TODO: Figure out why date format isn't working and convert to using that.
     // type: "date",
     // format: "%Y-%M-%d %h:%m %a",/
+    tooltipTemplate: tooltipTemplateFunction,
     template: function (text, row, col) {
       return text ? format(new Date(text), "yyyy-MM-dd', 'hh:mm a") : "";
     },
@@ -413,12 +415,13 @@ export const getTableBooleanIconColumn = (field, className, width = 60) => {
   };
 };
 
-export const getTableActiveBooleanIconColumn = (field, className, width = 60) => {
+export const getTableActiveBooleanIconColumn = (field, className, width = 60, tooltipTemplateFunction) => {
   return {
     header: getColumnHeader(field),
     id: getColumnId(field),
     align: "center",
     width: width,
+    tooltipTemplate: tooltipTemplateFunction,
     template: function (text) {
       if (text === true) {
         return (
