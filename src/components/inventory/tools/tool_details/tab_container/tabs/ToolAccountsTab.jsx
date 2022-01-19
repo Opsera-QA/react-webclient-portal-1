@@ -5,6 +5,7 @@ import {faUsers} from "@fortawesome/pro-light-svg-icons";
 
 const ACCOUNT_SUPPORTED_TOOL_IDENTIFIERS = [
   "jenkins",
+  "github",
   "gitlab",
   "bitbucket",
 ];
