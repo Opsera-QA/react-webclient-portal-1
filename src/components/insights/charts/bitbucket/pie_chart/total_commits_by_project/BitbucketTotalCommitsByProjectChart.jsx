@@ -7,6 +7,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import { defaultConfig, getColorByData, assignStandardColors,
          shortenPieChartLegend } from '../../../charts-views';
 function BitbucketTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -46,7 +47,6 @@ function BitbucketTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfigura
         kpiConfiguration,
         dashboardTags
       );
-
       let dataObject = response?.data?.data[0]?.bitbucketTotalCommitsChart?.data;
       assignStandardColors(dataObject);
       shortenPieChartLegend(dataObject);
@@ -73,7 +73,7 @@ function BitbucketTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfigura
         <ResponsivePie
           data={metrics}
           {...defaultConfig()}
-          {...config(getColorByData)}
+          {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
           onClick={() => setShowModal(true)}
         />
       </div>
