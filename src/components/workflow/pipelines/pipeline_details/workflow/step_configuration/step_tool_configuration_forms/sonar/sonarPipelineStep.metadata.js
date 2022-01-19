@@ -1,6 +1,6 @@
 import {SONAR_JOB_TYPES} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepJobTypeSelectInput";
 
-const sonarPipelineStepMetadata = {
+export const sonarPipelineStepMetadata = {
   type: "Sonar Pipeline Step Configuration",
   fields: [
     {
@@ -166,5 +166,3 @@ const sonarPipelineStepMetadata = {
     stepIdXml: "",
   }
 };
-
-export default sonarPipelineStepMetadata;
