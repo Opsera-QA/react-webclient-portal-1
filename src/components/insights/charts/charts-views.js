@@ -1,4 +1,5 @@
 import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 
 export const mainColor = "#5B5851";
 export let mainGold,
@@ -25,6 +26,14 @@ export const standardColors = [
   "#1E1D1B",
 ];
 export const gradationalColors = ["#B1AeA7", "#7A756C", mainColor, "#1E1D1B"];
+
+export const newChartColors = [ 
+  METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_1,
+  METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2,
+  METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_3,
+  METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_4,
+  METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_5
+];
 
 export const statusColors = {
   success: "#00897b",
