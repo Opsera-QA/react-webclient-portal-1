@@ -1,12 +1,12 @@
 import {SONAR_JOB_TYPES} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepJobTypeSelectInput";
 
-export const sonarPipelineStepMetadata = {
+const sonarPipelineStepMetadata = {
   type: "Sonar Pipeline Step Configuration",
   fields: [
     {
-      label: "Step Tool",
+      label: "Jenkins Tool",
       id: "toolConfigId",
-      isRequired: true
+      isRequired: true,
     },
     {
       label: "Job Type",
@@ -128,7 +128,7 @@ export const sonarPipelineStepMetadata = {
     },
   ],
   newObjectFields: {
-    jobType: "", //hardcoded, every step wil have a hardcoded jobType is what i know needs to check with Todd.
+    jobType: "",
     toolConfigId: "",
     jenkinsUrl: "",
     jenkinsPort: "",
@@ -138,13 +138,12 @@ export const sonarPipelineStepMetadata = {
     toolJobId: "",
     toolJobType: "",
     projectKey: "",
-
     accountUsername: "",
     projectId: "",
     defaultBranch: "",
     dockerName: "",
     dockerTagName: "",
-    buildType: "gradle", //hardcoded now but needs to get it from a dropdown
+    buildType: "gradle",
     gitToolId: "",
     repoId: "",
     gitUrl: "",
@@ -167,3 +166,5 @@ export const sonarPipelineStepMetadata = {
     stepIdXml: "",
   }
 };
+
+export default sonarPipelineStepMetadata;
