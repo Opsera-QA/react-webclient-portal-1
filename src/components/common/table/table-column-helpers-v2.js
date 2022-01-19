@@ -413,6 +413,25 @@ export const getTableBooleanIconColumn = (field, className, width = 60) => {
   };
 };
 
+export const getTableActiveBooleanIconColumn = (field, className, width = 60) => {
+  return {
+    header: getColumnHeader(field),
+    id: getColumnId(field),
+    align: "center",
+    width: width,
+    template: function (text) {
+      if (text === true) {
+        return (
+          `<i class="fal fa-check-circle green cell-icon vertical-align-item"></i>`
+        );
+      }
+
+      return "";
+    },
+    htmlEnable: true,
+    class: className ? className : "text-left"
+  };
+};
 
 export const getCountColumnWithoutField = (header, id, className) => {
   return {
