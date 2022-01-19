@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
-import GitTaskTaskActivityTabPanel from "components/tasks/activity_logs/details/TaskActivityTabPanel";
+import TaskActivityTabPanel from "components/tasks/activity_logs/details/TaskActivityTabPanel";
 
 function TaskActivityDetailViewer({ gitTaskActivityData, showModal, setShowModal }) {
   const handleClose = () => {
@@ -19,7 +19,7 @@ function TaskActivityDetailViewer({ gitTaskActivityData, showModal, setShowModal
         </Modal.Header>
         <Modal.Body>
           <div className="m-3 shaded-panel">
-            <GitTaskTaskActivityTabPanel gitTaskActivityData={gitTaskActivityData} />
+            <TaskActivityTabPanel gitTaskActivityData={gitTaskActivityData} />
           </div>
         </Modal.Body>
         <Modal.Footer>

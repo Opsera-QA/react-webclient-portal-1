@@ -27,7 +27,7 @@ function TaskActivityTabPanel({ gitTaskActivityData }) {
 
   const getActionSpecificTab = () => {
     // TODO: Make switch statement if a handful are added
-    if (gitTaskActivityData.log_type === "console log") {
+    if (gitTaskActivityData?.log_type === "console log") {
       return (<ConsoleLogTab activeTab={activeTab} handleTabClick={handleTabClick} />);
     }
   };
