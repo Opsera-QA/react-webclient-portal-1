@@ -130,6 +130,20 @@
     overflow-y: auto;
 }
 
+.overlay-console-log-container {
+    min-height: calc(100vh - 335px);
+    height: calc(100vh - 335px);
+    max-height: calc(100vh - 335px);
+    overflow-y: hidden;
+}
+
+.overlay-console-log-container-tabs, .overlay-console-log-container-body {
+    min-height: calc(100vh - 335px);
+    height: calc(100vh - 335px);
+    max-height: calc(100vh - 335px);
+    overflow-y: auto;
+}
+
 /* Console Log Container Styling */
 
 /* Metric Container Styling */

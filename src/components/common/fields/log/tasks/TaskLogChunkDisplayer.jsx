@@ -89,7 +89,7 @@ function TaskLogChunkDisplayer(
   };
 
   return (
-    <div>
+    <div className={"h-100"}>
       {getBody()}
     </div>
   );
