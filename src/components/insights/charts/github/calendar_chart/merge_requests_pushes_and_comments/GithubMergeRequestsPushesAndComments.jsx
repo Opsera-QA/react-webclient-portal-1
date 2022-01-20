@@ -79,7 +79,7 @@ function GithubMergeRequestsPushesAndComments({ kpiConfiguration, setKpiConfigur
             onClick={() => setShowModal(true)}
             tooltip={({ day, value, color }) => <ChartTooltip 
                                           titles = {[day]}
-                                          values = {[`${value} ${value > 1 ? "contributions" : "contribution}(s)"}`]}
+                                          values = {[`${value !== "undefined" ? value : 0 } ${value > 1 ? "contributions" : "contribution(s)"}`]}
                                           style = {false}
                                           color = {color} />}
           />
