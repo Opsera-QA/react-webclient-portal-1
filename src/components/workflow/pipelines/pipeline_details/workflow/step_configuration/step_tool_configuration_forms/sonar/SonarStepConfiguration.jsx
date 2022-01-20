@@ -130,6 +130,10 @@ function SonarStepConfiguration({
 
     return (
       <>
+        <SonarStepJenkinsToolAccountSelectInput
+          model={sonarStepModel}
+          setModel={setSonarStepModel}
+        />
         <SonarStepBitbucketWorkspaceSelectInput
           model={sonarStepModel}
           setModel={setSonarStepModel}
@@ -139,6 +143,10 @@ function SonarStepConfiguration({
           setModel={setSonarStepModel}
         />
         <SonarStepBranchSelectInput
+          model={sonarStepModel}
+          setModel={setSonarStepModel}
+        />
+        <SonarStepSonarSourcePathTextAreaInput
           model={sonarStepModel}
           setModel={setSonarStepModel}
         />
@@ -165,10 +173,6 @@ function SonarStepConfiguration({
             setModel={setSonarStepModel}
             jenkinsToolId={sonarStepModel?.getData("toolConfigId")}
           />
-          <SonarStepJenkinsToolAccountSelectInput
-            model={sonarStepModel}
-            setModel={setSonarStepModel}
-          />
           <BooleanToggleInput
             fieldName={"isScanBranch"}
             dataObject={sonarStepModel}
@@ -183,10 +187,6 @@ function SonarStepConfiguration({
             fieldName={"projectKey"}
             dataObject={sonarStepModel}
             setDataObject={setSonarStepModel}
-          />
-          <SonarStepSonarSourcePathTextAreaInput
-            model={sonarStepModel}
-            setModel={setSonarStepModel}
           />
           <BooleanToggleInput
             fieldName={"workspaceDeleteFlag"}
