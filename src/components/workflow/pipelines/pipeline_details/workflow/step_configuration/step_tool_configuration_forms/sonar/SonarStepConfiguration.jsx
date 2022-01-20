@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import SonarStepJenkinsToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepJenkinsToolSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import sonarPipelineStepMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStep.metadata";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SonarStepJobTypeSelectInput
   , {SONAR_JOB_TYPES} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepJobTypeSelectInput";
@@ -28,16 +26,19 @@ import SonarStepBranchSelectInput
 import SonarStepSonarSourcePathTextAreaInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepSonarSourcePathTextAreaInput";
 import PipelineStepSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineStepSelectInput";
+import sonarPipelineStepMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStep.metadata";
 
-function SonarStepConfiguration({
-  stepTool,
-  pipelineId,
-  plan,
-  stepId,
-  parentCallback,
-  handleCloseFunction,
-  createJob,
-}) {
+function SonarStepConfiguration(
+  {
+    stepTool,
+    pipelineId,
+    plan,
+    stepId,
+    parentCallback,
+    handleCloseFunction,
+    createJob,
+  }) {
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [sonarStepModel, setSonarStepModel] = useState(undefined);
@@ -131,6 +132,10 @@ function SonarStepConfiguration({
 
     return (
       <>
+        <SonarStepJenkinsToolAccountSelectInput
+          model={sonarStepModel}
+          setModel={setSonarStepModel}
+        />
         <SonarStepBitbucketWorkspaceSelectInput
           model={sonarStepModel}
           setModel={setSonarStepModel}
@@ -140,6 +145,10 @@ function SonarStepConfiguration({
           setModel={setSonarStepModel}
         />
         <SonarStepBranchSelectInput
+          model={sonarStepModel}
+          setModel={setSonarStepModel}
+        />
+        <SonarStepSonarSourcePathTextAreaInput
           model={sonarStepModel}
           setModel={setSonarStepModel}
         />
@@ -166,10 +175,6 @@ function SonarStepConfiguration({
             setModel={setSonarStepModel}
             jenkinsToolId={sonarStepModel?.getData("toolConfigId")}
           />
-          <SonarStepJenkinsToolAccountSelectInput
-            model={sonarStepModel}
-            setModel={setSonarStepModel}
-          />
           <BooleanToggleInput
             fieldName={"isScanBranch"}
             dataObject={sonarStepModel}
@@ -184,10 +189,6 @@ function SonarStepConfiguration({
             fieldName={"projectKey"}
             dataObject={sonarStepModel}
             setDataObject={setSonarStepModel}
-          />
-          <SonarStepSonarSourcePathTextAreaInput
-            model={sonarStepModel}
-            setModel={setSonarStepModel}
           />
           <BooleanToggleInput
             fieldName={"workspaceDeleteFlag"}

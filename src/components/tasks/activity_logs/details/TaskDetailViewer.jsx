@@ -8,6 +8,7 @@ import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import Model from "core/data_model/model";
 import taskActions from "components/tasks/task.actions";
+import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 
 function TaskDetailViewer({ taskActivityLogId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -72,7 +73,7 @@ function TaskDetailViewer({ taskActivityLogId }) {
   };
 
   return (
-    <CenterOverlayContainer
+    <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
       titleText={`Task Details`}
@@ -82,7 +83,7 @@ function TaskDetailViewer({ taskActivityLogId }) {
       <div className="m-3 shaded-panel">
         <TaskActivityTabPanel gitTaskActivityData={taskData?.data} />
       </div>
-    </CenterOverlayContainer>
+    </FullScreenCenterOverlayContainer>
   );
 }
 
