@@ -26,6 +26,7 @@ export const TOOL_DETAIL_PANEL_TABS = {
   CONNECTION: "connection",
   JOBS: "jobs",
   LOGS: "logs",
+  MAPPING: "mapping",
   ORGANIZATIONS: "organizations",
   PATHS: "paths",
   PROJECTS: "projects",
@@ -35,7 +36,6 @@ export const TOOL_DETAIL_PANEL_TABS = {
   SUMMARY: "summary",
   USAGE: "usage",
   VAULT: "vault",
-  MAPPING: "mapping",
 };
 
 
