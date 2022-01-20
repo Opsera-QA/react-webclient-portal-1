@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import GitTaskTaskActivityTabPanel from "components/tasks/activity_logs/details/TaskActivityTabPanel";
+import TaskActivityTabPanel from "components/tasks/activity_logs/details/TaskActivityTabPanel";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -80,7 +80,7 @@ function TaskDetailViewer({ taskActivityLogId }) {
       isLoading={isLoading}
     >
       <div className="m-3 shaded-panel">
-        <GitTaskTaskActivityTabPanel gitTaskActivityData={taskData?.data} />
+        <TaskActivityTabPanel gitTaskActivityData={taskData?.data} />
       </div>
     </CenterOverlayContainer>
   );

@@ -58,13 +58,13 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
 
   const calculateTrend = (maintainibility) => {
     if (maintainibility.currentScanIssuesCount || !maintainibility.previousScanIssuesCount) {
-      return "-";
+      return "";
     } else if (maintainibility.currentScanIssuesCount > maintainibility.previousScanIssuesCount) {
-      return "green";
+      return "Green";
     } else if (maintainibility.currentScanIssuesCount < maintainibility.previousScanIssuesCount) {
-      return "red";
+      return "Red";
     } else {
-      return "neutral";
+      return "Neutral";
     }
   };
 
@@ -100,7 +100,7 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
           }))
         );
         let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", sonarMaintainability.length);
+        newFilterDto.setData("totalCount", response?.data?.data[0]?.sonarCodeSmells?.data[0]?.count[0]?.count);
         setFilterModel({ ...newFilterDto });
         setIssueTypeData(response?.data?.data[0]?.sonarCodeSmells?.data[0]?.typeData[0]);
         setFooterData(response?.data?.data[0]?.sonarCodeSmells?.data[0]?.debtData[0]);

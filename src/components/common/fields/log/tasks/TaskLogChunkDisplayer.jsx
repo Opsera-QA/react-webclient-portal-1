@@ -5,12 +5,15 @@ import axios from "axios";
 import taskActions from "components/tasks/task.actions";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
-// TODO: This needs to be tailored to Pipeline Field
-function ChunkedTaskLogField({taskId, runCount}) {
+function TaskLogChunkDisplayer(
+  {
+    chunkNumber,
+    logMetaRecordId,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [consoleLogs, setConsoleLogs] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [logData, setLogData] = useState(undefined);
@@ -26,7 +29,7 @@ function ChunkedTaskLogField({taskId, runCount}) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    if (isMongoDbId(taskId)) {
+    if (isMongoDbId(logMetaRecordId) && typeof chunkNumber === "number") {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -38,12 +41,12 @@ function ChunkedTaskLogField({taskId, runCount}) {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [chunkNumber]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getPipelineTaskData(cancelSource);
+      await getTaskChunk(cancelSource);
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -58,37 +61,43 @@ function ChunkedTaskLogField({taskId, runCount}) {
     }
   };
 
-  const getPipelineTaskData = async (cancelSource = cancelTokenSource) => {
-    // const response = await taskActions.getTaskActivityMetaRecordById(getAccessToken, cancelSource, taskId, runCount);
-    const response = await taskActions.getTaskActivityChunkCount(getAccessToken, cancelSource, taskId, runCount);
-    console.log("response: " + JSON.stringify(response));
-    const pipelineActivityLogData = response?.data?.data;
+  const getTaskChunk = async (cancelSource = cancelTokenSource) => {
+    const response = await taskActions.getTaskActivityChunk(getAccessToken, cancelSource, logMetaRecordId, chunkNumber);
+    const taskLogChunk = response?.data?.data?.data;
 
+    if (taskLogChunk) {
+      setLogData(taskLogChunk);
+    }
+  };
+
+  const getBody = () => {
+    if (isLoading) {
+      return (
+        <div>Loading Log</div>
+      );
+    }
+
+    if (hasStringValue(logData) !== true) {
+      return (
+        <div>
+          There was no log data associated with this log record
+        </div>
+      );
+    }
+
+    return (logData);
   };
 
   return (
     <div>
-      <div className="m-2">
-        {/*<div className="float-right mr-2">*/}
-        {/*  <span>{getFormattedTimestamp(dataObject?.createdAt)}</span>*/}
-        {/*</div>*/}
-        {/*<span><span className="text-muted ml-2">Step: </span> {dataObject?.step_name}</span>*/}
-      </div>
-      <div className={"my-2"}>
-        {/*{getBody()}*/}
-      </div>
-      <div className={"my-2"}>
-        {/*<StandaloneConsoleLogsDisplayer*/}
-        {/*  consoleLogs={consoleLogs}*/}
-        {/*/>*/}
-      </div>
+      {getBody()}
     </div>
   );
 }
 
-ChunkedTaskLogField.propTypes = {
-  taskId: PropTypes.string,
-  runCount: PropTypes.number,
+TaskLogChunkDisplayer.propTypes = {
+  logMetaRecordId: PropTypes.string,
+  chunkNumber: PropTypes.number,
 };
 
-export default ChunkedTaskLogField;
+export default TaskLogChunkDisplayer;

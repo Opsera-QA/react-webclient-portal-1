@@ -5,16 +5,24 @@ import axios from "axios";
 import taskActions from "components/tasks/task.actions";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import {getFormattedTimestamp} from "components/common/fields/date/DateFieldBase";
+import LoadingDialog from "components/common/status_notifications/loading";
+import MultipleTaskChunksContainer from "components/common/fields/log/tasks/MultipleTaskChunksContainer";
 
 // TODO: This needs to be tailored to Pipeline Field
-function GridFsLogField({gridFsLogRecordId}) {
+function ChunkedTaskLogField(
+  {
+    logRecord,
+    logMetaRecordId,
+    taskId,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [consoleLogs, setConsoleLogs] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [logData, setLogData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(undefined);
+  const [chunkCount, setChunkCount] = useState(0);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -26,7 +34,7 @@ function GridFsLogField({gridFsLogRecordId}) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    if (isMongoDbId(gridFsLogRecordId)) {
+    if (isMongoDbId(taskId)) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -59,34 +67,37 @@ function GridFsLogField({gridFsLogRecordId}) {
   };
 
   const getPipelineTaskData = async (cancelSource = cancelTokenSource) => {
-    const response = await taskActions.getTaskActivityGridFsLogById(getAccessToken, cancelSource, gridFsLogRecordId);
-    console.log("response: " + JSON.stringify(response));
-    const pipelineActivityLogData = response?.data?.data;
+    const response = await taskActions.getTaskActivityChunkCount(getAccessToken, cancelSource, logMetaRecordId);
+    const count = response?.data?.count;
 
+    if (typeof count === "number") {
+      setChunkCount(count);
+    }
   };
 
   return (
     <div>
       <div className="m-2">
-        {/*<div className="float-right mr-2">*/}
-        {/*  <span>{getFormattedTimestamp(dataObject?.createdAt)}</span>*/}
-        {/*</div>*/}
-        {/*<span><span className="text-muted ml-2">Step: </span> {dataObject?.step_name}</span>*/}
+        <div className="float-right mr-2">
+          <span>{getFormattedTimestamp(logRecord?.createdAt)}</span>
+        </div>
+        <span><span className="text-muted ml-2">Step: </span> {logRecord?.step_name}</span>
       </div>
       <div className={"my-2"}>
-        {/*{getBody()}*/}
-      </div>
-      <div className={"my-2"}>
-        {/*<StandaloneConsoleLogsDisplayer*/}
-        {/*  consoleLogs={consoleLogs}*/}
-        {/*/>*/}
+        <MultipleTaskChunksContainer
+          isLoading={isLoading}
+          logMetaRecordId={logMetaRecordId}
+          chunkCount={chunkCount}
+        />
       </div>
     </div>
   );
 }
 
-GridFsLogField.propTypes = {
-  gridFsLogRecordId: PropTypes.string,
+ChunkedTaskLogField.propTypes = {
+  logRecord: PropTypes.object,
+  logMetaRecordId: PropTypes.string,
+  taskId: PropTypes.string,
 };
 
-export default GridFsLogField;
+export default ChunkedTaskLogField;
