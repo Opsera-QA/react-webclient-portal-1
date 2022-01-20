@@ -8,8 +8,8 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, gradationalColors } from '../../../charts-views';
-import ChartTooltip from '../../../ChartTooltip';
+import { defaultConfig, gradationalColors } from "../../../charts-views";
+import ChartTooltip from "../../../ChartTooltip";
 
 function BitbucketMergeRequestsPushesAndComments({
   kpiConfiguration,
@@ -46,7 +46,8 @@ function BitbucketMergeRequestsPushesAndComments({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -60,7 +61,6 @@ function BitbucketMergeRequestsPushesAndComments({
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
       }
-
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -83,11 +83,14 @@ function BitbucketMergeRequestsPushesAndComments({
           {...defaultConfig("", "", false, false, "", "", true)}
           {...config(gradationalColors, new Date(), METRIC_THEME_CHART_PALETTE_COLORS)}
           onClick={() => setShowModal(true)}
-          tooltip={({ day, value, color }) => <ChartTooltip 
-                                        titles = {[day]}
-                                        values = {[`${value} ${value > 1 ? "contributions" : "contribution}(s)"}`]}
-                                        style = {false}
-                                        color = {color} />}
+          tooltip={({ day, value, color }) => (
+            <ChartTooltip
+              titles={[day]}
+              values={[`${value !== "undefined" ? value : 0} ${value > 1 ? "contributions" : "contribution(s)"}`]}
+              style={false}
+              color={color}
+            />
+          )}
         />
       </div>
     );
