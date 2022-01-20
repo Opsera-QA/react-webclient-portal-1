@@ -92,6 +92,10 @@
     z-index: 1600 !important;
 }
 
+.dhx_tooltip {
+    z-index: 9999 !important;
+}
+
 /* End Select input styling */
 
 /* Summary Card Styling */
