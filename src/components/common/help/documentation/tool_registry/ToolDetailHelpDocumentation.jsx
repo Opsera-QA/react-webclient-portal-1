@@ -23,7 +23,7 @@ function ToolDetailHelpDocumentation() {
               <li><b>Repositories</b> - Add, modify or delete tool repositories. These repositories can be entered once and reused across the Opsera platform.</li>
               <li><b>Jobs</b> - Manage the tool jobs. Create settings for custom jobs to be triggered in Pipeline steps (when configuring a pipeline). These settings can be entered once and reused across the Opsera platform.</li>
               <li><b>Accounts</b> - Register account credentials in the tool for use in pipelines. Adding accounts here will make them available inside relevant Pipeline steps.</li>
-              <li><b>Paths</b> - Specify the repository package path from which components can be retrieved from in Salesforce Pipeline Wizard.</li>
+              <li><b>Paths</b> - Specify the repository package path from which components can be retrieved in Salesforce Pipeline Wizard.</li>
               <li><b>Logs</b> - View log activity for actions performed against this tool. This includes creation or deletion of jobs and applications and account registration.</li>
               <li><b>Applications</b> - Create and manage applications in the tool.</li>
               <li><b>Usage</b> - View and navigate to all pipelines in which this tool is being used.</li>
