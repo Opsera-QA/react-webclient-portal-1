@@ -29,15 +29,16 @@ import PipelineStepSelectInput from "components/common/list_of_values_input/work
 import sonarPipelineStepMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStep.metadata";
 
-function SonarStepConfiguration({
-  stepTool,
-  pipelineId,
-  plan,
-  stepId,
-  parentCallback,
-  handleCloseFunction,
-  createJob,
-}) {
+function SonarStepConfiguration(
+  {
+    stepTool,
+    pipelineId,
+    plan,
+    stepId,
+    parentCallback,
+    handleCloseFunction,
+    createJob,
+  }) {
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [sonarStepModel, setSonarStepModel] = useState(undefined);
