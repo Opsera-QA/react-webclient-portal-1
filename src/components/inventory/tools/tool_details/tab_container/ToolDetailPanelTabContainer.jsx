@@ -16,6 +16,7 @@ import ToolStorageTab from "components/inventory/tools/tool_details/tab_containe
 import ToolUsageTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolUsageTab";
 import ToolServiceTypeMappingTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolServiceTypeMappingTab";
 import ToolPathsTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolPathsTab";
+import ToolOrganizationsTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolOrganizationsTab";
 
 export const TOOL_DETAIL_PANEL_TABS = {
   ACCOUNTS: "accounts",
@@ -25,7 +26,7 @@ export const TOOL_DETAIL_PANEL_TABS = {
   CONNECTION: "connection",
   JOBS: "jobs",
   LOGS: "logs",
-  MAPPING: "mapping",
+  ORGANIZATIONS: "organizations",
   PATHS: "paths",
   PROJECTS: "projects",
   REPOSITORIES: "repositories",
@@ -34,6 +35,7 @@ export const TOOL_DETAIL_PANEL_TABS = {
   SUMMARY: "summary",
   USAGE: "usage",
   VAULT: "vault",
+  MAPPING: "mapping",
 };
 
 
@@ -45,8 +47,8 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         activeTab={activeTab}
       />
       <ToolAttributesTab
-      handleTabClick={handleTabClick}
-      activeTab={activeTab}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
       />
       <ToolVaultTab
         toolModel={toolModel}
@@ -98,14 +100,24 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         activeTab={activeTab}
         handleTabClick={handleTabClick}
       />
-      <ToolServiceTypeMappingTab
+      <ToolStorageTab
         toolModel={toolModel}
-        activeTab={activeTab}      
+        activeTab={activeTab}
         handleTabClick={handleTabClick}
       />
       <ToolUsageTab
         handleTabClick={handleTabClick}
         activeTab={activeTab}
+      />
+      <ToolServiceTypeMappingTab
+        toolModel={toolModel}
+        activeTab={activeTab}      
+        handleTabClick={handleTabClick}
+      />
+      <ToolOrganizationsTab
+        toolModel={toolModel}
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
       />
     </CustomTabContainer>
   );

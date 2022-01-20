@@ -26,11 +26,12 @@ import HashicorpVaultToolConfiguration from "./tool_jobs/hashicorp_vault/Hashico
 import KafkaConnectToolConfiguration from "./tool_jobs/kafka_connect/KafkaConnectToolConfiguration";
 import CoverityToolConfiguration from "./tool_jobs/coverity/CoverityToolConfiguration";
 import TwistlockToolConfiguration from "./tool_jobs/twistlock/TwistlockToolConfiguration";
-import MongodbRealmToolConfiguration from "./tool_jobs/mongodb_realm/MongodbRealmToolConfiguration";
-import AnsibleToolConfiguration from "./tool_jobs/ansible/AnsibleToolConfiguration";
 import AzureV2ToolConfiguration from "./tool_jobs/azureV2/AzureV2ToolConfiguration";
+import AnsibleToolConfiguration from "./tool_jobs/ansible/AnsibleToolConfiguration";
+import MongodbRealmToolConfiguration from "./tool_jobs/mongodb_realm/MongodbRealmToolConfiguration";
 import FlywayDatabaseToolConfiguration from "./tool_jobs/flyway_database/FlywayDatabaseToolConfiguration";
 import InformaticaToolConfiguration from "./tool_jobs/informatica/InformaticaToolConfiguration";
+import TerraformCloudToolConfiguration from "./tool_jobs/terraform_cloud/TerraformCloudToolConfiguration";
 
 function ToolConnectionPanel({ toolData }) {
   const getConnectionPanel = () => {
@@ -59,8 +60,6 @@ function ToolConnectionPanel({ toolData }) {
         return <AnchoreScanToolConfiguration toolData={toolData} />;
       case "anchore-integrator":
         return <AnchoreIntegratorToolConfiguration toolData={toolData} />;
-      case "ansible":
-        return <AnsibleToolConfiguration toolData={toolData} />;
       case "sonar":
         return <SonarToolConfiguration toolData={toolData} />;
       case "aws_account":
@@ -92,14 +91,18 @@ function ToolConnectionPanel({ toolData }) {
         return <CoverityToolConfiguration toolData={toolData} />;
       case "twistlock":
         return <TwistlockToolConfiguration toolData={toolData} />;
-      case "mongodb_realm":        
-        return <MongodbRealmToolConfiguration toolData={toolData} />;
       case "azure":
         return <AzureV2ToolConfiguration toolData={toolData} />;
+      case "ansible":
+        return <AnsibleToolConfiguration toolData={toolData} />;
+      case "mongodb_realm":        
+        return <MongodbRealmToolConfiguration toolData={toolData} />;
       case "flyway-database-migrator":
         return <FlywayDatabaseToolConfiguration toolData={toolData} />;
       case "informatica":
         return <InformaticaToolConfiguration toolData={toolData} />;
+      case "terraform-cloud":
+        return <TerraformCloudToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
     }

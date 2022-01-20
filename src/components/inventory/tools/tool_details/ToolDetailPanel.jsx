@@ -20,6 +20,8 @@ import ToolDetailPanelTabContainer
   , {TOOL_DETAIL_PANEL_TABS} from "components/inventory/tools/tool_details/tab_container/ToolDetailPanelTabContainer";
 import ToolPathsPanel from "components/inventory/tools/tool_details/paths/ToolPathsPanel";
 import ToolServiceTypeMappingPanel from "components/inventory/tools/tool_details/ToolServiceTypeMappingPanel";
+import ToolOrganizationsPanel from "./ToolOrganizationsPanel";
+
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
@@ -115,14 +117,6 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
             toolData={toolData}
           />
         );
-      case TOOL_DETAIL_PANEL_TABS.MAPPING:
-        return (
-          <ToolServiceTypeMappingPanel
-            toolData={toolData}
-            setToolData={setToolData}
-            loadData={loadData}
-          />
-        );
       case TOOL_DETAIL_PANEL_TABS.PATHS:
         return (
           <ToolPathsPanel
@@ -163,6 +157,14 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
             loadData={loadData}
           />
         );
+      case TOOL_DETAIL_PANEL_TABS.ORGANIZATIONS:
+        return (
+          <ToolOrganizationsPanel
+            toolData={toolData}
+            setToolData={setToolData}
+            loadData={loadData}
+          />
+        );
       case TOOL_DETAIL_PANEL_TABS.SUMMARY:
         return (
           <ToolSummaryPanel
@@ -183,6 +185,14 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
           <ToolVaultPanel
             toolData={toolData}
             setToolData={setToolData}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.MAPPING:
+        return (
+          <ToolServiceTypeMappingPanel 
+            toolData={toolData}
+            setToolData={setToolData}
+            loadData={loadData}
           />
         );
       default:
