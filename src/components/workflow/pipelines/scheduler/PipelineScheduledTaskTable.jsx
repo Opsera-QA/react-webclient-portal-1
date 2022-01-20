@@ -35,7 +35,7 @@ function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPagin
   };
 
   const getTooltipTemplate = () => {
-    return "testing the tool tip to see if ohhhhhhjjjjjjjjjjjjjjjjjjjj it's showing the tooltip behind the table";
+    return "Click row to view/edit details";
   };
 
   const columns = useMemo(
