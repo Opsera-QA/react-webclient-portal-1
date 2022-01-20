@@ -8,6 +8,8 @@ import Row from "react-bootstrap/Row";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import InfoContainer from "components/common/containers/InfoContainer";
 import TaskLogChunkDisplayer from "components/common/fields/log/tasks/TaskLogChunkDisplayer";
+import VanitySetTabAndViewOverlayContainer
+  from "components/common/tabs/vertical_tabs/VanitySetTabAndViewOverlayContainer";
 
 function MultipleTaskChunksContainer(
   {
@@ -52,9 +54,18 @@ function MultipleTaskChunksContainer(
 
   const getVerticalTabContainer = () => {
     return (
-      <VanitySetVerticalTabContainer className={"console-log-container-tabs"}>
+      <VanitySetVerticalTabContainer>
         {getChunkTabs()}
       </VanitySetVerticalTabContainer>
+    );
+  };
+
+  const getCurrentView = () => {
+    return (
+      <TaskLogChunkDisplayer
+        logMetaRecordId={logMetaRecordId}
+        chunkNumber={activeTab}
+      />
     );
   };
 
@@ -63,27 +74,14 @@ function MultipleTaskChunksContainer(
   }
 
   return (
-    <InfoContainer
+    <VanitySetTabAndViewOverlayContainer
       isLoading={isLoading}
       titleIcon={faLaptopCode}
       titleText={"Console Logs"}
-    >
-      <div className={"console-log-container"}>
-        <Row className={"mx-0"}>
-          <Col sm={2} className={"px-0"}>
-            {getVerticalTabContainer()}
-          </Col>
-          <Col sm={10} className={"px-0"}>
-            <div className="console-text console-log-container-body">
-              <TaskLogChunkDisplayer
-                logMetaRecordId={logMetaRecordId}
-                chunkNumber={activeTab}
-              />
-            </div>
-          </Col>
-        </Row>
-      </div>
-    </InfoContainer>
+      currentView={getCurrentView()}
+      verticalTabContainer={getVerticalTabContainer()}
+      viewClassName={"console-text"}
+    />
   );
 }
 

@@ -76,21 +76,11 @@ function ChunkedTaskLogField(
   };
 
   return (
-    <div>
-      <div className="m-2">
-        <div className="float-right mr-2">
-          <span>{getFormattedTimestamp(logRecord?.createdAt)}</span>
-        </div>
-        <span><span className="text-muted ml-2">Step: </span> {logRecord?.step_name}</span>
-      </div>
-      <div className={"my-2"}>
-        <MultipleTaskChunksContainer
-          isLoading={isLoading}
-          logMetaRecordId={logMetaRecordId}
-          chunkCount={chunkCount}
-        />
-      </div>
-    </div>
+    <MultipleTaskChunksContainer
+      isLoading={isLoading}
+      logMetaRecordId={logMetaRecordId}
+      chunkCount={chunkCount}
+    />
   );
 }
 
