@@ -18,6 +18,34 @@ analyticsActions.fetchProfile = async (getAccessToken) => {
   return response;
 };
 
+analyticsActions.getAnalyticsToolsV2 = async (getAccessToken, cancelTokenSource) => {
+  // TODO: Pass in, if necessary
+  const INDICES = [
+    "jenkins",
+    "opsera-pipeline",
+    "jira",
+    "sonar",
+    "xunit",
+    "junit",
+    "jmeter",
+    "heartbeat",
+    "codeship",
+    "gitlab",
+    "metricbeat",
+    "cypress",
+    "anchore",
+    "selenium",
+  ];
+
+  const urlParams = {
+    index: INDICES,
+  };
+
+  const apiUrl = `/analytics/index`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+
 analyticsActions.getAnalyticsSettingsV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = `/analytics/settings`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
