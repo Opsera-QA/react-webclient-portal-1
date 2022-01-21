@@ -6,8 +6,12 @@ function TerraformJobTypeSelectInput({dataObject, setDataObject, disabled}) {
 
   const JOB_TYPES = [
     {
-      name: "Execute Script",
+      name: "Execute",
       value: "EXECUTE",
+    },
+    {
+      name: "Update",
+      value: "UPDATE",
     },
     {
       name: "Delete",
