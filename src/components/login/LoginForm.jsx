@@ -148,7 +148,7 @@ const LoginForm = ({ authClient }) => {
       idps: idpValues,
       idpDisplay: "PRIMARY",
       idpDiscovery: {
-        requestContext: "about:blank" //window.location.href, //process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
+        requestContext: process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL + "/loading.html" //"about:blank"
       },
       features: {
         idpDiscovery: true,
