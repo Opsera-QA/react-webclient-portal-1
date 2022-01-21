@@ -70,7 +70,9 @@ function SonarStepConfiguration(
   const loadData = async () => {
     setIsLoading(true);
     const  threshold = stepTool?.threshold;
+    const jobType = stepTool?.job_type;
     const newSonarStepModel = modelHelpers.getPipelineStepConfigurationModel(stepTool, sonarPipelineStepMetadata);
+    newSonarStepModel.setData("job_type", jobType);
 
     setSonarStepModel(newSonarStepModel);
 
@@ -118,7 +120,7 @@ function SonarStepConfiguration(
   };
 
   const getBranchScanToggleOptionDynamicFields = () => {
-    if (sonarStepModel?.getData("isScanBranch") === false) {
+    if (sonarStepModel?.getData("isScanArtifact") === true) {
       return (
         <PipelineStepSelectInput
           model={sonarStepModel}
