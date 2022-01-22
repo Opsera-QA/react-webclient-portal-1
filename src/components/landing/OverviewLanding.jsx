@@ -161,6 +161,20 @@ function OverviewLanding() {
     }
   };
 
+  const getWelcomeText = () => {
+    let welcomeText = "Welcome Back";
+
+    if (userInfo?.firstName) {
+      welcomeText += ` ${userInfo?.firstName}`;
+    }
+
+    return (
+      <div className="h4 text-color mb-3">
+        {welcomeText}
+      </div>
+    );
+  };
+
   if (!accessRoleData) {
     return (
       <LoadingDialog
@@ -181,9 +195,7 @@ function OverviewLanding() {
           {getDataBlocks()}
         </ul>
       </div>
-      <div className="h4 text-color mb-3">
-        {`Welcome Back ${userInfo?.firstName}`}
-      </div>
+      {getWelcomeText()}
       <MyTagCloud/>
       <hr/>
       <Row className="mt-3 mr-2">
