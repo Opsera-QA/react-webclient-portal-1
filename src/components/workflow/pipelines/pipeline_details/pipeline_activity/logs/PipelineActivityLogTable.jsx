@@ -89,7 +89,6 @@ function PipelineActivityLogTable(
       <TableBase
         columns={columns}
         data={getFilteredData()}
-        isLoading={isLoading}
         noDataMessage={getNoDataMessage()}
         onRowSelect={onRowSelect}
       />

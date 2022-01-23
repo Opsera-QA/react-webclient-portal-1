@@ -86,7 +86,6 @@ TableBase.propTypes = {
 
 TableBase.defaultProps = {
   data: [],
-  isLoading: false,
   height: "500px"
 };
 

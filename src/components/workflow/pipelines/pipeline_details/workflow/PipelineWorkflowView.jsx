@@ -14,7 +14,6 @@ function PipelineWorkflowView({
   setWorkflowStatus,
   getActivityLogs,
   refreshCount,
-  setRefreshCount,
   setPipeline,
   softLoading,
 }) {
@@ -55,7 +54,6 @@ function PipelineWorkflowView({
                                     customerAccessRules={customerAccessRules}
                                     fetchData={fetchPlan}
                                     setPipeline={setPipeline}
-                                    setRefreshCount={setRefreshCount}
                                     refreshCount={refreshCount}
                                     fetchActivityLogs={getActivityLogs}
                                     setParentWorkflowStatus={setWorkflowStatus}/>
@@ -86,7 +84,6 @@ PipelineWorkflowView.propTypes = {
   getActivityLogs: PropTypes.func,
   setPipeline: PropTypes.func,
   refreshCount: PropTypes.number,
-  setRefreshCount: PropTypes.func,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   softLoading: PropTypes.bool,
 };

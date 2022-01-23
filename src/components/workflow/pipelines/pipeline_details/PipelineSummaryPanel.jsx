@@ -422,7 +422,6 @@ function PipelineSummaryPanel(
                                   customerAccessRules={customerAccessRules}
                                   fetchData={fetchPlan}
                                   setPipeline={setPipeline}
-                                  setRefreshCount={setRefreshCount}
                                   refreshCount={refreshCount}
                                   fetchActivityLogs={getActivityLogs}
                                   setParentWorkflowStatus={setWorkflowStatus} />
@@ -583,7 +582,6 @@ PipelineSummaryPanel.propTypes = {
   customerAccessRules: PropTypes.object,
   ownerName: PropTypes.string,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  setActiveTab: PropTypes.func,
   fetchPlan: PropTypes.func,
   setWorkflowStatus: PropTypes.func,
   setPipeline: PropTypes.func,
