@@ -35,7 +35,7 @@ function PipelineActionControls({
           customerAccessRules,
           disabledActionState,
           fetchData,
-          fetchActivityLogs,
+          // fetchActivityLogs,
         }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -166,7 +166,7 @@ function PipelineActionControls({
     setWorkflowStatus("stopped");
     await resetPipelineState(pipelineId);
     await fetchData();
-    await fetchActivityLogs();
+    // await fetchActivityLogs();
     setResetPipeline(false);
     setStartPipeline(false);
     await checkPipelineQueueStatus();
@@ -177,7 +177,7 @@ function PipelineActionControls({
     setWorkflowStatus("stopped");
     await stopPipelineRun(pipelineId);
     await fetchData();
-    await fetchActivityLogs();
+    // await fetchActivityLogs();
     setResetPipeline(false);
     setStartPipeline(false);
     await pipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipelineId);
@@ -211,7 +211,7 @@ function PipelineActionControls({
 
   const handleRefreshClick = async () => {
     await fetchData();
-    await fetchActivityLogs();
+    // await fetchActivityLogs();
     await checkPipelineQueueStatus();
   };
 
@@ -335,7 +335,7 @@ function PipelineActionControls({
         pipeline={pipeline}
         handleClose={handlePipelineStartWizardClose}
         handlePipelineWizardRequest={handlePipelineWizardRequest}
-        refreshPipelineActivityData={fetchActivityLogs}
+        loadPipeline={fetchData}
       />,
     );
   };

@@ -54,8 +54,7 @@ function PipelineWorkflowView({
                                     customerAccessRules={customerAccessRules}
                                     fetchData={fetchPlan}
                                     setPipeline={setPipeline}
-                                    refreshCount={refreshCount}
-                                    fetchActivityLogs={getActivityLogs}
+                                    // fetchActivityLogs={getActivityLogs}
                                     setParentWorkflowStatus={setWorkflowStatus}/>
           </div>}
         </div>

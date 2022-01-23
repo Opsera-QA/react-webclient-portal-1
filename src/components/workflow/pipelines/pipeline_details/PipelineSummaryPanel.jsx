@@ -54,9 +54,7 @@ function PipelineSummaryPanel(
     fetchPlan,
     setWorkflowStatus,
     getActivityLogs,
-    setRefreshCount,
     setPipeline,
-    refreshCount,
   }) {
   const contextType = useContext(AuthContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -422,7 +420,6 @@ function PipelineSummaryPanel(
                                   customerAccessRules={customerAccessRules}
                                   fetchData={fetchPlan}
                                   setPipeline={setPipeline}
-                                  refreshCount={refreshCount}
                                   fetchActivityLogs={getActivityLogs}
                                   setParentWorkflowStatus={setWorkflowStatus} />
 
@@ -585,8 +582,6 @@ PipelineSummaryPanel.propTypes = {
   fetchPlan: PropTypes.func,
   setWorkflowStatus: PropTypes.func,
   setPipeline: PropTypes.func,
-  refreshCount: PropTypes.number,
-  setRefreshCount: PropTypes.func,
 };
 
 export default PipelineSummaryPanel;

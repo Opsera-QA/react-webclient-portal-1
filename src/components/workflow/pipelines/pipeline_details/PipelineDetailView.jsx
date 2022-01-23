@@ -4,7 +4,7 @@ import PipelineActivityLogTreeTable
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTreeTable";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
-import { useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import PipelineWorkflowView from "./workflow/PipelineWorkflowView";
 import PipelineSummaryPanel from "./PipelineSummaryPanel";
 import axios from "axios";
@@ -12,42 +12,24 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 import pipelineActions from "components/workflow/pipeline-actions";
 import PipelineWorkflowTabBar from "components/workflow/pipelines/pipeline_details/PipelineWorkflowTabBar";
-import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
-import pipelineActivityHelpers
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-helpers";
-import pipelineActivityActions
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-actions";
 
-const refreshInterval = 15000;
-
-// TODO: Find way to refresh logs inside the log components rather than leaving all the methods in here
-//  we could instead pass refresh trigger down. 
+// TODO: This is a work in progress to move the logic for pulling activity logs into the table component
 function PipelineDetailView() {
   const { tab, id } = useParams();
   const toastContext = useContext(DialogToastContext);
-  const [pipeline, setPipeline] = useState(undefined);
-  const [activityData, setActivityData] = useState([]);
-  const [latestActivityLogs, setLatestActivityLogs] = useState([]);
-  const [secondaryActivityLogs, setSecondaryActivityLogs] = useState([]);
+  const [pipeline, setPipeline] = useState({});
   const [loading, setLoading] = useState(false);
   const [softLoading, setSoftLoading] = useState(false);
-  const [logsIsLoading, setLogsIsLoading] = useState(false);
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [editItem, setEditItem] = useState(false);
   const [refreshCount, setRefreshCount] = useState(0);
-  const [pipelineActivityFilterModel, setPipelineActivityFilterModel] = useState(new PipelineFilterModel());
-  const [pipelineActivityMetadata, setPipelineActivityMetadata] = useState(undefined);
-  const [pipelineActivityTreeData, setPipelineActivityTreeData] = useState([]);
 
-  const [refreshTimer, setRefreshTimer] = useState(null);
-  let internalRefreshCount = 1;
-
+  /* Role based Access Controls */
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
   const [customerAccessRules, setCustomerAccessRules] = useState({});
 
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [currentLogTreePage, setCurrentLogTreePage] = useState(0);
 
   useEffect(() => {
     //console.log("Effect  1");
@@ -70,27 +52,6 @@ function PipelineDetailView() {
       isMounted.current = false;
     };
   }, []);
-
-  useEffect(() => {
-    if (tab === "summary") {
-      setActivityData([]);
-      getActivityLogs().catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
-  }, [tab]);
-
-  useEffect(() => {
-    if (tab === "summary" && Array.isArray(pipelineActivityTreeData) && pipelineActivityTreeData.length > 0) {
-      pullLogData().catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
-  }, [currentLogTreePage]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -115,6 +76,7 @@ function PipelineDetailView() {
   };
 
   const getPipeline = async (cancelSource = cancelTokenSource) => {
+    console.log("in refresh pipeline");
     const newRefreshCount = refreshCount + 1;
     setRefreshCount(newRefreshCount);
 
@@ -124,7 +86,6 @@ function PipelineDetailView() {
 
     if (newPipeline) {
       setPipeline(newPipeline);
-      evaluatePipelineStatus(newPipeline);
     } else {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog("Pipeline not found");
@@ -136,131 +97,8 @@ function PipelineDetailView() {
     }
   };
 
-  const evaluatePipelineStatus = (pipeline) => {
-    console.log("evaluating pipeline status function");
-    if (!pipeline || Object.entries(pipeline).length === 0) {
-      return;
-    }
-
-    const pipelineStatus = pipeline?.workflow?.last_step?.status;
-
-    if (!pipelineStatus || pipelineStatus === "stopped") {
-      console.log("Pipeline stopped, no need to schedule refresh. Status: ", pipelineStatus);
-      return;
-    }
-
-    console.log(`Scheduling status check followup for Pipeline: ${pipeline._id}, counter: ${internalRefreshCount}, interval: ${refreshInterval} `);
-    const refreshTimer = setTimeout(async function() {
-      internalRefreshCount++;
-      console.log("running pipeline refresh interval");
-      await getPipeline();
-      await getActivityLogs(pipelineActivityFilterModel, true);
-    }, refreshInterval);
-    setRefreshTimer(refreshTimer);
-  };
-
-  // TODO: Find way to put refresh inside table itself
-  const getActivityLogs = async (newFilterModel = pipelineActivityFilterModel, silentLoading = false, cancelSource = cancelTokenSource) => {
-    if (tab !== "summary" || logsIsLoading) {
-      return;
-    }
-
-    try {
-      if (!silentLoading) {
-        setLogsIsLoading(true);
-      }
-
-      // TODO: if search term applies ignore run count and reconstruct tree?
-      const treeResponse = await pipelineActivityActions.getPipelineActivityLogTree(getAccessToken, cancelSource, id, newFilterModel);
-      const pipelineTree = pipelineActivityHelpers.constructTree(treeResponse?.data?.data);
-      setPipelineActivityTreeData([...pipelineTree]);
-
-      if (!silentLoading) {
-        setActivityData([]);
-        setSecondaryActivityLogs([]);
-        setLatestActivityLogs([]);
-      }
-
-      if (Array.isArray(pipelineTree) && pipelineTree.length > 0) {
-        await pullLogData(pipelineTree, newFilterModel, cancelSource, silentLoading);
-      }
-      else {
-        newFilterModel?.setData("totalCount", 0);
-        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
-        setPipelineActivityFilterModel({...newFilterModel});
-      }
-
-      await getLatestActivityLogs(newFilterModel, cancelSource);
-      await getSecondaryActivityLogs(newFilterModel, cancelSource);
-    } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-      console.log(error.message);
-    } finally {
-      setLogsIsLoading(false);
-    }
-  };
-
-  const pullLogData = async (pipelineTree = pipelineActivityTreeData, filterDto = pipelineActivityFilterModel, cancelSource = cancelTokenSource, silentLoading = false) => {
-    try {
-      if (!silentLoading) {
-        setLogsIsLoading(true);
-      }
-      await getActivityLogsBasedOnTree(pipelineTree, filterDto, cancelSource);
-    } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-      console.log(error.message);
-    }
-    finally {
-      setLogsIsLoading(false);
-    }
-  };
-
-  const getActivityLogsBasedOnTree = async (pipelineTree = pipelineActivityTreeData, filterDto = pipelineActivityFilterModel, cancelSource = cancelTokenSource,) => {
-    // create run count query based on tree -- tree is 0 index based
-    const startIndex = 20 * currentLogTreePage;
-    let runCountArray = [];
-
-    for (let i = startIndex; i < startIndex + 20 && i < pipelineTree.length; i++) {
-      let runCount = pipelineTree[i].runNumber;
-
-      if (runCount) {
-        runCountArray.push(runCount);
-      }
-    }
-
-    const response = await pipelineActivityActions.getPipelineActivityLogsV3(getAccessToken, cancelSource, id, runCountArray, filterDto);
-    const pipelineActivityData = response?.data?.data;
-
-    if (Array.isArray(pipelineActivityData)) {
-      setActivityData([...pipelineActivityData]);
-      setPipelineActivityMetadata(response?.data?.metadata);
-
-      const newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", response?.data?.count);
-      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-      setPipelineActivityFilterModel({...newFilterDto});
-    }
-  };
-
-  const getLatestActivityLogs = async (filterDto = pipelineActivityFilterModel, cancelSource = cancelTokenSource,) => {
-    const response = await pipelineActivityActions.getLatestPipelineActivityLogsV3(getAccessToken, cancelSource, id, filterDto);
-    const pipelineActivityData = response?.data?.data;
-
-    if (Array.isArray(pipelineActivityData)) {
-      setLatestActivityLogs([...pipelineActivityData]);
-    }
-  };
-
-  const getSecondaryActivityLogs = async (filterDto = pipelineActivityFilterModel, cancelSource = cancelTokenSource,) => {
-    const response = await pipelineActivityActions.getSecondaryPipelineActivityLogsV3(getAccessToken, cancelSource, id, filterDto);
-    const pipelineActivityData = response?.data?.data;
-
-    if (Array.isArray(pipelineActivityData)) {
-      setSecondaryActivityLogs([...pipelineActivityData]);
-    }
-  };
-
   const fetchPlan = async (param) => {
+    console.log("in fetch plan");
     await getPipeline();
     if (param) {
       setEditItem(param);
@@ -289,7 +127,7 @@ function PipelineDetailView() {
           setEditItem={setEditItem}
           fetchPlan={fetchPlan}
           setWorkflowStatus={setWorkflowStatus}
-          getActivityLogs={getActivityLogs}
+          // getActivityLogs={getActivityLogs}
           softLoading={softLoading}
         />
       );
@@ -309,24 +147,16 @@ function PipelineDetailView() {
             parentWorkflowStatus={workflowStatus}
             ownerName={pipeline?.owner_name}
             setWorkflowStatus={setWorkflowStatus}
-            getActivityLogs={getActivityLogs}
+            // getActivityLogs={getActivityLogs}
             fetchPlan={fetchPlan}
           />
         </div>
         <div className="max-content-width-1875">
           <PipelineActivityLogTreeTable
             pipeline={pipeline}
-            pipelineLogData={activityData}
-            isLoading={logsIsLoading}
-            loadData={getActivityLogs}
-            pipelineActivityFilterDto={pipelineActivityFilterModel}
-            setPipelineActivityFilterDto={setPipelineActivityFilterModel}
-            pipelineActivityMetadata={pipelineActivityMetadata}
-            pipelineActivityTreeData={pipelineActivityTreeData}
-            currentLogTreePage={currentLogTreePage}
-            setCurrentLogTreePage={setCurrentLogTreePage}
-            latestActivityLogs={latestActivityLogs}
-            secondaryActivityLogs={secondaryActivityLogs}
+            pipelineStatus={pipeline?.workflow?.last_step?.status}
+            pipelineId={id}
+            getPipeline={getPipeline}
           />
         </div>
       </div>
@@ -351,7 +181,7 @@ function PipelineDetailView() {
         currentTab={tab}
         pipelineId={id}
         getPipeline={getPipeline}
-        refreshTimer={refreshTimer}
+        // refreshTimer={refreshTimer}
       />
       {getCurrentView()}
     </div>
