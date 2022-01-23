@@ -73,6 +73,7 @@ import PmdScanStepConfiguration
 import AzureZipDeploymentStepConfiguration
   from "./step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfiguration";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import SentinelStepConfiguration from "./step_tool_configuration_forms/sentenial/SentinelStepConfiguration";
 function StepToolConfiguration({
   pipeline,
   editItem,
@@ -1078,6 +1079,21 @@ function StepToolConfiguration({
       case "azure-zip-deployment":
         return (
           <AzureZipDeploymentStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "sentinel":
+        return (
+          <SentinelStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}

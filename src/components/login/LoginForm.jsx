@@ -78,7 +78,7 @@ const LoginForm = ({ authClient }) => {
             }
           })
           .catch(function(err) {
-            console.error("[authClient.token.getWithoutPrompt]", JSON.stringify(err, null, 2));
+            console.error("[authClient.token.getWithoutPrompt]", err);
             //handleFallbackGetLoginWithPrompt(tokenOptions);
             handleFallbackSignInReactHook(sessionToken);
             //setErrorMessage(err.message);
@@ -87,7 +87,7 @@ const LoginForm = ({ authClient }) => {
       })
       .catch(error => {
         toastContext.removeAllBanners();
-        console.error("[authClient.signInWithCredentials]", JSON.stringify(error, null, 2));
+        console.error("[authClient.signInWithCredentials]", error);
         let errorMessage = "An error has occurred with your Okta account authentication.  Please close your browser and start over or report the issue to Opsera.";
         if (error.errorCode && error.errorSummary) {
           errorMessage = `Okta Login Error: [${error.errorCode}] ${error.errorSummary}`;
@@ -148,7 +148,7 @@ const LoginForm = ({ authClient }) => {
       idps: idpValues,
       idpDisplay: "PRIMARY",
       idpDiscovery: {
-        requestContext: "about:blank" //window.location.href, //process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
+        requestContext: process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL + "/loading.html" //"about:blank"
       },
       features: {
         idpDiscovery: true,
@@ -275,8 +275,13 @@ const LoginForm = ({ authClient }) => {
 
     } catch (error) {
       toastContext.removeAllBanners();
-      console.error(error);
-      toastContext.showErrorDialog(error);
+
+      if (error?.response?.status === 404) {
+        console.error(error);
+        toastContext.showErrorDialog("Your email address is not found in our system, please contact your account owner or administrator for assistance.");
+      } else {
+        toastContext.showErrorDialog(error);
+      }
     } finally {
       setLoading(false);
     }
