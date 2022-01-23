@@ -77,7 +77,9 @@ function PipelineDetailViewV2() {
 
   const getPipeline = async (cancelSource = cancelTokenSource) => {
     console.log("in refresh pipeline");
-    setRefreshCount(refreshCount => refreshCount + 1);
+    const newRefreshCount = refreshCount + 1;
+    setRefreshCount(newRefreshCount);
+
     setSoftLoading(true);
     const response = await pipelineActions.getPipelineByIdV2(getAccessToken, cancelSource, id);
     const newPipeline = response?.data?.data;
@@ -95,8 +97,8 @@ function PipelineDetailViewV2() {
     }
   };
 
-
   const fetchPlan = async (param) => {
+    console.log("in fetch plan");
     await getPipeline();
     if (param) {
       setEditItem(param);
@@ -121,7 +123,6 @@ function PipelineDetailViewV2() {
           pipeline={pipeline}
           setPipeline={setPipeline}
           refreshCount={refreshCount}
-          setRefreshCount={setRefreshCount}
           editItem={editItem}
           setEditItem={setEditItem}
           fetchPlan={fetchPlan}
@@ -142,7 +143,6 @@ function PipelineDetailViewV2() {
             pipeline={pipeline}
             setPipeline={setPipeline}
             refreshCount={refreshCount}
-            setRefreshCount={setRefreshCount}
             customerAccessRules={customerAccessRules}
             parentWorkflowStatus={workflowStatus}
             ownerName={pipeline?.owner_name}

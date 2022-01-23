@@ -19,7 +19,7 @@ import pipelineActivityHelpers
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 
-const refreshInterval = 5000;
+const refreshInterval = 15000;
 
 // TODO: This is an attempt to move the logic into the table. Not going to finish it now, will finish it as separate enhancement
 function PipelineActivityLogTreeTableV2(
@@ -44,7 +44,7 @@ function PipelineActivityLogTreeTableV2(
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   const [refreshTimer, setRefreshTimer] = useState(null);
-  let staleRefreshCount = 1;
+  let internalRefreshCount = 1;
 
 
   useEffect(() => {
@@ -75,7 +75,10 @@ function PipelineActivityLogTreeTableV2(
   }, []);
 
   useEffect(() => {
-    // evaluatePipelineStatus();
+    if (pipeline) {
+      console.log("in use effect to evaluate pipeline");
+      evaluatePipelineStatus(pipeline);
+    }
   }, [pipeline]);
 
   useEffect(() => {
@@ -88,30 +91,26 @@ function PipelineActivityLogTreeTableV2(
     }
   }, [currentLogTreePage]);
 
-  const evaluatePipelineStatus = () => {
-    console.log("evaluating pipeline status function: " + pipelineStatus);
-    if (!pipeline) {
-      console.log("pipeline is null, early return");
+  const evaluatePipelineStatus = (pipeline) => {
+    console.log("evaluating pipeline status function");
+    if (!pipeline || Object.entries(pipeline).length === 0) {
       return;
     }
 
-    if (pipelineStatus === "stopped" || !pipelineStatus) {
+    const pipelineStatus = pipeline?.workflow?.last_step?.status;
+
+    if (!pipelineStatus || pipelineStatus === "stopped") {
       console.log("Pipeline stopped, no need to schedule refresh. Status: ", pipelineStatus);
       return;
     }
 
-    console.log(`Scheduling status check followup for Pipeline: ${pipeline._id}, counter: ${staleRefreshCount}, interval: ${refreshInterval} `);
+    console.log(`Scheduling status check followup for Pipeline: ${pipeline._id}, counter: ${internalRefreshCount}, interval: ${refreshInterval} `);
     const refreshTimer = setTimeout(async function() {
-      console.log("running pipeline refresh interval. Step status: ");
-      staleRefreshCount++;
-      // TODO: do we need to pull pipeline every time?
+      internalRefreshCount++;
+      console.log("running pipeline refresh interval");
       await getPipeline();
-      if (staleRefreshCount % 3 === 0) {
-        console.log("divisible by 3 refresh: getting activity logs");
-        await loadData(pipelineActivityFilterModel, true, cancelTokenSource);
-      }
+      await loadData(pipelineActivityFilterModel, true);
     }, refreshInterval);
-
     setRefreshTimer(refreshTimer);
   };
 
@@ -131,12 +130,15 @@ function PipelineActivityLogTreeTableV2(
       const treeResponse = await pipelineActivityActions.getPipelineActivityLogTree(getAccessToken, cancelSource, pipelineId, newFilterModel);
       const pipelineTree = pipelineActivityHelpers.constructTree(treeResponse?.data?.data);
       setPipelineActivityTreeData([...pipelineTree]);
-      setActivityData([]);
-      setSecondaryActivityLogs([]);
-      setLatestActivityLogs([]);
+
+      if (!silentLoading) {
+        setActivityData([]);
+        setSecondaryActivityLogs([]);
+        setLatestActivityLogs([]);
+      }
 
       if (Array.isArray(pipelineTree) && pipelineTree.length > 0) {
-        await pullLogData(pipelineTree, newFilterModel, cancelSource);
+        await pullLogData(pipelineTree, newFilterModel, cancelSource, silentLoading);
       }
       else {
         newFilterModel?.setData("totalCount", 0);
