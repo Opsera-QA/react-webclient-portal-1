@@ -40,8 +40,7 @@ function PipelineActivityLogTreeTable(
 
 
   const [currentLogTreePage, setCurrentLogTreePage] = useState(0);
-  // const [currentRunNumber, setCurrentRunNumber] = useState(0);
-  // const [currentStepName, setCurrentStepName] = useState(0);
+  const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
 
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -83,6 +82,17 @@ function PipelineActivityLogTreeTable(
     }
   }, [pipeline]);
 
+  useEffect(() => {
+    setActivityData([]);
+
+    if (currentRunNumber) {
+      pullLogs().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
+  }, [currentRunNumber]);
 
   useEffect(() => {
     const newTree = pipelineActivityHelpers.addRunNumberToPipelineTree(pipelineActivityTreeData, pipelineRunCount);
@@ -136,8 +146,7 @@ function PipelineActivityLogTreeTable(
       const pipelineTree = pipelineActivityHelpers.constructTopLevelTreeBasedOnRunCount(pipelineRunCount);
       setPipelineActivityTreeData([...pipelineTree]);
 
-
-      await getSingleRunLogs(newFilterModel, pipelineTree, cancelSource);
+      await getSingleRunLogs(newFilterModel, cancelSource, pipelineTree);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
       console.log(error.message);
@@ -146,7 +155,7 @@ function PipelineActivityLogTreeTable(
     }
   };
 
-  const pullLogs = async (newFilterModel = pipelineActivityFilterModel, pipelineTree = pipelineActivityTreeData, cancelSource = cancelTokenSource) => {
+  const pullLogs = async (newFilterModel = pipelineActivityFilterModel, cancelSource = cancelTokenSource, pipelineTree = pipelineActivityTreeData) => {
     try {
       setIsLoading(true);
       setActivityData([]);
@@ -158,7 +167,7 @@ function PipelineActivityLogTreeTable(
       } else if (currentRunNumber === "secondary") {
         await getSecondaryActivityLogs(newFilterModel, cancelSource);
       } else {
-        await getSingleRunLogs(newFilterModel, pipelineTree, cancelSource);
+        await getSingleRunLogs(newFilterModel, cancelSource, pipelineTree);
       }
 
     } catch (error) {
@@ -172,11 +181,12 @@ function PipelineActivityLogTreeTable(
     }
   };
 
-  const getSingleRunLogs = async (newFilterModel = pipelineActivityFilterModel, pipelineTree = pipelineActivityTreeData, cancelSource = cancelTokenSource) => {
+  const getSingleRunLogs = async (newFilterModel = pipelineActivityFilterModel, cancelSource = cancelTokenSource, pipelineTree = pipelineActivityTreeData) => {
     const response = await pipelineActivityActions.getPipelineActivityLogsV3(getAccessToken, cancelSource, pipelineId, newFilterModel);
     const pipelineActivityData = response?.data?.data;
     const activityLogCount = response?.data?.count;
 
+    console.log("pipelineActivityTreeData: " + pipelineActivityTreeData?.length);
     if (Array.isArray(pipelineActivityData)) {
       setActivityData([...pipelineActivityData]);
       setPipelineActivityMetadata(response?.data?.metadata);
@@ -187,7 +197,10 @@ function PipelineActivityLogTreeTable(
       setPipelineActivityFilterModel({...newFilterModel});
 
       const newTree = pipelineActivityHelpers.updateSelectedRunNumberTree(pipelineTree, newFilterModel?.getData("currentRunNumber"), pipelineActivityData);
-      setPipelineActivityTreeData([...newTree]);
+
+      if (Array.isArray(newTree) && newTree.length > 0) {
+        setPipelineActivityTreeData([...newTree]);
+      }
     }
   };
 
@@ -241,7 +254,8 @@ function PipelineActivityLogTreeTable(
         setCurrentLogTreePage={setCurrentLogTreePage}
         pipelineActivityFilterDto={pipelineActivityFilterModel}
         setPipelineActivityFilterDto={setPipelineActivityFilterModel}
-        getSingleRunLogs={pullLogs}
+        currentRunNumber={currentRunNumber}
+        setCurrentRunNumber={setCurrentRunNumber}
       />
     );
   };

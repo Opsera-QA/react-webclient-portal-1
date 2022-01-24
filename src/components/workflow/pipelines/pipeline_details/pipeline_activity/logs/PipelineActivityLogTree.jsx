@@ -12,7 +12,8 @@ function PipelineActivityLogTree(
     setCurrentLogTreePage,
     pipelineActivityFilterDto,
     setPipelineActivityFilterDto,
-    getSingleRunLogs,
+    currentRunNumber,
+    setCurrentRunNumber,
   }) {
   const [treeWidget, setTreeWidget] = useState(undefined);
   const [secondaryTreeWidget, setSecondaryTreeWidget] = useState(undefined);
@@ -26,6 +27,7 @@ function PipelineActivityLogTree(
     if (Array.isArray(pipelineLogTree) && pipelineLogTree.length > 0) {
       let treeItem = pipelineLogTree[0];
 
+      // TODO: Remove usage of filter model
       const currentRunNumber = pipelineActivityFilterDto?.getData("currentRunNumber");
 
       if (typeof currentRunNumber === "number") {
@@ -36,7 +38,7 @@ function PipelineActivityLogTree(
         }
       }
 
-      if (currentRunNumber !== "latest" && currentRunNumber !== "secondary") {
+      if (currentRunNumber !== "latest" && currentRunNumber !== "secondary" && typeof currentRunNumber !== "number") {
         setSelectedId(treeItem?.id);
       }
     }
@@ -58,7 +60,7 @@ function PipelineActivityLogTree(
       pipelineActivityFilterDto?.setData("currentStepName", treeItem?.stepName);
 
       if (currentRunNumber !== treeItem?.runNumber) {
-        getSingleRunLogs(pipelineActivityFilterDto);
+        setCurrentRunNumber(treeItem?.runNumber);
       }
       else {
         setPipelineActivityFilterDto({...pipelineActivityFilterDto});
@@ -79,7 +81,7 @@ function PipelineActivityLogTree(
       setPipelineActivityFilterDto({...pipelineActivityFilterDto});
 
       if (currentRunNumber !== treeItem?.runNumber) {
-        getSingleRunLogs(pipelineActivityFilterDto);
+        setCurrentRunNumber(treeItem?.runNumber);
       }
       else {
         setPipelineActivityFilterDto({...pipelineActivityFilterDto});
@@ -95,6 +97,7 @@ function PipelineActivityLogTree(
         pipelineActivityFilterDto?.setData("currentRunNumber", undefined);
         pipelineActivityFilterDto?.setData("currentStepName", undefined);
         setPipelineActivityFilterDto({...pipelineActivityFilterDto});
+        setCurrentRunNumber(undefined);
 
         if (treeWidget) {
           treeWidget.selection.remove();
@@ -142,7 +145,8 @@ PipelineActivityLogTree.propTypes = {
   setCurrentLogTreePage: PropTypes.func,
   pipelineActivityFilterDto: PropTypes.object,
   setPipelineActivityFilterDto: PropTypes.func,
-  getSingleRunLogs: PropTypes.func,
+  setCurrentRunNumber: PropTypes.func,
+  currentRunNumber: PropTypes.number,
 };
 
 export default PipelineActivityLogTree;
