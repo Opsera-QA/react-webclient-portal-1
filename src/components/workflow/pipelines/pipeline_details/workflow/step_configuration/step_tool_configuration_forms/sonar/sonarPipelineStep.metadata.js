@@ -54,7 +54,7 @@ const sonarPipelineStepMetadata = {
       isRequiredFunction: (model) => {
         return (
           model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB
-          && model?.getData("isScanBranch") === true
+          && model?.getData("isScanArtifact") !== true
         );
       },
     },
@@ -65,7 +65,7 @@ const sonarPipelineStepMetadata = {
         return (
           model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB
           && model?.getData("service") === "bitbucket"
-          && model?.getData("isScanBranch") === true
+          && model?.getData("isScanArtifact") !== true
         );
       },
     },
@@ -76,7 +76,7 @@ const sonarPipelineStepMetadata = {
         return (
           model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB
           && model?.getData("service") === "bitbucket"
-          && model?.getData("isScanBranch") === true
+          && model?.getData("isScanArtifact") !== true
         );
       },
     },{
@@ -89,7 +89,7 @@ const sonarPipelineStepMetadata = {
       isRequiredFunction: (model) => {
         return (
           model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB
-          && model?.getData("isScanBranch") === true
+          && model?.getData("isScanArtifact") !== true
         );
       },
     },
@@ -99,7 +99,7 @@ const sonarPipelineStepMetadata = {
       isRequiredFunction: (model) => {
         return (
           model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB
-          && model?.getData("isScanBranch") === true
+          && model?.getData("isScanArtifact") !== true
         );
       },
     },
@@ -112,9 +112,9 @@ const sonarPipelineStepMetadata = {
       id: "successThreshold",
     },
     {
-      label: "Scan Entire Branch",
-      id: "isScanBranch",
-      formText: "If the entire branch is not scanned, only selected artifact components will be scanned based on the build step selected"
+      label: "Limit Scan to Selected Artifacts",
+      id: "isScanArtifact",
+      formText: "By default, scan the entire branch with SonarQube. If enabled, only the selected artifact components will be scanned based on the build step selected."
     },
     {
       label: "Build Step",
@@ -122,7 +122,7 @@ const sonarPipelineStepMetadata = {
       isRequiredFunction: (model) => {
         return (
           model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB
-          && model?.getData("isScanBranch") === false
+          && model?.getData("isScanArtifact") === true
         );
       },
     },
@@ -162,7 +162,7 @@ const sonarPipelineStepMetadata = {
     job_type: "",
     gitBranch: "",
     successThreshold: "",
-    isScanBranch: true,
+    isScanArtifact: false,
     stepIdXml: "",
   }
 };
