@@ -178,7 +178,7 @@ function SonarStepConfiguration(
             jenkinsToolId={sonarStepModel?.getData("toolConfigId")}
           />
           <BooleanToggleInput
-            fieldName={"isScanBranch"}
+            fieldName={"isScanArtifact"}
             dataObject={sonarStepModel}
             setDataObject={setSonarStepModel}
           />
