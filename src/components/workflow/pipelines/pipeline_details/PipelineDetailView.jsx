@@ -157,6 +157,7 @@ function PipelineDetailView() {
             pipelineStatus={pipeline?.workflow?.last_step?.status}
             pipelineId={id}
             getPipeline={getPipeline}
+            pipelineRunCount={pipeline?.workflow?.run_count}
           />
         </div>
       </div>

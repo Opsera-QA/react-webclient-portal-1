@@ -2,13 +2,13 @@ import baseActions from "utils/actionsBase";
 
 const pipelineActivityActions = {};
 
-pipelineActivityActions.getPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, runCountArray, pipelineActivityFilterDto) => {
+pipelineActivityActions.getPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterModel) => {
   const urlParams = {
     params: {
-      search:   pipelineActivityFilterDto?.getData("search"),
-      runCountArray: runCountArray,
-      fields: ["run_count", "step_name", "action", "message", "status", "createdAt"],
-      status: pipelineActivityFilterDto?.getFilterValue("status"),
+      search:   pipelineActivityFilterModel?.getData("search"),
+      runCount: pipelineActivityFilterModel?.getData("currentRunNumber"),
+      fields: ["run_count", "step_name", "action", "message", "status", "createdAt", "step_index"],
+      status: pipelineActivityFilterModel?.getFilterValue("status"),
     },
   };
 
@@ -59,6 +59,7 @@ pipelineActivityActions.getPipelineActivityLogsByRunNumber = async (getAccessTok
 pipelineActivityActions.getPipelineActivityLogTree = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterModel) => {
   const urlParams = {
     params: {
+      runCount: pipelineActivityFilterModel?.getData("runCount"),
       search: pipelineActivityFilterModel?.getData("search"),
       status: pipelineActivityFilterModel?.getFilterValue("status"),
     },

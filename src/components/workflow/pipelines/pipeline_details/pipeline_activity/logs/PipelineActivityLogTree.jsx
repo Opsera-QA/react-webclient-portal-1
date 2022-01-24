@@ -5,7 +5,15 @@ import VanityBottomPaginatorBase from "components/common/pagination/VanityBottom
 import pipelineActivityHelpers
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-helpers";
 
-function PipelineActivityLogTree({ pipelineLogTree, currentLogTreePage, setCurrentLogTreePage, pipelineActivityFilterDto, setPipelineActivityFilterDto}) {
+function PipelineActivityLogTree(
+  {
+    pipelineLogTree,
+    currentLogTreePage,
+    setCurrentLogTreePage,
+    pipelineActivityFilterDto,
+    setPipelineActivityFilterDto,
+    getSingleRunLogs,
+  }) {
   const [treeWidget, setTreeWidget] = useState(undefined);
   const [secondaryTreeWidget, setSecondaryTreeWidget] = useState(undefined);
   const [secondaryLogTree] = useState(pipelineActivityHelpers.getSecondaryTree());
@@ -20,7 +28,7 @@ function PipelineActivityLogTree({ pipelineLogTree, currentLogTreePage, setCurre
 
       const currentRunNumber = pipelineActivityFilterDto?.getData("currentRunNumber");
 
-      if (currentRunNumber !== "latest" && currentRunNumber !== "secondary") {
+      if (currentRunNumber !== "latest" && currentRunNumber !== "secondary" && typeof currentRunNumber !== "number") {
         setSelectedId(treeItem.id);
       }
     }
@@ -37,9 +45,16 @@ function PipelineActivityLogTree({ pipelineLogTree, currentLogTreePage, setCurre
     }
 
     if (treeItem) {
+      const currentRunNumber = pipelineActivityFilterDto?.getData("currentRunNumber");
       pipelineActivityFilterDto?.setData("currentRunNumber", treeItem?.runNumber);
       pipelineActivityFilterDto?.setData("currentStepName", treeItem?.stepName);
-      setPipelineActivityFilterDto({...pipelineActivityFilterDto});
+
+      if (currentRunNumber !== treeItem?.runNumber) {
+        getSingleRunLogs(pipelineActivityFilterDto);
+      }
+      else {
+        setPipelineActivityFilterDto({...pipelineActivityFilterDto});
+      }
     }
   };
 
@@ -50,9 +65,17 @@ function PipelineActivityLogTree({ pipelineLogTree, currentLogTreePage, setCurre
     }
 
     if (treeItem) {
+      const currentRunNumber = pipelineActivityFilterDto?.getData("currentRunNumber");
       pipelineActivityFilterDto?.setData("currentRunNumber", treeItem?.runNumber);
       pipelineActivityFilterDto?.setData("currentStepName", treeItem?.stepName);
       setPipelineActivityFilterDto({...pipelineActivityFilterDto});
+
+      if (currentRunNumber !== treeItem?.runNumber) {
+        getSingleRunLogs(pipelineActivityFilterDto);
+      }
+      else {
+        setPipelineActivityFilterDto({...pipelineActivityFilterDto});
+      }
     }
   };
 
@@ -111,6 +134,7 @@ PipelineActivityLogTree.propTypes = {
   setCurrentLogTreePage: PropTypes.func,
   pipelineActivityFilterDto: PropTypes.object,
   setPipelineActivityFilterDto: PropTypes.func,
+  getSingleRunLogs: PropTypes.func,
 };
 
 export default PipelineActivityLogTree;
