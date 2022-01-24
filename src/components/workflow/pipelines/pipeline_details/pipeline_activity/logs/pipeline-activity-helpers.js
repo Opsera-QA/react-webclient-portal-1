@@ -121,50 +121,11 @@ pipelineActivityHelpers.constructTopLevelTreeBasedOnRunCount = (runCount) => {
   if (runCount > 0) {
 
     for (let runNumber = 1; runNumber <= runCount; runNumber++) {
-      newTree.push({
-        id: runNumber,
-        runNumber: runNumber,
-        stepName: undefined,
-        value: `Run ${runNumber}`,
-        items: [],
-        icon: {
-          "folder": "fal fa-layer-group opsera-primary",
-          "openFolder": "fal fa-layer-group opsera-yellow",
-          "file": "fal fa-layer-group opsera-primary"
-        }
-      });
+      newTree.push(createTopLevelTreeItem(runNumber));
     }
   }
 
-  if (newTree.length > 0) {
-    // Sort tree by run number
-    newTree.sort((treeItem1, treeItem2) => {
-      const runNumber1 = treeItem1?.runNumber;
-      const runNumber2 = treeItem2?.runNumber;
-
-      const parsedRunNumber1 = parseInt(runNumber1);
-      const parsedRunNumber2 = parseInt(runNumber2);
-
-      if (typeof parsedRunNumber1 !== "number" && typeof parsedRunNumber2 !== "number") {
-        return 0;
-      }
-
-      if (typeof parsedRunNumber1 !== "number") {
-        return 1;
-      }
-
-      if (typeof parsedRunNumber2 !== "number") {
-        return -1;
-      }
-
-      return parsedRunNumber2 - parsedRunNumber1;
-    });
-
-    newTree[0].opened = true;
-    newTree[0].selected = 1;
-  }
-
-  return newTree;
+  return sortTree(newTree);
 };
 
 pipelineActivityHelpers.updateSelectedRunNumberTree = (pipelineTree, runNumber, pipelineLogData) => {
@@ -222,6 +183,22 @@ pipelineActivityHelpers.updateSelectedRunNumberTree = (pipelineTree, runNumber, 
   return newTree;
 };
 
+pipelineActivityHelpers.addRunNumberToPipelineTree = (pipelineTree, runNumber) => {
+  if (Array.isArray(pipelineTree) && pipelineTree.length > 0 && typeof runNumber === "number") {
+    const existingTreeItem = pipelineTree.find((treeItem) => treeItem.id === runNumber);
+
+    if (existingTreeItem == null) {
+      const newTreeItem = createTopLevelTreeItem(runNumber);
+
+      if (newTreeItem) {
+        const newTree = [...pipelineTree];
+        newTree.push(newTreeItem);
+        return sortTree(newTree);
+      }
+    }
+  }
+};
+
 pipelineActivityHelpers.getSecondaryTree = () => {
   return [
     {
@@ -251,5 +228,59 @@ pipelineActivityHelpers.getSecondaryTree = () => {
   ];
 };
 
+const sortTree = (tree) => {
+  if (!Array.isArray(tree) || tree.length === 0) {
+    return [];
+  }
+
+  let newTree = [...tree];
+
+  // Sort tree by run number
+  newTree.sort((treeItem1, treeItem2) => {
+    const runNumber1 = treeItem1?.runNumber;
+    const runNumber2 = treeItem2?.runNumber;
+
+    const parsedRunNumber1 = parseInt(runNumber1);
+    const parsedRunNumber2 = parseInt(runNumber2);
+
+    if (typeof parsedRunNumber1 !== "number" && typeof parsedRunNumber2 !== "number") {
+      return 0;
+    }
+
+    if (typeof parsedRunNumber1 !== "number") {
+      return 1;
+    }
+
+    if (typeof parsedRunNumber2 !== "number") {
+      return -1;
+    }
+
+    return parsedRunNumber2 - parsedRunNumber1;
+  });
+
+  newTree[0].opened = true;
+  newTree[0].selected = 1;
+
+  return newTree;
+};
+
+const createTopLevelTreeItem = (runNumber, items = []) => {
+  if (typeof runNumber === "number") {
+    return (
+      {
+        id: runNumber,
+        runNumber: runNumber,
+        stepName: undefined,
+        value: `Run ${runNumber}`,
+        items: items,
+        icon: {
+          "folder": "fal fa-layer-group opsera-primary",
+          "openFolder": "fal fa-layer-group opsera-yellow",
+          "file": "fal fa-layer-group opsera-primary"
+        }
+      }
+    );
+  }
+};
 
 export default pipelineActivityHelpers;

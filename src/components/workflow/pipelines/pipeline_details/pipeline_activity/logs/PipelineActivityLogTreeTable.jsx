@@ -75,7 +75,7 @@ function PipelineActivityLogTreeTable(
         clearTimeout(refreshTimer);
       }
     };
-  }, [pipelineRunCount]);
+  }, []);
 
   useEffect(() => {
     if (pipeline) {
@@ -83,14 +83,18 @@ function PipelineActivityLogTreeTable(
     }
   }, [pipeline]);
 
+
+  useEffect(() => {
+    const newTree = pipelineActivityHelpers.addRunNumberToPipelineTree(pipelineActivityTreeData, pipelineRunCount);
+
+    if (newTree) {
+      setPipelineActivityTreeData([...newTree]);
+    }
+  }, [pipelineRunCount]);
+
   useEffect(() => {
     if (Array.isArray(pipelineActivityTreeData) && pipelineActivityTreeData.length > 0) {
       setActivityData([]);
-      // pullLogData().catch((error) => {
-      //   if (isMounted?.current === true) {
-      //     throw error;
-      //   }
-      // });
     }
   }, [currentLogTreePage]);
 

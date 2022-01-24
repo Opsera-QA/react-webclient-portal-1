@@ -29,11 +29,15 @@ function PipelineActivityLogTree(
       const currentRunNumber = pipelineActivityFilterDto?.getData("currentRunNumber");
 
       if (typeof currentRunNumber === "number") {
-        treeItem = pipelineLogTree.find((treeItem) => treeItem.runNumber === currentRunNumber);
+        const foundTreeItem = pipelineLogTree.find((treeItem) => treeItem.id === currentRunNumber);
+
+        if (foundTreeItem) {
+          treeItem = foundTreeItem;
+        }
       }
 
       if (currentRunNumber !== "latest" && currentRunNumber !== "secondary") {
-        setSelectedId(treeItem.id);
+        setSelectedId(treeItem?.id);
       }
     }
 
