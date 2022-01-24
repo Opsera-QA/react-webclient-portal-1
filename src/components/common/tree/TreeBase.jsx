@@ -12,20 +12,18 @@ function TreeBase({ data, onItemClick, setParentWidget, expanded, treeId, select
   useEffect(() => {
     const treeGrid = setUpTree();
 
+    if (treeGrid && Array.isArray(data)) {
+      treeGrid.data.parse(data);
+
+      if (selectedId) {
+        treeGrid.selection.remove();
+        treeGrid.selection.add(selectedId);
+      }
+    }
+
     return () => {
       treeGrid.destructor();
     };
-  }, []);
-
-  useEffect(() => {
-    if (tree && Array.isArray(data)) {
-      tree.data.parse(data);
-
-      if (selectedId) {
-        tree.selection.remove();
-        tree.selection.add(selectedId);
-      }
-    }
   }, [data]);
 
   useEffect(() => {

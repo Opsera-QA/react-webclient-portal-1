@@ -36,9 +36,7 @@ function PipelineActivityLogTreeTable(
   const [pipelineActivityMetadata, setPipelineActivityMetadata] = useState(undefined);
   const [pipelineActivityTreeData, setPipelineActivityTreeData] = useState([]);
   const [activityData, setActivityData] = useState([]);
-  const [latestActivityLogs, setLatestActivityLogs] = useState([]);
-  const [secondaryActivityLogs, setSecondaryActivityLogs] = useState([]);
-  const [logsIsLoading, setLogsIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
 
   const [currentLogTreePage, setCurrentLogTreePage] = useState(0);
@@ -51,7 +49,6 @@ function PipelineActivityLogTreeTable(
   const [refreshTimer, setRefreshTimer] = useState(null);
   let internalRefreshCount = 1;
 
-
   useEffect(() => {
     //console.log("Effect  1");
     if (cancelTokenSource) {
@@ -61,8 +58,6 @@ function PipelineActivityLogTreeTable(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-
-    console.log("setting selected run number initially to pipeline's run count");
     pipelineActivityFilterModel.setData("currentRunNumber", pipelineRunCount);
 
     loadData(pipelineActivityFilterModel, false, cancelTokenSource).catch((error) => {
@@ -117,47 +112,64 @@ function PipelineActivityLogTreeTable(
       internalRefreshCount++;
       console.log("running pipeline refresh interval");
       await getPipeline();
-      await loadData(pipelineActivityFilterModel, true);
+      await getSingleRunLogs(pipelineActivityFilterModel);
     }, refreshInterval);
     setRefreshTimer(refreshTimer);
   };
 
   const loadData = async (newFilterModel = pipelineActivityFilterModel, silentLoading = false, cancelSource = cancelTokenSource) => {
     console.log("in load data in pipeline activityLogTreeTable");
-    if (logsIsLoading || typeof pipelineRunCount !== "number" || pipelineRunCount <= 0) {
+    if (isLoading || typeof pipelineRunCount !== "number" || pipelineRunCount <= 0) {
       return;
     }
 
     try {
       if (!silentLoading) {
-        setLogsIsLoading(true);
+        setIsLoading(true);
         setActivityData([]);
-        setSecondaryActivityLogs([]);
-        setLatestActivityLogs([]);
       }
 
       const pipelineTree = pipelineActivityHelpers.constructTopLevelTreeBasedOnRunCount(pipelineRunCount);
       setPipelineActivityTreeData([...pipelineTree]);
 
 
-      await getSingleRunLogs(newFilterModel, pipelineTree);
-
-      // TODO: Pull these when selected NOT whenever pulling logs
-      await getLatestActivityLogs(newFilterModel, cancelSource);
-      await getSecondaryActivityLogs(newFilterModel, cancelSource);
+      await getSingleRunLogs(newFilterModel, pipelineTree, cancelSource);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
       console.log(error.message);
     } finally {
-      setLogsIsLoading(false);
+      setIsLoading(false);
     }
   };
 
-  const getSingleRunLogs = async (newFilterModel = pipelineActivityFilterModel, pipelineTree = pipelineActivityTreeData) => {
+  const pullLogs = async (newFilterModel = pipelineActivityFilterModel, pipelineTree = pipelineActivityTreeData, cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+      setActivityData([]);
 
-    console.log("currentRunNumber: " + JSON.stringify(newFilterModel?.getData("currentRunNumber")));
+      const currentRunNumber = newFilterModel?.getData("currentRunNumber");
 
-    const response = await pipelineActivityActions.getPipelineActivityLogsV3(getAccessToken, cancelTokenSource, pipelineId, newFilterModel);
+      if (currentRunNumber === "latest") {
+        await getLatestActivityLogs(newFilterModel, cancelSource);
+      } else if (currentRunNumber === "secondary") {
+        await getSecondaryActivityLogs(newFilterModel, cancelSource);
+      } else {
+        await getSingleRunLogs(newFilterModel, pipelineTree, cancelSource);
+      }
+
+    } catch (error) {
+      if (isMounted.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    } finally {
+      if (isMounted.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const getSingleRunLogs = async (newFilterModel = pipelineActivityFilterModel, pipelineTree = pipelineActivityTreeData, cancelSource = cancelTokenSource) => {
+    const response = await pipelineActivityActions.getPipelineActivityLogsV3(getAccessToken, cancelSource, pipelineId, newFilterModel);
     const pipelineActivityData = response?.data?.data;
     const activityLogCount = response?.data?.count;
 
@@ -180,7 +192,7 @@ function PipelineActivityLogTreeTable(
     const pipelineActivityData = response?.data?.data;
 
     if (Array.isArray(pipelineActivityData)) {
-      setLatestActivityLogs([...pipelineActivityData]);
+      setActivityData([...pipelineActivityData]);
     }
   };
 
@@ -189,7 +201,7 @@ function PipelineActivityLogTreeTable(
     const pipelineActivityData = response?.data?.data;
 
     if (Array.isArray(pipelineActivityData)) {
-      setSecondaryActivityLogs([...pipelineActivityData]);
+      setActivityData([...pipelineActivityData]);
     }
   };
 
@@ -198,19 +210,21 @@ function PipelineActivityLogTreeTable(
       return ("Could not find any results with the given filters.");
     }
 
-    return ("Pipeline activity data has not been generated yet. Once this pipeline begins running, it will publish details here.");
+    if (pipelineActivityFilterModel?.getData("currentRunNumber") === "secondary") {
+      return ("There are no secondary logs.");
+    }
+
+    return ("Pipeline activity data has not been generated yet.\n Once this pipeline begins running, it will publish details here.");
   };
 
   const getTable = () => {
     return (
       <PipelineActivityLogTable
-        isLoading={logsIsLoading}
+        isLoading={isLoading}
         pipeline={pipeline}
         pipelineActivityMetadata={pipelineActivityMetadata}
         pipelineLogData={activityData}
         pipelineActivityFilterDto={pipelineActivityFilterModel}
-        latestActivityLogs={latestActivityLogs}
-        secondaryActivityLogs={secondaryActivityLogs}
       />
     );
   };
@@ -223,7 +237,7 @@ function PipelineActivityLogTreeTable(
         setCurrentLogTreePage={setCurrentLogTreePage}
         pipelineActivityFilterDto={pipelineActivityFilterModel}
         setPipelineActivityFilterDto={setPipelineActivityFilterModel}
-        getSingleRunLogs={getSingleRunLogs}
+        getSingleRunLogs={pullLogs}
       />
     );
   };
@@ -232,7 +246,7 @@ function PipelineActivityLogTreeTable(
     return (
       <TreeAndTableBase
         data={activityData}
-        isLoading={logsIsLoading}
+        isLoading={isLoading}
         noDataMessage={getNoDataMessage()}
         tableComponent={getTable()}
         loadData={loadData}
@@ -268,7 +282,7 @@ function PipelineActivityLogTreeTable(
         loadData={loadData}
         filterDto={pipelineActivityFilterModel}
         setFilterDto={setPipelineActivityFilterModel}
-        isLoading={logsIsLoading}
+        isLoading={isLoading}
         title={"Pipeline Logs"}
         inlineFilters={getInlineFilters()}
         dropdownFilters={getDropdownFilters()}
@@ -278,7 +292,7 @@ function PipelineActivityLogTreeTable(
         exportButton={
           <ExportPipelineActivityLogButton
             className={"ml-2"}
-            isLoading={logsIsLoading}
+            isLoading={isLoading}
             activityLogData={activityData}
           />
         }
