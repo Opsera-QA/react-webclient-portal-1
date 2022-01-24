@@ -251,6 +251,7 @@ function PipelineActivityLogTreeTable(
         tableComponent={getTable()}
         loadData={loadData}
         treeComponent={getTree()}
+        treeColumnSize={3}
       />
     );
   };

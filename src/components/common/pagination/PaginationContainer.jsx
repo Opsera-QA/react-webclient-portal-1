@@ -31,7 +31,12 @@ function PaginationContainer({ isLoading, filterDto, setFilterDto, loadData, chi
 
   const getBody = () => {
     if (isLoading) {
-      return <LoadingDialog message={"Loading Data"} size={"sm"} />;
+      return (
+        <LoadingDialog
+          message={"Loading Data"}
+          size={"sm"}
+        />
+      );
     }
 
     return (children);

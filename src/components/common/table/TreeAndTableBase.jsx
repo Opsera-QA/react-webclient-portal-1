@@ -23,7 +23,7 @@ function TreeAndTableBase(
       return treeColumnSize;
     }
 
-    return 2;
+    return 3;
   };
 
   const getViewColumnSize = () => {
@@ -31,7 +31,7 @@ function TreeAndTableBase(
       return 12 - treeColumnSize;
     }
 
-    return 10;
+    return 9;
   };
 
   const getTreeComponent = () => {
@@ -60,25 +60,19 @@ function TreeAndTableBase(
     );
   };
 
-  // return (
-  //   <Row className={"mx-0"}>
-  //     <Col sm={getTabColumnSize()} className={"px-0"}>
-  //       {getTreeComponent()}
-  //     </Col>
-  //     <Col sm={getViewColumnSize()} className={"px-0"}>
-  //       <div>
-  //         {getTableBody()}
-  //       </div>
-  //     </Col>
-  //   </Row>
-  // );
-
   return (
-
-    <div className={"d-flex w-100"}>
-      {getTreeComponent()}
-      {getTableBody()}
-    </div>
+    <Row className={"mx-0"}>
+      <Col sm={getTabColumnSize()} className={"px-0"}>
+        <div className={"w-100"}>
+          {getTreeComponent()}
+        </div>
+      </Col>
+      <Col sm={getViewColumnSize()} className={"px-0"}>
+        <div>
+          {getTableBody()}
+        </div>
+      </Col>
+    </Row>
   );
 }
 

@@ -80,14 +80,12 @@ function PipelineActivityLogTable(
   };
 
   return (
-    <div className={"tree-table"}>
-      <TableBase
-        columns={columns}
-        data={getFilteredData()}
-        noDataMessage={getNoDataMessage()}
-        onRowSelect={onRowSelect}
-      />
-    </div>
+    <TableBase
+      columns={columns}
+      data={getFilteredData()}
+      noDataMessage={getNoDataMessage()}
+      onRowSelect={onRowSelect}
+    />
   );
 }
 
