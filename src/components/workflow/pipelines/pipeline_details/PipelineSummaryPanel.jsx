@@ -10,6 +10,7 @@ import {
   faTimes,
   faUser,
   faUserFriends,
+  faBinoculars
 } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import EditRolesModal from "components/workflow/EditRolesModal";
@@ -298,6 +299,22 @@ function PipelineSummaryPanel(
     );
   };
 
+  const getScheduleIcon = () => {
+    if (taskCount > 0){
+      return (
+        <FontAwesomeIcon
+          icon={faBinoculars}
+          className="ml-2 text-muted"
+          size="s"
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            handleEditPropertyClick("schedule");
+          }} />
+      );
+    }
+    return getEditIcon("schedule");
+  };
+
   const getCancelIcon = (cancelFunction) => {
     return (
       <FontAwesomeIcon
@@ -515,7 +532,7 @@ function PipelineSummaryPanel(
           <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Schedule: </span>
             {getTaskCountText()}
             {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" ?
-              getEditIcon("schedule") : null}
+              getScheduleIcon() : null}
           </Col>
 
           {getTagField()}
