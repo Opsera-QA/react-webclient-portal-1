@@ -15,6 +15,7 @@ function ArgoAzureClusterSelectInput(
     setModel,
     azureToolConfigId,
     applicationId,
+    clusterData
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -42,7 +43,7 @@ function ArgoAzureClusterSelectInput(
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadAzureRegistries(cancelSource);
+      await loadAzureClusters(cancelSource);
     } catch (error) {
       setPlaceholderText("There was an error pulling Clusters");
       setErrorMessage("No Clusters available.");
@@ -55,7 +56,7 @@ function ArgoAzureClusterSelectInput(
 
   // TODO: We should make a route on node where you can pass an azure tool ID and an azure Application ID
   //  and return the clusters instead of constructing the complex query here on React
-  const loadAzureRegistries = async (cancelSource = cancelTokenSource) => {
+  const loadAzureClusters = async (cancelSource = cancelTokenSource) => {
     const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, azureToolConfigId);
     const tool = response?.data?.data;
 
@@ -90,7 +91,9 @@ function ArgoAzureClusterSelectInput(
     const result = azureResponse?.data?.data;
     if (Array.isArray(result) && result.length > 0) {
       setErrorMessage("");
-      setAzureRegionList(result);
+      const clusterNames = clusterData.map(c => c.name.trim());                
+      const tempClusters = result.filter(cluster => !clusterNames.includes(cluster));      
+      setAzureRegionList(tempClusters);
     }
 
     if (result?.length === 0) {
@@ -126,6 +129,7 @@ ArgoAzureClusterSelectInput.propTypes = {
   setModel: PropTypes.func,
   azureToolConfigId: PropTypes.string,
   applicationId: PropTypes.string,
+  clusterData: PropTypes.array,
 };
 
 ArgoAzureClusterSelectInput.defaultProps = {

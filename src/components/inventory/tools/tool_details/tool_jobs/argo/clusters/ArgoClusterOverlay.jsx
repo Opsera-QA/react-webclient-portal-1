@@ -8,7 +8,8 @@ import axios from "axios";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import modelHelpers from "components/common/model/modelHelpers";
 
-function ArgoClusterOverlay({ loadData, toolData, argoDataObject, clusterId, editMode }) {
+function ArgoClusterOverlay({ loadData, toolData, clusterData, argoDataObject, clusterId, editMode }) {
+
   const toastContext = useContext(DialogToastContext);
   const [argoClusterData, setArgoClusterData] = useState(undefined);
   const isMounted = useRef(false);
@@ -56,6 +57,7 @@ function ArgoClusterOverlay({ loadData, toolData, argoDataObject, clusterId, edi
         argoClusterData={argoClusterData}
         toolData={toolData}
         loadData={loadData}
+        clusterData={clusterData}
         handleClose={closePanel}
         clusterId={clusterId}
         editMode={editMode}
@@ -68,6 +70,7 @@ ArgoClusterOverlay.propTypes = {
   toolData: PropTypes.object,
   argoDataObject: PropTypes.object,
   loadData: PropTypes.func,
+  clusterData: PropTypes.array,
   clusterId: PropTypes.string,
   editMode: PropTypes.bool,
 };

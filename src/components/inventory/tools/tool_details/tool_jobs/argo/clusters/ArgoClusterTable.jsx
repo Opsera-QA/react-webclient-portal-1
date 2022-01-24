@@ -15,7 +15,7 @@ function ArgoClusterTable({ toolData, argoClusters, loadData, onRowSelect, isLoa
   let fields = argoClusterMetadata.fields;
 
   const createArgoCluster = () => {
-    toastContext.showOverlayPanel(<ArgoClusterOverlay toolData={toolData} loadData={loadData} editMode={false} />);
+    toastContext.showOverlayPanel(<ArgoClusterOverlay toolData={toolData} loadData={loadData} clusterData={argoClusters} editMode={false} />);
   };
 
   const columns = useMemo(
