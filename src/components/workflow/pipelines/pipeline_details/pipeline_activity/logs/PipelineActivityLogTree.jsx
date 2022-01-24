@@ -104,7 +104,7 @@ function PipelineActivityLogTree(
 
   return (
     <div className={"table-tree mb-3"}>
-      <div className={"scroll-y hide-x-overflow table-tree-with-paginator-and-secondary-tree p-2"}>
+      <div className={"scroll-y hide-x-overflow table-tree-with-paginator-and-secondary-tree"}>
         <TreeBase
           data={pipelineLogTree}
           onItemClick={onMainTreeItemClick}
@@ -112,7 +112,7 @@ function PipelineActivityLogTree(
           selectedId={selectedId}
         />
       </div>
-      <div className={"secondary-table-tree p-2"}>
+      <div className={"secondary-table-tree"}>
         <TreeBase
           data={secondaryLogTree}
           onItemClick={onSecondaryTreeItemClick}

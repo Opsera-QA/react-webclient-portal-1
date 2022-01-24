@@ -45,6 +45,7 @@ function TreeBase({ data, onItemClick, setParentWidget, expanded, treeId, select
   const setUpTree = () => {
     const tree = new Tree(treeId, {
       data: Array.isArray(data) && data.length > 0 ? data : [],
+      css: "p-2",
     });
 
     if (expanded === true) {
