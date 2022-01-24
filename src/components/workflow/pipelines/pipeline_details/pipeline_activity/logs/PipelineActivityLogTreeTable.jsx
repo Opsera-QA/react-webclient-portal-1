@@ -75,7 +75,7 @@ function PipelineActivityLogTreeTable(
         clearTimeout(refreshTimer);
       }
     };
-  }, []);
+  }, [pipelineRunCount]);
 
   useEffect(() => {
     if (pipeline) {

@@ -24,11 +24,15 @@ function PipelineActivityLogTree(
     isMounted.current = true;
 
     if (Array.isArray(pipelineLogTree) && pipelineLogTree.length > 0) {
-      const treeItem = pipelineLogTree[0];
+      let treeItem = pipelineLogTree[0];
 
       const currentRunNumber = pipelineActivityFilterDto?.getData("currentRunNumber");
 
-      if (currentRunNumber !== "latest" && currentRunNumber !== "secondary" && typeof currentRunNumber !== "number") {
+      if (typeof currentRunNumber === "number") {
+        treeItem = pipelineLogTree.find((treeItem) => treeItem.runNumber === currentRunNumber);
+      }
+
+      if (currentRunNumber !== "latest" && currentRunNumber !== "secondary") {
         setSelectedId(treeItem.id);
       }
     }
