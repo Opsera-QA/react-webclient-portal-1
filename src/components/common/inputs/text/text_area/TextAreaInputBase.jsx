@@ -63,6 +63,7 @@ function TextAreaInputBase(
       />
       <textarea
         disabled={disabled}
+        value={model?.getData(fieldName)}
         onChange={(event) => updateValue(event.target.value)}
         className={"form-control"}
         rows={rowCount}
