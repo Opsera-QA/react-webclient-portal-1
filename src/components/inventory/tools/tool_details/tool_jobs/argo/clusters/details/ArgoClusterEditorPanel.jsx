@@ -14,7 +14,7 @@ import ArgoAwsClusterEditorForm from "./sub-forms/ArgoAwsClusterEditorForm";
 import ArgoAzureClusterEditorForm from "./sub-forms/ArgoAzureClusterEditorForm";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
-function ArgoClusterEditorPanel({ argoClusterData, toolData, handleClose, editMode }) {
+function ArgoClusterEditorPanel({ argoClusterData, toolData, clusterData, handleClose, editMode }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [argoClusterModel, setArgoClusterModel] = useState(undefined);
@@ -110,6 +110,7 @@ function ArgoClusterEditorPanel({ argoClusterData, toolData, handleClose, editMo
           <ArgoAwsClusterEditorForm
             setModel={setArgoClusterModel}
             model={argoClusterModel}
+            clusterData={clusterData}
             disabled={argoClusterData ? !argoClusterData?.isNew() : false}
           />
         }
@@ -117,6 +118,7 @@ function ArgoClusterEditorPanel({ argoClusterData, toolData, handleClose, editMo
           <ArgoAzureClusterEditorForm
             setModel={setArgoClusterModel}
             model={argoClusterModel}
+            clusterData={clusterData}
             disabled={argoClusterData ? !argoClusterData?.isNew() : false}
           />
         }
@@ -151,6 +153,7 @@ ArgoClusterEditorPanel.propTypes = {
   repoId: PropTypes.string,
   handleClose: PropTypes.func,
   editMode: PropTypes.bool,
+  clusterData: PropTypes.array,
 };
 
 export default ArgoClusterEditorPanel;

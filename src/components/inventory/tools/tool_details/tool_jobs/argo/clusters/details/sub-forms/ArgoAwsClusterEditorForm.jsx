@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import ArgoAwsPlatformSelectInput from "../inputs/ArgoAwsPlatformSelectInput";
 import ArgoAwsClusterSelectInput from "../inputs/ArgoAwsClusterSelectInput";
 
-const ArgoAwsClusterEditorForm = ({ model, setModel, disabled }) => {
+const ArgoAwsClusterEditorForm = ({ model, setModel, clusterData, disabled }) => {
   return (
     <>
       <Col lg={12}>
@@ -18,6 +18,7 @@ const ArgoAwsClusterEditorForm = ({ model, setModel, disabled }) => {
         <ArgoAwsClusterSelectInput 
           model={model}
           setModel={setModel}
+          clusterData={clusterData}
           disabled={disabled || ( model && model.getData("platformToolId") === "" ) }
           awsToolConfigId={model && model.getData("platformToolId")}
         />
@@ -30,6 +31,7 @@ ArgoAwsClusterEditorForm.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
+  clusterData: PropTypes.array,
 };
 
 export default ArgoAwsClusterEditorForm;
