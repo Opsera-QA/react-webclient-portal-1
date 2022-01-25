@@ -5,6 +5,7 @@ import axios from "axios";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
+// TODO: We should add the ability to disable steps that don't match the tool_identifier of build steps we want to require
 function PipelineStepSelectInput({ fieldName, model, setModel, setDataFunction, disabled, plan, stepId }) {
   const [steps, setSteps] = useState([]);
   const isMounted = useRef(false);
