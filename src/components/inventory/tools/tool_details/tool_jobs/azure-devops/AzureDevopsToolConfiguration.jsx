@@ -43,12 +43,10 @@ function AzureDevopsToolConfiguration({ toolData }) {
     setAzureDevopsConfigurationDto(modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), AzureDevopsConnectionMetadata));
   };
 
-  const saveAzureDevopsToolConfiguration = async (cancelSource = cancelTokenSource) => {
-    let newConfiguration = azureDevopsConfigurationDto.getPersistData();
-    newConfiguration.accessToken = await toolsActions.saveThreePartToolPasswordToVaultV2(getAccessToken, cancelSource, toolData, azureDevopsConfigurationDto, "accessToken", newConfiguration.accessToken);
-
-    const item = {configuration: newConfiguration};
-    return await toolsActions.saveToolConfigurationV2(toolData, item, getAccessToken, cancelSource);
+  const saveAzureDevopsToolConfiguration = async () => {
+    const newConfiguration = azureDevopsConfigurationDto.getPersistData();
+    newConfiguration.accessToken = await toolsActions.saveThreePartToolPasswordToVaultV2(getAccessToken, cancelTokenSource, toolData, azureDevopsConfigurationDto, "accessToken", newConfiguration.accessToken);
+    return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
   };
 
   return (

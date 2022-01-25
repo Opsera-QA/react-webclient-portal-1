@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import ToolConfigurationEditorPanelContainer
@@ -10,13 +10,33 @@ import {AuthContext} from "contexts/AuthContext";
 import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
+import axios from "axios";
 
 function TerraformCloudToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [terraformCloudConfigurationDto, setTerraformCloudConfigurationDto] = useState(undefined);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
   const loadData = async () => {
@@ -24,8 +44,9 @@ function TerraformCloudToolConfiguration({ toolData }) {
   };
 
   const saveTerraformCloudToolConfiguration = async () => {
-    const item = {configuration: terraformCloudConfigurationDto.getPersistData()};
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    const newConfiguration = terraformCloudConfigurationDto.getPersistData();
+    newConfiguration.accessToken = await toolsActions.saveThreePartToolPasswordToVaultV2(getAccessToken, cancelTokenSource, toolData, terraformCloudConfigurationDto, "terraformToken", newConfiguration.terraformToken);
+    return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
   };
 
   return (
