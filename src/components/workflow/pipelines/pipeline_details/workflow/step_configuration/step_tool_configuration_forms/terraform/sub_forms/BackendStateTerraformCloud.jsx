@@ -11,7 +11,7 @@ function BackendStateAzure({ model, setModel }) {
   return (
     <>
       <TerraformCloudToolSelectInput model={model} setModel={setModel} />
-      <TerraformCloudOrganizationsSelectInput model={model} setModel={setModel} />
+      <TerraformCloudOrganizationsSelectInput dataObject={model} setDataObject={setModel} disabled={model?.getData("terraformCloudId")?.length === 0} toolId={model?.getData("terraformCloudId")} />
     </>
   );
 }

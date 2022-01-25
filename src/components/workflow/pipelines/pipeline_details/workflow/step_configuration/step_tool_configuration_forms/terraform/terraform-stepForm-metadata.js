@@ -137,6 +137,10 @@ const TerraformStepFormMetadata = {
       label: "Input Parameters",
       id: "inputParameters",
     },
+    {
+      label: "Maintain Remote State",
+      id: "isStateRemote",
+    },
   ],
   fieldsAlt: [
     {
@@ -281,6 +285,10 @@ const TerraformStepFormMetadata = {
       label: "Input Parameters",
       id: "inputParameters",
     },
+    {
+      label: "Maintain Remote State",
+      id: "isStateRemote",
+    },
   ],
   newObjectFields: {
     toolActionType: "EXECUTE",
@@ -315,10 +323,11 @@ const TerraformStepFormMetadata = {
     azureToolConfigId : "",
     terraformCloudId : "",
     organizationName : "",
-    backendState: "",
+    backendState: "local",
     azureCredentialId: "",
     inputParameters: "",
-    saveInputParameters: false
+    saveInputParameters: false,
+    isStateRemote: false
   }
 };
 

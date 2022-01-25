@@ -4,21 +4,27 @@ import TerraformRemoteStateCloudSelect from "../inputs/TerraformRemoteStateCloud
 import BackendStateAzure from "./BackendStateAzure";
 import BackendStateAWS from "./BackendStateAWS";
 import BackendStateTerraformCloud from "./BackendStateTerraformCloud";
+import TerraformRemoteStateToggleInput from "../inputs/TerraformRemoteStateToggleInput";
 
-function TerraformStateSubForm({ model, setModel}) {
+function TerraformStateSubForm({ model, setModel }) {
   return (
     <>
-      <TerraformRemoteStateCloudSelect dataObject={model} setDataObject={setModel} />
-      <BackendStateAzure model={model} setModel={setModel} />
-      <BackendStateAWS model={model} setModel={setModel} />
-      <BackendStateTerraformCloud model={model} setModel={setModel} />
+      <TerraformRemoteStateToggleInput dataObject={model} setDataObject={setModel} />
+      {model?.getData("isStateRemote") && (
+        <>
+          <TerraformRemoteStateCloudSelect dataObject={model} setDataObject={setModel} />
+          <BackendStateAzure model={model} setModel={setModel} />
+          <BackendStateAWS model={model} setModel={setModel} />
+          <BackendStateTerraformCloud model={model} setModel={setModel} />
+        </>
+      )}
     </>
   );
 }
 
 TerraformStateSubForm.propTypes = {
   model: PropTypes.object,
-  setModel: PropTypes.func
+  setModel: PropTypes.func,
 };
 
 export default TerraformStateSubForm;
