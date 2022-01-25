@@ -15,7 +15,12 @@ function GitToGitSyncTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationDat
   const getReviewerNamesField = () => {
     if (gitTaskConfigurationData?.getData("autoApprove") === true) {
       return (
-        <ArrayToTextField dataObject={gitTaskConfigurationData} fieldName={"reviewerNames"} />
+        <Col xs={12} sm={6} md={4}>
+          <ArrayToTextField
+            model={gitTaskConfigurationData}
+            fieldName={"reviewerNames"}
+          />
+        </Col>
       );
     }
   };
@@ -47,9 +52,7 @@ function GitToGitSyncTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationDat
         <Col xs={12} sm={6} md={4}>
           <BooleanField dataObject={gitTaskConfigurationData} fieldName={"autoApprove"} />
         </Col>
-        <Col xs={12} sm={6} md={4}>
-          {getReviewerNamesField()}
-        </Col>
+         {getReviewerNamesField()}
       </Row>
     </TaskSummaryCardContainer>
   );
