@@ -18,6 +18,7 @@ import pipelineActivityHelpers
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
+import CustomTable from "components/common/table/CustomTable";
 
 const refreshInterval = 15000;
 
@@ -261,6 +262,16 @@ function PipelineActivityLogTreeTable(
   };
 
   const getPipelineActivityTable = () => {
+    if (pipelineRunCount === 0) {
+      return (
+        <CustomTable
+          isLoading={isLoading}
+          data={[]}
+          noDataMessage={getNoDataMessage()}
+        />
+      );
+    }
+
     return (
       <TreeAndTableBase
         data={activityData}

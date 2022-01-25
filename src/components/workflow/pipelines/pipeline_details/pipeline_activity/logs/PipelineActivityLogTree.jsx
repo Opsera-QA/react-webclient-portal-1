@@ -146,7 +146,7 @@ PipelineActivityLogTree.propTypes = {
   pipelineActivityFilterDto: PropTypes.object,
   setPipelineActivityFilterDto: PropTypes.func,
   setCurrentRunNumber: PropTypes.func,
-  currentRunNumber: PropTypes.number,
+  currentRunNumber: PropTypes.string,
 };
 
 export default PipelineActivityLogTree;
