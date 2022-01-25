@@ -113,7 +113,11 @@ function SelectInputBase(
         disabled={disabled}
         onSearchFunction={onSearchFunction}
       />
-      <InfoText field={field} errorMessage={errorMessage} />
+      <InfoText
+        field={field}
+        errorMessage={errorMessage}
+        hideRegexDefinitionText={true}
+      />
     </InputContainer>
   );
 }
