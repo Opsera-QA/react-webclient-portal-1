@@ -78,12 +78,12 @@ function AwsEcsDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallb
         setDataObject={setAwsEcsDeployModel}
         fieldName={"ecsServiceContainerPort"}
       />
-      <DeleteResourceToggle
-        dataObject={awsEcsDeployModel}
-        setDataObject={setAwsEcsDeployModel}
-        fieldName={"ecsDeleteService"}
-        pipelineId={pipelineId}
-      />
+      {/*<DeleteResourceToggle*/}
+      {/*  dataObject={awsEcsDeployModel}*/}
+      {/*  setDataObject={setAwsEcsDeployModel}*/}
+      {/*  fieldName={"ecsDeleteService"}*/}
+      {/*  pipelineId={pipelineId}*/}
+      {/*/>*/}
     </PipelineStepEditorPanelContainer>
   );
 }
