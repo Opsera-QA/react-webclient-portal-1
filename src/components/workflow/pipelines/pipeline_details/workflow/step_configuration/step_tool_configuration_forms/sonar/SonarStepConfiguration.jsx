@@ -192,6 +192,11 @@ function SonarStepConfiguration(
             dataObject={sonarStepModel}
             setDataObject={setSonarStepModel}
           />
+          <TextInputBase
+            fieldName={"projectName"}
+            dataObject={sonarStepModel}
+            setDataObject={setSonarStepModel}
+          />
           <BooleanToggleInput
             fieldName={"workspaceDeleteFlag"}
             dataObject={sonarStepModel}
