@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TaskSummaryCardContainer from "components/tasks/details/tasks/TaskSummaryCardContainer";
 import BooleanField from "components/common/fields/boolean/BooleanField";
+import {Row, Col} from "react-bootstrap";
 
 function GitToGitSyncTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
 
@@ -20,17 +21,35 @@ function GitToGitSyncTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationDat
 
   return (
     <TaskSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
-      <div className="mb-2">
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"service"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitCredential"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"workspace"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"repository"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"sourceBranch"} />        
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitBranch"} />
-        <BooleanField fieldName={"deleteSourceBranch"} dataObject={gitTaskConfigurationData} />
-        <BooleanField fieldName={"autoApprove"} dataObject={gitTaskConfigurationData} />
-        {getReviewerNamesField()}
-      </div>
+       <Row className="mx-0 mb-2">
+        <Col xs={12} sm={6} md={4}>
+          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"service"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitCredential"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"workspace"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"repository"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"sourceBranch"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitBranch"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          <BooleanField dataObject={gitTaskConfigurationData} fieldName={"deleteSourceBranch"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          <BooleanField dataObject={gitTaskConfigurationData} fieldName={"autoApprove"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          {getReviewerNamesField()}
+        </Col>
+      </Row>
     </TaskSummaryCardContainer>
   );
 }
