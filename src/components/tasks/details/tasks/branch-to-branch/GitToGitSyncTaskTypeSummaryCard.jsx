@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TaskSummaryCardContainer from "components/tasks/details/tasks/TaskSummaryCardContainer";
 import BooleanField from "components/common/fields/boolean/BooleanField";
+import ArrayToTextField from "components/common/fields/text/ArrayToTextField";
 
 function GitToGitSyncTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
 
@@ -13,7 +14,7 @@ function GitToGitSyncTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationDat
   const getReviewerNamesField = () => {
     if (gitTaskConfigurationData?.getData("autoApprove") === true) {
       return (
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"reviewerNames"} />
+        <ArrayToTextField dataObject={gitTaskConfigurationData} fieldName={"reviewerNames"} />
       );
     }
   };
