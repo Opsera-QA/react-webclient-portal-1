@@ -305,7 +305,7 @@ function PipelineSummaryPanel(
         <FontAwesomeIcon
           icon={faBinoculars}
           className="ml-2 text-muted"
-          size="s"
+          size="sm"
           style={{ cursor: "pointer" }}
           onClick={() => {
             handleEditPropertyClick("schedule");
