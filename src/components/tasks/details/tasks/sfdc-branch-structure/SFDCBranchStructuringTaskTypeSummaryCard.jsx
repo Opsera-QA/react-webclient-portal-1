@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TaskSummaryCardContainer from "components/tasks/details/tasks/TaskSummaryCardContainer";
-
+import {Row, Col} from "react-bootstrap";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 function SFDCBranchStructuringTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
   if (isLoading) {
     return <TaskSummaryCardContainer isLoading={isLoading} />;
@@ -10,15 +11,32 @@ function SFDCBranchStructuringTaskTypeSummaryCard({ gitTasksData, gitTaskConfigu
 
   return (
     <TaskSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
-      <div className="mb-2">
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"toolName"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"conversionType"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"service"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitCredential"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"repository"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitBranch"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"destinationBranch"} />
-      </div>
+      <Row className="mx-0 mb-2">
+        <Col xs={12} sm={6} md={4}>
+          <ToolNameField model={gitTaskConfigurationData} fieldName={"toolConfigId"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          <ToolNameField model={gitTaskConfigurationData} fieldName={"sfdcToolId"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"conversionType"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"service"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitCredential"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"repository"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitBranch"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"destinationBranch"} />
+        </Col>
+      </Row>
     </TaskSummaryCardContainer>
   );
 }
