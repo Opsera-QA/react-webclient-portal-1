@@ -1730,11 +1730,10 @@ div.data-blocks-ellipses {
 }
 
 .confirmation-overlay-panel-body {
-    overflow-y: auto;
-    min-height: 75px;
+    min-height: 500px;
+    max-height: calc(100% - 48px);
     min-width: 750px;
     max-width: 750px;
-    max-height: calc(100% - 48px);
 }
 
 .confirmation-overlay-panel-body-text {

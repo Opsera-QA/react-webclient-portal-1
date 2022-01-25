@@ -56,7 +56,9 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
       handleClose();
       try{
         setIsLoading(true);
-        await sfdcPipelineActions.triggerGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData.getData("_id"));
+        const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
+        gitTasksData.setData("configuration", configuration);
+        await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
         handleClose();
         toastContext.showOverlayPanel(
           <SalesforceBulkMigrationTaskWizardOverlay
