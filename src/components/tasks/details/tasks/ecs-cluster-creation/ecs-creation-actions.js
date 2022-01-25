@@ -16,7 +16,8 @@ ECSCreationActions.getKeyPairs = async (dataObject, getAccessToken, cancelTokenS
 
 ECSCreationActions.getVPCs = async (dataObject, getAccessToken, cancelTokenSource) => {
   let urlParams = {
-    toolId: dataObject?.getData("awsToolId")
+    toolId: dataObject?.getData("awsToolId"),
+    region: dataObject?.getData("region")
   };
   const apiUrl = `/tools/aws/v2/vpc`;
   let response = await baseActions.apiPostCallV2(getAccessToken,cancelTokenSource, apiUrl, urlParams);
@@ -41,7 +42,8 @@ ECSCreationActions.getSubnets = async (dataObject, getAccessToken, cancelTokenSo
 
 ECSCreationActions.getIAMRoles = async (dataObject, getAccessToken, cancelTokenSource) => {
   let urlParams = {
-    toolId: dataObject?.getData("awsToolId")
+    toolId: dataObject?.getData("awsToolId"),
+    region: dataObject?.getData("region")
   };
   const apiUrl = `/tools/aws/v2/IAMRoles`;
   let response = await baseActions.apiPostCallV2(getAccessToken,cancelTokenSource, apiUrl, urlParams);
@@ -53,7 +55,8 @@ ECSCreationActions.getIAMRoles = async (dataObject, getAccessToken, cancelTokenS
 
 ECSCreationActions.getSecurityGroups = async (dataObject, getAccessToken, cancelTokenSource) => {
   let urlParams = {
-    toolId: dataObject?.getData("awsToolId")
+    toolId: dataObject?.getData("awsToolId"),
+    region: dataObject?.getData("region")
   };
   const apiUrl = `/tools/aws/v2/securityGroups`;
   let response = await baseActions.apiPostCallV2(getAccessToken,cancelTokenSource, apiUrl, urlParams);

@@ -104,6 +104,10 @@ const ec2ClusterCreationTaskConfigurationMetadata = {
     {
       label: "Stack ID",
       id: "stackId"
+    },
+    {
+      label: "Region",
+      id: "region"
     }
   ],
   newObjectFields:
@@ -125,7 +129,8 @@ const ec2ClusterCreationTaskConfigurationMetadata = {
       securityGroup : "",
       vpcId : "",
       instanceType : "",
-      keyPair: ""
+      keyPair: "",
+      region: ""
     }
 };
 

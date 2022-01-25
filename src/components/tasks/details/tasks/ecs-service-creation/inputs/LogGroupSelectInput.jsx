@@ -32,6 +32,7 @@ function LogGroupSelectInput({
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
+    console.log(dataObject.getData("region"));
 
     if (!disabled) {
       loadData(source).catch((error) => {

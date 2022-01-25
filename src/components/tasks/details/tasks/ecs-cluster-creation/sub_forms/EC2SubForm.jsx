@@ -28,7 +28,7 @@ function EC2SubForm({ dataObject, setDataObject, disabled }) {
           <VpcSelectInput
             dataObject={dataObject}
             setDataObject={setDataObject}
-            disabled={dataObject?.getData("awsToolId").length === 0}
+            disabled={dataObject?.getData("awsToolId").length === 0 || dataObject?.getData("region").length === 0}
             awstoolId={dataObject?.getData("awsToolId")}
           />
           <SubnetSelectInput
@@ -62,8 +62,8 @@ function EC2SubForm({ dataObject, setDataObject, disabled }) {
       <SecurityGroupSelectInput
         dataObject={dataObject}
         setDataObject={setDataObject}
-        disabled={dataObject?.getData("awsToolId").length === 0}
-        awstoolId={dataObject?.getData("awsToolId")}
+        disabled={dataObject?.getData("awsToolId").length === 0 || dataObject?.getData("region").length === 0}
+         awstoolId={dataObject?.getData("awsToolId")}
       />
     </>
   );
