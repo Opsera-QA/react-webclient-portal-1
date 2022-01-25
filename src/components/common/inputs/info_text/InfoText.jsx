@@ -2,7 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import regexDefinitions from "utils/regexDefinitions";
 
-function InfoText({ field, errorMessage, customMessage, successMessage }) {
+function InfoText(
+  {
+    field,
+    errorMessage,
+    customMessage,
+    successMessage,
+    hideRegexDefinitionText,
+  }) {
   if (errorMessage != null && errorMessage !== "") {
     return (
       <small className="red form-text">
@@ -27,7 +34,7 @@ function InfoText({ field, errorMessage, customMessage, successMessage }) {
     );
   }
 
-  if (field?.regexDefinitionName != null && regexDefinitions[field?.regexDefinitionName] !== null) {
+  if (field?.regexDefinitionName != null && regexDefinitions[field?.regexDefinitionName] !== null && hideRegexDefinitionText !== true) {
     return (
       <small className="text-muted form-text">
         <div>{regexDefinitions[field?.regexDefinitionName]?.formText}</div>
@@ -51,6 +58,7 @@ InfoText.propTypes = {
   errorMessage: PropTypes.string,
   customMessage: PropTypes.string,
   successMessage: PropTypes.string,
+  hideRegexDefinitionText: PropTypes.bool,
 };
 
 export default InfoText;

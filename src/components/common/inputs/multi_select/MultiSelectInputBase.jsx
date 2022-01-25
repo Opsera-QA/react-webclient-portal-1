@@ -5,6 +5,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 function MultiSelectInputBase(
   {
@@ -160,7 +161,11 @@ function MultiSelectInputBase(
         setDataFunction={updateValue}
         onSearchFunction={onSearchFunction}
       />
-      <InfoText errorMessage={errorMessage} field={field}/>
+      <InfoText
+        field={field}
+        errorMessage={errorMessage}
+        hideRegexDefinitionText={true}
+      />
     </InputContainer>
   );
 }
