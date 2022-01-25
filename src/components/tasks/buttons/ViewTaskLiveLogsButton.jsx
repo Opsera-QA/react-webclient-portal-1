@@ -9,7 +9,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_SALESFORCE_REPO,
-  TASK_TYPES.SALESFORCE_BULK_MIGRATION,
+  // TASK_TYPES.SALESFORCE_BULK_MIGRATION,
 ];
 
 function ViewTaskLiveLogsButton({taskModel, className, taskType, disabled }) {
