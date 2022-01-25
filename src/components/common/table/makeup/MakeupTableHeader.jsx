@@ -22,13 +22,15 @@ function MakeupTableHeader(
     );
   };
 
-  if ((isLoading === true && data == null) || !Array.isArray(headerGroups)) {
+  if ((isLoading === true && !Array.isArray(data) || data.length === 0) || !Array.isArray(headerGroups)) {
     return (
-      <tr>
-        <th colSpan="12">
-          <div className="no-header-text" />
-        </th>
-      </tr>
+      <thead>
+        <tr>
+          <th colSpan="12">
+            <div className="no-header-text" />
+          </th>
+        </tr>
+      </thead>
     );
   }
 

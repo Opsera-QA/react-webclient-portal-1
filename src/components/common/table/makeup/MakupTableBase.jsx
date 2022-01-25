@@ -70,6 +70,7 @@ MakeupTableBase.propTypes = {
 MakeupTableBase.defaultProps = {
   initialState: defaultInitialState,
   data: [],
+  columns: [],
   isLoading: false,
   noDataMessage: "No data is currently available",
   className: "table-content-block",
