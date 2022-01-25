@@ -17,9 +17,19 @@ const sonarPipelineStepMetadata = {
       label: "Job Type",
       id: "job_type",
       isRequired: true,
-    },{
+    },
+    {
       label: "Project Key",
       id: "projectKey",
+      maxLength: 150,
+      spacesAllowed: false,
+      isRequiredFunction: (model) => {
+        return model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB;
+      },
+    },
+    {
+      label: "Project Name",
+      id: "projectName",
       maxLength: 150,
       spacesAllowed: false,
       isRequiredFunction: (model) => {
@@ -138,6 +148,7 @@ const sonarPipelineStepMetadata = {
     toolJobId: "",
     toolJobType: "",
     projectKey: "",
+    projectName: "",
     accountUsername: "",
     projectId: "",
     defaultBranch: "",
