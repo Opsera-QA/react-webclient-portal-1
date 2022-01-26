@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, {useContext, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { Row, Col, Form } from "react-bootstrap";
@@ -37,6 +37,8 @@ import {
   getPipelineTypeLabel,
   PIPELINE_TYPE_SELECT_OPTIONS
 } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
+import commonActions from "components/common/common.actions";
+import axios from "axios";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -58,7 +60,6 @@ function PipelineSummaryPanel(
   }) {
   const contextType = useContext(AuthContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
   const { featureFlagHideItemInProd, getUserRecord } = contextType;
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -73,6 +74,32 @@ function PipelineSummaryPanel(
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [taskCount, setTaskCount] = useState(0);
   let history = useHistory();
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+
+  // TODO: This should be combined with the workflowStatus use effect but don't want to break anything.
+  //  After we have time to verify adding this doesn't break it, let's combine them.
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted.current === true) {
+        // toastContext.showLoadingError(error);
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
 
   const authorizedAction = (action, owner) => {
     let objectRoles = pipeline?.roles;
@@ -151,10 +178,10 @@ function PipelineSummaryPanel(
     });
   };
 
-  const deleteItem = async (pipelineId) => {
+  const deletePipeline = async (pipelineId) => {
     try {
       const { getAccessToken } = contextType;
-      await pipelineActions.delete(pipelineId, getAccessToken);
+      await pipelineActions.deletePipelineV2(getAccessToken, pipelineId);
       toastContext.showDeleteSuccessResultDialog("Pipeline");
       history.push("/workflow");
     } catch (error) {
@@ -579,7 +606,7 @@ function PipelineSummaryPanel(
                                 message="Warning! This pipeline cannot be recovered once this pipeline is deleted. Do you still want to proceed?"
                                 button="Confirm"
                                 handleCancelModal={() => setShowDeleteModal(false)}
-                                handleConfirmModal={() => deleteItem(modalDeleteId)} /> : null}
+                                handleConfirmModal={() => deletePipeline(modalDeleteId)} /> : null}
 
       {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
                                 handleCancelModal={() => setInfoModal({ ...infoModal, show: false })} />}

@@ -223,6 +223,25 @@ function PipelineActionControls(
     setStopPipeline(false);
     setStartPipeline(false);
   }
+  //
+  // const stopPipelineRun = async (pipelineId) => {
+  //   try {
+  //     setStopPipeline(true);
+  //     await PipelineActions.stopPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+  //   }
+  //   catch (error) {
+  //     if (isMounted.current === true) {
+  //       toastContext.showSystemErrorToast(error, "There was an issue stopping this pipeline");
+  //     }
+  //   }
+  //   finally {
+  //     if (isMounted?.current === true) {
+  //       setStopPipeline(false);
+  //       setStartPipeline(false);
+  //     }
+  //   }
+  // };
+
 
   async function resetPipelineState(pipelineId) {
     setStopPipeline(true);
