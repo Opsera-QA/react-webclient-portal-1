@@ -180,6 +180,7 @@ toolsActions.savePasswordToVault = async (toolData, toolConfigurationData, field
 };
 
 // Note: This is used for three part vault keys (tool ID, identifier, and key)
+// TODO: Should probably rewrite this
 toolsActions.saveThreePartToolPasswordToVaultV2 = async (getAccessToken, cancelTokenSource, toolData, toolConfigurationData, fieldName, value) => {
   if (toolConfigurationData.isChanged(fieldName) && value != null && typeof(value) === "string") {
     const toolId = toolData.getData("_id");
@@ -220,9 +221,10 @@ toolsActions.saveToolConfiguration = async (toolData, configurationItem, getAcce
   return await toolsActions.updateToolConfiguration(newToolData, getAccessToken);
 };
 
-toolsActions.saveToolConfigurationV2 = async (toolData, configurationItem, getAccessToken, cancelTokenSource) => {
-  let newToolData = toolData.getPersistData();
-  newToolData["configuration"] = configurationItem.configuration;
+toolsActions.saveToolConfigurationV2 = async (getAccessToken, cancelTokenSource, toolModel, newConfiguration) => {
+  const newToolData = toolModel?.getPersistData();
+  newToolData.configuration = newConfiguration;
+  console.log("saving tool configuration: " + JSON.stringify(newToolData));
   return await toolsActions.updateToolConfigurationV2(newToolData, getAccessToken, cancelTokenSource);
 };
 
