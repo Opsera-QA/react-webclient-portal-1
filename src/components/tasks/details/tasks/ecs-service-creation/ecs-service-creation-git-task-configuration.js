@@ -46,7 +46,8 @@ const ec2ServiceCreationTaskConfigurationMetadata = {
     },
     {
       label: "Region",
-      id: "region"
+      id: "region",
+      isRequired: true
     }
   ],
   newObjectFields:

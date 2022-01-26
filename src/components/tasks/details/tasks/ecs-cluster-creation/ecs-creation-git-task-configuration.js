@@ -107,7 +107,8 @@ const ec2ClusterCreationTaskConfigurationMetadata = {
     },
     {
       label: "Region",
-      id: "region"
+      id: "region",
+      isRequired: true
     }
   ],
   newObjectFields:

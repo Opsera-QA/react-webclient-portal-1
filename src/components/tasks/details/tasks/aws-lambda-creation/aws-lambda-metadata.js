@@ -34,7 +34,8 @@ const awsLambdaFunctionTaskConfigurationMetadata = {
     },
     {
       label: "Region",
-      id: "region"
+      id: "region",
+      isRequired: true
     }
   ],
   newObjectFields:
