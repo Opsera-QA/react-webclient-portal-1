@@ -14,8 +14,8 @@ import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.m
 import axios from "axios";
 import pipelineActivityActions
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-actions";
-import pipelineActivityHelpers
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-helpers";
+import pipelineLogHelpers
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineLog.helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import CustomTable from "components/common/table/CustomTable";
@@ -85,7 +85,7 @@ function PipelineActivityLogTreeTable(
     try {
       setIsLoading(true);
       setActivityData([]);
-      const newPipelineTree = pipelineActivityHelpers.constructTopLevelTreeBasedOnRunCount(pipelineRunCount);
+      const newPipelineTree = pipelineLogHelpers.constructTopLevelTreeBasedOnRunCount(pipelineRunCount);
       pipelineTree.current = [...newPipelineTree];
       await getSingleRunLogs(newFilterModel, cancelSource);
     } catch (error) {
@@ -156,7 +156,7 @@ function PipelineActivityLogTreeTable(
   }, [currentRunNumber]);
 
   useEffect(() => {
-    const newTree = pipelineActivityHelpers.addRunNumberToPipelineTree(pipelineTree?.current, pipelineRunCount);
+    const newTree = pipelineLogHelpers.addRunNumberToPipelineTree(pipelineTree?.current, pipelineRunCount);
 
     if (newTree) {
       pipelineTree.current = [...newTree];
@@ -201,7 +201,7 @@ function PipelineActivityLogTreeTable(
       newFilterModel.setData("activeFilters", newFilterModel?.getActiveFilters());
       setPipelineActivityFilterModel({...newFilterModel});
 
-      const newTree = pipelineActivityHelpers.updateSelectedRunNumberTree(pipelineTree.current, currentRunNumber, pipelineActivityData);
+      const newTree = pipelineLogHelpers.updateSelectedRunNumberTree(pipelineTree.current, currentRunNumber, pipelineActivityData);
 
       if (Array.isArray(newTree) && newTree.length > 0) {
         pipelineTree.current = [...newTree];

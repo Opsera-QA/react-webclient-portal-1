@@ -2,8 +2,8 @@ import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import TreeBase from "components/common/tree/TreeBase";
 import VanityBottomPaginatorBase from "components/common/pagination/VanityBottomPaginatorBase";
-import pipelineActivityHelpers
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-helpers";
+import pipelineLogHelpers
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineLog.helpers";
 
 function PipelineActivityLogTree(
   {
@@ -14,7 +14,7 @@ function PipelineActivityLogTree(
   }) {
   const [treeWidget, setTreeWidget] = useState(undefined);
   const [secondaryTreeWidget, setSecondaryTreeWidget] = useState(undefined);
-  const [secondaryLogTree] = useState(pipelineActivityHelpers.getSecondaryTree());
+  const [secondaryLogTree] = useState(pipelineLogHelpers.getSecondaryTree());
   const isMounted = useRef(false);
   const [selectedId, setSelectedId] = useState(undefined);
 
