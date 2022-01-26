@@ -14,7 +14,7 @@ function IAMRolesSelectInput({
                                    textField,
                                    valueField,
                                toolConfigId,
-                                   pipelineId,
+                                   region,
                                  }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -45,7 +45,7 @@ function IAMRolesSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolConfigId]);
+  }, [toolConfigId,region]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -127,7 +127,7 @@ IAMRolesSelectInput.propTypes = {
   textField: PropTypes.string,
   valueField: PropTypes.string,
   toolConfigId: PropTypes.string,
-  pipelineId: PropTypes.string,
+  region: PropTypes.string,
 };
 
 IAMRolesSelectInput.defaultProps = {

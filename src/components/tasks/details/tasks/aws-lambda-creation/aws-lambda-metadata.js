@@ -32,6 +32,11 @@ const awsLambdaFunctionTaskConfigurationMetadata = {
       label: "AWS Tool",
       id: "awsToolConfigId",
       isRequired: true
+    },
+    {
+      label: "Region",
+      id: "region",
+      isRequired: true
     }
   ],
   newObjectFields:
@@ -41,7 +46,8 @@ const awsLambdaFunctionTaskConfigurationMetadata = {
       runtime: "",
       handler : "",
       functionArn: "",
-      awsToolConfigId: ""
+      awsToolConfigId: "",
+      region: ""
     }
 };
 

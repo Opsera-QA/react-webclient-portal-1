@@ -14,7 +14,7 @@ function VpcSelectInput({
   textField,
   valueField,
   awstoolId,
-  pipelineId,
+  region,
 }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -45,7 +45,7 @@ function VpcSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [awstoolId]);
+  }, [awstoolId,region]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -108,7 +108,7 @@ VpcSelectInput.propTypes = {
   textField: PropTypes.string,
   valueField: PropTypes.string,
   awstoolId: PropTypes.string,
-  pipelineId: PropTypes.string,
+  region: PropTypes.string,
 };
 
 VpcSelectInput.defaultProps = {
