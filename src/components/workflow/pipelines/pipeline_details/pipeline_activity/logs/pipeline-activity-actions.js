@@ -2,11 +2,11 @@ import baseActions from "utils/actionsBase";
 
 const pipelineActivityActions = {};
 
-pipelineActivityActions.getPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterModel) => {
+pipelineActivityActions.getPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterModel, currentRunNumber) => {
   const urlParams = {
     params: {
       search:   pipelineActivityFilterModel?.getData("search"),
-      runCount: pipelineActivityFilterModel?.getData("currentRunNumber"),
+      runCount: currentRunNumber,
       fields: ["run_count", "step_name", "action", "message", "status", "createdAt", "step_index"],
       status: pipelineActivityFilterModel?.getFilterValue("status"),
     },

@@ -13,9 +13,10 @@ function PipelineActivityLogTable(
   {
     pipelineLogData,
     pipelineActivityMetadata,
-    isLoading,
     pipeline,
     pipelineActivityFilterDto,
+    currentRunNumber,
+    currentStepName,
   }) {
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
@@ -59,9 +60,6 @@ function PipelineActivityLogTable(
   };
 
   const getFilteredData = () => {
-    const currentRunNumber = pipelineActivityFilterDto?.getData("currentRunNumber");
-    const currentStepName = pipelineActivityFilterDto?.getData("currentStepName");
-
     if (currentRunNumber == null || currentRunNumber === "latest" || currentRunNumber === "secondary") {
       return pipelineLogData;
     }
@@ -92,9 +90,13 @@ function PipelineActivityLogTable(
 PipelineActivityLogTable.propTypes = {
   pipelineLogData: PropTypes.array,
   pipelineActivityMetadata: PropTypes.object,
-  isLoading: PropTypes.bool,
   pipeline: PropTypes.object,
   pipelineActivityFilterDto: PropTypes.object,
+  currentRunNumber: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  currentStepName: PropTypes.string,
 };
 
 export default PipelineActivityLogTable;

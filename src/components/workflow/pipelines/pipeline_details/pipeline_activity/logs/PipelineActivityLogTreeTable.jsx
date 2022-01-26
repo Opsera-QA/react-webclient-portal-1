@@ -44,7 +44,8 @@ function PipelineActivityLogTreeTable(
   const [refreshTimer, setRefreshTimer] = useState(null);
   let internalRefreshCount = 1;
   const [currentLogTreePage, setCurrentLogTreePage] = useState(0);
-  const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
+  const [currentRunNumber, setCurrentRunNumber] = useState(pipelineRunCount);
+  const [currentStepName, setCurrentStepName] = useState(undefined);
 
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -58,7 +59,6 @@ function PipelineActivityLogTreeTable(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    pipelineActivityFilterModel.setData("currentRunNumber", pipelineRunCount);
 
     loadData(pipelineActivityFilterModel, cancelTokenSource).catch((error) => {
       if (isMounted?.current === true) {
@@ -163,17 +163,9 @@ function PipelineActivityLogTreeTable(
     }
   }, [pipelineRunCount]);
 
-  useEffect(() => {
-    if (Array.isArray(pipelineTree?.current) && pipelineTree?.current?.length > 0) {
-      setActivityData([]);
-    }
-  }, [currentLogTreePage]);
-
   const pullLogs = async (newFilterModel = pipelineActivityFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-
-      const currentRunNumber = newFilterModel?.getData("currentRunNumber");
 
       console.log("pulling pipeline logs");
       if (currentRunNumber === "latest") {
@@ -196,7 +188,7 @@ function PipelineActivityLogTreeTable(
   };
 
   const getSingleRunLogs = async (newFilterModel = pipelineActivityFilterModel, cancelSource = cancelTokenSource) => {
-    const response = await pipelineActivityActions.getPipelineActivityLogsV3(getAccessToken, cancelSource, pipelineId, newFilterModel);
+    const response = await pipelineActivityActions.getPipelineActivityLogsV3(getAccessToken, cancelSource, pipelineId, newFilterModel, currentRunNumber);
     const pipelineActivityData = response?.data?.data;
     const activityLogCount = response?.data?.count;
 
@@ -209,7 +201,7 @@ function PipelineActivityLogTreeTable(
       newFilterModel.setData("activeFilters", newFilterModel?.getActiveFilters());
       setPipelineActivityFilterModel({...newFilterModel});
 
-      const newTree = pipelineActivityHelpers.updateSelectedRunNumberTree(pipelineTree.current, newFilterModel?.getData("currentRunNumber"), pipelineActivityData);
+      const newTree = pipelineActivityHelpers.updateSelectedRunNumberTree(pipelineTree.current, currentRunNumber, pipelineActivityData);
 
       if (Array.isArray(newTree) && newTree.length > 0) {
         pipelineTree.current = [...newTree];
@@ -240,11 +232,19 @@ function PipelineActivityLogTreeTable(
       return ("Could not find any results with the given filters.");
     }
 
-    if (pipelineActivityFilterModel?.getData("currentRunNumber") === "secondary") {
+    if (currentRunNumber === "secondary") {
       return ("There are no secondary logs.");
     }
 
-    return ("Pipeline activity data has not been generated yet.\n Once this pipeline begins running, it will publish details here.");
+    if (currentRunNumber === "latest") {
+      return ("Pipeline activity data has not been generated yet.\n Once this pipeline begins running, it will publish details here.");
+    }
+
+    if (currentRunNumber == null) {
+      return ("Please select a run to view its logs");
+    }
+
+    return (`There are no log associated with run ${currentRunNumber}`);
   };
 
   const getTable = () => {
@@ -255,6 +255,8 @@ function PipelineActivityLogTreeTable(
         pipelineActivityMetadata={pipelineActivityMetadata}
         pipelineLogData={activityData}
         pipelineActivityFilterDto={pipelineActivityFilterModel}
+        currentRunNumber={currentRunNumber}
+        currentStepName={currentStepName}
       />
     );
   };
@@ -263,12 +265,9 @@ function PipelineActivityLogTreeTable(
     return (
       <PipelineActivityLogTree
         pipelineLogTree={pipelineTree?.current}
-        currentLogTreePage={currentLogTreePage}
         setCurrentLogTreePage={setCurrentLogTreePage}
-        pipelineActivityFilterDto={pipelineActivityFilterModel}
-        setPipelineActivityFilterDto={setPipelineActivityFilterModel}
-        currentRunNumber={currentRunNumber}
         setCurrentRunNumber={setCurrentRunNumber}
+        setCurrentStepName={setCurrentStepName}
       />
     );
   };
