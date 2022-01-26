@@ -74,24 +74,30 @@ function PipelineDetailView() {
   };
 
   const getPipeline = async (cancelSource = cancelTokenSource) => {
-    console.log("in refresh pipeline");
-    const newRefreshCount = refreshCount + 1;
-    setRefreshCount(newRefreshCount);
+    try {
+      console.log("in refresh pipeline");
+      const newRefreshCount = refreshCount + 1;
+      setRefreshCount(newRefreshCount);
 
-    setSoftLoading(true);
-    const response = await pipelineActions.getPipelineByIdV2(getAccessToken, cancelSource, id);
-    const newPipeline = response?.data?.data;
+      setSoftLoading(true);
+      const response = await pipelineActions.getPipelineByIdV2(getAccessToken, cancelSource, id);
+      const newPipeline = response?.data?.data;
 
-    if (newPipeline) {
-      setPipeline(newPipeline);
-    } else {
       if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog("Pipeline not found");
+        if (newPipeline) {
+          setPipeline(newPipeline);
+        } else {
+          toastContext.showLoadingErrorDialog("Pipeline not found");
+        }
       }
-    }
-
-    if (isMounted?.current === true) {
-      setSoftLoading(false);
+    } catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setSoftLoading(false);
+      }
     }
   };
 
