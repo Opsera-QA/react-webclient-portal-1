@@ -15,7 +15,7 @@ function TableBodyLoadingWrapper({ isLoading, data, tableComponent, noDataMessag
     return noDataMessage;
   };
 
-  if (data == null || data.length === 0) {
+  if (!Array.isArray(data) || data.length === 0) {
     return (
       <Row className={"mx-0 w-100 table-border"} style={{height: tableHeight}}>
         <Col xs={12} className={"my-auto text-center px-0"}>
