@@ -332,7 +332,6 @@ function PipelineActionControls(
         pipeline={pipeline}
         handleClose={handlePipelineStartWizardClose}
         handlePipelineWizardRequest={handlePipelineWizardRequest}
-        loadPipeline={fetchData}
       />,
     );
   };
