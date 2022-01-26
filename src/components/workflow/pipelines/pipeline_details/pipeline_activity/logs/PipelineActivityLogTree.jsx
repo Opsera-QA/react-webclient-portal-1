@@ -8,12 +8,9 @@ import pipelineActivityHelpers
 function PipelineActivityLogTree(
   {
     pipelineLogTree,
-    currentLogTreePage,
     setCurrentLogTreePage,
-    pipelineActivityFilterDto,
-    setPipelineActivityFilterDto,
-    currentRunNumber,
     setCurrentRunNumber,
+    setCurrentStepName,
   }) {
   const [treeWidget, setTreeWidget] = useState(undefined);
   const [secondaryTreeWidget, setSecondaryTreeWidget] = useState(undefined);
@@ -24,23 +21,9 @@ function PipelineActivityLogTree(
   useEffect(() => {
     isMounted.current = true;
 
-    if (Array.isArray(pipelineLogTree) && pipelineLogTree.length > 0) {
+    if (Array.isArray(pipelineLogTree) && pipelineLogTree.length > 0 && selectedId == null) {
       let treeItem = pipelineLogTree[0];
-
-      // TODO: Remove usage of filter model
-      const currentRunNumber = pipelineActivityFilterDto?.getData("currentRunNumber");
-
-      if (typeof currentRunNumber === "number") {
-        const foundTreeItem = pipelineLogTree.find((treeItem) => treeItem.id === currentRunNumber);
-
-        if (foundTreeItem) {
-          treeItem = foundTreeItem;
-        }
-      }
-
-      if (currentRunNumber !== "latest" && currentRunNumber !== "secondary" && typeof currentRunNumber !== "number") {
-        setSelectedId(treeItem?.id);
-      }
+      setSelectedId(treeItem?.id);
     }
 
     return () => {
@@ -50,21 +33,14 @@ function PipelineActivityLogTree(
 
   const onMainTreeItemClick = (treeItem) => {
     setSelectedId(treeItem?.id);
+
     if (secondaryTreeWidget) {
       secondaryTreeWidget?.selection?.remove();
     }
 
     if (treeItem) {
-      const currentRunNumber = pipelineActivityFilterDto?.getData("currentRunNumber");
-      pipelineActivityFilterDto?.setData("currentRunNumber", treeItem?.runNumber);
-      pipelineActivityFilterDto?.setData("currentStepName", treeItem?.stepName);
-
-      if (currentRunNumber !== treeItem?.runNumber) {
-        setCurrentRunNumber(treeItem?.runNumber);
-      }
-      else {
-        setPipelineActivityFilterDto({...pipelineActivityFilterDto});
-      }
+      setCurrentStepName(treeItem?.stepName);
+      setCurrentRunNumber(treeItem?.runNumber);
     }
   };
 
@@ -75,37 +51,13 @@ function PipelineActivityLogTree(
     }
 
     if (treeItem) {
-      const currentRunNumber = pipelineActivityFilterDto?.getData("currentRunNumber");
-      pipelineActivityFilterDto?.setData("currentRunNumber", treeItem?.runNumber);
-      pipelineActivityFilterDto?.setData("currentStepName", treeItem?.stepName);
-      setPipelineActivityFilterDto({...pipelineActivityFilterDto});
-
-      if (currentRunNumber !== treeItem?.runNumber) {
-        setCurrentRunNumber(treeItem?.runNumber);
-      }
-      else {
-        setPipelineActivityFilterDto({...pipelineActivityFilterDto});
-      }
+      setCurrentStepName(treeItem?.stepName);
+      setCurrentRunNumber(treeItem?.runNumber);
     }
   };
 
   const onPageChange = (newPage) => {
-    if (currentLogTreePage !== newPage) {
-      const currentRunNumber = pipelineActivityFilterDto?.getData("currentRunNumber");
-
-      if (currentRunNumber !== "latest" && currentRunNumber !== "secondary") {
-        pipelineActivityFilterDto?.setData("currentRunNumber", undefined);
-        pipelineActivityFilterDto?.setData("currentStepName", undefined);
-        setPipelineActivityFilterDto({...pipelineActivityFilterDto});
-        setCurrentRunNumber(undefined);
-
-        if (treeWidget) {
-          treeWidget.selection.remove();
-        }
-      }
-
-      setCurrentLogTreePage(newPage);
-    }
+    setCurrentLogTreePage(newPage);
   };
 
 
@@ -141,15 +93,9 @@ function PipelineActivityLogTree(
 
 PipelineActivityLogTree.propTypes = {
   pipelineLogTree: PropTypes.array,
-  currentLogTreePage: PropTypes.number,
   setCurrentLogTreePage: PropTypes.func,
-  pipelineActivityFilterDto: PropTypes.object,
-  setPipelineActivityFilterDto: PropTypes.func,
   setCurrentRunNumber: PropTypes.func,
-  currentRunNumber: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  setCurrentStepName: PropTypes.func,
 };
 
 export default PipelineActivityLogTree;
