@@ -17,7 +17,7 @@ import PipelineWorkflowTabBar from "components/workflow/pipelines/pipeline_detai
 function PipelineDetailView() {
   const { tab, id } = useParams();
   const toastContext = useContext(DialogToastContext);
-  const [pipeline, setPipeline] = useState({});
+  const [pipeline, setPipeline] = useState(undefined);
   const [loading, setLoading] = useState(false);
   const [softLoading, setSoftLoading] = useState(false);
   const [workflowStatus, setWorkflowStatus] = useState(false);
@@ -106,15 +106,6 @@ function PipelineDetailView() {
   };
 
   const getCurrentView = () => {
-    if (loading) {
-      return (
-        <LoadingDialog
-          size="md"
-          message={"Loading pipeline..."}
-        />
-      );
-    }
-
     if (tab === "model") {
       return (
         <PipelineWorkflowView
@@ -163,6 +154,15 @@ function PipelineDetailView() {
       </div>
     );
   };
+
+  if (loading) {
+    return (
+      <LoadingDialog
+        size="md"
+        message={"Loading pipeline..."}
+      />
+    );
+  }
 
   if (!loading && !pipeline) {
     return (
