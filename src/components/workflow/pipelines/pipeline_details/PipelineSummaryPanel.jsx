@@ -54,7 +54,6 @@ function PipelineSummaryPanel(
     parentWorkflowStatus,
     fetchPlan,
     setWorkflowStatus,
-    getActivityLogs,
     setPipeline,
   }) {
   const contextType = useContext(AuthContext);
@@ -437,7 +436,6 @@ function PipelineSummaryPanel(
                                   customerAccessRules={customerAccessRules}
                                   fetchData={fetchPlan}
                                   setPipeline={setPipeline}
-                                  fetchActivityLogs={getActivityLogs}
                                   setParentWorkflowStatus={setWorkflowStatus} />
 
 
@@ -592,7 +590,6 @@ function PipelineSummaryPanel(
 
 PipelineSummaryPanel.propTypes = {
   pipeline: PropTypes.object,
-  getActivityLogs: PropTypes.func,
   customerAccessRules: PropTypes.object,
   ownerName: PropTypes.string,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),

@@ -13,12 +13,11 @@ import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationB
 import pipelineActions from "components/workflow/pipeline-actions";
 import PipelineWorkflowTabBar from "components/workflow/pipelines/pipeline_details/PipelineWorkflowTabBar";
 
-// TODO: This is a work in progress to move the logic for pulling activity logs into the table component
 function PipelineDetailView() {
   const { tab, id } = useParams();
   const toastContext = useContext(DialogToastContext);
   const [pipeline, setPipeline] = useState(undefined);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [softLoading, setSoftLoading] = useState(false);
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [editItem, setEditItem] = useState(false);
@@ -32,7 +31,6 @@ function PipelineDetailView() {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    //console.log("Effect  1");
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
@@ -55,7 +53,7 @@ function PipelineDetailView() {
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      setLoading(true);
+      setIsLoading(true);
 
       const userRecord = await getUserRecord(); //RBAC Logic
       const rules = await setAccessRoles(userRecord);
@@ -70,7 +68,7 @@ function PipelineDetailView() {
     }
     finally {
       if (isMounted?.current === true) {
-        setLoading(false);
+        setIsLoading(false);
       }
     }
   };
@@ -98,7 +96,6 @@ function PipelineDetailView() {
   };
 
   const fetchPlan = async (param) => {
-    console.log("in fetch plan");
     await getPipeline();
     if (param) {
       setEditItem(param);
@@ -118,7 +115,6 @@ function PipelineDetailView() {
           setEditItem={setEditItem}
           fetchPlan={fetchPlan}
           setWorkflowStatus={setWorkflowStatus}
-          // getActivityLogs={getActivityLogs}
           softLoading={softLoading}
         />
       );
@@ -138,7 +134,6 @@ function PipelineDetailView() {
             parentWorkflowStatus={workflowStatus}
             ownerName={pipeline?.owner_name}
             setWorkflowStatus={setWorkflowStatus}
-            // getActivityLogs={getActivityLogs}
             fetchPlan={fetchPlan}
           />
         </div>
@@ -155,39 +150,47 @@ function PipelineDetailView() {
     );
   };
 
-  if (loading) {
-    return (
-      <LoadingDialog
-        size="md"
-        message={"Loading pipeline..."}
-      />
-    );
-  }
+  const getBody = () => {
+    if (isLoading) {
+      return (
+        <LoadingDialog
+          size="md"
+          message={"Loading pipeline..."}
+        />
+      );
+    }
 
-  if (!loading && !pipeline) {
+    if (!pipeline) {
+      return (
+        <div className={"p-5"}>
+          <InfoDialog
+            message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."
+          />
+        </div>
+      );
+    }
+
     return (
-      <InfoDialog
-        message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."
-      />
+      <div>
+        <div className="h4 mt-3 mb-2">
+          {pipeline?.name}
+        </div>
+        <PipelineWorkflowTabBar
+          currentTab={tab}
+          pipelineId={id}
+          getPipeline={getPipeline}
+        />
+        {getCurrentView()}
+      </div>
     );
-  }
+  };
 
   return (
     <div>
       <WorkflowSubNavigationBar currentTab={"pipelineViewer"} />
-      <div className="h4 mt-3 mb-2">
-        {pipeline?.name}
-      </div>
-      <PipelineWorkflowTabBar
-        currentTab={tab}
-        pipelineId={id}
-        getPipeline={getPipeline}
-        // refreshTimer={refreshTimer}
-      />
-      {getCurrentView()}
+      {getBody()}
     </div>
   );
 }
-
 
 export default PipelineDetailView;

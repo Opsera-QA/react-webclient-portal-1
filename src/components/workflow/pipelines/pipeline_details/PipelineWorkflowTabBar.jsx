@@ -7,7 +7,6 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 function PipelineWorkflowTabBar(
   {
     currentTab,
-    refreshTimer,
     pipelineId,
     getPipeline,
   }) {
@@ -15,10 +14,6 @@ function PipelineWorkflowTabBar(
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
-
-    if (refreshTimer) {
-      clearTimeout(refreshTimer);
-    }
 
     if (currentTab !== tabSelection) {
       history.push(`/workflow/details/${pipelineId}/${tabSelection}`);

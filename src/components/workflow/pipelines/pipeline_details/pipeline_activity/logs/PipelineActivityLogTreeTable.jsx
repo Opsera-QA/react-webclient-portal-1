@@ -60,7 +60,7 @@ function PipelineActivityLogTreeTable(
     isMounted.current = true;
     pipelineActivityFilterModel.setData("currentRunNumber", pipelineRunCount);
 
-    loadData(pipelineActivityFilterModel, false, cancelTokenSource).catch((error) => {
+    loadData(pipelineActivityFilterModel, cancelTokenSource).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -77,33 +77,39 @@ function PipelineActivityLogTreeTable(
     };
   }, []);
 
-  const loadData = async (newFilterModel = pipelineActivityFilterModel, silentLoading = false, cancelSource = cancelTokenSource) => {
-    console.log("in load data in pipeline activityLogTreeTable");
+  const loadData = async (newFilterModel = pipelineActivityFilterModel, cancelSource = cancelTokenSource) => {
     if (isLoading || typeof pipelineRunCount !== "number" || pipelineRunCount <= 0) {
       return;
     }
 
     try {
-      if (!silentLoading) {
-        setIsLoading(true);
-        setActivityData([]);
-      }
-
+      setIsLoading(true);
+      setActivityData([]);
       const newPipelineTree = pipelineActivityHelpers.constructTopLevelTreeBasedOnRunCount(pipelineRunCount);
       pipelineTree.current = [...newPipelineTree];
-
       await getSingleRunLogs(newFilterModel, cancelSource);
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-      console.log(error.message);
+
+      if (isMounted.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
     } finally {
-      setIsLoading(false);
+
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
 
   useEffect(() => {
     if (pipeline) {
+      pullLogs(pipelineActivityFilterModel).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+
       evaluatePipelineStatus(pipeline);
     }
   }, [pipeline]);
@@ -131,7 +137,7 @@ function PipelineActivityLogTreeTable(
       internalRefreshCount++;
       console.log("running pipeline refresh interval");
       await getPipeline();
-      await getSingleRunLogs(pipelineActivityFilterModel);
+      // await getSingleRunLogs(pipelineActivityFilterModel);
     }, refreshInterval);
 
     setRefreshTimer(newRefreshTimer);
@@ -166,10 +172,10 @@ function PipelineActivityLogTreeTable(
   const pullLogs = async (newFilterModel = pipelineActivityFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      setActivityData([]);
 
       const currentRunNumber = newFilterModel?.getData("currentRunNumber");
 
+      console.log("pulling pipeline logs");
       if (currentRunNumber === "latest") {
         await getLatestActivityLogs(newFilterModel, cancelSource);
       } else if (currentRunNumber === "secondary") {
@@ -194,7 +200,6 @@ function PipelineActivityLogTreeTable(
     const pipelineActivityData = response?.data?.data;
     const activityLogCount = response?.data?.count;
 
-    console.log("pipelineTree length: " + pipelineTree?.current?.length);
     if (Array.isArray(pipelineActivityData)) {
       setActivityData([...pipelineActivityData]);
       setPipelineActivityMetadata(response?.data?.metadata);

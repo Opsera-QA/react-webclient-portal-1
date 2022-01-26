@@ -30,13 +30,13 @@ import InformaticaPipelineRunAssistantOverlay
 
 const delayCheckInterval = 8000;
 
-function PipelineActionControls({
-          pipeline,
-          customerAccessRules,
-          disabledActionState,
-          fetchData,
-          // fetchActivityLogs,
-        }) {
+function PipelineActionControls(
+  {
+    pipeline,
+    customerAccessRules,
+    disabledActionState,
+    fetchData,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [workflowStatus, setWorkflowStatus] = useState(false);
@@ -166,7 +166,6 @@ function PipelineActionControls({
     setWorkflowStatus("stopped");
     await resetPipelineState(pipelineId);
     await fetchData();
-    // await fetchActivityLogs();
     setResetPipeline(false);
     setStartPipeline(false);
     await checkPipelineQueueStatus();
@@ -177,7 +176,6 @@ function PipelineActionControls({
     setWorkflowStatus("stopped");
     await stopPipelineRun(pipelineId);
     await fetchData();
-    // await fetchActivityLogs();
     setResetPipeline(false);
     setStartPipeline(false);
     await pipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipelineId);
@@ -211,7 +209,6 @@ function PipelineActionControls({
 
   const handleRefreshClick = async () => {
     await fetchData();
-    // await fetchActivityLogs();
     await checkPipelineQueueStatus();
   };
 
@@ -648,6 +645,5 @@ PipelineActionControls.propTypes = {
   customerAccessRules: PropTypes.object,
   disabledActionState: PropTypes.bool,
   fetchData: PropTypes.func,
-  fetchActivityLogs: PropTypes.func,
 };
 export default PipelineActionControls;
