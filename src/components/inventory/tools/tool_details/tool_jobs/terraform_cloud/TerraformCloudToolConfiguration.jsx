@@ -54,12 +54,13 @@ function TerraformCloudToolConfiguration({ toolData }) {
       model={terraformCloudConfigurationDto}
       setModel={setTerraformCloudConfigurationDto}
       persistRecord={saveTerraformCloudToolConfiguration}
+      toolConnectionCheckName={"customer-terraform"}
       toolData={toolData}
     >
       <Row>
         <Col sm={12}>
-          <TextInputBase dataObject={terraformCloudConfigurationDto} setDataObject={setTerraformCloudConfigurationDto} fieldName={"terraformCloudUrl"}/>
-          <VaultTextAreaInput dataObject={terraformCloudConfigurationDto} setDataObject={setTerraformCloudConfigurationDto} fieldName={"terraformToken"}/>
+          <TextInputBase dataObject={terraformCloudConfigurationDto} setDataObject={setTerraformCloudConfigurationDto} fieldName={"url"}/>
+          <VaultTextAreaInput dataObject={terraformCloudConfigurationDto} setDataObject={setTerraformCloudConfigurationDto} fieldName={"token"}/>
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
