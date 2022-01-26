@@ -16,8 +16,6 @@ function PipelineActivityLogTable(
     isLoading,
     pipeline,
     pipelineActivityFilterDto,
-    secondaryActivityLogs,
-    latestActivityLogs,
   }) {
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
@@ -35,7 +33,12 @@ function PipelineActivityLogTable(
   }, [JSON.stringify(pipelineActivityMetadata)]);
 
   const onRowSelect = (treeGrid, row) => {
-    toastContext.showOverlayPanel(<PipelineTaskDetailViewer pipelineName={pipeline?.name} pipelineActivityLogId={row._id} />);
+    toastContext.showOverlayPanel(
+      <PipelineTaskDetailViewer
+        pipelineName={pipeline?.name}
+        pipelineActivityLogId={row._id}
+      />
+    );
   };
 
   const loadColumnMetadata = (newActivityMetadata) => {
@@ -59,16 +62,8 @@ function PipelineActivityLogTable(
     const currentRunNumber = pipelineActivityFilterDto?.getData("currentRunNumber");
     const currentStepName = pipelineActivityFilterDto?.getData("currentStepName");
 
-    if (currentRunNumber == null) {
+    if (currentRunNumber == null || currentRunNumber === "latest" || currentRunNumber === "secondary") {
       return pipelineLogData;
-    }
-
-    if (currentRunNumber === "latest") {
-      return [...latestActivityLogs];
-    }
-
-    if (currentRunNumber === "secondary") {
-      return [...secondaryActivityLogs];
     }
 
     return pipelineLogData.filter((item) => {
@@ -85,15 +80,12 @@ function PipelineActivityLogTable(
   };
 
   return (
-    <div className={"tree-table"}>
-      <TableBase
-        columns={columns}
-        data={getFilteredData()}
-        isLoading={isLoading}
-        noDataMessage={getNoDataMessage()}
-        onRowSelect={onRowSelect}
-      />
-    </div>
+    <TableBase
+      columns={columns}
+      data={getFilteredData()}
+      noDataMessage={getNoDataMessage()}
+      onRowSelect={onRowSelect}
+    />
   );
 }
 
@@ -103,8 +95,6 @@ PipelineActivityLogTable.propTypes = {
   isLoading: PropTypes.bool,
   pipeline: PropTypes.object,
   pipelineActivityFilterDto: PropTypes.object,
-  secondaryActivityLogs: PropTypes.array,
-  latestActivityLogs: PropTypes.array,
 };
 
 export default PipelineActivityLogTable;

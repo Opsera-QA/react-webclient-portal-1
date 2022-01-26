@@ -54,10 +54,7 @@ function PipelineSummaryPanel(
     parentWorkflowStatus,
     fetchPlan,
     setWorkflowStatus,
-    getActivityLogs,
-    setRefreshCount,
     setPipeline,
-    refreshCount,
   }) {
   const contextType = useContext(AuthContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -439,9 +436,6 @@ function PipelineSummaryPanel(
                                   customerAccessRules={customerAccessRules}
                                   fetchData={fetchPlan}
                                   setPipeline={setPipeline}
-                                  setRefreshCount={setRefreshCount}
-                                  refreshCount={refreshCount}
-                                  fetchActivityLogs={getActivityLogs}
                                   setParentWorkflowStatus={setWorkflowStatus} />
 
 
@@ -596,16 +590,12 @@ function PipelineSummaryPanel(
 
 PipelineSummaryPanel.propTypes = {
   pipeline: PropTypes.object,
-  getActivityLogs: PropTypes.func,
   customerAccessRules: PropTypes.object,
   ownerName: PropTypes.string,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  setActiveTab: PropTypes.func,
   fetchPlan: PropTypes.func,
   setWorkflowStatus: PropTypes.func,
   setPipeline: PropTypes.func,
-  refreshCount: PropTypes.number,
-  setRefreshCount: PropTypes.func,
 };
 
 export default PipelineSummaryPanel;
