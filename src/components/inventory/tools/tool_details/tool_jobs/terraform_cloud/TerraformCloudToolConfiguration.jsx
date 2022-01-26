@@ -45,7 +45,7 @@ function TerraformCloudToolConfiguration({ toolData }) {
 
   const saveTerraformCloudToolConfiguration = async () => {
     const newConfiguration = terraformCloudConfigurationDto.getPersistData();
-    newConfiguration.terraformToken = await toolsActions.saveThreePartToolPasswordToVaultV2(getAccessToken, cancelTokenSource, toolData, terraformCloudConfigurationDto, "terraformToken", newConfiguration.terraformToken);
+    newConfiguration.token = await toolsActions.saveThreePartToolPasswordToVaultV2(getAccessToken, cancelTokenSource, toolData, terraformCloudConfigurationDto, "token", newConfiguration.token);
     return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
   };
 
@@ -54,7 +54,7 @@ function TerraformCloudToolConfiguration({ toolData }) {
       model={terraformCloudConfigurationDto}
       setModel={setTerraformCloudConfigurationDto}
       persistRecord={saveTerraformCloudToolConfiguration}
-      toolConnectionCheckName={"customer-terraform"}
+      toolConnectionCheckName={"customer_terraform"}
       toolData={toolData}
     >
       <Row>

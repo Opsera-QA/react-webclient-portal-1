@@ -56,7 +56,7 @@ function TerraformCloudOrganizationsSelectInput({ fieldName, dataObject, setData
   const loadOrganizations = async (cancelSource = cancelTokenSource) => {
     try {
       const res = await terraformCloudOrganizationsActions.getTerraformCloudOrganizations(getAccessToken, cancelSource, toolId);
-      const accounts = res?.data?.data;
+      const accounts = res?.data;
 
       if(Array.isArray(accounts)) {
         setOrganizations(accounts);
