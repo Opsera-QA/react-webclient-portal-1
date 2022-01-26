@@ -5,7 +5,15 @@ import IconBase from "components/common/icons/IconBase";
 
 // TODO: Fix so when passing in height the height doesn't change after the table loads
 function TableBodyLoadingWrapper({ isLoading, data, tableComponent, noDataMessage, tableHeight }) {
-  if (data == null || data.length === 0) {
+  const getNoDataMessage = () => {
+    if (isLoading === true) {
+      return ("Loading Data");
+    }
+
+    return noDataMessage;
+  };
+
+  if (!Array.isArray(data) || data.length === 0) {
     return (
       <div className={"h-100 w-100 table-border"}>
         <div className="w-100 info-text text-center p-3">
@@ -13,7 +21,7 @@ function TableBodyLoadingWrapper({ isLoading, data, tableComponent, noDataMessag
             <div className="col-sm-12 my-auto text-center">
               <span>
                 <IconBase icon={faExclamationCircle} isLoading={isLoading} className="mr-2 mt-1"/>
-                {isLoading ? "Loading Data" : noDataMessage}
+                {getNoDataMessage()}
               </span>
             </div>
           </div>
