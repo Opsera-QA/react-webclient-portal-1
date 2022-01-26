@@ -14,7 +14,7 @@ function SecurityGroupSelectInput({
                                    textField,
                                    valueField,
                                    awsToolId,
-                                   pipelineId,
+                                   region,
                                  }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -45,7 +45,7 @@ function SecurityGroupSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [awsToolId]);
+  }, [awsToolId,region]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -107,7 +107,7 @@ SecurityGroupSelectInput.propTypes = {
   textField: PropTypes.string,
   valueField: PropTypes.string,
   awsToolId: PropTypes.string,
-  pipelineId: PropTypes.string,
+  region: PropTypes.string,
 };
 
 SecurityGroupSelectInput.defaultProps = {

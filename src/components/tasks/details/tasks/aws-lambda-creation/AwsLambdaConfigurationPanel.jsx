@@ -13,6 +13,7 @@ import OctopusProjectNameInput
 import FunctionNameWithButton from "./inputs/FunctionNameWithButton";
 import RoleRestrictedAwsAccountToolSelectInput
   from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
+import AWSRegionSelectInput from "../../../../common/list_of_values_input/aws/AWSRegionSelectInput";
 
 function AwsLambdaConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   useEffect(() => {
@@ -41,6 +42,15 @@ function AwsLambdaConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationDat
         />
       </Col>
       <Col lg={12}>
+        <AWSRegionSelectInput
+          dataObject={gitTasksConfigurationData}
+          setDataObject={setGitTasksConfigurationData}
+          fieldName={"region"}
+          disabled={gitTasksConfigurationData?.getData("awsToolConfigId")?.length === 0}
+          awsTool={gitTasksConfigurationData?.getData("awsToolConfigId")}
+        />
+      </Col>
+      <Col lg={12}>
         <FunctionNameWithButton
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
@@ -60,6 +70,7 @@ function AwsLambdaConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationDat
           setDataObject={setGitTasksConfigurationData}
           disabled={gitTasksConfigurationData?.getData("awsToolConfigId").length === 0}
           toolConfigId={gitTasksConfigurationData?.getData("awsToolConfigId")}
+          region={gitTasksConfigurationData?.getData("region")}
         />
       </Col>
       <Col lg={12}>

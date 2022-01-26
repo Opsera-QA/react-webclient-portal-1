@@ -30,6 +30,7 @@ function EC2SubForm({ dataObject, setDataObject, disabled }) {
             setDataObject={setDataObject}
             disabled={dataObject?.getData("awsToolId").length === 0 || dataObject?.getData("region").length === 0}
             awstoolId={dataObject?.getData("awsToolId")}
+            region={dataObject?.getData("region")}
           />
           <SubnetSelectInput
             dataObject={dataObject}
@@ -63,7 +64,8 @@ function EC2SubForm({ dataObject, setDataObject, disabled }) {
         dataObject={dataObject}
         setDataObject={setDataObject}
         disabled={dataObject?.getData("awsToolId").length === 0 || dataObject?.getData("region").length === 0}
-         awstoolId={dataObject?.getData("awsToolId")}
+        awstoolId={dataObject?.getData("awsToolId")}
+        region={dataObject?.getData("region")}
       />
     </>
   );

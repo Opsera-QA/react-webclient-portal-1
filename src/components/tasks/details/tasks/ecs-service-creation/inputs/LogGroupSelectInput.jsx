@@ -14,7 +14,7 @@ function LogGroupSelectInput({
                                textField,
                                valueField,
                                toolConfigId,
-                               pipelineId,
+                               region,
                              }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -46,7 +46,7 @@ function LogGroupSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolConfigId]);
+  }, [toolConfigId, region]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -109,7 +109,7 @@ LogGroupSelectInput.propTypes = {
   textField: PropTypes.string,
   valueField: PropTypes.string,
   toolConfigId: PropTypes.string,
-  pipelineId: PropTypes.string,
+  region: PropTypes.string,
 };
 
 LogGroupSelectInput.defaultProps = {

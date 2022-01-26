@@ -53,18 +53,16 @@ function AWSRegionSelectInput({ fieldName, dataObject, setDataObject, disabled, 
       const regions = response?.data?.data;
       if (Array.isArray(regions)) {
         setCloudProviderRegions(regions);
+        return;
       }
-      getPlaceholderText();
+      if (!isLoading && (cloudProviderRegions == null || cloudProviderRegions.length === 0)) {
+        setPlaceholder("AWS Region information is missing or unavailable!");
+      }
     } catch (error) {
-      getPlaceholderText();
+      setPlaceholder("Error pulling region information");
+
       console.error(error);
       toastContext.showServiceUnavailableDialog();
-    }
-  };
-
-  const getPlaceholderText = () => {
-    if (!isLoading && (cloudProviderRegions == null || cloudProviderRegions.length === 0)) {
-      setPlaceholder("S3 Region information is missing or unavailable!");
     }
   };
 

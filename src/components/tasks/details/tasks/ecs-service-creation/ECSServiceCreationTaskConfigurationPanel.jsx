@@ -107,6 +107,7 @@ function ECSServiceCreationTaskConfigurationPanel({
           setDataObject={setGitTasksConfigurationData}
           disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0 || gitTasksConfigurationData?.getData("region").length === 0}
           toolConfigId={gitTasksConfigurationData?.getData("toolConfigId")}
+          region={gitTasksConfigurationData?.getData("region")}
         />
       </Col>
       <Col lg={12}>
@@ -122,6 +123,7 @@ function ECSServiceCreationTaskConfigurationPanel({
           setDataObject={setGitTasksConfigurationData}
           disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0 || gitTasksConfigurationData?.getData("region").length === 0}
           toolConfigId={gitTasksConfigurationData?.getData("toolConfigId")}
+          region={gitTasksConfigurationData?.getData("region")}
         />
       </Col>
       <Col lg={12}>
@@ -130,6 +132,7 @@ function ECSServiceCreationTaskConfigurationPanel({
           setDataObject={setGitTasksConfigurationData}
           disabled={gitTasksConfigurationData?.getData("ecsServiceVpcId").length === 0 || gitTasksConfigurationData?.getData("region").length === 0}
           vpcId={gitTasksConfigurationData?.getData("ecsServiceVpcId")}
+          region={gitTasksConfigurationData?.getData("region")}
         />
       </Col>
       {getDynamicFields()}
