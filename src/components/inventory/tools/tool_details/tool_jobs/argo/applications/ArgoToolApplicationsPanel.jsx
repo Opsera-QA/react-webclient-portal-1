@@ -1,13 +1,18 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import ArgoApplicationsTable from "./ArgoApplicationsTable";
 import PropTypes from "prop-types";
-import ArgoApplicationOverlay
-  from "components/inventory/tools/tool_details/tool_jobs/argo/applications/ArgoApplicationOverlay";
+import CreateArgoApplicationOverlay
+  from "components/inventory/tools/tool_details/tool_jobs/argo/applications/CreateArgoApplicationOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
 import ParameterFilterModel from "components/inventory/parameters/parameter.filter.model";
 import {AuthContext} from "contexts/AuthContext";
+import modelHelpers from "components/common/model/modelHelpers";
+import argoApplicationsMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/argo/applications/argo-application-metadata";
+import ArgoApplicationEditorPanel
+  from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/ArgoApplicationEditorPanel";
 
 function ArgoToolApplicationsPanel({ toolData }) {
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
@@ -16,6 +21,7 @@ function ArgoToolApplicationsPanel({ toolData }) {
   const [parameterFilterModel, setParameterFilterModel] = useState(new ParameterFilterModel());
   const [isLoading, setIsLoading] = useState(false);
   const [argoApplications, setArgoApplications] = useState([]);
+  const [selectedArgoApplication, setSelectedArgoApplication] = useState(undefined);
 
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -89,25 +95,25 @@ function ArgoToolApplicationsPanel({ toolData }) {
     setArgoApplications(newApplicationList);
   };
 
-  const onRowSelect = (grid, row) => {
-    let selectedRow = toolData?.getArrayData("actions")[row?.index];
-    toastContext.showOverlayPanel(
-      <ArgoApplicationOverlay
-        argoDataObject={selectedRow?.configuration}
-        applicationId={selectedRow?._id}
-        toolData={toolData}
+  if (selectedArgoApplication != null) {
+    return (
+      <ArgoApplicationEditorPanel
         loadData={loadData}
+        handleClose={() => setSelectedArgoApplication(undefined)}
+        toolData={toolData}
+        argoApplicationData={selectedArgoApplication}
+        applicationId={selectedArgoApplication?.getData("applicationId")}
       />
     );
-  };
+  }
 
   return (
     <ArgoApplicationsTable
       isLoading={isLoading}
       toolData={toolData}
       loadData={loadData}
-      onRowSelect={onRowSelect}
       argoApplications={argoApplications}
+      setSelectedArgoApplication={setSelectedArgoApplication}
     />
   );
 }
