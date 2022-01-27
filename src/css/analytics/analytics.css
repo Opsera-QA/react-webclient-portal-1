@@ -56,3 +56,20 @@
 
 
 /* End Marketplace Chart Card Styling */
+
+/* Insights Card Styling */
+.insight-card-title {
+    background-color: #00a8e8;
+    color: #fff;
+}
+
+.insight-hl > div > span {
+    font-weight: 600;
+}
+
+.insight-hll {
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+/* End Insights Card Styling */
