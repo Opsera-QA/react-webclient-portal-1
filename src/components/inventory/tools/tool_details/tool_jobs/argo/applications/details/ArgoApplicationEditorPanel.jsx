@@ -61,8 +61,10 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
   };
 
   const deleteApplication = async () => {
-    await argoActions.deleteArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, applicationId);
+    const response = await argoActions.deleteArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, applicationId);
     handleClose();
+    loadData();
+    return response;
   };
 
   if (isLoading || argoApplicationModel == null) {
