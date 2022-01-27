@@ -17,12 +17,14 @@ import ToolUsageTab from "components/inventory/tools/tool_details/tab_container/
 import ToolServiceTypeMappingTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolServiceTypeMappingTab";
 import ToolPathsTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolPathsTab";
 import ToolOrganizationsTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolOrganizationsTab";
+import ToolClustersTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolClustersTab";
 
 export const TOOL_DETAIL_PANEL_TABS = {
   ACCOUNTS: "accounts",
   APPLICATIONS: "applications",
   ATTRIBUTES: "attributes",
   ATTRIBUTE_SETTINGS: "attribute_settings",
+  CLUSTERS: "clusters",
   CONNECTION: "connection",
   JOBS: "jobs",
   LOGS: "logs",
@@ -69,7 +71,7 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         toolModel={toolModel}
         activeTab={activeTab}
         handleTabClick={handleTabClick}
-      />
+      />      
       <ToolApplicationsTab
         toolModel={toolModel}
         activeTab={activeTab}
@@ -95,14 +97,14 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         activeTab={activeTab}
         handleTabClick={handleTabClick}
       />
-      <ToolStorageTab
+      <ToolServiceTypeMappingTab
         toolModel={toolModel}
         activeTab={activeTab}
         handleTabClick={handleTabClick}
       />
-      <ToolServiceTypeMappingTab
+      <ToolClustersTab
         toolModel={toolModel}
-        activeTab={activeTab}      
+        activeTab={activeTab}
         handleTabClick={handleTabClick}
       />
       <ToolOrganizationsTab
@@ -110,6 +112,7 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         activeTab={activeTab}
         handleTabClick={handleTabClick}
       />
+      {/* Keep logs and usage as last tabs */}
       <ToolLogsTab
         toolModel={toolModel}
         activeTab={activeTab}

@@ -20,7 +20,8 @@ import ToolDetailPanelTabContainer
   , {TOOL_DETAIL_PANEL_TABS} from "components/inventory/tools/tool_details/tab_container/ToolDetailPanelTabContainer";
 import ToolPathsPanel from "components/inventory/tools/tool_details/paths/ToolPathsPanel";
 import ToolServiceTypeMappingPanel from "components/inventory/tools/tool_details/ToolServiceTypeMappingPanel";
-import ToolOrganizationsPanel from "./ToolOrganizationsPanel";
+import ToolClustersPanel from "components/inventory/tools/tool_details/clusters/ToolClustersPanel";
+import ToolOrganizationsPanel from "components/inventory/tools/tool_details/ToolOrganizationsPanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
@@ -193,6 +194,13 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
             toolData={toolData}
             setToolData={setToolData}
             loadData={loadData}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.CLUSTERS:
+        return (
+          <ToolClustersPanel
+            toolData={toolData}
+            loadData={loadData}            
           />
         );
       default:
