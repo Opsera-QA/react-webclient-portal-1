@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import RoleRestrictedAzureToolSelectInput
   from "components/common/list_of_values_input/tools/azure/tools/RoleRestrictedAzureToolSelectInput";
 
-function ArgoAzurePlatformSelectInput({ fieldName, model, setModel, disabled, textField, valueField }) {
+function ArgoClusterAzureToolSelectInput({ fieldName, model, setModel, disabled, textField, valueField }) {
 
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...model};
@@ -27,6 +27,10 @@ function ArgoAzurePlatformSelectInput({ fieldName, model, setModel, disabled, te
     setModel({...newDataObject});
   };
 
+  if (model?.getData("platform") !== "azure") {
+    return null;
+  }
+
   return (
     <RoleRestrictedAzureToolSelectInput
       fieldName={fieldName}
@@ -41,7 +45,7 @@ function ArgoAzurePlatformSelectInput({ fieldName, model, setModel, disabled, te
   );  
 }
 
-ArgoAzurePlatformSelectInput.propTypes = {
+ArgoClusterAzureToolSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -50,10 +54,10 @@ ArgoAzurePlatformSelectInput.propTypes = {
   valueField: PropTypes.string,
 };
 
-ArgoAzurePlatformSelectInput.defaultProps = {
+ArgoClusterAzureToolSelectInput.defaultProps = {
   valueField: "_id",
   textField: "name",
   fieldName: "platformToolId",  
 };
 
-export default ArgoAzurePlatformSelectInput;
+export default ArgoClusterAzureToolSelectInput;

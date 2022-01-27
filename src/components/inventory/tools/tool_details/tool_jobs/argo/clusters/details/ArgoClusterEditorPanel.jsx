@@ -13,6 +13,15 @@ import ArgoClusterPlatformSelectInput from "./inputs/ArgoClusterPlatformSelectIn
 import ArgoAwsClusterEditorForm from "./sub-forms/ArgoAwsClusterEditorForm";
 import ArgoAzureClusterEditorForm from "./sub-forms/ArgoAzureClusterEditorForm";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import ArgoClusterAzureToolSelectInput
+  from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/details/inputs/ArgoClusterAzureToolSelectInput";
+import ArgoClusterAwsToolSelectInput
+  from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/details/inputs/ArgoClusterAwsToolSelectInput";
+import DeleteButton from "components/common/buttons/delete/DeleteButton";
+import CreateArgoClusterOverlay
+  from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/CreateArgoClusterOverlay";
+import DeleteArgoClusterOverlay
+  from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/DeleteArgoClusterOverlay";
 
 function ArgoClusterEditorPanel(
   {
@@ -22,11 +31,11 @@ function ArgoClusterEditorPanel(
     handleClose,
   }) {
   const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [argoClusterModel, setArgoClusterModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);  
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -37,9 +46,7 @@ function ArgoClusterEditorPanel(
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    if (argoClusterData) {
-      loadData();
-    }
+    loadData();
 
     return () => {
       source.cancel();
@@ -48,36 +55,35 @@ function ArgoClusterEditorPanel(
   }, [argoClusterData]);
 
   const loadData = () => {
-    try {
-      setIsLoading(true);
-      setArgoClusterModel(argoClusterData);
-    } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    } finally {
-      setIsLoading(false);
-    }
+    setIsLoading(true);
+    setArgoClusterModel(argoClusterData);
+    setIsLoading(false);
   };
 
   const createCluster = async () => {
     return await argoActions.createArgoCluster(getAccessToken, cancelTokenSource, toolId, argoClusterModel);
   };
 
-  const deleteCluster = async () => {
-    const response = await argoActions.deleteArgoCluster(getAccessToken, cancelTokenSource, toolId, argoClusterModel);
-    handleClose();
-    return response;
-  };
-
   // TODO: Create Argo Cluster Delete Panel
   const getExtraButtons = () => {
     if (argoClusterModel?.isNew() === false) {
       return (
-        <DeleteButtonWithInlineConfirmation
+        <DeleteButton
           dataObject={argoClusterModel}
-          deleteRecord={deleteCluster}
+          deleteRecord={showDeleteOverlay}
         />
       );
     }
+  };
+
+  const showDeleteOverlay = () => {
+    toastContext.showOverlayPanel(
+      <DeleteArgoClusterOverlay
+        argoClusterModel={argoClusterData}
+        loadData={loadData}
+        toolId={toolId}
+      />
+    );
   };
 
   const getArgoClusterEditorFields = () => {
@@ -148,6 +154,7 @@ function ArgoClusterEditorPanel(
       isLoading={isLoading}
       extraButtons={getExtraButtons()}
       handleClose={handleClose}
+      disable={!argoClusterData?.isNew()}
     >
       <div>
         {getArgoClusterEditorFields()}

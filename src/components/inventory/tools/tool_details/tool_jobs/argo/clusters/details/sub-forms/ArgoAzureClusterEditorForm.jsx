@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import ArgoAzurePlatformSelectInput from "../inputs/ArgoAzurePlatformSelectInput";
+import ArgoClusterAzureToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/details/inputs/ArgoClusterAzureToolSelectInput";
 import ArgoAzureClusterSelectInput from "../inputs/ArgoAzureClusterSelectInput";
 import ArgoAzureApplicationSelectInput from "../inputs/ArgoAzureApplicationSelectInput";
 import ArgoAzureResourceGroupSelectInput from "../inputs/ArgoAzureResourceGroupSelectInput";
@@ -11,7 +11,7 @@ const ArgoAzureClusterEditorForm = ({ model, setModel, disabled, clusterData }) 
   return (
     <>
       <Col lg={12}>
-        <ArgoAzurePlatformSelectInput 
+        <ArgoClusterAzureToolSelectInput
           model={model}
           setModel={setModel}
           disabled={disabled}
