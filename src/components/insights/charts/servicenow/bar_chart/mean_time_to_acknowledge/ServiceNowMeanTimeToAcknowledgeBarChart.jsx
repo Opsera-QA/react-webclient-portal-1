@@ -157,11 +157,11 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
     // };
 
     return (
-      <div className="new-chart m-3 p-0" style={{ height: "300px", display: "flex" }}>
+      <div className="new-chart m-3 p-0" style={{ minHeight: "300px", display: "flex" }}>
         <Row>
           <Col xl={3} lg={3} md={4} className={"d-flex align-content-around"}>
             <Row>
-              <Col lg={12} className={"my-3"}>
+              <Col lg={12} className={"my-3"} style={{ paddingTop: "8px"}}>
                 <ServiceNowTotalIncidentsDataBlock data={totalIncidents} />
               </Col>
               <Col lg={12} className={"my-3"}>
@@ -169,7 +169,7 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
               </Col>
             </Row>
           </Col>
-          <Col xl={9} lg={9} md={8} className={"my-2 p-2 d-flex flex-column align-items-end"}>
+          <Col xl={9} lg={9} md={8} className={"my-2 p-0 d-flex flex-column align-items-end"}>
             <div style={{ float: "right", fontSize: "10px", marginRight: "20px" }}>
               Average MTTA <b>({overallMean} Hours)</b> <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" />
               <br></br>
