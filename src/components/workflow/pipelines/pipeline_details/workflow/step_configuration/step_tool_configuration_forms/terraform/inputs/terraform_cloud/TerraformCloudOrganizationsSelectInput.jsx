@@ -101,8 +101,8 @@ TerraformCloudOrganizationsSelectInput.propTypes = {
 };
 
 TerraformCloudOrganizationsSelectInput.defaultProps = {
-  valueField: "value",
-  textField: "text",
+  valueField: "organizationName",
+  textField: "organizationName",
   fieldName: "organizationName",
   disabled: false
 };
