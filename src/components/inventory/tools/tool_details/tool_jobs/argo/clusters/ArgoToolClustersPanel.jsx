@@ -6,11 +6,17 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
+import modelHelpers from "components/common/model/modelHelpers";
+import argoClusterMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/argo-cluster-metadata";
+import ArgoClusterEditorPanel
+  from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/details/ArgoClusterEditorPanel";
+import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 
 function ArgoToolClustersPanel({ toolId }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [argoClusters, setArgoClusters] = useState([]);
+  const [selectedArgoCluster, setSelectedArgoCluster] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -57,23 +63,33 @@ function ArgoToolClustersPanel({ toolId }) {
     if(isMounted?.current === true && Array.isArray(clusters)){
       setArgoClusters(clusters);
     }
-
   };
 
   const onRowSelect = (grid, row) => {
+    const clusterObject = {
+      clusterName: row?.name,
+      server: row?.server
+    };
+    const parsedModel = modelHelpers.parseObjectIntoModel(clusterObject, argoClusterMetadata);
+    setSelectedArgoCluster({...parsedModel});
+  };
 
-    toastContext.showOverlayPanel(
-      <CreateArgoClusterOverlay
-        argoDataObject={{
-          clusterName: row?.name,
-          name: row?.name,
-          server: row?.server
-        }}
+  const closeEditorPanel = async () => {
+    setSelectedArgoCluster(undefined);
+    await loadData();
+  };
+
+  if (selectedArgoCluster != null) {
+    return (
+      <ArgoClusterEditorPanel
+        argoClusterData={selectedArgoCluster}
         toolId={toolId}
         loadData={loadData}
+        clusterData={argoClusters}
+        handleClose={closeEditorPanel}
       />
     );
-  };
+  }
 
   return (
     <ArgoClusterTable

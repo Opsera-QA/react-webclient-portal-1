@@ -14,9 +14,7 @@ function CreateArgoClusterOverlay(
     toolId,
     clusterData,
     argoDataObject,
-    clusterId,
   }) {
-
   const toastContext = useContext(DialogToastContext);
   const [argoClusterData, setArgoClusterData] = useState(undefined);
   const isMounted = useRef(false);
@@ -66,7 +64,6 @@ function CreateArgoClusterOverlay(
         loadData={loadData}
         clusterData={clusterData}
         handleClose={closePanel}
-        clusterId={clusterId}
       />
     </CreateCenterPanel>
   );

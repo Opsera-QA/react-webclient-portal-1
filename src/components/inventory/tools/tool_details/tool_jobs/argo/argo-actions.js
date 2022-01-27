@@ -98,7 +98,7 @@ argoActions.deleteArgoProject = async (getAccessToken, cancelTokenSource, toolId
 };
 
 argoActions.createArgoCluster = async (getAccessToken, cancelTokenSource, toolId, argoClusterModel) => {
-  const apiUrl = `/tools/${toolId}/clusters/argo/create`;
+  const apiUrl = `/tools/${toolId}/argo/v2/clusters/create`;
   const postBody = {
     ...argoClusterModel.getPersistData()
   };
@@ -106,9 +106,12 @@ argoActions.createArgoCluster = async (getAccessToken, cancelTokenSource, toolId
 };
 
 argoActions.deleteArgoCluster = async (getAccessToken, cancelTokenSource, toolId, argoClusterModel) => {
-  const apiUrl = `/tools/${toolId}/clusters/argo/delete`;
+  const apiUrl = `/tools/${toolId}/argo/v2/clusters/delete`;
   const postBody = {
-    ...argoClusterModel.getPersistData()
+    clusterName: argoClusterModel?.getData("clusterName"),
+    server: argoClusterModel?.getData("server"),
+    platform: argoClusterModel?.getData("platform"),
+    platformToolId: argoClusterModel?.getData("platformToolId"),
   };
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };

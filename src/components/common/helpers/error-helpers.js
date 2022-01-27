@@ -1,6 +1,6 @@
 export function parseError(error) {
   if (!error || error.length === 0) {
-    return "Unknown error reported. Please check console log.";
+    return "Unknown error reported.";
   }
   console.error(error); //log all errors to console
 
@@ -16,7 +16,7 @@ export function parseError(error) {
 
       const requestResponseText = error?.error?.response?.data?.message;
       if (requestResponseText) {
-        return `Status ${error?.error?.response?.status}: ${requestResponseText}`;
+        return requestResponseText;
       }
 
       if (error?.error?.message) {
@@ -27,9 +27,7 @@ export function parseError(error) {
     }
 
     if (error.response) {
-      let messageBody = `Status ${error.response.status}: `;
-      messageBody += error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data);
-      return messageBody;
+      return error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data);
     }
 
     if (error.message) {
