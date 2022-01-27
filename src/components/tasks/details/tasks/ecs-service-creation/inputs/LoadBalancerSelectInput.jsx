@@ -13,7 +13,7 @@ function LoadBalancerSelectInput({
                           disabled,
                           textField,
                           valueField,
-                                   vpcId,
+                          vpcId,
                           region,
                         }) {
   const toastContext = useContext(DialogToastContext);
@@ -45,7 +45,7 @@ function LoadBalancerSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [vpcId,region]);
+  }, [vpcId, region]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {

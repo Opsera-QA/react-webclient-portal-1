@@ -95,10 +95,12 @@ function ECSServiceCreationTaskConfigurationPanel({
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
           disabled={
-            gitTasksConfigurationData?.getData("toolConfigId").length === 0 ||
-            gitTasksConfigurationData?.getData("ecsServiceRequiresCompatibilities").length === 0
+            gitTasksConfigurationData?.getData("toolConfigId")?.length === 0 ||
+            gitTasksConfigurationData?.getData("ecsServiceRequiresCompatibilities")?.length === 0 ||
+            gitTasksConfigurationData?.getData("region")?.length === 0
           }
           requiresCompatibilities={gitTasksConfigurationData?.getData("ecsServiceRequiresCompatibilities")}
+          region={gitTasksConfigurationData?.getData("region")}
         />
       </Col>
       <Col lg={12}>
