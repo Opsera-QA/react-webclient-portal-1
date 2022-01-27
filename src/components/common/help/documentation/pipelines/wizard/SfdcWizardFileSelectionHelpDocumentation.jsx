@@ -9,6 +9,7 @@ function SfdcWizardFileSelectionHelpDocumentation({closeHelpPanel}) {
       closeHelpPanel={closeHelpPanel}
       confluenceLink={`https://opsera.atlassian.net/l/c/XbSETC14`}
     >
+    <div><b>Note: </b> Salesforce limits retrieval or deployment of upto <b>10,000</b> files at once.</div>
       <div><b>Rule Filters</b> allow you to select which components will be included or excluded in this pipeline
         run. The rule order is not important. Once Include and Exclude Rules have been set, select <b>Proceed with
           Selected Files</b> to view the final list.
