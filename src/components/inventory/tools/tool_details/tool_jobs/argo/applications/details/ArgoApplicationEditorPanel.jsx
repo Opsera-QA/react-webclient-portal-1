@@ -82,6 +82,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
           deleteRecord={deleteApplication}
         />
       }
+      disable={argoApplicationModel?.isNew() !== true} // TODO: Remove when adding update functionality
       handleClose={handleClose}
     >
       <div className="scroll-y hide-x-overflow">
