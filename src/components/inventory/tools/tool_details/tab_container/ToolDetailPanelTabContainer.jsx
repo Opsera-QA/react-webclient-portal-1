@@ -24,9 +24,11 @@ export const TOOL_DETAIL_PANEL_TABS = {
   APPLICATIONS: "applications",
   ATTRIBUTES: "attributes",
   ATTRIBUTE_SETTINGS: "attribute_settings",
+  CLUSTERS: "clusters",
   CONNECTION: "connection",
   JOBS: "jobs",
   LOGS: "logs",
+  MAPPING: "mapping",
   ORGANIZATIONS: "organizations",
   PATHS: "paths",
   PROJECTS: "projects",
@@ -36,8 +38,6 @@ export const TOOL_DETAIL_PANEL_TABS = {
   SUMMARY: "summary",
   USAGE: "usage",
   VAULT: "vault",
-  MAPPING: "mapping",
-  CLUSTERS: "clusters",
 };
 
 
@@ -71,7 +71,7 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         toolModel={toolModel}
         activeTab={activeTab}
         handleTabClick={handleTabClick}
-      />      
+      />
       <ToolApplicationsTab
         toolModel={toolModel}
         activeTab={activeTab}
@@ -96,15 +96,15 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         toolModel={toolModel}
         activeTab={activeTab}
         handleTabClick={handleTabClick}
-      />      
+      />
       <ToolServiceTypeMappingTab
         toolModel={toolModel}
-        activeTab={activeTab}      
+        activeTab={activeTab}
         handleTabClick={handleTabClick}
       />
-      <ToolClustersTab 
+      <ToolClustersTab
         toolModel={toolModel}
-        activeTab={activeTab}      
+        activeTab={activeTab}
         handleTabClick={handleTabClick}
       />
       <ToolOrganizationsTab

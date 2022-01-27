@@ -4,7 +4,7 @@ import CustomTab from "components/common/tabs/CustomTab";
 import {faProjectDiagram} from "@fortawesome/pro-light-svg-icons";
 
 const SUPPORTED_TOOL_IDENTIFIERS = [
-  "argo"
+  "argo",
 ];
 
 function ToolClustersTab({ toolModel, handleTabClick, activeTab }) {
@@ -19,7 +19,7 @@ function ToolClustersTab({ toolModel, handleTabClick, activeTab }) {
       handleTabClick={handleTabClick}
       activeTab={activeTab}
       tabText={"Clusters"}
-      accessRestricted={!toolModel.canPerformAction("update_tool_repositories")}
+      // accessRestricted={!toolModel.canPerformAction("update_tool_clusters")}
     />
   );
 }
