@@ -141,6 +141,11 @@ const TerraformStepFormMetadata = {
       label: "Maintain Remote State",
       id: "isStateRemote",
     },
+    {
+      label: "State File Management",
+      id: "stateFile",
+      formText: "This tracks if the state file will be created by Opsera during runtime."
+    },
   ],
   fieldsAlt: [
     {
@@ -289,6 +294,11 @@ const TerraformStepFormMetadata = {
       label: "Maintain Remote State",
       id: "isStateRemote",
     },
+    {
+      label: "State File Management",
+      id: "stateFile",
+      formText: "This tracks if the state file will be created by Opsera during runtime."
+    },
   ],
   newObjectFields: {
     toolActionType: "EXECUTE",
@@ -327,7 +337,8 @@ const TerraformStepFormMetadata = {
     azureCredentialId: "",
     inputParameters: "",
     saveInputParameters: false,
-    isStateRemote: false
+    isStateRemote: false,
+    stateFile: ""
   }
 };
 

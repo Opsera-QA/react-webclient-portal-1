@@ -5,6 +5,7 @@ import BackendStateAzure from "./BackendStateAzure";
 import BackendStateAWS from "./BackendStateAWS";
 import BackendStateTerraformCloud from "./BackendStateTerraformCloud";
 import TerraformRemoteStateToggleInput from "../inputs/TerraformRemoteStateToggleInput";
+import TerraformStateMethodSelect from "../inputs/terraform_cloud/TerraformStateMethodSelect";
 
 function TerraformStateSubForm({ model, setModel }) {
   return (
@@ -12,10 +13,15 @@ function TerraformStateSubForm({ model, setModel }) {
       <TerraformRemoteStateToggleInput dataObject={model} setDataObject={setModel} />
       {model?.getData("isStateRemote") && (
         <>
+          <TerraformStateMethodSelect dataObject={model} setDataObject={setModel} />
           <TerraformRemoteStateCloudSelect dataObject={model} setDataObject={setModel} />
-          <BackendStateAzure model={model} setModel={setModel} />
-          <BackendStateAWS model={model} setModel={setModel} />
-          <BackendStateTerraformCloud model={model} setModel={setModel} />
+          {model?.getData("stateFile") === "manual" && (
+            <>
+              <BackendStateAzure model={model} setModel={setModel} />
+              <BackendStateAWS model={model} setModel={setModel} />
+              <BackendStateTerraformCloud model={model} setModel={setModel} />
+            </>
+          )}
         </>
       )}
     </>
