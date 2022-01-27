@@ -11,7 +11,7 @@ function TerraformStateSubForm({ model, setModel }) {
   return (
     <>
       <TerraformRemoteStateToggleInput dataObject={model} setDataObject={setModel} />
-      {model?.getData("isStateRemote") && (
+      {model?.getData("stateRemote") && (
         <>
           <TerraformStateMethodSelect dataObject={model} setDataObject={setModel} />
           <TerraformRemoteStateCloudSelect dataObject={model} setDataObject={setModel} />

@@ -23,7 +23,7 @@ function TerraformRemoteStateToggleInput({dataObject, setDataObject, disabled}) 
 
   return (
     <BooleanToggleInput
-      fieldName={"isStateRemote"}
+      fieldName={"stateRemote"}
       setDataFunction={setDataFunction}
       dataObject={dataObject}
       setDataObject={setDataObject}

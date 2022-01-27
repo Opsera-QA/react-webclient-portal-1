@@ -139,7 +139,7 @@ const TerraformStepFormMetadata = {
     },
     {
       label: "Maintain Remote State",
-      id: "isStateRemote",
+      id: "stateRemote",
     },
     {
       label: "State File Management",
@@ -292,7 +292,7 @@ const TerraformStepFormMetadata = {
     },
     {
       label: "Maintain Remote State",
-      id: "isStateRemote",
+      id: "stateRemote",
     },
     {
       label: "State File Management",
@@ -337,7 +337,7 @@ const TerraformStepFormMetadata = {
     azureCredentialId: "",
     inputParameters: "",
     saveInputParameters: false,
-    isStateRemote: false,
+    stateRemote: false,
     stateFile: ""
   }
 };
