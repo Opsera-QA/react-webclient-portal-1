@@ -37,7 +37,6 @@ function SfdcPipelineWizardSubmitProfileComponentsButton({pipelineWizardModel, s
       setIsSaving(true);
       await sfdcPipelineActions.setProfileComponentListV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
       await generateXml();
-      setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.XML_VIEWER);
     } catch (error) {
       console.error(error);
       toastContext.showInlineErrorMessage(error);
@@ -50,7 +49,13 @@ function SfdcPipelineWizardSubmitProfileComponentsButton({pipelineWizardModel, s
   };
 
   const generateXml = async () => {
-    await sfdcPipelineActions.generateSfdcProfileMigrationPackageXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+    let generateXMLResponse = await sfdcPipelineActions.generateSfdcProfileMigrationPackageXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+  
+    if(generateXMLResponse?.data?.status !== 200) {
+      toastContext.showInlineErrorMessage(generateXMLResponse?.data?.message);
+      return;
+    }
+    setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.XML_VIEWER);
   };
 
   if (pipelineWizardModel == null) {
