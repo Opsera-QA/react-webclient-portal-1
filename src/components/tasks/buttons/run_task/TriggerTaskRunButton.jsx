@@ -53,7 +53,6 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
   // TODO: This should be separate buttons OR passed into this component from a wrapper component for each type
   const handleRunGitTask = async () => {
     if (gitTasksData?.getData("type") === TASK_TYPES.SALESFORCE_BULK_MIGRATION) {
-      handleClose();
       try{
         setIsLoading(true);
         const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
