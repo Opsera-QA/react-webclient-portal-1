@@ -1,17 +1,17 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 import PropTypes from "prop-types";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
-import AnalyticsDataEntrySummaryPanel from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntrySummaryPanel";
+import AnalyticsDataEntrySummaryPanel from "components/settings/analytics_data_entry/detail_view/summary_panels/AnalyticsDataEntrySummaryPanel";
 import AnalyticsDataEntryEditorPanel from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryEditorPanel";
 
-function AnalyticsDataEntryDetailPanel({analyticsDataEntry}) {
+function AnalyticsDataEntryDetailPanel({ analyticsDataEntry }) {
   const [activeTab, setActiveTab] = useState("summary");
 
-  const handleTabClick = (activeTab) => e => {
+  const handleTabClick = (activeTab) => (e) => {
     e.preventDefault();
     if (activeTab) {
       setActiveTab(activeTab);
@@ -36,13 +36,15 @@ function AnalyticsDataEntryDetailPanel({analyticsDataEntry}) {
       case "summary":
         return <AnalyticsDataEntrySummaryPanel analyticsDataEntry={analyticsDataEntry} setActiveTab={setActiveTab} />;
       case "settings":
-        return <AnalyticsDataEntryEditorPanel handleClose={toggleSummaryPanel} analyticsDataEntry={analyticsDataEntry} />;
+        return (
+          <AnalyticsDataEntryEditorPanel handleClose={toggleSummaryPanel} analyticsDataEntry={analyticsDataEntry} />
+        );
       default:
         return null;
     }
   };
 
-  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
+  return <DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />;
 }
 
 AnalyticsDataEntryDetailPanel.propTypes = {
@@ -50,5 +52,3 @@ AnalyticsDataEntryDetailPanel.propTypes = {
 };
 
 export default AnalyticsDataEntryDetailPanel;
-
-
