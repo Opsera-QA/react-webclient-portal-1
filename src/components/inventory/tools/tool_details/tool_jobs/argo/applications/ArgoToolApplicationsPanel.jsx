@@ -20,6 +20,7 @@ function ArgoToolApplicationsPanel({ toolData }) {
   // TODO: Replace with actual filter model for this area OR make generic one
   const [parameterFilterModel, setParameterFilterModel] = useState(new ParameterFilterModel());
   const [isLoading, setIsLoading] = useState(false);
+  const [toolApplications, setToolApplications] = useState([]);
   const [argoApplications, setArgoApplications] = useState([]);
   const [selectedArgoApplication, setSelectedArgoApplication] = useState(undefined);
 
@@ -69,7 +70,7 @@ function ArgoToolApplicationsPanel({ toolData }) {
     // const userRoleAccess = await getAccessRoleData();
 
     if (isMounted?.current === true && Array.isArray(applications)) {
-      // setArgoApplications([...applications]);
+      setToolApplications([...applications]);
       unpackApplications(applications);
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.count);
@@ -79,14 +80,14 @@ function ArgoToolApplicationsPanel({ toolData }) {
   };
 
   // TODO: This is a current workaround until I can refactor the area further.
-  const unpackApplications = (toolActions) => {
+  const unpackApplications = (toolApplications) => {
     const newApplicationList = [];
 
     //TODO: Don't unpack these objects and instead just use the main ones.
-    if (Array.isArray(toolActions)) {
-      toolActions.forEach((toolAction, index) => {
-        let application = toolAction?.configuration;
-        application = {...application, applicationId: toolAction?._id};
+    if (Array.isArray(toolApplications)) {
+      toolApplications.forEach((toolApplication, index) => {
+        let application = toolApplication?.configuration;
+        application = {...application, applicationId: toolApplication?._id};
         application = {...application, index: index};
         newApplicationList?.push(application);
       });
@@ -95,11 +96,16 @@ function ArgoToolApplicationsPanel({ toolData }) {
     setArgoApplications(newApplicationList);
   };
 
+  const closeEditorPanel = async () => {
+    setSelectedArgoApplication(undefined);
+    await loadData();
+  };
+
   if (selectedArgoApplication != null) {
     return (
       <ArgoApplicationEditorPanel
         loadData={loadData}
-        handleClose={() => setSelectedArgoApplication(undefined)}
+        handleClose={closeEditorPanel}
         toolData={toolData}
         argoApplicationData={selectedArgoApplication}
         applicationId={selectedArgoApplication?.getData("applicationId")}
@@ -114,6 +120,7 @@ function ArgoToolApplicationsPanel({ toolData }) {
       loadData={loadData}
       argoApplications={argoApplications}
       setSelectedArgoApplication={setSelectedArgoApplication}
+      toolApplications={toolApplications}
     />
   );
 }
