@@ -40,7 +40,7 @@ function TerraformCloudOrganizationsPanel({ toolId }) {
     try {
       setIsLoading(true);
       const response = await terraformCloudOrganizationsActions.getTerraformCloudOrganizations(getAccessToken, cancelSource, toolId);
-      const accounts = response?.data?.data;
+      const accounts = response?.data;
 
       if(Array.isArray(accounts)) {
         setTerraformCloudOrganizationsList(accounts);

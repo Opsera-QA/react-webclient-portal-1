@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import terraformStepFormMetadata from "../terraform-stepForm-metadata";
+import terraformStepFormMetadata from "../../terraform-stepForm-metadata";
 
 function TerraformIAmRoleFlagToggleInput({model, setModel, disabled}) {
   

@@ -60,7 +60,7 @@ function ParameterValueTextInput({fieldName, dataObject, parameterId, setDataObj
     <InputContainer>
       <InputLabel field={field} model={dataObject}/>
       <div className={isLoading ? "d-flex loading-input-wrapper" : ""}>
-        <input
+        <textarea
           disabled={disabled || isLoading}
           value={isLoading ? "Loading Value From Vault" : dataObject?.getData(fieldName)}
           onChange={(event) => validateAndSetData(event.target.value)}

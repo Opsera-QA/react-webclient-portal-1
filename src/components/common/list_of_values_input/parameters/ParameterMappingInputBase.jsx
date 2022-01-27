@@ -200,7 +200,7 @@ function ParameterMappingInputBase({
             <input
               className="form-control"
               type={"text"}
-              placeholder={"Output Key Name"}
+              placeholder={"Key Name"}
               maxLength={nameMaxLength}
               style={{height: "99%"}}
               onChange={(event) => setOutputKey(event.target.value)}
@@ -296,7 +296,7 @@ function ParameterMappingInputBase({
               <span className="text-muted">Parameter</span>
             </Col>
             <Col sm={6} className={"pl-2 pr-0 py-2"}>
-              <span className="text-muted">Output Key</span>
+              <span className="text-muted">Key</span>
             </Col>
           </Row>
         </Col>

@@ -45,7 +45,7 @@ function TerraformCloudToolConfiguration({ toolData }) {
 
   const saveTerraformCloudToolConfiguration = async () => {
     const newConfiguration = terraformCloudConfigurationDto.getPersistData();
-    newConfiguration.terraformToken = await toolsActions.saveThreePartToolPasswordToVaultV2(getAccessToken, cancelTokenSource, toolData, terraformCloudConfigurationDto, "terraformToken", newConfiguration.terraformToken);
+    newConfiguration.token = await toolsActions.saveThreePartToolPasswordToVaultV2(getAccessToken, cancelTokenSource, toolData, terraformCloudConfigurationDto, "token", newConfiguration.token);
     return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
   };
 
@@ -54,12 +54,13 @@ function TerraformCloudToolConfiguration({ toolData }) {
       model={terraformCloudConfigurationDto}
       setModel={setTerraformCloudConfigurationDto}
       persistRecord={saveTerraformCloudToolConfiguration}
+      toolConnectionCheckName={"customer_terraform"}
       toolData={toolData}
     >
       <Row>
         <Col sm={12}>
-          <TextInputBase dataObject={terraformCloudConfigurationDto} setDataObject={setTerraformCloudConfigurationDto} fieldName={"terraformCloudUrl"}/>
-          <VaultTextAreaInput dataObject={terraformCloudConfigurationDto} setDataObject={setTerraformCloudConfigurationDto} fieldName={"terraformToken"}/>
+          <TextInputBase dataObject={terraformCloudConfigurationDto} setDataObject={setTerraformCloudConfigurationDto} fieldName={"url"}/>
+          <VaultTextAreaInput dataObject={terraformCloudConfigurationDto} setDataObject={setTerraformCloudConfigurationDto} fieldName={"token"}/>
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
