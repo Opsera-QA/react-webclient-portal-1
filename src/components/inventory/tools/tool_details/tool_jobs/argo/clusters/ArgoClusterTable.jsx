@@ -5,17 +5,30 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import ArgoClusterOverlay
-  from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/ArgoClusterOverlay";
+import CreateArgoClusterOverlay
+  from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/CreateArgoClusterOverlay";
 import {getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 
-function ArgoClusterTable({ toolData, argoClusters, loadData, onRowSelect, isLoading }) {
+function ArgoClusterTable(
+  {
+    toolId,
+    argoClusters,
+    loadData,
+    onRowSelect,
+    isLoading,
+  }) {
   const toastContext = useContext(DialogToastContext);
   let fields = argoClusterMetadata.fields;
 
   const createArgoCluster = () => {
-    toastContext.showOverlayPanel(<ArgoClusterOverlay toolData={toolData} loadData={loadData} clusterData={argoClusters} editMode={false} />);
+    toastContext.showOverlayPanel(
+      <CreateArgoClusterOverlay
+        toolId={toolId}
+        loadData={loadData}
+        clusterData={argoClusters}
+      />
+    );
   };
 
   const columns = useMemo(
@@ -42,9 +55,9 @@ function ArgoClusterTable({ toolData, argoClusters, loadData, onRowSelect, isLoa
       loadData={loadData}
       isLoading={isLoading}
       title={"Argo Clusters"}
-      type={"Argo Clusters"}
+      type={"Argo Cluster"}
       titleIcon={faBrowser}
-      addRecordFunction={toolData?.data?.configuration ? createArgoCluster : undefined}
+      addRecordFunction={createArgoCluster}
       body={getTable()}
       showBorder={false}
     />
@@ -52,11 +65,11 @@ function ArgoClusterTable({ toolData, argoClusters, loadData, onRowSelect, isLoa
 }
 
 ArgoClusterTable.propTypes = {
-  toolData: PropTypes.object,
+  toolId: PropTypes.string,
   loadData: PropTypes.func,
   onRowSelect: PropTypes.func,
   isLoading: PropTypes.bool,
-  argoClusters: PropTypes.array
+  argoClusters: PropTypes.array,
 };
 
 export default ArgoClusterTable;
