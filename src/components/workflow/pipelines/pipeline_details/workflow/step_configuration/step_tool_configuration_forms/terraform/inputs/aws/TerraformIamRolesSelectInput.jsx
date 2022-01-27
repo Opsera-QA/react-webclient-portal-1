@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
-import terraformStepActions from "../terraform-step-actions";
+import terraformStepActions from "../../terraform-step-actions";
 import { AuthContext } from "contexts/AuthContext";
 
 function TerraformIamRolesSelectInput({

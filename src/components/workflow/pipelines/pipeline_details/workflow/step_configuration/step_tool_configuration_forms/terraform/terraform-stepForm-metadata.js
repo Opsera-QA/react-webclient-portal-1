@@ -69,8 +69,12 @@ const TerraformStepFormMetadata = {
       maxItems: 15,
     },
     {
-      label: "Save Output Parameters?",
+      label: "Save Output Parameters",
       id: "saveParameters"
+    },
+    {
+      label: "Define Input Parameters",
+      id: "saveInputParameters"
     },
     {
       label: "IAM Roles", 
@@ -100,6 +104,51 @@ const TerraformStepFormMetadata = {
       label: "Terraform Version",
       id: "tag",
       isRequired: true
+    },
+    {
+      label: "Resource Group",
+      id: "resourceGroup",
+    },
+    {
+      label: "Storage Account Name",
+      id: "storageName",
+    },
+    {
+      label: "Storage Container",
+      id: "containerName",
+    },
+    {
+      label: "Azure Tool",
+      id: "azureToolConfigId",
+    },
+    {
+      label: "Terraform Cloud Tool",
+      id: "terraformCloudId",
+    },
+    {
+      label: "Organization Name",
+      id: "organizationName",
+    },
+    {
+      label: "Backend State",
+      id: "backendState",
+    },
+    {
+      label: "Azure Credential",
+      id: "azureCredentialId",
+    },
+    {
+      label: "Input Parameters",
+      id: "inputParameters",
+    },
+    {
+      label: "Maintain Remote State",
+      id: "stateRemote",
+    },
+    {
+      label: "State File Management",
+      id: "stateFile",
+      formText: "This tracks if the state file will be created by Opsera during runtime."
     },
   ],
   fieldsAlt:[
@@ -171,8 +220,12 @@ const TerraformStepFormMetadata = {
       maxItems: 15,
     },
     {
-      label: "Save Output Parameters?",
+      label: "Save Output Parameters",
       id: "saveParameters"
+    },
+    {
+      label: "Define Input Parameters",
+      id: "saveInputParameters"
     },
     {
       label: "IAM Roles", 
@@ -204,6 +257,51 @@ const TerraformStepFormMetadata = {
       id: "tag",
       isRequired: true
     },
+    {
+      label: "Backend State",
+      id: "backendState",
+    },
+    {
+      label: "Resource Group",
+      id: "resourceGroup",
+    },
+    {
+      label: "Storage Account Name",
+      id: "storageName",
+    },
+    {
+      label: "Storage Container",
+      id: "containerName",
+    },
+    {
+      label: "Azure Tool",
+      id: "azureToolConfigId",
+    },
+    {
+      label: "Terraform Cloud Tool",
+      id: "terraformCloudId",
+    },
+    {
+      label: "Organization Name",
+      id: "organizationName",
+    },
+    {
+      label: "Azure Credential",
+      id: "azureCredentialId",
+    },
+    {
+      label: "Input Parameters",
+      id: "inputParameters",
+    },
+    {
+      label: "Maintain Remote State",
+      id: "stateRemote",
+    },
+    {
+      label: "State File Management",
+      id: "stateFile",
+      formText: "This tracks if the state file will be created by Opsera during runtime."
+    },
   ],
   newObjectFields: {
     toolActionType: "EXECUTE",
@@ -232,6 +330,18 @@ const TerraformStepFormMetadata = {
     bucketRegion: "",
     cloudProvider: "aws",
     tag: "",
+    resourceGroup : "",
+    storageName : "",
+    containerName : "",
+    azureToolConfigId : "",
+    terraformCloudId : "",
+    organizationName : "",
+    backendState: "local",
+    azureCredentialId: "",
+    inputParameters: "",
+    saveInputParameters: false,
+    stateRemote: false,
+    stateFile: ""
   }
 };
 

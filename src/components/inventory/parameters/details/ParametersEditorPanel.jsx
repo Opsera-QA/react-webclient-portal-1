@@ -54,7 +54,7 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
     }
 
     return (
-      <TextInputBase
+      <TextAreaInput
         dataObject={parameterModel}
         setDataObject={setParameterModel}
         fieldName={"value"}
