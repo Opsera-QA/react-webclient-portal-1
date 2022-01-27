@@ -16,16 +16,20 @@ import ToolStorageTab from "components/inventory/tools/tool_details/tab_containe
 import ToolUsageTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolUsageTab";
 import ToolServiceTypeMappingTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolServiceTypeMappingTab";
 import ToolPathsTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolPathsTab";
+import ToolOrganizationsTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolOrganizationsTab";
+import ToolClustersTab from "components/inventory/tools/tool_details/tab_container/tabs/ToolClustersTab";
 
 export const TOOL_DETAIL_PANEL_TABS = {
   ACCOUNTS: "accounts",
   APPLICATIONS: "applications",
   ATTRIBUTES: "attributes",
   ATTRIBUTE_SETTINGS: "attribute_settings",
+  CLUSTERS: "clusters",
   CONNECTION: "connection",
   JOBS: "jobs",
   LOGS: "logs",
   MAPPING: "mapping",
+  ORGANIZATIONS: "organizations",
   PATHS: "paths",
   PROJECTS: "projects",
   REPOSITORIES: "repositories",
@@ -45,8 +49,8 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         activeTab={activeTab}
       />
       <ToolAttributesTab
-      handleTabClick={handleTabClick}
-      activeTab={activeTab}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
       />
       <ToolVaultTab
         toolModel={toolModel}
@@ -67,12 +71,7 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         toolModel={toolModel}
         activeTab={activeTab}
         handleTabClick={handleTabClick}
-      />
-      <ToolLogsTab
-        toolModel={toolModel}
-        activeTab={activeTab}
-        handleTabClick={handleTabClick}
-      />
+      />      
       <ToolApplicationsTab
         toolModel={toolModel}
         activeTab={activeTab}
@@ -100,7 +99,23 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
       />
       <ToolServiceTypeMappingTab
         toolModel={toolModel}
-        activeTab={activeTab}      
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+      />
+      <ToolClustersTab
+        toolModel={toolModel}
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+      />
+      <ToolOrganizationsTab
+        toolModel={toolModel}
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+      />
+      {/* Keep logs and usage as last tabs */}
+      <ToolLogsTab
+        toolModel={toolModel}
+        activeTab={activeTab}
         handleTabClick={handleTabClick}
       />
       <ToolUsageTab

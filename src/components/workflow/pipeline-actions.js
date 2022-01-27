@@ -180,6 +180,7 @@ pipelineActions.resume = async (pipelineId, postBody, getAccessToken) => {
   return response;
 };
 
+// TODO: Delete
 pipelineActions.stop = async (pipelineId, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/${pipelineId}/stop/`;
@@ -187,6 +188,11 @@ pipelineActions.stop = async (pipelineId, getAccessToken) => {
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
   return response;
+};
+
+pipelineActions.stopPipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
+  const apiUrl = `/pipelines/${pipelineId}/stop/`;
+  return await baseActions.apiGetCallV2(getAccessToken, apiUrl);
 };
 
 pipelineActions.reset = async (pipelineId, getAccessToken) => {

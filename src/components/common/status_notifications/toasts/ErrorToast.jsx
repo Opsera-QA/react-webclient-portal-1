@@ -43,7 +43,6 @@ function ErrorToast({ error, prependMessage, removeToast, autoCloseLength, id })
         <div className={"ml-auto"}>
           <IconBase
             icon={faTimes}
-            iconSize={"md"}
             className="pointer danger-red"
             onClickFunction={() => { clearError(); }}
           />

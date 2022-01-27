@@ -2,27 +2,28 @@ import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import TreeBase from "components/common/tree/TreeBase";
 import VanityBottomPaginatorBase from "components/common/pagination/VanityBottomPaginatorBase";
-import pipelineActivityHelpers
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-helpers";
+import pipelineLogHelpers
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineLog.helpers";
 
-function PipelineActivityLogTree({ pipelineLogTree, currentLogTreePage, setCurrentLogTreePage, pipelineActivityFilterDto, setPipelineActivityFilterDto}) {
+function PipelineActivityLogTree(
+  {
+    pipelineLogTree,
+    setCurrentLogTreePage,
+    setCurrentRunNumber,
+    setCurrentStepName,
+  }) {
   const [treeWidget, setTreeWidget] = useState(undefined);
   const [secondaryTreeWidget, setSecondaryTreeWidget] = useState(undefined);
-  const [secondaryLogTree] = useState(pipelineActivityHelpers.getSecondaryTree());
+  const [secondaryLogTree] = useState(pipelineLogHelpers.getSecondaryTree());
   const isMounted = useRef(false);
   const [selectedId, setSelectedId] = useState(undefined);
 
   useEffect(() => {
     isMounted.current = true;
 
-    if (Array.isArray(pipelineLogTree) && pipelineLogTree.length > 0) {
-      const treeItem = pipelineLogTree[0];
-
-      const currentRunNumber = pipelineActivityFilterDto?.getData("currentRunNumber");
-
-      if (currentRunNumber !== "latest" && currentRunNumber !== "secondary") {
-        setSelectedId(treeItem.id);
-      }
+    if (Array.isArray(pipelineLogTree) && pipelineLogTree.length > 0 && selectedId == null) {
+      let treeItem = pipelineLogTree[0];
+      setSelectedId(treeItem?.id);
     }
 
     return () => {
@@ -32,14 +33,14 @@ function PipelineActivityLogTree({ pipelineLogTree, currentLogTreePage, setCurre
 
   const onMainTreeItemClick = (treeItem) => {
     setSelectedId(treeItem?.id);
+
     if (secondaryTreeWidget) {
       secondaryTreeWidget?.selection?.remove();
     }
 
     if (treeItem) {
-      pipelineActivityFilterDto?.setData("currentRunNumber", treeItem?.runNumber);
-      pipelineActivityFilterDto?.setData("currentStepName", treeItem?.stepName);
-      setPipelineActivityFilterDto({...pipelineActivityFilterDto});
+      setCurrentStepName(treeItem?.stepName);
+      setCurrentRunNumber(treeItem?.runNumber);
     }
   };
 
@@ -50,28 +51,13 @@ function PipelineActivityLogTree({ pipelineLogTree, currentLogTreePage, setCurre
     }
 
     if (treeItem) {
-      pipelineActivityFilterDto?.setData("currentRunNumber", treeItem?.runNumber);
-      pipelineActivityFilterDto?.setData("currentStepName", treeItem?.stepName);
-      setPipelineActivityFilterDto({...pipelineActivityFilterDto});
+      setCurrentStepName(treeItem?.stepName);
+      setCurrentRunNumber(treeItem?.runNumber);
     }
   };
 
   const onPageChange = (newPage) => {
-    if (currentLogTreePage !== newPage) {
-      const currentRunNumber = pipelineActivityFilterDto?.getData("currentRunNumber");
-
-      if (currentRunNumber !== "latest" && currentRunNumber !== "secondary") {
-        pipelineActivityFilterDto?.setData("currentRunNumber", undefined);
-        pipelineActivityFilterDto?.setData("currentStepName", undefined);
-        setPipelineActivityFilterDto({...pipelineActivityFilterDto});
-
-        if (treeWidget) {
-          treeWidget.selection.remove();
-        }
-      }
-
-      setCurrentLogTreePage(newPage);
-    }
+    setCurrentLogTreePage(newPage);
   };
 
 
@@ -81,7 +67,7 @@ function PipelineActivityLogTree({ pipelineLogTree, currentLogTreePage, setCurre
 
   return (
     <div className={"table-tree mb-3"}>
-      <div className={"scroll-y hide-x-overflow table-tree-with-paginator-and-secondary-tree p-2"}>
+      <div className={"scroll-y hide-x-overflow table-tree-with-paginator-and-secondary-tree"}>
         <TreeBase
           data={pipelineLogTree}
           onItemClick={onMainTreeItemClick}
@@ -89,7 +75,7 @@ function PipelineActivityLogTree({ pipelineLogTree, currentLogTreePage, setCurre
           selectedId={selectedId}
         />
       </div>
-      <div className={"secondary-table-tree p-2"}>
+      <div className={"secondary-table-tree"}>
         <TreeBase
           data={secondaryLogTree}
           onItemClick={onSecondaryTreeItemClick}
@@ -107,10 +93,9 @@ function PipelineActivityLogTree({ pipelineLogTree, currentLogTreePage, setCurre
 
 PipelineActivityLogTree.propTypes = {
   pipelineLogTree: PropTypes.array,
-  currentLogTreePage: PropTypes.number,
   setCurrentLogTreePage: PropTypes.func,
-  pipelineActivityFilterDto: PropTypes.object,
-  setPipelineActivityFilterDto: PropTypes.func,
+  setCurrentRunNumber: PropTypes.func,
+  setCurrentStepName: PropTypes.func,
 };
 
 export default PipelineActivityLogTree;

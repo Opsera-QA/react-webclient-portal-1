@@ -55,7 +55,6 @@ argoActions.createArgoRepository = async (getAccessToken, cancelTokenSource, too
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-
 argoActions.updateArgoRepository = async (getAccessToken, cancelTokenSource, toolId, repoId, argoRepositoryModel) => {
   const apiUrl = `/tools/${toolId}/argo/repo/${repoId}/update`;
   const postBody = {
@@ -96,6 +95,34 @@ argoActions.updateArgoProject = async (getAccessToken, cancelTokenSource, toolId
 argoActions.deleteArgoProject = async (getAccessToken, cancelTokenSource, toolId, projId) => {
   const apiUrl = `/tools/${toolId}/argo/project/${projId}`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+argoActions.createArgoCluster = async (getAccessToken, cancelTokenSource, toolId, argoClusterModel) => {
+  const apiUrl = `/tools/${toolId}/clusters/argo/create`;
+  const postBody = {
+    ...argoClusterModel.getPersistData()
+  };
+  return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+argoActions.deleteArgoCluster = async (getAccessToken, cancelTokenSource, toolId, argoClusterModel) => {
+  const apiUrl = `/tools/${toolId}/clusters/argo/delete`;
+  const postBody = {
+    ...argoClusterModel.getPersistData()
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+argoActions.getAwsEksClusters = async (getAccessToken, cancelTokenSource, toolId, clusterType) => {
+  let urlParams = {
+    toolId: toolId
+  };
+  const apiUrl = `/tools/aws/v2/eks/clusters`;
+  let response = await baseActions.apiPostCallV2(getAccessToken,cancelTokenSource, apiUrl, urlParams);
+  if (response && response.status === 200) {
+    return response.data;
+  }
+  return [];
 };
 
 export default argoActions;
