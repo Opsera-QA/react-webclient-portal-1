@@ -18,6 +18,7 @@ function ArgoApplicationsTable(
     loadData,
     isLoading,
     setSelectedArgoApplication,
+    toolApplications,
   }) {
   const toastContext = useContext(DialogToastContext);
   let fields = argoApplicationsMetadata.fields;
@@ -37,11 +38,14 @@ function ArgoApplicationsTable(
   );
 
   const onRowSelect = (grid, row) => {
-    const selectedRow = toolData?.getArrayData("actions")[row?.index];
-    const applicationId = selectedRow?._id;
-    const parsedModel = modelHelpers.parseObjectIntoModel(selectedRow?.configuration, argoApplicationsMetadata);
-    parsedModel?.setData("applicationId", applicationId);
-    setSelectedArgoApplication({...parsedModel});
+    const selectedRow = toolApplications[row?.index];
+
+    if (selectedRow) {
+      const applicationId = selectedRow?._id;
+      const parsedModel = modelHelpers.parseObjectIntoModel(selectedRow?.configuration, argoApplicationsMetadata);
+      parsedModel?.setData("applicationId", applicationId);
+      setSelectedArgoApplication({...parsedModel});
+    }
   };
 
   const getTable = () => {
@@ -76,6 +80,7 @@ ArgoApplicationsTable.propTypes = {
   isLoading: PropTypes.bool,
   argoApplications: PropTypes.array,
   setSelectedArgoApplication: PropTypes.func,
+  toolApplications: PropTypes.array,
 };
 
 export default ArgoApplicationsTable;
