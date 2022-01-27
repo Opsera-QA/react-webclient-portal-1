@@ -129,6 +129,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     const isOrgToOrg = sfdcStep?.tool?.configuration?.isOrgToOrg === true;
     const jobType = sfdcStep?.tool?.job_type;
     const isProfiles = jobType === "sfdc-ant-profile" || jobType?.toUpperCase() === "SFDC PROFILE DEPLOY";
+    const isTranslations = false;
 
     if (pipelineId == null) {
       setError("Could not find Pipeline");
@@ -155,6 +156,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     newPipelineWizardModel.setData("stepId", stepId);
     newPipelineWizardModel.setData("isOrgToOrg", isOrgToOrg);
     newPipelineWizardModel.setData("isProfiles", isProfiles);
+    newPipelineWizardModel.setData("isTranslations", isTranslations);
     newPipelineWizardModel.setData("unitTestSteps", getCustomUnitTestSteps(steps));
     const isSfdx = await checkIfSfdx(cancelSource, sfdcToolId);
     newPipelineWizardModel.setData("isSfdx", isSfdx);
@@ -184,14 +186,18 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       setPipelineWizardModel({...newPipelineWizardModel});
     }
     else {
-      await createNewPipelineWizardRecord(newPipelineWizardModel);
+      await createNewPipelineWizardRecord(newPipelineWizardModel, false, false);
     }
   };
 
-  const createNewPipelineWizardRecord = async (newPipelineWizardModel = pipelineWizardModel, moveToNextScreen) => {
+  const createNewPipelineWizardRecord = async (newPipelineWizardModel = pipelineWizardModel, moveToNextScreen, translation) => {
     try {
       if (moveToNextScreen === true) {
         setCreatingNewRecord(true);
+      }
+
+      if(translation === true) {
+        newPipelineWizardModel.setData("isTranslations", true);
       }
 
       const response = await sfdcPipelineActions.createNewRecordV2(getAccessToken, cancelTokenSource, newPipelineWizardModel);
@@ -301,17 +307,36 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
           <div className={"mt-2"}>
             {`Please note, using the Salesforce Pipeline Run Wizard at the same time as someone else for the same use case will lead to unintended side effects.`}
           </div>
-          <SaveButtonContainer>
-            <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading}
-                    onClick={() => createNewPipelineWizardRecord(undefined, true)}>
-              <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Instance</span>
-            </Button>
-            <Button size={"sm"} variant="success" disabled={isLoading} onClick={() => unpackPreviousPipelineRun()}>
-              <span><IconBase icon={faStepForward} fixedWidth className="mr-2"/>Continue Where The Last Instance Left Off</span>
-            </Button>
-            <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose}
-                          size={"sm"}/>
-          </SaveButtonContainer>
+          {pipelineWizardModel.getData("isProfiles") === true ? 
+            <SaveButtonContainer>
+              <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading}
+                      onClick={() => createNewPipelineWizardRecord(undefined, true, false)}>
+                <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Profile Instance</span>
+              </Button>
+              <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading}
+                      onClick={() => createNewPipelineWizardRecord(undefined, true, true)}>
+                <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Translation Instance</span>
+              </Button>
+              <Button size={"sm"} variant="success" disabled={isLoading} onClick={() => unpackPreviousPipelineRun()}>
+                <span><IconBase icon={faStepForward} fixedWidth className="mr-2"/>Continue Where The Last Instance Left Off</span>
+              </Button>
+              <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose}
+                            size={"sm"}/>
+            </SaveButtonContainer>
+            :
+            <SaveButtonContainer>
+              <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading}
+                      onClick={() => createNewPipelineWizardRecord(undefined, true, false)}>
+                <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Instance</span>
+              </Button>
+              <Button size={"sm"} variant="success" disabled={isLoading} onClick={() => unpackPreviousPipelineRun()}>
+                <span><IconBase icon={faStepForward} fixedWidth className="mr-2"/>Continue Where The Last Instance Left Off</span>
+              </Button>
+              <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose}
+                            size={"sm"}/>
+            </SaveButtonContainer>
+          }
+          
         </div>
       );
     }
@@ -321,12 +346,24 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
         <div className={"mt-2"}>
           {`Would you like to start a new SFDC Pipeline Run Wizard Instance?`}
         </div>
-        <SaveButtonContainer>
-          <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading} onClick={() => createNewPipelineWizardRecord(undefined, true)}>
-            <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Instance</span>
-          </Button>
-          <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
-        </SaveButtonContainer>
+        {pipelineWizardModel.getData("isProfiles") === true ? 
+          <SaveButtonContainer>
+            <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading} onClick={() => createNewPipelineWizardRecord(undefined, true, false)}>
+              <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Profile Instance</span>
+            </Button>
+            <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading} onClick={() => createNewPipelineWizardRecord(undefined, true, true)}>
+              <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Translation Instance</span>
+            </Button>
+            <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
+          </SaveButtonContainer>
+          :
+          <SaveButtonContainer>
+            <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading} onClick={() => createNewPipelineWizardRecord(undefined, true)}>
+              <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Instance</span>
+            </Button>
+            <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
+          </SaveButtonContainer>
+        }
       </div>
     );
   };

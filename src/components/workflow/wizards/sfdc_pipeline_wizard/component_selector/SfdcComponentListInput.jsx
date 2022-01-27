@@ -37,7 +37,7 @@ const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel })
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [pipelineWizardModel.getData("isTranslations")]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
