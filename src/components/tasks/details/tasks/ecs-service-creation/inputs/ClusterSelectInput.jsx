@@ -14,7 +14,7 @@ function ClusterSelectInput({
                           textField,
                           valueField,
                           requiresCompatibilities,
-                          pipelineId,
+                          region,
                         }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -45,7 +45,7 @@ function ClusterSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [requiresCompatibilities]);
+  }, [requiresCompatibilities,region]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -108,7 +108,7 @@ ClusterSelectInput.propTypes = {
   textField: PropTypes.string,
   valueField: PropTypes.string,
   requiresCompatibilities: PropTypes.string,
-  pipelineId: PropTypes.string,
+  region: PropTypes.string,
 };
 
 ClusterSelectInput.defaultProps = {
