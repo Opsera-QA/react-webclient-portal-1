@@ -4,14 +4,15 @@ import DetailPanelContainer from "components/common/panels/detail_panel_containe
 import MessageField from "components/common/fields/text/MessageField";
 import ArgoToolClustersPanel from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/ArgoToolClustersPanel";
 
-function ToolClustersPanel({ toolData, loadData }) {
+function ToolClustersPanel({ toolModel }) {
 
-  const getToolClustersPanel = (toolIdentifier, loadData) => {
+  const getToolClustersPanel = () => {
+    const toolIdentifier = toolModel?.getData("tool_identifier");
     switch (toolIdentifier) {
       case "argo":
         return (
           <ArgoToolClustersPanel
-            toolData={toolData}
+            toolId={toolModel?.getData("_id")}
           />
         );
       default:
@@ -23,7 +24,7 @@ function ToolClustersPanel({ toolData, loadData }) {
     }
   };
 
-  if (toolData == null) {
+  if (toolModel == null) {
     return null;
   }
 
@@ -31,14 +32,13 @@ function ToolClustersPanel({ toolData, loadData }) {
     <DetailPanelContainer>
       <div className="h6">Managed K8 Cluster Creation</div>
       <MessageField message={`Add, Modify or Delete K8 Clusters. These K8 Clusters can be entered once and reused across the Opsera platform.`} />
-      {getToolClustersPanel(toolData["tool_identifier"].toLowerCase(), loadData)}
+      {getToolClustersPanel()}
     </DetailPanelContainer>
   );
 }
 
 ToolClustersPanel.propTypes = {
-  toolData: PropTypes.object,
-  loadData: PropTypes.func,
+  toolModel: PropTypes.object,
 };
 
 

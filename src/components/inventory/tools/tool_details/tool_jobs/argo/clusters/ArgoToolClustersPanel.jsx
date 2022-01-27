@@ -1,13 +1,13 @@
 import React, {useContext, useEffect, useState, useRef} from "react";
 import ArgoClusterTable from "./ArgoClusterTable";
 import PropTypes from "prop-types";
-import ArgoClusterOverlay from "./ArgoClusterOverlay";
+import CreateArgoClusterOverlay from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/CreateArgoClusterOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
 
-function ArgoToolClustersPanel({ toolData }) {
+function ArgoToolClustersPanel({ toolId }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [argoClusters, setArgoClusters] = useState([]);
@@ -50,7 +50,7 @@ function ArgoToolClustersPanel({ toolData }) {
   };
 
   const getArgoClusters = async (cancelSource = cancelTokenSource) => {
-    const response = await argoActions.getArgoClustersV2(getAccessToken, cancelSource, toolData?.getData("_id"));    
+    const response = await argoActions.getArgoClustersV2(getAccessToken, cancelSource, toolId);
 
     const clusters = response?.data?.data;
 
@@ -63,15 +63,14 @@ function ArgoToolClustersPanel({ toolData }) {
   const onRowSelect = (grid, row) => {
 
     toastContext.showOverlayPanel(
-      <ArgoClusterOverlay
+      <CreateArgoClusterOverlay
         argoDataObject={{
           clusterName: row?.name,
           name: row?.name,
           server: row?.server
         }}
-        toolData={toolData}
+        toolId={toolId}
         loadData={loadData}
-        editMode={true}
       />
     );
   };
@@ -79,7 +78,7 @@ function ArgoToolClustersPanel({ toolData }) {
   return (
     <ArgoClusterTable
       isLoading={isLoading}
-      toolData={toolData}
+      toolId={toolId}
       loadData={loadData}
       onRowSelect={onRowSelect}
       argoClusters={argoClusters}
@@ -88,6 +87,7 @@ function ArgoToolClustersPanel({ toolData }) {
 }
 
 ArgoToolClustersPanel.propTypes = {
-  toolData: PropTypes.object,
+  toolId: PropTypes.string,
 };
+
 export default ArgoToolClustersPanel;

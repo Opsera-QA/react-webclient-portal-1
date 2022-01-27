@@ -14,7 +14,13 @@ import ArgoAwsClusterEditorForm from "./sub-forms/ArgoAwsClusterEditorForm";
 import ArgoAzureClusterEditorForm from "./sub-forms/ArgoAzureClusterEditorForm";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
-function ArgoClusterEditorPanel({ argoClusterData, toolData, clusterData, handleClose, editMode }) {
+function ArgoClusterEditorPanel(
+  {
+    argoClusterData,
+    toolId,
+    clusterData,
+    handleClose,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [argoClusterModel, setArgoClusterModel] = useState(undefined);
@@ -53,25 +59,29 @@ function ArgoClusterEditorPanel({ argoClusterData, toolData, clusterData, handle
   };
 
   const createCluster = async () => {
-    return await argoActions.createArgoCluster(getAccessToken, cancelTokenSource, toolData?._id, argoClusterModel);
+    return await argoActions.createArgoCluster(getAccessToken, cancelTokenSource, toolId, argoClusterModel);
   };
 
   const deleteCluster = async () => {
-    const response = await argoActions.deleteArgoCluster(getAccessToken, cancelTokenSource, toolData?._id, argoClusterModel);
+    const response = await argoActions.deleteArgoCluster(getAccessToken, cancelTokenSource, toolId, argoClusterModel);
     handleClose();
     return response;
   };
 
+  // TODO: Create Argo Cluster Delete Panel
   const getExtraButtons = () => {
-    if (editMode) {
+    if (argoClusterModel?.isNew() === false) {
       return (
-        <DeleteButtonWithInlineConfirmation dataObject={argoClusterModel} deleteRecord={deleteCluster} />
+        <DeleteButtonWithInlineConfirmation
+          dataObject={argoClusterModel}
+          deleteRecord={deleteCluster}
+        />
       );
     }
   };
 
   const getArgoClusterEditorFields = () => {
-    if (editMode) {
+    if (argoClusterModel?.isNew() === false) {
       return (
         <>
           <Row>
@@ -148,11 +158,9 @@ function ArgoClusterEditorPanel({ argoClusterData, toolData, clusterData, handle
 
 ArgoClusterEditorPanel.propTypes = {
   argoClusterData: PropTypes.object,
-  toolData: PropTypes.object,
+  toolId: PropTypes.string,
   loadData: PropTypes.func,
-  repoId: PropTypes.string,
   handleClose: PropTypes.func,
-  editMode: PropTypes.bool,
   clusterData: PropTypes.array,
 };
 
