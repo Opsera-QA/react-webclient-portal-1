@@ -157,7 +157,7 @@ function ServiceNowMeanTimeToAcknowledgeBarChart({
     // };
 
     return (
-      <div className="new-chart m-3" style={{ minHeight: "300px", display: "flex" }}>
+      <div className="new-chart m-3 p-0" style={{ minHeight: "300px", display: "flex" }}>
         <Row>
           <Col xl={3} lg={3} md={4} className={"d-flex align-content-around"}>
             <Row>
