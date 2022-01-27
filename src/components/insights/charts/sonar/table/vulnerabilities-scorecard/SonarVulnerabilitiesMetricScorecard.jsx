@@ -20,6 +20,9 @@ import { faTable } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import SonarPipelineWiseVulnerabilitiesDetails from "components/insights/charts/sonar/table/vulnerabilities-scorecard/SonarPipelineWiseVulnerabilitiesDetails";
+import SonarCardView from "../../card/SonarCardView";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faUserCircle} from "@fortawesome/pro-light-svg-icons";
 
 function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const history = useHistory();
@@ -134,17 +137,43 @@ function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfigura
     }
   };
 
-  const getChartTable = () => {
+  // const getChartTable = () => {
+  //   return (
+  //     <CustomTable
+  //       columns={columns}
+  //       data={metrics}
+  //       noDataMessage={noDataMessage}
+  //       paginationDto={tableFilterDto}
+  //       setPaginationDto={setTableFilterDto}
+  //       loadData={loadData}
+  //       scrollOnLoad={false}
+  //       onRowSelect={onRowSelect}
+  //     />
+  //   );
+  // };
+
+  const getCardView = () => {
     return (
-      <CustomTable
-        columns={columns}
+      <SonarCardView
+        sonarDataFilterDto={tableFilterDto}
+        setSonarDataFilterDto={setTableFilterDto}
+        isLoading={isLoading}
         data={metrics}
-        noDataMessage={noDataMessage}
-        paginationDto={tableFilterDto}
-        setPaginationDto={setTableFilterDto}
         loadData={loadData}
-        scrollOnLoad={false}
-        onRowSelect={onRowSelect}
+        type={"vulnerabilities"}
+      />
+    );
+  };
+
+  const getFilterContainer = () => {
+    return (  
+      <FilterContainer
+        filterDto={tableFilterDto}
+        setFilterDto={setTableFilterDto}
+        body={getCardView()}
+        isLoading={isLoading}
+        loadData={loadData}
+        supportSearch={true}      
       />
     );
   };
@@ -154,7 +183,7 @@ function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfigura
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={getChartTable()}
+        chart={getFilterContainer()}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
