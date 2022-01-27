@@ -7,6 +7,7 @@ import {parsePackageXml} from "components/common/helpers/code-helpers";
 const sfdcPipelineActions = {};
 
 sfdcPipelineActions.getComponentTypesV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  ///${pipelineWizardModel?.getData("isTranslations")}
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/get_component_types`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
@@ -331,6 +332,7 @@ sfdcPipelineActions.createNewRecordV2 = async (getAccessToken, cancelTokenSource
     sfdcDestToolId: pipelineWizardModel.getData("sfdcDestToolId"),
     isOrgToOrg: pipelineWizardModel.getData("isOrgToOrg") === true,
     isProfiles: pipelineWizardModel.getData("isProfiles") === true,
+    isTranslations: pipelineWizardModel.getData("isTranslations") === true,
     fromGitTasks: pipelineWizardModel.getData("fromGitTasks") === true,
     runCount: pipelineWizardModel.getData("run_count"),
   };
