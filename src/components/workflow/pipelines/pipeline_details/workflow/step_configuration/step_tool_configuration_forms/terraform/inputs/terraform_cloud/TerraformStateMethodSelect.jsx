@@ -6,11 +6,11 @@ function TerraformStateMethodSelect({dataObject, setDataObject, disabled}) {
 
   const JOB_TYPES = [
     {
-      name: "Automatic (Managed by Opsera)",
+      name: "Automatic",
       value: "automatic",
     },
     {
-      name: "Manual",
+      name: "Manual (Managed by Opsera)",
       value: "manual",
     }
   ];
