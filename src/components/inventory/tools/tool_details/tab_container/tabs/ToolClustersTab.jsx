@@ -4,7 +4,7 @@ import CustomTab from "components/common/tabs/CustomTab";
 import {faNetworkWired} from "@fortawesome/pro-light-svg-icons";
 
 const SUPPORTED_TOOL_IDENTIFIERS = [
-  // "argo",
+  "argo",
 ];
 
 function ToolClustersTab({ toolModel, handleTabClick, activeTab }) {

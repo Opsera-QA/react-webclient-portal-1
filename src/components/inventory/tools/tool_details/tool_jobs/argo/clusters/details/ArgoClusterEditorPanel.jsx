@@ -146,7 +146,7 @@ function ArgoClusterEditorPanel(
       createRecord={createCluster}
       setRecordDto={setArgoClusterModel}
       isLoading={isLoading}
-      extraButtons={getExtraButtons()}
+      // extraButtons={getExtraButtons()}
       handleClose={handleClose}
       disable={!argoClusterData?.isNew()}
     >
