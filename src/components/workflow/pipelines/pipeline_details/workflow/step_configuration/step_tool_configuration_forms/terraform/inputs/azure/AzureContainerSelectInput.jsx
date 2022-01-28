@@ -18,7 +18,9 @@ function AzureContainerSelectInput(
     azureToolConfigId,
     applicationId,
     storageName,
-    resourceGroup
+    resourceGroup,
+    textField,
+    valueField
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -92,6 +94,7 @@ function AzureContainerSelectInput(
     );
 
     const result = azureResponse?.data?.data;
+    console.log(result);
     if (Array.isArray(result) && result.length > 0) {
       setErrorMessage("");
       setAzureRegionList(result);
@@ -107,6 +110,8 @@ function AzureContainerSelectInput(
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
+        textField={textField}
+        valueField={valueField}
         setDataObject={setDataObject}
         selectOptions={azureRegionList}
         busy={isLoading}
@@ -125,12 +130,14 @@ AzureContainerSelectInput.propTypes = {
   applicationId: PropTypes.string,
   storageName: PropTypes.string,
   resourceGroup: PropTypes.string,
+  textField: PropTypes.string,
+  valueField: PropTypes.string,
 };
 
 AzureContainerSelectInput.defaultProps = {
   fieldName: "containerName",
-  textField: "clusterName",
-  valueField: "clusterName",
+  textField: "containerName",
+  valueField: "containerName",
 };
 
 export default AzureContainerSelectInput;

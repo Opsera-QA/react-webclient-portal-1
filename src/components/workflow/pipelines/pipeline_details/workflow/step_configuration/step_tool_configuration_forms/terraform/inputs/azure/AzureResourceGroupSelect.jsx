@@ -147,8 +147,8 @@ AksResourceGroupSelectInput.propTypes = {
 
 AksResourceGroupSelectInput.defaultProps = {
   fieldName: "resourceGroup",
-  textField: "resourceGroup",
-  valueField: "resourceGroup",
+  textField: "name",
+  valueField: "name",
 };
 
 export default AksResourceGroupSelectInput;
