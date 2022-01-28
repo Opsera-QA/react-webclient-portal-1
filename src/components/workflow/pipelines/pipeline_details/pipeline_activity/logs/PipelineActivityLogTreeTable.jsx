@@ -43,7 +43,6 @@ function PipelineActivityLogTreeTable(
   const pipelineTree = useRef([]);
   const [refreshTimer, setRefreshTimer] = useState(null);
   let internalRefreshCount = 1;
-  const [currentLogTreePage, setCurrentLogTreePage] = useState(0);
   const [currentRunNumber, setCurrentRunNumber] = useState(pipelineRunCount);
   const [currentStepName, setCurrentStepName] = useState(undefined);
 
@@ -128,7 +127,6 @@ function PipelineActivityLogTreeTable(
     }
 
     if (refreshTimer) {
-      console.log("clearing refresh timer");
       clearTimeout(refreshTimer);
     }
 
@@ -137,7 +135,6 @@ function PipelineActivityLogTreeTable(
       internalRefreshCount++;
       console.log("running pipeline refresh interval");
       await getPipeline();
-      // await getSingleRunLogs(pipelineActivityFilterModel);
     }, refreshInterval);
 
     setRefreshTimer(newRefreshTimer);
@@ -265,7 +262,6 @@ function PipelineActivityLogTreeTable(
     return (
       <PipelineActivityLogTree
         pipelineLogTree={pipelineTree?.current}
-        setCurrentLogTreePage={setCurrentLogTreePage}
         setCurrentRunNumber={setCurrentRunNumber}
         setCurrentStepName={setCurrentStepName}
       />
