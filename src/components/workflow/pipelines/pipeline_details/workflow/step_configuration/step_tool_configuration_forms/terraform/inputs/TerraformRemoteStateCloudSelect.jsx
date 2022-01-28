@@ -47,7 +47,7 @@ function TerraformRemoteStateCloudSelect({dataObject, setDataObject, disabled}) 
     newModel.setData("azureToolConfigId", "");
     newModel.setData("terraformCloudId", "");
     newModel.setData("organizationName", "");
-    newModel.setData("backendState", "");
+    newModel.setData("backendState", "local");
     newModel.setData("azureCredentialId", "");
     newModel.setData("bucketName", "");
     setDataObject({...newModel});
