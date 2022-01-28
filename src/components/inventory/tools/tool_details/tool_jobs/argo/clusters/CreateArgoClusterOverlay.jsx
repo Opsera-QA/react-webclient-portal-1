@@ -8,8 +8,13 @@ import axios from "axios";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import modelHelpers from "components/common/model/modelHelpers";
 
-function ArgoClusterOverlay({ loadData, toolData, clusterData, argoDataObject, clusterId, editMode }) {
-
+function CreateArgoClusterOverlay(
+  {
+    loadData,
+    toolId,
+    clusterData,
+    argoDataObject,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const [argoClusterData, setArgoClusterData] = useState(undefined);
   const isMounted = useRef(false);
@@ -36,7 +41,7 @@ function ArgoClusterOverlay({ loadData, toolData, clusterData, argoDataObject, c
     let parsedModel = modelHelpers.parseObjectIntoModel(argoDataObject, argoClusterMetadata);
 
     if (parsedModel?.isNew()) {
-      parsedModel.setData("toolId", toolData?.getData("_id"));
+      parsedModel.setData("toolId", toolId);
     }
 
     setArgoClusterData({...parsedModel});
@@ -55,24 +60,21 @@ function ArgoClusterOverlay({ loadData, toolData, clusterData, argoDataObject, c
     <CreateCenterPanel closePanel={closePanel} objectType={argoClusterMetadata.type} loadData={loadData}>
       <ArgoClusterEditorPanel
         argoClusterData={argoClusterData}
-        toolData={toolData}
+        toolId={toolId}
         loadData={loadData}
         clusterData={clusterData}
         handleClose={closePanel}
-        clusterId={clusterId}
-        editMode={editMode}
       />
     </CreateCenterPanel>
   );
 }
 
-ArgoClusterOverlay.propTypes = {
-  toolData: PropTypes.object,
+CreateArgoClusterOverlay.propTypes = {
+  toolId: PropTypes.string,
   argoDataObject: PropTypes.object,
   loadData: PropTypes.func,
   clusterData: PropTypes.array,
   clusterId: PropTypes.string,
-  editMode: PropTypes.bool,
 };
 
-export default ArgoClusterOverlay;
+export default CreateArgoClusterOverlay;

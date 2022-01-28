@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
-import {faProjectDiagram} from "@fortawesome/pro-light-svg-icons";
+import {faNetworkWired} from "@fortawesome/pro-light-svg-icons";
 
 const SUPPORTED_TOOL_IDENTIFIERS = [
-  // "argo",
+  "argo",
 ];
 
 function ToolClustersTab({ toolModel, handleTabClick, activeTab }) {
@@ -14,12 +14,12 @@ function ToolClustersTab({ toolModel, handleTabClick, activeTab }) {
 
   return (
     <CustomTab
-      icon={faProjectDiagram}
+      icon={faNetworkWired}
       tabName={"clusters"}
       handleTabClick={handleTabClick}
       activeTab={activeTab}
       tabText={"Clusters"}
-      accessRestricted={!toolModel.canPerformAction("update_tool_clusters")}
+      // accessRestricted={!toolModel.canPerformAction("update_tool_clusters")}
     />
   );
 }

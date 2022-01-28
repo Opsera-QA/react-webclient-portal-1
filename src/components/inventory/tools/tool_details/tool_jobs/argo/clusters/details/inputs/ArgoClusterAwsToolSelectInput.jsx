@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import RoleRestrictedAwsAccountToolSelectInput from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 
-const ArgoAwsPlatformSelectInput = ({ fieldName, model, setModel, disabled, textField, valueField }) => {
+const ArgoClusterAwsToolSelectInput = ({ fieldName, model, setModel, disabled, textField, valueField }) => {
 
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = { ...model };
@@ -18,6 +18,10 @@ const ArgoAwsPlatformSelectInput = ({ fieldName, model, setModel, disabled, text
     setModel({ ...newDataObject });
   };
 
+  if (model?.getData("platform") !== "aws") {
+    return null;
+  }
+
   return (
     <RoleRestrictedAwsAccountToolSelectInput
       fieldName={fieldName}
@@ -32,7 +36,7 @@ const ArgoAwsPlatformSelectInput = ({ fieldName, model, setModel, disabled, text
   );
 };
 
-ArgoAwsPlatformSelectInput.propTypes = {
+ArgoClusterAwsToolSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -41,10 +45,10 @@ ArgoAwsPlatformSelectInput.propTypes = {
   valueField: PropTypes.string,
 };
 
-ArgoAwsPlatformSelectInput.defaultProps = {
+ArgoClusterAwsToolSelectInput.defaultProps = {
   valueField: "_id",
   textField: "name",
   fieldName: "platformToolId",
 };
 
-export default ArgoAwsPlatformSelectInput;
+export default ArgoClusterAwsToolSelectInput;

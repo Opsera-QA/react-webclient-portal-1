@@ -49,7 +49,7 @@ function OverlayPanelBodyContainer({ children, className, helpIsShown, setHelpIs
   };
 
   return (
-    <div>
+    <div className={"w-100"}>
       {getActionBar()}
       <div className={className}>
         {getBody()}

@@ -1,22 +1,25 @@
 import React, {useContext, useEffect, useState, useRef} from "react";
 import ArgoClusterTable from "./ArgoClusterTable";
 import PropTypes from "prop-types";
-import ArgoClusterOverlay from "./ArgoClusterOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
+import modelHelpers from "components/common/model/modelHelpers";
+import argoClusterMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/argo-cluster-metadata";
+import ArgoClusterEditorPanel
+  from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/details/ArgoClusterEditorPanel";
 
-function ArgoToolClustersPanel({ toolData }) {
+function ArgoToolClustersPanel({ toolId }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [argoClusters, setArgoClusters] = useState([]);
+  const [selectedArgoCluster, setSelectedArgoCluster] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-
     if(cancelTokenSource) {
       cancelTokenSource.cancel();
     }
@@ -31,6 +34,10 @@ function ArgoToolClustersPanel({ toolData }) {
       }
     });
 
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -50,36 +57,43 @@ function ArgoToolClustersPanel({ toolData }) {
   };
 
   const getArgoClusters = async (cancelSource = cancelTokenSource) => {
-    const response = await argoActions.getArgoClustersV2(getAccessToken, cancelSource, toolData?.getData("_id"));    
-
+    const response = await argoActions.getArgoClustersV2(getAccessToken, cancelSource, toolId);
     const clusters = response?.data?.data;
 
     if(isMounted?.current === true && Array.isArray(clusters)){
       setArgoClusters(clusters);
     }
-
   };
 
   const onRowSelect = (grid, row) => {
+    const clusterObject = {
+      clusterName: row?.name,
+      server: row?.server
+    };
+    const parsedModel = modelHelpers.parseObjectIntoModel(clusterObject, argoClusterMetadata);
+    setSelectedArgoCluster({...parsedModel});
+  };
 
-    toastContext.showOverlayPanel(
-      <ArgoClusterOverlay
-        argoDataObject={{
-          clusterName: row?.name,
-          name: row?.name,
-          server: row?.server
-        }}
-        toolData={toolData}
-        loadData={loadData}
-        editMode={true}
+  const closeEditorPanel = async () => {
+    setSelectedArgoCluster(undefined);
+    await loadData();
+  };
+
+  if (selectedArgoCluster != null) {
+    return (
+      <ArgoClusterEditorPanel
+        argoClusterData={selectedArgoCluster}
+        toolId={toolId}
+        clusterData={argoClusters}
+        handleClose={closeEditorPanel}
       />
     );
-  };
+  }
 
   return (
     <ArgoClusterTable
       isLoading={isLoading}
-      toolData={toolData}
+      toolId={toolId}
       loadData={loadData}
       onRowSelect={onRowSelect}
       argoClusters={argoClusters}
@@ -88,6 +102,7 @@ function ArgoToolClustersPanel({ toolData }) {
 }
 
 ArgoToolClustersPanel.propTypes = {
-  toolData: PropTypes.object,
+  toolId: PropTypes.string,
 };
+
 export default ArgoToolClustersPanel;

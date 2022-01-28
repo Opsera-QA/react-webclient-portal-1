@@ -24,7 +24,7 @@ pipelineHelpers.getPendingApprovalStep = (pipeline) => {
     let step_id = pipeline?.workflow?.last_step?.running?.step_id;
     let stepArrayIndex = pipeline?.workflow?.plan?.findIndex(x => x._id === step_id);
 
-    if (stepArrayIndex && stepArrayIndex > -1 && pipeline?.workflow?.plan[stepArrayIndex]?.tool?.tool_identifier === "approval") {
+    if (typeof stepArrayIndex === "number" && stepArrayIndex > -1 && pipeline?.workflow?.plan[stepArrayIndex]?.tool?.tool_identifier === "approval") {
       return pipeline?.workflow?.plan[stepArrayIndex];
     }
   }
