@@ -22,6 +22,8 @@ import OverlayPanelBodyContainer from "components/common/panels/detail_panel_con
 import {TASK_TYPES} from "components/tasks/task.types";
 import SfdcOrgSyncPrerunHelpDocumentation
   from "components/common/help/documentation/tasks/SfdcOrgSyncPrerunHelpDocumentation";
+import SfdcBulkMigrationPrerunHelpDocumentation
+  from "../../common/help/documentation/tasks/SfdcBulkMigrationPrerunHelpDocumentation";
 import azureAksClusterTaskConfigurationMetadata
   from "components/tasks/details/tasks/azure-cluster-creation/azure-cluster-metadata";
 import SalesforceOrganizationSyncTaskGitBranchSelectInput
@@ -30,12 +32,13 @@ import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import {salesforceBulkMigrationTaskConfigurationMetadata} from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
 
+
 function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
   const [showHelp, setShowHelp] = useState(false);
   const [taskConfigurationModel, setTaskConfigurationModel] = useState(undefined);
   const [canEdit, setCanEdit] = useState(false);
   const { getAccessRoleData } = useContext(AuthContext);
-
+  
   useEffect(() => {
     loadRoles();
     loadConfig();
@@ -164,6 +167,7 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
         return (<SfdcOrgSyncPrerunHelpDocumentation closeHelpPanel={() => setShowHelp(false)}/>);
       case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+        return (<SfdcBulkMigrationPrerunHelpDocumentation closeHelpPanel={() => setShowHelp(false)}/>);
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
