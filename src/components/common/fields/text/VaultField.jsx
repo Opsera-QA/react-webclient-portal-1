@@ -15,8 +15,6 @@ function VaultField({dataObject, fieldName, className}) {
     if (isStoredInVault()) {
       return <span>This credential is securely stored in the vault.</span>;
     }
-
-    return <span>This credential has not been saved to the vault.</span>;
   };
 
   return (
