@@ -57,7 +57,7 @@ function ArgoClusterTable(
       title={"Argo Clusters"}
       type={"Argo Cluster"}
       titleIcon={faBrowser}
-      // addRecordFunction={createArgoCluster}
+      addRecordFunction={createArgoCluster}
       body={getTable()}
       showBorder={false}
     />
