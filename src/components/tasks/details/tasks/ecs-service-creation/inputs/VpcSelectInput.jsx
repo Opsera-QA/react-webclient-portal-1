@@ -14,7 +14,7 @@ function VpcSelectInput({
   textField,
   valueField,
   toolConfigId,
-  region,
+  regions,
 }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -45,7 +45,7 @@ function VpcSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolConfigId, region]);
+  }, [toolConfigId, regions]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -108,7 +108,7 @@ VpcSelectInput.propTypes = {
   textField: PropTypes.string,
   valueField: PropTypes.string,
   toolConfigId: PropTypes.string,
-  region: PropTypes.string,
+  regions: PropTypes.string,
 };
 
 VpcSelectInput.defaultProps = {

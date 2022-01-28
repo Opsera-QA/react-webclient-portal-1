@@ -5,7 +5,7 @@ const AWSLambdaFunctionActions = {};
 AWSLambdaFunctionActions.getIAMRoles = async (getAccessToken, cancelTokenSource, dataObject) => {
   let urlParams = {
     toolId: dataObject?.getData("awsToolConfigId"),
-    region: dataObject?.getData("region")
+    region: dataObject?.getData("regions")
   };
   const apiUrl = `/tools/aws/v2/IAMRoles`;
   return await baseActions.apiPostCallV2(getAccessToken,cancelTokenSource, apiUrl, urlParams);

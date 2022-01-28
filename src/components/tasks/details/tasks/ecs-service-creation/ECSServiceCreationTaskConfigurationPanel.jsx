@@ -44,7 +44,7 @@ function ECSServiceCreationTaskConfigurationPanel({
           <IAMRoleSelectInput
             dataObject={gitTasksConfigurationData}
             setDataObject={setGitTasksConfigurationData}
-            disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0 || gitTasksConfigurationData?.getData("region").length === 0}
+            disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0 || gitTasksConfigurationData?.getData("regions").length === 0}
             toolConfigId={gitTasksConfigurationData?.getData("toolConfigId")}
           />
         </Col>
@@ -78,7 +78,7 @@ function ECSServiceCreationTaskConfigurationPanel({
         <AWSRegionSelectInput
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
-          fieldName={"region"}
+          fieldName={"regions"}
           disabled={gitTasksConfigurationData?.getData("toolConfigId")?.length === 0}
           awsTool={gitTasksConfigurationData?.getData("toolConfigId")}
         />
@@ -97,19 +97,19 @@ function ECSServiceCreationTaskConfigurationPanel({
           disabled={
             gitTasksConfigurationData?.getData("toolConfigId")?.length === 0 ||
             gitTasksConfigurationData?.getData("ecsServiceRequiresCompatibilities")?.length === 0 ||
-            gitTasksConfigurationData?.getData("region")?.length === 0
+            gitTasksConfigurationData?.getData("regions")?.length === 0
           }
           requiresCompatibilities={gitTasksConfigurationData?.getData("ecsServiceRequiresCompatibilities")}
-          region={gitTasksConfigurationData?.getData("region")}
+          regions={gitTasksConfigurationData?.getData("regions")}
         />
       </Col>
       <Col lg={12}>
         <VpcSelectInput
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
-          disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0 || gitTasksConfigurationData?.getData("region").length === 0}
+          disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0 || gitTasksConfigurationData?.getData("regions").length === 0}
           toolConfigId={gitTasksConfigurationData?.getData("toolConfigId")}
-          region={gitTasksConfigurationData?.getData("region")}
+          regions={gitTasksConfigurationData?.getData("regions")}
         />
       </Col>
       <Col lg={12}>
@@ -123,18 +123,18 @@ function ECSServiceCreationTaskConfigurationPanel({
         <LogGroupSelectInput
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
-          disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0 || gitTasksConfigurationData?.getData("region").length === 0}
+          disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0 || gitTasksConfigurationData?.getData("regions").length === 0}
           toolConfigId={gitTasksConfigurationData?.getData("toolConfigId")}
-          region={gitTasksConfigurationData?.getData("region")}
+          regions={gitTasksConfigurationData?.getData("regions")}
         />
       </Col>
       <Col lg={12}>
         <LoadBalancerSelectInput
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
-          disabled={gitTasksConfigurationData?.getData("ecsServiceVpcId").length === 0 || gitTasksConfigurationData?.getData("region").length === 0}
+          disabled={gitTasksConfigurationData?.getData("ecsServiceVpcId").length === 0 || gitTasksConfigurationData?.getData("regions").length === 0}
           vpcId={gitTasksConfigurationData?.getData("ecsServiceVpcId")}
-          region={gitTasksConfigurationData?.getData("region")}
+          regions={gitTasksConfigurationData?.getData("regions")}
         />
       </Col>
       {getDynamicFields()}
