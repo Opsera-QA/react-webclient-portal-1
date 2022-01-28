@@ -5,17 +5,26 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import ArgoApplicationOverlay
-  from "components/inventory/tools/tool_details/tool_jobs/argo/applications/ArgoApplicationOverlay";
+import CreateArgoApplicationOverlay
+  from "components/inventory/tools/tool_details/tool_jobs/argo/applications/CreateArgoApplicationOverlay";
 import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
+import modelHelpers from "components/common/model/modelHelpers";
 
-function ArgoApplicationsTable({ toolData, argoApplications, loadData, onRowSelect, isLoading }) {
+function ArgoApplicationsTable(
+  {
+    toolData,
+    argoApplications,
+    loadData,
+    isLoading,
+    setSelectedArgoApplication,
+    toolApplications,
+  }) {
   const toastContext = useContext(DialogToastContext);
   let fields = argoApplicationsMetadata.fields;
 
   const createArgoApplication = () => {
-    toastContext.showOverlayPanel(<ArgoApplicationOverlay toolData={toolData} loadData={loadData} />);
+    toastContext.showOverlayPanel(<CreateArgoApplicationOverlay toolData={toolData} loadData={loadData} />);
   };
 
   const columns = useMemo(
@@ -27,6 +36,17 @@ function ArgoApplicationsTable({ toolData, argoApplications, loadData, onRowSele
     ],
     []
   );
+
+  const onRowSelect = (grid, row) => {
+    const selectedRow = toolApplications[row?.index];
+
+    if (selectedRow) {
+      const applicationId = selectedRow?._id;
+      const parsedModel = modelHelpers.parseObjectIntoModel(selectedRow?.configuration, argoApplicationsMetadata);
+      parsedModel?.setData("applicationId", applicationId);
+      setSelectedArgoApplication({...parsedModel});
+    }
+  };
 
   const getTable = () => {
     return (
@@ -58,7 +78,9 @@ ArgoApplicationsTable.propTypes = {
   loadData: PropTypes.func,
   onRowSelect: PropTypes.func,
   isLoading: PropTypes.bool,
-  argoApplications: PropTypes.array
+  argoApplications: PropTypes.array,
+  setSelectedArgoApplication: PropTypes.func,
+  toolApplications: PropTypes.array,
 };
 
 export default ArgoApplicationsTable;

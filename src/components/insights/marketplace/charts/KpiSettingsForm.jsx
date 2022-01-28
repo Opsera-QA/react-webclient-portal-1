@@ -1,4 +1,4 @@
-import React, {useState, useContext, useRef, useEffect} from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Row, Col } from "react-bootstrap";
@@ -71,8 +71,7 @@ import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete
 import TextAreaInput from "../../../common/inputs/text/TextAreaInput";
 
 import axios from "axios";
-import ResetMetricConfirmationPanel
-  from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricConfirmationPanel";
+import ResetMetricConfirmationPanel from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricConfirmationPanel";
 import ResetButton from "components/common/buttons/reset/ResetButton";
 
 // TODO: There are a handful of issues with this we need to address.
@@ -230,7 +229,6 @@ function KpiSettingsForm({
     };
   }, []);
 
-
   const tagFilterEnabled = [
     "opsera-pipeline-duration",
     "opsera-pipelines-by-user",
@@ -313,6 +311,7 @@ function KpiSettingsForm({
     "automation-percentage",
     "adoption-percentage",
     "automated-test-results",
+    "defect-removal-efficiency",
     "sfdc-manual-test",
     "sfdc-backups",
     "sfdc-profile-migrations",
@@ -333,10 +332,14 @@ function KpiSettingsForm({
   const getKpiFilters = (filter) => {
     switch (filter.type) {
       case "date":
-        if(kpiConfiguration.kpi_identifier === "jira-lead-time"){
+        if (kpiConfiguration.kpi_identifier === "jira-lead-time") {
           return (
             <div>
-              <ThreeMonthsRestrictedDateRangeInput dataObject={kpiDateFilter} setDataObject={setKpiDateFilter} fieldName={"value"} />
+              <ThreeMonthsRestrictedDateRangeInput
+                dataObject={kpiDateFilter}
+                setDataObject={setKpiDateFilter}
+                fieldName={"value"}
+              />
             </div>
           );
         } else {
@@ -926,7 +929,7 @@ function KpiSettingsForm({
 
     // TODO: This is forced because the dashboard detail view refresh doesn't work after saving.
     //  This needs to be addressed and removed.
-    setKpiConfiguration({...kpiSettings?.getPersistData()});
+    setKpiConfiguration({ ...kpiSettings?.getPersistData() });
 
     await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardData);
 
@@ -960,15 +963,8 @@ function KpiSettingsForm({
   const getExtraButtons = () => {
     return (
       <div className={"d-flex"}>
-        <DeleteButtonWithInlineConfirmation
-          dataObject={kpiSettings}
-          deleteRecord={deleteKpi}
-        />
-        <ResetButton
-          className={"ml-2"}
-          model={kpiSettings}
-          resetFunction={() => setShowResetConfirmationPanel(true)}
-        />
+        <DeleteButtonWithInlineConfirmation dataObject={kpiSettings} deleteRecord={deleteKpi} />
+        <ResetButton className={"ml-2"} model={kpiSettings} resetFunction={() => setShowResetConfirmationPanel(true)} />
       </div>
     );
   };
@@ -1037,7 +1033,7 @@ function KpiSettingsForm({
       );
     }
 
-    return (getEditorPanel());
+    return getEditorPanel();
   };
 
   if (kpiSettings == null) {

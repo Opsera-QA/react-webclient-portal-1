@@ -5,6 +5,10 @@ const analyticsDataFilterMetadata = {
   type: "Entry",
   fields: [
     {
+      label: "ID",
+      id: "_id",
+    },
+    {
       label: "Status",
       id: "status",
     },

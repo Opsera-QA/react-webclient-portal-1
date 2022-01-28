@@ -61,8 +61,9 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
   };
 
   const deleteApplication = async () => {
-    await argoActions.deleteArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, applicationId);
+    const response = await argoActions.deleteArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, applicationId);
     handleClose();
+    return response;
   };
 
   if (isLoading || argoApplicationModel == null) {
@@ -82,6 +83,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
           deleteRecord={deleteApplication}
         />
       }
+      disable={argoApplicationModel?.isNew() !== true} // TODO: Remove when adding update functionality
       handleClose={handleClose}
     >
       <div className="scroll-y hide-x-overflow">

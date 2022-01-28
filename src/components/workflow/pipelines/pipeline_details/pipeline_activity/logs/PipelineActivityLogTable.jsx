@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {
   getPipelineActivityStatusColumn,
   getTableDateTimeColumn,
-  getTableTextColumn
+  getTableTextColumn, getUppercaseTableTextColumn
 } from "components/common/table/table-column-helpers-v2";
 import PipelineTaskDetailViewer from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineTaskDetailViewer";
 import TableBase from "components/common/table/TableBase";
@@ -49,8 +49,8 @@ function PipelineActivityLogTable(
       setColumns(
         [
           {...getTableTextColumn(fields.find(field => { return field.id === "run_count";}), "cell-center no-wrap-inline", 100,)},
-          getTableTextColumn(fields.find(field => { return field.id === "step_name";})),
-          getTableTextColumn(fields.find(field => { return field.id === "action";})),
+          getUppercaseTableTextColumn(fields.find(field => { return field.id === "step_name";})),
+          getUppercaseTableTextColumn(fields.find(field => { return field.id === "action";})),
           getTableTextColumn(fields.find(field => { return field.id === "message";})),
           getPipelineActivityStatusColumn(fields.find(field => { return field.id === "status";})),
           getTableDateTimeColumn(fields.find(field => { return field.id === "createdAt";}))

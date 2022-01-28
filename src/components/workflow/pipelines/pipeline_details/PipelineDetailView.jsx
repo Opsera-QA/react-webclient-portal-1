@@ -75,7 +75,6 @@ function PipelineDetailView() {
 
   const getPipeline = async (cancelSource = cancelTokenSource) => {
     try {
-      console.log("in refresh pipeline");
       const newRefreshCount = refreshCount + 1;
       setRefreshCount(newRefreshCount);
 
