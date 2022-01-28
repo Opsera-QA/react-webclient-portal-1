@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState, useRef} from "react";
 import ArgoClusterTable from "./ArgoClusterTable";
 import PropTypes from "prop-types";
-import CreateArgoClusterOverlay from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/CreateArgoClusterOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
@@ -10,7 +9,6 @@ import modelHelpers from "components/common/model/modelHelpers";
 import argoClusterMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/argo-cluster-metadata";
 import ArgoClusterEditorPanel
   from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/details/ArgoClusterEditorPanel";
-import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 
 function ArgoToolClustersPanel({ toolId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -22,7 +20,6 @@ function ArgoToolClustersPanel({ toolId }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-
     if(cancelTokenSource) {
       cancelTokenSource.cancel();
     }
@@ -37,6 +34,10 @@ function ArgoToolClustersPanel({ toolId }) {
       }
     });
 
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -57,7 +58,6 @@ function ArgoToolClustersPanel({ toolId }) {
 
   const getArgoClusters = async (cancelSource = cancelTokenSource) => {
     const response = await argoActions.getArgoClustersV2(getAccessToken, cancelSource, toolId);
-
     const clusters = response?.data?.data;
 
     if(isMounted?.current === true && Array.isArray(clusters)){
