@@ -8,7 +8,6 @@ import pipelineLogHelpers
 function PipelineActivityLogTree(
   {
     pipelineLogTree,
-    setCurrentLogTreePage,
     setCurrentRunNumber,
     setCurrentStepName,
   }) {
@@ -56,15 +55,11 @@ function PipelineActivityLogTree(
     }
   };
 
-  const onPageChange = (newPage) => {
-    setCurrentLogTreePage(newPage);
-  };
-
-
   if (pipelineLogTree == null) {
     return null;
   }
 
+  // TODO: Make this generic when doing the task logs work
   return (
     <div className={"table-tree mb-3"}>
       <div className={"scroll-y hide-x-overflow table-tree-with-paginator-and-secondary-tree"}>
@@ -85,7 +80,10 @@ function PipelineActivityLogTree(
         />
       </div>
       <div>
-        <VanityBottomPaginatorBase widgetData={treeWidget?.data} pageSize={20} onPageChange={onPageChange}/>
+        <VanityBottomPaginatorBase
+          widgetData={treeWidget?.data}
+          pageSize={20}
+        />
       </div>
     </div>
   );
@@ -93,7 +91,6 @@ function PipelineActivityLogTree(
 
 PipelineActivityLogTree.propTypes = {
   pipelineLogTree: PropTypes.array,
-  setCurrentLogTreePage: PropTypes.func,
   setCurrentRunNumber: PropTypes.func,
   setCurrentStepName: PropTypes.func,
 };

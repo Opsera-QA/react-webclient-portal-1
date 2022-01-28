@@ -54,6 +54,42 @@ export const getTableTextColumn = (field, className, maxWidth = undefined, filte
   };
 };
 
+export const getUppercaseTableTextColumn = (field, className, maxWidth = undefined, filterType, tooltipTemplateFunction ) => {
+  let header = getColumnHeader(field);
+
+  if (filterType) {
+    header.push({ content: filterType });
+  }
+
+  return {
+    header: header,
+    id: getColumnId(field),
+    tooltipTemplate: tooltipTemplateFunction,
+    template: (value) => {
+      return capitalizeFirstLetter(value);
+    },
+    class: className,
+    maxWidth: maxWidth
+  };
+};
+
+export const getTableTextColumnBase = (field, className, maxWidth = undefined, filterType, tooltipTemplateFunction, formatDataFunction, ) => {
+  let header = getColumnHeader(field);
+
+  if (filterType) {
+    header.push({ content: filterType });
+  }
+
+  return {
+    header: header,
+    id: getColumnId(field),
+    tooltipTemplate: tooltipTemplateFunction,
+    template: formatDataFunction,
+    class: className,
+    maxWidth: maxWidth
+  };
+};
+
 export const getLimitedTableTextColumn = (field, maxLength, className) => {
   return {
     header: getColumnHeader(field),
