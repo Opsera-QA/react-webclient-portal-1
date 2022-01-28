@@ -8,18 +8,11 @@ import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
-import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import ArgoClusterPlatformSelectInput from "./inputs/ArgoClusterPlatformSelectInput";
 import ArgoAwsClusterEditorForm from "./sub-forms/ArgoAwsClusterEditorForm";
 import ArgoAzureClusterEditorForm from "./sub-forms/ArgoAzureClusterEditorForm";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import ArgoClusterAzureToolSelectInput
-  from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/details/inputs/ArgoClusterAzureToolSelectInput";
-import ArgoClusterAwsToolSelectInput
-  from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/details/inputs/ArgoClusterAwsToolSelectInput";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
-import CreateArgoClusterOverlay
-  from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/CreateArgoClusterOverlay";
 import DeleteArgoClusterOverlay
   from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/DeleteArgoClusterOverlay";
 
@@ -82,6 +75,7 @@ function ArgoClusterEditorPanel(
         argoClusterModel={argoClusterData}
         loadData={loadData}
         toolId={toolId}
+        closePanel={handleClose}
       />
     );
   };
@@ -166,7 +160,6 @@ function ArgoClusterEditorPanel(
 ArgoClusterEditorPanel.propTypes = {
   argoClusterData: PropTypes.object,
   toolId: PropTypes.string,
-  loadData: PropTypes.func,
   handleClose: PropTypes.func,
   clusterData: PropTypes.array,
 };

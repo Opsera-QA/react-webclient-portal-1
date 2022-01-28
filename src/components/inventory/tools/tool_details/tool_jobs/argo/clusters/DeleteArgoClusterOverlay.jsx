@@ -24,6 +24,7 @@ function DeleteArgoClusterOverlay(
     loadData,
     argoClusterModel,
     toolId,
+    closePanel,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -53,19 +54,20 @@ function DeleteArgoClusterOverlay(
     setDeleteClusterModel({...argoClusterModel});
   };
 
-  const closePanel = () => {
+  const handleClose = () => {
     if (isMounted?.current === true) {
       loadData();
     }
 
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
+    closePanel();
   };
 
   const deleteCluster = async () => {
     try {
       const response = await argoActions.deleteArgoCluster(getAccessToken, cancelTokenSource, toolId, argoClusterModel);
-      closePanel();
+      handleClose();
     }
     catch (error) {
       toastContext.showDeleteFailureResultDialog("Argo Cluster", error);
@@ -151,6 +153,7 @@ DeleteArgoClusterOverlay.propTypes = {
   argoClusterModel: PropTypes.object,
   loadData: PropTypes.func,
   toolId: PropTypes.string,
+  closePanel: PropTypes.func,
 };
 
 export default DeleteArgoClusterOverlay;

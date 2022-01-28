@@ -84,7 +84,6 @@ function ArgoToolClustersPanel({ toolId }) {
       <ArgoClusterEditorPanel
         argoClusterData={selectedArgoCluster}
         toolId={toolId}
-        loadData={loadData}
         clusterData={argoClusters}
         handleClose={closeEditorPanel}
       />
