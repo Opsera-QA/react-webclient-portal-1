@@ -34,7 +34,7 @@ const awsLambdaFunctionTaskConfigurationMetadata = {
     },
     {
       label: "Region",
-      id: "region",
+      id: "regions",
       isRequired: true
     }
   ],
@@ -46,7 +46,7 @@ const awsLambdaFunctionTaskConfigurationMetadata = {
       handler : "",
       functionArn: "",
       awsToolConfigId: "",
-      region: ""
+      regions: ""
     }
 };
 

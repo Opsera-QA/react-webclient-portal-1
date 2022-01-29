@@ -14,7 +14,7 @@ function LogGroupSelectInput({
                                textField,
                                valueField,
                                toolConfigId,
-                               region,
+                               regions,
                              }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -32,7 +32,6 @@ function LogGroupSelectInput({
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    console.log(dataObject.getData("region"));
 
     if (!disabled) {
       loadData(source).catch((error) => {
@@ -46,7 +45,7 @@ function LogGroupSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolConfigId, region]);
+  }, [toolConfigId, regions]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -109,7 +108,7 @@ LogGroupSelectInput.propTypes = {
   textField: PropTypes.string,
   valueField: PropTypes.string,
   toolConfigId: PropTypes.string,
-  region: PropTypes.string,
+  regions: PropTypes.string,
 };
 
 LogGroupSelectInput.defaultProps = {

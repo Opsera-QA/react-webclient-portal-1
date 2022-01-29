@@ -46,7 +46,7 @@ const ec2ServiceCreationTaskConfigurationMetadata = {
     },
     {
       label: "Region",
-      id: "region",
+      id: "regions",
       isRequired: true
     }
   ],
@@ -61,7 +61,7 @@ const ec2ServiceCreationTaskConfigurationMetadata = {
       ecsServiceLogGroup: "",
       ecsServiceExecutionRoleArn: "",
       ecsServiceSubnets : [],
-      region: ""
+      regions: ""
     }
 };
 

@@ -45,7 +45,7 @@ function AwsLambdaConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationDat
         <AWSRegionSelectInput
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
-          fieldName={"region"}
+          fieldName={"regions"}
           disabled={gitTasksConfigurationData?.getData("awsToolConfigId")?.length === 0}
           awsTool={gitTasksConfigurationData?.getData("awsToolConfigId")}
         />
@@ -70,7 +70,7 @@ function AwsLambdaConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationDat
           setDataObject={setGitTasksConfigurationData}
           disabled={gitTasksConfigurationData?.getData("awsToolConfigId").length === 0}
           toolConfigId={gitTasksConfigurationData?.getData("awsToolConfigId")}
-          region={gitTasksConfigurationData?.getData("region")}
+          regions={gitTasksConfigurationData?.getData("regions")}
         />
       </Col>
       <Col lg={12}>
