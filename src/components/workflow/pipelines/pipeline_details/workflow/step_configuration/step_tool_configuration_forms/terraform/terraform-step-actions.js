@@ -34,7 +34,7 @@ terraformStepActions.getAzureClusters = async (getAccessToken, cancelTokenSource
 };
 
 terraformStepActions.getAzureResourceGroups = async (getAccessToken, cancelTokenSource, config, applicationData, clusterName) => {
-  const apiUrl = `tools/azure/management/resourcebycluster`;
+  const apiUrl = `tools/azure/management/resourceGroups`;
   const cfg = config?.configuration;
   const owner = config?.owner;
   const postBody = {
@@ -44,6 +44,7 @@ terraformStepActions.getAzureResourceGroups = async (getAccessToken, cancelToken
     "tenantId": cfg?.azureTenantId,
     "subscriptionId": cfg?.azureSubscriptionId,
     "resource": applicationData?.resource,
+    "type" : "v2"
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);

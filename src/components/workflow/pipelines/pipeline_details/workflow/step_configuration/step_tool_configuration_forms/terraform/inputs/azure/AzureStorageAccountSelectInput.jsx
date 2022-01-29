@@ -84,7 +84,7 @@ function AzureStorageAccountInput(
     );
 
     const result = azureResponse?.data?.data;
-    if (Array.isArray(result) && result.length > 0) {
+    if (Array.isArray(result) && result?.length > 0) {
       setErrorMessage("");
       setAzureRegionList(result);
     }
