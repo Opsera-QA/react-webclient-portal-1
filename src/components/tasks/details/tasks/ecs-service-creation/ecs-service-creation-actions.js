@@ -6,7 +6,7 @@ const ECSServiceCreationActions = {};
 ECSServiceCreationActions.getVPCs = async (dataObject, getAccessToken, cancelTokenSource) => {
   let urlParams = {
     toolId: dataObject?.getData("toolConfigId"),
-    region: dataObject?.getData("region"),
+    region: dataObject?.getData("regions"),
   };
   const apiUrl = `/tools/aws/v2/vpc`;
   let response = await baseActions.apiPostCallV2(getAccessToken,cancelTokenSource, apiUrl, urlParams);
@@ -34,7 +34,7 @@ ECSServiceCreationActions.getLoadBalancers = async (dataObject, getAccessToken, 
   let urlParams = {
     toolId: dataObject?.getData("toolConfigId"),
     vpcId: dataObject?.getData("ecsServiceVpcId"),
-    region: dataObject?.getData("region")
+    region: dataObject?.getData("regions")
   };
   const apiUrl = `/tools/aws/v2/loadbalancers`;
   let response = await baseActions.apiPostCallV2(getAccessToken,cancelTokenSource, apiUrl, urlParams);
@@ -47,7 +47,7 @@ ECSServiceCreationActions.getLoadBalancers = async (dataObject, getAccessToken, 
 ECSServiceCreationActions.getIAMRoles = async (dataObject, getAccessToken, cancelTokenSource) => {
   let urlParams = {
     toolId: dataObject?.getData("toolConfigId"),
-    region: dataObject?.getData("region")
+    region: dataObject?.getData("regions")
   };
   const apiUrl = `/tools/aws/v2/IAMRoles`;
   let response = await baseActions.apiPostCallV2(getAccessToken,cancelTokenSource, apiUrl, urlParams);
@@ -73,7 +73,7 @@ ECSServiceCreationActions.getSubnets = async (dataObject, getAccessToken, cancel
 ECSServiceCreationActions.getLogGroups = async (dataObject, getAccessToken, cancelTokenSource) => {
   let urlParams = {
     toolId: dataObject?.getData("toolConfigId"),
-    region: dataObject?.getData("region")
+    region: dataObject?.getData("regions")
   };
   const apiUrl = `/tools/aws/v2/logGroups`;
   let response = await baseActions.apiPostCallV2(getAccessToken,cancelTokenSource, apiUrl, urlParams);
