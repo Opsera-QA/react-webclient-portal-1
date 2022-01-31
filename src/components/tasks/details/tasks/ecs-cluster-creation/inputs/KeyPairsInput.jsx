@@ -14,7 +14,7 @@ function KeyPairSelectInput({
                           textField,
                           valueField,
                           awstoolId,
-                          pipelineId,
+                          region,
                         }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -45,7 +45,7 @@ function KeyPairSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [awstoolId]);
+  }, [awstoolId, region]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -114,7 +114,7 @@ KeyPairSelectInput.propTypes = {
   textField: PropTypes.string,
   valueField: PropTypes.string,
   awstoolId: PropTypes.string,
-  pipelineId: PropTypes.string,
+  region: PropTypes.string,
 };
 
 KeyPairSelectInput.defaultProps = {
