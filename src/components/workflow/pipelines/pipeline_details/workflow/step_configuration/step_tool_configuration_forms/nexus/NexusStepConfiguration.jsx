@@ -169,15 +169,13 @@ function NexusStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdito
         setDataObject={setNexusStepConfigurationDataDto}        
         dataObject={nexusStepConfigurationDto}
       />
-      {getAdditionalFields()}      
-      {nexusStepConfigurationDto.getData("type") === "push" &&
-        <NexusArtifactStepSelectInput
-          setModel={setNexusStepConfigurationDataDto}
-          model={nexusStepConfigurationDto}
-          plan={plan}
-          stepId={stepId}
-        />
-      }
+      {getAdditionalFields()}
+      <NexusArtifactStepSelectInput
+        setModel={setNexusStepConfigurationDataDto}
+        model={nexusStepConfigurationDto}
+        plan={plan}
+        stepId={stepId}
+      />
       <NexusCustomVersionToggleInput 
         setDataObject={setNexusStepConfigurationDataDto}
         dataObject={nexusStepConfigurationDto}
