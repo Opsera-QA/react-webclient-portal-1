@@ -4,7 +4,9 @@ const ECSCreationActions = {};
 
 ECSCreationActions.getKeyPairs = async (dataObject, getAccessToken, cancelTokenSource) => {
   let urlParams = {
-      toolId: dataObject?.getData("awsToolId")
+      toolId: dataObject?.getData("awsToolId"),
+      region: dataObject?.getData("region")
+
   };
   const apiUrl = `/tools/aws/v2/keypairs`;
   let response = await baseActions.apiPostCallV2(getAccessToken,cancelTokenSource, apiUrl, urlParams);

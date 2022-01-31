@@ -55,8 +55,9 @@ function EC2SubForm({ dataObject, setDataObject, disabled }) {
       <KeyPairSelectInput
         dataObject={dataObject}
         setDataObject={setDataObject}
-        disabled={dataObject?.getData("awsToolId").length === 0}
+        disabled={dataObject?.getData("awsToolId").length === 0 || dataObject?.getData("region").length === 0}
         awstoolId={dataObject?.getData("awsToolId")}
+        region={dataObject?.getData("region")}
       />
       {getDynamicFields()}
       <SecurityGroupSelectInput
