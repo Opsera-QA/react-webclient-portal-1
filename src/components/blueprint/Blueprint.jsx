@@ -5,6 +5,7 @@ import CustomTab from "components/common/tabs/CustomTab";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import BlueprintSearch from "components/blueprint/BlueprintSearch";
 import {useParams} from "react-router-dom";
+import BlueprintsHelpDocumentation from "../common/help/documentation/blueprints/BlueprintsHelpDocumentation";
 
 function Blueprint() {
   const {id, run} = useParams();
@@ -37,10 +38,15 @@ function Blueprint() {
     return (<BlueprintSearch sideBySide={activeTab === "comparison"} id={id} run={run} />);
   };
 
+  const getHelpComponent = () => {
+    return (<BlueprintsHelpDocumentation/>);
+  };
+
   // TODO: Cleanup further
   return (
     <ScreenContainer
       breadcrumbDestination={"blueprint"}
+      helpComponent={getHelpComponent()}
       pageDescription={`
           The Pipeline Blueprint offers an end to end picture of the pipeline run combining logs from all stages under a single pane of glass for clear visibility and effortless debugging.
       `}
