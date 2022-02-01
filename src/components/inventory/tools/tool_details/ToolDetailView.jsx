@@ -98,7 +98,11 @@ function ToolDetailView() {
 
   const getHelpComponent = () => {
     if (!isLoading) {
-      return (<ToolDetailHelpDocumentation/>);
+      return (
+        <ToolDetailHelpDocumentation
+          toolIdentifier={toolData?.getData("tool_identifier")}
+        />
+      );
     }
   };
 
