@@ -47,7 +47,7 @@ function JiraProjectEditorPanel({ toolData, jiraProjectData, setJiraProjectData,
     newProject["configuration"] = newConfigurationData;
     jiraProjects.push(newProject);
     newToolData.setData("projects", jiraProjects);
-    return await toolsActions.updateTool(getAccessToken, cancelTokenSource, newToolData);
+    return await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, newToolData);
   };
 
   const updateJiraProject = async () => {

@@ -75,7 +75,7 @@ function ToolProjectsView() {
     const metaData = getMetaData(toolDataDto.getData("tool_identifier"));
 
     if (toolProjects?.length > 0) {
-      let projectData = toolProjects.find((project) => project.id === projectId);
+      let projectData = toolProjects.find((project) => project._id === projectId);
 
       if (projectData != null) {
         let toolProjectDto = new Model({...projectData}, metaData, false);
