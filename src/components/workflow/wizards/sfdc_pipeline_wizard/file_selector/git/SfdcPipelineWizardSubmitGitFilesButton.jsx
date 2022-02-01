@@ -70,7 +70,7 @@ function SfdcPipelineWizardSubmitGitFilesButton({pipelineWizardModel, setPipelin
       generateXMLResponse = await sfdcPipelineActions.generateGitTaskXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
     }
     else {
-      await sfdcPipelineActions.generateSfdcPackageXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+      generateXMLResponse = await sfdcPipelineActions.generateSfdcPackageXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
     }
 
     if(generateXMLResponse?.data?.status !== 200) {

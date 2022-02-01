@@ -31,7 +31,7 @@ function ToolClustersPanel({ toolModel }) {
   return (
     <DetailPanelContainer>
       <div className="h6">Managed K8 Cluster Creation</div>
-      <MessageField message={`Add, Modify or Delete K8 Clusters. These K8 Clusters can be entered once and reused across the Opsera platform.`} />
+      {/*<MessageField message={`Add, Modify or Delete K8 Clusters. These K8 Clusters can be entered once and reused across the Opsera platform.`} />*/}
       {getToolClustersPanel()}
     </DetailPanelContainer>
   );
