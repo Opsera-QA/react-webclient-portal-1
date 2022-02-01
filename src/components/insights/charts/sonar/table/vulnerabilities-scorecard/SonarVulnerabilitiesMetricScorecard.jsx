@@ -14,12 +14,14 @@ import {
 import SonarVulnerabilitiesMetricScorecardMetaData from "components/insights/charts/sonar/table/vulnerabilities-scorecard/SonarVulnerabilitiesMetricScorecardMetaData";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
-import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import sonarPipelineFilterMetadata from "components/insights/charts/sonar/table/sonar-pipeline-filter-metadata";
 import { useHistory } from "react-router-dom";
 import { faTable } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import SonarPipelineWiseVulnerabilitiesDetails from "components/insights/charts/sonar/table/vulnerabilities-scorecard/SonarPipelineWiseVulnerabilitiesDetails";
+import SonarCardView from "../../card/SonarCardView";
+import FilterContainer from "components/common/table/FilterContainer";
 
 function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const history = useHistory();
@@ -32,7 +34,7 @@ function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfigura
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   let toastContext = useContext(DialogToastContext);
   const [tableFilterDto, setTableFilterDto] = useState(
-    new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
+    new Model({ ...sonarPipelineFilterMetadata.newObjectFields }, sonarPipelineFilterMetadata, false)
   );
 
   const noDataMessage = "No Data is available for this chart at this time";
@@ -134,17 +136,43 @@ function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfigura
     }
   };
 
-  const getChartTable = () => {
+  // const getChartTable = () => {
+  //   return (
+  //     <CustomTable
+  //       columns={columns}
+  //       data={metrics}
+  //       noDataMessage={noDataMessage}
+  //       paginationDto={tableFilterDto}
+  //       setPaginationDto={setTableFilterDto}
+  //       loadData={loadData}
+  //       scrollOnLoad={false}
+  //       onRowSelect={onRowSelect}
+  //     />
+  //   );
+  // };
+
+  const getCardView = () => {
     return (
-      <CustomTable
-        columns={columns}
+      <SonarCardView
+        sonarDataFilterDto={tableFilterDto}
+        setSonarDataFilterDto={setTableFilterDto}
+        isLoading={isLoading}
         data={metrics}
-        noDataMessage={noDataMessage}
-        paginationDto={tableFilterDto}
-        setPaginationDto={setTableFilterDto}
         loadData={loadData}
-        scrollOnLoad={false}
-        onRowSelect={onRowSelect}
+        type={"vulnerabilities"}
+      />
+    );
+  };
+
+  const getFilterContainer = () => {
+    return (  
+      <FilterContainer
+        filterDto={tableFilterDto}
+        setFilterDto={setTableFilterDto}
+        body={getCardView()}
+        isLoading={isLoading}
+        loadData={loadData}
+        supportSearch={true}      
       />
     );
   };
@@ -154,7 +182,7 @@ function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfigura
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={getChartTable()}
+        chart={getFilterContainer()}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
