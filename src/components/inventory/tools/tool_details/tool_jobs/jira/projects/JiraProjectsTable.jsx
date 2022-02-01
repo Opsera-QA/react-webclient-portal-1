@@ -27,7 +27,7 @@ function JiraProjectsTable({ toolData, loadData, isLoading }) {
   );
 
   const onRowSelect = (rowData) => {
-    history.push(`/inventory/tools/details/${toolData.getData("_id")}/projects/${rowData.original.id}`);
+    history.push(`/inventory/tools/details/${toolData.getData("_id")}/projects/${rowData.original._id}`);
   };
 
   const getJiraProjectsTable = () => {
