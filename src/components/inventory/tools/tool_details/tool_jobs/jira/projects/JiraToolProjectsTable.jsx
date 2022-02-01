@@ -1,21 +1,27 @@
-import React, {useMemo, useState} from "react";
+import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import NewJiraProjectModal from "components/inventory/tools/tool_details/tool_jobs/jira/projects/NewJiraProjectModal";
+import CreateJiraToolProjectOverlay from "components/inventory/tools/tool_details/tool_jobs/jira/projects/CreateJiraToolProjectOverlay";
 import jiraProjectMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jira-project-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {useHistory} from "react-router-dom";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
-function JiraProjectsTable({ toolData, loadData, isLoading }) {
+function JiraToolProjectsTable({ toolData, loadData, isLoading }) {
+  const toastContext = useContext(DialogToastContext);
   let history = useHistory();
   const fields = jiraProjectMetadata.fields;
-  const [showCreateProjectModal, setShowCreateProjectModal] = useState(false);
 
   const createJiraProject = () => {
-    setShowCreateProjectModal(true);
+    toastContext.showOverlayPanel(
+      <CreateJiraToolProjectOverlay
+        toolData={toolData}
+        loadData={loadData}
+      />
+    );
   };
 
   const columns = useMemo(
@@ -42,27 +48,24 @@ function JiraProjectsTable({ toolData, loadData, isLoading }) {
   };
 
   return (
-    <div>
-      <FilterContainer
-        showBorder={false}
-        loadData={loadData}
-        addRecordFunction={createJiraProject}
-        body={getJiraProjectsTable()}
-        isLoading={isLoading}
-        metadata={jiraProjectMetadata}
-        titleIcon={faBrowser}
-        title={"Projects"}
-      />
-      <NewJiraProjectModal toolData={toolData} loadData={loadData} setShowModal={setShowCreateProjectModal} showModal={showCreateProjectModal}/>
-    </div>
+    <FilterContainer
+      showBorder={false}
+      loadData={loadData}
+      addRecordFunction={createJiraProject}
+      body={getJiraProjectsTable()}
+      isLoading={isLoading}
+      metadata={jiraProjectMetadata}
+      titleIcon={faBrowser}
+      title={"Projects"}
+    />
   );
 }
 
-JiraProjectsTable.propTypes = {
+JiraToolProjectsTable.propTypes = {
   toolData: PropTypes.object,
   loadData: PropTypes.func,
   selectRowFunction: PropTypes.func,
   isLoading: PropTypes.bool
 };
 
-export default JiraProjectsTable;
+export default JiraToolProjectsTable;
