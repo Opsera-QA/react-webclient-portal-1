@@ -1,16 +1,16 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import ActionBarTransferPipelineButton from "./buttons/ActionBarTransferPipelineButton";
-import ActionBarPublishPipelineButton from "./buttons/ActionBarPublishPipelineButton";
+import ActionBarTransferPipelineButton from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarTransferPipelineButton";
+import ActionBarPublishPipelineButton from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarPublishPipelineButton";
 import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import PipelinesSummaryHelpDocumentation from "../../help/documentation/pipelines/PipelinesSummaryHelpDocumentation";
+import PipelinesSummaryHelpDocumentation from "components/common/help/documentation/pipelines/PipelinesSummaryHelpDocumentation";
 import ActionBarDuplicatePipelineButton
-  from "components/common/actions/pipeline/buttons/ActionBarDuplicatePipelineButton";
-import ActionBarDeletePipelineButton from "components/common/actions/pipeline/buttons/ActionBarDeletePipelineButton";
+  from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarDuplicatePipelineButton";
+import ActionBarDeletePipelineButton from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarDeletePipelineButton";
 import ActionBarShowPipelineSummaryOverlayButton
-  from "components/common/actions/pipeline/buttons/ActionBarShowPipelineSummaryOverlayButton";
+  from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarShowPipelineSummaryOverlayButton";
 
 function PipelineSummaryActionBar({pipelineModel, isActionAllowedFunction, pipeline, loadPipeline}) {
   const toastContext = useContext(DialogToastContext);
