@@ -14,7 +14,7 @@ import {
 import SonarBugsMetricScorecardMetaData from "components/insights/charts/sonar/table/bugs-scorecard/SonarBugsMetricScorecardMetaData";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
-import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import sonarPipelineFilterMetadata from "components/insights/charts/sonar/table/sonar-pipeline-filter-metadata";
 import { useHistory } from "react-router-dom";
 import SonarCardView from "../../card/SonarCardView";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -29,7 +29,7 @@ function SonarBugsMetricScorecard({ kpiConfiguration, setKpiConfiguration, dashb
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
-    new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
+    new Model({ ...sonarPipelineFilterMetadata.newObjectFields }, sonarPipelineFilterMetadata, false)
   );
 
   const noDataMessage = "No Data is available for this chart at this time";
