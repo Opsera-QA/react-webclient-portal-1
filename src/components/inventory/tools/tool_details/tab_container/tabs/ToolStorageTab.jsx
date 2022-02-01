@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faBoxesAlt} from "@fortawesome/pro-light-svg-icons";
 
-const STORAGE_SUPPORTED_TOOL_IDENTIFIERS = [
+export const STORAGE_SUPPORTED_TOOL_IDENTIFIERS = [
   "aws_account",
-  "azure"
+  "azure",
 ];
 
 function ToolStorageTab({ toolModel, handleTabClick, activeTab }) {

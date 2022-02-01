@@ -4,7 +4,7 @@ import CustomTab from "components/common/tabs/CustomTab";
 import {faFolderTree,} from "@fortawesome/pro-light-svg-icons";
 import {TOOL_DETAIL_PANEL_TABS} from "components/inventory/tools/tool_details/tab_container/ToolDetailPanelTabContainer";
 
-const PATHS_TAB_SUPPORTED_TOOL_IDENTIFIERS = [
+export const PATHS_TAB_SUPPORTED_TOOL_IDENTIFIERS = [
   "gitlab",
   "github",
   "bitbucket",
