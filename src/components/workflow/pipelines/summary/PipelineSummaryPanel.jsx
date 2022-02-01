@@ -21,7 +21,7 @@ import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import InformationDialog from "components/common/status_notifications/info";
 import PipelineActionControls from "components/workflow/pipelines/pipeline_details/PipelineActionControls";
-import PipelineSummaryActionBar from "components/common/actions/pipeline/PipelineSummaryActionBar";
+import PipelineSummaryActionBar from "components/workflow/pipelines/summary/action_bar/PipelineSummaryActionBar";
 import PipelineSummaryMessages from "components/workflow/pipelines/pipeline_details/pipelineSummaryMessage";
 import EditTagModal from "components/workflow/EditTagModal";
 import pipelineActions from "components/workflow/pipeline-actions";
