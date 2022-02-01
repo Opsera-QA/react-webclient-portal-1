@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faGit} from "@fortawesome/free-brands-svg-icons";
 
-const REPOSITORY_SUPPORTED_TOOL_IDENTIFIERS = [
+export const REPOSITORY_SUPPORTED_TOOL_IDENTIFIERS = [
   "argo",
   "jfrog_artifactory_maven",
 ];

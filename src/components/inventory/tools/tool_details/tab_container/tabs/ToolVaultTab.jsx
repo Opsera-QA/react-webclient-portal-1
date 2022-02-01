@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faKey,} from "@fortawesome/pro-light-svg-icons";
 
-const VAULT_SUPPORTED_TOOL_IDENTIFIERS = [
+export const VAULT_SUPPORTED_TOOL_IDENTIFIERS = [
   "jenkins",
   "gitlab",
   "github",
