@@ -18,6 +18,7 @@ import DeployElkButton from "components/admin/registered_users/actions/deploy_el
 import UserToolsTable from "components/admin/registered_users/actions/users_tools/UserToolsTable";
 import SonarVulnerabilitiesMetricScorecardMetaData from "components/insights/charts/sonar/table/vulnerabilities-scorecard/SonarVulnerabilitiesMetricScorecardMetaData";
 import SonarBugsMetricScorecardMetaData from "components/insights/charts/sonar/table/bugs-scorecard/SonarBugsMetricScorecardMetaData";
+import SonarCodeSmellsMetricScorecardMetaData from "components/insights/charts/sonar/table/codesmells-scorecard/SonarCodeSmellsMetricScorecardMetaData";
 import { faArrowCircleDown, faArrowCircleUp, faMinusCircle, faPauseCircle } from "@fortawesome/free-solid-svg-icons";
 import SuccessMetricIcon from "components/common/icons/metric/success/SuccessMetricIcon";
 import DangerMetricIcon from "components/common/icons/metric/danger/DangerMetricIcon";
@@ -39,6 +40,9 @@ function SonarSummaryCard({ sonarData, loadData, type }) {
             return;
         case "vulnerabilities":            
             setSonarMetricScorecardDto(new Model({...sonarData}, SonarVulnerabilitiesMetricScorecardMetaData, false));
+            return;
+        case "code-smells":
+            setSonarMetricScorecardDto(new Model({...sonarData}, SonarCodeSmellsMetricScorecardMetaData, false));
             return;
         default:
             return;

@@ -16,6 +16,8 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import { useHistory } from "react-router-dom";
+import SonarCardView from "../../card/SonarCardView";
+import FilterContainer from "components/common/table/FilterContainer";
 
 function SonarCodeSmellsMetricScorecard({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const history = useHistory();
@@ -107,17 +109,43 @@ function SonarCodeSmellsMetricScorecard({ kpiConfiguration, setKpiConfiguration,
     }
   };
 
-  const getChartTable = () => {
+  // const getChartTable = () => {
+  //   return (
+  //     <CustomTable
+  //       columns={columns}
+  //       data={metrics}
+  //       noDataMessage={noDataMessage}
+  //       paginationDto={tableFilterDto}
+  //       setPaginationDto={setTableFilterDto}
+  //       loadData={loadData}
+  //       scrollOnLoad={false}
+  //       onRowSelect={onRowSelect}
+  //     />
+  //   );
+  // };
+
+  const getCardView = () => {
     return (
-      <CustomTable
-        columns={columns}
+      <SonarCardView
+        sonarDataFilterDto={tableFilterDto}
+        setSonarDataFilterDto={setTableFilterDto}
+        isLoading={isLoading}
         data={metrics}
-        noDataMessage={noDataMessage}
-        paginationDto={tableFilterDto}
-        setPaginationDto={setTableFilterDto}
         loadData={loadData}
-        scrollOnLoad={false}
-        onRowSelect={onRowSelect}
+        type={"code-smells"}
+      />
+    );
+  };
+
+  const getFilterContainer = () => {
+    return (  
+      <FilterContainer
+        filterDto={tableFilterDto}
+        setFilterDto={setTableFilterDto}
+        body={getCardView()}
+        isLoading={isLoading}
+        loadData={loadData}
+        supportSearch={true}      
       />
     );
   };
@@ -127,7 +155,7 @@ function SonarCodeSmellsMetricScorecard({ kpiConfiguration, setKpiConfiguration,
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={getChartTable()}
+        chart={getFilterContainer()}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
