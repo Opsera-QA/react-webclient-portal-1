@@ -94,7 +94,14 @@ function ToolProjectsView() {
   const getDetailView = () => {
     switch (toolData.getData("tool_identifier")) {
       case "jira":
-        return <JiraProjectDetailView toolData={toolData} loadTool={getTool} jiraProjectData={toolProjectData} setJiraProjectData={setToolProjectData} />;
+        return (
+          <JiraProjectDetailView
+            toolData={toolData}
+            loadTool={getTool}
+            jiraProjectData={toolProjectData}
+            setJiraProjectData={setToolProjectData}
+          />
+        );
     }
   };
 
