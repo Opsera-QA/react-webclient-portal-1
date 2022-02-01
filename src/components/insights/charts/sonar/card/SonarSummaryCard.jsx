@@ -12,6 +12,7 @@ import SonarVulnerabilitiesMetricScorecardMetaData from "components/insights/cha
 import SonarBugsMetricScorecardMetaData from "components/insights/charts/sonar/table/bugs-scorecard/SonarBugsMetricScorecardMetaData";
 import SonarCodeSmellsMetricScorecardMetaData from "components/insights/charts/sonar/table/codesmells-scorecard/SonarCodeSmellsMetricScorecardMetaData";
 import InsightHighlightFieldWithTrendIcon from "components/common/fields/text/InsightHighlightFieldWithTrendIcon";
+import SonarViewActionableInsightsButton from "components/insights/charts/sonar/card/SonarViewActionableInsightsButton";
 
 function SonarSummaryCard({ sonarData, loadData, type }) {
   
@@ -41,6 +42,7 @@ function SonarSummaryCard({ sonarData, loadData, type }) {
     return (
       <div className="d-flex justify-content-between w-100">
         <div><FontAwesomeIcon icon={faFileCode} fixedWidth className="mr-1"/>{sonarMetricScorecardDto.getData("projectName")}</div>        
+        <div><SonarViewActionableInsightsButton dataObject={sonarMetricScorecardDto} /></div>
       </div>
     );
   };
