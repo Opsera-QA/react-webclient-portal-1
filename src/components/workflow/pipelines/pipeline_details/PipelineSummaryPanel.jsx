@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, {useContext, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { Row, Col, Form } from "react-bootstrap";
@@ -34,6 +34,7 @@ import {
   getPipelineTypeLabel,
   PIPELINE_TYPE_SELECT_OPTIONS
 } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
+import axios from "axios";
 
 const INITIAL_FORM_DATA = {
   name: "",
