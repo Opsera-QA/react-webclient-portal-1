@@ -181,7 +181,7 @@ function PipelineSummaryPanel(
   const deletePipeline = async (pipelineId) => {
     try {
       const { getAccessToken } = contextType;
-      await pipelineActions.deletePipelineV2(getAccessToken, pipelineId);
+      await pipelineActions.deletePipelineV2(getAccessToken, cancelTokenSource, pipelineId);
       toastContext.showDeleteSuccessResultDialog("Pipeline");
       history.push("/workflow");
     } catch (error) {
