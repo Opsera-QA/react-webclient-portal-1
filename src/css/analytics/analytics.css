@@ -63,16 +63,12 @@
     color: #fff;
 }
 
-.insight-hl > div > span {
-    font-weight: 600;
-}
-
-.insight-hll {
+.insight-highlight {
     font-weight: 600;
     font-size: 2rem;
 }
 
-.mw-50 > label, .mw-50 > div > label {
+.insight-detail-label > label, .insight-detail-label > div > label {
     min-width: 50px;
 }
 

@@ -22,7 +22,6 @@ import FullScreenCenterOverlayContainer from "components/common/overlays/center/
 import SonarPipelineWiseVulnerabilitiesDetails from "components/insights/charts/sonar/table/vulnerabilities-scorecard/SonarPipelineWiseVulnerabilitiesDetails";
 import SonarCardView from "../../card/SonarCardView";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faUserCircle} from "@fortawesome/pro-light-svg-icons";
 
 function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const history = useHistory();
