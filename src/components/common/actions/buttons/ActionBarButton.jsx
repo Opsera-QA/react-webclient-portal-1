@@ -1,14 +1,30 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import IconBase from "components/common/icons/IconBase";
 
-function ActionBarButton({action, iconClasses, popoverText, text, icon, className, size}) {
+function ActionBarButton(
+  {
+    action,
+    iconClasses,
+    popoverText,
+    text,
+    icon,
+    className,
+    size,
+    isBusy,
+  }) {
   return (
     <div className={className}>
       <TooltipWrapper innerText={popoverText}>
-        <span className="action-bar-icon pointer" onClick={() => {action();}}>
-          <FontAwesomeIcon size={size} icon={icon} className={iconClasses}/>
+        <span className={"action-bar-icon pointer"}>
+          <IconBase
+            iconSize={size}
+            icon={icon}
+            iconClassName={iconClasses}
+            onClickFunction={action}
+            isLoading={isBusy}
+          />
           <span>{text}</span>
         </span>
       </TooltipWrapper>
@@ -23,7 +39,8 @@ ActionBarButton.propTypes = {
   iconClasses: PropTypes.string,
   text: PropTypes.string,
   className: PropTypes.string,
-  size: PropTypes.string
+  size: PropTypes.string,
+  isBusy: PropTypes.bool
 };
 
 ActionBarButton.defaultProps = {

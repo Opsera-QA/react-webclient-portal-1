@@ -128,22 +128,6 @@ function StepToolConfiguration({
     return response;
   };
 
-  const getFromVault = async (vaultId) => {
-    const response = await PipelineActions.getFromVault(
-      vaultId,
-      getAccessToken
-    );
-    return response;
-  };
-
-  const deleteFromVaultUsingVaultKey = async (vaultId) => {
-    const response = await PipelineActions.deleteFromVaultUsingVaultKey(
-      vaultId,
-      getAccessToken
-    );
-    return response;
-  };
-
   const createJob = async (
     toolId,
     toolConfiguration,
@@ -276,6 +260,7 @@ function StepToolConfiguration({
     }
   };
 
+  // TODO: Move into twistlock helper
   const createTwistlockJob = async (
     toolId,
     toolConfiguration,
@@ -342,6 +327,7 @@ function StepToolConfiguration({
     }
   };
 
+  // TODO: Move into mongo DB realm helper
   const createMongodbRealmJob = async (
     toolId,
     toolConfiguration,

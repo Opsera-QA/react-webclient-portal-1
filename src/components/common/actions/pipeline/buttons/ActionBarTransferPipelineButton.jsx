@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faShareAlt} from "@fortawesome/pro-light-svg-icons";
@@ -11,17 +11,42 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import ActionBarPopoverButton from "components/common/actions/buttons/ActionBarPopoverButton";
 import PopoverContainer from "components/common/tooltip/PopoverContainer";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import axios from "axios";
 
-function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
+function ActionBarTransferPipelineButton(
+  {
+    pipeline,
+    loadPipeline,
+    isActionAllowedFunction,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [userList, setUserList] = useState([]);
   const [user, setUser] = useState(undefined);
   const [transferringPipeline, setTransferringPipeline] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
   const loadData = async () => {
@@ -49,7 +74,7 @@ function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
   const changePipelineOwner = async () => {
     try {
       setTransferringPipeline(true);
-      await pipelineActions.transferPipeline(pipeline._id, user._id, getAccessToken);
+      await pipelineActions.transferPipelineV2(getAccessToken, cancelTokenSource, pipeline?._id, user?._id);
       toastContext.showUpdateSuccessResultDialog("Pipeline Owner");
       await loadPipeline();
       document.body.click();
@@ -89,6 +114,10 @@ function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
       </div>
     );
 
+  if (pipeline == null || pipeline?.account == null || isActionAllowedFunction("transfer_pipeline_btn", pipeline.owner) !== true) {
+    return null;
+  }
+
   return (
     <PopoverContainer
       className={"owner-popover"}
@@ -96,7 +125,12 @@ function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
       title={"Transfer Pipeline"}
       content={popoverContent}>
       <div>
-        <ActionBarPopoverButton disabled={isLoading} icon={faShareAlt} popoverText={`Transfer Pipeline to new Owner`} />
+        <ActionBarPopoverButton
+          className={"ml-3"}
+          disabled={isLoading}
+          icon={faShareAlt}
+          popoverText={`Transfer Pipeline to new Owner`}
+        />
       </div>
     </PopoverContainer>
   );
@@ -104,7 +138,8 @@ function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
 
 ActionBarTransferPipelineButton.propTypes = {
   pipeline: PropTypes.object,
-  loadPipeline: PropTypes.func
+  loadPipeline: PropTypes.func,
+  isActionAllowedFunction: PropTypes.func,
 };
 
 export default ActionBarTransferPipelineButton;
