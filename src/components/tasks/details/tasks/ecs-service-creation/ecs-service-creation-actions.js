@@ -19,6 +19,7 @@ ECSServiceCreationActions.getClusters = async (dataObject, getAccessToken, cance
   let urlParams = {
     toolId: dataObject?.getData("toolConfigId"),
     type: dataObject?.getData("ecsServiceRequiresCompatibilities"),
+    region: dataObject?.getData("regions"),
   };
   const apiUrl = `/tools/aws/v2/clusters`;
   let response = await baseActions.apiPostCallV2(getAccessToken,cancelTokenSource, apiUrl, urlParams);
