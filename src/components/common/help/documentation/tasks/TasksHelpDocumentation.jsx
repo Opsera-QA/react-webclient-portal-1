@@ -25,6 +25,7 @@ function TasksHelpDocumentation() {
               <li><b><a href="https://opsera.atlassian.net/l/c/dqYyf13n" target="_blank" rel="noreferrer">{getTaskTypeLabel(TASK_TYPES.SYNC_GIT_BRANCHES)}</a></b> - Use this task to sync up between 2 different Git branches and merge the changes. The resulting Merge Request can be configured to be approved by set of approvers before Merging. </li>
               <li><b>{getTaskTypeLabel(TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE)}</b> - Convert the Salesforce metadata components available in Git Branch from Ant to SFDX format or vice versa.</li>
               <li><b><a href="https://opsera.atlassian.net/l/c/8X7xNseS" target="_blank" rel="noreferrer">{getTaskTypeLabel(TASK_TYPES.SYNC_SALESFORCE_REPO)}</a></b> - Create and configure the Salesforce Organization Sync task to sync the changes in Salesforce Org with the configured Git branch. </li>
+              <li><b><a href="https://opsera.atlassian.net/l/c/GKoC01mX" target="_blank" rel="noreferrer">{getTaskTypeLabel(TASK_TYPES.SALESFORCE_BULK_MIGRATION)}</a></b> - Migrate the entire SFDC org metadata components to a GIT repository branch.</li>
             </ul>
           </div>
         </div>
