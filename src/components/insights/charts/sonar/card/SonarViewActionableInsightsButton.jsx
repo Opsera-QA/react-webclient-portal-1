@@ -1,17 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faSearchPlus} from "@fortawesome/pro-light-svg-icons";
+import { faSearchPlus } from "@fortawesome/pro-light-svg-icons";
 import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 import { useHistory } from "react-router-dom";
 
 function ShowActionableInsightsButton({ dataObject }) {
 
-    const history = useHistory();
-
-    console.log({dataObject});
+  const history = useHistory();
 
   const getActionableInsights = () => {
-      history.push(`/blueprint/${dataObject.getData("pipelineId")}/${dataObject.getData("run_count")}`);    
+    history.push(`/blueprint/${dataObject.getData("pipelineId")}/${dataObject.getData("run_count")}`);
   };
 
   return (
