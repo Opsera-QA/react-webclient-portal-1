@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import registeredUsersMetadata from "components/admin/registered_users/registeredUsers.metadata";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import DateFieldBase from "components/common/fields/date/DateFieldBase";
+import DateTimeField from "components/common/fields/date/DateTimeField";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import DeactivateUserButton from "components/admin/registered_users/actions/deactivate_user/DeactivateUserButton";
@@ -108,17 +108,17 @@ function SonarSummaryCard({ sonarData, loadData, type }) {
             <Col sm={12} md={7} lg={9}>
                 <Row>
                     <Col sm={12} md={6} lg={6}>
-                        <TextFieldBase dataObject={sonarMetricScorecardDto} fieldName={"sonarPrimaryLanguage"} />
+                        <TextFieldBase dataObject={sonarMetricScorecardDto} fieldName={"sonarPrimaryLanguage"} className="mw-50 my-2" />
                     </Col>
                     <Col sm={12} md={6} lg={6}>
-                        <TextFieldBase dataObject={sonarMetricScorecardDto} fieldName={"run_count"}/>
+                        <TextFieldBase dataObject={sonarMetricScorecardDto} fieldName={"run_count"} className="mw-50 my-2" />
                     </Col>
                     <Col sm={12} md={6} lg={6}>
-                        <TextFieldBase dataObject={sonarMetricScorecardDto} fieldName={"pipelineName"}/>
+                        <TextFieldBase dataObject={sonarMetricScorecardDto} fieldName={"pipelineName"} className="mw-50 my-2" />
                     </Col>
                     <Col sm={12} md={6} lg={6}>
-                        <TextFieldBase dataObject={sonarMetricScorecardDto} fieldName={"timestamp"}/>
-                    </Col>            
+                        <DateTimeField dataObject={sonarMetricScorecardDto} fieldName={"timestamp"} className="mw-50 my-2" />
+                    </Col>
                 </Row>
             </Col>            
           </Row>          
