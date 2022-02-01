@@ -65,13 +65,25 @@ function JiraProjectDetailView( {toolData, setToolData, jiraProjectData, setJira
     return toolsActions.updateToolV2(getAccessToken, cancelTokenSource, newToolData);
   };
 
+  const getDetailPanel = () => {
+    return (
+      <JiraProjectsDetailPanel
+        jiraProjectData={jiraProjectData}
+        setJiraProjectData={setJiraProjectData}
+        toolData={toolData}
+        setToolData={setToolData}
+        loadData={loadTool}
+      />
+    );
+  };
+
   return (
     <DetailScreenContainer
       breadcrumbDestination={"toolProjectDetailView"}
       metadata={jiraProjectMetadata}
       dataObject={jiraProjectData}
       actionBar={getActionBar()}
-      detailPanel={<JiraProjectsDetailPanel jiraProjectData={jiraProjectData} setJiraProjectData={setJiraProjectData} toolData={toolData} setToolData={setToolData} loadData={loadTool}/>}
+      detailPanel={getDetailPanel()}
     />
   );
 }
