@@ -11,7 +11,7 @@ function TerraformRemoteStateCloudSelect({dataObject, setDataObject, disabled}) 
     },
     {
       name: "Azure",
-      value: "AZUREM",
+      value: "AZURERM",
     },
     {
       name: "Terraform Cloud",
