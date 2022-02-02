@@ -8,7 +8,7 @@ import AzureStorageAccountInput from "../inputs/azure/AzureStorageAccountSelectI
 import AzureContainerSelectInput from "../inputs/azure/AzureContainerSelectInput";
 
 function BackendStateAzure({ model, setModel }) {
-  if (!model?.getData("backendState") || model?.getData("backendState") !== "AZUREM") {
+  if (!model?.getData("backendState") || model?.getData("backendState") !== "AZURERM") {
     return null;
   }
 
