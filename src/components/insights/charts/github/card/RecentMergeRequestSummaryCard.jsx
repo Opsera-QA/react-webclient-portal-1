@@ -35,23 +35,20 @@ function RecentMergeRequestSummaryCard({ mergeRequestData, loadData }) {
 
   return (
     <InsightsCardContainerBase titleBar={getTitleBar()}>
-      <div className={"m-2"}>
+      <div className={"m-2 ml-3 mr-3"}>
         <small>
           <Row className="d-flex align-items-center">
+              <Col sm={12} md={12} lg={12}>
+                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"MergeRequestTitle"} className="insight-detail-label my-2" />
+              </Col>
               <Col sm={12} md={6} lg={6}>
                   <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"AuthorName"} className="insight-detail-label my-2" />
               </Col>
               <Col sm={12} md={6} lg={6}>
                   <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"AssigneeName"} className="insight-detail-label my-2" />
-              </Col>
-              <Col sm={12} md={6} lg={6}>
-                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"MergeRequestTitle"} className="insight-detail-label my-2" />
-              </Col>
+              </Col>              
               <Col sm={12} md={6} lg={6}>
                   <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"BranchName"} className="insight-detail-label my-2" />
-              </Col>
-              <Col sm={12} md={6} lg={6}>
-                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"ProjectName"} className="insight-detail-label my-2" />
               </Col>
               <Col sm={12} md={6} lg={6}>
                   <DateTimeField dataObject={mergeRequestMetricScorecardDto} fieldName={"mrCompletionTimeTimeStamp"} className="insight-detail-label my-2" />
