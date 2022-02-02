@@ -151,14 +151,14 @@ const SfdcPipelineWizardProfileComponentTable = ({ pipelineWizardModel, setPipel
       />
       <InlineWarning
         className={"ml-2"}
-        warningMessage={"Warning: Use of the component or keyword search filter in the table below will not alter the final filtered profile component list."}
+        warningMessage={"Warning: Use of the component or keyword search filter in the table below will not alter the final filtered component list."}
       />
       <FilterContainer
         loadData={loadData}
         filterDto={filterDto}
         setFilterDto={setFilterDto}
         isLoading={isLoading}
-        title={"Profile Components"}
+        title={"Components"}
         titleIcon={faSalesforce}
         body={getProfileFilesView()}
         supportSearch={true}

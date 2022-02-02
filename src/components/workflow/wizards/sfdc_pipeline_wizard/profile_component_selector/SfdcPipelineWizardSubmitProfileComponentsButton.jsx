@@ -59,10 +59,10 @@ function SfdcPipelineWizardSubmitProfileComponentsButton({pipelineWizardModel, s
 
   const getLabel = () => {
     if (isSaving) {
-      return ("Saving Filtered Profile Component List");
+      return ("Saving Filtered Component List");
     }
 
-    return (`Proceed with ${filteredFileCount} Profile Components`);
+    return (`Proceed with ${filteredFileCount} Components`);
   };
 
   return (
