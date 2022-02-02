@@ -102,7 +102,7 @@ const SfdcPipelineWizardProfileComponentSelector = ({ pipelineWizardModel, setPi
   return (
     <div>
       <div>
-        <div className="h5">Salesforce Pipeline Run: Profile Component Selection for {pipelineWizardModel?.getArrayData("selectedComponentTypes")?.length} Components</div>
+        <div className="h5">Salesforce Pipeline Run: Component Selection for {pipelineWizardModel?.getArrayData("selectedComponentTypes")?.length} Components</div>
         <div className="text-muted mb-2">
           Select which Profile Component will have changes impacted in this pipeline run by using filter rules.
         </div>
