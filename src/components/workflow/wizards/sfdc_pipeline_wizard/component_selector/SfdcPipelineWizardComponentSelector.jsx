@@ -10,8 +10,6 @@ import SfdcPipelineWizardFileSelectionDateTimeRange
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardFileSelectionDateTimeRange";
 import SfdcPipelineWizardIncludedComponentTypesRadioInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludedComponentTypesRadioInput";
-import SfdcPipelineWizardComponentTypesBooleanInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardComponentTypesBooleanInput";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import SfdcPipelineWizardSubmitComponentTypesButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardSubmitComponentTypesButton";
@@ -33,12 +31,6 @@ const SfdcPipelineWizardComponentSelector = ({ pipelineWizardModel, setPipelineW
       <Row className="my-3">
         <Col sm={12} lg={6}>
           <TextInputBase fieldName={"namespacePrefix"} setDataObject={setPipelineWizardModel} dataObject={pipelineWizardModel} />
-        </Col>
-        <Col sm={12} lg={6}>
-          <SfdcPipelineWizardComponentTypesBooleanInput
-            pipelineWizardModel={pipelineWizardModel}
-            setPipelineWizardModel={setPipelineWizardModel}
-          />
         </Col>
         <Col sm={12} lg={6}>
           <SfdcPipelineWizardIncludedComponentTypesRadioInput
