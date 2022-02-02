@@ -21,7 +21,7 @@ function InsightHighlightFieldWithTrendIcon({ dataObject, fieldName, className, 
         case "green":
         return (<SuccessMetricIcon />);
         case "-":
-          return (<NoTrendMetricIcon />);
+          return null;
         default:
           return status;
       }
