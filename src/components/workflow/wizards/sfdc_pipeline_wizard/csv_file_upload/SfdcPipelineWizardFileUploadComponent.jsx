@@ -22,6 +22,8 @@ import SfdcComponentListInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcComponentListInput";
 import SfdcPipelineWizardIncludeDependenciesToggle
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
+import SfdcPipelineWizardTranslationToggleInput
+  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardTranslationToggleInput";
 
 function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) {
   const fields = PipelineWizardFileUploadMetadata.fields;
@@ -337,6 +339,16 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     }
   };
 
+  const getTranslationsToggle = () => {
+    if (pipelineWizardModel?.getData("isProfiles") === true) {
+      return (
+        <SfdcPipelineWizardTranslationToggleInput
+            pipelineWizardModel={pipelineWizardModel}
+            setPipelineWizardModel={setPipelineWizardModel}
+          />
+      );
+    }
+  };
   // TODO: Check if validating against git branch
   const getDependenciesToggle = () => {
     if (pipelineWizardModel?.getData("modifiedFilesOrigin") === "git") {
@@ -371,6 +383,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
             {getValidateButton()}
           </div>
           {getDependenciesToggle()}
+          {getTranslationsToggle()}
           {getXMLView()}
           {getCsvView()}
         </div>

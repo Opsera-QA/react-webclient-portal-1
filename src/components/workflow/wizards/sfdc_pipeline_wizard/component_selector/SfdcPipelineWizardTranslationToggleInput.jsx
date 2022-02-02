@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function SfdcPipelineWizardComponentTypesBooleanInput({ fieldName, pipelineWizardModel, setPipelineWizardModel, disabled}) {
+function SfdcPipelineWizardTranslationToggleInput({ fieldName, pipelineWizardModel, setPipelineWizardModel, disabled}) {
   return (
       <Row className={"py-1"}>
         <Col sm={12} md={4}>
@@ -21,15 +21,15 @@ function SfdcPipelineWizardComponentTypesBooleanInput({ fieldName, pipelineWizar
   );
 }
 
-SfdcPipelineWizardComponentTypesBooleanInput.propTypes = {
+SfdcPipelineWizardTranslationToggleInput.propTypes = {
   fieldName: PropTypes.string,
   pipelineWizardModel: PropTypes.object,
   setPipelineWizardModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-SfdcPipelineWizardComponentTypesBooleanInput.defaultProps = {
+SfdcPipelineWizardTranslationToggleInput.defaultProps = {
   fieldName: "isTranslations",
 };
 
-export default SfdcPipelineWizardComponentTypesBooleanInput;
+export default SfdcPipelineWizardTranslationToggleInput;

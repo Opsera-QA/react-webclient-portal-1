@@ -383,6 +383,7 @@ sfdcPipelineActions.setXmlFileContentsV2 = async (getAccessToken, cancelTokenSou
   const postBody = {
     packageXml: pipelineWizardModel?.getData("xmlFileContent"),
     excludeDependencies: pipelineWizardModel.getData("includeDependencies") === false,
+    isTranslations: pipelineWizardModel.getData("isTranslations"),
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/set_xml_file_contents`;
@@ -393,6 +394,7 @@ sfdcPipelineActions.setUploadedCsvFileListV2 = async (getAccessToken, cancelToke
   const postBody = {
     selectedFileList: pipelineWizardModel?.getData("csvFileContent"),
     excludeDependencies: pipelineWizardModel.getData("includeDependencies") === false,
+    isTranslations: pipelineWizardModel.getData("isTranslations"),
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/set_csv_file_contents`;
