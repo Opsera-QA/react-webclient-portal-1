@@ -1,7 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RadioButtonInputContainer from "components/common/inputs/radio/RadioButtonInputContainer";
-import RadioButtonOption from "components/common/inputs/radio/RadioButtonOption";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
