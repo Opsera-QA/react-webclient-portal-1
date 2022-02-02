@@ -7,7 +7,7 @@ import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import JSONInput from "react-json-editor-ajrm";
 
-function JsonInput({fieldName, model, setModel, disabled, className, isLoading, customTitle,}) {
+function JsonInput({fieldName, model, setModel, disabled, className, isLoading, customTitle, helpComponent}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(model.getFieldById(fieldName));
 
@@ -63,6 +63,7 @@ function JsonInput({fieldName, model, setModel, disabled, className, isLoading, 
             icon={faBracketsCurly}
             isLoading={isLoading}
             customTitle={customTitle}
+            helpComponent={helpComponent}
           />
           <div>
             {getBody()}
@@ -83,6 +84,7 @@ JsonInput.propTypes = {
   className: PropTypes.string,
   isLoading: PropTypes.bool,
   customTitle: PropTypes.string,
+  helpComponent: PropTypes.object,
 };
 
 export default JsonInput;
