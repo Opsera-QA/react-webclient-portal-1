@@ -1416,7 +1416,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Service Now
       case "servicenow-mean-time-to-resolution":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col md={12} className="p-2">
             <ServiceNowMeanTimeToResolutionBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1428,7 +1428,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "servicenow-mean-time-to-acknowledge":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col md={12} className="p-2">
             <ServiceNowMeanTimeToAcknowledgeBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}

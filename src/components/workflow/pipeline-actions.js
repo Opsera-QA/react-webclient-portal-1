@@ -161,6 +161,11 @@ pipelineActions.run = async (pipelineId, postBody, getAccessToken) => {
   return response;
 };
 
+pipelineActions.runPipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
+  const apiUrl = `/pipelines/${pipelineId}/run/`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 //new-start which first resets the pipeline and then triggers a fresh run all in a single API call
 pipelineActions.newStart = async (pipelineId, getAccessToken) => {
   const accessToken = await getAccessToken();
@@ -171,37 +176,24 @@ pipelineActions.newStart = async (pipelineId, getAccessToken) => {
   return response;
 };
 
-pipelineActions.resume = async (pipelineId, postBody, getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = `/pipelines/${pipelineId}/resume`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw { error };});
-  return response;
+pipelineActions.triggerPipelineNewStartV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
+  const apiUrl = `/pipelines/${pipelineId}/new-start/`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-// TODO: Delete
-pipelineActions.stop = async (pipelineId, getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = `/pipelines/${pipelineId}/stop/`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw { error };});
-  return response;
+pipelineActions.resumePipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
+  const apiUrl = `/pipelines/${pipelineId}/resume`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 pipelineActions.stopPipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
   const apiUrl = `/pipelines/${pipelineId}/stop/`;
-  return await baseActions.apiGetCallV2(getAccessToken, apiUrl);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-pipelineActions.reset = async (pipelineId, getAccessToken) => {
-  const accessToken = await getAccessToken();
+pipelineActions.resetPipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
   const apiUrl = `/pipelines/${pipelineId}/reset/`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw { error };});
-  return response;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 pipelineActions.updatePipeline = async (pipelineId, postBody, getAccessToken) => {
@@ -213,17 +205,13 @@ pipelineActions.updatePipeline = async (pipelineId, postBody, getAccessToken) =>
   return response;
 };
 
-pipelineActions.transferPipeline = async (pipelineId, newOwnerId, getAccessToken) => {
+pipelineActions.transferPipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId, newOwnerId) => {
+  const apiUrl = `/pipelines/${pipelineId}/update/`;
   const postBody = {
     owner: newOwnerId
   };
 
-  const accessToken = await getAccessToken();
-  const apiUrl = `/pipelines/${pipelineId}/update/`;
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw { error };});
-  return response;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 pipelineActions.get = async (pipelineId, getAccessToken) => {
@@ -239,15 +227,6 @@ pipelineActions.saveToVault = async (postBody, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/vault";   
   const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw { error };});
-  return response;
-};
-
-pipelineActions.getFromVault = async (vaultId, getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = `/vault/${vaultId}`;   
-  const response = await axiosApiService(accessToken).get(apiUrl)
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
   return response;
@@ -302,6 +281,16 @@ pipelineActions.duplicate = async (pipelineId, getAccessToken) => {
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
   return response;
+};
+
+pipelineActions.duplicatePipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
+  const apiUrl = `/pipelines/${pipelineId}/duplicate/`;
+  return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+pipelineActions.publishPipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
+  const apiUrl = `/pipelines/${pipelineId}/publish-template/`;
+  return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 pipelineActions.publish = async (pipelineId, getAccessToken) => {
@@ -406,49 +395,6 @@ pipelineActions.searchRepositories = async (service, gitAccountId, workspaces, g
       if (result.data) {
         let arrOfObj = result.data.data;
         return arrOfObj;
-      }
-      else {
-        throw "Tool repositories information is missing or unavailable!  Please ensure the required creds are registered and up to date in Tool Registry.";
-      }
-    })
-    .catch(error => {throw { error };});
-  return response;
-};
-
-pipelineActions.searchRepositoriesV2 = async (getAccessToken, cancelTokenSource, service, gitAccountId, workspaces) => {
-  const apiUrl = `/tools/properties`;
-  const postBody = {
-    tool: service,
-    metric: "getRepositories",
-    gitAccountId: gitAccountId,
-    workspaces: workspaces,
-  };
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-// TODO: in case we  want to reuse this route, we should probably construct the array inside wherever uses it instead
-//  We can always have a function in a helper that does the parsing of data automatically and call that instead
-pipelineActions.searchBranches = async (service, gitAccountId, repoId, workspaces, getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = `/tools/properties`;
-  const postBody = {
-    tool: service,
-    metric: "getBranches",
-    gitAccountId: gitAccountId,
-    repoId: repoId,
-    workspaces: workspaces,
-  };
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {
-      if (result.data) {
-        let arrOfObj = result.data.data;
-        let response = arrOfObj.map(function(el) {
-          let o = Object.assign({});
-          o.value = el;
-          o.name = el;
-          return o;
-        });
-        return response;
       }
       else {
         throw "Tool repositories information is missing or unavailable!  Please ensure the required creds are registered and up to date in Tool Registry.";

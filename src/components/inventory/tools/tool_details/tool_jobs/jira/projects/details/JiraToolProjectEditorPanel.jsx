@@ -11,7 +11,7 @@ import JiraProjectConfigurationPanel
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraProjectConfigurationPanel";
 import axios from "axios";
 
-function JiraProjectEditorPanel({ toolData, jiraProjectData, setJiraProjectData, handleClose }) {
+function JiraToolProjectEditorPanel({ toolData, jiraProjectData, setJiraProjectData, handleClose }) {
   const [jiraConfigurationDto, setJiraConfigurationDto] = useState(undefined);
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
@@ -47,7 +47,7 @@ function JiraProjectEditorPanel({ toolData, jiraProjectData, setJiraProjectData,
     newProject["configuration"] = newConfigurationData;
     jiraProjects.push(newProject);
     newToolData.setData("projects", jiraProjects);
-    return await toolsActions.updateTool(getAccessToken, cancelTokenSource, newToolData);
+    return await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, newToolData);
   };
 
   const updateJiraProject = async () => {
@@ -102,11 +102,11 @@ function JiraProjectEditorPanel({ toolData, jiraProjectData, setJiraProjectData,
   );
 }
 
-JiraProjectEditorPanel.propTypes = {
+JiraToolProjectEditorPanel.propTypes = {
   toolData: PropTypes.object,
   jiraProjectData: PropTypes.object,
   setJiraProjectData: PropTypes.func,
   handleClose: PropTypes.func,
 };
 
-export default JiraProjectEditorPanel;
+export default JiraToolProjectEditorPanel;

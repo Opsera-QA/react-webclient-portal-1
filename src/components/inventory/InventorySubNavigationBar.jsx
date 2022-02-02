@@ -2,7 +2,7 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faFileCode, faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
+import {faFileCode, faHandshake, faProjectDiagram, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 
 function InventorySubNavigationBar({currentTab}) {
@@ -37,6 +37,16 @@ function InventorySubNavigationBar({currentTab}) {
             handleTabClick={handleTabClick}
             activeTab={"toolViewer"}
             tabText={"Tool Viewer"}
+          />
+        );
+      case "toolProjectViewer":
+        return (
+          <NavigationTab
+            icon={faProjectDiagram}
+            tabName={currentTab}
+            handleTabClick={handleTabClick}
+            activeTab={"toolProjectViewer"}
+            tabText={"Tool Project Viewer"}
           />
         );
       default:

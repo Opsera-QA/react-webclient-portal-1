@@ -3,21 +3,27 @@ import PropTypes from "prop-types";
 import ActionBarButton from "./ActionBarButton";
 import {faCopy} from "@fortawesome/pro-light-svg-icons";
 
-function ActionBarDuplicateButton({handleDuplicateClick, itemName, itemId}) {
-
-  const duplicateConfiguration = () => {
-    handleDuplicateClick(itemId);
-  };
+function ActionBarDuplicateButton({duplicateFunction, itemName, className, isDuplicating}) {
+  if (duplicateFunction == null) {
+    return null;
+  }
 
   return (
-    <ActionBarButton action={duplicateConfiguration} icon={faCopy} popoverText={`Duplicate this ${itemName} configuration`} />
+    <ActionBarButton
+      action={duplicateFunction}
+      icon={faCopy}
+      isBusy={isDuplicating}
+      popoverText={`Duplicate this ${itemName} configuration`}
+      className={className}
+    />
   );
 }
 
 ActionBarDuplicateButton.propTypes = {
-  handleDuplicateClick: PropTypes.func,
+  duplicateFunction: PropTypes.func,
   itemName: PropTypes.string,
-  itemId: PropTypes.string
+  className: PropTypes.string,
+  isDuplicating: PropTypes.bool,
 };
 
 export default ActionBarDuplicateButton;

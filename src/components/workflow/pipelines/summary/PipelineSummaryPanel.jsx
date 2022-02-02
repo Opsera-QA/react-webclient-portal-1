@@ -19,25 +19,21 @@ import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pip
 import { AuthContext } from "contexts/AuthContext";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
-import pipelineHelpers from "components/workflow/pipelineHelpers";
 import InformationDialog from "components/common/status_notifications/info";
 import PipelineActionControls from "components/workflow/pipelines/pipeline_details/PipelineActionControls";
-import PipelineSummaryActionBar from "components/common/actions/pipeline/PipelineSummaryActionBar";
+import PipelineSummaryActionBar from "components/workflow/pipelines/summary/action_bar/PipelineSummaryActionBar";
 import PipelineSummaryMessages from "components/workflow/pipelines/pipeline_details/pipelineSummaryMessage";
 import EditTagModal from "components/workflow/EditTagModal";
 import pipelineActions from "components/workflow/pipeline-actions";
-import Modal from "components/common/modal/modal";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
 import PipelineScheduledTasksOverlay from "components/workflow/pipelines/scheduler/PipelineScheduledTasksOverlay";
 import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
-import PipelineDetailsOverviewOverlay from "components/workflow/pipelines/overview/PipelineDetailsOverviewOverlay";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import {
   getPipelineTypeLabel,
   PIPELINE_TYPE_SELECT_OPTIONS
 } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
-import commonActions from "components/common/common.actions";
 import axios from "axios";
 
 const INITIAL_FORM_DATA = {
@@ -62,8 +58,6 @@ function PipelineSummaryPanel(
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const { featureFlagHideItemInProd, getUserRecord } = contextType;
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [modalDeleteId, setModalDeleteId] = useState(false);
   const [editTitle, setEditTitle] = useState(false);
   const [editDescription, setEditDescription] = useState(false);
   const [editTags, setEditTags] = useState(false);
@@ -71,9 +65,7 @@ function PipelineSummaryPanel(
   const [editType, setEditType] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [pipelineModel, setPipelineModel] = useState(new Model(pipeline, pipelineMetadata, false));
-  const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [taskCount, setTaskCount] = useState(0);
-  let history = useHistory();
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -106,22 +98,13 @@ function PipelineSummaryPanel(
     return workflowAuthorizedActions.workflowItems(customerAccessRules, action, owner, objectRoles);
   };
 
-  useEffect(() => {
-    const controller = new AbortController();
-    loadData();
-    return () => {
-      controller.abort();
-    };
-  }, []);
-
   const loadData = async () => {
     try {
       await loadFormData(pipeline);
       await getScheduledTasksCount();
-    } catch (err) {
-      if (err.name === "AbortError") {
-        console.log("Request was canceled via controller.abort");
-        return;
+    } catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
       }
     }
   };
@@ -142,51 +125,8 @@ function PipelineSummaryPanel(
     }
   };
 
-  const handleViewClick = () => {
-    toastContext.showOverlayPanel(<PipelineDetailsOverviewOverlay pipeline={pipeline} />);
-  };
-
-  const handleDeleteClick = (itemId) => {
-    setShowDeleteModal(true);
-    setModalDeleteId(itemId);
-  };
-
   const handleEditAccessRolesClick = () => {
     setEditRoles(true);
-  };
-
-  const handleCopyPipeline = async (pipelineId) => {
-    const { getAccessToken } = contextType;
-    setInfoModal({
-      show: true,
-      header: "Duplicate Pipeline",
-      message: "A new pipeline configuration has been created, duplicating all of the settings from this one.  That pipeline is now in your list of Pipelines for viewing.  No tools or activity logs have been duplicated in this process.",
-      button: "OK",
-    });
-    await pipelineActions.duplicate(pipelineId, getAccessToken);
-  };
-
-
-  const handlePublishPipelineClick = async (pipelineId) => {
-    const { getAccessToken } = contextType;
-    await pipelineActions.publish(pipelineId, getAccessToken);
-    setInfoModal({
-      show: true,
-      header: "Pipeline Published to Private Catalog",
-      message: "You have published a copy of this pipeline template in your organization's private catalog for others in your organization to use.  Overall settings of the pipeline are shared but no tools or activity logs have been duplicated in this process.",
-      button: "OK",
-    });
-  };
-
-  const deletePipeline = async (pipelineId) => {
-    try {
-      const { getAccessToken } = contextType;
-      await pipelineActions.deletePipelineV2(getAccessToken, pipelineId);
-      toastContext.showDeleteSuccessResultDialog("Pipeline");
-      history.push("/workflow");
-    } catch (error) {
-      toastContext.showDeleteFailureResultDialog("Pipeline", error);
-    }
   };
 
   const handleSavePropertyClick = async (pipelineId, value, type) => {
@@ -459,13 +399,14 @@ function PipelineSummaryPanel(
     <>
       <div>
         <div className="text-right py-2">
-          <PipelineActionControls pipeline={pipeline} disabledActionState={false}
-                                  customerAccessRules={customerAccessRules}
-                                  fetchData={fetchPlan}
-                                  setPipeline={setPipeline}
-                                  setParentWorkflowStatus={setWorkflowStatus} />
-
-
+          <PipelineActionControls
+            pipeline={pipeline}
+            disabledActionState={false}
+            customerAccessRules={customerAccessRules}
+            fetchData={fetchPlan}
+            setPipeline={setPipeline}
+            setParentWorkflowStatus={setWorkflowStatus}
+          />
         </div>
       </div>
 
@@ -493,17 +434,13 @@ function PipelineSummaryPanel(
               }</div>
           </Col>
 
+
           <Col sm={3}>
             <PipelineSummaryActionBar
               pipeline={pipeline}
               pipelineModel={pipelineModel}
-              handleDeleteClick={authorizedAction("delete_pipeline_btn", pipeline.owner) ? handleDeleteClick : undefined}
-              handleDuplicateClick={authorizedAction("duplicate_pipeline_btn", pipeline.owner) ? handleCopyPipeline : undefined}
-              handleViewClick={authorizedAction("view_template_pipeline_btn", pipeline.owner) ? handleViewClick : undefined}
-              handlePublishClick={authorizedAction("publish_pipeline_btn", pipeline.owner) ? handlePublishPipelineClick : undefined}
-              handleEditAccessRolesClick={authorizedAction("edit_access_roles", pipeline.owner) ? handleEditAccessRolesClick : undefined}
-              canTransferPipeline={authorizedAction("transfer_pipeline_btn", pipeline.owner)}
               loadPipeline={fetchPlan}
+              isActionAllowedFunction={authorizedAction} // TODO: Handle this without passing the function in
             />
           </Col>
 
@@ -601,16 +538,6 @@ function PipelineSummaryPanel(
 
         </Row>
       </div>
-
-      {showDeleteModal ? <Modal header="Confirm Pipeline Delete"
-                                message="Warning! This pipeline cannot be recovered once this pipeline is deleted. Do you still want to proceed?"
-                                button="Confirm"
-                                handleCancelModal={() => setShowDeleteModal(false)}
-                                handleConfirmModal={() => deletePipeline(modalDeleteId)} /> : null}
-
-      {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
-                                handleCancelModal={() => setInfoModal({ ...infoModal, show: false })} />}
-
     </>
   );
 }

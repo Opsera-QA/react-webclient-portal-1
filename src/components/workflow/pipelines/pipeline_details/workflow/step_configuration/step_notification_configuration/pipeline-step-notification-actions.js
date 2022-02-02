@@ -3,6 +3,7 @@ import baseActions from "../../../../../../../utils/actionsBase";
 // TODO Implement
 const pipelineStepNotificationActions = {};
 
+// TODO: Move the jira routes into a Jira-specific actions file
 pipelineStepNotificationActions.getJiraBoards = async (jiraStepNotificationDto, getAccessToken) => {
   let toolId = jiraStepNotificationDto.getData("jiraToolId");
   const apiUrl = `/connectors/jira/${toolId}/boards`;
@@ -37,7 +38,7 @@ pipelineStepNotificationActions.getJiraProjects = async (jiraStepNotificationDto
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-pipelineStepNotificationActions.getJiraProjectsFromId = async (toolId, getAccessToken) => {
+pipelineStepNotificationActions.getJiraProjectsFromIdV2 = async (getAccessToken, cancelTokenSource, toolId) => {
   const apiUrl = `/connectors/jira/${toolId}/projects`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };

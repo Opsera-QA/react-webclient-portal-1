@@ -6,7 +6,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import {useParams} from "react-router-dom";
 import PipelineWorkflowView from "./workflow/PipelineWorkflowView";
-import PipelineSummaryPanel from "./PipelineSummaryPanel";
+import PipelineSummaryPanel from "components/workflow/pipelines/summary/PipelineSummaryPanel";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
