@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 
-const APPLICATION_SUPPORTED_TOOL_IDENTIFIERS = [
+export const SERVICE_MAPPING_SUPPORTED_TOOL_IDENTIFIERS = [
   "informatica",
 ];
 
 function ToolServiceTypeMappingTab({ toolModel, handleTabClick, activeTab }) {
-  if (!APPLICATION_SUPPORTED_TOOL_IDENTIFIERS.includes(toolModel?.getData("tool_identifier"))) {
+  if (!SERVICE_MAPPING_SUPPORTED_TOOL_IDENTIFIERS.includes(toolModel?.getData("tool_identifier"))) {
     return null;
   }
 
