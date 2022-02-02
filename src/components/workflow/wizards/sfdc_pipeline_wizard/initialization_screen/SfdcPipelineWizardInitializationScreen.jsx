@@ -186,7 +186,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       setPipelineWizardModel({...newPipelineWizardModel});
     }
     else {
-      await createNewPipelineWizardRecord(createNewPipelineWizardRecord(newPipelineWizardModel, false, false);
+      await createNewPipelineWizardRecord(newPipelineWizardModel, false, false);
     }
   };
 
