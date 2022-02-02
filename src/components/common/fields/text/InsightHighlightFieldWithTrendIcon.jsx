@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import SuccessMetricIcon from "components/common/icons/metric/success/SuccessMetricIcon";
 import DangerMetricIcon from "components/common/icons/metric/danger/DangerMetricIcon";
-import NoTrendMetricIcon from "components/common/icons/metric/trend/NoTrendMetricIcon";
 
 function InsightHighlightFieldWithTrendIcon({ dataObject, fieldName, className, trendFieldName }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
@@ -21,7 +20,7 @@ function InsightHighlightFieldWithTrendIcon({ dataObject, fieldName, className, 
         case "green":
         return (<SuccessMetricIcon />);
         case "-":
-          return (<NoTrendMetricIcon />);
+          return null;
         default:
           return status;
       }
