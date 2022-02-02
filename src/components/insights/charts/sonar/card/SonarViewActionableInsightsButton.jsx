@@ -17,7 +17,7 @@ function ShowActionableInsightsButton({ dataObject }) {
       <ActionBarButton
         action={() => getActionableInsights()}
         icon={faSearchPlus}
-        popoverText={`Actionable Insights`}
+        popoverText={`Pipeline Blueprint`}
       />
     </div>
   );
