@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 
-const LOG_SUPPORTED_TOOL_IDENTIFIERS = [
+export const LOG_SUPPORTED_TOOL_IDENTIFIERS = [
   "jenkins",
   "octopus",
   "sfdc-configurator",

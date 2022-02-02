@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faBoxesAlt} from "@fortawesome/pro-light-svg-icons";
 
-const ORGANIZATIONS_SUPPORTED_TOOL_IDENTIFIERS = [
+export const ORGANIZATIONS_SUPPORTED_TOOL_IDENTIFIERS = [
   "terraform-cloud"
 ];
 
