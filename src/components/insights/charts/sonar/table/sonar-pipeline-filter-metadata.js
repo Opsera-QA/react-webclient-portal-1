@@ -11,6 +11,10 @@ const sonarPipelineFilterMetadata = {
       id: "totalCount",
     },
     {
+      label: "Sort Option",
+      id: "sortOption",
+    },
+    {
       label: "Search",
       id: "search",
     },
@@ -31,9 +35,17 @@ const sonarPipelineFilterMetadata = {
   newObjectFields: {
     pageSize: 5,
     currentPage: 1,
+    sortOption: {text: "Newest", value: ""},
     search: "",
     activeFilters: []
-  }
+  },
+  sortOptions: [
+    {text: "Newest", option: ""},
+    {text: "Oldest", option: "oldest"},
+    {text: "Project Name", option: "projectName"},
+    {text: "Pipeline Name", option: "pipelineName"},
+    {text: "Language", option: "sonarPrimaryLanguage"}
+  ]
 };
 
 export default sonarPipelineFilterMetadata;
