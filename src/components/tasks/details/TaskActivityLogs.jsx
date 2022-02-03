@@ -8,9 +8,17 @@ import TaskActivityLogsTable from "components/tasks/activity_logs/TaskActivityLo
 import TaskActivityLogTree from "components/tasks/activity_logs/TaskActivityLogTree";
 import TaskStatusFilter from "components/common/filters/tasks/status/TaskStatusFilter";
 
-function TaskActivityLogs({ taskLogData, taskName, taskActivityMetadata, loadData, isLoading, taskActivityFilterModel, setTaskActivityFilterModel, taskActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
-  const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
-  const [currentStepName, setCurrentStepName] = useState(undefined);
+function TaskActivityLogs(
+  {
+    taskLogData,
+    taskActivityMetadata,
+    loadData,
+    isLoading,
+    taskActivityFilterModel,
+    setTaskActivityFilterModel,
+    taskActivityTreeData,
+    setCurrentRunNumber,
+  }) {
 
   const getNoDataMessage = () => {
     const activeFilters = taskActivityFilterModel?.getActiveFilters();
@@ -26,9 +34,7 @@ function TaskActivityLogs({ taskLogData, taskName, taskActivityMetadata, loadDat
       <TaskActivityLogsTable
         isLoading={isLoading}
         taskLogData={taskLogData}
-        currentRunNumber={currentRunNumber}
         taskActivityMetadata={taskActivityMetadata}
-        currentTaskName={taskName}
       />
     );
   };
@@ -37,9 +43,7 @@ function TaskActivityLogs({ taskLogData, taskName, taskActivityMetadata, loadDat
     return (
       <TaskActivityLogTree
         setCurrentRunNumber={setCurrentRunNumber}
-        currentLogTreePage={currentLogTreePage}
-        setCurrentLogTreePage={setCurrentLogTreePage}
-        setCurrentTaskName={setCurrentStepName}
+        setCurrentTaskId={() => {console.log("todo: remove");}}
         taskActivityFilterModel={taskActivityFilterModel}
         loadData={loadData}
         taskLogTree={taskActivityTreeData}
@@ -98,9 +102,7 @@ TaskActivityLogs.propTypes = {
   loadData: PropTypes.func,
   taskActivityMetadata: PropTypes.object,
   taskActivityTreeData: PropTypes.array,
-  setCurrentLogTreePage: PropTypes.func,
-  currentLogTreePage: PropTypes.number,
-  taskName: PropTypes.string,
+  setCurrentRunNumber: PropTypes.func,
 };
 
 export default TaskActivityLogs;

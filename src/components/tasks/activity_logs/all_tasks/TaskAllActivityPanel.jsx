@@ -35,7 +35,7 @@ function TaskAllActivityPanel() {
     isMounted.current = true;
 
     let newFilterModel = new TaskActivityFilterModel(getAccessToken, source, loadData);
-    loadData(newFilterModel, false, source).catch((error) => {
+    loadData(newFilterModel, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -50,8 +50,6 @@ function TaskAllActivityPanel() {
   useEffect(() => {
     setActivityData([]);
 
-    console.log(currentRunNumber);
-    console.log(currentTaskId);
     if (currentTaskId) {
       pullLogs().catch((error) => {
         if (isMounted?.current === true) {
@@ -59,7 +57,7 @@ function TaskAllActivityPanel() {
         }
       });
     }
-  }, [currentRunNumber]);
+  }, [currentRunNumber, currentTaskId]);
 
   const loadData = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
     try {
@@ -91,7 +89,7 @@ function TaskAllActivityPanel() {
 
       if (currentTaskId === "latest") {
         await getLatestActivityLogs(newFilterModel, cancelSource);
-      } else if (currentTaskId === "secondary") {
+      } else if (currentRunNumber === "secondary") {
         await getSecondaryActivityLogs(newFilterModel, cancelSource);
       } else if (currentRunNumber) {
         await getSingleRunLogs(newFilterModel, cancelSource);
