@@ -256,11 +256,13 @@ function PipelineActionControls(
       setStartPipeline(true);
       toastContext.showInformationToast("A request to start this pipeline has been submitted.  It will begin shortly.", 20);
       await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      delayRefresh();
 
+      // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
       setTimeout(async function() {
         await fetchData();
         setStartPipeline(false);
-      }, delayCheckInterval);
+      }, timeoutCheckInterval);
     }
     catch (error) {
       if (isMounted.current === true) {
