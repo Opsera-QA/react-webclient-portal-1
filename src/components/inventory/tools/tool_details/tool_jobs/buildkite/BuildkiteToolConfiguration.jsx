@@ -46,13 +46,13 @@ function BuildkiteToolConfiguration({ toolData }) {
 
   const saveBuildkiteToolConfiguration = async () => {
     const newConfiguration = buildkiteConfigurationDto.getPersistData();
-    newConfiguration.accessToken = await toolsActions.saveThreePartToolPasswordToVaultV2(
+    newConfiguration.publicKey = await toolsActions.saveThreePartToolPasswordToVaultV2(
       getAccessToken,
       cancelTokenSource,
       toolData,
       buildkiteConfigurationDto,
-      "accessToken",
-      newConfiguration.accessToken
+      "publicKey",
+      newConfiguration.publicKey
     );
     return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
   };
@@ -75,7 +75,7 @@ function BuildkiteToolConfiguration({ toolData }) {
           <VaultTextAreaInput
             dataObject={buildkiteConfigurationDto}
             setDataObject={setBuildkiteConfigurationDto}
-            fieldName={"accessToken"}
+            fieldName={"publicKey"}
           />
         </Col>
       </Row>

@@ -9,14 +9,14 @@ const BuildkiteMetadata = {
     },
     {
       label: "Access Token",
-      id: "accessToken",
+      id: "publicKey",
       isRequired: true
     },
   ],
   newObjectFields:
     {
       organizationName: "",
-      accessToken: "",
+      publicKey: "",
     }
 };
 
