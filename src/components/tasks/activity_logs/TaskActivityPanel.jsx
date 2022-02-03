@@ -8,8 +8,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import TaskActivityLogs from "components/tasks/details/TaskActivityLogs";
 import {TaskActivityFilterModel} from "components/tasks/activity_logs/task-activity.filter.model";
 import {taskActivityLogActions} from "components/tasks/activity_logs/taskActivityLog.actions";
-import pipelineLogHelpers
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineLog.helpers";
 
 function TaskActivityPanel({ task }) {
   const toastContext = useContext(DialogToastContext);

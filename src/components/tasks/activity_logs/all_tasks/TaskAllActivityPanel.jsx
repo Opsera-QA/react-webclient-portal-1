@@ -86,7 +86,7 @@ function TaskAllActivityPanel() {
     try {
       setIsLoading(true);
 
-      if (currentTaskId === "latest") {
+      if (currentRunNumber === "latest") {
         await getLatestActivityLogs(newFilterModel, cancelSource);
       } else if (currentRunNumber === "secondary") {
         await getSecondaryActivityLogs(newFilterModel, cancelSource);
