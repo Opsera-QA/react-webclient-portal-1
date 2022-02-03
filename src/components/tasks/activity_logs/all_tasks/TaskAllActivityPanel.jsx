@@ -89,100 +89,25 @@ function TaskAllActivityPanel() {
         await getLatestActivityLogs(newFilterModel, cancelSource);
       } else if (currentRunNumber === "secondary") {
         await getSecondaryActivityLogs(newFilterModel, cancelSource);
-      } else if (currentRunNumber) {
-        await getSingleRunLogs(newFilterModel, cancelSource);
-      }
-
-    } catch (error) {
-      if (isMounted.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const getSecondaryActivityLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      const response = await taskActivityLogActions.getSecondaryTaskActivityLogs(getAccessToken, cancelSource);
-      const taskActivityData = response?.data?.data;
-
-      if (Array.isArray(taskActivityData)) {
-        setActivityData([...taskActivityData]);
-        setTaskActivityMetadata(response?.data?.metadata);
-        newFilterModel?.setData("totalCount", response?.data?.count);
-        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
-        setTaskActivityFilterModel({...newFilterModel});
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      setActivityData([]);
-      const fields = ["name", "run_count"];
-      const response = await taskActions.getTasksListV2(getAccessToken, cancelSource, undefined, fields);
-      const tasks = response?.data?.data;
-      const taskTree = taskActivityLogHelpers.constructTopLevelTreeBasedOnNameAndRunCount(tasks);
-
-      if (Array.isArray(taskTree)) {
-        taskLogsTree.current = taskTree;
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const pullLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-
-      if (currentRunNumber === "latest") {
-        await getLatestActivityLogs(newFilterModel, cancelSource);
-      } else if (currentRunNumber === "secondary") {
-        await getSecondaryActivityLogs(newFilterModel, cancelSource);
       } else if (typeof currentRunNumber === "number" && hasStringValue(currentTaskId)) {
         await getSingleRunLogs(newFilterModel, cancelSource);
->>>>>>> Stashed changes
       }
 
     } catch (error) {
-<<<<<<< Updated upstream
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-=======
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
       }
     } finally {
       if (isMounted.current === true) {
->>>>>>> Stashed changes
         setIsLoading(false);
       }
     }
   };
 
-<<<<<<< Updated upstream
-  const getLatestActivityLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      const response = await taskActivityLogActions.getLatestTaskActivityLogs(getAccessToken, cancelSource, newFilterModel);
-=======
   const getSecondaryActivityLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       const response = await taskActivityLogActions.getSecondaryTaskActivityLogs(getAccessToken, cancelSource);
->>>>>>> Stashed changes
       const taskActivityData = response?.data?.data;
 
       if (Array.isArray(taskActivityData)) {
@@ -195,9 +120,6 @@ function TaskAllActivityPanel() {
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
-<<<<<<< Updated upstream
-      }
-=======
       }
     } finally {
       if (isMounted?.current === true) {
@@ -223,7 +145,6 @@ function TaskAllActivityPanel() {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
       }
->>>>>>> Stashed changes
     } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
