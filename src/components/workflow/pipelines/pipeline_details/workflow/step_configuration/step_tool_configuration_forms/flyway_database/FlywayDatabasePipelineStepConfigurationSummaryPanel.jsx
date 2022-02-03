@@ -16,7 +16,7 @@ function FlywayDatabasePipelineStepConfigurationSummaryPanel({ flywayPipelineDat
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
-      <Col lg={6}>
+        <Col lg={6}>
           <TextFieldBase dataObject={flywayPipelineDataObject} fieldName={"type"}/>
         </Col>
         <Col lg={6}>
