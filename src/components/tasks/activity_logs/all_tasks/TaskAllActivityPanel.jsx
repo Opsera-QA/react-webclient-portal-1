@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "contexts/AuthContext";
-import AllTasksActivityLogs
-  from "components/tasks/activity_logs/all_tasks/AllTasksActivityLogs";
+import AllTasksActivityLogTreeTable
+  from "components/tasks/activity_logs/all_tasks/AllTasksActivityLogTreeTable";
 import axios from "axios";
 import taskActivityLogHelpers
   from "components/tasks/activity_logs/taskActivityLog.helpers";
@@ -34,8 +34,8 @@ function TaskAllActivityPanel() {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    let newFilterModel = new TaskActivityFilterModel(getAccessToken, source, loadData);
-    loadData(newFilterModel, source).catch((error) => {
+    setTaskActivityFilterModel(new TaskActivityFilterModel(getAccessToken, source, pullLogs));
+    loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -59,14 +59,13 @@ function TaskAllActivityPanel() {
     }
   }, [currentRunNumber, currentTaskId]);
 
-  const loadData = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       setActivityData([]);
       const fields = ["name", "run_count"];
-      const response = await taskActions.getTasksListV2(getAccessToken, cancelSource, newFilterModel, fields);
+      const response = await taskActions.getTasksListV2(getAccessToken, cancelSource, undefined, fields);
       const tasks = response?.data?.data;
-
       const taskTree = taskActivityLogHelpers.constructTopLevelTreeBasedOnNameAndRunCount(tasks);
 
       if (Array.isArray(taskTree)) {
@@ -115,9 +114,9 @@ function TaskAllActivityPanel() {
       if (Array.isArray(taskActivityData)) {
         setActivityData([...taskActivityData]);
         setTaskActivityMetadata(response?.data?.metadata);
-        // newFilterModel?.setData("totalCount", response?.data?.count);
-        // newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
-        // setTaskActivityFilterModel({...newFilterModel});
+        newFilterModel?.setData("totalCount", response?.data?.count);
+        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
+        setTaskActivityFilterModel({...newFilterModel});
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -139,9 +138,9 @@ function TaskAllActivityPanel() {
       if (Array.isArray(taskActivityData)) {
         setActivityData([...taskActivityData]);
         setTaskActivityMetadata(response?.data?.metadata);
-        // newFilterModel?.setData("totalCount", response?.data?.count);
-        // newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
-        // setTaskActivityFilterModel({...newFilterModel});
+        newFilterModel?.setData("totalCount", response?.data?.count);
+        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
+        setTaskActivityFilterModel({...newFilterModel});
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -163,9 +162,9 @@ function TaskAllActivityPanel() {
       if (Array.isArray(taskActivityData)) {
         setActivityData([...taskActivityData]);
         setTaskActivityMetadata(response?.data?.metadata);
-        // newFilterModel?.setData("totalCount", response?.data?.count);
-        // newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
-        // setTaskActivityFilterModel({...newFilterModel});
+        newFilterModel?.setData("totalCount", response?.data?.count);
+        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
+        setTaskActivityFilterModel({...newFilterModel});
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -187,7 +186,7 @@ function TaskAllActivityPanel() {
       `}
       navigationTabContainer={<TasksSubNavigationBar currentTab={"activity"}/>}
     >
-      <AllTasksActivityLogs
+      <AllTasksActivityLogTreeTable
         taskLogData={activityData}
         isLoading={isLoading}
         loadData={pullLogs}

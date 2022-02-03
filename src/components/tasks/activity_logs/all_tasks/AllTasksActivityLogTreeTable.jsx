@@ -11,7 +11,7 @@ import TaskStatusFilter from "components/common/filters/tasks/status/TaskStatusF
 import InlineTaskTypeFilter from "components/common/filters/tasks/type/InlineTaskTypeFilter";
 import AllTasksActivityLogTable from "components/tasks/activity_logs/all_tasks/AllTasksActivityLogTable";
 
-function AllTasksActivityLogs(
+function AllTasksActivityLogTreeTable(
   {
     taskLogData,
     taskActivityMetadata,
@@ -82,18 +82,11 @@ function AllTasksActivityLogs(
 
   const getDropdownFilters = () => {
     return (
-      <>
-        <TaskTypeFilter
-          filterModel={taskActivityFilterModel}
-          setFilterModel={setTaskActivityFilterModel}
-          className={"mb-2"}
-        />
-        <TaskStatusFilter
-          className={"mb-2"}
-          filterModel={taskActivityFilterModel}
-          setFilterModel={setTaskActivityFilterModel}
-        />
-      </>
+      <TaskStatusFilter
+        className={"mb-2"}
+        filterModel={taskActivityFilterModel}
+        setFilterModel={setTaskActivityFilterModel}
+      />
     );
   };
 
@@ -108,14 +101,14 @@ function AllTasksActivityLogs(
       className={"px-2 pb-2"}
       titleIcon={faClipboardList}
       dropdownFilters={getDropdownFilters()}
-      inlineFilters={
-        <InlineTaskTypeFilter
-          filterModel={taskActivityFilterModel}
-          setFilterModel={setTaskActivityFilterModel}
-          loadData={loadData}
-          className={"mr-2"}
-        />
-      }
+      // inlineFilters={
+      //   <InlineTaskTypeFilter
+      //     filterModel={taskActivityFilterModel}
+      //     setFilterModel={setTaskActivityFilterModel}
+      //     loadData={loadData}
+      //     className={"mr-2"}
+      //   />
+      // }
       body={getTaskActivityTable()}
       supportSearch={true}
       exportButton={
@@ -128,7 +121,7 @@ function AllTasksActivityLogs(
   );
 }
 
-AllTasksActivityLogs.propTypes = {
+AllTasksActivityLogTreeTable.propTypes = {
   taskLogData: PropTypes.array,
   isLoading: PropTypes.bool,
   taskActivityFilterModel: PropTypes.object,
@@ -137,8 +130,11 @@ AllTasksActivityLogs.propTypes = {
   taskActivityMetadata: PropTypes.object,
   taskActivityTreeData: PropTypes.array,
   setCurrentTaskId: PropTypes.func,
-  currentRunNumber: PropTypes.number,
+  currentRunNumber: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   setCurrentRunNumber: PropTypes.func,
 };
 
-export default AllTasksActivityLogs;
+export default AllTasksActivityLogTreeTable;

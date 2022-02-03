@@ -1,93 +1,60 @@
-import {hasStringValue} from "components/common/helpers/string-helpers";
+import {capitalizeFirstLetter, hasStringValue} from "components/common/helpers/string-helpers";
 
 const taskActivityLogHelpers = {};
 
-taskActivityLogHelpers.constructSingleTaskTree = (pipelineLogData) => {
-  let newTree = [];
+taskActivityLogHelpers.updateSelectedRunNumberTree = (runNumberTree, runNumber, taskLogData) => {
+  if (typeof runNumber !== "number" || !Array.isArray(runNumberTree) || !Array.isArray(taskLogData) || taskLogData.length === 0) {
+    return runNumberTree;
+  }
 
-  if (Array.isArray(pipelineLogData) && pipelineLogData.length > 0) {
-    pipelineLogData.forEach((log) => {
-      const runNumber = log.run_count ? log.run_count : "logs";
-      const runNumberText = log.run_count ? `Run ${log.run_count}` : "Logs";
-      const taskType = log.type ? log.type : "Other Type";
-      const taskName = log.name ? log.name : "No Name";
-      const existingTreeItem = newTree.find((treeItem) => treeItem.id === runNumber);
+  let newTree = [...runNumberTree];
 
-      if (existingTreeItem == null) {
-        const currentValue = {
-          id: runNumber,
+  const currentValue = newTree.find((entry) => {
+    return entry.id === `${runNumber}`;
+  });
+
+  taskLogData.forEach((log) => {
+    if (!log.run_count || log.step_name === "start pipeline") {
+      return;
+    }
+
+    const stepIndex = log.step_index >= 0 ? log.step_index : "other_logs";
+    const stepName = log.step_name ? log.step_name : "Other Logs";
+    let stepNameText;
+
+    if (stepName === "registered webhook event") {
+      stepNameText = `${capitalizeFirstLetter(log.step_name)}`;
+    } else if (stepIndex === "other_logs" || !log.step_name) {
+      stepNameText = `Step: ${capitalizeFirstLetter(log.step_name)}`;
+    } else {
+      stepNameText = `Step ${stepIndex + 1}: ${capitalizeFirstLetter(log.step_name)}`;
+    }
+
+    if (currentValue != null) {
+      const index = newTree.indexOf(currentValue);
+      const existingStep = currentValue.items.find((item) => {
+        return item.id === `${runNumber}-${stepName}`;
+      });
+
+      if (existingStep == null && stepIndex != null) {
+        currentValue.items.push({
+          id: `${runNumber}-${stepName}`,
           runNumber: runNumber,
-          value: runNumberText,
-          items: [],
-          type: taskType,
-          name: taskName,
+          stepName: stepName,
+          value: stepNameText,
           icon: {
-            "folder": "fal fa-layer-group opsera-primary",
-            "openFolder": "fal fa-layer-group opsera-yellow",
-            "file": "fal fa-layer-group opsera-primary"
+            "folder": "fal fa-tasks opsera-primary",
+            "openFolder": "fal fa-tasks opsera-yellow",
+            "file": "fal fa-tasks opsera-primary"
           }
-        };
-
-        newTree.push(currentValue);
-      }
-    });
-  }
-
-  if (newTree?.length > 0) {
-    // Sort by run number
-    newTree.sort((treeItem1, treeItem2) => {
-      const task1RunNumber = treeItem1?.runNumber;
-      const task2RunNumber = treeItem2?.runNumber;
-
-      if (task1RunNumber > task2RunNumber) {
-        return -1;
+        });
       }
 
-      if (task1RunNumber < task2RunNumber) {
-        return 1;
-      }
+      newTree[index] = currentValue;
+    }
+  });
 
-      return 0;
-    });
-
-    newTree[0].opened = true;
-    newTree[0].selected = 1;
-  }
-
-  return newTree;
-};
-
-taskActivityLogHelpers.getSecondaryTree = () => {
-  return [
-    {
-      id: "latest",
-      taskId: undefined,
-      runNumber: "latest",
-      value: "Latest Logs",
-      items: [],
-      type: undefined,
-      name: undefined,
-      icon: {
-        "folder": "fal fa-layer-group opsera-primary",
-        "openFolder": "fal fa-layer-group opsera-yellow",
-        "file": "fal fa-layer-group opsera-primary"
-      }
-    },
-    {
-      id: "secondary",
-      taskId: undefined,
-      runNumber: "secondary",
-      value: "Secondary Logs",
-      items: [],
-      type: undefined,
-      name: undefined,
-      icon: {
-        "folder": "fal fa-layer-group opsera-primary",
-        "openFolder": "fal fa-layer-group opsera-yellow",
-        "file": "fal fa-layer-group opsera-primary"
-      }
-    },
-  ];
+  return sortRunCountTree(newTree);
 };
 
 taskActivityLogHelpers.constructTopLevelTreeBasedOnNameAndRunCount = (tasks) => {
@@ -110,10 +77,7 @@ taskActivityLogHelpers.constructTopLevelTreeBasedOnNameAndRunCount = (tasks) => 
 
 
   newTree[0].opened = true;
-
-  return newTree;
-  // TODO: Sort the tree alphabetically
-  // return sortTree(newTree);
+  return sortTopLevelTree(newTree);
 };
 
 taskActivityLogHelpers.constructRunCountTree = (task) => {
@@ -241,5 +205,37 @@ const sortTopLevelTree = (tree) => {
   return newTree;
 };
 
+taskActivityLogHelpers.getSecondaryTree = () => {
+  return [
+    {
+      id: "latest",
+      taskId: undefined,
+      runNumber: "latest",
+      value: "Latest Logs",
+      items: [],
+      type: undefined,
+      name: undefined,
+      icon: {
+        "folder": "fal fa-layer-group opsera-primary",
+        "openFolder": "fal fa-layer-group opsera-yellow",
+        "file": "fal fa-layer-group opsera-primary"
+      }
+    },
+    {
+      id: "secondary",
+      taskId: undefined,
+      runNumber: "secondary",
+      value: "Secondary Logs",
+      items: [],
+      type: undefined,
+      name: undefined,
+      icon: {
+        "folder": "fal fa-layer-group opsera-primary",
+        "openFolder": "fal fa-layer-group opsera-yellow",
+        "file": "fal fa-layer-group opsera-primary"
+      }
+    },
+  ];
+};
 
 export default taskActivityLogHelpers;

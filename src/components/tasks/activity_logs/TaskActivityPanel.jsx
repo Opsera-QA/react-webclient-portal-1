@@ -108,9 +108,9 @@ function TaskActivityPanel({ task }) {
       if (Array.isArray(taskActivityData)) {
         setActivityData([...taskActivityData]);
         setTaskActivityMetadata(response?.data?.metadata);
-        // newFilterModel?.setData("totalCount", response?.data?.count);
-        // newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
-        // setTaskActivityFilterModel({...newFilterModel});
+        newFilterModel?.setData("totalCount", response?.data?.count);
+        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
+        setTaskActivityFilterModel({...newFilterModel});
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -132,9 +132,9 @@ function TaskActivityPanel({ task }) {
       if (Array.isArray(taskActivityData)) {
         setActivityData([...taskActivityData]);
         setTaskActivityMetadata(response?.data?.metadata);
-        // newFilterModel?.setData("totalCount", response?.data?.count);
-        // newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
-        // setTaskActivityFilterModel({...newFilterModel});
+        newFilterModel?.setData("totalCount", response?.data?.count);
+        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
+        setTaskActivityFilterModel({...newFilterModel});
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -156,9 +156,9 @@ function TaskActivityPanel({ task }) {
       if (Array.isArray(taskActivityData)) {
         setActivityData([...taskActivityData]);
         setTaskActivityMetadata(response?.data?.metadata);
-        // newFilterModel?.setData("totalCount", response?.data?.count);
-        // newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
-        // setTaskActivityFilterModel({...newFilterModel});
+        newFilterModel?.setData("totalCount", response?.data?.count);
+        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
+        setTaskActivityFilterModel({...newFilterModel});
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -176,7 +176,7 @@ function TaskActivityPanel({ task }) {
     <TaskActivityLogs
       taskLogData={activityData}
       isLoading={isLoading}
-      loadData={loadData}
+      loadData={pullLogs}
       taskActivityFilterModel={taskActivityFilterModel}
       setTaskActivityFilterModel={setTaskActivityFilterModel}
       taskActivityMetadata={taskActivityMetadata}
