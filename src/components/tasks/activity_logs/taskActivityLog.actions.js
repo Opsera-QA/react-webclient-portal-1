@@ -74,19 +74,6 @@ taskActivityLogActions.getTaskActivityLogTree = async (getAccessToken, cancelTok
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-taskActivityLogActions.getAllTasksActivityTree = async (getAccessToken, cancelTokenSource, taskActivityFilterModel) => {
-  const apiUrl = `/tasks/logs/activity/v2/all-tasks-tree`;
-  const urlParams = {
-    params: {
-      search: taskActivityFilterModel?.getData("search"),
-      type: taskActivityFilterModel?.getFilterValue("type"),
-      status: taskActivityFilterModel?.getFilterValue("status"),
-    },
-  };
-
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
-};
-
 taskActivityLogActions.getTaskActivityLogById = async (getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/tasks/logs/activity/v2/${id}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
