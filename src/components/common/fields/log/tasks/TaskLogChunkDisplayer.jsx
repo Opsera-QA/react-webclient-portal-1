@@ -2,10 +2,10 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import axios from "axios";
-import taskActions from "components/tasks/task.actions";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import {taskActivityLogActions} from "components/tasks/activity_logs/taskActivityLog.actions";
 
 function TaskLogChunkDisplayer(
   {
@@ -62,7 +62,7 @@ function TaskLogChunkDisplayer(
   };
 
   const getTaskChunk = async (cancelSource = cancelTokenSource) => {
-    const response = await taskActions.getTaskActivityChunk(getAccessToken, cancelSource, logMetaRecordId, chunkNumber);
+    const response = await taskActivityLogActions.getTaskActivityChunk(getAccessToken, cancelSource, logMetaRecordId, chunkNumber);
     const taskLogChunk = response?.data?.data?.data;
 
     if (taskLogChunk) {

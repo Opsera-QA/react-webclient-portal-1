@@ -6,7 +6,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 import {getFormattedTimestamp} from "components/common/fields/date/DateFieldBase";
 import axios from "axios";
-import taskActions from "components/tasks/task.actions";
+import {taskActivityLogActions} from "components/tasks/activity_logs/taskActivityLog.actions";
 
 function TaskLiveLogsOverlay({ runCount, taskId }) {
   const toastContext = useContext(DialogToastContext);
@@ -66,7 +66,7 @@ function TaskLiveLogsOverlay({ runCount, taskId }) {
   const pullLogs = async () => {
     try {
       setLoading(true);
-      const response = await taskActions.pullLiveLogV2(getAccessToken, cancelTokenSource, taskId, runCount);
+      const response = await taskActivityLogActions.pullLiveLogV2(getAccessToken, cancelTokenSource, taskId, runCount);
       const log = response?.data?.log;
       const taskState = response?.data?.state;
 

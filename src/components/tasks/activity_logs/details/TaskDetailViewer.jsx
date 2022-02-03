@@ -9,6 +9,7 @@ import {AuthContext} from "contexts/AuthContext";
 import Model from "core/data_model/model";
 import taskActions from "components/tasks/task.actions";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import {taskActivityLogActions} from "components/tasks/activity_logs/taskActivityLog.actions";
 
 function TaskDetailViewer({ taskActivityLogId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -59,7 +60,7 @@ function TaskDetailViewer({ taskActivityLogId }) {
   };
 
   const getPipelineTaskData = async (cancelSource = cancelTokenSource) => {
-    const response = await taskActions.getTaskActivityLogById(getAccessToken, cancelSource, taskActivityLogId);
+    const response = await taskActivityLogActions.getTaskActivityLogById(getAccessToken, cancelSource, taskActivityLogId);
     const pipelineActivityLogData = response?.data?.data;
 
     if (isMounted?.current === true && pipelineActivityLogData) {
