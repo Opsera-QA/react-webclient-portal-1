@@ -40,16 +40,16 @@ function ToolRegistryHelpDocumentation({registryToolRoleDefinitions}) {
       helpTopic={"Tool Registry"}
       helpDocumentation={getHelpDocumentation()}
     >
-      {/*<div className={"my-2"}>*/}
-      {/*  <AssignedRoleAccessTable*/}
-      {/*    roleAccessDefinitions={registryToolRoleDefinitions}*/}
-      {/*  />*/}
-      {/*</div>*/}
-      {/*<div className={"my-2"}>*/}
-      {/*  <SiteRoleAccessTable*/}
-      {/*    roleAccessDefinitions={registryToolRoleDefinitions}*/}
-      {/*  />*/}
-      {/*</div>*/}
+      <div className={"my-2"}>
+        <AssignedRoleAccessTable
+          roleAccessDefinitions={registryToolRoleDefinitions}
+        />
+      </div>
+      <div className={"my-2"}>
+        <SiteRoleAccessTable
+          roleAccessDefinitions={registryToolRoleDefinitions}
+        />
+      </div>
     </HelpOverlayBase>
   );
 }

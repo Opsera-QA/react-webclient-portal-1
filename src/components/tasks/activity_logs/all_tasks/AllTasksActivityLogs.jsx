@@ -11,9 +11,20 @@ import TaskStatusFilter from "components/common/filters/tasks/status/TaskStatusF
 import InlineTaskTypeFilter from "components/common/filters/tasks/type/InlineTaskTypeFilter";
 import AllTasksActivityLogTable from "components/tasks/activity_logs/all_tasks/AllTasksActivityLogTable";
 
-function AllTasksActivityLogs({ taskLogData, taskActivityMetadata, loadData, isLoading, taskActivityFilterModel, setTaskActivityFilterModel, taskActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
-  const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
-  const [currentTaskName, setCurrentTaskName] = useState(undefined);
+function AllTasksActivityLogs(
+  {
+    taskLogData,
+    taskActivityMetadata,
+    loadData,
+    isLoading,
+    taskActivityFilterModel,
+    setTaskActivityFilterModel,
+    taskActivityTreeData,
+    currentTaskId,
+    setCurrentTaskId,
+    currentRunNumber,
+    setCurrentRunNumber,
+  }) {
 
   const getNoDataMessage = () => {
     const activeFilters = taskActivityFilterModel?.getActiveFilters();
@@ -21,7 +32,19 @@ function AllTasksActivityLogs({ taskLogData, taskActivityMetadata, loadData, isL
       return ("Could not find any results with the given filters.");
     }
 
-    return ("Task activity data has not been generated yet. Once this Task begins running, it will publish details here.");
+    if (currentTaskId === "latest") {
+      return ("Task activity data has not been generated yet. Once this Task begins running, it will publish details here.");
+    }
+
+    if (currentTaskId === "secondary") {
+      return ("There are no secondary logs.");
+    }
+
+    if (currentRunNumber == null) {
+      return ("Please select a run number to view its logs.");
+    }
+
+    return (`Task activity data has not been generated yet for Run ${currentRunNumber}`);
   };
 
   const getTable = () => {
@@ -29,8 +52,6 @@ function AllTasksActivityLogs({ taskLogData, taskActivityMetadata, loadData, isL
       <AllTasksActivityLogTable
         isLoading={isLoading}
         taskLogData={taskLogData}
-        currentRunNumber={currentRunNumber}
-        currentTaskName={currentTaskName}
         taskActivityMetadata={taskActivityMetadata}
       />
     );
@@ -41,9 +62,7 @@ function AllTasksActivityLogs({ taskLogData, taskActivityMetadata, loadData, isL
       <TaskActivityLogTree
         taskLogTree={taskActivityTreeData}
         setCurrentRunNumber={setCurrentRunNumber}
-        setCurrentTaskName={setCurrentTaskName}
-        currentLogTreePage={currentLogTreePage}
-        setCurrentLogTreePage={setCurrentLogTreePage}
+        setCurrentTaskId={setCurrentTaskId}
         taskActivityFilterModel={taskActivityFilterModel}
       />
     );
@@ -118,8 +137,10 @@ AllTasksActivityLogs.propTypes = {
   loadData: PropTypes.func,
   taskActivityMetadata: PropTypes.object,
   taskActivityTreeData: PropTypes.array,
-  setCurrentLogTreePage: PropTypes.func,
-  currentLogTreePage: PropTypes.number,
+  currentTaskId: PropTypes.string,
+  setCurrentTaskId: PropTypes.func,
+  currentRunNumber: PropTypes.number,
+  setCurrentRunNumber: PropTypes.func,
 };
 
 export default AllTasksActivityLogs;

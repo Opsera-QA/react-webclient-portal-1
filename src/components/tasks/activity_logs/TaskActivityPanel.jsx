@@ -3,8 +3,8 @@ import {AuthContext} from "contexts/AuthContext";
 import PropTypes from "prop-types";
 import {useParams} from "react-router-dom";
 import axios from "axios";
-import taskActivityHelpers
-  from "components/tasks/activity_logs/task-activity-helpers";
+import taskActivityLogHelpers
+  from "components/tasks/activity_logs/taskActivityLog.helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import TaskActivityLogs from "components/tasks/details/TaskActivityLogs";
 import {TaskActivityFilterModel} from "components/tasks/activity_logs/task-activity.filter.model";
@@ -64,7 +64,7 @@ function TaskActivityPanel({ taskName }) {
 
       // TODO: if search term applies ignore run count and reconstruct tree?
       const treeResponse = await taskActions.getTaskActivityLogTree(getAccessToken, cancelSource, id, newFilterModel);
-      const taskTree = taskActivityHelpers.constructSingleTaskTree(treeResponse?.data?.data);
+      const taskTree = taskActivityLogHelpers.constructSingleTaskTree(treeResponse?.data?.data);
       setTaskActivityTreeData([...taskTree]);
       setActivityData([]);
 
