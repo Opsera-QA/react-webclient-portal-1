@@ -11,24 +11,26 @@ import TaskConfigurationPanel
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TagManager from "components/common/inputs/tags/TagManager";
 import axios from "axios";
+import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import AwsEcsClusterCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsEcsClusterCreationTaskHelpDocumentation";
 import TaskCreationHelpDocumentation from "components/common/help/documentation/tasks/TaskCreationHelpDocumentation";
 import AwsEcsServiceCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsEcsServiceCreationTaskHelpDocumentation";
-import SfdcOrgSyncTaskHelpDocumentation
-  from "components/common/help/documentation/tasks/SfdcOrgSyncTaskHelpDocumentation";
 import {TASK_TYPES} from "components/tasks/task.types";
 import AzureAksClusterCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AzureAksClusterCreationTaskHelpDocumentation";
 import TasksTaskTypeSelectInput from "components/tasks/details/TasksTaskTypeSelectInput";
 import AwsLambdaFunctionCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsLambdaFunctionCreationTaskHelpDocumentation";
-import GitToGitSyncTaskHelpDocumentation
-  from "components/common/help/documentation/tasks/GitToGitSyncTaskHelpDocumentation";
+import SfdcOrgSyncTaskHelpDocumentation
+  from "components/common/help/documentation/tasks/SfdcOrgSyncTaskHelpDocumentation";
+import GitToGitSyncTaskHelpDocumentation from "../../common/help/documentation/tasks/GitToGitSyncTaskHelpDocumentation";
+import SalesforceBulkMigrationHelpDocumentation
+  from "../../common/help/documentation/tasks/SalesforceBulkMigrationHelpDocumentation";
 
 function TaskEditorPanel({ taskData, handleClose }) {
-  const { getAccessToken, featureFlagHideItemInProd } = useContext(AuthContext);
+  const { getAccessToken, isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
   const [taskModel, setTaskModel] = useState(undefined);
   const [taskConfigurationModel, setTaskConfigurationModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -87,11 +89,23 @@ function TaskEditorPanel({ taskData, handleClose }) {
         return <AzureAksClusterCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.SYNC_GIT_BRANCHES:
         return <GitToGitSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case  TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+        return <SalesforceBulkMigrationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
         break;
       default:
         return <TaskCreationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+    }
+  };
+
+  const getDynamicFields = () => {
+    if (taskModel?.isNew() && !isSassUser()) {
+      return (
+        <Col lg={12} className="mb-4">
+          <RoleAccessInput dataObject={taskModel} setDataObject={setTaskModel} fieldName={"roles"}/>
+        </Col>
+      );
     }
   };
 
@@ -112,6 +126,7 @@ function TaskEditorPanel({ taskData, handleClose }) {
           {/* <Col lg={6}>
           <ActivityToggleInput dataObject={taskModel} setDataObject={setGitTasksDataDto} fieldName={"active"}/>
         </Col> */}
+
           <Col lg={12}>
             <TextInputBase setDataObject={setTaskModel} dataObject={taskModel}
                            fieldName={"description"}/>
@@ -119,6 +134,7 @@ function TaskEditorPanel({ taskData, handleClose }) {
           <Col lg={12}>
             <TagManager type={"task"} setDataObject={setTaskModel} dataObject={taskModel}/>
           </Col>
+          {getDynamicFields()}
         </Row>
         <TaskConfigurationPanel
           taskConfigurationModel={taskConfigurationModel}
