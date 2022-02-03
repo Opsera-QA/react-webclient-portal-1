@@ -11,7 +11,7 @@ const SonarBugsMetricScorecardMetaData = {
       id: "pipelineId",
     },
     {
-      label: "Pipeline Name",
+      label: "Pipeline",
       id: "pipelineName",
     },
     {
