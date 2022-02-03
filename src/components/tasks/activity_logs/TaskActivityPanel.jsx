@@ -102,7 +102,7 @@ function TaskActivityPanel({ task }) {
   const getSecondaryActivityLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await taskActivityLogActions.getSecondaryTaskActivityLogs(getAccessToken, cancelSource, newFilterModel, task?._id);
+      const response = await taskActivityLogActions.getSecondaryTaskActivityLogs(getAccessToken, cancelSource, newFilterModel, task?.getData("_id"));
       const taskActivityData = response?.data?.data;
 
       if (Array.isArray(taskActivityData)) {
@@ -126,7 +126,7 @@ function TaskActivityPanel({ task }) {
   const getLatestActivityLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await taskActivityLogActions.getLatestTaskActivityLogs(getAccessToken, cancelSource, newFilterModel, task?._id);
+      const response = await taskActivityLogActions.getLatestTaskActivityLogs(getAccessToken, cancelSource, newFilterModel, task?.getData("_id"));
       const taskActivityData = response?.data?.data;
 
       if (Array.isArray(taskActivityData)) {
@@ -150,7 +150,7 @@ function TaskActivityPanel({ task }) {
   const getSingleRunLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await taskActivityLogActions.getTaskActivityLogsByIdAndRunCount(getAccessToken, cancelSource, task?._id, currentRunNumber, newFilterModel);
+      const response = await taskActivityLogActions.getTaskActivityLogsByIdAndRunCount(getAccessToken, cancelSource, task?.getData("_id"), currentRunNumber, newFilterModel);
       const taskActivityData = response?.data?.data;
 
       if (Array.isArray(taskActivityData)) {

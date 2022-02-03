@@ -78,9 +78,6 @@ const createTopLevelTreeItem = (task, items = []) => {
       }
     );
   }
-
-
-  console.log("task id not found: " + JSON.stringify(task));
 };
 
 const sortRunCountTree = (tree) => {
@@ -113,9 +110,6 @@ const sortRunCountTree = (tree) => {
     return parsedRunNumber2 - parsedRunNumber1;
   });
 
-  newTree[0].opened = true;
-  newTree[0].selected = 1;
-
   return newTree;
 };
 
@@ -143,8 +137,10 @@ const sortTopLevelTree = (tree) => {
       return 0;
     });
 
-    newTree[0].opened = true;
-    newTree[0].selected = 1;
+    if (Array.isArray(newTree) && newTree?.length > 0) {
+      newTree[0].opened = true;
+      newTree[0].selected = 1;
+    }
   }
 
   return newTree;

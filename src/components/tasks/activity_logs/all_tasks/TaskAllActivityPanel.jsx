@@ -69,6 +69,7 @@ function TaskAllActivityPanel() {
       const tasks = response?.data?.data;
       const taskTree = taskActivityLogHelpers.constructTopLevelTreeBasedOnNameAndRunCount(tasks);
 
+      console.log("taskTree: " + JSON.stringify(taskTree));
       if (Array.isArray(taskTree)) {
         taskLogsTree.current = taskTree;
       }
@@ -107,75 +108,41 @@ function TaskAllActivityPanel() {
   };
 
   const getSecondaryActivityLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      const response = await taskActivityLogActions.getSecondaryTaskActivityLogs(getAccessToken, cancelSource);
-      const taskActivityData = response?.data?.data;
+    const response = await taskActivityLogActions.getSecondaryTaskActivityLogs(getAccessToken, cancelSource);
+    const taskActivityData = response?.data?.data;
 
-      if (Array.isArray(taskActivityData)) {
-        setActivityData([...taskActivityData]);
-        setTaskActivityMetadata(response?.data?.metadata);
-        newFilterModel?.setData("totalCount", response?.data?.count);
-        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
-        setTaskActivityFilterModel({...newFilterModel});
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
+    if (Array.isArray(taskActivityData)) {
+      setActivityData([...taskActivityData]);
+      setTaskActivityMetadata(response?.data?.metadata);
+      newFilterModel?.setData("totalCount", response?.data?.count);
+      newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
+      setTaskActivityFilterModel({...newFilterModel});
     }
   };
 
   const getLatestActivityLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      const response = await taskActivityLogActions.getLatestTaskActivityLogs(getAccessToken, cancelSource, newFilterModel);
-      const taskActivityData = response?.data?.data;
+    const response = await taskActivityLogActions.getLatestTaskActivityLogs(getAccessToken, cancelSource, newFilterModel);
+    const taskActivityData = response?.data?.data;
 
-      if (Array.isArray(taskActivityData)) {
-        setActivityData([...taskActivityData]);
-        setTaskActivityMetadata(response?.data?.metadata);
-        newFilterModel?.setData("totalCount", response?.data?.count);
-        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
-        setTaskActivityFilterModel({...newFilterModel});
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
+    if (Array.isArray(taskActivityData)) {
+      setActivityData([...taskActivityData]);
+      setTaskActivityMetadata(response?.data?.metadata);
+      newFilterModel?.setData("totalCount", response?.data?.count);
+      newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
+      setTaskActivityFilterModel({...newFilterModel});
     }
   };
 
   const getSingleRunLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      const response = await taskActivityLogActions.getTaskActivityLogsByIdAndRunCount(getAccessToken, cancelSource, currentTaskId, currentRunNumber, newFilterModel);
-      const taskActivityData = response?.data?.data;
+    const response = await taskActivityLogActions.getTaskActivityLogsByIdAndRunCount(getAccessToken, cancelSource, currentTaskId, currentRunNumber, newFilterModel);
+    const taskActivityData = response?.data?.data;
 
-      if (Array.isArray(taskActivityData)) {
-        setActivityData([...taskActivityData]);
-        setTaskActivityMetadata(response?.data?.metadata);
-        newFilterModel?.setData("totalCount", response?.data?.count);
-        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
-        setTaskActivityFilterModel({...newFilterModel});
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    }
-    finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
+    if (Array.isArray(taskActivityData)) {
+      setActivityData([...taskActivityData]);
+      setTaskActivityMetadata(response?.data?.metadata);
+      newFilterModel?.setData("totalCount", response?.data?.count);
+      newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
+      setTaskActivityFilterModel({...newFilterModel});
     }
   };
 
