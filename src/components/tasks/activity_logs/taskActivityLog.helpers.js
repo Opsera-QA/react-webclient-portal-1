@@ -1,61 +1,6 @@
-import {capitalizeFirstLetter, hasStringValue} from "components/common/helpers/string-helpers";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 const taskActivityLogHelpers = {};
-
-taskActivityLogHelpers.updateSelectedRunNumberTree = (runNumberTree, runNumber, taskLogData) => {
-  if (typeof runNumber !== "number" || !Array.isArray(runNumberTree) || !Array.isArray(taskLogData) || taskLogData.length === 0) {
-    return runNumberTree;
-  }
-
-  let newTree = [...runNumberTree];
-
-  const currentValue = newTree.find((entry) => {
-    return entry.id === `${runNumber}`;
-  });
-
-  taskLogData.forEach((log) => {
-    if (!log.run_count || log.step_name === "start pipeline") {
-      return;
-    }
-
-    const stepIndex = log.step_index >= 0 ? log.step_index : "other_logs";
-    const stepName = log.step_name ? log.step_name : "Other Logs";
-    let stepNameText;
-
-    if (stepName === "registered webhook event") {
-      stepNameText = `${capitalizeFirstLetter(log.step_name)}`;
-    } else if (stepIndex === "other_logs" || !log.step_name) {
-      stepNameText = `Step: ${capitalizeFirstLetter(log.step_name)}`;
-    } else {
-      stepNameText = `Step ${stepIndex + 1}: ${capitalizeFirstLetter(log.step_name)}`;
-    }
-
-    if (currentValue != null) {
-      const index = newTree.indexOf(currentValue);
-      const existingStep = currentValue.items.find((item) => {
-        return item.id === `${runNumber}-${stepName}`;
-      });
-
-      if (existingStep == null && stepIndex != null) {
-        currentValue.items.push({
-          id: `${runNumber}-${stepName}`,
-          runNumber: runNumber,
-          stepName: stepName,
-          value: stepNameText,
-          icon: {
-            "folder": "fal fa-tasks opsera-primary",
-            "openFolder": "fal fa-tasks opsera-yellow",
-            "file": "fal fa-tasks opsera-primary"
-          }
-        });
-      }
-
-      newTree[index] = currentValue;
-    }
-  });
-
-  return sortRunCountTree(newTree);
-};
 
 taskActivityLogHelpers.constructTopLevelTreeBasedOnNameAndRunCount = (tasks) => {
   let newTree = [];

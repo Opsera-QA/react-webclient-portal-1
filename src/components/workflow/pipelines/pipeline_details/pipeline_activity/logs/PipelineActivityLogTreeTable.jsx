@@ -189,12 +189,9 @@ function PipelineActivityLogTreeTable(
     if (Array.isArray(pipelineActivityData)) {
       setActivityData([...pipelineActivityData]);
       setPipelineActivityMetadata(response?.data?.metadata);
-
-
       newFilterModel.setData("totalCount", activityLogCount);
       newFilterModel.setData("activeFilters", newFilterModel?.getActiveFilters());
       setPipelineActivityFilterModel({...newFilterModel});
-
       const newTree = pipelineLogHelpers.updateSelectedRunNumberTree(pipelineTree.current, currentRunNumber, pipelineActivityData);
 
       if (Array.isArray(newTree) && newTree.length > 0) {
