@@ -118,6 +118,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     seleniumTestSuites: seleniumTestSuites,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
+    search: tableFilterDto?.getData("search"),
+    sortOption: tableFilterDto?.getData("sortOption")?.value,
     projectTags: projectTags,
     dashboardOrgs: dashboardOrgs,
     pipelineName: pipelineName,

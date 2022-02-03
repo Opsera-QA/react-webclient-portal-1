@@ -11,7 +11,7 @@ const SonarCodeSmellsMetricScorecardMetaData = {
       id: "pipelineId",
     },
     {
-      label: "Pipeline Name",
+      label: "Pipeline",
       id: "pipelineName",
     },
     {
