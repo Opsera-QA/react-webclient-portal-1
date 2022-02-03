@@ -12,6 +12,10 @@ const FLYWAY_DB_TYPES = [
     value: "redshift"
   },
   {
+    name: "SQL Server",
+    value: "sqlserver"
+  },
+  {
     name: "MySQL",
     value: "mysql"
   }
