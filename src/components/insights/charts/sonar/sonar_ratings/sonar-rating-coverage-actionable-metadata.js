@@ -1,0 +1,49 @@
+const SonarCoverageTableMetadata = {
+  idProperty: "_id",
+  type: "Sonar Pipeline Table Report",
+  fields: [
+    {
+      label: "Project",
+      id: "project",
+    },
+    {
+      label: "Pipeline Name",
+      id: "pipelineName",
+    },
+    {
+      label: "Run Count",
+      id: "runCount",
+    },
+    {
+      label: "Timestamp",
+      id: "endTimestamp",
+    },
+    // {
+    //   label: "Trend",
+    //   id: "status",
+    // },
+    {
+      label: "Code Coverage",
+      id: "coverage",
+    },
+    {
+      label: "Duplicated Lines",
+      id: "duplicate_lines",
+    },
+    {
+      label: "Duplicated Density",
+      id: "duplicated_lines_density",
+    },
+    {
+      label: "Lines to Cover",
+      id: "lines_to_cover",
+    },
+    {
+      label: "Uncovered Lines",
+      id: "uncovered_lines",
+    },
+  ],
+  newObjectFields: {},
+};
+
+export default SonarCoverageTableMetadata;

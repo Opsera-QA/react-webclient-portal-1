@@ -1,7 +1,7 @@
 import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
-import SonarPipelineTableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar.pipeline.table.metadata";
+import SonarCoverageTableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-rating-coverage-actionable-metadata";
 import {
   getChartTrendStatusColumn,
   getTableTextColumnWithoutField,
@@ -14,21 +14,19 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
-import { LETTER_GRADES } from "../../../../../../common/metrics/grade/MetricLetterGradeText";
-import { getTableTextColumn } from "../../../../../../common/table/column_definitions/model-table-column-definitions";
 
 // TODO: Convert to cards
-function SonarRatingsMaintainabilityActionableInsightTable(
+function SonarRatingCodeCoverageActionableInsightTable(
   {
-    maintainabilityData,
+    coverageData,
     isLoading,
     loadData,
     filterModel,
     setFilterModel,
   }) {
   const toastContext = useContext(DialogToastContext);
-  const noDataMessage = "Sonar Code Smell report is currently unavailable at this time";
-  const fields = SonarPipelineTableMetadata.fields;
+  const noDataMessage = "Sonar Code Coverage report is currently unavailable at this time";
+  const fields = SonarCoverageTableMetadata.fields;
 
   // TODO: Handle colors with rules after written
   const getKpiSonarPipelineTableTextColumn = (field, block) => {
@@ -64,48 +62,17 @@ function SonarRatingsMaintainabilityActionableInsightTable(
     };
   };
 
-  const getKpiSonarRatingTableTextColumn = (field, rating) => {
-    return {
-      Header: getCustomTableHeader(field),
-      accessor: getCustomTableAccessor(field),
-      Cell: function parseText(row) {
-        const value = row?.value;
-        if (value > 0) {
-          if (rating <= 1) {
-            return LETTER_GRADES.A;
-          } else if (rating <= 2) {
-            return LETTER_GRADES.B;
-          } else if (rating <= 3) {
-            return LETTER_GRADES.C;
-          } else if (rating <= 4) {
-            return LETTER_GRADES.D;
-          } else if (rating <= 5) {
-            return LETTER_GRADES.E;
-          } else {
-            return null;
-          }
-        }
-        return (
-          {value}
-        );
-      },
-    };
-  };
-
   const columns = useMemo(
     () => [
       getKpiSonarPipelineTableTextColumn(getField(fields, "project")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "pipelineName")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "runCount")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "endTimestamp")),
-      getKpiSonarRatingTableTextColumn(getField(fields, "maintainibility_rating"), "maintainibility_rating"),
-      getChartTrendStatusColumn(getField(fields, "status")),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "critical"), "critical"),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "blocker"), "blocker"),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "major"), "major"),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "minor"), "minor"),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "info"), "info"),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "effort")),
+      getKpiSonarPipelineTableTextColumn(getField(fields, "duplicate_lines")),
+      getKpiSonarPipelineTableTextColumn(getField(fields, "duplicated_lines_density")),
+      getKpiSonarPipelineTableTextColumn(getField(fields, "coverage")),
+      getKpiSonarPipelineTableTextColumn(getField(fields, "lines_to_cover")),
+      getKpiSonarPipelineTableTextColumn(getField(fields, "uncovered_lines")),
       getTableTextColumnWithoutField("Actions", "_blueprint", "text-center"),
     ],
     []
@@ -122,7 +89,7 @@ function SonarRatingsMaintainabilityActionableInsightTable(
       <CustomTable
         isLoading={isLoading}
         columns={columns}
-        data={maintainabilityData}
+        data={coverageData}
         noDataMessage={noDataMessage}
         onRowSelect={onRowSelect}
         paginationDto={filterModel}
@@ -136,7 +103,7 @@ function SonarRatingsMaintainabilityActionableInsightTable(
     <FilterContainer
       isLoading={isLoading}
       showBorder={false}
-      title={`Technical Debt Ratio Report`}
+      title={`Code Coverage Metrics Report`}
       titleIcon={faDraftingCompass}
       body={getTable()}
       className={"px-2 pb-2"}
@@ -147,12 +114,12 @@ function SonarRatingsMaintainabilityActionableInsightTable(
   );
 }
 
-SonarRatingsMaintainabilityActionableInsightTable.propTypes = {
-  maintainabilityData: PropTypes.array,
+SonarRatingCodeCoverageActionableInsightTable.propTypes = {
+  coverageData: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
 };
 
-export default SonarRatingsMaintainabilityActionableInsightTable;
+export default SonarRatingCodeCoverageActionableInsightTable;

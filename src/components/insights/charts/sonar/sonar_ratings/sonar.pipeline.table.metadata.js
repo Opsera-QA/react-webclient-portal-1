@@ -19,6 +19,10 @@ const SonarPipelineTableMetadata = {
       id: "endTimestamp",
     },
     {
+      label: "Rating",
+      id: "rating",
+    },
+    {
       label: "Trend",
       id: "status",
     },

@@ -14,6 +14,8 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
+import { LETTER_GRADES } from "../../../../../../common/metrics/grade/MetricLetterGradeText";
+import { getTableTextColumn } from "../../../../../../common/table/column_definitions/model-table-column-definitions";
 
 // TODO: Convert to cards
 function SonarRatingsReliabilityActionableInsightTable(
@@ -62,12 +64,41 @@ function SonarRatingsReliabilityActionableInsightTable(
     };
   };
 
+  const getKpiSonarRatingTableTextColumn = (field, rating) => {
+    return {
+      Header: getCustomTableHeader(field),
+      accessor: getCustomTableAccessor(field),
+      Cell: function parseText(row) {
+        const value = row?.value;
+        if (value > 0) {
+          if (rating <= 1) {
+            return LETTER_GRADES.A;
+          } else if (rating <= 2) {
+            return LETTER_GRADES.B;
+          } else if (rating <= 3) {
+            return LETTER_GRADES.C;
+          } else if (rating <= 4) {
+            return LETTER_GRADES.D;
+          } else if (rating <= 5) {
+            return LETTER_GRADES.E;
+          } else {
+            return null;
+          }
+        }
+        return (
+          {value}
+        );
+      },
+    };
+  };
+
   const columns = useMemo(
     () => [
       getKpiSonarPipelineTableTextColumn(getField(fields, "project")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "pipelineName")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "runCount")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "endTimestamp")),
+      getKpiSonarRatingTableTextColumn(getField(fields, "reliability_rating"),"reliability_rating"),
       getChartTrendStatusColumn(getField(fields, "status")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "critical"), "critical"),
       getKpiSonarPipelineTableTextColumn(getField(fields, "blocker"), "blocker"),
