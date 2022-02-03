@@ -29,6 +29,7 @@ import InformaticaPipelineRunAssistantOverlay
   from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistantOverlay";
 
 const delayCheckInterval = 8000;
+const timeoutCheckInterval = 60000;
 
 function PipelineActionControls(
   {
@@ -150,7 +151,9 @@ function PipelineActionControls(
   };
 
   const checkPipelineQueueStatus = async () => {
-    const { orchestration } = await getFeatureFlags();
+    const featureFlags = await getFeatureFlags();
+    const orchestration = featureFlags?.orchestration;
+
     setQueueingEnabled(orchestration?.enableQueuing);
 
     if (orchestration?.enableQueuing) {
@@ -312,10 +315,13 @@ function PipelineActionControls(
       toastContext.showInformationToast("A request to resume this pipeline has been submitted.  It will begin shortly.", 20);
       await PipelineActions.resumePipelineV2(getAccessToken, cancelTokenSource, pipelineId);
 
+      delayRefresh();
+
+      // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
       setTimeout(async function() {
         await fetchData();
         setStartPipeline(false);
-      }, delayCheckInterval);
+      }, timeoutCheckInterval);
     }
     catch (error) {
       if (isMounted.current === true) {
