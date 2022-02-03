@@ -51,11 +51,13 @@ function TaskAllActivityPanel() {
   useEffect(() => {
     setActivityData([]);
 
-    pullLogs().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (currentRunNumber) {
+      pullLogs().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
   }, [currentRunNumber, currentTaskId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
