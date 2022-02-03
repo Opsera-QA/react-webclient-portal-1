@@ -34,14 +34,16 @@ function TaskActivityLogTree(
   }, [taskLogTree]);
 
   const selectTreeItemFunction = (treeItem) => {
-    setSelectedId(treeItem?.id);
+    if (selectedId !== treeItem?.id) {
+      setSelectedId(treeItem?.id);
+    }
 
     if (treeItem) {
-      if (setCurrentRunNumber) {
+      if (setCurrentRunNumber != null) {
         setCurrentRunNumber(treeItem.runNumber);
       }
 
-      if (setCurrentTaskId) {
+      if (setCurrentTaskId != null) {
         setCurrentTaskId(treeItem.taskId);
       }
     }
