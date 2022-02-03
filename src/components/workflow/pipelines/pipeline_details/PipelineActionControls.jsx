@@ -29,6 +29,7 @@ import InformaticaPipelineRunAssistantOverlay
   from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistantOverlay";
 
 const delayCheckInterval = 8000;
+const timeoutCheckInterval = 60000;
 
 function PipelineActionControls(
   {
@@ -150,7 +151,8 @@ function PipelineActionControls(
   };
 
   const checkPipelineQueueStatus = async () => {
-    const { orchestration } = await getFeatureFlags();
+    const featureFlags = await getFeatureFlags();
+    const orchestration = featureFlags?.orchestration;
     setQueueingEnabled(orchestration?.enableQueuing);
 
     if (orchestration?.enableQueuing) {
@@ -253,11 +255,13 @@ function PipelineActionControls(
       setStartPipeline(true);
       toastContext.showInformationToast("A request to start this pipeline has been submitted.  It will begin shortly.", 20);
       await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      delayRefresh();
 
+      // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
       setTimeout(async function() {
         await fetchData();
         setStartPipeline(false);
-      }, delayCheckInterval);
+      }, timeoutCheckInterval);
     }
     catch (error) {
       if (isMounted.current === true) {
@@ -292,11 +296,13 @@ function PipelineActionControls(
       toastContext.showInformationToast("A request to start this pipeline from the start has been submitted.  Resetting pipeline status and then the pipeline will begin momentarily.", 20);
       await PipelineActions.triggerPipelineNewStartV2(getAccessToken, cancelTokenSource, pipelineId);
       setHasQueuedRequest(true);
+      delayRefresh();
 
+      // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
       setTimeout(async function() {
         await fetchData();
         setStartPipeline(false);
-      }, delayCheckInterval);
+      }, timeoutCheckInterval);
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -312,10 +318,13 @@ function PipelineActionControls(
       toastContext.showInformationToast("A request to resume this pipeline has been submitted.  It will begin shortly.", 20);
       await PipelineActions.resumePipelineV2(getAccessToken, cancelTokenSource, pipelineId);
 
+      delayRefresh();
+
+      // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
       setTimeout(async function() {
         await fetchData();
         setStartPipeline(false);
-      }, delayCheckInterval);
+      }, timeoutCheckInterval);
     }
     catch (error) {
       if (isMounted.current === true) {
@@ -466,6 +475,7 @@ function PipelineActionControls(
   };
 
   // TODO: Make base button components for these in the future
+  //  and wire up the functions inside those components to clean up PipelineActionControls
   return (
     <>
       <div className="d-flex flex-fill">
