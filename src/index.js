@@ -21,8 +21,7 @@ if (typeof window["TextEncoder"] !== "function") {
   window["TextDecoder"] = TextEncodingPolyfill.TextDecoder;
 }
 
-
-var browserNotSupported = (function (agent) {
+const browserNotSupported = (function (agent) {
   switch (true) {
   case agent.indexOf("edge") > -1: return false; // "edge";
   case agent.indexOf("edg") > -1: return false; //"chromium based edge (dev or canary)";
