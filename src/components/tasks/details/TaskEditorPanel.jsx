@@ -26,6 +26,8 @@ import AwsLambdaFunctionCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsLambdaFunctionCreationTaskHelpDocumentation";
 import GitToGitSyncTaskHelpDocumentation
   from "components/common/help/documentation/tasks/GitToGitSyncTaskHelpDocumentation";
+import SalesforceBulkMigrationHelpDocumentation
+  from "../../common/help/documentation/tasks/SalesforceBulkMigrationHelpDocumentation";
 
 function TaskEditorPanel({ taskData, handleClose }) {
   const { getAccessToken, featureFlagHideItemInProd } = useContext(AuthContext);
@@ -87,6 +89,8 @@ function TaskEditorPanel({ taskData, handleClose }) {
         return <AzureAksClusterCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.SYNC_GIT_BRANCHES:
         return <GitToGitSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case  TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+        return <SalesforceBulkMigrationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
         break;
