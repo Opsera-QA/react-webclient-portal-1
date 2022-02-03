@@ -11,6 +11,7 @@ import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
 import taskActions from "components/tasks/task.actions";
 import {TaskActivityFilterModel} from "components/tasks/activity_logs/task-activity.filter.model";
 import {taskActivityLogActions} from "components/tasks/activity_logs/taskActivityLog.actions";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function TaskAllActivityPanel() {
   const toastContext = useContext(DialogToastContext);
@@ -50,13 +51,11 @@ function TaskAllActivityPanel() {
   useEffect(() => {
     setActivityData([]);
 
-    if (currentTaskId) {
-      pullLogs().catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
+    pullLogs().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
   }, [currentRunNumber, currentTaskId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -90,7 +89,7 @@ function TaskAllActivityPanel() {
         await getLatestActivityLogs(newFilterModel, cancelSource);
       } else if (currentRunNumber === "secondary") {
         await getSecondaryActivityLogs(newFilterModel, cancelSource);
-      } else if (currentRunNumber) {
+      } else if (typeof currentRunNumber === "number" && hasStringValue(currentTaskId)) {
         await getSingleRunLogs(newFilterModel, cancelSource);
       }
 
