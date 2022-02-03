@@ -6,6 +6,7 @@ import ReactJson from "react-json-view";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import JSONInput from "react-json-editor-ajrm";
+import {objectHelpers} from "components/common/helpers/object/object.helpers";
 
 function JsonInput({fieldName, model, setModel, disabled, className, isLoading, customTitle,}) {
   const [errorMessage, setErrorMessage] = useState("");
@@ -14,7 +15,7 @@ function JsonInput({fieldName, model, setModel, disabled, className, isLoading, 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = model;
     try {
-      let json = JSON.parse(value.json);
+      let json = objectHelpers.parseJson(value?.json);
       newDataObject.setData(fieldName, json);
       setErrorMessage(newDataObject.getFieldError(fieldName));
       setModel({...newDataObject});
