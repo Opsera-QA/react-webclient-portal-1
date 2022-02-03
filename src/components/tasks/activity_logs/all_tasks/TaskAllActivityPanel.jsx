@@ -13,7 +13,7 @@ import {TaskActivityFilterModel} from "components/tasks/activity_logs/task-activ
 import {taskActivityLogActions} from "components/tasks/activity_logs/taskActivityLog.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 
-function TaskAllActivityPanel()
+function TaskAllActivityPanel() {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
