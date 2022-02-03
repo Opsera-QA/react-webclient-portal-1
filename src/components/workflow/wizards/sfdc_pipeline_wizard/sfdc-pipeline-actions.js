@@ -1,7 +1,7 @@
 import baseActions from "utils/actionsBase";
 import {axiosApiService} from "api/apiService";
-import pipelineActivityActions
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-actions";
+import pipelineActivityLogsActions
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineActivityLogs.actions";
 import {parsePackageXml} from "components/common/helpers/code-helpers";
 
 const sfdcPipelineActions = {};
@@ -450,7 +450,7 @@ sfdcPipelineActions.getComponentNameCountListV2 = async (getAccessToken, cancelT
 };
 
 sfdcPipelineActions.getPackageXmlFromRun = async (getAccessToken, cancelTokenSource, pipelineId, stepId, runNumber) => {
-  const response = await pipelineActivityActions.getPipelineActivityLogsByRunNumber(getAccessToken, cancelTokenSource, pipelineId, undefined, runNumber, undefined, "console output");
+  const response = await pipelineActivityLogsActions.getPipelineActivityLogsByRunNumber(getAccessToken, cancelTokenSource, pipelineId, undefined, runNumber, undefined, "console output");
   const logs = response?.data?.data;
 
   if (Array.isArray(logs) && logs.length > 0) {

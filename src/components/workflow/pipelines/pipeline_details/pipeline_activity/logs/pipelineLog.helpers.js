@@ -6,7 +6,6 @@ pipelineLogHelpers.constructTopLevelTreeBasedOnRunCount = (runCount) => {
   let newTree = [];
 
   if (runCount > 0) {
-
     for (let runNumber = 1; runNumber <= runCount; runNumber++) {
       newTree.push(createTopLevelTreeItem(runNumber));
     }

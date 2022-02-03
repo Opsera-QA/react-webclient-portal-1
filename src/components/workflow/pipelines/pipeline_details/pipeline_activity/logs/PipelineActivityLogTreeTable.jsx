@@ -12,8 +12,8 @@ import PipelineActivityLogTable
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTable";
 import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
 import axios from "axios";
-import pipelineActivityActions
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-actions";
+import pipelineActivityLogsActions
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineActivityLogs.actions";
 import pipelineLogHelpers
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineLog.helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -37,9 +37,6 @@ function PipelineActivityLogTreeTable(
   const [pipelineActivityMetadata, setPipelineActivityMetadata] = useState(undefined);
   const [activityData, setActivityData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-
-  // TODO: Using ref for pipelineTree to ensure state is kept for automatic refresh
   const pipelineTree = useRef([]);
   const [refreshTimer, setRefreshTimer] = useState(null);
   let internalRefreshCount = 1;
@@ -185,19 +182,16 @@ function PipelineActivityLogTreeTable(
   };
 
   const getSingleRunLogs = async (newFilterModel = pipelineActivityFilterModel, cancelSource = cancelTokenSource) => {
-    const response = await pipelineActivityActions.getPipelineActivityLogsV3(getAccessToken, cancelSource, pipelineId, newFilterModel, currentRunNumber);
+    const response = await pipelineActivityLogsActions.getPipelineActivityLogsV3(getAccessToken, cancelSource, pipelineId, newFilterModel, currentRunNumber);
     const pipelineActivityData = response?.data?.data;
     const activityLogCount = response?.data?.count;
 
     if (Array.isArray(pipelineActivityData)) {
       setActivityData([...pipelineActivityData]);
       setPipelineActivityMetadata(response?.data?.metadata);
-
-
       newFilterModel.setData("totalCount", activityLogCount);
       newFilterModel.setData("activeFilters", newFilterModel?.getActiveFilters());
       setPipelineActivityFilterModel({...newFilterModel});
-
       const newTree = pipelineLogHelpers.updateSelectedRunNumberTree(pipelineTree.current, currentRunNumber, pipelineActivityData);
 
       if (Array.isArray(newTree) && newTree.length > 0) {
@@ -207,7 +201,7 @@ function PipelineActivityLogTreeTable(
   };
 
   const getLatestActivityLogs = async (filterDto = pipelineActivityFilterModel, cancelSource = cancelTokenSource,) => {
-    const response = await pipelineActivityActions.getLatestPipelineActivityLogsV3(getAccessToken, cancelSource, pipelineId, filterDto);
+    const response = await pipelineActivityLogsActions.getLatestPipelineActivityLogsV3(getAccessToken, cancelSource, pipelineId, filterDto);
     const pipelineActivityData = response?.data?.data;
 
     if (Array.isArray(pipelineActivityData)) {
@@ -216,7 +210,7 @@ function PipelineActivityLogTreeTable(
   };
 
   const getSecondaryActivityLogs = async (filterDto = pipelineActivityFilterModel, cancelSource = cancelTokenSource,) => {
-    const response = await pipelineActivityActions.getSecondaryPipelineActivityLogsV3(getAccessToken, cancelSource, pipelineId, filterDto);
+    const response = await pipelineActivityLogsActions.getSecondaryPipelineActivityLogsV3(getAccessToken, cancelSource, pipelineId, filterDto);
     const pipelineActivityData = response?.data?.data;
 
     if (Array.isArray(pipelineActivityData)) {
