@@ -25,6 +25,9 @@ function TaskActivityLogTree(
         if (Array.isArray(items) && items.length > 0) {
           setSelectedId(items[0]?.id);
         }
+        else {
+          setSelectedId(treeItem?.id);
+        }
       }
     }
 
