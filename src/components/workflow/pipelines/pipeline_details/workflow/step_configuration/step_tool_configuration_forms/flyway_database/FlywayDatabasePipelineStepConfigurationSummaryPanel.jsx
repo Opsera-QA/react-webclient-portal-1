@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
+import BooleanField from "components/common/fields/boolean/BooleanField";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
@@ -15,8 +16,14 @@ function FlywayDatabasePipelineStepConfigurationSummaryPanel({ flywayPipelineDat
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
+      <Col lg={6}>
+          <TextFieldBase dataObject={flywayPipelineDataObject} fieldName={"type"}/>
+        </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={flywayPipelineDataObject} fieldName={"toolConfigId"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={flywayPipelineDataObject} fieldName={"dbType"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={flywayPipelineDataObject} fieldName={"service"}/>
@@ -29,6 +36,9 @@ function FlywayDatabasePipelineStepConfigurationSummaryPanel({ flywayPipelineDat
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={flywayPipelineDataObject} fieldName={"repository"}/>
+        </Col>
+        <Col lg={6}>
+          <BooleanField dataObject={flywayPipelineDataObject} fieldName={"outOfOrder"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={flywayPipelineDataObject} fieldName={"gitBranch"}/>
