@@ -17,18 +17,29 @@ function TaskActivityLogs(
     taskActivityFilterModel,
     setTaskActivityFilterModel,
     taskActivityTreeData,
+    currentRunNumber,
     setCurrentRunNumber,
   }) {
-
   const getNoDataMessage = () => {
     const activeFilters = taskActivityFilterModel?.getActiveFilters();
     if (activeFilters?.length > 0) {
       return ("Could not find any results with the given filters.");
     }
 
-    return ("Task activity data has not been generated yet. Once this Task begins running, it will publish details here.");
-  };
+    if (currentRunNumber === "latest") {
+      return ("Task activity data has not been generated yet. Once this Task begins running, it will publish details here.");
+    }
 
+    if (currentRunNumber === "secondary") {
+      return ("There are no secondary logs.");
+    }
+
+    if (currentRunNumber == null) {
+      return ("Please select a run number to view its logs.");
+    }
+
+    return (`Task activity data has not been generated yet for Run ${currentRunNumber}`);
+  };
   const getTable = () => {
     return (
       <TaskActivityLogsTable
@@ -43,7 +54,6 @@ function TaskActivityLogs(
     return (
       <TaskActivityLogTree
         setCurrentRunNumber={setCurrentRunNumber}
-        setCurrentTaskId={() => {console.log("todo: remove");}}
         taskActivityFilterModel={taskActivityFilterModel}
         loadData={loadData}
         taskLogTree={taskActivityTreeData}
@@ -103,6 +113,7 @@ TaskActivityLogs.propTypes = {
   taskActivityMetadata: PropTypes.object,
   taskActivityTreeData: PropTypes.array,
   setCurrentRunNumber: PropTypes.func,
+  currentRunNumber: PropTypes.number,
 };
 
 export default TaskActivityLogs;

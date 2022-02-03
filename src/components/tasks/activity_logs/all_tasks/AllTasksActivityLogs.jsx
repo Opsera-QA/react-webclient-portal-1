@@ -20,7 +20,6 @@ function AllTasksActivityLogs(
     taskActivityFilterModel,
     setTaskActivityFilterModel,
     taskActivityTreeData,
-    currentTaskId,
     setCurrentTaskId,
     currentRunNumber,
     setCurrentRunNumber,
@@ -32,11 +31,11 @@ function AllTasksActivityLogs(
       return ("Could not find any results with the given filters.");
     }
 
-    if (currentTaskId === "latest") {
+    if (currentRunNumber === "latest") {
       return ("Task activity data has not been generated yet. Once this Task begins running, it will publish details here.");
     }
 
-    if (currentTaskId === "secondary") {
+    if (currentRunNumber === "secondary") {
       return ("There are no secondary logs.");
     }
 
@@ -137,7 +136,6 @@ AllTasksActivityLogs.propTypes = {
   loadData: PropTypes.func,
   taskActivityMetadata: PropTypes.object,
   taskActivityTreeData: PropTypes.array,
-  currentTaskId: PropTypes.string,
   setCurrentTaskId: PropTypes.func,
   currentRunNumber: PropTypes.number,
   setCurrentRunNumber: PropTypes.func,

@@ -182,6 +182,7 @@ function TaskActivityPanel({ task }) {
       taskActivityMetadata={taskActivityMetadata}
       taskActivityTreeData={taskLogsTree?.current}
       setCurrentRunNumber={setCurrentRunNumber}
+      currentRunNumber={currentRunNumber}
     />
   );
 }

@@ -9,7 +9,6 @@ import TableBase from "components/common/table/TableBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {getTaskTypeLabel} from "components/tasks/task.types";
-import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function AllTasksActivityLogTable({ taskLogData, taskActivityMetadata, isLoading }) {
   const [columns, setColumns] = useState([]);

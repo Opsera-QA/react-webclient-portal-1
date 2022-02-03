@@ -43,8 +43,13 @@ function TaskActivityLogTree(
     }
 
     if (treeItem) {
-      setCurrentRunNumber(treeItem.runNumber);
-      setCurrentTaskId(treeItem.taskId);
+      if (setCurrentRunNumber) {
+        setCurrentRunNumber(treeItem.runNumber);
+      }
+
+      if (setCurrentTaskId) {
+        setCurrentTaskId(treeItem.taskId);
+      }
     }
   };
 
@@ -55,8 +60,14 @@ function TaskActivityLogTree(
     }
 
     if (treeItem) {
-      setCurrentRunNumber(undefined);
-      setCurrentTaskId(treeItem.taskId);
+
+      if (setCurrentRunNumber) {
+        setCurrentRunNumber(treeItem.runNumber);
+      }
+
+      if (setCurrentTaskId) {
+        setCurrentTaskId(treeItem.taskId);
+      }
     }
   };
 
