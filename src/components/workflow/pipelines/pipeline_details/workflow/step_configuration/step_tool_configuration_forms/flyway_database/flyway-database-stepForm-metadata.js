@@ -2,6 +2,13 @@ const flywayDatabaseStepFormMetadata = {
   type: "Flyway Tool Configuration",
   fields: [
     {
+      label: "Step Type",
+      id: "type",
+      isRequired: true,
+      maxLength: 10,
+      lowercase: true,
+    }, 
+    {
       label: "Flyway Database",
       id: "toolConfigId",
       isRequired: true,
@@ -67,7 +74,7 @@ const flywayDatabaseStepFormMetadata = {
       id: "database",
       regexDefinitionName: "generalText",
       maxLength: 50,
-      formText: "Snowflake database"
+      formText: "database"
     }, 
     {
       label: "Warehouse",
@@ -76,14 +83,29 @@ const flywayDatabaseStepFormMetadata = {
       maxLength: 50,
       formText: "Snowflake Warehouse"
     },
+    {
+      label: "Allow Out of Order deployment",
+      id: "outOfOrder",
+      formText: " "
+    },
+    {
+      label: "Informatica DB",
+      id: "dbType",
+      formText: " ",
+      isRequired: true,
+      maxLength: 255,
+    }
   ],
   newObjectFields: {
+    type: "",
     toolConfigId : "",
+    dbType: "snowflake",
     service: "",
     gitToolId : "",
     repository: "",
     workspace: "",
     gitBranch: "",
+    outOfOrder: false,
     baseSchema: "",
     schema: [],
     scriptFilePath: "",

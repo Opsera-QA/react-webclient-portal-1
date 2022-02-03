@@ -12,8 +12,9 @@ import SourceRepositoryBitbucketWorkspaceSelectInput from "components/workflow/p
 import SourceRepositorySelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/inputs/SourceRepositorySelectInput";
 import SourceRepositoryPrimaryBranchSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/inputs/SourceRepositoryPrimaryBranchSelectInput";
 import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
-import RoleRestrictedToolByIdentifierInputBase
-  from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+import FlywayStepTypeSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/inputs/FlywayStepTypeSelectInput";
+import FlywayToolSelectInput from "./inputs/FlywayToolSelectInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 function FlywayDatabaseStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
   const [flywayStepConfigurationDto, setFlywayStepConfigurationDataDto] = useState(undefined);
@@ -63,13 +64,15 @@ function FlywayDatabaseStepConfiguration({ pipelineId, stepTool, plan, stepId, c
       persistRecord={handleSaveStepConfig}
       isLoading={isLoading}
     >
-      <RoleRestrictedToolByIdentifierInputBase
-        toolIdentifier={"flyway-database-migrator"}
-        toolFriendlyName={"flyway-database-migrator"}
+      <FlywayStepTypeSelectInput
+        fieldName={"type"}
+        model={flywayStepConfigurationDto}
+        setModel={setFlywayStepConfigurationDataDto}
+      />
+      <FlywayToolSelectInput
         fieldName={"toolConfigId"}
         model={flywayStepConfigurationDto}
         setModel={setFlywayStepConfigurationDataDto}
-        placeholderText={"Select a Tool"}
       />
       <SourceRepositoryTypeSelectInput
         model={flywayStepConfigurationDto}
@@ -102,6 +105,11 @@ function FlywayDatabaseStepConfiguration({ pipelineId, stepTool, plan, stepId, c
         model={flywayStepConfigurationDto}
         setModel={setFlywayStepConfigurationDataDto}
       />
+      <BooleanToggleInput 
+        fieldName={"outOfOrder"}
+        dataObject={flywayStepConfigurationDto}
+        setDataObject={setFlywayStepConfigurationDataDto}
+      />
       <MultiTextInputBase
         fieldName={"schema"}
         setDataObject={setFlywayStepConfigurationDataDto}
@@ -110,7 +118,7 @@ function FlywayDatabaseStepConfiguration({ pipelineId, stepTool, plan, stepId, c
       <TextInputBase fieldName={"baseSchema"} dataObject={flywayStepConfigurationDto} setDataObject={setFlywayStepConfigurationDataDto}/>
       <TextInputBase fieldName={"scriptFilePath"} dataObject={flywayStepConfigurationDto} setDataObject={setFlywayStepConfigurationDataDto}/>
       <TextInputBase fieldName={"database"} dataObject={flywayStepConfigurationDto} setDataObject={setFlywayStepConfigurationDataDto}/>
-      <TextInputBase fieldName={"warehouse"} dataObject={flywayStepConfigurationDto} setDataObject={setFlywayStepConfigurationDataDto}/>
+      {flywayStepConfigurationDto.getData("dbType") === "snowflake" && <TextInputBase fieldName={"warehouse"} dataObject={flywayStepConfigurationDto} setDataObject={setFlywayStepConfigurationDataDto}/>}
     </PipelineStepEditorPanelContainer>
   );
 }

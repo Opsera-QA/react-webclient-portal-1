@@ -6,6 +6,14 @@ const FLYWAY_DB_TYPES = [
   {
     name: "Snowflake",
     value: "snowflake"
+  },
+  {
+    name: "Redshift",
+    value: "redshift"
+  },
+  {
+    name: "MySQL",
+    value: "mysql"
   }
 ];
 
