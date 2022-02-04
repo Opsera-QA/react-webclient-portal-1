@@ -23,7 +23,7 @@ const SonarCoverageTableMetadata = {
     //   id: "status",
     // },
     {
-      label: "Code Coverage",
+      label: "Code Coverage %",
       id: "coverage",
     },
     {
@@ -31,7 +31,7 @@ const SonarCoverageTableMetadata = {
       id: "duplicate_lines",
     },
     {
-      label: "Duplicated Density",
+      label: "Duplicated Density %",
       id: "duplicated_lines_density",
     },
     {
