@@ -153,6 +153,7 @@ function PipelineActionControls(
   const checkPipelineQueueStatus = async () => {
     const featureFlags = await getFeatureFlags();
     const orchestration = featureFlags?.orchestration;
+
     setQueueingEnabled(orchestration?.enableQueuing);
 
     if (orchestration?.enableQueuing) {
@@ -255,6 +256,14 @@ function PipelineActionControls(
       setStartPipeline(true);
       toastContext.showInformationToast("A request to start this pipeline has been submitted.  It will begin shortly.", 20);
       await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+    }
+    catch (error) {
+      if (isMounted.current === true) {
+        setStartPipeline(false);
+        toastContext.showSystemErrorToast(error, "There was an issue starting this pipeline");
+      }
+    }
+    finally {
       delayRefresh();
 
       // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
@@ -262,12 +271,6 @@ function PipelineActionControls(
         await fetchData();
         setStartPipeline(false);
       }, timeoutCheckInterval);
-    }
-    catch (error) {
-      if (isMounted.current === true) {
-        setStartPipeline(false);
-        toastContext.showSystemErrorToast(error, "There was an issue starting this pipeline");
-      }
     }
   };
 
@@ -296,6 +299,13 @@ function PipelineActionControls(
       toastContext.showInformationToast("A request to start this pipeline from the start has been submitted.  Resetting pipeline status and then the pipeline will begin momentarily.", 20);
       await PipelineActions.triggerPipelineNewStartV2(getAccessToken, cancelTokenSource, pipelineId);
       setHasQueuedRequest(true);
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    }
+    finally {
       delayRefresh();
 
       // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
@@ -303,11 +313,6 @@ function PipelineActionControls(
         await fetchData();
         setStartPipeline(false);
       }, timeoutCheckInterval);
-    }
-    catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
     }
   };
 
@@ -317,7 +322,14 @@ function PipelineActionControls(
       setWorkflowStatus("running");
       toastContext.showInformationToast("A request to resume this pipeline has been submitted.  It will begin shortly.", 20);
       await PipelineActions.resumePipelineV2(getAccessToken, cancelTokenSource, pipelineId);
-
+    }
+    catch (error) {
+      if (isMounted.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+        setStartPipeline(false);
+      }
+    }
+    finally {
       delayRefresh();
 
       // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
@@ -325,12 +337,6 @@ function PipelineActionControls(
         await fetchData();
         setStartPipeline(false);
       }, timeoutCheckInterval);
-    }
-    catch (error) {
-      if (isMounted.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-        setStartPipeline(false);
-      }
     }
   };
 

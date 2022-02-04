@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import {parseError} from "../../helpers/error-helpers";
 import IconBase from "components/common/icons/IconBase";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function ErrorToast({ error, prependMessage, removeToast, autoCloseLength, id }) {
   const [messageBody, setMessageBody] = useState("");
@@ -12,7 +13,7 @@ function ErrorToast({ error, prependMessage, removeToast, autoCloseLength, id })
   useEffect(() => {
     const messageBody = parseError(error);
     setMessageBody(messageBody);
-    setStatusCode(error && error.response ? error.response.status : null);
+    setStatusCode(error?.response?.status);
 
     if (autoCloseLength != null) {
       autoHideDialog(autoCloseLength * 1000);
@@ -33,9 +34,9 @@ function ErrorToast({ error, prependMessage, removeToast, autoCloseLength, id })
     removeToast(id);
   };
 
-  function autoHideDialog(autoCloseLength = 20000) {
+  const autoHideDialog = (autoCloseLength = 20000) => {
     setAutoCloseTimer(setTimeout(() => { clearError(); }, autoCloseLength));
-  }
+  };
 
   const getCloseButton = () => {
     if (removeToast) {
@@ -52,7 +53,7 @@ function ErrorToast({ error, prependMessage, removeToast, autoCloseLength, id })
   };
 
   const getCustomMessage = () => {
-    if (statusCode === 401 || (messageBody && messageBody.includes("401"))) {
+    if (statusCode === 401 || (hasStringValue(messageBody) === true && messageBody.includes("401"))) {
       return (
         <span>
           <a style={{textDecoration: "underline"}} href="#" onClick={() => { reloadSession(); }}>Click here to renew session.</a>
