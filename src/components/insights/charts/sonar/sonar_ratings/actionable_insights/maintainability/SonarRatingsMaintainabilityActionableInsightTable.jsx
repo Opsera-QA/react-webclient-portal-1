@@ -14,6 +14,8 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
+import { LETTER_GRADES } from "../../../../../../common/metrics/grade/MetricLetterGradeText";
+import { getTableTextColumn } from "../../../../../../common/table/column_definitions/model-table-column-definitions";
 
 // TODO: Convert to cards
 function SonarRatingsMaintainabilityActionableInsightTable(
@@ -62,12 +64,41 @@ function SonarRatingsMaintainabilityActionableInsightTable(
     };
   };
 
+  const getKpiSonarRatingTableTextColumn = (field, rating) => {
+    return {
+      Header: getCustomTableHeader(field),
+      accessor: getCustomTableAccessor(field),
+      Cell: function parseText(row) {
+        let value = row?.value;
+        if (value > 0) {
+          if (rating <= 1) {
+            value = LETTER_GRADES.A;
+          } else if (rating <= 2) {
+            value = LETTER_GRADES.B;
+          } else if (rating <= 3) {
+            value = LETTER_GRADES.C;
+          } else if (rating <= 4) {
+            value = LETTER_GRADES.D;
+          } else if (rating <= 5) {
+            value = LETTER_GRADES.E;
+          } else {
+            value = null;
+          }
+        }
+        return (
+          <div>{value}</div>
+        );
+      },
+    };
+  };
+
   const columns = useMemo(
     () => [
       getKpiSonarPipelineTableTextColumn(getField(fields, "project")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "pipelineName")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "runCount")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "endTimestamp")),
+      getKpiSonarRatingTableTextColumn(getField(fields, "maintainibility_rating"), "maintainibility_rating"),
       getChartTrendStatusColumn(getField(fields, "status")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "critical"), "critical"),
       getKpiSonarPipelineTableTextColumn(getField(fields, "blocker"), "blocker"),

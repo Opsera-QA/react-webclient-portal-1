@@ -11,6 +11,8 @@ import ThreeStackedHorizontalMetricsContainer from "components/common/metrics/da
 import SonarRatingsReliabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlockContainer";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import BadgeBase from "components/common/badges/BadgeBase";
+import { Col, Row } from "react-bootstrap";
+import SonarRatingsCodeCoverageBlockContainer from "./data_blocks/SonarRatingsCodeCoverageBlockConatainer";
 
 function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -85,34 +87,46 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
 
     return (
       <>
-        <ThreeStackedHorizontalMetricsContainer
-          className={"mx-2"}
-          topDataBlock={
-            <SonarRatingsVulnerabilityDataBlockContainer
-              kpiConfiguration={kpiConfiguration}
-              dashboardData={dashboardData}
-              securityRating={sonarRatingsMetric?.security_rating}
-              vulnerabilityCount={sonarRatingsMetric?.vulnerabilities}
-            />
-          }
-          middleDataBlock={
-            <SonarRatingsReliabilityDataBlockContainer
-              kpiConfiguration={kpiConfiguration}
-              dashboardData={dashboardData}
-              reliabilityRating={sonarRatingsMetric?.reliability_rating}
-              bugCount={sonarRatingsMetric?.bugs}
-            />
-          }
-          bottomDataBlock={
-            <SonarRatingsMaintainabilityDataBlockContainer
-              dashboardData={dashboardData}
-              kpiConfiguration={kpiConfiguration}
-              maintainabilityRating={sonarRatingsMetric?.maintainability_rating}
-              technicalDebtRatio={sonarRatingsMetric.technical_debt_ratio}
-            />
-          }
-        />
-        <BadgeBase className={"mx-2"} badgeText={"Results of scans from 25th November 2021 onward"} />
+        <div className={"mx-2"}>
+          <Row>
+            <Col className={"my-3"}>
+              <SonarRatingsVulnerabilityDataBlockContainer
+                kpiConfiguration={kpiConfiguration}
+                dashboardData={dashboardData}
+                securityRating={sonarRatingsMetric?.security_rating}
+                vulnerabilityCount={sonarRatingsMetric?.vulnerabilities}
+              />
+            </Col>
+            <Col className={"my-3"}>
+              <SonarRatingsReliabilityDataBlockContainer
+                kpiConfiguration={kpiConfiguration}
+                dashboardData={dashboardData}
+                reliabilityRating={sonarRatingsMetric?.reliability_rating}
+                bugCount={sonarRatingsMetric?.bugs}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col className={"my-3"}>
+              <SonarRatingsMaintainabilityDataBlockContainer
+                dashboardData={dashboardData}
+                kpiConfiguration={kpiConfiguration}
+                maintainabilityRating={sonarRatingsMetric?.maintainability_rating}
+                technicalDebtRatio={sonarRatingsMetric.technical_debt_ratio}
+              />
+            </Col>
+            <Col className={"my-3"}>
+              <SonarRatingsCodeCoverageBlockContainer
+                dashboardData={dashboardData}
+                kpiConfiguration={kpiConfiguration}
+                linesToCover={sonarRatingsMetric?.lines_to_cover}
+                uncoveredLines={sonarRatingsMetric?.uncovered_lines}
+                duplicate={sonarRatingsMetric?.duplicated_lines}
+              />
+            </Col>
+          </Row>
+        </div>
+        <BadgeBase className={"mx-2"} badgeText={"Please Note, scan data used by these metrics is only available from Nov 25 2021 onward.  Any date selection prior to that will not return data."} />
       </>
     );
   };
