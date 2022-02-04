@@ -31,7 +31,7 @@ const SonarCoverageTableMetadata = {
       id: "duplicate_lines",
     },
     {
-      label: "Duplicated Density %",
+      label: "Duplicated Line Density %",
       id: "duplicated_lines_density",
     },
     {
