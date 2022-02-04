@@ -9,30 +9,35 @@ import PipelineTaskSummaryMessageField
   from "components/common/fields/pipelines/activity/PipelineTaskSummaryMessageField";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 
-function TaskActivitySummaryPanel({ gitTaskActivityData }) {
+function TaskActivitySummaryPanel({ taskActivityLogModel }) {
+
+  if (taskActivityLogModel == null) {
+    return null;
+  }
+
   return (
     <SummaryPanelContainer>
       <Row>
         <Col md={6}>
-          <TextFieldBase dataObject={gitTaskActivityData} fieldName={"name"}/>
+          <TextFieldBase dataObject={taskActivityLogModel} fieldName={"name"}/>
         </Col>
         <Col md={6}>
-          <TextFieldBase dataObject={gitTaskActivityData} fieldName={"type"}/>
+          <TextFieldBase dataObject={taskActivityLogModel} fieldName={"type"}/>
         </Col>
         <Col md={6}>
-          <TextFieldBase dataObject={gitTaskActivityData} fieldName={"task_id"}/>
+          <TextFieldBase dataObject={taskActivityLogModel} fieldName={"task_id"}/>
         </Col>
         <Col md={6}>
-          <TextFieldBase dataObject={gitTaskActivityData} fieldName={"run_count"}/>
+          <TextFieldBase dataObject={taskActivityLogModel} fieldName={"run_count"}/>
         </Col>
         <Col md={6}>
-          <DateTimeField dataObject={gitTaskActivityData} fieldName={"createdAt"}/>
+          <DateTimeField dataObject={taskActivityLogModel} fieldName={"createdAt"}/>
         </Col>
         <Col md={6}>
-          <PipelineTaskStateField dataObject={gitTaskActivityData} fieldName={"status"}/>
+          <PipelineTaskStateField dataObject={taskActivityLogModel} fieldName={"status"}/>
         </Col>
         <Col md={12}>
-          <PipelineTaskSummaryMessageField fieldName={"message"} dataObject={gitTaskActivityData} />
+          <PipelineTaskSummaryMessageField fieldName={"message"} dataObject={taskActivityLogModel} />
         </Col>
       </Row>
     </SummaryPanelContainer>
@@ -40,8 +45,7 @@ function TaskActivitySummaryPanel({ gitTaskActivityData }) {
 }
 
 TaskActivitySummaryPanel.propTypes = {
-  gitTaskActivityData: PropTypes.object,
+  taskActivityLogModel: PropTypes.object,
 };
-
 
 export default TaskActivitySummaryPanel;
