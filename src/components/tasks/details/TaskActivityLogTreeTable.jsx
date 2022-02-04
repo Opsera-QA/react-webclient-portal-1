@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { faClipboardList } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -8,27 +8,45 @@ import TaskActivityLogsTable from "components/tasks/activity_logs/TaskActivityLo
 import TaskActivityLogTree from "components/tasks/activity_logs/TaskActivityLogTree";
 import TaskStatusFilter from "components/common/filters/tasks/status/TaskStatusFilter";
 
-function TaskActivityLogs({ taskLogData, taskName, taskActivityMetadata, loadData, isLoading, taskActivityFilterModel, setTaskActivityFilterModel, taskActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
-  const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
-  const [currentStepName, setCurrentStepName] = useState(undefined);
-
+function TaskActivityLogTreeTable(
+  {
+    taskLogData,
+    taskActivityMetadata,
+    loadData,
+    isLoading,
+    taskActivityFilterModel,
+    setTaskActivityFilterModel,
+    taskActivityTreeData,
+    currentRunNumber,
+    setCurrentRunNumber,
+    setCurrentTaskId,
+  }) {
   const getNoDataMessage = () => {
     const activeFilters = taskActivityFilterModel?.getActiveFilters();
     if (activeFilters?.length > 0) {
       return ("Could not find any results with the given filters.");
     }
 
-    return ("Task activity data has not been generated yet. Once this Task begins running, it will publish details here.");
-  };
+    if (currentRunNumber === "latest") {
+      return ("Task activity data has not been generated yet. Once this Task begins running, it will publish details here.");
+    }
 
+    if (currentRunNumber === "secondary") {
+      return ("There are no secondary logs.");
+    }
+
+    if (currentRunNumber == null) {
+      return ("Please select a run number to view its logs.");
+    }
+
+    return (`Task activity data has not been generated yet for Run ${currentRunNumber}`);
+  };
   const getTable = () => {
     return (
       <TaskActivityLogsTable
         isLoading={isLoading}
         taskLogData={taskLogData}
-        currentRunNumber={currentRunNumber}
         taskActivityMetadata={taskActivityMetadata}
-        currentTaskName={taskName}
       />
     );
   };
@@ -37,12 +55,10 @@ function TaskActivityLogs({ taskLogData, taskName, taskActivityMetadata, loadDat
     return (
       <TaskActivityLogTree
         setCurrentRunNumber={setCurrentRunNumber}
-        currentLogTreePage={currentLogTreePage}
-        setCurrentLogTreePage={setCurrentLogTreePage}
-        setCurrentTaskName={setCurrentStepName}
         taskActivityFilterModel={taskActivityFilterModel}
         loadData={loadData}
         taskLogTree={taskActivityTreeData}
+        setCurrentTaskId={setCurrentTaskId}
       />
     );
   };
@@ -62,13 +78,11 @@ function TaskActivityLogs({ taskLogData, taskName, taskActivityMetadata, loadDat
 
   const getDropdownFilters = () => {
     return(
-      <>
-        <TaskStatusFilter
-          className={"mb-2"}
-          filterModel={taskActivityFilterModel}
-          setFilterModel={setTaskActivityFilterModel}
-        />
-      </>
+      <TaskStatusFilter
+        className={"mb-2"}
+        filterModel={taskActivityFilterModel}
+        setFilterModel={setTaskActivityFilterModel}
+      />
     );
   };
 
@@ -90,7 +104,7 @@ function TaskActivityLogs({ taskLogData, taskName, taskActivityMetadata, loadDat
   );
 }
 
-TaskActivityLogs.propTypes = {
+TaskActivityLogTreeTable.propTypes = {
   taskLogData: PropTypes.array,
   isLoading: PropTypes.bool,
   taskActivityFilterModel: PropTypes.object,
@@ -98,9 +112,12 @@ TaskActivityLogs.propTypes = {
   loadData: PropTypes.func,
   taskActivityMetadata: PropTypes.object,
   taskActivityTreeData: PropTypes.array,
-  setCurrentLogTreePage: PropTypes.func,
-  currentLogTreePage: PropTypes.number,
-  taskName: PropTypes.string,
+  setCurrentRunNumber: PropTypes.func,
+  currentRunNumber: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  setCurrentTaskId: PropTypes.func,
 };
 
-export default TaskActivityLogs;
+export default TaskActivityLogTreeTable;

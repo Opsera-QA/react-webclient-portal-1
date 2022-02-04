@@ -1,8 +1,8 @@
 import baseActions from "utils/actionsBase";
 
-const pipelineActivityActions = {};
+const pipelineActivityLogsActions = {};
 
-pipelineActivityActions.getPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterModel, currentRunNumber) => {
+pipelineActivityLogsActions.getPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterModel, currentRunNumber) => {
   const urlParams = {
     params: {
       search:   pipelineActivityFilterModel?.getData("search"),
@@ -16,7 +16,7 @@ pipelineActivityActions.getPipelineActivityLogsV3 = async (getAccessToken, cance
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-pipelineActivityActions.getLatestPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterDto) => {
+pipelineActivityLogsActions.getLatestPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterDto) => {
   const urlParams = {
     params: {
       search: pipelineActivityFilterDto?.getData("search"),
@@ -29,7 +29,7 @@ pipelineActivityActions.getLatestPipelineActivityLogsV3 = async (getAccessToken,
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-pipelineActivityActions.getSecondaryPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterDto) => {
+pipelineActivityLogsActions.getSecondaryPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterDto) => {
   const urlParams = {
     params: {
       search: pipelineActivityFilterDto?.getData("search"),
@@ -42,7 +42,7 @@ pipelineActivityActions.getSecondaryPipelineActivityLogsV3 = async (getAccessTok
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-pipelineActivityActions.getPipelineActivityLogsByRunNumber = async (getAccessToken, cancelTokenSource, pipelineId, stepId, runNumber, stepName, action) => {
+pipelineActivityLogsActions.getPipelineActivityLogsByRunNumber = async (getAccessToken, cancelTokenSource, pipelineId, stepId, runNumber, stepName, action) => {
   const apiUrl = `/pipelines/${pipelineId}/activity/v2/run/${runNumber}`;
   const urlParams = {
     params: {
@@ -56,22 +56,9 @@ pipelineActivityActions.getPipelineActivityLogsByRunNumber = async (getAccessTok
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-pipelineActivityActions.getPipelineActivityLogTree = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterModel) => {
-  const urlParams = {
-    params: {
-      runCount: pipelineActivityFilterModel?.getData("runCount"),
-      search: pipelineActivityFilterModel?.getData("search"),
-      status: pipelineActivityFilterModel?.getFilterValue("status"),
-    },
-  };
-
-  const apiUrl = `/pipelines/${id}/activity/v2/tree`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
-};
-
-pipelineActivityActions.getPipelineActivityLogById = async (getAccessToken, cancelTokenSource, id) => {
+pipelineActivityLogsActions.getPipelineActivityLogById = async (getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/pipelines/activity/v2/${id}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-export default pipelineActivityActions;
+export default pipelineActivityLogsActions;

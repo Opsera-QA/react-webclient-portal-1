@@ -2,12 +2,10 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import axios from "axios";
-import taskActions from "components/tasks/task.actions";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {getFormattedTimestamp} from "components/common/fields/date/DateFieldBase";
-import LoadingDialog from "components/common/status_notifications/loading";
 import MultipleTaskChunksContainer from "components/common/fields/log/tasks/MultipleTaskChunksContainer";
+import {taskActivityLogActions} from "components/tasks/activity_logs/taskActivityLog.actions";
 
 // TODO: This needs to be tailored to Pipeline Field
 function ChunkedTaskLogField(
@@ -67,7 +65,7 @@ function ChunkedTaskLogField(
   };
 
   const getPipelineTaskData = async (cancelSource = cancelTokenSource) => {
-    const response = await taskActions.getTaskActivityChunkCount(getAccessToken, cancelSource, logMetaRecordId);
+    const response = await taskActivityLogActions.getTaskActivityChunkCount(getAccessToken, cancelSource, logMetaRecordId);
     const count = response?.data?.count;
 
     if (typeof count === "number") {
