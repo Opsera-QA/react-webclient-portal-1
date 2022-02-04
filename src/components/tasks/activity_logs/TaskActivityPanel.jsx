@@ -5,8 +5,8 @@ import axios from "axios";
 import taskActivityLogHelpers
   from "components/tasks/activity_logs/taskActivityLog.helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import TaskActivityLogs from "components/tasks/details/TaskActivityLogs";
-import {TaskActivityFilterModel} from "components/tasks/activity_logs/task-activity.filter.model";
+import TaskActivityLogTreeTable from "components/tasks/details/TaskActivityLogTreeTable";
+import {TaskActivityLogFilterModel} from "components/tasks/activity_logs/taskActivityLog.filter.model";
 import {taskActivityLogActions} from "components/tasks/activity_logs/taskActivityLog.actions";
 
 function TaskActivityPanel({ task }) {
@@ -30,7 +30,7 @@ function TaskActivityPanel({ task }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    let newFilterModel = new TaskActivityFilterModel(getAccessToken, source, loadData);
+    let newFilterModel = new TaskActivityLogFilterModel(getAccessToken, source, loadData);
     setTaskActivityFilterModel(newFilterModel);
     loadData().catch((error) => {
       if (isMounted?.current === true) {
@@ -173,7 +173,7 @@ function TaskActivityPanel({ task }) {
   };
 
   return (
-    <TaskActivityLogs
+    <TaskActivityLogTreeTable
       taskLogData={activityData}
       isLoading={isLoading}
       loadData={pullLogs}
