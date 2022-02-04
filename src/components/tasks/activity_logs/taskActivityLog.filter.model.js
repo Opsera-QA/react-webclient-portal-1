@@ -1,6 +1,6 @@
 import FilterModelBase from "core/data_model/filterModel.base";
 
-const taskActivityFilterMetadata = {
+export const taskActivityFilterMetadata = {
   type: "Task Activity Log",
   fields: [
     {
@@ -53,7 +53,7 @@ const taskActivityFilterMetadata = {
   },
 };
 
-export class TaskActivityFilterModel extends FilterModelBase {
+export class TaskActivityLogFilterModel extends FilterModelBase {
   constructor(getAccessToken, cancelTokenSource, loadData) {
     super(taskActivityFilterMetadata);
     this.getAccessToken = getAccessToken;
@@ -107,10 +107,10 @@ export class TaskActivityFilterModel extends FilterModelBase {
   };
 
   getNewInstance = () => {
-    return new TaskActivityFilterModel(this.getAccessToken, this.cancelTokenSource, this.loadData);
+    return new TaskActivityLogFilterModel(this.getAccessToken, this.cancelTokenSource, this.loadData);
   };
 }
 
-export default TaskActivityFilterModel;
+export default TaskActivityLogFilterModel;
 
 

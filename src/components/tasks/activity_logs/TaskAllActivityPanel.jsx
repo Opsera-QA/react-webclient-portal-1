@@ -1,7 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "contexts/AuthContext";
-import AllTasksActivityLogTreeTable
-  from "components/tasks/activity_logs/all_tasks/AllTasksActivityLogTreeTable";
 import axios from "axios";
 import taskActivityLogHelpers
   from "components/tasks/activity_logs/taskActivityLog.helpers";
@@ -9,9 +7,10 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
 import taskActions from "components/tasks/task.actions";
-import {TaskActivityFilterModel} from "components/tasks/activity_logs/task-activity.filter.model";
+import {TaskActivityLogFilterModel} from "components/tasks/activity_logs/taskActivityLog.filter.model";
 import {taskActivityLogActions} from "components/tasks/activity_logs/taskActivityLog.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import TaskActivityLogTreeTable from "components/tasks/details/TaskActivityLogTreeTable";
 
 function TaskAllActivityPanel() {
   const toastContext = useContext(DialogToastContext);
@@ -35,7 +34,7 @@ function TaskAllActivityPanel() {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    setTaskActivityFilterModel(new TaskActivityFilterModel(getAccessToken, source, pullLogs));
+    setTaskActivityFilterModel(new TaskActivityLogFilterModel(getAccessToken, source, pullLogs));
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -153,17 +152,17 @@ function TaskAllActivityPanel() {
       `}
       navigationTabContainer={<TasksSubNavigationBar currentTab={"activity"}/>}
     >
-      <AllTasksActivityLogTreeTable
+      <TaskActivityLogTreeTable
         taskLogData={activityData}
-        isLoading={isLoading}
+        taskActivityMetadata={taskActivityMetadata}
         loadData={pullLogs}
+        isLoading={isLoading}
         taskActivityFilterModel={taskActivityFilterModel}
         setTaskActivityFilterModel={setTaskActivityFilterModel}
-        taskActivityMetadata={taskActivityMetadata}
         taskActivityTreeData={taskLogsTree?.current}
+        currentRunNumber={currentRunNumber}
         setCurrentRunNumber={setCurrentRunNumber}
         setCurrentTaskId={setCurrentTaskId}
-        currentRunNumber={currentRunNumber}
       />
     </ScreenContainer>
   );
