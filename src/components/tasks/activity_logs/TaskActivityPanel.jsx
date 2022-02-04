@@ -8,8 +8,9 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import TaskActivityLogTreeTable from "components/tasks/details/TaskActivityLogTreeTable";
 import {TaskActivityLogFilterModel} from "components/tasks/activity_logs/taskActivityLog.filter.model";
 import {taskActivityLogActions} from "components/tasks/activity_logs/taskActivityLog.actions";
+import CustomTable from "components/common/table/CustomTable";
 
-function TaskActivityPanel({ task }) {
+function TaskActivityPanel({ taskModel }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -29,9 +30,9 @@ function TaskActivityPanel({ task }) {
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-
     let newFilterModel = new TaskActivityLogFilterModel(getAccessToken, source, loadData);
     setTaskActivityFilterModel(newFilterModel);
+
     loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -42,7 +43,7 @@ function TaskActivityPanel({ task }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [taskModel]);
 
   useEffect(() => {
     setActivityData([]);
@@ -60,7 +61,7 @@ function TaskActivityPanel({ task }) {
     try {
       setIsLoading(true);
       setActivityData([]);
-      const taskTree = taskActivityLogHelpers.constructRunCountTree(task);
+      const taskTree = taskActivityLogHelpers.constructRunCountTree(taskModel?.getData("run_count"));
 
       if (Array.isArray(taskTree)) {
         taskLogsTree.current = taskTree;
@@ -102,7 +103,7 @@ function TaskActivityPanel({ task }) {
   const getSecondaryActivityLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await taskActivityLogActions.getSecondaryTaskActivityLogs(getAccessToken, cancelSource, newFilterModel, task?.getData("_id"));
+      const response = await taskActivityLogActions.getSecondaryTaskActivityLogs(getAccessToken, cancelSource, newFilterModel, taskModel?.getData("_id"));
       const taskActivityData = response?.data?.data;
 
       if (Array.isArray(taskActivityData)) {
@@ -126,7 +127,7 @@ function TaskActivityPanel({ task }) {
   const getLatestActivityLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await taskActivityLogActions.getLatestTaskActivityLogs(getAccessToken, cancelSource, newFilterModel, task?.getData("_id"));
+      const response = await taskActivityLogActions.getLatestTaskActivityLogs(getAccessToken, cancelSource, newFilterModel, taskModel?.getData("_id"));
       const taskActivityData = response?.data?.data;
 
       if (Array.isArray(taskActivityData)) {
@@ -150,7 +151,7 @@ function TaskActivityPanel({ task }) {
   const getSingleRunLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await taskActivityLogActions.getTaskActivityLogsByIdAndRunCount(getAccessToken, cancelSource, task?.getData("_id"), currentRunNumber, newFilterModel);
+      const response = await taskActivityLogActions.getTaskActivityLogsByIdAndRunCount(getAccessToken, cancelSource, taskModel?.getData("_id"), currentRunNumber, newFilterModel);
       const taskActivityData = response?.data?.data;
 
       if (Array.isArray(taskActivityData)) {
@@ -172,6 +173,10 @@ function TaskActivityPanel({ task }) {
     }
   };
 
+  if (taskModel == null) {
+    return null;
+  }
+
   return (
     <TaskActivityLogTreeTable
       taskLogData={activityData}
@@ -183,12 +188,13 @@ function TaskActivityPanel({ task }) {
       taskActivityTreeData={taskLogsTree?.current}
       setCurrentRunNumber={setCurrentRunNumber}
       currentRunNumber={currentRunNumber}
+      taskRunCount={taskModel?.getData("run_count")}
     />
   );
 }
 
 TaskActivityPanel.propTypes = {
-  task: PropTypes.object,
+  taskModel: PropTypes.object,
 };
 
 export default TaskActivityPanel;
