@@ -27,7 +27,11 @@ function TaskActivityLogsTable({ taskLogData, taskActivityMetadata, isLoading })
   }, [JSON.stringify(taskActivityMetadata)]);
 
   const onRowSelect = (treeGrid, row) => {
-    toastContext.showOverlayPanel(<TaskDetailViewer taskActivityLogId={row?._id} />);
+    toastContext.showOverlayPanel(
+      <TaskDetailViewer
+        taskActivityLogId={row?._id}
+      />
+    );
   };
 
   const loadColumnMetadata = (newActivityMetadata) => {
