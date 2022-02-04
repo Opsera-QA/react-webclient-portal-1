@@ -98,7 +98,7 @@ function ParameterValueTextInput({fieldName, model, parameterId, setModel, disab
     <InputContainer>
       <InputLabel field={field} model={model}/>
       <div className={"d-flex"}>
-        <input
+        <textarea
           type={valueShown === false && !model?.isChanged(fieldName) ? "password" : undefined}
           disabled={disabled}
           value={getValue()}

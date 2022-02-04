@@ -67,6 +67,8 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
     }
   };
 
+  console.log("help");
+
   const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     try {
       setIsLoading(true);
@@ -90,31 +92,17 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
         undefined
       );
 
-      const metrics = response?.data?.data[0]?.sonarCodeCoverageActionableInsights?.data[0]?.data;
+      const metrics = response?.data.data[0].sonarCodeCoverageActionableInsights.data[0].data;
 
       console.log("metrics", metrics);
 
       if (isMounted?.current === true && Array.isArray(metrics)) {
-        setCoverageData(metrics[0]);
+        setCoverageData(metrics);
 
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", response?.data?.data[0]?.sonarCodeCoverageActionableInsights?.data[0]?.count[0]?.count);
         setFilterModel({ ...newFilterDto });
       }
-
-      // if (isMounted?.current === true && response?.status === 200) {
-      //   const metrics = response?.data?.data[0]?.sonarCodeCoverageActionableInsights?.data[0]?.data;
-      //   // await setMaintainibilityData(
-      //   //   sonarMaintainability.map((maintainibility, index) => ({
-      //   //     ...maintainibility,
-      //   //     status: calculateTrend(maintainibility),
-      //   //     _blueprint: <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2" />,
-      //   //   }))
-      //   // );
-      //   let newFilterDto = filterDto;
-      //   newFilterDto.setData("totalCount", response?.data?.data[0]?.sonarCodeCoverageActionableInsights?.data[0]?.count[0]?.count);
-      //   setFilterModel({ ...newFilterDto });
-      // }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -137,6 +125,8 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
   };
+
+  console.log("coverageData", coverageData);
 
   return (
     <FullScreenCenterOverlayContainer

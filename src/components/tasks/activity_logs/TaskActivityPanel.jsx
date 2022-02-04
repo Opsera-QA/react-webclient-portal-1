@@ -1,25 +1,23 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import PropTypes from "prop-types";
-import {useParams} from "react-router-dom";
 import axios from "axios";
-import taskActivityHelpers
-  from "components/tasks/activity_logs/task-activity-helpers";
+import taskActivityLogHelpers
+  from "components/tasks/activity_logs/taskActivityLog.helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import TaskActivityLogs from "components/tasks/details/TaskActivityLogs";
 import {TaskActivityFilterModel} from "components/tasks/activity_logs/task-activity.filter.model";
-import taskActions from "components/tasks/task.actions";
+import {taskActivityLogActions} from "components/tasks/activity_logs/taskActivityLog.actions";
 
-function TaskActivityPanel({ taskName }) {
-  const { id } = useParams();
-  const [isLoading, setIsLoading] = useState(false);
+function TaskActivityPanel({ task }) {
   const toastContext = useContext(DialogToastContext);
+  const { getAccessToken } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
   const [taskActivityFilterModel, setTaskActivityFilterModel] = useState(undefined);
   const [taskActivityMetadata, setTaskActivityMetadata] = useState(undefined);
-  const [taskActivityTreeData, setTaskActivityTreeData] = useState([]);
-  const [currentLogTreePage, setCurrentLogTreePage] = useState(0);
   const [activityData, setActivityData] = useState([]);
-  const { getAccessToken } = useContext(AuthContext);
+  const taskLogsTree = useRef([]);
+  const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -33,7 +31,8 @@ function TaskActivityPanel({ taskName }) {
     isMounted.current = true;
 
     let newFilterModel = new TaskActivityFilterModel(getAccessToken, source, loadData);
-    loadData(newFilterModel, false, source).catch((error) => {
+    setTaskActivityFilterModel(newFilterModel);
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -43,82 +42,133 @@ function TaskActivityPanel({ taskName }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, [currentLogTreePage]);
+  }, []);
 
   useEffect(() => {
-    if (taskActivityFilterModel) {
-      getActivityLogs().catch((error) => {
+    setActivityData([]);
+
+    if (currentRunNumber) {
+      pullLogs().catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
       });
     }
-  }, [currentLogTreePage]);
+  }, [currentRunNumber]);
 
-  // TODO: Find way to put refresh inside table itself
-  const loadData = async (newFilterModel = taskActivityFilterModel, silentLoading = false, cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
-      if (!silentLoading) {
-        setIsLoading(true);
-      }
-
-      // TODO: if search term applies ignore run count and reconstruct tree?
-      const treeResponse = await taskActions.getTaskActivityLogTree(getAccessToken, cancelSource, id, newFilterModel);
-      const taskTree = taskActivityHelpers.constructSingleTaskTree(treeResponse?.data?.data);
-      setTaskActivityTreeData([...taskTree]);
+      setIsLoading(true);
       setActivityData([]);
+      const taskTree = taskActivityLogHelpers.constructRunCountTree(task);
 
-      if (Array.isArray(taskTree) && taskTree.length > 0) {
-        await getActivityLogs(newFilterModel, taskTree, cancelSource);
+      if (Array.isArray(taskTree)) {
+        taskLogsTree.current = taskTree;
       }
-      else {
-        newFilterModel?.setData("totalCount", 0);
+    } catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const pullLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+
+      if (currentRunNumber === "latest") {
+        await getLatestActivityLogs(newFilterModel, cancelSource);
+      } else if (currentRunNumber === "secondary") {
+        await getSecondaryActivityLogs(newFilterModel, cancelSource);
+      } else if (currentRunNumber) {
+        await getSingleRunLogs(newFilterModel, cancelSource);
+      }
+
+    } catch (error) {
+      if (isMounted.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    } finally {
+      if (isMounted.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const getSecondaryActivityLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+      const response = await taskActivityLogActions.getSecondaryTaskActivityLogs(getAccessToken, cancelSource, newFilterModel, task?.getData("_id"));
+      const taskActivityData = response?.data?.data;
+
+      if (Array.isArray(taskActivityData)) {
+        setActivityData([...taskActivityData]);
+        setTaskActivityMetadata(response?.data?.metadata);
+        newFilterModel?.setData("totalCount", response?.data?.count);
         newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
         setTaskActivityFilterModel({...newFilterModel});
       }
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-      console.log(error.message);
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
     } finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
-  const getActivityLogs = async (filterDto = taskActivityFilterModel, taskTree = taskActivityTreeData, cancelSource = cancelTokenSource, silentLoading = false) => {
+  const getLatestActivityLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
     try {
-      // create run count query based on tree -- tree is 0 index based
-      const startIndex = 20 * currentLogTreePage;
-      let runCountArray = [];
-
-      if (!silentLoading) {
-        setIsLoading(true);
-      }
-
-      for (let i = startIndex; i < startIndex + 20 && i < taskTree.length; i++) {
-        let runCount = taskTree[i].runNumber;
-
-        if (runCount) {
-          runCountArray.push(runCount);
-        }
-      }
-
-      const response = await taskActions.getTaskActivityLogs(getAccessToken, cancelSource, id, runCountArray, filterDto);
+      setIsLoading(true);
+      const response = await taskActivityLogActions.getLatestTaskActivityLogs(getAccessToken, cancelSource, newFilterModel, task?.getData("_id"));
       const taskActivityData = response?.data?.data;
 
-      if (taskActivityData) {
-        setActivityData(taskActivityData);
+      if (Array.isArray(taskActivityData)) {
+        setActivityData([...taskActivityData]);
         setTaskActivityMetadata(response?.data?.metadata);
-        const newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", response?.data?.count);
-        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-        setTaskActivityFilterModel({...newFilterDto});
+        newFilterModel?.setData("totalCount", response?.data?.count);
+        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
+        setTaskActivityFilterModel({...newFilterModel});
       }
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-      console.log(error.message);
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const getSingleRunLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+      const response = await taskActivityLogActions.getTaskActivityLogsByIdAndRunCount(getAccessToken, cancelSource, task?.getData("_id"), currentRunNumber, newFilterModel);
+      const taskActivityData = response?.data?.data;
+
+      if (Array.isArray(taskActivityData)) {
+        setActivityData([...taskActivityData]);
+        setTaskActivityMetadata(response?.data?.metadata);
+        newFilterModel?.setData("totalCount", response?.data?.count);
+        newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
+        setTaskActivityFilterModel({...newFilterModel});
+      }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -126,19 +176,19 @@ function TaskActivityPanel({ taskName }) {
     <TaskActivityLogs
       taskLogData={activityData}
       isLoading={isLoading}
-      loadData={loadData}
+      loadData={pullLogs}
       taskActivityFilterModel={taskActivityFilterModel}
       setTaskActivityFilterModel={setTaskActivityFilterModel}
       taskActivityMetadata={taskActivityMetadata}
-      taskActivityTreeData={taskActivityTreeData}
-      setCurrentLogTreePage={setCurrentLogTreePage}
-      taskName={taskName}
+      taskActivityTreeData={taskLogsTree?.current}
+      setCurrentRunNumber={setCurrentRunNumber}
+      currentRunNumber={currentRunNumber}
     />
   );
 }
 
 TaskActivityPanel.propTypes = {
-  taskName: PropTypes.string,
+  task: PropTypes.object,
 };
 
 export default TaskActivityPanel;

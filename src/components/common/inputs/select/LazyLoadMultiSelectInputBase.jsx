@@ -4,6 +4,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 function LazyLoadMultiSelectInputBase(
   {
@@ -134,7 +135,11 @@ function LazyLoadMultiSelectInputBase(
           lazyLoad={true}
         />
       </div>
-      <InfoText errorMessage={errorMessage} field={field} />
+      <InfoText
+        field={field}
+        errorMessage={errorMessage}
+        hideRegexDefinitionText={true}
+      />
     </InputContainer>
   );
 }

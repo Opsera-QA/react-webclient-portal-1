@@ -24,6 +24,7 @@ function SonarRatingCodeCoverageActionableInsightTable(
     filterModel,
     setFilterModel,
   }) {
+  console.log("cover", coverageData);
   const toastContext = useContext(DialogToastContext);
   const noDataMessage = "Sonar Code Coverage report is currently unavailable at this time";
   const fields = SonarCoverageTableMetadata.fields;
@@ -64,10 +65,10 @@ function SonarRatingCodeCoverageActionableInsightTable(
 
   const columns = useMemo(
     () => [
-      getKpiSonarPipelineTableTextColumn(getField(fields, "project")),
+      getKpiSonarPipelineTableTextColumn(getField(fields, "_id")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "pipelineName")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "runCount")),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "endTimestamp")),
+      getKpiSonarPipelineTableTextColumn(getField(fields, "timestamp")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "duplicate_lines")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "duplicated_lines_density")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "coverage")),

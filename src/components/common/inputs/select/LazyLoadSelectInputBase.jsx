@@ -118,7 +118,11 @@ function LazyLoadSelectInputBase(
         onSearchFunction={onSearchFunction}
         lazyLoad={true}
       />
-      <InfoText field={field} errorMessage={errorMessage} />
+      <InfoText
+        field={field}
+        errorMessage={errorMessage}
+        hideRegexDefinitionText={true}
+      />
     </InputContainer>
   );
 }

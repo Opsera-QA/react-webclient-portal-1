@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
-import JiraProjectEditorPanel
-  from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/JiraProjectEditorPanel";
+import JiraToolProjectEditorPanel
+  from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/JiraToolProjectEditorPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
@@ -28,9 +28,22 @@ function JiraProjectsDetailPanel({ toolData, setToolData, jiraProjectData, setJi
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <JiraProjectSummaryPanel jiraProjectData={jiraProjectData} jiraConfigurationData={getJiraConfigurationData()} setActiveTab={handleTabClick} />;
+        return (
+          <JiraProjectSummaryPanel
+            jiraProjectData={jiraProjectData}
+            jiraConfigurationData={getJiraConfigurationData()}
+            setActiveTab={handleTabClick}
+          />
+        );
       case "settings":
-        return <JiraProjectEditorPanel toolData={toolData} activeTab={activeTab} setJiraProjectData={setJiraProjectData} jiraProjectData={jiraProjectData} />;
+        return (
+          <JiraToolProjectEditorPanel
+            toolData={toolData}
+            activeTab={activeTab}
+            setJiraProjectData={setJiraProjectData}
+            jiraProjectData={jiraProjectData}
+          />
+        );
       default:
         return null;
     }
@@ -45,7 +58,12 @@ function JiraProjectsDetailPanel({ toolData, setToolData, jiraProjectData, setJi
     );
   };
 
-  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
+  return (
+    <DetailTabPanelContainer
+      detailView={getCurrentView()}
+      tabContainer={getTabContainer()}
+    />
+    );
 }
 
 JiraProjectsDetailPanel.propTypes = {

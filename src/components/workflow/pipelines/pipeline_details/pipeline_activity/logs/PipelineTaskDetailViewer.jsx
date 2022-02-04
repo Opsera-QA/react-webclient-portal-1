@@ -5,8 +5,8 @@ import CenterOverlayContainer from "components/common/overlays/center/CenterOver
 import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
-import pipelineActivityActions
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-actions";
+import pipelineActivityLogsActions
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineActivityLogs.actions";
 import {AuthContext} from "contexts/AuthContext";
 import Model from "core/data_model/model";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
@@ -60,7 +60,7 @@ function PipelineTaskDetailViewer({ pipelineActivityLogId, pipelineName }) {
   };
 
   const getPipelineTaskData = async (cancelSource = cancelTokenSource) => {
-    const response = await pipelineActivityActions.getPipelineActivityLogById(getAccessToken, cancelSource, pipelineActivityLogId);
+    const response = await pipelineActivityLogsActions.getPipelineActivityLogById(getAccessToken, cancelSource, pipelineActivityLogId);
     const pipelineActivityLogData = response?.data?.data;
 
     if (isMounted?.current === true && pipelineActivityLogData) {

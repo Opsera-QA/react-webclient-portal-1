@@ -11,6 +11,7 @@ import jiraProjectMetadata from "components/inventory/tools/tool_details/tool_jo
 import toolsActions from "components/inventory/tools/tools-actions";
 import axios from "axios";
 import ToolModel from "components/inventory/tools/tool.model";
+import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 
 function ToolProjectsView() {
   const { id, projectId } = useParams();
@@ -75,7 +76,7 @@ function ToolProjectsView() {
     const metaData = getMetaData(toolDataDto.getData("tool_identifier"));
 
     if (toolProjects?.length > 0) {
-      let projectData = toolProjects.find((project) => project.id === projectId);
+      let projectData = toolProjects.find((project) => project._id === projectId);
 
       if (projectData != null) {
         let toolProjectDto = new Model({...projectData}, metaData, false);
@@ -92,44 +93,29 @@ function ToolProjectsView() {
   };
 
   const getDetailView = () => {
-    switch (toolData.getData("tool_identifier")) {
+    switch (toolData?.getData("tool_identifier")) {
       case "jira":
-        return <JiraProjectDetailView toolData={toolData} loadTool={getTool} jiraProjectData={toolProjectData} setJiraProjectData={setToolProjectData} />;
+        return (
+          <JiraProjectDetailView
+            toolData={toolData}
+            loadTool={getTool}
+            isLoading={isLoading}
+            jiraProjectData={toolProjectData}
+            setJiraProjectData={setToolProjectData}
+          />
+        );
     }
+
+    return (
+      <DetailScreenContainer
+        breadcrumbDestination={"toolProjectDetailView"}
+        navigationTabContainer={<InventorySubNavigationBar currentTab={"toolProjectViewer"} />}
+        isLoading={isLoading}
+        dataObject={toolProjectData}
+        metadata={getMetaData(toolData?.getData("tool_identifier"))}
+      />
+    );
   };
-
-  if (isLoading) {
-    return (
-      <DetailScreenContainer
-        breadcrumbDestination={"toolProjectDetailView"}
-        isLoading={isLoading}
-        dataObject={toolProjectData}
-        metadata={getMetaData(toolData?.getData("tool_identifier"))}
-      />
-    );
-  }
-
-  if (toolData == null) {
-    return (
-      <DetailScreenContainer
-        breadcrumbDestination={"toolProjectDetailView"}
-        isLoading={isLoading}
-        dataObject={toolData}
-        metadata={toolMetadata}
-      />
-    );
-  }
-
-  if (toolProjectData == null) {
-    return (
-      <DetailScreenContainer
-        breadcrumbDestination={"toolProjectDetailView"}
-        isLoading={isLoading}
-        dataObject={toolProjectData}
-        metadata={getMetaData(toolData?.getData("tool_identifier"))}
-      />
-    );
-  }
 
   return (getDetailView());
 }

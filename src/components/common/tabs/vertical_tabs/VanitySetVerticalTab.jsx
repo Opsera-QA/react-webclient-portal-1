@@ -47,14 +47,14 @@ function VanitySetVerticalTab({tabName, tabText, icon, visible, disabled, access
 
 VanitySetVerticalTab.propTypes = {
   tabName: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  tabText: PropTypes.string.isRequired,
+  tabText: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   icon: PropTypes.object,
   visible: PropTypes.bool,
   tooltipText: PropTypes.string,
   disabled: PropTypes.bool,
   accessRestricted: PropTypes.bool,
   handleTabClick: PropTypes.func,
-  activeTab: PropTypes.string,
+  activeTab: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export default VanitySetVerticalTab;

@@ -30,31 +30,6 @@ import {
 
 const chartsActions = {};
 
-
-// TODO: Don't use for new metrics
-chartsActions.getLegacyMetrics = async (getAccessToken, cancelTokenSource, postBody) => {
-  const apiUrl = "/analytics/metrics";
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-// TODO: Don't use.
-chartsActions.getLegacyChartData = async (getAccessToken, cancelTokenSource, request, metric, date) => {
-  const apiUrl = "/analytics/data";
-
-  const postBody = {
-    data: [
-      {
-        request: request,
-        metric: metric,
-      },
-    ],
-    startDate: date.start,
-    endDate: date.end,
-  };
-
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
 chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessToken) => {
   const apiUrl = "/analytics/metrics";
 
@@ -143,6 +118,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     seleniumTestSuites: seleniumTestSuites,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
+    search: tableFilterDto?.getData("search"),
+    sortOption: tableFilterDto?.getData("sortOption")?.value,
     projectTags: projectTags,
     dashboardOrgs: dashboardOrgs,
     pipelineName: pipelineName,

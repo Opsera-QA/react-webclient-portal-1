@@ -7,8 +7,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import jiraConfigurationMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/jiraConfigurationMetadata";
-import JiraProjectInput
-  from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraProjectInput";
+import JiraProjectSelectInput
+  from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraProjectSelectInput";
 import JiraSprintInput
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraSprintInput";
 import JiraBoardInput
@@ -41,7 +41,11 @@ function JiraProjectConfigurationPanel({ toolData, jiraProjectData, jiraConfigur
   return (
     <div>
       {getJiraMessage()}
-      <JiraProjectInput jiraToolId={toolData.getData("_id")} setDataObject={setJiraConfigurationDto} dataObject={jiraConfigurationDto} />
+      <JiraProjectSelectInput
+        jiraToolId={toolData.getData("_id")}
+        setModel={setJiraConfigurationDto}
+        model={jiraConfigurationDto}
+      />
       <JiraBoardInput jiraToolId={toolData.getData("_id")} jiraProjectKey={jiraConfigurationDto.getData("jiraProject")} setDataObject={setJiraConfigurationDto} dataObject={jiraConfigurationDto} />
       <JiraSprintInput jiraToolId={toolData.getData("_id")} jiraBoard={jiraConfigurationDto.getData("jiraBoard")} setDataObject={setJiraConfigurationDto} dataObject={jiraConfigurationDto} />
       <JiraParentTicketInput jiraToolId={toolData.getData("_id")} jiraSprintId={jiraConfigurationDto.getData("jiraSprint")} setDataObject={setJiraConfigurationDto} dataObject={jiraConfigurationDto} />

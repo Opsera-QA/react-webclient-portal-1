@@ -31,11 +31,6 @@ taskActions.createGitTaskV2 = async (getAccessToken, cancelTokenSource, gitTasks
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-taskActions.pullLiveLogV2 = async (getAccessToken, cancelTokenSource, taskId, runCount) => {
-  const apiUrl = `/tasks/logs/${taskId}/activity/v2/run/${runCount}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
 taskActions.getTasksListV2 = async (getAccessToken, cancelTokenSource, taskFilterModel, fields) => {
   const apiUrl = `/tasks`;
   const urlParams = {
@@ -125,75 +120,6 @@ taskActions.syncCertToJenkins = async (getAccessToken, gitTasksDataDto, cancelTo
   const postBody= {"taskId" : gitTasksDataDto.getData("_id"), "jenkinsId": gitTasksDataDto.getData("jenkinsIds")};
   const apiUrl = `/tasks/synchcert`;
   return await baseActions.apiPostCall(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-taskActions.getTaskActivityLogs = async (getAccessToken, cancelTokenSource, id, runCountArray, taskActivityFilterDto) => {
-  const search = taskActivityFilterDto?.getData("search");
-  const urlParams = {
-    params: {
-      search: search ? search : undefined,
-      runCountArray: runCountArray,
-      fields: ["run_count", "name", "log_type", "type", "message", "status", "createdAt"]
-    },
-  };
-
-  const apiUrl = `tasks/logs/${id}/activity/v2/`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
-};
-
-taskActions.getAllTaskActivityLogs = async (getAccessToken, cancelTokenSource, taskNameArray, runCountArray, taskActivityFilterModel) => {
-  const urlParams = {
-    params: {
-      search: taskActivityFilterModel?.getData("search"),
-      taskNameArray: taskNameArray,
-      runCountArray: runCountArray,
-      status: taskActivityFilterModel?.getFilterValue("status"),
-      fields: ["run_count", "name", "log_type", "type", "message", "status", "createdAt"]
-    },
-  };
-
-  const apiUrl = `/tasks/logs/activity/v2/`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
-};
-
-taskActions.getTaskActivityLogTree = async (getAccessToken, cancelTokenSource, id, taskActivityFilterModel) => {
-  const apiUrl = `/tasks/logs/${id}/activity/v2/tree`;
-  const urlParams = {
-    params: {
-      search: taskActivityFilterModel?.getData("search"),
-      status: taskActivityFilterModel?.getFilterValue("status"),
-    },
-  };
-
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
-};
-
-taskActions.getAllTasksActivityTree = async (getAccessToken, cancelTokenSource, taskActivityFilterModel) => {
-  const apiUrl = `/tasks/logs/activity/v2/all-tasks-tree`;
-  const urlParams = {
-    params: {
-      search: taskActivityFilterModel?.getData("search"),
-      type: taskActivityFilterModel?.getFilterValue("type"),
-      status: taskActivityFilterModel?.getFilterValue("status"),
-    },
-  };
-
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
-};
-
-taskActions.getTaskActivityLogById = async (getAccessToken, cancelTokenSource, id) => {
-  const apiUrl = `/tasks/logs/activity/v2/${id}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-taskActions.getTaskActivityGridFsLogRecordById = async (getAccessToken, cancelTokenSource, id) => {
-  const apiUrl = `/tasks/logs/files/${id}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-taskActions.getTaskActivityGridFsLogContentById = async (getAccessToken, cancelTokenSource, id) => {
-  const apiUrl = `/tasks/logs/files/${id}/content`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 taskActions.createECSCluster = async (postBody, getAccessToken) => {

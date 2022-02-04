@@ -29,14 +29,15 @@ import InformaticaPipelineRunAssistantOverlay
   from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistantOverlay";
 
 const delayCheckInterval = 8000;
+const timeoutCheckInterval = 60000;
 
-function PipelineActionControls({
-          pipeline,
-          customerAccessRules,
-          disabledActionState,
-          fetchData,
-          fetchActivityLogs,
-        }) {
+function PipelineActionControls(
+  {
+    pipeline,
+    customerAccessRules,
+    disabledActionState,
+    fetchData,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [workflowStatus, setWorkflowStatus] = useState(false);
@@ -150,7 +151,9 @@ function PipelineActionControls({
   };
 
   const checkPipelineQueueStatus = async () => {
-    const { orchestration } = await getFeatureFlags();
+    const featureFlags = await getFeatureFlags();
+    const orchestration = featureFlags?.orchestration;
+
     setQueueingEnabled(orchestration?.enableQueuing);
 
     if (orchestration?.enableQueuing) {
@@ -166,7 +169,6 @@ function PipelineActionControls({
     setWorkflowStatus("stopped");
     await resetPipelineState(pipelineId);
     await fetchData();
-    await fetchActivityLogs();
     setResetPipeline(false);
     setStartPipeline(false);
     await checkPipelineQueueStatus();
@@ -177,7 +179,6 @@ function PipelineActionControls({
     setWorkflowStatus("stopped");
     await stopPipelineRun(pipelineId);
     await fetchData();
-    await fetchActivityLogs();
     setResetPipeline(false);
     setStartPipeline(false);
     await pipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipelineId);
@@ -211,49 +212,65 @@ function PipelineActionControls({
 
   const handleRefreshClick = async () => {
     await fetchData();
-    await fetchActivityLogs();
     await checkPipelineQueueStatus();
   };
 
-  //action functions
-  async function stopPipelineRun(pipelineId) {
-    setStopPipeline(true);
-    await PipelineActions.stop(pipelineId, getAccessToken)
-      .catch(err => {
-        console.log(err);
-        toastContext.showLoadingErrorDialog(err);
-      });
-    setStopPipeline(false);
-    setStartPipeline(false);
-  }
-
-  async function resetPipelineState(pipelineId) {
-    setStopPipeline(true);
-    await PipelineActions.reset(pipelineId, getAccessToken)
-      .catch(err => {
-        console.log(err);
-        toastContext.showLoadingErrorDialog(err.error);
-      });
-    setStopPipeline(false);
-    setStartPipeline(false);
-  }
-
-  async function runPipeline(pipelineId) {
-    setStartPipeline(true);
-    toastContext.showInformationToast("A request to start this pipeline has been submitted.  It will begin shortly.", 20);
-
-    await PipelineActions.run(pipelineId, {}, getAccessToken)
-      .catch(err => {
+  const stopPipelineRun = async (pipelineId) => {
+    try {
+      setStopPipeline(true);
+      await PipelineActions.stopPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+    }
+    catch (error) {
+      if (isMounted.current === true) {
+        toastContext.showSystemErrorToast(error, "There was an issue stopping this pipeline");
+      }
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setStopPipeline(false);
         setStartPipeline(false);
-        console.error(err);
-        toastContext.showLoadingErrorDialog(err.error);
-      });
+      }
+    }
+  };
 
-    setTimeout(async function() {
-      await fetchData();
-      setStartPipeline(false);
-    }, delayCheckInterval);
-  }
+  const resetPipelineState = async (pipelineId) => {
+    try {
+      setStopPipeline(true);
+      await PipelineActions.resetPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+    }
+    catch (error) {
+      if (isMounted.current === true) {
+        toastContext.showSystemErrorToast(error, "There was an issue resetting this pipeline");
+      }
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setStopPipeline(false);
+        setStartPipeline(false);
+      }
+    }
+  };
+
+  const runPipeline = async (pipelineId) => {
+    try {
+      setStartPipeline(true);
+      toastContext.showInformationToast("A request to start this pipeline has been submitted.  It will begin shortly.", 20);
+      await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      delayRefresh();
+
+      // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
+      setTimeout(async function() {
+        await fetchData();
+        setStartPipeline(false);
+      }, timeoutCheckInterval);
+    }
+    catch (error) {
+      if (isMounted.current === true) {
+        setStartPipeline(false);
+        toastContext.showSystemErrorToast(error, "There was an issue starting this pipeline");
+      }
+    }
+  };
 
   /***
    * Used primiarily to call run API again to register a queued start request.  Unlike normal runPipeline, it doesn't impact
@@ -261,51 +278,61 @@ function PipelineActionControls({
    * @param pipelineId
    * @returns {Promise<void>}
    */
-  async function runPipelineLight(pipelineId) {
-    toastContext.showInformationToast("A request to re-start this pipeline has been added to the queue.  Upon successful completion of this pipeline run, the pipeline will start again.", 20);
+  const runPipelineLight = async (pipelineId) => {
+    try {
+      toastContext.showInformationToast("A request to re-start this pipeline has been added to the queue.  Upon successful completion of this pipeline run, the pipeline will start again.", 20);
+      await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      setHasQueuedRequest(true);
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    }
+  };
 
-    await PipelineActions.run(pipelineId, {}, getAccessToken)
-      .catch(err => {
-        console.error(err);
-        toastContext.showLoadingErrorDialog(err.error);
-      });
+  const startNewPipelineRun = async (pipelineId) => {
+    try {
+      setStartPipeline(true);
+      toastContext.showInformationToast("A request to start this pipeline from the start has been submitted.  Resetting pipeline status and then the pipeline will begin momentarily.", 20);
+      await PipelineActions.triggerPipelineNewStartV2(getAccessToken, cancelTokenSource, pipelineId);
+      setHasQueuedRequest(true);
+      delayRefresh();
 
-    setHasQueuedRequest(true);
-  }
-
-  async function startNewPipelineRun(pipelineId) {
-    setStartPipeline(true);
-    toastContext.showInformationToast("A request to start this pipeline from the start has been submitted.  Resetting pipeline status and then the pipeline will begin momentarily.", 20);
-
-    await PipelineActions.newStart(pipelineId, getAccessToken)
-      .catch(err => {
+      // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
+      setTimeout(async function() {
+        await fetchData();
         setStartPipeline(false);
-        console.error(err);
-        toastContext.showLoadingErrorDialog(err.error);
-      });
-
-    setTimeout(async function() {
-      await fetchData();
-      setStartPipeline(false);
-    }, delayCheckInterval);
-  }
+      }, timeoutCheckInterval);
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    }
+  };
 
   const handleResumeWorkflowClick = async (pipelineId) => {
-    setStartPipeline(true);
-    setWorkflowStatus("running");
-    toastContext.showInformationToast("A request to resume this pipeline has been submitted.  It will begin shortly.", 20);
+    try {
+      setStartPipeline(true);
+      setWorkflowStatus("running");
+      toastContext.showInformationToast("A request to resume this pipeline has been submitted.  It will begin shortly.", 20);
+      await PipelineActions.resumePipelineV2(getAccessToken, cancelTokenSource, pipelineId);
 
-    await PipelineActions.resume(pipelineId, {}, getAccessToken)
-      .catch(err => {
+      delayRefresh();
+
+      // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
+      setTimeout(async function() {
+        await fetchData();
         setStartPipeline(false);
-        console.log(err);
-        toastContext.showLoadingErrorDialog(err.error);
-      });
-
-    setTimeout(async function() {
-      await fetchData();
-      setStartPipeline(false);
-    }, delayCheckInterval);
+      }, timeoutCheckInterval);
+    }
+    catch (error) {
+      if (isMounted.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+        setStartPipeline(false);
+      }
+    }
   };
 
   const delayRefresh = () => {
@@ -335,7 +362,6 @@ function PipelineActionControls({
         pipeline={pipeline}
         handleClose={handlePipelineStartWizardClose}
         handlePipelineWizardRequest={handlePipelineWizardRequest}
-        refreshPipelineActivityData={fetchActivityLogs}
       />,
     );
   };
@@ -450,6 +476,7 @@ function PipelineActionControls({
   };
 
   // TODO: Make base button components for these in the future
+  //  and wire up the functions inside those components to clean up PipelineActionControls
   return (
     <>
       <div className="d-flex flex-fill">
@@ -648,6 +675,5 @@ PipelineActionControls.propTypes = {
   customerAccessRules: PropTypes.object,
   disabledActionState: PropTypes.bool,
   fetchData: PropTypes.func,
-  fetchActivityLogs: PropTypes.func,
 };
 export default PipelineActionControls;

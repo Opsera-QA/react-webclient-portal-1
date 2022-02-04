@@ -199,8 +199,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case TOOL_DETAIL_PANEL_TABS.CLUSTERS:
         return (
           <ToolClustersPanel
-            toolData={toolData}
-            loadData={loadData}            
+            toolModel={toolData}
           />
         );
       default:

@@ -28,7 +28,6 @@ const SfdcPipelineWizardXmlViewer = (
     handleClose,
     setPipelineWizardScreen,
     setError,
-    refreshPipelineActivityData,
     handlePipelineWizardRequest
   }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -163,8 +162,6 @@ const SfdcPipelineWizardXmlViewer = (
     }
 
     if (createJobResponse && createJobResponse.data && createJobResponse.data.message === "success") {
-      //trigger refresh of pipeline object!!!
-      await refreshPipelineActivityData();
 
       //trigger start of pipeline & close modal
       await handlePipelineWizardRequest(pipelineWizardModel.getData("pipelineId"), true);
@@ -266,7 +263,6 @@ SfdcPipelineWizardXmlViewer.propTypes = {
   setPipelineWizardScreen: PropTypes.func,
   handleClose: PropTypes.func,
   setError: PropTypes.func,
-  refreshPipelineActivityData: PropTypes.func,
   handlePipelineWizardRequest: PropTypes.func
 };
 

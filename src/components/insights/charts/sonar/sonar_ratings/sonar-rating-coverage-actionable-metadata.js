@@ -4,7 +4,7 @@ const SonarCoverageTableMetadata = {
   fields: [
     {
       label: "Project",
-      id: "project",
+      id: "_id",
     },
     {
       label: "Pipeline Name",
@@ -16,7 +16,7 @@ const SonarCoverageTableMetadata = {
     },
     {
       label: "Timestamp",
-      id: "endTimestamp",
+      id: "timestamp",
     },
     // {
     //   label: "Trend",

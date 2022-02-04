@@ -18,7 +18,11 @@ function ArgoClusterPlatformSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData(fieldName, selectedOption.value);
-    newModel.setData("clusterName", "");
+
+    // TODO: Make base argo cluster platform select
+    if (model?.isNew() === true) {
+      newModel.setData("clusterName", "");
+    }
     newModel.setData("platformToolId", "");
     newModel.setData("resourceGroup", "");
     newModel.setData("azureApplicationId", "");    
@@ -29,8 +33,12 @@ function ArgoClusterPlatformSelectInput({model, setModel, disabled}) {
 
   const clearDataFunction = () => {
     let newModel = {...model};
+
+    if (model?.isNew() === true) {
+      newModel.setData("clusterName", "");
+    }
+
     newModel.setData("platform", "");
-    newModel.setData("clusterName", "");
     newModel.setData("platformToolId", "");
     newModel.setData("resourceGroup", "");
     newModel.setData("azureApplicationId", "");

@@ -148,7 +148,7 @@ const LoginForm = ({ authClient }) => {
       idps: idpValues,
       idpDisplay: "PRIMARY",
       idpDiscovery: {
-        requestContext: window.location.href, //process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
+        requestContext: process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL + "/loading.html" //"about:blank"
       },
       features: {
         idpDiscovery: true,
@@ -275,8 +275,13 @@ const LoginForm = ({ authClient }) => {
 
     } catch (error) {
       toastContext.removeAllBanners();
-      console.error(error);
-      toastContext.showErrorDialog(error);
+
+      if (error?.response?.status === 404) {
+        console.error(error);
+        toastContext.showErrorDialog("Your email address is not found in our system, please contact your account owner or administrator for assistance.");
+      } else {
+        toastContext.showErrorDialog(error);
+      }
     } finally {
       setLoading(false);
     }

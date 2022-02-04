@@ -10,7 +10,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {getTaskTypeLabel} from "components/tasks/task.types";
 
-function AllTasksActivityLogTable({ taskLogData, taskActivityMetadata, isLoading, currentTaskName, currentRunNumber }) {
+function AllTasksActivityLogTable({ taskLogData, taskActivityMetadata, isLoading }) {
   const [columns, setColumns] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
@@ -48,25 +48,11 @@ function AllTasksActivityLogTable({ taskLogData, taskActivityMetadata, isLoading
     }
   };
 
-  const getFilteredData = () => {
-    if (currentTaskName === null || currentTaskName === undefined ) {
-      return taskLogData;
-    }
-
-    return taskLogData.filter((item) => {
-      if (currentRunNumber === "logs") {
-        return item.name === currentTaskName;
-      }
-
-      return item.name === currentTaskName && (currentRunNumber === null || currentRunNumber === undefined || item.run_count === currentRunNumber);
-    });
-  };
-
   return (
     <div className={"tree-table"}>
       <TableBase
         columns={columns}
-        data={getFilteredData()}
+        data={taskLogData}
         isLoading={isLoading}
         onRowSelect={onRowSelect}
       />
@@ -77,9 +63,7 @@ function AllTasksActivityLogTable({ taskLogData, taskActivityMetadata, isLoading
 AllTasksActivityLogTable.propTypes = {
   taskLogData: PropTypes.array,
   isLoading: PropTypes.bool,
-  currentTaskName: PropTypes.string,
   taskActivityMetadata: PropTypes.object,
-  currentRunNumber: PropTypes.number,
 };
 
 export default AllTasksActivityLogTable;

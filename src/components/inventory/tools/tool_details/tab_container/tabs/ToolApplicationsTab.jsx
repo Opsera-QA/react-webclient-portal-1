@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 
-const APPLICATION_SUPPORTED_TOOL_IDENTIFIERS = [
+export const APPLICATION_SUPPORTED_TOOL_IDENTIFIERS = [
   "argo",
   "octopus",
   "azure",

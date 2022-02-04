@@ -10,8 +10,17 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import jiraProjectMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jira-project-metadata";
 import axios from "axios";
+import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 
-function JiraProjectDetailView( {toolData, setToolData, jiraProjectData, setJiraProjectData, loadTool}) {
+function JiraProjectDetailView(
+  {
+    toolData,
+    setToolData,
+    jiraProjectData,
+    setJiraProjectData,
+    loadTool,
+    isLoading,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -65,13 +74,27 @@ function JiraProjectDetailView( {toolData, setToolData, jiraProjectData, setJira
     return toolsActions.updateToolV2(getAccessToken, cancelTokenSource, newToolData);
   };
 
+  const getDetailPanel = () => {
+    return (
+      <JiraProjectsDetailPanel
+        jiraProjectData={jiraProjectData}
+        setJiraProjectData={setJiraProjectData}
+        toolData={toolData}
+        setToolData={setToolData}
+        loadData={loadTool}
+      />
+    );
+  };
+
   return (
     <DetailScreenContainer
       breadcrumbDestination={"toolProjectDetailView"}
+      navigationTabContainer={<InventorySubNavigationBar currentTab={"toolProjectViewer"} />}
+      isLoading={isLoading}
       metadata={jiraProjectMetadata}
       dataObject={jiraProjectData}
       actionBar={getActionBar()}
-      detailPanel={<JiraProjectsDetailPanel jiraProjectData={jiraProjectData} setJiraProjectData={setJiraProjectData} toolData={toolData} setToolData={setToolData} loadData={loadTool}/>}
+      detailPanel={getDetailPanel()}
     />
   );
 }
@@ -82,6 +105,7 @@ JiraProjectDetailView.propTypes = {
   jiraProjectData: PropTypes.object,
   setJiraProjectData: PropTypes.func,
   loadTool: PropTypes.func,
+  isLoading: PropTypes.bool,
 };
 
 export default JiraProjectDetailView;

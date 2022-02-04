@@ -10,6 +10,7 @@ import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 import ParameterValueTextInput from "components/inventory/parameters/details/ParameterValueTextInput";
 import TogglePasswordTextInput from "components/common/inputs/text/TogglePasswordTextInput";
+import TextAreaInput from "../../../common/inputs/text/TextAreaInput";
 
 function ParametersEditorPanel({ parameterModel, setParameterModel, parameterModelId, handleClose }) {
   const isMounted = useRef(false);
@@ -55,7 +56,7 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
     }
 
     return (
-      <TextInputBase
+      <TextAreaInput
         dataObject={parameterModel}
         setDataObject={setParameterModel}
         fieldName={"value"}

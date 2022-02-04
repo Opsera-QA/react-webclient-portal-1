@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faProjectDiagram} from "@fortawesome/pro-light-svg-icons";
 
-const VAULT_SUPPORTED_TOOL_IDENTIFIERS = [
+export const PROJECT_SUPPORTED_TOOL_IDENTIFIERS = [
   "argo",
   "jira",
 ];
 
 function ToolProjectsTab({ toolModel, handleTabClick, activeTab }) {
-  if (!VAULT_SUPPORTED_TOOL_IDENTIFIERS.includes(toolModel?.getData("tool_identifier"))) {
+  if (!PROJECT_SUPPORTED_TOOL_IDENTIFIERS.includes(toolModel?.getData("tool_identifier"))) {
     return null;
   }
 

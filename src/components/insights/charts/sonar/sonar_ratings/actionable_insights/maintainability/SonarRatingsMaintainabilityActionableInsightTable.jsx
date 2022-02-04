@@ -69,24 +69,24 @@ function SonarRatingsMaintainabilityActionableInsightTable(
       Header: getCustomTableHeader(field),
       accessor: getCustomTableAccessor(field),
       Cell: function parseText(row) {
-        const value = row?.value;
+        let value = row?.value;
         if (value > 0) {
           if (rating <= 1) {
-            return LETTER_GRADES.A;
+            value = LETTER_GRADES.A;
           } else if (rating <= 2) {
-            return LETTER_GRADES.B;
+            value = LETTER_GRADES.B;
           } else if (rating <= 3) {
-            return LETTER_GRADES.C;
+            value = LETTER_GRADES.C;
           } else if (rating <= 4) {
-            return LETTER_GRADES.D;
+            value = LETTER_GRADES.D;
           } else if (rating <= 5) {
-            return LETTER_GRADES.E;
+            value = LETTER_GRADES.E;
           } else {
-            return null;
+            value = null;
           }
         }
         return (
-          {value}
+          <div>{value}</div>
         );
       },
     };

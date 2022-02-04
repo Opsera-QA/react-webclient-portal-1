@@ -1,17 +1,17 @@
 import React from 'react';
 import { Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import ArgoAzurePlatformSelectInput from "../inputs/ArgoAzurePlatformSelectInput";
+import ArgoClusterAzureToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/details/inputs/ArgoClusterAzureToolSelectInput";
 import ArgoAzureClusterSelectInput from "../inputs/ArgoAzureClusterSelectInput";
 import ArgoAzureApplicationSelectInput from "../inputs/ArgoAzureApplicationSelectInput";
 import ArgoAzureResourceGroupSelectInput from "../inputs/ArgoAzureResourceGroupSelectInput";
 
-const ArgoAzureClusterEditorForm = ({ model, setModel, disabled }) => {
+const ArgoAzureClusterEditorForm = ({ model, setModel, disabled, clusterData }) => {
 
   return (
     <>
       <Col lg={12}>
-        <ArgoAzurePlatformSelectInput 
+        <ArgoClusterAzureToolSelectInput
           model={model}
           setModel={setModel}
           disabled={disabled}
@@ -27,6 +27,7 @@ const ArgoAzureClusterEditorForm = ({ model, setModel, disabled }) => {
         <ArgoAzureClusterSelectInput 
           model={model}
           setModel={setModel}
+          clusterData={clusterData}
           disabled={disabled || ( model && model.getData("platformToolId") === "" )}
           azureToolConfigId={model && model.getData("platformToolId")}
           applicationId={model && model.getData("azureApplicationId")}
@@ -49,6 +50,7 @@ ArgoAzureClusterEditorForm.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
+  clusterData: PropTypes.array,
 };
 
 export default ArgoAzureClusterEditorForm;

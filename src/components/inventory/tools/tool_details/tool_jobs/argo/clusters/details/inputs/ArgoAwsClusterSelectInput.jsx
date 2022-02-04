@@ -13,7 +13,8 @@ function ArgoAwsClusterSelectInput({
   disabled,
   textField,
   valueField,
-  awsToolConfigId
+  awsToolConfigId,
+  clusterData
 }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -49,7 +50,7 @@ function ArgoAwsClusterSelectInput({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadTypes(cancelSource);
+      await loadAwsClusters(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -62,7 +63,7 @@ function ArgoAwsClusterSelectInput({
     }
   };
 
-  const loadTypes = async (cancelSource) => {
+  const loadAwsClusters = async (cancelSource) => {
     try {
       setClusters([]);
       const res = await argoActions.getAwsEksClusters(getAccessToken, cancelSource, awsToolConfigId);
@@ -72,7 +73,9 @@ function ArgoAwsClusterSelectInput({
           return;
         }
         setPlaceholder("Select a Cluster");
-        setClusters(res.data);
+        const clusterNames = clusterData.map(c => c.name.trim());                
+        const tempClusters = res.data.filter(cluster => !clusterNames.includes(cluster));
+        setClusters(tempClusters);
         return;
       }
       setPlaceholder("No Clusters Found");
@@ -107,6 +110,7 @@ ArgoAwsClusterSelectInput.propTypes = {
   textField: PropTypes.string,
   valueField: PropTypes.string,
   awsToolConfigId: PropTypes.string,
+  clusterData: PropTypes.array,
 };
 
 ArgoAwsClusterSelectInput.defaultProps = {

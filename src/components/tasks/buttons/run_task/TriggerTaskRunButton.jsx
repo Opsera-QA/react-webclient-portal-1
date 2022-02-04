@@ -53,12 +53,12 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
   // TODO: This should be separate buttons OR passed into this component from a wrapper component for each type
   const handleRunGitTask = async () => {
     if (gitTasksData?.getData("type") === TASK_TYPES.SALESFORCE_BULK_MIGRATION) {
-      handleClose();
       try{
         setIsLoading(true);
-        await sfdcPipelineActions.triggerGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData.getData("_id"));
+        const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
+        gitTasksData.setData("configuration", configuration);
+        await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
         handleClose();
-
         toastContext.showOverlayPanel(
           <SalesforceBulkMigrationTaskWizardOverlay
             taskModel={gitTasksData}
@@ -82,10 +82,10 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
         setIsLoading(false);
       } finally {
         handleClose();
-        toastContext.showOverlayPanel(<GitTaskSfdcPipelineWizardOverlay gitTasksData={gitTasksData}/>);  
+        toastContext.showOverlayPanel(<GitTaskSfdcPipelineWizardOverlay gitTasksData={gitTasksData}/>);
         setIsLoading(false);
       }
-    }    
+    }
     else if (gitTasksData?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE) {
       // pipeline action call to trigger branch conversion
       try{
@@ -174,10 +174,10 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
 
 TriggerTaskRunButton.propTypes = {
   gitTasksData: PropTypes.object,
-  setGitTasksData: PropTypes.func,
-  gitTasksConfigurationDataDto: PropTypes.object,
   loadData: PropTypes.func,
   disable: PropTypes.bool,
+  setGitTasksData: PropTypes.func,
+  gitTasksConfigurationDataDto: PropTypes.object,
   className: PropTypes.string,
   handleClose: PropTypes.func
 };
