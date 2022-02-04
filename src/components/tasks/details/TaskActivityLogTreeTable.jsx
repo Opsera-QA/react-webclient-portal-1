@@ -105,7 +105,7 @@ function TaskActivityLogTreeTable(
   return (
     <FilterContainer
       showBorder={false}
-      className={"pt-2"}
+      className={"pt-2 px-2"}
       loadData={loadData}
       filterDto={taskActivityFilterModel}
       setFilterDto={setTaskActivityFilterModel}
