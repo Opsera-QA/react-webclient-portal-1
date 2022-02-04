@@ -15,12 +15,22 @@ function BadgeBase({icon, badgeText, className}) {
     }
   };
 
+  const getClassNames = () => {
+    let classNames = "badge standard-badge p-1";
+
+    if (hasStringValue(className)) {
+      classNames += ` ${className}`;
+    }
+
+    return classNames;
+  };
+
   if (hasStringValue(badgeText) !== true) {
     return null;
   }
 
   return (
-    <span className={`badge standard-badge ${className} p-1`}>
+    <span className={getClassNames()}>
       <span>{getIcon()}{badgeText}</span>
     </span>
   );
