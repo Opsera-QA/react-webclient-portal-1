@@ -61,7 +61,7 @@ function TaskActivityPanel({ taskModel }) {
     try {
       setIsLoading(true);
       setActivityData([]);
-      const taskTree = taskActivityLogHelpers.constructRunCountTree(taskModel?.getData("run_count"));
+      const taskTree = taskActivityLogHelpers.constructRunCountTree(taskModel?.getPersistData());
 
       if (Array.isArray(taskTree)) {
         taskLogsTree.current = taskTree;
