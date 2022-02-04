@@ -19,16 +19,16 @@ function PipelineTaskStateField({ fieldName, dataObject, className }) {
     );
   };
 
+  if (field == null) {
+    return null;
+  }
+
   if (hasStringValue(dataObject?.getData(fieldName)) !== true) {
     return (
       <FieldContainer>
         <span>No Pipeline State Associated With This Task</span>
       </FieldContainer>
     );
-  }
-
-  if (field == null) {
-    return null;
   }
 
   return (

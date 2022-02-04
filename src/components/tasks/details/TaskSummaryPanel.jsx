@@ -64,6 +64,9 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
           <SmartIdField model={gitTasksData} fieldName={"_id"} />
         </Col>
         <Col md={6}>
+          <TextFieldBase dataObject={gitTasksData} fieldName={"run_count"} />
+        </Col>
+        <Col md={6}>
           <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
         </Col>
         {gitTasksData.getData("type") !== "ecs_cluster_creation" ||
