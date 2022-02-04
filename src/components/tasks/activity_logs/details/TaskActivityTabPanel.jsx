@@ -7,11 +7,9 @@ import Model from "core/data_model/model";
 import ModalTabPanelContainer from "components/common/panels/detail_view/ModalTabPanelContainer";
 import ConsoleLogTab from "components/common/tabs/detail_view/ConsoleLogTab";
 import TaskActivitySummaryPanel from "components/tasks/activity_logs/details/TaskActivitySummaryPanel";
-import tasksActivityLogMetadata
-  from "components/tasks/activity_logs/tasks-activity-log-metadata";
 import TaskActivityConsoleLogPanel from "components/tasks/activity_logs/details/TaskConsoleLogPanel";
 import TaskActivityJsonPanel from "components/tasks/activity_logs/details/TaskActivityJsonPanel";
-
+import {taskActivityFilterMetadata} from "components/tasks/activity_logs/taskActivityLog.filter.model";
 
 function TaskActivityTabPanel({ gitTaskActivityData }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -47,7 +45,7 @@ function TaskActivityTabPanel({ gitTaskActivityData }) {
       case "summary":
         return (
           <TaskActivitySummaryPanel
-            gitTaskActivityData={wrapObject(tasksActivityLogMetadata)}
+            gitTaskActivityData={wrapObject(taskActivityFilterMetadata)}
           />
         );
       case "log":

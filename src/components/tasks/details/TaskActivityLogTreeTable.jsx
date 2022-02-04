@@ -8,7 +8,7 @@ import TaskActivityLogsTable from "components/tasks/activity_logs/TaskActivityLo
 import TaskActivityLogTree from "components/tasks/activity_logs/TaskActivityLogTree";
 import TaskStatusFilter from "components/common/filters/tasks/status/TaskStatusFilter";
 
-function TaskActivityLogs(
+function TaskActivityLogTreeTable(
   {
     taskLogData,
     taskActivityMetadata,
@@ -19,6 +19,7 @@ function TaskActivityLogs(
     taskActivityTreeData,
     currentRunNumber,
     setCurrentRunNumber,
+    setCurrentTaskId,
   }) {
   const getNoDataMessage = () => {
     const activeFilters = taskActivityFilterModel?.getActiveFilters();
@@ -57,6 +58,7 @@ function TaskActivityLogs(
         taskActivityFilterModel={taskActivityFilterModel}
         loadData={loadData}
         taskLogTree={taskActivityTreeData}
+        setCurrentTaskId={setCurrentTaskId}
       />
     );
   };
@@ -76,13 +78,11 @@ function TaskActivityLogs(
 
   const getDropdownFilters = () => {
     return(
-      <>
-        <TaskStatusFilter
-          className={"mb-2"}
-          filterModel={taskActivityFilterModel}
-          setFilterModel={setTaskActivityFilterModel}
-        />
-      </>
+      <TaskStatusFilter
+        className={"mb-2"}
+        filterModel={taskActivityFilterModel}
+        setFilterModel={setTaskActivityFilterModel}
+      />
     );
   };
 
@@ -104,7 +104,7 @@ function TaskActivityLogs(
   );
 }
 
-TaskActivityLogs.propTypes = {
+TaskActivityLogTreeTable.propTypes = {
   taskLogData: PropTypes.array,
   isLoading: PropTypes.bool,
   taskActivityFilterModel: PropTypes.object,
@@ -117,6 +117,7 @@ TaskActivityLogs.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
+  setCurrentTaskId: PropTypes.func,
 };
 
-export default TaskActivityLogs;
+export default TaskActivityLogTreeTable;
