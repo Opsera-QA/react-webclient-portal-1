@@ -29,7 +29,7 @@ import InformaticaPipelineRunAssistantOverlay
   from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistantOverlay";
 
 const delayCheckInterval = 8000;
-const timeoutCheckInterval = 60000;
+const timeoutCheckInterval = 70000;
 
 function PipelineActionControls(
   {
