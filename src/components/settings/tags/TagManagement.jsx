@@ -9,14 +9,17 @@ import TagsTable from "components/settings/tags/TagsTable";
 import axios from "axios";
 import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import TagManagementSubNavigationBar from "components/settings/tags/TagManagementSubNavigationBar";
+import ListModelBase from "core/data_model/list.model.base";
+import tagMetadata from "components/settings/tags/tag.metadata";
 
 function TagManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [tagList, setTagList] = useState([]);
-  const toastContext = useContext(DialogToastContext);
   const [tagFilterDto, setTagFilterDto] = useState(new Model({...tagFilterMetadata.newObjectFields}, tagFilterMetadata, false));
+  const tagListModel = useRef(new ListModelBase(authContext));
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -38,6 +41,7 @@ function TagManagement() {
     return () => {
       source.cancel();
       isMounted.current = false;
+      // tagListModel.current.unsubscribe();
     };
   }, []);
 
@@ -59,19 +63,6 @@ function TagManagement() {
     }
   };
 
-  const getTags = async (filterDto = tagFilterDto, cancelSource = cancelTokenSource) => {
-    const response = await adminTagsActions.getTags(getAccessToken, cancelSource, filterDto);
-    const tagList = response?.data?.data;
-
-    if (isMounted?.current === true && tagList) {
-      setTagList(tagList);
-      let newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", response?.data?.count);
-      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-      setTagFilterDto({...newFilterDto});
-    }
-  };
-
   const getRoles = async (filterDto = tagFilterDto, cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
@@ -81,6 +72,21 @@ function TagManagement() {
       if (meetsRequirements(ROLE_LEVELS.POWER_USERS_AND_SASS, userRoleAccess)) {
         await getTags(filterDto, cancelSource);
       }
+    }
+  };
+
+  const getTags = async (filterDto = tagFilterDto, cancelSource = cancelTokenSource) => {
+    const response = await adminTagsActions.getTags(getAccessToken, cancelSource, filterDto);
+    const tagList = response?.data?.data;
+
+    if (isMounted?.current === true && Array.isArray(tagList)) {
+      tagListModel.current.setMetadata(tagMetadata);
+      tagListModel.current.setData(tagList);
+      tagListModel.current.subscribe();
+      let newFilterDto = filterDto;
+      newFilterDto.setData("totalCount", response?.data?.count);
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+      setTagFilterDto({...newFilterDto});
     }
   };
 
@@ -95,7 +101,7 @@ function TagManagement() {
       <TagsTable
         loadData={loadData}
         isLoading={isLoading}
-        data={tagList}
+        data={tagListModel?.current?.getDataArray()}
         tagFilterDto={tagFilterDto}
         setTagFilterDto={setTagFilterDto}
       />

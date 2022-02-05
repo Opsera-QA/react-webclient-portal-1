@@ -5,16 +5,14 @@ import {useHistory} from "react-router-dom";
 import commonActions from "components/common/common.actions";
 import axios from "axios";
 import accountsActions from "components/admin/accounts/accounts-actions";
-import {ClientWebsocket} from "core/data_model/client.websocket";
 
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
 
-const AuthContextProvider = ({ userData, refreshToken, authClient, children }) => {
+const AuthContextProvider = ({ userData, refreshToken, authClient, children, websocketClient }) => {
   const history = useHistory();
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  // const [websocketClient, setWebsocketClient] = useState(new ClientWebsocket());
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -35,9 +33,21 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     };
   }, []);
 
-  // const getWebsocketClient = () => {
-  //   return websocketClient;
-  // };
+  const getWebsocketClient = () => {
+    return websocketClient;
+  };
+
+  const subscribeToTopic = (topicName, model) => {
+    if (websocketClient) {
+      websocketClient?.subscribeToTopic(topicName, model);
+    }
+  };
+
+  const unsubscribeFromTopic = (topicName, model) => {
+    if (websocketClient) {
+      websocketClient?.unsubscribeFromTopic(topicName, model);
+    }
+  };
 
   const logoutUserContext = async () => {
     authClient.tokenManager.clear();
@@ -186,8 +196,6 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       }
       //console.table(customerAccessRules);
       return customerAccessRules;
-    } else {
-      console.error("Unable to set user access rules: ", user);
     }
   };
 
@@ -228,6 +236,8 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       isOrganizationOwner: isOrganizationOwner,
       getFeatureFlags: getFeatureFlags,
       // getWebsocketClient: getWebSocketClient,
+      subscribeToTopic: subscribeToTopic,
+      unsubscribeFromTopic: unsubscribeFromTopic,
     }}>
       {children}
     </AuthContext.Provider>
@@ -239,6 +249,7 @@ AuthContextProvider.propTypes = {
   refreshToken: PropTypes.func,
   authClient: PropTypes.object,
   children: PropTypes.any,
+  websocketClient: PropTypes.object,
 };
 
 export const AuthContext = createContext();

@@ -12,6 +12,7 @@ import { axiosApiService } from "api/apiService";
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { Security } from "@okta/okta-react";
 import AppRoutes from "./AppRoutes";
+import ClientWebsocket from "core/websocket/client.websocket";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -20,6 +21,7 @@ const AppWithRouterAccess = () => {
   const [authenticatedState, setAuthenticatedState] = useState(false);
   const [isPublicPathState, setIsPublicPathState] = useState(false);
   const [data, setData] = useState(null);
+  const [websocketClient, setWebsocketClient] = useState(new ClientWebsocket());
 
   const history = useHistory();
 
@@ -79,12 +81,19 @@ const AppWithRouterAccess = () => {
         setIsPublicPathState(true);
       }
 
+      if (websocketClient) {
+        websocketClient?.closeWebsocket();
+      }
+
       return;
     }
 
     if (authState.isAuthenticated && !data && !error && !loading) {
       await setLoading(true);
       await loadUsersData(authState.accessToken["accessToken"],loading);
+
+      console.log("initializing websocket");
+      websocketClient.initializeWebsocket();
     }
 
   });
@@ -165,7 +174,7 @@ const AppWithRouterAccess = () => {
   return (
     <Security oktaAuth={authClient} restoreOriginalUri={restoreOriginalUri}>
       {getError()}
-      <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
+      <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient} websocketClient={websocketClient}>
         <ToastContextProvider navBar={getNavBar()}>
 
           <AppRoutes
