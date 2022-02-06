@@ -80,6 +80,10 @@ export class ListModelBase {
     this.updateExternalState();
   };
 
+  setSetStateFunction = (setStateFunction) => {
+    this.setStateFunction = setStateFunction;
+  };
+
   handleLiveMessage = (liveMessage) => {
     // TODO: Add Data Parsing Helper, ensure the format is correct
     const type = liveMessage.type;
@@ -153,7 +157,9 @@ export class ListModelBase {
   };
 
   updateExternalState = () => {
-    this.setStateFunction({...this});
+    if (this.setStateFunction) {
+      this.setStateFunction({...this});
+    }
   };
 }
 

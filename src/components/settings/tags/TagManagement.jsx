@@ -19,7 +19,7 @@ function TagManagement() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [tagFilterDto, setTagFilterDto] = useState(new Model({...tagFilterMetadata.newObjectFields}, tagFilterMetadata, false));
-  const [tagListModel, setTagListModel] = useState(undefined);
+  const [tagListModel, setTagListModel] = useState(new ListModelBase(authContext));
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -83,7 +83,8 @@ function TagManagement() {
     const tagList = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(tagList)) {
-      const newModel = new ListModelBase(authContext, setTagListModel);
+      const newModel = {...tagListModel};
+      newModel.setSetStateFunction(setTagListModel);
       newModel.setMetadata(tagMetadata);
       newModel.setDataArray(tagList);
       newModel.subscribe();
