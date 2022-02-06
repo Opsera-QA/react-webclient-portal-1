@@ -27,9 +27,9 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children, web
       source.cancel();
       isMounted.current = false;
 
-      // if (websocketClient) {
-      //   websocketClient.close();
-      // }
+      if (websocketClient) {
+        websocketClient.closeWebsocket();
+      }
     };
   }, []);
 
@@ -239,6 +239,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children, web
       subscribeToTopic: subscribeToTopic,
       unsubscribeFromTopic: unsubscribeFromTopic,
     }}>
+      <div>Websocket connected: {websocketClient?.isConnected()}</div>
       {children}
     </AuthContext.Provider>
   );

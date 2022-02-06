@@ -4,12 +4,13 @@ import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
 // TODO: Should we handle RBAC for adding in here?
 export class ListModelBase {
-  constructor(authContext, metadata) {
-    this.metadata = _.cloneDeep({...metadata});
+  constructor(authContext, setStateFunction) {
+    // this.metadata = _.cloneDeep({...metadata});
     this.dataArray = [];
     this.authContext = authContext;
     this.isLoading = false;
     this.addAllowed = false;
+    this.setStateFunction = setStateFunction;
     this.roleDefinitions = {};
     this.topicName = LIVE_MESSAGE_TOPICS.TAGS;
   }
@@ -74,8 +75,9 @@ export class ListModelBase {
     return this.dataArray;
   };
   
-  setData = (newList) => {
+  setDataArray = (newList) => {
     this.dataArray = [...newList];
+    this.updateExternalState();
   };
 
   handleLiveMessage = (liveMessage) => {
@@ -104,7 +106,7 @@ export class ListModelBase {
     // TODO: Check if record meets expectations
     newData.push(newRecord);
 
-    this.dataArray = newData;
+    this.setDataArray(newData);
   };
 
   handleUpdateRecordLiveMessage = (liveMessage) => {
@@ -122,13 +124,14 @@ export class ListModelBase {
       newData.push(updatedRecord);
     }
 
-    this.dataArray = newData;
+    this.setDataArray(newData);
   };
 
   handleDeleteRecordLiveMessage = (liveMessage) => {
     const newData = [...this.dataArray];
     const deletedRecordId = liveMessage.message.data;
 
+    console.log("newDataLength: " + JSON.stringify(newData.length));
     if (isMongoDbId(deletedRecordId) === true) {
       const index = newData.findIndex((item) => item._id === deletedRecordId);
 
@@ -137,7 +140,8 @@ export class ListModelBase {
       }
     }
 
-    this.dataArray = newData;
+    console.log("newDataLength: " + JSON.stringify(newData.length));
+    this.setDataArray(newData);
   };
 
   subscribe = () => {
@@ -146,6 +150,10 @@ export class ListModelBase {
 
   unsubscribe = () => {
     this.authContext.unsubscribeFromTopic(this.topicName);
+  };
+
+  updateExternalState = () => {
+    this.setStateFunction({...this});
   };
 }
 

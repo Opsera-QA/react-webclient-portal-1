@@ -19,7 +19,7 @@ function TagManagement() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [tagFilterDto, setTagFilterDto] = useState(new Model({...tagFilterMetadata.newObjectFields}, tagFilterMetadata, false));
-  const tagListModel = useRef(new ListModelBase(authContext));
+  const [tagListModel, setTagListModel] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -41,7 +41,10 @@ function TagManagement() {
     return () => {
       source.cancel();
       isMounted.current = false;
-      // tagListModel.current.unsubscribe();
+
+      if (tagListModel) {
+        tagListModel?.unsubscribe();
+      }
     };
   }, []);
 
@@ -80,9 +83,12 @@ function TagManagement() {
     const tagList = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(tagList)) {
-      tagListModel.current.setMetadata(tagMetadata);
-      tagListModel.current.setData(tagList);
-      tagListModel.current.subscribe();
+      const newModel = new ListModelBase(authContext, setTagListModel);
+      newModel.setMetadata(tagMetadata);
+      newModel.setDataArray(tagList);
+      newModel.subscribe();
+      setTagListModel({...newModel});
+
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response?.data?.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
@@ -101,7 +107,7 @@ function TagManagement() {
       <TagsTable
         loadData={loadData}
         isLoading={isLoading}
-        data={tagListModel?.current?.getDataArray()}
+        data={tagListModel?.getDataArray()}
         tagFilterDto={tagFilterDto}
         setTagFilterDto={setTagFilterDto}
       />
