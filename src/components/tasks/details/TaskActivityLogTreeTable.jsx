@@ -7,6 +7,7 @@ import TreeAndTableBase from "components/common/table/TreeAndTableBase";
 import TaskActivityLogsTable from "components/tasks/activity_logs/TaskActivityLogTable";
 import TaskActivityLogTree from "components/tasks/activity_logs/TaskActivityLogTree";
 import TaskStatusFilter from "components/common/filters/tasks/status/TaskStatusFilter";
+import CustomTable from "components/common/table/CustomTable";
 
 function TaskActivityLogTreeTable(
   {
@@ -20,6 +21,7 @@ function TaskActivityLogTreeTable(
     currentRunNumber,
     setCurrentRunNumber,
     setCurrentTaskId,
+    taskRunCount,
   }) {
   const getNoDataMessage = () => {
     const activeFilters = taskActivityFilterModel?.getActiveFilters();
@@ -28,11 +30,15 @@ function TaskActivityLogTreeTable(
     }
 
     if (currentRunNumber === "latest") {
-      return ("Task activity data has not been generated yet. Once this Task begins running, it will publish details here.");
+      return ("Task activity data has not been generated yet.");
     }
 
     if (currentRunNumber === "secondary") {
       return ("There are no secondary logs.");
+    }
+
+    if (currentRunNumber === 0) {
+      return ("Task activity data has not been generated yet. Once this Task begins running, it will publish details here.");
     }
 
     if (currentRunNumber == null) {
@@ -64,6 +70,16 @@ function TaskActivityLogTreeTable(
   };
 
   const getTaskActivityTable = () => {
+    if (taskRunCount === 0) {
+      return (
+        <CustomTable
+          isLoading={isLoading}
+          data={[]}
+          noDataMessage={getNoDataMessage()}
+        />
+      );
+    }
+
     return (
       <TreeAndTableBase
         data={taskLogData}
@@ -89,7 +105,7 @@ function TaskActivityLogTreeTable(
   return (
     <FilterContainer
       showBorder={false}
-      className={"pt-2"}
+      className={"pt-2 px-2"}
       loadData={loadData}
       filterDto={taskActivityFilterModel}
       setFilterDto={setTaskActivityFilterModel}
@@ -118,6 +134,7 @@ TaskActivityLogTreeTable.propTypes = {
     PropTypes.number,
   ]),
   setCurrentTaskId: PropTypes.func,
+  taskRunCount: PropTypes.number,
 };
 
 export default TaskActivityLogTreeTable;
