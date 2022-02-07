@@ -28,7 +28,8 @@ import commonActions from "../../../common/common.actions";
 import InformaticaPipelineRunAssistantOverlay
   from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistantOverlay";
 
-const delayCheckInterval = 8000;
+const delayCheckInterval = 15000;
+const timeoutCheckInterval = 70000;
 
 function PipelineActionControls(
   {
@@ -150,7 +151,9 @@ function PipelineActionControls(
   };
 
   const checkPipelineQueueStatus = async () => {
-    const { orchestration } = await getFeatureFlags();
+    const featureFlags = await getFeatureFlags();
+    const orchestration = featureFlags?.orchestration;
+
     setQueueingEnabled(orchestration?.enableQueuing);
 
     if (orchestration?.enableQueuing) {
@@ -251,19 +254,25 @@ function PipelineActionControls(
   const runPipeline = async (pipelineId) => {
     try {
       setStartPipeline(true);
-      toastContext.showInformationToast("A request to start this pipeline has been submitted.  It will begin shortly.", 20);
-      await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
-
-      setTimeout(async function() {
-        await fetchData();
-        setStartPipeline(false);
-      }, delayCheckInterval);
+      const response = await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      const message = response?.data?.message;
+      toastContext.showInformationToast(message, 20);
     }
     catch (error) {
       if (isMounted.current === true) {
         setStartPipeline(false);
         toastContext.showSystemErrorToast(error, "There was an issue starting this pipeline");
       }
+    }
+    finally {
+      // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
+      setTimeout(async function() {
+        console.log("refreshing pipeline after timeout check");
+        await fetchData();
+        setStartPipeline(false);
+      }, timeoutCheckInterval);
+
+      delayRefresh();
     }
   };
 
@@ -292,16 +301,21 @@ function PipelineActionControls(
       toastContext.showInformationToast("A request to start this pipeline from the start has been submitted.  Resetting pipeline status and then the pipeline will begin momentarily.", 20);
       await PipelineActions.triggerPipelineNewStartV2(getAccessToken, cancelTokenSource, pipelineId);
       setHasQueuedRequest(true);
-
-      setTimeout(async function() {
-        await fetchData();
-        setStartPipeline(false);
-      }, delayCheckInterval);
     }
     catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
       }
+    }
+    finally {
+      // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
+      setTimeout(async function() {
+        console.log("refreshing pipeline after timeout check");
+        await fetchData();
+        setStartPipeline(false);
+      }, timeoutCheckInterval);
+
+      delayRefresh();
     }
   };
 
@@ -311,17 +325,21 @@ function PipelineActionControls(
       setWorkflowStatus("running");
       toastContext.showInformationToast("A request to resume this pipeline has been submitted.  It will begin shortly.", 20);
       await PipelineActions.resumePipelineV2(getAccessToken, cancelTokenSource, pipelineId);
-
-      setTimeout(async function() {
-        await fetchData();
-        setStartPipeline(false);
-      }, delayCheckInterval);
     }
     catch (error) {
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
         setStartPipeline(false);
       }
+    }
+    finally {
+      // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
+      setTimeout(async function() {
+        await fetchData();
+        setStartPipeline(false);
+      }, timeoutCheckInterval);
+
+      delayRefresh();
     }
   };
 
@@ -466,6 +484,7 @@ function PipelineActionControls(
   };
 
   // TODO: Make base button components for these in the future
+  //  and wire up the functions inside those components to clean up PipelineActionControls
   return (
     <>
       <div className="d-flex flex-fill">

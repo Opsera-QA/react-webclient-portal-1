@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faNetworkWired} from "@fortawesome/pro-light-svg-icons";
 
-const SUPPORTED_TOOL_IDENTIFIERS = [
+export const ARGO_CLUSTER_SUPPORTED_TOOL_IDENTIFIERS = [
   "argo",
 ];
 
 function ToolClustersTab({ toolModel, handleTabClick, activeTab }) {
-  if (!SUPPORTED_TOOL_IDENTIFIERS.includes(toolModel?.getData("tool_identifier"))) {
+  if (!ARGO_CLUSTER_SUPPORTED_TOOL_IDENTIFIERS.includes(toolModel?.getData("tool_identifier"))) {
     return null;
   }
 

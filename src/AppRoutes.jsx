@@ -108,7 +108,7 @@ import PipelineReportsScreen from "components/reports/pipelines/PipelineReportsS
 import ToolReportsScreen from "components/reports/tools/ToolReportsScreen";
 import UserReportsScreen from "components/reports/users/UserReportsScreen";
 import TaskManagement from "components/tasks/TaskManagement";
-import TaskAllActivityPanel from "components/tasks/activity_logs/all_tasks/TaskAllActivityPanel";
+import TaskAllActivityPanel from "components/tasks/activity_logs/TaskAllActivityPanel";
 import UserManagement from "components/settings/users/UserManagement";
 import UserDetailView from "components/settings/users/details/UserDetailView";
 import SsoUserDetailView from "components/settings/users/sso_user_details/SsoUserDetailView";

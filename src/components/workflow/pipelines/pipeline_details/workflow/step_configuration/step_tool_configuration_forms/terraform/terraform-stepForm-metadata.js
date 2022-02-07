@@ -48,7 +48,7 @@ const TerraformStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Runtime Argument Map",
+      label: "Runtime Arguments",
       id: "keyValueMap",
     },
     {
@@ -150,7 +150,7 @@ const TerraformStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Runtime Argument Map",
+      label: "Runtime Arguments",
       id: "keyValueMap",
     },
     {

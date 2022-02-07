@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
 import { faAbacus,} from "@fortawesome/pro-light-svg-icons";
 
-const JOBS_SUPPORTED_TOOL_IDENTIFIERS = [
+export const JOBS_SUPPORTED_TOOL_IDENTIFIERS = [
   "jenkins",
 ];
 

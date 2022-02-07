@@ -74,9 +74,15 @@ function ArgoToolClustersPanel({ toolId }) {
     setSelectedArgoCluster({...parsedModel});
   };
 
-  const closeEditorPanel = async () => {
+
+  const closePanel = () => {
     setSelectedArgoCluster(undefined);
-    await loadData();
+    if (isMounted?.current === true) {
+      loadData();
+    }
+
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
   };
 
   if (selectedArgoCluster != null) {
@@ -85,7 +91,7 @@ function ArgoToolClustersPanel({ toolId }) {
         argoClusterData={selectedArgoCluster}
         toolId={toolId}
         clusterData={argoClusters}
-        handleClose={closeEditorPanel}
+        handleClose={closePanel}
       />
     );
   }

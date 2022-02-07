@@ -1,39 +1,50 @@
+import {hasStringValue} from "components/common/helpers/string-helpers";
+
+// TODO: Handle better when error handling standards are in place
 export function parseError(error) {
   if (!error || error.length === 0) {
     return "Unknown error reported.";
   }
   console.error(error); //log all errors to console
 
-  if (typeof error === "string") {
+  if (hasStringValue(error) === true) {
     return error;
   }
 
   if (typeof error === "object") {
     if (error?.error) {
-      if (typeof error.error === "string") {
+      if (hasStringValue(error?.error) === true) {
         return error.error;
       }
 
       const requestResponseText = error?.error?.response?.data?.message;
-      if (requestResponseText) {
+      if (hasStringValue(requestResponseText) === true) {
         return requestResponseText;
       }
 
-      if (error?.error?.message) {
+      if (hasStringValue(error?.error?.message) === true) {
         return error.error.message;
       }
-
-      return JSON.stringify(error.error);
     }
 
     if (error.response) {
-      return error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data);
+      const responseData = error?.response?.data;
+
+      if (responseData) {
+        if (hasStringValue(responseData) === true) {
+          return error?.response.data;
+        }
+
+        if (hasStringValue(responseData?.message) === true) {
+          return responseData?.message;
+        }
+      }
     }
 
-    if (error.message) {
+    if (hasStringValue(error.message) === true) {
       return error.message;
     }
 
-    return JSON.stringify(error);
+    return "Unknown error reported. Please check your browser's console logs for more details";
   }
 }
