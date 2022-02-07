@@ -254,8 +254,9 @@ function PipelineActionControls(
   const runPipeline = async (pipelineId) => {
     try {
       setStartPipeline(true);
-      toastContext.showInformationToast("A request to start this pipeline has been submitted.  It will begin shortly.", 20);
-      await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      const response = await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      const message = response?.data?.message;
+      toastContext.showInformationToast(message, 20);
     }
     catch (error) {
       if (isMounted.current === true) {
@@ -264,13 +265,14 @@ function PipelineActionControls(
       }
     }
     finally {
-      delayRefresh();
-
       // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
       setTimeout(async function() {
+        console.log("refreshing pipeline after timeout check");
         await fetchData();
         setStartPipeline(false);
       }, timeoutCheckInterval);
+
+      delayRefresh();
     }
   };
 
@@ -306,13 +308,14 @@ function PipelineActionControls(
       }
     }
     finally {
-      delayRefresh();
-
       // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
       setTimeout(async function() {
+        console.log("refreshing pipeline after timeout check");
         await fetchData();
         setStartPipeline(false);
       }, timeoutCheckInterval);
+
+      delayRefresh();
     }
   };
 
@@ -330,13 +333,13 @@ function PipelineActionControls(
       }
     }
     finally {
-      delayRefresh();
-
       // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
       setTimeout(async function() {
         await fetchData();
         setStartPipeline(false);
       }, timeoutCheckInterval);
+
+      delayRefresh();
     }
   };
 
