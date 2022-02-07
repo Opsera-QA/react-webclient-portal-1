@@ -266,13 +266,16 @@ function PipelineActionControls(
     }
     finally {
       // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
+      // setTimeout(async function() {
+      //   console.log("refreshing pipeline after timeout check");
+      //   await fetchData();
+      //   setStartPipeline(false);
+      // }, timeoutCheckInterval);
+
       setTimeout(async function() {
-        console.log("refreshing pipeline after timeout check");
         await fetchData();
         setStartPipeline(false);
-      }, timeoutCheckInterval);
-
-      delayRefresh();
+      }, delayCheckInterval);
     }
   };
 
@@ -309,13 +312,16 @@ function PipelineActionControls(
     }
     finally {
       // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
+      // setTimeout(async function() {
+      //   console.log("refreshing pipeline after timeout check");
+      //   await fetchData();
+      //   setStartPipeline(false);
+      // }, timeoutCheckInterval);
+
       setTimeout(async function() {
-        console.log("refreshing pipeline after timeout check");
         await fetchData();
         setStartPipeline(false);
-      }, timeoutCheckInterval);
-
-      delayRefresh();
+      }, delayCheckInterval);
     }
   };
 
@@ -334,12 +340,16 @@ function PipelineActionControls(
     }
     finally {
       // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
+      // setTimeout(async function() {
+      //   console.log("refreshing pipeline after timeout check");
+      //   await fetchData();
+      //   setStartPipeline(false);
+      // }, timeoutCheckInterval);
+
       setTimeout(async function() {
         await fetchData();
         setStartPipeline(false);
-      }, timeoutCheckInterval);
-
-      delayRefresh();
+      }, delayCheckInterval);
     }
   };
 
