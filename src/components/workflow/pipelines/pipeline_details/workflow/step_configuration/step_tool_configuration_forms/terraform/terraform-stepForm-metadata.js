@@ -146,6 +146,22 @@ const TerraformStepFormMetadata = {
       id: "stateFile",
       formText: "This tracks if the state file will be created by Opsera during runtime."
     },
+    {
+      label: "Terraform Execution Script",
+      id: "customScript"
+    },
+    {
+      label: "Terraform Commands",
+      id: "terraformCommands"
+    },
+    {
+      label: "Specify Environment Variables",
+      id: "saveEnvironmentVariables"
+    },
+    {
+      label: "Environment Variables",
+      id: "environmentVariables"
+    },
   ],
   fieldsAlt: [
     {
@@ -299,6 +315,22 @@ const TerraformStepFormMetadata = {
       id: "stateFile",
       formText: "This tracks if the state file will be created by Opsera during runtime."
     },
+    {
+      label: "Terraform Execution Script",
+      id: "customScript"
+    },
+    {
+      label: "Terraform Commands",
+      id: "terraformCommands"
+    },
+    {
+      label: "Specify Environment Variables",
+      id: "saveEnvironmentVariables"
+    },
+    {
+      label: "Environment Variables",
+      id: "environmentVariables"
+    },
   ],
   newObjectFields: {
     toolActionType: "EXECUTE",
@@ -338,7 +370,11 @@ const TerraformStepFormMetadata = {
     inputParameters: "",
     saveInputParameters: false,
     stateRemote: false,
-    stateFile: ""
+    stateFile: "",
+    customScript: false,
+    terraformCommands: "",
+    saveEnvironmentVariables: false,
+    environmentVariables: []
   }
 };
 
