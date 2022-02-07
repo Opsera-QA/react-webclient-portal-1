@@ -19,6 +19,7 @@ function TerraformCustomScriptSelectInput({dataObject, setDataObject, disabled})
     let newModel = {...dataObject};
     newModel.setData(fieldName, selectedOption.value);
     newModel.setData("stateRemote", false);
+    newModel.setData("saveInputParameters", false);
     newModel.setData("resourceGroup", "");
     newModel.setData("storageName", "");
     newModel.setData("containerName", "");
@@ -38,6 +39,7 @@ function TerraformCustomScriptSelectInput({dataObject, setDataObject, disabled})
   const clearDataFunction = () => {
     let newModel = {...dataObject};
     newModel.setData("backendState", "");
+    newModel.setData("saveInputParameters", false);
     newModel.setData("resourceGroup", "");
     newModel.setData("storageName", "");
     newModel.setData("containerName", "");
