@@ -70,8 +70,6 @@ function SonarRatingsMaintainabilityActionableInsightTable(
       accessor: getCustomTableAccessor(field),
       Cell: function parseText(row) {
         let value = row?.value;
-        console.log("maintain", value);
-        console.log("maintainRow", row);
         if (value > 0) {
           if (rating <= 1) {
             value = LETTER_GRADES.A;

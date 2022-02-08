@@ -70,8 +70,6 @@ function SonarRatingsReliabilityActionableInsightTable(
       accessor: getCustomTableAccessor(field),
       Cell: function parseText(row) {
         const value = row?.value;
-        console.log("value", value);
-        console.log("row", row);
         if (value > 0) {
           if (rating <= 1) {
             return LETTER_GRADES.A;
