@@ -6,8 +6,9 @@ import Col from "react-bootstrap/Col";
 import TwoLineScoreDataBlock from "../../../../../common/metrics/score/TwoLineScoreDataBlock";
 import SonarRatingCodeCoverageActionableInsightOverlay
   from "../actionable_insights/coverage/SonarRatingCodeCoverageActionableInsightOverlay";
+import TwoLinePercentageDataBlock from "../../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
 
-function SonarRatingsCodeCoverageBlockContainer({ linesToCover, uncoveredLines, duplicate, kpiConfiguration, dashboardData,
+function SonarRatingsCodeCoverageBlockContainer({ tests, lineCoverage, duplicate, kpiConfiguration, dashboardData,
                                                        }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -21,15 +22,15 @@ function SonarRatingsCodeCoverageBlockContainer({ linesToCover, uncoveredLines, 
   };
 
   const getLeftDataBlock = () => {
-    return <TwoLineScoreDataBlock score={linesToCover} subtitle={"Lines to Cover"} />;
+    return <TwoLinePercentageDataBlock percentage={lineCoverage} subtitle={"Line Coverage %"} />;
   };
 
   const getMiddleDataBlock = () => {
-    return <TwoLineScoreDataBlock score={uncoveredLines} subtitle={"Uncovered Lines"} />;
+    return <TwoLineScoreDataBlock score={tests} subtitle={"Unit Tests"}  />;
   };
 
   const getRightDataBlock = () => {
-    return <TwoLineScoreDataBlock score={duplicate} subtitle={"Duplicate Lines"} />;
+    return <TwoLinePercentageDataBlock percentage={duplicate} subtitle={"Duplicated Lines %"} />;
   };
 
   return (
@@ -42,8 +43,8 @@ function SonarRatingsCodeCoverageBlockContainer({ linesToCover, uncoveredLines, 
 }
 
 SonarRatingsCodeCoverageBlockContainer.propTypes = {
-  linesToCover: PropTypes.number,
-  uncoveredLines: PropTypes.number,
+  tests: PropTypes.number,
+  lineCoverage: PropTypes.number,
   duplicate: PropTypes.number,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
