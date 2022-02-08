@@ -158,9 +158,9 @@ regexDefinitions.octopusFileList = {
 };
 
 regexDefinitions.customParameterValueRegex = {
-  regex: /^[a-zA-Z0-9-+|!.$@&:_;#%^'*, [\]\\/]*$/,
-  formText: "Value can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : ; | # % ^ ' , *",
-  errorFormText: "Value can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : ; | # % ^ ' , *",
+  regex: /^[a-zA-Z0-9-+|!.$@&:_; [\]\\/]*$/,
+  formText: "Value can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : ; |",
+  errorFormText: "Value can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : ; |",
 };
 
 regexDefinitions.customParameterNameRegex = {
