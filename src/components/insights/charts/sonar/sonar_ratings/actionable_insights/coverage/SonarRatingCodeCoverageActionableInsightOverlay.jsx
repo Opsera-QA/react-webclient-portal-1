@@ -139,7 +139,7 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
-        {getDateBadge()}
+        <div className={"mb-4"} >{getDateBadge()}</div>
         <SonarRatingCodeCoverageActionableInsightTable
           isLoading={isLoading}
           coverageData={coverageData}

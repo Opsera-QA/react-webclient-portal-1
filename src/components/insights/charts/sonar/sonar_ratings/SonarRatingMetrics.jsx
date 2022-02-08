@@ -119,9 +119,9 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
               <SonarRatingsCodeCoverageBlockContainer
                 dashboardData={dashboardData}
                 kpiConfiguration={kpiConfiguration}
-                linesToCover={sonarRatingsMetric?.lines_to_cover}
-                uncoveredLines={sonarRatingsMetric?.uncovered_lines}
-                duplicate={sonarRatingsMetric?.duplicated_lines}
+                tests={sonarRatingsMetric?.tests}
+                lineCoverage={sonarRatingsMetric?.line_percentage}
+                duplicate={sonarRatingsMetric?.duplication_percentage}
               />
             </Col>
           </Row>

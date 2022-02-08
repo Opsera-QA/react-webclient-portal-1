@@ -86,7 +86,7 @@ function SonarRatingsReliabilityActionableInsightTable(
           }
         }
         return (
-          {value}
+          <div>{value}</div>
         );
       },
     };
