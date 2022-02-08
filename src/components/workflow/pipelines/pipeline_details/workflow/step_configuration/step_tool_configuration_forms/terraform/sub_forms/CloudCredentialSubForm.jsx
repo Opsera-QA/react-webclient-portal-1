@@ -20,18 +20,17 @@ function CloudCredentialSubForm({ model, setModel}) {
       );
     }
 
-    return (
-      <>
-        <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"accessKeyParamName"} />
-        <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"secretKeyParamName"} />
-        <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"regionParamName"} />
-      </>
-    );
+    if (!model?.getData('customScript'))
+      {
+      return (
+        <>
+          <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"accessKeyParamName"} />
+          <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"secretKeyParamName"} />
+          <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"regionParamName"} />
+        </>
+      );
+    }
   };
-
-  if (model?.getData("customScript")) {
-    return null;
-  }
 
   return (
     <>
