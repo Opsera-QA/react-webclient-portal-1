@@ -30,8 +30,7 @@ function PipelineActivityLogTree(
 
   useEffect(() => {
     if (isMounted.current === true && pipelineRunCount && Array.isArray(pipelineLogTree) && pipelineLogTree.length > 0) {
-      let treeItem = pipelineLogTree[0];
-      setSelectedId(treeItem?.id);
+      setSelectedId(`${pipelineRunCount}`);
     }
   }, [pipelineRunCount]);
 
