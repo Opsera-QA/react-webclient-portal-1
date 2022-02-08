@@ -128,4 +128,12 @@ argoActions.getAwsEksClusters = async (getAccessToken, cancelTokenSource, toolId
   return [];
 };
 
+argoActions.getIAMRoles = async (getAccessToken, cancelTokenSource, awsToolId) => {
+  let urlParams = {
+    toolId: awsToolId
+  };
+  const apiUrl = `/tools/aws/v2/IAMRoles`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 export default argoActions;
