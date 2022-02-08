@@ -136,6 +136,10 @@ const sonarPipelineStepMetadata = {
         );
       },
     },
+    {
+      label: "Commands",
+      id: "commands"
+    },
   ],
   newObjectFields: {
     jobType: "",
@@ -175,6 +179,7 @@ const sonarPipelineStepMetadata = {
     successThreshold: "",
     isScanArtifact: false,
     stepIdXml: "",
+    commands: "",
   }
 };
 

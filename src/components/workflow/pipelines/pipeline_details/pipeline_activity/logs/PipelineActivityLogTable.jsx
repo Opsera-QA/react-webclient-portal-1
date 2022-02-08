@@ -60,12 +60,12 @@ function PipelineActivityLogTable(
   };
 
   const getFilteredData = () => {
-    if (currentRunNumber == null || currentRunNumber === "latest" || currentRunNumber === "secondary") {
+    if (currentRunNumber == null || currentRunNumber === "latest" || currentRunNumber === "secondary" || currentStepName == null) {
       return pipelineLogData;
     }
 
     return pipelineLogData.filter((item) => {
-      return item.run_count === currentRunNumber && (currentStepName == null || item.step_name === currentStepName);
+      return item.step_name === currentStepName;
     });
   };
 

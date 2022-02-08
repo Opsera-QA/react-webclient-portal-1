@@ -37,6 +37,14 @@ const argoClusterMetadata = {
     },
     {
       id: "clientSecret"
+    },    
+    {
+      label: "IAM Roles", 
+      id:"iamRoleFlag"
+    },
+    {
+      label: "IAM Role",
+      id: "roleArn"
     },
   ],
   newObjectFields: {
@@ -49,6 +57,8 @@ const argoClusterMetadata = {
     server: "",
     clientId: "",
     clientSecret: "",
+    iamRoleFlag: false,
+    roleArn: ""
   }
 };
 
