@@ -18,7 +18,7 @@ function TerraformRemoteStateCloudSelect({dataObject, setDataObject, disabled}) 
       value: "TERRAFORM_CLOUD",
     },
     {
-      name: "Local",
+      name: "Local Filesystem",
       value: "LOCAL",
     }
   ];
@@ -47,7 +47,7 @@ function TerraformRemoteStateCloudSelect({dataObject, setDataObject, disabled}) 
     newModel.setData("azureToolConfigId", "");
     newModel.setData("terraformCloudId", "");
     newModel.setData("organizationName", "");
-    newModel.setData("backendState", "local");
+    newModel.setData("backendState", "LOCAL");
     newModel.setData("azureCredentialId", "");
     newModel.setData("bucketName", "");
     setDataObject({...newModel});

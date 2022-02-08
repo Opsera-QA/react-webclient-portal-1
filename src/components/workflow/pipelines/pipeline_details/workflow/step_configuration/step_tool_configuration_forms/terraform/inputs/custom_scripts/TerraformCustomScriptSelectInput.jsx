@@ -26,7 +26,7 @@ function TerraformCustomScriptSelectInput({dataObject, setDataObject, disabled})
     newModel.setData("azureToolConfigId", "");
     newModel.setData("terraformCloudId", "");
     newModel.setData("organizationName", "");
-    newModel.setData("backendState", "local");
+    newModel.setData("backendState", "LOCAL");
     newModel.setData("azureCredentialId", "");
     newModel.setData("bucketName", "");
     newModel.setData("inputParameters", []);
@@ -46,7 +46,7 @@ function TerraformCustomScriptSelectInput({dataObject, setDataObject, disabled})
     newModel.setData("azureToolConfigId", "");
     newModel.setData("terraformCloudId", "");
     newModel.setData("organizationName", "");
-    newModel.setData("backendState", "local");
+    newModel.setData("backendState", "LOCAL");
     newModel.setData("azureCredentialId", "");
     newModel.setData("bucketName", "");
     newModel.setData("inputParameters", []);

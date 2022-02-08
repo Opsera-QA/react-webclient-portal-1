@@ -365,7 +365,7 @@ const TerraformStepFormMetadata = {
     azureToolConfigId : "",
     terraformCloudId : "",
     organizationName : "",
-    backendState: "local",
+    backendState: "LOCAL",
     azureCredentialId: "",
     inputParameters: "",
     saveInputParameters: false,
