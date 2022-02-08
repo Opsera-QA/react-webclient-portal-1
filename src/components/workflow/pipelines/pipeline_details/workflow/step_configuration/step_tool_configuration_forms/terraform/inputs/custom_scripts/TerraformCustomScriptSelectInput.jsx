@@ -2,45 +2,24 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function TerraformRemoteStateCloudSelect({dataObject, setDataObject, disabled}) {
+function TerraformCustomScriptSelectInput({dataObject, setDataObject, disabled}) {
 
   const JOB_TYPES = [
     {
-      name: "AWS S3",
-      value: "S3",
+      name: "Custom Script",
+      value: true,
     },
     {
-      name: "Azure",
-      value: "AZURERM",
-    },
-    {
-      name: "Terraform Cloud",
-      value: "TERRAFORM_CLOUD",
-    },
-    {
-      name: "Local Filesystem",
-      value: "LOCAL",
+      name: "Opsera Script",
+      value: false,
     }
   ];
 
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...dataObject};
-    newModel.setData("resourceGroup", "");
-    newModel.setData("storageName", "");
-    newModel.setData("containerName", "");
-    newModel.setData("azureToolConfigId", "");
-    newModel.setData("terraformCloudId", "");
-    newModel.setData("organizationName", "");
-    newModel.setData("backendState", "");
-    newModel.setData("azureCredentialId", "");
-    newModel.setData("bucketName", "");
-    newModel.setData("backendState", selectedOption.value);
-    setDataObject({...newModel});
-  };
-
-  const clearDataFunction = () => {
-    let newModel = {...dataObject};
-    newModel.setData("backendState", "");
+    newModel.setData(fieldName, selectedOption.value);
+    newModel.setData("stateRemote", false);
+    newModel.setData("saveInputParameters", false);
     newModel.setData("resourceGroup", "");
     newModel.setData("storageName", "");
     newModel.setData("containerName", "");
@@ -50,13 +29,37 @@ function TerraformRemoteStateCloudSelect({dataObject, setDataObject, disabled}) 
     newModel.setData("backendState", "LOCAL");
     newModel.setData("azureCredentialId", "");
     newModel.setData("bucketName", "");
+    newModel.setData("inputParameters", []);
+    newModel.setData("environmentVariables", []);
+    newModel.setData("terraformCommands", "");
+    newModel.setData("keyValueMap", {});
+    setDataObject({...newModel});
+  };
+
+  const clearDataFunction = () => {
+    let newModel = {...dataObject};
+    newModel.setData("backendState", "");
+    newModel.setData("saveInputParameters", false);
+    newModel.setData("resourceGroup", "");
+    newModel.setData("storageName", "");
+    newModel.setData("containerName", "");
+    newModel.setData("azureToolConfigId", "");
+    newModel.setData("terraformCloudId", "");
+    newModel.setData("organizationName", "");
+    newModel.setData("backendState", "LOCAL");
+    newModel.setData("azureCredentialId", "");
+    newModel.setData("bucketName", "");
+    newModel.setData("inputParameters", []);
+    newModel.setData("environmentVariables", []);
+    newModel.setData("terraformCommands", "");
+    newModel.setData("keyValueMap", {});
     setDataObject({...newModel});
   };
 
 
   return (
     <SelectInputBase
-      fieldName={"backendState"}
+      fieldName={"customScript"}
       dataObject={dataObject}
       setDataObject={setDataObject}
       setDataFunction={setDataFunction}
@@ -64,18 +67,18 @@ function TerraformRemoteStateCloudSelect({dataObject, setDataObject, disabled}) 
       selectOptions={JOB_TYPES}
       valueField={"value"}
       textField={"name"}
-      placeholderText={"Select a Remote State Location"}
+      placeholderText={"Select Terraform Execution Script"}
       disabled={disabled}
       busy={disabled}
     />
   );
 }
 
-TerraformRemoteStateCloudSelect.propTypes = {
+TerraformCustomScriptSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string
 };
 
-export default TerraformRemoteStateCloudSelect;
+export default TerraformCustomScriptSelectInput;
