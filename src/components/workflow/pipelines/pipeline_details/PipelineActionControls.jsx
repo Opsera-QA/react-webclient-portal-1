@@ -29,7 +29,7 @@ import InformaticaPipelineRunAssistantOverlay
   from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistantOverlay";
 
 const delayCheckInterval = 15000;
-const timeoutCheckInterval = 70000;
+let internalRefreshCount = 1;
 
 function PipelineActionControls(
   {
@@ -71,9 +71,6 @@ function PipelineActionControls(
     return response?.data;
   };
 
-
-  // TODO: This should be combined with the workflowStatus use effect but don't want to break anything.
-  //  After we have time to verify adding this doesn't break it, let's combine them.
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -111,6 +108,19 @@ function PipelineActionControls(
     }
   }, [workflowStatus, JSON.stringify(pipeline.workflow)]);
 
+
+  useEffect(() => {
+    if (pipeline && startPipeline === true) {
+      const state = pipeline?.workflow?.last_step?.status;
+
+      if (state !== "running") {
+        handleDelayCheckRefresh(pipeline?._id);
+      }
+      else {
+        setStartPipeline(false);
+      }
+    }
+  }, [pipeline]);
 
   const loadData = async (pipeline) => {
     // TODO: With the below check this is unnecessary-- leaving in for now but something to look at later
@@ -254,25 +264,18 @@ function PipelineActionControls(
   const runPipeline = async (pipelineId) => {
     try {
       setStartPipeline(true);
+      toastContext.showInformationToast("A request to start this pipeline has been submitted.", 20);
       const response = await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
       const message = response?.data?.message;
       toastContext.showInformationToast(message, 20);
     }
     catch (error) {
       if (isMounted.current === true) {
-        setStartPipeline(false);
         toastContext.showSystemErrorToast(error, "There was an issue starting this pipeline");
       }
     }
     finally {
-      // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
-      setTimeout(async function() {
-        console.log("refreshing pipeline after timeout check");
-        await fetchData();
-        setStartPipeline(false);
-      }, timeoutCheckInterval);
-
-      delayRefresh();
+      handlePipelineStatusRefresh(pipelineId);
     }
   };
 
@@ -308,14 +311,7 @@ function PipelineActionControls(
       }
     }
     finally {
-      // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
-      setTimeout(async function() {
-        console.log("refreshing pipeline after timeout check");
-        await fetchData();
-        setStartPipeline(false);
-      }, timeoutCheckInterval);
-
-      delayRefresh();
+      handlePipelineStatusRefresh(pipelineId);
     }
   };
 
@@ -329,18 +325,26 @@ function PipelineActionControls(
     catch (error) {
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
-        setStartPipeline(false);
       }
+    } finally {
+      handlePipelineStatusRefresh(pipelineId);
     }
-    finally {
-      // TODO: This is temporary until websocket can actually send live update to confirm pipeline started
-      setTimeout(async function() {
-        await fetchData();
-        setStartPipeline(false);
-      }, timeoutCheckInterval);
+  };
 
-      delayRefresh();
-    }
+  const handlePipelineStatusRefresh = (pipelineId) => {
+    console.log("Initialized pipeline startup status check");
+    internalRefreshCount = 0;
+
+    console.log(`Scheduling startup status check followup for Pipeline: ${pipelineId}, counter: ${internalRefreshCount}, interval: ${delayCheckInterval} `);
+    handleDelayCheckRefresh(pipelineId);
+  };
+
+  const handleDelayCheckRefresh = (pipelineId) => {
+    setTimeout(async function() {
+      internalRefreshCount++;
+      console.log(`Scheduling startup status check followup for Pipeline: ${pipelineId}, counter: ${internalRefreshCount}, interval: ${delayCheckInterval} `);
+      await fetchData();
+    }, delayCheckInterval);
   };
 
   const delayRefresh = () => {
@@ -354,7 +358,6 @@ function PipelineActionControls(
       await handleResumeWorkflowClick(pipelineId);
     }, 5000);
   };
-
 
   const launchPipelineStartWizard = (pipelineOrientation, pipelineType, pipelineId) => {
     //console.log("launching wizard");

@@ -21,6 +21,7 @@ import {AuthContext} from "contexts/AuthContext";
 import CustomTable from "components/common/table/CustomTable";
 
 const refreshInterval = 15000;
+let internalRefreshCount = 1;
 
 function PipelineActivityLogTreeTable(
   {
@@ -38,9 +39,10 @@ function PipelineActivityLogTreeTable(
   const [isLoading, setIsLoading] = useState(false);
   const pipelineTree = useRef([]);
   const [refreshTimer, setRefreshTimer] = useState(null);
-  let internalRefreshCount = 1;
   const [currentRunNumber, setCurrentRunNumber] = useState(pipelineRunCount);
   const [currentStepName, setCurrentStepName] = useState(undefined);
+  const [latestRunNumber, setLatestRunNumber] = useState(undefined);
+  const [isPipelineRunning, setIsPipelineRunning] = useState(false);
 
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -118,12 +120,22 @@ function PipelineActivityLogTreeTable(
     const pipelineStatus = pipeline?.workflow?.last_step?.status;
 
     if (!pipelineStatus || pipelineStatus === "stopped") {
+      if (isPipelineRunning === true) {
+        toastContext.showInformationToast("The Pipeline has completed running. Please check the activity logs for details.", 20);
+        setIsPipelineRunning(false);
+      }
+
       console.log("Pipeline stopped, no need to schedule refresh. Status: ", pipelineStatus);
       return;
     }
 
     if (refreshTimer) {
       clearTimeout(refreshTimer);
+    }
+
+    if (isPipelineRunning !== true) {
+      toastContext.showInformationToast("The Pipeline is currently running. Please check the activity logs for details.", 20);
+      setIsPipelineRunning(true);
     }
 
     console.log(`Scheduling status check followup for Pipeline: ${pipeline._id}, counter: ${internalRefreshCount}, interval: ${refreshInterval} `);
@@ -153,6 +165,7 @@ function PipelineActivityLogTreeTable(
 
     if (newTree) {
       pipelineTree.current = [...newTree];
+      setLatestRunNumber(pipelineRunCount);
     }
   }, [pipelineRunCount]);
 
@@ -261,6 +274,7 @@ function PipelineActivityLogTreeTable(
         pipelineLogTree={pipelineTree?.current}
         setCurrentRunNumber={setCurrentRunNumber}
         setCurrentStepName={setCurrentStepName}
+        pipelineRunCount={latestRunNumber}
       />
     );
   };
