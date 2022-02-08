@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import ArgoCdGitYamlToolSelectInput
@@ -136,6 +137,11 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
         dataObject={argoCdModel}
         fieldName={"gitFilePath"}
         disabled={argoCdModel?.getData("defaultBranch").length === 0}
+      />
+      <BooleanToggleInput 
+        fieldName={"rollbackEnabled"}
+        dataObject={argoCdModel}
+        setDataObject={setArgoCdModel}
       />
       {getDynamicFields()}
     </PipelineStepEditorPanelContainer>

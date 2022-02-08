@@ -83,6 +83,11 @@ const ArgoCDStepFormMetadata = {
       id: "sshUrl",
       // isRequired: true,
     },
+    {
+      label: "Rollback Enabled",
+      id: "rollbackEnabled",
+      // isRequired: true,
+    },
   ],
   newObjectFields: {
     existingContent: "image",
