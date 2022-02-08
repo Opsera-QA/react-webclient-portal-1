@@ -70,6 +70,11 @@ pipelineLogHelpers.updateSelectedRunNumberTree = (pipelineTree, runNumber, pipel
 };
 
 pipelineLogHelpers.addRunNumberToPipelineTree = (pipelineTree, runNumber) => {
+  // TODO: Should we do this regardless of run count for safety?
+  if (runNumber === 1 && (!Array.isArray(pipelineTree) || pipelineTree.length === 0)) {
+    return pipelineLogHelpers.constructTopLevelTreeBasedOnRunCount(runNumber);
+  }
+
   if (Array.isArray(pipelineTree) && pipelineTree.length > 0 && typeof runNumber === "number") {
     const existingTreeItem = pipelineTree.find((treeItem) => treeItem.id === runNumber);
 
