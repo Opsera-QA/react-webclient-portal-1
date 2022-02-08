@@ -22,7 +22,6 @@ import CustomTable from "components/common/table/CustomTable";
 
 const refreshInterval = 15000;
 
-// TODO: This is an attempt to move the logic into the table. Not going to finish it now, will finish it as separate enhancement
 function PipelineActivityLogTreeTable(
   {
     pipeline,
@@ -229,6 +228,10 @@ function PipelineActivityLogTreeTable(
 
     if (currentRunNumber === "latest") {
       return ("Pipeline activity data has not been generated yet.\n Once this pipeline begins running, it will publish details here.");
+    }
+
+    if (currentRunNumber === 0) {
+      return ("Pipeline activity data has not been generated yet. Once this pipeline begins running, it will publish details here.");
     }
 
     if (currentRunNumber == null) {
