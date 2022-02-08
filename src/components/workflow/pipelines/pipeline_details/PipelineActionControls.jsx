@@ -333,7 +333,7 @@ function PipelineActionControls(
 
   const handlePipelineStatusRefresh = (pipelineId) => {
     console.log("Initialized pipeline startup status check");
-    internalRefreshCount = 0;
+    internalRefreshCount = 1;
 
     console.log(`Scheduling startup status check followup for Pipeline: ${pipelineId}, counter: ${internalRefreshCount}, interval: ${delayCheckInterval} `);
     handleDelayCheckRefresh(pipelineId);
