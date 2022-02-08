@@ -39,29 +39,29 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
       <div className={"m-2 ml-3 mr-3"}>
         <small>
           <Row className="d-flex align-items-center">
-              <Col sm={12} md={6} lg={6}>
-                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"tests"} className="insight-detail-label my-2" />
-              </Col>
-              <Col sm={12} md={6} lg={6}>
-                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"test_success_density"} className="insight-detail-label my-2" />
-              </Col>
-              <Col sm={12} md={6} lg={6}>
-                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"test_failures"} className="insight-detail-label my-2" />
-              </Col>              
-              <Col sm={12} md={6} lg={6}>
-                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"skipped_tests"} className="insight-detail-label my-2" />
-              </Col>
-              <Col sm={12} md={6} lg={6}>
-                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"test_errors"} className="insight-detail-label my-2" />
-              </Col>
-              <Col sm={12} md={6} lg={6}>
-                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"test_execution_time"} className="insight-detail-label my-2" />
-              </Col>
-              <Col sm={12} md={6} lg={6}>
+              <Col sm={12} md={4} lg={4}>
                   <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"name"} className="insight-detail-label my-2" />
               </Col>
-              <Col sm={12} md={6} lg={6}>
+              <Col sm={12} md={4} lg={4}>
+                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"tests"} className="insight-detail-label my-2" />
+              </Col>
+              <Col sm={12} md={4} lg={4}>
                   <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"run_count"} className="insight-detail-label my-2" />
+              </Col>
+              <Col sm={12} md={4} lg={4}>
+                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"test_success_density"} className="insight-detail-label my-2" />
+              </Col>
+              <Col sm={12} md={4} lg={4}>
+                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"test_failures"} className="insight-detail-label my-2" />
+              </Col>              
+              <Col sm={12} md={4} lg={4}>
+                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"skipped_tests"} className="insight-detail-label my-2" />
+              </Col>
+              <Col sm={12} md={4} lg={4}>
+                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"test_errors"} className="insight-detail-label my-2" />
+              </Col>
+              <Col sm={12} md={4} lg={4}>
+                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"test_execution_time"} className="insight-detail-label my-2" />
               </Col>
           </Row>          
         </small>
