@@ -175,6 +175,8 @@ import sonarPipelineStepMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStep.metadata";
 import PackerPipelineStepConfigurationSummaryPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/packer/PackerPipelineStepConfigurationSummaryPanel";
 import PackerStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/packer/packer-stepForm-metadata";
+import BuildkiteStepSummary from "./step_tool_configuration_forms/buildkite/BuildkiteStepSummary";
+import buildkiteMetadata from "./step_tool_configuration_forms/buildkite/buildkite-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -548,6 +550,13 @@ function PipelineStepConfigurationSummary({
           <PackerPipelineStepConfigurationSummaryPanel 
             pipelineData={pipelineData}
             sentenialStepFormMetadata={getModelWrappedObject(PackerStepFormMetadata)}
+            />
+            );
+      case "buildkite":
+        return (
+          <BuildkiteStepSummary
+            pipelineData={pipelineData}
+            buildkiteStepConfigurationData={getModelWrappedObject(buildkiteMetadata)}
           />
         );
       default:

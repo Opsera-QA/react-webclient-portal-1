@@ -76,6 +76,7 @@ import PmdScanStepConfiguration
 import SentinelStepConfiguration from "./step_tool_configuration_forms/sentenial/SentinelStepConfiguration";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import PackerStepConfiguration from "./step_tool_configuration_forms/packer/PackerStepConfiguration";
+import BuildkiteStepConfiguration from "./step_tool_configuration_forms/buildkite/BuildkiteStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
