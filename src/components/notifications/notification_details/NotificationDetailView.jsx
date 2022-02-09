@@ -101,7 +101,7 @@ function NotificationDetailView() {
     <DetailScreenContainer
       breadcrumbDestination={"notificationDetailView"}
       metadata={notificationMetadata}
-      navigationTabContainer={<NotificationSubNavigationBar currentTab={"notificationViewer"} />}
+      navigationTabContainer={<NotificationSubNavigationBar activeTab={"notificationViewer"} />}
       dataObject={notificationData}
       isLoading={isLoading}
       actionBar={getActionBar()}
