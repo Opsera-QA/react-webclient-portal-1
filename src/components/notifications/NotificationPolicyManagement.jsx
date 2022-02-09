@@ -71,7 +71,6 @@ function NotificationPolicyManagement() {
         Create Notification Policies to tailor activity logging to your needs.
       `}
       navigationTabContainer={<NotificationSubNavigationBar activeTab={"notifications"} />}
-      isLoading={isLoading}
     >
       <NotificationsTable
         isLoading={isLoading}
