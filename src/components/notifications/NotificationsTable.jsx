@@ -91,7 +91,7 @@ function NotificationsTable(
         loadData={loadData}
       />
     );
-  }
+  };
 
   return (
     <FilterContainer
