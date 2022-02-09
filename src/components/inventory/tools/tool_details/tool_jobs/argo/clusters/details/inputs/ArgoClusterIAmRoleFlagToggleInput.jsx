@@ -9,6 +9,7 @@ function ArgoClusterIAmRoleFlagToggleInput({model, setModel, disabled}) {
     newModel.setData(fieldName, selectedValue);
     newModel.setData("roleArn", "");
     newModel.setData("roleSessionName", "");
+    newModel.setData("clusterName", "");
     setModel({...newModel});
   };
   

@@ -59,8 +59,7 @@ const ArgoAwsClusterEditorForm = ({ model, setModel, clusterData, disabled }) =>
           setModel={setModel}
           disabled={disabled}
         />
-      </Col>
-      
+      </Col>      
       <Col lg={12}>
         <ArgoClusterIAmRoleFlagToggleInput model={model} setModel={setModel} />
       </Col>
