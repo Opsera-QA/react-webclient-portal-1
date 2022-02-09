@@ -72,17 +72,17 @@ function SonarRatingsMaintainabilityActionableInsightTable(
         let value = row?.value;
         if (value > 0) {
           if (value <= 1) {
-            value = LETTER_GRADES.A;
+            return <div className="green">A</div>;
           } else if (value <= 2) {
-            value = LETTER_GRADES.B;
+            return <div className="yellow">B</div>;
           } else if (value <= 3) {
-            value = LETTER_GRADES.C;
+            return <div className="yellow">C</div>;
           } else if (value <= 4) {
-            value = LETTER_GRADES.D;
+            return <div className="danger-red">D</div>;
           } else if (value <= 5) {
-            value = LETTER_GRADES.E;
+            return <div className="danger-red">E</div>;
           } else {
-            value = null;
+            return null;
           }
         }
         return (
