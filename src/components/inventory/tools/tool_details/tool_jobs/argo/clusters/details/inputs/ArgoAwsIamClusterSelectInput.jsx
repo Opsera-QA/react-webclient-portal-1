@@ -2,25 +2,27 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import axios from "axios";
-import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
 import { AuthContext } from "contexts/AuthContext";
+import axios from "axios";
+import argoActions from "../../../argo-actions";
 
-function ArgoClusterRolesSelectInput({
+function ArgoAwsIamClusterSelectInput({
   fieldName,
   model,
   setModel,
   disabled,
   textField,
   valueField,
-  toolConfigId,
-  pipelineId,
+  awsToolConfigId,
+  awsIamRole,
+  awsIamRoleName,
+  clusterData
 }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [loadBalancers, setIAMRoless] = useState([]);
+  const [clusters, setClusters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select an IAM Role");
+  const [placeholder, setPlaceholder] = useState("Select a Cluster");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -45,12 +47,12 @@ function ArgoClusterRolesSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolConfigId]);
+  }, [awsToolConfigId, awsIamRole]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadTypes(cancelSource);
+      await loadAwsClusters(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -63,39 +65,28 @@ function ArgoClusterRolesSelectInput({
     }
   };
 
-  const loadTypes = async (cancelSource) => {
+  const loadAwsClusters = async (cancelSource) => {
     try {
-      setIAMRoless([]);
-      let awsToolId = model.getData("platformToolId");
-      let res = await argoActions.getIAMRoles(getAccessToken, cancelSource, awsToolId);
-      if (res && res.status === 200) {
-        res = res.data;
-      } else {
-        res = [];
-      }
+      setClusters([]);
+      const res = await argoActions.getIamAwsClusters(getAccessToken, cancelSource, awsToolConfigId, awsIamRole, awsIamRoleName);
       if (res && res.status === 200) {
         if (res.data.length === 0) {
-          setPlaceholder("No IAM Roles Found");
+          setPlaceholder("No Clusters Found");
           return;
         }
-        setPlaceholder("Select an IAM Role");
-        setIAMRoless(res.data);
+        setPlaceholder("Select a Cluster");
+        const clusterNames = clusterData.map(c => c.name.trim());                
+        const tempClusters = res.data.filter(cluster => !clusterNames.includes(cluster));
+        setClusters(tempClusters);
         return;
       }
-      setPlaceholder("No IAM Roles Found");
-      setIAMRoless([]);
+      setPlaceholder("No Clusters Found");
+      setClusters([]);
     } catch (error) {
-      setPlaceholder("No IAM Roles Found");
+      setPlaceholder("No Clusters Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }
-  };
-
-  const handleChange=(fieldName,selectedOption)=>{
-    let newModel = {...model};
-    newModel.setData(fieldName, selectedOption?.arn);
-    newModel.setData("roleSessionName", selectedOption?.roleName);
-    setModel({...newModel});
   };
 
   return (
@@ -103,32 +94,33 @@ function ArgoClusterRolesSelectInput({
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      setDataFunction={handleChange}
-      selectOptions={loadBalancers}     
+      selectOptions={clusters}
       textField={textField}
       valueField={valueField}
       busy={isLoading}
       placeholderText={placeholder}
-      disabled={disabled || isLoading || (!isLoading && (loadBalancers == null || loadBalancers.length === 0))}
+      disabled={disabled || isLoading || (!isLoading && (clusters == null || clusters.length === 0))}
     />
   );
 }
 
-ArgoClusterRolesSelectInput.propTypes = {
+ArgoAwsIamClusterSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  toolConfigId: PropTypes.string,
-  pipelineId: PropTypes.string,
+  awsToolConfigId: PropTypes.string,
+  clusterData: PropTypes.array,
+  awsIamRole: PropTypes.string,
+  awsIamRoleName: PropTypes.string,
 };
 
-ArgoClusterRolesSelectInput.defaultProps = {
-  fieldName: "roleArn",
-  textField: "roleName",
-  valueField: "arn",
+ArgoAwsIamClusterSelectInput.defaultProps = {
+  fieldName: "clusterName",
+  textField: "clusterName",
+  valueField: "clusterName",
 };
 
-export default ArgoClusterRolesSelectInput;
+export default ArgoAwsIamClusterSelectInput;
