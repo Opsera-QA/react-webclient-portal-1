@@ -43,10 +43,10 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
                   <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"name"} className="insight-detail-label my-2" />
               </Col>
               <Col sm={12} md={4} lg={4}>
-                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"tests"} className="insight-detail-label my-2" />
+                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"run_count"} className="insight-detail-label my-2" />
               </Col>
               <Col sm={12} md={4} lg={4}>
-                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"run_count"} className="insight-detail-label my-2" />
+                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"tests"} className="insight-detail-label my-2" />
               </Col>
               <Col sm={12} md={4} lg={4}>
                   <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"test_success_density"} className="insight-detail-label my-2" />

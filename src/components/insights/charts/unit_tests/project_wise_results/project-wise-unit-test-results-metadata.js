@@ -31,7 +31,7 @@ const githubRecentMergeRequestsMetadata = {
         id: "test_execution_time"
       },
       {
-        label: "Pipeline name",
+        label: "Pipeline",
         id: "name"
       },
       {
