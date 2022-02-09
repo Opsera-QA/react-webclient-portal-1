@@ -110,6 +110,7 @@ paths.toolDetailView = paths.toolRegistry + "/details";
 
 //Notifications
 paths.notificationManagement = "notifications";
+paths.notificationActivityLogs = "notifications/activity";
 paths.notificationDetailView = paths.notificationDetailView + "/details";
 
 //Tasks

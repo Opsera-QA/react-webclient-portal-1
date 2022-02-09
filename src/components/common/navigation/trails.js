@@ -755,6 +755,14 @@ const breadcrumbs = {
     linkText: "Notification Management",
     icon: faEnvelope
   },
+  notificationActivityLogs : {
+    parent: undefined,
+    name: "notificationActivityLogs",
+    path: paths.notificationActivityLogs,
+    title: "Notification Policy Activity Logs",
+    linkText: "Notification Policy Activity Logs",
+    icon: faClipboardList
+  },
   notificationDetailView: {
     parent: "notificationManagement",
     name: "notificationDetailView",

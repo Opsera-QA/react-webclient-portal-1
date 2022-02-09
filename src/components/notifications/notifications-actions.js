@@ -69,29 +69,31 @@ notificationsActions.getNotificationByIdV2 = async (getAccessToken, cancelTokenS
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-notificationsActions.getNotificationActivityLogs = async (notificationDataDto, notificationActivityFilterDto, getAccessToken) => {
-  let sortOption = notificationActivityFilterDto.getData("sortOption");
+notificationsActions.getNotificationActivityLogsV2 = async (getAccessToken, cancelTokenSource, notificationId, notificationActivityFilterDto) => {
+  const apiUrl = `/notifications/logs/${notificationId}`;
+  const sortOption = notificationActivityFilterDto?.getData("sortOption");
   let urlParams = {
     params: {
       sort: notificationActivityFilterDto ? sortOption.value : undefined,
-      page: notificationActivityFilterDto.getData("currentPage"),
-      size: notificationActivityFilterDto.getData("pageSize"),
-      tag: notificationActivityFilterDto.getFilterValue("tag"),
-      type: notificationActivityFilterDto.getFilterValue("type"),
-      status: notificationActivityFilterDto.getFilterValue("status"),
-      search: notificationActivityFilterDto.getFilterValue("search"),
+      page: notificationActivityFilterDto?.getData("currentPage"),
+      size: notificationActivityFilterDto?.getData("pageSize"),
+      tag: notificationActivityFilterDto?.getFilterValue("tag"),
+      type: notificationActivityFilterDto?.getFilterValue("type"),
+      status: notificationActivityFilterDto?.getFilterValue("status"),
+      search: notificationActivityFilterDto?.getFilterValue("search"),
     }
   };
 
-  const apiUrl = `/notifications/logs/${notificationDataDto.getData("_id")}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-notificationsActions.getAllNotificationActivityLogs = async ( notificationActivityFilterDto, getAccessToken) => {
-  let sortOption = notificationActivityFilterDto.getData("sortOption");
-  let urlParams = {
+
+notificationsActions.getAllNotificationActivityLogsV2 = async (getAccessToken, cancelTokenSource, notificationActivityFilterDto) => {
+  const apiUrl = `/notifications/logs/`;
+  const sortOption = notificationActivityFilterDto.getData("sortOption");
+  const urlParams = {
     params: {
-      sort: notificationActivityFilterDto ? sortOption.value : undefined,
+      sort: notificationActivityFilterDto ? sortOption?.value : undefined,
       page: notificationActivityFilterDto.getData("currentPage"),
       size: notificationActivityFilterDto.getData("pageSize"),
       tag: notificationActivityFilterDto.getFilterValue("tag"),
@@ -101,8 +103,7 @@ notificationsActions.getAllNotificationActivityLogs = async ( notificationActivi
     }
   };
 
-  const apiUrl = `/notifications/logs/`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 export default notificationsActions;
