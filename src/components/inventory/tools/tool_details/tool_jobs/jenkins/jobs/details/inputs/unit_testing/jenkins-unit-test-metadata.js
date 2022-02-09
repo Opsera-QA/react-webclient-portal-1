@@ -7,6 +7,11 @@ const JenkinsUnitTestJobMetadata = {
         isRequired: true,
       },
       {
+        label: "Build Tool",
+        id: "buildTool",
+        isRequired: true,
+      },
+      {
         label: "Gradle Task",
         id: "gradleTask",
       },
@@ -22,6 +27,7 @@ const JenkinsUnitTestJobMetadata = {
     ],
     newObjectFields: {
       buildType: "",
+      buildTool: "",
       gradleTask:"",
       mavenTask:"",
       agentLabels: "",
