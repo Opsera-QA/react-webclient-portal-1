@@ -88,8 +88,8 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
     return (
       <>
         <div className={"mx-2"}>
-          <Row>
-            <Col className={"my-3"}>
+          <Row className={"mx-0 p-2 justify-content-between"}>
+            <Col className={"px-0 my-3"} xl={6} lg={12}>
               <SonarRatingsVulnerabilityDataBlockContainer
                 kpiConfiguration={kpiConfiguration}
                 dashboardData={dashboardData}
@@ -97,17 +97,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
                 vulnerabilityCount={sonarRatingsMetric?.vulnerabilities}
               />
             </Col>
-            <Col className={"my-3"}>
-              <SonarRatingsReliabilityDataBlockContainer
-                kpiConfiguration={kpiConfiguration}
-                dashboardData={dashboardData}
-                reliabilityRating={sonarRatingsMetric?.reliability_rating}
-                bugCount={sonarRatingsMetric?.bugs}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col className={"my-3"}>
+            <Col className={"px-0 my-3"} xl={6} lg={12}>
               <SonarRatingsMaintainabilityDataBlockContainer
                 dashboardData={dashboardData}
                 kpiConfiguration={kpiConfiguration}
@@ -115,7 +105,15 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
                 technicalDebtRatio={sonarRatingsMetric.technical_debt_ratio}
               />
             </Col>
-            <Col className={"my-3"}>
+            <Col className={"px-0 my-3"} xl={6} lg={12}>
+              <SonarRatingsReliabilityDataBlockContainer
+                kpiConfiguration={kpiConfiguration}
+                dashboardData={dashboardData}
+                reliabilityRating={sonarRatingsMetric?.reliability_rating}
+                bugCount={sonarRatingsMetric?.bugs}
+              />
+            </Col>
+            <Col className={"px-0 my-3"} xl={6} lg={12}>
               <SonarRatingsCodeCoverageBlockContainer
                 dashboardData={dashboardData}
                 kpiConfiguration={kpiConfiguration}
@@ -126,7 +124,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
             </Col>
           </Row>
         </div>
-        <BadgeBase className={"mx-2"} badgeText={"Please Note, scan data used by these metrics is only available from Nov 25 2021 onward.  Any date selection prior to that will not return data."} />
+        <BadgeBase className={"mx-2"} badgeText={"Please note, scan data used by these metrics is only available from Nov 25 2021 onward.  Any date selection prior to that will not return data."} />
       </>
     );
   };
