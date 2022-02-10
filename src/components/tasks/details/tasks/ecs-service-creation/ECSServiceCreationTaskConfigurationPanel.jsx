@@ -46,6 +46,7 @@ function ECSServiceCreationTaskConfigurationPanel({
             setDataObject={setGitTasksConfigurationData}
             disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0 || gitTasksConfigurationData?.getData("regions").length === 0}
             toolConfigId={gitTasksConfigurationData?.getData("toolConfigId")}
+            region={gitTasksConfigurationData?.getData("regions").length === 0}
           />
         </Col>
       <Col lg={12}>
