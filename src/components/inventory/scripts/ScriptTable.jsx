@@ -15,7 +15,20 @@ import VanityDataContainer from "components/common/containers/VanityDataContaine
 import {isActionAllowed} from "components/common/helpers/role-helpers";
 
 
-function ScriptTable({ data, scriptMetadata, setScriptData, scriptData, loadData, isLoading, isMounted, getAccessToken, cancelTokenSource, scriptRoleDefinitions, scriptFilterModel }) {
+function ScriptTable(
+  {
+    data,
+    scriptMetadata,
+    setScriptData,
+    scriptData,
+    loadData,
+    isLoading,
+    isMounted,
+    getAccessToken,
+    cancelTokenSource,
+    scriptRoleDefinitions,
+    scriptFilterModel
+  }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessRoleData } = useContext(AuthContext);
   const [userRoleAccess, setUserRoleAccess] = useState(undefined);
@@ -73,7 +86,6 @@ function ScriptTable({ data, scriptMetadata, setScriptData, scriptData, loadData
   const getScriptTable = () => {
     return (
       <VanitySelectionTable
-        className="table-no-border"
         noDataMessage={"No Scripts have been created yet"}
         data={data}
         columns={columns}
@@ -81,7 +93,6 @@ function ScriptTable({ data, scriptMetadata, setScriptData, scriptData, loadData
         loadData={loadData}
         paginationModel={scriptFilterModel}
         setParentModel={setScriptData}
-        parentModelId={scriptData?.getData("_id")}
         tableHeight={"calc(25vh)"}
         parentModel={scriptData}
       />

@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
-import terraformStepActions from "../terraform-step-actions";
+import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
 import { AuthContext } from "contexts/AuthContext";
 
-function TerraformIamRolesSelectInput({
+function ArgoClusterRolesSelectInput({
   fieldName,
   model,
   setModel,
@@ -66,7 +66,8 @@ function TerraformIamRolesSelectInput({
   const loadTypes = async (cancelSource) => {
     try {
       setIAMRoless([]);
-      let res = await terraformStepActions.getIAMRoles(getAccessToken, cancelSource, model);
+      let awsToolId = model.getData("platformToolId");
+      let res = await argoActions.getIAMRoles(getAccessToken, cancelSource, awsToolId);
       if (res && res.status === 200) {
         res = res.data;
       } else {
@@ -93,7 +94,7 @@ function TerraformIamRolesSelectInput({
   const handleChange=(fieldName,selectedOption)=>{
     let newModel = {...model};
     newModel.setData(fieldName, selectedOption?.arn);
-    newModel.setData("roleName", selectedOption?.roleName);
+    newModel.setData("roleSessionName", selectedOption?.roleName);
     setModel({...newModel});
   };
 
@@ -113,7 +114,7 @@ function TerraformIamRolesSelectInput({
   );
 }
 
-TerraformIamRolesSelectInput.propTypes = {
+ArgoClusterRolesSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -124,10 +125,10 @@ TerraformIamRolesSelectInput.propTypes = {
   pipelineId: PropTypes.string,
 };
 
-TerraformIamRolesSelectInput.defaultProps = {
+ArgoClusterRolesSelectInput.defaultProps = {
   fieldName: "roleArn",
   textField: "roleName",
   valueField: "arn",
 };
 
-export default TerraformIamRolesSelectInput;
+export default ArgoClusterRolesSelectInput;

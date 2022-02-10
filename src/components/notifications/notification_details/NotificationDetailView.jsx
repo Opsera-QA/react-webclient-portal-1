@@ -11,14 +11,12 @@ import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import axios from "axios";
-import { meetsRequirements } from "components/common/helpers/role-helpers";
-import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
+import NotificationSubNavigationBar from "components/notifications/NotificationSubNavigationBar";
 
 function NotificationDetailView() {
   const { id } = useParams();
-  const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [notificationData, setNotificationData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
@@ -65,21 +63,16 @@ function NotificationDetailView() {
   };
 
   const getRoles = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (isMounted.current === true && userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-
-      if (meetsRequirements(ROLE_LEVELS.POWER_USERS_AND_SASS, userRoleAccess) && id) {
-        await getNotificationData(cancelSource);
-      }
-    }
+    await getNotificationData(cancelSource);
   };
 
   const getNotificationData = async (cancelSource = cancelTokenSource) => {
    const response = await notificationsActions.getNotificationByIdV2(getAccessToken, cancelSource, id);
-   if(isMounted.current === true && response?.data){
-     setNotificationData(new Model(response.data[0], notificationMetadata, false));
+   // TODO: When adding notification and notification method constants, please update route to just send the one notification
+   const notificationArray = response?.data;
+
+   if(isMounted.current === true && Array.isArray(notificationArray) && notificationArray.length > 0){
+     setNotificationData(new Model(notificationArray[0], notificationMetadata, false));
    }
   };
 
@@ -94,7 +87,11 @@ function NotificationDetailView() {
           <ActionBarBackButton path={"/notifications"} />
         </div>
         <div>
-          {meetsRequirements(ROLE_LEVELS.ADMINISTRATORS_AND_SASS, accessRoleData) && <ActionBarDeleteButton2 relocationPath={"/notifications/"} handleDelete={deleteNotification} dataObject={notificationData} /> }
+          <ActionBarDeleteButton2
+            relocationPath={"/notifications/"}
+            handleDelete={deleteNotification}
+            dataObject={notificationData}
+          />
         </div>
       </ActionBarContainer>
     );
@@ -104,11 +101,18 @@ function NotificationDetailView() {
     <DetailScreenContainer
       breadcrumbDestination={"notificationDetailView"}
       metadata={notificationMetadata}
-      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+      navigationTabContainer={<NotificationSubNavigationBar activeTab={"notificationViewer"} />}
       dataObject={notificationData}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      detailPanel={<NotificationDetailPanel notificationData={notificationData} isLoading={isLoading} setNotificationData={setNotificationData} loadData={getNotificationData}/>}
+      detailPanel={
+        <NotificationDetailPanel
+          notificationData={notificationData}
+          isLoading={isLoading}
+          setNotificationData={setNotificationData}
+          loadData={getNotificationData}
+        />
+      }
     />
   );
 }

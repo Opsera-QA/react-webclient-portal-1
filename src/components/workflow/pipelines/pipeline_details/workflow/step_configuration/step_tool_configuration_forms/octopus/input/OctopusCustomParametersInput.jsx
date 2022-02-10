@@ -404,7 +404,12 @@ function OctopusCustomParametersInput({
           </div>
         </div>
         <div className="object-properties-footer">{getInputRow()}</div>
-        <InfoText field={field} errorMessage={errorMessage} />
+        <InfoText
+          model={dataObject}
+          fieldName={fieldName}
+          field={field}
+          errorMessage={errorMessage}
+        />
       </div>
     </>    
   );

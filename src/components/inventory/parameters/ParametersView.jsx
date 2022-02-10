@@ -39,20 +39,10 @@ function ParametersView({isLoading, loadData, parameterList, parameterMetadata, 
         cancelTokenSource={cancelTokenSource}
         isMounted={isMounted}
         getAccessToken={getAccessToken}
-        setParameterData={setModel}
+        setParameterData={setParameterData}
         parameterData={parameterData}
       />
     );
-  };
-
-  const setModel = (newModel) => {
-    const newValue = !newModel || newModel?.isDeleted() ? undefined : {...newModel};
-
-    if (newModel) {
-      newValue.setSetStateFunction(setParameterData);
-    }
-
-    setParameterData(newValue);
   };
 
   const getEditorPanel = () => {

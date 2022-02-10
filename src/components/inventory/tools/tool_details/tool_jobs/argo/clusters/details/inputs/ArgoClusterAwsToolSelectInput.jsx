@@ -7,6 +7,8 @@ const ArgoClusterAwsToolSelectInput = ({ fieldName, model, setModel, disabled, t
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = { ...model };
     newDataObject.setData(fieldName, selectedOption._id);
+    newDataObject.setData("roleArn", "");
+    newDataObject.setData("roleSessionName", "");
     newDataObject.setData("clusterName", "");
     setModel({ ...newDataObject });
   };
@@ -14,6 +16,8 @@ const ArgoClusterAwsToolSelectInput = ({ fieldName, model, setModel, disabled, t
   const clearDataFunction = () => {
     let newDataObject = { ...model };
     newDataObject.setData(fieldName, "");
+    newDataObject.setData("roleArn", "");
+    newDataObject.setData("roleSessionName", "");
     newDataObject.setData("clusterName", "");
     setModel({ ...newDataObject });
   };

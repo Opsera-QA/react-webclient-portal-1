@@ -17,7 +17,7 @@ function AddChartOverlay({ kpiData, dashboardId }) {
     <CenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`[${kpiData.name}] Chart Details`}
+      titleText={`${kpiData.name} Chart Details`}
       titleIcon={faUserChart}
       showToasts={true}
       showCloseButton={false}

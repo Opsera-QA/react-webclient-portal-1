@@ -135,6 +135,8 @@ function LazyLoadMultiSelectInputBase({
         />
       </div>
       <InfoText
+        model={dataObject}
+        fieldName={fieldName}
         field={field}
         errorMessage={errorMessage}
         hideRegexDefinitionText={true}
