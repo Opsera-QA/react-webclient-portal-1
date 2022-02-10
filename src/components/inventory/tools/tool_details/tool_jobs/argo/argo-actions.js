@@ -128,4 +128,26 @@ argoActions.getAwsEksClusters = async (getAccessToken, cancelTokenSource, toolId
   return [];
 };
 
+argoActions.getIamAwsClusters = async (getAccessToken, cancelTokenSource, toolId, awsIamRole, awsIamRoleName) => {
+  let postBody = {
+    toolId: toolId,
+    roleArn: awsIamRole,
+    roleSessionName: awsIamRoleName
+  };
+  const apiUrl = `/tools/aws/v2/eks/clusters/iamrole`;
+  let response = await baseActions.apiPostCallV2(getAccessToken,cancelTokenSource, apiUrl, postBody);
+  if (response && response.status === 200) {
+    return response.data;
+  }
+  return [];
+};
+
+argoActions.getIAMRoles = async (getAccessToken, cancelTokenSource, awsToolId) => {
+  let urlParams = {
+    toolId: awsToolId
+  };
+  const apiUrl = `/tools/aws/v2/IAMRoles`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 export default argoActions;
