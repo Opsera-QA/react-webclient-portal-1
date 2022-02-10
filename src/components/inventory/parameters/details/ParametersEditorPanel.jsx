@@ -47,8 +47,8 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
       return (
         <ParameterValueTextInput
           disabled={parameterModel?.isNew() === false && parameterModel?.canUpdate() !== true}
-          setDataObject={setParameterModel}
-          dataObject={parameterModel}
+          setModel={setParameterModel}
+          model={parameterModel}
           fieldName={"value"}
           parameterId={parameterModel?.getData("_id")}
         />
