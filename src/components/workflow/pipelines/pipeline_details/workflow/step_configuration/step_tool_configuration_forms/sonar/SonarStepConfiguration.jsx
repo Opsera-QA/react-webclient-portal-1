@@ -28,6 +28,7 @@ import SonarStepSonarSourcePathTextAreaInput
 import PipelineStepSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineStepSelectInput";
 import sonarPipelineStepMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStep.metadata";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
 function SonarStepConfiguration(
   {
@@ -192,6 +193,11 @@ function SonarStepConfiguration(
             dataObject={sonarStepModel}
             setDataObject={setSonarStepModel}
           />
+          <TextInputBase
+            fieldName={"projectName"}
+            dataObject={sonarStepModel}
+            setDataObject={setSonarStepModel}
+          />
           <BooleanToggleInput
             fieldName={"workspaceDeleteFlag"}
             dataObject={sonarStepModel}
@@ -202,6 +208,11 @@ function SonarStepConfiguration(
             dataObject={sonarStepModel}
             setDataObject={setSonarStepModel}
             disabled={true}
+          />
+          <TextAreaInput 
+            dataObject={sonarStepModel}
+            setDataObject={setSonarStepModel}
+            fieldName={"commands"}
           />
         </>
       );
