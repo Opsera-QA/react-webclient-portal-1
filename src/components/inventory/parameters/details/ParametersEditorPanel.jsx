@@ -9,6 +9,7 @@ import VanityEditorPanelContainer from "components/common/panels/detail_panel_co
 import ParameterValueTextInput from "components/inventory/parameters/details/ParameterValueTextInput";
 import TogglePasswordTextInput from "components/common/inputs/text/TogglePasswordTextInput";
 import ParameterVaultEnabledToggle from "components/inventory/parameters/details/ParameterVaultEnabledToggle";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
 function ParametersEditorPanel({ parameterModel, setParameterModel, parameterModelId, handleClose }) {
   const isMounted = useRef(false);
