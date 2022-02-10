@@ -14,6 +14,8 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
+import { LETTER_GRADES } from "../../../../../../common/metrics/grade/MetricLetterGradeText";
+import { getTableTextColumn } from "../../../../../../common/table/column_definitions/model-table-column-definitions";
 
 // TODO: Convert to cards
 function SonarRatingsReliabilityActionableInsightTable(
@@ -62,12 +64,41 @@ function SonarRatingsReliabilityActionableInsightTable(
     };
   };
 
+  const getKpiSonarRatingTableTextColumn = (field) => {
+    return {
+      Header: getCustomTableHeader(field),
+      accessor: getCustomTableAccessor(field),
+      Cell: function parseText(row) {
+        const value = row?.value;
+        if (value > 0) {
+          if (value <= 1) {
+            return <div className="green">A</div>;
+          } else if (value <= 2) {
+            return <div className="yellow">B</div>;
+          } else if (value <= 3) {
+            return <div className="yellow">C</div>;
+          } else if (value <= 4) {
+            return <div className="danger-red">D</div>;
+          } else if (value <= 5) {
+            return <div className="danger-red">E</div>;
+          } else {
+            return null;
+          }
+        }
+        return (
+          <div>{value}</div>
+        );
+      },
+    };
+  };
+
   const columns = useMemo(
     () => [
       getKpiSonarPipelineTableTextColumn(getField(fields, "project")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "pipelineName")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "runCount")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "endTimestamp")),
+      getKpiSonarRatingTableTextColumn(getField(fields, "reliability_rating")),
       getChartTrendStatusColumn(getField(fields, "status")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "critical"), "critical"),
       getKpiSonarPipelineTableTextColumn(getField(fields, "blocker"), "blocker"),
@@ -97,7 +128,6 @@ function SonarRatingsReliabilityActionableInsightTable(
         paginationDto={filterModel}
         setPaginationDto={setFilterModel}
         loadData={loadData}
-
       />
     );
   };

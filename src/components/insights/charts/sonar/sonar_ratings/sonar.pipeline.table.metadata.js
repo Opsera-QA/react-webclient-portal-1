@@ -19,6 +19,18 @@ const SonarPipelineTableMetadata = {
       id: "endTimestamp",
     },
     {
+      label: " Maintainibility Rating",
+      id: "maintainibility_rating",
+    },
+    {
+      label: " Reliability Rating",
+      id: "reliability_rating",
+    },
+    {
+      label: " Security Rating",
+      id: "security_rating",
+    },
+    {
       label: "Trend",
       id: "status",
     },
