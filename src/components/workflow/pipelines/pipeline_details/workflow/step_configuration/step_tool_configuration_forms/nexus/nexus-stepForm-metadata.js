@@ -31,6 +31,7 @@ const nexusStepFormMetadata = {
     {
       label: "Select Build Step",
       id: "artifactStepId",
+      isRequired: true
     },
     {
       label: "Use Run count as version?",
