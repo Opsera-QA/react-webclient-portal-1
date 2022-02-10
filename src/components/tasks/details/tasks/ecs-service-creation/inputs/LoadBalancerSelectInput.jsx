@@ -108,7 +108,7 @@ LoadBalancerSelectInput.propTypes = {
   textField: PropTypes.string,
   valueField: PropTypes.string,
   vpcId: PropTypes.string,
-  pipelineId: PropTypes.string,
+  region: PropTypes.string,
 };
 
 LoadBalancerSelectInput.defaultProps = {
