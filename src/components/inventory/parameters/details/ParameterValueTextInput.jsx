@@ -3,10 +3,18 @@ import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import regexDefinitions from "utils/regexDefinitions";
 
 // TODO: Use new VisibleVaultTextInput when complete
-function ParameterValueTextInput({fieldName, dataObject, parameterId, setDataObject, disabled}) {
-  const [field, setField] = useState(dataObject.getFieldById(fieldName));
+function ParameterValueTextInput(
+  {
+    fieldName,
+    model,
+    parameterId,
+    setModel,
+    disabled,
+  }) {
+  const [field, setField] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
@@ -14,7 +22,7 @@ function ParameterValueTextInput({fieldName, dataObject, parameterId, setDataObj
   useEffect(() => {
     isMounted.current = true;
 
-    if (!dataObject.isNew()) {
+    if (!model.isNew()) {
       getValueFromVault().catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -28,17 +36,17 @@ function ParameterValueTextInput({fieldName, dataObject, parameterId, setDataObj
   }, [parameterId]);
 
   const validateAndSetData = (value) => {
-    let newDataObject = dataObject;
-    newDataObject.setTextData(fieldName, value);
+    const newDataObject = {...model};
+    newDataObject.setTextData(model, value);
     setErrorMessage(newDataObject.getFieldError(fieldName));
-    setDataObject({...newDataObject});
+    setModel({...newDataObject});
   };
 
   const getValueFromVault = async () => {
     try {
       setIsLoading(true);
-      if (dataObject?.getData("vaultEnabled") === true) {
-        await dataObject.getValueFromVault(fieldName);
+      if (model?.getData("vaultEnabled") === true) {
+        await model?.getValueFromVault(fieldName);
       }
     }
     catch (error) {
@@ -56,13 +64,23 @@ function ParameterValueTextInput({fieldName, dataObject, parameterId, setDataObj
     }
   };
 
+  const getCustomMessage = () => {
+    const definitionName = field.regexDefinitionName;
+    const regexDefinition = regexDefinitions[definitionName];
+    const isRequiredFunction = regexDefinition?.isRequiredFunction;
+
+    if (isRequiredFunction != null && isRequiredFunction(model) === false) {
+      return ("Values are visible to all users if no Access Roles are assigned to this record.");
+    }
+  };
+
   return (
     <InputContainer>
-      <InputLabel field={field} model={dataObject}/>
+      <InputLabel field={field} model={model}/>
       <div className={isLoading ? "d-flex loading-input-wrapper" : ""}>
         <input
           disabled={disabled || isLoading}
-          value={isLoading ? "Loading Value From Vault" : dataObject?.getData(fieldName)}
+          value={isLoading ? "Loading Value From Vault" : model?.getData(fieldName)}
           onChange={(event) => validateAndSetData(event.target.value)}
           className="form-control"
         />
@@ -71,7 +89,8 @@ function ParameterValueTextInput({fieldName, dataObject, parameterId, setDataObj
         fieldName={fieldName}
         field={field}
         errorMessage={errorMessage}
-        model={dataObject}
+        model={model}
+        customMessage={getCustomMessage()}
       />
     </InputContainer>
   );
@@ -79,8 +98,8 @@ function ParameterValueTextInput({fieldName, dataObject, parameterId, setDataObj
 
 ParameterValueTextInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   parameterId: PropTypes.string
 };
