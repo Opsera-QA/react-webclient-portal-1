@@ -114,6 +114,8 @@ function SelectInputBase(
         onSearchFunction={onSearchFunction}
       />
       <InfoText
+        model={dataObject}
+        fieldName={fieldName}
         field={field}
         errorMessage={errorMessage}
         hideRegexDefinitionText={true}

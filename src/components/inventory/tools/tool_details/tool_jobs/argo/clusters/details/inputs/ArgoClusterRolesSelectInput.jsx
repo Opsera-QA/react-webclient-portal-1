@@ -94,7 +94,7 @@ function ArgoClusterRolesSelectInput({
   const handleChange=(fieldName,selectedOption)=>{
     let newModel = {...model};
     newModel.setData(fieldName, selectedOption?.arn);
-    newModel.setData("roleName", selectedOption?.roleName);
+    newModel.setData("roleSessionName", selectedOption?.roleName);
     setModel({...newModel});
   };
 

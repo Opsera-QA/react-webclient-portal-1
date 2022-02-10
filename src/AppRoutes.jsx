@@ -66,7 +66,7 @@ import AnalyticsProfileSettings from "./components/settings/analytics/analyticsP
 import SiteNotificationManagement from "./components/admin/site_notifications/SiteNotificationManagement";
 import SiteNotificationDetailView
   from "./components/admin/site_notifications/details/SiteNotificationDetailView";
-import Notifications from "./components/notifications/Notifications";
+import NotificationPolicyManagement from "components/notifications/NotificationPolicyManagement";
 import ToolsUsedInPipelineReport from "./components/reports/tools/pipelines/ToolsUsedInPipelineReport";
 import Insights from "./components/insights/dashboards/Insights";
 import DashboardDetailView from "./components/insights/dashboards/dashboard_details/DashboardDetailView";
@@ -119,6 +119,7 @@ import ToolCategoryManagement from "components/admin/tools/tool_category/ToolCat
 import ToolIdentifierManagement from "components/admin/tools/tool_identifier/ToolIdentifierManagement";
 import SiteRoleManagement from "components/settings/ldap_site_roles/SiteRoleManagement";
 import SiteRoleDetailView from "components/settings/ldap_site_roles/details/SiteRoleDetailView";
+import NotificationPoliciesActivityLogs from "components/notifications/NotificationPoliciesActivityLogs";
 //import FreeTrialRegistration from "./components/free_trial/Registration";
 //import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 
@@ -227,7 +228,8 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/reports/users/user-report" exact component={ConsolidatedUserReport} />
 
 
-          <SecureRoute path="/notifications" exact component={Notifications} />
+          <SecureRoute path="/notifications" exact component={NotificationPolicyManagement} />
+          <SecureRoute path="/notifications/activity" exact component={NotificationPoliciesActivityLogs} />
           <SecureRoute path="/notifications/details/:id" exact component={NotificationDetailView} />
 
 

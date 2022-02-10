@@ -67,7 +67,12 @@ function TimeInput({ fieldName, dataObject, setDataObject, disabled, setDataFunc
           data={dataObject?.getData(fieldName)}
         />
       </div>
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        model={dataObject}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </InputContainer>
     );
 }

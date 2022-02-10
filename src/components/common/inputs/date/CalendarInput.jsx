@@ -45,7 +45,12 @@ function CalendarInput({ fieldName, dataObject, setDataObject, disabled, setData
           width={width}
         />
       </div>
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        model={dataObject}
+        field={field}
+        errorMessage={errorMessage}
+        fieldName={fieldName}
+      />
     </InputContainer>
   );
 }
