@@ -8,7 +8,7 @@ const notificationsMetadata = {
     return `/notifications/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return ` ${capitalizeFirstLetter(record?.getOriginalValue("name"))} Notification Details`;
+    return `Notification Details ${record.getOriginalValue("name")}`;
   },
   fields: [
     {
