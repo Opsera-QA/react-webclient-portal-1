@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import StandaloneDatePickerInput from "components/common/inputs/date/StandaloneDateTimeInput";
 
 function FileInputBase({ fieldName, dataObject, setDataObject, disabled }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -24,7 +25,12 @@ function FileInputBase({ fieldName, dataObject, setDataObject, disabled }) {
         value={dataObject.getData(fieldName)}
         onChange={(event) => validateAndSetData(event.target.value)}
       />
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        model={dataObject}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </InputContainer>
   );
 }

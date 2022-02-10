@@ -65,7 +65,12 @@ function DateTimeInputBase(
         setDataFunction={validateAndSetData}
         defaultToNull={defaultToNull}
       />
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        model={dataObject}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </InputContainer>
   );
 }

@@ -68,6 +68,7 @@ function ParameterValueTextInput({fieldName, dataObject, parameterId, setDataObj
         />
       </div>
       <InfoText
+        fieldName={fieldName}
         field={field}
         errorMessage={errorMessage}
         model={dataObject}

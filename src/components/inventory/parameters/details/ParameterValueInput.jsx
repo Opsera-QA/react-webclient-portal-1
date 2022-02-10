@@ -108,7 +108,12 @@ function ParameterValueTextInput({fieldName, model, parameterId, setModel, disab
         />
         {getButtons()}
       </div>
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        model={model}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </InputContainer>
   );
 }

@@ -11,6 +11,7 @@ function InfoText(
     successMessage,
     hideRegexDefinitionText,
     model,
+    fieldName,
   }) {
   if (hasStringValue(errorMessage) === true) {
     return (
@@ -68,6 +69,7 @@ InfoText.propTypes = {
   successMessage: PropTypes.string,
   hideRegexDefinitionText: PropTypes.bool,
   model: PropTypes.object,
+  fieldName: PropTypes.string,
 };
 
 export default InfoText;
