@@ -132,7 +132,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     serviceNowConfigurationItems: serviceNowConfigurationItems,
     serviceNowBusinessServices: serviceNowBusinessServices,
     actionableInsightsQueryData: actionableInsightsQueryData,
-    coveritySeverity: coveritySeverity
+    coveritySeverity: coveritySeverity,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
