@@ -169,6 +169,15 @@ const commandLineStepFormMetadata = {
       id: "sonarScanFlag"
     },
     {
+      label: "Sonar Custom Params Mapping",
+      id: "saveSonarParameters"
+    },
+    {
+      label: "Sonar Parameters",
+      id: "sonarCustomParameters",
+      maxItems: 15,
+    },
+    {
       label: "Sonar Tool Id",
       id: "sonarToolConfigId",
       isRequiredFunction: (model) => {
@@ -183,14 +192,7 @@ const commandLineStepFormMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("sonarScanFlag") === true;
       },
-    },
-    {
-      label: "Sonar Scanner Commands",
-      id: "sonarScannerCommand",
-      isRequiredFunction: (model) => {
-        return model?.getData("sonarScanFlag") === true;
-      },
-    },
+    }
   ],
   fieldsAlt: [
     {
@@ -361,6 +363,15 @@ const commandLineStepFormMetadata = {
     {
       label: "Sonar Scan",
       id: "sonarScanFlag"
+    }, 
+    {
+      label: "Sonar Custom Params Mapping",
+      id: "saveSonarParameters"
+    },
+    {
+      label: "Sonar Parameters",
+      id: "sonarCustomParameters",
+      maxItems: 15,
     },
     {
       label: "Sonar Tool Id",
@@ -377,14 +388,7 @@ const commandLineStepFormMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("sonarScanFlag") === true;
       },
-    },
-    {
-      label: "Sonar Scanner Commands",
-      id: "sonarScannerCommand",
-      isRequiredFunction: (model) => {
-        return model?.getData("sonarScanFlag") === true;
-      },
-    },
+    }
   ],
   newObjectFields: {
 
@@ -430,9 +434,10 @@ const commandLineStepFormMetadata = {
     customParameters: [],
     useTerraformOutput : false,
     sonarScanFlag: false,
+    saveSonarParameters: false,
+    sonarCustomParameters: [],
     sonarToolConfigId: "",
     projectKey: "",
-    sonarScannerCommand: ""
   }
 };
 
