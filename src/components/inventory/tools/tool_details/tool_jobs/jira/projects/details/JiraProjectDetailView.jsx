@@ -8,7 +8,7 @@ import JiraProjectsDetailPanel
 import ActionBarDestructiveDeleteButton from "components/common/actions/buttons/ActionBarDestructiveDeleteButton";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
-import jiraProjectMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jira-project-metadata";
+import {jiraProjectMetadata} from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jiraProject.metadata";
 import axios from "axios";
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 
