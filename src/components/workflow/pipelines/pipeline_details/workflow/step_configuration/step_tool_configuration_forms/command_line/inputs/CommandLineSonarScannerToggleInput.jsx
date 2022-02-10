@@ -3,16 +3,14 @@ import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function CommandLineSonarScannerToggleInput({dataObject, setDataObject, fieldName, disabled}) {
-
-  console.log("inside CommandLineSonarScannerToggleInput");
-
   const setDataFunction = (fieldName, value) => {
     let newDataObject = dataObject;
     let sonarFlag = !dataObject.getData(fieldName);
     newDataObject.setData(fieldName, sonarFlag);    
     newDataObject.setData("sonarToolConfigId", "");
     newDataObject.setData("projectKey", "");
-    newDataObject.setData("sonarScannerCommand", "");
+    newDataObject.setData("saveSonarParameters", false);
+    newDataObject.setData("sonarCustomParameters", []);
     setDataObject({...newDataObject});
   };
 

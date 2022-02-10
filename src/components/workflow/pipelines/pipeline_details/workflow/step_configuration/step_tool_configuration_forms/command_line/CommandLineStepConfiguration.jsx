@@ -35,7 +35,7 @@ import StepConfigUseTerraformOutput from "../common/inputs/StepConfigUseTerrafor
 import CommandLineSonarScannerToggleInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineSonarScannerToggleInput";
 import RoleRestrictedSonarToolSelectInput
   from "components/common/list_of_values_input/tools/sonar/tool/RoleRestrictedSonarToolSelectInput";
-
+import CommandLineSonarCustomParametersToggle from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineSonarCustomParametersToggle";
 
 function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -90,7 +90,10 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
         <div>
           <RoleRestrictedSonarToolSelectInput fieldName={"sonarToolConfigId"} model={commandLineStepConfigurationDto} setModel={setCommandLineStepConfigurationDataDto} />
           <TextInputBase fieldName={"projectKey"} dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
-          <TextAreaInput fieldName={"sonarScannerCommand"} dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
+          <CommandLineSonarCustomParametersToggle 
+            model={commandLineStepConfigurationDto}
+            setModel={setCommandLineStepConfigurationDataDto}
+          />
         </div>
       );
     }
