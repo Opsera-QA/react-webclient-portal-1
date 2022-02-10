@@ -4,11 +4,11 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
-import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 import ParameterValueTextInput from "components/inventory/parameters/details/ParameterValueTextInput";
 import TogglePasswordTextInput from "components/common/inputs/text/TogglePasswordTextInput";
+import ParameterVaultEnabledToggle from "components/inventory/parameters/details/ParameterVaultEnabledToggle";
 
 function ParametersEditorPanel({ parameterModel, setParameterModel, parameterModelId, handleClose }) {
   const isMounted = useRef(false);
@@ -77,7 +77,12 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
       <Row>
         <Col md={12} lg={parameterModel?.isNew() ? 4 : 5}>
           <TextInputBase disabled={!parameterModel?.isNew()} setDataObject={setParameterModel} dataObject={parameterModel} fieldName={"name"}/>
-          <BooleanToggleInput setDataObject={setParameterModel} dataObject={parameterModel} fieldName={"vaultEnabled"} disabled={!parameterModel?.isNew()}/>
+          <ParameterVaultEnabledToggle
+            fieldName={"vaultEnabled"}
+            setModel={setParameterModel}
+            model={parameterModel}
+            disabled={!parameterModel?.isNew()}
+          />
           {getValueInput()}
         </Col>
         <Col md={12} lg={parameterModel?.isNew() ? 8 : 7} className={"my-2"}>
