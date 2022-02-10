@@ -67,7 +67,11 @@ function ParameterValueTextInput({fieldName, dataObject, parameterId, setDataObj
           className="form-control"
         />
       </div>
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        field={field}
+        errorMessage={errorMessage}
+        model={dataObject}
+      />
     </InputContainer>
   );
 }
