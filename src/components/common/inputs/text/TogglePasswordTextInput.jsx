@@ -76,7 +76,7 @@ function TogglePasswordTextInput({fieldName, model, setModel, disabled}) {
     <InputContainer>
       <InputLabel model={model} field={field}/>
       <div className={"d-flex"}>
-        <input
+        <textarea
           type={valueShown === false ? "password" : undefined}
           disabled={disabled}
           value={model?.getData(fieldName)}

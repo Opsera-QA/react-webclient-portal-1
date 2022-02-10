@@ -10,19 +10,22 @@ import TerraformScmToolSelectInput from "components/workflow/pipelines/pipeline_
 import TerraformBitbucketWorkspaceSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformBitbucketWorkspaceSelectInput";
 import TerraformGitRepositorySelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformGitRepositorySelectInput";
 import TerraformGitBranchSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformGitBranchSelectInput";
-import TerraformAwsCredentialsSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformAwsCredentialsSelectInput";
+import TerraformAwsCredentialsSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/aws/TerraformAwsCredentialsSelectInput";
 import terraformStepFormMetadata from "./terraform-stepForm-metadata";
 import TerraformCustomParametersInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCustomParametersInput";
 import TerraformRuntimeArgsInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformRuntimeArgsInput";
-import TerraformIamRolesSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformIamRolesSelectInput";
-import TerraformIAmRoleFlagToggleInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformIAmRoleFlagToggleInput";
-import TerraformStoreStateInS3Toggle from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformStoreStateInS3Toggle";
-import TerraformS3BucketSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformS3BucketSelectInput";
-import TerraformS3BucketRegionSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformS3BucketRegionSelectInput";
+import TerraformIamRolesSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/aws/TerraformIamRolesSelectInput";
+import TerraformIAmRoleFlagToggleInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/aws/TerraformIAmRoleFlagToggleInput";
+import TerraformStoreStateInS3Toggle from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/aws/TerraformStoreStateInS3Toggle";
+import TerraformS3BucketSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/aws/TerraformS3BucketSelectInput";
+import TerraformS3BucketRegionSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/aws/TerraformS3BucketRegionSelectInput";
 import TerraformCloudProviderSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCloudProviderSelectInput";
 import TerraformTagSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformTagSelectInput";
+import TerraformStateSubForm from "./sub_forms/TerraformStateSubForm";
+import CloudCredentialSubForm from "./sub_forms/CloudCredentialSubForm";
+import CustomScriptSubForm from "./sub_forms/CustomScriptSubForm";
 
 function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -71,37 +74,16 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
     await parentCallback(item);
   };
 
-  const getIamRoleFields = () => {
-    if (terraformStepConfigurationModel?.getData('iamRoleFlag') === true) {
-      return (
-        <TerraformIamRolesSelectInput
-          model={terraformStepConfigurationModel}
-          setModel={setTerraformStepConfigurationModel}
-          disabled={terraformStepConfigurationModel?.getData("awsToolConfigId").length === 0}
-          toolConfigId={terraformStepConfigurationModel?.getData("awsToolConfigId")}
-        />
-      );
-    }
-
-    return (
-      <>
-        <TextInputBase dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName={"accessKeyParamName"} />
-        <TextInputBase dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName={"secretKeyParamName"} />
-        <TextInputBase dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName={"regionParamName"} />
-      </>
-    );
-  };
-
-  const getS3BucketFields = () => {
-    if(terraformStepConfigurationModel?.getData('storeStateInBucket')) {
-      return (
-        <>
-          <TerraformS3BucketSelectInput dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} />
-          <TerraformS3BucketRegionSelectInput dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName="bucketRegion" />
-        </>
-      );
-    }
-  };
+  // const getS3BucketFields = () => {
+  //   if(terraformStepConfigurationModel?.getData('storeStateInBucket')) {
+  //     return (
+  //       <>
+  //         <TerraformS3BucketSelectInput dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} />
+  //         <TerraformS3BucketRegionSelectInput dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName="bucketRegion" />
+  //       </>
+  //     );
+  //   }
+  // };
  
   if (isLoading || terraformStepConfigurationModel == null) {
     return <DetailPanelLoadingDialog />;
@@ -122,17 +104,22 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       <TerraformGitBranchSelectInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
       <TextInputBase dataObject={terraformStepConfigurationModel} fieldName={"gitFilePath"} setDataObject={setTerraformStepConfigurationModel}/>
       <TerraformTagSelectInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
+      <CustomScriptSubForm model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
       <TerraformCloudProviderSelectInput dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName={"cloudProvider"} />
-      <TerraformAwsCredentialsSelectInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
-      <TerraformIAmRoleFlagToggleInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
-      {getIamRoleFields()}
-      <TerraformRuntimeArgsInput dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} />
+      <CloudCredentialSubForm model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
+      <TerraformStateSubForm model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
       <TerraformCustomParametersInput
         model={terraformStepConfigurationModel}
         setModel={setTerraformStepConfigurationModel}
-      />    
-      <TerraformStoreStateInS3Toggle dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName="storeStateInBucket" />
-      {getS3BucketFields()}
+        fieldName={"saveInputParameters"}
+      />
+      <TerraformCustomParametersInput
+        model={terraformStepConfigurationModel}
+        setModel={setTerraformStepConfigurationModel}
+        fieldName={"saveParameters"}
+      />
+      {/*<TerraformStoreStateInS3Toggle dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName="storeStateInBucket" />*/}
+      {/*{getS3BucketFields()}*/}
     </PipelineStepEditorPanelContainer>
   );
 }
