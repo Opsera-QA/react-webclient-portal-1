@@ -162,6 +162,8 @@ function MultiSelectInputBase(
         onSearchFunction={onSearchFunction}
       />
       <InfoText
+        fieldName={fieldName}
+        model={dataObject}
         field={field}
         errorMessage={errorMessage}
         hideRegexDefinitionText={true}

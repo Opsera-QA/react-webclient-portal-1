@@ -382,7 +382,12 @@ function ParameterSelectListInputBase({
         <div>{properties.length > 0 ? getHeaderBar() : null}</div>
         <div className="properties-body-alt">{getFieldBody()}</div>
       </div>
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        model={dataObject}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 }

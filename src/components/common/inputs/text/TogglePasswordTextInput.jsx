@@ -85,6 +85,7 @@ function TogglePasswordTextInput({fieldName, model, setModel, disabled}) {
         {getButtons()}
       </div>
       <InfoText
+        fieldName={fieldName}
         field={field}
         errorMessage={errorMessage}
         model={model}
