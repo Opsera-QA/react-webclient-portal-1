@@ -10,6 +10,7 @@ import VanityEditorPanelContainer from "components/common/panels/detail_panel_co
 import ParameterValueTextInput from "components/inventory/parameters/details/ParameterValueTextInput";
 import TogglePasswordTextInput from "components/common/inputs/text/TogglePasswordTextInput";
 import TextAreaInput from "../../../common/inputs/text/TextAreaInput";
+import ParameterVaultEnabledToggle from "components/inventory/parameters/details/ParameterVaultEnabledToggle";
 
 function ParametersEditorPanel({ parameterModel, setParameterModel, parameterModelId, handleClose }) {
   const isMounted = useRef(false);
@@ -78,7 +79,12 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
       <Row>
         <Col md={12} lg={parameterModel?.isNew() ? 4 : 5}>
           <TextInputBase disabled={!parameterModel?.isNew()} setDataObject={setParameterModel} dataObject={parameterModel} fieldName={"name"}/>
-          <BooleanToggleInput setDataObject={setParameterModel} dataObject={parameterModel} fieldName={"vaultEnabled"} disabled={!parameterModel?.isNew()}/>
+          <ParameterVaultEnabledToggle
+            fieldName={"vaultEnabled"}
+            setModel={setParameterModel}
+            model={parameterModel}
+            disabled={!parameterModel?.isNew()}
+          />
           {getValueInput()}
         </Col>
         <Col md={12} lg={parameterModel?.isNew() ? 8 : 7} className={"my-2"}>
