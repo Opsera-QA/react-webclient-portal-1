@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ConstantFieldBase from "components/common/fields/constant/ConstantFieldBase";
-import {getNotificationTypeLabel} from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
+import {getNotificationMethodLabel} from "components/common/list_of_values_input/notifications/method/notificationMethod.constants";
 
-function NotificationTypeField(
+function NotificationMethodField(
   {
     model,
     fieldName,
@@ -12,7 +12,7 @@ function NotificationTypeField(
   }) {
   return (
     <ConstantFieldBase
-      getLabelFunction={getNotificationTypeLabel}
+      getLabelFunction={getNotificationMethodLabel}
       model={model}
       fieldName={fieldName}
       className={className}
@@ -21,11 +21,11 @@ function NotificationTypeField(
   );
 }
 
-NotificationTypeField.propTypes = {
+NotificationMethodField.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   className: PropTypes.string,
   showLabel: PropTypes.bool,
 };
 
-export default NotificationTypeField;
+export default NotificationMethodField;
