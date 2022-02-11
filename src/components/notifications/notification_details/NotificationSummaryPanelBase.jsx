@@ -5,6 +5,7 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
+import NotificationTypeField from "components/common/list_of_values_input/notifications/type/NotificationTypeField";
 
 function NotificationSummaryPanelBase({ notificationData, setActiveTab, notificationTypeSummaryCard, notificationMethodSummaryCard }) {
   return (
@@ -14,7 +15,7 @@ function NotificationSummaryPanelBase({ notificationData, setActiveTab, notifica
           <TextFieldBase dataObject={notificationData} fieldName={"name"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={notificationData} fieldName={"type"} />
+          <NotificationTypeField model={notificationData} fieldName={"type"} />
         </Col>
         <Col lg={12}>
           <TextFieldBase dataObject={notificationData} fieldName={"description"} />

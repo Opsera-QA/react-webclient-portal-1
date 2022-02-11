@@ -2,6 +2,7 @@ import React, {useMemo, useContext} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
+  getFormattedLabelWithFunctionColumnDefinition,
   getLimitedTableTextColumn,
   getTableBooleanIconColumn,
   getTableDateColumn,
@@ -19,6 +20,7 @@ import InlineNotificationTypeFilter
   from "components/common/filters/notifications/notification_type/InlineNotificationTypeFilter";
 import NewNotificationOverlay from "components/notifications/NewNotificationOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import {getNotificationTypeLabel} from "components/notifications/notificationTypes.constants";
 
 function NotificationsTable(
   {
@@ -41,7 +43,7 @@ function NotificationsTable(
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "name";})),
       getLimitedTableTextColumn(getField(fields, "description"), 100),
-      getTableTextColumn(fields.find(field => { return field.id === "type";})),
+      getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), getNotificationTypeLabel),
       getTableDateColumn(fields.find(field => { return field.id === "createdAt";})),
       getTableBooleanIconColumn(fields.find(field => { return field.id === "active";})),
     ],

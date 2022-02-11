@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {notificationTypes} from "components/common/list_of_values_input/notifications/NotificationTypeSelectInput";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
+import {NOTIFICATION_TYPE_SELECT_OPTIONS} from "components/notifications/notificationTypes.constants";
 
 function NotificationTypeFilter({ filterDto, setFilterDto, fieldName, setDataFunction, className, inline}) {
   return (
@@ -12,8 +12,8 @@ function NotificationTypeFilter({ filterDto, setFilterDto, fieldName, setDataFun
       setDataObject={setFilterDto}
       dataObject={filterDto}
       setDataFunction={setDataFunction}
-      selectOptions={notificationTypes}
-      textField={"name"}
+      selectOptions={NOTIFICATION_TYPE_SELECT_OPTIONS}
+      textField={"text"}
       valueField={"value"}
       inline={inline}
     />
