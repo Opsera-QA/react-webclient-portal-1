@@ -12,7 +12,7 @@ import {AuthContext} from "contexts/AuthContext";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import axios from "axios";
 import NotificationSubNavigationBar from "components/notifications/NotificationSubNavigationBar";
-import {NOTIFICATION_TYPES} from "components/notifications/notificationTypes.constants";
+import {NOTIFICATION_TYPES} from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
 
 function NotificationDetailView() {
   const { id } = useParams();

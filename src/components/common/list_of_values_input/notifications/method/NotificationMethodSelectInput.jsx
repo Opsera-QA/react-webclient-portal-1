@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {NOTIFICATION_TYPE_SELECT_OPTIONS} from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
+import {NOTIFICATION_METHOD_SELECT_OPTIONS} from "components/common/list_of_values_input/notifications/method/notificationMethod.constants";
 
-// TODO: Remove the disabled items from here when done
-function NotificationTypeSelectInput(
+function NotificationMethodSelectInput(
   {
     fieldName,
     model,
@@ -17,16 +16,16 @@ function NotificationTypeSelectInput(
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={NOTIFICATION_TYPE_SELECT_OPTIONS}
+      selectOptions={NOTIFICATION_METHOD_SELECT_OPTIONS}
       setDataFunction={setDataFunction}
       valueField={"value"}
       textField={"text"}
-      disabled={[{text: "Metric", value: "metric"}]}
+      disabled={disabled}
     />
   );
 }
 
-NotificationTypeSelectInput.propTypes = {
+NotificationMethodSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -34,8 +33,8 @@ NotificationTypeSelectInput.propTypes = {
   disabled: PropTypes.bool,
 };
 
-NotificationTypeSelectInput.defaultProps = {
-  fieldName: "type"
+NotificationMethodSelectInput.defaultProps = {
+  fieldName: "method"
 };
 
-export default NotificationTypeSelectInput;
+export default NotificationMethodSelectInput;

@@ -20,7 +20,7 @@ import InlineNotificationTypeFilter
   from "components/common/filters/notifications/notification_type/InlineNotificationTypeFilter";
 import NewNotificationOverlay from "components/notifications/NewNotificationOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {getNotificationTypeLabel} from "components/notifications/notificationTypes.constants";
+import {getNotificationTypeLabel} from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
 
 function NotificationsTable(
   {
