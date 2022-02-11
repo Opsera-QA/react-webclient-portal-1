@@ -1,4 +1,4 @@
-const jenkinsCreateAccountMetadata = {
+export const jenkinsToolAccountMetadata = {
   type: "Jenkins Account Credential",
   fields: [
     {
@@ -60,5 +60,3 @@ export const platformList = [
     value: "bitbucket",
   },
 ];
-
-export default jenkinsCreateAccountMetadata;

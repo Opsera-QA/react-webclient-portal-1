@@ -29,8 +29,8 @@ function JenkinsAccountServiceSelectInput({ fieldName, dataObject, setDataObject
       setDataObject={setDataObject}
       placeholderText={"Select Service Type"}
       selectOptions={TOOL_TYPES}
-      valueField="value"
-      textField="label"
+      valueField={"value"}
+      textField={"label"}
       disabled={disabled}
       setDataFunction={setJenkinsAccountService}
     />
