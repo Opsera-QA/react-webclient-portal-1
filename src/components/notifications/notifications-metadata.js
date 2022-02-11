@@ -1,3 +1,5 @@
+import {capitalizeFirstLetter} from "../common/helpers/string-helpers";
+
 const notificationsMetadata = {
   idProperty: "_id",
   type: "Notification Policy",
@@ -6,7 +8,7 @@ const notificationsMetadata = {
     return `/notifications/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `Notification Details [${record.getOriginalValue("name")}]`;
+    return `Notification Details ${record.getOriginalValue("name")}`;
   },
   fields: [
     {
