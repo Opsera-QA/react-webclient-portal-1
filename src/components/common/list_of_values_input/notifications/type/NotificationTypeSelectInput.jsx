@@ -1,33 +1,35 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import {NOTIFICATION_TYPE_SELECT_OPTIONS} from "components/notifications/notificationTypes.constants";
 
-// disabling metric selection for now
-export const notificationTypes = [
-  {name: "Pipeline", value: "pipeline"},
-  {name: "Metric", value: "metric"}
-];
 // TODO: Remove the disabled items from here when done
-function NotificationTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction }) {
+function NotificationTypeSelectInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    disabled,
+    setDataFunction,
+  }) {
   return (
     <SelectInputBase
       fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
-      selectOptions={notificationTypes}
+      dataObject={model}
+      setDataObject={setModel}
+      selectOptions={NOTIFICATION_TYPE_SELECT_OPTIONS}
       setDataFunction={setDataFunction}
-      valueField="value"
-      textField="name"
-      // disabled={disabled}
-      disabled={[ {name: "Metric", value: "metric"} ]}
+      valueField={"value"}
+      textField={"text"}
+      disabled={[{text: "Metric", value: "metric"}]}
     />
   );
 }
 
 NotificationTypeSelectInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
 };
