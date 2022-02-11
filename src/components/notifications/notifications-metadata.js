@@ -1,5 +1,3 @@
-
-
 const notificationsMetadata = {
   idProperty: "_id",
   type: "Notification Policy",
