@@ -1,5 +1,3 @@
-import {capitalizeFirstLetter} from "../common/helpers/string-helpers";
-
 const notificationsMetadata = {
   idProperty: "_id",
   type: "Notification Policy",
