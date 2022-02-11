@@ -13,6 +13,8 @@ import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarD
 import axios from "axios";
 import NotificationSubNavigationBar from "components/notifications/NotificationSubNavigationBar";
 import {NOTIFICATION_TYPES} from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
+import NotificationDetailViewHelpDocumentation
+  from "components/common/help/documentation/notifications/NotificationDetailViewHelpDocumentation";
 
 function NotificationDetailView() {
   const { id } = useParams();
@@ -99,12 +101,12 @@ function NotificationDetailView() {
   };
 
   const getHelpComponent = () => {
-    switch (notificationData?.getData("type")) {
-      case NOTIFICATION_TYPES.PIPELINE:
-      case NOTIFICATION_TYPES.METRIC:
-      default:
-        return null;
-    }
+    return (
+      <NotificationDetailViewHelpDocumentation
+        type={notificationData?.getData("type")}
+        method={notificationData?.getData("method")}
+      />
+    );
   };
 
   return (
@@ -115,7 +117,7 @@ function NotificationDetailView() {
       dataObject={notificationData}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      // helpComponent={getHelpComponent()}
+      helpComponent={getHelpComponent()}
       detailPanel={
         <NotificationDetailPanel
           notificationData={notificationData}
