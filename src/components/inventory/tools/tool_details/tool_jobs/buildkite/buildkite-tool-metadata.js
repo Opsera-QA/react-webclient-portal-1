@@ -12,11 +12,21 @@ const BuildkiteMetadata = {
       id: "publicKey",
       isRequired: true
     },
+    {
+      label: "URL",
+      id: "url",
+      isRequired: true
+    },
+    {
+      label: "Slug",
+      id: "slug"
+    },
   ],
   newObjectFields:
     {
       organizationName: "",
       publicKey: "",
+      url: ""
     }
 };
 

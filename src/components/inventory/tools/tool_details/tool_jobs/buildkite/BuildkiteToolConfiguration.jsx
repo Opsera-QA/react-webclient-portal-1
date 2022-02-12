@@ -70,7 +70,17 @@ function BuildkiteToolConfiguration({ toolData }) {
           <TextInputBase
             dataObject={buildkiteConfigurationDto}
             setDataObject={setBuildkiteConfigurationDto}
+            fieldName={"url"}
+          />
+          <TextInputBase
+            dataObject={buildkiteConfigurationDto}
+            setDataObject={setBuildkiteConfigurationDto}
             fieldName={"organizationName"}
+          />
+          <TextInputBase
+            dataObject={buildkiteConfigurationDto}
+            setDataObject={setBuildkiteConfigurationDto}
+            fieldName={"slug"}
           />
           <VaultTextAreaInput
             dataObject={buildkiteConfigurationDto}
