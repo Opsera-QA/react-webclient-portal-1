@@ -14,6 +14,8 @@ import BitbucketRepositorySelectInput
   from "components/common/list_of_values_input/tools/bitbucket/repositories/BitbucketRepositorySelectInput";
 import GithubRepositorySelectInput
   from "components/common/list_of_values_input/tools/github/repositories/GithubRepositorySelectInput";
+import GitlabRepositorySelectInput
+  from "components/common/list_of_values_input/tools/gitlab/repositories/GitlabRepositorySelectInput";
 
 // TODO: Clean up this component. Change "gitToolId" to "toolId", make validateSavedData default to true after all use cases are tested.
 // TODO: Separate out into multiple inputs, make this RepositorySelectInputBase
@@ -55,10 +57,12 @@ function RepositorySelectInput(
     setRepositories([]);
     setErrorMessage("");
 
+    // TODO: See if this needs to support any more tools. if not, remove loading altogether from here and use the individual select inputs
     if (hasStringValue(service) &&
       service !== "azure-devops"
       && service !== "bitbucket"
       && service !== "github"
+      && service !== "gitlab"
       && isMongoDbId(gitToolId)) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
@@ -158,6 +162,20 @@ function RepositorySelectInput(
   if (service === "github") {
     return (
       <GithubRepositorySelectInput
+        toolId={gitToolId}
+        model={dataObject}
+        setModel={setDataObject}
+        setDataFunction={setDataFunction}
+        fieldName={fieldName}
+        disabled={disabled}
+        clearDataFunction={clearDataFunction}
+      />
+    );
+  }
+
+  if (service === "gitlab") {
+    return (
+      <GitlabRepositorySelectInput
         toolId={gitToolId}
         model={dataObject}
         setModel={setDataObject}
