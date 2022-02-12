@@ -10,6 +10,8 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import AzureDevOpsBranchSelectInput
   from "components/common/list_of_values_input/tools/azure/branches/AzureDevOpsBranchSelectInput";
+import BitbucketBranchSelectInput
+  from "components/common/list_of_values_input/tools/bitbucket/branches/BitbucketBranchSelectInput";
 
 // TODO: Rework this into multiple inputs, rename BranchSelectInputBase
 function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
@@ -31,7 +33,13 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
 
     setBranches([]);
     // TODO: Add check for service type?
-    if (hasStringValue(service) === true && service !== "azure-devops" && isMongoDbId(gitToolId) === true && hasStringValue(repoId) === true) {
+    if (
+      hasStringValue(service) === true
+      && service !== "azure-devops"
+      && service !== "bitbucket"
+      && isMongoDbId(gitToolId) === true
+      && hasStringValue(repoId) === true
+    ) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -88,6 +96,22 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
         fieldName={fieldName}
         disabled={disabled}
         clearDataFunction={clearDataFunction}
+      />
+    );
+  }
+
+  if (service === "bitbucket") {
+    return (
+      <BitbucketBranchSelectInput
+        toolId={gitToolId}
+        model={dataObject}
+        setModel={setDataObject}
+        setDataFunction={setDataFunction}
+        fieldName={fieldName}
+        disabled={disabled}
+        clearDataFunction={clearDataFunction}
+        workspace={workspace}
+        repositoryId={repoId}
       />
     );
   }
