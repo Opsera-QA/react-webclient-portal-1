@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import AzureDevOpsBranchSelectInput
   from "components/common/list_of_values_input/tools/azure/branches/AzureDevOpsBranchSelectInput";

@@ -38,6 +38,7 @@ function BitbucketRepositorySelectInput(
     setCancelTokenSource(source);
     setErrorMessage("");
     setBitbucketRepositories([]);
+    setPlaceholderText("Select Bitbucket Repository");
 
     if (isMongoDbId(toolId) === true && hasStringValue(workspace) === true) {
       loadData(source).catch((error) => {
@@ -69,7 +70,6 @@ function BitbucketRepositorySelectInput(
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
-      setPlaceholderText("Select Bitbucket Repository");
       setBitbucketRepositories([...repositories]);
 
       const existingRepository = model?.getData(fieldName);
