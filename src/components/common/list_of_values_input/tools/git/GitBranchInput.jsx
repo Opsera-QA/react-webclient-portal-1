@@ -11,7 +11,7 @@ import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import AzureDevOpsBranchSelectInput
   from "components/common/list_of_values_input/tools/azure/branches/AzureDevOpsBranchSelectInput";
 
-// TODO: This needs to be reworked. We should not be using the /tools/properties routes
+// TODO: Rework this into multiple inputs, rename BranchSelectInputBase
 function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -69,7 +69,7 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
   };
 
   const getNoBranchesMessage = () => {
-    if (!isLoading && (!Array.isArray(branches) || branches.length === 0) && hasStringValue(service) === true && hasStringValue(gitToolId) === true && hasStringValue(repoId) === true) {
+    if (!isLoading && (!Array.isArray(branches) || branches.length === 0) && hasStringValue(service) === true && isMongoDbId(gitToolId) === true && hasStringValue(repoId) === true) {
       return ("No Branches Found!");
     }
   };
@@ -123,7 +123,7 @@ GitBranchInput.propTypes = {
     PropTypes.array
   ]),
   visible: PropTypes.bool,
-  clearDataFunction: PropTypes.func
+  clearDataFunction: PropTypes.func,
 };
 
 export default GitBranchInput;

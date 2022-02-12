@@ -60,7 +60,7 @@ function AzureDevOpsBranchSelectInput(
   };
 
   const loadAzureBranches = async (cancelSource = cancelTokenSource) => {
-    const response = await azureActions.getRepositoriesFromAzureInstanceV2(getAccessToken, cancelSource, azureToolId);
+    const response = await azureActions.getRepositoriesFromAzureInstanceV2(getAccessToken, cancelSource, toolId);
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
