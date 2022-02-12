@@ -21,7 +21,7 @@ function BitbucketRepositorySelectInput(
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [azureRepositories, setAzureRepositories] = useState([]);
+  const [bitbucketBranches, setBitbucketBranches] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [placeholderText, setPlaceholderText] = useState("Select Bitbucket Branch");
   const isMounted = useRef(false);
@@ -35,7 +35,7 @@ function BitbucketRepositorySelectInput(
     isMounted.current = true;
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-    setAzureRepositories([]);
+    setBitbucketBranches([]);
     setErrorMessage("");
     setPlaceholderText("Select Bitbucket Branch");
 
@@ -54,7 +54,7 @@ function BitbucketRepositorySelectInput(
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadBitbucketRepositories(cancelSource);
+      await loadBitbucketBranches(cancelSource);
     } catch (error) {
       setPlaceholderText("No Branches Available!");
       setErrorMessage("There was an error pulling Bitbucket Branches");
@@ -64,13 +64,13 @@ function BitbucketRepositorySelectInput(
     }
   };
 
-  const loadBitbucketRepositories = async (cancelSource = cancelTokenSource) => {
+  const loadBitbucketBranches = async (cancelSource = cancelTokenSource) => {
     const response = await bitbucketActions.getBranchesFromBitbucketInstanceV2(getAccessToken, cancelSource, toolId, workspace, repositoryId);
     const branches = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(branches)) {
       setPlaceholderText("Select Bitbucket Branch");
-      setAzureRepositories([...branches]);
+      setBitbucketBranches([...branches]);
     }
   };
 
@@ -79,7 +79,7 @@ function BitbucketRepositorySelectInput(
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={azureRepositories}
+      selectOptions={bitbucketBranches}
       busy={isLoading}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}

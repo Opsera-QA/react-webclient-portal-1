@@ -12,6 +12,8 @@ import AzureDevOpsRepositorySelectInput
   from "components/common/list_of_values_input/tools/azure/repositories/AzureDevOpsRepositorySelectInput";
 import BitbucketRepositorySelectInput
   from "components/common/list_of_values_input/tools/bitbucket/repositories/BitbucketRepositorySelectInput";
+import GithubRepositorySelectInput
+  from "components/common/list_of_values_input/tools/github/repositories/GithubRepositorySelectInput";
 
 // TODO: Clean up this component. Change "gitToolId" to "toolId", make validateSavedData default to true after all use cases are tested.
 // TODO: Separate out into multiple inputs, make this RepositorySelectInputBase
@@ -53,8 +55,11 @@ function RepositorySelectInput(
     setRepositories([]);
     setErrorMessage("");
 
-    console.log("service: " + service);
-    if (hasStringValue(service) && service !== "azure-devops" && service !== "bitbucket" && isMongoDbId(gitToolId)) {
+    if (hasStringValue(service) &&
+      service !== "azure-devops"
+      && service !== "bitbucket"
+      && service !== "github"
+      && isMongoDbId(gitToolId)) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -146,6 +151,20 @@ function RepositorySelectInput(
         disabled={disabled}
         clearDataFunction={clearDataFunction}
         workspace={workspace}
+      />
+    );
+  }
+
+  if (service === "github") {
+    return (
+      <GithubRepositorySelectInput
+        toolId={gitToolId}
+        model={dataObject}
+        setModel={setDataObject}
+        setDataFunction={setDataFunction}
+        fieldName={fieldName}
+        disabled={disabled}
+        clearDataFunction={clearDataFunction}
       />
     );
   }
