@@ -12,7 +12,7 @@ import AzureDevOpsBranchSelectInput
   from "components/common/list_of_values_input/tools/azure/branches/AzureDevOpsBranchSelectInput";
 
 // TODO: Rework this into multiple inputs, rename BranchSelectInputBase
-function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, setBranchList}) {
+function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [branches, setBranches] = useState([]);
@@ -65,14 +65,11 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
 
     if (Array.isArray(branchesResponse)) {
       setBranches(branchesResponse);
-      if (setBranchList != null) {
-        setBranchList(branchesResponse); 
-      }
     }
   };
 
   const getNoBranchesMessage = () => {
-    if (!isLoading && (branches == null || branches.length === 0) && service !== "" && gitToolId !== "" && repoId !== "") {
+    if (!isLoading && (!Array.isArray(branches) || branches.length === 0) && hasStringValue(service) === true && isMongoDbId(gitToolId) === true && hasStringValue(repoId) === true) {
       return ("No Branches Found!");
     }
   };
@@ -127,7 +124,6 @@ GitBranchInput.propTypes = {
   ]),
   visible: PropTypes.bool,
   clearDataFunction: PropTypes.func,
-  setBranchList:PropTypes.func
 };
 
 export default GitBranchInput;
