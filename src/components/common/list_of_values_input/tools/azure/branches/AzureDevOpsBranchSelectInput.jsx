@@ -6,7 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import azureActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
 
-function AzureDevOpsRepositorySelectInput(
+function AzureDevOpsBranchSelectInput(
   {
     fieldName,
     model,
@@ -18,7 +18,7 @@ function AzureDevOpsRepositorySelectInput(
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [azureRepositories, setAzureRepositories] = useState([]);
+  const [azureBranches, setAzureBranches] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [placeholder, setPlaceholderText] = useState("Select Azure Repository");
   const isMounted = useRef(false);
@@ -32,7 +32,7 @@ function AzureDevOpsRepositorySelectInput(
     isMounted.current = true;
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-    setAzureRepositories([]);
+    setAzureBranches([]);
 
     if (isMongoDbId(toolId) === true) {
       loadData(source).catch((error) => {
@@ -49,23 +49,23 @@ function AzureDevOpsRepositorySelectInput(
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadAzureRepositories(cancelSource);
+      await loadAzureBranches(cancelSource);
     } catch (error) {
-      setPlaceholderText("No Repositories Available!");
-      setErrorMessage("There was an error pulling Azure Repositories");
+      setPlaceholderText("No Branches Available!");
+      setErrorMessage("There was an error pulling Azure Branches");
       console.error(error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const loadAzureRepositories = async (cancelSource = cancelTokenSource) => {
-    const response = await azureActions.getRepositoriesFromAzureInstanceV2(getAccessToken, cancelSource, toolId);
+  const loadAzureBranches = async (cancelSource = cancelTokenSource) => {
+    const response = await azureActions.getRepositoriesFromAzureInstanceV2(getAccessToken, cancelSource, azureToolId);
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
-      setPlaceholderText("Select Azure Repository");
-      setAzureRepositories([...repositories]);
+      setPlaceholderText("Select Azure Branch");
+      setAzureBranches([...repositories]);
     }
   };
 
@@ -74,12 +74,10 @@ function AzureDevOpsRepositorySelectInput(
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={azureRepositories}
+      selectOptions={azureBranches}
       busy={isLoading}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
-      valueField={"name"}
-      textField={"repositoryId"}
       disabled={disabled}
       placeholder={placeholder}
       errorMessage={errorMessage}
@@ -87,7 +85,7 @@ function AzureDevOpsRepositorySelectInput(
   );
 }
 
-AzureDevOpsRepositorySelectInput.propTypes = {
+AzureDevOpsBranchSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -97,4 +95,4 @@ AzureDevOpsRepositorySelectInput.propTypes = {
   clearDataFunction: PropTypes.func,
 };
 
-export default AzureDevOpsRepositorySelectInput;
+export default AzureDevOpsBranchSelectInput;
