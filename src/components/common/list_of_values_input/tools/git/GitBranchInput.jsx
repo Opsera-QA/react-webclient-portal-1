@@ -14,6 +14,8 @@ import BitbucketBranchSelectInput
   from "components/common/list_of_values_input/tools/bitbucket/branches/BitbucketBranchSelectInput";
 import GithubBranchSelectInput
   from "components/common/list_of_values_input/tools/github/branches/GithubBranchSelectInput";
+import GitlabBranchSelectInput
+  from "components/common/list_of_values_input/tools/gitlab/branches/GitlabBranchSelectInput";
 
 // TODO: Rework this into multiple inputs, rename BranchSelectInputBase
 function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
@@ -122,6 +124,21 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
   if (service === "github") {
     return (
       <GithubBranchSelectInput
+        toolId={gitToolId}
+        model={dataObject}
+        setModel={setDataObject}
+        setDataFunction={setDataFunction}
+        fieldName={fieldName}
+        disabled={disabled}
+        clearDataFunction={clearDataFunction}
+        repositoryId={repoId}
+      />
+    );
+  }
+
+  if (service === "gitlab") {
+    return (
+      <GitlabBranchSelectInput
         toolId={gitToolId}
         model={dataObject}
         setModel={setDataObject}

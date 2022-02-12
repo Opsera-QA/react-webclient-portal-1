@@ -5,9 +5,9 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import {githubActions} from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
+import {gitlabActions} from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
 
-function GithubBranchSelectInput(
+function GitlabBranchSelectInput(
   {
     fieldName,
     model,
@@ -20,9 +20,9 @@ function GithubBranchSelectInput(
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [githubBranches, setGithubBranches] = useState([]);
+  const [gitlabBranches, setGitlabBranches] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [placeholderText, setPlaceholderText] = useState("Select Github Branch");
+  const [placeholderText, setPlaceholderText] = useState("Select Gitlab Branch");
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
 
@@ -34,9 +34,9 @@ function GithubBranchSelectInput(
     isMounted.current = true;
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-    setGithubBranches([]);
+    setGitlabBranches([]);
     setErrorMessage("");
-    setPlaceholderText("Select Github Branch");
+    setPlaceholderText("Select Gitlab Branch");
 
     if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
       loadData(source).catch((error) => {
@@ -53,23 +53,23 @@ function GithubBranchSelectInput(
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadGithubBranches(cancelSource);
+      await loadGitlabBranches(cancelSource);
     } catch (error) {
       setPlaceholderText("No Branches Available!");
-      setErrorMessage("There was an error pulling Github Branches");
+      setErrorMessage("There was an error pulling Gitlab Branches");
       console.error(error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const loadGithubBranches = async (cancelSource = cancelTokenSource) => {
-    const response = await githubActions.getBranchesFromGithubInstanceV2(getAccessToken, cancelSource, toolId, repositoryId);
+  const loadGitlabBranches = async (cancelSource = cancelTokenSource) => {
+    const response = await gitlabActions.getBranchesFromGitlabInstanceV2(getAccessToken, cancelSource, toolId, repositoryId);
     const branches = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(branches)) {
-      setPlaceholderText("Select Github Branch");
-      setGithubBranches([...branches]);
+      setPlaceholderText("Select Gitlab Branch");
+      setGitlabBranches([...branches]);
     }
   };
 
@@ -78,7 +78,7 @@ function GithubBranchSelectInput(
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={githubBranches}
+      selectOptions={gitlabBranches}
       busy={isLoading}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
@@ -91,7 +91,7 @@ function GithubBranchSelectInput(
   );
 }
 
-GithubBranchSelectInput.propTypes = {
+GitlabBranchSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -102,4 +102,4 @@ GithubBranchSelectInput.propTypes = {
   repositoryId: PropTypes.string,
 };
 
-export default GithubBranchSelectInput;
+export default GitlabBranchSelectInput;

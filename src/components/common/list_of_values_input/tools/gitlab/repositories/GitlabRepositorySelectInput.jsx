@@ -4,10 +4,10 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import {hasStringValue} from "components/common/helpers/string-helpers";
 import {githubActions} from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
+import {gitlabActions} from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
 
-function GithubBranchSelectInput(
+function GitlabRepositorySelectInput(
   {
     fieldName,
     model,
@@ -16,13 +16,12 @@ function GithubBranchSelectInput(
     disabled,
     setDataFunction,
     clearDataFunction,
-    repositoryId,
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [githubBranches, setGithubBranches] = useState([]);
+  const [gitlabRepositories, setGitlabRepositories] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [placeholderText, setPlaceholderText] = useState("Select Github Branch");
+  const [placeholder, setPlaceholderText] = useState("Select Gitlab Repository");
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
 
@@ -34,11 +33,10 @@ function GithubBranchSelectInput(
     isMounted.current = true;
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-    setGithubBranches([]);
     setErrorMessage("");
-    setPlaceholderText("Select Github Branch");
+    setGitlabRepositories([]);
 
-    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
+    if (isMongoDbId(toolId) === true) {
       loadData(source).catch((error) => {
         throw error;
       });
@@ -48,28 +46,28 @@ function GithubBranchSelectInput(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId, repositoryId]);
+  }, [toolId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadGithubBranches(cancelSource);
+      await loadGitlabRepositories(cancelSource);
     } catch (error) {
-      setPlaceholderText("No Branches Available!");
-      setErrorMessage("There was an error pulling Github Branches");
+      setPlaceholderText("No Repositories Available!");
+      setErrorMessage("There was an error pulling Gitlab Repositories");
       console.error(error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const loadGithubBranches = async (cancelSource = cancelTokenSource) => {
-    const response = await githubActions.getBranchesFromGithubInstanceV2(getAccessToken, cancelSource, toolId, repositoryId);
-    const branches = response?.data?.data;
+  const loadGitlabRepositories = async (cancelSource = cancelTokenSource) => {
+    const response = await gitlabActions.getRepositoriesFromGitlabInstanceV2(getAccessToken, cancelSource, toolId);
+    const repositories = response?.data?.data;
 
-    if (isMounted?.current === true && Array.isArray(branches)) {
-      setPlaceholderText("Select Github Branch");
-      setGithubBranches([...branches]);
+    if (isMounted?.current === true && Array.isArray(repositories)) {
+      setPlaceholderText("Select Gitlab Repository");
+      setGitlabRepositories([...repositories]);
     }
   };
 
@@ -78,20 +76,20 @@ function GithubBranchSelectInput(
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={githubBranches}
+      selectOptions={gitlabRepositories}
       busy={isLoading}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
       valueField={"name"}
       textField={"name"}
       disabled={disabled}
-      placeholderText={placeholderText}
+      placeholder={placeholder}
       errorMessage={errorMessage}
     />
   );
 }
 
-GithubBranchSelectInput.propTypes = {
+GitlabRepositorySelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -99,7 +97,6 @@ GithubBranchSelectInput.propTypes = {
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
-  repositoryId: PropTypes.string,
 };
 
-export default GithubBranchSelectInput;
+export default GitlabRepositorySelectInput;
