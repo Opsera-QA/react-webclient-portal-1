@@ -4,10 +4,10 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import {bitbucketActions} from "components/inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import {githubActions} from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
 
-function BitbucketRepositorySelectInput(
+function GithubBranchSelectInput(
   {
     fieldName,
     model,
@@ -16,13 +16,13 @@ function BitbucketRepositorySelectInput(
     disabled,
     setDataFunction,
     clearDataFunction,
-    workspace,
+    repositoryId,
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [bitbucketRepositories, setBitbucketRepositories] = useState([]);
+  const [azureRepositories, setAzureRepositories] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Bitbucket Repository");
+  const [placeholderText, setPlaceholderText] = useState("Select Github Branch");
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
 
@@ -34,10 +34,12 @@ function BitbucketRepositorySelectInput(
     isMounted.current = true;
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
+    setAzureRepositories([]);
     setErrorMessage("");
-    setBitbucketRepositories([]);
+    setPlaceholderText("Select Github Branch");
+    console.log("in github branch select input");
 
-    if (isMongoDbId(toolId) === true && hasStringValue(workspace) === true) {
+    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
       loadData(source).catch((error) => {
         throw error;
       });
@@ -47,28 +49,28 @@ function BitbucketRepositorySelectInput(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId, workspace]);
+  }, [toolId, repositoryId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadBitbucketRepositories(cancelSource);
+      await loadGithubBranches(cancelSource);
     } catch (error) {
-      setPlaceholderText("No Repositories Available!");
-      setErrorMessage("There was an error pulling Bitbucket Repositories");
+      setPlaceholderText("No Branches Available!");
+      setErrorMessage("There was an error pulling Github Branches");
       console.error(error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const loadBitbucketRepositories = async (cancelSource = cancelTokenSource) => {
-    const response = await bitbucketActions.getRepositoriesFromBitbucketInstanceV2(getAccessToken, cancelSource, toolId, workspace);
-    const repositories = response?.data?.data;
+  const loadGithubBranches = async (cancelSource = cancelTokenSource) => {
+    const response = await githubActions.getBranchesFromGithubInstanceV2(getAccessToken, cancelSource, toolId, repositoryId);
+    const branches = response?.data?.data;
 
-    if (isMounted?.current === true && Array.isArray(repositories)) {
-      setPlaceholderText("Select Bitbucket Repository");
-      setBitbucketRepositories([...repositories]);
+    if (isMounted?.current === true && Array.isArray(branches)) {
+      setPlaceholderText("Select Github Branch");
+      setAzureRepositories([...branches]);
     }
   };
 
@@ -77,20 +79,20 @@ function BitbucketRepositorySelectInput(
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={bitbucketRepositories}
+      selectOptions={azureRepositories}
       busy={isLoading}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
       valueField={"name"}
       textField={"name"}
       disabled={disabled}
-      placeholder={placeholder}
+      placeholderText={placeholderText}
       errorMessage={errorMessage}
     />
   );
 }
 
-BitbucketRepositorySelectInput.propTypes = {
+GithubBranchSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -98,7 +100,7 @@ BitbucketRepositorySelectInput.propTypes = {
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
-  workspace: PropTypes.string,
+  repositoryId: PropTypes.string,
 };
 
-export default BitbucketRepositorySelectInput;
+export default GithubBranchSelectInput;

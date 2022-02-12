@@ -4,10 +4,9 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import {bitbucketActions} from "components/inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket.actions";
-import {hasStringValue} from "components/common/helpers/string-helpers";
+import {githubActions} from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
 
-function BitbucketRepositorySelectInput(
+function GithubRepositorySelectInput(
   {
     fieldName,
     model,
@@ -16,13 +15,12 @@ function BitbucketRepositorySelectInput(
     disabled,
     setDataFunction,
     clearDataFunction,
-    workspace,
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [bitbucketRepositories, setBitbucketRepositories] = useState([]);
+  const [githubRepositories, setGithubRepositories] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Bitbucket Repository");
+  const [placeholder, setPlaceholderText] = useState("Select Github Repository");
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
 
@@ -35,9 +33,9 @@ function BitbucketRepositorySelectInput(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setErrorMessage("");
-    setBitbucketRepositories([]);
+    setGithubRepositories([]);
 
-    if (isMongoDbId(toolId) === true && hasStringValue(workspace) === true) {
+    if (isMongoDbId(toolId) === true) {
       loadData(source).catch((error) => {
         throw error;
       });
@@ -47,28 +45,28 @@ function BitbucketRepositorySelectInput(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId, workspace]);
+  }, [toolId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadBitbucketRepositories(cancelSource);
+      await loadGithubRepositories(cancelSource);
     } catch (error) {
       setPlaceholderText("No Repositories Available!");
-      setErrorMessage("There was an error pulling Bitbucket Repositories");
+      setErrorMessage("There was an error pulling Github Repositories");
       console.error(error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const loadBitbucketRepositories = async (cancelSource = cancelTokenSource) => {
-    const response = await bitbucketActions.getRepositoriesFromBitbucketInstanceV2(getAccessToken, cancelSource, toolId, workspace);
+  const loadGithubRepositories = async (cancelSource = cancelTokenSource) => {
+    const response = await githubActions.getRepositoriesFromGithubInstanceV2(getAccessToken, cancelSource, toolId);
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
-      setPlaceholderText("Select Bitbucket Repository");
-      setBitbucketRepositories([...repositories]);
+      setPlaceholderText("Select Github Repository");
+      setGithubRepositories([...repositories]);
     }
   };
 
@@ -77,7 +75,7 @@ function BitbucketRepositorySelectInput(
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={bitbucketRepositories}
+      selectOptions={githubRepositories}
       busy={isLoading}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
@@ -90,7 +88,7 @@ function BitbucketRepositorySelectInput(
   );
 }
 
-BitbucketRepositorySelectInput.propTypes = {
+GithubRepositorySelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -98,7 +96,6 @@ BitbucketRepositorySelectInput.propTypes = {
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
-  workspace: PropTypes.string,
 };
 
-export default BitbucketRepositorySelectInput;
+export default GithubRepositorySelectInput;
