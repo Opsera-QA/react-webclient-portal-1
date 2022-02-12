@@ -6,7 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import azureActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
 
-function AzureDevOpsBranchSelectInput(
+function AzureDevOpsBranchMultiSelectInput(
   {
     fieldName,
     model,
@@ -20,7 +20,7 @@ function AzureDevOpsBranchSelectInput(
   const [isLoading, setIsLoading] = useState(false);
   const [azureBranches, setAzureBranches] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Azure Branch");
+  const [placeholder, setPlaceholderText] = useState("Select Azure Branches");
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
 
@@ -64,7 +64,7 @@ function AzureDevOpsBranchSelectInput(
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
-      setPlaceholderText("Select Azure Branch");
+      setPlaceholderText("Select Azure Branches");
       setAzureBranches([...repositories]);
     }
   };
@@ -85,14 +85,17 @@ function AzureDevOpsBranchSelectInput(
   );
 }
 
-AzureDevOpsBranchSelectInput.propTypes = {
+AzureDevOpsBranchMultiSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
   toolId: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array,
+  ]),
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
 };
 
-export default AzureDevOpsBranchSelectInput;
+export default AzureDevOpsBranchMultiSelectInput;

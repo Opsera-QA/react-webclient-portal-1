@@ -1,12 +1,13 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import azureActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import {githubActions} from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
-function AzureDevOpsBranchSelectInput(
+function GithubBranchMultiSelectInput(
   {
     fieldName,
     model,
@@ -14,13 +15,14 @@ function AzureDevOpsBranchSelectInput(
     toolId,
     disabled,
     setDataFunction,
-    clearDataFunction
+    clearDataFunction,
+    repositoryId,
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [azureBranches, setAzureBranches] = useState([]);
+  const [githubBranches, setGithubBranches] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Azure Branch");
+  const [placeholderText, setPlaceholderText] = useState("Select Github Branches");
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
 
@@ -32,9 +34,11 @@ function AzureDevOpsBranchSelectInput(
     isMounted.current = true;
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-    setAzureBranches([]);
+    setGithubBranches([]);
+    setErrorMessage("");
+    setPlaceholderText("Select Github Branches");
 
-    if (isMongoDbId(toolId) === true) {
+    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
       loadData(source).catch((error) => {
         throw error;
       });
@@ -44,55 +48,61 @@ function AzureDevOpsBranchSelectInput(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId]);
+  }, [toolId, repositoryId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadAzureBranches(cancelSource);
+      await loadGithubBranches(cancelSource);
     } catch (error) {
       setPlaceholderText("No Branches Available!");
-      setErrorMessage("There was an error pulling Azure Branches");
+      setErrorMessage("There was an error pulling Github Branches");
       console.error(error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const loadAzureBranches = async (cancelSource = cancelTokenSource) => {
-    const response = await azureActions.getRepositoriesFromAzureInstanceV2(getAccessToken, cancelSource, toolId);
-    const repositories = response?.data?.data;
+  const loadGithubBranches = async (cancelSource = cancelTokenSource) => {
+    const response = await githubActions.getBranchesFromGithubInstanceV2(getAccessToken, cancelSource, toolId, repositoryId);
+    const branches = response?.data?.data;
 
-    if (isMounted?.current === true && Array.isArray(repositories)) {
-      setPlaceholderText("Select Azure Branch");
-      setAzureBranches([...repositories]);
+    if (isMounted?.current === true && Array.isArray(branches)) {
+      setPlaceholderText("Select Github Branches");
+      setGithubBranches([...branches]);
     }
   };
 
   return (
-    <SelectInputBase
+    <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={azureBranches}
+      selectOptions={githubBranches}
       busy={isLoading}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
+      valueField={"name"}
+      textField={"name"}
       disabled={disabled}
-      placeholder={placeholder}
+      placeholderText={placeholderText}
       errorMessage={errorMessage}
     />
   );
 }
 
-AzureDevOpsBranchSelectInput.propTypes = {
+GithubBranchMultiSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
   toolId: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array,
+  ]),
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
+  repositoryId: PropTypes.string,
 };
 
-export default AzureDevOpsBranchSelectInput;
+export default GithubBranchMultiSelectInput;

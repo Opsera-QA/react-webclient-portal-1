@@ -1,12 +1,13 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import azureActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import {gitlabActions} from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
-function AzureDevOpsBranchSelectInput(
+function GitlabBranchSelectInput(
   {
     fieldName,
     model,
@@ -14,13 +15,14 @@ function AzureDevOpsBranchSelectInput(
     toolId,
     disabled,
     setDataFunction,
-    clearDataFunction
+    clearDataFunction,
+    repositoryId,
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [azureBranches, setAzureBranches] = useState([]);
+  const [gitlabBranches, setGitlabBranches] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Azure Branch");
+  const [placeholderText, setPlaceholderText] = useState("Select Gitlab Branches");
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
 
@@ -32,9 +34,11 @@ function AzureDevOpsBranchSelectInput(
     isMounted.current = true;
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-    setAzureBranches([]);
+    setGitlabBranches([]);
+    setErrorMessage("");
+    setPlaceholderText("Select Gitlab Branches");
 
-    if (isMongoDbId(toolId) === true) {
+    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
       loadData(source).catch((error) => {
         throw error;
       });
@@ -44,55 +48,61 @@ function AzureDevOpsBranchSelectInput(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId]);
+  }, [toolId, repositoryId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadAzureBranches(cancelSource);
+      await loadGitlabBranches(cancelSource);
     } catch (error) {
       setPlaceholderText("No Branches Available!");
-      setErrorMessage("There was an error pulling Azure Branches");
+      setErrorMessage("There was an error pulling Gitlab Branches");
       console.error(error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const loadAzureBranches = async (cancelSource = cancelTokenSource) => {
-    const response = await azureActions.getRepositoriesFromAzureInstanceV2(getAccessToken, cancelSource, toolId);
-    const repositories = response?.data?.data;
+  const loadGitlabBranches = async (cancelSource = cancelTokenSource) => {
+    const response = await gitlabActions.getBranchesFromGitlabInstanceV2(getAccessToken, cancelSource, toolId, repositoryId);
+    const branches = response?.data?.data;
 
-    if (isMounted?.current === true && Array.isArray(repositories)) {
-      setPlaceholderText("Select Azure Branch");
-      setAzureBranches([...repositories]);
+    if (isMounted?.current === true && Array.isArray(branches)) {
+      setPlaceholderText("Select Gitlab Branches");
+      setGitlabBranches([...branches]);
     }
   };
 
   return (
-    <SelectInputBase
+    <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={azureBranches}
+      selectOptions={gitlabBranches}
       busy={isLoading}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
+      valueField={"name"}
+      textField={"name"}
       disabled={disabled}
-      placeholder={placeholder}
+      placeholderText={placeholderText}
       errorMessage={errorMessage}
     />
   );
 }
 
-AzureDevOpsBranchSelectInput.propTypes = {
+GitlabBranchSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
   toolId: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array,
+  ]),
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
+  repositoryId: PropTypes.string,
 };
 
-export default AzureDevOpsBranchSelectInput;
+export default GitlabBranchSelectInput;
