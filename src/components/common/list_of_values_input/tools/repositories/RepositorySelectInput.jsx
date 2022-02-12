@@ -12,6 +12,7 @@ import AzureDevOpsRepositorySelectInput
   from "components/common/list_of_values_input/tools/azure/repositories/AzureDevOpsRepositorySelectInput";
 
 // TODO: Clean up this component. Change "gitToolId" to "toolId", make validateSavedData default to true after all use cases are tested.
+// TODO: Separate out into multiple inputs, make this RepositorySelectInputBase
 function RepositorySelectInput(
   {
     service,
@@ -125,7 +126,7 @@ function RepositorySelectInput(
   if (service === "azure-devops") {
     return (
       <AzureDevOpsRepositorySelectInput
-        azureToolId={gitToolId}
+        toolId={gitToolId}
         model={dataObject}
         setModel={setDataObject}
         setDataFunction={setDataFunction}

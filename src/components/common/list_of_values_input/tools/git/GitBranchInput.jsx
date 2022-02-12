@@ -7,6 +7,9 @@ import GitActionsHelper
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
 import axios from "axios";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import AzureDevOpsBranchSelectInput
+  from "components/common/list_of_values_input/tools/azure/branches/AzureDevOpsBranchSelectInput";
 
 // TODO: This needs to be reworked. We should not be using the /tools/properties routes
 function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
@@ -27,7 +30,8 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
     isMounted.current = true;
 
     setBranches([]);
-    if (hasStringValue(service) === true && hasStringValue(gitToolId) === true && hasStringValue(repoId) === true) {
+    // TODO: Add check for service type?
+    if (hasStringValue(service) === true && service !== "azure-devops" && isMongoDbId(gitToolId) === true && hasStringValue(repoId) === true) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -74,6 +78,20 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
     return <></>;
   }
 
+  if (service === "azure-devops") {
+    return (
+      <AzureDevOpsBranchSelectInput
+        toolId={gitToolId}
+        model={dataObject}
+        setModel={setDataObject}
+        setDataFunction={setDataFunction}
+        fieldName={fieldName}
+        disabled={disabled}
+        clearDataFunction={clearDataFunction}
+      />
+    );
+  }
+
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -84,9 +102,9 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
       busy={isLoading}
       placeholderText={getNoBranchesMessage()}
       clearDataFunction={clearDataFunction}
-      valueField="name"
-      textField="name"
-      disabled={disabled || isLoading || branches.length === 0}
+      valueField={"name"}
+      textField={"name"}
+      disabled={disabled}
     />
   );
 }
