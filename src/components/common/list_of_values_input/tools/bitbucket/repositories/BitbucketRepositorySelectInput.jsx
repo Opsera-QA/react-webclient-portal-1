@@ -17,6 +17,8 @@ function BitbucketRepositorySelectInput(
     setDataFunction,
     clearDataFunction,
     workspace,
+    valueField,
+    textField,
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -69,6 +71,18 @@ function BitbucketRepositorySelectInput(
     if (isMounted?.current === true && Array.isArray(repositories)) {
       setPlaceholderText("Select Bitbucket Repository");
       setBitbucketRepositories([...repositories]);
+
+      const existingRepository = model?.getData(fieldName);
+
+      if (hasStringValue(existingRepository) === true) {
+        const existingRepositoryExists = repositories.find((repository) => repository[valueField] === existingRepository);
+
+        if (existingRepositoryExists == null) {
+          setErrorMessage(
+            "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list."
+          );
+        }
+      }
     }
   };
 
@@ -81,8 +95,8 @@ function BitbucketRepositorySelectInput(
       busy={isLoading}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
-      valueField={"name"}
-      textField={"name"}
+      valueField={valueField}
+      textField={textField}
       disabled={disabled}
       placeholder={placeholder}
       errorMessage={errorMessage}
@@ -99,6 +113,13 @@ BitbucketRepositorySelectInput.propTypes = {
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
   workspace: PropTypes.string,
+  valueField: PropTypes.string,
+  textField: PropTypes.string,
+};
+
+BitbucketRepositorySelectInput.defaultProps = {
+  valueField: "name",
+  textField: "name",
 };
 
 export default BitbucketRepositorySelectInput;
