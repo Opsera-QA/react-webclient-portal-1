@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import BitbucketWorkspaceInput from "components/common/list_of_values_input/tools/bitbucket/BitbucketWorkspaceInput";
+import BitbucketWorkspaceInput from "components/common/list_of_values_input/tools/bitbucket/workspaces/BitbucketWorkspaceInput";
 
 function ProjectMappingWorkspaceSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, toolId}) {
   const setDataFunction = async (fieldName, value) => {

@@ -11,7 +11,7 @@ import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import AzureDevOpsRepositorySelectInput
   from "components/common/list_of_values_input/tools/azure/repositories/AzureDevOpsRepositorySelectInput";
 import BitbucketRepositorySelectInput
-  from "components/common/list_of_values_input/tools/bitbucket/BitbucketRepositorySelectInput";
+  from "components/common/list_of_values_input/tools/bitbucket/repositories/BitbucketRepositorySelectInput";
 
 // TODO: Clean up this component. Change "gitToolId" to "toolId", make validateSavedData default to true after all use cases are tested.
 // TODO: Separate out into multiple inputs, make this RepositorySelectInputBase
