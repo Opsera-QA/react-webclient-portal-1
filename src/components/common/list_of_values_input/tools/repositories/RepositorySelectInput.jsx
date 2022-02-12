@@ -8,6 +8,8 @@ import GitActionsHelper
   import axios from "axios";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import AzureDevOpsRepositorySelectInput
+  from "components/common/list_of_values_input/tools/azure/repositories/AzureDevOpsRepositorySelectInput";
 
 // TODO: Clean up this component. Change "gitToolId" to "toolId", make validateSavedData default to true after all use cases are tested.
 function RepositorySelectInput(
@@ -48,7 +50,8 @@ function RepositorySelectInput(
 
     setRepositories([]);
     setErrorMessage("");
-    if (hasStringValue(service) && isMongoDbId(gitToolId)) {
+    console.log("service: " + service);
+    if (hasStringValue(service) && service !== "azure-devops" && isMongoDbId(gitToolId)) {
       if(service === "bitbucket" && !hasStringValue(workspace)) {
         return;
       }
@@ -118,6 +121,20 @@ function RepositorySelectInput(
 
     return (placeholderText);
   };
+
+  if (service === "azure-devops") {
+    return (
+      <AzureDevOpsRepositorySelectInput
+        azureToolId={gitToolId}
+        model={dataObject}
+        setModel={setDataObject}
+        setDataFunction={setDataFunction}
+        fieldName={fieldName}
+        disabled={disabled}
+        clearDataFunction={clearDataFunction}
+      />
+    );
+  }
 
   return (
     <SelectInputBase
