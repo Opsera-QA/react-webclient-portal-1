@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RepositorySelectInput from "components/common/list_of_values_input/tools/git/RepositorySelectInput";
+import RepositorySelectInput from "components/common/list_of_values_input/tools/repositories/RepositorySelectInput";
 
 // TODO: Rework
 const disallowedJobTypes = [
@@ -12,23 +12,21 @@ const disallowedJobTypes = [
 function JenkinsRepositorySelectInput({dataObject, setDataObject, disabled, gitToolId, jobType, service, workspace}) {
 
   const setDataFunction = (fieldName, selectedOption) => {
-    let newDataObject = { ...dataObject };
-
-    newDataObject.setData("repository", selectedOption.name);
-    newDataObject.setData("repoId", selectedOption.id);
-    newDataObject.setData("projectId", selectedOption.id);
-    newDataObject.setData("gitUrl", selectedOption.httpUrl || "");
-    newDataObject.setData("sshUrl", selectedOption.sshUrl || "");
+    const newDataObject = { ...dataObject };
+    const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
+    newDataObject.setData("repository", selectedOption?.name);
+    newDataObject.setData("repoId", repoId);
+    newDataObject.setData("projectId", selectedOption?.id);
+    newDataObject.setData("gitUrl", selectedOption?.httpUrl || "");
+    newDataObject.setData("sshUrl", selectedOption?.sshUrl || "");
     newDataObject.setData("branch", "");
     newDataObject.setData("defaultBranch", "");
     newDataObject.setData("gitBranch", "");
-
     setDataObject({ ...newDataObject });
   };
 
   const clearDataFunction = () => {
-    let newDataObject = { ...dataObject };
-
+    const newDataObject = { ...dataObject };
     newDataObject.setData("repository", "");
     newDataObject.setData("repoId", "");
     newDataObject.setData("projectId", "");
@@ -37,7 +35,6 @@ function JenkinsRepositorySelectInput({dataObject, setDataObject, disabled, gitT
     newDataObject.setData("branch", "");
     newDataObject.setData("defaultBranch", "");
     newDataObject.setData("gitBranch", "");
-
     setDataObject({ ...newDataObject });
   };
 

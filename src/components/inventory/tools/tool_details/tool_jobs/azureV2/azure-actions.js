@@ -25,4 +25,9 @@ azureActions.deleteAzureCredential = async (getAccessToken, cancelTokenSource, t
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+azureActions.getRepositoriesFromAzureInstanceV2 = async (getAccessToken, cancelTokenSource, toolId) => {
+  const apiUrl = `/azure-devops/${toolId}/repositories`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 export default azureActions;
