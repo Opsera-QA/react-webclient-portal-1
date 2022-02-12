@@ -7,15 +7,15 @@ import JenkinsAccountToolSelectInput from "./inputs/JenkinsAccountToolSelectInpu
 import StandaloneDeleteButtonWithConfirmationModal
   from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import axios from "axios";
-import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import jenkinsToolAccountActions
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccounts.actions";
+import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
+import {AuthContext} from "contexts/AuthContext";
+import axios from "axios";
 
 function JenkinsAccountEditorPanel(
   {
