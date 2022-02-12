@@ -8,8 +8,6 @@ import GitActionsHelper
 import axios from "axios";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import AzureDevOpsRepositorySelectInput
-  from "components/common/list_of_values_input/tools/azure/repositories/AzureDevOpsRepositorySelectInput";
 import AzureDevOpsBranchSelectInput
   from "components/common/list_of_values_input/tools/azure/branches/AzureDevOpsBranchSelectInput";
 
