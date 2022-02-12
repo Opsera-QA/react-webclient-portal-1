@@ -1,10 +1,6 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import pipelineActions from "components/workflow/pipeline-actions";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
-import axios from "axios";
+import BitbucketWorkspaceInput from "components/common/list_of_values_input/tools/bitbucket/BitbucketWorkspaceInput";
 
 // TODO: Rework
 const disallowedJobTypes = [
@@ -14,64 +10,6 @@ const disallowedJobTypes = [
 ];
 
 function JenkinsWorkspaceProjectSelectInput({ fieldName, dataObject, setDataObject, disabled, service, gitToolId, jobType}) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const [workspacesList, setWorkspacesList] = useState([]);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    setWorkspacesList([]);
-    if (service === "bitbucket" && gitToolId != null && gitToolId !== "") {
-      loadData(source).catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, [service, gitToolId]);
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      const response = await pipelineActions.searchWorkspacesV2(getAccessToken, cancelSource, service, gitToolId);
-      const workspaces = response?.data?.data;
-
-      if (isMounted.current === true) {
-
-        if (!Array.isArray(workspaces) || workspaces.length === 0) {
-          let errorMessage = "Workspace information is missing or unavailable!";
-          toastContext.showErrorDialog(errorMessage);
-          return;
-        }
-
-        setWorkspacesList(workspaces);
-      }
-    }
-    catch (error) {
-      console.error(error);
-      toastContext.showErrorDialog(error);
-    }
-    finally {
-      setIsLoading(false);
-    }
-  };
-
   const setDataFunction = (fieldName, value) => {
     let newDataObject = { ...dataObject };
     newDataObject.setData("repository", "");
@@ -118,18 +56,14 @@ function JenkinsWorkspaceProjectSelectInput({ fieldName, dataObject, setDataObje
   }
 
   return (
-    <SelectInputBase
+    <BitbucketWorkspaceInput
       fieldName={fieldName}
       dataObject={dataObject}
       setDataFunction={setDataFunction}
+      gitToolId={gitToolId}
       setDataObject={setDataObject}
-      placeholderText={"Select"}
-      selectOptions={workspacesList}
-      valueField="key"
-      textField="name"
-      disabled={disabled}
       clearDataFunction={clearDataFunction}
-      busy={isLoading}
+      disabled={disabled}
     />
   );
 }

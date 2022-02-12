@@ -10,6 +10,8 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import AzureDevOpsRepositorySelectInput
   from "components/common/list_of_values_input/tools/azure/repositories/AzureDevOpsRepositorySelectInput";
+import BitbucketRepositorySelectInput
+  from "components/common/list_of_values_input/tools/bitbucket/BitbucketRepositorySelectInput";
 
 // TODO: Clean up this component. Change "gitToolId" to "toolId", make validateSavedData default to true after all use cases are tested.
 // TODO: Separate out into multiple inputs, make this RepositorySelectInputBase
@@ -48,26 +50,22 @@ function RepositorySelectInput(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-
     setRepositories([]);
     setErrorMessage("");
+
     console.log("service: " + service);
-    if (hasStringValue(service) && service !== "azure-devops" && isMongoDbId(gitToolId)) {
-      if(service === "bitbucket" && !hasStringValue(workspace)) {
-        return;
-      }
-      
+    if (hasStringValue(service) && service !== "azure-devops" && service !== "bitbucket" && isMongoDbId(gitToolId)) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
       });
-    
-      return () => {
-        source.cancel();
-        isMounted.current = false;
-      };
     }
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, [service, gitToolId, workspace]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -133,6 +131,21 @@ function RepositorySelectInput(
         fieldName={fieldName}
         disabled={disabled}
         clearDataFunction={clearDataFunction}
+      />
+    );
+  }
+
+  if (service === "bitbucket") {
+    return (
+      <BitbucketRepositorySelectInput
+        toolId={gitToolId}
+        model={dataObject}
+        setModel={setDataObject}
+        setDataFunction={setDataFunction}
+        fieldName={fieldName}
+        disabled={disabled}
+        clearDataFunction={clearDataFunction}
+        workspace={workspace}
       />
     );
   }

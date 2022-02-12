@@ -1,67 +1,25 @@
-import React, {useContext, useEffect, useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import pipelineActions from "components/workflow/pipeline-actions";
+import BitbucketWorkspaceInput from "components/common/list_of_values_input/tools/bitbucket/BitbucketWorkspaceInput";
 
 function ProjectMappingWorkspaceSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, toolId}) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
-  const [workspaces, setWorkspaces] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setWorkspaces([]);
-    if (toolId !== "" && dataObject.getData("tool_identifier") !== "") {
-      loadData();
-    }
-  }, [toolId]);
-
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
-      await loadWorkspaces();
-    }
-    catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    }
-    finally {
-      setIsLoading(false);
-    }
-  };
-
-  const loadWorkspaces = async () => {
-    let results = await pipelineActions.searchWorkSpaces(dataObject.getData("tool_identifier"), dataObject.getData("tool_id"), getAccessToken);
-    if (typeof results != "object") {
-      toastContext.showLoadingErrorDialog(`There has been an error in fetching ${dataObject.getData("tool_identifier")} workspaces`);
-      return;
-    }
-    setWorkspaces(results);
-  };
-
-  const handleDTOChange = async (fieldName, value) => {
-    if (fieldName === "tool_prop_name") {
-      let newDataObject = dataObject;
-      newDataObject.setData("tool_prop", value.key);
-      newDataObject.setData("tool_prop_name", value.name);
-      setDataObject({ ...newDataObject });
-      return;
-    }
+  const setDataFunction = async (fieldName, value) => {
+    const newModel = dataObject;
+    newModel.setData("tool_prop", value.key);
+    newModel.setData("tool_prop_name", value.name);
+    setDataObject({...newModel});
   };
 
   return (
-    <SelectInputBase
+    <BitbucketWorkspaceInput
       fieldName={fieldName}
       dataObject={dataObject}
-      setDataFunction={handleDTOChange}
+      gitToolId={dataObject?.getData("tool_id")}
+      setDataFunction={setDataFunction}
       setDataObject={setDataObject}
-      selectOptions={workspaces}
-      busy={isLoading}
       valueField={valueField}
       textField={textField}
-      placeholderText={"Select a Workspace"}
-      disabled={disabled || isLoading || workspaces.length === 0}
+      disabled={disabled}
     />
   );
 }
