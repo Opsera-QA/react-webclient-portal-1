@@ -3,15 +3,16 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const TOOL_TYPES = [
-  { value: "gitlab", label: "Gitlab" },
-  { value: "github", label: "Github" },
+  { value: "azure-devops", label: "Azure DevOps" },
   { value: "bitbucket", label: "Bitbucket" },
   { value: "coverity", label: "Coverity"},
+  { value: "github", label: "Github" },
+  { value: "gitlab", label: "Gitlab" },
 ];
 
 function JenkinsAccountServiceSelectInput({ fieldName, dataObject, setDataObject, disabled }) {
-  
-  const setJenkinsAccountService = (fieldName, selectedOption) => {    
+
+  const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = dataObject;
     newDataObject?.setData(fieldName, selectedOption?.value);
     newDataObject.setData("credentailsToolId", "");
@@ -32,7 +33,7 @@ function JenkinsAccountServiceSelectInput({ fieldName, dataObject, setDataObject
       valueField={"value"}
       textField={"label"}
       disabled={disabled}
-      setDataFunction={setJenkinsAccountService}
+      setDataFunction={setDataFunction}
     />
   );
 }

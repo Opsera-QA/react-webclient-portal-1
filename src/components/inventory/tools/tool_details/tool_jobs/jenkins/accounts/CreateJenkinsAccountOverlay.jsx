@@ -17,7 +17,7 @@ function CreateJenkinsAccountOverlay(
   const toastContext = useContext(DialogToastContext);
   const [jenkinsAccountData, setJenkinsAccountData] = useState(new Model(jenkinsToolAccountMetadata.newObjectFields, jenkinsToolAccountMetadata, true));
 
-  const closePanel = () => {
+  const closePanelFunction = () => {
     if (isMounted?.current === true && loadData) {
       loadData();
     }
@@ -29,7 +29,7 @@ function CreateJenkinsAccountOverlay(
 
   return (
     <CreateCenterPanel
-      closePanel={closePanel}
+      closePanel={closePanelFunction}
       objectType={jenkinsToolAccountMetadata.type}
       loadData={loadData}
       size={CENTER_OVERLAY_SIZES.SMALL}
@@ -38,7 +38,7 @@ function CreateJenkinsAccountOverlay(
         toolId={toolId}
         jenkinsAccountData={jenkinsAccountData}
         setJenkinsAccountData={setJenkinsAccountData}
-        handleClose={closePanel}
+        closePanelFunction={closePanelFunction}
       />
     </CreateCenterPanel>
   );

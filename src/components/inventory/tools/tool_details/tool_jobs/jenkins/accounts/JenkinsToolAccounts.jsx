@@ -7,7 +7,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import JenkinsAccountEditorPanel
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/JenkinsAccountEditorPanel";
-import jenkinsAccountActions
+import jenkinsToolAccountActions
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccounts.actions";
 
 function JenkinsToolAccounts({ toolId }) {
@@ -63,12 +63,17 @@ function JenkinsToolAccounts({ toolId }) {
   };
 
   const getJenkinsAccounts = async (cancelSource = cancelTokenSource) => {
-    const response = await jenkinsAccountActions.getJenkinsAccountsV2(getAccessToken, cancelSource, toolId);
+    const response = await jenkinsToolAccountActions.getJenkinsAccountsV2(getAccessToken, cancelSource, toolId);
     const jenkinsAccountArray = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(jenkinsAccountArray)) {
       setJenkinsAccounts(jenkinsAccountArray);
     }
+  };
+
+  const closePanelFunction = async () => {
+    setJenkinsAccountModel(undefined);
+    await loadData();
   };
 
   if (jenkinsAccountModel != null) {
@@ -77,7 +82,7 @@ function JenkinsToolAccounts({ toolId }) {
         toolId={toolId}
         jenkinsAccountData={jenkinsAccountModel}
         setJenkinsAccountData={setJenkinsAccountModel}
-        handleClose={() => setJenkinsAccountModel(undefined)}
+        closePanelFunction={closePanelFunction}
       />
     );
   }
