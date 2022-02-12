@@ -103,7 +103,7 @@ function RepositorySelectInput(
       if (validateSavedData === true) {
         const existingRepository = dataObject?.getData(fieldName);
 
-        if (existingRepository != null && existingRepository !== "") {
+        if (hasStringValue(existingRepository) === true) {
           const existingRepositoryExists = repositories.find((repository) => repository[valueField] === existingRepository);
 
           if (existingRepositoryExists == null) {

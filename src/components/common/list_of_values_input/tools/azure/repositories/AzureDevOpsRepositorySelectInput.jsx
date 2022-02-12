@@ -5,6 +5,7 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import azureActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function AzureDevOpsRepositorySelectInput(
   {
@@ -14,7 +15,9 @@ function AzureDevOpsRepositorySelectInput(
     toolId,
     disabled,
     setDataFunction,
-    clearDataFunction
+    clearDataFunction,
+    valueField,
+    textField,
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -66,6 +69,18 @@ function AzureDevOpsRepositorySelectInput(
     if (isMounted?.current === true && Array.isArray(repositories)) {
       setPlaceholderText("Select Azure Repository");
       setAzureRepositories([...repositories]);
+
+      const existingRepository = model?.getData(fieldName);
+
+      if (hasStringValue(existingRepository) === true) {
+        const existingRepositoryExists = repositories.find((repository) => repository[valueField] === existingRepository);
+
+        if (existingRepositoryExists == null) {
+          setErrorMessage(
+            "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list."
+          );
+        }
+      }
     }
   };
 
@@ -78,8 +93,8 @@ function AzureDevOpsRepositorySelectInput(
       busy={isLoading}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
-      valueField={"repositoryId"}
-      textField={"name"}
+      valueField={valueField}
+      textField={textField}
       disabled={disabled}
       placeholder={placeholder}
       errorMessage={errorMessage}
@@ -95,6 +110,13 @@ AzureDevOpsRepositorySelectInput.propTypes = {
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
+  valueField: PropTypes.string,
+  textField: PropTypes.string,
+};
+
+AzureDevOpsRepositorySelectInput.defaultProps = {
+  valueField: "repositoryId",
+  textField: "name",
 };
 
 export default AzureDevOpsRepositorySelectInput;
