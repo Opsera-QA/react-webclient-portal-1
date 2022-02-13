@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import regexDefinitions from "utils/regexDefinitions";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function InfoText(
   {
@@ -9,8 +10,10 @@ function InfoText(
     customMessage,
     successMessage,
     hideRegexDefinitionText,
+    model,
+    fieldName,
   }) {
-  if (errorMessage != null && errorMessage !== "") {
+  if (hasStringValue(errorMessage) === true) {
     return (
       <small className="red form-text">
         <div>{errorMessage}</div>
@@ -18,7 +21,7 @@ function InfoText(
     );
   }
 
-  if(successMessage != null && successMessage !== "") {
+  if(hasStringValue(successMessage) === true) {
     return (
       <small className="green form-text">
         <div>{successMessage}</div>
@@ -26,7 +29,7 @@ function InfoText(
     );
   }
 
-  if (field?.formText != null && field?.formText !== "") {
+  if (hasStringValue(field?.formText) === true) {
     return (
       <small className="text-muted form-text">
         <div>{field?.formText}</div>
@@ -34,12 +37,18 @@ function InfoText(
     );
   }
 
-  if (field?.regexDefinitionName != null && regexDefinitions[field?.regexDefinitionName] !== null && hideRegexDefinitionText !== true) {
-    return (
-      <small className="text-muted form-text">
-        <div>{regexDefinitions[field?.regexDefinitionName]?.formText}</div>
-      </small>
-    );
+  if (field?.regexDefinitionName != null) {
+    const definitionName = field.regexDefinitionName;
+    const regexDefinition = regexDefinitions[definitionName];
+    const isRequiredFunction = regexDefinition?.isRequiredFunction;
+
+    if (hideRegexDefinitionText !== true && regexDefinition != null && (isRequiredFunction == null || isRequiredFunction(model) === true)) {
+      return (
+        <small className="text-muted form-text">
+          <div>{regexDefinition?.formText}</div>
+        </small>
+      );
+    }
   }
 
   if (customMessage == null) {
@@ -59,6 +68,8 @@ InfoText.propTypes = {
   customMessage: PropTypes.string,
   successMessage: PropTypes.string,
   hideRegexDefinitionText: PropTypes.bool,
+  model: PropTypes.object,
+  fieldName: PropTypes.string,
 };
 
 export default InfoText;

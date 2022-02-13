@@ -82,6 +82,7 @@ function PipelineWorkflow({
     setShowModal(true);
   };
 
+  // TODO: Break out into separate actions file, maybe call in a pipeline activity overlay rather than here?
   const fetchPipelineActivityByTool = async (pipelineId, tool, stepId, activityId) => {
     const accessToken = await getAccessToken();
     let apiUrl = `/pipelines/${pipelineId}/activity`;
@@ -100,7 +101,7 @@ function PipelineWorkflow({
     }
   };
 
-  const handleViewPipelineClick = (param) => {
+  const handleViewPipelineClick = () => {
 
     if (!authorizedAction("view_pipeline_configuration", pipeline.owner)) {
       setInfoModal({

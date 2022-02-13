@@ -41,7 +41,11 @@ function ComboBoxInputBase({ fieldName, dataObject, setDataObject, groupBy, sele
         setDataFunction={updateValue}
         disabled={disabled}
       />
-      <InfoText field={field} />
+      <InfoText
+        field={field}
+        model={dataObject}
+        fieldName={fieldName}
+      />
     </InputContainer>
   );
 }

@@ -4,7 +4,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import FieldContainer from "components/common/fields/FieldContainer";
 import Model from "core/data_model/model";
-import jiraProjectMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jira-project-metadata";
+import {jiraProjectMetadata} from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jiraProject.metadata";
 import JiraToolProjectSummaryCard
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraToolProjectSummaryCard";
 import modelHelpers from "components/common/model/modelHelpers";

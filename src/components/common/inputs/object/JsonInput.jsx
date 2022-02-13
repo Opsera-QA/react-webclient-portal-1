@@ -71,7 +71,12 @@ function JsonInput({fieldName, model, setModel, disabled, className, isLoading, 
           </div>
           <div className={"object-properties-footer"}/>
         </div>
-        <InfoText field={field} errorMessage={errorMessage}/>
+        <InfoText
+          fieldName={fieldName}
+          model={model}
+          field={field}
+          errorMessage={errorMessage}
+        />
       </div>
     </div>
   );

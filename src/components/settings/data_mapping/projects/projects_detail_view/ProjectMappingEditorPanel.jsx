@@ -109,10 +109,8 @@ function ProjectMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
         </Col>
       <Col lg={12}>
         <ProjectRepositorySelectInput
-          dataObject={projectMappingDto}
-          setDataObject={setProjectMappingDto}
-          tool_prop_name={projectMappingDto.getData("tool_prop_name")}
-          tool_prop={projectMappingDto.getData("tool_prop")}
+          model={projectMappingDto}
+          setModel={setProjectMappingDto}
         />
       </Col>
           </>
@@ -122,9 +120,8 @@ function ProjectMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
       return (
         <Col lg={12}>
           <ProjectRepositorySelectInput
-            dataObject={projectMappingDto}
-            setDataObject={setProjectMappingDto}
-            tool_prop={projectMappingDto.getData("tool_id")}
+            model={projectMappingDto}
+            setModel={setProjectMappingDto}
           />
         </Col>
       );

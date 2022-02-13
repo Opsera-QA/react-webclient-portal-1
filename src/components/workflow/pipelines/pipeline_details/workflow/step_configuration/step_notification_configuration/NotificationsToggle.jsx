@@ -6,15 +6,14 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
 function NotificationsToggle({ fieldName, dataObject, setDataObject, disabled }) {
-    const [field] = useState(dataObject.getFieldById("enabled"));
+  const [field] = useState(dataObject.getFieldById("enabled"));
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject;
     if (value === true) {
       newDataObject = dataObject;
       newDataObject.setData(fieldName, value);
-    }
-    else {
+    } else {
       // Reset all fields if toggled off
       newDataObject = new Model({...dataObject.getNewObjectFields()}, dataObject.getMetaData(), true);
     }
@@ -34,9 +33,15 @@ function NotificationsToggle({ fieldName, dataObject, setDataObject, disabled })
         checked={!!dataObject.getData(fieldName)}
         disabled={disabled}
         label={field.label}
-        onChange={() => {validateAndSetData(field.id, !dataObject.getData(fieldName));}}
+        onChange={() => {
+          validateAndSetData(field.id, !dataObject.getData(fieldName));
+        }}
       />
-      <InfoText field={field} errorMessage={null}/>
+      <InfoText
+        model={dataObject}
+        fieldName={fieldName}
+        field={field}
+      />
     </InputContainer>
   );
 }

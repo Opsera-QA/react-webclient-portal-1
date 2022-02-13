@@ -12,9 +12,7 @@ import ArgoClusterPlatformSelectInput from "./inputs/ArgoClusterPlatformSelectIn
 import ArgoAwsClusterEditorForm from "./sub-forms/ArgoAwsClusterEditorForm";
 import ArgoAzureClusterEditorForm from "./sub-forms/ArgoAzureClusterEditorForm";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import DeleteButton from "components/common/buttons/delete/DeleteButton";
-import DeleteArgoClusterOverlay
-  from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/DeleteArgoClusterOverlay";
+import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 
 function ArgoClusterEditorPanel(
   {
@@ -57,27 +55,35 @@ function ArgoClusterEditorPanel(
     return await argoActions.createArgoCluster(getAccessToken, cancelTokenSource, toolId, argoClusterModel);
   };
 
-  // TODO: Create Argo Cluster Delete Panel
-  const getExtraButtons = () => {
-    if (argoClusterModel?.isNew() === false) {
-      return (
-        <DeleteButton
-          dataObject={argoClusterModel}
-          deleteRecord={showDeleteOverlay}
-        />
-      );
+  const handleDeleteClose = () => {
+    if (isMounted?.current === true) {
+      loadData();
+    }
+
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+    handleClose();
+  };
+
+  const deleteCluster = async () => {
+    try {
+      const response = await argoActions.deleteArgoCluster(getAccessToken, cancelTokenSource, toolId, argoClusterModel);
+      handleDeleteClose();
+    }
+    catch (error) {
+      toastContext.showDeleteFailureResultDialog("Argo Cluster", error);
     }
   };
 
-  const showDeleteOverlay = () => {
-    toastContext.showOverlayPanel(
-      <DeleteArgoClusterOverlay
-        argoClusterModel={argoClusterData}
-        loadData={loadData}
-        toolId={toolId}
-        closePanel={handleClose}
-      />
-    );
+  const getExtraButtons = () => {
+    if (argoClusterModel?.isNew() === false) {
+      return (
+        <DeleteButtonWithInlineConfirmation
+          dataObject={argoClusterModel}
+          deleteRecord={deleteCluster}
+        />
+      );
+    }
   };
 
   const getArgoClusterEditorFields = () => {
@@ -146,7 +152,7 @@ function ArgoClusterEditorPanel(
       createRecord={createCluster}
       setRecordDto={setArgoClusterModel}
       isLoading={isLoading}
-      // extraButtons={getExtraButtons()}
+      extraButtons={getExtraButtons()}
       handleClose={handleClose}
       disable={!argoClusterData?.isNew()}
     >

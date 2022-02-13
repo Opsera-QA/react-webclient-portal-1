@@ -24,6 +24,13 @@ const SfdcPipelineWizardComponentSelector = ({ pipelineWizardModel, setPipelineW
     return null;
   }
 
+  const backButtonClick = () => {
+    let newPipelineWizardModel = {...pipelineWizardModel};
+    newPipelineWizardModel.setData("selectedComponentTypes",[]);
+    setPipelineWizardModel({...newPipelineWizardModel});
+    setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);
+  };
+
   return (
     <div>
       <div className="h5">Salesforce Pipeline Run: Component Type Selection</div>
@@ -55,7 +62,7 @@ const SfdcPipelineWizardComponentSelector = ({ pipelineWizardModel, setPipelineW
         />
       </div>
       <SaveButtonContainer>
-        <Button variant="secondary" size="sm" className="mr-2" onClick={() => {setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);}}>
+        <Button variant="secondary" size="sm" className="mr-2" onClick={() => backButtonClick()}>
           <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>Back
         </Button>
         <SfdcPipelineWizardSubmitComponentTypesButton

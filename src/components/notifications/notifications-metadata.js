@@ -6,7 +6,7 @@ const notificationsMetadata = {
     return `/notifications/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `Notification Details [${record.getOriginalValue("name")}]`;
+    return `Notification Details ${record.getOriginalValue("name")}`;
   },
   fields: [
     {

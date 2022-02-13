@@ -5,6 +5,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import FileSelectButton from "components/common/buttons/data/FileSelectButton";
 import DeleteIcon from "components/common/icons/delete/DeleteIcon";
+import StandaloneDatePickerInput from "components/common/inputs/date/StandaloneDateTimeInput";
 
 function FileReaderInputBase({ fieldName, model, setModel, setDataFunction, clearDataFunction, acceptType, disabled, isLoading }) {
   const [field] = useState(model?.getFieldById(fieldName));
@@ -123,7 +124,12 @@ function FileReaderInputBase({ fieldName, model, setModel, setDataFunction, clea
         />
         {getFileText()}
       </div>
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        model={model}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </InputContainer>
   );
 }

@@ -15,23 +15,21 @@ import BlueprintSearchResult from "./BlueprintSearchResult";
 import CommitSearchResult from "./CommitSearchResult";
 import Pagination from "components/common/pagination";
 import analyticsActions from "components/settings/analytics/analytics-settings-actions";
-import {ApiService} from "api/apiService";
+import { ApiService } from "api/apiService";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import PipelineFilterSelectInput from "components/logs/PipelineFilterSelectInput";
 import ExportLogSearchButton from "components/common/buttons/export/log_search/ExportLogSearchButton";
-import {getAllResultsForExport} from "components/common/buttons/export/exportHelpers";
+import { getAllResultsForExport } from "components/common/buttons/export/exportHelpers";
 import projectMappingMetadata from "components/settings/data_mapping/projects/projectMapping.metadata";
 import Model from "core/data_model/model";
-import ProjectMappingToolSelectInput
-  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
+import ProjectMappingToolSelectInput from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
-import JenkinsRegistryToolJobSelectInput
-  from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
+import JenkinsRegistryToolJobSelectInput from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 
 // TODO: This entire form needs to be completely refactored
-function LogSearch({tools, sideBySide}) {
+function LogSearch({ tools, sideBySide }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -47,18 +45,24 @@ function LogSearch({tools, sideBySide}) {
   const [currentLogTab, setCurrentLogTab] = useState(0);
   const [exportData, setExportData] = useState("");
   const [exportDisabled, setExportDisabled] = useState(true);
-  const [jenkinsProjectDto, setJenkinsProjectDto] = useState(new Model({
-    type: "project",
-    tool_identifier: "jenkins",
-    tool_id: "",
-    key: "",
-    value: [],
-    owner : "",
-    account : {},
-    tool_prop: "",
-    createdAt: "",
-    active : true
-  }, projectMappingMetadata, true));
+  const [jenkinsProjectDto, setJenkinsProjectDto] = useState(
+    new Model(
+      {
+        type: "project",
+        tool_identifier: "jenkins",
+        tool_id: "",
+        key: "",
+        value: [],
+        owner: "",
+        account: {},
+        tool_prop: "",
+        createdAt: "",
+        active: true,
+      },
+      projectMappingMetadata,
+      true
+    )
+  );
   // const [jenkinsJobs, setJenkinsJobs] = useState([]);
 
   const [date, setDate] = useState([
@@ -98,7 +102,20 @@ function LogSearch({tools, sideBySide}) {
     }
 
     await getSearchResults(startDate, endDate, newTab);
-    await getAllResultsForExport(startDate, endDate, setIsLoading, getAccessToken(), searchTerm, jenkinsProjectDto, filterType, getFormattedCustomFilters(), currentPage, setExportData, setExportDisabled);  };
+    await getAllResultsForExport(
+      startDate,
+      endDate,
+      setIsLoading,
+      getAccessToken(),
+      searchTerm,
+      jenkinsProjectDto,
+      filterType,
+      getFormattedCustomFilters(),
+      currentPage,
+      setExportData,
+      setExportDisabled
+    );
+  };
 
   const cancelSearchClicked = () => {
     setDate([
@@ -118,6 +135,7 @@ function LogSearch({tools, sideBySide}) {
     setPipelineFilter("");
     setStepFilter("");
     setSubmittedSearchTerm(null);
+    setCurrentPage(1);
   };
 
   const handleSelectChange = (selectedOption) => {
@@ -162,7 +180,22 @@ function LogSearch({tools, sideBySide}) {
   useEffect(() => {
     jenkinsProjectDto.setData("tool_identifier", "jenkins");
     if (searchTerm) {
-      getSearchResults();
+      let startDate = 0;
+      let endDate = 0;
+      if (date[0].startDate && date[0].endDate) {
+        startDate = format(new Date(date[0].startDate), "yyyy-MM-dd");
+        endDate = format(new Date(date[0].endDate), "yyyy-MM-dd");
+
+        if (startDate === endDate) {
+          endDate = 0;
+        }
+        if (calenderActivation === false) {
+          startDate = 0;
+          endDate = 0;
+        }
+      }
+
+      getSearchResults(startDate, endDate);
     }
   }, [currentPage, pageSize]);
 
@@ -351,19 +384,19 @@ function LogSearch({tools, sideBySide}) {
 
     if (submitted) {
       if (!searchTerm) {
-        return (<InfoDialog message="Search term required." />);
+        return <InfoDialog message="Search term required." />;
       }
 
       const logData = logTabData[currentLogTab];
 
-      if ((logData?.hits == null || Object.keys(logData.hits).length === 0)) {
-        return (<InfoDialog message="No results found." />);
+      if (logData?.hits == null || Object.keys(logData.hits).length === 0) {
+        return <InfoDialog message="No results found." />;
       }
 
       if (Object.keys(logData).length > 0) {
         switch (filterType) {
           case "blueprint":
-            return (<BlueprintSearchResult searchResults={logData?.hits} />);
+            return <BlueprintSearchResult searchResults={logData?.hits} />;
           case "commit":
             return (
               // TODO: Not sure if we want to show both, but this was a bug in legacy code if not
@@ -373,7 +406,13 @@ function LogSearch({tools, sideBySide}) {
               </>
             );
           default:
-            return (<LogSearchResult searchResults={logData?.hits} submittedSearchTerm={submittedSearchTerm} />);
+            return (
+              <LogSearchResult
+                searchResults={logData?.hits}
+                submittedSearchTerm={submittedSearchTerm}
+                getPaginator={getPaginator}
+              />
+            );
         }
       }
     }
@@ -409,20 +448,17 @@ function LogSearch({tools, sideBySide}) {
     if (filterType === "blueprint") {
       return (
         <>
-        <Col>
-          <ProjectMappingToolSelectInput
-            model={jenkinsProjectDto}
-            setModel={setJenkinsProjectDto}
-          />
-        </Col>
-        <Col>
-          <JenkinsRegistryToolJobSelectInput
-            model={jenkinsProjectDto}
-            setModel={setJenkinsProjectDto}
-            fieldName={"key"}
-            jenkinsToolId={jenkinsProjectDto?.getData("tool_id")}
-          />
-        </Col>
+          <Col>
+            <ProjectMappingToolSelectInput model={jenkinsProjectDto} setModel={setJenkinsProjectDto} />
+          </Col>
+          <Col>
+            <JenkinsRegistryToolJobSelectInput
+              model={jenkinsProjectDto}
+              setModel={setJenkinsProjectDto}
+              fieldName={"key"}
+              jenkinsToolId={jenkinsProjectDto?.getData("tool_id")}
+            />
+          </Col>
         </>
       );
     }
@@ -452,7 +488,10 @@ function LogSearch({tools, sideBySide}) {
     return (
       <Row className={"mx-0 py-2"}>
         <Col className="custom-select-input my-2">
-          <label><span>Search Index</span><span className="danger-red">*</span></label>          
+          <label>
+            <span>Search Index</span>
+            <span className="danger-red">*</span>
+          </label>
           <StandaloneSelectInput
             selectOptions={Array.isArray(tools) ? tools : []}
             defaultValue={Array.isArray(tools) ? tools[0] : []}
@@ -465,8 +504,11 @@ function LogSearch({tools, sideBySide}) {
         </Col>
         {getDynamicFields()}
         <Col className="custom-select-input my-2">
-        <label><span>Search Input</span><span className="danger-red">*</span></label>
-        <Form.Control
+          <label>
+            <span>Search Input</span>
+            <span className="danger-red">*</span>
+          </label>
+          <Form.Control
             placeholder={filterType === "blueprint" ? "Enter Build Number" : "Search logs"}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -479,7 +521,14 @@ function LogSearch({tools, sideBySide}) {
   const getNewTabButton = () => {
     if (!sideBySide && logTabData.length > 0 && logTabData.length < 4) {
       return (
-        <Button variant="primary" className="ml-1" type="submit" onClick={() => {searchLogs(true);}}>
+        <Button
+          variant="primary"
+          className="ml-1"
+          type="submit"
+          onClick={() => {
+            searchLogs(true);
+          }}
+        >
           Open In New Tab
         </Button>
       );
@@ -494,13 +543,32 @@ function LogSearch({tools, sideBySide}) {
             <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
             {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
           </Button>
-          <Button variant="primary" className="ml-1" onClick={() => {searchLogs();}} disabled={filterType === "blueprint" && (!jenkinsProjectDto?.getData("tool_id") || !jenkinsProjectDto?.getData("key")) || !searchTerm}>            Search
+          <Button
+            variant="primary"
+            className="ml-1"
+            onClick={() => {
+              searchLogs();
+            }}
+            disabled={
+              (filterType === "blueprint" &&
+                (!jenkinsProjectDto?.getData("tool_id") || !jenkinsProjectDto?.getData("key"))) ||
+              !searchTerm
+            }
+          >
+            {" "}
+            Search
           </Button>
           {getNewTabButton()}
           <Button variant="outline-secondary" className="ml-1" type="button" onClick={cancelSearchClicked}>
             Clear
           </Button>
-          <ExportLogSearchButton exportDisabled={exportDisabled} isLoading={isLoading} variant="primary" className="ml-1" searchResults={exportData}/>
+          <ExportLogSearchButton
+            exportDisabled={exportDisabled}
+            isLoading={isLoading}
+            variant="primary"
+            className="ml-1"
+            searchResults={exportData}
+          />
           {getDateRangeButton()}
         </Col>
       </Row>
@@ -509,13 +577,7 @@ function LogSearch({tools, sideBySide}) {
 
   const getDateRangeButton = () => {
     return (
-      <Overlay
-        show={calendar}
-        target={target}
-        placement="bottom"
-        container={ref.current}
-        containerPadding={20}
-      >
+      <Overlay show={calendar} target={target} placement="bottom" container={ref.current} containerPadding={20}>
         <Popover className="max-content-width">
           <Popover.Title>
             <div style={{ display: "flex" }}>
@@ -556,7 +618,7 @@ function LogSearch({tools, sideBySide}) {
     );
   };
 
-  const handleTabClick = (activeTab) => e => {
+  const handleTabClick = (activeTab) => (e) => {
     e.preventDefault();
     setCurrentLogTab(activeTab);
   };
@@ -572,9 +634,30 @@ function LogSearch({tools, sideBySide}) {
     return (
       <CustomTabContainer>
         <CustomTab activeTab={currentLogTab} tabText={"Results"} handleTabClick={handleTabClick} tabName={0} />
-        <CustomTab activeTab={currentLogTab} tabText={"Results #2"} handleTabClick={handleTabClick} tabName={1} visible={logTabData.length >= 2} closeTab={closeTab}/>
-        <CustomTab activeTab={currentLogTab} tabText={"Results #3"} handleTabClick={handleTabClick} tabName={2} visible={logTabData.length >= 3} closeTab={closeTab}/>
-        <CustomTab activeTab={currentLogTab} tabText={"Results #4"} handleTabClick={handleTabClick} tabName={3} visible={logTabData.length >= 4} closeTab={closeTab} />
+        <CustomTab
+          activeTab={currentLogTab}
+          tabText={"Results #2"}
+          handleTabClick={handleTabClick}
+          tabName={1}
+          visible={logTabData.length >= 2}
+          closeTab={closeTab}
+        />
+        <CustomTab
+          activeTab={currentLogTab}
+          tabText={"Results #3"}
+          handleTabClick={handleTabClick}
+          tabName={2}
+          visible={logTabData.length >= 3}
+          closeTab={closeTab}
+        />
+        <CustomTab
+          activeTab={currentLogTab}
+          tabText={"Results #4"}
+          handleTabClick={handleTabClick}
+          tabName={3}
+          visible={logTabData.length >= 4}
+          closeTab={closeTab}
+        />
       </CustomTabContainer>
     );
   };
@@ -583,15 +666,16 @@ function LogSearch({tools, sideBySide}) {
     <div>
       {getSearchFields()}
       {getSearchButtons()}
-      <div className="p-2"><TabPanelContainer currentView={getBottom()} tabContainer={getTabContainer()} /></div>
-      {getPaginator()}
+      <div className="p-2">
+        <TabPanelContainer currentView={getBottom()} tabContainer={getTabContainer()} />
+      </div>
     </div>
   );
 }
 
-  LogSearch.propTypes = {
-    tools: PropTypes.array,
-    sideBySide: PropTypes.bool
-  };
+LogSearch.propTypes = {
+  tools: PropTypes.array,
+  sideBySide: PropTypes.bool,
+};
 
 export default LogSearch;

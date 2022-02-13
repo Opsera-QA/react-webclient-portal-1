@@ -156,7 +156,12 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
           direction="horizontal"
         />
       </div>
-      <InfoText field={field} errorMessage={errorMessage} />
+      <InfoText
+        model={dataObject}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </InputContainer>
   );
 }

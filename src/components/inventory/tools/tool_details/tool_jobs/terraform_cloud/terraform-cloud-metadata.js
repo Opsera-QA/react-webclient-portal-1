@@ -4,19 +4,19 @@ const TerraformCloudMetadata = {
     fields: [
       {
         label: "Terraform Cloud URL",
-        id: "terraformCloudUrl",
+        id: "url",
         isRequired: true
       },
       {
         label: "Terraform Token",
-        id: "terraformToken",
+        id: "token",
         isRequired: true
       },
     ],
     newObjectFields:
       {
-       terraformCloudUrl: "",
-       terraformToken: "",
+       url: "",
+       token: "",
        type: "terraform-cloud"
       }
   };

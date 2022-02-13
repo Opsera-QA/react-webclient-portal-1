@@ -39,7 +39,11 @@ function BooleanToggleInput({ fieldName, dataObject, setDataObject, setDataFunct
           updateValue(!dataObject.getData(fieldName));
         }}
       />
-      <InfoText field={field} errorMessage={null}/>
+      <InfoText
+        field={field}
+        model={dataObject}
+        fieldName={fieldName}
+      />
     </InputContainer>
   );
 }

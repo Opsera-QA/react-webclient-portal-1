@@ -29,19 +29,19 @@ function TogglePasswordTextInput({fieldName, model, setModel, disabled}) {
     setModel({...newDataObject});
   };
 
-  const hideValue = () => {
+  const hideDataFunction = () => {
     setValueShown(false);
   };
 
-  const showData = async () => {
+  const showDataFunction = async () => {
     setValueShown(true);
   };
 
   const getSensitiveDataButton = () => {
     return (
       <ShowSensitiveDataButton
-        showDataFunction={showData}
-        hideDataFunction={hideValue}
+        showDataFunction={showDataFunction}
+        hideDataFunction={hideDataFunction}
         className={"input-button"}
         valueShown={valueShown}
       />
@@ -51,7 +51,7 @@ function TogglePasswordTextInput({fieldName, model, setModel, disabled}) {
   const getButtons = () => {
     if (!model?.isNew()) {
       return (
-        <div className={"d-flex ml-2"}>
+        <div className={"d-flex ml-auto mt-2"}>
           {getSensitiveDataButton()}
           <CopyToClipboardButton
             copyString={model?.getData(fieldName)}
@@ -62,7 +62,7 @@ function TogglePasswordTextInput({fieldName, model, setModel, disabled}) {
     }
 
     return (
-      <div className={"d-flex ml-2"}>
+      <div className={"d-flex ml-auto mt-2"}>
         {getSensitiveDataButton()}
       </div>
     );
@@ -75,17 +75,25 @@ function TogglePasswordTextInput({fieldName, model, setModel, disabled}) {
   return (
     <InputContainer>
       <InputLabel model={model} field={field}/>
-      <div className={"d-flex"}>
-        <input
-          type={valueShown === false ? "password" : undefined}
+      <div>
+        <textarea
+          style={valueShown  === false ? {WebkitTextSecurity: 'disc'} : undefined}
           disabled={disabled}
           value={model?.getData(fieldName)}
           onChange={(event) => validateAndSetData(event.target.value)}
-          className="form-control"
+          className={"form-control"}
+          rows={5}
         />
-        {getButtons()}
+        <div className={"d-flex w-100"}>
+          {getButtons()}
+        </div>
       </div>
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+        model={model}
+      />
     </InputContainer>
   );
 }

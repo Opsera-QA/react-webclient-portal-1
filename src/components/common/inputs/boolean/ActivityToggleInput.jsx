@@ -33,7 +33,11 @@ function ActivityToggleInput({ fieldName, dataObject, setDataObject, disabled })
           </div>
         </TooltipWrapper>
       </div>
-      <InfoText field={field} errorMessage={null}/>
+      <InfoText
+        field={field}
+        model={dataObject}
+        fieldName={fieldName}
+      />
     </InputContainer>
   );
 }
