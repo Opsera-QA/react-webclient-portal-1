@@ -9,19 +9,20 @@ import "./step_configuration/helpers/step-validation-helper";
 import StepValidationHelper from "./step_configuration/helpers/step-validation-helper";
 
 
-function PipelineWorkflowItemList({
-                                    pipeline,
-                                    lastStep,
-                                    editWorkflow,
-                                    pipelineId,
-                                    parentCallbackEditItem,
-                                    parentHandleViewSourceActivityLog,
-                                    quietSavePlan,
-                                    fetchPlan,
-                                    customerAccessRules,
-                                    parentWorkflowStatus,
-                                    refreshCount,
-                                  }) {
+function PipelineWorkflowItemList(
+  {
+    pipeline,
+    lastStep,
+    editWorkflow,
+    pipelineId,
+    parentCallbackEditItem,
+    parentHandleViewSourceActivityLog,
+    quietSavePlan,
+    fetchPlan,
+    customerAccessRules,
+    parentWorkflowStatus,
+    refreshCount,
+  }) {
   const [isSaving, setIsSaving] = useState(false);
   const [pipelineSteps, setPipelineSteps] = useState(pipeline.workflow.plan);
 

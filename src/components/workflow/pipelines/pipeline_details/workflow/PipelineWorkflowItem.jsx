@@ -34,21 +34,21 @@ import StepValidationHelper from "./step_configuration/helpers/step-validation-h
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
-const PipelineWorkflowItem = ({
-                                pipeline,
-                                plan,
-                                item,
-                                index,
-                                lastStep,
-                                pipelineId,
-                                editWorkflow,
-                                parentCallbackEditItem,
-                                deleteStep,
-                                parentHandleViewSourceActivityLog,
-                                customerAccessRules,
-                                parentWorkflowStatus,
-                                refreshCount,
-                              }) => {
+const PipelineWorkflowItem = (
+  {
+    pipeline,
+    plan,
+    item,
+    index,
+    lastStep,
+    pipelineId,
+    editWorkflow,
+    parentCallbackEditItem,
+    deleteStep,
+    parentHandleViewSourceActivityLog,
+    customerAccessRules,
+    parentWorkflowStatus,
+  }) => {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [currentStatus, setCurrentStatus] = useState({});
@@ -211,6 +211,7 @@ const PipelineWorkflowItem = ({
     deleteStep(index);
   };
 
+  // TODO: Pull entire list once, don't hit DB once for every workflow item
   const getToolDetails = async (tool_identifier) => {
     setIsLoading(true);
     const accessToken = await getAccessToken();
@@ -554,7 +555,6 @@ PipelineWorkflowItem.propTypes = {
   parentHandleViewSourceActivityLog: PropTypes.func,
   customerAccessRules: PropTypes.object,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  refreshCount: PropTypes.number,
 };
 
 export default PipelineWorkflowItem;
