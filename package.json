@@ -73,6 +73,7 @@
     "build:test": "env-cmd -f .env.test react-scripts build && mv build build-test",
     "build:staging": "env-cmd -f .env.staging react-scripts build && mv build build-staging",
     "build:freetrial": "env-cmd -f .env.freetrial react-scripts build && mv build build-freetrial",
+    "build:kube-generic": "env-cmd -f .env.kube-generic react-scripts build && mv build build-kube-generic",
     "build:kube-dev": "env-cmd -f .env.kube-dev react-scripts build && mv build build-kube-dev",
     "build:kube-test": "env-cmd -f .env.kube-test react-scripts build && mv build build-kube-test",
     "build:kube-prod": "env-cmd -f .env.kube-prod react-scripts build && mv build build-kube-prod",
