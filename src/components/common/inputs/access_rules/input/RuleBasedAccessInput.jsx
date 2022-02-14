@@ -282,11 +282,11 @@ function RuleBasedAccessInput(
       <PropertyInputContainer
         titleIcon={faIdCard}
         field={field}
-        addProperty={addAccessRule}
+        // addProperty={addAccessRule}
         titleText={"Access Rules"}
         errorMessage={errorMessage}
         type={"Access Rule"}
-        addAllowed={lastRuleComplete() === true && disabled !== true}
+        // addAllowed={lastRuleComplete() === true && disabled !== true}
         helpComponent={getHelpComponent()}
         incompleteRowMessage={getIncompleteRoleMessage()}
       >

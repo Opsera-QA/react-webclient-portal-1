@@ -1,17 +1,20 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import SpyglassBadge from "components/common/badges/spyglass/SpyglassBadge";
 import {accessRuleTypeConstants} from "components/common/inputs/access_rules/constants/AccessRuleType.constants";
 import AllowedSsoUserOrganizationNamesBadgeDisplayer
   from "components/common/inputs/access_rules/field/AllowedSsoUserOrganizationNamesBadgeDisplayer";
 
-function AccessRuleField({rules, className, noDataMessage}) {
-  const [allowedSsoUserOrganizationNames, setAllowedSsoUserOrganizationNames] = useState([]);
+function AccessRuleOverlayField({rules, className, noDataMessage}) {
+  const [ssoUserOrganizations, setSsoUserOrganizations] = useState([]);
 
   useEffect(() => {
-    unpackRoles();
+      unpackRoles();
   }, [JSON.stringify(rules)]);
 
   const unpackRoles = () => {
+
     if (Array.isArray(rules) && rules.length > 0) {
       rules.forEach((accessRule) => {
         const type = accessRule?.type;
@@ -27,10 +30,22 @@ function AccessRuleField({rules, className, noDataMessage}) {
 
   const unpackAllowedSsoUserOrganizationNames = (ssoUserOrganizationNameArray) => {
     if (!Array.isArray(ssoUserOrganizationNameArray) || ssoUserOrganizationNameArray?.length === 0) {
-      setAllowedSsoUserOrganizationNames([]);
+      setSsoUserOrganizations([]);
     }
 
-    setAllowedSsoUserOrganizationNames([...ssoUserOrganizationNameArray]);
+    setSsoUserOrganizations([...ssoUserOrganizationNameArray]);
+  };
+
+  const getRoleAccessPopover = () => {
+    return (
+      <div>
+        <AllowedSsoUserOrganizationNamesBadgeDisplayer
+          className={"mb-3"}
+          allowedSsoOrganizationNames={ssoUserOrganizations}
+          type={"Kpi"}
+        />
+      </div>
+    );
   };
 
   if (!Array.isArray(rules) || rules?.length === 0) {
@@ -38,26 +53,31 @@ function AccessRuleField({rules, className, noDataMessage}) {
   }
 
   return (
-    <span className={className}>
-      <span className="item-field">
-        <AllowedSsoUserOrganizationNamesBadgeDisplayer
-          className={"mb-3"}
-          allowedSsoOrganizationNames={allowedSsoUserOrganizationNames}
-          type={"KPI"}
-        />
+    <TooltipWrapper
+      innerText={getRoleAccessPopover()}
+      title={"Access Rules"}
+      showCloseButton={false}
+      className={"popover-filter"}
+    >
+      <span className={className}>
+        <span className="item-field">
+          <SpyglassBadge
+            badgeText={`${rules?.length} Access Rule${rules?.length !== 1 ? "s" : ""} Applied`}
+          />
+        </span>
       </span>
-    </span>
+    </TooltipWrapper>
   );
 }
 
-AccessRuleField.propTypes = {
+AccessRuleOverlayField.propTypes = {
   rules: PropTypes.array,
   className: PropTypes.string,
   noDataMessage: PropTypes.any,
 };
 
-AccessRuleField.defaultProps = {
+AccessRuleOverlayField.defaultProps = {
   noDataMessage: "No Access Rules are Applied",
 };
 
-export default AccessRuleField;
+export default AccessRuleOverlayField;
