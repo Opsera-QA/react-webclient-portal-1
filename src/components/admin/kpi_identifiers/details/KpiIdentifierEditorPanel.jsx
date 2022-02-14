@@ -151,12 +151,12 @@ function KpiIdentifierEditorPanel({ kpiData, handleClose }) {
             Once all stacks are updated, this will be removed. Please use the Data Point tab if adding or editing data points in the short term.
           </div>
         </Col>
-        {/*<Col lg={12} className={"mt-2"}>*/}
-        {/*  <RuleBasedAccessInput*/}
-        {/*    model={kpiDataDto}*/}
-        {/*    setModel={setKpiDataDto}*/}
-        {/*  />*/}
-        {/*</Col>*/}
+        <Col lg={12} className={"mt-2"}>
+          <RuleBasedAccessInput
+            model={kpiDataDto}
+            setModel={setKpiDataDto}
+          />
+        </Col>
         <Col lg={12}>
           <TextAreaInput
             fieldName={"description"}
