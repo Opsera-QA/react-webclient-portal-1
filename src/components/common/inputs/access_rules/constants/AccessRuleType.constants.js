@@ -1,17 +1,18 @@
+// Keep aligned with the Node version until the constants can get moved to an external library
 export const accessRuleTypeConstants = {};
-// TODO: Extract into separate constants file if reused
+
 accessRuleTypeConstants.ACCESS_RULE_TYPES = {
-  SSO_USER_ORGANIZATION: "sso_user_organization",
+  ALLOWED_SSO_USER_ORGANIZATIONS: "allowed_sso_user_organization",
 };
 
 accessRuleTypeConstants.ACCESS_RULE_TYPE_LABELS = {
-  SSO_USER_ORGANIZATION: "SSO User Organization",
+  ALLOWED_SSO_USER_ORGANIZATIONS: "Allowed SSO User Organizations",
 };
 
 accessRuleTypeConstants.ACCESS_RULE_TYPE_SELECT_OPTIONS = [
   {
-    text: accessRuleTypeConstants.ACCESS_RULE_TYPE_LABELS.SSO_USER_ORGANIZATION,
-    value: accessRuleTypeConstants.ACCESS_RULE_TYPES.SSO_USER_ORGANIZATION,
+    text: accessRuleTypeConstants.ACCESS_RULE_TYPE_LABELS.ALLOWED_SSO_USER_ORGANIZATIONS,
+    value: accessRuleTypeConstants.ACCESS_RULE_TYPES.ALLOWED_SSO_USER_ORGANIZATIONS,
   },
 ];
 

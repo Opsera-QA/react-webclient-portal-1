@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 
-const AccessRuleSsoUserOrganizationNameStandaloneSelectInput = (
+const AccessRuleSsoUserOrganizationNameStandaloneMultiSelectInput = (
   {
     value,
     setDataFunction,
@@ -10,19 +10,19 @@ const AccessRuleSsoUserOrganizationNameStandaloneSelectInput = (
     ssoUserOrganizationNames,
   }) => {
   return (
-    <StandaloneSelectInput
+    <StandaloneMultiSelectInput
       selectOptions={ssoUserOrganizationNames}
       valueField={"organizationName"}
       textField={"organizationName"}
       value={value}
-      placeholderText={"Select SSO User Organization Name"}
+      placeholderText={"Select Allowed SSO User Organization Names"}
       setDataFunction={setDataFunction}
       disabled={disabled}
     />
   );
 };
 
-AccessRuleSsoUserOrganizationNameStandaloneSelectInput.propTypes = {
+AccessRuleSsoUserOrganizationNameStandaloneMultiSelectInput.propTypes = {
   value: PropTypes.string,  
   disabled: PropTypes.oneOfType([
     PropTypes.bool,
@@ -32,4 +32,4 @@ AccessRuleSsoUserOrganizationNameStandaloneSelectInput.propTypes = {
   ssoUserOrganizationNames: PropTypes.array,
 };
 
-export default AccessRuleSsoUserOrganizationNameStandaloneSelectInput;
+export default AccessRuleSsoUserOrganizationNameStandaloneMultiSelectInput;
