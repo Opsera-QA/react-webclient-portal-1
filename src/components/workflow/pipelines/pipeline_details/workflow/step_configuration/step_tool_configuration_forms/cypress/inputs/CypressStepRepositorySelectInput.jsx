@@ -5,10 +5,12 @@ import RepositorySelectInput from "components/common/list_of_values_input/tools/
 function CypressStepRepositorySelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
+    const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
+    const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     newModel.setData("repository", selectedOption?.name);
-    newModel.setData("repoId", selectedOption?.id);
-    newModel.setData("projectId", selectedOption?.id);
-    newModel.setData("gitUrl", selectedOption?.httpUrl || "");
+    newModel.setData("repoId", repoId);
+    newModel.setData("projectId", repoId);
+    newModel.setData("gitUrl", gitUrl);
     newModel.setData("sshUrl", selectedOption?.sshUrl || "");
     newModel.setData("branch", "");
     newModel.setData("defaultBranch", "");
