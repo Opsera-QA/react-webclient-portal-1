@@ -13,7 +13,15 @@ const JENKINS_JOBS_UNIT_TEST_OPTIONS = [
   },
 ];
 
-function JenkinsJobsUnitTestingTypeSelectInput({ fieldName, model, setModel, setDataFunction }) {
+function JenkinsJobsUnitTestingTypeSelectInput({ fieldName, model, setModel }) {
+  
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newDataObject = model;
+    newDataObject.setData(fieldName, selectedOption.value);
+    newDataObject.setData("buildTool", selectedOption.value);
+    setModel({...newDataObject});
+  };
+
   return (
     <SelectInputBase
       fieldName={fieldName}

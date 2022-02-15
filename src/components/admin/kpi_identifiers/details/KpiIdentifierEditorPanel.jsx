@@ -18,6 +18,7 @@ import axios from "axios";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import PipelineUsageToolMultiSelectInput
   from "components/common/list_of_values_input/workflow/pipelines/PipelineUsageToolMultiSelectInput";
+import RuleBasedAccessInput from "components/common/inputs/access_rules/input/RuleBasedAccessInput";
 
 function KpiIdentifierEditorPanel({ kpiData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -149,6 +150,12 @@ function KpiIdentifierEditorPanel({ kpiData, handleClose }) {
             The Data Point JSON input is temporarily left in to make it easy to remove old data point data that cause issues saving KPIs with the new data point flow.
             Once all stacks are updated, this will be removed. Please use the Data Point tab if adding or editing data points in the short term.
           </div>
+        </Col>
+        <Col lg={12} className={"mt-2"}>
+          <RuleBasedAccessInput
+            model={kpiDataDto}
+            setModel={setKpiDataDto}
+          />
         </Col>
         <Col lg={12}>
           <TextAreaInput

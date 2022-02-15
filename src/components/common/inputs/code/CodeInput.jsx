@@ -113,7 +113,12 @@ function CodeInput({model, setModel, fieldName, mode, className, isLoading, disa
       </div>
       <div className={"object-properties-footer"}>
         <div className={"px-2"}>
-          <InfoText field={field} errorMessage={errorMessage}/>
+          <InfoText
+            field={field}
+            errorMessage={errorMessage}
+            model={model}
+            fieldName={fieldName}
+          />
         </div>
       </div>
     </InputContainer>

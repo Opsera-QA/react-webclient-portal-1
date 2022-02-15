@@ -54,7 +54,12 @@ function VanityTextInput({fieldName, className, dataObject, setDataObject, setDa
         disabled={disabled}
         className={getInputClasses()}
       />
-      <InfoText field={field} errorMessage={errorMessage} />
+      <InfoText
+        fieldName={fieldName}
+        model={dataObject}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </InputContainer>
   );
 }

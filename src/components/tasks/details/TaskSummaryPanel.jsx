@@ -66,6 +66,9 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         <Col md={6}>
           <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
         </Col>
+        <Col md={6}>
+          <TextFieldBase dataObject={gitTasksData} fieldName={"run_count"} />
+        </Col>
         {gitTasksData.getData("type") !== "ecs_cluster_creation" ||
         (gitTasksData.getData("type") === "ecs_service_creation" && (
           <Col md={6}>

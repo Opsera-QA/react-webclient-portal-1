@@ -8,6 +8,11 @@ import TerraformRemoteStateToggleInput from "../inputs/TerraformRemoteStateToggl
 import TerraformStateMethodSelect from "../inputs/terraform_cloud/TerraformStateMethodSelect";
 
 function TerraformStateSubForm({ model, setModel }) {
+
+  if (model?.getData("customScript")) {
+    return null;
+  }
+
   return (
     <>
       <TerraformRemoteStateToggleInput dataObject={model} setDataObject={setModel} />

@@ -26,6 +26,7 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import toolsActions from "components/inventory/tools/tools-actions";
+import {bitbucketActions} from "components/inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket.actions";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -189,7 +190,7 @@ function LegacyCypressStepConfiguration({
     async function fetchRepos(service, gitToolId) {
       setIsWorkspacesSearching(true);
       // Set results state
-      let results = await pipelineActions.searchWorkSpaces(service, gitToolId, getAccessToken);
+      let results = await bitbucketActions.getWorkspacesFromAzureInstanceV2(getAccessToken, undefined, gitToolId);
       if (typeof(results) != "object") {
         setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
         let errorMessage =

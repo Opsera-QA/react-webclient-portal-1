@@ -12,10 +12,24 @@ import taskActions from "components/tasks/task.actions";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
-import Model from "core/data_model/model";
 import TaskModel from "components/tasks/task.model";
 import VanitySetDetailScreenContainer
   from "components/common/panels/detail_view_container/VanitySetDetailScreenContainer";
+import {TASK_TYPES} from "components/tasks/task.types";
+import AwsEcsClusterCreationTaskDetailsHelpDocumentation
+  from "../../common/help/documentation/tasks/details/AwsEcsClusterCreationTaskDetailsHelpDocumentation";
+import AwsEcsServiceCreationTaskDetailsHelpDocumentation
+  from "../../common/help/documentation/tasks/details/AwsEcsServiceCreationTaskDetailsHelpDocumentation";
+import AwsLambdaFunctionCreationTaskDetailsHelpDocumentation
+  from "../../common/help/documentation/tasks/details/AwsLambdaFunctionCreationTaskDetailsHelpDocumentation";
+import AzureAKSClusterCreationTaskDetailsHelpDocumentation
+  from "../../common/help/documentation/tasks/details/AzureAKSClusterCreationTaskDetailsHelpDocumentation";
+import GitToGitSyncTaskDetailsHelpDocumentation
+  from "../../common/help/documentation/tasks/details/GitToGitSyncTaskDetailsHelpDocumentation";
+import SalesforceBulkMigrationTaskDetailsHelpDocumentation
+  from "../../common/help/documentation/tasks/details/SalesforceBulkMigrationTaskDetailsHelpDocumentation";
+import SfdcOrgSyncTaskDetailsHelpDocumentation
+  from "../../common/help/documentation/tasks/details/SfdcOrgSyncTaskDetailsHelpDocumentation";
 
 function TaskDetailView() {
   const location = useLocation();
@@ -110,6 +124,29 @@ function TaskDetailView() {
     );
   };
 
+  const getHelpComponent = () => {
+    switch (taskData?.getData("type")) {
+      case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
+        return <AwsEcsClusterCreationTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
+        return <AwsEcsServiceCreationTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
+        return <AwsLambdaFunctionCreationTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.AZURE_CLUSTER_CREATION:
+        return <AzureAKSClusterCreationTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.SYNC_GIT_BRANCHES:
+        return <GitToGitSyncTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+        return <SalesforceBulkMigrationTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.SYNC_SALESFORCE_REPO:
+        return <SfdcOrgSyncTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+      case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
+      default:
+        return null;
+    }
+  };
+
   return (
     <VanitySetDetailScreenContainer
       breadcrumbDestination={"taskManagementDetailView"}
@@ -120,6 +157,7 @@ function TaskDetailView() {
       navigationTabContainer={<TasksSubNavigationBar currentTab={"taskViewer"} />}
       objectRoles={taskData?.getData("roles")}
       actionBar={getActionBar()}
+      helpComponent={getHelpComponent()}
       detailPanel={
         <TaskDetailPanel
           gitTasksData={taskData}

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RepositorySelectInput from "components/common/list_of_values_input/tools/git/RepositorySelectInput";
+import RepositorySelectInput from "components/common/list_of_values_input/tools/repositories/RepositorySelectInput";
 
 function SfdcGitRepositoryInput({dataObject, setDataObject, disabled}) {
   const setRepository = (fieldName, selectedOption) => {

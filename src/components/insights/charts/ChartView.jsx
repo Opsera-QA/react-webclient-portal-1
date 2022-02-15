@@ -710,7 +710,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-ratings-v2":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col md={12} className="p-2">
             <SonarRatingMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
