@@ -8,7 +8,7 @@ function GitToGitSyncTaskRepositorySelectInput({model, setModel, disabled}) {
     const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     newDataObject.setData("repository", selectedOption?.name);
-    newDataObject.setData("projectId", repoId;
+    newDataObject.setData("projectId", repoId);
     newDataObject.setData("repoId", repoId);
     newDataObject.setData("sshUrl", selectedOption?.sshUrl);
     newDataObject.setData("gitUrl", gitUrl);
