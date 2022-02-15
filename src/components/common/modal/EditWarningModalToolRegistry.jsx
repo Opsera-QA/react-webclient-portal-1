@@ -5,6 +5,7 @@ import { faExclamationTriangle, faSpinner } from "@fortawesome/pro-light-svg-ico
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { DialogToastContext } from "../../../contexts/DialogToastContext";
 
+// TODO: Delete
 function EditWarningModalToolRegistry({ dataObject, showModal, setShowModal, handleEdit,handleClose }) {
   const [editing, setEditing] = useState(false);
   const toastContext = useContext(DialogToastContext);
