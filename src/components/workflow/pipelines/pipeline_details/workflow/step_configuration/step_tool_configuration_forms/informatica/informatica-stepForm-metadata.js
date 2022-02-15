@@ -20,7 +20,7 @@ const InformaticaStepFormMetadata = {
       label: "Informatica Export Object Step",
       id: "buildStepId",
       isRequiredFunction: (model) => {
-        return model?.getData("type") === "import";
+        return model?.getData("type") === "import" && !model?.getData("deployfromGit");
       },
       maxLength: 24,
       regexDefinitionName: "mongoId",
@@ -30,7 +30,7 @@ const InformaticaStepFormMetadata = {
       label: "SCM Type",
       id: "service",
       isRequiredFunction: (model) => {
-        return model?.getData("type") === "export";
+        return model?.getData("type") === "export" || model?.getData("deployfromGit");
       },
       maxLength: 10,
       lowercase: true,
@@ -39,7 +39,7 @@ const InformaticaStepFormMetadata = {
       label: "SCM Account",
       id: "gitToolId",
       isRequiredFunction: (model) => {
-        return model?.getData("type") === "export";
+        return model?.getData("type") === "export" || model?.getData("deployfromGit");
       },
       maxLength: 24,
       regexDefinitionName: "mongoId",
@@ -49,7 +49,7 @@ const InformaticaStepFormMetadata = {
       label: "Repository",
       id: "repository",
       isRequiredFunction: (model) => {
-        return model?.getData("type") === "export";
+        return model?.getData("type") === "export" || model?.getData("deployfromGit");
       },
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
@@ -66,15 +66,26 @@ const InformaticaStepFormMetadata = {
       label: "Branch",
       id: "gitBranch",
       isRequiredFunction: (model) => {
-        return model?.getData("type") === "export";
+        return model?.getData("type") === "export" || model?.getData("deployfromGit");
       },
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
       formText:" "
     },
     {
+      label: "Path to Zip",
+      id: "path",
+      maxLength: 255,
+      regexDefinitionName: "pathField",
+      formText:" "
+    },
+    {
       label: "Include Dependencies",
       id: "includeDependencies",
+    },
+    {
+      label: "Deploy from Git",
+      id: "deployfromGit",
     },
   ],
   newObjectFields: {
@@ -86,7 +97,9 @@ const InformaticaStepFormMetadata = {
     repository: "",
     workspace: "",
     gitBranch: "",
+    path: "",
     includeDependencies: false,
+    deployfromGit: false
   }
 };
 
