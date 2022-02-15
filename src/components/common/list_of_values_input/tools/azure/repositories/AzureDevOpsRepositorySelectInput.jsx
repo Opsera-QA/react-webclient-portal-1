@@ -75,7 +75,7 @@ function AzureDevOpsRepositorySelectInput(
       const existingRepository = model?.getData(fieldName);
 
       if (hasStringValue(existingRepository) === true) {
-        const existingRepositoryExists = repositories.find((repository) => repository[valueField] === existingRepository);
+        const existingRepositoryExists = repositories.find((repository) => repository["name"] === existingRepository);
 
         if (existingRepositoryExists == null) {
           setErrorMessage(
