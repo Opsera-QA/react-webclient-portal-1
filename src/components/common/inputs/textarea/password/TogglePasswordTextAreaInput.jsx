@@ -6,7 +6,7 @@ import ShowSensitiveDataButton from "components/common/buttons/data/ShowSensitiv
 import CopyToClipboardButton from "components/common/buttons/data/CopyToClipboardButton";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 
-function TogglePasswordTextInput({fieldName, model, setModel, disabled}) {
+function TogglePasswordTextAreaInput({fieldName, model, setModel, disabled}) {
   const [field, setField] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [valueShown, setValueShown] = useState(false);
@@ -51,18 +51,18 @@ function TogglePasswordTextInput({fieldName, model, setModel, disabled}) {
   const getButtons = () => {
     if (!model?.isNew()) {
       return (
-        <div className={"d-flex ml-auto mt-2"}>
+        <div>
           {getSensitiveDataButton()}
           <CopyToClipboardButton
             copyString={model?.getData(fieldName)}
-            className={"input-button"}
+            className={"input-button mt-2"}
           />
         </div>
       );
     }
 
     return (
-      <div className={"d-flex ml-auto mt-2"}>
+      <div className={"d-flex"}>
         {getSensitiveDataButton()}
       </div>
     );
@@ -74,8 +74,11 @@ function TogglePasswordTextInput({fieldName, model, setModel, disabled}) {
 
   return (
     <InputContainer>
-      <InputLabel model={model} field={field}/>
-      <div>
+      <InputLabel
+        model={model}
+        field={field}
+      />
+      <div className={"d-flex"}>
         <textarea
           style={valueShown  === false ? {WebkitTextSecurity: 'disc'} : undefined}
           disabled={disabled}
@@ -84,25 +87,19 @@ function TogglePasswordTextInput({fieldName, model, setModel, disabled}) {
           className={"form-control"}
           rows={5}
         />
-        <div className={"d-flex w-100"}>
+        <div className={"ml-2"}>
           {getButtons()}
         </div>
       </div>
-      <InfoText
-        fieldName={fieldName}
-        field={field}
-        errorMessage={errorMessage}
-        model={model}
-      />
     </InputContainer>
   );
 }
 
-TogglePasswordTextInput.propTypes = {
+TogglePasswordTextAreaInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default TogglePasswordTextInput;
+export default TogglePasswordTextAreaInput;
