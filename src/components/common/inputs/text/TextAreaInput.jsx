@@ -24,7 +24,12 @@ function TextAreaInput({ fieldName, dataObject, setDataObject, disabled }) {
         className="form-control"
         rows={5}
       />
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        model={dataObject}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </InputContainer>
   );
 }

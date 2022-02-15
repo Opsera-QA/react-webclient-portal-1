@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import GitBranchMultiSelectInput from "components/common/list_of_values_input/tools/git/GitBranchMultiSelectInput";
+import RepositoryBranchMultiSelectInputBase from "components/common/list_of_values_input/tools/git/RepositoryBranchMultiSelectInputBase";
 
 function PipelineSourceRepositorySecondaryBranchesMultiSelectInput({className, fieldName, model, setModel, disabled, primaryBranch}) {
   const getDisabledBranch = () => {
@@ -12,14 +12,14 @@ function PipelineSourceRepositorySecondaryBranchesMultiSelectInput({className, f
   };
 
   return (
-    <GitBranchMultiSelectInput
+    <RepositoryBranchMultiSelectInputBase
       repoId={model?.getData("repoId")}
-      service={model?.getData("service")}
-      gitToolId={model?.getData("accountId")}
+      toolIdentifier={model?.getData("service")}
+      toolId={model?.getData("accountId")}
       workspace={model?.getData("workspace")}
       fieldName={fieldName}
-      dataObject={model}
-      setDataObject={setModel}
+      model={model}
+      setModel={setModel}
       disabled={getDisabledBranch()}
       className={className}
     />

@@ -46,7 +46,12 @@ function TempTextInput({ fieldName, dataObject, setDataObject, disabled, type, i
         onChange={(event) => validateAndSetData(event.target.value)}
         className={getInputClasses()}
       />
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        model={dataObject}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </InputContainer>
   );
 }

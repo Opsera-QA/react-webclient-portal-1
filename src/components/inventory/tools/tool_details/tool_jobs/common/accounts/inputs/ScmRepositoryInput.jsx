@@ -1,19 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RepositorySelectInput from "components/common/list_of_values_input/tools/git/RepositorySelectInput";
+import RepositorySelectInput from "components/common/list_of_values_input/tools/repositories/RepositorySelectInput";
 
 function ScmRepositoryInput({dataObject, setDataObject, disabled}) {
-  const setRepository = (fieldName, selectedOption) => {    
+  const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
+    const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
+    const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     newDataObject.setData("repository", selectedOption.name);
-    newDataObject.setData("repoId", selectedOption.id);
+    newDataObject.setData("repoId", repoId);
+    newDataObject.setData("gitUrl", gitUrl);
     newDataObject.setData("reviewerName", "");
     newDataObject.setData("reviewerId", "");
     newDataObject.setData("reviewer", "");    
     setDataObject({...newDataObject});
   };
 
-  const clearRepository = (fieldName) => {
+  const clearDataFunction = (fieldName) => {
     let newDataObject = {...dataObject};
     newDataObject.setData("repository", "");
     newDataObject.setData("repoId", "");
@@ -31,8 +34,8 @@ function ScmRepositoryInput({dataObject, setDataObject, disabled}) {
        workspace={dataObject.getData("workspace")}
        dataObject={dataObject}
        setDataObject={setDataObject}
-       setDataFunction={setRepository}
-       clearDataFunction={clearRepository}
+       setDataFunction={setDataFunction}
+       clearDataFunction={clearDataFunction}
        disabled={disabled}
      />
   );

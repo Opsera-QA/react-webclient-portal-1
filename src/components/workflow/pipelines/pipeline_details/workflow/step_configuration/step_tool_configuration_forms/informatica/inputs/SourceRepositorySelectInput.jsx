@@ -1,13 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RepositorySelectInput from "components/common/list_of_values_input/tools/git/RepositorySelectInput";
+import RepositorySelectInput from "components/common/list_of_values_input/tools/repositories/RepositorySelectInput";
 
 function SourceRepositorySelectInput({className, fieldName, model, setModel, disabled, service, accountId, workspace, visible}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
+    const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
+    const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     newModel.setData("repository", selectedOption?.name);
-    newModel.setData("repoId", selectedOption?.id);
-    newModel.setData("gitUrl", selectedOption?.httpUrl);
+    newModel.setData("repoId", repoId);
+    newModel.setData("gitUrl", gitUrl);
     newModel.setData("sshUrl", selectedOption?.sshUrl);
     newModel.setData("gitBranch", "");
     setModel({...newModel});

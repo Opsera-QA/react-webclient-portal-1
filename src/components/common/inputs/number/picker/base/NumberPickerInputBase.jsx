@@ -54,7 +54,12 @@ function NumberPickerInputBase(
         maximum={typeof maximum === "number" ? maximum : field?.maxNumber}
         formatType={formatType}
       />
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        model={dataObject}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </InputContainer>
   );
 }

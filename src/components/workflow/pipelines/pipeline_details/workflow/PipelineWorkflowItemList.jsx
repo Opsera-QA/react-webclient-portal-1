@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import { SteppedLineTo } from "react-lineto";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
@@ -7,24 +7,84 @@ import { faPlusSquare, faCaretSquareDown, faCaretSquareUp, faCopy } from "@forta
 import PipelineWorkflowItem from "./PipelineWorkflowItem";
 import "./step_configuration/helpers/step-validation-helper";
 import StepValidationHelper from "./step_configuration/helpers/step-validation-helper";
+import axios from "axios";
+import adminTagsActions from "components/settings/tags/admin-tags-actions";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import toolManagementActions from "components/admin/tools/tool-management-actions";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 
-function PipelineWorkflowItemList({
-                                    pipeline,
-                                    lastStep,
-                                    editWorkflow,
-                                    pipelineId,
-                                    parentCallbackEditItem,
-                                    parentHandleViewSourceActivityLog,
-                                    quietSavePlan,
-                                    fetchPlan,
-                                    customerAccessRules,
-                                    parentWorkflowStatus,
-                                    refreshCount,
-                                  }) {
+function PipelineWorkflowItemList(
+  {
+    pipeline,
+    lastStep,
+    editWorkflow,
+    pipelineId,
+    parentCallbackEditItem,
+    parentHandleViewSourceActivityLog,
+    quietSavePlan,
+    fetchPlan,
+    customerAccessRules,
+    parentWorkflowStatus,
+    refreshCount,
+  }) {
+  const toastContext = useContext(DialogToastContext);
+  const { getAccessToken } = useContext(AuthContext);
   const [isSaving, setIsSaving] = useState(false);
   const [pipelineSteps, setPipelineSteps] = useState(pipeline.workflow.plan);
+  const [isLoading, setIsLoading] = useState(false);
+  const [toolIdentifiers, setToolIdentifiers] = useState([]);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+      await getToolIdentifiers(cancelSource);
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
+    }
+    finally {
+      if (isMounted?.current === true ) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const getToolIdentifiers = async (cancelSource = cancelTokenSource) => {
+    const response = await toolManagementActions.getToolIdentifiersV2(getAccessToken, cancelSource);
+    const identifiers = response?.data;
+
+    if (isMounted?.current === true && Array.isArray(identifiers)) {
+      setToolIdentifiers(identifiers);
+    }
+  };
 
   useEffect(() => {
     if (pipeline) {
@@ -158,6 +218,13 @@ function PipelineWorkflowItemList({
 
     return classString += " " + stepStatusClass;
   };
+
+  const getToolIdentifierForStep = (toolIdentifier) => {
+    if (Array.isArray(toolIdentifiers) && toolIdentifiers.length > 0 && hasStringValue(toolIdentifier)) {
+      return toolIdentifiers.find((identifier) => toolIdentifier === identifier?.identifier);
+    }
+  };
+
   return (
     <>
       {pipelineSteps && pipelineSteps.map((item, index) => (
@@ -177,7 +244,9 @@ function PipelineWorkflowItemList({
               deleteStep={deleteStep}
               refreshCount={refreshCount}
               parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog}
-              parentWorkflowStatus={parentWorkflowStatus} />
+              parentWorkflowStatus={parentWorkflowStatus}
+              toolIdentifier={getToolIdentifierForStep(item?.tool?.tool_identifier)}
+            />
           </div>
 
           {editWorkflow ? <>

@@ -4,16 +4,14 @@ import PropTypes from "prop-types";
 import NotificationEditorPanel from "./NotificationEditorPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
-import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
-import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 import NotificationSummaryPanel
   from "components/notifications/notification_details/NotificationSummaryPanel";
-import NotificationActivityLogsTable
-  from "components/notifications/notification_details/activity_logs/NotificationActivityLogsTable";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
+import NotificationPolicyActivityLogs
+  from "components/notifications/notification_details/NotificationPolicyActivityLogs";
 
 function NotificationDetailPanel({ notificationData, setNotificationData, loadData, isLoading }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -57,11 +55,8 @@ function NotificationDetailPanel({ notificationData, setNotificationData, loadDa
       case "logs":
         return (
           <DetailPanelContainer>
-            <NotificationActivityLogsTable
-              notificationData={notificationData}
-              setNotificationData={setNotificationData}
-              loadData={loadData}
-              allLogs={false}
+            <NotificationPolicyActivityLogs
+              notificationId={notificationData?.getData("_id")}
             />
           </DetailPanelContainer>
         );
@@ -70,7 +65,12 @@ function NotificationDetailPanel({ notificationData, setNotificationData, loadDa
     }
   };
 
-  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
+  return (
+    <DetailTabPanelContainer
+      detailView={getCurrentView()}
+      tabContainer={getTabContainer()}
+    />
+  );
 }
 
 NotificationDetailPanel.propTypes = {

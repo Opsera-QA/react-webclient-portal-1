@@ -8,6 +8,7 @@ import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 
 const excludeArr = ["SFDC VALIDATE PACKAGE XML", "SFDC UNIT TESTING", "SFDC DEPLOY"];
 
+// TODO: Make JenkinsToolAccountSelectInput
 function JenkinsGitCredentialsSelectInput({
   fieldName,
   dataObject,
@@ -100,7 +101,7 @@ function JenkinsGitCredentialsSelectInput({
   if(!checkValidity()){
     return null;
   }
-  
+
   return (
     <>
       <SelectInputBase
@@ -109,9 +110,10 @@ function JenkinsGitCredentialsSelectInput({
         setDataFunction={setDataFunction}
         setDataObject={setDataObject}
         placeholderText={"Select Account"}
+        groupBy={"service"}
         selectOptions={accountsList}
-        valueField="gitCredential"
-        textField="gitCredential"
+        valueField={"gitCredential"}
+        textField={"gitCredential"}
         clearDataFunction={clearDataFunction}
         disabled={disabled || accountsList.length===0}
       />

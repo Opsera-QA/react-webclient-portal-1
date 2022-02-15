@@ -71,6 +71,8 @@ function TextAreaInputBase(
       <InfoText
         field={field}
         errorMessage={errorMessage}
+        model={model}
+        fieldName={fieldName}
       />
     </InputContainer>
   );

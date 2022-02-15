@@ -138,7 +138,12 @@ function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObj
           setDataFunction={newValue => setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)}
         />
       </div>
-      <InfoText errorMessage={errorMessage} field={field} />
+      <InfoText
+        model={dataObject}
+        fieldName={fieldName}
+        errorMessage={errorMessage}
+        field={field}
+      />
     </InputContainer>
   );
 }
