@@ -14,42 +14,51 @@ const buildkiteMetadata = {
     {
       label: "SCM Tool",
       id: "gitToolId",
+      formText: "Select SCM info must match the data configured in the buildkite pipeline"
     },
     {
       label: "Repository ID",
       id: "repoId",
+      formText: "Select SCM info must match the data configured in the buildkite pipeline"
     },
     {
       label: "Project ID",
       id: "projectId",
+      formText: "Select SCM info must match the data configured in the buildkite pipeline"
     },
     {
       label: "SCM Service Type",
       id: "service",
+      formText: "Select SCM info must match the data configured in the buildkite pipeline"
     },
     {
       label: "GIT URL",
-      id: "gitUrl"
+      id: "gitUrl",
+      formText: "Select SCM info must match the data configured in the buildkite pipeline"
     },
     {
       label: "SSH URL",
       id: "sshUrl",
+      formText: "Select SCM info must match the data configured in the buildkite pipeline"
     },
     {
       label: "Repository",
       id: "repository",
+      formText: "Select SCM info must match the data configured in the buildkite pipeline"
     },
     {
       label: "Workspace",
-      id: "workspace"
+      id: "workspace",
+      formText: "Select SCM info must match the data configured in the buildkite pipeline"
     },
     {
       label: "Workspace/Project",
-      id: "workspaceName"
+      id: "workspaceName",
+      formText: "Select SCM info must match the data configured in the buildkite pipeline"
     },
     {
       label: "Branch",
-      id: "defaultBranch",
+      id: "branch",
     },
     {
       label: "Commit",
@@ -72,7 +81,7 @@ const buildkiteMetadata = {
     repository : "",
     workspace : "",
     workspaceName : "",
-    defaultBranch : "",
+    branch : "",
     commit : "",
     message: ""
   }

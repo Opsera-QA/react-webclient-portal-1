@@ -6,13 +6,12 @@ import modelHelpers from "components/common/model/modelHelpers";
 import buildkiteMetadata from "./buildkite-metadata";
 import BuildkiteToolSelectInput from "./inputs/BuildkiteToolSelectInput";
 import BuildkitePipelineSelectInput from "./inputs/BuildkitePipelineSelectInput";
-import KafkaConnectSCMToolTypeSelectInput from "../kafka_connect/inputs/KafkConnectSCMToolTypeSelectInput";
-import KafkaConnectStepSourceControlManagementToolSelectInput
-  from "../kafka_connect/inputs/KafkaConnectStepSourceControlManagementToolSelectInput";
-import KafkaConnectBitbucketWorkspaceInput from "../kafka_connect/inputs/KafkaConnectBitbucketWorkspaceInput";
-import KafkaConnectGitRepositoryInput from "../kafka_connect/inputs/KafkaConnectGitRepositoryInput";
-import KafkaConnectGitBranchInput from "../kafka_connect/inputs/KafkaConnectGitBranchInput";
 import TextInputBase from "../../../../../../../common/inputs/text/TextInputBase";
+import BuildkiteSCMToolSelectInput from "./inputs/BuildkiteStepSCMToolSelectInput";
+import BuildkiteBitbucketWorkspaceInput from "./inputs/BuildkiteBitbucketWorkspaceInput";
+import BuildkiteGitRepositoryInput from "./inputs/BuildkiteGitRepositoryInput";
+import BuildkiteGitBranchInput from "./inputs/BuildkiteGitBranchInput";
+import BuildkiteSCMToolTypeSelectInput from "./inputs/BuildkiteSCMToolTypeSelectInput";
 
 function BuildkiteStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -54,24 +53,24 @@ function BuildkiteStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       isLoading={isLoading}
     >
       <BuildkiteToolSelectInput model={buildkiteStepConfigurationDto} setModel={setBuildkiteStepConfigurationDataDto} />
-      <KafkaConnectSCMToolTypeSelectInput
+      <BuildkiteSCMToolTypeSelectInput
         dataObject={buildkiteStepConfigurationDto}
         setDataObject={setBuildkiteStepConfigurationDataDto}
       />
-      <KafkaConnectStepSourceControlManagementToolSelectInput
+      <BuildkiteSCMToolSelectInput
         model={buildkiteStepConfigurationDto}
         setModel={setBuildkiteStepConfigurationDataDto}
         disabled={buildkiteStepConfigurationDto.getData("service").length === 0}
       />
-      <KafkaConnectBitbucketWorkspaceInput
+      <BuildkiteBitbucketWorkspaceInput
         dataObject={buildkiteStepConfigurationDto}
         setDataObject={setBuildkiteStepConfigurationDataDto}
       />
-      <KafkaConnectGitRepositoryInput
+      <BuildkiteGitRepositoryInput
         dataObject={buildkiteStepConfigurationDto}
         setDataObject={setBuildkiteStepConfigurationDataDto}
       />
-      <KafkaConnectGitBranchInput
+      <BuildkiteGitBranchInput
         dataObject={buildkiteStepConfigurationDto}
         setDataObject={setBuildkiteStepConfigurationDataDto}
       />

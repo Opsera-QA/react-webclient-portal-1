@@ -6,12 +6,12 @@ function BuildkiteGitBranchInput({dataObject, setDataObject, disabled}) {
   const setBranch = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
     // newDataObject.setData("branch", selectedOption);
-    newDataObject.setData("defaultBranch", selectedOption);
+    newDataObject.setData("branch", selectedOption);
     setDataObject({...newDataObject});
   };
   return (
      <GitBranchInput
-       fieldName={"defaultBranch"}
+       fieldName={"branch"}
        service={dataObject.getData("service")}
        gitToolId={dataObject.getData("gitToolId")}
        workspace={dataObject.getData("workspace")}
