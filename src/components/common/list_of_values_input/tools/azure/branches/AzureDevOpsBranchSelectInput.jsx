@@ -33,6 +33,8 @@ function AzureDevOpsBranchSelectInput(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setAzureBranches([]);
+    setErrorMessage("");
+    setPlaceholderText("Select Azure Branch");
 
     if (isMongoDbId(toolId) === true) {
       loadData(source).catch((error) => {
@@ -60,7 +62,7 @@ function AzureDevOpsBranchSelectInput(
   };
 
   const loadAzureBranches = async (cancelSource = cancelTokenSource) => {
-    const response = await azureActions.getRepositoriesFromAzureInstanceV2(getAccessToken, cancelSource, toolId);
+    const response = await azureActions.getBranchesFromAzureInstanceV2(getAccessToken, cancelSource, toolId, model.getData("repoId"));
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {

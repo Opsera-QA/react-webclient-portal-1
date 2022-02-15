@@ -36,6 +36,8 @@ function AzureDevOpsRepositorySelectInput(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setAzureRepositories([]);
+    setErrorMessage("");
+    setPlaceholderText("Select Azure Repository");
 
     if (isMongoDbId(toolId) === true) {
       loadData(source).catch((error) => {
