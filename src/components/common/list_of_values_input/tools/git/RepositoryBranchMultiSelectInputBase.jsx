@@ -31,6 +31,7 @@ function RepositoryBranchMultiSelectInputBase(
       <AzureDevOpsBranchMultiSelectInput
         toolId={toolId}
         model={model}
+        repositoryId={repoId}
         setModel={setModel}
         setDataFunction={setDataFunction}
         fieldName={fieldName}
