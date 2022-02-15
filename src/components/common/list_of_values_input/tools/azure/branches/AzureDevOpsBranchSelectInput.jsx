@@ -5,6 +5,7 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import azureActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function AzureDevOpsBranchSelectInput(
   {
@@ -14,7 +15,8 @@ function AzureDevOpsBranchSelectInput(
     toolId,
     disabled,
     setDataFunction,
-    clearDataFunction
+    clearDataFunction,
+    repositoryId,
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +38,7 @@ function AzureDevOpsBranchSelectInput(
     setErrorMessage("");
     setPlaceholderText("Select Azure Branch");
 
-    if (isMongoDbId(toolId) === true) {
+    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
       loadData(source).catch((error) => {
         throw error;
       });
@@ -46,7 +48,7 @@ function AzureDevOpsBranchSelectInput(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId]);
+  }, [toolId, repositoryId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -62,7 +64,7 @@ function AzureDevOpsBranchSelectInput(
   };
 
   const loadAzureBranches = async (cancelSource = cancelTokenSource) => {
-    const response = await azureActions.getBranchesFromAzureInstanceV2(getAccessToken, cancelSource, toolId, model.getData("repoId"));
+    const response = await azureActions.getBranchesFromAzureInstanceV2(getAccessToken, cancelSource, toolId, repositoryId);
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
@@ -95,6 +97,7 @@ AzureDevOpsBranchSelectInput.propTypes = {
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
+  repositoryId: PropTypes.string,
 };
 
 export default AzureDevOpsBranchSelectInput;

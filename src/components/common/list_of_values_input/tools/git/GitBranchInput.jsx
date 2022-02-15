@@ -32,6 +32,7 @@ function GitBranchInput(
     return (
       <AzureDevOpsBranchSelectInput
         toolId={gitToolId}
+        repositoryId={repoId}
         model={dataObject}
         setModel={setDataObject}
         setDataFunction={setDataFunction}
