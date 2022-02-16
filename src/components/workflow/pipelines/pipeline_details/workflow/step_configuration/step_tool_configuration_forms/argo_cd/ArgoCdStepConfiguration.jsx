@@ -144,6 +144,7 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
         setDataObject={setArgoCdModel}
       />
       {getDynamicFields()}
+      {console.log(argoCdModel)}
     </PipelineStepEditorPanelContainer>
   );
 }
