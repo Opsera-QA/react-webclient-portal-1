@@ -39,7 +39,7 @@ function ActionBarDeleteToolButton({ toolModel, className }) {
 
   const deleteObject = async () => {
     try {
-      let vaultDeleteResponse = await vaultActions.deleteOwnerVaultRecordsForToolIdV2(getAccessToken, cancelTokenSource, toolModel);
+      let vaultDeleteResponse = await vaultActions.deleteToolVaultKeys(getAccessToken, cancelTokenSource, toolModel);
       if (vaultDeleteResponse?.status !== 200) {
         const errorMsg = `Error reported by services while deleting tool information from Vault. Please try again`;
         toastContext.showErrorDialog(errorMsg);
