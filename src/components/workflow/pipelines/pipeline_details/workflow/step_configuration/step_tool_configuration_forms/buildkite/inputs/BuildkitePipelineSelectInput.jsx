@@ -56,7 +56,7 @@ function BuildkitePipelineSelectInput({ fieldName, dataObject, setDataObject, di
     try {
       const res = await BuildkiteStepActions.getPipelines(dataObject, getAccessToken, cancelSource);
       if (res && res.status === 200) {
-        setPipelines(res.data);
+        setPipelines(res?.data?.data);
         return;
       }
       setPipelines([]);
@@ -71,6 +71,7 @@ function BuildkitePipelineSelectInput({ fieldName, dataObject, setDataObject, di
       toastContext.showServiceUnavailableDialog();
     }
   };
+
 
   return (
     <div>

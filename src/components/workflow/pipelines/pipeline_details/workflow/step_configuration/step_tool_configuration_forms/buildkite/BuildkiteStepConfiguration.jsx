@@ -77,12 +77,12 @@ function BuildkiteStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       <TextInputBase
         setDataObject={setBuildkiteStepConfigurationDataDto}
         dataObject={buildkiteStepConfigurationDto}
-        fieldName={"message"}
+        fieldName={"commit"}
       />
       <TextInputBase
         setDataObject={setBuildkiteStepConfigurationDataDto}
         dataObject={buildkiteStepConfigurationDto}
-        fieldName={"commit"}
+        fieldName={"message"}
       />
       <BuildkitePipelineSelectInput
         dataObject={buildkiteStepConfigurationDto}
