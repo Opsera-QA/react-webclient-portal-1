@@ -9,8 +9,14 @@ toolsActions.checkToolConnectivityV2 = async (getAccessToken, cancelTokenSource,
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+// TODO: Remove and use deleteToolByIdV2 after all references are updated
 toolsActions.deleteToolV2 = async (getAccessToken, cancelToken, toolModel) => {
   const apiUrl = `/registry/${toolModel?.getData("_id")}`;
+  return baseActions.apiDeleteCallV2(getAccessToken, cancelToken, apiUrl);
+};
+
+toolsActions.deleteToolByIdV2 = async (getAccessToken, cancelToken, toolId) => {
+  const apiUrl = `/registry/${toolId}`;
   return baseActions.apiDeleteCallV2(getAccessToken, cancelToken, apiUrl);
 };
 
