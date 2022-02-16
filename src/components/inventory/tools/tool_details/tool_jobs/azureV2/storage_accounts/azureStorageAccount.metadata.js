@@ -8,7 +8,7 @@ export const azureStorageAccountMetadata = {
         maxLength: 100
       },
       {
-        label: "Azure Storage Shared Access Signature",
+        label: "Azure Storage Access Key",
         id: "azureStorageAccountToken",
         isRequired: true
       },
