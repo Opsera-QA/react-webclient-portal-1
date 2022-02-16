@@ -73,8 +73,18 @@ const InformaticaStepFormMetadata = {
       formText:" "
     },
     {
+      label: "Source Branch",
+      id: "sourceBranch",
+      isRequiredFunction: (model) => {
+        return model?.getData("isNewBranch");
+      },
+      maxLength: 255,
+      regexDefinitionName: "generalTextWithSpacesSlash",
+      formText:" "
+    },
+    {
       label: "Path to Zip",
-      id: "path",
+      id: "gitFilePath",
       maxLength: 255,
       regexDefinitionName: "pathField",
       formText:" "
@@ -87,6 +97,21 @@ const InformaticaStepFormMetadata = {
       label: "Deploy from Git",
       id: "deployfromGit",
     },
+    {
+      label: "Create a new branch",
+      id: "isNewBranch",
+    },
+    {
+      label: "Dynamic Branch Name",
+      id: "destinationBranch",
+      formText: "timestamp, run_count text can be used to make it dynamic ex:`PRETEXT_run_count`",
+      regexDefinitionName: "dockerName",
+      isRequiredFunction: (model) => {
+        return model?.getData("isNewBranch");
+      },
+      maxLength: 50,
+      lowercase: true,
+    },
   ],
   newObjectFields: {
     toolConfigId : "",
@@ -97,9 +122,12 @@ const InformaticaStepFormMetadata = {
     repository: "",
     workspace: "",
     gitBranch: "",
-    path: "",
+    gitFilePath: "",
     includeDependencies: false,
-    deployfromGit: false
+    deployfromGit: false,
+    isNewBranch: false,
+    sourceBranch: "",
+    destinationBranch: ""
   }
 };
 

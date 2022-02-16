@@ -61,6 +61,24 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
     parentCallback(item);
   };
 
+  const getNewBranchHandler = () => {
+    if(informaticaStepConfigurationDto.getData("isNewBranch"))
+      return(
+        <div>
+          <SourceRepositoryPrimaryBranchSelectInput
+            fieldName="sourceBranch"
+            model={informaticaStepConfigurationDto}
+            setModel={setInformaticaStepConfigurationDataDto}
+          />
+          <TextInputBase
+            dataObject={informaticaStepConfigurationDto}
+            setDataObject={setInformaticaStepConfigurationDataDto}
+            fieldName={"destinationBranch"}
+          />
+        </div>
+      );
+  };
+
   const getSourceSelection = () => {
     return(
       <div>
@@ -90,10 +108,12 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
             && informaticaStepConfigurationDto?.getData("gitToolId") != null
             && (informaticaStepConfigurationDto?.getData("service" === "bitbucket") ? informaticaStepConfigurationDto?.getData("workspace") != null && informaticaStepConfigurationDto?.getData("workspace").length > 0 : true)}
         />
-        <SourceRepositoryPrimaryBranchSelectInput
-          model={informaticaStepConfigurationDto}
-          setModel={setInformaticaStepConfigurationDataDto}
-        />
+        {!informaticaStepConfigurationDto.getData("isNewBranch") && 
+          <SourceRepositoryPrimaryBranchSelectInput
+            model={informaticaStepConfigurationDto}
+            setModel={setInformaticaStepConfigurationDataDto}
+          />
+        }
       </div>
     );
   };
@@ -112,6 +132,12 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
               placeholderText={"Select Source Informatica Tool"}
             />
             {getSourceSelection()}
+            <BooleanToggleInput
+              fieldName={"isNewBranch"}
+              dataObject={informaticaStepConfigurationDto}
+              setDataObject={setInformaticaStepConfigurationDataDto}
+            />
+            {getNewBranchHandler()}
             <BooleanToggleInput
               fieldName={"includeDependencies"}
               dataObject={informaticaStepConfigurationDto}
@@ -138,7 +164,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
             {informaticaStepConfigurationDto.getData("deployfromGit") ? 
               <>
                 {getSourceSelection()}
-                <TextInputBase fieldName={"path"} dataObject={informaticaStepConfigurationDto} setDataObject={setInformaticaStepConfigurationDataDto}/>
+                <TextInputBase fieldName={"gitFilePath"} dataObject={informaticaStepConfigurationDto} setDataObject={setInformaticaStepConfigurationDataDto}/>
               </> :
               <SelectInputBase
                 setDataObject={setInformaticaStepConfigurationDataDto}
