@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {faTrash} from "@fortawesome/pro-light-svg-icons";
 
-// DON'T USE THIS
-function DeleteCenterPanel(
+function DeleteOverlay(
   {
     children,
     titleIcon,
@@ -16,7 +15,7 @@ function DeleteCenterPanel(
     <CenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`Delete ${objectType}`}
+      titleText={`Confirm ${objectType} Delete`}
       titleIcon={titleIcon}
       showToasts={true}
       showCloseButton={false}
@@ -27,7 +26,7 @@ function DeleteCenterPanel(
   );
 }
 
-DeleteCenterPanel.propTypes = {
+DeleteOverlay.propTypes = {
   children: PropTypes.any,
   objectType: PropTypes.string,
   titleIcon: PropTypes.object,
@@ -35,10 +34,10 @@ DeleteCenterPanel.propTypes = {
   size: PropTypes.string,
 };
 
-DeleteCenterPanel.defaultProps = {
+DeleteOverlay.defaultProps = {
   titleIcon: faTrash,
 };
 
-export default DeleteCenterPanel;
+export default DeleteOverlay;
 
 
