@@ -88,10 +88,15 @@ function RuleBasedAccessInput(
     const unpackedRoles = [];
 
     if (Array.isArray(currentData) && currentData.length > 0) {
-      unpackedRoles.push([...currentData]);
+      unpackedRoles.push(...currentData);
     }
     else {
-      unpackedRoles.push({type: accessRuleTypeConstants.ACCESS_RULE_TYPES.SSO_USER_ORGANIZATION, value: ""});
+      unpackedRoles.push(
+        {
+          type: accessRuleTypeConstants.ACCESS_RULE_TYPES.ALLOWED_SSO_USER_ORGANIZATIONS,
+          value: []
+        }
+      );
     }
 
     setAccessRules([...unpackedRoles]);
@@ -102,7 +107,7 @@ function RuleBasedAccessInput(
     const newDataObject = {...model};
 
     if (newRoleList.length > field.maxItems) {
-      setErrorMessage("You have reached the maximum allowed number of role access items. Please remove one to add another.");
+      setErrorMessage("You have reached the maximum allowed number of access rules. Please remove one to add another.");
       return;
     }
 
@@ -123,7 +128,16 @@ function RuleBasedAccessInput(
   };
 
   const isRoleComplete = (accessRule) => {
-    return (hasStringValue(accessRule?.type) === true && hasStringValue(accessRule?.value) === true);
+    return (hasStringValue(accessRule?.type) === true && hasValues(accessRule?.type, accessRule?.value) === true);
+  };
+
+  const hasValues = (type, value) => {
+    switch (type) {
+      case accessRuleTypeConstants.ACCESS_RULE_TYPES.ALLOWED_SSO_USER_ORGANIZATIONS:
+        return Array.isArray(value) && value.length > 0;
+      default:
+        return false;
+    }
   };
 
   const lastRuleComplete = () => {
@@ -133,7 +147,7 @@ function RuleBasedAccessInput(
       return true;
     }
 
-    let lastObject = newPropertyList[newPropertyList.length - 1];
+    const lastObject = newPropertyList[newPropertyList.length - 1];
     return isRoleComplete(lastObject);
   };
 
@@ -142,8 +156,8 @@ function RuleBasedAccessInput(
 
     if (lastRuleComplete()) {
       const newRow = {
-        type: accessRuleTypeConstants.ACCESS_RULE_TYPES.SSO_USER_ORGANIZATION,
-        value: "",
+        type: accessRuleTypeConstants.ACCESS_RULE_TYPES.ALLOWED_SSO_USER_ORGANIZATIONS,
+        value: [],
       };
       newRoleList.push(newRow);
       validateAndSetData(newRoleList);
@@ -194,7 +208,7 @@ function RuleBasedAccessInput(
     if (!accessRules || accessRules.length === 0) {
       return (
         <div className="roles-input">
-          <div className="text-center text-muted no-data-message">No access roles have been added yet.</div>
+          <div className="text-center text-muted no-data-message">No access rules have been added yet.</div>
         </div>
       );
     }
@@ -268,11 +282,11 @@ function RuleBasedAccessInput(
       <PropertyInputContainer
         titleIcon={faIdCard}
         field={field}
-        addProperty={addAccessRule}
+        // addProperty={addAccessRule}
         titleText={"Access Rules"}
         errorMessage={errorMessage}
         type={"Access Rule"}
-        addAllowed={lastRuleComplete() === true && disabled !== true}
+        // addAllowed={lastRuleComplete() === true && disabled !== true}
         helpComponent={getHelpComponent()}
         incompleteRowMessage={getIncompleteRoleMessage()}
       >

@@ -5,10 +5,12 @@ import RepositorySelectInput from "components/common/list_of_values_input/tools/
 function SentenialGitRepositorySelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
+    const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
+    const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     newModel.setData("repository", selectedOption?.name);
-    newModel.setData("repoId", selectedOption?.id);
+    newModel.setData("repoId", repoId);
     newModel.setData("sshUrl", selectedOption?.sshUrl || "");
-    newModel.setData("gitUrl", selectedOption?.httpUrl || "");
+    newModel.setData("gitUrl", gitUrl);
     setModel({...newModel});
   };
 

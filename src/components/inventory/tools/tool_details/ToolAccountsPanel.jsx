@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import JenkinsAccounts from "./tool_jobs/jenkins/accounts/JenkinsAccounts";
+import JenkinsToolAccounts from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/JenkinsToolAccounts";
 import ScmAccounts from "components/inventory/tools/tool_details/tool_jobs/common/accounts/ScmAccounts";
 
 function ToolAccountsPanel({ toolData, loadData, isLoading }) {
@@ -8,7 +8,11 @@ function ToolAccountsPanel({ toolData, loadData, isLoading }) {
   const getAccountPanel = (toolIdentifier, loadData) => {
     switch (toolIdentifier) {
       case "jenkins":
-        return <JenkinsAccounts toolData={toolData} loadData={loadData}/>;
+        return (
+          <JenkinsToolAccounts
+            toolId={toolData?.getData("_id")}
+          />
+        );
       case "gitlab":
       case "github":
       case "bitbucket":

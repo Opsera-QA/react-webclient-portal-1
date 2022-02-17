@@ -36,6 +36,8 @@ function AzureDevOpsRepositorySelectInput(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setAzureRepositories([]);
+    setErrorMessage("");
+    setPlaceholderText("Select Azure Repository");
 
     if (isMongoDbId(toolId) === true) {
       loadData(source).catch((error) => {
@@ -73,7 +75,7 @@ function AzureDevOpsRepositorySelectInput(
       const existingRepository = model?.getData(fieldName);
 
       if (hasStringValue(existingRepository) === true) {
-        const existingRepositoryExists = repositories.find((repository) => repository[valueField] === existingRepository);
+        const existingRepositoryExists = repositories.find((repository) => repository["name"] === existingRepository);
 
         if (existingRepositoryExists == null) {
           setErrorMessage(

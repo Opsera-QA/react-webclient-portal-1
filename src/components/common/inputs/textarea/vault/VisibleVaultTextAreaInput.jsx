@@ -5,10 +5,21 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import ShowSensitiveDataButton from "components/common/buttons/data/ShowSensitiveDataButton";
 import CopyToClipboardButton from "components/common/buttons/data/CopyToClipboardButton";
+import {parseError} from "components/common/helpers/error-helpers";
 
-// TODO: We should also make a generic show/hide text input with copy capabilities.
-function VisibleVaultTextInput({fieldName, dataObject, setDataObject, disabled, pullVaultDataFunction, hideIfNotShown, isLoading}) {
-  const field = useState(dataObject.getFieldById(fieldName));
+function VisibleVaultTextAreaInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    disabled,
+    pullVaultDataFunction,
+    isLoading,
+    setDataFunction,
+    error,
+    customMessage,
+  }) {
+  const [field, setField] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [pullingValueFromVault, setPullingValueFromVault] = useState(false);
   const [valueShown, setValueShown] = useState(false);
@@ -22,11 +33,28 @@ function VisibleVaultTextInput({fieldName, dataObject, setDataObject, disabled, 
     };
   }, []);
 
+  useEffect(() => {
+    setErrorMessage(error ? parseError(error) : "");
+  }, [error]);
+
   const validateAndSetData = (value) => {
-    let newDataObject = dataObject;
-    newDataObject.setTextData(fieldName, value);
-    setErrorMessage(newDataObject.getFieldError(fieldName));
-    setDataObject({...newDataObject});
+    const newModel = model;
+    newModel.setTextData(fieldName, value);
+    setErrorMessage(newModel.getFieldError(fieldName));
+    setModel({...newModel});
+  };
+
+  const updateValue = (newValue) => {
+    if (setDataFunction) {
+      const newDataObject = setDataFunction(fieldName, newValue);
+
+      if (newDataObject) {
+        setErrorMessage(newDataObject?.getFieldError(fieldName));
+      }
+    }
+    else {
+      validateAndSetData(newValue);
+    }
   };
 
   const hideValue = () => {
@@ -61,7 +89,7 @@ function VisibleVaultTextInput({fieldName, dataObject, setDataObject, disabled, 
           isLoading={pullingValueFromVault || isLoading}
           showDataFunction={showData}
           hideDataFunction={hideValue}
-          className={"input-button mr-2"}
+          className={"input-button"}
           valueShown={valueShown}
         />
       );
@@ -69,50 +97,64 @@ function VisibleVaultTextInput({fieldName, dataObject, setDataObject, disabled, 
   };
 
   const getButtons = () => {
-    if (!dataObject?.isNew()) {
+    if (model?.isNew() !== true) {
       return (
-        <div className={"d-flex ml-2"}>
+        <div>
           {getSensitiveDataButton()}
           <CopyToClipboardButton
-            copyString={dataObject?.getData(fieldName)}
-            className={"input-button"}
+            copyString={model?.getData(fieldName)}
+            className={"input-button mt-2"}
           />
         </div>
       );
     }
   };
 
+  if (field == null) {
+    return null;
+  }
+
+
   return (
     <InputContainer>
-      <InputLabel field={field} model={dataObject}/>
+      <InputLabel
+        field={field}
+        model={model}
+      />
       <div className={"d-flex"}>
-        <input
-          type={hideIfNotShown === true && valueShown === false && !pullingValueFromVault ? "password" : undefined}
+        <textarea
+          style={valueShown === false && !pullingValueFromVault ? {WebkitTextSecurity: 'disc'} : undefined}
           disabled={disabled || pullingValueFromVault}
-          value={pullingValueFromVault || isLoading ? "Loading Value From Vault" : dataObject?.getData(fieldName)}
-          onChange={(event) => validateAndSetData(event.target.value)}
-          className="form-control"
+          value={pullingValueFromVault || isLoading ? "Loading Value From Vault" : model?.getData(fieldName)}
+          onChange={(event) => updateValue(event.target.value)}
+          className={"form-control"}
+          rows={5}
         />
-        {getButtons()}
+        <div className={"ml-2"}>
+          {getButtons()}
+        </div>
       </div>
       <InfoText
-        model={dataObject}
+        model={model}
         fieldName={fieldName}
         field={field}
         errorMessage={errorMessage}
+        customMessage={customMessage}
       />
     </InputContainer>
   );
 }
 
-VisibleVaultTextInput.propTypes = {
+VisibleVaultTextAreaInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   pullVaultDataFunction: PropTypes.func,
-  hideIfNotShown: PropTypes.bool,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  setDataFunction: PropTypes.func,
+  error: PropTypes.any,
+  customMessage: PropTypes.string,
 };
 
-export default VisibleVaultTextInput;
+export default VisibleVaultTextAreaInput;

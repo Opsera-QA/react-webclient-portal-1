@@ -24,6 +24,28 @@ KpiActions.getKpisV2 = async (getAccessToken, cancelTokenSource, kpiFilterDto) =
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+KpiActions.getKpiIdentifiersV2 = async (getAccessToken, cancelTokenSource, kpiFilterModel) => {
+  const apiUrl = "/analytics/kpi/identifiers";
+  const sortOption = kpiFilterModel?.getData("sortOption");
+  const status = kpiFilterModel?.getData("status");
+  const policySupport = kpiFilterModel?.getData("policySupport");
+
+  const urlParams = {
+    params: {
+      sort: sortOption?.value,
+      size: kpiFilterModel.getData("pageSize"),
+      page: kpiFilterModel.getData("currentPage"),
+      tool: kpiFilterModel.getFilterValue("tool"),
+      category: kpiFilterModel.getFilterValue("category"),
+      status: status?.value,
+      policySupport: policySupport?.value,
+      search: kpiFilterModel.getFilterValue("search"),
+    },
+  };
+
+  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 // Remove after all instances are updated to v2
 KpiActions.getAllKpis = async (getAccessToken, status, policySupport) => {
   const apiUrl = "/analytics/kpi/configurations";

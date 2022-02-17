@@ -86,7 +86,6 @@ function PipelineActivityLogTreeTable(
       pipelineTree.current = [...newPipelineTree];
       await getSingleRunLogs(newFilterModel, cancelSource);
     } catch (error) {
-
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
       }
@@ -203,7 +202,7 @@ function PipelineActivityLogTreeTable(
     const pipelineActivityData = response?.data?.data;
     const activityLogCount = response?.data?.count;
 
-    if (Array.isArray(pipelineActivityData)) {
+    if (isMounted?.current === true && Array.isArray(pipelineActivityData)) {
       setActivityData([...pipelineActivityData]);
       setPipelineActivityMetadata(response?.data?.metadata);
       newFilterModel.setData("totalCount", activityLogCount);
@@ -221,7 +220,7 @@ function PipelineActivityLogTreeTable(
     const response = await pipelineActivityLogsActions.getLatestPipelineActivityLogsV3(getAccessToken, cancelSource, pipelineId, filterDto);
     const pipelineActivityData = response?.data?.data;
 
-    if (Array.isArray(pipelineActivityData)) {
+    if (isMounted?.current === true && Array.isArray(pipelineActivityData)) {
       setActivityData([...pipelineActivityData]);
     }
   };
@@ -230,7 +229,7 @@ function PipelineActivityLogTreeTable(
     const response = await pipelineActivityLogsActions.getSecondaryPipelineActivityLogsV3(getAccessToken, cancelSource, pipelineId, filterDto);
     const pipelineActivityData = response?.data?.data;
 
-    if (Array.isArray(pipelineActivityData)) {
+    if (isMounted?.current === true && Array.isArray(pipelineActivityData)) {
       setActivityData([...pipelineActivityData]);
     }
   };

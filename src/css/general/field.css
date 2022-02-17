@@ -37,6 +37,20 @@
     font-size: 13px;
 }
 
+.opsera-badge {
+    font-weight: normal;
+    letter-spacing: 1px;
+    font-size: 13px;
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+    font-family: 'Inter', sans-serif;
+}
+
 /* End Item Field */
 
 

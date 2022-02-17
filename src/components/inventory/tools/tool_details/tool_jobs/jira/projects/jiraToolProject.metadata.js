@@ -1,5 +1,5 @@
 // TODO: If this is used again in the same way, make this generic toolProjectMetadata
-export const jiraProjectMetadata = {
+export const jiraToolProjectMetadata = {
   type: "Jira Project Configuration",
   activeField: "active",
   detailView: function (record) {
@@ -24,6 +24,9 @@ export const jiraProjectMetadata = {
     {
       label: "Description",
       id: "description",
+      maxLength: 1000,
+      regexDefinitionName: "generalTextWithSpacesSlash",
+      formText: "Description can be up to 1000 characters and can consist of letters, apostrophes, numbers, spaces, dashes, colons, underscores, and periods"
     },
     {
       label: "Project Configuration",

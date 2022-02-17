@@ -5,6 +5,7 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import azureActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function AzureDevOpsBranchMultiSelectInput(
   {
@@ -14,7 +15,8 @@ function AzureDevOpsBranchMultiSelectInput(
     toolId,
     disabled,
     setDataFunction,
-    clearDataFunction
+    clearDataFunction,
+    repositoryId,
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -33,8 +35,10 @@ function AzureDevOpsBranchMultiSelectInput(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setAzureBranches([]);
+    setErrorMessage("");
+    setPlaceholderText("Select Azure Branches");
 
-    if (isMongoDbId(toolId) === true) {
+    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
       loadData(source).catch((error) => {
         throw error;
       });
@@ -60,7 +64,7 @@ function AzureDevOpsBranchMultiSelectInput(
   };
 
   const loadAzureBranches = async (cancelSource = cancelTokenSource) => {
-    const response = await azureActions.getRepositoriesFromAzureInstanceV2(getAccessToken, cancelSource, toolId);
+    const response = await azureActions.getBranchesFromAzureInstanceV2(getAccessToken, cancelSource, toolId, repositoryId);
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
@@ -96,6 +100,7 @@ AzureDevOpsBranchMultiSelectInput.propTypes = {
   ]),
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
+  repositoryId: PropTypes.string,
 };
 
 export default AzureDevOpsBranchMultiSelectInput;

@@ -16,9 +16,11 @@ function ArgoCdGitRepositorySelectInput({className, fieldName, model, setModel, 
       }
       repoName = matches[1];
     }
+    const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
+    const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     newModel.setData("gitRepository", repoName);
-    newModel.setData("gitRepositoryID", selectedOption?.id);
-    newModel.setData("gitUrl", selectedOption?.httpUrl || "");
+    newModel.setData("gitRepositoryID", repoId);
+    newModel.setData("gitUrl", gitUrl);
     newModel.setData("sshUrl", selectedOption?.sshUrl || "");
     setModel({ ...newModel });
   };

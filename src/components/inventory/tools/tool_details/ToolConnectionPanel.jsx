@@ -38,7 +38,7 @@ function ToolConnectionPanel({ toolData }) {
     if (toolData == null) {
       return <></>;
     }
-    
+
     switch (toolData.getData("tool_identifier")) {
       case "jenkins":
         return <JenkinsToolConfiguration toolData={toolData} />;
