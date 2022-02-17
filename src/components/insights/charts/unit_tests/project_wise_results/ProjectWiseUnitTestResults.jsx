@@ -49,7 +49,7 @@ function ProjectWiseUnitTestResults({ kpiConfiguration, setKpiConfiguration, das
       const response = await chartsActions.getSonarUnitTestsMetrics(kpiConfiguration, dashboardTags, getAccessToken, cancelSource, filterDto );
       const  responseObject = response?.data?.data?.sonarUnitTestMetrics?.data[0];
       let dataObject = responseObject?.data;
-      dataObject = dataObject.map(item => ({...item, status: '-'}));
+      dataObject = dataObject?.map(item => ({...item, status: '-'}));
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;
