@@ -4,11 +4,11 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const sfdcBuildTypeArray = [
   {
-    "name": "Ant Migration",
+    "name": "Ant (Metadata Format)",
     "value": "ant",
   },
   {
-    "name": "Salesforce DX (SFDX)",
+    "name": "Salesforce DX (Source Format)",
     "value": "sfdx",
   },
 ];

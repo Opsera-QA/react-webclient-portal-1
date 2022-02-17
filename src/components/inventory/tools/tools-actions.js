@@ -286,16 +286,4 @@ toolsActions.getToolConnectionLog = async (getAccessToken, toolDataDto) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-// TODO: Move to a Salesforce (DX) specific actions file
-toolsActions.checkSFDXToolConnection = async (getAccessToken, toolDataDto, selectedJenkinsId) => {
-  // console.log(toolDataDto);
-  const postBody = {
-    "jenkinsToolId": selectedJenkinsId,
-    "sfdcToolId": toolDataDto.getData("_id"),
-    "tool": "sfdc"
-  };
-  const apiUrl = `/tools/sfdc/check-connectivity`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
 export default toolsActions;
