@@ -27,6 +27,7 @@ import CancelPipelineQueueConfirmationOverlay
 import commonActions from "../../../common/common.actions";
 import InformaticaPipelineRunAssistantOverlay
   from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistantOverlay";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 const delayCheckInterval = 15000;
 let internalRefreshCount = 1;
@@ -267,7 +268,10 @@ function PipelineActionControls(
       toastContext.showInformationToast("A request to start this pipeline has been submitted.", 20);
       const response = await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
       const message = response?.data?.message;
-      toastContext.showInformationToast(message, 20);
+
+      if (hasStringValue(message) === true) {
+        toastContext.showInformationToast(message, 20);
+      }
     }
     catch (error) {
       if (isMounted.current === true) {

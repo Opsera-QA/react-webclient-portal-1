@@ -1,6 +1,6 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import {hasStringValue} from "components/common/helpers/string-helpers";
+import {hasStringValue, truncateString} from "components/common/helpers/string-helpers";
 import {faClock, faDraftingCompass, faTally} from "@fortawesome/pro-light-svg-icons";
 import BadgeBase from "components/common/badges/BadgeBase";
 
@@ -21,13 +21,21 @@ function MetricPipelineInfoSubheader(
     return classNames;
   };
 
-  return (
-    <div className={getClassNames()}>
+  const getPipelineBadge = () => {
+    const parsedPipelineName = truncateString(pipelineName, 47);
+
+    return (
       <BadgeBase
         className={"mr-3"}
         icon={faDraftingCompass}
-        badgeText={`Pipeline: ${pipelineName}`}
+        badgeText={parsedPipelineName}
       />
+    );
+  };
+
+  return (
+    <div className={getClassNames()}>
+      {getPipelineBadge()}
       <BadgeBase
         className={"mr-3"}
         icon={faTally}
