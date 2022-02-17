@@ -10,7 +10,7 @@ const JobTypeSFDC = {
         value: "SFDC CREATE PACKAGE XML"
       },
       {
-        name: "Profile Migration",
+        name: "Salesforce Migration Job",
         value: "SFDC PROFILE DEPLOY"
       },
       {
