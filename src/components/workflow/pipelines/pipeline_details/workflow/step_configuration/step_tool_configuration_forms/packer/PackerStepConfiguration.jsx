@@ -62,17 +62,6 @@ function PackerStepConfiguration({ pipelineId, stepTool, stepId, createJob, clos
     };
     await parentCallback(item);
   };
-
-  // const getS3BucketFields = () => {
-  //   if(packerStepConfigurationModel?.getData('storeStateInBucket')) {
-  //     return (
-  //       <>
-  //         <TerraformS3BucketSelectInput dataObject={packerStepConfigurationModel} setDataObject={setPackerStepConfigurationModel} />
-  //         <TerraformS3BucketRegionSelectInput dataObject={packerStepConfigurationModel} setDataObject={setPackerStepConfigurationModel} fieldName="bucketRegion" />
-  //       </>
-  //     );
-  //   }
-  // };
  
   if (isLoading || packerStepConfigurationModel == null) {
     return <DetailPanelLoadingDialog />;

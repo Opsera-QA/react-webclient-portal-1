@@ -7,9 +7,6 @@ function PackerAzureToolSelectInput({ fieldName, model, setModel, disabled, text
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("azureCredentialId", "");
-    newModel.setData("resourceGroup", "");
-    newModel.setData("storageName", "");
-    newModel.setData("containerName", "");
     newModel.setData(fieldName, selectedOption?._id);
     setModel({...newModel});
   };
@@ -17,9 +14,6 @@ function PackerAzureToolSelectInput({ fieldName, model, setModel, disabled, text
   const clearDataFunction = () => {
     let newModel = {...model};
     newModel.setData(fieldName, "");
-    newModel.setData("resourceGroup", "");
-    newModel.setData("storageName", "");
-    newModel.setData("containerName", "");
     newModel.setData("azureToolConfigId", "");
     newModel.setData("azureCredentialId", "");
     setModel({...newModel});
