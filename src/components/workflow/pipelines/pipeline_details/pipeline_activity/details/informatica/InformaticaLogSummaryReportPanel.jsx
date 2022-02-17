@@ -43,7 +43,7 @@ function InformaticaLogSummaryReportPanel({ pipelineTaskData }) {
     try {
       const jobDetails = pipelineTaskData?.api_response?.informaticaJobStatus;
       const deployObj = Object.keys(jobDetails)?.length > 0 ? jobDetails.objects : undefined;
-      if(deployObj[0]?.sourceObject) {
+      if(Array.isArray(deployObj) && deployObj[0]?.sourceObject) {
         setIsImport(true);
       }
       setInformaticaDeployObjs(deployObj);

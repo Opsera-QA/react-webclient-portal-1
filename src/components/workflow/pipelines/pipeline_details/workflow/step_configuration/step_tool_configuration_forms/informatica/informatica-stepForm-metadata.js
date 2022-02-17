@@ -87,6 +87,9 @@ const InformaticaStepFormMetadata = {
       id: "gitFilePath",
       maxLength: 255,
       regexDefinitionName: "pathField",
+      isRequiredFunction: (model) => {
+        return model?.getData("deployFromGit");
+      },
       formText:" "
     },
     {
