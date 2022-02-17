@@ -44,11 +44,7 @@ const PackerStepFormMetadata = {
     {
       label: "Git File Path",
       id: "gitFilePath",      
-    },
-    {
-      label: "Runtime Arguments",
-      id: "keyValueMap",
-    },
+    },    
     {
       label: "Git Repository ID",
       id: "gitRepositoryID",
@@ -60,20 +56,7 @@ const PackerStepFormMetadata = {
     {
       label: "BitBucket Workspace/Project",
       id: "bitbucketWorkspaceName",
-    },
-    {
-      label: "Parameters",
-      id: "customParameters",
-      maxItems: 15,
-    },
-    {
-      label: "Save Output Parameters",
-      id: "saveParameters"
-    },
-    {
-      label: "Define Input Parameters",
-      id: "saveInputParameters"
-    },
+    },    
     {
       label: "IAM Roles", 
       id:"iamRoleFlag"
@@ -81,19 +64,7 @@ const PackerStepFormMetadata = {
     {
       label: "IAM Role",
       id: "roleArn"
-    },
-    {
-      label: "Store State in S3 Bucket", 
-      id:"storeStateInBucket"
-    },
-    {
-      label: "S3 Bucket Name",
-      id: "bucketName"      
-    },
-    {
-      label: "Bucket Region",
-      id: "bucketRegion"
-    },
+    },    
     {
       label: "Cloud Provider",
       id: "cloudProvider",
@@ -103,35 +74,11 @@ const PackerStepFormMetadata = {
       label: "Packer Version",
       id: "tag",
       isRequired: true
-    },
-    {
-      label: "Resource Group",
-      id: "resourceGroup",
-    },
-    {
-      label: "Storage Account Name",
-      id: "storageName",
-    },
-    {
-      label: "Storage Container",
-      id: "containerName",
-    },
+    },    
     {
       label: "Azure Tool",
       id: "azureToolConfigId",
-    },
-    {
-      label: "Packer Cloud Tool",
-      id: "packerCloudId",
-    },
-    {
-      label: "Organization Name",
-      id: "organizationName",
-    },
-    {
-      label: "Backend State",
-      id: "backendState",
-    },
+    },    
     {
       label: "Azure Credential",
       id: "azureCredentialId",
@@ -139,16 +86,7 @@ const PackerStepFormMetadata = {
     {
       label: "Input Parameters",
       id: "inputParameters",
-    },
-    {
-      label: "Maintain Remote State",
-      id: "stateRemote",
-    },
-    {
-      label: "State File Management",
-      id: "stateFile",
-      formText: "This tracks if the state file will be created by Opsera during runtime."
-    },
+    },    
     {
       label: "Packer Execution Script",
       id: "customScript"
@@ -156,11 +94,7 @@ const PackerStepFormMetadata = {
     {
       label: "Packer Commands",
       id: "commands"
-    },
-    {
-      label: "Specify Environment Variables",
-      id: "saveEnvironmentVariables"
-    },
+    },    
     {
       label: "Environment Variables",
       id: "environmentVariables"
@@ -221,10 +155,6 @@ const PackerStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Runtime Arguments",
-      id: "keyValueMap",
-    },
-    {
       label: "Git Repository ID",
       id: "gitRepositoryID",
     },
@@ -237,19 +167,6 @@ const PackerStepFormMetadata = {
       id: "bitbucketWorkspaceName",
     },
     {
-      label: "Parameters",
-      id: "customParameters",
-      maxItems: 15,
-    },
-    {
-      label: "Save Output Parameters",
-      id: "saveParameters"
-    },
-    {
-      label: "Define Input Parameters",
-      id: "saveInputParameters"
-    },
-    {
       label: "IAM Roles", 
       id:"iamRoleFlag"
     },
@@ -257,19 +174,7 @@ const PackerStepFormMetadata = {
       label: "IAM Role",
       id: "roleArn",
       isRequired:true
-    },
-    {
-      label: "Store State in S3 Bucket", 
-      id:"storeStateInBucket"
-    },
-    {
-      label: "S3 Bucket Name",
-      id: "bucketName"
-    },
-    {
-      label: "Bucket Region",
-      id: "bucketRegion"
-    },
+    },    
     {
       label: "Cloud Provider",
       id: "cloudProvider",
@@ -279,35 +184,11 @@ const PackerStepFormMetadata = {
       label: "Packer Version",
       id: "tag",
       isRequired: true
-    },
-    {
-      label: "Backend State",
-      id: "backendState",
-    },
-    {
-      label: "Resource Group",
-      id: "resourceGroup",
-    },
-    {
-      label: "Storage Account Name",
-      id: "storageName",
-    },
-    {
-      label: "Storage Container",
-      id: "containerName",
-    },
+    },    
     {
       label: "Azure Tool",
       id: "azureToolConfigId",
-    },
-    {
-      label: "Packer Cloud Tool",
-      id: "packerCloudId",
-    },
-    {
-      label: "Organization Name",
-      id: "organizationName",
-    },
+    },    
     {
       label: "Azure Credential",
       id: "azureCredentialId",
@@ -315,16 +196,7 @@ const PackerStepFormMetadata = {
     {
       label: "Input Parameters",
       id: "inputParameters",
-    },
-    {
-      label: "Maintain Remote State",
-      id: "stateRemote",
-    },
-    {
-      label: "State File Management",
-      id: "stateFile",
-      formText: "This tracks if the state file will be created by Opsera during runtime."
-    },
+    },    
     {
       label: "Packer Execution Script",
       id: "customScript"
@@ -332,11 +204,7 @@ const PackerStepFormMetadata = {
     {
       label: "Packer Commands",
       id: "commands"
-    },
-    {
-      label: "Specify Environment Variables",
-      id: "saveEnvironmentVariables"
-    },
+    },    
     {
       label: "Environment Variables",
       id: "environmentVariables"
@@ -366,32 +234,16 @@ const PackerStepFormMetadata = {
     gitUrl:"",
     bitbucketWorkspace : "",
     bitbucketWorkspaceName: "",
-    keyValueMap: {},
-    customParameters: "",
-    saveParameters: false,
     iamRoleFlag:false,
     roleArn:"",
     roleName:"",
-    storeStateInBucket: false,
-    bucketName: "",
-    bucketRegion: "",
     cloudProvider: "",
-    tag: "",
-    resourceGroup : "",
-    storageName : "",
-    containerName : "",
+    tag: "",    
     azureToolConfigId : "",
-    packerCloudId : "",
-    organizationName : "",
-    backendState: "LOCAL",
     azureCredentialId: "",
     inputParameters: "",
-    saveInputParameters: false,
-    stateRemote: false,
-    stateFile: "",
     customScript: false,
-    commands: "",
-    saveEnvironmentVariables: false,
+    commands: "",    
     environmentVariables: [],
     isVariableFile: false,
     inputFilePaths: [],
