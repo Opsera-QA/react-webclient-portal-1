@@ -6,11 +6,13 @@ function SfdcGitRepositoryInput({dataObject, setDataObject, disabled}) {
   const setRepository = (fieldName, selectedOption) => {
 
     let newDataObject = {...dataObject};
+    const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
+    const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     newDataObject.setData("repository", selectedOption.name);
-    newDataObject.setData("projectId", selectedOption.id);
-    newDataObject.setData("repoId", selectedOption.id);
+    newDataObject.setData("projectId", repoId);
+    newDataObject.setData("repoId", repoId);
     newDataObject.setData("sshUrl", selectedOption.sshUrl);
-    newDataObject.setData("gitUrl", selectedOption.httpUrl);
+    newDataObject.setData("gitUrl", gitUrl);
     newDataObject.setData("branch", "");
     newDataObject.setData("gitBranch", "");
     newDataObject.setData("defaultBranch", "");

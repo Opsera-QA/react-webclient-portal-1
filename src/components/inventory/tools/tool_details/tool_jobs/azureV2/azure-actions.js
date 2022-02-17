@@ -30,8 +30,8 @@ azureActions.getRepositoriesFromAzureInstanceV2 = async (getAccessToken, cancelT
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-azureActions.getRepositoriesFromAzureInstanceV2 = async (getAccessToken, cancelTokenSource, toolId, repositoryId) => {
-  const apiUrl = `/azure-devops/${toolId}/repositories`;
+azureActions.getBranchesFromAzureInstanceV2 = async (getAccessToken, cancelTokenSource, toolId, repositoryId) => {
+  const apiUrl = `/azure-devops/${toolId}/branches`;
   const queryParams = {
     params: {
       repositoryId: repositoryId

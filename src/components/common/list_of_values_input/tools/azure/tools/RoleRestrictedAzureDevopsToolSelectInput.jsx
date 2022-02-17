@@ -6,7 +6,7 @@ import RoleRestrictedToolByIdentifierInputBase
 function RoleRestrictedAzureToolSelectInput({model, setModel, setDataFunction, clearDataFunction, fieldName, disabled, placeholderText, textField}) {
   return (
     <RoleRestrictedToolByIdentifierInputBase
-      toolIdentifier={"azure_devops"}
+      toolIdentifier={"azure-devops"}
       toolFriendlyName={"Azure"}
       fieldName={fieldName}
       configurationRequired={true}

@@ -11,6 +11,11 @@ vaultActions.deleteOwnerVaultRecordsForToolIdV2 = async (getAccessToken, cancelT
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+vaultActions.deleteToolVaultKeys = async (getAccessToken, cancelTokenSource, toolId) => {
+  const apiUrl = `/vault/entries/tool/${toolId}`;
+  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 // Note: This is used for three part vault keys (tool ID, identifier, and key)
 vaultActions.savePasswordToVault = async (toolData, toolConfigurationData, fieldName, value, getAccessToken) => {
   if (toolConfigurationData.isChanged(fieldName) && value != null && typeof(value) === "string") {

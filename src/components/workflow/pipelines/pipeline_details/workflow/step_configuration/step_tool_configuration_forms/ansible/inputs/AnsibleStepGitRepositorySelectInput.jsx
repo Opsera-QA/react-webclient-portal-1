@@ -5,11 +5,13 @@ import RepositorySelectInput from "components/common/list_of_values_input/tools/
 function AnsibleStepGitRepositorySelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModelObject = {...model};
+    const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
+    const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     newModelObject.setData("repository", selectedOption.name);
-    newModelObject.setData("repoId", selectedOption.id);
-    newModelObject.setData("projectId", selectedOption.id);
+    newModelObject.setData("repoId", repoId);
+    newModelObject.setData("projectId", repoId);
     newModelObject.setData("sshUrl", selectedOption.sshUrl || "");
-    newModelObject.setData("gitUrl", selectedOption.httpUrl || "");
+    newModelObject.setData("gitUrl", gitUrl);
     setModel({...newModelObject});
   };
   const clearDataFunction=(fieldName)=>{
