@@ -6,9 +6,6 @@ import RoleRestrictedRegistryToolApplicationSelectInput
 function PackerAzureApplicationSelectInput({fieldName, model, setModel}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
-    newModel.setData("resourceGroup", "");
-    newModel.setData("storageName", "");
-    newModel.setData("containerName", "");
     newModel.setData(fieldName, selectedOption._id);
     setModel({...newModel});
   };
@@ -16,9 +13,6 @@ function PackerAzureApplicationSelectInput({fieldName, model, setModel}) {
   const clearDataFunction = () => {
     let newModel = {...model};
     newModel.setData(fieldName, "");
-    newModel.setData("resourceGroup", "");
-    newModel.setData("storageName", "");
-    newModel.setData("containerName", "");
     setModel({...newModel});
   };
 
