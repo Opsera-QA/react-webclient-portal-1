@@ -5,6 +5,7 @@ import PackerIAmRoleFlagToggleInput from "../inputs/aws/PackerIAmRoleFlagToggleI
 import PackerIamRolesSelectInput from "../inputs/aws/PackerIamRolesSelectInput";
 import PackerAzureToolSelectInput from "../inputs/azure/PackerAzureToolSelectInput";
 import PackerAzureApplicationSelectInput from "../inputs/azure/PackerAzureApplicationSelectInput";
+import PackerGcpToolSelectInput from "../inputs/gcp/PackerGcpToolSelectInput";
 
 function PackerCloudCredentialSubForm({ model, setModel, cloudProvider}) {
 
@@ -50,7 +51,9 @@ function PackerCloudCredentialSubForm({ model, setModel, cloudProvider}) {
           </>
         );
       case "gcp":
-        return;
+        return (
+          <PackerGcpToolSelectInput model={model} setModel={setModel} />
+        );
       default:
         return;
     }
