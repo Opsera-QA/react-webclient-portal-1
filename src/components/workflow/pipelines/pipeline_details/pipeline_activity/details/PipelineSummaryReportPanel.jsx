@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import SalesforceLogSummaryReportPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceLogSummaryReportPanel";
+import InformaticaLogSummaryReportPanel from "./informatica/InformaticaLogSummaryReportPanelctivity/details/informatica/InformaticaLogSummaryReportPanel";
 
 function PipelineSummaryReportPanel({ pipelineTaskData }) {
   const wrapObject = (metaData) => {
@@ -10,8 +11,14 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
   };
 
   const getSummaryReportPanel = () => {
-    // TODO : we cant restrict this based on step name, this is where i was thinking to have a unique tool identifier. Removing check for step name for now
-    return (<SalesforceLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>);
+    switch(pipelineTaskData?.api_response?.stepIdentifier) {
+      case "informatica":
+        return (
+          <InformaticaLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );
+      default:
+        return (<SalesforceLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>);
+    }
   };
 
   return (getSummaryReportPanel());
