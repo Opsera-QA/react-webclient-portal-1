@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import SalesforceLogSummaryReportPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceLogSummaryReportPanel";
-import InformaticaLogSummaryReportPanel from "./informatica/InformaticaLogSummaryReportPanelctivity/details/informatica/InformaticaLogSummaryReportPanel";
+import InformaticaLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/InformaticaLogSummaryReportPanel";
+
 function PipelineSummaryReportPanel({ pipelineTaskData }) {
   const wrapObject = (metaData) => {
     return new Model(pipelineTaskData, metaData, false);
