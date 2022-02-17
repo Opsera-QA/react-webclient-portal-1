@@ -20,48 +20,48 @@ import {
 import MetricPipelineInfoSubheader from "components/common/metrics/subheaders/MetricPipelineInfoSubheader";
 function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
 
-  const [mergeRequestMetricScorecardDto, setMergeRequestMetricScorecardDto] = useState(undefined);
+  const [unitTestMetricScorecardDto, setUnitTestMetricScorecardDto] = useState(undefined);
   useEffect(() => {
     initializeDto();
   }, [mergeRequestData]);
 
   const initializeDto = async () => 
-    setMergeRequestMetricScorecardDto(new Model({...mergeRequestData}, projectWiseUnitTestResultsMetadata, false));
+  setUnitTestMetricScorecardDto(new Model({...mergeRequestData}, projectWiseUnitTestResultsMetadata, false));
 
   const getTitleBar = () => {
     return (
       <div className="d-flex justify-content-between w-100">
-        <div><FontAwesomeIcon icon={faFileCode} fixedWidth className="mr-1"/>{mergeRequestMetricScorecardDto.getData("ProjectName")}</div>
+        <div><FontAwesomeIcon icon={faFileCode} fixedWidth className="mr-1"/>{unitTestMetricScorecardDto.getData("ProjectName")}</div>
       </div>
     );
   };
 
-  if (mergeRequestMetricScorecardDto == null) {
+  if (unitTestMetricScorecardDto == null) {
     return <></>;
   }
 
   const chartData = [{
         "id": "Success",
         "label": "Success",
-        "value": mergeRequestMetricScorecardDto.getData("test_success_density"),
+        "value": unitTestMetricScorecardDto.getData("test_success_density"),
         "color": "#5B5851"
       },
       {
         "id": "Failure",
         "label": "Failure",
-        "value": mergeRequestMetricScorecardDto.getData("test_failures"),
+        "value": unitTestMetricScorecardDto.getData("test_failures"),
         "color": "#7A756C"
       },
       {
         "id": "Errors",
         "label": "Errors",
-        "value": mergeRequestMetricScorecardDto.getData("test_errors"),
+        "value": unitTestMetricScorecardDto.getData("test_errors"),
         "color": "#7A756C"
       },
       {
         "id": "Skipped",
         "label": "Skipped",
-        "value": mergeRequestMetricScorecardDto.getData("skipped_tests"),
+        "value": unitTestMetricScorecardDto.getData("skipped_tests"),
         "color": "#7A756C"
       }
     ];
@@ -70,15 +70,15 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
     <InsightsCardContainerBase titleBar={getTitleBar()}>
       <div className="m-2">
         <MetricPipelineInfoSubheader
-          pipelineName={mergeRequestMetricScorecardDto.getData('pipelineName')}
-          pipelineRunCount={mergeRequestMetricScorecardDto.getData('runCount')}
-          pipelineDuration={mergeRequestMetricScorecardDto.getData('test_execution_time')}
+          pipelineName={unitTestMetricScorecardDto.getData('pipelineName')}
+          pipelineRunCount={unitTestMetricScorecardDto.getData('runCount')}
+          pipelineDuration={unitTestMetricScorecardDto.getData('test_execution_time')}
         />
         <Row className="d-flex align-items-center">
           <Col sm={12} md={6} lg={6}> 
             <div className="data-block-box ml-5 mr-5">
               <InsightHighlightFieldWithTrendIcon
-                  dataObject={mergeRequestMetricScorecardDto}
+                  dataObject={unitTestMetricScorecardDto}
                   fieldName="tests"
                   trendFieldName="status"
               />

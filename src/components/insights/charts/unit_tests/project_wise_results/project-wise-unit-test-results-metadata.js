@@ -1,4 +1,4 @@
-const projectWiseUnitTestResultsMetadta = {
+const projectWiseUnitTestResultsMetadata = {
     idProperty: "_id",
     type: "Unit Tests Project Wise Results",
     fields: [
@@ -47,4 +47,4 @@ const projectWiseUnitTestResultsMetadta = {
     }
   };
   
-  export default projectWiseUnitTestResultsMetadta;
+  export default projectWiseUnitTestResultsMetadata;
