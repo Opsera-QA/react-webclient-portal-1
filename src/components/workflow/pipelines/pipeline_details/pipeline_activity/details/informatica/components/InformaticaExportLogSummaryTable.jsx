@@ -1,8 +1,8 @@
 import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import {faCheckCircle, faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
-import informaticaObjectLogResultMetaData
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/metadata/informaticaObjectLogResult.metadata";
+import informaticaExportObjectLogResultMetaData
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/metadata/informaticaExportObjectLogResult.metadata";
 import {
   getColumnHeader, getColumnId,
   getTableTextColumn
@@ -28,8 +28,8 @@ export const getStatusColumnDefinition = (field, maxLength, className) => {
   };
 };
 
-function InformaticaLogSummaryTable({ informaticaDeployObjs }) {
-  const fields = informaticaObjectLogResultMetaData?.fields;
+function InformaticaExportLogSummaryTable({ informaticaDeployObjs }) {
+  const fields = informaticaExportObjectLogResultMetaData?.fields;
   
   const columns = useMemo(
     () => [
@@ -73,8 +73,8 @@ function InformaticaLogSummaryTable({ informaticaDeployObjs }) {
   );
 }
 
-InformaticaLogSummaryTable.propTypes = {
+InformaticaExportLogSummaryTable.propTypes = {
   informaticaDeployObjs: PropTypes.array,
 };
 
-export default InformaticaLogSummaryTable;
+export default InformaticaExportLogSummaryTable;

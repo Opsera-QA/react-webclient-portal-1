@@ -1,8 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import InformaticaLogSummaryTable
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/components/InformaticaLogSummaryTable";
 import InformaticaReportSummaryOverview
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/components/InformaticaReportSummaryOverview";
 import informaticaSummaryLogResultMetaData
@@ -17,11 +15,14 @@ import { faClipboardListCheck } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import {faCheckCircle} from "@fortawesome/pro-light-svg-icons";
+import InformaticaReportView
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/components/InformaticaReportView";
 
 function InformaticaLogSummaryReportPanel({ pipelineTaskData }) {
   const [informaticaResultsModel, setInformaticaResultsModel] = useState(undefined);
   const [informaticaDeployObjs, setInformaticaDeployObjs] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
+  const [isImportObj, setIsImport] = useState(false);
   const isMounted = useRef(false);
 
   useEffect(() => {
@@ -42,6 +43,9 @@ function InformaticaLogSummaryReportPanel({ pipelineTaskData }) {
     try {
       const jobDetails = pipelineTaskData?.api_response?.informaticaJobStatus;
       const deployObj = Object.keys(jobDetails)?.length > 0 ? jobDetails.objects : undefined;
+      if(Array.isArray(deployObj) && deployObj[0]?.sourceObject) {
+        setIsImport(true);
+      }
       setInformaticaDeployObjs(deployObj);
       if (jobDetails != null) {
         setInformaticaResultsModel(new Model(jobDetails, informaticaSummaryLogResultMetaData, false));
@@ -67,8 +71,9 @@ function InformaticaLogSummaryReportPanel({ pipelineTaskData }) {
             <InformaticaReportSummaryOverview
               informaticaResultsModel={informaticaResultsModel}
             />
-            <InformaticaLogSummaryTable
+            <InformaticaReportView
               informaticaDeployObjs={informaticaDeployObjs}
+              isImportObj={isImportObj}
             />
           </SummaryPanelContainer>
         </VanitySetTabView>
@@ -79,7 +84,7 @@ function InformaticaLogSummaryReportPanel({ pipelineTaskData }) {
   if (pipelineTaskData == null || isLoading) {
     return (
       <LoadingDialog
-        message={"Loading Pipeline"}
+        message={"Loading Report"}
         size={'sm'}
       />
     );

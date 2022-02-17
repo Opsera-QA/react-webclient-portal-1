@@ -19,7 +19,7 @@ export const informaticaRunParameterConfigurationMetadata = {
     {
       label: "Update By",
       id: "updateBy",
-      regexDefinitionName: "generalTextWithSpaces",
+      regexDefinitionName: "email",
       maxLength: 1000,
     },
     {
