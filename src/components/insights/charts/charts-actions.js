@@ -43,6 +43,21 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, apiUrl, postBody);
 };
 
+chartsActions.getSonarUnitTestsMetrics = async(kpiConfiguration, tags, getAccessToken, cancelTokenSource)=>{
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const apiUrl = "/analytics/sonar/v1/sonarUnitTestsMetrics";
+  console.log(kpiConfiguration, '***** config');
+  const postBody = {
+    startDate: date.start,
+    endDate: date.end,
+    tags: tags,
+    size: 10,
+    page: 1,
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 chartsActions.parseConfigurationAndGetChartMetrics = async (
   getAccessToken,
   cancelTokenSource,

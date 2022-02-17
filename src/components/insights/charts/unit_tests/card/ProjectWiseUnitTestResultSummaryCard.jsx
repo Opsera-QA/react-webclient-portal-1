@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import DateTimeField from "components/common/fields/date/DateTimeField";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -45,25 +43,25 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
   const chartData = [{
         "id": "Success",
         "label": "Success",
-        "value": 40,
+        "value": mergeRequestMetricScorecardDto.getData("test_success_density"),
         "color": "#5B5851"
       },
       {
         "id": "Failure",
         "label": "Failure",
-        "value": 10,
+        "value": mergeRequestMetricScorecardDto.getData("test_failures"),
         "color": "#7A756C"
       },
       {
         "id": "Errors",
         "label": "Errors",
-        "value": 10,
+        "value": mergeRequestMetricScorecardDto.getData("test_errors"),
         "color": "#7A756C"
       },
       {
         "id": "Skipped",
         "label": "Skipped",
-        "value": 10,
+        "value": mergeRequestMetricScorecardDto.getData("skipped_tests"),
         "color": "#7A756C"
       }
     ];
@@ -72,8 +70,8 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
     <InsightsCardContainerBase titleBar={getTitleBar()}>
       <div className="m-2">
         <MetricPipelineInfoSubheader
-          pipelineName={mergeRequestMetricScorecardDto.getData('name')}
-          pipelineRunCount={mergeRequestMetricScorecardDto.getData('run_count')}
+          pipelineName={mergeRequestMetricScorecardDto.getData('pipelineName')}
+          pipelineRunCount={mergeRequestMetricScorecardDto.getData('runCount')}
           pipelineDuration={mergeRequestMetricScorecardDto.getData('test_execution_time')}
         />
         <Row className="d-flex align-items-center">

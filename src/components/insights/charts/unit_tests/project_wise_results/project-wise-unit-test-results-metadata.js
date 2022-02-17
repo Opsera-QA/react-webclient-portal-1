@@ -32,11 +32,11 @@ const githubRecentMergeRequestsMetadata = {
       },
       {
         label: "Pipeline",
-        id: "name"
+        id: "pipelineName"
       },
       {
         label: "Run Count",
-        id: "run_count"
+        id: "runCount"
       },
       {
         label:'Trend',
