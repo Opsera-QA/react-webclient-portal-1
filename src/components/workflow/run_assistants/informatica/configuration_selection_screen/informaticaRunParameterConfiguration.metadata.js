@@ -14,7 +14,7 @@ export const informaticaRunParameterConfigurationMetadata = {
     {
       label: "Location",
       id: "location",
-      regexDefinitionName: "alphanumericPlusSpacesAndForwardSlash",
+      regexDefinitionName: "informaticaLocationRules",
     },
     {
       label: "Update By",
