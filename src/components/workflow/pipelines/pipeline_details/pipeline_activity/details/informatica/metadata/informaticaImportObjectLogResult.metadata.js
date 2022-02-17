@@ -23,11 +23,11 @@ const informaticaImportObjectLogResultMetaData = {
     },
     {
       label: "Source Path",
-      id: "sourceObject.name"
+      id: "sourceObject.path"
     },
     {
       label: "Source Type",
-      id: "sourceObject.name"
+      id: "sourceObject.type"
     },    
     {
       label: "Target Name",
@@ -35,11 +35,11 @@ const informaticaImportObjectLogResultMetaData = {
     },
     {
       label: "Target Path",
-      id: "targetObject.name"
+      id: "targetObject.path"
     },
     {
       label: "Target Type",
-      id: "targetObject.name"
+      id: "targetObject.type"
     },    
     {
       label: "Status/State",
@@ -48,8 +48,8 @@ const informaticaImportObjectLogResultMetaData = {
   ],
   newObjectFields: {
     id: "",
-    sourceObject: "",
-    targetObject: "",
+    sourceObject: {},
+    targetObject: {},
     status: {}
   }
 };
