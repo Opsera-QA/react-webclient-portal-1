@@ -77,15 +77,17 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
           pipelineDuration={mergeRequestMetricScorecardDto.getData('test_execution_time')}
         />
         <Row className="d-flex align-items-center">
-          <Col sm={12} md={6} lg={6}>                
-            <InsightHighlightFieldWithTrendIcon 
-                dataObject={mergeRequestMetricScorecardDto} 
-                fieldName="tests"
-                trendFieldName="status"
-            />                
+          <Col sm={12} md={6} lg={6}> 
+            <div className="data-block-box ml-5 mr-5">
+              <InsightHighlightFieldWithTrendIcon
+                  dataObject={mergeRequestMetricScorecardDto}
+                  fieldName="tests"
+                  trendFieldName="status"
+              />
+            </div>
           </Col>
           <Col sm={12} md={6} lg={6} >
-            <div style={{ height: '200px' }}>                
+            <div style={{ height: '180px' }}>      
               <ResponsivePie
                 data={chartData}
                 {...defaultConfig()}
