@@ -53,61 +53,64 @@ function ProjectWiseUnitTestResults({ kpiConfiguration, setKpiConfiguration, das
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = {
-        data: { "status": 200,
-        "status_text": "ES Pipeline Summary Query Results",
-        "message": "ES Query Response from Living Connection",
-        "data": [
-            {
+        data: { 
+          "status": 200,
+          "status_text": "ES Pipeline Summary Query Results",
+          "message": "ES Query Response from Living Connection",
+          "data": [
+              {
                 "githubTimeTakenToCompleteMergeRequestReviewAndPushTime": {
                     "tool": "github",
                     "data": [
-                        {
-                            "_id": 819940634,
-                            "tests":0,
-                            "test_success_density":12,
-                            "test_failures":10,
-                            "skipped_tests":10,
-                            "test_errors":10,
-                            "test_execution_time":10,
-                            "name": 'Test bucket string',
-                            "run_count":10,
-                            "ProjectName": "github-webhook",
-                        },
-                        {
-                            "_id": 691676316,
-                            "tests":0,
-                            "test_success_density":12,
-                            "test_failures":10,
-                            "skipped_tests":10,
-                            "test_errors":10,
-                            "test_execution_time":10,
-                            "name": 'Test bucket string',
-                            "run_count":10,
-                            "ProjectName": "github-webhook",
-                        },
-                        {
-                            "_id": 621439232,
-                            "tests":0,
-                            "test_success_density": 12,
-                            "test_failures": 10,
-                            "skipped_tests": 10,
-                            "test_errors": 10,
-                            "test_execution_time": 10,
-                            "name": 'Test bucket string',
-                            "run_count": 10,
-                            "ProjectName": "github-webhook",
-                        },
+                      {
+                          "_id": 819940634,
+                          "tests":0,
+                          "test_success_density":12,
+                          "test_failures":10,
+                          "skipped_tests":10,
+                          "test_errors":10,
+                          "test_execution_time":'10 Mins',
+                          "name": 'Test Bucket String Test Bucket String Test',
+                          "run_count":10,
+                          "ProjectName": "github-webhook",
+                      },
+                      {
+                          "_id": 691676316,
+                          "tests":0,
+                          "test_success_density":12,
+                          "test_failures":10,
+                          "skipped_tests":10,
+                          "test_errors":10,
+                          "test_execution_time":'10 Mins',
+                          "name": 'Test bucket string',
+                          "run_count":10,
+                          "ProjectName": "github-webhook",
+                      },
+                      {
+                          "_id": 621439232,
+                          "tests":0,
+                          "test_success_density": 12,
+                          "test_failures": 10,
+                          "skipped_tests": 10,
+                          "test_errors": 10,
+                          "test_execution_time": '10 Mins',
+                          "name": 'Test bucket string',
+                          "run_count": 10,
+                          "ProjectName": "github-webhook",
+                      },
                     ],
                     "length": 3,
                     "status": 200,
                     "status_text": "OK",
                     "count": 17
                 }
-            }
-        ]
-    }};
-      let dataObject = response?.data?.data[0]?.githubTimeTakenToCompleteMergeRequestReviewAndPushTime?.data;
+              }
+            ]
+          }
+        };
 
+      let dataObject = response?.data?.data[0]?.githubTimeTakenToCompleteMergeRequestReviewAndPushTime?.data;
+      dataObject = dataObject.map(item => ({...item, status: '-'}));
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;
@@ -128,10 +131,6 @@ function ProjectWiseUnitTestResults({ kpiConfiguration, setKpiConfiguration, das
       }
     }
   };
-  // const onRowSelect = (rowData) => {
-  //   setModalData(rowData.original);
-  //   setShowModal(true);
-  // };
 
   const getCardView = () => {
     return (
@@ -144,7 +143,6 @@ function ProjectWiseUnitTestResults({ kpiConfiguration, setKpiConfiguration, das
       />
     );
   };
-
 
   return (
     <div>

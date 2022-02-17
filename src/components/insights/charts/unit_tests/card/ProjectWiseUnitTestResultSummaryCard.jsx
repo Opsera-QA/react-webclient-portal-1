@@ -8,13 +8,21 @@ import Col from "react-bootstrap/Col";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileCode} from "@fortawesome/pro-light-svg-icons";
 import InsightsCardContainerBase from "components/common/card_containers/InsightsCardContainerBase";
-
+import InsightHighlightFieldWithTrendIcon from "components/common/fields/text/InsightHighlightFieldWithTrendIcon";
 import projectWiseUnitTestResultsMetadata from "../project_wise_results/project-wise-unit-test-results-metadata.js";
-
+import { ResponsivePie } from "@nivo/pie";
+import {
+  defaultConfig,
+  getColorByData,
+} from "components/insights/charts/charts-views";
+import config from "./projectWiseUnitTestConfig";
+import {
+  METRIC_THEME_CHART_PALETTE_COLORS
+} from "components/common/helpers/metrics/metricTheme.helpers";
+import MetricPipelineInfoSubheader from "components/common/metrics/subheaders/MetricPipelineInfoSubheader";
 function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
 
   const [mergeRequestMetricScorecardDto, setMergeRequestMetricScorecardDto] = useState(undefined);
-
   useEffect(() => {
     initializeDto();
   }, [mergeRequestData]);
@@ -34,38 +42,59 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
     return <></>;
   }
 
+  const chartData = [{
+        "id": "Success",
+        "label": "Success",
+        "value": 40,
+        "color": "#5B5851"
+      },
+      {
+        "id": "Failure",
+        "label": "Failure",
+        "value": 10,
+        "color": "#7A756C"
+      },
+      {
+        "id": "Errors",
+        "label": "Errors",
+        "value": 10,
+        "color": "#7A756C"
+      },
+      {
+        "id": "Skipped",
+        "label": "Skipped",
+        "value": 10,
+        "color": "#7A756C"
+      }
+    ];
+
   return (
     <InsightsCardContainerBase titleBar={getTitleBar()}>
-      <div className={"m-2 ml-3 mr-3"}>
-        <small>
-          <Row className="d-flex align-items-center">
-              <Col sm={12} md={4} lg={4}>
-                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"name"} className="insight-detail-label my-2" />
-              </Col>
-              <Col sm={12} md={4} lg={4}>
-                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"run_count"} className="insight-detail-label my-2" />
-              </Col>
-              <Col sm={12} md={4} lg={4}>
-                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"tests"} className="insight-detail-label my-2" />
-              </Col>
-              <Col sm={12} md={4} lg={4}>
-                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"test_success_density"} className="insight-detail-label my-2" />
-              </Col>
-              <Col sm={12} md={4} lg={4}>
-                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"test_failures"} className="insight-detail-label my-2" />
-              </Col>              
-              <Col sm={12} md={4} lg={4}>
-                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"skipped_tests"} className="insight-detail-label my-2" />
-              </Col>
-              <Col sm={12} md={4} lg={4}>
-                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"test_errors"} className="insight-detail-label my-2" />
-              </Col>
-              <Col sm={12} md={4} lg={4}>
-                  <TextFieldBase dataObject={mergeRequestMetricScorecardDto} fieldName={"test_execution_time"} className="insight-detail-label my-2" />
-              </Col>
-          </Row>          
-        </small>
-      </div>
+      <div className="m-2">
+        <MetricPipelineInfoSubheader
+          pipelineName={mergeRequestMetricScorecardDto.getData('name')}
+          pipelineRunCount={mergeRequestMetricScorecardDto.getData('run_count')}
+          pipelineDuration={mergeRequestMetricScorecardDto.getData('test_execution_time')}
+        />
+        <Row className="d-flex align-items-center">
+          <Col sm={12} md={6} lg={6}>                
+            <InsightHighlightFieldWithTrendIcon 
+                dataObject={mergeRequestMetricScorecardDto} 
+                fieldName="tests"
+                trendFieldName="status"
+            />                
+          </Col>
+          <Col sm={12} md={6} lg={6} >
+            <div style={{ height: '200px' }}>                
+              <ResponsivePie
+                data={chartData}
+                {...defaultConfig()}
+                {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
+              />
+            </div>
+          </Col>
+          </Row>         
+        </div>
     </InsightsCardContainerBase>
   );
 }

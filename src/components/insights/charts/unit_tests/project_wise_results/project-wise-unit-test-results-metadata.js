@@ -38,6 +38,10 @@ const githubRecentMergeRequestsMetadata = {
         label: "Run Count",
         id: "run_count"
       },
+      {
+        label:'Trend',
+        id:'trend'
+      }
     ],
     newObjectFields: {
     }
