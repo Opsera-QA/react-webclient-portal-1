@@ -171,7 +171,7 @@ const PackerStepFormMetadata = {
     },
     {
       label: "Packer Variables Files",
-      id: "packerVariablesFiles"
+      id: "inputFilePaths"
     },
   ],
   fieldsAlt: [
@@ -347,7 +347,7 @@ const PackerStepFormMetadata = {
     },
     {
       label: "Packer Variables Files",
-      id: "packerVariablesFiles"
+      id: "inputFilePaths"
     },
   ],
   newObjectFields: {
@@ -394,7 +394,7 @@ const PackerStepFormMetadata = {
     saveEnvironmentVariables: false,
     environmentVariables: [],
     isVariableFile: false,
-    packerVariablesFiles: [],
+    inputFilePaths: [],
   }
 };
 
