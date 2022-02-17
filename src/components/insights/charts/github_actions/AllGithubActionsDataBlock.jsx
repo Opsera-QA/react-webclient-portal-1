@@ -9,14 +9,13 @@ import ModalLogs from "../../../common/modal/modalLogs";
 import TwoLinePercentageDataBlock from "../../../common/metrics/percentage/TwoLinePercentageDataBlock";
 import {dataPointHelpers} from "../../../common/helpers/metrics/data_point/dataPoint.helpers";
 
-function AllGithubActionsDataBlock(
+function AllGithubActionsDataBlock({
   kpiConfiguration,
   setKpiConfiguration,
   dashboardData,
   index,
   setKpis,
-  showSettingsToggle,
-) {
+  showSettingsToggle}) {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [metrics, setMetrics] = useState([]);
@@ -31,7 +30,7 @@ function AllGithubActionsDataBlock(
                 <DataBlockBoxContainer showBorder={true}>
                   <div className={"p-3"}>
                     <TwoLinePercentageDataBlock dataPoint={dataPointHelpers.getDataPoint(
-                        kpiConfiguration?.kpiConfiguration?.dataPoints,
+                        kpiConfiguration?.dataPoints,
                         "all-github-actions-data-block"
                     )} percentage={98} subtitle={"Goal: 95%"} />
                   </div>
@@ -106,12 +105,12 @@ function AllGithubActionsDataBlock(
   return (
     <>
       <ChartContainer
-        kpiConfiguration={kpiConfiguration?.kpiConfiguration}
-        setKpiConfiguration={kpiConfiguration?.setKpiConfiguration}
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
         chart={getChartBody()}
-        dashboardData={kpiConfiguration?.dashboardData}
-        index={kpiConfiguration?.index}
-        setKpis={kpiConfiguration?.setKpis}
+        dashboardData={dashboardData}
+        index={index}
+        setKpis={setKpis}
         isLoading={isLoading}
         showSettingsToggle={showSettingsToggle}
       />
