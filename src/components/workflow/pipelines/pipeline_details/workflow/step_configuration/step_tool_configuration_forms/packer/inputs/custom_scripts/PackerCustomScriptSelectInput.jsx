@@ -17,42 +17,24 @@ function PackerCustomScriptSelectInput({dataObject, setDataObject, disabled}) {
 
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...dataObject};
-    newModel.setData(fieldName, selectedOption.value);
-    newModel.setData("stateRemote", false);
-    newModel.setData("saveInputParameters", false);
-    newModel.setData("resourceGroup", "");
-    newModel.setData("storageName", "");
-    newModel.setData("containerName", "");
+    newModel.setData(fieldName, selectedOption.value);    
     newModel.setData("azureToolConfigId", "");
-    newModel.setData("terraformCloudId", "");
-    newModel.setData("organizationName", "");
-    newModel.setData("backendState", "LOCAL");
     newModel.setData("azureCredentialId", "");
     newModel.setData("bucketName", "");
     newModel.setData("inputParameters", []);
     newModel.setData("environmentVariables", []);
-    newModel.setData("terraformCommands", "");
-    newModel.setData("keyValueMap", {});
+    newModel.setData("commands", "");
     setDataObject({...newModel});
   };
 
   const clearDataFunction = () => {
-    let newModel = {...dataObject};
-    newModel.setData("backendState", "");
-    newModel.setData("saveInputParameters", false);
-    newModel.setData("resourceGroup", "");
-    newModel.setData("storageName", "");
-    newModel.setData("containerName", "");
+    let newModel = {...dataObject};    
     newModel.setData("azureToolConfigId", "");
-    newModel.setData("terraformCloudId", "");
-    newModel.setData("organizationName", "");
-    newModel.setData("backendState", "LOCAL");
     newModel.setData("azureCredentialId", "");
     newModel.setData("bucketName", "");
     newModel.setData("inputParameters", []);
     newModel.setData("environmentVariables", []);
-    newModel.setData("terraformCommands", "");
-    newModel.setData("keyValueMap", {});
+    newModel.setData("commands", "");
     setDataObject({...newModel});
   };
 
