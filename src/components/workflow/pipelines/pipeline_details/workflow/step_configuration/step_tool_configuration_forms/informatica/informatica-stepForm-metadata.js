@@ -20,7 +20,7 @@ const InformaticaStepFormMetadata = {
       label: "Informatica Export Object Step",
       id: "buildStepId",
       isRequiredFunction: (model) => {
-        return model?.getData("type") === "import" && !model?.getData("deployfromGit");
+        return model?.getData("type") === "import" && !model?.getData("deployFromGit");
       },
       maxLength: 24,
       regexDefinitionName: "mongoId",
@@ -30,7 +30,7 @@ const InformaticaStepFormMetadata = {
       label: "SCM Type",
       id: "service",
       isRequiredFunction: (model) => {
-        return model?.getData("type") === "export" || model?.getData("deployfromGit");
+        return model?.getData("type") === "export" || model?.getData("deployFromGit");
       },
       maxLength: 10,
       lowercase: true,
@@ -39,7 +39,7 @@ const InformaticaStepFormMetadata = {
       label: "SCM Account",
       id: "gitToolId",
       isRequiredFunction: (model) => {
-        return model?.getData("type") === "export" || model?.getData("deployfromGit");
+        return model?.getData("type") === "export" || model?.getData("deployFromGit");
       },
       maxLength: 24,
       regexDefinitionName: "mongoId",
@@ -49,7 +49,7 @@ const InformaticaStepFormMetadata = {
       label: "Repository",
       id: "repository",
       isRequiredFunction: (model) => {
-        return model?.getData("type") === "export" || model?.getData("deployfromGit");
+        return model?.getData("type") === "export" || model?.getData("deployFromGit");
       },
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
@@ -66,7 +66,7 @@ const InformaticaStepFormMetadata = {
       label: "Branch",
       id: "gitBranch",
       isRequiredFunction: (model) => {
-        return model?.getData("type") === "export" || model?.getData("deployfromGit");
+        return model?.getData("type") === "export" || model?.getData("deployFromGit");
       },
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
@@ -95,7 +95,7 @@ const InformaticaStepFormMetadata = {
     },
     {
       label: "Deploy from Git",
-      id: "deployfromGit",
+      id: "deployFromGit",
     },
     {
       label: "Create a new branch",
@@ -124,7 +124,7 @@ const InformaticaStepFormMetadata = {
     gitBranch: "",
     gitFilePath: "",
     includeDependencies: false,
-    deployfromGit: false,
+    deployFromGit: false,
     isNewBranch: false,
     sourceBranch: "",
     destinationBranch: ""

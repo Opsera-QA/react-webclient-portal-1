@@ -157,11 +157,11 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
               placeholderText={"Select Destination Informatica Tool"}
             />
             <BooleanToggleInput
-              fieldName={"deployfromGit"}
+              fieldName={"deployFromGit"}
               dataObject={informaticaStepConfigurationDto}
               setDataObject={setInformaticaStepConfigurationDataDto}
             />
-            {informaticaStepConfigurationDto.getData("deployfromGit") ? 
+            {informaticaStepConfigurationDto.getData("deployFromGit") ? 
               <>
                 {getSourceSelection()}
                 <TextInputBase fieldName={"gitFilePath"} dataObject={informaticaStepConfigurationDto} setDataObject={setInformaticaStepConfigurationDataDto}/>
