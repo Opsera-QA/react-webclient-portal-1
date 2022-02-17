@@ -1,4 +1,4 @@
-const githubRecentMergeRequestsMetadata = {
+const projectWiseUnitTestResultsMetadta = {
     idProperty: "_id",
     type: "Unit Tests Project Wise Results",
     fields: [
@@ -40,11 +40,11 @@ const githubRecentMergeRequestsMetadata = {
       },
       {
         label:'Trend',
-        id:'trend'
+        id:'status'
       }
     ],
     newObjectFields: {
     }
   };
   
-  export default githubRecentMergeRequestsMetadata;
+  export default projectWiseUnitTestResultsMetadta;
