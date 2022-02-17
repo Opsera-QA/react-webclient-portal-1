@@ -30,7 +30,7 @@ PackerVariablesFilesInput.propTypes = {
 
 
 PackerVariablesFilesInput.defaultProps = {
-  fieldName: "packerVariablesFiles"
+  fieldName: "inputFilePaths"
 };
 
 export default PackerVariablesFilesInput;
