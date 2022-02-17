@@ -25,18 +25,6 @@ const PackerStepFormMetadata = {
       id: "gcpToolConfigId",
     },
     {
-      label: "Access Key Script Parameter Name",
-      id: "accessKeyParamName",
-    },
-    {
-      label: "Secret Key Script Parameter Name",
-      id: "secretKeyParamName",
-    },
-    {
-      label: "Region Parameter Name",
-      id: "regionParamName",
-    },
-    {
       label: "Branch",
       id: "defaultBranch", 
       isRequired: true
@@ -133,18 +121,6 @@ const PackerStepFormMetadata = {
       id: "gcpToolConfigId",
     },
     {
-      label: "Access Key Script Parameter Name",
-      id: "accessKeyParamName",
-    },
-    {
-      label: "Secret Key Script Parameter Name",
-      id: "secretKeyParamName",
-    },
-    {
-      label: "Region Parameter Name",
-      id: "regionParamName",
-    },
-    {
       label: "Branch",
       id: "defaultBranch", 
       isRequired: true
@@ -224,9 +200,6 @@ const PackerStepFormMetadata = {
     defaultBranch: "",
     awsToolConfigId : "",
     gcpToolConfigId: "",    
-    accessKeyParamName: "",
-    secretKeyParamName: "",
-    regionParamName: "",
     type:"",
     gitToolId : "",
     gitRepositoryID: "",

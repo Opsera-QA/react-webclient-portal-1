@@ -8,9 +8,6 @@ function PackerIAmRoleFlagToggleInput({model, setModel, disabled}) {
   const setRoleFlag = (fieldName, selectedValue) => {
     let newModel = {...model};
     newModel.setData(fieldName, selectedValue);
-    newModel.setData("accessKeyParamName", "");
-    newModel.setData("secretKeyParamName", "");
-    newModel.setData("regionParamName", "");
     newModel.setData("roleArn", "");
     newModel.setData("roleName", "");
     newModel.setMetaDataFields(selectedValue === true ? packerStepFormMetadata.fieldsAlt : packerStepFormMetadata.fields);
