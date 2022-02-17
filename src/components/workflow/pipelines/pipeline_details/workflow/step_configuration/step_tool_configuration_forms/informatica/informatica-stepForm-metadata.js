@@ -86,6 +86,9 @@ const InformaticaStepFormMetadata = {
       label: "Path to Zip",
       id: "gitFilePath",
       maxLength: 255,
+      isRequiredFunction: (model) => {
+        return model?.getData("deployFromGit");
+      },
       regexDefinitionName: "pathField",
       formText:" "
     },
