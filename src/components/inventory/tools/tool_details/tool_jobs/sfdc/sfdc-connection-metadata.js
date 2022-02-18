@@ -9,25 +9,25 @@ const sfdcConnectionMetadata = {
       maxLength: 100
     },
     {
-      label: "SFDC Username",
+      label: "Salesforce Login Username",
       id: "accountUsername",
       isRequired: true,
       maxLength: 256
     },
     {
-      label: "SFDC Client ID",
+      label: "Salesforce Client ID (Consumer Key from Connected App)",
       id: "sfdc_client_id",
       isRequired: true,
       maxLength: 256
     },
     {
-      label: "SFDC Client Secret",
+      label: "Salesforce Client Secret (Consumer Secret from Connected App)",
       id: "sfdc_client_secret",
       isRequired: true,
       maxLength: 256
     },
     {
-      label: "SFDC Token",
+      label: "Salesforce User Token",
       id: "sfdc_token",
       maxLength: 256
     },
@@ -42,17 +42,7 @@ const sfdcConnectionMetadata = {
       id: "buildType",
       regexDefinitionName: "generalTextWithoutSpacesPeriod",
       maxLength: 10
-    },
-    {
-      label: "Check Connection for SFDX",
-      id: "checkConnection"
-    },
-    {
-      label: "Jenkins Tool",
-      id: "jenkinsToolId",
-      maxLength: 24,
-      regexDefinitionName: "mongoId",
-    },
+    }
   ],
   newObjectFields:
     {
@@ -63,8 +53,6 @@ const sfdcConnectionMetadata = {
       sfdc_token: "",
       sfdc_password: "",
       buildType: "ant",
-      checkConnection: false,
-      jenkinsToolId: ""
     }
 };
 
