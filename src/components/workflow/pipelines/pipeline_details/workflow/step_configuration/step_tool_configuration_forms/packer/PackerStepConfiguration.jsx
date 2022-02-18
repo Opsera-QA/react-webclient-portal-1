@@ -82,10 +82,10 @@ function PackerStepConfiguration({ pipelineId, stepTool, stepId, createJob, clos
       <PackerGitBranchSelectInput model={packerStepConfigurationModel} setModel={setPackerStepConfigurationModel} />
       <TextInputBase dataObject={packerStepConfigurationModel} fieldName={"gitFilePath"} setDataObject={setPackerStepConfigurationModel}/>
       <PackerTagSelectInput model={packerStepConfigurationModel} setModel={setPackerStepConfigurationModel} />
-      <PackerEnvironmentVariables dataObject={packerStepConfigurationModel} setDataObject={setPackerStepConfigurationModel} />
-      <PackerCustomScriptSubForm model={packerStepConfigurationModel} setModel={setPackerStepConfigurationModel} />
       <PackerCloudProviderSelectInput dataObject={packerStepConfigurationModel} setDataObject={setPackerStepConfigurationModel} fieldName={"cloudProvider"} />
       <PackerCloudCredentialSubForm model={packerStepConfigurationModel} setModel={setPackerStepConfigurationModel} cloudProvider={packerStepConfigurationModel?.getData("cloudProvider")} />      
+      <PackerCustomScriptSubForm model={packerStepConfigurationModel} setModel={setPackerStepConfigurationModel} />
+      <PackerEnvironmentVariables dataObject={packerStepConfigurationModel} setDataObject={setPackerStepConfigurationModel} />
     </PipelineStepEditorPanelContainer>
   );
 }
