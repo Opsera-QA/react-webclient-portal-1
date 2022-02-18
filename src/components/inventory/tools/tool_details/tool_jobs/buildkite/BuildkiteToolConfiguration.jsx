@@ -62,7 +62,7 @@ function BuildkiteToolConfiguration({ toolData }) {
       model={buildkiteConfigurationDto}
       setModel={setBuildkiteConfigurationDto}
       persistRecord={saveBuildkiteToolConfiguration}
-      // toolConnectionCheckName={"buildkite"}
+      toolConnectionCheckName={"buildkite"}
       toolData={toolData}
     >
       <Row>
