@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
-import terraformStepActions from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/terraform-step-actions";
+import packerStepActions from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/packer/packer-step-actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const PackerTagSelectInput = ({
@@ -17,7 +17,7 @@ const PackerTagSelectInput = ({
 
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [terraformTags, setTerraformTags] = useState([]);
+  const [packerTags, setPackerTags] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -47,7 +47,7 @@ const PackerTagSelectInput = ({
   const loadData = async (cancelSource = cancelTokenSource) => {
     setIsLoading(true);
     try {
-      await getTerraformTags(cancelSource);
+      await getPackerTags(cancelSource);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     } finally {
@@ -55,11 +55,11 @@ const PackerTagSelectInput = ({
     }
   };
 
-  const getTerraformTags = async (cancelSource) => {
+  const getPackerTags = async (cancelSource) => {
     try {
-      const response = await terraformStepActions.getTerraformTags(getAccessToken, cancelTokenSource);      
+      const response = await packerStepActions.getPackerTags(getAccessToken, cancelSource);
       if(response?.data?.status === 200 && Array.isArray(response?.data?.data)){        
-        setTerraformTags(response.data.data);
+        setPackerTags(response.data.data);
       }
 
     } catch (error) {
@@ -73,12 +73,12 @@ const PackerTagSelectInput = ({
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={terraformTags}
+      selectOptions={packerTags}
       textField={textField}
       valueField={valueField}
       busy={isLoading}
       placeholderText="Select Packer Version"
-      disabled={disabled || isLoading || (!isLoading && (terraformTags == null || terraformTags.length === 0))}
+      disabled={disabled || isLoading || (!isLoading && (packerTags == null || packerTags.length === 0))}
     />
   );
 };

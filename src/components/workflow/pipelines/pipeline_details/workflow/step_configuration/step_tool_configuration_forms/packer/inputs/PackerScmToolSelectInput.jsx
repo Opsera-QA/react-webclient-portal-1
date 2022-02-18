@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase
   from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
-function TerraformScmToolSelectInput({model, setModel, className, disabled}) {
+function PackerScmToolSelectInput({model, setModel, className, disabled}) {
   return (
      <RoleRestrictedToolByIdentifierInputBase
        fieldName={"gitToolId"}
@@ -17,11 +17,11 @@ function TerraformScmToolSelectInput({model, setModel, className, disabled}) {
   );
 }
 
-TerraformScmToolSelectInput.propTypes = {
+PackerScmToolSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string
 };
 
-export default TerraformScmToolSelectInput;
+export default PackerScmToolSelectInput;
