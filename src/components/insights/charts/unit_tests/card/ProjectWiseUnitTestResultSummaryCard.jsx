@@ -18,6 +18,7 @@ import {
   METRIC_THEME_CHART_PALETTE_COLORS
 } from "components/common/helpers/metrics/metricTheme.helpers";
 import MetricPipelineInfoSubheader from "components/common/metrics/subheaders/MetricPipelineInfoSubheader";
+import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
 function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
 
   const [unitTestMetricScorecardDto, setUnitTestMetricScorecardDto] = useState(undefined);
@@ -72,7 +73,7 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
         <MetricPipelineInfoSubheader
           pipelineName={unitTestMetricScorecardDto.getData('pipelineName')}
           pipelineRunCount={unitTestMetricScorecardDto.getData('runCount')}
-          pipelineDuration={unitTestMetricScorecardDto.getData('test_execution_time')}
+          pipelineDuration={getTimeDisplay(unitTestMetricScorecardDto.getData('test_execution_time'))}
         />
         <Row className="d-flex align-items-center">
           <Col sm={12} md={6} lg={6}> 
