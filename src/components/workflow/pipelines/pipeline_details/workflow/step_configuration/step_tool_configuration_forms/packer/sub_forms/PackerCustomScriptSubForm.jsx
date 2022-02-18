@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import PackerCustomScriptSelectInput from "../inputs/custom_scripts/PackerCustomScriptSelectInput";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import PackerInputParameters from "../inputs/PackerInputParameters";
-import PackerEnvironmentVariables from "../inputs/custom_scripts/PackerEnvironmentVariables";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import PackerVariablesFilesInput from "../inputs/PackerVariablesFilesInput";
 
@@ -13,13 +12,7 @@ function PackerCustomScriptSubForm({ model, setModel }) {
   const getScriptFields = () => {
     if(model?.getData("customScript")){
       return (
-        <>
-          <TextAreaInput dataObject={model} fieldName={"commands"} setDataObject={setModel}/>
-          <PackerEnvironmentVariables
-            dataObject={model}
-            setDataObject={setModel}
-          />
-        </>
+        <TextAreaInput dataObject={model} fieldName={"commands"} setDataObject={setModel}/>
       );
     }
 

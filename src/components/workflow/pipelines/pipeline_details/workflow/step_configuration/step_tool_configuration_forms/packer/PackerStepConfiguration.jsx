@@ -14,6 +14,7 @@ import PackerCloudProviderSelectInput from "components/workflow/pipelines/pipeli
 import PackerTagSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/packer/inputs/PackerTagSelectInput";
 import PackerCloudCredentialSubForm from "./sub_forms/PackerCloudCredentialSubForm";
 import PackerCustomScriptSubForm from "./sub_forms/PackerCustomScriptSubForm";
+import PackerEnvironmentVariables from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/packer/inputs/PackerEnvironmentVariables";
 
 function PackerStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -81,6 +82,7 @@ function PackerStepConfiguration({ pipelineId, stepTool, stepId, createJob, clos
       <PackerGitBranchSelectInput model={packerStepConfigurationModel} setModel={setPackerStepConfigurationModel} />
       <TextInputBase dataObject={packerStepConfigurationModel} fieldName={"gitFilePath"} setDataObject={setPackerStepConfigurationModel}/>
       <PackerTagSelectInput model={packerStepConfigurationModel} setModel={setPackerStepConfigurationModel} />
+      <PackerEnvironmentVariables dataObject={model} setDataObject={setModel} />
       <PackerCustomScriptSubForm model={packerStepConfigurationModel} setModel={setPackerStepConfigurationModel} />
       <PackerCloudProviderSelectInput dataObject={packerStepConfigurationModel} setDataObject={setPackerStepConfigurationModel} fieldName={"cloudProvider"} />
       <PackerCloudCredentialSubForm model={packerStepConfigurationModel} setModel={setPackerStepConfigurationModel} cloudProvider={packerStepConfigurationModel?.getData("cloudProvider")} />      
