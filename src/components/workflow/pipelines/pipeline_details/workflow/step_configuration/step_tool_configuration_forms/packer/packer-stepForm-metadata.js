@@ -55,8 +55,7 @@ const PackerStepFormMetadata = {
     },    
     {
       label: "Cloud Provider",
-      id: "cloudProvider",
-      isRequired: true
+      id: "cloudProvider"
     },
     {
       label: "Packer Version",
@@ -94,6 +93,10 @@ const PackerStepFormMetadata = {
     {
       label: "Packer Variables Files",
       id: "inputFilePaths"
+    },
+    {
+      label: "Input File Name",
+      id: "inputFileName"
     },
   ],
   fieldsAlt: [
@@ -153,8 +156,7 @@ const PackerStepFormMetadata = {
     },    
     {
       label: "Cloud Provider",
-      id: "cloudProvider",
-      isRequired: true
+      id: "cloudProvider"
     },
     {
       label: "Packer Version",
@@ -193,6 +195,10 @@ const PackerStepFormMetadata = {
       label: "Packer Variables Files",
       id: "inputFilePaths"
     },
+    {
+      label: "Input File Name",
+      id: "inputFileName"
+    },
   ],
   newObjectFields: {
     gitFilePath: "",
@@ -220,6 +226,7 @@ const PackerStepFormMetadata = {
     environmentVariables: [],
     isVariableFile: false,
     inputFilePaths: [],
+    inputFileName: "",
   }
 };
 
