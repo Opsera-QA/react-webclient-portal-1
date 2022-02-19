@@ -40,6 +40,9 @@ const InformaticaRunAssistantMigrationObjectList = (
     `);
   };
 
+  const searchFunction = (item, searchTerm) => {
+    return item.path.toLowerCase().includes(searchTerm.toLowerCase());
+  };
 
   return (
     <div>
@@ -48,6 +51,7 @@ const InformaticaRunAssistantMigrationObjectList = (
         fieldName={"selectedMigrationObjects"}
         valueField={"_id"}
         selectOptions={migrationObjects}
+        searchFunction={searchFunction}
         showSelectAllButton={true}
         dataObject={informaticaRunParametersModel}
         setDataObject={setInformaticaRunParametersModel}

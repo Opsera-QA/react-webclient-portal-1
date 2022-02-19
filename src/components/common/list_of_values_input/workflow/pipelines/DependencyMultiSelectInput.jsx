@@ -281,6 +281,11 @@ export const itemArray = [
     "version": "5.0",
   },
   {
+    "name": ".NET Version 6.0",
+    "dependencyType" : "dotnet",
+    "version": "6.0",
+  },
+  {
     "name": "Python 2",
     "dependencyType" : "python",
     "version": "2.0",
