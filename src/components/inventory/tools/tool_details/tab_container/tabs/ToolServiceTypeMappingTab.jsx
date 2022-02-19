@@ -2,9 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
 export const SERVICE_MAPPING_SUPPORTED_TOOL_IDENTIFIERS = [
-  "informatica",
+  toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA,
 ];
 
 function ToolServiceTypeMappingTab({ toolModel, handleTabClick, activeTab }) {
