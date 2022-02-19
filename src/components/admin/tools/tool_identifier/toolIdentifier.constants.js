@@ -1,7 +1,7 @@
 // TODO: Please keep aligned with node's version, keep alphabetized, and remove inaccurate tool identifiers
-export const TOOL_IDENTIFIER_CONSTANTS = {};
+export const toolIdentifierConstants = {};
 
-TOOL_IDENTIFIER_CONSTANTS.TOOL_IDENTIFIERS = {
+toolIdentifierConstants.TOOL_IDENTIFIERS = {
   ANCHORE_INTEGRATOR: "anchore-integrator",
   ANCHORE_SCAN: "anchore-scan",
   ANSIBLE: "ansible",
