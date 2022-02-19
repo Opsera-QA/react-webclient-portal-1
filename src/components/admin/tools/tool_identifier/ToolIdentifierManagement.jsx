@@ -64,6 +64,33 @@ function ToolIdentifierManagement() {
       const toolIdentifierResponse = await toolManagementActions.getToolIdentifiersV2(getAccessToken, cancelSource);
 
       if (isMounted?.current === true) {
+        const toolIdentifiers = toolIdentifierResponse?.data;
+
+        // tool-identifier: tool-identifier
+        let typesJson = {
+
+        };
+
+        // tool-identifier: label
+        let labelsJson = {
+
+        };
+
+
+        toolIdentifiers.forEach((toolIdentifier) => {
+          const label = toolIdentifier.name;
+          const identifier = toolIdentifier.identifier;
+
+          typesJson[identifier] = identifier;
+          labelsJson[identifier] = label;
+        });
+
+
+        console.log(`types: ${JSON.stringify(typesJson)}`);
+        console.log(`labels: ${JSON.stringify(labelsJson)}`);
+
+
+
         setToolIdentifiers(toolIdentifierResponse?.data);
       }
     } catch (error) {

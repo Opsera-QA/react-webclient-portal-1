@@ -110,6 +110,11 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
     }
   };
 
+  // <DocumentationListItem
+  //   label={"Organizations"}
+  //   description={"Manage Terraform cloud organizations"}
+  // />
+
   const getHelpDocumentation = () => {
     return (
       <div>
