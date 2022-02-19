@@ -8,14 +8,21 @@ const notificationLevels = [
   { value: "all", label: "All Activity", message: "You will receive notifications for any activity on this step." },
 ];
 
-function NotificationLevelInput({ fieldName, dataObject, setDataObject, disabled, visible}) {
+function NotificationLevelInput(
+  {
+    fieldName,
+    dataObject,
+    setDataObject,
+    disabled,
+    visible,
+  }) {
   const getPlaceholderText = () => {
-    if (dataObject.getData("enabled") === false) {
+    if (dataObject?.getData("enabled") === false) {
       return "Notifications must be enabled before selecting Notification Level.";
     }
   };
 
-  if (!visible) {
+  if (visible === false) {
     return <></>;
   }
 
@@ -39,10 +46,6 @@ NotificationLevelInput.propTypes = {
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool
-};
-
-NotificationLevelInput.defaultProps = {
-  visible: true
 };
 
 export default NotificationLevelInput;

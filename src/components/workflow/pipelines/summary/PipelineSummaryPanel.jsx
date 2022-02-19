@@ -35,6 +35,8 @@ import {
   PIPELINE_TYPE_SELECT_OPTIONS
 } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import axios from "axios";
+import PipelineDurationMetricsStandaloneField
+  from "components/common/fields/pipelines/metrics/PipelineDurationMetricsStandaloneField";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -519,6 +521,7 @@ function PipelineSummaryPanel(
               </Col>
             </>
           }
+
           {pipeline.workflow?.last_run?.completed &&
           <Col sm={12} className="py-2">
             <span className="text-muted mr-1">Summary:</span> Last complete run of pipeline finished on {
@@ -536,6 +539,12 @@ function PipelineSummaryPanel(
           </Col>
           }
 
+          {/*<Col sm={12}>*/}
+          {/*  <PipelineDurationMetricsStandaloneField*/}
+          {/*    pipelineId={pipeline?._id}*/}
+          {/*    pipelineRunCount={pipeline?.workflow?.run_count}*/}
+          {/*  />*/}
+          {/*</Col>*/}
         </Row>
       </div>
     </>

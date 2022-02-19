@@ -1,12 +1,19 @@
 import React, {useContext, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSave, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {faSave} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import IconBase from "components/common/icons/IconBase";
 
 // Note: this should only be used in special cases where Model-Wrapped objects don't make sense
-function StandaloneSaveButton({saveFunction, disable, type}) {
+function StandaloneSaveButton(
+  {
+    saveFunction,
+    disable,
+    type,
+    size,
+    className,
+  }) {
   let toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -25,28 +32,39 @@ function StandaloneSaveButton({saveFunction, disable, type}) {
   };
 
   const getLabel = () => {
-    if (isSaving) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Saving</span>);
-    }
-
-    return (<span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>Save</span>);
+    return isSaving === true ? "Saving" : "Save";
   };
 
   return (
-    <Button size="sm" disabled={isSaving || disable} onClick={() => persistRecord()}>
-      {getLabel()}
-    </Button>
+    <div className={className}>
+      <Button
+        size={size}
+        disabled={isSaving || disable}
+        onClick={() => persistRecord()}
+      >
+        <span>
+          <IconBase
+            isLoading={isSaving}
+            icon={faSave}
+            className={"mr-2"}
+          />
+          {getLabel()}
+        </span>
+      </Button>
+    </div>
   );
 }
 
 StandaloneSaveButton.propTypes = {
   saveFunction: PropTypes.func,
   disable: PropTypes.bool,
-  type: PropTypes.string
+  type: PropTypes.string,
+  size: PropTypes.string,
+  className: PropTypes.string,
 };
 
 StandaloneSaveButton.defaultProps = {
-  disable: false,
+  size: "sm",
 };
 
 export default StandaloneSaveButton;

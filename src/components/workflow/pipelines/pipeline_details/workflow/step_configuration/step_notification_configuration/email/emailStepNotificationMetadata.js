@@ -15,6 +15,10 @@ const emailStepNotificationMetadata = {
     {
       label: "Email Address",
       id: "address",
+    },
+    {
+      label: "Email Addresses",
+      id: "addresses",
       isRequired: true,
     },
     {
@@ -25,6 +29,7 @@ const emailStepNotificationMetadata = {
   newObjectFields: {
     type: "email",
     address: "",
+    addresses: [],
     event: "error",
     enabled: false,
   }
