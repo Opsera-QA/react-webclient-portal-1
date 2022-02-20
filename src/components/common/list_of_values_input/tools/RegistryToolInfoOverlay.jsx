@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import ToolInfoContainer from "components/common/fields/inventory/tools/ToolInfoContainer";
 import ToolsTable from "components/inventory/tools/ToolsTable";
-import {faTools, faWandMagic} from "@fortawesome/pro-light-svg-icons";
+import {faTools} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import TableCardView from "components/common/table/TableCardView";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
@@ -97,7 +97,7 @@ function RegistryToolInfoOverlay(
       closePanel={closePanel}
       showPanel={true}
       titleText={`Tool Details`}
-      titleIcon={faWandMagic}
+      titleIcon={faTools}
       showToasts={true}
       fullWidth={true}
     >
