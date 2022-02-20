@@ -165,7 +165,7 @@ function JenkinsRegistryToolJobSelectInput(
       groupBy={(job) => getJenkinsJobTypeLabelForValue(job?.type)}
       valueField={valueField}
       textField={textField}
-      infoOverlay={renderOverlayTrigger()}
+      // infoOverlay={renderOverlayTrigger()}
       clearDataFunction={clearDataFunction}
       disabled={disabled || jenkinsToolId === ""}
     />
