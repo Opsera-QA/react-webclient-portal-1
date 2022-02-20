@@ -36,6 +36,7 @@ function ToastContextProvider({children, navBar}) {
   const [bannerMessages, setBannerMessages] = useState([]);
   const [inlineBanner, setInlineBanner] = useState(undefined);
   const [overlayPanel, setOverlayPanel] = useState(undefined);
+  const [infoOverlayPanel, setInfoOverlayPanel] = useState(undefined);
 
   const removeAllBanners = useCallback(() => {
       setBannerMessages([]);
@@ -73,10 +74,25 @@ function ToastContextProvider({children, navBar}) {
     }, [setOverlayPanel]
   );
 
+  const addInfoOverlayPanel = useCallback((infoOverlayPanel) => {
+      if (infoOverlayPanel != null) {
+        document.body.style.overflow = 'hidden';
+        window.scrollTo(0, 0);
+      }
+
+      setInfoOverlayPanel(infoOverlayPanel);
+    }, [setInfoOverlayPanel]
+  );
+
   const clearOverlayPanel = useCallback(() => {
       document.body.style.overflow = 'unset';
       setOverlayPanel(undefined);
     }, [setOverlayPanel]
+  );
+
+  const clearInfoOverlayPanel = useCallback(() => {
+      setInfoOverlayPanel(undefined);
+    }, [setInfoOverlayPanel]
   );
 
   const showModal = useCallback((modal) => {
@@ -389,6 +405,10 @@ function ToastContextProvider({children, navBar}) {
     addOverlayPanel(overlayPanel);
   };
 
+  const showInfoOverlayPanel = (overlayPanel) => {
+    addInfoOverlayPanel(overlayPanel);
+  };
+
   const showInlineErrorMessage = (error, prependMessage) => {
     let id = generateUUID();
     let inlineErrorBanner = getInlineErrorBanner(error, id, prependMessage);
@@ -583,13 +603,16 @@ function ToastContextProvider({children, navBar}) {
         getInlineBanner: getInlineBanner,
         removeInlineMessage: removeInlineMessage,
 
-        clearToastsArray: clearToastsArray, //tmp solution till next version of toasts
+        clearToastsArray: clearToastsArray,
 
         showOverlayPanel: showOverlayPanel,
         clearOverlayPanel: clearOverlayPanel,
+        showInfoOverlayPanel: showInfoOverlayPanel,
+        clearInfoOverlayPanel: clearInfoOverlayPanel,
         showModal: showModal,
         clearModal: clearModal
       }}>
+      <OverlayPanelContainer overlayPanel={infoOverlayPanel}/>
       <OverlayPanelContainer overlayPanel={overlayPanel}/>
       {navBar}
       <SiteNotificationDisplayer/>

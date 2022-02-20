@@ -8,6 +8,8 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import {Link} from "react-router-dom";
 import InfoOverlayContainer from "components/common/inputs/info_text/InfoOverlayContainer";
 import {getJenkinsJobTypeLabelForValue} from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobTypeSelectInput";
+import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import {faTools} from "@fortawesome/pro-light-svg-icons";
 
 function JenkinsRegistryToolJobSelectInput(
   {
@@ -112,6 +114,10 @@ function JenkinsRegistryToolJobSelectInput(
     return ("Select Jenkins Job");
   };
 
+  const closePanel = () => {
+    toastContext.clearInfoOverlayPanel();
+  };
+
   // TODO: Make tool job overlay
   const renderOverlayTrigger = () => {
     const toolJobId = model?.getData(fieldName);
@@ -120,31 +126,38 @@ function JenkinsRegistryToolJobSelectInput(
 
     if (jenkinsJob) {
       return (
-        <InfoOverlayContainer title={"Jenkins Job Details"}>
-            <div>
-              <div className="text-muted mb-2">
-                Configuration details for this item are listed below. Tool and account specific settings are stored in
-                the
-                <Link to="/inventory/tools">Tool Registry</Link>. To add a new entry to a dropdown or update settings,
-                make those changes there.
-              </div>
-              {jenkinsJob?.configuration && (
-                <>
-                  {Object.entries(jenkinsJob?.configuration).map(function (a) {
-                    return (
-                      <div key={a}>
-                        {a[1] != null && a[1].length > 0 && (
-                          <>
-                            <span className="text-muted pr-1">{a[0]}: </span> {a[1]}
-                          </>
-                        )}
-                      </div>
-                    );
-                  })}
-                </>
-              )}
+        <FullScreenCenterOverlayContainer
+          closePanel={closePanel}
+          showPanel={true}
+          titleText={`Tool Job Details`}
+          titleIcon={faTools}
+          showToasts={true}
+          fullWidth={true}
+        >
+          <div className={"p-2"}>
+            <div className="text-muted mb-2">
+              Configuration details for this item are listed below. Tool and account specific settings are stored in
+              the
+              <Link to="/inventory/tools">Tool Registry</Link>. To add a new entry to a dropdown or update settings,
+              make those changes there.
             </div>
-        </InfoOverlayContainer>
+            {jenkinsJob?.configuration && (
+              <>
+                {Object.entries(jenkinsJob?.configuration).map(function (a) {
+                  return (
+                    <div key={a}>
+                      {a[1] != null && a[1].length > 0 && (
+                        <>
+                          <span className="text-muted pr-1">{a[0]}: </span> {a[1]}
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
+              </>
+            )}
+          </div>
+        </FullScreenCenterOverlayContainer>
       );
     }
   };
