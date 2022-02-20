@@ -12,6 +12,7 @@ import genericChartFilterMetadata from "components/insights/charts/generic_filte
 import {faProjectDiagram} from "@fortawesome/pro-light-svg-icons";
 import ProjectDetailsMetadata from "components/insights/summary/project-details-metadata";
 import FilterContainer from "components/common/table/FilterContainer";
+import {ANALYTICS_TEXT_CONSTANTS} from "components/common/constants/text/analytics/analytics.text.constants";
 
 function PipelinesByProjectTable({dashboardData, setDashboardData}) {
   const fields = ProjectDetailsMetadata.fields;
@@ -74,7 +75,6 @@ function PipelinesByProjectTable({dashboardData, setDashboardData}) {
     }
   };
 
-  const noDataMessage = "No Data is available for this chart at this time";
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "project")),
@@ -95,7 +95,7 @@ function PipelinesByProjectTable({dashboardData, setDashboardData}) {
       <CustomTable
         columns={columns}
         data={metrics}
-        noDataMessage={noDataMessage}
+        noDataMessage={ANALYTICS_TEXT_CONSTANTS.NO_CHART_DATA_MESSAGE}
         paginationDto={tableFilterDto}
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
