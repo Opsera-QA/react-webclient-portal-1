@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "@fortawesome/fontawesome-pro/css/all.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "dhx-suite-package/codebase/suite.css";
+import "@opsera/dhx-suite-package/codebase/suite.css";
 import "react-widgets/styles.css";
 import "css/general/theme.css";
 import "css/general/field.css";

@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {Timepicker} from "dhx-suite-package";
+import {Timepicker} from "@opsera/dhx-suite-package";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
