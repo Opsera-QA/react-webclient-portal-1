@@ -227,8 +227,20 @@
     cursor: pointer !important;
 }
 
+.custom-control-input:disabled~.custom-control-label::before,
+.custom-control-input[disabled]~.custom-control-label::before,
+.custom-control-input:disabled~.custom-control-label::after,
+.custom-control-input[disabled]~.custom-control-label::after,
+input[disabled] {
+    cursor: not-allowed !important;
+}
+
 .toggle-alignment {
     margin-top: .9rem;
+}
+
+.toggle-label-alignment {
+    margin-top: 1px;
 }
 
 /* End Toggle Styling*/
