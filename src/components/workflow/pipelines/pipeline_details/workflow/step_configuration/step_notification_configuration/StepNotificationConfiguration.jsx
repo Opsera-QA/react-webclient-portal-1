@@ -140,6 +140,7 @@ function StepNotificationConfiguration({ pipeline, stepId, handleCloseClick }) {
     if (validateRequiredFields()) {
       const newNotificationConfiguration = [emailNotificationModel.getPersistData(), slackDto.getPersistData(), jiraDto.getPersistData(), teamsDto.getPersistData(), serviceNowDto.getPersistData()];
       await pipelineActions.updatePipelineStepNotificationConfiguration(getAccessToken, cancelTokenSource, pipeline?._id, stepId, newNotificationConfiguration);
+      toastContext.showSaveSuccessToast("Pipeline Notification Configuration");
     }
   };
 
@@ -167,7 +168,7 @@ function StepNotificationConfiguration({ pipeline, stepId, handleCloseClick }) {
       toastContext.showErrorDialog("Error: Cannot enable Slack notifications without all required fields filled out.");
       return false;
     }
-    
+
     if (serviceNowDto.getData("enabled") === true && !serviceNowDto.isModelValid()) {
       toastContext.showErrorDialog("Error: Cannot enable ServiceNow notifications without all required fields filled out.");
       return false;

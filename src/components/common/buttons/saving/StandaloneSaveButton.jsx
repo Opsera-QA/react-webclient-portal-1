@@ -46,9 +46,7 @@ function StandaloneSaveButton(
       }
     }
     catch (error) {
-      if (showToasts !== false) {
-        toastContext.showSaveFailureToast(type, error);
-      }
+      toastContext.showSaveFailureToast(type, error);
     }
     finally {
       if (isMounted?.current === true) {
