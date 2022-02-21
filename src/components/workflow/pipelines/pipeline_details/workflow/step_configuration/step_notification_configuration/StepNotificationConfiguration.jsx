@@ -394,6 +394,7 @@ function StepNotificationConfiguration({ pipeline, stepId, handleCloseClick }) {
           type={"Pipeline Notification Step Configurations"}
           saveFunction={updateStepNotificationConfiguration}
           size={"md"}
+          showToasts={false}
         />
         <CloseButton
           closeEditorCallback={handleCloseClick}
