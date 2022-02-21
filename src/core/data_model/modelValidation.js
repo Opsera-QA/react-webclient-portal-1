@@ -62,7 +62,17 @@ export const fieldValidation = (value, data, field) => {
   if (field.isEmail === true) {
     if (!validateEmail(value))
     {
-      errorMessages.push("The email address given is not valid.");
+      errorMessages.push(`The email address ${value} is not valid.`);
+    }
+  }
+
+  if (field.isEmailArray === true) {
+    if (Array.isArray(value) && value?.length > 0) {
+      value?.forEach((potentialEmail) => {
+        if (validateEmail(potentialEmail) !== true) {
+          errorMessages.push(`The email address ${potentialEmail} is not valid.`);
+        }
+      });
     }
   }
 
