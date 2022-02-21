@@ -18,8 +18,6 @@ const CLOUD_PROVIDER_OPTIONS = [
 ];
 
 function PackerCloudProviderSelectInput({dataObject, setDataObject, disabled, fieldName}) {
-  
-  console.log({dataObject, setDataObject, disabled, fieldName});
 
   return (    
     <SelectInputBase
