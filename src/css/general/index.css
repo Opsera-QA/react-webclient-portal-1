@@ -175,6 +175,10 @@ primary analytics font*/
     cursor: default
 }
 
+.not-allowed-cursor {
+    cursor: not-allowed;
+}
+
 .vertical-align-item {
     vertical-align: middle;
 }
