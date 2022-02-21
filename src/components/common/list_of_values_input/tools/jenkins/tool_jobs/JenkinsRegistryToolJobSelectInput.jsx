@@ -6,7 +6,6 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {Link} from "react-router-dom";
-import InfoOverlayContainer from "components/common/inputs/info_text/InfoOverlayContainer";
 import {getJenkinsJobTypeLabelForValue} from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobTypeSelectInput";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
