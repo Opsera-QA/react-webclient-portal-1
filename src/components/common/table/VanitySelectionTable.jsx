@@ -50,6 +50,7 @@ function VanitySelectionTable(
       }
     }
 
+    row?.setSetStateFunction(setParentModel);
     setParentModel({...row});
     return true;
   };
