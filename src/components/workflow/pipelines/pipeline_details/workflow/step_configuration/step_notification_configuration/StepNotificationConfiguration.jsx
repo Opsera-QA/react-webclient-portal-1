@@ -140,6 +140,7 @@ function StepNotificationConfiguration({ pipeline, stepId, handleCloseClick }) {
     if (validateRequiredFields()) {
       const newNotificationConfiguration = [emailNotificationModel.getPersistData(), slackDto.getPersistData(), jiraDto.getPersistData(), teamsDto.getPersistData(), serviceNowDto.getPersistData()];
       await pipelineActions.updatePipelineStepNotificationConfiguration(getAccessToken, cancelTokenSource, pipeline?._id, stepId, newNotificationConfiguration);
+      toastContext.showSaveSuccessToast("Pipeline Notification Configuration");
     }
   };
 
