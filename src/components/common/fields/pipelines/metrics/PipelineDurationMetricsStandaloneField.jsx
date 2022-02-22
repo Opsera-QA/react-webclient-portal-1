@@ -7,7 +7,7 @@ import {parseError} from "components/common/helpers/error-helpers";
 import pipelineActivityLogsActions
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineActivityLogs.actions";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
-import LoadingDialog from "components/common/status_notifications/loading";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 function PipelineDurationMetricsStandaloneField({ pipelineId, pipelineRunCount, className }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -71,11 +71,13 @@ function PipelineDurationMetricsStandaloneField({ pipelineId, pipelineRunCount, 
   };
 
   const getBody = () => {
-    if (isLoading === true) {
+    if (pipelineRunCount < 5) {
       return (
-        <LoadingDialog
-          size={"sm"}
-          message={"Loading Pipeline Duration Metrics"}
+        <StandaloneTextFieldBase
+          text={pipelineDurationMetrics?.humanizedLastRunDuration}
+          label={"Last Pipeline Run Duration"}
+          className={"py-2"}
+          isBusy={isLoading}
         />
       );
     }
@@ -83,14 +85,16 @@ function PipelineDurationMetricsStandaloneField({ pipelineId, pipelineRunCount, 
     return (
       <>
         <StandaloneTextFieldBase
-          text={pipelineDurationMetrics?.humanizedLastRunDuration}
+          text={pipelineDurationMetrics?.humanizedLastRunDuration || "No Valid Metrics to Display"}
           label={"Last Pipeline Run Duration"}
           className={"py-2"}
+          isBusy={isLoading}
         />
         <StandaloneTextFieldBase
-          text={pipelineDurationMetrics?.humanizedLastFiveRunsAverageDuration}
+          text={pipelineDurationMetrics?.humanizedLastFiveRunsAverageDuration || "No Valid Metrics to Display"}
           label={"Last Five Pipeline Runs Average Duration"}
           className={"py-2"}
+          isBusy={isLoading}
         />
       </>
     );
@@ -104,6 +108,7 @@ function PipelineDurationMetricsStandaloneField({ pipelineId, pipelineRunCount, 
   return (
     <div className={className}>
       {getBody()}
+      <InfoText errorMessage={errorMessage} />
     </div>
   );
 }
