@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { axiosApiService } from "api/apiService";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import Modal from "components/common/modal/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,6 +29,12 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 import "./step_configuration/helpers/step-validation-helper";
 import StepValidationHelper from "./step_configuration/helpers/step-validation-helper";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import StepNotificationConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/StepNotificationConfiguration";
+import PipelineStepNotificationConfigurationOverlay
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/PipelineStepNotificationConfigurationOverlay";
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
@@ -48,8 +53,10 @@ const PipelineWorkflowItem = (
     customerAccessRules,
     parentWorkflowStatus,
     toolIdentifier,
+    loadPipeline,
   }) => {
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [currentStatus, setCurrentStatus] = useState({});
   const [itemState, setItemState] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -172,8 +179,19 @@ const PipelineWorkflowItem = (
     }
 
     setIsLoading(true);
-    if (tool && tool.tool_identifier !== undefined) {
-      await parentCallbackEditItem({ type: type, tool_name: tool.tool_identifier, step_id: itemId });
+    if (hasStringValue(tool?.tool_identifier) === true) {
+      // if (type === "notification") {
+      //   toastContext.showOverlayPanel(
+      //     <PipelineStepNotificationConfigurationOverlay
+      //       pipeline={pipeline}
+      //       stepId={itemId}
+      //       loadPipeline={loadPipeline}
+      //     />
+      //   );
+      // }
+      // else {
+        await parentCallbackEditItem({type: type, tool_name: tool.tool_identifier, step_id: itemId});
+      // }
     } else {
       await parentCallbackEditItem({ type: type, tool_name: "", step_id: itemId });
     }
@@ -534,6 +552,7 @@ PipelineWorkflowItem.propTypes = {
   customerAccessRules: PropTypes.object,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   toolIdentifier: PropTypes.object,
+  loadPipeline: PropTypes.func,
 };
 
 export default PipelineWorkflowItem;

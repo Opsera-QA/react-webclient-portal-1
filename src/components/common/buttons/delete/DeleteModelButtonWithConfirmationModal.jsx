@@ -31,7 +31,6 @@ function DeleteModelButtonWithConfirmation({model, disabled, afterDeleteFunction
     }
     catch (error) {
       toastContext.showDeleteFailureResultDialog(model?.getType(), error);
-      console.error(error);
     }
     finally {
       if (isMounted?.current === true) {

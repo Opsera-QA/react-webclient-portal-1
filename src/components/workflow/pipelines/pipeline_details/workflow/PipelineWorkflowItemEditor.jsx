@@ -93,16 +93,17 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
     </>);
   }
 
+  // TODO: Remove when overlay is pushed to master
   if (editItem.type === "notification") {
     return (<>
       {getTitleBar("Step Notification")}
       <div className="p-3 bg-white step-settings-container">
         {showToast && <div className="mb-2">{toast}</div>}
         <StepNotificationConfiguration
-          data={pipeline}
-          stepId={editItem.step_id}
+          pipeline={pipeline}
+          stepId={editItem?.step_id}
           handleCloseClick={handleCloseClick}
-          parentCallback={callbackFunctionTools}/>
+        />
       </div>
     </>);
   }

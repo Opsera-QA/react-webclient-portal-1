@@ -69,7 +69,7 @@ function ToolInfoContainer({ toolId }) {
           <div>To add a new entry to a dropdown or update settings, make those changes there.</div>
           <div>
             <Link to={`/inventory/tools/details/${toolId}`} target="_blank" rel="noopener noreferrer">
-              Click here to view the selected Tool&apos;s details
+              Click here to visit the selected Tool&apos;s Registry entry
             </Link>
           </div>
         </div>
@@ -96,7 +96,12 @@ function ToolInfoContainer({ toolId }) {
   };
 
   if (isLoading) {
-    return (<LoadingDialog size={"sm"} message={"Loading Tool Data"} />);
+    return (
+      <LoadingDialog
+        size={"sm"}
+        message={"Loading Tool Data"}
+      />
+    );
   }
 
   return (

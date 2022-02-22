@@ -204,6 +204,15 @@ pipelineActions.updatePipeline = async (pipelineId, postBody, getAccessToken) =>
   return response;
 };
 
+pipelineActions.updatePipelineStepNotificationConfiguration = async (getAccessToken, cancelTokenSource, pipelineId, stepId, notificationConfiguration) => {
+  const apiUrl = `/pipelines/v2/${pipelineId}/step/${stepId}/notifications/update/`;
+  const postBody = {
+    notification: notificationConfiguration,
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 pipelineActions.transferPipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId, newOwnerId) => {
   const apiUrl = `/pipelines/${pipelineId}/update/`;
   const postBody = {

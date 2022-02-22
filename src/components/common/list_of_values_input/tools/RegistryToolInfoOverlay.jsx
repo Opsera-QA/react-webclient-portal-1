@@ -1,12 +1,13 @@
-import React from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import InfoOverlayContainer from "components/common/inputs/info_text/InfoOverlayContainer";
 import {Link} from "react-router-dom";
 import ToolInfoContainer from "components/common/fields/inventory/tools/ToolInfoContainer";
 import ToolsTable from "components/inventory/tools/ToolsTable";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import TableCardView from "components/common/table/TableCardView";
+import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function RegistryToolInfoOverlay(
   {
@@ -21,6 +22,8 @@ function RegistryToolInfoOverlay(
     model,
     setModel,
   }) {
+  const toastContext = useContext(DialogToastContext);
+
   // TODO: This is a workaround until the tool info overlay is complete
   const rowClickFunction = (selectedTool) => {
     if (setDataFunction) {
@@ -31,7 +34,7 @@ function RegistryToolInfoOverlay(
         setModel({...model});
       }
     }
-    document.body.click();
+    toastContext.clearInfoOverlayPanel();
   };
 
   const getToolsTable = () => {
@@ -81,14 +84,27 @@ function RegistryToolInfoOverlay(
     );
   };
 
+  const closePanel = () => {
+    toastContext.clearInfoOverlayPanel();
+  };
+
   if (isMounted?.current !== true) {
     return null;
   }
 
   return (
-    <InfoOverlayContainer title={"Tool Details"}>
-      {getBody()}
-    </InfoOverlayContainer>
+    <FullScreenCenterOverlayContainer
+      closePanel={closePanel}
+      showPanel={true}
+      titleText={`Tool Details`}
+      titleIcon={faTools}
+      showToasts={true}
+      fullWidth={true}
+    >
+      <div className={"p-2"}>
+        {getBody()}
+      </div>
+    </FullScreenCenterOverlayContainer>
   );
 }
 

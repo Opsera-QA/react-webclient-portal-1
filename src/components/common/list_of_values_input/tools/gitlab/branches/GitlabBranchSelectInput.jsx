@@ -6,6 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {gitlabActions} from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
+import {errorHelpers} from "components/common/helpers/error-helpers";
 
 function GitlabBranchSelectInput(
   {
@@ -21,7 +22,7 @@ function GitlabBranchSelectInput(
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [gitlabBranches, setGitlabBranches] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState(undefined);
   const [placeholderText, setPlaceholderText] = useState("Select Gitlab Branch");
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
@@ -35,7 +36,7 @@ function GitlabBranchSelectInput(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setGitlabBranches([]);
-    setErrorMessage("");
+    setError(undefined);
     setPlaceholderText("Select Gitlab Branch");
 
     if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
@@ -55,9 +56,7 @@ function GitlabBranchSelectInput(
       setIsLoading(true);
       await loadGitlabBranches(cancelSource);
     } catch (error) {
-      setPlaceholderText("No Branches Available!");
-      setErrorMessage("There was an error pulling Gitlab Branches");
-      console.error(error);
+      setError(error);
     } finally {
       setIsLoading(false);
     }
@@ -86,7 +85,9 @@ function GitlabBranchSelectInput(
       textField={"name"}
       disabled={disabled}
       placeholderText={placeholderText}
-      errorMessage={errorMessage}
+      error={error}
+      pluralTopic={"Gitlab Branches"}
+      singularTopic={"Gitlab Branch"}
     />
   );
 }
