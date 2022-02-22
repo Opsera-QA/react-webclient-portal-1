@@ -9,8 +9,14 @@ toolsActions.checkToolConnectivityV2 = async (getAccessToken, cancelTokenSource,
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+// TODO: Remove and use deleteToolByIdV2 after all references are updated
 toolsActions.deleteToolV2 = async (getAccessToken, cancelToken, toolModel) => {
   const apiUrl = `/registry/${toolModel?.getData("_id")}`;
+  return baseActions.apiDeleteCallV2(getAccessToken, cancelToken, apiUrl);
+};
+
+toolsActions.deleteToolByIdV2 = async (getAccessToken, cancelToken, toolId) => {
+  const apiUrl = `/registry/${toolId}`;
   return baseActions.apiDeleteCallV2(getAccessToken, cancelToken, apiUrl);
 };
 
@@ -273,23 +279,6 @@ toolsActions.saveToolActions = async (toolData, configurationItem, getAccessToke
 toolsActions.getToolCounts = async (getAccessToken) => {
   const apiUrl = `/reports/tools/counts`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-toolsActions.getToolConnectionLog = async (getAccessToken, toolDataDto) => {
-  const apiUrl = `/registry/log/${toolDataDto.getData("_id")}?page=1&size=10`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-// TODO: Move to a Salesforce (DX) specific actions file
-toolsActions.checkSFDXToolConnection = async (getAccessToken, toolDataDto, selectedJenkinsId) => {
-  // console.log(toolDataDto);
-  const postBody = {
-    "jenkinsToolId": selectedJenkinsId,
-    "sfdcToolId": toolDataDto.getData("_id"),
-    "tool": "sfdc"
-  };
-  const apiUrl = `/tools/sfdc/check-connectivity`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 export default toolsActions;

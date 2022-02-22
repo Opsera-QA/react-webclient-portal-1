@@ -7,7 +7,7 @@ import toolMetadata from "components/inventory/tools/tool-metadata";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import JiraProjectDetailView
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/JiraProjectDetailView";
-import {jiraProjectMetadata} from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jiraProject.metadata";
+import {jiraToolProjectMetadata} from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jiraToolProject.metadata";
 import toolsActions from "components/inventory/tools/tools-actions";
 import axios from "axios";
 import ToolModel from "components/inventory/tools/tool.model";
@@ -88,7 +88,7 @@ function ToolProjectsView() {
   const getMetaData = (toolIdentifier) => {
     switch (toolIdentifier) {
       case "jira":
-        return jiraProjectMetadata;
+        return jiraToolProjectMetadata;
     }
   };
 

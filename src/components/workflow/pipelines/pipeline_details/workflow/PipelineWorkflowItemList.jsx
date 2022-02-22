@@ -246,6 +246,7 @@ function PipelineWorkflowItemList(
               parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog}
               parentWorkflowStatus={parentWorkflowStatus}
               toolIdentifier={getToolIdentifierForStep(item?.tool?.tool_identifier)}
+              loadPipeline={fetchPlan}
             />
           </div>
 

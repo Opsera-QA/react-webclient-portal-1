@@ -14,12 +14,12 @@ export const informaticaRunParameterConfigurationMetadata = {
     {
       label: "Location",
       id: "location",
-      regexDefinitionName: "alphanumericPlusSpacesAndForwardSlash",
+      regexDefinitionName: "informaticaLocationRules",
     },
     {
       label: "Update By",
       id: "updateBy",
-      regexDefinitionName: "generalTextWithSpaces",
+      regexDefinitionName: "email",
       maxLength: 1000,
     },
     {

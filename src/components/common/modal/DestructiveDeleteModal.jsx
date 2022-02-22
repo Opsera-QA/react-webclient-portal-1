@@ -6,6 +6,7 @@ import {cannotBeUndone} from "../tooltip/popover-text";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 
+// TODO: Remove after updating all references to use DestructiveDeleteConfirmationOverlay
 function DestructiveDeleteModal({ deleteTopic, deleteDetails, showModal, setShowModal, handleDelete, modalSize }) {
   const [confirmText, setConfirmText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);

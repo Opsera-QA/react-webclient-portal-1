@@ -333,6 +333,7 @@ function KpiSettingsForm({
     "build-deployment-statistics",
     "sdlc-duration-statistics",
     "sonar-ratings-v2",
+    "sonar-unit-testing",
   ];
 
   const getKpiFilters = (filter) => {

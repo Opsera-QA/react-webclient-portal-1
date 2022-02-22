@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from "react";
 import PropTypes from "prop-types";
-import {Timepicker} from "dhx-suite-package";
+import {Timepicker} from "@opsera/dhx-suite-package";
 
 // TODO: Utilize Opsera colors
 function TimeInputBase({ data, disabled, setDataFunction }) {

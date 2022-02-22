@@ -41,7 +41,7 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
   const getAccountsTabInformation = () => {
     if (doesToolSupportTab(toolIdentifier, TOOL_DETAIL_PANEL_TABS.ACCOUNTS) === true) {
       return (
-        <li><b>Accounts</b> - Register account credentials in the tool for use in pipelines. Adding accounts here will make them available inside relevant Pipeline steps. Option to select a configured Bitbucket, Coverity, Github or Gitlab or tool for use in pipelines.</li>
+        <li><b>Accounts</b> - Register account credentials in the tool for use in pipelines. Adding accounts here will make them available inside relevant Pipeline steps. Option to select a configured Bitbucket, Coverity, Github, Gitlab or Azure DevOps tool for use in pipelines.</li>
       );
     }
   };
