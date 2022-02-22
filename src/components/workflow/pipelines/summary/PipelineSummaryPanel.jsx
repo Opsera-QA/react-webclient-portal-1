@@ -539,12 +539,12 @@ function PipelineSummaryPanel(
           </Col>
           }
 
-          {/*<Col sm={12}>*/}
-          {/*  <PipelineDurationMetricsStandaloneField*/}
-          {/*    pipelineId={pipeline?._id}*/}
-          {/*    pipelineRunCount={pipeline?.workflow?.run_count}*/}
-          {/*  />*/}
-          {/*</Col>*/}
+          <Col sm={12}>
+            <PipelineDurationMetricsStandaloneField
+              pipelineId={pipeline?._id}
+              pipelineRunCount={pipeline?.workflow?.run_count}
+            />
+          </Col>
         </Row>
       </div>
     </>
