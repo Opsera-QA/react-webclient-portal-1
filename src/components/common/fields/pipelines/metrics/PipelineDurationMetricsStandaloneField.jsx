@@ -8,6 +8,7 @@ import pipelineActivityLogsActions
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineActivityLogs.actions";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import {numberHelpers} from "components/common/helpers/number/number.helpers";
 
 function PipelineDurationMetricsStandaloneField({ pipelineId, pipelineRunCount, className }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -29,7 +30,7 @@ function PipelineDurationMetricsStandaloneField({ pipelineId, pipelineRunCount, 
     setErrorMessage("");
 
 
-    if (isMongoDbId(pipelineId)) {
+    if (isMongoDbId(pipelineId) && numberHelpers.hasNumberValue(pipelineRunCount) === true && pipelineRunCount > 0) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
