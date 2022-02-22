@@ -1,4 +1,6 @@
-import {hasStringValue} from "components/common/helpers/string-helpers";
+import {capitalizeFirstLetter, hasStringValue} from "components/common/helpers/string-helpers";
+
+export const errorHelpers = {};
 
 // TODO: Handle better when error handling standards are in place
 export function parseError(error) {
@@ -48,3 +50,21 @@ export function parseError(error) {
     return "Unknown error reported. Please check your browser's console logs for more details";
   }
 }
+
+errorHelpers.parseApiErrorForInfoText = (topic = "data", error) => {
+  const parsedError = parseError(error);
+
+  if (hasStringValue(topic) !== true) {
+    topic = "data";
+  }
+
+  return `Error Pulling ${capitalizeFirstLetter(topic)}: ${parsedError}`;
+};
+
+errorHelpers.constructApiResponseErrorPlaceholderText = (topic = "data") => {
+  if (hasStringValue(topic) !== true) {
+    topic = "data";
+  }
+
+  return `Error Pulling ${capitalizeFirstLetter(topic)}!`;
+};
