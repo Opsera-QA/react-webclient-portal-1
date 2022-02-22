@@ -13,7 +13,14 @@ import DataPointEvaluationTriggerFilterSelectInput
 import DataPointEvaluationTriggerValuesInput
   from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/DataPointEvaluationTriggerValuesInput";
 
-function MetricDataPointEvaluationRuleInput({ruleData, updateRule, fieldName, icon, title}) {
+function MetricDataPointEvaluationRuleInputBase(
+  {
+    ruleData, 
+    updateRuleFunction, 
+    fieldName, 
+    icon, 
+    title,
+  }) {
   const [ruleModel, setRuleModel] = useState(undefined);
   const isMounted = useRef(false);
 
@@ -37,12 +44,12 @@ function MetricDataPointEvaluationRuleInput({ruleData, updateRule, fieldName, ic
     setRuleModel({...newModel});
   };
 
-  const updateRuleRow = (newModel) => {
+  const updateRuleFunctionRow = (newModel) => {
     setRuleModel(newModel);
-    updateRule(fieldName, newModel?.getPersistData());
+    updateRuleFunction(fieldName, newModel?.getPersistData());
   };
 
-  if (ruleModel == null) {
+  if (ruleModel == null || updateRuleFunction == null) {
     return null;
   }
 
@@ -57,14 +64,14 @@ function MetricDataPointEvaluationRuleInput({ruleData, updateRule, fieldName, ic
           <DataPointEvaluationTriggerFilterSelectInput
             model={ruleModel}
             setModel={setRuleModel}
-            updateRule={updateRuleRow}
+            updateRuleFunction={updateRuleFunctionRow}
           />
         </Col>
         <Col sm={12} lg={8}>
           <DataPointEvaluationTriggerValuesInput
             model={ruleModel}
             setModel={setRuleModel}
-            updateRule={updateRuleRow}
+            updateRuleFunction={updateRuleFunctionRow}
             triggerFilter={ruleModel?.getData("trigger_filter")}
           />
         </Col>
@@ -73,12 +80,12 @@ function MetricDataPointEvaluationRuleInput({ruleData, updateRule, fieldName, ic
   );
 }
 
-MetricDataPointEvaluationRuleInput.propTypes = {
+MetricDataPointEvaluationRuleInputBase.propTypes = {
   ruleData: PropTypes.object,
   fieldName: PropTypes.string,
-  updateRule: PropTypes.func,
+  updateRuleFunction: PropTypes.func,
   icon: PropTypes.object,
   title: PropTypes.string,
 };
 
-export default MetricDataPointEvaluationRuleInput;
+export default MetricDataPointEvaluationRuleInputBase;
