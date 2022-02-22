@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import {errorHelpers} from "components/common/helpers/error-helpers";
 
 function MultiSelectInputBase(
   {
@@ -32,9 +32,24 @@ function MultiSelectInputBase(
     onSearchFunction,
     formatDataFunction,
     parseValueFunction,
+    error,
+    singularTopic,
+    pluralTopic,
   }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
+  const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
+  const [internalErrorMessage, setInternalErrorMessage] = useState("");
+
+  useEffect(() => {
+    setInternalErrorMessage("");
+    setInternalPlaceholderText("");
+
+    if (error) {
+      setInternalPlaceholderText(errorHelpers.constructApiResponseErrorPlaceholderText(pluralTopic));
+      setInternalErrorMessage(errorHelpers.parseApiErrorForInfoText(pluralTopic, error));
+    }
+  }, [error]);
 
   // TODO: Implement
   // useEffect(() => {
@@ -130,6 +145,31 @@ function MultiSelectInputBase(
     }
   };
 
+  const getErrorMessage = () => {
+    if (hasStringValue(internalErrorMessage) === true) {
+      return internalErrorMessage;
+    }
+
+    if (hasStringValue(errorMessage) === true) {
+      return errorMessage;
+    }
+  };
+
+  const getPlaceholderText = () => {
+    if (hasStringValue(internalPlaceholderText) === true) {
+      return internalPlaceholderText;
+    }
+
+    if (hasStringValue(placeholderText) === true) {
+      return placeholderText;
+    }
+
+    if (hasStringValue(singularTopic) === true) {
+      return `Select a ${singularTopic}`;
+    }
+
+    return "Select One";
+  };
 
   if (field == null) {
     return null;
@@ -149,14 +189,14 @@ function MultiSelectInputBase(
         infoOverlay={infoOverlay}
       />
       <StandaloneMultiSelectInput
-        hasErrorState={hasStringValue(errorMessage) === true}
+        hasErrorState={hasStringValue(getErrorMessage()) === true}
         selectOptions={selectOptions}
         valueField={valueField}
         textField={textField}
         busy={busy}
         groupBy={groupBy}
         value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : []}
-        placeholderText={placeholderText}
+        placeholderText={getPlaceholderText()}
         disabled={disabled}
         setDataFunction={updateValue}
         onSearchFunction={onSearchFunction}
@@ -165,7 +205,7 @@ function MultiSelectInputBase(
         fieldName={fieldName}
         model={dataObject}
         field={field}
-        errorMessage={errorMessage}
+        errorMessage={getErrorMessage()}
         hideRegexDefinitionText={true}
       />
     </InputContainer>
@@ -203,6 +243,9 @@ MultiSelectInputBase.propTypes = {
   formatDataFunction: PropTypes.func,
   parseValueFunction: PropTypes.func,
   onSearchFunction: PropTypes.func,
+  error: PropTypes.any,
+  singularTopic: PropTypes.string,
+  pluralTopic: PropTypes.string,
 };
 
 export default MultiSelectInputBase;

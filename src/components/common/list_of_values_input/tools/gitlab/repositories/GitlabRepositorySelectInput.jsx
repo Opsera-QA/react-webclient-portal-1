@@ -22,8 +22,7 @@ function GitlabRepositorySelectInput(
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [gitlabRepositories, setGitlabRepositories] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Gitlab Repository");
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
 
@@ -35,7 +34,7 @@ function GitlabRepositorySelectInput(
     isMounted.current = true;
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-    setErrorMessage("");
+    setError(undefined);
     setGitlabRepositories([]);
 
     if (isMongoDbId(toolId) === true) {
@@ -55,9 +54,7 @@ function GitlabRepositorySelectInput(
       setIsLoading(true);
       await loadGitlabRepositories(cancelSource);
     } catch (error) {
-      setPlaceholderText("No Repositories Available!");
-      setErrorMessage("There was an error pulling Gitlab Repositories");
-      console.error(error);
+      setError(error);
     } finally {
       setIsLoading(false);
     }
@@ -68,7 +65,6 @@ function GitlabRepositorySelectInput(
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
-      setPlaceholderText("Select Gitlab Repository");
       setGitlabRepositories([...repositories]);
 
       const existingRepository = model?.getData(fieldName);
@@ -77,7 +73,7 @@ function GitlabRepositorySelectInput(
         const existingRepositoryExists = repositories.find((repository) => repository[valueField] === existingRepository);
 
         if (existingRepositoryExists == null) {
-          setErrorMessage(
+          setError(
             "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list."
           );
         }
@@ -94,11 +90,12 @@ function GitlabRepositorySelectInput(
       busy={isLoading}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
-      valueField={"name"}
-      textField={"name"}
+      valueField={valueField}
+      textField={textField}
       disabled={disabled}
-      placeholder={placeholder}
-      errorMessage={errorMessage}
+      singularTopic={"Gitlab Repository"}
+      pluralTopic={"Gitlab Repositories"}
+      error={error}
     />
   );
 }
