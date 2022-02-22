@@ -74,7 +74,7 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
         <MetricPipelineInfoSubheader
           pipelineName={unitTestMetricScorecardDto.getData('pipelineName')}
           pipelineRunCount={unitTestMetricScorecardDto.getData('runCount')}
-          // pipelineDuration={dateHelpers.humanizeDurationForMilliseconds(unitTestMetricScorecardDto.getData('test_execution_time'))}
+          pipelineDuration={dateHelpers.humanizeDurationForMilliseconds(unitTestMetricScorecardDto.getData('test_execution_time'))}
         />
         <Row className="d-flex align-items-center">
           <Col sm={12} md={6} lg={6}> 
