@@ -18,7 +18,8 @@ import {
   METRIC_THEME_CHART_PALETTE_COLORS
 } from "components/common/helpers/metrics/metricTheme.helpers";
 import MetricPipelineInfoSubheader from "components/common/metrics/subheaders/MetricPipelineInfoSubheader";
-import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
+import { dateHelpers } from 'components/common/helpers/date/date.helpers';
+
 function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
 
   const [unitTestMetricScorecardDto, setUnitTestMetricScorecardDto] = useState(undefined);
@@ -32,7 +33,7 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
   const getTitleBar = () => {
     return (
       <div className="d-flex justify-content-between w-100">
-        <div><FontAwesomeIcon icon={faFileCode} fixedWidth className="mr-1"/>{unitTestMetricScorecardDto.getData("ProjectName")}</div>
+        <div><FontAwesomeIcon icon={faFileCode} fixedWidth className="mr-1"/>{unitTestMetricScorecardDto.getData("projectName")}</div>
       </div>
     );
   };
@@ -73,7 +74,7 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
         <MetricPipelineInfoSubheader
           pipelineName={unitTestMetricScorecardDto.getData('pipelineName')}
           pipelineRunCount={unitTestMetricScorecardDto.getData('runCount')}
-          pipelineDuration={getTimeDisplay(unitTestMetricScorecardDto.getData('test_execution_time'))}
+          // pipelineDuration={dateHelpers.humanizeDurationForMilliseconds(unitTestMetricScorecardDto.getData('test_execution_time'))}
         />
         <Row className="d-flex align-items-center">
           <Col sm={12} md={6} lg={6}> 
