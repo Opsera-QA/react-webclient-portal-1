@@ -10,13 +10,13 @@ function DataPointEvaluationTriggerFilterSelectInput(
     model,
     setModel,
     disabled,
-    updateRule,
+    updateRuleFunction,
   }) {
-  // TODO: Should we just pass updateRule as setModel?
+  // TODO: Should we just pass updateRuleFunction as setModel?
   const setDataFunction = (fieldName, selectedOption) => {
     const newModel = {...model};
     newModel.setTextData(fieldName, selectedOption?.value);
-    updateRule(newModel);
+    updateRuleFunction(newModel);
   };
 
   return (
@@ -37,7 +37,7 @@ DataPointEvaluationTriggerFilterSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
-  updateRule: PropTypes.func,
+  updateRuleFunction: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
