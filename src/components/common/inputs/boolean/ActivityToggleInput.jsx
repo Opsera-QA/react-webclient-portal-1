@@ -5,6 +5,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
+// TODO: Combine with BooleanToggleInput or make a true base for both
 function ActivityToggleInput({ fieldName, dataObject, setDataObject, disabled }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
@@ -14,25 +15,54 @@ function ActivityToggleInput({ fieldName, dataObject, setDataObject, disabled })
     setDataObject({...newDataObject});
   };
 
+  const getClassNames = () => {
+    let classNames = "";
+
+    if (disabled === true) {
+      classNames += "not-allowed-cursor";
+    }
+    else {
+      classNames += "pointer";
+    }
+
+    return classNames;
+  };
+
+  const getLabelClassNames = () => {
+    let classNames = "toggle-label-alignment";
+
+    if (disabled === true) {
+      classNames += " not-allowed-cursor";
+    }
+    else {
+      classNames += " pointer";
+    }
+
+    return classNames;
+  };
+
   return (
     <InputContainer>
-      <div className={"d-flex toggle-alignment"}>
-        <div className={"mt-4"}>Show in Application</div>
-        <TooltipWrapper innerText={`Toggle this record as ${dataObject?.getData(fieldName) === true ? "inactive" : "active"}`}>
-          <div className={"ml-4 mt-4"}>
+      <TooltipWrapper
+        placement={"left"}
+        innerText={`Toggle this record as ${dataObject?.getData(fieldName) === true ? "inactive" : "active"}`}
+      >
+        <div className={"toggle-alignment"}>
+          <div className={"h-100"}>
             <Form.Check
-              type="switch"
+              type={"switch"}
               id={field.id}
               checked={!!dataObject.getData(fieldName)}
               disabled={disabled}
-              label={<span className="mt-auto"> </span>}
+              className={getClassNames()}
+              label={<div className={getLabelClassNames()}>Show in Application</div>}
               onChange={() => {
                 validateAndSetData(!dataObject.getData(fieldName));
               }}
             />
           </div>
-        </TooltipWrapper>
-      </div>
+        </div>
+      </TooltipWrapper>
       <InfoText
         field={field}
         model={dataObject}

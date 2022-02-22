@@ -17,7 +17,7 @@ import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
-import {noChartDataMessage} from "components/common/tooltip/popover-text";
+import {ANALYTICS_TEXT_CONSTANTS} from "components/common/constants/text/analytics/analytics.text.constants";
 
 function BitbucketRejectedMergeRequestsTable({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const toastContext = useContext(DialogToastContext);
@@ -108,7 +108,7 @@ function BitbucketRejectedMergeRequestsTable({ kpiConfiguration, setKpiConfigura
       <CustomTable
         columns={columns}
         data={metrics}
-        noDataMessage={noChartDataMessage}
+        noDataMessage={ANALYTICS_TEXT_CONSTANTS.NO_CHART_DATA_MESSAGE}
         paginationDto={tableFilterDto}
         setPaginationDto={setTableFilterDto}
         loadData={loadData}

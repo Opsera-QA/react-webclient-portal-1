@@ -75,6 +75,7 @@ import PmdScanStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/PmdScanStepConfiguration";
 import SentinelStepConfiguration from "./step_tool_configuration_forms/sentenial/SentinelStepConfiguration";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import PackerStepConfiguration from "./step_tool_configuration_forms/packer/PackerStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -1083,6 +1084,20 @@ function StepToolConfiguration({
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
             createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "packer": 
+        return (
+          <PackerStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
             setToast={setToast}
             setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}

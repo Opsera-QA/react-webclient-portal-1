@@ -1,7 +1,6 @@
 import { AuthContext } from "contexts/AuthContext";
 import React, {useContext, useEffect, useRef, useState} from "react";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import PropTypes from "prop-types";
 import axios from "axios";
 import parametersActions from "components/inventory/parameters/parameters-actions";
 import ParametersView from "components/inventory/parameters/ParametersView";
@@ -50,7 +49,6 @@ function ParametersInventory() {
       await getParameters(filterDto, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     } finally {
@@ -66,7 +64,7 @@ function ParametersInventory() {
     const userRoleAccess = await getAccessRoleData();
 
     if (isMounted?.current === true && Array.isArray(parameters)) {
-      const newParameterMetadata = response.data.metadata;
+      const newParameterMetadata = response?.data?.metadata;
       setParameterMetadata(newParameterMetadata);
       const roleDefinitions = response?.data?.roles;
       setParameterRoleDefinitions(roleDefinitions);

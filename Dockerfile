@@ -8,9 +8,7 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 ENV GENERATE_SOURCEMAP false
 COPY package.json /usr/src/app/package.json
 COPY .npmrc /usr/src/app/.npmrc
-COPY development_dependencies /usr/src/app/development_dependencies
 RUN npm install --silent
-RUN npm install
 RUN npm install react-scripts -g --silent
 COPY . /usr/src/app
 RUN npm run build:${build_env}
