@@ -1104,6 +1104,20 @@ function StepToolConfiguration({
             closeEditorPanel={closeEditorPanel}
           />
         );
+      case "buildkite":
+        return (
+          <BuildkiteStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
     }
   };
 
