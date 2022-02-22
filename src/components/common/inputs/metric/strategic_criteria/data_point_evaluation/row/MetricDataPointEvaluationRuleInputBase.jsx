@@ -12,6 +12,7 @@ import DataPointEvaluationTriggerFilterSelectInput
   from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/DataPointEvaluationTriggerFilterSelectInput";
 import DataPointEvaluationTriggerValuesInput
   from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/DataPointEvaluationTriggerValuesInput";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 function MetricDataPointEvaluationRuleInputBase(
   {
@@ -20,6 +21,7 @@ function MetricDataPointEvaluationRuleInputBase(
     fieldName, 
     icon, 
     title,
+    errorMessage,
   }) {
   const [ruleModel, setRuleModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -54,29 +56,32 @@ function MetricDataPointEvaluationRuleInputBase(
   }
 
   return (
-    <PropertyInputContainer
-      titleIcon={icon}
-      field={null}
-      titleText={title}
-    >
-      <Row className={"m-2"}>
-        <Col sm={12} lg={4}>
-          <DataPointEvaluationTriggerFilterSelectInput
-            model={ruleModel}
-            setModel={setRuleModel}
-            updateRuleFunction={updateRuleFunctionRow}
-          />
-        </Col>
-        <Col sm={12} lg={8}>
-          <DataPointEvaluationTriggerValuesInput
-            model={ruleModel}
-            setModel={setRuleModel}
-            updateRuleFunction={updateRuleFunctionRow}
-            triggerFilter={ruleModel?.getData("trigger_filter")}
-          />
-        </Col>
-      </Row>
-    </PropertyInputContainer>
+    <div>
+      <PropertyInputContainer
+        titleIcon={icon}
+        field={null}
+        titleText={title}
+      >
+        <Row className={"m-2"}>
+          <Col sm={12} lg={4}>
+            <DataPointEvaluationTriggerFilterSelectInput
+              model={ruleModel}
+              setModel={setRuleModel}
+              updateRuleFunction={updateRuleFunctionRow}
+            />
+          </Col>
+          <Col sm={12} lg={8}>
+            <DataPointEvaluationTriggerValuesInput
+              model={ruleModel}
+              setModel={setRuleModel}
+              updateRuleFunction={updateRuleFunctionRow}
+              triggerFilter={ruleModel?.getData("trigger_filter")}
+            />
+          </Col>
+        </Row>
+      </PropertyInputContainer>
+      <InfoText errorMessage={errorMessage} />
+    </div>
   );
 }
 
@@ -86,6 +91,7 @@ MetricDataPointEvaluationRuleInputBase.propTypes = {
   updateRuleFunction: PropTypes.func,
   icon: PropTypes.object,
   title: PropTypes.string,
+  errorMessage: PropTypes.string,
 };
 
 export default MetricDataPointEvaluationRuleInputBase;

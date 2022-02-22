@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
 import MetricDataPointEvaluationRuleInputBase
   from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationRuleInputBase";
+import {dataPointEvaluationRulesHelpers} from "components/common/helpers/metrics/data_point/evaluation_rules/dataPointEvaluationRules.helpers";
 
 function MetricDataPointEvaluationWarningRuleInputBase(
   {
@@ -16,6 +17,7 @@ function MetricDataPointEvaluationWarningRuleInputBase(
       updateRuleFunction={updateRuleFunction}
       title={"Warning Criteria"}
       icon={faExclamationTriangle}
+      errorMessage={dataPointEvaluationRulesHelpers.getConflictingRuleError(dataPointEvaluationRules)}
     />
   );
 }
