@@ -19,6 +19,7 @@ import {
 } from "components/common/helpers/metrics/metricTheme.helpers";
 import MetricPipelineInfoSubheader from "components/common/metrics/subheaders/MetricPipelineInfoSubheader";
 import { dateHelpers } from 'components/common/helpers/date/date.helpers';
+import { getTableDurationTextColumn } from "components/common/table/table-column-helpers.js";
 
 function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
 
@@ -68,13 +69,18 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
       }
     ];
 
+    const getDuration = () => {
+      const duration = unitTestMetricScorecardDto.getData('test_execution_time');
+      return duration === 0 ? '0 Seconds' : dateHelpers.humanizeDurationForMilliseconds(duration);
+    };
+
   return (
     <InsightsCardContainerBase titleBar={getTitleBar()}>
       <div className="m-2">
         <MetricPipelineInfoSubheader
           pipelineName={unitTestMetricScorecardDto.getData('pipelineName')}
           pipelineRunCount={unitTestMetricScorecardDto.getData('runCount')}
-          // pipelineDuration={dateHelpers.humanizeDurationForMilliseconds(unitTestMetricScorecardDto.getData('test_execution_time'))}
+          pipelineDuration={getDuration()}
         />
         <Row className="d-flex align-items-center">
           <Col sm={12} md={6} lg={6}> 
