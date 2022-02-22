@@ -40,6 +40,11 @@ primary analytics font*/
     letter-spacing: 1px;
 }
 
+.metric-block-content-text-md {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
 .metric-block-footer-text {
     font-size: .85rem;
     letter-spacing: 1px;
@@ -311,6 +316,9 @@ a:hover, .active, .link-text:hover {
     border-bottom-style: solid;
 }
 
+.medium-data-block-height {
+    min-height: 11rem;
+}
 
 .max-content-width {
     max-width: 1685px; /* 1250px*/
