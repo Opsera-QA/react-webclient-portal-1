@@ -74,6 +74,9 @@ import GitlabTotalCommitsByProjectChart from "./gitlab/pie_chart/total_commits_b
 import GitlabRecentMergeRequests from "./gitlab/table/recent_merge_requests/GitlabRecentMergeRequests";
 import GitlabPendingMergeRequests from "./gitlab/table/pending_merge_requests/GitlabPendingMergeRequests.jsx";
 
+//new
+import ProjectWiseUnitTestResults from './unit_tests/project_wise_results/ProjectWiseUnitTestResults';
+
 // Github KPIs
 import GithubMergeRequestsByUser from "./github/bar_chart/merge_requests_by_user/GithubMergeRequestsByUserChart";
 import GithubMergeRequestsPushesAndComments from "./github/calendar_chart/merge_requests_pushes_and_comments/GithubMergeRequestsPushesAndComments";
@@ -1126,20 +1129,30 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-
       case "all-github-actions-data-block":
-          return(
-              <Col md={12} className="p-2">
-                  <AllGithubActionsDataBlock
-                      kpiConfiguration={kpiConfig}
-                      setKpiConfiguration={setKpiConfig}
-                      dashboardData={dashboardData}
-                      setKpis={setKpis}
-                      index={index}
-                  />
-              </Col>
-          );
-
+        return(
+          <Col md={12} className="p-2">
+            <AllGithubActionsDataBlock
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sonar-unit-testing":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <ProjectWiseUnitTestResults
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       // Bitbucket KPIs
       case "bitbucket-most-active-contributors":
         return (

@@ -61,4 +61,9 @@ pipelineActivityLogsActions.getPipelineActivityLogById = async (getAccessToken, 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+pipelineActivityLogsActions.getPipelineDurationMetricsV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
+  const apiUrl = `/pipelines/${pipelineId}/activity/v2/metrics`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 export default pipelineActivityLogsActions;

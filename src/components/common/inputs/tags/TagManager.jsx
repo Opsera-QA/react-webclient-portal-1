@@ -209,7 +209,12 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
           setDataFunction={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
         />
       </div>
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        fieldName={fieldName}
+        model={dataObject}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </InputContainer>
   );
 }

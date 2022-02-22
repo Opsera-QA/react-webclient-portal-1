@@ -6,7 +6,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
-import {Combobox} from "dhx-suite-package";
+import {Combobox} from "@opsera/dhx-suite-package";
 
 // TODO: This will replace select input base after it is verified
 function TempSelectInputBase(
@@ -101,7 +101,12 @@ function TempSelectInputBase(
     <InputContainer>
       <InputLabel showLabel={showLabel} field={field} clearDataFunction={getClearDataFunction()} model={dataObject} />
       <div className={"w-100"} id="select-input" ref={el => (containerRef.current = el)} />
-      <InfoText field={field} errorMessage={errorMessage} />
+      <InfoText
+        field={field}
+        errorMessage={errorMessage}
+        model={dataObject}
+        fieldName={fieldName}
+      />
     </InputContainer>
   );
 }

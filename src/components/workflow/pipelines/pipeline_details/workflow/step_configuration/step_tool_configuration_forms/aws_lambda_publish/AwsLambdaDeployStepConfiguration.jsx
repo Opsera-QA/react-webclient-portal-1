@@ -59,7 +59,7 @@ function AwsLambdaDeployStepConfiguration({ stepTool, closeEditorPanel, parentCa
       <RoleRestrictedAwsAccountToolSelectInput
         model={lambdaModel}
         setModel={setLambdaModel}
-        fieldName={"toolConfigId"}
+        fieldName={"awsToolConfigId"}
       />
       <MultiTaskSelectInputBase
         titleIcon={faBracketsCurly}

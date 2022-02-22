@@ -5,11 +5,12 @@ import {faPlus, faTimes} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
-import {List} from "dhx-suite-package";
+import {List} from "@opsera/dhx-suite-package";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import ComponentLoadingWrapper from "components/common/loading/ComponentLoadingWrapper";
 import IconBase from "components/common/icons/IconBase";
 import {parseError} from "components/common/helpers/error-helpers";
+import StandaloneDatePickerInput from "components/common/inputs/date/StandaloneDateTimeInput";
 
 // TODO: Rewrite and combine with list input base
 function ListObjectInputBase(
@@ -363,7 +364,12 @@ function ListObjectInputBase(
         {getExtraRow()}
         {getBody()}
       </div>
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        model={model}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </InputContainer>
   );
 }

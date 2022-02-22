@@ -167,6 +167,11 @@ accountsActions.getPendingUserByIdV2 = async (getAccessToken, cancelTokenSource,
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+accountsActions.getSsoUserOrganizationNames = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/users/sso-user-organization-names`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 accountsActions.getUser = async (userId, getAccessToken) => {
   const apiUrl = `/users/${userId}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);

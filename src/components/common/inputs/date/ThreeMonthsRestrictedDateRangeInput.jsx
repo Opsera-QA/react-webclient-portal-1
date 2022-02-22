@@ -9,6 +9,7 @@ import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import { addDays, isSameDay } from "date-fns";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import StandaloneDatePickerInput from "components/common/inputs/date/StandaloneDateTimeInput";
 
 
 function ThreeMonthsRestrictedDateRangeInput({ fieldName, dataObject, setDataObject }) {
@@ -132,7 +133,12 @@ function ThreeMonthsRestrictedDateRangeInput({ fieldName, dataObject, setDataObj
           direction="horizontal"
         />
       </div>
-      <InfoText field={field} errorMessage={errorMessage} />
+      <InfoText
+        model={dataObject}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </InputContainer>
   );
 }

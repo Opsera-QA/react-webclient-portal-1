@@ -62,7 +62,7 @@ function MarketplaceCharts ({ dashboardId }) {
   };
 
   const getMarketKpiData = async (filterModel = marketplaceFilterDto, cancelSource = cancelTokenSource) => {
-    const kpiResponse = await KpiActions.getKpisV2(getAccessToken, cancelSource, filterModel);
+    const kpiResponse = await KpiActions.getKpiIdentifiersV2(getAccessToken, cancelSource, filterModel);
     const kpis = kpiResponse?.data?.data;
 
     if (isMounted?.current === true && kpiResponse && kpis) {

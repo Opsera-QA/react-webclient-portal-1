@@ -14,7 +14,7 @@ export const JENKINS_JOB_OPTIONS = [
   { value: JENKINS_JOB_TYPES.CUSTOM_JOB, label: "Custom Job" },
   { value: JENKINS_JOB_TYPES.OPSERA_MANAGED_JOB, label: "Opsera Managed Job" },
   { value: JENKINS_JOB_TYPES.SALESFORCE_PACKAGE_GENERATION_JOB, label: "Salesforce Package Generation Job" },
-  { value: JENKINS_JOB_TYPES.SALESFORCE_PROFILE_MIGRATION_JOB, label: "Salesforce Profile Migration Job" },
+  { value: JENKINS_JOB_TYPES.SALESFORCE_PROFILE_MIGRATION_JOB, label: "Salesforce Migration Job" },
 ];
 
 function JenkinsStepJobTypeSelectInput({ model, setModel }) {

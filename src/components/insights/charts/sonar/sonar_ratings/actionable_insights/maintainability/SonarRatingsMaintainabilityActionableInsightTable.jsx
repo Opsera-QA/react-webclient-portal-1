@@ -64,25 +64,25 @@ function SonarRatingsMaintainabilityActionableInsightTable(
     };
   };
 
-  const getKpiSonarRatingTableTextColumn = (field, rating) => {
+  const getKpiSonarRatingTableTextColumn = (field) => {
     return {
       Header: getCustomTableHeader(field),
       accessor: getCustomTableAccessor(field),
       Cell: function parseText(row) {
         let value = row?.value;
         if (value > 0) {
-          if (rating <= 1) {
-            value = LETTER_GRADES.A;
-          } else if (rating <= 2) {
-            value = LETTER_GRADES.B;
-          } else if (rating <= 3) {
-            value = LETTER_GRADES.C;
-          } else if (rating <= 4) {
-            value = LETTER_GRADES.D;
-          } else if (rating <= 5) {
-            value = LETTER_GRADES.E;
+          if (value <= 1) {
+            return <div className="green">A</div>;
+          } else if (value <= 2) {
+            return <div className="yellow">B</div>;
+          } else if (value <= 3) {
+            return <div className="yellow">C</div>;
+          } else if (value <= 4) {
+            return <div className="danger-red">D</div>;
+          } else if (value <= 5) {
+            return <div className="danger-red">E</div>;
           } else {
-            value = null;
+            return null;
           }
         }
         return (
@@ -98,7 +98,7 @@ function SonarRatingsMaintainabilityActionableInsightTable(
       getKpiSonarPipelineTableTextColumn(getField(fields, "pipelineName")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "runCount")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "endTimestamp")),
-      getKpiSonarRatingTableTextColumn(getField(fields, "maintainibility_rating"), "maintainibility_rating"),
+      getKpiSonarRatingTableTextColumn(getField(fields, "maintainibility_rating")),
       getChartTrendStatusColumn(getField(fields, "status")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "critical"), "critical"),
       getKpiSonarPipelineTableTextColumn(getField(fields, "blocker"), "blocker"),

@@ -5,7 +5,6 @@ import {useHistory} from "react-router-dom";
 import commonActions from "components/common/common.actions";
 import axios from "axios";
 import accountsActions from "components/admin/accounts/accounts-actions";
-import {ClientWebsocket} from "core/data_model/client.websocket";
 
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;

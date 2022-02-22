@@ -8,7 +8,7 @@ import JiraProjectsDetailPanel
 import ActionBarDestructiveDeleteButton from "components/common/actions/buttons/ActionBarDestructiveDeleteButton";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
-import jiraProjectMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jira-project-metadata";
+import {jiraToolProjectMetadata} from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jiraToolProject.metadata";
 import axios from "axios";
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 
@@ -91,7 +91,7 @@ function JiraProjectDetailView(
       breadcrumbDestination={"toolProjectDetailView"}
       navigationTabContainer={<InventorySubNavigationBar currentTab={"toolProjectViewer"} />}
       isLoading={isLoading}
-      metadata={jiraProjectMetadata}
+      metadata={jiraToolProjectMetadata}
       dataObject={jiraProjectData}
       actionBar={getActionBar()}
       detailPanel={getDetailPanel()}

@@ -1,16 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RepositorySelectInput from "components/common/list_of_values_input/tools/git/RepositorySelectInput";
+import RepositorySelectInput from "components/common/list_of_values_input/tools/repositories/RepositorySelectInput";
 
 function ArgoGitRepositoryInput({dataObject, setDataObject, disabled}) {
   const setRepository = (fieldName, selectedOption) => {
 
     let newDataObject = {...dataObject};
+    const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
+    const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     newDataObject.setData("repositoryName", selectedOption.name);
-    newDataObject.setData("projectId", selectedOption.id);
-    newDataObject.setData("repoId", selectedOption.id);
+    newDataObject.setData("projectId", repoId);
+    newDataObject.setData("repoId", repoId);
     newDataObject.setData("sshUrl", selectedOption.sshUrl);
-    newDataObject.setData("httpsUrl", selectedOption.httpUrl);
+    newDataObject.setData("httpsUrl", gitUrl);
     setDataObject({...newDataObject});
   };
 

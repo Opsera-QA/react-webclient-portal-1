@@ -86,7 +86,6 @@ function PipelineActivityLogTreeTable(
       pipelineTree.current = [...newPipelineTree];
       await getSingleRunLogs(newFilterModel, cancelSource);
     } catch (error) {
-
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
       }
@@ -120,12 +119,17 @@ function PipelineActivityLogTreeTable(
     const pipelineStatus = pipeline?.workflow?.last_step?.status;
 
     if (!pipelineStatus || pipelineStatus === "stopped") {
+      const isPaused = pipeline?.workflow?.last_step?.running?.paused;
+
       if (isPipelineRunning === true) {
-        toastContext.showInformationToast("The Pipeline has completed running. Please check the activity logs for details.", 20);
+        const stoppedMessage = "The Pipeline has completed running. Please check the activity logs for details.";
+        const pausedMessage = "The Pipeline has been paused. Please check the activity logs for details.";
+
+        toastContext.showInformationToast(isPaused === true ? pausedMessage : stoppedMessage, 20);
         setIsPipelineRunning(false);
       }
 
-      console.log("Pipeline stopped, no need to schedule refresh. Status: ", pipelineStatus);
+      console.log("Pipeline stopped, no need to schedule refresh. Status: ", isPaused === true ? "Paused" : pipelineStatus);
       return;
     }
 
@@ -198,7 +202,7 @@ function PipelineActivityLogTreeTable(
     const pipelineActivityData = response?.data?.data;
     const activityLogCount = response?.data?.count;
 
-    if (Array.isArray(pipelineActivityData)) {
+    if (isMounted?.current === true && Array.isArray(pipelineActivityData)) {
       setActivityData([...pipelineActivityData]);
       setPipelineActivityMetadata(response?.data?.metadata);
       newFilterModel.setData("totalCount", activityLogCount);
@@ -216,7 +220,7 @@ function PipelineActivityLogTreeTable(
     const response = await pipelineActivityLogsActions.getLatestPipelineActivityLogsV3(getAccessToken, cancelSource, pipelineId, filterDto);
     const pipelineActivityData = response?.data?.data;
 
-    if (Array.isArray(pipelineActivityData)) {
+    if (isMounted?.current === true && Array.isArray(pipelineActivityData)) {
       setActivityData([...pipelineActivityData]);
     }
   };
@@ -225,7 +229,7 @@ function PipelineActivityLogTreeTable(
     const response = await pipelineActivityLogsActions.getSecondaryPipelineActivityLogsV3(getAccessToken, cancelSource, pipelineId, filterDto);
     const pipelineActivityData = response?.data?.data;
 
-    if (Array.isArray(pipelineActivityData)) {
+    if (isMounted?.current === true && Array.isArray(pipelineActivityData)) {
       setActivityData([...pipelineActivityData]);
     }
   };
@@ -341,7 +345,7 @@ function PipelineActivityLogTreeTable(
           <ExportPipelineActivityLogButton
             className={"ml-2"}
             isLoading={isLoading}
-            activityLogData={activityData}
+            activityLogData={activityData?.current}
           />
         }
       />

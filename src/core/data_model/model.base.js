@@ -497,6 +497,10 @@ export class ModelBase {
   canPerformAction = () => {
     return false;
   };
+
+  handleLiveMessage = (liveMessage) => {
+    throw "This action is not supported yet";
+  };
 }
 
 export default ModelBase;

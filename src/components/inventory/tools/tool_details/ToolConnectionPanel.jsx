@@ -32,13 +32,14 @@ import MongodbRealmToolConfiguration from "./tool_jobs/mongodb_realm/MongodbReal
 import FlywayDatabaseToolConfiguration from "./tool_jobs/flyway_database/FlywayDatabaseToolConfiguration";
 import InformaticaToolConfiguration from "./tool_jobs/informatica/InformaticaToolConfiguration";
 import TerraformCloudToolConfiguration from "./tool_jobs/terraform_cloud/TerraformCloudToolConfiguration";
+import GcpToolConfiguration from "./tool_jobs/gcp/GcpToolConfiguration";
 
 function ToolConnectionPanel({ toolData }) {
   const getConnectionPanel = () => {
     if (toolData == null) {
       return <></>;
     }
-    
+
     switch (toolData.getData("tool_identifier")) {
       case "jenkins":
         return <JenkinsToolConfiguration toolData={toolData} />;
@@ -103,6 +104,8 @@ function ToolConnectionPanel({ toolData }) {
         return <InformaticaToolConfiguration toolData={toolData} />;
       case "terraform-cloud":
         return <TerraformCloudToolConfiguration toolData={toolData} />;
+      case "gcp_account":
+        return <GcpToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
     }

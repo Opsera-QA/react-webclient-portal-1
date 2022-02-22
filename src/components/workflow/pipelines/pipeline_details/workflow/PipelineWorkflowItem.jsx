@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { axiosApiService } from "api/apiService";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import Modal from "components/common/modal/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,7 +22,6 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import StepToolActivityView from "./step_configuration/StepToolActivityView";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import WorkflowAuthorizedActions from "./workflow-authorized-actions";
 import PipelineStepConfigurationSummaryModal from "./step_configuration/PipelineStepConfigurationSummaryModal";
@@ -31,32 +29,39 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 import "./step_configuration/helpers/step-validation-helper";
 import StepValidationHelper from "./step_configuration/helpers/step-validation-helper";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import StepNotificationConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/StepNotificationConfiguration";
+import PipelineStepNotificationConfigurationOverlay
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/PipelineStepNotificationConfigurationOverlay";
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
-const PipelineWorkflowItem = ({
-                                pipeline,
-                                plan,
-                                item,
-                                index,
-                                lastStep,
-                                pipelineId,
-                                editWorkflow,
-                                parentCallbackEditItem,
-                                deleteStep,
-                                parentHandleViewSourceActivityLog,
-                                customerAccessRules,
-                                parentWorkflowStatus,
-                                refreshCount,
-                              }) => {
-  const toastContext = useContext(DialogToastContext);
+const PipelineWorkflowItem = (
+  {
+    pipeline,
+    plan,
+    item,
+    index,
+    lastStep,
+    pipelineId,
+    editWorkflow,
+    parentCallbackEditItem,
+    deleteStep,
+    parentHandleViewSourceActivityLog,
+    customerAccessRules,
+    parentWorkflowStatus,
+    toolIdentifier,
+    loadPipeline,
+  }) => {
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [currentStatus, setCurrentStatus] = useState({});
   const [itemState, setItemState] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [modalDeleteIndex, setModalDeleteIndex] = useState(false);
   const [modalDeleteObj, setModalDeleteObj] = useState(false);
-  const [toolProperties, setToolProperties] = useState({});
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [activityLogModal, setActivityLogModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [showToolActivity, setShowToolActivity] = useState(false);
@@ -97,7 +102,7 @@ const PipelineWorkflowItem = ({
       }
 
       if (lastStep !== undefined) {
-        if (lastStep.success && lastStep.success !== undefined && Object.keys(lastStep.success).length > 0) {
+        if (lastStep?.success && lastStep.success !== undefined && Object.keys(lastStep.success).length > 0) {
           let stepArrayIndex = plan.findIndex((x) => {
             if (x._id && x._id.toString() === lastStep.success.step_id) {
               return true;
@@ -130,11 +135,6 @@ const PipelineWorkflowItem = ({
             setItemState("failed");
           }
         }
-      }
-
-
-      if (item?.tool && typeof (item?.tool?.tool_identifier) === "string" && item?.tool?.tool_identifier !== "" && Object.keys(toolProperties).length === 0) {
-        await getToolDetails(item?.tool?.tool_identifier);
       }
     }
   };
@@ -179,8 +179,19 @@ const PipelineWorkflowItem = ({
     }
 
     setIsLoading(true);
-    if (tool && tool.tool_identifier !== undefined) {
-      await parentCallbackEditItem({ type: type, tool_name: tool.tool_identifier, step_id: itemId });
+    if (hasStringValue(tool?.tool_identifier) === true) {
+      // if (type === "notification") {
+      //   toastContext.showOverlayPanel(
+      //     <PipelineStepNotificationConfigurationOverlay
+      //       pipeline={pipeline}
+      //       stepId={itemId}
+      //       loadPipeline={loadPipeline}
+      //     />
+      //   );
+      // }
+      // else {
+        await parentCallbackEditItem({type: type, tool_name: tool.tool_identifier, step_id: itemId});
+      // }
     } else {
       await parentCallbackEditItem({ type: type, tool_name: "", step_id: itemId });
     }
@@ -210,20 +221,6 @@ const PipelineWorkflowItem = ({
     }
     deleteStep(index);
   };
-
-  const getToolDetails = async (tool_identifier) => {
-    setIsLoading(true);
-    const accessToken = await getAccessToken();
-    try {
-      const toolResponse = await axiosApiService(accessToken).get("/registry/tool/properties/" + tool_identifier, {});
-      setToolProperties(toolResponse.data);
-    } catch (err) {
-      toastContext.showLoadingErrorDialog(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
 
   return (
     <>
@@ -389,7 +386,7 @@ const PipelineWorkflowItem = ({
 
         <div className="p-1 text-muted small">
           <FontAwesomeIcon icon={faToolbox} size="sm" fixedWidth
-                           className="mr-1" /> Tool: {toolProperties.name || ""}
+                           className="mr-1" /> Tool: {toolIdentifier?.name || ""}
         </div>
 
 
@@ -432,7 +429,7 @@ const PipelineWorkflowItem = ({
                 </>
                 :
                 <>
-                  {toolProperties.properties && toolProperties.properties.isLiveStream && <OverlayTrigger
+                  {toolIdentifier?.properties && toolIdentifier?.properties?.isLiveStream && <OverlayTrigger
                     placement="top"
                     delay={{ show: 250, hide: 400 }}
                     overlay={renderTooltip({ message: "View Running Tool Activity (if available)" })}>
@@ -554,7 +551,8 @@ PipelineWorkflowItem.propTypes = {
   parentHandleViewSourceActivityLog: PropTypes.func,
   customerAccessRules: PropTypes.object,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  refreshCount: PropTypes.number,
+  toolIdentifier: PropTypes.object,
+  loadPipeline: PropTypes.func,
 };
 
 export default PipelineWorkflowItem;

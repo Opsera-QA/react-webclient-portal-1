@@ -173,6 +173,8 @@ import SentinelStepConfigurationSummaryPanel from "./step_tool_configuration_for
 import SentenialStepFormMetadata from "./step_tool_configuration_forms/sentenial/sentinel-stepForm-metadata";
 import sonarPipelineStepMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStep.metadata";
+import PackerPipelineStepConfigurationSummaryPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/packer/PackerPipelineStepConfigurationSummaryPanel";
+import PackerStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/packer/packer-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -539,6 +541,13 @@ function PipelineStepConfigurationSummary({
           <SentinelStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             sentenialStepFormMetadata={getModelWrappedObject(SentenialStepFormMetadata)}
+          />
+        );
+      case "packer":
+        return (
+          <PackerPipelineStepConfigurationSummaryPanel 
+            pipelineData={pipelineData}
+            sentenialStepFormMetadata={getModelWrappedObject(PackerStepFormMetadata)}
           />
         );
       default:

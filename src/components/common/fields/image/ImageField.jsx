@@ -31,7 +31,7 @@ function ImageField(
 }
 
 ImageField.propTypes = {
-  model: PropTypes.string,
+  model: PropTypes.object,
   fieldName: PropTypes.string,
   imageTitle: PropTypes.string,
   className: PropTypes.func,

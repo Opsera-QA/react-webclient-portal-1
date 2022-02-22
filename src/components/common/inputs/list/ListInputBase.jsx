@@ -5,9 +5,10 @@ import {faPlus, faTimes} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
-import {List} from "dhx-suite-package";
+import {List} from "@opsera/dhx-suite-package";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import ComponentLoadingWrapper from "components/common/loading/ComponentLoadingWrapper";
+import StandaloneDatePickerInput from "components/common/inputs/date/StandaloneDateTimeInput";
 
 // TODO: Make an actual base version and rename this VanityListInput
 // TODO: Refactor
@@ -309,7 +310,12 @@ function ListInputBase(
         {getExtraRow()}
         {getBody()}
       </div>
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        model={dataObject}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </InputContainer>
   );
 }

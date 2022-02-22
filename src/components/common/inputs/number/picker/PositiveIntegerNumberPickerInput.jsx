@@ -65,7 +65,13 @@ function PositiveIntegerNumberPickerInput({ fieldName, className, dataObject, se
         minimum={typeof minimum === "number" ? minimum : field?.minNumber}
         maximum={typeof maximum === "number" ? maximum : field?.maxNumber}
       />
-      <InfoText field={field} errorMessage={errorMessage} customMessage={`${field?.label} must be 0 or a positive whole number`}/>
+      <InfoText
+        field={field}
+        errorMessage={errorMessage}
+        customMessage={`${field?.label} must be 0 or a positive whole number`}
+        model={dataObject}
+        fieldName={fieldName}
+      />
     </InputContainer>
   );
 }
