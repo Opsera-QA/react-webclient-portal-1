@@ -20,7 +20,7 @@ const projectWiseUnitTestResultsMetadata = {
       },
       {
         label: "Project",
-        id: "ProjectName",
+        id: "projectName",
       },
       {
         label: "Errors",
