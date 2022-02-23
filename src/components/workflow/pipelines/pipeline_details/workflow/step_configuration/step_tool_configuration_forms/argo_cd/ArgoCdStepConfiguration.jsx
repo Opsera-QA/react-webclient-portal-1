@@ -8,8 +8,6 @@ import PipelineStepEditorPanelContainer
 import ArgoCdStepSourceControlManagementToolIdentifierSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepSourceControlManagementToolIdentifierSelectInput";
 import ArgoCdPipelineToolSelectInput from "components/common/list_of_values_input/tools/argo_cd/ArgoCdPipelineToolSelectInput";
-import ArgoCdApplicationSelectInput
-  from "components/common/list_of_values_input/tools/argo_cd/application/ArgoCdApplicationSelectInput";
 import PipelineStepSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineStepSelectInput";
 import {ArgoCdStepConfigurationMetadata}
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/argoCdStepConfiguration.metadata";
@@ -21,6 +19,9 @@ import ArgoCdGitRepositorySelectInput
 import ArgoCdGitBranchSelectInput
   from "components/common/list_of_values_input/tools/argo_cd/ArgoCdGitBranchSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
+import ArgoCdApplicationSelectInput
+  from "components/common/list_of_values_input/tools/argo_cd/application/ArgoCdApplicationSelectInput";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel }) {
   const toastContext = useContext(DialogToastContext);
@@ -106,7 +107,7 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
         stepId={stepId}
         plan={plan}
         fieldName={"dockerStepID"}
-        disabled={argoCdModel?.getData("applicationName").length === 0}
+        disabled={hasStringValue(argoCdModel?.getData("applicationName")) !== true}
       />
       <ArgoCdStepSourceControlManagementToolIdentifierSelectInput
         model={argoCdModel}
@@ -134,7 +135,7 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
         setDataObject={setArgoCdModel}
         dataObject={argoCdModel}
         fieldName={"gitFilePath"}
-        disabled={argoCdModel?.getData("defaultBranch").length === 0}
+        disabled={hasStringValue(argoCdModel?.getData("defaultBranch")) !== true}
       />
       {getDynamicFields()}
     </PipelineStepEditorPanelContainer>
