@@ -14,6 +14,8 @@ import ArgoRepositoryInput from "./inputs/ArgoRepositoryInput";
 import ArgoClusterNamespaceInput from "./inputs/ArgoClusterNamespaceInput";
 import ArgoGroupKindInput from "./inputs/ArgoGroupKindInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import ArgoClusterNameSpaceInputBase
+  from "components/common/list_of_values_input/tools/argo_cd/cluster/ArgoClusterNameSpaceInputBase";
 
 function ArgoProjectEditorPanel({ argoProjectData, toolData, projId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);

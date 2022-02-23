@@ -9,6 +9,7 @@ import PropertyInputContainer from "components/common/inputs/object/PropertyInpu
 import InputContainer from "components/common/inputs/InputContainer";
 import regexDefinitions from "utils/regexDefinitions";
 
+// TODO: This needs to be cleaned up
 function ArgoClusterNameSpaceInputBase({dataObject, setDataObject, fieldName, disabledFields, type, titleIcon, allowIncompleteItems, titleText, nameMaxLength, valueMaxLength, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");

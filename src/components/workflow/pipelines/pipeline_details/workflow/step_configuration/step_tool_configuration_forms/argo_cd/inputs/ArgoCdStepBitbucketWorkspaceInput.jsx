@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import BitbucketWorkspaceInput from "components/common/list_of_values_input/tools/bitbucket/workspaces/BitbucketWorkspaceInput";
 
-function ArgoCdBitbucketWorkspaceInput({ gitToolId, fieldName, model, setModel, disabled, className}) {
+function ArgoCdStepBitbucketWorkspaceInput({ gitToolId, fieldName, model, setModel, disabled, className}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = model;
     newModel.setData("bitbucketWorkspace", selectedOption?.key);
@@ -27,7 +27,7 @@ function ArgoCdBitbucketWorkspaceInput({ gitToolId, fieldName, model, setModel, 
   );
 }
 
-ArgoCdBitbucketWorkspaceInput.propTypes = {
+ArgoCdStepBitbucketWorkspaceInput.propTypes = {
   gitToolId: PropTypes.string,
   fieldName: PropTypes.string,
   model: PropTypes.object,
@@ -36,8 +36,8 @@ ArgoCdBitbucketWorkspaceInput.propTypes = {
   className: PropTypes.string,
 };
 
-ArgoCdBitbucketWorkspaceInput.defaultProps = {
+ArgoCdStepBitbucketWorkspaceInput.defaultProps = {
   fieldName: "bitbucketWorkspaceName",
 };
 
-export default ArgoCdBitbucketWorkspaceInput;
+export default ArgoCdStepBitbucketWorkspaceInput;

@@ -33,6 +33,8 @@ import FlywayDatabaseToolConfiguration from "./tool_jobs/flyway_database/FlywayD
 import InformaticaToolConfiguration from "./tool_jobs/informatica/InformaticaToolConfiguration";
 import TerraformCloudToolConfiguration from "./tool_jobs/terraform_cloud/TerraformCloudToolConfiguration";
 import GcpToolConfiguration from "./tool_jobs/gcp/GcpToolConfiguration";
+import BuildkiteToolConfiguration from "./tool_jobs/buildkite/BuildkiteToolConfiguration";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
 function ToolConnectionPanel({ toolData }) {
   const getConnectionPanel = () => {
@@ -55,7 +57,7 @@ function ToolConnectionPanel({ toolData }) {
         return <SpinnakerToolConfiguration toolData={toolData} />;
       case "cypress":
         return <CypressToolConfiguration toolData={toolData} />;
-      case "argo":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
         return <ArgoToolConfiguration toolData={toolData} />;
       case "anchore-scan":
         return <AnchoreScanToolConfiguration toolData={toolData} />;
@@ -106,6 +108,8 @@ function ToolConnectionPanel({ toolData }) {
         return <TerraformCloudToolConfiguration toolData={toolData} />;
       case "gcp_account":
         return <GcpToolConfiguration toolData={toolData} />;
+      case "buildkite":
+        return <BuildkiteToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
     }

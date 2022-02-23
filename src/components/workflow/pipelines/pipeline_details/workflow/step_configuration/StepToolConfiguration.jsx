@@ -76,6 +76,8 @@ import PmdScanStepConfiguration
 import SentinelStepConfiguration from "./step_tool_configuration_forms/sentenial/SentinelStepConfiguration";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import PackerStepConfiguration from "./step_tool_configuration_forms/packer/PackerStepConfiguration";
+import BuildkiteStepConfiguration from "./step_tool_configuration_forms/buildkite/BuildkiteStepConfiguration";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
 function StepToolConfiguration({
   pipeline,
@@ -640,11 +642,11 @@ function StepToolConfiguration({
             setShowToast={setShowToast}
           />
         );
-      case "argo":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
         return (
           <ArgoCdStepConfiguration
             pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
+            plan={pipeline?.workflow?.plan}
             stepId={stepId}
             stepTool={stepTool}
             parentCallback={callbackFunction}
@@ -1093,6 +1095,20 @@ function StepToolConfiguration({
       case "packer": 
         return (
           <PackerStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "buildkite":
+        return (
+          <BuildkiteStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}

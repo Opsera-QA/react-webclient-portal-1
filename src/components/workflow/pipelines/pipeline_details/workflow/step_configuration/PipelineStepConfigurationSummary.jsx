@@ -27,7 +27,7 @@ import SpinnakerPipelineStepConfigurationSummaryPanel
 import spinnakerStepFormMetadata from "./step_tool_configuration_forms/spinnaker/spinnaker-stepForm-metadata";
 import ArgoCdPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/ArgoCdPipelineStepConfigurationSummaryPanel";
-import ArgoCDStepFormMetadata from "./step_tool_configuration_forms/argo_cd/argocd-stepForm-metadata";
+import {ArgoCdStepConfigurationMetadata} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/argoCdStepConfiguration.metadata";
 import OctopusPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/octopus/OctopusPipelineStepConfigurationSummaryPanel";
 import octopusStepFormMetadata from "./step_tool_configuration_forms/octopus/octopus-stepForm-metadata";
@@ -175,6 +175,9 @@ import sonarPipelineStepMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStep.metadata";
 import PackerPipelineStepConfigurationSummaryPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/packer/PackerPipelineStepConfigurationSummaryPanel";
 import PackerStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/packer/packer-stepForm-metadata";
+import BuildkiteStepSummary from "./step_tool_configuration_forms/buildkite/BuildkiteStepSummary";
+import buildkiteMetadata from "./step_tool_configuration_forms/buildkite/buildkite-metadata";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -214,11 +217,11 @@ function PipelineStepConfigurationSummary({
             approvalGatePipelineDataObject={getModelWrappedObject(approvalGatePipelineStepConfigurationMetadata)}
           />
         );
-      case "argo":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
         return (
           <ArgoCdPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            argoCdPipelineDataObject={getModelWrappedObject(ArgoCDStepFormMetadata)}
+            argoCdPipelineDataObject={getModelWrappedObject(ArgoCdStepConfigurationMetadata)}
           />
         );
       case "aws-deploy":
@@ -548,6 +551,13 @@ function PipelineStepConfigurationSummary({
           <PackerPipelineStepConfigurationSummaryPanel 
             pipelineData={pipelineData}
             sentenialStepFormMetadata={getModelWrappedObject(PackerStepFormMetadata)}
+            />
+            );
+      case "buildkite":
+        return (
+          <BuildkiteStepSummary
+            pipelineData={pipelineData}
+            buildkiteStepConfigurationData={getModelWrappedObject(buildkiteMetadata)}
           />
         );
       default:

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {faCheckCircle} from "@fortawesome/pro-light-svg-icons";
 import MetricDataPointEvaluationRuleInputBase
   from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationRuleInputBase";
+import {dataPointEvaluationRulesHelpers} from "components/common/helpers/metrics/data_point/evaluation_rules/dataPointEvaluationRules.helpers";
 
 function MetricDataPointEvaluationSuccessRuleInput(
   {
@@ -16,6 +17,7 @@ function MetricDataPointEvaluationSuccessRuleInput(
       updateRuleFunction={updateRuleFunction}
       title={"Success Criteria"}
       icon={faCheckCircle}
+      errorMessage={dataPointEvaluationRulesHelpers.getConflictingRuleError(dataPointEvaluationRules)}
     />
   );
 }
