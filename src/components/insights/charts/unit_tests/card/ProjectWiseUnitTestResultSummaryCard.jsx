@@ -68,13 +68,18 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
       }
     ];
 
+    const getDuration = () => {
+      const duration = unitTestMetricScorecardDto.getData('test_execution_time');
+      return duration === 0 ? '0 Seconds' : dateHelpers.humanizeDurationForMilliseconds(duration);
+    };
+
   return (
     <InsightsCardContainerBase titleBar={getTitleBar()}>
       <div className="m-2">
         <MetricPipelineInfoSubheader
           pipelineName={unitTestMetricScorecardDto.getData('pipelineName')}
           pipelineRunCount={unitTestMetricScorecardDto.getData('runCount')}
-          pipelineDuration={dateHelpers.humanizeDurationForMilliseconds(unitTestMetricScorecardDto.getData('test_execution_time'))}
+          pipelineDuration={getDuration()}
         />
         <Row className="d-flex align-items-center">
           <Col sm={12} md={6} lg={6}> 
@@ -92,6 +97,7 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
                 data={chartData}
                 {...defaultConfig()}
                 {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
+                arcLabel={e => e.value === 0 ? '' : e.value}
               />
             </div>
           </Col>
