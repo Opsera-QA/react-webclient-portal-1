@@ -14,7 +14,7 @@ function PipelineMappingEnvironmentInputRow(
     disabled,
     setKeyFunction,
     setValueFunction,
-    accessRule,
+    environment,
     deleteEnvironmentFunction,
   }) {
 
@@ -40,14 +40,14 @@ function PipelineMappingEnvironmentInputRow(
         <Row>
           <Col sm={6} className={"pr-1"}>
             <StandaloneTextInputBase
-             value={accessRule?.key}
+             value={environment?.key}
              setDataFunction={setKeyFunction}
              disabled={disabled}
             />
           </Col>
           <Col sm={6} className={"pl-2 pr-2"}>
             <StandaloneTextInputBase
-              value={accessRule?.value}
+              value={environment?.value}
               setDataFunction={setValueFunction}
               disabled={disabled}
             />
@@ -66,7 +66,7 @@ PipelineMappingEnvironmentInputRow.propTypes = {
   deleteEnvironmentFunction: PropTypes.func,
   setKeyFunction: PropTypes.func,
   setValueFunction: PropTypes.func,
-  accessRule: PropTypes.object,
+  environment: PropTypes.object,
 };
 
 export default PipelineMappingEnvironmentInputRow;
