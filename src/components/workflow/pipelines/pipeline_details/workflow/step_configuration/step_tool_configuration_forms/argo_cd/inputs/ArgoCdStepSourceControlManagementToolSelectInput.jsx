@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
-function ArgoCdScmToolSelectInput({className, fieldName, model, setModel, disabled, gitYamlTool}) {
+function ArgoCdStepSourceControlManagementToolSelectInput({className, fieldName, model, setModel, disabled, gitYamlTool}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("gitToolId", selectedOption?._id);
@@ -26,7 +26,7 @@ function ArgoCdScmToolSelectInput({className, fieldName, model, setModel, disabl
   );
 }
 
-ArgoCdScmToolSelectInput.propTypes = {
+ArgoCdStepSourceControlManagementToolSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
@@ -35,8 +35,8 @@ ArgoCdScmToolSelectInput.propTypes = {
   gitYamlTool: PropTypes.string,
 };
 
-ArgoCdScmToolSelectInput.defaultProps = {
+ArgoCdStepSourceControlManagementToolSelectInput.defaultProps = {
   fieldName: "gitToolId",
 };
 
-export default ArgoCdScmToolSelectInput;
+export default ArgoCdStepSourceControlManagementToolSelectInput;
