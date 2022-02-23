@@ -74,7 +74,6 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
   };
 
   const getRollbackRepositorySelect = () => {
-    console.log(argoCdModel);
     if (argoCdModel.getData("rollbackEnabled") === true) {
       return ( 
         <ArgoCdRepositoryTagSelectInput
