@@ -8,6 +8,7 @@ import PropertyInputContainer from "components/common/inputs/object/PropertyInpu
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 
 function PipelineMappingJobInput({ fieldName, model, setModel, disabled}) {
+  const [field] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [jobs, setJobs] = useState([]);
 
