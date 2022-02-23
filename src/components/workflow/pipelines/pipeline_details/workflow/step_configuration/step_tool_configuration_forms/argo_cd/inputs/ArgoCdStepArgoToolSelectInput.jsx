@@ -16,6 +16,7 @@ function ArgoCdStepArgoToolSelectInput(
     newModel.setData("toolConfigId", selectedOption?._id);
     newModel.setData("toolUrl", selectedOption?.configuration?.toolURL);
     newModel.setData("userName", selectedOption?.configuration?.userName);
+    newModel.setDefaultValue("applicationName");
     setModel({...newModel});
   };
 
