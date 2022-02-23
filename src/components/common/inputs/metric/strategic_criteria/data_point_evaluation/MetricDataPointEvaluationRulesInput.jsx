@@ -1,10 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faCheckCircle, faExclamationCircle, faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
-import MetricDataPointEvaluationRuleInput
-  from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationRuleInput";
 import H4FieldSubHeader from "components/common/fields/subheader/H4FieldSubHeader";
 import {Col, Row} from "react-bootstrap";
+import MetricDataPointEvaluationSuccessRuleInput
+  from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationSuccessRuleInput";
+import MetricDataPointEvaluationWarningRuleInput
+  from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationWarningRuleInput";
+import MetricDataPointEvaluationFailureRuleInput
+  from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationFailureRuleInput";
 
 function MetricDataPointEvaluationRulesInput({model, setModel, strategicCriteria}) {
   const validateAndSetData = (newDataPointEvaluationRules) => {
@@ -14,7 +17,7 @@ function MetricDataPointEvaluationRulesInput({model, setModel, strategicCriteria
     setModel({...model});
   };
 
-  const updateRule = (fieldName, ruleData) => {
+  const updateRuleFunction = (fieldName, ruleData) => {
     let newDataPointEvaluationRules = typeof strategicCriteria?.data_point_evaluation_rules === "object" ? {...strategicCriteria?.data_point_evaluation_rules} : {};
     newDataPointEvaluationRules[fieldName] = {...ruleData};
     validateAndSetData(newDataPointEvaluationRules);
@@ -25,30 +28,21 @@ function MetricDataPointEvaluationRulesInput({model, setModel, strategicCriteria
       <H4FieldSubHeader subheaderText={"Strategic Criteria"}/>
       <Row>
         <Col xs={12} className={"my-2"}>
-          <MetricDataPointEvaluationRuleInput
-            ruleData={strategicCriteria?.data_point_evaluation_rules?.success_rule}
-            fieldName={"success_rule"}
-            updateRule={updateRule}
-            title={"Success Criteria"}
-            icon={faCheckCircle}
+          <MetricDataPointEvaluationSuccessRuleInput
+            dataPointEvaluationRules={strategicCriteria?.data_point_evaluation_rules}
+            updateRuleFunction={updateRuleFunction}
           />
         </Col>
         <Col xs={12} className={"my-2"}>
-          <MetricDataPointEvaluationRuleInput
-            ruleData={strategicCriteria?.data_point_evaluation_rules?.warning_rule}
-            fieldName={"warning_rule"}
-            updateRule={updateRule}
-            title={"Warning Criteria"}
-            icon={faExclamationTriangle}
+          <MetricDataPointEvaluationWarningRuleInput
+            dataPointEvaluationRules={strategicCriteria?.data_point_evaluation_rules}
+            updateRuleFunction={updateRuleFunction}
           />
         </Col>
         <Col xs={12} className={"my-2"}>
-          <MetricDataPointEvaluationRuleInput
-            ruleData={strategicCriteria?.data_point_evaluation_rules?.failure_rule}
-            fieldName={"failure_rule"}
-            updateRule={updateRule}
-            title={"Failure Criteria"}
-            icon={faExclamationCircle}
+          <MetricDataPointEvaluationFailureRuleInput
+            dataPointEvaluationRules={strategicCriteria?.data_point_evaluation_rules}
+            updateRuleFunction={updateRuleFunction}
           />
         </Col>
       </Row>

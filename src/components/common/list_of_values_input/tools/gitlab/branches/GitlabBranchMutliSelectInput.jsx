@@ -21,8 +21,7 @@ function GitlabBranchSelectInput(
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [gitlabBranches, setGitlabBranches] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [placeholderText, setPlaceholderText] = useState("Select Gitlab Branches");
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
 
@@ -35,8 +34,7 @@ function GitlabBranchSelectInput(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setGitlabBranches([]);
-    setErrorMessage("");
-    setPlaceholderText("Select Gitlab Branches");
+    setError(undefined);
 
     if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
       loadData(source).catch((error) => {
@@ -55,9 +53,7 @@ function GitlabBranchSelectInput(
       setIsLoading(true);
       await loadGitlabBranches(cancelSource);
     } catch (error) {
-      setPlaceholderText("No Branches Available!");
-      setErrorMessage("There was an error pulling Gitlab Branches");
-      console.error(error);
+      setError(error);
     } finally {
       setIsLoading(false);
     }
@@ -68,7 +64,6 @@ function GitlabBranchSelectInput(
     const branches = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(branches)) {
-      setPlaceholderText("Select Gitlab Branches");
       setGitlabBranches([...branches]);
     }
   };
@@ -85,8 +80,9 @@ function GitlabBranchSelectInput(
       valueField={"name"}
       textField={"name"}
       disabled={disabled}
-      placeholderText={placeholderText}
-      errorMessage={errorMessage}
+      error={error}
+      singularTopic={"Gitlab Branch"}
+      pluralTopic={"Gitlab Branches"}
     />
   );
 }

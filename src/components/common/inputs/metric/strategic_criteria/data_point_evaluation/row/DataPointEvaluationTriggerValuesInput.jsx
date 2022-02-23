@@ -12,7 +12,7 @@ function DataPointEvaluationTriggerValuesInput(
     setModel,
     triggerFilter,
     disabled,
-    updateRule,
+    updateRuleFunction,
   }) {
   const getInputs = () => {
     if (triggerFilter === DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.BETWEEN_INCLUSIVE) {
@@ -61,7 +61,7 @@ function DataPointEvaluationTriggerValuesInput(
   const setDataFunction = (fieldName, newValue) => {
     const newModel = {...model};
     newModel.setData(fieldName, newValue);
-    updateRule(newModel);
+    updateRuleFunction(newModel);
     return newModel;
   };
 
@@ -79,7 +79,7 @@ function DataPointEvaluationTriggerValuesInput(
 DataPointEvaluationTriggerValuesInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
-  updateRule: PropTypes.func,
+  updateRuleFunction: PropTypes.func,
   disabled: PropTypes.bool,
   triggerFilter: PropTypes.string,
 };
