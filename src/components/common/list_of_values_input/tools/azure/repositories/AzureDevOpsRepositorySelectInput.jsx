@@ -22,8 +22,7 @@ function AzureDevOpsRepositorySelectInput(
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [azureRepositories, setAzureRepositories] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Azure Repository");
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
 
@@ -36,8 +35,7 @@ function AzureDevOpsRepositorySelectInput(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setAzureRepositories([]);
-    setErrorMessage("");
-    setPlaceholderText("Select Azure Repository");
+    setError(undefined);
 
     if (isMongoDbId(toolId) === true) {
       loadData(source).catch((error) => {
@@ -56,9 +54,7 @@ function AzureDevOpsRepositorySelectInput(
       setIsLoading(true);
       await loadAzureRepositories(cancelSource);
     } catch (error) {
-      setPlaceholderText("No Repositories Available!");
-      setErrorMessage("There was an error pulling Azure Repositories");
-      console.error(error);
+      setError(error);
     } finally {
       setIsLoading(false);
     }
@@ -69,16 +65,14 @@ function AzureDevOpsRepositorySelectInput(
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
-      setPlaceholderText("Select Azure Repository");
       setAzureRepositories([...repositories]);
-
       const existingRepository = model?.getData(fieldName);
 
       if (hasStringValue(existingRepository) === true) {
         const existingRepositoryExists = repositories.find((repository) => repository["name"] === existingRepository);
 
         if (existingRepositoryExists == null) {
-          setErrorMessage(
+          setError(
             "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list."
           );
         }
@@ -98,8 +92,9 @@ function AzureDevOpsRepositorySelectInput(
       valueField={valueField}
       textField={textField}
       disabled={disabled}
-      placeholder={placeholder}
-      errorMessage={errorMessage}
+      pluralTopic={"Azure Repositories"}
+      singularTopic={"Azure Repository"}
+      error={error}
     />
   );
 }

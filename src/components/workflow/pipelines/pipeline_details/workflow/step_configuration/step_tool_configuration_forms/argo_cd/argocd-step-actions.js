@@ -1,5 +1,6 @@
 import { axiosApiService } from "../../../../../../../../api/apiService";
 import baseActions from "utils/actionsBase";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
 const ArgoCDStepActions = {};
 
@@ -7,7 +8,7 @@ ArgoCDStepActions.searchArgoAppsList = async (id, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/tools/argo/applications";
   const postBody = {
-    tool: "argo",
+    tool: toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO,
     id: id,
   };
   const res = await axiosApiService(accessToken)
@@ -24,7 +25,7 @@ ArgoCDStepActions.searchArgoAppsList = async (id, getAccessToken) => {
 ArgoCDStepActions.getArgoApplicationsV2 = async (getAccessToken, cancelTokenSource, argoToolId) => {
   const apiUrl = "/tools/argo/applications";
   const postBody = {
-    tool: "argo",
+    tool: toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO,
     id: argoToolId,
   };
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);

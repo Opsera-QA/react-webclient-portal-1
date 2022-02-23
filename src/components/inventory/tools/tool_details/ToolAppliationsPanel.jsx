@@ -3,11 +3,12 @@ import ArgoToolApplicationsPanel from "components/inventory/tools/tool_details/t
 import OctopusToolApplicationsPanel from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/OctopusToolApplicationsPanel";
 import AzureApplications from "./tool_jobs/azureV2/applications/AzureApplications";
 import PropTypes from "prop-types";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
 function ToolApplicationsPanel({ toolData, setToolData, loadData, isLoading }) {
   const getPanel = (toolIdentifier, loadData) => {
     switch (toolIdentifier) {
-      case "argo":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
         return (
           <ArgoToolApplicationsPanel
             toolData={toolData}

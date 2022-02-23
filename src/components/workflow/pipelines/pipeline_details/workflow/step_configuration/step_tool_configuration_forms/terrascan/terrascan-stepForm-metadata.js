@@ -36,7 +36,7 @@ const terrascanStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Select SCM Type",
+      label: "Source Code Management Type",
       id: "type",
       isRequired: true
     },
