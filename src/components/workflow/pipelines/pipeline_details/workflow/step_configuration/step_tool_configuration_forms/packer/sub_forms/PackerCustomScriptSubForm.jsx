@@ -4,8 +4,8 @@ import PackerCustomScriptSelectInput from "../inputs/custom_scripts/PackerCustom
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PackerInputParameters from "../inputs/PackerInputParameters";
-import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import PackerVariablesFilesInput from "../inputs/PackerVariablesFilesInput";
+import PackerVariablesFileToggleInput from "../inputs/PackerVariablesFileToggleInput";
 
 function PackerCustomScriptSubForm({ model, setModel }) {
 
@@ -20,7 +20,7 @@ function PackerCustomScriptSubForm({ model, setModel }) {
     return (
       <>
         <TextInputBase fieldName={"inputFileName"} dataObject={model} setDataObject={setModel} />
-        <BooleanToggleInput fieldName={"isVariableFile"} dataObject={model} setDataObject={setModel} />
+        <PackerVariablesFileToggleInput fieldName={"isVariableFile"} model={model} setModel={setModel} />
         {getVariableInputs()}
       </>
     );
