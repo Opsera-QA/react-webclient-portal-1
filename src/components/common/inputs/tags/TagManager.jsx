@@ -16,7 +16,7 @@ import {fieldValidation} from "core/data_model/modelValidation";
 function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setDataFunction, allowCreate, inline, allowedTypes, getDisabledTags, placeholderText}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [field] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(dataObject?.getFieldById(fieldName));
   const [tagOptions, setTagOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);

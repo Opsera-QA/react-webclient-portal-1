@@ -9,39 +9,47 @@ import PipelineMappingEnvironmentInputRow
 import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function PipelineMappingEnvironmentInput({ fieldName, model, setModel, disabled}) {
-  const [field] = useState(model.getFieldById(fieldName));
+  const [field] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [environments, setEnvironments] = useState([]);
 
   useEffect(() => {
-    const environments = model?.getData(fieldName);
+    if (model) {
+      const unpackedEnvironments = model?.getData(fieldName);
 
-    if (Array.isArray(environments)) {
-      setEnvironments(environments);
+      if (Array.isArray(unpackedEnvironments) && unpackedEnvironments.length > 0) {
+        setEnvironments(unpackedEnvironments);
+      } else {
+        addEnvironment();
+      }
     }
-  }, [model]);
+  }, []);
 
   const validateAndSetData = (environments) => {
-    setEnvironments([...environments]);
-    let newDataObject = {...model};
+    if (!Array.isArray(environments)) {
+      return;
+    }
 
-    if (environments.length > field.maxItems) {
+    setEnvironments([...environments]);
+    const newModel = {...model};
+
+    if (environments?.length > field?.maxItems) {
       setErrorMessage("You have reached the maximum allowed number of configuration items. Please remove one to add another.");
       return;
     }
 
-    let newObject = {};
+    const validatedEnvironments = [];
 
-    if (environments && environments.length > 0) {
-      environments.map((item) => {
-        if (hasStringValue(item.key) === true && hasStringValue(item.value) === true) {
-          newObject[item.name] = item.value;
+    if (environments.length > 0) {
+      environments.map((environment) => {
+        if (isEnvironmentComplete(environment)) {
+          validatedEnvironments.push(environment);
         }
       });
     }
 
-    newDataObject.setData(fieldName, {...newObject});
-    setModel({...newDataObject});
+    newModel.setData(fieldName, validatedEnvironments);
+    setModel({...newModel});
   };
 
   const addEnvironment = () => {
@@ -51,7 +59,7 @@ function PipelineMappingEnvironmentInput({ fieldName, model, setModel, disabled}
       return;
     }
 
-    let newRow = {
+    const newRow = {
       key: "",
       value: "",
     };
@@ -61,28 +69,28 @@ function PipelineMappingEnvironmentInput({ fieldName, model, setModel, disabled}
   };
 
   const deleteEnvironmentFunction = (index) => {
-    let newPropertyList = environments;
-    newPropertyList.splice(index, 1);
-    validateAndSetData(newPropertyList);
+    let newEnvironmentList = environments;
+    newEnvironmentList.splice(index, 1);
+    validateAndSetData(newEnvironmentList);
   };
 
   // Are there allowed and not characters for key or value
   const setEnvironmentValueFunction = (index, newValue) => {
-    let newPropertyList = environments;
+    let newEnvironmentList = environments;
 
-    if (newPropertyList[index]["value"] !== newValue) {
-      newPropertyList[index]["value"] = newValue;
-      validateAndSetData(newPropertyList);
+    if (newEnvironmentList[index]["value"] !== newValue) {
+      newEnvironmentList[index]["value"] = newValue;
+      validateAndSetData(newEnvironmentList);
     }
   };
 
   // Are there allowed and not characters for key or value
   const setEnvironmentKeyFunction = (index, newValue) => {
-    let newPropertyList = environments;
+    let newEnvironmentList = environments;
 
-    if (newPropertyList[index]["key"] !== newValue) {
-      newPropertyList[index]["key"] = newValue;
-      validateAndSetData(newPropertyList);
+    if (newEnvironmentList[index]["key"] !== newValue) {
+      newEnvironmentList[index]["key"] = newValue;
+      validateAndSetData(newEnvironmentList);
     }
   };
 
@@ -105,7 +113,7 @@ function PipelineMappingEnvironmentInput({ fieldName, model, setModel, disabled}
   };
 
   const getFieldBody = () => {
-    if (!environments || environments.length === 0) {
+    if (!Array.isArray(environments) || environments.length === 0) {
       return (
         <div className="rules-input">
           <div className="text-muted text-center no-data-message">No environments have been added</div>
@@ -119,7 +127,7 @@ function PipelineMappingEnvironmentInput({ fieldName, model, setModel, disabled}
           return (
             <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
               <PipelineMappingEnvironmentInputRow
-                accessRule={environment}
+                environment={environment}
                 disabled={disabled}
                 deleteEnvironmentFunction={() => deleteEnvironmentFunction(index)}
                 setKeyFunction={(value) => setEnvironmentKeyFunction(index, value)}
@@ -137,14 +145,11 @@ function PipelineMappingEnvironmentInput({ fieldName, model, setModel, disabled}
   };
 
   const lastEnvironmentComplete = () => {
-    let newPropertyList = environments;
-
-    if (newPropertyList.length === 0) {
+    if (environments.length === 0) {
       return true;
     }
 
-    let lastObject = newPropertyList[newPropertyList.length - 1];
-    return isEnvironmentComplete(lastObject);
+    return isEnvironmentComplete(environments.lastItem);
   };
 
   const getIncompletePropertyMessage = () => {
