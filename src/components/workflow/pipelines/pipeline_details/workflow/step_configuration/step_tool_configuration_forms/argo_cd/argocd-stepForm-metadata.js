@@ -88,6 +88,11 @@ const ArgoCDStepFormMetadata = {
       id: "rollbackEnabled",
       // isRequired: true,
     },
+    {
+      label: "Repository Tag",
+      id: "repositoryTag",
+      // isRequired: true,
+    },
   ],
   newObjectFields: {
     existingContent: "image",

@@ -30,4 +30,13 @@ ArgoCDStepActions.getArgoApplicationsV2 = async (getAccessToken, cancelTokenSour
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+ArgoCDStepActions.getArtifactoryTagsFromArgoInstance = async (getAccessToken, cancelTokenSource, pipelineId, stepId) => {
+  const apiUrl = "/tools/argo/artifcatory-tags";
+  const postBody = {
+    pipelineId, 
+    stepId
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default ArgoCDStepActions;

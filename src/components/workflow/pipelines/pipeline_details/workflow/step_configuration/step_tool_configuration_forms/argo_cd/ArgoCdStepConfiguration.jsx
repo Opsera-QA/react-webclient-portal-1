@@ -22,8 +22,10 @@ import ArgoCdGitRepositorySelectInput
 import ArgoCdGitBranchSelectInput
   from "components/common/list_of_values_input/tools/argo_cd/ArgoCdGitBranchSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
+import ArgoCdRepositoryTagSelectInput 
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdRepositoryTagSelectInput";
 
-function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel }) {
+function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel, pipelineId }) {
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [argoCdModel, setArgoCdModel] = useState(undefined);
@@ -66,6 +68,22 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
       },
     };
     parentCallback(item);
+  };
+
+  const getRollbackRepositorySelect = () => {
+    console.log(argoCdModel);
+    if (argoCdModel.getData("rollbackEnabled") === true) {
+      return ( 
+        <ArgoCdRepositoryTagSelectInput
+          fieldName={"repositoryTag"}
+          model={argoCdModel}
+          setModel={setArgoCdModel}
+          pipelineId={pipelineId}
+          stepId={argoCdModel?.getData("dockerStepID")}
+          valueField={"value"}
+        />
+      );
+    }
   };
 
   const getDynamicFields = () => {
@@ -143,8 +161,8 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
         dataObject={argoCdModel}
         setDataObject={setArgoCdModel}
       />
+      {getRollbackRepositorySelect()}
       {getDynamicFields()}
-      {console.log(argoCdModel)}
     </PipelineStepEditorPanelContainer>
   );
 }
@@ -154,7 +172,8 @@ ArgoCdStepConfiguration.propTypes = {
   plan: PropTypes.array,
   stepId: PropTypes.string,
   parentCallback: PropTypes.func,
-  closeEditorPanel: PropTypes.func
+  closeEditorPanel: PropTypes.func,
+  pipelineId: PropTypes.string,
 };
 
 export default ArgoCdStepConfiguration;
