@@ -33,7 +33,6 @@ function MultiSelectInputBase(
     formatDataFunction,
     parseValueFunction,
     error,
-    singularTopic,
     pluralTopic,
   }) {
   const [errorMessage, setErrorMessage] = useState("");
@@ -164,8 +163,8 @@ function MultiSelectInputBase(
       return placeholderText;
     }
 
-    if (hasStringValue(singularTopic) === true) {
-      return `Select a ${singularTopic}`;
+    if (hasStringValue(pluralTopic) === true) {
+      return `Select ${pluralTopic}`;
     }
 
     return "Select One";
@@ -244,7 +243,6 @@ MultiSelectInputBase.propTypes = {
   parseValueFunction: PropTypes.func,
   onSearchFunction: PropTypes.func,
   error: PropTypes.any,
-  singularTopic: PropTypes.string,
   pluralTopic: PropTypes.string,
 };
 

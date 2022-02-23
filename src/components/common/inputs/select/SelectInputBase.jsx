@@ -117,7 +117,7 @@ function SelectInputBase(
     }
 
     if (hasStringValue(singularTopic) === true) {
-      return `Select a ${singularTopic}`;
+      return `Select ${singularTopic}`;
     }
 
     return "Select One";

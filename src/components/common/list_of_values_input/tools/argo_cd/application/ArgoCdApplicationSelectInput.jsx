@@ -2,20 +2,19 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faTools} from "@fortawesome/pro-light-svg-icons";
 import {Link} from "react-router-dom";
 import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
 import ArgoCdApplicationInfoOverlay from "components/common/list_of_values_input/tools/argo_cd/application/ArgoCdApplicationInfoOverlay";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
 function ArgoCdApplicationSelectInput({className, fieldName, model, setModel, disabled, argoToolId, setDataFunction}) {
   const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [argoApplications, setArgoApplications] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -28,9 +27,9 @@ function ArgoCdApplicationSelectInput({className, fieldName, model, setModel, di
     setCancelTokenSource(source);
     isMounted.current = true;
     setArgoApplications([]);
-    setErrorMessage("");
+    setError(undefined);
 
-    if (argoToolId != null && argoToolId !== "") {
+    if (isMongoDbId(argoToolId) === true) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -50,10 +49,7 @@ function ArgoCdApplicationSelectInput({className, fieldName, model, setModel, di
       await loadArgoApplications(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
-        setErrorMessage(`
-          There was an error pulling Argo Applications. Please check browser logs for more details.
-        `);
-        console.error(error);
+        setError(error);
       }
     } finally {
       setIsLoading(false);
@@ -66,20 +62,11 @@ function ArgoCdApplicationSelectInput({className, fieldName, model, setModel, di
 
     if (Array.isArray(argoApplications)) {
       setArgoApplications(argoApplications);
-
-      if (argoApplications.length === 0) {
-        const errorMessage = "No Argo Applications Found! Please validate credentials and configured applications.";
-        toastContext.showErrorDialog(errorMessage);
-      }
-    } else {
-      const errorMessage =
-        "Error fetching Argo Applications! Please validate credentials and configured repositories.";
-      setErrorMessage(errorMessage);
     }
   };
 
   const getErrorMessage = () => {
-    if (!isLoading && argoApplications?.length === 0 && argoToolId) {
+    if (!isLoading && argoApplications?.length === 0 && isMongoDbId(argoToolId) === true) {
       return (
         <div className="form-text text-muted p-2">
           <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
@@ -103,7 +90,7 @@ function ArgoCdApplicationSelectInput({className, fieldName, model, setModel, di
   };
 
   const getArgoDetailViewLink = () => {
-    if (argoToolId != null && argoToolId !== "") {
+    if (isMongoDbId(argoToolId) === true) {
       return (`/inventory/tools/details/${argoToolId}/applications`);
     }
   };
@@ -112,7 +99,6 @@ function ArgoCdApplicationSelectInput({className, fieldName, model, setModel, di
     <>
       <SelectInputBase
         fieldName={fieldName}
-        placeholderText={"Select Argo Application"}
         dataObject={model}
         setDataObject={setModel}
         setDataFunction={setDataFunction}
@@ -123,10 +109,12 @@ function ArgoCdApplicationSelectInput({className, fieldName, model, setModel, di
         // infoOverlay={getInfoOverlay()}
         className={className}
         selectOptions={argoApplications}
-        errorMessage={errorMessage}
         linkTooltipText={`View Or Create New Argo Applications`}
         linkIcon={faTools}
         detailViewLink={getArgoDetailViewLink()}
+        error={error}
+        singularTopic={"Argo Application"}
+        pluralTopic={"Argo Applications"}
       />
       {getErrorMessage()}
     </>
