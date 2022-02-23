@@ -19,7 +19,6 @@ import {
 } from "components/common/helpers/metrics/metricTheme.helpers";
 import MetricPipelineInfoSubheader from "components/common/metrics/subheaders/MetricPipelineInfoSubheader";
 import { dateHelpers } from 'components/common/helpers/date/date.helpers';
-import { getTableDurationTextColumn } from "components/common/table/table-column-helpers.js";
 
 function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
 
