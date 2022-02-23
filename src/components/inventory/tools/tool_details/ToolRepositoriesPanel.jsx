@@ -5,6 +5,7 @@ import DetailPanelContainer from "components/common/panels/detail_panel_containe
 import JFrogToolRepositoriesPanel from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/JFrogToolRepositoriesPanel";
 import MessageField from "components/common/fields/text/MessageField";
 import ArgoToolRepositoriesPanel from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/ArgoToolRepositoriesPanel";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
 function ToolRepositoriesPanel({ toolData, loadData, isLoading }) {
   const getToolRepositoriesPanel = () => {
@@ -15,7 +16,7 @@ function ToolRepositoriesPanel({ toolData, loadData, isLoading }) {
           toolId={toolData?.getData("_id")}
         />
       );
-    case "argo":
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
       return (
         <ArgoToolRepositoriesPanel
           toolActions={toolData?.getData("repositories")}

@@ -2,9 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faProjectDiagram} from "@fortawesome/pro-light-svg-icons";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
 export const PROJECT_SUPPORTED_TOOL_IDENTIFIERS = [
-  "argo",
+  toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO,
   "jira",
 ];
 

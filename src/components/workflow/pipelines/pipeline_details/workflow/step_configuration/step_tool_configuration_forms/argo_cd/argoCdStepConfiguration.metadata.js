@@ -1,13 +1,13 @@
-const ArgoCDStepFormMetadata = {
-  type: "YAML Git Step Configuration",
+export const ArgoCdStepConfigurationMetadata = {
+  type: "Argo CD Step Configuration",
   fields: [
     {
-      label: "SCM Tool Type",
+      label: "Source Code Management Tool Type",
       id: "type",
       isRequired: true,
     },
     {
-      label: "SCM Tool",
+      label: "Source Code Management Tool",
       id: "gitToolId",
       isRequired: true,
     },
@@ -104,5 +104,3 @@ const ArgoCDStepFormMetadata = {
     bitbucketWorkspaceName: "",
   },
 };
-
-export default ArgoCDStepFormMetadata;

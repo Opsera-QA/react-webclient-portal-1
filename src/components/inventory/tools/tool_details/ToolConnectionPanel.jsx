@@ -34,6 +34,7 @@ import InformaticaToolConfiguration from "./tool_jobs/informatica/InformaticaToo
 import TerraformCloudToolConfiguration from "./tool_jobs/terraform_cloud/TerraformCloudToolConfiguration";
 import GcpToolConfiguration from "./tool_jobs/gcp/GcpToolConfiguration";
 import BuildkiteToolConfiguration from "./tool_jobs/buildkite/BuildkiteToolConfiguration";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
 function ToolConnectionPanel({ toolData }) {
   const getConnectionPanel = () => {
@@ -56,7 +57,7 @@ function ToolConnectionPanel({ toolData }) {
         return <SpinnakerToolConfiguration toolData={toolData} />;
       case "cypress":
         return <CypressToolConfiguration toolData={toolData} />;
-      case "argo":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
         return <ArgoToolConfiguration toolData={toolData} />;
       case "anchore-scan":
         return <AnchoreScanToolConfiguration toolData={toolData} />;

@@ -5,14 +5,14 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
-import ArgoCdGitYamlToolSelectInput
-  from "components/common/list_of_values_input/workflow/pipelines/argo_cd/ArgoCdGitYamlToolSelectInput";
+import ArgoCdStepSourceControlManagementToolTypeSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepSourceControlManagementToolTypeSelectInput";
 import ArgoCdPipelineToolSelectInput from "components/common/list_of_values_input/tools/argo_cd/ArgoCdPipelineToolSelectInput";
 import ArgoCdApplicationSelectInput
   from "components/common/list_of_values_input/tools/argo_cd/application/ArgoCdApplicationSelectInput";
 import PipelineStepSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineStepSelectInput";
-import ArgoCDStepFormMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/argocd-stepForm-metadata";
+import {ArgoCdStepConfigurationMetadata}
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/argoCdStepConfiguration.metadata";
 import ArgoCdScmToolSelectInput from "components/common/list_of_values_input/tools/argo_cd/ArgoCdScmToolSelectInput";
 import ArgoCdBitbucketWorkspaceInput
   from "components/common/list_of_values_input/tools/argo_cd/ArgoCdBitbucketWorkspaceInput";
@@ -45,7 +45,7 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
   const loadData = async () => {
     try {
       setIsLoading(true);
-      const parsedModel = modelHelpers.parseObjectIntoModel(stepTool?.configuration, ArgoCDStepFormMetadata);
+      const parsedModel = modelHelpers.parseObjectIntoModel(stepTool?.configuration, ArgoCdStepConfigurationMetadata);
       setArgoCdModel(parsedModel);
     }
     catch (error) {
@@ -108,7 +108,7 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
         fieldName={"dockerStepID"}
         disabled={argoCdModel?.getData("applicationName").length === 0}
       />
-      <ArgoCdGitYamlToolSelectInput
+      <ArgoCdStepSourceControlManagementToolTypeSelectInput
         model={argoCdModel}
         setModel={setArgoCdModel}
         disabled={argoCdModel?.getData("dockerStepID").length === 0}

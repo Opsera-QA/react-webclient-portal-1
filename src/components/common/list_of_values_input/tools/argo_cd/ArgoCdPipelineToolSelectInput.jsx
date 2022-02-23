@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
 function ArgoCdPipelineToolSelectInput({className, fieldName, model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
@@ -13,7 +14,7 @@ function ArgoCdPipelineToolSelectInput({className, fieldName, model, setModel, d
 
   return (
      <RoleRestrictedToolByIdentifierInputBase
-       toolIdentifier={"argo"}
+       toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO}
        toolFriendlyName={"Argo CD"}
        fieldName={fieldName}
        placeholderText={"Select Argo CD Tool"}

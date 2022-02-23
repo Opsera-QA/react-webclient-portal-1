@@ -4,6 +4,7 @@ import {faOctopusDeploy, faSalesforce} from "@fortawesome/free-brands-svg-icons"
 import {faTasks, faWrench} from "@fortawesome/pro-light-svg-icons";
 import React from "react";
 import {TASK_TYPES} from "components/tasks/task.types";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
 export function getLargeVendorIconFromToolIdentifier (toolIdentifier, s3Bucket = process.env.REACT_APP_OPSERA_S3_STORAGE_URL) {
   if (toolIdentifier == null) {
@@ -52,8 +53,8 @@ export function getLargeVendorIconFromToolIdentifier (toolIdentifier, s3Bucket =
       return <Image src={`${vendorIconPrefix}/selenium-64-261.png`} className={"selenium-icon"} />;
     case "anchor":
       return <Image src={`${vendorIconPrefix}/anchor-96-256.png`} />;
-    case "argo":
-      return getVendorTitle("argo");
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
+      return getVendorTitle(toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO);
     case "sonar":
     // TODO: Find better icon for Sonar. It looks bad
       return getVendorTitle("sonar");
@@ -173,7 +174,7 @@ export function getVendorTitle (toolIdentifier) {
       return "Selenium";
     case "anchor":
       return "Anchor";
-    case "argo":
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
       return "Argo CD";
     case "sonar":
       return "SonarQube";

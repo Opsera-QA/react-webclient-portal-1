@@ -15,9 +15,13 @@ const YAML_SCM_TOOL_OPTIONS = [
     text: "Bitbucket",
     value: "bitbucket",
   },
+  // {
+  //   name: "Azure DevOps",
+  //   value: toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS,
+  // },
 ];
 
-function ArgoCdGitYamlToolSelectInput({ fieldName, model, setModel, disabled }) {
+function ArgoCdStepSourceControlManagementToolTypeSelectInput({ fieldName, model, setModel, disabled }) {
   const setDataFunction = (fieldName, option) => {
     let newModel = model;
     newModel.setData("type", option?.value);
@@ -45,7 +49,7 @@ function ArgoCdGitYamlToolSelectInput({ fieldName, model, setModel, disabled }) 
   );
 }
 
-ArgoCdGitYamlToolSelectInput.propTypes = {
+ArgoCdStepSourceControlManagementToolTypeSelectInput.propTypes = {
   currentPipelineId: PropTypes.string,
   fieldName: PropTypes.string,
   model: PropTypes.object,
@@ -53,8 +57,8 @@ ArgoCdGitYamlToolSelectInput.propTypes = {
   disabled: PropTypes.bool
 };
 
-ArgoCdGitYamlToolSelectInput.defaultProps = {
+ArgoCdStepSourceControlManagementToolTypeSelectInput.defaultProps = {
   fieldName: "type",
 };
 
-export default ArgoCdGitYamlToolSelectInput;
+export default ArgoCdStepSourceControlManagementToolTypeSelectInput;

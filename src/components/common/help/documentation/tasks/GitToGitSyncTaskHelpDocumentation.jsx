@@ -11,7 +11,7 @@ function GitToGitSyncTaskHelpDocumentation({closeHelpPanel}) {
       <ol>
         <li>Select <b>{getTaskTypeLabel(TASK_TYPES.SYNC_GIT_BRANCHES)}</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:
           <ul style={{listStyleType: "none"}}>
-            <li><b>SCM Type</b> - Select a source control management tool(SCM) identifier. Choose from Gitlab, Github or Bitbucket.</li>
+            <li><b>Source Code Management Type</b> - Select a source control management tool(SCM) identifier. Choose from Gitlab, Github or Bitbucket.</li>
             <li><b>Account</b> - Select a configured source control management(SCM) Tool from the Tool Registry.</li>
             <li><b>Workspace/Project</b> - Select the Bitbucket Workspace or Project where your repository exists.</li>
             <li><b>Repository</b> - Select the repository of the branch to be merged.</li>

@@ -2,9 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faGit} from "@fortawesome/free-brands-svg-icons";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
 export const REPOSITORY_SUPPORTED_TOOL_IDENTIFIERS = [
-  "argo",
+  toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO,
   "jfrog_artifactory_maven",
 ];
 

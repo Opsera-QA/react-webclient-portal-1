@@ -2,7 +2,7 @@ const TerraformStepFormMetadata = {
   type: "Terraform Step Configuration",
   fields: [
     {
-      label: "SCM Tool Type",
+      label: "Source Code Management Tool Type",
       id: "type",
       isRequired: true
     },
@@ -12,7 +12,7 @@ const TerraformStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "SCM Tool",
+      label: "Source Code Management Tool",
       id: "gitToolId",
       isRequired: true
     },
@@ -165,7 +165,7 @@ const TerraformStepFormMetadata = {
   ],
   fieldsAlt: [
     {
-      label: "SCM Tool Type",
+      label: "Source Code Management Tool Type",
       id: "type",
       isRequired: true
     },
@@ -175,7 +175,7 @@ const TerraformStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "SCM Tool",
+      label: "Source Code Management Tool",
       id: "gitToolId",
       isRequired: true
     },
