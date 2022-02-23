@@ -5,8 +5,8 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
-import ArgoCdStepSourceControlManagementToolTypeSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepSourceControlManagementToolTypeSelectInput";
+import ArgoCdStepSourceControlManagementToolIdentifierSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepSourceControlManagementToolIdentifierSelectInput";
 import ArgoCdPipelineToolSelectInput from "components/common/list_of_values_input/tools/argo_cd/ArgoCdPipelineToolSelectInput";
 import PipelineStepSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineStepSelectInput";
 import {ArgoCdStepConfigurationMetadata}
@@ -108,10 +108,9 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
         fieldName={"dockerStepID"}
         disabled={argoCdModel?.getData("applicationName").length === 0}
       />
-      <ArgoCdStepSourceControlManagementToolTypeSelectInput
+      <ArgoCdStepSourceControlManagementToolIdentifierSelectInput
         model={argoCdModel}
         setModel={setArgoCdModel}
-        disabled={argoCdModel?.getData("dockerStepID").length === 0}
       />
       <ArgoCdScmToolSelectInput
         gitYamlTool={argoCdModel?.getData("type")}

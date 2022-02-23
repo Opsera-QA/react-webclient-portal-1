@@ -21,8 +21,7 @@ function AzureDevOpsBranchSelectInput(
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [azureBranches, setAzureBranches] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Azure Branch");
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
 
@@ -35,8 +34,7 @@ function AzureDevOpsBranchSelectInput(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setAzureBranches([]);
-    setErrorMessage("");
-    setPlaceholderText("Select Azure Branch");
+    setError(undefined);
 
     if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
       loadData(source).catch((error) => {
@@ -55,9 +53,7 @@ function AzureDevOpsBranchSelectInput(
       setIsLoading(true);
       await loadAzureBranches(cancelSource);
     } catch (error) {
-      setPlaceholderText("No Branches Available!");
-      setErrorMessage("There was an error pulling Azure Branches");
-      console.error(error);
+      setError(error);
     } finally {
       setIsLoading(false);
     }
@@ -68,7 +64,6 @@ function AzureDevOpsBranchSelectInput(
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
-      setPlaceholderText("Select Azure Branch");
       setAzureBranches([...repositories]);
     }
   };
@@ -83,8 +78,9 @@ function AzureDevOpsBranchSelectInput(
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
       disabled={disabled}
-      placeholder={placeholder}
-      errorMessage={errorMessage}
+      error={error}
+      singularTopic={"Azure Branch"}
+      pluralTopic={"Azure Branches"}
     />
   );
 }
