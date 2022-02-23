@@ -11,7 +11,7 @@ function PackerVariablesFilesInput({ dataObject, setDataObject, disabled, fieldN
       dataObject={dataObject}
       setDataObject={setDataObject}
       fieldName={fieldName}
-      allowIncompleteItems={false}
+      allowIncompleteItems={true}
       type={"Variable File"}
       disabled={disabled}
       regexValidationRequired={false}
