@@ -98,6 +98,7 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
                 data={chartData}
                 {...defaultConfig()}
                 {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
+                arcLabel={e => e.value === 0 ? '' : e.value}
               />
             </div>
           </Col>
