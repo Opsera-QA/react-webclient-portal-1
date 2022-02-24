@@ -37,6 +37,7 @@ function AzureAcrPushStepConfiguration({ stepTool, closeEditorPanel, plan, stepI
     let azureAcrPushConfigurationData = modelHelpers.getPipelineStepConfigurationModel(
       stepTool,
       azureAcrPushStepFormMetadata
+    );
     setAzureAcrPushModel(azureAcrPushConfigurationData);
     setIsLoading(false);
   };
