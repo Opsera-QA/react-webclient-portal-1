@@ -27,6 +27,7 @@ import ArgoCdStepPipelineStepSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepPipelineStepSelectInput";
 import ArgoCdRepositoryTagSelectInput
   from "components/common/list_of_values_input/tools/argo_cd/tags/ArgoCdRepositoryTagSelectInput";
+import pipelineHelpers from "components/workflow/pipelineHelpers";
 
 function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel, pipelineId }) {
   const toastContext = useContext(DialogToastContext);
@@ -75,14 +76,14 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
 
   const getRollbackRepositorySelect = () => {
     if (argoCdModel?.getData("rollbackEnabled") === true) {
-      return ( 
+      return (
         <ArgoCdRepositoryTagSelectInput
           fieldName={"repositoryTag"}
           model={argoCdModel}
           setModel={setArgoCdModel}
           pipelineId={pipelineId}
           stepId={argoCdModel?.getData("dockerStepID")}
-          toolIdentifier={argoCdModel?.getData("buildStepToolIdentifier")}
+          toolIdentifier={pipelineHelpers.getToolIdentifierFromPlanForStepId(plan, argoCdModel?.getData("dockerStepID"))}
           valueField={"value"}
           plan={plan}
         />
