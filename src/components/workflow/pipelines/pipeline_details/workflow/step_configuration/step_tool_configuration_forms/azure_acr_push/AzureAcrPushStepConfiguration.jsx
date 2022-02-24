@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
-import azureAcrPushStepFormMetadata
-  from "./azureAcrPush-stepForm-metadata";
+import azureAcrPushStepFormMetadata from "./azureAcrPush-stepForm-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import AzureAcrPushStepJenkinsToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_acr_push/inputs/AzureAcrPushStepJenkinsToolSelectInput";
 import AzureAcrPushStepJenkinsJobSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_acr_push/inputs/AzureAcrPushStepJenkinsJobSelectInput";
@@ -15,8 +13,10 @@ import AzureAcrPushNewRepoBooleanInput from "./inputs/AzureAcrPushNewRepoBoolean
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import AzureAcrPushRepositoryNameSelectInput from "./inputs/AzureAcrPushRepositoryNameSelectInput";
 import AzureAcrPushUseRunCountBooleanInput from "./inputs/AzureAcrPushUseRunCountBooleanInput";
+import AcrPushToolTypeSelectInput from "./inputs/AcrPushToolTypeSelectInput";
+import AzureToolApplicationSelectInput from "../../../../../../../common/list_of_values_input/tools/azure/credentials/AzureToolApplicationSelectInput";
 
-function AzureAcrPushStepConfiguration({ stepTool, closeEditorPanel, plan, stepId, pipelineId, createJob}) {
+function AzureAcrPushStepConfiguration({ stepTool, closeEditorPanel, plan, stepId, pipelineId, createJob }) {
   const [isLoading, setIsLoading] = useState(false);
   const [azureAcrPushModel, setAzureAcrPushModel] = useState(undefined);
   const [thresholdVal, setThresholdValue] = useState("");
@@ -34,11 +34,12 @@ function AzureAcrPushStepConfiguration({ stepTool, closeEditorPanel, plan, stepI
       setThresholdType(threshold?.type);
       setThresholdValue(threshold?.value);
     }
-    let azureAcrPushConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, azureAcrPushStepFormMetadata);
+    let azureAcrPushConfigurationData = modelHelpers.getPipelineStepConfigurationModel(
+      stepTool,
+      azureAcrPushStepFormMetadata
     setAzureAcrPushModel(azureAcrPushConfigurationData);
     setIsLoading(false);
   };
-
 
   const handleCreateAndSave = async () => {
     const toolId = azureAcrPushModel.getData("toolConfigId");
@@ -74,56 +75,57 @@ function AzureAcrPushStepConfiguration({ stepTool, closeEditorPanel, plan, stepI
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <AzureAcrPushStepJenkinsToolSelectInput
-        model={azureAcrPushModel}
-        setModel={setAzureAcrPushModel}
-      />
-      <AzureAcrPushStepJenkinsJobSelectInput
-        model={azureAcrPushModel}
-        setModel={setAzureAcrPushModel}
-      />
-      {/* buildStepId */}
+      <AzureAcrPushStepJenkinsToolSelectInput model={azureAcrPushModel} setModel={setAzureAcrPushModel} />
+      <AzureAcrPushStepJenkinsJobSelectInput model={azureAcrPushModel} setModel={setAzureAcrPushModel} />
       <AzureAcrPushBuildStepSelectInput
         dataObject={azureAcrPushModel}
         setDataObject={setAzureAcrPushModel}
         plan={plan}
         stepId={stepId}
       />
-      {/* azureToolConfigId */}
+      <AcrPushToolTypeSelectInput
+        dataObject={azureAcrPushModel}
+        setDataObject={setAzureAcrPushModel}
+        disabled={false}
+      />
       <AzureAcrPushAzureToolConfigIdSelectInput
         model={azureAcrPushModel}
         setModel={setAzureAcrPushModel}
+        service={azureAcrPushModel?.getData("toolType")}
+        disabled={azureAcrPushModel?.getData("toolType")?.length === 0}
       />
-      {/* azureCredentialId */}
-      {/* <AzureAcrPushCredentialIdSelectInput dataObject={azureAcrPushModel} setDataObject={setAzureAcrPushModel} azureConfig={azureConfig} setApplicationData={setApplicationData} /> */}
-      {/* resource */}
-      <TextInputBase
-        setDataObject={setAzureAcrPushModel}
-        dataObject={azureAcrPushModel}
-        fieldName={"resource"}
-      />
-      {/* azureRegistryName */}
+      {azureAcrPushModel?.getData("toolType") === "azure" && (
+        <AzureToolApplicationSelectInput
+          model={azureAcrPushModel}
+          setModel={setAzureAcrPushModel}
+          azureToolId={azureAcrPushModel?.getData("azureToolConfigId")}
+          disabled={azureAcrPushModel?.getData("azureToolConfigId")?.length === 0}
+          fieldName={"azureCredentialId"}
+        />
+      )}
+      <TextInputBase setDataObject={setAzureAcrPushModel} dataObject={azureAcrPushModel} fieldName={"resource"} />
       <AzureAcrPushStepRegistryNameSelectInput
         dataObject={azureAcrPushModel}
         setDataObject={setAzureAcrPushModel}
         azureToolConfigId={azureAcrPushModel.getData("azureToolConfigId")}
         resource={azureAcrPushModel.getData("resource")}
+        applicationId={azureAcrPushModel?.getData("azureCredentialId")}
       />
-      {/* newRepo */}
-      <AzureAcrPushNewRepoBooleanInput
-        dataObject={azureAcrPushModel}
-        setDataObject={setAzureAcrPushModel}
-      />
-      {/* repositoryName */}
-      {azureAcrPushModel.getData('newRepo') ? (
+      <AzureAcrPushNewRepoBooleanInput dataObject={azureAcrPushModel} setDataObject={setAzureAcrPushModel} />
+      {azureAcrPushModel.getData("newRepo") ? (
         <AzureAcrPushRepositoryNameSelectInput
-        dataObject={azureAcrPushModel} 
-        setDataObject={setAzureAcrPushModel} 
-        acrLoginUrl={azureAcrPushModel.getData("acrLoginUrl")}
-        azureToolId={azureAcrPushModel.getData("azureToolConfigId")}
+          dataObject={azureAcrPushModel}
+          setDataObject={setAzureAcrPushModel}
+          acrLoginUrl={azureAcrPushModel.getData("acrLoginUrl")}
+          azureToolId={azureAcrPushModel.getData("azureToolConfigId")}
+          applicationId={azureAcrPushModel?.getData("azureCredentialId")}
         />
       ) : (
-        <TextInputBase setDataObject={setAzureAcrPushModel}  dataObject={azureAcrPushModel} fieldName={"azureRepoName"} />
+        <TextInputBase
+          setDataObject={setAzureAcrPushModel}
+          dataObject={azureAcrPushModel}
+          fieldName={"azureRepoName"}
+        />
       )}
       <AzureAcrPushUseRunCountBooleanInput dataObject={azureAcrPushModel} setDataObject={setAzureAcrPushModel} />
     </PipelineStepEditorPanelContainer>
@@ -136,7 +138,7 @@ AzureAcrPushStepConfiguration.propTypes = {
   plan: PropTypes.array,
   stepId: PropTypes.string,
   pipelineId: PropTypes.string,
-  createJob: PropTypes.func
+  createJob: PropTypes.func,
 };
 
 export default AzureAcrPushStepConfiguration;
