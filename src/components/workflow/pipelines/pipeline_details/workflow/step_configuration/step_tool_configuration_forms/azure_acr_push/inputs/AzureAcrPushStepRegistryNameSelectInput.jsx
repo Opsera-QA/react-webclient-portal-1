@@ -5,19 +5,19 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import azurePipelineActions from "../azure-pipeline-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSync} from "@fortawesome/pro-light-svg-icons";
-import {hasStringValue} from "components/common/helpers/string-helpers";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSync } from "@fortawesome/pro-light-svg-icons";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 import toolsActions from "components/inventory/tools/tools-actions";
 
-function AzureAcrPushStepRegistryNameSelectInput(
-  {
-    fieldName,
-    dataObject,
-    setDataObject,
-    azureToolConfigId,
-    resource,
-  }) {
+function AzureAcrPushStepRegistryNameSelectInput({
+  fieldName,
+  dataObject,
+  setDataObject,
+  azureToolConfigId,
+  resource,
+  applicationId,
+}) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [azureRegistryList, setAzureRegistryList] = useState([]);
@@ -34,12 +34,18 @@ function AzureAcrPushStepRegistryNameSelectInput(
     setCancelTokenSource(source);
     setAzureRegistryList([]);
 
-    if (hasStringValue(azureToolConfigId) === true && hasStringValue(resource) === true) {
+    if (
+      hasStringValue(azureToolConfigId) === true &&
+      hasStringValue(resource) === true &&
+      (hasStringValue(dataObject?.getData("toolType")) && dataObject?.getData("toolType") === "azure"
+        ? hasStringValue(applicationId)
+        : true)
+    ) {
       loadData(source).catch((error) => {
         throw error;
       });
     }
-  }, [azureToolConfigId, resource]);
+  }, [azureToolConfigId, resource, applicationId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -58,6 +64,7 @@ function AzureAcrPushStepRegistryNameSelectInput(
   const loadAzureRegistries = async (cancelSource = cancelTokenSource) => {
     const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, azureToolConfigId);
     const tool = response?.data?.data;
+    let applicationData = {};
 
     if (tool == null) {
       setPlaceholderText("Error Pulling Clusters!");
@@ -65,12 +72,33 @@ function AzureAcrPushStepRegistryNameSelectInput(
       return;
     }
 
+    if (dataObject?.getData("toolType") === "azure") {
+      const applicationResponse = await toolsActions.getRoleLimitedToolApplicationByIdV2(
+        getAccessToken,
+        cancelSource,
+        azureToolConfigId,
+        applicationId
+      );
+      applicationData = applicationResponse?.data?.data;
+
+      if (applicationData == null) {
+        setPlaceholderText("Error Pulling Clusters!");
+        setErrorMessage(`
+        The selected Application was not found. 
+        It may have been deleted, or the Tool's access roles may have been updated.
+        Please select another Application or create another in the Tool Registry.
+      `);
+        return;
+      }
+    }
+
     const azureResponse = await azurePipelineActions.getAzureRegistries(
       getAccessToken,
       cancelSource,
       tool,
-      // applicationData,
-      resource
+      resource,
+      dataObject?.getData("toolType"),
+      applicationData
     );
 
     const result = azureResponse?.data?.data;
@@ -136,6 +164,7 @@ AzureAcrPushStepRegistryNameSelectInput.propTypes = {
   setDataObject: PropTypes.func,
   azureToolConfigId: PropTypes.string,
   resource: PropTypes.string,
+  applicationId: PropTypes.string,
 };
 
 AzureAcrPushStepRegistryNameSelectInput.defaultProps = {
