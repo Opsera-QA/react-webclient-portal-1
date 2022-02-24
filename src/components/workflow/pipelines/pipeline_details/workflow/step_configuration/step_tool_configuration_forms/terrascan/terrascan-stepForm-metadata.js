@@ -98,7 +98,7 @@ const terrascanStepFormMetadata = {
     },
     
     {
-      label: "Want to specifiy the path for a script file?",
+      label: "Want to specify the path for a script file?",
       id: "sourceScript",
     },
     {
