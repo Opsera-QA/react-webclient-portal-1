@@ -13,15 +13,13 @@ const emailStepNotificationMetadata = {
       isRequired: true
     },
     {
-      label: "Email Address",
-      id: "address",
-    },
-    {
       label: "Email Addresses",
       id: "addresses",
       minItems: 1,
       isRequired: true,
       isEmailArray: true,
+      maxItems: 5,
+      formText: "You can select up to five Email Addresses to receive notifications for this Pipeline step",
     },
     {
       label: "Email Notifications",
@@ -30,7 +28,6 @@ const emailStepNotificationMetadata = {
   ],
   newObjectFields: {
     type: "email",
-    address: "",
     addresses: [],
     event: "error",
     enabled: false,
