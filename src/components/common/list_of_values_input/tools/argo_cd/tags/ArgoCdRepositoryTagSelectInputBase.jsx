@@ -5,14 +5,16 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import argoCdStepActions from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/argocd-step-actions";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
-function ArgoCdRepositoryTagSelectInput(
+function ArgoCdRepositoryTagSelectInputBase(
   {
     fieldName,
     model,
     setModel,
     pipelineId,
     stepId,
+    toolIdentifier,
     disabled,
     setDataFunction,
     clearDataFunction,
@@ -37,9 +39,11 @@ function ArgoCdRepositoryTagSelectInput(
     setError(undefined);
     setRepositoryTags([]);
 
-    loadData(source).catch((error) => {
-      throw error;
-    });
+    if (isMongoDbId(stepId) === true && isMongoDbId(pipelineId) === true && hasStringValue(toolIdentifier) === true) {
+      loadData(source).catch((error) => {
+        throw error;
+      });
+    }
 
     return () => {
       source.cancel();
@@ -59,9 +63,9 @@ function ArgoCdRepositoryTagSelectInput(
   };
 
   const loadRepositoryTags = async (cancelSource = cancelTokenSource) => {
-    const response = await argoCdStepActions.getArtifactoryTagsFromArgoInstance(getAccessToken, cancelSource, pipelineId, stepId);
+    const response = await argoCdStepActions.getArtifactoryTagsFromArgoInstance(getAccessToken, cancelSource, pipelineId, stepId, toolIdentifier);
     const repositoryTags = response?.data;
-    console.log(response);
+
     if (isMounted?.current === true && Array.isArray(repositoryTags)) {
       setRepositoryTags([...repositoryTags]);
     }
@@ -86,7 +90,7 @@ function ArgoCdRepositoryTagSelectInput(
   );
 }
 
-ArgoCdRepositoryTagSelectInput.propTypes = {
+ArgoCdRepositoryTagSelectInputBase.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -97,11 +101,12 @@ ArgoCdRepositoryTagSelectInput.propTypes = {
   clearDataFunction: PropTypes.func,
   valueField: PropTypes.string,
   textField: PropTypes.string,
+  toolIdentifier: PropTypes.string,
 };
 
-ArgoCdRepositoryTagSelectInput.defaultProps = {
-  valueField: "name",
+ArgoCdRepositoryTagSelectInputBase.defaultProps = {
+  valueField: "value",
   textField: "name",
 };
 
-export default ArgoCdRepositoryTagSelectInput;
+export default ArgoCdRepositoryTagSelectInputBase;

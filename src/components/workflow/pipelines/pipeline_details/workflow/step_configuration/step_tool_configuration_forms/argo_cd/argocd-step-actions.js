@@ -31,12 +31,24 @@ ArgoCDStepActions.getArgoApplicationsV2 = async (getAccessToken, cancelTokenSour
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-ArgoCDStepActions.getArtifactoryTagsFromArgoInstance = async (getAccessToken, cancelTokenSource, pipelineId, stepId) => {
-  const apiUrl = "/tools/argo/artifcatory-tags";
+ArgoCDStepActions.getArtifactoryTagsFromArgoInstance = async (getAccessToken, cancelTokenSource, pipelineId, stepId, toolIdentifier) => {
+  const apiUrl = "/tools/argo/artifactory-tags";
   const postBody = {
-    pipelineId, 
-    stepId
+    pipelineId: pipelineId,
+    stepId: stepId,
+    toolIdentifier: toolIdentifier,
   };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+ArgoCDStepActions.getAzureArtifactoryTagsFromArgoInstance = async (getAccessToken, cancelTokenSource, azureToolConfigId, acrLoginUrl, acrRepoName) => {
+  const apiUrl = "/tools/argo/artifactory-tags/azure";
+  const postBody = {
+    azureToolConfigId: azureToolConfigId,
+    acrLoginUrl: acrLoginUrl,
+    acrRepoName: acrRepoName,
+  };
+
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 

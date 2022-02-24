@@ -8,8 +8,6 @@ import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import ArgoCdStepSourceControlManagementToolIdentifierSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepSourceControlManagementToolIdentifierSelectInput";
-import RoleRestrictedArgoToolSelectInput from "components/common/list_of_values_input/tools/argo_cd/tools/RoleRestrictedArgoToolSelectInput";
-import PipelineStepSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineStepSelectInput";
 import {ArgoCdStepConfigurationMetadata}
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/argoCdStepConfiguration.metadata";
 import ArgoCdStepSourceControlManagementToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepSourceControlManagementToolSelectInput";
@@ -20,13 +18,15 @@ import ArgoCdStepGitRepositorySelectInput
 import ArgoCdStepGitBranchSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepGitBranchSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import ArgoCdRepositoryTagSelectInput 
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdRepositoryTagSelectInput";
 import ArgoCdApplicationSelectInput
   from "components/common/list_of_values_input/tools/argo_cd/application/ArgoCdApplicationSelectInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import ArgoCdStepArgoToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepArgoToolSelectInput";
+import ArgoCdStepPipelineStepSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepPipelineStepSelectInput";
+import ArgoCdRepositoryTagSelectInput
+  from "components/common/list_of_values_input/tools/argo_cd/tags/ArgoCdRepositoryTagSelectInput";
 
 function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel, pipelineId }) {
   const toastContext = useContext(DialogToastContext);
@@ -74,7 +74,7 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
   };
 
   const getRollbackRepositorySelect = () => {
-    if (argoCdModel.getData("rollbackEnabled") === true) {
+    if (argoCdModel?.getData("rollbackEnabled") === true) {
       return ( 
         <ArgoCdRepositoryTagSelectInput
           fieldName={"repositoryTag"}
@@ -82,10 +82,25 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
           setModel={setArgoCdModel}
           pipelineId={pipelineId}
           stepId={argoCdModel?.getData("dockerStepID")}
+          toolIdentifier={argoCdModel?.getData("buildStepToolIdentifier")}
           valueField={"value"}
+          plan={plan}
         />
       );
     }
+  };
+
+  const getRollbackInputs = () => {
+    return (
+      <>
+        <BooleanToggleInput
+          fieldName={"rollbackEnabled"}
+          dataObject={argoCdModel}
+          setDataObject={setArgoCdModel}
+        />
+        {getRollbackRepositorySelect()}
+      </>
+    );
   };
 
   const getDynamicFields = () => {
@@ -121,12 +136,11 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
         setModel={setArgoCdModel}
         argoToolId={argoCdModel.getData("toolConfigId")}
       />
-      <PipelineStepSelectInput
+      <ArgoCdStepPipelineStepSelectInput
         model={argoCdModel}
         setModel={setArgoCdModel}
         stepId={stepId}
         plan={plan}
-        fieldName={"dockerStepID"}
         disabled={hasStringValue(argoCdModel?.getData("applicationName")) !== true}
       />
       <ArgoCdStepSourceControlManagementToolIdentifierSelectInput
@@ -157,12 +171,7 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
         fieldName={"gitFilePath"}
         disabled={hasStringValue(argoCdModel?.getData("defaultBranch")) !== true}
       />
-      <BooleanToggleInput 
-        fieldName={"rollbackEnabled"}
-        dataObject={argoCdModel}
-        setDataObject={setArgoCdModel}
-      />
-      {getRollbackRepositorySelect()}
+      {/*{getRollbackInputs()}*/}
       {getDynamicFields()}
     </PipelineStepEditorPanelContainer>
   );
