@@ -642,6 +642,7 @@ function StepToolConfiguration({
       case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
         return (
           <ArgoCdStepConfiguration
+            pipelineId={pipeline._id}
             plan={pipeline?.workflow?.plan}
             stepId={stepId}
             stepTool={stepTool}

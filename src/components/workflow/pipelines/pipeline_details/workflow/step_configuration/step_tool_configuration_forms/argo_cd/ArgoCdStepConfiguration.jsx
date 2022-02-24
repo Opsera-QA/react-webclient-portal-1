@@ -28,7 +28,7 @@ import ArgoCdRepositoryTagSelectInput
   from "components/common/list_of_values_input/tools/argo_cd/tags/ArgoCdRepositoryTagSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel }) {
+function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel, pipelineId }) {
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [argoCdModel, setArgoCdModel] = useState(undefined);
@@ -182,7 +182,8 @@ ArgoCdStepConfiguration.propTypes = {
   plan: PropTypes.array,
   stepId: PropTypes.string,
   parentCallback: PropTypes.func,
-  closeEditorPanel: PropTypes.func
+  closeEditorPanel: PropTypes.func,
+  pipelineId: PropTypes.string,
 };
 
 export default ArgoCdStepConfiguration;
