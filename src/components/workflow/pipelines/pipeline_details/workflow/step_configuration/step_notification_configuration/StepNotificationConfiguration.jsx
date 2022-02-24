@@ -371,8 +371,8 @@ function StepNotificationConfiguration(
     return (
       <div>
         <h6 className="upper-case-first">{titleText}</h6>
-        <div className="text-muted mt-2 mb-3">Each step in the workflow can be configured with notification triggers upon
-          completion. More help on notification configurations is available <Link to="/tools">here</Link>.
+        <div className="text-muted mt-2 mb-3">Each step in the workflow can be configured with notifications that trigger upon
+          completion, failure, or all scenarios.
         </div>
       </div>
     );
