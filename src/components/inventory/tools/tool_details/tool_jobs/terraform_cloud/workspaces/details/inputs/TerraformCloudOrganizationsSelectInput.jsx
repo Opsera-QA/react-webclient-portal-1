@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import { AuthContext } from "../../../../../../../../../../contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import terraformCloudOrganizationsActions
-  from "../../../../../../../../../inventory/tools/tool_details/tool_jobs/terraform_cloud/organizations/terraformCloudOrganizations.actions";
+  from "components/inventory/tools/tool_details/tool_jobs/terraform_cloud/organizations/terraformCloudOrganizations.actions";
 
 function TerraformCloudOrganizationsSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, toolId}) {
   const toastContext = useContext(DialogToastContext);
@@ -75,28 +75,12 @@ function TerraformCloudOrganizationsSelectInput({ fieldName, dataObject, setData
     }
   };
 
-  const setDataFunction = (fieldName, selectedOption) => {
-    let newDataObject = dataObject;
-    newDataObject.setData(fieldName, selectedOption?.organizationName);
-    newDataObject.setDefaultValue("workspaceName");
-    setDataObject({...newDataObject});
-  };
-
-  const clearDataFunction = (fieldName) => {
-    let newDataObject = dataObject;
-    newDataObject.setDefaultValue("organizationName");
-    newDataObject.setDefaultValue("workspaceName");
-    setDataObject({...newDataObject});
-  };
-
   return (
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
         setDataObject={setDataObject}
         selectOptions={organizations}
-        setDataFunction={setDataFunction}
-        clearDataFunction={clearDataFunction}
         busy={isLoading}
         valueField={valueField}
         textField={textField}

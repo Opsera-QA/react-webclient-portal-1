@@ -126,6 +126,10 @@ const TerraformStepFormMetadata = {
       id: "organizationName",
     },
     {
+      label: "Workspace Name",
+      id: "workspaceName",
+    },
+    {
       label: "Backend State",
       id: "backendState",
     },
@@ -299,6 +303,10 @@ const TerraformStepFormMetadata = {
       id: "organizationName",
     },
     {
+      label: "Workspace Name",
+      id: "workspaceName",
+    },
+    {
       label: "Azure Credential",
       id: "azureCredentialId",
     },
@@ -365,6 +373,7 @@ const TerraformStepFormMetadata = {
     azureToolConfigId : "",
     terraformCloudId : "",
     organizationName : "",
+    workspaceName: "",    
     backendState: "LOCAL",
     azureCredentialId: "",
     inputParameters: "",
