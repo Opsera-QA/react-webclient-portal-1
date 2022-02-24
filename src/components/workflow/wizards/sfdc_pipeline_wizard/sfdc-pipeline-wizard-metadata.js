@@ -76,6 +76,10 @@ const sfdcPipelineWizardMetadata = {
       id: "isProfiles",
     },
     {
+      label: "Is Translations?",
+      id: "isTranslations",
+    },
+    {
       label: "Is SFDX?",
       id: "isSfdx",
     },
@@ -156,6 +160,7 @@ const sfdcPipelineWizardMetadata = {
     sfdcToolId: "",
     isOrgToOrg: false,
     isProfiles: false,
+    isTranslations: false,
     modifiedFilesOrigin: "sfdc",
     unitTestSteps: [],
     gitTaskId: "",

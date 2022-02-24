@@ -12,6 +12,7 @@ import ActionBarPopoverButton from "components/common/actions/buttons/ActionBarP
 import PopoverContainer from "components/common/tooltip/PopoverContainer";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import axios from "axios";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
 function ActionBarTransferPipelineButton(
   {
@@ -63,12 +64,18 @@ function ActionBarTransferPipelineButton(
   };
 
   const getUsers = async () => {
-    let response = await accountsActions.getOrganizationAccountMembers(pipeline.account, getAccessToken);
+    const response = await accountsActions.getOrganizationAccountMembers(pipeline.account, getAccessToken);
+    const users = response?.data;
 
-    if (pipeline.owner != null) {
-      setUser(response.data.find(x => x._id === pipeline.owner));
+    if (isMounted?.current === true && Array.isArray(users)) {
+      const pipelineOwner = pipeline?.owner;
+
+      if (isMongoDbId(pipelineOwner)) {
+        setUser(users?.find(x => x._id === pipeline.owner));
+      }
+
+      setUserList([...users]);
     }
-    setUserList(response.data);
   };
 
   const changePipelineOwner = async () => {

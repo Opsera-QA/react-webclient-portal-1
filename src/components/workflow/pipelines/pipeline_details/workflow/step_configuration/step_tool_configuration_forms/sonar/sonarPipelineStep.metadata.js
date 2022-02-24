@@ -27,6 +27,15 @@ const sonarPipelineStepMetadata = {
       },
     },
     {
+      label: "Project Name",
+      id: "projectName",
+      maxLength: 150,
+      spacesAllowed: false,
+      isRequiredFunction: (model) => {
+        return model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB;
+      },
+    },
+    {
       label: "Job Name",
       id: "jobName",
       maxLength: 150,
@@ -126,6 +135,10 @@ const sonarPipelineStepMetadata = {
         );
       },
     },
+    {
+      label: "Commands",
+      id: "commands"
+    },
   ],
   newObjectFields: {
     jobType: "",
@@ -138,6 +151,7 @@ const sonarPipelineStepMetadata = {
     toolJobId: "",
     toolJobType: "",
     projectKey: "",
+    projectName: "",
     accountUsername: "",
     projectId: "",
     defaultBranch: "",
@@ -164,6 +178,7 @@ const sonarPipelineStepMetadata = {
     successThreshold: "",
     isScanArtifact: false,
     stepIdXml: "",
+    commands: "",
   }
 };
 

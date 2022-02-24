@@ -36,7 +36,7 @@ const terrascanStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Select SCM Type",
+      label: "Source Code Management Type",
       id: "type",
       isRequired: true
     },
@@ -98,7 +98,7 @@ const terrascanStepFormMetadata = {
     },
     
     {
-      label: "Want to specifiy the path for a script file?",
+      label: "Want to specify the path for a script file?",
       id: "sourceScript",
     },
     {

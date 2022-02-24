@@ -74,6 +74,8 @@ import AzureZipDeploymentStepConfiguration
   from "./step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfiguration";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import SentinelStepConfiguration from "./step_tool_configuration_forms/sentenial/SentinelStepConfiguration";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
+
 function StepToolConfiguration({
   pipeline,
   editItem,
@@ -637,10 +639,11 @@ function StepToolConfiguration({
             setShowToast={setShowToast}
           />
         );
-      case "argo":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
         return (
           <ArgoCdStepConfiguration
-            plan={pipeline.workflow.plan}
+            pipelineId={pipeline._id}
+            plan={pipeline?.workflow?.plan}
             stepId={stepId}
             stepTool={stepTool}
             parentCallback={callbackFunction}

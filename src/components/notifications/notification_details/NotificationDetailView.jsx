@@ -12,6 +12,9 @@ import {AuthContext} from "contexts/AuthContext";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import axios from "axios";
 import NotificationSubNavigationBar from "components/notifications/NotificationSubNavigationBar";
+import {NOTIFICATION_TYPES} from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
+import NotificationDetailViewHelpDocumentation
+  from "components/common/help/documentation/notifications/NotificationDetailViewHelpDocumentation";
 
 function NotificationDetailView() {
   const { id } = useParams();
@@ -97,6 +100,15 @@ function NotificationDetailView() {
     );
   };
 
+  const getHelpComponent = () => {
+    return (
+      <NotificationDetailViewHelpDocumentation
+        type={notificationData?.getData("type")}
+        method={notificationData?.getData("method")}
+      />
+    );
+  };
+
   return (
     <DetailScreenContainer
       breadcrumbDestination={"notificationDetailView"}
@@ -105,6 +117,7 @@ function NotificationDetailView() {
       dataObject={notificationData}
       isLoading={isLoading}
       actionBar={getActionBar()}
+      // helpComponent={getHelpComponent()}
       detailPanel={
         <NotificationDetailPanel
           notificationData={notificationData}

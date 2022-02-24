@@ -8,7 +8,7 @@ import { format } from "date-fns";
 
 const Highlight = require("react-highlighter");
 
-function LogSearchResult({ searchResults, submittedSearchTerm }) {
+function LogSearchResult({ searchResults, submittedSearchTerm, getPaginator }) {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
 
@@ -92,6 +92,7 @@ function LogSearchResult({ searchResults, submittedSearchTerm }) {
         show={showModal}
         setParentVisibility={setShowModal}
       />
+      {getPaginator()}
     </>
   );
 }
@@ -99,6 +100,7 @@ function LogSearchResult({ searchResults, submittedSearchTerm }) {
 LogSearchResult.propTypes = {
   searchResults: PropTypes.array,
   submittedSearchTerm: PropTypes.string,
+  getPaginator: PropTypes.func,
 };
 
 export default LogSearchResult;

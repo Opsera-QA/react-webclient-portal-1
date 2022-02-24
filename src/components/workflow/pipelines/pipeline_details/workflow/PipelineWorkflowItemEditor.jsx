@@ -12,6 +12,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 import SourceRepositoryConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/SourceRepositoryConfiguration";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
 
 const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPlan }) => {
@@ -20,11 +21,29 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(undefined);
   const [showToast, setShowToast] = useState(false);
+  const [pipelineStep, setPipelineStep] = useState(false);
 
   useEffect(() => {
     setShowToast(false);
     setToast(undefined);
+    setPipelineStep(undefined);
+
+    unpackPipelineStep(editItem?.step_id);
   }, [editItem]);
+
+  const unpackPipelineStep = (stepId) => {
+    if (isMongoDbId(stepId) === true) {
+      const plan = pipeline?.workflow?.plan;
+
+      if (Array.isArray(plan)) {
+        const index = plan.findIndex(x => x._id === stepId);
+
+        if (index !== -1) {
+          setPipelineStep(plan[index]);
+        }
+      }
+    }
+  };
 
   // TODO: We should be handling this inside the step forms themselves
   const postData = async (pipeline, type) => {
@@ -94,16 +113,17 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
     </>);
   }
 
+  // TODO: Remove when overlay is pushed to master
   if (editItem.type === "notification") {
     return (<>
       {getTitleBar("Step Notification")}
       <div className="p-3 bg-white step-settings-container">
         {showToast && <div className="mb-2">{toast}</div>}
         <StepNotificationConfiguration
-          data={pipeline}
-          stepId={editItem.step_id}
+          pipelineId={pipeline?._id}
+          pipelineStep={pipelineStep}
           handleCloseClick={handleCloseClick}
-          parentCallback={callbackFunctionTools}/>
+        />
       </div>
     </>);
   }

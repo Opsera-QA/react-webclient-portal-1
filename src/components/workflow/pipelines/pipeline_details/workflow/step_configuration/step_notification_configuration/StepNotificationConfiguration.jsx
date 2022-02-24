@@ -1,12 +1,11 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-import {Button, Form} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faClipboardList, faSave, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import jiraStepNotificationMetadata from "./jira/jiraStepNotificationMetadata";
-import Model from "../../../../../../../core/data_model/model";
+import Model from "core/data_model/model";
 import JiraStepNotificationToolInput from "./jira/JiraStepNotificationToolInput";
 import JiraStepNotificationProjectInput from "./jira/JiraStepNotificationProjectInput";
 import JiraStepNotificationProjectUsersMultiSelectInput from "./jira/JiraStepNotificationProjectUsersMultiSelectInput";
@@ -20,7 +19,6 @@ import serviceNowStepNotificationMetadata from "./servicenow/serviceNowStepNotif
 import NotificationsToggle from "./NotificationsToggle";
 import NotificationLevelInput from "./NotificationLevelInput";
 import JiraStepNotificationWorkflowStepInput from "./jira/JiraStepNotificationWorkflowStepInput";
-import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import JiraStepNotificationParentTicketInput from "./jira/JiraStepNotificationParentTicketInput";
 import slackStepNotificationMetadata from "./slack/slackStepNotificationMetadata";
 import emailStepNotificationMetadata from "./email/emailStepNotificationMetadata";
@@ -29,40 +27,68 @@ import SlackStepNotificationToolInput from "./slack/SlackStepNotificationToolInp
 import ServiceNowStepNotificationToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/servicenow/ServiceNowStepNotificationToolSelectInput";
 import JiraStepNotificationProjectUserInput from "./jira/JiraStepNotificationProjectUserInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import ServiceNowUserSelectInput from "./servicenow/ServiceNowUserSelectInput";
 import ServiceNowGroupSelectInput from "./servicenow/ServiceNowGroupSelectInput";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
+import Form from "react-bootstrap/Form";
+import StandaloneSaveButton from "components/common/buttons/saving/StandaloneSaveButton";
+import CloseButton from "components/common/buttons/CloseButton";
+import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
+import pipelineActions from "components/workflow/pipeline-actions";
+import {AuthContext} from "contexts/AuthContext";
+import axios from "axios";
+import EmailNotificationToggle
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/email/EmailNotificationToggle";
 
-function StepNotificationConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
+// TODO: Break out into sub panels when refactoring
+function StepNotificationConfiguration(
+  {
+    pipelineId,
+    pipelineStep,
+    handleCloseClick,
+  }) {
   const toastContext = useContext(DialogToastContext);
-  const { plan } = data.workflow;
-  const [step, setStep] = useState(undefined);
+  const { getAccessToken } = useContext(AuthContext);
   const [stepName, setStepName] = useState(undefined);
   const [stepTool, setStepTool] = useState({});
   const [jiraDto, setJiraDto] = useState(undefined);
   const [teamsDto, setTeamsDto] = useState(undefined);
   const [slackDto, setSlackDto] = useState(undefined);
-  const [emailDto, setEmailDto] = useState(undefined);
+  const [emailNotificationModel, setEmailNotificationModel] = useState(undefined);
   const [serviceNowDto, setServiceNowDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
-  }, [stepId]);
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [pipelineStep, pipelineId]);
 
   const loadData = async () => {
     try {
       setIsLoading(true);
-      const stepIndex = getStepIndex(stepId);
-      let step = plan[stepIndex];
-      setStep(step);
-
-      if (step.tool.tool_identifier === "approval") {
-        await loadConfiguration(step, jiraStepApprovalMetadata);
+      if (pipelineStep?.tool?.tool_identifier === "approval") {
+        await loadConfiguration(pipelineStep, jiraStepApprovalMetadata);
       }
       else {
-        await loadConfiguration(step, jiraStepNotificationMetadata);
+        await loadConfiguration(pipelineStep, jiraStepNotificationMetadata);
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -74,34 +100,39 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
 
   // TODO: Tighten up
   const loadConfiguration = async (step, jiraStepMetadata) => {
-    setEmailDto(new Model({...emailStepNotificationMetadata.newObjectFields}, emailStepNotificationMetadata, true));
+    setEmailNotificationModel(new Model({...emailStepNotificationMetadata.newObjectFields}, emailStepNotificationMetadata, true));
     setSlackDto(new Model({...slackStepNotificationMetadata.newObjectFields}, slackStepNotificationMetadata, true));
     setJiraDto(new Model({...jiraStepMetadata.newObjectFields}, jiraStepMetadata, true));
     setTeamsDto(new Model({...teamsStepNotificationMetadata.newObjectFields}, teamsStepNotificationMetadata, true));
     setServiceNowDto(new Model({...serviceNowStepNotificationMetadata.newObjectFields}, serviceNowStepNotificationMetadata, true));
 
     if (step.notification !== undefined) {
-      let emailArrayIndex = step.notification.findIndex(x => x.type === "email");
-      let slackArrayIndex = step.notification.findIndex(x => x.type === "slack");
-      let jiraArrayIndex = step.notification.findIndex(x => x.type === "jira");
-      let teamsArrayIndex = step.notification.findIndex(x => x.type === "teams");
-      let serviceNowArrayIndex = step.notification.findIndex(x => x.type === "servicenow");
+      const emailArrayIndex = step.notification.findIndex(x => x.type === "email");
+      const slackArrayIndex = step.notification.findIndex(x => x.type === "slack");
+      const jiraArrayIndex = step.notification.findIndex(x => x.type === "jira");
+      const teamsArrayIndex = step.notification.findIndex(x => x.type === "teams");
+      const serviceNowArrayIndex = step.notification.findIndex(x => x.type === "servicenow");
+
       if (emailArrayIndex >= 0) {
         let emailFormData = step.notification[emailArrayIndex];
-        setEmailDto(new Model(emailFormData, emailStepNotificationMetadata, false));
+        setEmailNotificationModel(new Model(emailFormData, emailStepNotificationMetadata, false));
       }
+
       if (slackArrayIndex >= 0) {
         let slackFormData = step.notification[slackArrayIndex];
         setSlackDto(new Model(slackFormData, slackStepNotificationMetadata, false));
       }
+
       if (jiraArrayIndex >= 0) {
         let jiraFormData = step.notification[jiraArrayIndex];
         setJiraDto(new Model(jiraFormData, jiraStepMetadata, false));
       }
+
       if (teamsArrayIndex >= 0) {
         let teamsFormData = step.notification[teamsArrayIndex];
         setTeamsDto(new Model(teamsFormData, teamsStepNotificationMetadata, false));
       }
+
       if (serviceNowArrayIndex >= 0) {
         let serviceNowFormData = step.notification[serviceNowArrayIndex];
         setServiceNowDto(new Model(serviceNowFormData, serviceNowStepNotificationMetadata, false));
@@ -112,22 +143,22 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
     setStepName(step.name);
   };
 
-  const callbackFunction = async () => {
+  const updateStepNotificationConfiguration = async () => {
     if (validateRequiredFields()) {
-      setIsSaving(true);
-      let stepArrayIndex = getStepIndex(stepId);
-      plan[stepArrayIndex].notification = [emailDto.getPersistData(), slackDto.getPersistData(), jiraDto.getPersistData(), teamsDto.getPersistData(), serviceNowDto.getPersistData()];
-      await parentCallback(plan);
-      setIsSaving(false);
+      const newNotificationConfiguration = [emailNotificationModel.getPersistData(), slackDto.getPersistData(), jiraDto.getPersistData(), teamsDto.getPersistData(), serviceNowDto.getPersistData()];
+      await pipelineActions.updatePipelineStepNotificationConfiguration(
+        getAccessToken,
+        cancelTokenSource,
+        pipelineId,
+        pipelineStep?._id,
+        newNotificationConfiguration,
+        );
+      toastContext.showSaveSuccessToast("Pipeline Notification Configuration");
     }
   };
 
-  const getStepIndex = (step_id) => {
-    return plan.findIndex(x => x._id === step_id);
-  };
-
   const validateRequiredFields = () => {
-    if (emailDto.getData("enabled") === true && !emailDto.isModelValid()) {
+    if (emailNotificationModel.getData("enabled") === true && !emailNotificationModel.isModelValid()) {
       toastContext.showErrorDialog("Error: Cannot enable Email notification without all required fields filled out.");
       return false;
     }
@@ -222,7 +253,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
     }
 
     // TODO: If unneeded, remove
-    if (step.tool.tool_identifier === "approval") {
+    if (pipelineStep?.tool?.tool_identifier === "approval") {
       return (
         <div className="my-4">
           <NotificationsToggle dataObject={jiraDto} setDataObject={setJiraDto} />
@@ -297,24 +328,52 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
     );
   };
 
+  // TODO: Separate into own form
   const getEmailFormFields = () => {
-    if (isLoading || emailDto == null) {
+    if (isLoading || emailNotificationModel == null) {
       return null;
     }
 
-    if (emailDto.getData("enabled") === false) {
+    if (emailNotificationModel.getData("enabled") === false) {
       return (
         <div className="my-4">
-          <NotificationsToggle disabled={true} dataObject={emailDto} setDataObject={setEmailDto} fieldName={"enabled"} />
+          <EmailNotificationToggle
+            model={emailNotificationModel}
+            setModel={setEmailNotificationModel}
+          />
         </div>
       );
     }
 
     return (
       <div className="my-4">
-        <NotificationsToggle disabled={true} dataObject={emailDto} setDataObject={setEmailDto} fieldName={"enabled"} />
-        <TextInputBase disabled={true} dataObject={emailDto} setDataObject={setEmailDto} fieldName={"address"} />
-        <NotificationLevelInput disabled={true} dataObject={emailDto} setDataObject={setEmailDto} fieldName={"event"} />
+        <EmailNotificationToggle
+          model={emailNotificationModel}
+          setModel={setEmailNotificationModel}
+        />
+        <MultiTextInputBase
+          dataObject={emailNotificationModel}
+          setDataObject={setEmailNotificationModel}
+          fieldName={"addresses"}
+        />
+        <NotificationLevelInput
+          dataObject={emailNotificationModel}
+          setDataObject={setEmailNotificationModel}
+          fieldName={"event"}
+        />
+      </div>
+    );
+  };
+
+  const getTitleBar = () => {
+    const toolIdentifier = stepTool?.tool_identifier;
+    const titleText = hasStringValue(stepName) === true ? `${stepName}: ${toolIdentifier}` : toolIdentifier;
+    return (
+      <div>
+        <h6 className="upper-case-first">{titleText}</h6>
+        <div className="text-muted mt-2 mb-3">Each step in the workflow can be configured with notification triggers upon
+          completion. More help on notification configurations is available <Link to="/tools">here</Link>.
+        </div>
       </div>
     );
   };
@@ -323,49 +382,36 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
     return <LoadingDialog message={"Loading Notification Configuration"} size={"sm"} />;
   }
 
-
+  // TODO: Use general save button mechanisms
   return (
     <Form>
-      <h6 className="upper-case-first">{typeof (stepName) !== "undefined" ? stepName + ": " : null}
-        {typeof (stepTool) !== "undefined" ? stepTool.tool_identifier : null}</h6>
-
-      <div className="text-muted mt-2 mb-3">Each step in the workflow can be configured with notification triggers upon
-        completion. More help on notification configurations is available <Link to="/tools">here</Link>.
-      </div>
-
+      {getTitleBar()}
       {getSlackFormFields()}
       {getTeamsFormFields()}
       {getJiraFormFields()}
       {getServiceNowFormFields()}
       {getEmailFormFields()}
 
-      <Button variant="primary"
-              type="button"
-              disabled={isSaving}
-              onClick={() => {
-                callbackFunction();
-              }}>
-        {isSaving ?
-          <><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Saving</> :
-          <><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>Save</>}
-      </Button>
-
-      <Button variant="secondary" type="button" className="ml-2" disabled={isSaving}
-              onClick={() => {
-                handleCloseClick();
-              }}>
-        <FontAwesomeIcon icon={faTimes} className="mr-1"/> Close
-      </Button>
-
-      <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
+      <div className={"d-flex"}>
+        <StandaloneSaveButton
+          className={"mr-2"}
+          type={"Pipeline Notification Step Configurations"}
+          saveFunction={updateStepNotificationConfiguration}
+          size={"md"}
+          showToasts={false}
+        />
+        <CloseButton
+          closeEditorCallback={handleCloseClick}
+        />
+      </div>
+      <RequiredFieldsMessage/>
     </Form>
   );
 }
 
 StepNotificationConfiguration.propTypes = {
-  data: PropTypes.object,
-  stepId: PropTypes.string,
-  parentCallback: PropTypes.func,
+  pipelineStep: PropTypes.object,
+  pipelineId: PropTypes.string,
   handleCloseClick: PropTypes.func,
 };
 

@@ -5,7 +5,7 @@ import RoleRestrictedSlackToolSelectInput
 
 function SlackStepNotificationToolInput({visible, dataObject, setDataObject, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
-    let newDataObject = {...selectedOption};
+    let newDataObject = {...dataObject};
     newDataObject.setData(fieldName, selectedOption?._id);
     newDataObject.setData("channel", "");
     setDataObject({...newDataObject});

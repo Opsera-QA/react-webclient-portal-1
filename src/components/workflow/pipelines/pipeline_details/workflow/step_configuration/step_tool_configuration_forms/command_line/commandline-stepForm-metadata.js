@@ -98,7 +98,7 @@ const commandLineStepFormMetadata = {
     },
     
     {
-      label: "Custom Script Path",
+      label: "Want to specify the path for a script file?",
       id: "sourceScript",
     },
     {
@@ -163,6 +163,35 @@ const commandLineStepFormMetadata = {
     {
       label: "Use Terraform Output",
       id: "useTerraformOutput"
+    },
+    {
+      label: "Sonar Scan",
+      id: "sonarScanFlag"
+    },
+    {
+      label: "Sonar Custom Params Mapping",
+      id: "saveSonarParameters"
+    },
+    {
+      label: "Sonar Parameters",
+      id: "sonarCustomParameters",
+      maxItems: 15,
+    },
+    {
+      label: "Sonar Tool Id",
+      id: "sonarToolConfigId",
+      isRequiredFunction: (model) => {
+        return model?.getData("sonarScanFlag") === true;
+      },
+    },
+    {
+      label: "Project Key",
+      id: "projectKey",
+      maxLength: 150,
+      spacesAllowed: false,
+      isRequiredFunction: (model) => {
+        return model?.getData("sonarScanFlag") === true;
+      },
     }
   ],
   fieldsAlt: [
@@ -268,7 +297,7 @@ const commandLineStepFormMetadata = {
     },
     
     {
-      label: "Custom Script Path",
+      label: "Want to specify the path for a script file?",
       id: "sourceScript",
     },
     {
@@ -330,6 +359,35 @@ const commandLineStepFormMetadata = {
     {
       label: "Use Terraform Output",
       id: "useTerraformOutput"
+    },    
+    {
+      label: "Sonar Scan",
+      id: "sonarScanFlag"
+    }, 
+    {
+      label: "Sonar Custom Params Mapping",
+      id: "saveSonarParameters"
+    },
+    {
+      label: "Sonar Parameters",
+      id: "sonarCustomParameters",
+      maxItems: 15,
+    },
+    {
+      label: "Sonar Tool Id",
+      id: "sonarToolConfigId",
+      isRequiredFunction: (model) => {
+        return model?.getData("sonarScanFlag") === true;
+      },
+    },
+    {
+      label: "Project Key",
+      id: "projectKey",
+      maxLength: 150,
+      spacesAllowed: false,
+      isRequiredFunction: (model) => {
+        return model?.getData("sonarScanFlag") === true;
+      },
     }
   ],
   newObjectFields: {
@@ -374,7 +432,12 @@ const commandLineStepFormMetadata = {
     commands: "",
     terraformStepId: "",
     customParameters: [],
-    useTerraformOutput : false
+    useTerraformOutput : false,
+    sonarScanFlag: false,
+    saveSonarParameters: false,
+    sonarCustomParameters: [],
+    sonarToolConfigId: "",
+    projectKey: "",
   }
 };
 

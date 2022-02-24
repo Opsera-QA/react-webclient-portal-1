@@ -19,6 +19,7 @@ import PipelineSourceRepositoryHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/PipelineSourceRepositoryHelpDocumentation";
 import AnsibleStepConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/AnsibleStepConfigurationHelpDocumentation";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
 function StepToolHelpIcon({type, tool, className, iconClassName}) {
   // TODO: Alphabetize when adding new help panels
@@ -56,7 +57,7 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
       case "spinnaker":
       case "approval":
       case "cypress":
-      case "argo":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
       case "anchore-scan":
       case "anchore-integrator":
       case "sfdc-configurator":

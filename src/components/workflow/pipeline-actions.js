@@ -205,6 +205,15 @@ pipelineActions.updatePipeline = async (pipelineId, postBody, getAccessToken) =>
   return response;
 };
 
+pipelineActions.updatePipelineStepNotificationConfiguration = async (getAccessToken, cancelTokenSource, pipelineId, stepId, notificationConfiguration) => {
+  const apiUrl = `/pipelines/v2/${pipelineId}/step/${stepId}/notifications/update/`;
+  const postBody = {
+    notification: notificationConfiguration,
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 pipelineActions.transferPipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId, newOwnerId) => {
   const apiUrl = `/pipelines/${pipelineId}/update/`;
   const postBody = {
@@ -342,41 +351,6 @@ pipelineActions.createFreeTrialPipeline = async (postBody, getAccessToken) => {
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
   return response;
-};
-
-// TODO: If we're doing different metrics, they should be different routes, not one route coupled with other unrelated routes.
-// TODO: We should be handling not getting data inside the places that call this route instead
-//  We can always have a function in a helper that does the parsing of data automatically and call that instead
-pipelineActions.searchWorkSpaces = async (service, gitAccountId, getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = `/tools/properties`;
-  const postBody = {
-    tool: service,
-    metric: "getWorkSpaces",
-    gitAccountId: gitAccountId,
-  };
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {
-      if (result.data) {
-        let arrOfObj = result.data.data;
-        return arrOfObj;
-      }
-      else {
-        throw "Tool workspaces information is missing or unavailable!  Please ensure the required creds are registered and up to date in Tool Registry.";
-      }
-    })
-    .catch(error => {throw { error };});
-  return response;
-};
-
-pipelineActions.searchWorkspacesV2 = async (getAccessToken, cancelTokenSource, service, gitAccountId) => {
-  const apiUrl = `/tools/properties`;
-  const postBody = {
-    tool: service,
-    metric: "getWorkSpaces",
-    gitAccountId: gitAccountId,
-  };
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 // TODO: We should be handling not getting data inside the places that call this route instead

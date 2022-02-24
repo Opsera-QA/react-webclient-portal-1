@@ -53,7 +53,7 @@ primary analytics font*/
     color: white;
 }
 
-.chart-footer-text {
+.chart-footer-text, .chart-subheader-text {
     font-family: 'Inter', sans-serif;
     font-weight: 100;
     font-size: small;
@@ -173,6 +173,10 @@ primary analytics font*/
 
 .default-cursor {
     cursor: default
+}
+
+.not-allowed-cursor {
+    cursor: not-allowed;
 }
 
 .vertical-align-item {

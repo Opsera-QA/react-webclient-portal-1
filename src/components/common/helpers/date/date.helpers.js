@@ -1,6 +1,47 @@
+// TODO: Make javascript library with all these helpers to be consistent across node services and React
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
-import { format } from "date-fns";
+import { format, formatDistance } from "date-fns";
 import {parseError} from "components/common/helpers/error-helpers";
+import {parseDate} from "utils/helpers";
+import {dataParsingHelper} from "components/common/helpers/data/dataParsing.helper";
+
+export const dateHelpers = {};
+
+dateHelpers.humanizeDurationBetweenDates = (firstDate, secondDate) => {
+  const parsedFirstDate = parseDate(firstDate);
+  const parsedSecondDate = parseDate(secondDate);
+
+  if (!parsedFirstDate || !parsedSecondDate) {
+    return false;
+  }
+
+  return formatDistance(
+    firstDate,
+    secondDate,
+    {
+      includeSeconds: true,
+    },
+  );
+};
+
+dateHelpers.humanizeDurationForMilliseconds = (milliseconds) => {
+  const parsedMilliseconds = dataParsingHelper.parseInteger(milliseconds);
+
+  if (!parsedMilliseconds || parsedMilliseconds === 0) {
+    return false;
+  }
+
+  const firstDate = new Date(0);
+  const secondDate = new Date(parsedMilliseconds);
+
+  return formatDistance(
+    firstDate,
+    secondDate,
+    {
+      includeSeconds: true,
+    },
+  );
+};
 
 export function convertFutureDateToDhmsFromNowString(date) {
   const currentDateInSeconds = new Date().getTime() / 1000;

@@ -32,13 +32,14 @@ import MongodbRealmToolConfiguration from "./tool_jobs/mongodb_realm/MongodbReal
 import FlywayDatabaseToolConfiguration from "./tool_jobs/flyway_database/FlywayDatabaseToolConfiguration";
 import InformaticaToolConfiguration from "./tool_jobs/informatica/InformaticaToolConfiguration";
 import TerraformCloudToolConfiguration from "./tool_jobs/terraform_cloud/TerraformCloudToolConfiguration";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
 function ToolConnectionPanel({ toolData }) {
   const getConnectionPanel = () => {
     if (toolData == null) {
       return <></>;
     }
-    
+
     switch (toolData.getData("tool_identifier")) {
       case "jenkins":
         return <JenkinsToolConfiguration toolData={toolData} />;
@@ -54,7 +55,7 @@ function ToolConnectionPanel({ toolData }) {
         return <SpinnakerToolConfiguration toolData={toolData} />;
       case "cypress":
         return <CypressToolConfiguration toolData={toolData} />;
-      case "argo":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
         return <ArgoToolConfiguration toolData={toolData} />;
       case "anchore-scan":
         return <AnchoreScanToolConfiguration toolData={toolData} />;

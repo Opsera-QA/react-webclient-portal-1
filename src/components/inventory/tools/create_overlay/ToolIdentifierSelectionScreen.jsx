@@ -9,9 +9,9 @@ import FilterContainer from "components/common/table/FilterContainer";
 import ToolIdentifierSelectionCardView from "components/admin/tools/tool_identifier/ToolIdentifierSelectionCardView";
 import toolIdentifierMetadata from "components/admin/tools/tool_identifier/tool-identifier-metadata";
 import ToolFilterModel from "components/inventory/tools/tool.filter.model";
-import ToolIdentifierTable from "components/admin/tools/tool_identifier/ToolIdentifierTable";
 import TableCardView from "components/common/table/TableCardView";
 import {hasStringValue, stringIncludesValue} from "components/common/helpers/string-helpers";
+import ToolIdentifierSelectionTable from "components/admin/tools/tool_identifier/ToolIdentifierSelectionTable";
 
 function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
@@ -120,11 +120,12 @@ function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
   const getTableView = () => {
     return (
       <div className={"scroll-y full-screen-overlay-selection-container hide-x-overflow"}>
-        <ToolIdentifierTable
+        <ToolIdentifierSelectionTable
           isMounted={isMounted}
           toolIdentifiers={getFilteredData()}
           isLoading={isLoading}
           loadData={loadData}
+          setDataFunction={setDataFunction}
         />
       </div>
     );

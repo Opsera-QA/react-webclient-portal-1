@@ -7,8 +7,8 @@ import axios from "axios";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 import ParameterValueTextInput from "components/inventory/parameters/details/ParameterValueTextInput";
-import TogglePasswordTextInput from "components/common/inputs/text/TogglePasswordTextInput";
 import ParameterVaultEnabledToggle from "components/inventory/parameters/details/ParameterVaultEnabledToggle";
+import TogglePasswordTextAreaInput from "components/common/inputs/textarea/password/TogglePasswordTextAreaInput";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
 function ParametersEditorPanel({ parameterModel, setParameterModel, parameterModelId, handleClose }) {
@@ -35,7 +35,7 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
 
       if (parameterModel?.isNew()) {
         return (
-          <TogglePasswordTextInput
+          <TogglePasswordTextAreaInput
             model={parameterModel}
             setModel={setParameterModel}
             fieldName={"value"}
@@ -77,7 +77,12 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
     >
       <Row>
         <Col md={12} lg={parameterModel?.isNew() ? 4 : 5}>
-          <TextInputBase disabled={!parameterModel?.isNew()} setDataObject={setParameterModel} dataObject={parameterModel} fieldName={"name"}/>
+          <TextInputBase
+            disabled={!parameterModel?.isNew()}
+            setDataObject={setParameterModel}
+            dataObject={parameterModel}
+            fieldName={"name"}
+          />
           <ParameterVaultEnabledToggle
             fieldName={"vaultEnabled"}
             setModel={setParameterModel}
@@ -87,7 +92,12 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
           {getValueInput()}
         </Col>
         <Col md={12} lg={parameterModel?.isNew() ? 8 : 7} className={"my-2"}>
-          <RoleAccessInput disabled={parameterModel?.canEditAccessRoles() !== true} dataObject={parameterModel} setDataObject={setParameterModel} fieldName={"roles"} />
+          <RoleAccessInput
+            disabled={parameterModel?.canEditAccessRoles() !== true}
+            dataObject={parameterModel}
+            setDataObject={setParameterModel}
+            fieldName={"roles"}
+          />
         </Col>
       </Row>
     </VanityEditorPanelContainer>

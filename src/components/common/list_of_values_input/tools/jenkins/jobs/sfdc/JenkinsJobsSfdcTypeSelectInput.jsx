@@ -8,7 +8,7 @@ const JENKINS_JOBS_SFDC_OPTIONS = [
     value: "SFDC CREATE PACKAGE XML",
   },
   {
-    name: "Profile Migration",
+    name: "Salesforce Migration",
     value: "SFDC PROFILE DEPLOY",
   },
   {

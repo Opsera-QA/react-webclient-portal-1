@@ -11,6 +11,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import ImageField from "components/common/fields/image/ImageField";
+import AccessRuleField from "components/common/inputs/access_rules/field/AccessRuleField";
 
 function KpiIdentifierSummaryPanel({ kpiData, setActiveTab }) {
   if (kpiData == null) {
@@ -68,6 +69,13 @@ function KpiIdentifierSummaryPanel({ kpiData, setActiveTab }) {
         </Col>
         <Col lg={4}>
           <JsonField dataObject={kpiData} fieldName={"settings"} />
+        </Col>
+        <Col lg={12} className={"mt-3"}>
+          <AccessRuleField
+            rules={kpiData?.getData("accessRules")}
+            model={kpiData}
+            fieldName={"accessRules"}
+          />
         </Col>
       </Row>
     </SummaryPanelContainer>

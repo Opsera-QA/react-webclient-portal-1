@@ -1,14 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RepositorySelectInput from "components/common/list_of_values_input/tools/git/RepositorySelectInput";
+import RepositorySelectInput from "components/common/list_of_values_input/tools/repositories/RepositorySelectInput";
 
 function TerraformGitRepositorySelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
+    const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
+    const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     newModel.setData("gitRepository", selectedOption?.name);
-    newModel.setData("gitRepositoryID", selectedOption?.id);
+    newModel.setData("gitRepositoryID", repoId);
     newModel.setData("sshUrl", selectedOption?.sshUrl || "");
-    newModel.setData("gitUrl", selectedOption?.httpUrl || "");
+    newModel.setData("gitUrl", gitUrl);
     setModel({...newModel});
   };
 

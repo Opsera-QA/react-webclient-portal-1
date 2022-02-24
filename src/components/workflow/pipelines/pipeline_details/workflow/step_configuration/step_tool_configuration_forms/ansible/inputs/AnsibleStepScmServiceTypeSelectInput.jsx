@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ScmToolIdentifierSelectInput
-  from "components/common/list_of_values_input/tools/source_control/ScmToolIdentifierSelectInput";
+import SourceControlManagementToolIdentifierSelectInput
+  from "components/common/list_of_values_input/tools/source_control/SourceControlManagementToolIdentifierSelectInput";
 
   function AnsibleStepScmServiceTypeSelectInput({model, fieldName, setModel, disabled}) {
   const setDataFunction = async (fieldName, selectedOption) => {
@@ -29,7 +29,7 @@ import ScmToolIdentifierSelectInput
   };
 
   return (
-    <ScmToolIdentifierSelectInput
+    <SourceControlManagementToolIdentifierSelectInput
       model={model}
       setModel={setModel}
       setDataFunction={setDataFunction}

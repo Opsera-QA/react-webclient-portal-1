@@ -23,13 +23,7 @@ function SfdcToolConfigurationSummaryPanel({ sfdcToolConfigurationModel }) {
           <TextFieldBase dataObject={sfdcToolConfigurationModel} fieldName={"toolURL"} />
         </Col>
         <Col lg={12}>
-          <ToolNameField model={sfdcToolConfigurationModel} fieldName={"jenkinsToolId"} />
-        </Col>
-        <Col lg={12}>
           <TextFieldBase dataObject={sfdcToolConfigurationModel} fieldName={"buildType"} />
-        </Col>
-        <Col lg={12}>
-          <BooleanField dataObject={sfdcToolConfigurationModel} fieldName={"checkConnection"} />
         </Col>
         <Col lg={12}>
           <VaultField dataObject={sfdcToolConfigurationModel} fieldName={"sfdc_client_id"} />
