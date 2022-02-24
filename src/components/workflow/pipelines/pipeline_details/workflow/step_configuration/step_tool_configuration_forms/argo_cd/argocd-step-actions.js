@@ -1,13 +1,15 @@
-import { axiosApiService } from "../../../../../../../../api/apiService";
 import baseActions from "utils/actionsBase";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
+import {axiosApiService} from "api/apiService";
 
 const ArgoCDStepActions = {};
 
+// TODO: rewrite to use base action
 ArgoCDStepActions.searchArgoAppsList = async (id, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/tools/argo/applications";
   const postBody = {
-    tool: "argo",
+    tool: toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO,
     id: id,
   };
   const res = await axiosApiService(accessToken)
@@ -24,9 +26,30 @@ ArgoCDStepActions.searchArgoAppsList = async (id, getAccessToken) => {
 ArgoCDStepActions.getArgoApplicationsV2 = async (getAccessToken, cancelTokenSource, argoToolId) => {
   const apiUrl = "/tools/argo/applications";
   const postBody = {
-    tool: "argo",
+    tool: toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO,
     id: argoToolId,
   };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+ArgoCDStepActions.getArtifactoryTagsFromArgoInstance = async (getAccessToken, cancelTokenSource, pipelineId, stepId, toolIdentifier) => {
+  const apiUrl = "/tools/argo/artifactory-tags";
+  const postBody = {
+    pipelineId: pipelineId,
+    stepId: stepId,
+    toolIdentifier: toolIdentifier,
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+ArgoCDStepActions.getAzureArtifactoryTagsFromArgoInstance = async (getAccessToken, cancelTokenSource, azureToolConfigId, acrLoginUrl, acrRepoName) => {
+  const apiUrl = "/tools/argo/artifactory-tags/azure";
+  const postBody = {
+    azureToolConfigId: azureToolConfigId,
+    acrLoginUrl: acrLoginUrl,
+    acrRepoName: acrRepoName,
+  };
+
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 

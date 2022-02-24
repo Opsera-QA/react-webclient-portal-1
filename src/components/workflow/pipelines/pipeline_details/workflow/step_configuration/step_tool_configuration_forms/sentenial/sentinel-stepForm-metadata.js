@@ -2,12 +2,12 @@ const SentenialStepFormMetadata = {
   type: "Sentenial Step Configuration",
   fields: [
     {
-      label: "SCM Tool Type",
+      label: "Source Code Management Tool Type",
       id: "service",
       isRequired: true
     },
     {
-      label: "SCM Tool",
+      label: "Source Code Management Tool",
       id: "gitToolId",
       isRequired: true
     },

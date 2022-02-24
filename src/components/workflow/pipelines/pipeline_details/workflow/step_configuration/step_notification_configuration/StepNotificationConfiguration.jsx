@@ -1,8 +1,8 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faClipboardList, faSave, faSpinner, faTimes} from "@fortawesome/pro-light-svg-icons";
+import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import jiraStepNotificationMetadata from "./jira/jiraStepNotificationMetadata";
 import Model from "core/data_model/model";
@@ -28,21 +28,21 @@ import ServiceNowStepNotificationToolSelectInput from "components/workflow/pipel
 import JiraStepNotificationProjectUserInput from "./jira/JiraStepNotificationProjectUserInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ServiceNowGroupSelectInput from "./servicenow/ServiceNowGroupSelectInput";
-import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
-import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import StandaloneSaveButton from "components/common/buttons/saving/StandaloneSaveButton";
 import CloseButton from "components/common/buttons/CloseButton";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
-import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
+import pipelineActions from "components/workflow/pipeline-actions";
+import {AuthContext} from "contexts/AuthContext";
+import axios from "axios";
 
 // TODO: Break out into sub panels when refactoring
-function StepNotificationConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
+function StepNotificationConfiguration({ pipeline, stepId, handleCloseClick }) {
   const toastContext = useContext(DialogToastContext);
-  const { plan } = data.workflow;
+  const { getAccessToken } = useContext(AuthContext);
+  const { plan } = pipeline?.workflow;
   const [step, setStep] = useState(undefined);
   const [stepName, setStepName] = useState(undefined);
   const [stepTool, setStepTool] = useState({});
@@ -52,7 +52,23 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
   const [emailNotificationModel, setEmailNotificationModel] = useState(undefined);
   const [serviceNowDto, setServiceNowDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
 
 
   useEffect(() => {
@@ -120,13 +136,11 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
     setStepName(step.name);
   };
 
-  const callbackFunction = async () => {
+  const updateStepNotificationConfiguration = async () => {
     if (validateRequiredFields()) {
-      setIsSaving(true);
-      let stepArrayIndex = getStepIndex(stepId);
-      plan[stepArrayIndex].notification = [emailNotificationModel.getPersistData(), slackDto.getPersistData(), jiraDto.getPersistData(), teamsDto.getPersistData(), serviceNowDto.getPersistData()];
-      await parentCallback(plan);
-      setIsSaving(false);
+      const newNotificationConfiguration = [emailNotificationModel.getPersistData(), slackDto.getPersistData(), jiraDto.getPersistData(), teamsDto.getPersistData(), serviceNowDto.getPersistData()];
+      await pipelineActions.updatePipelineStepNotificationConfiguration(getAccessToken, cancelTokenSource, pipeline?._id, stepId, newNotificationConfiguration);
+      toastContext.showSaveSuccessToast("Pipeline Notification Configuration");
     }
   };
 
@@ -318,7 +332,6 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
             dataObject={emailNotificationModel}
             setDataObject={setEmailNotificationModel}
             fieldName={"enabled"}
-            disabled={true}
           />
         </div>
       );
@@ -330,19 +343,16 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
           dataObject={emailNotificationModel}
           setDataObject={setEmailNotificationModel}
           fieldName={"enabled"}
-          disabled={true}
         />
         <MultiTextInputBase
           dataObject={emailNotificationModel}
           setDataObject={setEmailNotificationModel}
           fieldName={"addresses"}
-          disabled={true}
         />
         <NotificationLevelInput
           dataObject={emailNotificationModel}
           setDataObject={setEmailNotificationModel}
           fieldName={"event"}
-          disabled={true}
         />
       </div>
     );
@@ -367,11 +377,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
 
   // TODO: Use general save button mechanisms
   return (
-    <Form
-      handleClose={handleCloseClick}
-      persistRecord={callbackFunction}
-      isLoading={isLoading}
-    >
+    <Form>
       {getTitleBar()}
       {getSlackFormFields()}
       {getTeamsFormFields()}
@@ -383,8 +389,9 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
         <StandaloneSaveButton
           className={"mr-2"}
           type={"Pipeline Notification Step Configurations"}
-          saveFunction={callbackFunction}
+          saveFunction={updateStepNotificationConfiguration}
           size={"md"}
+          showToasts={false}
         />
         <CloseButton
           closeEditorCallback={handleCloseClick}
@@ -396,7 +403,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
 }
 
 StepNotificationConfiguration.propTypes = {
-  data: PropTypes.object,
+  pipeline: PropTypes.object,
   stepId: PropTypes.string,
   parentCallback: PropTypes.func,
   handleCloseClick: PropTypes.func,

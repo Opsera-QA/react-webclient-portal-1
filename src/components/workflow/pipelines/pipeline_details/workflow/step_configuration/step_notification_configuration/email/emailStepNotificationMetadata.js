@@ -19,7 +19,9 @@ const emailStepNotificationMetadata = {
     {
       label: "Email Addresses",
       id: "addresses",
+      minItems: 1,
       isRequired: true,
+      isEmailArray: true,
     },
     {
       label: "Email Notifications",

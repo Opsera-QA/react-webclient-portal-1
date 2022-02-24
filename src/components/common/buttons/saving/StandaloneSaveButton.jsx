@@ -1,9 +1,10 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {faSave} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
+import axios from "axios";
 
 // Note: this should only be used in special cases where Model-Wrapped objects don't make sense
 function StandaloneSaveButton(
@@ -13,21 +14,44 @@ function StandaloneSaveButton(
     type,
     size,
     className,
+    showToasts,
   }) {
   let toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
 
   const persistRecord = async () => {
     try {
       setIsSaving(true);
       await saveFunction();
-      toastContext.showSaveSuccessToast(type);
+
+      if (showToasts !== false) {
+        toastContext.showSaveSuccessToast(type);
+      }
     }
     catch (error) {
       toastContext.showSaveFailureToast(type, error);
     }
     finally {
-      setIsSaving(false);
+      if (isMounted?.current === true) {
+        setIsSaving(false);
+      }
     }
   };
 
@@ -61,10 +85,12 @@ StandaloneSaveButton.propTypes = {
   type: PropTypes.string,
   size: PropTypes.string,
   className: PropTypes.string,
+  showToasts: PropTypes.bool,
 };
 
 StandaloneSaveButton.defaultProps = {
   size: "sm",
+  showToasts: true,
 };
 
 export default StandaloneSaveButton;

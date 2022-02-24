@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import RepositorySelectInput from "components/common/list_of_values_input/tools/repositories/RepositorySelectInput";
 
-function ArgoCdGitRepositorySelectInput({className, fieldName, model, setModel, disabled}) {
+function ArgoCdStepGitRepositorySelectInput({className, fieldName, model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = model;
     let repoName = selectedOption?.name;
@@ -41,7 +41,7 @@ function ArgoCdGitRepositorySelectInput({className, fieldName, model, setModel, 
   );
 }
 
-ArgoCdGitRepositorySelectInput.propTypes = {
+ArgoCdStepGitRepositorySelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
@@ -49,8 +49,8 @@ ArgoCdGitRepositorySelectInput.propTypes = {
   fieldName: PropTypes.string,
 };
 
-ArgoCdGitRepositorySelectInput.defaultProps = {
+ArgoCdStepGitRepositorySelectInput.defaultProps = {
   fieldName: "gitRepository",
 };
 
-export default ArgoCdGitRepositorySelectInput;
+export default ArgoCdStepGitRepositorySelectInput;
