@@ -77,13 +77,18 @@ function SonarBugsMetricScorecard({ kpiConfiguration, setKpiConfiguration, dashb
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "sonarBugsCodeBasedMetricScorecard",
         kpiConfiguration,
         dashboardTags,
-        filterDto
+        filterDto,
+        null,
+        dashboardOrgs
       );
       let dataObject = response?.data?.data[0]?.sonarBugsCodeBasedMetricScorecard?.data[0]?.data;
 
@@ -137,14 +142,14 @@ function SonarBugsMetricScorecard({ kpiConfiguration, setKpiConfiguration, dashb
   };
 
   const getFilterContainer = () => {
-    return (  
+    return (
       <FilterContainer
         filterDto={tableFilterDto}
         setFilterDto={setTableFilterDto}
         body={getCardView()}
         isLoading={isLoading}
         loadData={loadData}
-        supportSearch={true}      
+        supportSearch={true}
       />
     );
   };
