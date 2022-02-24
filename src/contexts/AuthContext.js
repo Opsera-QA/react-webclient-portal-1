@@ -239,7 +239,6 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children, web
       subscribeToTopic: subscribeToTopic,
       unsubscribeFromTopic: unsubscribeFromTopic,
     }}>
-      <div>Websocket connected: {websocketClient?.isConnected()}</div>
       {children}
     </AuthContext.Provider>
   );
