@@ -25,7 +25,6 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(undefined);
 
-
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -52,13 +51,18 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "githubTimeTakenToCompleteMergeRequestReviewAndPushTime",
         kpiConfiguration,
         dashboardTags,
-        filterDto
+        filterDto,
+        null,
+        dashboardOrgs
       );
       let dataObject = response?.data?.data[0]?.githubTimeTakenToCompleteMergeRequestReviewAndPushTime?.data;
 
@@ -98,7 +102,6 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
       />
     );
   };
-
 
   return (
     <div>
