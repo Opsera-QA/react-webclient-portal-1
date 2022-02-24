@@ -171,7 +171,7 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
         fieldName={"gitFilePath"}
         disabled={hasStringValue(argoCdModel?.getData("defaultBranch")) !== true}
       />
-      {/*{getRollbackInputs()}*/}
+      {getRollbackInputs()}
       {getDynamicFields()}
     </PipelineStepEditorPanelContainer>
   );

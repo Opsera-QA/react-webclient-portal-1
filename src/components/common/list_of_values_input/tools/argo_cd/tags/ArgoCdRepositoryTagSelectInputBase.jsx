@@ -64,7 +64,7 @@ function ArgoCdRepositoryTagSelectInputBase(
 
   const loadRepositoryTags = async (cancelSource = cancelTokenSource) => {
     const response = await argoCdStepActions.getArtifactoryTagsFromArgoInstance(getAccessToken, cancelSource, pipelineId, stepId, toolIdentifier);
-    const repositoryTags = response?.data;
+    const repositoryTags = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositoryTags)) {
       setRepositoryTags([...repositoryTags]);
