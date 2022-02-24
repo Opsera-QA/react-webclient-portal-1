@@ -7,7 +7,6 @@ import ThreeMonthsRestrictedDateRangeInput from "components/common/inputs/date/T
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import kpiConfigurationMetadata from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import {
-  kpiSettingsMetadata,
   kpiDateFilterMetadata,
   kpiTagsFilterMetadata,
   kpiGoalsFilterMetadata,
@@ -98,7 +97,7 @@ function KpiSettingsForm({
   const [showResetConfirmationPanel, setShowResetConfirmationPanel] = useState(false);
 
   const [kpiConfigSettings, setKpiConfigSettings] = useState(
-    modelHelpers.getDashboardSettingsModel(kpiConfiguration, kpiSettingsMetadata)
+    modelHelpers.getDashboardSettingsModel(kpiConfiguration)
   );
   const [kpiDateFilter, setKpiDateFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "date", kpiDateFilterMetadata)

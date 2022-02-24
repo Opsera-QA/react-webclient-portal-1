@@ -154,6 +154,7 @@ import AutomatedTestAdoptionRateMetric
   from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AutomatedTestAdoptionRateMetric";
 import FirstPassYieldMetrics from "./first_pass/FirstPassYieldMetrics";
 import LoadingDialog from "components/common/status_notifications/loading";
+import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1354,7 +1355,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "salesforce-duration-by-stage":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_DURATION_BY_STAGE:
         return (
           <Col md={12} className="p-2">
             <SalesforceDurationByStageMetrics
@@ -1414,7 +1415,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "sdlc-duration-statistics":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS:
         return (
           <Col xl={12} md={12} className="p-2">
             <SdlcDurationByStageMetrics

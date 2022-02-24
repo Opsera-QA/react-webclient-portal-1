@@ -27,19 +27,19 @@ function MetricDataPointEvaluationRulesInput({model, setModel, strategicCriteria
     <div>
       <H4FieldSubHeader subheaderText={"Strategic Criteria"}/>
       <Row>
-        <Col xs={12} className={"my-2"}>
+        <Col xs={12} className={"my-1"}>
           <MetricDataPointEvaluationSuccessRuleInput
             dataPointEvaluationRules={strategicCriteria?.data_point_evaluation_rules}
             updateRuleFunction={updateRuleFunction}
           />
         </Col>
-        <Col xs={12} className={"my-2"}>
+        <Col xs={12} className={"my-1"}>
           <MetricDataPointEvaluationWarningRuleInput
             dataPointEvaluationRules={strategicCriteria?.data_point_evaluation_rules}
             updateRuleFunction={updateRuleFunction}
           />
         </Col>
-        <Col xs={12} className={"my-2"}>
+        <Col xs={12} className={"mt-1"}>
           <MetricDataPointEvaluationFailureRuleInput
             dataPointEvaluationRules={strategicCriteria?.data_point_evaluation_rules}
             updateRuleFunction={updateRuleFunction}
