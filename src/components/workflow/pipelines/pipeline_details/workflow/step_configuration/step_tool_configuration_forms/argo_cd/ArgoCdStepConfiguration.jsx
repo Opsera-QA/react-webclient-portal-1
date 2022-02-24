@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import ArgoCdStepSourceControlManagementToolIdentifierSelectInput
@@ -26,7 +27,7 @@ import ArgoCdStepPipelineStepSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepPipelineStepSelectInput";
 import ArgoCdRepositoryTagSelectInput
   from "components/common/list_of_values_input/tools/argo_cd/tags/ArgoCdRepositoryTagSelectInput";
-import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import pipelineHelpers from "components/workflow/pipelineHelpers";
 
 function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel, pipelineId }) {
   const toastContext = useContext(DialogToastContext);
@@ -75,14 +76,14 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
 
   const getRollbackRepositorySelect = () => {
     if (argoCdModel?.getData("rollbackEnabled") === true) {
-      return ( 
+      return (
         <ArgoCdRepositoryTagSelectInput
           fieldName={"repositoryTag"}
           model={argoCdModel}
           setModel={setArgoCdModel}
           pipelineId={pipelineId}
           stepId={argoCdModel?.getData("dockerStepID")}
-          toolIdentifier={argoCdModel?.getData("buildStepToolIdentifier")}
+          toolIdentifier={pipelineHelpers.getToolIdentifierFromPlanForStepId(plan, argoCdModel?.getData("dockerStepID"))}
           valueField={"value"}
           plan={plan}
         />
