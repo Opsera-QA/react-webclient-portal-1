@@ -1,14 +1,13 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import config from "./githubMergeRequestsByUserChartConfig";
 import ModalLogs from "components/common/modal/modalLogs";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, assignStandardColors, 
-         adjustBarWidth } from '../../../charts-views';
+import { defaultConfig, assignStandardColors, adjustBarWidth } from "../../../charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 function GithubMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -43,22 +42,33 @@ function GithubMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, dash
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "githubMergeRequestsByUser", kpiConfiguration, dashboardTags);
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "githubMergeRequestsByUser",
+        kpiConfiguration,
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
+      );
       let dataObject = response?.data ? response?.data?.data[0]?.githubMergeRequestsByUser?.data : [];
       assignStandardColors(dataObject, true);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
       }
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -70,18 +80,17 @@ function GithubMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, dash
       return null;
     }
 
-  return (
-    <div className="new-chart mb-3" style={{height: "300px"}}>
-          <ResponsiveBar
-            data={metrics}
-            {...defaultConfig("Author", "Merge Requests", 
-                      true, false, "cutoffString", "wholeNumbers")}
-            {...config(METRIC_THEME_CHART_PALETTE_COLORS)}
-            {...adjustBarWidth(metrics, false)}
-            onClick={() => setShowModal(true)}
-          />
+    return (
+      <div className="new-chart mb-3" style={{ height: "300px" }}>
+        <ResponsiveBar
+          data={metrics}
+          {...defaultConfig("Author", "Merge Requests", true, false, "cutoffString", "wholeNumbers")}
+          {...config(METRIC_THEME_CHART_PALETTE_COLORS)}
+          {...adjustBarWidth(metrics, false)}
+          onClick={() => setShowModal(true)}
+        />
       </div>
-  );
+    );
   };
 
   return (
@@ -115,7 +124,7 @@ GithubMergeRequestsByUser.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func
+  setKpis: PropTypes.func,
 };
 
 export default GithubMergeRequestsByUser;
