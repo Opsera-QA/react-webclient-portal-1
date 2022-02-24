@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
 import React from "react";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
 const pipelineHelpers = {};
 
@@ -18,6 +19,15 @@ pipelineHelpers.getStepIndexWithName = (pipeline, stepName) => {
   return stepArrayIndex > -1 ? stepArrayIndex + 1 : "UNKNOWN";
 };
 
+pipelineHelpers.getToolIdentifierFromPlanForStepId = (plan, stepId) => {
+  if (Array.isArray(plan) && isMongoDbId(stepId) === true) {
+    const step = plan?.find((step) => step?._id === stepId);
+
+    if (step) {
+      return step?.tool?.tool_identifier;
+    }
+  }
+};
 
 pipelineHelpers.getPendingApprovalStep = (pipeline) => {
   if (pipeline?.workflow?.last_step?.running?.paused) {
@@ -196,7 +206,7 @@ pipelineHelpers.formatStepOptions = (plan, stepId) => {
     0,
     plan.findIndex((element) => element._id === stepId),
   );
-  console.log(STEP_OPTIONS);
+  // console.log(STEP_OPTIONS);
   return STEP_OPTIONS;
 };
 

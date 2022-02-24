@@ -15,7 +15,6 @@ function ArgoCdStepPipelineStepSelectInput(
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = model;
     newModel.setData("dockerStepID", selectedOption?._id);
-    newModel.setData("buildStepToolIdentifier", selectedOption?.tool?.tool_identifier);
     setModel({ ...newModel });
   };
 

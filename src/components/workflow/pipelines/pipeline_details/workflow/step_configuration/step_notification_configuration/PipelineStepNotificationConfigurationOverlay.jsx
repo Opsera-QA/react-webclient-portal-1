@@ -9,8 +9,8 @@ import CenterOverlayContainer from "components/common/overlays/center/CenterOver
 
 function PipelineStepNotificationConfigurationOverlay(
   {
-    pipeline,
-    stepId,
+    pipelineStep,
+    pipelineId,
     loadPipeline,
   }) {
   const toastContext = useContext(DialogToastContext);
@@ -20,7 +20,7 @@ function PipelineStepNotificationConfigurationOverlay(
     loadPipeline();
   };
 
-  if (pipeline == null || isMongoDbId(stepId) !== true) {
+  if (pipelineStep == null || isMongoDbId(pipelineId) !== true) {
     return null;
   }
 
@@ -35,8 +35,8 @@ function PipelineStepNotificationConfigurationOverlay(
     >
       <div className={"p-3"}>
         <StepNotificationConfiguration
-          pipeline={pipeline}
-          stepId={stepId}
+          pipelineId={pipelineId}
+          pipelineStep={pipelineStep}
           handleCloseClick={closePanel}
         />
       </div>
@@ -45,8 +45,8 @@ function PipelineStepNotificationConfigurationOverlay(
 }
 
 PipelineStepNotificationConfigurationOverlay.propTypes = {
-  pipeline: PropTypes.object,
-  stepId: PropTypes.string,
+  pipelineStep: PropTypes.object,
+  pipelineId: PropTypes.string,
   loadPipeline: PropTypes.func,
 };
 

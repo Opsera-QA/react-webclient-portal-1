@@ -183,8 +183,8 @@ const PipelineWorkflowItem = (
       // if (type === "notification") {
       //   toastContext.showOverlayPanel(
       //     <PipelineStepNotificationConfigurationOverlay
-      //       pipeline={pipeline}
-      //       stepId={itemId}
+      //       pipelineId={pipeline?._id}
+      //       pipelineStep={tool}
       //       loadPipeline={loadPipeline}
       //     />
       //   );
