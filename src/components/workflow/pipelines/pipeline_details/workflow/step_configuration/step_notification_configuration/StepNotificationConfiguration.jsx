@@ -75,8 +75,6 @@ function StepNotificationConfiguration(
       }
     });
 
-    console.log("pipelineStep: " + JSON.stringify(pipelineStep));
-
     return () => {
       source.cancel();
       isMounted.current = false;
