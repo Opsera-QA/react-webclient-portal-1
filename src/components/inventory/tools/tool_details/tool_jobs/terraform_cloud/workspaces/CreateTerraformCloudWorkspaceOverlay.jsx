@@ -34,6 +34,7 @@ function CreateTerraformCloudWorkspaceOverlay({ loadData, toolId, isMounted }) {
         setTerraformCloudWorkspacesModel={setTerraformCloudWorkspacesModel}
         toolId={toolId}
         handleClose={handleClose}
+        editMode={false}
       />
     </CreateCenterPanel>
   );

@@ -5,7 +5,6 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
-import modelHelpers from "components/common/model/modelHelpers";
 import CustomTable from "components/common/table/CustomTable";
 import {terraformCloudWorkspacesMetadata} from "./terraformCloudWorkspaces.metadata";
 import CreateTerraformCloudWorkspaceOverlay from "./CreateTerraformCloudWorkspaceOverlay";
@@ -14,14 +13,12 @@ import terraformCloudWorkspacesActions from "./terraformCloudWorkspaces.actions"
 import {AuthContext} from "contexts/AuthContext";
 
 function TerraformCloudWorkspacesTable({
-    toolId, 
-    setTerraformCloudWorkspacesModel,
+    toolId,
     organizationName,
     terraformCloudWorkspacesList,
-    setTerraformCloudWorkspacesList
+    setTerraformCloudWorkspacesList,
+    handleRowSelect
   }) {
-
-  console.log({terraformCloudWorkspacesList});
 
   const fields = terraformCloudWorkspacesMetadata.fields;
   const toastContext = useContext(DialogToastContext);
@@ -48,15 +45,13 @@ function TerraformCloudWorkspacesTable({
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId]);
+  }, [toolId, organizationName]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       const response = await terraformCloudWorkspacesActions.getTerraformCloudWorkspaces(getAccessToken, cancelSource, toolId, organizationName);
       const workspaces = response?.data?.data;
-
-      console.log({workspaces});
 
       if(Array.isArray(workspaces)) {        
         setTerraformCloudWorkspacesList(workspaces);        
@@ -90,8 +85,7 @@ function TerraformCloudWorkspacesTable({
   );
 
   const onRowSelect = async (rowData) => {    
-    const parsedModel = modelHelpers.parseObjectIntoModel(rowData?.original, terraformCloudWorkspacesMetadata);
-    setTerraformCloudWorkspacesModel({...parsedModel});
+    handleRowSelect(rowData?.original);
   };
 
   const getTable = () => {
@@ -123,14 +117,10 @@ function TerraformCloudWorkspacesTable({
 
 TerraformCloudWorkspacesTable.propTypes = {
   toolId: PropTypes.string,
-  loadData: PropTypes.func,
-  isLoading: PropTypes.bool,
-  isMounted: PropTypes.object,
-  toolData: PropTypes.object,
-  setTerraformCloudWorkspacesModel: PropTypes.func,
   organizationName: PropTypes.string,
   terraformCloudWorkspacesList: PropTypes.array,
-  setTerraformCloudWorkspacesList: PropTypes.func,  
+  setTerraformCloudWorkspacesList: PropTypes.func,
+  handleRowSelect: PropTypes.func,
 };
 
 export default TerraformCloudWorkspacesTable;

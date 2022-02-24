@@ -10,8 +10,8 @@ terraformCloudWorkspacesActions.createTerraformCloudWorkspace = async (getAccess
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-terraformCloudWorkspacesActions.deleteTerraformCloudWorkspace = async (getAccessToken, cancelTokenSource, toolId, organizationName) => {
-  const apiUrl = `/tools/${toolId}/terraform-cloud-workspaces/${organizationName}`;
+terraformCloudWorkspacesActions.deleteTerraformCloudWorkspace = async (getAccessToken, cancelTokenSource, toolId, organizationName, workspaceName) => {
+  const apiUrl = `/tools/${toolId}/terraform-cloud-workspaces/${organizationName}/${workspaceName}`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

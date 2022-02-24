@@ -6,14 +6,25 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import terraformCloudWorkspacesActions from "components/inventory/tools/tool_details/tool_jobs/terraform_cloud/workspaces/terraformCloudWorkspaces.actions";
-import StandaloneDeleteButtonWithConfirmationModal from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
+import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import TerraformCloudOrganizationsSelectInput from "./inputs/TerraformCloudOrganizationsSelectInput";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import TextAreaClipboardField from "components/common/fields/clipboard/TextAreaClipboardField";
+import InlineLoadingDialog from "components/common/status_notifications/loading/InlineLoadingDialog";
 
-function TerraformCloudWorkspacesEditorPanel({ terraformCloudWorkspacesModel, setTerraformCloudWorkspacesModel, toolId, handleClose }) {
+function TerraformCloudWorkspacesEditorPanel({ 
+  terraformCloudWorkspacesModel, 
+  setTerraformCloudWorkspacesModel, 
+  toolId, 
+  handleClose, 
+  editMode 
+}) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [currentTerraformCloudOrganizationName, setCurrentTerraformCloudOrganizationName] = useState(undefined);
+  const [ isLoading, setIsLoading ] = useState(false);
+  const toastContext = useContext(DialogToastContext);
+  const [workspaceConfiguration, setWorkspaceConfiguration] = useState("Workspace configuration not found. Please try again.");
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -24,7 +35,11 @@ function TerraformCloudWorkspacesEditorPanel({ terraformCloudWorkspacesModel, se
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    setCurrentTerraformCloudOrganizationName(terraformCloudWorkspacesModel?.getData('workspaceName'));
+    loadData(source).catch((error) => {
+      if(isMounted?.current === true){
+        throw error;
+      }
+    });
 
     return () => {
       source.cancel();
@@ -32,26 +47,70 @@ function TerraformCloudWorkspacesEditorPanel({ terraformCloudWorkspacesModel, se
     };
   }, []);
 
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    
+    if (!editMode) {
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const {organizationName, workspaceName} = terraformCloudWorkspacesModel.getPersistData();
+      const response = await terraformCloudWorkspacesActions.getTerraformCloudWorkspaceConfiguration(getAccessToken, cancelSource, toolId, organizationName, workspaceName);      
+      setWorkspaceConfiguration(response?.data?.data);      
+    } catch (error) {
+      if(isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    } finally {
+      if(isMounted?.current === true) {
+        setIsLoading(false);
+      }      
+    }
+  };
+
   const createTerraformCloudWorkspace = async () => {
-    const {organizationName, workspaceName} = terraformCloudWorkspacesModel.getPersistData();    
+    const {organizationName, workspaceName} = terraformCloudWorkspacesModel.getPersistData();
     return await terraformCloudWorkspacesActions.createTerraformCloudWorkspace(getAccessToken, cancelTokenSource, toolId, organizationName, workspaceName);
   };
 
   const deleteTerraformCloudWorkspace = async () => {
-    return await terraformCloudWorkspacesActions.deleteTerraformCloudWorkspace(getAccessToken, cancelTokenSource, toolId, currentTerraformCloudOrganizationName);
+    const {organizationName, workspaceName} = terraformCloudWorkspacesModel.getPersistData();
+    const response = await terraformCloudWorkspacesActions.deleteTerraformCloudWorkspace(getAccessToken, cancelTokenSource, toolId, organizationName, workspaceName);
+    handleClose();
   };
 
-  const getExtraButtons = () => {
-    if (terraformCloudWorkspacesModel?.isNew() === false) {
-      return (
-        <StandaloneDeleteButtonWithConfirmationModal
-          model={terraformCloudWorkspacesModel}
-          deleteDataFunction={deleteTerraformCloudWorkspace}
-          handleCloseFunction={handleClose}
+  const getExtraButtons = () => {    
+    if (editMode) {      
+      return (        
+        <DeleteButtonWithInlineConfirmation
+          dataObject={terraformCloudWorkspacesModel}
+          deleteRecord={deleteTerraformCloudWorkspace}
         />
       );
     }
   };
+
+  const getWorkspaceConfigurationFields = () => {
+    if (editMode) {
+      return (
+        <Row>
+          <Col lg={12}>
+            <TextAreaClipboardField            
+              allowResize={false}
+              rows={10}
+              textAreaValue={workspaceConfiguration}
+              description={`You can add this configuration block to any .tf file in the directory where you run Terraform.`}
+            />
+          </Col>
+        </Row>
+      );
+    }
+  };
+
+  if (isLoading) {
+    return (<InlineLoadingDialog />);
+  }
 
   return (
     <EditorPanelContainer
@@ -61,7 +120,7 @@ function TerraformCloudWorkspacesEditorPanel({ terraformCloudWorkspacesModel, se
       extraButtons={getExtraButtons()}
       createRecord={createTerraformCloudWorkspace}
       lenient={false}
-      disable={terraformCloudWorkspacesModel?.checkCurrentValidity() !== true}
+      disable={terraformCloudWorkspacesModel?.checkCurrentValidity() !== true || editMode}
     >
       <Row>      
         <Col lg={12}>
@@ -69,7 +128,7 @@ function TerraformCloudWorkspacesEditorPanel({ terraformCloudWorkspacesModel, se
             dataObject={terraformCloudWorkspacesModel} 
             setDataObject={setTerraformCloudWorkspacesModel} 
             toolId={toolId}
-            disabled={!terraformCloudWorkspacesModel.isNew()}
+            disabled={editMode}
           />
         </Col>
       </Row>
@@ -79,10 +138,11 @@ function TerraformCloudWorkspacesEditorPanel({ terraformCloudWorkspacesModel, se
             dataObject={terraformCloudWorkspacesModel}
             setDataObject={setTerraformCloudWorkspacesModel}            
             fieldName={"workspaceName"}
-            disabled={!terraformCloudWorkspacesModel.isNew()}
+            disabled={editMode}
           />
         </Col>
-      </Row>      
+      </Row>
+      { getWorkspaceConfigurationFields() }      
     </EditorPanelContainer>
   );
 }
@@ -92,7 +152,8 @@ TerraformCloudWorkspacesEditorPanel.propTypes = {
   setTerraformCloudWorkspacesModel: PropTypes.func,
   toolId: PropTypes.string,
   handleClose: PropTypes.func,
-  toolData: PropTypes.object
+  toolData: PropTypes.object,
+  editMode: PropTypes.bool,
 };
 
 export default TerraformCloudWorkspacesEditorPanel;
