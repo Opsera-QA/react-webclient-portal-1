@@ -81,9 +81,9 @@ const AppWithRouterAccess = () => {
         setIsPublicPathState(true);
       }
 
-      if (websocketClient) {
-        websocketClient?.closeWebsocket();
-      }
+      // if (websocketClient) {
+      //   websocketClient?.closeWebsocket();
+      // }
 
       return;
     }
@@ -92,8 +92,8 @@ const AppWithRouterAccess = () => {
       await setLoading(true);
       await loadUsersData(authState.accessToken["accessToken"],loading);
 
-      console.log("initializing websocket");
-      websocketClient.initializeWebsocket();
+      // console.log("initializing websocket");
+      // websocketClient.initializeWebsocket();
     }
 
   });
