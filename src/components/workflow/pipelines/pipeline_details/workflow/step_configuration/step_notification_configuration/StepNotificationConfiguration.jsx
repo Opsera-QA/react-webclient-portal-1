@@ -332,7 +332,6 @@ function StepNotificationConfiguration({ pipeline, stepId, handleCloseClick }) {
             dataObject={emailNotificationModel}
             setDataObject={setEmailNotificationModel}
             fieldName={"enabled"}
-            disabled={true}
           />
         </div>
       );
@@ -344,19 +343,16 @@ function StepNotificationConfiguration({ pipeline, stepId, handleCloseClick }) {
           dataObject={emailNotificationModel}
           setDataObject={setEmailNotificationModel}
           fieldName={"enabled"}
-          disabled={true}
         />
         <MultiTextInputBase
           dataObject={emailNotificationModel}
           setDataObject={setEmailNotificationModel}
           fieldName={"addresses"}
-          disabled={true}
         />
         <NotificationLevelInput
           dataObject={emailNotificationModel}
           setDataObject={setEmailNotificationModel}
           fieldName={"event"}
-          disabled={true}
         />
       </div>
     );
