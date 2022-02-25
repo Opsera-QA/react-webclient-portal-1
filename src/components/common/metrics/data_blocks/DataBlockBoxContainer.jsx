@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function DataBlockBoxContainer({ children, className, onClickFunction, showBorder}) {
+function DataBlockBoxContainer({ children, className, onClickFunction, showBorder }) {
   const getDataBlockClassNames = () => {
     let className = "";
 
@@ -18,10 +18,7 @@ function DataBlockBoxContainer({ children, className, onClickFunction, showBorde
 
   return (
     <div className={className}>
-      <div
-        className={getDataBlockClassNames()}
-        onClick={onClickFunction}
-      >
+      <div className={getDataBlockClassNames()} onClick={onClickFunction}>
         {children}
       </div>
     </div>

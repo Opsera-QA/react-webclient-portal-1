@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import DataPointInfoOverlayIcon from "components/common/icons/metric/info/DataPointInfoOverlayIcon";
 
-function ThreeLineDataBlockBase({ middleText, bottomText, topText, className, icon, dataPoint }) {
+function ThreeLineDataBlockBase({ middleText, bottomText, topText, className, icon, dataPoint, onClickFunction }) {
   const getLeftDataBlockIcon = () => {
     if (icon) {
       return (
@@ -41,7 +41,7 @@ function ThreeLineDataBlockBase({ middleText, bottomText, topText, className, ic
   };
 
   return (
-    <div className={className}>
+    <div className={className} onClick={onClickFunction}>
       <Row className={"w-100 h-100 mx-auto text-center"}>
         <Col xs={12} className={"d-flex justify-content-between"}>
           <div className={"data-block-icon"}>{getLeftDataBlockIcon()}</div>
@@ -66,6 +66,7 @@ ThreeLineDataBlockBase.propTypes = {
   className: PropTypes.string,
   icon: PropTypes.object,
   dataPoint: PropTypes.object,
+  onClickFunction: PropTypes.object,
 };
 
 export default ThreeLineDataBlockBase;
