@@ -1,13 +1,13 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext} from 'react';
 import PropTypes from "prop-types";
-import {AuthContext} from "contexts/AuthContext";
-import axios from "axios";
-import {dashboardMetricActions} from "components/insights/dashboards/metrics/dashboardMetric.actions";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
+import DeleteDashboardMetricConfirmationPanel
+  from "components/insights/marketplace/dashboards/metrics/delete/DeleteDashboardMetricConfirmationPanel";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function DeleteDashboardMetricButton(
   {
-    kpiConfigurationModel,
+    metricModel,
     dashboardModel,
     index,
     setKpis,
@@ -15,38 +15,21 @@ function DeleteDashboardMetricButton(
     closePanelFunction,
     className,
   }) {
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
 
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const deleteKpi = async () => {
-    await dashboardMetricActions.deleteDashboardKpiV2(getAccessToken, cancelTokenSource, dashboardModel?.getData("_id"), kpiConfigurationModel?.getData("_id"));
-
-    // This is a workaround necessary for hiding the KPI after it's deleted.
-    dashboardModel?.getData("configuration").splice(index, 1);
-    setKpis(dashboardModel?.getData("configuration"));
-
-    if (closePanelFunction) {
-      closePanelFunction();
-    }
+  const showConfirmationOverlay = () => {
+    toastContext.showOverlayPanel(
+      <DeleteDashboardMetricConfirmationPanel
+        metricModel={metricModel}
+        dashboardModel={dashboardModel}
+        closePanelFunction={closePanelFunction}
+        index={index}
+        setKpis={setKpis}
+      />
+    );
   };
 
-  if (kpiConfigurationModel == null || dashboardModel == null) {
+  if (metricModel == null || dashboardModel == null) {
     return null;
   }
 
@@ -54,15 +37,15 @@ function DeleteDashboardMetricButton(
     <DeleteButton
       size={"md"}
       className={className}
-      dataObject={kpiConfigurationModel}
-      deleteRecord={deleteKpi}
+      dataObject={metricModel}
+      deleteRecord={showConfirmationOverlay()}
       disabled={disabled}
     />
   );
 }
 
 DeleteDashboardMetricButton.propTypes = {
-  kpiConfigurationModel: PropTypes.object,
+  metricModel: PropTypes.object,
   dashboardModel: PropTypes.object,
   setKpis: PropTypes.func,
   index: PropTypes.number,

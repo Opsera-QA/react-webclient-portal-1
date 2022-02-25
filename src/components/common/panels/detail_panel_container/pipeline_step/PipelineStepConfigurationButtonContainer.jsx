@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import CloseButton from "../../CloseButton";
-import PipelineStepConfigurationSaveButtonContainer from "./PipelineStepConfigurationSaveButtonContainer";
-import LenientSaveButton from "../LenientSaveButton";
+import CloseButton from "components/common/buttons/CloseButton";
+import PipelineStepConfigurationSaveButtonContainer from "components/common/buttons/saving/containers/PipelineStepConfigurationSaveButtonContainer";
+import LenientSaveButton from "components/common/buttons/saving/LenientSaveButton";
 import StrictSaveButton from "components/common/buttons/saving/StrictSaveButton";
 
 // TODO: This will probably be removed if we make an actual detail view or if we do the modal concept where we have the tabs

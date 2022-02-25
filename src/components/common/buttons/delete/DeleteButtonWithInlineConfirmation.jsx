@@ -50,7 +50,7 @@ function DeleteButtonWithInlineConfirmation({deleteRecord,  dataObject, disabled
         <DeleteConfirmationPanel
           model={dataObject}
           deleteDataFunction={deleteDataFunction}
-          handleClose={handleClose}
+          closePanelFunction={handleClose}
         />
       );
     }

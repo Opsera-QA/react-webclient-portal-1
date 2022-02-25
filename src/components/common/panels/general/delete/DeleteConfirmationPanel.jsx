@@ -9,7 +9,7 @@ import InfoContainer from "components/common/containers/InfoContainer";
 function DeleteConfirmationPanel(
   {
     model,
-    handleClose,
+    closePanelFunction,
     deleteDataFunction,
     deleteButton,
     subPanel,
@@ -54,7 +54,11 @@ function DeleteConfirmationPanel(
         </div>
         {getSubPanel()}
         <SaveButtonContainer>
-          <CancelButton size={"md"} className={"mx-2"} cancelFunction={handleClose}/>
+          <CancelButton
+            size={"md"}
+            className={"mx-2"}
+            cancelFunction={closePanelFunction}
+          />
           {getDeleteButton()}
         </SaveButtonContainer>
       </div>
@@ -65,7 +69,7 @@ function DeleteConfirmationPanel(
 DeleteConfirmationPanel.propTypes = {
   model: PropTypes.object,
   deleteButton: PropTypes.object,
-  handleClose: PropTypes.func,
+  closePanelFunction: PropTypes.func,
   subPanel: PropTypes.any,
   deleteDataFunction: PropTypes.func,
 };

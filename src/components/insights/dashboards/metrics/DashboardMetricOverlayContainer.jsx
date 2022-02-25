@@ -9,18 +9,12 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import Model from "core/data_model/model";
 import kpiConfigurationMetadata from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import MetricSettingsInputPanel from "components/common/inputs/metric/settings/MetricSettingsInputPanel";
-import ResetButton from "components/common/buttons/reset/ResetButton";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {metricHelpers} from "components/insights/metric.helpers";
 import UserEditableMetricDataPointsInputPanel
   from "components/common/inputs/metric/data_points/UserEditableMetricDataPointsInputPanel";
-import DeleteDashboardMetricConfirmationPanel
-  from "components/insights/marketplace/dashboards/metrics/delete/DeleteDashboardMetricConfirmationPanel";
-import ResetMetricConfirmationPanel
-  from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricConfirmationPanel";
-import DeleteButton from "components/common/buttons/delete/DeleteButton";
 import GenericChartSettingsHelpDocumentation
   from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
@@ -31,7 +25,8 @@ const SUPPORTED_NEW_METRICS =[
   kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS,
 ];
 
-function DashboardMetricEditorPanel({
+// TODO: combine with chart settings overlay?
+function DashboardMetricOverlayContainer({
   kpiConfiguration,
   setKpiConfiguration,
   dashboardData,
@@ -47,8 +42,6 @@ function DashboardMetricEditorPanel({
   const [metricModel, setMetricModel] = useState(undefined);
   const [metricFilterModel, setMetricFilterModel] = useState(undefined);
   const [unpackedFilterData, setUnpackedFilterData] = useState(undefined);
-  const [showDeleteConfirmationPanel, setShowDeleteConfirmationPanel] = useState(false);
-  const [showResetConfirmationPanel, setShowResetConfirmationPanel] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -96,23 +89,6 @@ function DashboardMetricEditorPanel({
     await dashboardMetricActions.updateDashboardKpiV2(getAccessToken, cancelTokenSource, dashboardData?.getData("_id"), metricModel);
   };
 
-  const getExtraButtons = () => {
-    return (
-      <div className={"d-flex"}>
-        <DeleteButton
-          dataObject={metricModel}
-          deleteRecord={() => setShowDeleteConfirmationPanel(true)}
-          size={"md"}
-        />
-        <ResetButton
-          className={"ml-2"}
-          model={metricModel}
-          resetFunction={() => setShowResetConfirmationPanel(true)}
-        />
-      </div>
-    );
-  };
-
 
   const getMetricEditorPanel = () => {
     switch (kpiConfiguration?.kpi_identifier) {
@@ -129,35 +105,6 @@ function DashboardMetricEditorPanel({
   };
 
   const getBody = () => {
-    if (showDeleteConfirmationPanel === true) {
-      return (
-        <div className={"m-2"}>
-          <DeleteDashboardMetricConfirmationPanel
-            kpiConfigurationModel={metricModel}
-            dashboardModel={dashboardData}
-            closePanelFunction={closeSettingsPanel}
-            index={index}
-            setKpis={setKpis}
-          />
-        </div>
-      );
-    }
-
-    if (showResetConfirmationPanel === true) {
-      return (
-        <div className={"m-2"}>
-          <ResetMetricConfirmationPanel
-            kpiConfigurationModel={metricModel}
-            dashboardModel={dashboardData}
-            className={"ml-2"}
-            identifier={metricModel?.getData("kpi_identifier")}
-            index={index}
-            closePanelFunction={closeSettingsPanel}
-            setKpiConfiguration={setKpiConfiguration}
-          />
-        </div>
-      );
-    }
 
     return (
       <div>
@@ -226,7 +173,6 @@ function DashboardMetricEditorPanel({
         recordDto={metricModel}
         lenient={true}
         className={"px-3 pb-3"}
-        extraButtons={getExtraButtons()}
       >
         {getBody()}
       </EditorPanelContainer>
@@ -234,7 +180,7 @@ function DashboardMetricEditorPanel({
   );
 }
 
-DashboardMetricEditorPanel.propTypes = {
+DashboardMetricOverlayContainer.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -245,4 +191,4 @@ DashboardMetricEditorPanel.propTypes = {
   settingsHelpComponent: PropTypes.object,
 };
 
-export default DashboardMetricEditorPanel;
+export default DashboardMetricOverlayContainer;
