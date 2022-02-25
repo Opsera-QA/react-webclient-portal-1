@@ -14,7 +14,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import {faTrash} from "@fortawesome/pro-light-svg-icons"; // TODO: Make specialized Model when Dashboard refresh issue is fixed.
+import {faHistory} from "@fortawesome/pro-light-svg-icons";
 
 function ResetMetricConfirmationPanel(
   {
@@ -105,7 +105,12 @@ function ResetMetricConfirmationPanel(
       setKpiConfiguration({...resetKpiData});
       dashboardModel.setData("configuration", configuration);
 
-      await dashboardMetricActions.updateDashboardKpiV2(getAccessToken, cancelTokenSource, dashboardModel?.getData("_id"), metricModel);
+      await dashboardMetricActions.updateDashboardKpiV2(
+        getAccessToken,
+        cancelTokenSource,
+        dashboardModel?.getData("_id"),
+        metricModel
+      );
       toastContext.showResetSuccessToast("KPI Configuration");
 
       if (closePanelFunction) {
@@ -138,8 +143,8 @@ function ResetMetricConfirmationPanel(
     <CenterOverlayContainer
       closePanel={closePanelFunction}
       showPanel={true}
-      titleIcon={faTrash}
-      titleText={`Delete ${metricModel?.getData("kpi_name")} Confirmation`}
+      titleIcon={faHistory}
+      titleText={`Reset ${metricModel?.getData("kpi_name")} Confirmation`}
       showCloseButton={false}
     >
       <ResetConfirmationPanel

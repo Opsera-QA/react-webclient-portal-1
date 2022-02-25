@@ -4,7 +4,6 @@ import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdenti
 import SdlcDurationByStageMetricsEditorPanel
   from "components/insights/charts/sdlc/bar_chart/duration_by_stage/SdlcDurationByStageMetricsEditorPanel";
 import KpiSettingsForm from "components/insights/marketplace/charts/KpiSettingsForm";
-import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import Model from "core/data_model/model";
 import kpiConfigurationMetadata from "components/insights/marketplace/charts/kpi-configuration-metadata";
@@ -19,6 +18,8 @@ import GenericChartSettingsHelpDocumentation
   from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import {dashboardMetricActions} from "components/insights/dashboards/metrics/dashboardMetric.actions";
+import DashboardMetricEditorPanelContainer
+  from "components/common/panels/detail_panel_container/dashboard_metrics/DashboardMetricEditorPanelContainer";
 
 // TODO: This is temporary until kpis are updated to follow new standards
 const SUPPORTED_NEW_METRICS =[
@@ -84,7 +85,7 @@ function DashboardMetricOverlayContainer({
     }
   };
 
-  // TODO: Make node route for saving individual KPI on a dashboard by id
+  // TODO: Once legacy KPI Settings panel is removed, this can be moved into the Dashboard Metric Button Container
   const saveKpiSettings = async () => {
     await dashboardMetricActions.updateDashboardKpiV2(getAccessToken, cancelTokenSource, dashboardData?.getData("_id"), metricModel);
   };
@@ -167,15 +168,17 @@ function DashboardMetricOverlayContainer({
       setHelpIsShown={setHelpIsShown}
       hideCloseButton={true}
     >
-      <EditorPanelContainer
-        handleClose={closeSettingsPanel}
-        updateRecord={saveKpiSettings}
-        recordDto={metricModel}
-        lenient={true}
+      <DashboardMetricEditorPanelContainer
+        saveDataFunction={saveKpiSettings}
+        closePanelFunction={closeSettingsPanel}
+        metricModel={metricModel}
+        setKpis={setKpis}
+        metricIndex={index}
+        dashboardModel={dashboardData}
         className={"px-3 pb-3"}
       >
         {getBody()}
-      </EditorPanelContainer>
+      </DashboardMetricEditorPanelContainer>
     </OverlayPanelBodyContainer>
   );
 }
