@@ -948,7 +948,11 @@ function KpiSettingsForm({
       settingsHelpComponent(() => setHelpIsShown(false));
     }
 
-    return <GenericChartSettingsHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+    return (
+      <GenericChartSettingsHelpDocumentation
+        closeHelpPanel={() => setHelpIsShown(false)}
+      />
+    );
   };
 
   const getEditorPanelFilters = () => {

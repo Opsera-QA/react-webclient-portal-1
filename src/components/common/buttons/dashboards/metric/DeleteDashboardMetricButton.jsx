@@ -38,7 +38,7 @@ function DeleteDashboardMetricButton(
       size={"md"}
       className={className}
       dataObject={metricModel}
-      deleteRecord={showConfirmationOverlay()}
+      deleteRecord={showConfirmationOverlay}
       disabled={disabled}
     />
   );
