@@ -17,6 +17,7 @@ function MetricDataPointEvaluationSuccessRuleInput(
       updateRuleFunction={updateRuleFunction}
       title={"Success Criteria"}
       icon={faCheckCircle}
+      headerClassName={"green-header"}
       errorMessage={dataPointEvaluationRulesHelpers.getConflictingRuleError(dataPointEvaluationRules)}
     />
   );

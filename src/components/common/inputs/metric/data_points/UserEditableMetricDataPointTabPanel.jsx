@@ -41,7 +41,9 @@ function UserEditableMetricDataPointTabPanel(
 
   const getVerticalTabContainer = () => {
     return (
-      <VanitySetVerticalTabContainer className={"console-log-container-tabs"}>
+      <VanitySetVerticalTabContainer
+        className={"h-100 w-100"}
+      >
         {dataPoints.map((dataPoint) => {
           return (
             getVerticalTab(dataPoint?._id, dataPoint?.name)

@@ -166,6 +166,14 @@
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
 }
+
+.metric-input-container-header {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    height: 28px;
+    max-height: 28px;
+}
+
 /* End Metric Container Styling */
 
 .dashboard-screen-container-body {
