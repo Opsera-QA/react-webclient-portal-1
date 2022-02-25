@@ -35,6 +35,7 @@ function UserEditableMetricDataPointTabPanel(
         tabName={id}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
+        className={""}
       />
     );
   };
@@ -44,11 +45,13 @@ function UserEditableMetricDataPointTabPanel(
       <VanitySetVerticalTabContainer
         className={"h-100 w-100"}
       >
-        {dataPoints.map((dataPoint) => {
-          return (
-            getVerticalTab(dataPoint?._id, dataPoint?.name)
-          );
-        })}
+        <div className={"metric-tab-tree"}>
+          {dataPoints.map((dataPoint) => {
+            return (
+              getVerticalTab(dataPoint?._id, dataPoint?.name)
+            );
+          })}
+        </div>
       </VanitySetVerticalTabContainer>
     );
   };
