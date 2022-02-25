@@ -86,7 +86,7 @@ function DashboardMetricOverlayContainer({
   // TODO: Once legacy KPI Settings panel is removed, this can be moved into the Dashboard Metric Button Container
   const saveKpiSettings = async () => {
     const packedFilters = metricHelpers.packFilterData(metricFilterModel?.getPersistData());
-    metricModel.setData("filters", packedFilters);
+    metricModel?.setData("filters", packedFilters);
     await dashboardMetricActions.updateDashboardKpiV2(
       getAccessToken,
       cancelTokenSource,
@@ -138,7 +138,11 @@ function DashboardMetricOverlayContainer({
       settingsHelpComponent(() => setHelpIsShown(false));
     }
 
-    return <GenericChartSettingsHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+    return (
+      <GenericChartSettingsHelpDocumentation
+        closeHelpPanel={() => setHelpIsShown(false)}
+      />
+    );
   };
 
   // TODO: This is temporary for compatibility reasons.
