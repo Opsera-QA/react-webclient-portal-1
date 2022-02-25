@@ -4,12 +4,12 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
-import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import DeleteModelButtonWithConfirmation from "components/common/buttons/delete/DeleteModelButtonWithConfirmationModal";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
+import ParameterVaultEnabledToggle from "components/inventory/parameters/details/ParameterVaultEnabledToggle";
+import TogglePasswordTextAreaInput from "components/common/inputs/textarea/password/TogglePasswordTextAreaInput";
 import ParameterValueTextInput from "components/inventory/parameters/details/ParameterValueTextInput";
-import TogglePasswordTextInput from "components/common/inputs/text/TogglePasswordTextInput";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
 function ParametersEditorPanel({ parameterModel, setParameterModel, parameterModelId, handleClose }) {
   const isMounted = useRef(false);
@@ -35,7 +35,7 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
 
       if (parameterModel?.isNew()) {
         return (
-          <TogglePasswordTextInput
+          <TogglePasswordTextAreaInput
             model={parameterModel}
             setModel={setParameterModel}
             fieldName={"value"}
@@ -46,8 +46,8 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
       return (
         <ParameterValueTextInput
           disabled={parameterModel?.isNew() === false && parameterModel?.canUpdate() !== true}
-          setDataObject={setParameterModel}
-          dataObject={parameterModel}
+          setModel={setParameterModel}
+          model={parameterModel}
           fieldName={"value"}
           parameterId={parameterModel?.getData("_id")}
         />
@@ -55,7 +55,7 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
     }
 
     return (
-      <TextInputBase
+      <TextAreaInput
         dataObject={parameterModel}
         setDataObject={setParameterModel}
         fieldName={"value"}
@@ -73,16 +73,31 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
       model={parameterModel}
       setModel={setParameterModel}
       handleClose={handleClose}
-      extraButtons={<DeleteModelButtonWithConfirmation model={parameterModel} />}
+      className={"mx-2 mb-2"}
     >
       <Row>
         <Col md={12} lg={parameterModel?.isNew() ? 4 : 5}>
-          <TextInputBase disabled={!parameterModel?.isNew()} setDataObject={setParameterModel} dataObject={parameterModel} fieldName={"name"}/>
-          <BooleanToggleInput setDataObject={setParameterModel} dataObject={parameterModel} fieldName={"vaultEnabled"} disabled={!parameterModel?.isNew()}/>
+          <TextInputBase
+            disabled={!parameterModel?.isNew()}
+            setDataObject={setParameterModel}
+            dataObject={parameterModel}
+            fieldName={"name"}
+          />
+          <ParameterVaultEnabledToggle
+            fieldName={"vaultEnabled"}
+            setModel={setParameterModel}
+            model={parameterModel}
+            disabled={!parameterModel?.isNew()}
+          />
           {getValueInput()}
         </Col>
         <Col md={12} lg={parameterModel?.isNew() ? 8 : 7} className={"my-2"}>
-          <RoleAccessInput disabled={parameterModel?.canEditAccessRoles() !== true} dataObject={parameterModel} setDataObject={setParameterModel} fieldName={"roles"} />
+          <RoleAccessInput
+            disabled={parameterModel?.canEditAccessRoles() !== true}
+            dataObject={parameterModel}
+            setDataObject={setParameterModel}
+            fieldName={"roles"}
+          />
         </Col>
       </Row>
     </VanityEditorPanelContainer>

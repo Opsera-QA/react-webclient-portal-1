@@ -5,7 +5,7 @@ import SlackNotificationMethodConfigurationPanel from "components/notifications/
 import JiraNotificationMethodConfigurationPanel from "components/notifications/notification_details/notification_method_forms/jira/JiraNotificationMethodConfigurationPanel";
 import TeamsNotificationMethodConfigurationPanel from "components/notifications/notification_details/notification_method_forms/teams/TeamsNotificationMethodConfigurationPanel";
 import NotificationMethodSelectInput
-  from "components/common/list_of_values_input/notifications/NotificationMethodSelectInput";
+  from "components/common/list_of_values_input/notifications/method/NotificationMethodSelectInput";
 
 function NotificationMethodConfigurationPanel({ notificationDataDto, setNotificationDataDto, notificationMethodDataDto, setNotificationMethodDataDto }) {
   const getMethodConfigurationPanel = () => {
@@ -60,7 +60,11 @@ function NotificationMethodConfigurationPanel({ notificationDataDto, setNotifica
   return (
     <div>
       <div>
-        <NotificationMethodSelectInput setDataFunction={handleMethodChange} dataObject={notificationDataDto} setDataObject={setNotificationDataDto} />
+        <NotificationMethodSelectInput
+          setDataFunction={handleMethodChange}
+          model={notificationDataDto}
+          setModel={setNotificationDataDto}
+        />
       </div>
       {getMethodConfigurationPanel()}
     </div>

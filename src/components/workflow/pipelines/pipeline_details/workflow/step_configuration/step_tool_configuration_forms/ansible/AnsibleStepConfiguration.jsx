@@ -97,12 +97,13 @@ function AnsibleStepConfiguration({ stepTool, stepId, closeEditorPanel, parentCa
         setModel={setAnsibleStepModel}
         model={ansibleStepModel}
       />
-      <JsonInput
-        className={"my-2"}
-        fieldName={"commandArgs"}
-        model={ansibleStepModel}
-        setModel={setAnsibleStepModel}
-      />
+      {/*Disabling Command Line args as part of OPL 2400*/}
+      {/*<JsonInput*/}
+      {/*  className={"my-2"}*/}
+      {/*  fieldName={"commandArgs"}*/}
+      {/*  model={ansibleStepModel}*/}
+      {/*  setModel={setAnsibleStepModel}*/}
+      {/*/>*/}
     </PipelineStepEditorPanelContainer>
   );
 }

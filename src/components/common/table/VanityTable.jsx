@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "dhx-suite-package/codebase/suite.css";
+import "@opsera/dhx-suite-package/codebase/suite.css";
 import TableBase from "components/common/table/TableBase";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";

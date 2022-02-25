@@ -63,13 +63,19 @@ function SfdcPipelineWizardSubmitSfdcFilesButton({pipelineWizardModel, setPipeli
   };
 
   const generateXml = async () => {
+    let generateXMLResponse = undefined;
     if (pipelineWizardModel.getData("fromGitTasks") === true) {
-      await sfdcPipelineActions.generateGitTaskXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+      generateXMLResponse = await sfdcPipelineActions.generateGitTaskXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
     }
     else {
-      await sfdcPipelineActions.generateSfdcPackageXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+      generateXMLResponse = await sfdcPipelineActions.generateSfdcPackageXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
     }
 
+    if(generateXMLResponse?.data?.status !== 200) {
+      toastContext.showInlineErrorMessage(generateXMLResponse?.data?.message);
+      return;
+    }
+    
     setPipelineWizardScreen(
       pipelineWizardModel.getData("unitTestSteps").length > 0
         ? PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR

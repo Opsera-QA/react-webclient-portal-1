@@ -1,26 +1,42 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { ResponsivePie } from "@nivo/pie";
 import config from "components/insights/charts/qa_metrics/manualQaTestPieChartConfig";
 import ModalLogs from "components/common/modal/modalLogs";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import {
-  defaultConfig, getColorByData,getColor, assignStandardColors,
-  shortenPieChartLegend, mainColor,
+  defaultConfig,
+  getColorByData,
+  getColor,
+  assignStandardColors,
+  shortenPieChartLegend,
+  mainColor,
 } from "../charts-views";
 import ChartTooltip from "../ChartTooltip";
 import { Col, Container, Row } from "react-bootstrap";
 import DataBlockWrapper from "../../../common/data_boxes/DataBlockWrapper";
+import TwoLineScoreDataBlock from "../../../common/metrics/score/TwoLineScoreDataBlock";
+import PercentageDataBlock from "../../../common/metrics/percentage/PercentageDataBlock";
+import { METRIC_QUALITY_LEVELS } from "../../../common/metrics/text/MetricTextBase";
+import NewPercentageDataBlock from "../../../common/metrics/percentage/NewPercentageDataBlock";
 
-function AdoptionPercentagePieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis, showSettingsToggle }) {
+function AdoptionPercentagePieChart({
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  setKpis,
+  showSettingsToggle,
+}) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [notesData, setNotesData] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -47,27 +63,31 @@ function AdoptionPercentagePieChart({ kpiConfiguration, setKpiConfiguration, das
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
+      let notes = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "notes")]?.value;
+      setNotesData(notes);
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
-      let dateRange = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "date")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "adoptionPercentage", kpiConfiguration, dashboardTags, null, null, dashboardOrgs, null, null, dateRange);
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "adoptionPercentage",
+        kpiConfiguration,
+        dashboardTags
+      );
       let dataObject = response?.data ? response?.data?.data[0]?.adoptionPercentage?.data : [];
       assignStandardColors(dataObject[0]?.pairs);
       shortenPieChartLegend(dataObject[0]?.pairs);
 
-
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
       }
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -80,37 +100,41 @@ function AdoptionPercentagePieChart({ kpiConfiguration, setKpiConfiguration, das
     }
 
     return (
-
-      <div className="new-chart mb-3" style={{height: "300px", display: "flex"}}>
+      <div className="new-chart mb-3" style={{ height: "300px", display: "flex" }}>
         <Container>
           <Row className="p-1">
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                <div>{metrics[0]?.executedTests}</div>
-              </div>
-              <div className="w-100 text-muted mb-1">No of Automated Test Cases Executed</div>
-            </div></Col>
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                { metrics[0]?.adoptionRate ?
-                  <div className ="red">{metrics[0]?.adoptionRate+ "%"}</div>
-                  : <div>{"N/A"}</div>}
-              </div>
-              <div className="w-100 text-muted mb-1">Adoption Rate</div>
-            </div></Col>
+            <Col lg={6} md={8}>
+              <TwoLineScoreDataBlock
+                className={"test-percentage"}
+                score={metrics[0]?.executedTests}
+                subtitle={"No of Automated Test Cases Executed"}
+              />
+            </Col>
+            <Col lg={6} md={8}>
+              <TwoLineScoreDataBlock
+                className={"test-percentage"}
+                score={metrics[0]?.manualTests}
+                subtitle={"No of Automated Test Cases Executed Manually"}
+              />
+            </Col>
           </Row>
-          <Row className="p-1">
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                <div>{metrics[0]?.manualTests}</div>
-              </div>
-              <div className="w-100 text-muted mb-1">No of Automated Test Cases Executed Manually</div>
-            </div></Col>
+          <Row className="p-1 text-center">
+            <Col lg={6} md={8}>
+              <NewPercentageDataBlock
+                className={"test-percentage"}
+                percentage={metrics[0]?.adoptionRate}
+                subtitle={"Adoption Percentage"}
+                qualityLevel={
+                  metrics[0]?.adoptionRate < 98 ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS
+                }
+                goal={"Goal: Adoption Percentage > 98%"}
+              />
+            </Col>
           </Row>
-          <Row className="p-1">
-                      <Col className="text-center">
-                        <small><span className="font-weight-bold">Goal:</span> Adoption Percentage = 100%</small>
-                      </Col>
+          <Row className="p-3">
+            <Col className="text-center">
+              <small> {notesData} </small>
+            </Col>
           </Row>
         </Container>
         <ResponsivePie
@@ -156,7 +180,6 @@ AdoptionPercentagePieChart.propTypes = {
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
   setKpis: PropTypes.func,
-  showSettingsToggle: PropTypes.bool,
 };
 
 export default AdoptionPercentagePieChart;

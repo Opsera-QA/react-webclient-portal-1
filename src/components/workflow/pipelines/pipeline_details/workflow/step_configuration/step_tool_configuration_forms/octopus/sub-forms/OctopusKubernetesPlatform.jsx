@@ -7,7 +7,7 @@ import RollbackToggleInput from "../input/RollbackToggleInput";
 import AzureRepoTagsSelectInput from "../input/AzureRepoTagsSelectInput";
 import TextInputBase from "../../../../../../../../common/inputs/text/TextInputBase";
 import OctopusSpecifyDepVarsToggle from "../input/OctopusSpecifyDepVarsToggle";
-import OctopusDeploymentVariables from "../input/OctopusDeploymentVariables";
+import OctopusCustomParametersInput from "../input/OctopusCustomParametersInput";
 function OctopusKubernetesPlatform({ dataObject, setDataObject, isLoading, plan, stepId }) {
 
   return (
@@ -52,12 +52,12 @@ function OctopusKubernetesPlatform({ dataObject, setDataObject, isLoading, plan,
           setDataObject={setDataObject}
           fieldName={"specifyDepVariables"}
         />
-        {dataObject && dataObject.getData("specifyDepVariables") && (
-          <OctopusDeploymentVariables
-            fieldName={"deploymentVariables"}
+        {dataObject && dataObject.getData("specifyDepVariables") && (          
+          <OctopusCustomParametersInput
+            fieldName={"customVariableList"}
             dataObject={dataObject}
             setDataObject={setDataObject}
-          />        
+          />          
         )}
       </>
     </>

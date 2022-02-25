@@ -11,7 +11,7 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import analyticsDataActions from "components/settings/analytics_data_entry/analytics-data-actions";
-import {analyticsDataMetadata} from "components/settings/analytics_data_entry/analytics-data-metadata";
+import {analyticsDataEntryMetadata} from "components/settings/analytics_data_entry/analyticsDataEntry.metadata";
 import AnalyticsDataEntryDetailPanel from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryDetailPanel";
 import AnalyticsDataEntryManagementSubNavigationBar
   from "components/settings/analytics_data_entry/AnalyticsDataEntryManagementSubNavigationBar";
@@ -79,7 +79,7 @@ function AnalyticsDataEntryDetailView() {
         const analyticsData = response?.data;
 
         if (isMounted.current === true && analyticsData) {
-          setAnalyticsDataEntry(new Model(analyticsData, analyticsDataMetadata, false));
+          setAnalyticsDataEntry(new Model(analyticsData, analyticsDataEntryMetadata, false));
           setCanDelete(meetsRequirements(ROLE_LEVELS.ADMINISTRATORS, userRoleAccess) || analyticsData.owner === user?._id);
         }
       }
@@ -112,7 +112,7 @@ function AnalyticsDataEntryDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"analyticsDataEntryDetailView"}
-      metadata={analyticsDataMetadata}
+      metadata={analyticsDataEntryMetadata}
       dataObject={analyticsDataEntry}
       isLoading={isLoading}
       actionBar={getActionBar()}

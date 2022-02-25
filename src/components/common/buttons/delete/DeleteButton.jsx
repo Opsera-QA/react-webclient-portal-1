@@ -39,6 +39,10 @@ function DeleteButton({deleteRecord, dataObject, disabled, size, icon, className
     return (`Delete ${dataObject.getType()}`);
   };
 
+  if (dataObject == null) {
+    return null;
+  }
+
   return (
     <div className={className}>
       <TooltipWrapper innerText={cannotBeUndone}>

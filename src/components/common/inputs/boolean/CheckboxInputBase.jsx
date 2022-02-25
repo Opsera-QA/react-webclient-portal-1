@@ -38,7 +38,11 @@ function CheckboxInputBase({fieldName, model, setModel, setDataFunction, disable
           updateValue(!model?.getData(fieldName));
         }}
       />
-      <InfoText field={field} errorMessage={null}/>
+      <InfoText
+        field={field}
+        model={model}
+        fieldName={fieldName}
+      />
     </InputContainer>
   );
 }

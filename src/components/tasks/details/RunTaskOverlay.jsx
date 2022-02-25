@@ -22,6 +22,8 @@ import OverlayPanelBodyContainer from "components/common/panels/detail_panel_con
 import {TASK_TYPES} from "components/tasks/task.types";
 import SfdcOrgSyncPrerunHelpDocumentation
   from "components/common/help/documentation/tasks/SfdcOrgSyncPrerunHelpDocumentation";
+import SfdcBulkMigrationPrerunHelpDocumentation
+  from "../../common/help/documentation/tasks/SfdcBulkMigrationPrerunHelpDocumentation";
 import azureAksClusterTaskConfigurationMetadata
   from "components/tasks/details/tasks/azure-cluster-creation/azure-cluster-metadata";
 import SalesforceOrganizationSyncTaskGitBranchSelectInput
@@ -29,6 +31,7 @@ import SalesforceOrganizationSyncTaskGitBranchSelectInput
 import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import {salesforceBulkMigrationTaskConfigurationMetadata} from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
+
 
 function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
   const [showHelp, setShowHelp] = useState(false);
@@ -104,22 +107,21 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
     );
   };
 
+  // TODO: This should be put inside the first step of Wizards.
   const getRunView = () => {
-    if (canEdit && taskModel?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_REPO) {
-      return (
-        <div style={{minHeight: "400px"}}>
-          <Row className={"m-3"}>
-            <Col lg={12}>
-              <SalesforceOrganizationSyncTaskGitBranchSelectInput
-                model={taskConfigurationModel}
-                setModel={setTaskConfigurationModel}
-                visible={taskConfigurationModel?.getData("isNewBranch") !== true}/>
-            </Col>
-            <Col lg={12}>
-              <SalesforceOrganizationSyncTaskNewBranchToggleInput model={taskConfigurationModel} setModel={setTaskConfigurationModel}/>
-            </Col>
-            {taskConfigurationModel?.getData("isNewBranch") &&
-            <>
+    const type = taskModel?.getData("type");
+
+    if (canEdit && [TASK_TYPES.SYNC_SALESFORCE_REPO, TASK_TYPES.SALESFORCE_BULK_MIGRATION].includes(type)) {
+      if (taskConfigurationModel?.getData("isNewBranch") === true) {
+        return (
+          <div>
+            <Row>
+              <Col lg={12}>
+                <SalesforceOrganizationSyncTaskNewBranchToggleInput
+                  model={taskConfigurationModel}
+                  setModel={setTaskConfigurationModel}
+                />
+              </Col>
               <Col lg={12}>
                 <SalesforceOrganizationSyncTaskGitBranchTextInput
                   fieldName={"gitBranch"}
@@ -134,8 +136,26 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
                   setModel={setTaskConfigurationModel}
                 />
               </Col>
-            </>
-            }
+            </Row>
+          </div>
+        );
+      }
+
+      return (
+        <div>
+          <Row>
+            <Col lg={12}>
+              <SalesforceOrganizationSyncTaskNewBranchToggleInput
+                model={taskConfigurationModel}
+                setModel={setTaskConfigurationModel}
+              />
+            </Col>
+            <Col lg={12}>
+              <SalesforceOrganizationSyncTaskGitBranchSelectInput
+                model={taskConfigurationModel}
+                setModel={setTaskConfigurationModel}
+              />
+            </Col>
           </Row>
         </div>
       );
@@ -147,6 +167,7 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
         return (<SfdcOrgSyncPrerunHelpDocumentation closeHelpPanel={() => setShowHelp(false)}/>);
       case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+        return (<SfdcBulkMigrationPrerunHelpDocumentation closeHelpPanel={() => setShowHelp(false)}/>);
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
@@ -178,8 +199,12 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
         setHelpIsShown={setShowHelp}
         hideCloseButton={true}
       >
-        <div className={"mb-3 mx-3"}>Do you want to run this Task: {taskModel?.getData("name")}?</div>
-        {getRunView()}
+        <div className={"mx-2 mb-2"}>
+          <div className={"mb-3"}>
+            Do you want to run this Task: {taskModel?.getData("name")}?
+          </div>
+          {getRunView()}
+        </div>
       </OverlayPanelBodyContainer>
     </ConfirmationOverlay>
   );

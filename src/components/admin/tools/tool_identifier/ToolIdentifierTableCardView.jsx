@@ -1,12 +1,9 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import TableCardView from "components/common/table/TableCardView";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import TaskVerticalTabContainer from "components/tasks/TaskVerticalTabContainer";
 import NewToolIdentifierOverlay from "components/admin/tools/tool_identifier/NewToolIdentifierOverlay";
 import ToolIdentifierTable from "components/admin/tools/tool_identifier/ToolIdentifierTable";
 import ToolIdentifierCardView from "components/admin/tools/tool_identifier/ToolIdentifierCardView";
@@ -22,7 +19,6 @@ function ToolIdentifierTableCardView(
     isMounted, taskMetadata
   }) {
   const toastContext = useContext(DialogToastContext);
-  const isTrue = useState(true);
 
   const getCardView = () => {
     return (
@@ -38,52 +34,22 @@ function ToolIdentifierTableCardView(
   const getTableView = () => {
     return (
       <ToolIdentifierTable
-        isMounted={isMounted}
         toolIdentifiers={toolIdentifiers}
         isLoading={isLoading}
-        loadData={loadData}
-        taskMetadata={taskMetadata}
-        taskFilterModel={toolIdentifierFilterModel}
-        setTaskFilterModel={setToolIdentifierFilterModel}
       />
     );
   };
 
 
   const getTableCardView = () => {
-    if (isTrue) {
-      return (
-        <TableCardView
-          filterDto={toolIdentifierFilterModel}
-          data={toolIdentifiers}
-          isLoading={isLoading}
-          loadData={loadData}
-          cardView={getCardView()}
-          tableView={getTableView()}
-        />
-      );
-    }
-
     return (
-      <Row className={"mx-0"}>
-        <Col sm={2} className={"px-0"}>
-          <TaskVerticalTabContainer
-            isLoading={isLoading}
-            loadData={loadData}
-            taskFilterModel={toolIdentifierFilterModel}
-          />
-        </Col>
-        <Col sm={10} className={"px-0"}>
-          <TableCardView
-            filterDto={toolIdentifierFilterModel}
-            data={toolIdentifiers}
-            isLoading={isLoading}
-            loadData={loadData}
-            cardView={getCardView()}
-            tableView={getTableView()}
-          />
-        </Col>
-      </Row>
+      <TableCardView
+        filterModel={toolIdentifierFilterModel}
+        data={toolIdentifiers}
+        isLoading={isLoading}
+        cardView={getCardView()}
+        tableView={getTableView()}
+      />
     );
   };
 

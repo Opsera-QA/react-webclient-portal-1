@@ -2,14 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faProjectDiagram} from "@fortawesome/pro-light-svg-icons";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
-const VAULT_SUPPORTED_TOOL_IDENTIFIERS = [
-  "argo",
+export const PROJECT_SUPPORTED_TOOL_IDENTIFIERS = [
+  toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO,
   "jira",
 ];
 
 function ToolProjectsTab({ toolModel, handleTabClick, activeTab }) {
-  if (!VAULT_SUPPORTED_TOOL_IDENTIFIERS.includes(toolModel?.getData("tool_identifier"))) {
+  if (!PROJECT_SUPPORTED_TOOL_IDENTIFIERS.includes(toolModel?.getData("tool_identifier"))) {
     return null;
   }
 

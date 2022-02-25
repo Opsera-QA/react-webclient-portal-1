@@ -1,0 +1,333 @@
+/* Item Field */
+.item-field .badge {
+    font-size: 13px;
+}
+
+.tag-badge, .metric-badge {
+    font-weight: normal;
+    background: #00a8e8;
+    color: white;
+    padding: 5px;
+}
+
+.item-field .generic-badge {
+    font-weight: normal;
+    background: #C7C3DD;
+}
+
+.item-field .group-badge {
+    font-weight: normal;
+    background: #E6E5E3;
+}
+
+.item-field .item-badge {
+    font-weight: normal;
+    background: #E6E5E3;
+}
+
+.item-field .filter-badge {
+    font-weight: normal;
+    background-color: #453191;
+    color: #fff;
+}
+
+.standard-badge {
+    font-weight: normal;
+    letter-spacing: 1px;
+    font-size: 13px;
+}
+
+.opsera-badge {
+    font-weight: normal;
+    letter-spacing: 1px;
+    font-size: 13px;
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+    font-family: 'Inter', sans-serif;
+}
+
+/* End Item Field */
+
+
+/* Role Access Input Styling */
+.role-access .group-badge {
+    font-weight: normal;
+    background: #E6E5E3;
+}
+
+.role-access .user-badge {
+    font-weight: normal;
+    background: #b2dbff;
+}
+
+.role-access .edit-button {
+    min-width: 100px;
+}
+
+/* End Role Access Input Styling */
+
+/* Group Membership Input Panel */
+.membership-list {
+    min-height: 370px;
+    max-height: 370px;
+    background-color: #E7E5ED;
+    list-style-type: none;
+    overflow-y: auto;
+    border-bottom: 1px solid #E6E5E3;
+}
+
+.membership-search {
+    width: 300px;
+}
+
+/* End Group Membership Input Panel Styling */
+
+/* Ensure dropdown does not get cut off. */
+
+/* Input Icon Styling */
+.view-details-icon {
+    margin-top: 2px;
+}
+/* End Input Icon Styling */
+
+/*TODO: This can probably be applied everywhere, but I don't want to break anything so in next release test all modals and change to
+   .modal instead of .modal-overflow
+*/
+.modal-overflow div.modal-dialog div.modal-content {
+    overflow: visible !important;
+}
+
+.rw-popup-container {
+    z-index: 1600 !important;
+}
+
+.dhx_tooltip {
+    z-index: 9999 !important;
+}
+
+/* End Select input styling */
+
+/* Summary Card Styling */
+.vertical-selection-card {
+    min-width: 200px;
+    width: 240px;
+}
+
+.vertical-selection-card .title-icon {
+    height: 92px;
+    max-width: 100%;
+}
+
+.vertical-selection-card .title-fa-icon, .title-fa-icon {
+    font-size: 75px;
+    margin-top: 15px;
+}
+
+.icon-image {
+    background-color: white;
+    border-radius: 0.25rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
+}
+
+.vertical-selection-card .small-title-icon {
+    margin-top: 30px;
+}
+
+.vertical-selection-card .jira-icon {
+    margin-top: 15%;
+    margin-left: 10%;
+    max-width: 75%;
+}
+
+.vertical-selection-card .sonarqube-icon {
+    margin-top: 30px;
+    max-width: 98%;
+}
+
+.vertical-selection-card .junit-icon {
+    margin-top: 10px;
+    margin-left: 15px;
+    max-width: 75%;
+}
+
+.vertical-selection-card .xunit-icon {
+    margin-top: 25px;
+    margin-left: 15px;
+    max-width: 80%;
+}
+
+.vertical-selection-card .teamcity-icon {
+    margin-top: 10px;
+    margin-left: 25px;
+    max-width: 65%;
+}
+
+.vertical-selection-card .twistlock-icon {
+    margin-top: 20px;
+    max-width: 98%;
+}
+
+.vertical-selection-card .slack-icon {
+    margin-top: 30px;
+    max-width: 98%;
+}
+
+.vertical-selection-card .selenium-icon {
+    margin-top: 20px;
+    max-width: 98%;
+}
+
+.vertical-selection-card .jenkins-icon {
+    margin-top: 10px;
+}
+
+.vertical-selection-card .bitbucket-icon {
+    margin-top: 10px;
+}
+
+.vertical-selection-card .wrench {
+    opacity: .8;
+}
+
+.vertical-selection-card .icon-card-title {
+    font-size: 13px;
+    color: #3D3B36;
+    font-weight: bold;
+}
+
+.vertical-selection-card .description-height {
+    min-height: 50px;
+    height: 100%;
+    /*max-height: 90px;*/
+}
+
+.vertical-selection-card .date-and-button {
+    min-height: 69px;
+}
+
+.tool-title-text {
+    font-family: 'Lato', sans-serif;
+    font-size: 35px;
+    font-weight: 300;
+    line-height: 37.5px;
+    white-space: nowrap;
+}
+
+/* End Summary Card Styling */
+
+
+/* Toggle Styling */
+.custom-switch .custom-control-label, input[type="checkbox" i] {
+    cursor: pointer !important;
+}
+
+.custom-control-input:disabled~.custom-control-label::before,
+.custom-control-input[disabled]~.custom-control-label::before,
+.custom-control-input:disabled~.custom-control-label::after,
+.custom-control-input[disabled]~.custom-control-label::after,
+input[disabled] {
+    cursor: not-allowed !important;
+}
+
+.toggle-alignment {
+    margin-top: .9rem;
+}
+
+.toggle-label-alignment {
+    margin-top: 1px;
+}
+
+/* End Toggle Styling*/
+
+/* Radio Button Input Styling */
+.disabled-radio-option {
+    opacity: .7;
+}
+
+/* End Radio Button Input Styling */
+
+.date-range-header {
+    width: 332px;
+}
+
+/* Custom Badge styling */
+.custom-badge-field {
+    list-style: none;
+}
+
+.custom-badge {
+    background: #eee;
+    border-radius: 3px 0 0 3px;
+    display: inline-block;
+    font-size: small;
+    height: 26px;
+    line-height: 26px;
+    padding: 0 10px 0 5px;
+    position: relative;
+    margin: 0 5px 5px 0;
+}
+
+.custom-badge::after {
+    background: #fff;
+    border-bottom: 13px solid transparent;
+    border-left: 10px solid #eee;
+    border-top: 13px solid transparent;
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.custom-badge-field .subscribed-tag-badge {
+    color: #fff;
+    font-weight: normal;
+    background-color: #00AA84;
+    border-color: #019171;
+}
+
+.custom-badge-field .subscribed-tag-badge::after {
+    border-left: 10px solid #00AA84;
+}
+/* End Custom Badge styling */
+
+.input-search-filter {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.text-input {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.step-configuration-summary {
+    color: #334152;
+}
+
+.vertical-tab-text {
+    font-size: 1.25em;
+}
+
+/* Error State CSS */
+.select-input-error {
+    box-shadow: 0 0 3px #CC0000;
+    border-radius: 5px;
+}
+
+/* End Error State CSS */

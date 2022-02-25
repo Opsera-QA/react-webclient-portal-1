@@ -6,9 +6,9 @@ import RoleRestrictedSalesforceConfiguratorToolSelectInput
 function SalesforceStepToolSelectInput({dataObject, setDataObject, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
-    newDataObject.setData("sfdcToolId", selectedOption.id);
-    newDataObject.setData("accountUsername",selectedOption.configuration.accountUsername);
-    newDataObject.setData("sfdcToolName", selectedOption.name);
+    newDataObject.setData("sfdcToolId", selectedOption?._id);
+    newDataObject.setData("accountUsername",selectedOption?.configuration?.accountUsername);
+    newDataObject.setData("sfdcToolName", selectedOption?.name);
     setDataObject({...newDataObject});
   };
 

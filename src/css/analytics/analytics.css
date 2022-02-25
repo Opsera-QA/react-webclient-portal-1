@@ -1,0 +1,75 @@
+/* Data Block Styling */
+.data-block-focal-text {
+    font-size: 2.43rem;
+    font-weight: 500;
+    font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: 1px;
+    display: inline-block;
+}
+
+@media (min-width: 1250px) {
+    .data-block-focal-text {
+        font-size: 2.43rem;
+    }
+}
+
+@media (max-width: 1250px) {
+    .data-block-focal-text {
+        font-size: 2.43rem;
+    }
+}
+
+@media (max-width: 1000px) {
+    .data-block-focal-text {
+        font-size: 2.25rem;
+    }
+}
+
+@media (max-width: 800px) {
+    .data-block-focal-text {
+        font-size: 2rem;
+    }
+}
+
+
+.data-block-container, .data-block-box {
+    background: white;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    /*border: 1px solid #00a8e8;*/
+    border-radius: 6px;
+}
+
+.data-block-icon {
+    width: 1.75rem;
+    max-width: 1.75rem;
+    font-size: 1.1rem;
+    z-index: 500;
+}
+
+/* End Data Block Styling */
+
+/* Marketplace Chart Card Styling */
+.marketplace-chart-card {
+}
+
+
+/* End Marketplace Chart Card Styling */
+
+/* Insights Card Styling */
+.insight-card-title {
+    background-color: #00a8e8;
+    color: #fff;
+}
+
+.insight-highlight {
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.insight-detail-label > label, .insight-detail-label > div > label {
+    min-width: 50px;
+}
+
+/* End Insights Card Styling */

@@ -1,7 +1,7 @@
 import baseActions from "utils/actionsBase";
 import {axiosApiService} from "api/apiService";
-import pipelineActivityActions
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-actions";
+import pipelineActivityLogsActions
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineActivityLogs.actions";
 import {parsePackageXml} from "components/common/helpers/code-helpers";
 
 const sfdcPipelineActions = {};
@@ -331,6 +331,7 @@ sfdcPipelineActions.createNewRecordV2 = async (getAccessToken, cancelTokenSource
     sfdcDestToolId: pipelineWizardModel.getData("sfdcDestToolId"),
     isOrgToOrg: pipelineWizardModel.getData("isOrgToOrg") === true,
     isProfiles: pipelineWizardModel.getData("isProfiles") === true,
+    isTranslations: pipelineWizardModel.getData("isTranslations") === true,
     fromGitTasks: pipelineWizardModel.getData("fromGitTasks") === true,
     runCount: pipelineWizardModel.getData("run_count"),
   };
@@ -381,6 +382,7 @@ sfdcPipelineActions.setXmlFileContentsV2 = async (getAccessToken, cancelTokenSou
   const postBody = {
     packageXml: pipelineWizardModel?.getData("xmlFileContent"),
     excludeDependencies: pipelineWizardModel.getData("includeDependencies") === false,
+    isTranslations: pipelineWizardModel.getData("isTranslations"),
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/set_xml_file_contents`;
@@ -391,6 +393,7 @@ sfdcPipelineActions.setUploadedCsvFileListV2 = async (getAccessToken, cancelToke
   const postBody = {
     selectedFileList: pipelineWizardModel?.getData("csvFileContent"),
     excludeDependencies: pipelineWizardModel.getData("includeDependencies") === false,
+    isTranslations: pipelineWizardModel.getData("isTranslations"),
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/set_csv_file_contents`;
@@ -447,21 +450,21 @@ sfdcPipelineActions.getComponentNameCountListV2 = async (getAccessToken, cancelT
 };
 
 sfdcPipelineActions.getPackageXmlFromRun = async (getAccessToken, cancelTokenSource, pipelineId, stepId, runNumber) => {
-  const response = await pipelineActivityActions.getPipelineActivityLogsByRunNumber(getAccessToken, cancelTokenSource, pipelineId, undefined, runNumber, undefined, "console output");
+  const response = await pipelineActivityLogsActions.getPipelineActivityLogsByRunNumber(getAccessToken, cancelTokenSource, pipelineId, undefined, runNumber, undefined, "console output");
   const logs = response?.data?.data;
 
   if (Array.isArray(logs) && logs.length > 0) {
     for (let i = 0; i < logs.length; i++) {
-      try {
-        const packageXml = parsePackageXml(logs[i]);
+     try {
+       const packageXml = parsePackageXml(logs[i]);
 
-        if (packageXml != null) {
-          return packageXml;
-        }
-      }
-      catch (error) {
-        console.error(error);
-      }
+       if (packageXml != null) {
+         return packageXml;
+       }
+     }
+     catch (error) {
+       console.error(error);
+     }
     }
   }
 

@@ -5,18 +5,53 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import {errorHelpers, parseError} from "components/common/helpers/error-helpers";
 
 function SelectInputBase(
   {
-    fieldName, dataObject, setDataObject, groupBy,
-    selectOptions, valueField, textField, placeholderText,
-    setDataFunction, busy, disabled, clearDataFunction,
-    showClearValueButton, errorMessage, getCurrentValue,
-    showLabel, className, onSearch, requireClearDataConfirmation,
-    clearDataDetails, linkTooltipText, detailViewLink, infoOverlay, linkIcon,
-    ellipsisTooltipText, lenientClearValueButton,
+    fieldName,
+    dataObject,
+    setDataObject,
+    groupBy,
+    selectOptions,
+    valueField,
+    textField,
+    placeholderText,
+    setDataFunction,
+    busy,
+    disabled,
+    clearDataFunction,
+    showClearValueButton,
+    errorMessage, // TODO: deprecate, pass in error instead
+    getCurrentValue,
+    showLabel,
+    className,
+    onSearchFunction,
+    requireClearDataConfirmation,
+    clearDataDetails,
+    linkTooltipText,
+    detailViewLink,
+    infoOverlay,
+    linkIcon,
+    ellipsisTooltipText,
+    lenientClearValueButton,
+    error,
+    singularTopic,
+    pluralTopic,
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
+  const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
+  const [internalErrorMessage, setInternalErrorMessage] = useState("");
+
+  useEffect(() => {
+    setInternalErrorMessage("");
+    setInternalPlaceholderText("");
+
+    if (error) {
+      setInternalPlaceholderText(errorHelpers.constructApiResponseErrorPlaceholderText(pluralTopic));
+      setInternalErrorMessage(errorHelpers.parseApiErrorForInfoText(pluralTopic, error));
+    }
+  }, [error]);
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
@@ -62,6 +97,32 @@ function SelectInputBase(
     return dataObject?.getData(field.id);
   };
 
+  const getErrorMessage = () => {
+    if (hasStringValue(internalErrorMessage) === true) {
+      return internalErrorMessage;
+    }
+
+    if (hasStringValue(errorMessage) === true) {
+      return errorMessage;
+    }
+  };
+
+  const getPlaceholderText = () => {
+    if (hasStringValue(internalPlaceholderText) === true) {
+      return internalPlaceholderText;
+    }
+
+    if (hasStringValue(placeholderText) === true) {
+      return placeholderText;
+    }
+
+    if (hasStringValue(singularTopic) === true) {
+      return `Select ${singularTopic}`;
+    }
+
+    return "Select One";
+  };
+
   if (field == null) {
     return null;
   }
@@ -82,19 +143,25 @@ function SelectInputBase(
         ellipsisTooltipText={ellipsisTooltipText}
       />
       <StandaloneSelectInput
-        hasErrorState={hasStringValue(errorMessage) === true}
+        hasErrorState={hasStringValue(getErrorMessage()) === true}
         selectOptions={selectOptions}
         valueField={valueField}
         textField={textField}
         groupBy={groupBy}
         value={findCurrentValue()}
         busy={busy}
-        placeholderText={placeholderText}
+        placeholderText={getPlaceholderText()}
         setDataFunction={(newValue) => updateValue(newValue)}
         disabled={disabled}
-        onSearch={onSearch}
+        onSearchFunction={onSearchFunction}
       />
-      <InfoText field={field} errorMessage={errorMessage} />
+      <InfoText
+        model={dataObject}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={getErrorMessage()}
+        hideRegexDefinitionText={true}
+      />
     </InputContainer>
   );
 }
@@ -126,7 +193,7 @@ SelectInputBase.propTypes = {
   getCurrentValue: PropTypes.func,
   showLabel: PropTypes.bool,
   className: PropTypes.string,
-  onSearch: PropTypes.func,
+  onSearchFunction: PropTypes.func,
   requireClearDataConfirmation: PropTypes.bool,
   clearDataDetails: PropTypes.any,
   linkTooltipText: PropTypes.string,
@@ -135,12 +202,14 @@ SelectInputBase.propTypes = {
   linkIcon: PropTypes.object,
   ellipsisTooltipText: PropTypes.string,
   lenientClearValueButton: PropTypes.bool,
+  error: PropTypes.any,
+  singularTopic: PropTypes.string,
+  pluralTopic: PropTypes.string,
 };
 
 SelectInputBase.defaultProps = {
   showClearValueButton: true,
   className: "custom-select-input my-2",
-  placeholderText: "Select One"
 };
 
 export default SelectInputBase;

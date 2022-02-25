@@ -18,6 +18,7 @@ function ToolIdentifierTable({toolIdentifiers, isLoading}) {
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "identifier")),
       getLimitedTableTextColumn(getField(fields, "description"), 100),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableBooleanIconColumn(getField(fields, "active")),

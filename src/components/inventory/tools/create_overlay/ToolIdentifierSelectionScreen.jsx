@@ -8,14 +8,17 @@ import {faTools} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import ToolIdentifierSelectionCardView from "components/admin/tools/tool_identifier/ToolIdentifierSelectionCardView";
 import toolIdentifierMetadata from "components/admin/tools/tool_identifier/tool-identifier-metadata";
-import CloseButton from "components/common/buttons/CloseButton";
-import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
+import ToolFilterModel from "components/inventory/tools/tool.filter.model";
+import TableCardView from "components/common/table/TableCardView";
+import {hasStringValue, stringIncludesValue} from "components/common/helpers/string-helpers";
+import ToolIdentifierSelectionTable from "components/admin/tools/tool_identifier/ToolIdentifierSelectionTable";
 
 function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
+  const [toolIdentifierFilterModel, setToolIdentifierFilterModel] = useState(new ToolFilterModel());
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -80,11 +83,31 @@ function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
     setToolModel({...newModel});
   };
 
+  const getFilteredData = () => {
+    const searchTerm = toolIdentifierFilterModel?.getFilterValue("search");
+
+    if (hasStringValue(searchTerm)) {
+      return toolIdentifiers.filter((toolIdentifier) => {
+        const name = toolIdentifier?.name;
+        const identifier = toolIdentifier?.identifier;
+        const description = toolIdentifier?.description;
+
+        return (
+             stringIncludesValue(name, searchTerm)
+          || stringIncludesValue(identifier, searchTerm)
+          || stringIncludesValue(description, searchTerm)
+        );
+      });
+    }
+
+    return toolIdentifiers;
+  };
+
   const getCardView = () => {
     return (
-      <div className={"scroll-y full-screen-overlay-selection-container"}>
+      <div className={"scroll-y full-screen-overlay-selection-container hide-x-overflow"}>
         <ToolIdentifierSelectionCardView
-          toolIdentifiers={toolIdentifiers}
+          toolIdentifiers={getFilteredData()}
           setDataFunction={setDataFunction}
           toolIdentifierMetadata={toolIdentifierMetadata}
           isLoading={isLoading}
@@ -94,11 +117,42 @@ function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
     );
   };
 
+  const getTableView = () => {
+    return (
+      <div className={"scroll-y full-screen-overlay-selection-container hide-x-overflow"}>
+        <ToolIdentifierSelectionTable
+          isMounted={isMounted}
+          toolIdentifiers={getFilteredData()}
+          isLoading={isLoading}
+          loadData={loadData}
+          setDataFunction={setDataFunction}
+        />
+      </div>
+    );
+  };
+
+
+  const getTableCardView = () => {
+    return (
+      <TableCardView
+        filterModel={toolIdentifierFilterModel}
+        data={toolIdentifiers}
+        isLoading={isLoading}
+        cardView={getCardView()}
+        tableView={getTableView()}
+      />
+    );
+  };
+
   return (
     <FilterContainer
       loadData={loadData}
+      filterDto={toolIdentifierFilterModel}
+      setFilterDto={setToolIdentifierFilterModel}
+      supportClientSideSearching={true}
+      supportViewToggle={true}
       isLoading={isLoading}
-      body={getCardView()}
+      body={getTableCardView()}
       metadata={toolIdentifierMetadata}
       titleIcon={faTools}
       title={"Select Which Tool You Would Like to Create"}

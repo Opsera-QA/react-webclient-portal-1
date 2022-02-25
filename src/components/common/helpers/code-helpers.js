@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export const formatXml = (xml) => {
   const xmlDoc = new DOMParser().parseFromString(xml, 'application/xml');
   const xsltDoc = new DOMParser().parseFromString([
@@ -64,4 +66,8 @@ export const _xmlFormattingHelper = (data) => {
   } catch (error) {
     return data;
   }
+};
+
+export const lodashClone = (objectToClone) => {
+  _.cloneDeep(objectToClone);
 };

@@ -1,8 +1,10 @@
 import baseActions from "../../../../../../../../utils/actionsBase";
 
+// TODO: This should be cleaned up. These routes should just accept the toolID and the application ID and do the heavy lifting on node
 const aksStepActions = {};
 
 aksStepActions.getAzureClusters = async (getAccessToken, cancelTokenSource, config, applicationData) => {
+  const apiUrl = `tools/azure/management/clusterNames`;
   const cfg = config?.configuration;
   const owner = config?.owner;
   const postBody = {
@@ -14,11 +16,12 @@ aksStepActions.getAzureClusters = async (getAccessToken, cancelTokenSource, conf
     "resource": applicationData?.resource,
     "type": "v2"
   };
-  const apiURL = `tools/azure/management/clusterNames`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-aksStepActions.getAzureResourceGroups = async (getAccessToken, cancelTokenSource, config, applicationData) => {
+aksStepActions.getAzureResourceGroups = async (getAccessToken, cancelTokenSource, config, applicationData, clusterName) => {
+  const apiUrl = `tools/azure/management/resourcebycluster`;
   const cfg = config?.configuration;
   const owner = config?.owner;
   const postBody = {
@@ -28,10 +31,10 @@ aksStepActions.getAzureResourceGroups = async (getAccessToken, cancelTokenSource
     "tenantId": cfg?.azureTenantId,
     "subscriptionId": cfg?.azureSubscriptionId,
     "resource": applicationData?.resource,
-    "type": "v2"
+    "cluster": clusterName
   };
-  const apiURL = `tools/azure/management/resourceGroups`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 export default aksStepActions;

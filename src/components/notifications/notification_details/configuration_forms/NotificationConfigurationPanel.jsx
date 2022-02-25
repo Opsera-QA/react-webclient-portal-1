@@ -5,11 +5,11 @@ import MetricNotificationConfigurationPanel
 import PipelineNotificationEditorPanel
   from "components/notifications/notification_details/configuration_forms/pipeline/PipelineNotificationConfigurationPanel";
 import NotificationTypeSelectInput
-  from "components/common/list_of_values_input/notifications/NotificationTypeSelectInput";
+  from "components/common/list_of_values_input/notifications/type/NotificationTypeSelectInput";
 
 function NotificationConfigurationPanel({ notificationDataDto, setNotificationDataDto, notificationConfigurationData, setNotificationConfigurationData }) {
   const getConfigurationPanel = () => {
-    switch (notificationDataDto.getData("type")) {
+    switch (notificationDataDto?.getData("type")) {
       case "metric":
         return (
           <MetricNotificationConfigurationPanel
@@ -44,7 +44,11 @@ function NotificationConfigurationPanel({ notificationDataDto, setNotificationDa
   return (
     <div>
       <div>
-        <NotificationTypeSelectInput setDataFunction={handleNotificationTypeChange} dataObject={notificationDataDto} setDataObject={setNotificationDataDto} />
+        <NotificationTypeSelectInput
+          setDataFunction={handleNotificationTypeChange}
+          model={notificationDataDto}
+          setModel={setNotificationDataDto}
+        />
       </div>
       {getConfigurationPanel()}
     </div>

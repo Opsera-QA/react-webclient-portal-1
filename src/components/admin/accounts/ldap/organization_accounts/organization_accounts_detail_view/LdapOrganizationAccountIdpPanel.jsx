@@ -21,10 +21,8 @@ function LdapOrganizationAccountIdpPanel({ ldapOrganizationAccountData, loadData
   const initializeData = async () => {
     const {ldap} = currentUser;
     const userRoleAccess = await setAccessRoles(currentUser);
-    let authorizedIdpActions = await accountsActions.getAllowedIdpAccountActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-    setAuthorizedIdpActions(authorizedIdpActions);
-    // let authorizedDepartmentActions = await accountsActions.getAllowedDepartmentActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-    // setAuthorizedDepartmentActions(authorizedDepartmentActions);
+    // let authorizedIdpActions = await accountsActions.getAllowedIdpAccountActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
+    // setAuthorizedIdpActions(authorizedIdpActions);
     //
     // if (authorizedDepartmentActions?.includes("get_department_details")) {
     //   await loadDepartments();

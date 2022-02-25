@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import SiteNotificationEditorPanel
-  from "components/admin/site_notifications/site_notification_detail_view/SiteNotificationEditorPanel";
+  from "components/admin/site_notifications/details/SiteNotificationEditorPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faSitemap} from "@fortawesome/pro-light-svg-icons";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
-
 
 function SiteNotificationManagerDetailPanel({ siteWideNotificationData, setSiteWideNotificationData }) {
   const [activeTab, setActiveTab] = useState("site");

@@ -13,7 +13,7 @@ function WorkflowSubNavigationBar({currentTab}) {
 
     switch (tabSelection) {
       case "catalog":
-        history.push(`/workflow/catalog`);
+        history.push(`/workflow/catalog/library`);
         return;
       case "pipelines":
         history.push(`/workflow/`);

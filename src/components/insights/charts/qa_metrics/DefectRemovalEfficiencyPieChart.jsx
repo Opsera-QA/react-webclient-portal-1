@@ -1,19 +1,23 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { ResponsivePie } from "@nivo/pie";
 import config from "components/insights/charts/qa_metrics/defectRemovalEfficiencyPieChartConfig";
 import ModalLogs from "components/common/modal/modalLogs";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import {
-  defaultConfig, getColorByData, assignStandardColors,
-  shortenPieChartLegend
-} from "../charts-views";
+import { defaultConfig, getColorByData, assignStandardColors, shortenPieChartLegend } from "../charts-views";
 import { Col, Container, Row } from "react-bootstrap";
 
-function DefectRemovalEfficiencyPieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis , showSettingsToggle}) {
+function DefectRemovalEfficiencyPieChart({
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  setKpis,
+  showSettingsToggle,
+}) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -46,10 +50,21 @@ function DefectRemovalEfficiencyPieChart({ kpiConfiguration, setKpiConfiguration
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
-      let dateRange = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "date")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "defectRemovalEfficiency", kpiConfiguration, dashboardTags, null, null, dashboardOrgs, null, null, dateRange);      
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "defectRemovalEfficiency",
+        kpiConfiguration,
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
+      );
       let dataObject = response?.data ? response?.data?.data[0]?.defectRemovalEfficiencyData?.data : [];
       assignStandardColors(dataObject[0]?.pairs);
       shortenPieChartLegend(dataObject[0]?.pairs);
@@ -57,14 +72,12 @@ function DefectRemovalEfficiencyPieChart({ kpiConfiguration, setKpiConfiguration
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
       }
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -77,42 +90,53 @@ function DefectRemovalEfficiencyPieChart({ kpiConfiguration, setKpiConfiguration
     }
 
     return (
-
-      <div className="new-chart mb-3" style={{height: "300px", display: "flex"}}>
+      <div className="new-chart mb-3" style={{ height: "300px", display: "flex" }}>
         <Container>
           <Row className="p-1">
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                <div>{metrics[0]?.testingPhaseDefects}</div>
+            <Col>
+              <div className="metric-box text-center">
+                <div className="box-metric">
+                  <div>{metrics[0]?.testingPhaseDefects}</div>
+                </div>
+                <div className="w-100 text-muted mb-1">Defects in Testing Phase</div>
               </div>
-              <div className="w-100 text-muted mb-1">Defects in Testing Phase</div>
-            </div></Col>
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                { metrics[0]?.dre ?
-                  <div className ={metrics[0]?.dre >= 90 ? 'green' : 'red'}>{metrics[0]?.dre+ "%"}</div>
-                  : <div>{"N/A"}</div>}
+            </Col>
+            <Col>
+              <div className="metric-box text-center">
+                <div className="box-metric">
+                  {metrics[0]?.dre ? (
+                    <div className={metrics[0]?.dre >= 90 ? "green" : "red"}>{metrics[0]?.dre + "%"}</div>
+                  ) : (
+                    <div>{"N/A"}</div>
+                  )}
+                </div>
+                <div className="w-100 text-muted mb-1">Defect Removal Efficiency</div>
               </div>
-              <div className="w-100 text-muted mb-1">Defect Removal Efficiency</div>
-            </div></Col>
+            </Col>
           </Row>
           <Row className="p-1">
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                <div>{metrics[0]?.uatDefects}</div>
+            <Col>
+              <div className="metric-box text-center">
+                <div className="box-metric">
+                  <div>{metrics[0]?.uatDefects}</div>
+                </div>
+                <div className="w-100 text-muted mb-1">Defects in UAT</div>
               </div>
-              <div className="w-100 text-muted mb-1">Defects in UAT</div>
-            </div></Col>
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                <div>{metrics[0]?.postProductionDefects}</div>
+            </Col>
+            <Col>
+              <div className="metric-box text-center">
+                <div className="box-metric">
+                  <div>{metrics[0]?.postProductionDefects}</div>
+                </div>
+                <div className="w-100 text-muted mb-1">Defects in Post Production</div>
               </div>
-              <div className="w-100 text-muted mb-1">Defects in Post Production</div>
-            </div></Col>
+            </Col>
           </Row>
           <Row className="p-1">
-            <Col className="text-center">            
-                <small><span className="font-weight-bold">Goal:</span> Defect Removal Efficiency &gt; 90%</small>
+            <Col className="text-center">
+              <small>
+                <span className="font-weight-bold">Goal:</span> Defect Removal Efficiency &gt; 90%
+              </small>
             </Col>
           </Row>
         </Container>
@@ -159,8 +183,6 @@ DefectRemovalEfficiencyPieChart.propTypes = {
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
   setKpis: PropTypes.func,
-  showSettingsToggle: PropTypes.bool,
-
 };
 
 export default DefectRemovalEfficiencyPieChart;

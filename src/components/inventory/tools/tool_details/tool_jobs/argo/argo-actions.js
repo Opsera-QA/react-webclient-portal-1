@@ -97,4 +97,57 @@ argoActions.deleteArgoProject = async (getAccessToken, cancelTokenSource, toolId
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+argoActions.createArgoCluster = async (getAccessToken, cancelTokenSource, toolId, argoClusterModel) => {
+  const apiUrl = `/tools/${toolId}/argo/v2/clusters/create`;
+  const postBody = {
+    ...argoClusterModel.getPersistData()
+  };
+  return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+argoActions.deleteArgoCluster = async (getAccessToken, cancelTokenSource, toolId, argoClusterModel) => {
+  const apiUrl = `/tools/${toolId}/argo/v2/clusters/delete`;
+  const postBody = {
+    clusterName: argoClusterModel?.getData("clusterName"),
+    server: argoClusterModel?.getData("server"),
+    platform: argoClusterModel?.getData("platform"),
+    platformToolId: argoClusterModel?.getData("platformToolId"),
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+argoActions.getAwsEksClusters = async (getAccessToken, cancelTokenSource, toolId, clusterType) => {
+  let urlParams = {
+    toolId: toolId
+  };
+  const apiUrl = `/tools/aws/v2/eks/clusters`;
+  let response = await baseActions.apiPostCallV2(getAccessToken,cancelTokenSource, apiUrl, urlParams);
+  if (response && response.status === 200) {
+    return response.data;
+  }
+  return [];
+};
+
+argoActions.getIamAwsClusters = async (getAccessToken, cancelTokenSource, toolId, awsIamRole, awsIamRoleName) => {
+  let postBody = {
+    toolId: toolId,
+    roleArn: awsIamRole,
+    roleSessionName: awsIamRoleName
+  };
+  const apiUrl = `/tools/aws/v2/eks/clusters/iamrole`;
+  let response = await baseActions.apiPostCallV2(getAccessToken,cancelTokenSource, apiUrl, postBody);
+  if (response && response.status === 200) {
+    return response.data;
+  }
+  return [];
+};
+
+argoActions.getIAMRoles = async (getAccessToken, cancelTokenSource, awsToolId) => {
+  let urlParams = {
+    toolId: awsToolId
+  };
+  const apiUrl = `/tools/aws/v2/IAMRoles`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 export default argoActions;

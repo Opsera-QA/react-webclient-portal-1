@@ -13,7 +13,7 @@ function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData, setActiveTab }
   }
 
   return (
-    <SummaryPanelContainer setActiveTab={setActiveTab}>
+    <SummaryPanelContainer setActiveTab={setActiveTab} className={"mx-2 mt-2"}>
       <Row className={"mb-2"}>
         <Col lg={6}>
           <TextFieldBase dataObject={ldapGroupData} fieldName={"name"}/>

@@ -129,6 +129,7 @@ function GitlabPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        tableChart={true}
       />
       <ModalLogs
         header="Gitlab Pending Merge Requests"

@@ -1,152 +1,150 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../../../../../contexts/AuthContext";
-import { DialogToastContext } from "../../../../../../../contexts/DialogToastContext";
-import LoadingDialog from "../../../../../../common/status_notifications/loading";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import JenkinsAccountServiceSelectInput from "./inputs/JenkinsAccountServiceSelectInput";
 import JenkinsAccountToolSelectInput from "./inputs/JenkinsAccountToolSelectInput";
-import TextInputBase from "../../../../../../common/inputs/text/TextInputBase";
-import jenkinsAccountActions from "./jenkins-accounts-actions";
-import DeleteModal from "../../../../../../common/modal/DeleteModal";
-import { Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import SaveButtonBase from "../../../../../../common/buttons/saving/SaveButtonBase";
-import EditWarningModalToolRegistry from "../../../../../../common/modal/EditWarningModalToolRegistry";
+import StandaloneDeleteButtonWithConfirmationModal
+  from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import LoadingDialog from "components/common/status_notifications/loading";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import IconBase from "components/common/icons/IconBase";
+import jenkinsToolAccountActions
+  from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccounts.actions";
+import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
+import {AuthContext} from "contexts/AuthContext";
+import axios from "axios";
 
-function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData, setJenkinsAccountData, handleClose, credentialId }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
+function JenkinsAccountEditorPanel(
+  {
+    toolId,
+    jenkinsAccountData,
+    setJenkinsAccountData,
+    closePanelFunction,
+  }) {
+  const {getAccessToken} = useContext(AuthContext);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [toolId]);
 
   const createJenkinsAccount = async () => {
-    try {
-      await jenkinsAccountActions.createJenkinsAccount(jenkinsAccountData, toolData, getAccessToken);
-      toastContext.showCreateSuccessResultDialog("Account");
-      handleClose();
-    } catch (error) {
-      toastContext.showCreateFailureResultDialog("Account", error);
-    }
-  };
-
-  const updateApplicationCaller= async () => {
-    setShowEditModal(true);
-  };
-
-  const updateJenkinsAccount = async () => {
-    return await jenkinsAccountActions.createJenkinsAccount(jenkinsAccountData, toolData, getAccessToken);
+    const response = await jenkinsToolAccountActions.createJenkinsAccountV2(getAccessToken, cancelTokenSource, toolId, jenkinsAccountData);
+    closePanelFunction();
+    return response;
   };
 
   const deleteJenkinsAccount = async () => {
-    try {
-      await jenkinsAccountActions.deleteJenkinsAccount(jenkinsAccountData, toolData, getAccessToken);
-      toastContext.showDeleteSuccessResultDialog("Account");
-      handleClose();
-    } catch (error) {
-      toastContext.showDeleteFailureResultDialog("Account", error);
+    const response = await jenkinsToolAccountActions.deleteJenkinsAccountV2(getAccessToken, cancelTokenSource, toolId, jenkinsAccountData);
+    closePanelFunction();
+    return response;
+  };
+
+  const getDeleteButton = () => {
+    if (jenkinsAccountData?.isNew() === false) {
+      return (
+        <StandaloneDeleteButtonWithConfirmationModal
+          model={jenkinsAccountData}
+          deleteDataFunction={deleteJenkinsAccount}
+          handleCloseFunction={closePanelFunction}
+        />
+      );
+    }
+  };
+
+  const getEditWarning = () => {
+    if (jenkinsAccountData?.isNew() === false) {
+      return (
+        <Row>
+          <Col sm={1}>
+            <div className="mt-2">
+              <IconBase icon={faExclamationTriangle} size={"lg"}/>
+            </div>
+          </Col>
+          <Col sm={11}>
+            <div>Editing this Account Credential does not change the configuration in any Pipelines.</div>
+            <div>Visit the <strong>Usage</strong> tab to view a list of Pipelines that require attention.</div>
+          </Col>
+        </Row>
+      );
     }
   };
 
   if (jenkinsAccountData == null) {
-    return <LoadingDialog size="sm" />;
+    return <LoadingDialog size="sm"/>;
   }
 
   return (
-    <>
-      <div className="scroll-y full-height">
-        <Row>
-          <Col lg={12}>
-            <JenkinsAccountServiceSelectInput
-              dataObject={jenkinsAccountData}
-              setDataObject={setJenkinsAccountData}
-              disabled={
-                (credentialId && jenkinsAccountData && !jenkinsAccountData.getData("credentialsId")) ||
-                (!credentialId && jenkinsAccountData && jenkinsAccountData.getData("toolId"))
-              }
-            />
-          </Col>
-          <Col lg={12}>
-            <JenkinsAccountToolSelectInput
-              model={jenkinsAccountData}
-              setModel={setJenkinsAccountData}
-              disabled={
-                (credentialId && jenkinsAccountData && !jenkinsAccountData.getData("credentialsId")) ||
-                (!credentialId && jenkinsAccountData && jenkinsAccountData.getData("toolId"))
-              }
-            />
-          </Col>
-          <Col lg={12}>
-            <TextInputBase
-              fieldName={"credentialsId"}
-              dataObject={jenkinsAccountData}
-              setDataObject={setJenkinsAccountData}
-              disabled={
-                credentialId
-                  ? true
-                  : false
-              }
-            />
-          </Col>
-          <Col lg={12}>
-            <TextInputBase
-              fieldName={"credentialsDescription"}
-              dataObject={jenkinsAccountData}
-              setDataObject={setJenkinsAccountData}
-              disabled={
-                credentialId
-                  ? true
-                  : false
-              }
-            />
-          </Col>
-        </Row>
-        <Row>
-          {credentialId && (
-            <div className="mr-auto mt-3 px-3">
-              <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>
-                <FontAwesomeIcon icon={faTrash} className="danger-red" /> Delete Account
-              </Button>
-              <br />
-            </div>
-          )}
-          <div className="ml-auto mt-3 px-3">
-            <SaveButtonBase
-              updateRecord={credentialId ? updateApplicationCaller : createJenkinsAccount}
-              setRecordDto={setJenkinsAccountData}
-              setData={setJenkinsAccountData}
-              createRecord={createJenkinsAccount}
-              recordDto={jenkinsAccountData}
-              handleClose={handleClose}
-              showSuccessToasts={false}
-            />
-          </div>
-        </Row>
-      </div>
-      <DeleteModal
-        showModal={showDeleteModal}
-        setShowModal={setShowDeleteModal}
-        dataObject={jenkinsAccountData}
-        handleDelete={deleteJenkinsAccount}
-      />
-      <EditWarningModalToolRegistry
-        showModal={showEditModal}
-        setShowModal={setShowEditModal}
-        dataObject={jenkinsAccountData}
-        handleEdit={updateJenkinsAccount}
-        handleClose={handleClose}
-      />
-    </>
+    <EditorPanelContainer
+      handleClose={closePanelFunction}
+      recordDto={jenkinsAccountData}
+      createRecord={createJenkinsAccount}
+      updateRecord={createJenkinsAccount}
+      lenient={true}
+      setRecordDto={setJenkinsAccountData}
+      extraButtons={getDeleteButton()}
+    >
+      <Row>
+        <Col lg={12}>
+          <JenkinsAccountServiceSelectInput
+            dataObject={jenkinsAccountData}
+            setDataObject={setJenkinsAccountData}
+            disabled={jenkinsAccountData?.isNew() !== true && hasStringValue(jenkinsAccountData?.getData("credentialsId")) === false}
+          />
+        </Col>
+        <Col lg={12}>
+          <JenkinsAccountToolSelectInput
+            model={jenkinsAccountData}
+            setModel={setJenkinsAccountData}
+            disabled={jenkinsAccountData?.isNew() !== true && hasStringValue(jenkinsAccountData?.getData("credentialsId")) === false}
+          />
+        </Col>
+        <Col lg={12}>
+          <TextInputBase
+            fieldName={"credentialsId"}
+            dataObject={jenkinsAccountData}
+            setDataObject={setJenkinsAccountData}
+            disabled={jenkinsAccountData?.isNew() !== true}
+          />
+        </Col>
+        <Col lg={12}>
+          <TextInputBase
+            fieldName={"credentialsDescription"}
+            dataObject={jenkinsAccountData}
+            setDataObject={setJenkinsAccountData}
+            disabled={jenkinsAccountData?.isNew() !== true}
+          />
+        </Col>
+      </Row>
+      <Row className={"my-2"}>
+        <Col sm={12} md={8} lg={6} xl={6} className={"mx-auto"}>
+          {getEditWarning()}
+        </Col>
+      </Row>
+    </EditorPanelContainer>
   );
 }
 
 JenkinsAccountEditorPanel.propTypes = {
-  toolData: PropTypes.object,
+  toolId: PropTypes.string,
   jenkinsAccountData: PropTypes.object,
   setJenkinsAccountData: PropTypes.func,
-  handleClose: PropTypes.func,
+  closePanelFunction: PropTypes.func,
   credentialId: PropTypes.string,
 };
 

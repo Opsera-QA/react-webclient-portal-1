@@ -53,9 +53,10 @@ function AnsibleStepConfigurationSummaryPanel({ ansibleDataObject, pipelineData,
         <Col lg={6}>
           <TextFieldBase dataObject={ansibleDataObject} fieldName={"playbookFileName"}/>
         </Col>
-        <Col lg={6}>
-          <JsonField dataObject={ansibleDataObject} fieldName={"commandArgs"}/>
-        </Col>        
+        {/*Disabling Command Line args as part of OPL 2400*/}
+        {/*<Col lg={6}>*/}
+        {/*  <JsonField dataObject={ansibleDataObject} fieldName={"commandArgs"}/>*/}
+        {/*</Col>        */}
       </Row>
     </PipelineStepSummaryPanelContainer>
   );

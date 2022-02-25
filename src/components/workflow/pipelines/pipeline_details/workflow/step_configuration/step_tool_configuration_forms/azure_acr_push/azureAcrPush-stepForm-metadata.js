@@ -47,6 +47,7 @@ const azureAcrPushStepFormMetadata = {
     {
       label:"Repository Name",
       id:"azureRepoName",
+      regexDefinitionName: "azureLabels"
     },
     {
       label:"Use Run Count as Repository Tag?",

@@ -11,12 +11,12 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TaskTypeField from "components/common/fields/tasks/TaskTypeField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
-import TagsInlineInputBase from "components/common/inline_inputs/tags/TagsInlineInputBase";
+import TagsInlineInputBase from "components/common/inputs/tags/inline/TagsInlineInputBase";
 import TaskRoleAccessInput from "components/tasks/details/TaskRoleAccessInput";
-import RunTaskButton from "components/common/buttons/tasks/RunTaskButton";
 import ECSActionButtons from "components/tasks/ECSActionButtons";
 import AKSActionButtons from "components/tasks/AKSActionButtons";
 import TaskConfigurationSummaryPanel from "components/tasks/details/TaskConfigurationSummaryPanel";
+import RunTaskButton from "components/tasks/buttons/RunTaskButton";
 
 function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -66,6 +66,9 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         <Col md={6}>
           <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
         </Col>
+        <Col md={6}>
+          <TextFieldBase dataObject={gitTasksData} fieldName={"run_count"} />
+        </Col>
         {gitTasksData.getData("type") !== "ecs_cluster_creation" ||
         (gitTasksData.getData("type") === "ecs_service_creation" && (
           <Col md={6}>
@@ -80,9 +83,10 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         <Col md={12} className={"pt-1"}>
           <TagsInlineInputBase
             type={"task"}
-            dataObject={gitTasksData}
+            model={gitTasksData}
             fieldName={"tags"}
-            saveData={updateRecord}
+            saveDataFunction={updateRecord}
+            tags={gitTasksData?.getData("tags")}
             disabled={!actionAllowed("edit_settings")}
           />
         </Col>
@@ -101,8 +105,8 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         <div className={"mx-auto"}>
           <div className={"mx-auto"}>
             <RunTaskButton
-              gitTasksData={gitTasksData}
-              setGitTasksData={setGitTasksData}
+              taskModel={gitTasksData}
+              setTaskModel={setGitTasksData}
               loadData={loadData}
               actionAllowed={actionAllowed("run_task")}
               taskType={gitTasksData?.getData("type")}

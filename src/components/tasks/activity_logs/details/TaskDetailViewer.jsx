@@ -1,13 +1,14 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import GitTaskTaskActivityTabPanel from "components/tasks/activity_logs/details/TaskActivityTabPanel";
-import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import Model from "core/data_model/model";
-import taskActions from "components/tasks/task.actions";
+import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import {taskActivityLogActions} from "components/tasks/activity_logs/taskActivityLog.actions";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import TaskActivityTabPanel from "components/tasks/activity_logs/details/TaskActivityTabPanel";
 
 function TaskDetailViewer({ taskActivityLogId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -15,29 +16,31 @@ function TaskDetailViewer({ taskActivityLogId }) {
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [taskData, setTaskData] = useState(undefined);
+  const [taskActivityLogModel, setTaskActivityLogModel] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
 
-    setTaskData(undefined);
+    setTaskActivityLogModel(undefined);
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (isMongoDbId(taskActivityLogId)) {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [taskActivityLogId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -58,11 +61,11 @@ function TaskDetailViewer({ taskActivityLogId }) {
   };
 
   const getPipelineTaskData = async (cancelSource = cancelTokenSource) => {
-    const response = await taskActions.getTaskActivityLogById(getAccessToken, cancelSource, taskActivityLogId);
-    const pipelineActivityLogData = response?.data?.data;
+    const response = await taskActivityLogActions.getTaskActivityLogById(getAccessToken, cancelSource, taskActivityLogId);
+    const taskActivityLog = response?.data?.data;
 
-    if (isMounted?.current === true && pipelineActivityLogData) {
-      setTaskData(new Model(pipelineActivityLogData, response?.data?.metadata, false));
+    if (isMounted?.current === true && taskActivityLog) {
+      setTaskActivityLogModel(new Model(taskActivityLog, response?.data?.metadata, false));
     }
   };
 
@@ -72,7 +75,7 @@ function TaskDetailViewer({ taskActivityLogId }) {
   };
 
   return (
-    <CenterOverlayContainer
+    <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
       titleText={`Task Details`}
@@ -80,9 +83,11 @@ function TaskDetailViewer({ taskActivityLogId }) {
       isLoading={isLoading}
     >
       <div className="m-3 shaded-panel">
-        <GitTaskTaskActivityTabPanel gitTaskActivityData={taskData?.data} />
+        <TaskActivityTabPanel
+          taskActivityLogModel={taskActivityLogModel}
+        />
       </div>
-    </CenterOverlayContainer>
+    </FullScreenCenterOverlayContainer>
   );
 }
 

@@ -24,9 +24,7 @@ function LdapOrganizationAccountDetailPanel(
   {
     ldapOrganizationAccountData,
     setLdapOrganizationAccountData,
-    cancelTokenSource,
     loadData,
-    authorizedActions,
     isMounted,
     organizationDomain,
     currentUser
@@ -51,7 +49,6 @@ function LdapOrganizationAccountDetailPanel(
       case "users":
         return (
           <LdapOrganizationAccountUsersPanel
-            authorizedActions={authorizedActions}
             loadData={loadData}
             ldapOrganizationAccountData={ldapOrganizationAccountData}
           />
@@ -59,25 +56,22 @@ function LdapOrganizationAccountDetailPanel(
       case "groups":
         return (
           <LdapOrganizationAccountGroupsPanel
-            authorizedActions={authorizedActions}
-            loadData={loadData}
             ldapOrganizationAccountData={ldapOrganizationAccountData}
             currentUser={currentUser}
+            organizationDomain={organizationDomain}
           />
         );
       case "site-roles":
         return (
           <LdapOrganizationAccountSiteRolesPanel
-            loadData={loadData}
             ldapOrganizationAccountData={ldapOrganizationAccountData}
-            currentUser={currentUser}
+            organizationDomain={organizationDomain}
           />
         );
       case "idpAccounts":
         return(
           <LdapOrganizationAccountIdpPanel
             ldapOrganizationAccountData={ldapOrganizationAccountData}
-            authorizedActions={authorizedActions}
             loadData={loadData}
             isMounted={isMounted}
             currentUser={currentUser}
@@ -86,10 +80,7 @@ function LdapOrganizationAccountDetailPanel(
       case "departments":
         return (
           <LdapOrganizationAccountDepartmentsPanel
-            loadData={loadData}
-            isMounted={isMounted}
             ldapOrganizationAccountData={ldapOrganizationAccountData}
-            cancelTokenSource={cancelTokenSource}
             organizationDomain={organizationDomain}
           />
         );
@@ -99,7 +90,6 @@ function LdapOrganizationAccountDetailPanel(
             ldapOrganizationAccountData={ldapOrganizationAccountData}
             setLdapOrganizationAccountData={setLdapOrganizationAccountData}
             loadData={loadData}
-            authorizedActions={authorizedActions}
             handleClose={toggleSummaryPanel}
           />
       );
@@ -112,14 +102,34 @@ function LdapOrganizationAccountDetailPanel(
     return (
       <CustomTabContainer>
         <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <CustomTab icon={faUsers} tabName={"users"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"Users"}/>
-        <CustomTab icon={faUsersClass} tabName={"groups"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"Groups"}/>
-        <CustomTab icon={faServer} tabName={"site-roles"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"Site Roles"}/>
-        <CustomTab icon={faBuilding} tabName={"departments"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"Departments"}/>
+        <CustomTab
+          icon={faUsers}
+          tabName={"users"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Users"}
+        />
+        <CustomTab
+          icon={faUsersClass}
+          tabName={"groups"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Groups"}
+        />
+        <CustomTab
+          icon={faServer}
+          tabName={"site-roles"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Site Roles"}
+        />
+        <CustomTab
+          icon={faBuilding}
+          tabName={"departments"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Departments"}
+        />
         {/*<CustomTab icon={faCubes} tabName={"idpAccounts"} handleTabClick={handleTabClick} activeTab={activeTab}*/}
         {/*           tabText={"IDP Account"}/>*/}
       </CustomTabContainer>
@@ -134,9 +144,7 @@ LdapOrganizationAccountDetailPanel.propTypes = {
   setLdapOrganizationAccountData: PropTypes.func,
   organizationDomain: PropTypes.string,
   loadData: PropTypes.func,
-  authorizedActions: PropTypes.array,
   isMounted: PropTypes.object,
-  cancelTokenSource: PropTypes.object,
   currentUser: PropTypes.object
 };
 

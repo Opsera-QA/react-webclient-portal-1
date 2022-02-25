@@ -20,7 +20,7 @@ function Insights() {
   const [dashboardsList, setDashboardsList] = useState(undefined);
   const [dashboardFilterDto, setDashboardFilterDto] = useState(new Model({...dashboardFilterMetadata.newObjectFields}, dashboardFilterMetadata, false));
   const toastContext = useContext(DialogToastContext);
-  const [profile, setProfile] = useState(undefined);
+  const [areAnalyticsToolsEnabled, setAreAnalyticsToolsEnabled] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -61,15 +61,23 @@ function Insights() {
     }
   };
 
+  const getRoles = async (filterDto = dashboardFilterDto, cancelSource = cancelTokenSource) => {
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+
+    if (isMounted.current === true && userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+      await getProfile(filterDto, cancelSource);
+    }
+  };
+
   const getProfile = async(filterDto = dashboardFilterDto, cancelSource = cancelTokenSource) => {
-    let settings = await analyticsActions.fetchProfileV2(getAccessToken, cancelSource);
+    const response = await analyticsActions.areAnalyticsToolsEnabled(getAccessToken, cancelSource);
+    const analyticsAreEnabled = response?.data.areAnalyticsToolsEnabled;
+    setAreAnalyticsToolsEnabled(analyticsAreEnabled);
 
-    if (isMounted.current === true) {
-      setProfile(settings?.data);
-
-      if (settings?.data?.enabledToolsOn) {
-        await getDashboards(filterDto, cancelSource);
-      }
+    if (isMounted.current === true && analyticsAreEnabled === true) {
+      await getDashboards(filterDto, cancelSource);
     }
   };
 
@@ -86,22 +94,12 @@ function Insights() {
     }
   };
 
-  const getRoles = async (filterDto = dashboardFilterDto, cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-
-    if (isMounted.current === true && userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-      await getProfile(filterDto, cancelSource);
-    }
-  };
-
   const getInsightsView = () => {
-    if (!profile) {
+    if (areAnalyticsToolsEnabled == null) {
       return (<LoadingDialog size="sm" message="Loading Insights"/>);
     }
 
-    if (profile?.enabledToolsOn) {
+    if (areAnalyticsToolsEnabled === true) {
       return (
         <DashboardsTable
           data={dashboardsList}

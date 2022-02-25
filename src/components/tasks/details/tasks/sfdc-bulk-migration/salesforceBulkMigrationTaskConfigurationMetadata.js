@@ -5,15 +5,11 @@ export const salesforceBulkMigrationTaskConfigurationMetadata = {
       label: "Jenkins Tool",
       id: "toolConfigId",
       isRequired: true,
-      maxLength: 24,
       regexDefinitionName: "mongoId",
     },
     {
       label: "Jenkins Tool Name",
       id: "toolName",
-      isRequired: true,
-      maxLength: 100,
-      regexDefinitionName: "generalTextWithSpacesSlash",
     },
     {
       label: "Auto Scaling",
@@ -111,7 +107,7 @@ export const salesforceBulkMigrationTaskConfigurationMetadata = {
     {
       label: "Create a new branch?",
       id: "isNewBranch",
-      formText: "Creates a new branch and synch the changes.",
+      formText: "Creates a new branch and sync the changes.",
     },
     {
       label: "Upstream Branch",

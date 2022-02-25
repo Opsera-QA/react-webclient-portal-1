@@ -1,15 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faChartNetwork, faDraftingCompass, faExclamationCircle, faEye, faTag, faWrench} from "@fortawesome/pro-light-svg-icons";
-import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import {faChartNetwork, faDraftingCompass, faEye, faTag, faWrench} from "@fortawesome/pro-light-svg-icons";
+import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
+import DangerIcon from "components/common/icons/status/danger/DangerIcon";
 
 function TagsCloudBase({ tagsWithUsage, onTagClick, className, getTooltip, subscribedTagIds, isLoading, subscribingToTag }) {
   const getSubscribedEye = (subscribed) => {
     if (subscribed) {
-      return (<span><FontAwesomeIcon icon={faEye} fixedWidth className={"mx-1"}/></span>);
+      return (
+        <IconBase
+          icon={faEye}
+          className={"ml-2"}
+        />
+      );
     }
   };
 
@@ -31,10 +36,19 @@ function TagsCloudBase({ tagsWithUsage, onTagClick, className, getTooltip, subsc
           return (
             <TooltipWrapper innerText={getTooltip(tagWithUsage)} key={tag?._id}>
               <span className={classNames} style={getDynamicBadgeStyle(tagWithUsage)} onClick={() => {handleClick(tag);}}>
-                <span><IconBase icon={faTag} isLoading={subscribingToTag === tag?._id} className={"mr-1"} />{`${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}</span>
-                <span className="ml-3"><FontAwesomeIcon icon={faDraftingCompass} fixedWidth className="mr-1"/>{tagWithUsage?.pipeline_usage_count}</span>
-                <span className="ml-2"><FontAwesomeIcon icon={faWrench} fixedWidth className="mr-1"/>{tagWithUsage?.tool_usage_count}</span>
-                <span className="ml-2"><FontAwesomeIcon icon={faChartNetwork} fixedWidth className="mr-1"/>{tagWithUsage?.dashboard_usage_count}</span>
+                <span><IconBase icon={faTag} isLoading={subscribingToTag === tag?._id} className={"mr-1"} />{`${capitalizeFirstLetter(tag?.type)}: ${truncateString(tag?.value, 50)}`}</span>
+                <span>
+                  <IconBase icon={faDraftingCompass} className="ml-3 mr-1"/>
+                  {tagWithUsage?.pipeline_usage_count}
+                </span>
+                <span>
+                  <IconBase icon={faWrench} className="ml-2 mr-1"/>
+                  {tagWithUsage?.tool_usage_count}
+                </span>
+                <span>
+                  <IconBase icon={faChartNetwork} className="ml-2 mr-1"/>
+                  {tagWithUsage?.dashboard_usage_count}
+                </span>
                 {getSubscribedEye(subscribed)}
               </span>
             </TooltipWrapper>
@@ -61,13 +75,14 @@ function TagsCloudBase({ tagsWithUsage, onTagClick, className, getTooltip, subsc
     return {opacity: opacity / 2 + .5};
   };
 
-  // TODO: pass in no tags message
   if (tagsWithUsage == null || tagsWithUsage.length === 0) {
     return (
       <div className="form-text text-muted ml-3">
         <div>
-          <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
-          No Tags Found</span>
+          <span className={"text-muted"}>
+            <DangerIcon className="mr-2" />
+            No Tags Found
+          </span>
         </div>
       </div>
     );

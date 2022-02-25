@@ -4,29 +4,33 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
-function LazyLoadMultiSelectInputBase({
-  fieldName,
-  dataObject,
-  setDataObject,
-  groupBy,
-  disabled,
-  selectOptions,
-  valueField,
-  textField,
-  placeholderText,
-  setDataFunction,
-  busy,
-  showClearValueButton,
-  clearDataFunction,
-  className,
-  showLabel,
-  requireClearDataConfirmation,
-  clearDataDetails,
-  linkTooltipText,
-  detailViewLink,
-  infoOverlay,
-  onToggleFunction,
+function LazyLoadMultiSelectInputBase(
+  {
+    fieldName,
+    dataObject,
+    setDataObject,
+    groupBy,
+    disabled,
+    selectOptions,
+    valueField,
+    textField,
+    placeholderText,
+    setDataFunction,
+    busy,
+    showClearValueButton,
+    clearDataFunction,
+    className,
+    showLabel,
+    requireClearDataConfirmation,
+    clearDataDetails,
+    linkTooltipText,
+    detailViewLink,
+    infoOverlay,
+    onToggleFunction,
+    onSearchFunction,
+    useToggle,
 }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -117,19 +121,27 @@ function LazyLoadMultiSelectInputBase({
           filter="contains"
           groupBy={groupBy}
           onToggleFunction={(test) => {
-            if (test === true && (!Array.isArray(selectOptions) || selectOptions?.length === 0)) {
+            if (useToggle && test === true && (!Array.isArray(selectOptions) || selectOptions?.length === 0)) {
               onToggleFunction();
             }
           }}
           value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : []}
           placeholderText={placeholderText}
           disabled={disabled}
+          onSearchFunction={onSearchFunction}
           setDataFunction={(newValue) =>
             setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)
           }
+          lazyLoad={true}
         />
       </div>
-      <InfoText errorMessage={errorMessage} field={field} />
+      <InfoText
+        model={dataObject}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+        hideRegexDefinitionText={true}
+      />
     </InputContainer>
   );
 }
@@ -157,6 +169,8 @@ LazyLoadMultiSelectInputBase.propTypes = {
   detailViewLink: PropTypes.string,
   infoOverlay: PropTypes.any,
   onToggleFunction: PropTypes.func,
+  onSearchFunction: PropTypes.func,
+  useToggle: PropTypes.bool,
 };
 
 LazyLoadMultiSelectInputBase.defaultProps = {

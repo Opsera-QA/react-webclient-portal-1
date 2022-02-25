@@ -1,14 +1,16 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Row, Col } from "react-bootstrap";
 import DateRangeInput from "components/common/inputs/date/DateRangeInput";
+import ThreeMonthsRestrictedDateRangeInput from "components/common/inputs/date/ThreeMonthsRestrictedDateRangeInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import kpiConfigurationMetadata from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import {
-  kpiSettingsMetadata,
   kpiDateFilterMetadata,
   kpiTagsFilterMetadata,
+  kpiGoalsFilterMetadata,
+  kpiNotesFilterMetadata,
   kpiJenkinsResultFilterMetadata,
   kpiJenkinsJobUrlFilterMetadata,
   kpiJenkinsBuildNumberFilterMetadata,
@@ -34,7 +36,7 @@ import {
   kpiServiceNowBusinessServicesFilterMetadata,
 } from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import Model from "core/data_model/model";
-import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import GoalsInputBase from "./goals/GoalsInputBase";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
@@ -63,24 +65,51 @@ import ServiceNowServiceOfferingsSelectInput from "components/common/list_of_val
 import ServiceNowConfigurationItemsSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowConfigurationItemsSelectInput";
 import ServiceNowBusinessServicesSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowBusinessServicesSelectInput";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import GenericChartSettingsHelpDocumentation
-  from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
-import StandaloneDeleteButtonWithConfirmationModal
-  from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
+import GenericChartSettingsHelpDocumentation from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
+import TextAreaInput from "../../../common/inputs/text/TextAreaInput";
 
-function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData, index, closePanel, loadChart, setKpis, settingsHelpComponent }) {
+import axios from "axios";
+import ResetMetricConfirmationPanel from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricConfirmationPanel";
+import ResetButton from "components/common/buttons/reset/ResetButton";
+
+// TODO: After all KPIs are converted, don't do check and just convert this file to be the one that points to the separate editor panels
+// TODO: Make types file with all supported KPI Identifiers
+const STANDALONE_EDITOR_PANEL_KPI_IDENTIFIERS = [
+  "adoption-percentage",
+];
+
+// TODO: There are a handful of issues with this we need to address.
+function KpiSettingsForm({
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  closePanel,
+  loadChart,
+  setKpis,
+  settingsHelpComponent,
+}) {
   const { getAccessToken } = useContext(AuthContext);
   const [helpIsShown, setHelpIsShown] = useState(false);
   const [kpiSettings, setKpiSettings] = useState(new Model(kpiConfiguration, kpiConfigurationMetadata, false));
+  const [showDeleteConfirmationPanel, setShowDeleteConfirmationPanel] = useState(false);
+  const [showResetConfirmationPanel, setShowResetConfirmationPanel] = useState(false);
+
   const [kpiConfigSettings, setKpiConfigSettings] = useState(
-    modelHelpers.getDashboardSettingsModel(kpiConfiguration, kpiSettingsMetadata)
+    modelHelpers.getDashboardSettingsModel(kpiConfiguration)
   );
   const [kpiDateFilter, setKpiDateFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "date", kpiDateFilterMetadata)
   );
   const [kpiTagsFilter, setKpiTagsFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "tags", kpiTagsFilterMetadata)
+  );
+  const [kpiGoalsFilter, setKpiGoalsFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "goals", kpiGoalsFilterMetadata)
+  );
+  const [kpiNotesFilter, setKpiNotesFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "notes", kpiNotesFilterMetadata)
   );
   const [kpiJenkinsResultFilter, setKpiJenkinsResultFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "jenkins-result", kpiJenkinsResultFilterMetadata)
@@ -187,6 +216,23 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       kpiServiceNowBusinessServicesFilterMetadata
     )
   );
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
 
   const tagFilterEnabled = [
     "opsera-pipeline-duration",
@@ -270,6 +316,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "automation-percentage",
     "adoption-percentage",
     "automated-test-results",
+    "defect-removal-efficiency",
     "sfdc-manual-test",
     "sfdc-backups",
     "sfdc-profile-migrations",
@@ -281,16 +328,29 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "sonar-vulnerabilities-metric-scorecard",
     "sonar-reliability-remediation-agg-by-time",
     "coverity-issues-by-category-trend",
+    "salesforce-duration-by-stage",
+    "build-deployment-statistics",
+    "sdlc-duration-statistics",
+    "sonar-ratings-v2",
+    "sonar-unit-testing",
   ];
 
   const getKpiFilters = (filter) => {
     switch (filter.type) {
       case "date":
-        return (
-          <div>
-            <DateRangeInput dataObject={kpiDateFilter} setDataObject={setKpiDateFilter} fieldName={"value"} />
-          </div>
-        );
+        if(kpiConfiguration.kpi_identifier === "jira-lead-time"){
+          return (
+            <div>
+              <ThreeMonthsRestrictedDateRangeInput dataObject={kpiDateFilter} setDataObject={setKpiDateFilter} fieldName={"value"} />
+            </div>
+          );
+        } else {
+          return (
+            <div>
+              <DateRangeInput dataObject={kpiDateFilter} setDataObject={setKpiDateFilter} fieldName={"value"} />
+            </div>
+          );
+        }        
       case "tags":
         return (
           <div>
@@ -319,6 +379,29 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
                 !tagFilterEnabled.includes(kpiSettings.getData("kpi_identifier")) ||
                 !kpiConfigSettings.getData("useKpiTags")
               }
+            />
+          </div>
+        );
+      case "goals":
+        return (
+          <div>
+            <GoalsInputBase
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiGoalsFilter}
+              dataObject={kpiGoalsFilter}
+              kpiName={kpiSettings.getData("kpi_identifier")}
+            />
+          </div>
+        );
+      case "notes":
+        return (
+          <div>
+            <TextAreaInput
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiNotesFilter}
+              dataObject={kpiNotesFilter}
             />
           </div>
         );
@@ -619,224 +702,238 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "date")]) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "date")
-      ].value = kpiDateFilter.getData("value");
+        ].value = kpiDateFilter.getData("value");
     }
     if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "tags")]) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "tags")
-      ].value = kpiTagsFilter.getData("value");
+        ].value = kpiTagsFilter.getData("value");
+    }
+    if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "goals")]) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "goals")
+        ].value = kpiGoalsFilter.getData("value");
+    }
+    if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "notes")]) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "notes")
+        ].value = kpiNotesFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-result")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-result")
-      ].value = kpiJenkinsResultFilter.getData("value");
+        ].value = kpiJenkinsResultFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-job-url")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-job-url")
-      ].value = kpiJenkinsJobUrlFilter.getData("value");
+        ].value = kpiJenkinsJobUrlFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-build-number")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-build-number")
-      ].value = kpiJenkinsBuildNumberFilter.getData("value");
+        ].value = kpiJenkinsBuildNumberFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-type")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-type")
-      ].value = kpiJiraIssueTypeFilter.getData("value");
+        ].value = kpiJiraIssueTypeFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-components")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-components")
-      ].value = kpiJiraIssueComponentsFilter.getData("value");
+        ].value = kpiJiraIssueComponentsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-labels")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-labels")
-      ].value = kpiJiraIssueLabelsFilter.getData("value");
+        ].value = kpiJiraIssueLabelsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-status")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-status")
-      ].value = kpiJiraIssueStatusFilter.getData("value");
+        ].value = kpiJiraIssueStatusFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-start-status")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-start-status")
-      ].value = kpiJiraIssueStartStatusFilter.getData("value");
+        ].value = kpiJiraIssueStartStatusFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-done-status")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-done-status")
-      ].value = kpiJiraIssueDoneStatusFilter.getData("value");
+        ].value = kpiJiraIssueDoneStatusFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sonar-project-key")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sonar-project-key")
-      ].value = kpiSonarProjectKeyFilter.getData("value");
+        ].value = kpiSonarProjectKeyFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "domain")]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "domain")
-      ].value = kpiDomainFilter.getData("value");
+        ].value = kpiDomainFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")
-      ].value = kpiProjectFilter.getData("value");
+        ].value = kpiProjectFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "application")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "application")
-      ].value = kpiApplicationFilter.getData("value");
+        ].value = kpiApplicationFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sprint")]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sprint")
-      ].value = kpiSprintFilter.getData("value");
+        ].value = kpiSprintFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")
-      ].value = kpiProjectFilter.getData("value");
+        ].value = kpiProjectFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "release")]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "release")
-      ].value = kpiReleaseFilter.getData("value");
+        ].value = kpiReleaseFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "selenium-test-suites")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "selenium-test-suites")
-      ].value = kpiSeleniumTestSuitesFilter.getData("value");
+        ].value = kpiSeleniumTestSuitesFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sonar-project-languages")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sonar-project-languages")
-      ].value = kpiSonarProjectLanguagesFilter.getData("value");
+        ].value = kpiSonarProjectLanguagesFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-priorities")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-priorities")
-      ].value = kpiServiceNowPrioritiesFilter.getData("value");
+        ].value = kpiServiceNowPrioritiesFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-tools")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-tools")
-      ].value = kpiServiceNowToolsFilter.getData("value");
+        ].value = kpiServiceNowToolsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-assignment-groups")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-assignment-groups")
-      ].value = kpiServiceNowAssignmentGroupsFilter.getData("value");
+        ].value = kpiServiceNowAssignmentGroupsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-service-offerings")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-service-offerings")
-      ].value = kpiServiceNowServiceOfferingsFilter.getData("value");
+        ].value = kpiServiceNowServiceOfferingsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-configuration-items")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-configuration-items")
-      ].value = kpiServiceNowConfigurationItemsFilter.getData("value");
+        ].value = kpiServiceNowConfigurationItemsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-business-services")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "servicenow-business-services")
-      ].value = kpiServiceNowBusinessServicesFilter.getData("value");
+        ].value = kpiServiceNowBusinessServicesFilter.getData("value");
     }
 
     setKpiSettings({ ...newKpiSettings });
-    dashboardData.getData("configuration")[index] = kpiSettings.data;
-    setKpiConfiguration(kpiSettings.data);
-    await dashboardsActions.update(dashboardData, getAccessToken);
+    dashboardData.getData("configuration")[index] = kpiSettings?.getPersistData();
+
+    // TODO: This is forced because the dashboard detail view refresh doesn't work after saving.
+    //  This needs to be addressed and removed.
+    setKpiConfiguration({...kpiSettings?.getPersistData()});
+
+    await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardData);
 
     if (closePanel) {
       closePanel();
@@ -850,7 +947,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
   const deleteKpi = async () => {
     dashboardData?.getData("configuration").splice(index, 1);
     setKpis(dashboardData?.getData("configuration"));
-    await dashboardsActions.update(dashboardData, getAccessToken);
+    await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardData);
 
     if (closePanel) {
       closePanel();
@@ -862,25 +959,44 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       settingsHelpComponent(() => setHelpIsShown(false));
     }
 
+    return <GenericChartSettingsHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+  };
+
+  // TODO: Combine with getEditorPanel when all are moved over
+  // const getStandaloneEditorPanel = (kpiIdentifier) => {
+  //   switch (kpiIdentifier) {
+  //     case "adoption-percentage":
+  //       return (
+  //         <AutomationTestAdoptionRateEditorPanel
+  //           dashboardData={dashboardData}
+  //           kpiConfiguration={kpiConfiguration}
+  //           setKpis={setKpis}
+  //           index={index}
+  //           handleClose={closePanel}
+  //         />
+  //       );
+  //   }
+  // };
+
+  const getExtraButtons = () => {
     return (
-      <GenericChartSettingsHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />
+      <div className={"d-flex"}>
+        <DeleteButtonWithInlineConfirmation dataObject={kpiSettings} deleteRecord={deleteKpi} />
+        <ResetButton className={"ml-2"} model={kpiSettings} resetFunction={() => setShowResetConfirmationPanel(true)} />
+      </div>
     );
   };
 
-  const getDeleteButton = () => {
-    return (
-      <DeleteButtonWithInlineConfirmation
-        dataObject={kpiSettings}
-        deleteRecord={deleteKpi}
-      />
-    );
-  };
-
-  const getBody = () => {
+  const getEditorPanelFilters = () => {
     if (kpiSettings?.getData) {
       return (
         <div className={"px-2 mb-5"}>
-          <TextInputBase className={"mb-2"} fieldName={"kpi_name"} dataObject={kpiSettings} setDataObject={setKpiSettings}/>
+          <TextInputBase
+            className={"mb-2"}
+            fieldName={"kpi_name"}
+            dataObject={kpiSettings}
+            setDataObject={setKpiSettings}
+          />
           {kpiSettings?.getData("filters").map((filter, index) => (
             <div key={index}>{getKpiFilters(filter)}</div>
           ))}
@@ -889,8 +1005,62 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     }
   };
 
+  const getEditorPanel = () => {
+    // TODO: Implement separately
+    // if (STANDALONE_EDITOR_PANEL_KPI_IDENTIFIERS.includes(kpiSettings?.getData("kpi_identifier"))) {
+    //   return (getStandaloneEditorPanel());
+    // }
+
+    return (
+      <EditorPanelContainer
+        showRequiredFieldsMessage={false}
+        handleClose={cancelKpiSettings}
+        updateRecord={saveKpiSettings}
+        recordDto={kpiSettings}
+        lenient={true}
+        className={"px-3 pb-3"}
+        extraButtons={getExtraButtons()}
+      >
+        {getEditorPanelFilters()}
+      </EditorPanelContainer>
+    );
+  };
+
+  const handleClose = () => {
+    if (closePanel) {
+      closePanel();
+    }
+  };
+
+  const getBody = () => {
+    // TODO: Implement
+    // if (showDeleteConfirmationPanel === true) {
+    //   return (
+    //
+    //   );
+    // }
+
+    if (showResetConfirmationPanel === true) {
+      return (
+        <div className={"m-2"}>
+          <ResetMetricConfirmationPanel
+            kpiConfigurationModel={kpiSettings}
+            dashboardModel={dashboardData}
+            className={"ml-2"}
+            identifier={kpiSettings?.getData("kpi_identifier")}
+            index={index}
+            closePanelFunction={handleClose}
+            setKpiConfiguration={setKpiConfiguration}
+          />
+        </div>
+      );
+    }
+
+    return getEditorPanel();
+  };
+
   if (kpiSettings == null) {
-    return (<></>);
+    return <></>;
   }
 
   return (
@@ -900,17 +1070,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       setHelpIsShown={setHelpIsShown}
       hideCloseButton={true}
     >
-      <EditorPanelContainer
-        showRequiredFieldsMessage={false}
-        handleClose={cancelKpiSettings}
-        updateRecord={saveKpiSettings}
-        recordDto={kpiSettings}
-        lenient={true}
-        className={"px-3 pb-3"}
-        extraButtons={getDeleteButton()}
-      >
-        {getBody()}
-      </EditorPanelContainer>
+      {getBody()}
     </OverlayPanelBodyContainer>
   );
 }

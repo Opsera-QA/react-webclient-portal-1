@@ -1,7 +1,6 @@
-import React, { useMemo, useState, useEffect, useContext } from "react";
+import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import { AuthContext } from "contexts/AuthContext";
 import {
   getTableBooleanIconColumn,
   getTableDateTimeColumn, getTableInfoIconColumn,
@@ -10,32 +9,24 @@ import {
 import notificationActivityLogMetadata
   from "components/notifications/notification_details/activity_logs/notification-activity-log-metadata";
 import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
-import notificationsActions from "components/notifications/notifications-actions";
-import Model from "core/data_model/model";
-import notificationActivityLogFilterMetadata
-  from "components/notifications/notification_details/activity_logs/notifications-activity-log-filter-metadata";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import NotificationTypeFilter from "components/common/filters/notifications/notification_type/NotificationTypeFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 
-function NotificationActivityLogsTable({ notificationData, allLogs }) {
+function NotificationActivityLogsTable(
+  {
+    notificationActivityFilterDto,
+    setNotificationActivityFilterDto,
+    notificationActivityLogs,
+    isLoading,
+    loadData,
+  }) {
   let fields = notificationActivityLogMetadata.fields;
-  const { getAccessToken } = useContext(AuthContext);
-  const [logData, setLogData] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  // TODO: Use new overlay
   const [modalData, setModalData] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [notificationActivityFilterDto, setNotificationActivityFilterDto] = useState(new Model({...notificationActivityLogFilterMetadata.newObjectFields}, notificationActivityLogFilterMetadata, false));
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const initialState = {
-    pageIndex: 0,
-  };
 
   const showActivityLog = (row) => {
     setModalData(row);
@@ -54,34 +45,6 @@ function NotificationActivityLogsTable({ notificationData, allLogs }) {
     [],
   );
 
-  const loadData = async (filterDto = notificationActivityFilterDto) => {
-    try {
-      let notificationLogResponse;
-
-      setIsLoading(true);
-
-      if(allLogs) {
-        notificationLogResponse = await notificationsActions.getAllNotificationActivityLogs(filterDto, getAccessToken);
-      } else {
-        notificationLogResponse = await notificationsActions.getNotificationActivityLogs(notificationData, filterDto, getAccessToken);
-      }
-      
-      if (notificationLogResponse?.data) {
-        setLogData(notificationLogResponse.data.data);
-
-        let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", notificationLogResponse.data.count);
-        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-        setNotificationActivityFilterDto({...newFilterDto});
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-    finally {
-      setIsLoading(false);
-    }
-  };
-
   const getDropdownFilters = () => {
     return (
       <>
@@ -97,8 +60,7 @@ function NotificationActivityLogsTable({ notificationData, allLogs }) {
       <CustomTable
         className={"no-table-border"}
         columns={columns}
-        data={logData}
-        initialState={initialState}
+        data={notificationActivityLogs}
         isLoading={isLoading}
         paginationDto={notificationActivityFilterDto}
         setPaginationDto={setNotificationActivityFilterDto}
@@ -126,8 +88,12 @@ function NotificationActivityLogsTable({ notificationData, allLogs }) {
 }
 
 NotificationActivityLogsTable.propTypes = {
-  notificationData: PropTypes.object,
-  allLogs : PropTypes.bool,
+  notificationActivityFilterDto: PropTypes.object,
+  setNotificationActivityFilterDto: PropTypes.func,
+  notificationActivityLogs: PropTypes.array,
+  isLoading: PropTypes.bool,
+  loadData: PropTypes.func,
+
 };
 
 export default NotificationActivityLogsTable;

@@ -36,6 +36,10 @@ const dashboardMetadata = {
       id: "tags",
     },
     {
+      label: "Organizations",
+      id: "organizations",
+    },
+    {
       label: "Attributes",
       id: "attributes",
     },
@@ -76,6 +80,7 @@ const dashboardMetadata = {
     visibility: "private",
     type: "",
     active: true,
+    isFavorite: false,
     tags: [],
     configuration: [],
     attributes: {},

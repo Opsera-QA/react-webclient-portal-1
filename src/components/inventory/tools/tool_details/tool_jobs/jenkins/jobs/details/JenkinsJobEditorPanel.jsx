@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import JenkinsJobTypeSelectInput from "./inputs/JenkinsJobTypeSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import jenkinsJobsActions from "./jenkins-jobs-actions";
+import jenkinsToolJobActions from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/jenkinsToolJob.actions";
 import JenkinsJobSummaryPanel from "./JenkinsJobSummaryPanel";
 import {AuthContext} from "contexts/AuthContext";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
@@ -40,39 +40,17 @@ function JenkinsJobEditorPanel({ handleClose, jenkinsJobModel, setJenkinsJobMode
   }, []);
 
   const updateJob = async () => {
-    const currentJobs = toolData?.getArrayData("jobs");
-    const name = jenkinsJobModel?.getData("name");
-    let count = 0;
-
-    currentJobs.forEach((job) => {
-      if (job.name === name) {
-        count++;
-      }
-    });
-
-    if (count > 1) {
-      throw { error: "Name must be unique across all Jobs tied to this tool" };
-    }
-
     const configuration = {...jenkinsJobConfigurationModel.getPersistData()};
     jenkinsJobModel.setData("configuration", configuration);
 
-    return await jenkinsJobsActions.updateJenkinsJobs(getAccessToken, cancelTokenSource, toolData, jenkinsJobModel);
+    return await jenkinsToolJobActions.updateJenkinsJob(getAccessToken, cancelTokenSource, toolData?._id, jenkinsJobModel);
   };
 
   const createJob = async () => {
-    const found = toolData
-      ?.getArrayData("jobs")
-      .some((job) => job.name === jenkinsJobModel?.getData("name"));
-
-    if (found) {
-      throw { error: "Name must be unique across all Jobs tied to this tool" };
-    }
-
     const configuration = {...jenkinsJobConfigurationModel.getPersistData()};
     jenkinsJobModel.setData("configuration", configuration);
 
-    return await jenkinsJobsActions.createJenkinsJobs(getAccessToken, cancelTokenSource, toolData, jenkinsJobModel);
+    return await jenkinsToolJobActions.createJenkinsJob(getAccessToken, cancelTokenSource, toolData?._id, jenkinsJobModel);
   };
 
   const getEditingWarning = () => {
@@ -106,8 +84,9 @@ function JenkinsJobEditorPanel({ handleClose, jenkinsJobModel, setJenkinsJobMode
   }
 
   const deleteJob = async () => {
-    const response = await jenkinsJobsActions.deleteJenkinsJobs(getAccessToken, cancelTokenSource, toolData, jenkinsJobModel);
+    const response = await jenkinsToolJobActions.deleteJenkinsJob(getAccessToken, cancelTokenSource, toolData?._id, jenkinsJobModel?.getData("_id"));
     loadData();
+    handleClose();
     return response;
   };
 
@@ -125,6 +104,14 @@ function JenkinsJobEditorPanel({ handleClose, jenkinsJobModel, setJenkinsJobMode
       {getEditingWarning()}
       <Row>
         <Col lg={6}>
+          <TextInputBase
+            setDataObject={setJenkinsJobModel}
+            dataObject={jenkinsJobModel}
+            fieldName={"name"}
+            disabled={!jenkinsJobModel?.isNew()}
+          />
+        </Col>
+        <Col lg={6}>
           <JenkinsJobTypeSelectInput
             disabled={!jenkinsJobModel?.isNew()}
             setModel={setJenkinsJobModel}
@@ -132,12 +119,6 @@ function JenkinsJobEditorPanel({ handleClose, jenkinsJobModel, setJenkinsJobMode
             fieldName={"jobType"}
             setConfigurationModel={setJenkinsJobConfigurationModel}
           />
-        </Col>
-        <Col lg={6}>
-          <TextInputBase setDataObject={setJenkinsJobModel} dataObject={jenkinsJobModel} fieldName={"name"}/>
-        </Col>
-        <Col lg={12}>
-          <TextInputBase setDataObject={setJenkinsJobModel} dataObject={jenkinsJobModel} fieldName={"description"}/>
         </Col>
       </Row>
       <JenkinsJobSubEditorPanel
@@ -147,6 +128,11 @@ function JenkinsJobEditorPanel({ handleClose, jenkinsJobModel, setJenkinsJobMode
         jenkinsJobType={jenkinsJobModel?.getArrayData("type", 0)}
         autoScalingEnabled={toolData?.configuration?.autoScaleEnable}
       />
+      <Row>
+        <Col lg={12}>
+          <TextInputBase setDataObject={setJenkinsJobModel} dataObject={jenkinsJobModel} fieldName={"description"}/>
+        </Col>
+      </Row>
     </EditorPanelContainer>
   );
 }

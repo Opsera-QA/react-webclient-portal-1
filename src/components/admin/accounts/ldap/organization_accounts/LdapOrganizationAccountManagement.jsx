@@ -8,6 +8,8 @@ import LdapOrganizationAccountsTable
   from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountsTable";
 import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import LdapOrganizationAccountManagementSubNavigationBar
+  from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagementSubNavigationBar";
 
 // TODO: If we ever support multiple administrators, we will need to remove the requirement to be an Opsera Administrator
 function LdapOrganizationAccountManagement() {
@@ -19,7 +21,6 @@ function LdapOrganizationAccountManagement() {
   const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
   const [organizationAccounts, setOrganizationAccounts] = useState(undefined);
   const toastContext = useContext(ToastContext);
-  const [authorizedActions, setAuthorizedActions] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -91,9 +92,6 @@ function LdapOrganizationAccountManagement() {
 
       setAccessRoleData(userRoleAccess);
 
-      let authorizedActions = await accountsActions.getAllowedOrganizationAccountActions(userRoleAccess, ldap?.organization, getUserRecord, getAccessToken);
-      setAuthorizedActions(authorizedActions);
-
       if (userRoleAccess?.OpseraAdministrator) {
         await loadOrganizationByName(organizationName, cancelSource);
       }
@@ -106,10 +104,14 @@ function LdapOrganizationAccountManagement() {
       isLoading={!accessRoleData}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       accessRoleData={accessRoleData}
+      navigationTabContainer={
+        <LdapOrganizationAccountManagementSubNavigationBar
+          activeTab={"organizationAccounts"}
+        />
+      }
     >
       <LdapOrganizationAccountsTable
         isLoading={isLoading}
-        authorizedActions={authorizedActions}
         ldapOrganizationData={ldapOrganizationData}
         ldapOrganizationAccounts={organizationAccounts}
         loadData={loadData}

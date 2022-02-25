@@ -1,23 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilAlt} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
+import IconBase from "components/common/icons/IconBase";
 
-function EditIcon({ editFunction, className, tooltipBody, disabled }) {
+function EditIcon(
+  {
+    handleEditFunction,
+    className,
+    tooltipBody,
+    disabled,
+    iconClassName,
+  }) {
 
-  if (disabled === true) {
+  if (disabled === true || handleEditFunction == null) {
     return null;
   }
 
   return (
     <div className={className}>
       <ButtonTooltip innerText={tooltipBody}>
-        <FontAwesomeIcon
-          onClick={() => {editFunction();}}
+        <IconBase
+          onClickFunction={() => {handleEditFunction();}}
           icon={faPencilAlt}
-          fixedWidth
           className={"pointer"}
+          iconClassName={iconClassName}
         />
       </ButtonTooltip>
     </div>
@@ -25,10 +32,11 @@ function EditIcon({ editFunction, className, tooltipBody, disabled }) {
 }
 
 EditIcon.propTypes = {
-  editFunction: PropTypes.func,
+  handleEditFunction: PropTypes.func,
   className: PropTypes.string,
   tooltipBody: PropTypes.any,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  iconClassName: PropTypes.string,
 };
 
 export default EditIcon;

@@ -5,21 +5,37 @@ import {faPlus, faTimes} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
-import {List} from "dhx-suite-package";
+import {List} from "@opsera/dhx-suite-package";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import ComponentLoadingWrapper from "components/common/loading/ComponentLoadingWrapper";
+import StandaloneDatePickerInput from "components/common/inputs/date/StandaloneDateTimeInput";
 
 // TODO: Make an actual base version and rename this VanityListInput
 // TODO: Refactor
 function ListInputBase(
   {
-    fieldName, dataObject, setDataObject,
-    selectOptions, valueField, textField,
-    setDataFunction, isLoading, disabled, clearDataFunction,
-    showClearValueButton, getCurrentValue,
-    height, icon, searchFunction, showSelectAllButton, customTemplate, disabledOptions, noDataMessage,
-    customTitle
-  }) {
+    fieldName,
+    dataObject,
+    setDataObject,
+    selectOptions,
+    valueField,
+    textField,
+    setDataFunction,
+    isLoading,
+    disabled,
+    clearDataFunction,
+    showClearValueButton,
+    getCurrentValue,
+    height,
+    icon,
+    searchFunction,
+    showSelectAllButton,
+    customTemplate,
+    disabledOptions,
+    noDataMessage,
+    customTitle,
+    loadDataFunction,
+}) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [list, setList] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");
@@ -58,6 +74,10 @@ function ListInputBase(
 
       if (Array.isArray(currentValues) && currentValues.length === 0) {
         list.selection.remove();
+      }
+
+      if (dataObject?.isNew() === false || dataObject?.isChanged(fieldName) === true) {
+        validateData(dataObject);
       }
     }
   }, [dataObject]);
@@ -109,10 +129,8 @@ function ListInputBase(
     `);
   };
 
-  const validateAndSetData = (fieldName, valueArray) => {
-    let newDataObject = dataObject;
-    newDataObject.setData(fieldName, valueArray);
-    let errors = newDataObject.isFieldValid(field.id);
+  const validateData = (dataModel) => {
+    let errors = dataModel?.isFieldValid(field.id);
 
     if ( errors != null && errors !== true) {
       setErrorMessage(errors[0]);
@@ -120,7 +138,12 @@ function ListInputBase(
     else {
       setErrorMessage("");
     }
+  };
 
+  const validateAndSetData = (fieldName, valueArray) => {
+    let newDataObject = dataObject;
+    newDataObject.setData(fieldName, valueArray);
+    validateData(newDataObject);
     setDataObject({...newDataObject});
   };
 
@@ -282,11 +305,17 @@ function ListInputBase(
           setSearchTerm={setSearchTerm}
           searchTerm={searchTerm}
           showSearchBar={searchFunction != null}
+          loadDataFunction={loadDataFunction}
         />
         {getExtraRow()}
         {getBody()}
       </div>
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        model={dataObject}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </InputContainer>
   );
 }
@@ -322,7 +351,8 @@ ListInputBase.propTypes = {
   customTemplate: PropTypes.func,
   disabledOptions: PropTypes.array,
   noDataMessage: PropTypes.string,
-  customTitle: PropTypes.string
+  customTitle: PropTypes.string,
+  loadDataFunction: PropTypes.func,
 };
 
 ListInputBase.defaultProps = {

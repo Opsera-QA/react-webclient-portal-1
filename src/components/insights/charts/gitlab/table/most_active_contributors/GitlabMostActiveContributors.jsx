@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis, showSettingsToggle }) {
+function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = gitlabMostActiveContributorsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -75,15 +75,23 @@ function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
-      let dateRange = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "date")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      let dateRange =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "date")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "gitlabMostActiveUsers",
         kpiConfiguration,
         dashboardTags,
-        filterDto, null, dashboardOrgs, null, null, dateRange
+        filterDto,
+        null,
+        dashboardOrgs,
+        null,
+        null,
+        dateRange
       );
       let dataObject = response?.data?.data[0]?.gitlabMostActiveUsers?.data;
 
@@ -131,7 +139,7 @@ function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
-        showSettingsToggle={showSettingsToggle}
+        tableChart={true}
       />
     </div>
   );
@@ -143,7 +151,6 @@ GitlabMostActiveContributors.propTypes = {
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
   setKpis: PropTypes.func,
-  showSettingsToggle: PropTypes.bool
 };
 
 export default GitlabMostActiveContributors;

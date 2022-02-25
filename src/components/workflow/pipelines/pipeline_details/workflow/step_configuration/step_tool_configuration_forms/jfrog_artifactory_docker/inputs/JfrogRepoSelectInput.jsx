@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
-import JFrogStepActions from "../jfrog-step-actions";
 import axios from "axios";
+import JFrogToolRepositoriesActions
+  from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jFrogToolRepositories.actions";
 
 function JfrogRepoSelect({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_prop}) {
   const toastContext = useContext(DialogToastContext);
@@ -59,9 +60,9 @@ function JfrogRepoSelect({ fieldName, dataObject, setDataObject, disabled, textF
 
   const loadRepos = async (cancelSource = cancelTokenSource) => {
     try {
-      const res = await JFrogStepActions.getRepos(dataObject.getData("jfrogToolConfigId"),"Docker", getAccessToken, cancelSource);
+      const res = await JFrogToolRepositoriesActions.getDockerRepositories(getAccessToken, cancelSource, dataObject.getData("jfrogToolConfigId"));
       if (res && res.status === 200) {
-        setRepos(res.data);
+        setRepos(res?.data?.data);
         return;
       }
       setRepos([]);

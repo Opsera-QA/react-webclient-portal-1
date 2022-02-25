@@ -12,15 +12,17 @@ import LdapOrganizationAccountDetailPanel
   from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountDetailPanel";
 import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import LdapOrganizationAccountManagementSubNavigationBar
+  from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagementSubNavigationBar";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 function LdapOrganizationAccountDetailView() {
   const { organizationDomain } = useParams();
-  const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
+  const { getUserRecord, getAccessToken, getAccessRoleData } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false); //this is how we toggle showing/hiding stuff when API calls or other functions are loading
   const [ldapOrganizationAccountData, setLdapOrganizationAccountData] = useState(undefined);
-  const [authorizedActions, setAuthorizedActions] = useState([]);
   const [currentUser, setCurrentUser] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -66,20 +68,14 @@ function LdapOrganizationAccountDetailView() {
 
   const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
-    const {ldap} = user;
-    const userRoleAccess = await setAccessRoles(user);
+    const userRoleAccess = await getAccessRoleData();
 
     if (isMounted?.current === true && userRoleAccess) {
       setCurrentUser(user);
       setAccessRoleData(userRoleAccess);
 
       if (userRoleAccess?.OpseraAdministrator) {
-        let authorizedActions = await accountsActions.getAllowedOrganizationAccountActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-        setAuthorizedActions(authorizedActions);
-
-        if (authorizedActions?.includes("get_organization_account_details")) {
-          await loadOrganizationAccount(cancelSource);
-        }
+        await loadOrganizationAccount(cancelSource);
       }
     }
   };
@@ -111,9 +107,13 @@ function LdapOrganizationAccountDetailView() {
       dataObject={ldapOrganizationAccountData}
       isLoading={isLoading}
       actionBar={getActionBar()}
+      navigationTabContainer={
+        <LdapOrganizationAccountManagementSubNavigationBar
+          activeTab={"organizationAccountViewer"}
+        />
+      }
       detailPanel={
         <LdapOrganizationAccountDetailPanel
-          authorizedActions={authorizedActions}
           isMounted={isMounted}
           cancelTokenSource={cancelTokenSource}
           ldapOrganizationAccountData={ldapOrganizationAccountData}

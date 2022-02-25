@@ -57,8 +57,8 @@ function ParameterValueTextInput({fieldName, model, parameterId, setModel, disab
     return (
       <div className={"d-flex ml-2"}>
         <ShowSensitiveDataButton
-          showData={showData}
-          hideData={hideValue}
+          showDataFunction={showData}
+          hideDataFunction={hideValue}
           isLoading={isLoading}
           className={"input-button"}
           valueShown={valueShown || model?.isChanged(fieldName)}
@@ -98,7 +98,7 @@ function ParameterValueTextInput({fieldName, model, parameterId, setModel, disab
     <InputContainer>
       <InputLabel field={field} model={model}/>
       <div className={"d-flex"}>
-        <input
+        <textarea
           type={valueShown === false && !model?.isChanged(fieldName) ? "password" : undefined}
           disabled={disabled}
           value={getValue()}
@@ -108,7 +108,12 @@ function ParameterValueTextInput({fieldName, model, parameterId, setModel, disab
         />
         {getButtons()}
       </div>
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        model={model}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </InputContainer>
   );
 }

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
-import config from "./sonarMaintainabilityRatingLineChartConfigs";
+import config from "components/insights/charts/sonar/line_chart/maintainability_rating/sonarMaintainabilityRatingLineChartConfigs";
 import React, {useState, useEffect, useContext, useRef} from "react";
 import ModalLogs from "components/common/modal/modalLogs";
 import axios from "axios";

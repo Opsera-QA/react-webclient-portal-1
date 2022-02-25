@@ -10,6 +10,7 @@ import Model from "core/data_model/model";
 
 function FilterButtons({ dropdownFilters, filterDto, loadData, className, isLoading }) {
   const loadFilters = async () => {
+    filterDto?.setData("currentPage", 1);
     loadData(filterDto);
     document.body.click();
   };

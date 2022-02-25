@@ -19,7 +19,7 @@ function ServiceNowAssignmentGroupSelectInput({
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [toggleSelected, setToggleSelected] = useState(false);
+  // const [toggleSelected, setToggleSelected] = useState(false);
   const [groups, setGroups] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -80,29 +80,36 @@ function ServiceNowAssignmentGroupSelectInput({
     };
   }, [serviceNowToolId]);
 
-  const loadGroups = async () => {
-    try {
-      setIsLoading(true);
-      setToggleSelected(true);
-      const response = await pipelineStepNotificationActions.getServiceNowGroups(
-        serviceNowToolId,
-        getAccessToken,
-        cancelTokenSource
-      );
-
-      if (response.data != null && response.data.message != null && Array.isArray(response.data.message)) {
-        setGroups(response.data.message);
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showErrorDialog(
-          "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry."
+  const loadGroups = async (searchTerm) => {
+    if (searchTerm && searchTerm.length >= 3) {
+      try {
+        setIsLoading(true);
+        // setToggleSelected(true);
+        const response = await pipelineStepNotificationActions.getServiceNowGroupsByName(
+          serviceNowToolId,
+          searchTerm,
+          getAccessToken,
+          cancelTokenSource
         );
-      }
-      console.error(error);
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
+
+        if (
+          response?.data !== null &&
+          response?.data?.message?.result !== null &&
+          Array.isArray(response.data.message.result)
+        ) {
+          setGroups(response.data.message.result);
+        }
+      } catch (error) {
+        if (isMounted?.current === true) {
+          toastContext.showErrorDialog(
+            "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry."
+          );
+        }
+        console.error(error);
+      } finally {
+        if (isMounted?.current === true) {
+          setIsLoading(false);
+        }
       }
     }
   };
@@ -116,11 +123,11 @@ function ServiceNowAssignmentGroupSelectInput({
       return "A ServiceNow Tool must be selected before selecting a Assignment Group";
     }
 
-    if (!isLoading && serviceNowToolId !== "" && groups.length === 0 && !toggleSelected) {
-      return "Click to load Assignment Groups";
+    if (!isLoading && serviceNowToolId !== "" && groups.length === 0) {
+      return "Start typing to load Assignment Groups";
     }
 
-    if (!isLoading && serviceNowToolId !== "" && groups.length === 0 && toggleSelected) {
+    if (!isLoading && serviceNowToolId !== "" && groups.length === 0) {
       return "No Assignment Groups found for selected ServiceNow account.";
     }
 
@@ -140,9 +147,11 @@ function ServiceNowAssignmentGroupSelectInput({
       valueField={valueField}
       textField={textField}
       placeholderText={getPlaceholderText()}
-      onToggleFunction={loadGroups}
+      // onToggleFunction={loadBusinessServices}
       disabled={disabled || serviceNowToolId === "" || !serviceNowToolId}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
+      onSearchFunction={(searchTerm) => loadGroups(searchTerm)}
+      useToggle={false}
     />
   );
 }

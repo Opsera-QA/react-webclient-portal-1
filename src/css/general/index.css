@@ -1,0 +1,950 @@
+:root {
+    --height: calc(100% + 100px);
+    --font-family-sans-serif: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.h4, .h5 {
+    letter-spacing: .6px;
+}
+
+/* Site Typography
+primary analytics font*/
+.font-inter-light-100 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 100;
+}
+
+.font-inter-light-300 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+}
+
+.font-inter-light-400 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+}
+
+.font-inter-light-500 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+}
+
+.metric-block-header-text {
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.metric-block-content-text {
+    font-size: 2rem;
+    letter-spacing: 1px;
+}
+
+.metric-block-content-text-md {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.metric-block-footer-text {
+    font-size: .85rem;
+    letter-spacing: 1px;
+}
+
+.chart-header-name-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 100;
+    text-transform: capitalize;
+    /*color: #8798ad;*/
+    color: white;
+}
+
+.chart-footer-text, .chart-subheader-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 100;
+    font-size: small;
+    text-transform: capitalize;
+    color: #8798ad;
+}
+
+/*primary product font*/
+.font-lato-100 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 100;
+}
+
+.font-lato-300 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+.font-lato-400 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+}
+
+.failure-text {
+    color: red;
+    font-weight: bold;
+}
+
+.red {
+    color: #E57373;
+}
+
+.danger-red {
+    color: #dc3545;
+}
+
+.yellow {
+    color: #CF940C;
+}
+
+.green {
+    color: #00897b;
+}
+
+/*Official Opsera Color Pallette*/
+.opsera-yellow {
+    color: #CF940C;
+}
+
+.opsera-primary {
+    color: #352F54
+}
+
+.opsera-secondary {
+    color: #46415C;
+}
+
+.opsera-banner-text-on-purple-background {
+    color: #fef7fd;
+}
+
+.light-grey {
+    color: #E6E5E3;
+}
+
+.dark-grey {
+    color: #3D3B36;
+}
+
+.text-color {
+    color: #3D3B36;
+}
+
+.background-shading {
+    background-color: #FCFCFC;
+}
+
+/*begin analytics focused color scheme*/
+.dark-gray-text-primary {
+    color: #2e384d;
+}
+
+.light-gray-text-secondary {
+    color: #67788d;
+}
+
+.chart-palette-1 {
+    color: #00a8e8;
+}
+
+.chart-palette-2 {
+    color: #e76500;
+}
+
+.chart-palette-3 {
+    color: #a24600;
+}
+
+.chart-palette-4 {
+    color: #2e17e7;
+}
+
+.chart-palette-5 {
+    color: #2010a2;
+}
+/*end analytics color scheme*/
+/*END Official Colors*/
+
+
+.small-label-text {
+    font-size:.8rem;
+}
+
+.pointer {
+    cursor: pointer
+}
+
+.default-cursor {
+    cursor: default
+}
+
+.not-allowed-cursor {
+    cursor: not-allowed;
+}
+
+.vertical-align-item {
+    vertical-align: middle;
+}
+
+html {
+    font-family: sans-serif;
+    line-height: 1.15;
+    margin: 0;
+}
+
+body {
+    background-color: #fff;
+    color: #334152;
+    margin: 0;
+    font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.5;
+    min-height: 100vh;
+}
+
+.main-text, .vanity-table {
+    font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+a, .link-text {
+    color: #383060; /*#1578dc;*/
+    text-decoration: none;
+}
+
+a:hover, .active, .link-text:hover {
+    color: #7F74B9; /*#1578dc;*/
+    text-decoration: none;
+}
+
+.title-text-header-1 {
+    font-size: 1.25rem;
+    letter-spacing: .8px;
+}
+
+.title-text-header-2 {
+    font-size: 1.1rem;
+}
+
+.title-text-header-3 {
+    font-size: 1.25rem;
+}
+
+.title-text-5 {
+    font-weight: 500;
+    line-height: 1.4;
+    font-size: 1.2rem;
+    padding-bottom: .25rem
+}
+
+.title-text-6 {
+    font-weight: 500;
+    line-height: 1.2;
+    font-size: 1rem;
+    padding-bottom: .25rem
+}
+
+.title-text-7 {
+    font-weight: bold;
+    line-height: 1;
+    font-size: .9rem;
+    padding-bottom: .25rem
+}
+
+.title-text-divider {
+    border-bottom: 1px solid #c9cdd0;
+}
+
+.header-text {
+    font-weight: 500;
+    line-height: 1.2;
+    font-size: 1.1rem;
+    margin-bottom: .2rem;
+    margin-top: .5rem;
+}
+
+.blueprint-title {
+    font-weight: 500;
+    line-height: 1.4;
+    font-size: 1.2rem;
+}
+
+.blueprint-step-title {
+    font-weight: 500;
+    line-height: 1.4;
+    font-size: 1rem;
+    color: #000000
+}
+
+.absolute-center-content {
+    max-width: 400px;
+    max-height: 200px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+
+.btn-group-sized .btn-default {
+    min-width: 100px;
+}
+
+
+/* Utility Classes */
+.italic {
+    font-style: italic;
+}
+
+/* Set at row level */
+.vertical-center-cols-in-row {
+    display: flex;
+    align-items: center;
+}
+
+.border-bottom {
+    border-width: 2px;
+    border-bottom-width: 2px;
+    border-bottom-color: #343a40;
+    border-bottom-style: solid;
+}
+
+.medium-data-block-height {
+    min-height: 11rem;
+}
+
+.max-content-width {
+    max-width: 1685px; /* 1250px*/
+}
+
+.max-content-width-1875 {
+    max-width: 1875px; /* 1250px*/
+}
+
+.max-content-width-1080 {
+    max-width: 1080px;
+}
+
+.max-charting-width {
+    max-width: 80vw;
+}
+
+.max-content-module-width-50 {
+    max-width: 800px;
+}
+
+.min-content-message-dimension {
+    min-width: 20vw;
+    min-height: 20vw;
+}
+
+.upper-case-all {
+    text-transform: uppercase;
+}
+
+.upper-case-first {
+    text-transform: capitalize;
+}
+
+.force-text-wrap {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -ms-word-break: break-all;
+    /* This is the dangerous one in WebKit, as it breaks things wherever */
+    word-break: break-all;
+    /* word-break: break-word; */
+
+    /* Adds a hyphen where the word breaks, if supported (No Blink) */
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+/* END Utility Classes */
+
+
+/* Absolute Center Spinner */
+.loading {
+    position: fixed;
+    z-index: 999;
+    height: 2em;
+    width: 2em;
+    overflow: visible;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+/* Transparent Overlay */
+.loading:before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.loader {
+    min-width: 125px;
+}
+
+.list-item-container {
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: .25rem;
+    padding: 1em;
+}
+
+.row-header-text {
+    font-size: 1.1em;
+}
+
+.row-content-spacing {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.col-header-text {
+    font-weight: bold;
+    font-size: larger;
+}
+
+.grid-striped .row:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, .05);
+}
+
+.modal-body-text-block {
+    font-size: .9em;
+    margin: 4px;
+}
+
+@media only screen and (max-width: 764px) {
+    .sidebar {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    /*   .container-fluid {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+     */
+}
+
+/* reporting */
+
+.reporting__to-dashboard-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-top: 30px;
+}
+
+
+/* New Template Classes */
+.all-wrapper {
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    max-width: 1600px;
+    margin: 0px auto;
+    position: relative;
+    min-height: 100%;
+}
+
+.all-wrapper.with-pattern {
+    box-shadow: none;
+    border-radius: 0px;
+    /* background-image: url("../img/bg-pattern2.png"); */
+    background-size: contain;
+    background-repeat: repeat;
+    background-position: 0 0;
+}
+
+.all-wrapper.no-padding-content .content-box {
+    padding: 0px;
+}
+
+.all-wrapper.white-bg-content .content-w {
+    background-color: #fff;
+    background-image: none;
+}
+
+.all-wrapper.solid-bg-all {
+    background-color: #f2f4f8;
+}
+
+.all-wrapper.solid-bg-all .content-w {
+    background-image: none;
+}
+
+.auth-wrapper .all-wrapper {
+    padding: 100px;
+}
+
+.menu-side .content-w {
+    display: block;
+}
+
+/* #2.  Screen size <= 1550px */
+@media (max-width: 1550px) {
+    .auth-wrapper .all-wrapper {
+        padding: 20px;
+    }
+}
+
+/*
+ #12. Authorization styles
+*/
+.auth-box-w {
+    max-width: 450px;
+    min-width: 420px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+}
+
+.auth-box-w.wider {
+    max-width: 500px;
+}
+
+.auth-box-w .logged-user-w {
+    padding-top: 0;
+    padding-bottom: 10px;
+}
+
+.auth-box-w .logo-w {
+    text-align: center;
+    padding: 15%;
+}
+
+.auth-box-w .auth-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+    padding-left: 80px;
+}
+
+.auth-box-w .auth-header:after {
+    content: "";
+    background-color: #352F54;
+    width: 32px;
+    height: 7px;
+    border-radius: 2px;
+    display: block;
+    position: absolute;
+    bottom: -4px;
+    left: 80px;
+}
+
+.auth-box-w form {
+    padding: 20px 80px 60px;
+}
+
+.auth-box-w form .form-check-inline {
+    margin-left: 1rem;
+}
+
+.auth-box-w form .form-group {
+    position: relative;
+}
+
+.auth-box-w form .form-group .pre-icon {
+    position: absolute;
+    bottom: 5px;
+    font-size: 24px;
+    color: #1578dc;
+    left: -38px;
+}
+
+.auth-box-w .buttons-w {
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.auth-box-w.centered {
+    text-align: center;
+}
+
+.auth-box-w.centered .auth-header {
+    padding-left: 0;
+}
+
+.auth-box-w.centered .auth-header:after {
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+/* #3.  Screen size <= 1400px */
+@media (max-width: 1400px) {
+    .menu-side-w ul.main-menu > li .icon-w {
+        padding-left: 10px;
+        width: 65px;
+    }
+
+    .menu-side-w {
+        width: 230px;
+    }
+
+    .menu-side-w .side-menu-magic {
+        padding: 30px 20px;
+    }
+
+    .menu-side-w .logged-user-menu ul {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .menu-side-w ul.sub-menu {
+        padding-left: 30px;
+    }
+}
+
+/* #4.  Screen size <= 1350px */
+@media (max-width: 1350px) {
+    .menu-side-w .logo-w {
+        padding: 1.5rem 1rem;
+    }
+}
+
+/* #6.  Screen size <= 1250px */
+@media (max-width: 1250px) {
+    .content-w,
+    .menu-side-w,
+    .all-wrapper {
+        border-radius: 0 !important;
+        overflow: hidden;
+    }
+
+    .menu-side-w .logged-user-menu {
+        left: 0;
+        right: 0;
+    }
+
+}
+
+/* End New Template Classes */
+
+
+.bordered-content-block {
+    border: 1px solid #d2d2d2;
+}
+
+.flat-top-content-block {
+    border-bottom: 1px solid #d2d2d2;
+    border-left: 1px solid #d2d2d2;
+    border-right: 1px solid #d2d2d2;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: #fff;
+
+    border-top: 1px solid #d2d2d2; /* Temporarily added to address tabbed content that isn't ready for no top border */
+}
+
+.side-content-block {
+    padding: 3px;
+    border-right: 1px solid #d2d2d2;
+
+}
+
+/* status page css */
+
+.status-text {
+    font-size: smaller;
+    text-transform: capitalize;
+}
+
+.error-text {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    color: #dc3545;
+    padding: 5px;
+}
+
+.info-text {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    color: #3D3B36;
+    padding: 5px;
+}
+
+.success-text {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    color: green;
+    padding: 5px;
+}
+
+.success-toast-text {
+    opacity: .8;
+}
+
+.error-toast-text {
+    opacity: .8;
+}
+
+.warning-text {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    color: #CF940C;
+    padding: 5px;
+}
+
+.success-block {
+    background-color: green;
+    color: #fff;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.error-block {
+    background-color: #dc3545;
+    color: #fff;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.info-block {
+    background-color: #1989F9;
+    color: #fff;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.warning-block {
+    background-color: #CF940C;
+    color: #FFF;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.text-block {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    padding: 5px;
+    margin: 3px;
+}
+
+
+.top-dialog-detail-panel-block {
+    padding: 1em;
+    width: 100%;
+    z-index: 1200;
+}
+
+.top-dialog-block {
+    top: 0;
+    left: 0;
+    position: fixed;
+    padding: .75em;
+    z-index: 1200;
+}
+
+.top-dialog-block-static {
+    top: 0;
+    left: 0;
+    padding: .75em;
+    z-index: 1200;
+}
+
+.top-dialog-block-static-login {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    padding: .75em;
+    z-index: 1200;
+}
+
+.top-error-block {
+    top: 0;
+    left: 0;
+    position: fixed;
+    padding: .75em;
+}
+
+.step-configuration-dialog-block {
+    padding: 1em;
+    border-radius: 5px;
+    z-index: 1200;
+}
+
+.tool-registry-dialog-block {
+    padding: 1em;
+    border-radius: 5px;
+}
+
+.pipeline-summary-dialog-block {
+    background-color: #FFF;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    padding: 10px;
+    margin: 10px 0 5px 0;
+    z-index: 3000;
+    border-radius: 5px;
+    text-align: left;
+    border-width: 2px;
+    border-style: solid;
+    border-left-width: 8px;
+}
+
+.warning-theme {
+    border-color: #f9c116;
+}
+
+.info-theme {
+    border-color: #1989F9;
+}
+
+.success-theme {
+    border-color: green;
+}
+
+.error-theme {
+    border-color: #dc3545;
+}
+
+.code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.pre {
+    white-space: pre-wrap; /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+.no-wrap {
+    display: inline-block;
+    white-space: nowrap;
+    word-break: keep-all;
+}
+
+.no-wrap-inline {
+    white-space: nowrap;
+    word-break: keep-all;
+}
+
+.console-text {
+    background-color: black;
+    background-image: radial-gradient(
+            rgb(56, 75, 112, 0.75), black 120%
+    );
+    padding: 10px;
+    color: white;
+    font: .8em Inconsolata, monospace;
+    white-space: pre-wrap; /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+.console-text-invert {
+    padding: 10px;
+    color: black;
+    font: .8em Inconsolata, monospace;
+    white-space: pre-wrap; /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+.console-text-invert-modal {
+    padding: 10px;
+    color: black;
+    font: .95em Inconsolata, monospace;
+    white-space: pre-wrap; /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+.json-block-text {
+    padding: 10px;
+    font: Inconsolata, monospace;
+    white-space: pre-wrap; /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+/*  Modal Style Changes */
+#dataManagerModal .modal-content {
+    min-height: 600px;
+}
+
+#dataManagerModalSmall .modal-content {
+    min-height: 400px;
+}
+
+
+.flex-container {
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-container-top {
+    min-height: 40px;
+}
+
+.flex-container-content {
+    flex: auto;
+}
+
+.flex-container-bottom {
+    min-height: 25px;
+}
+
+.scale-80 {
+    transform: scale(.80);
+    transform-origin: top center;
+    padding: 15px;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.scale-100 {
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.scale-120 {
+    padding: 15px;
+    margin-top: 10px;
+    transform: scaleX(1.2);
+    transform-origin: top center;
+}
+
+.scale-120-container {
+    transform: scaleY(1.2);
+    transform-origin: top;
+}
+
+.dropdown-data-fetch:hover {
+    text-decoration: underline;
+}
+
+.dropdown-data-fetch {
+    color: blue;
+    cursor: pointer;
+}
+
+.stepForm-data-display {
+    background-color: #FFF;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    z-index: 3000;
+}

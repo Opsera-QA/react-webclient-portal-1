@@ -1,21 +1,18 @@
 import { format } from "date-fns";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { Form } from "react-bootstrap";
 import {
   faCheckCircle,
   faCircle, faOctagon,
   faPauseCircle, faPlayCircle, faSearchPlus,
   faSpinner,
   faStopCircle,
-  faTimesCircle, faTrash, faPlay, faTag, faExclamationCircle
+  faTimesCircle, faTrash, faPlay, faExclamationCircle
 } from "@fortawesome/pro-light-svg-icons";
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import WarningIcon from "../../common/icons/table/WarningIcon";
 import FailIcon from "../../common/icons/table/FailIcon";
-import ArrowCircleDown from "../../common/icons/table/ArrowCircleDown";
-import ArrowCircleUp from "../../common/icons/table/ArrowCircleUp";
-import MinusCircle from "../../common/icons/table/MinusCircle";
-import PauseCircle from "../../common/icons/table/PauseCircle";
+import SuccessMetricIcon from "components/common/icons/metric/success/SuccessMetricIcon";
+import DangerMetricIcon from "components/common/icons/metric/danger/DangerMetricIcon";
 import React from "react";
 import Model from "core/data_model/model";
 import PipelineTypesField from "components/common/fields/pipelines/PipelineTypesField";
@@ -23,14 +20,17 @@ import DashboardFavoritesIcon from "components/common/icons/dashboards/Dashboard
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import {Button} from "react-bootstrap";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
-import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date-helpers";
-import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
+import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date/date.helpers";
+import {capitalizeFirstLetter, hasStringValue, truncateString} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
-import CustomBadge from "components/common/badges/CustomBadge";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
-import {getTaskTypeLabel} from "components/tasks/task.types";
 import { getPipelineStateFieldBase} from "components/common/fields/pipelines/state/PipelineStateField";
+import AppliedTagBadge from "components/common/badges/tag/AppliedTagBadge";
+import UnchangedMetricIcon from "components/common/icons/metric/unchanged/UnchangedMetricIcon";
+import NoTrendMetricIcon from "components/common/icons/metric/trend/NoTrendMetricIcon";
+import IconBase from "components/common/icons/IconBase";
+import PageLinkIcon from "components/common/icons/general/PageLinkIcon";
+import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
 
 export const getCustomTableHeader = (field) => {
   return field ? field.label : "";
@@ -40,10 +40,11 @@ export const getCustomTableAccessor = (field) => {
   return field ? field.id : "";
 };
 
-export const getTableTextColumnWithoutField = (header, accessor) => {
+export const getTableTextColumnWithoutField = (header, accessor, className) => {
   return {
     Header: header,
-    accessor: accessor
+    accessor: accessor,
+    class: className ? className : undefined
   };
 };
 
@@ -60,6 +61,30 @@ export const getTableTextColumn = (field, className) => {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     class: className ? className : undefined
+  };
+};
+
+export const getTableDurationTextColumn = (field, className) => {
+  if (className) {
+    return {
+      Header: getCustomTableHeader(field),
+      accessor: getCustomTableAccessor(field),
+      class: className,
+      Cell: function parseText(row) {
+        const value = row?.value;
+        return getTimeDisplay(value);
+      }
+    };
+  }
+
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    class: className ? className : undefined,
+    Cell: function parseText(row) {
+      const value = row?.value;
+      return getTimeDisplay(value);
+    }
   };
 };
 
@@ -93,29 +118,12 @@ export const getLimitedTableTextColumn = (field, maxLength, className) => {
   };
 };
 
-export const getStringifiedArrayColumn = (field, className) => {
+export const getFormattedLabelWithFunctionColumnDefinition = (field, formatFunction, className) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
-    Cell: function stringifyArray(row) {
-      const array = row?.value;
-
-      if (Array.isArray(array) && array.length > 0) {
-        return JSON.stringify(array);
-      }
-
-      return "";
-    },
-    class: className ? className : "no-wrap-inline"
-  };
-};
-
-export const getTaskTypeColumn = (field, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function formatTaskTypeLabel(row) {
-      return getTaskTypeLabel(row?.value);
+    Cell: function formatValue(row) {
+      return formatFunction(row?.value);
     },
     class: className ? className : "no-wrap-inline"
   };
@@ -148,49 +156,6 @@ export const getTaskStatusColumn = (field, className) => {
   };
 };
 
-export const getLimitedStringifiedArrayColumn = (field, maxLength, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function stringifyArray(row) {
-      const array = row?.value;
-
-      if (Array.isArray(array) && array.length > 0) {
-        const value = JSON.stringify(array);
-        const truncatedString = truncateString(value ,maxLength);
-        
-        if (truncatedString !== value) {
-          return (<TooltipWrapper innerText={value}><span>{truncatedString}</span></TooltipWrapper>);
-        }
-
-        return value;
-      }
-
-      return "";
-    },
-    class: className ? className : "no-wrap-inline"
-  };
-};
-
-export const getNameValueArrayColumn = (field, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function stringifyArray(row) {
-      const array = row?.value;
-
-      if (Array.isArray(array) && array.length > 0) {
-        return array.map((item, index) => {
-          return (`${item.name}:${item.value}${array.length > index + 1 ? ',' : ''}`);
-        });
-      }
-
-      return "";
-    },
-    class: className ? className : "no-wrap-inline"
-  };
-};
-
 export const getRoleArrayColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
@@ -210,151 +175,19 @@ export const getRoleArrayColumn = (field, className) => {
   };
 };
 
-export const getContactArrayColumn = (field, className) => {
+export const getTagColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function stringifyArray(row) {
-      const array = row?.value;
+      const tags = row?.value;
 
-      if (Array.isArray(array) && array.length > 0) {
-        return array.map((item, index) => {
-          return (`${item.name}:${item.email}:${item.user_id}${array.length > index + 1 ? ',' : ''}`);
-        });
-      }
-
-      return "";
-    },
-    class: className ? className : "no-wrap-inline"
-  };
-};
-
-export const getLimitedContactArrayColumn = (field, maxLength, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function stringifyArray(row) {
-      const array = row?.value;
-
-      if (Array.isArray(array) && array.length > 0) {
-          const valueArr = array.map((item, index) => {
-            return (`${item.name}:${item.email}:${item.user_id}${array.length > index + 1 ? ',' : ''}`);
-          });
-
-          const value = JSON.stringify(valueArr).replace(/[["\]]/g,'');
-
-          const truncatedString = truncateString(value, maxLength);
-          
-          if (truncatedString !== value) {
-            return (<TooltipWrapper innerText={value}><span>{truncatedString}</span></TooltipWrapper>);
-          }
-  
-          return value;
-      }
-
-      return "";
-    },
-    class: className ? className : "no-wrap-inline"
-  };
-};
-
-export const getTagColumn = (field, maxShown = 2, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function stringifyArray(row) {
-      const array = row?.value;
-
-      if (Array.isArray(array) && array.length > 0) {
-        const tags =
-          <CustomBadgeContainer>
-            {array.map((tag, index) => {
-              if (typeof tag !== "string") {
-                return (
-                  <CustomBadge
-                    badgeText={<span><span
-                      className="mr-1">{capitalizeFirstLetter(tag.type)}:</span>{capitalizeFirstLetter(tag.value)}</span>}
-                    icon={faTag}
-                    key={index}
-                  />
-                );
-              }
-            })}
-          </CustomBadgeContainer>;
-
-        return (
-          <TooltipWrapper innerText={maxShown < array.length ? tags : null} title={"Tags"}>
-            <div>
-              <span className="item-field">
-              {array.map((tag, index) => {
-                if (index + 1 > maxShown) {
-                  return;
-                }
-
-                return (
-                  <span key={index}>
-                    <span className="mr-1 badge badge-light group-badge">
-                      {capitalizeFirstLetter(tag.type)}: {capitalizeFirstLetter(tag.value)}
-                    </span>
-                  </span>
-                );
-              })}
-                <span>{array.length > maxShown ? "..." : ""}</span>
-              </span>
-            </div>
-          </TooltipWrapper>
-        );
-      }
-
-      return "";
-    },
-    class: className ? className : "no-wrap-inline"
-  };
-};
-
-export const getTagArrayColumn = (field, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function stringifyArray(row) {
-      const array = row?.value;
-
-      if (Array.isArray(array) && array.length > 0) {
-        return array.map((tag, index) => {
-          return (`${tag.type}: ${tag.value}${array.length > index + 1 ? ',' : ''}`);
-        });
-      }
-
-      return "";
-    },
-    class: className ? className : "no-wrap-inline"
-  };
-};
-
-export const getLimitedTagArrayColumn = (field, maxLength, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function stringifyArray(row) {
-      const array = row?.value;
-
-      if (Array.isArray(array) && array.length > 0) {
-        const valueArr = array.map((tag, index) => {
-          return (`${tag.type}: ${tag.value}${array.length > index + 1 ? ',' : ''}`);
-        });
-
-        const value = JSON.stringify(valueArr).replace(/[["\]]/g,'');
-
-        const truncatedString = truncateString(value, maxLength);
-
-        if (truncatedString !== value) {
-          return (<TooltipWrapper innerText={value}><span>{truncatedString}</span></TooltipWrapper>);
-        }
-
-        return value;
-      }
-
-      return "";
+      return (
+        <AppliedTagBadge
+          className={"group-badge"}
+          tags={tags}
+        />
+      );
     },
     class: className ? className : "no-wrap-inline"
   };
@@ -402,31 +235,6 @@ export const getTableDateAndTimeUntilValueColumn = (header, id, fakeColumn = "fa
       return originalRow[id] ? convertFutureDateToDhmsFromNowString(new Date(originalRow[id])) : "";
     },
     class: className ? className : "no-wrap-inline"
-  };
-};
-
-export const getPipelineActivityStatusColumn = (field, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function parseStatus(row) {
-      if (row?.value == null || row?.value === "") {
-        return (
-          <div className="d-flex flex-nowrap">
-            <div><FontAwesomeIcon icon={faCircle} className="cell-icon yellow my-auto" fixedWidth/></div>
-            <div className="ml-1">Unknown</div>
-          </div>
-        );
-      }
-
-      return (
-        <div className="d-flex flex-nowrap">
-          <div>{getPipelineStatusIcon(row)}</div>
-          <div className="ml-1">{capitalizeFirstLetter(row.value)}</div>
-        </div>
-      );
-    },
-    class: className ? className : undefined
   };
 };
 
@@ -533,16 +341,17 @@ export const getChartTrendStatusColumn = (field, className) => {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function parseStatus(row) {
-      let status = typeof row?.value === "string" ? row.value.toLowerCase() : status;
+      let status = typeof row?.value === "string" ? row.value.toLowerCase() : "";
+
       switch (status) {
         case "red":
-          return (<ArrowCircleUp />);
+          return (<DangerMetricIcon />);
         case "neutral":
-          return (<PauseCircle/>);
+          return null;
         case "green":
-        return (<ArrowCircleDown/>);
+        return (<SuccessMetricIcon />);
         case "-":
-          return (<MinusCircle/>);
+          return (<NoTrendMetricIcon />);
         default:
           return status;
       }
@@ -619,19 +428,6 @@ export const getTableBooleanIconColumn = (field, className) => {
   };
 };
 
-export const getGitTasksStatusColumn = (field, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function parseStatus(row) {
-      return (        
-        <div>{getPipelineStatusIcon(row)}</div>        
-      );
-    },
-    class: className ? className : undefined
-  };
-};
-
 export const getTableInfoIconColumn = (showInformationFunction, accessor = "row", className) => {
   return {
     Header: "Info",
@@ -649,7 +445,7 @@ export const getTableArrayCountColumn = (field, className) => {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function getCount(row) {
-      return row.value.length;
+      return Array.isArray(row?.value) ? row.value.length : "";
     },
     class: className ? className :  "no-wrap-inline"
   };
@@ -694,60 +490,29 @@ export const getRoleAccessLevelColumn = (field, className) => {
   };
 };
 
-export const getValueColumn = (field, valueFormat) => {
-  switch (valueFormat) {
-    case "boolean":
-      return getTableBooleanIconColumn(field);
-    case "date":
-      return getTableDateColumn(field);
-    case "count":
-      return getTableArrayCountColumn(field);
-    case "text":
-    default:
-      return getTableTextColumn(field);
-  }
-};
-
-export const getCheckBoxColumn = (handleChange) => {
-  return {
-    Header: "",
-    accessor: "row",
-    Cell: function getCheckboxForRow(row) {
-      const idx = row.row["index"];
-      const item = row["data"][idx];
-      return <Form.Check
-        inline
-        type={"checkbox"}
-        name={item.committedFile}
-        id={idx}
-        disabled={item.checkAll}
-        checked={!!item.isChecked}
-        onChange = {() => {
-          item.isChecked = !item.isChecked;
-          handleChange(item);
-        }}
-      />;
-    },
-  };
-};
-
-export const getStaticIconColumn = (icon, accessor = "row", className) => {
-  return {
-    Header: "",
-    accessor: accessor,
-    Cell: function StaticIcon(){
-      return <FontAwesomeIcon icon={icon} />;
-    },
-    class: className ? className : undefined
-  };
-};
-
 export const getStaticInfoColumn = (icon, accessor = "row", className) => {
   return {
     Header: "",
     accessor: accessor,
     Cell: function StaticIcon(){
-      return <FontAwesomeIcon icon={faSearchPlus} />;
+      return <IconBase icon={faSearchPlus} />;
+    },
+    class: className ? className : undefined
+  };
+};
+
+export const getExternalLinkIconColumnDefinition = (field, linkText, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    Cell: function getPageLink(row){
+      return (
+        <PageLinkIcon
+          pageLink={row?.value}
+          externalLink={true}
+          pageLinkText={linkText}
+        />
+      );
     },
     class: className ? className : undefined
   };

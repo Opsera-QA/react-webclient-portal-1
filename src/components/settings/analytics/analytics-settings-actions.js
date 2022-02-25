@@ -18,11 +18,6 @@ analyticsActions.fetchProfile = async (getAccessToken) => {
   return response;
 };
 
-analyticsActions.getAnalyticsSettingsV2 = async (getAccessToken, cancelTokenSource) => {
-  const apiUrl = `/analytics/settings`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
 analyticsActions.getAnalyticsToolsV2 = async (getAccessToken, cancelTokenSource) => {
   // TODO: Pass in, if necessary
   const INDICES = [
@@ -50,6 +45,12 @@ analyticsActions.getAnalyticsToolsV2 = async (getAccessToken, cancelTokenSource)
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+
+analyticsActions.getAnalyticsSettingsV2 = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/analytics/settings`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 analyticsActions.getBlueprintFilterData = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = `/analytics/search/filter`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
@@ -62,6 +63,11 @@ analyticsActions.getPipelineFilterData = async (getAccessToken, cancelTokenSourc
 
 analyticsActions.fetchProfileV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = "/analytics/profile/settings";
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+analyticsActions.areAnalyticsToolsEnabled = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = "/analytics/profile/enabled-tools-check";
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

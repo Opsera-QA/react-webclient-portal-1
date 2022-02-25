@@ -8,11 +8,11 @@ function HorizontalDataBlocksContainer({children, onClick, tooltipText, title, c
   return (
     <TooltipWrapper innerText={tooltipText}>
       <div className={className}>
+        <div className={"mx-1 light-gray-text-secondary font-inter-light-400 metric-block-header-text"}>
+          {title}
+        </div>
         <div className={`${onClick ? "pointer " : ""}data-block-container m-1`} onClick={onClick}>
-          <div className={"data-block-container-title px-2 py-1"}>
-            {title}
-          </div>
-          <Row className={"m-1"}>
+          <Row className={"m-1 py-2"}>
             {children}
           </Row>
         </div>

@@ -24,7 +24,11 @@ function FavoriteInput({fieldName, dataObject, setDataObject, disabled}) {
             onClick={() => {validateAndSetData(!dataObject.getData(field.id));}}
           />
         </span>
-      <InfoText field={field} errorMessage={null} />
+      <InfoText
+        field={field}
+        fieldName={fieldName}
+        model={dataObject}
+      />
     </div>
   );
 }

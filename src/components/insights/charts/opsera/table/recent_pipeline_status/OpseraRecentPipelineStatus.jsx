@@ -117,6 +117,7 @@ function OpseraRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, das
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
+        tableChart={true}
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}

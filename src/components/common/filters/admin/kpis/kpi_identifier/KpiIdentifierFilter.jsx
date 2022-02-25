@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import KpiActions from "components/admin/kpi_editor/kpi-editor-actions";
+import KpiActions from "components/admin/kpi_identifiers/kpi.actions";
 import axios from "axios";
 
 function KpiIdentifierFilter({ fieldName, filterModel, setFilterModel, setDataFunction, inline, className, textField, valueField, status, policySupport, manualDataEntry}) {

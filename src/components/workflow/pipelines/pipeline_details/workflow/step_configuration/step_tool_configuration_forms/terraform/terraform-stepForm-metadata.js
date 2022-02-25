@@ -2,7 +2,7 @@ const TerraformStepFormMetadata = {
   type: "Terraform Step Configuration",
   fields: [
     {
-      label: "SCM Tool Type",
+      label: "Source Code Management Tool Type",
       id: "type",
       isRequired: true
     },
@@ -12,7 +12,7 @@ const TerraformStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "SCM Tool",
+      label: "Source Code Management Tool",
       id: "gitToolId",
       isRequired: true
     },
@@ -48,7 +48,7 @@ const TerraformStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Runtime Argument Map",
+      label: "Runtime Arguments",
       id: "keyValueMap",
     },
     {
@@ -69,8 +69,12 @@ const TerraformStepFormMetadata = {
       maxItems: 15,
     },
     {
-      label: "Save Output Parameters?",
+      label: "Save Output Parameters",
       id: "saveParameters"
+    },
+    {
+      label: "Define Input Parameters",
+      id: "saveInputParameters"
     },
     {
       label: "IAM Roles", 
@@ -92,10 +96,80 @@ const TerraformStepFormMetadata = {
       label: "Bucket Region",
       id: "bucketRegion"
     },
+    {
+      label: "Terraform Version",
+      id: "tag",
+      isRequired: true
+    },
+    {
+      label: "Resource Group",
+      id: "resourceGroup",
+    },
+    {
+      label: "Storage Account Name",
+      id: "storageName",
+    },
+    {
+      label: "Storage Container",
+      id: "containerName",
+    },
+    {
+      label: "Azure Tool",
+      id: "azureToolConfigId",
+    },
+    {
+      label: "Terraform Cloud Tool",
+      id: "terraformCloudId",
+    },
+    {
+      label: "Organization Name",
+      id: "organizationName",
+    },
+    {
+      label: "Workspace Name",
+      id: "workspaceName",
+    },
+    {
+      label: "Backend State",
+      id: "backendState",
+    },
+    {
+      label: "Azure Credential",
+      id: "azureCredentialId",
+    },
+    {
+      label: "Input Parameters",
+      id: "inputParameters",
+    },
+    {
+      label: "Maintain Remote State",
+      id: "stateRemote",
+    },
+    {
+      label: "State File Management",
+      id: "stateFile",
+      formText: "This tracks if the state file will be created by Opsera during runtime."
+    },
+    {
+      label: "Terraform Execution Script",
+      id: "customScript"
+    },
+    {
+      label: "Terraform Commands",
+      id: "terraformCommands"
+    },
+    {
+      label: "Specify Environment Variables",
+      id: "saveEnvironmentVariables"
+    },
+    {
+      label: "Environment Variables",
+      id: "environmentVariables"
+    },
   ],
   fieldsAlt: [
     {
-      label: "SCM Tool Type",
+      label: "Source Code Management Tool Type",
       id: "type",
       isRequired: true
     },
@@ -105,7 +179,7 @@ const TerraformStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "SCM Tool",
+      label: "Source Code Management Tool",
       id: "gitToolId",
       isRequired: true
     },
@@ -141,7 +215,7 @@ const TerraformStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Runtime Argument Map",
+      label: "Runtime Arguments",
       id: "keyValueMap",
     },
     {
@@ -162,8 +236,12 @@ const TerraformStepFormMetadata = {
       maxItems: 15,
     },
     {
-      label: "Save Output Parameters?",
+      label: "Save Output Parameters",
       id: "saveParameters"
+    },
+    {
+      label: "Define Input Parameters",
+      id: "saveInputParameters"
     },
     {
       label: "IAM Roles", 
@@ -190,7 +268,77 @@ const TerraformStepFormMetadata = {
       label: "Cloud Provider",
       id: "cloudProvider",
       isRequired: true
-    }
+    },
+    {
+      label: "Terraform Version",
+      id: "tag",
+      isRequired: true
+    },
+    {
+      label: "Backend State",
+      id: "backendState",
+    },
+    {
+      label: "Resource Group",
+      id: "resourceGroup",
+    },
+    {
+      label: "Storage Account Name",
+      id: "storageName",
+    },
+    {
+      label: "Storage Container",
+      id: "containerName",
+    },
+    {
+      label: "Azure Tool",
+      id: "azureToolConfigId",
+    },
+    {
+      label: "Terraform Cloud Tool",
+      id: "terraformCloudId",
+    },
+    {
+      label: "Organization Name",
+      id: "organizationName",
+    },
+    {
+      label: "Workspace Name",
+      id: "workspaceName",
+    },
+    {
+      label: "Azure Credential",
+      id: "azureCredentialId",
+    },
+    {
+      label: "Input Parameters",
+      id: "inputParameters",
+    },
+    {
+      label: "Maintain Remote State",
+      id: "stateRemote",
+    },
+    {
+      label: "State File Management",
+      id: "stateFile",
+      formText: "This tracks if the state file will be created by Opsera during runtime."
+    },
+    {
+      label: "Terraform Execution Script",
+      id: "customScript"
+    },
+    {
+      label: "Terraform Commands",
+      id: "terraformCommands"
+    },
+    {
+      label: "Specify Environment Variables",
+      id: "saveEnvironmentVariables"
+    },
+    {
+      label: "Environment Variables",
+      id: "environmentVariables"
+    },
   ],
   newObjectFields: {
     toolActionType: "EXECUTE",
@@ -218,6 +366,24 @@ const TerraformStepFormMetadata = {
     bucketName: "",
     bucketRegion: "",
     cloudProvider: "aws",
+    tag: "",
+    resourceGroup : "",
+    storageName : "",
+    containerName : "",
+    azureToolConfigId : "",
+    terraformCloudId : "",
+    organizationName : "",
+    workspaceName: "",    
+    backendState: "LOCAL",
+    azureCredentialId: "",
+    inputParameters: "",
+    saveInputParameters: false,
+    stateRemote: false,
+    stateFile: "",
+    customScript: false,
+    terraformCommands: "",
+    saveEnvironmentVariables: false,
+    environmentVariables: []
   }
 };
 

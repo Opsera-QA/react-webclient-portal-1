@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import TaskDetailViewer from "components/tasks/activity_logs/details/TaskDetailViewer";
 import {
   getPipelineActivityStatusColumn, getTableDateTimeColumn,
-  getTableTextColumn,
-  getTaskTypeColumn
+  getTableTextColumn, getFormattedLabelWithFunctionColumnDefinition
 } from "components/common/table/table-column-helpers-v2";
 import TableBase from "components/common/table/TableBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import {getField} from "components/common/metadata/metadata-helpers";
+import {getTaskTypeLabel} from "components/tasks/task.types";
 
-function TaskActivityLogsTable({ taskLogData, taskActivityMetadata, isLoading, currentTaskName, currentRunNumber }) {
+function TaskActivityLogsTable({ taskLogData, taskActivityMetadata, isLoading }) {
   const [columns, setColumns] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
@@ -26,7 +27,11 @@ function TaskActivityLogsTable({ taskLogData, taskActivityMetadata, isLoading, c
   }, [JSON.stringify(taskActivityMetadata)]);
 
   const onRowSelect = (treeGrid, row) => {
-    toastContext.showOverlayPanel(<TaskDetailViewer taskActivityLogId={row?._id} />);
+    toastContext.showOverlayPanel(
+      <TaskDetailViewer
+        taskActivityLogId={row?._id}
+      />
+    );
   };
 
   const loadColumnMetadata = (newActivityMetadata) => {
@@ -36,36 +41,22 @@ function TaskActivityLogsTable({ taskLogData, taskActivityMetadata, isLoading, c
       setColumns(
         [
           // {...getTableTextColumn(fields.find(field => { return field.id === "run_count";}), "cell-center no-wrap-inline", 100,)},
-          getTableTextColumn(fields.find(field => { return field.id === "name";})),
-          getTaskTypeColumn(fields.find(field => { return field.id === "type";})),
-          getTableTextColumn(fields.find(field => { return field.id === "log_type";})),
-          getTableTextColumn(fields.find(field => { return field.id === "message";})),
-          getPipelineActivityStatusColumn(fields.find(field => { return field.id === "status";})),
-          getTableDateTimeColumn(fields.find(field => { return field.id === "createdAt";}))
+          getTableTextColumn(getField(fields, "name")),
+          getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), getTaskTypeLabel),
+          getTableTextColumn(getField(fields, "log_type")),
+          getTableTextColumn(getField(fields, "message")),
+          getPipelineActivityStatusColumn(getField(fields, "status")),
+          getTableDateTimeColumn(getField(fields, "createdAt")),
         ]
       );
     }
-  };
-
-  const getFilteredData = () => {
-    if (currentTaskName === null || currentTaskName === undefined ) {
-      return taskLogData;
-    }
-
-    return taskLogData.filter((item) => {
-      if (currentRunNumber === "logs") {
-        return item.name === currentTaskName;
-      }
-
-      return item.name === currentTaskName && (currentRunNumber === null || currentRunNumber === undefined || item.run_count === currentRunNumber);
-    });
   };
 
   return (
     <div className={"tree-table"}>
       <TableBase
         columns={columns}
-        data={getFilteredData()}
+        data={taskLogData}
         isLoading={isLoading}
         onRowSelect={onRowSelect}
       />
@@ -75,9 +66,7 @@ function TaskActivityLogsTable({ taskLogData, taskActivityMetadata, isLoading, c
 TaskActivityLogsTable.propTypes = {
   taskLogData: PropTypes.array,
   isLoading: PropTypes.bool,
-  currentTaskName: PropTypes.string,
   taskActivityMetadata: PropTypes.object,
-  currentRunNumber: PropTypes.number,
 };
 
 export default TaskActivityLogsTable;

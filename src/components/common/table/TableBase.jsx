@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {Grid} from "dhx-suite-package";
-import "dhx-suite-package/codebase/suite.css";
+import {Grid} from "@opsera/dhx-suite-package";
 import {useWindowSize} from "components/common/hooks/useWindowSize";
 
 function TableBase({ columns, data, onRowSelect, rowStyling, sort, height }) {
@@ -86,7 +85,6 @@ TableBase.propTypes = {
 
 TableBase.defaultProps = {
   data: [],
-  isLoading: false,
   height: "500px"
 };
 

@@ -18,7 +18,7 @@ function RoleRestrictedSlackToolSelectInput(
       toolIdentifier={"slack"}
       toolFriendlyName={"Slack"}
       fieldName={fieldName}
-      configurationRequired={true}
+      configurationRequired={false}
       placeholderText={placeholderText}
       model={model}
       setModel={setModel}

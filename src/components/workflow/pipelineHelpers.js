@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
 import React from "react";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
 const pipelineHelpers = {};
 
@@ -18,13 +19,22 @@ pipelineHelpers.getStepIndexWithName = (pipeline, stepName) => {
   return stepArrayIndex > -1 ? stepArrayIndex + 1 : "UNKNOWN";
 };
 
+pipelineHelpers.getToolIdentifierFromPlanForStepId = (plan, stepId) => {
+  if (Array.isArray(plan) && isMongoDbId(stepId) === true) {
+    const step = plan?.find((step) => step?._id === stepId);
+
+    if (step) {
+      return step?.tool?.tool_identifier;
+    }
+  }
+};
 
 pipelineHelpers.getPendingApprovalStep = (pipeline) => {
   if (pipeline?.workflow?.last_step?.running?.paused) {
     let step_id = pipeline?.workflow?.last_step?.running?.step_id;
     let stepArrayIndex = pipeline?.workflow?.plan?.findIndex(x => x._id === step_id);
 
-    if (stepArrayIndex && stepArrayIndex > -1 && pipeline?.workflow?.plan[stepArrayIndex]?.tool?.tool_identifier === "approval") {
+    if (typeof stepArrayIndex === "number" && stepArrayIndex > -1 && pipeline?.workflow?.plan[stepArrayIndex]?.tool?.tool_identifier === "approval") {
       return pipeline?.workflow?.plan[stepArrayIndex];
     }
   }
@@ -117,23 +127,6 @@ pipelineHelpers.getPipelineStatus = (pipeline) => {
   }
 };
 
-// TODO: Move to general helper
-pipelineHelpers.getUserNameById = async (userId, accessTokenFn) => {
-  const accessToken = await accessTokenFn();
-  let name = userId;
-  const apiUrl = `/users/user/${userId}`;
-  try {
-    const user = await axiosApiService(accessToken).get(apiUrl);
-    if (user.data && user.data.lastName) {
-      name = user.data.firstName + " " + user.data.lastName;
-    }
-  } catch (err) {
-    console.log(err.message);
-  }
-
-  return name;
-};
-
 pipelineHelpers.displayPipelineType = (typeArray) => {
   switch (typeArray[0]) {
   case "sfdc":
@@ -207,19 +200,6 @@ pipelineHelpers.getRegistryPopover = (data) => {
     );
   }
 };
-
-pipelineHelpers.PIPELINE_TYPES = [
-  { id: "", name: "No Value", groupId: "Pipeline Types" },
-  { id: "sfdc", name: "Salesforce", groupId: "Pipeline Types" },
-  { id: "sdlc", name: "Software Development", groupId: "Pipeline Types" },
-  { id: "ai-ml", name: "Machine Learning (AI)", groupId: "Pipeline Types" },
-];
-
-pipelineHelpers.PIPELINE_TYPES_ = [
-  { value: "sfdc", text: "Salesforce", groupId: "Pipeline Types" },
-  { value: "sdlc", text: "Software Development", groupId: "Pipeline Types" },
-  { value: "ai-ml", text: "Machine Learning (AI)", groupId: "Pipeline Types" },
-];
 
 pipelineHelpers.formatStepOptions = (plan, stepId) => {
   let STEP_OPTIONS = plan.slice(

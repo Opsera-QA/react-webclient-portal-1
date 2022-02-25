@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import InfoDialog from "../../../../common/status_notifications/info";
 import PipelineWorkflow from "./PipelineWorkflow";
 import PipelineWorkflowEditor from "./PipelineWorkflowItemEditor";
-import "../../../workflows.css";
 import PipelineActionControls from "../PipelineActionControls";
 
 function PipelineWorkflowView({
@@ -13,9 +12,7 @@ function PipelineWorkflowView({
   setEditItem,
   fetchPlan,
   setWorkflowStatus,
-  getActivityLogs,
   refreshCount,
-  setRefreshCount,
   setPipeline,
   softLoading,
 }) {
@@ -56,9 +53,6 @@ function PipelineWorkflowView({
                                     customerAccessRules={customerAccessRules}
                                     fetchData={fetchPlan}
                                     setPipeline={setPipeline}
-                                    setRefreshCount={setRefreshCount}
-                                    refreshCount={refreshCount}
-                                    fetchActivityLogs={getActivityLogs}
                                     setParentWorkflowStatus={setWorkflowStatus}/>
           </div>}
         </div>
@@ -84,10 +78,8 @@ PipelineWorkflowView.propTypes = {
   setActiveTab: PropTypes.func,
   fetchPlan: PropTypes.func,
   setWorkflowStatus: PropTypes.func,
-  getActivityLogs: PropTypes.func,
   setPipeline: PropTypes.func,
   refreshCount: PropTypes.number,
-  setRefreshCount: PropTypes.func,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   softLoading: PropTypes.bool,
 };

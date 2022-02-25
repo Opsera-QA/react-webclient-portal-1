@@ -9,7 +9,7 @@ function PipelineWelcomeView () {
   const history = useHistory();
 
   const goToPipelineCatalog = () => {
-    history.push(`/workflow/catalog`);
+    history.push(`/workflow/catalog/library`);
   };
 
   return (

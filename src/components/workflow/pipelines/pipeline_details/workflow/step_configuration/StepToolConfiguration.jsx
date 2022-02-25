@@ -65,6 +65,19 @@ import AzureFunctionsStepConfiguration from "./step_tool_configuration_forms/azu
 import DotNetCliStepConfiguration from "./step_tool_configuration_forms/dotnetcli/DotNetCliStepConfiguration";
 import CypressStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/CypressStepConfiguration";
+import FlywayDatabaseStepConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/FlywayDatabaseStepConfiguration";
+import AzureZipDeploymentStepConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfiguration";
+import InformaticaStepConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/informatica/InformaticaStepConfiguration";
+import PmdScanStepConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/PmdScanStepConfiguration";
+import SentinelStepConfiguration from "./step_tool_configuration_forms/sentenial/SentinelStepConfiguration";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import PackerStepConfiguration from "./step_tool_configuration_forms/packer/PackerStepConfiguration";
+import BuildkiteStepConfiguration from "./step_tool_configuration_forms/buildkite/BuildkiteStepConfiguration";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
 function StepToolConfiguration({
   pipeline,
@@ -113,22 +126,6 @@ function StepToolConfiguration({
   const saveToVault = async (postBody) => {
     const response = await PipelineActions.saveToVault(
       postBody,
-      getAccessToken
-    );
-    return response;
-  };
-
-  const getFromVault = async (vaultId) => {
-    const response = await PipelineActions.getFromVault(
-      vaultId,
-      getAccessToken
-    );
-    return response;
-  };
-
-  const deleteFromVaultUsingVaultKey = async (vaultId) => {
-    const response = await PipelineActions.deleteFromVaultUsingVaultKey(
-      vaultId,
       getAccessToken
     );
     return response;
@@ -266,6 +263,7 @@ function StepToolConfiguration({
     }
   };
 
+  // TODO: Move into twistlock helper
   const createTwistlockJob = async (
     toolId,
     toolConfiguration,
@@ -332,6 +330,7 @@ function StepToolConfiguration({
     }
   };
 
+  // TODO: Move into mongo DB realm helper
   const createMongodbRealmJob = async (
     toolId,
     toolConfiguration,
@@ -443,15 +442,13 @@ function StepToolConfiguration({
       case "sonar":
         return (
           <SonarStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
+            pipelineId={pipeline?._id}
+            plan={pipeline?.workflow?.plan}
             stepId={stepId}
             stepTool={stepTool}
             parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
             createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
+            handleCloseFunction={closeEditorPanel}
           />
         );
       case "command-line":
@@ -464,8 +461,6 @@ function StepToolConfiguration({
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
             createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
           />
         );
@@ -548,15 +543,11 @@ function StepToolConfiguration({
       case "s3":
         return (
           <S3StepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
+            plan={pipeline?.workflow?.plan}
             stepTool={stepTool}
             parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+            stepId={stepId}
           />
         );
       case "databricks-notebook":
@@ -651,10 +642,11 @@ function StepToolConfiguration({
             setShowToast={setShowToast}
           />
         );
-      case "argo":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
         return (
           <ArgoCdStepConfiguration
-            plan={pipeline.workflow.plan}
+            pipelineId={pipeline._id}
+            plan={pipeline?.workflow?.plan}
             stepId={stepId}
             stepTool={stepTool}
             parentCallback={callbackFunction}
@@ -1038,14 +1030,117 @@ function StepToolConfiguration({
             setShowToast={setShowToast}
           />
         );
+        case "flyway-database-migrator":
+          return (
+            <FlywayDatabaseStepConfiguration
+              pipelineId={pipeline._id}
+              plan={pipeline.workflow.plan}
+              stepId={stepId}
+              stepTool={stepTool}
+              parentCallback={callbackFunction}
+              closeEditorPanel={closeEditorPanel}
+            />
+          );
+      case "azure-zip-deployment":
+        return (
+          <AzureZipDeploymentStepConfiguration
+            closeEditorPanel={closeEditorPanel}
+            parentCallback={callbackFunction}
+            stepTool={stepTool}
+            plan={plan}
+            stepId={stepId}
+          />
+        );
+      case "informatica":
+        return (
+          <InformaticaStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "pmd":
+        return (
+          <PmdScanStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "sentinel":
+        return (
+          <SentinelStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "packer": 
+        return (
+          <PackerStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "buildkite":
+        return (
+          <BuildkiteStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
     }
+  };
+
+  const getTitleText = () => {
+    let titleText = "";
+
+    if (hasStringValue(stepName) === true) {
+      titleText += `${stepName}: `;
+    }
+
+    if (hasStringValue(stepTool?.tool_identifier)) {
+      titleText += stepTool.tool_identifier;
+    }
+
+    return titleText;
   };
 
   return (
     <div>
       <div className="title-text-5 upper-case-first mb-3">
-        {typeof stepName !== "undefined" ? stepName + ": " : null}
-        {typeof stepTool !== "undefined" ? stepTool.tool_identifier : null}
+        {getTitleText()}
       </div>
 
       {typeof stepTool !== "undefined" ? (

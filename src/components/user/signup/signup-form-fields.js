@@ -38,7 +38,7 @@ const defaultSignupFormFields = {
     {
       label: "City",
       id: "city",
-      regexDefinitionName: "nameField",
+      regexDefinitionName: "limitedTextWithSpaces",
       isRequired: true,
       maxLength: 50
     },

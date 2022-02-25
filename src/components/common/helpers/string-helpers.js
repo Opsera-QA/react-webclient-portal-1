@@ -1,6 +1,5 @@
 export function capitalizeFirstLetter(string, wordDelimiter = " ", noDataString) {
-
-  if (string && string.length > 0) {
+  if (typeof string === "string" && string.length > 0) {
     let capitalizedString = "";
     const words = string.split(wordDelimiter);
 
@@ -22,8 +21,12 @@ export function hasStringValue(string) {
   return (typeof string === "string" && string !== "");
 }
 
+export function stringIncludesValue(string, searchTerm) {
+  return hasStringValue(string) && hasStringValue(searchTerm) && string.toLowerCase().includes(searchTerm.toLowerCase());
+}
+
 export function truncateString(string, maxLength){
-  if (string == null || typeof string !== "string") {
+  if (hasStringValue(string) !== true) {
     return "";
   }
 

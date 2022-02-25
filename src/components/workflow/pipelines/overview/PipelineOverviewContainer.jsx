@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import Tab from "react-bootstrap/Tab";
 import PipelineStepDetailsOverview from "components/workflow/pipelines/overview/PipelineStepDetailsOverview";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import PipelineOverviewStepTree from "components/workflow/pipelines/overview/PipelineOverviewStepTree";

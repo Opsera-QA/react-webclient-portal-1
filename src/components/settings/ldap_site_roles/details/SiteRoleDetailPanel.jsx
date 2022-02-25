@@ -9,7 +9,7 @@ import LdapGroupMembershipManagementPanel
 import SiteRoleSummaryPanel from "components/settings/ldap_site_roles/details/SiteRoleSummaryPanel";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 
-function SiteRoleDetailPanel({ldapGroupData, ldapUsers, orgDomain, loadData, authorizedActions }) {
+function SiteRoleDetailPanel({ldapGroupData, orgDomain, loadData }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -51,8 +51,6 @@ function SiteRoleDetailPanel({ldapGroupData, ldapUsers, orgDomain, loadData, aut
             orgDomain={orgDomain}
             setActiveTab={setActiveTab}
             ldapGroupData={ldapGroupData}
-            authorizedActions={authorizedActions}
-            ldapUsers={ldapUsers}
             loadData={loadData}
             type={"Site Role"}
           />
@@ -72,10 +70,8 @@ function SiteRoleDetailPanel({ldapGroupData, ldapUsers, orgDomain, loadData, aut
 
 SiteRoleDetailPanel.propTypes = {
   ldapGroupData: PropTypes.object,
-  ldapUsers: PropTypes.array,
   orgDomain: PropTypes.string,
   loadData: PropTypes.func,
-  authorizedActions: PropTypes.array,
 };
 
 export default SiteRoleDetailPanel;

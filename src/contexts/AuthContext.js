@@ -13,6 +13,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
   const history = useHistory();
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  // const [websocketClient, setWebsocketClient] = useState(new ClientWebsocket());
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -26,8 +27,16 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     return () => {
       source.cancel();
       isMounted.current = false;
+
+      // if (websocketClient) {
+      //   websocketClient.close();
+      // }
     };
   }, []);
+
+  // const getWebsocketClient = () => {
+  //   return websocketClient;
+  // };
 
   const logoutUserContext = async () => {
     authClient.tokenManager.clear();
@@ -153,7 +162,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
 
         customerAccessRules = {
           ...customerAccessRules,
-          OrganizationOwner: ldap?.orgAccountOwnerEmail === user?.email,
+          OrganizationOwner: ldap?.organizationOwnerEmail === user?.email,
           OrganizationAccountOwner: ldap?.orgAccountOwnerEmail === user?.email,
           Administrator: groups.includes("Administrators"),
           PowerUser: groups.includes("PowerUsers"),
@@ -217,6 +226,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       isSassUser: isSassUser,
       isOrganizationOwner: isOrganizationOwner,
       getFeatureFlags: getFeatureFlags,
+      // getWebsocketClient: getWebSocketClient,
     }}>
       {children}
     </AuthContext.Provider>

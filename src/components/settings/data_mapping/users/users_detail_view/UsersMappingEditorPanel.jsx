@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Card, Col, Row } from "react-bootstrap";
-import usersTagsMetadata from "components/settings/data_mapping/users/tagging-users-metadata";
+import usersMappingMetadata from "components/settings/data_mapping/users/userMapping.metadata";
 import Model from "core/data_model/model";
 import dataMappingActions from "components/settings/data_mapping/data-mapping-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -53,8 +53,8 @@ function UsersMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
   const loadData = async () => {
     if (isMounted?.current === true) {
       setIsLoading(true);
-      let modelData = typeof toolTypeData !== "undefined" ? toolTypeData.getPersistData() : usersTagsMetadata.newObjectFields;
-      setUsersMappingDto(new Model(modelData, usersTagsMetadata, false));
+      let modelData = typeof toolTypeData !== "undefined" ? toolTypeData.getPersistData() : usersMappingMetadata.newObjectFields;
+      setUsersMappingDto(new Model(modelData, usersMappingMetadata, false));
       setIsLoading(false);
     }
   };

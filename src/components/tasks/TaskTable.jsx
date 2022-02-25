@@ -5,10 +5,11 @@ import {
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn,
-  getTagColumn, getTaskTypeColumn, getTaskStatusColumn
+  getTagColumn, getTaskStatusColumn, getFormattedLabelWithFunctionColumnDefinition
 } from "components/common/table/table-column-helpers";
 import {useHistory} from "react-router-dom";
 import {getField} from "components/common/metadata/metadata-helpers";
+import {getTaskTypeLabel} from "components/tasks/task.types";
 
 function TaskTable({ taskData, taskFilterModel, setTaskFilterModel, loadData, isLoading, taskMetadata }) {
   let history = useHistory();
@@ -27,7 +28,8 @@ function TaskTable({ taskData, taskFilterModel, setTaskFilterModel, loadData, is
         [
           getTableTextColumn(getField(fields, "name"), "force-text-wrap"),
           getTableTextColumn(getField(fields, "description"), "force-text-wrap"),
-          getTaskTypeColumn(getField(fields, "type")),
+          getTableTextColumn(getField(fields, "run_count"), "mx-auto"),
+          getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), getTaskTypeLabel),
           getTagColumn(getField(fields, "tags")),
           getTableDateColumn(getField(fields, "createdAt")),
           getTableBooleanIconColumn(getField(fields, "active")),

@@ -5,7 +5,7 @@ export const ldapOrganizationAccountMetaData = {
     return `/admin/organization-accounts/${record.getData("orgDomain")}/details/`;
   },
   detailViewTitle: function (record) {
-    return `Organization Account Details [${record.getOriginalValue("name")}]`;
+    return `${record?.getOriginalValue("name")}`;
   },
   fields: [
     {
@@ -97,6 +97,11 @@ export const ldapOrganizationAccountMetaData = {
       isRequired: true,
       maxLength: 50,
       formText: "Maps to the Okta configured Identity Provider ID in Opsera Okta.  Disabled Federation set to 0"
+    },
+    {
+      label: "New User Registration URL",
+      id: "urlString",
+      formText: "Do not use if account is Federated or if the user’s domain does not match the account owner’s. In those cases, you must use the New User form in User Management in Account Settings."
     }
   ],
   newObjectFields: {

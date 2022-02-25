@@ -6,11 +6,13 @@ import DetailScreenContainer from "components/common/panels/detail_view_containe
 import siteNotificationHelpers from "components/admin/site_notifications/site-notification-helpers";
 import SiteNotificationManagerDetailPanel
   from "components/admin/site_notifications/manager/SiteNotificationManagerDetailPanel";
-import siteNotificationMetadata from "components/admin/site_notifications/siteNotificationMetadata";
+import siteNotificationMetadata from "components/admin/site_notifications/siteNotification.metadata";
 import axios from "axios";
+import SiteNotificationManagementSubNavigationBar
+  from "components/admin/site_notifications/SiteNotificationManagementSubNavigationBar";
 
 function SiteNotificationManager() {
-  const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
+  const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -43,14 +45,12 @@ function SiteNotificationManager() {
     try {
       setIsLoading(true);
       await getRoles(cancelSource);
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
         console.error(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -90,7 +90,17 @@ function SiteNotificationManager() {
       dataObject={siteWideNotificationData}
       accessDenied={!accessRoleData?.OpseraAdministrator}
       isLoading={isLoading}
-      detailPanel={<SiteNotificationManagerDetailPanel siteWideNotificationData={siteWideNotificationData} setSiteWideNotificationData={setSiteWideNotificationData} />}
+      navigationTabContainer={
+        <SiteNotificationManagementSubNavigationBar
+          activeTab={"siteNotificationManager"}
+        />
+      }
+      detailPanel={
+        <SiteNotificationManagerDetailPanel
+          siteWideNotificationData={siteWideNotificationData}
+          setSiteWideNotificationData={setSiteWideNotificationData}
+        />
+      }
     />
   );
 }

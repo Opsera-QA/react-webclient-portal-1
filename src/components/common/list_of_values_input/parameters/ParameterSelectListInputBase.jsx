@@ -291,13 +291,13 @@ function ParameterSelectListInputBase({
                 names derived from this list of available parameters.
                 <br />
                 <br />
-                If the <strong>Use Terraform Output</strong> checkbox has been selected, the available parameters will
-                appear in the Parameter selection option with <strong>Terraform Output</strong> as the Parameter Origin.
-                They use the same syntax mentioned above in order to be used in the commands.
-                <br />
-                <br />
                 You must select all parameters that you pass in the commands in the parameter selection view as well in
                 order for the details to be fetched during runtime.
+                <br />
+                <br />
+                <strong>Pipelines with Terraform Steps: </strong> If the <strong>Use Terraform Output</strong> checkbox has been selected, the available parameters will
+                appear in the Parameter selection option with <strong>Terraform Output</strong> as the Parameter Origin.
+                They use the same syntax mentioned above in order to be used in the commands.
               </div>
             </Popover.Content>
           </Popover>
@@ -382,7 +382,12 @@ function ParameterSelectListInputBase({
         <div>{properties.length > 0 ? getHeaderBar() : null}</div>
         <div className="properties-body-alt">{getFieldBody()}</div>
       </div>
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        model={dataObject}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 }

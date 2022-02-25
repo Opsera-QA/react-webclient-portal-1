@@ -10,6 +10,10 @@ const NEXUS_REPO_TYPES = [
   {
     name: "Docker",
     value: "docker"
+  },
+  {
+    name: "NuGet",
+    value: "nuget"
   }
 ];
 

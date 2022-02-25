@@ -5,16 +5,14 @@ import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 function InfoContainer({ children, isLoading, titleIcon, titleText, helpComponent, className }) {
   return (
     <div className={className}>
-      <div className="object-properties-input">
-        <div className="content-container">
-          <InputTitleBar
-            customTitle={titleText}
-            icon={titleIcon}
-            helpComponent={helpComponent}
-            isLoading={isLoading}
-          />
-          {children}
-        </div>
+      <div className="content-container">
+        <InputTitleBar
+          customTitle={titleText}
+          icon={titleIcon}
+          helpComponent={helpComponent}
+          isLoading={isLoading}
+        />
+        {children}
       </div>
     </div>
   );

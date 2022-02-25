@@ -2,7 +2,6 @@ import React, {  useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "../../workflows.css";
 import { faPlay, faSpinner } from "@fortawesome/pro-light-svg-icons";
 
 

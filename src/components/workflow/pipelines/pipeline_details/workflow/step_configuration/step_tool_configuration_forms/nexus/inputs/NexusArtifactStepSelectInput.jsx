@@ -1,30 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import PipelineStepSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineStepSelectInput";
 
-const NexusArtifactStepSelectInput = ({dataObject, setDataObject, disabled, listOfSteps}) => {
+const NexusArtifactStepSelectInput = ({model, setModel, disabled, plan, stepId}) => {
   return (
-    <SelectInputBase
+    <PipelineStepSelectInput
       fieldName={"artifactStepId"}
-      dataObject={dataObject}
-      setDataObject={setDataObject}      
-      selectOptions={listOfSteps ? listOfSteps : []}      
-      valueField="_id"
-      textField="name"      
-      disabled={disabled || dataObject.getData("nexusToolConfigId") === ""}
+      model={model}
+      setModel={setModel}
+      stepId={stepId}
+      plan={plan}
+      disabled={disabled || model?.getData("nexusToolConfigId") === ""}
     />
   );
 };
 
 NexusArtifactStepSelectInput.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
-  listOfSteps: PropTypes.array,
-};
-
-NexusArtifactStepSelectInput.defaultProps = {
-  visible: true
+  plan: PropTypes.array,
+  stepId: PropTypes.string,
 };
 
 export default NexusArtifactStepSelectInput;

@@ -8,7 +8,7 @@ import PipelineTaskSummaryPanel from "components/workflow/pipelines/pipeline_det
 import ModalTabPanelContainer from "components/common/panels/detail_view/ModalTabPanelContainer";
 import PipelineTaskConsoleLogPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskConsoleLogPanel";
 import ConsoleLogTab from "components/common/tabs/detail_view/ConsoleLogTab";
-
+import OverlayTabPanelContainer from "components/common/panels/general/OverlayTabPanelContainer";
 
 function PipelineTaskTabPanel({ pipelineTaskData }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -19,9 +19,14 @@ function PipelineTaskTabPanel({ pipelineTaskData }) {
   };
 
   const getActionSpecificTab = () => {
-    // TODO: Make switch statement if a handful are added
-    if (pipelineTaskData?.action === "console output") {
-      return (<ConsoleLogTab activeTab={activeTab} handleTabClick={handleTabClick} />);
+    switch (pipelineTaskData?.action) {
+      case ("console output"):
+        return (
+          <ConsoleLogTab
+            activeTab={activeTab}
+            handleTabClick={handleTabClick}
+          />
+        );
     }
   };
 
@@ -38,11 +43,23 @@ function PipelineTaskTabPanel({ pipelineTaskData }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <PipelineTaskSummaryPanel pipelineTaskData={pipelineTaskData} />;
+        return (
+          <PipelineTaskSummaryPanel
+            pipelineTaskData={pipelineTaskData}
+          />
+        );
       case "log":
-        return <PipelineTaskConsoleLogPanel pipelineTaskData={pipelineTaskData} />;
+        return (
+          <PipelineTaskConsoleLogPanel
+            pipelineTaskData={pipelineTaskData}
+          />
+        );
       case "json":
-        return <PipelineTaskJsonPanel pipelineTaskData={pipelineTaskData} />;
+        return (
+          <PipelineTaskJsonPanel
+            pipelineTaskData={pipelineTaskData}
+          />
+        );
       default:
         return null;
     }
@@ -52,7 +69,12 @@ function PipelineTaskTabPanel({ pipelineTaskData }) {
     return null;
   }
 
-  return (<ModalTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
+  return (
+    <OverlayTabPanelContainer
+      currentView={getCurrentView()}
+      tabContainer={getTabContainer()}
+    />
+  );
 }
 
 PipelineTaskTabPanel.propTypes = {

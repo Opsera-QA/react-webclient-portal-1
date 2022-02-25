@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import tagEditorMetadata from "components/settings/tags/tags-metadata";
+import tagMetadata from "components/settings/tags/tag.metadata";
 import adminTagsActions from "../../settings/tags/admin-tags-actions";
 import Model from "../../../core/data_model/model";
 import LoadingDialog from "../status_notifications/loading";
@@ -95,7 +95,7 @@ function TempTagManagerInput({ label, data, setDataFunction, disabled, filter, p
     let currentOptions = [...tagOptions];
     let newTag = {type: "pipeline", value: newValue, active: true, configuration: {}};
     let newTagOption = {type: "pipeline", value: newValue};
-    let newTagDto = new Model(newTag, tagEditorMetadata, true);
+    let newTagDto = new Model(newTag, tagMetadata, true);
     await saveNewTag(newTagDto);
     currentValues.push(newTagOption);
     currentOptions.push(newTagOption);
@@ -111,6 +111,7 @@ function TempTagManagerInput({ label, data, setDataFunction, disabled, filter, p
         textField={data => data["type"] + ": " + data["value"]}
         filter={filter}
         allowCreate={allowCreate}
+        manualEntry={true}
         groupBy={groupBy}
         busy={componentLoading}
         createOptionFunction={handleCreate}

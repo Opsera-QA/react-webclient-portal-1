@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import React from "react";
-import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date-helpers";
+import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date/date.helpers";
 import {
   getScriptLanguageDisplayText,
 } from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
@@ -8,8 +8,8 @@ import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-help
 import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import {getTaskTypeLabel} from "components/tasks/task.types";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {THRESHOLD_LEVELS} from "components/common/list_of_values_input/pipelines/thresholds/PipelineThresholdLevelSelectInputBase";
+import {getCustomTableAccessor, getCustomTableHeader} from "components/common/table/table-column-helpers";
 export const FILTER_TYPES = {
   SEARCH_FILTER: "inputFilter",
   SELECT_FILTER: "selectFilter",
@@ -38,7 +38,7 @@ export const getTableTextColumnWithoutField = (header, id) => {
   };
 };
 
-export const getTableTextColumn = (field, className, maxWidth = undefined, filterType ) => {
+export const getTableTextColumn = (field, className, maxWidth = undefined, filterType, tooltipTemplateFunction ) => {
   let header = getColumnHeader(field);
 
   if (filterType) {
@@ -48,6 +48,43 @@ export const getTableTextColumn = (field, className, maxWidth = undefined, filte
   return {
     header: header,
     id: getColumnId(field),
+    tooltipTemplate: tooltipTemplateFunction,
+    class: className,
+    maxWidth: maxWidth
+  };
+};
+
+export const getUppercaseTableTextColumn = (field, className, maxWidth = undefined, filterType, tooltipTemplateFunction ) => {
+  let header = getColumnHeader(field);
+
+  if (filterType) {
+    header.push({ content: filterType });
+  }
+
+  return {
+    header: header,
+    id: getColumnId(field),
+    tooltipTemplate: tooltipTemplateFunction,
+    template: (value) => {
+      return capitalizeFirstLetter(value);
+    },
+    class: className,
+    maxWidth: maxWidth
+  };
+};
+
+export const getTableTextColumnBase = (field, className, maxWidth = undefined, filterType, tooltipTemplateFunction, formatDataFunction, ) => {
+  let header = getColumnHeader(field);
+
+  if (filterType) {
+    header.push({ content: filterType });
+  }
+
+  return {
+    header: header,
+    id: getColumnId(field),
+    tooltipTemplate: tooltipTemplateFunction,
+    template: formatDataFunction,
     class: className,
     maxWidth: maxWidth
   };
@@ -116,7 +153,7 @@ export const getTableDateColumn = (field, className, width = 150) => {
   };
 };
 
-export const getTableDateTimeColumn = (field, className, width = 175, showFilter) => {
+export const getTableDateTimeColumn = (field, className, width = 175, showFilter, tooltipTemplateFunction) => {
   let header = getColumnHeader(field);
 
   if (showFilter) {
@@ -130,6 +167,7 @@ export const getTableDateTimeColumn = (field, className, width = 175, showFilter
     // TODO: Figure out why date format isn't working and convert to using that.
     // type: "date",
     // format: "%Y-%M-%d %h:%m %a",/
+    tooltipTemplate: tooltipTemplateFunction,
     template: function (text, row, col) {
       return text ? format(new Date(text), "yyyy-MM-dd', 'hh:mm a") : "";
     },
@@ -244,6 +282,7 @@ export const getPipelineStatusIconCss = (value) => {
     case "queued":
       return ("fa-pause-circle green");
     case "stopped":
+    case "aborted":
     case "halted":
       return ("fa-octagon red");
     case "passed":
@@ -314,12 +353,12 @@ export const getPipelineTypeColumn = (field, className) => {
   };
 };
 
-export const getTaskTypeColumn = (field, className) => {
+export const getFormattedLabelWithFunctionColumnDefinition = (field, formatFunction, className) => {
   return {
     header: getColumnHeader(field),
     id: getColumnId(field),
     template: function (text) {
-      return getTaskTypeLabel(text);
+      return formatFunction(text);
     },
     class: className ? className : "no-wrap-inline"
   };
@@ -412,6 +451,26 @@ export const getTableBooleanIconColumn = (field, className, width = 60) => {
   };
 };
 
+export const getTableActiveBooleanIconColumn = (field, className, width = 60, tooltipTemplateFunction) => {
+  return {
+    header: getColumnHeader(field),
+    id: getColumnId(field),
+    align: "center",
+    width: width,
+    tooltipTemplate: tooltipTemplateFunction,
+    template: function (text) {
+      if (text === true) {
+        return (
+          `<i class="fal fa-check-circle green cell-icon vertical-align-item"></i>`
+        );
+      }
+
+      return "";
+    },
+    htmlEnable: true,
+    class: className ? className : "text-left"
+  };
+};
 
 export const getCountColumnWithoutField = (header, id, className) => {
   return {
@@ -483,5 +542,22 @@ export const getStaticInfoColumn = (className) => {
     },
     maxWidth: 50,
     class: className
+  };
+};
+
+export const getSalesforceSumamryTableBooleanIconColumn = (field, className, width = 60) => {
+  return {
+    header: getColumnHeader(field),
+    id: getColumnId(field),
+    align: "center",
+    width: width,
+    template: function (text) {
+      const iconCss = text === true ? "fa-check-circle green" : "fa-minus";
+      return (
+        `<i class="fal ${iconCss} cell-icon vertical-align-item"></i>`
+      );
+    },
+    htmlEnable: true,
+    class: className ? className : "text-left"
   };
 };

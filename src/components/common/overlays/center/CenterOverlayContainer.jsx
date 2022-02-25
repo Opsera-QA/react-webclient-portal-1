@@ -6,7 +6,28 @@ import CloseButton from "components/common/buttons/CloseButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 
-function CenterOverlayContainer({ children, actionBar, titleText, titleIcon, showPanel, closePanel, isLoading, showToasts, showCloseButton, buttonContainer, fullWidth, pageLink, linkTooltipText }) {
+export const CENTER_OVERLAY_SIZES = {
+  FULL_WIDTH: "full_width", // TODO: Remove?
+  STANDARD: "standard",
+  SMALL: "small",
+};
+
+function CenterOverlayContainer(
+  {
+    children,
+    actionBar,
+    titleText,
+    titleIcon,
+    showPanel,
+    closePanel,
+    isLoading,
+    showToasts,
+    showCloseButton,
+    buttonContainer,
+    pageLink,
+    linkTooltipText,
+    size,
+  }) {
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -20,7 +41,7 @@ function CenterOverlayContainer({ children, actionBar, titleText, titleIcon, sho
       return buttonContainer;
     }
 
-    if (showCloseButton === true) {
+    if (showCloseButton !== false) {
       return (
         <SaveButtonContainer>
           <CloseButton className={"p-3"} size={"sm"} closeEditorCallback={closePanel} showUnsavedChangesMessage={false} />
@@ -29,12 +50,21 @@ function CenterOverlayContainer({ children, actionBar, titleText, titleIcon, sho
     }
   };
 
-  const getStyling = () => {
-    if (fullWidth === true) {
-      return ("full-width-center-overlay content-card-1 bg-white");
+  const getContainerStyling = () => {
+    switch (size) {
+      case (CENTER_OVERLAY_SIZES.FULL_WIDTH):
+        return ("full-width-center-overlay");
+      case (CENTER_OVERLAY_SIZES.SMALL):
+        return ("small-center-overlay");
+      case (CENTER_OVERLAY_SIZES.STANDARD):
+      default:
+        return ("center-overlay");
     }
+  };
 
-    return ("center-overlay content-card-1 bg-white");
+  const getStyling = () => {
+    const containerStyle = getContainerStyling();
+    return (`${containerStyle} content-card-1 bg-white`);
   };
 
   const getBody = () => {
@@ -84,13 +114,9 @@ CenterOverlayContainer.propTypes = {
   actionBar: PropTypes.object,
   showCloseButton: PropTypes.bool,
   buttonContainer: PropTypes.object,
-  fullWidth: PropTypes.bool,
   pageLink: PropTypes.string,
-  linkTooltipText: PropTypes.string
-};
-
-CenterOverlayContainer.defaultProps = {
-  showCloseButton: true
+  linkTooltipText: PropTypes.string,
+  size: PropTypes.string,
 };
 
 export default CenterOverlayContainer;

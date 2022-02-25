@@ -2,7 +2,7 @@ import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import {ldapUsersMetaData} from "./ldap-users-metadata";
+import {ldapUserMetadata} from "components/settings/ldap_users/ldapUser.metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import NewLdapUserModal from "components/settings/ldap_users/NewLdapUserModal";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -10,7 +10,7 @@ import {faUser} from "@fortawesome/pro-light-svg-icons";
 
 function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loadData }) {
   const [showCreateUserModal, setShowCreateUserModal] = useState(false);
-  const fields = ldapUsersMetaData.fields;
+  const fields = ldapUserMetadata.fields;
   const history = useHistory();
 
   const columns = useMemo(
@@ -50,7 +50,7 @@ function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loa
   };
 
   return (
-    <div className="px-2 pb-2">
+    <div>
       <FilterContainer
         loadData={loadData}
         addRecordFunction={authorizedActions?.includes("create_user") ? createUser : null}

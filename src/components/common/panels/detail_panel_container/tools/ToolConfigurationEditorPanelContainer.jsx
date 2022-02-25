@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
-import TestToolConnectionButton from "components/common/buttons/connection/TestToolConnectionButton";
+import TestToolConnectionButton from "components/common/buttons/connection/tool/TestToolConnectionButton";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import StrictSaveButton from "components/common/buttons/saving/StrictSaveButton";
@@ -12,7 +12,7 @@ function ToolConfigurationEditorPanelContainer({children, isLoading, persistReco
     if (toolConnectionCheckName != null && toolData != null) {
      return (
         <TestToolConnectionButton
-          toolDataDto={toolData}
+          toolModel={toolData}
           toolName={toolConnectionCheckName}
           disabled={model?.checkCurrentValidity() !== true || model?.isChanged()}
         />
@@ -25,7 +25,7 @@ function ToolConfigurationEditorPanelContainer({children, isLoading, persistReco
   }
 
   return (
-    <Form className="scroll-y full-height">
+    <Form className="scroll-y hide-x-overflow full-height">
       <div>
         <div className="d-flex justify-content-between">
           <div className="text-muted pt-1 pb-3">Enter tool specific configuration information below.  These settings will be used for pipelines.</div>

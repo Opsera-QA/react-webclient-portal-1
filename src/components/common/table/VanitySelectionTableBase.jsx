@@ -1,17 +1,33 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {Grid} from "dhx-suite-package";
-import "dhx-suite-package/codebase/suite.css";
+import {Grid} from "@opsera/dhx-suite-package";
 import {useWindowSize} from "components/common/hooks/useWindowSize";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
-function VanitySelectionTableBase({columns, data, onRowSelect, rowStyling, sort, height, onCellEdit, selectedItem, rowSelection}) {
+function VanitySelectionTableBase(
+  {
+    columns,
+    data,
+    onRowSelect,
+    rowStyling,
+    sort,
+    height,
+    onCellEdit,
+    selectedId,
+    selectedModel,
+    rowSelection,
+  }) {
   const containerRef = useRef(null);
   const [grid, setGrid] = useState(null);
   const windowSize = useWindowSize();
 
   useEffect(() => {
-    setUpGrid();
-  }, [columns]);
+    const gridInstance = setUpGrid();
+
+    return () => {
+      gridInstance?.destructor();
+    };
+  }, [columns, selectedModel]);
 
   useEffect(() => {
     if (grid && Array.isArray(data)) {
@@ -19,9 +35,10 @@ function VanitySelectionTableBase({columns, data, onRowSelect, rowStyling, sort,
 
       grid.selection.removeCell();
 
-      if (selectedItem) {
-        const parsedObject = JSON.parse(selectedItem);
-        const selection = grid.data.find((item) => {return item.getData("_id") === parsedObject?._id;});
+      if (hasStringValue(selectedId)) {
+        const selection = grid.data.find((item) => {
+          return item?.getData("_id") === selectedId;
+        });
 
         if (selection) {
           grid.selection.setCell(selection);
@@ -30,23 +47,6 @@ function VanitySelectionTableBase({columns, data, onRowSelect, rowStyling, sort,
     }
   }, [data]);
 
-  useEffect(() => {
-    if (grid && selectedItem) {
-      const parsedObject = JSON.parse(selectedItem);
-
-      grid.selection.removeCell();
-
-      const selection = grid.data.find((item, index) => {
-        return item.getData("_id") === parsedObject?._id;
-      });
-
-      if (selection) {
-        grid.selection.setCell(selection);
-      }
-    }
-
-  }, [selectedItem]);
-
   // Refresh width on resize
   useEffect(() => {
     if (grid) {
@@ -54,12 +54,11 @@ function VanitySelectionTableBase({columns, data, onRowSelect, rowStyling, sort,
     }
   }, [windowSize, grid]);
 
-
   const setUpGrid = () => {
     let grid = new Grid(containerRef.current, {
       columns: columns,
       autoWidth: true,
-      data: data && Array.isArray(data) && data.length > 0 ? data : [],
+      data: Array.isArray(data) && data.length > 0 ? data : [],
       htmlEnable: true,
       resizable: true,
       selection: rowSelection,
@@ -79,15 +78,27 @@ function VanitySelectionTableBase({columns, data, onRowSelect, rowStyling, sort,
 
     if (onRowSelect) {
       grid.selection.events.on("beforeSelect", async (row, column, e) => {
-        const response = await onRowSelect(grid, row, column, e);
+        const response = await onRowSelect(selectedModel, grid, row);
         return response === true;
       });
     }
 
+    // TODO: Don't use for now
     if (onCellEdit) {
       grid.events.on("BeforeEditEnd", (value, row, column) => {
         return onCellEdit(value, row, column);
       });
+    }
+
+    const selectedId = selectedModel?.getData("_id");
+    if (hasStringValue(selectedId)) {
+      const selection = grid.data.find((item, index) => {
+        return item?.getData("_id") === selectedId;
+      });
+
+      if (selection) {
+        grid.selection.setCell(selection);
+      }
     }
 
     if (sort) {
@@ -112,12 +123,13 @@ VanitySelectionTableBase.propTypes = {
   columns: PropTypes.array,
   data: PropTypes.array,
   onRowSelect: PropTypes.func,
-  selectedItem: PropTypes.any,
+  selectedId: PropTypes.any,
   rowStyling: PropTypes.func,
   sort: PropTypes.string,
   height: PropTypes.string,
   onCellEdit: PropTypes.func,
-  rowSelection: PropTypes.string
+  rowSelection: PropTypes.string,
+  selectedModel: PropTypes.object,
 };
 
 VanitySelectionTableBase.defaultProps = {

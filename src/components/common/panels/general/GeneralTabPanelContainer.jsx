@@ -22,7 +22,7 @@ GeneralTabPanelContainer.propTypes = {
 };
 
 GeneralTabPanelContainer.defaultProps = {
-  bodyClassName: "pt-1 scroll-y"
+  bodyClassName: "pt-1 scroll-y hide-x-overflow"
 };
 
 export default GeneralTabPanelContainer;

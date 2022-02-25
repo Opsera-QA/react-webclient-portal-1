@@ -1,0 +1,231 @@
+/* Help Documentation Container Styling */
+.help-documentation-container .header {
+    /*background-color: #f2c364;*/
+    background-color: #F6D179;
+    color: #3D3B36;
+}
+
+.help-documentation-container .help-body {
+    background-color: #fbe3b3;
+    min-height: 195px;
+    overflow-y: auto;
+    overflow-x: hidden
+}
+
+/* End Help Documentation Container Styling */
+
+/* Metric Container Styling */
+.metric-container {
+    width: 100%;
+    margin: 1em;
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .metric-container {
+        max-width: 100%;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .metric-container {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .metric-container {
+        max-width: 45%;
+        /* width: 100%; */
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .metric-container {
+        max-width: 30%;
+    }
+}
+/* End Metric Container Styling */
+
+/* Makeup Container Styling */
+.makeup-tree-container {
+    border-right: 1px solid #E6E5E3;
+}
+
+.makeup-tree-container-body {
+    /*TODO: Leaving these here temporarily, They're for taking up the entire space. If left unused, remove.*/
+    /*min-height: calc(100vh - 264px);*/
+    /*height: calc(100vh - 264px);*/
+    /*max-height: calc(100vh - 264px);*/
+    min-height: 100%;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+.makeup-tree-title {
+    min-height: 49px;
+    font-weight: 500;
+    line-height: 1.4;
+    font-size: 1.1rem;
+    background-color: #F3F3F1;
+    color: #3D3B36;
+    border: 1px solid #e4e4e4;
+    border-left: none;
+    border-right: none;
+}
+
+.makeup-tab-content-title {
+    min-height: 49px;
+    font-weight: 500;
+    line-height: 1.4;
+    font-size: 1.2rem;
+    background-color: #F3F3F1;
+    color: #3D3B36;
+    border: 1px solid #e4e4e4;
+    border-left: none;
+    border-right: none;
+}
+
+.makeup-container-body {
+    min-height: calc(100vh - 264px);
+    height: calc(100vh - 264px);
+    max-height: calc(100vh - 264px);
+    overflow-y: hidden;
+}
+
+.makeup-container-table {
+    min-height: calc(70vh - 82px - .5rem);
+}
+
+.makeup-container-tab-container {
+    max-height: 100%;
+    overflow-y: hidden;
+}
+
+.makeup-container-content-body {
+    min-height: calc(100vh - 264px);
+    height: calc(100vh - 264px);
+    max-height: calc(100vh - 264px);
+    overflow-y: auto;
+}
+/* End Makeup Container Styling */
+
+
+/* Console Log Container Styling */
+.console-log-container {
+    min-height: 500px;
+    height: 500px;
+    max-height: 500px;
+    overflow-y: hidden;
+}
+
+.console-log-container-tabs, .console-log-container-body {
+    min-height: 500px;
+    height: 500px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.overlay-console-log-container {
+    min-height: calc(100vh - 335px);
+    height: calc(100vh - 335px);
+    max-height: calc(100vh - 335px);
+    overflow-y: hidden;
+}
+
+.overlay-console-log-container-tabs, .overlay-console-log-container-body {
+    min-height: calc(100vh - 335px);
+    height: calc(100vh - 335px);
+    max-height: calc(100vh - 335px);
+    overflow-y: auto;
+}
+
+/* Console Log Container Styling */
+
+/* Metric Container Styling */
+.metric-chart-container {
+    margin: 0 auto;
+    /*border: 1px solid #E6E5E3;*/
+    border-radius: 6px;
+    /*box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);*/
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.metric-chart-container > .metric-title-bar, .metric-info-container > .metric-title-bar, .dashboard-container-header {
+    /*background-color: #E6E5E3;*/
+    /*color: #3D3B36;*/
+    background-color: #00a8e8;
+    color: #fff;
+    font-size: 1.4em;
+    height: 48px;
+    max-height: 48px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+/* End Metric Container Styling */
+
+.dashboard-screen-container-body {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    background-clip: border-box;
+    background-color: #e6e5e3;
+    border: 1px solid #e6e5e3;
+}
+
+/* Metric Info Container Styling */
+.metric-info-container .metric-info-container-body {
+    border: 1px solid #E6E5E3;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.metric-info-container-footer {
+    background-color: #E6E5E3;
+    min-height: 1em;
+}
+/* End Metric Info Container Styling */
+
+/* Property Input Container Styling */
+.object-properties-input .property-header, .input-title-bar {
+    background-color: #E6E5E3;
+    color: #3D3B36;
+    min-height: 42px;
+    font-size: 1.1rem;
+}
+
+.object-properties-input .delete-button {
+    margin-left: 2px;
+}
+
+.object-properties-input .properties-body {
+    height: 195px;
+    overflow-y: auto;
+    overflow-x: hidden
+}
+
+.object-properties-input .properties-body-alt {
+    min-height: 195px;
+}
+
+.object-properties-input .rules-input, .object-properties-input .roles-input {
+    min-height: 55px;
+}
+
+.object-properties-input .no-data-message {
+    padding: 2%;
+}
+
+.object-properties-footer {
+    background-color: #E6E5E3;
+    min-height: 1em;
+}
+
+.object-properties-footer .form-text {
+    margin: 0
+}
+
+/* End Property Input Container Styling */

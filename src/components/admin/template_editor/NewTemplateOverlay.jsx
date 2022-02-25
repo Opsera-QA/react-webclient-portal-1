@@ -1,8 +1,8 @@
 import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import templateEditorMetadata from "components/admin/template_editor/template-metadata";
-import TemplateEditorPanel from "components/admin/template_editor/template_detail_view/TemplateEditorPanel";
+import templateEditorMetadata from "components/admin/template_editor/pipelineTemplate.metadata";
+import TemplateEditorPanel from "components/admin/template_editor/details/TemplateEditorPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 

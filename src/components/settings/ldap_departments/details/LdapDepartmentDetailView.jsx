@@ -4,8 +4,7 @@ import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import departmentActions from "components/settings/ldap_departments/department-functions";
-import ldapDepartmentMetaData from "components/settings/ldap_departments/ldap-department-metadata";
-import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
+import ldapDepartmentMetadata from "components/settings/ldap_departments/ldapDepartment.metadata";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
@@ -18,6 +17,9 @@ import axios from "axios";
 import LdapDepartmentManagementSubNavigationBar
   from "components/settings/ldap_departments/LdapDepartmentManagementSubNavigationBar";
 
+// TODO: Can we get an API Call to get role group names associated with an organization?
+const roleGroups = ["Administrators", "PowerUsers", "Users"];
+
 function LdapDepartmentDetailView() {
   const {departmentName, orgDomain} = useParams();
   const [accessRoleData, setAccessRoleData] = useState({});
@@ -26,7 +28,6 @@ function LdapDepartmentDetailView() {
   const [ldapDepartmentGroupData, setLdapDepartmentGroupData] = useState(undefined);
   const [ldapDepartmentData, setLdapDepartmentData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [authorizedActions, setAuthorizedActions] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -68,19 +69,6 @@ function LdapDepartmentDetailView() {
       }
     }
   };
-  const getLdapDepartment = async (cancelSource = cancelTokenSource) => {
-    const response = await departmentActions.getDepartmentV2(getAccessToken, cancelSource, orgDomain, departmentName);
-
-    if (isMounted.current === true && response?.data != null) {
-      let newLdapDepartmentData = new Model({...response.data}, ldapDepartmentMetaData, false);
-      setLdapDepartmentData(newLdapDepartmentData);
-      const groupResponse = await accountsActions.getGroupV2(getAccessToken, cancelSource, orgDomain, newLdapDepartmentData.getData("departmentGroupName"));
-
-      if (isMounted.current === true && groupResponse?.data != null) {
-        setLdapDepartmentGroupData(new Model({...groupResponse.data}, ldapGroupMetaData, false));
-      }
-    }
-  };
 
   const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
@@ -89,14 +77,30 @@ function LdapDepartmentDetailView() {
       setAccessRoleData(userRoleAccess);
       let {ldap} = user;
 
-      if (userRoleAccess?.OpseraAdministrator || ldap.domain === orgDomain)
-      {
-        let authorizedActions = await accountsActions.getAllowedDepartmentActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-        setAuthorizedActions(authorizedActions);
+      if (userRoleAccess?.OpseraAdministrator !== true && (ldap.domain !== orgDomain)) {
+        history.push(`/admin/${ldap.domain}/departments/details/${departmentName}`);
+        return;
+      }
 
-        if (authorizedActions?.includes("get_department_details")) {
-          await getLdapDepartment(cancelSource);
-        }
+      if (roleGroups.includes(departmentName)) {
+        history.push(`/settings/${orgDomain}/site-roles/details/${departmentName}`);
+        return;
+      }
+
+      await getLdapDepartment(cancelSource);
+    }
+  };
+
+  const getLdapDepartment = async (cancelSource = cancelTokenSource) => {
+    const response = await departmentActions.getDepartmentV2(getAccessToken, cancelSource, orgDomain, departmentName);
+
+    if (isMounted.current === true && response?.data != null) {
+      let newLdapDepartmentData = new Model({...response.data}, ldapDepartmentMetadata, false);
+      setLdapDepartmentData(newLdapDepartmentData);
+      const groupResponse = await accountsActions.getGroupV2(getAccessToken, cancelSource, orgDomain, newLdapDepartmentData.getData("departmentGroupName"));
+
+      if (isMounted.current === true && groupResponse?.data != null) {
+        setLdapDepartmentGroupData(new Model({...groupResponse.data}, ldapDepartmentMetadata, false));
       }
     }
   };
@@ -114,7 +118,7 @@ function LdapDepartmentDetailView() {
           </div>
           <div>
             <ActionBarDestructiveDeleteButton
-              relocationPath={"/admin/departments"}
+              relocationPath={"/settings/departments"}
               dataObject={ldapDepartmentData}
               handleDelete={deleteDepartment}
               mustBeOpseraAdmin={true}
@@ -129,7 +133,7 @@ function LdapDepartmentDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"ldapDepartmentDetailView"}
-      metadata={ldapDepartmentMetaData}
+      metadata={ldapDepartmentMetadata}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
       dataObject={ldapDepartmentData}
@@ -142,9 +146,9 @@ function LdapDepartmentDetailView() {
           setLdapDepartmentData={setLdapDepartmentData}
           orgDomain={orgDomain}
           ldapDepartmentData={ldapDepartmentData}
-          authorizedActions={authorizedActions}
           loadData={loadData}
-        />}
+        />
+      }
     />
   );
 }

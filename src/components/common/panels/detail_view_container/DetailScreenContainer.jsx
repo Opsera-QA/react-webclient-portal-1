@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import DataNotFoundContainer from "components/common/panels/detail_view_container/DataNotFoundContainer";
 import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import TitleBar from "components/common/fields/TitleBar";
@@ -119,24 +118,30 @@ function DetailScreenContainer(
 
   if (!isLoading && accessDenied) {
     return (
-      <AccessDeniedContainer />
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
     );
   }
 
   if (!isLoading && accessRoleData && roleRequirement && !meetsRequirements(roleRequirement, accessRoleData)) {
     return (
-      <AccessDeniedContainer />
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
     );
   }
 
   if (!isLoading && dataObject == null) {
     return (
-      <DataNotFoundContainer type={metadata?.type} breadcrumbDestination={breadcrumbDestination} />
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
     );
   }
 
   return (
-    <div className="max-content-width ml-2 max-content-height scroll-y">
+    <div className="max-content-width ml-2 max-content-height scroll-y hide-x-overflow">
       {getTopNavigation()}
       <div className="content-container content-card-1">
         <div className="px-2 content-block-header title-text-header-1">

@@ -4,16 +4,6 @@ import { Button, Modal } from "react-bootstrap";
 import { format } from "date-fns";
 import ReactJson from "react-json-view";
 
-
-function IsJsonString(str) {
-  try {
-    JSON.parse(str);
-  } catch (e) {
-    return false;
-  }
-  return true;
-}
-
 function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibility }) {
   const [showModal, setShowModal] = useState(false);
   const [viewType, setViewType] = useState("log");

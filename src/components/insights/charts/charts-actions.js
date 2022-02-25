@@ -30,41 +30,6 @@ import {
 
 const chartsActions = {};
 
-chartsActions.getChart = async (request, metric, date, getAccessToken) => {
-  const apiUrl = "/analytics/data";
-
-  const postBody = {
-    data: [
-      {
-        request: request,
-        metric: metric,
-      },
-    ],
-    startDate: date.start,
-    endDate: date.end,
-  };
-
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
-chartsActions.getChartData = async (getAccessToken, cancelTokenSource, request, metric, kpiConfiguration) => {
-  const apiUrl = "/analytics/data";
-  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
-
-  const postBody = {
-    data: [
-      {
-        request: request,
-        metric: metric,
-      },
-    ],
-    startDate: date.start,
-    endDate: date.end,
-  };
-
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
 chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessToken) => {
   const apiUrl = "/analytics/metrics";
 
@@ -75,17 +40,45 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
     tags: tags,
   };
 
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, apiUrl, postBody);
 };
 
-chartsActions.getEnvironmentMetrics = async (getAccessToken, cancelTokenSource, request, environment, dashboardTags, dashboardOrgs, dateRange) => {
+chartsActions.getSonarUnitTestsMetrics = async (
+  kpiConfiguration,
+  tags,
+  getAccessToken,
+  cancelTokenSource,
+  tableFilterDto
+) => {
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const apiUrl = "/analytics/sonar/v1/sonarUnitTestsMetrics";
+  const postBody = {
+    startDate: date.start,
+    endDate: date.end,
+    tags: tags,
+    page: tableFilterDto?.getData("currentPage"),
+    size: tableFilterDto?.getData("pageSize"),
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+chartsActions.getEnvironmentMetrics = async (
+  getAccessToken,
+  cancelTokenSource,
+  request,
+  environment,
+  dashboardTags,
+  dashboardOrgs,
+  dateRange
+) => {
   const apiUrl = "/analytics/metrics";
   const postBody = {
     request: request,
     environment: environment,
     tags: dashboardTags?.length > 0 ? dashboardTags : null,
     dashboardOrgs: dashboardOrgs?.length > 0 ? dashboardOrgs : null,
-    dateRange: dateRange
+    dateRange: dateRange,
     // tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
   };
 
@@ -105,6 +98,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   currentDate,
   dateRange,
   actionableInsightsQueryData,
+  coveritySeverity
 ) => {
   const apiUrl = "/analytics/metrics",
     date = getDateObjectFromKpiConfiguration(kpiConfiguration),
@@ -140,6 +134,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   }
   if (!useDashboardTags) {
     dashboardTags = null;
+    dashboardOrgs = null;
   }
 
   const postBody = {
@@ -165,6 +160,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     seleniumTestSuites: seleniumTestSuites,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
+    search: tableFilterDto?.getData("search"),
+    sortOption: tableFilterDto?.getData("sortOption")?.value,
     projectTags: projectTags,
     dashboardOrgs: dashboardOrgs,
     pipelineName: pipelineName,
@@ -176,10 +173,11 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     serviceNowServiceOfferings: serviceNowServiceOfferings,
     serviceNowConfigurationItems: serviceNowConfigurationItems,
     serviceNowBusinessServices: serviceNowBusinessServices,
-    actionableInsightsQueryData: actionableInsightsQueryData
+    actionableInsightsQueryData: actionableInsightsQueryData,
+    coveritySeverity: coveritySeverity,
   };
 
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 export default chartsActions;

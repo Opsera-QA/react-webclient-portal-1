@@ -62,10 +62,10 @@ function ToolEditorPanel({ toolData, handleClose }) {
     <VanityEditorPanelContainer
       model={toolDataDto}
       setModel={setToolDataDto}
-      setRecordDto={setToolDataDto}
       isLoading={isLoading}
       showBooleanToggle={true}
       handleClose={handleClose}
+      className={"mx-3 mb-2"}
     >
       <Row>
         <Col lg={6}>

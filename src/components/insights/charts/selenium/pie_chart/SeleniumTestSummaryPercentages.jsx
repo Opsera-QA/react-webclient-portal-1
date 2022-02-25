@@ -8,7 +8,16 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColorByData, assignStandardColors, shortenPieChartLegend } from "../../charts-views";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
+import SeleniumTestsTotalDataBlock from "./data_blocks/tests_total/SeleniumTestsTotalDataBlock";
+import SeleniumTestsCasesPassedDataBlock from "./data_blocks/tests_passed/SeleniumTestsCasesPassedDataBlock";
+import SeleniumTestsCasesFailedDataBlock from "./data_blocks/tests_failed/SeleniumTestsCasesFailedDataBlock";
+import SeleniumTestsCasesBlockedDataBlock from "./data_blocks/tests_blocked/SeleniumTestsCasesBlockedDataBlock";
+import SeleniumTestsCasesNotExecutedBlock from "./data_blocks/tests_not_executed/SeleniumTestsCasesNotExecutedBlock";
+import {
+  METRIC_THEME_CHART_PALETTE_COLORS,
+  METRIC_CHART_STANDARD_HEIGHT,
+} from "components/common/helpers/metrics/metricTheme.helpers";
 
 function SeleniumTestSummaryPercentages({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -45,12 +54,18 @@ function SeleniumTestSummaryPercentages({ kpiConfiguration, setKpiConfiguration,
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "seleniumTestPercentageResults",
         kpiConfiguration,
-        dashboardTags
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
       );
       let dataObject = response?.data ? response?.data?.data[0]?.seleniumTestPercentageResults?.data : [];
       assignStandardColors(dataObject[0]?.testsSummary);
@@ -77,61 +92,40 @@ function SeleniumTestSummaryPercentages({ kpiConfiguration, setKpiConfiguration,
     }
 
     return (
-      <div className="new-chart mb-3" style={{ height: "300px", display: "flex" }}>
-        <Container>
-          <Row className="p-1">
-            <Col>
-              <div className="metric-box text-center">
-                <div className="box-metric">
-                  <div>{metrics[0]?.testsRun}</div>
-                </div>
-                <div className="w-100 text-muted mb-1">Total TestCases</div>
-              </div>
-            </Col>
-            <Col>
-              <div className="metric-box text-center">
-                <div className="box-metric">
-                  <div className="green">{metrics[0]?.testsPassed}</div>
-                </div>
-                <div className="w-100 text-muted mb-1">Test Cases Passed</div>
-              </div>
-            </Col>
-          </Row>
-          <Row className="p-1">
-            <Col>
-              <div className="metric-box text-center">
-                <div className="box-metric">
-                  <div className="red">{metrics[0]?.testsFailed}</div>
-                </div>
-                <div className="w-100 text-muted mb-1">Test Cases Failed</div>
-              </div>
-            </Col>
-            <Col>
-              <div className="metric-box text-center">
-                <div className="box-metric">
-                  <div>{metrics[0]?.blockedTests}</div>
-                </div>
-                <div className="w-100 text-muted mb-1">Test Cases Blocked</div>
-              </div>
-            </Col>
-          </Row>
-          <Row className="p-1">
-            <Col>
-              <div className="metric-box text-center">
-                <div className="box-metric">
-                  <div>{metrics[0]?.notExecutedTests}</div>
-                </div>
-                <div className="w-100 text-muted mb-1">Test Cases Not Executed</div>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-        <ResponsivePie
-          data={metrics[0]?.testsSummary}
-          {...defaultConfig()}
-          {...config(getColorByData)}
-          onClick={() => setShowModal(true)}
-        />
+      <div className="new-chart m-3 p-0" style={{ minHeight: "300px", display: "flex" }}>
+        <Row>
+          <Col xl={6} lg={6} md={6}>
+            <Row>
+              <Col xl={6} lg={6} className={"mb-3"}>
+                <SeleniumTestsTotalDataBlock score={metrics[0]?.testsRun?.toString()} />
+              </Col>
+              <Col xl={6} lg={6} className={"mb-3"}>
+                <SeleniumTestsCasesPassedDataBlock score={metrics[0]?.testsPassed?.toString()} />
+              </Col>
+              <Col xl={6} lg={6} className={"mb-3"}>
+                <SeleniumTestsCasesFailedDataBlock score={metrics[0]?.testsFailed?.toString()} />
+              </Col>
+              <Col xl={6} lg={6} className={"mb-3"}>
+                <SeleniumTestsCasesBlockedDataBlock score={metrics[0]?.blockedTests?.toString()} />
+              </Col>
+            </Row>
+            <Row className={"justify-content-center"}>
+              <Col xl={6} lg={6} className={"mb-3"}>
+                <SeleniumTestsCasesNotExecutedBlock score={metrics[0]?.notExecutedTests?.toString()} />
+              </Col>
+            </Row>
+          </Col>
+          <Col xl={6} lg={6} md={6} className={"my-2 p-2"}>
+            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
+              <ResponsivePie
+                data={metrics[0]?.testsSummary}
+                {...defaultConfig()}
+                {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
+                onClick={() => setShowModal(true)}
+              />
+            </div>
+          </Col>
+        </Row>
       </div>
     );
   };

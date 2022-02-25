@@ -2,18 +2,23 @@ import React from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
-import ArgoRepository from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/ArgoRepository";
-import JFrogMavenRepositoriesPanel from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/JFrogMavenRepositoriesPanel";
+import JFrogToolRepositoriesPanel from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/JFrogToolRepositoriesPanel";
 import MessageField from "components/common/fields/text/MessageField";
+import ArgoToolRepositoriesPanel from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/ArgoToolRepositoriesPanel";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
 function ToolRepositoriesPanel({ toolData, loadData, isLoading }) {
   const getToolRepositoriesPanel = () => {
     switch (toolData?.getData("tool_identifier")) {
     case "jfrog_artifactory_maven":
-      return <JFrogMavenRepositoriesPanel isLoading={isLoading} toolData={toolData} />;
-    case "argo":
       return (
-        <ArgoRepository
+        <JFrogToolRepositoriesPanel
+          toolId={toolData?.getData("_id")}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
+      return (
+        <ArgoToolRepositoriesPanel
           toolActions={toolData?.getData("repositories")}
           isLoading={isLoading}
           toolData={toolData}

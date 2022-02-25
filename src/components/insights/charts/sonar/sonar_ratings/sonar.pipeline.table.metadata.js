@@ -3,12 +3,32 @@ const SonarPipelineTableMetadata = {
   type: "Sonar Pipeline Table Report",
   fields: [
     {
-      label: "Project Name",
+      label: "Project",
       id: "project",
     },
     {
-      label: "Recent Scan",
+      label: "Pipeline Name",
+      id: "pipelineName",
+    },
+    {
+      label: "Run Count",
       id: "runCount",
+    },
+    {
+      label: "Timestamp",
+      id: "endTimestamp",
+    },
+    {
+      label: " Maintainibility Rating",
+      id: "maintainibility_rating",
+    },
+    {
+      label: " Reliability Rating",
+      id: "reliability_rating",
+    },
+    {
+      label: " Security Rating",
+      id: "security_rating",
     },
     {
       label: "Trend",

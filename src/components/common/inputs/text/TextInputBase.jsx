@@ -7,9 +7,22 @@ import {parseError} from "components/common/helpers/error-helpers";
 
 function TextInputBase(
   {
-    fieldName, dataObject, setDataObject, disabled, type,
-    showLabel, inputClasses, linkTooltipText, detailViewLink, infoOverlay,
-    setDataFunction, name, style, className, error
+    fieldName,
+    dataObject,
+    setDataObject,
+    disabled,
+    type,
+    showLabel,
+    inputClasses,
+    linkTooltipText,
+    detailViewLink,
+    infoOverlay,
+    setDataFunction,
+    name,
+    style,
+    className,
+    error,
+    inputButtons,
   }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -30,6 +43,11 @@ function TextInputBase(
   };
 
   const updateValue = (newValue) => {
+    if (typeof newValue !== "string") {
+      setErrorMessage(`${field?.label} must be a string.`);
+      return;
+    }
+
     if (setDataFunction) {
       const newDataObject = setDataFunction(fieldName, newValue);
 
@@ -57,6 +75,20 @@ function TextInputBase(
     return classes;
   };
 
+  const getInputButtons = () => {
+    if (inputButtons) {
+      return (
+        <div className={"d-flex ml-2"}>
+          {inputButtons}
+        </div>
+      );
+    }
+  };
+
+  if (field == null) {
+    return null;
+  }
+
   return (
     <InputContainer className={className}>
       <InputLabel
@@ -67,17 +99,25 @@ function TextInputBase(
         detailViewLink={detailViewLink}
         infoOverlay={infoOverlay}
       />
-      <input
-        type={type}
-        style={style}
-        disabled={disabled}
-        name={name}
-        value={dataObject.getData(fieldName)}
-        onChange={(event) => updateValue(event.target.value)}
-        className={getInputClasses()}
-        autoComplete="off"
+      <div className={"d-flex"}>
+        <input
+          type={type}
+          style={style}
+          disabled={disabled}
+          name={name}
+          value={dataObject.getData(fieldName)}
+          onChange={(event) => updateValue(event.target.value)}
+          className={getInputClasses()}
+          autoComplete="off"
+        />
+        {getInputButtons()}
+      </div>
+      <InfoText
+        model={dataObject}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
       />
-      <InfoText field={field} errorMessage={errorMessage}/>
     </InputContainer>
   );
 }
@@ -102,6 +142,7 @@ TextInputBase.propTypes = {
     PropTypes.string,
     PropTypes.object,
   ]),
+  inputButtons: PropTypes.any,
 };
 
 export default TextInputBase;

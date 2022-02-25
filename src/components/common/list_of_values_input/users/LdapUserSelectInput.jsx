@@ -6,7 +6,17 @@ import accountsActions from "components/admin/accounts/accounts-actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 
-function LdapUserSelectInput({ model, setModel, fieldName, valueField, textField, showClearValueButton, setDataFunction, className }) {
+function LdapUserSelectInput(
+  {
+    model,
+    setModel,
+    fieldName,
+    valueField,
+    textField,
+    showClearValueButton,
+    setDataFunction,
+    className,
+  }) {
   const { getAccessToken, getUserRecord, setAccessRoles, isSassUser } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -113,13 +123,13 @@ LdapUserSelectInput.propTypes = {
   showClearValueButton: PropTypes.bool,
   textField: PropTypes.string,
   setDataFunction: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 LdapUserSelectInput.defaultProps = {
   valueField: "value",
   textField: "text",
-  showClearValueButton: true
+  showClearValueButton: true,
 };
 
 export default LdapUserSelectInput;

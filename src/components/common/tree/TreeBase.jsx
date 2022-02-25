@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {Tree} from "dhx-suite-package";
-import "dhx-suite-package/codebase/suite.css";
+import {Tree} from "@opsera/dhx-suite-package";
 import {useWindowSize} from "components/common/hooks/useWindowSize";
 
 function TreeBase({ data, onItemClick, setParentWidget, expanded, treeId, selectedId }) {
@@ -47,6 +46,7 @@ function TreeBase({ data, onItemClick, setParentWidget, expanded, treeId, select
   const setUpTree = () => {
     const tree = new Tree(treeId, {
       data: Array.isArray(data) && data.length > 0 ? data : [],
+      css: "p-2",
     });
 
     if (expanded === true) {

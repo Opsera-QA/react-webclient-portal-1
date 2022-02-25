@@ -3,9 +3,11 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
-import JFrogStepActions from "../../jfrog_artifactory_docker/jfrog-step-actions";
 import axios from "axios";
+import JFrogToolRepositoriesActions
+  from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jFrogToolRepositories.actions";
 
+// TODO: Refactor
 function JfrogMavenRepoSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_prop}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -36,7 +38,7 @@ function JfrogMavenRepoSelectInput({ fieldName, dataObject, setDataObject, disab
       source.cancel();
       isMounted.current = false;
     };
-  }, [tool_prop]);
+  }, [tool_prop, dataObject.getData("repositoryFormat")]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -59,9 +61,9 @@ function JfrogMavenRepoSelectInput({ fieldName, dataObject, setDataObject, disab
 
   const loadRepos = async (cancelSource = cancelTokenSource) => {
     try {
-      const res = await JFrogStepActions.getRepos(dataObject.getData("jfrogToolConfigId"),"Maven", getAccessToken, cancelSource);
-      if (res && res.status === 200) {        
-        setRepos(res.data);
+      const res = await JFrogToolRepositoriesActions.getRepositories(getAccessToken, cancelSource, dataObject.getData("jfrogToolConfigId"), dataObject.getData("repositoryFormat"));
+      if (res && res.status === 200) {
+        setRepos(res.data.data);
         return;
       }
       setRepos([]);

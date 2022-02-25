@@ -5,16 +5,18 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function PipelineStateFieldBase({ icon, innerText, statusText, className, colorClassName }) {
   return (
-    <span className={className}>
-      <TooltipWrapper innerText={innerText}>
-        <FontAwesomeIcon
-          size="lg"
-          icon={icon}
-          fixedWidth
-          className={statusText === "Running" ? `fa-spin mr-2 ${colorClassName}` : `mr-2 ${colorClassName}`}
-        />
-      </TooltipWrapper>
-      <span>{statusText}</span>
+    <span className={`${className}`}>
+      <span className={"d-flex flex-nowrap"}>
+        <TooltipWrapper innerText={innerText}>
+          <FontAwesomeIcon
+            size="lg"
+            icon={icon}
+            fixedWidth
+            className={statusText === "Running" ? `my-auto fa-spin mr-2 ${colorClassName}` : `my-auto mr-2 ${colorClassName}`}
+          />
+        </TooltipWrapper>
+        <span>{statusText}</span>
+      </span>
     </span>
   );
 }

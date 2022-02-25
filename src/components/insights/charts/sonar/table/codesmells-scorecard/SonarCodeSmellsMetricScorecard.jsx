@@ -14,8 +14,10 @@ import {
 import SonarCodeSmellsMetricScorecardMetaData from "components/insights/charts/sonar/table/codesmells-scorecard/SonarCodeSmellsMetricScorecardMetaData";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
-import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import sonarPipelineFilterMetadata from "components/insights/charts/sonar/table/sonar-pipeline-filter-metadata";
 import { useHistory } from "react-router-dom";
+import SonarCardView from "../../card/SonarCardView";
+import FilterContainer from "components/common/table/FilterContainer";
 
 function SonarCodeSmellsMetricScorecard({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const history = useHistory();
@@ -27,7 +29,7 @@ function SonarCodeSmellsMetricScorecard({ kpiConfiguration, setKpiConfiguration,
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
-    new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
+    new Model({ ...sonarPipelineFilterMetadata.newObjectFields }, sonarPipelineFilterMetadata, false)
   );
 
   const noDataMessage = "No Data is available for this chart at this time";
@@ -75,13 +77,18 @@ function SonarCodeSmellsMetricScorecard({ kpiConfiguration, setKpiConfiguration,
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "sonarCodeSmellsCodeBasedMetricScorecard",
         kpiConfiguration,
         dashboardTags,
-        filterDto
+        filterDto,
+        null,
+        dashboardOrgs
       );
 
       let dataObject = response?.data?.data[0]?.sonarCodeSmellsCodeBasedMetricScorecard?.data[0]?.data;
@@ -107,17 +114,43 @@ function SonarCodeSmellsMetricScorecard({ kpiConfiguration, setKpiConfiguration,
     }
   };
 
-  const getChartTable = () => {
+  // const getChartTable = () => {
+  //   return (
+  //     <CustomTable
+  //       columns={columns}
+  //       data={metrics}
+  //       noDataMessage={noDataMessage}
+  //       paginationDto={tableFilterDto}
+  //       setPaginationDto={setTableFilterDto}
+  //       loadData={loadData}
+  //       scrollOnLoad={false}
+  //       onRowSelect={onRowSelect}
+  //     />
+  //   );
+  // };
+
+  const getCardView = () => {
     return (
-      <CustomTable
-        columns={columns}
+      <SonarCardView
+        sonarDataFilterDto={tableFilterDto}
+        setSonarDataFilterDto={setTableFilterDto}
+        isLoading={isLoading}
         data={metrics}
-        noDataMessage={noDataMessage}
-        paginationDto={tableFilterDto}
-        setPaginationDto={setTableFilterDto}
         loadData={loadData}
-        scrollOnLoad={false}
-        onRowSelect={onRowSelect}
+        type={"code-smells"}
+      />
+    );
+  };
+
+  const getFilterContainer = () => {
+    return (
+      <FilterContainer
+        filterDto={tableFilterDto}
+        setFilterDto={setTableFilterDto}
+        body={getCardView()}
+        isLoading={isLoading}
+        loadData={loadData}
+        supportSearch={true}
       />
     );
   };
@@ -127,13 +160,14 @@ function SonarCodeSmellsMetricScorecard({ kpiConfiguration, setKpiConfiguration,
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={getChartTable()}
+        chart={getFilterContainer()}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        tableChart={true}
       />
     </div>
   );

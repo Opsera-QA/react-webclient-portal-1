@@ -14,7 +14,7 @@ import axios from "axios";
 
 function AzureDevopsToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [azureDevopsConfigurationDto, setAzureDevopsConfigurationDto] = useState(undefined);
+  const [azureDevOpsConfigurationModel, setAzureDevOpsConfigurationModel] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -40,28 +40,35 @@ function AzureDevopsToolConfiguration({ toolData }) {
   }, []);
 
   const loadData = async () => {
-    setAzureDevopsConfigurationDto(modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), AzureDevopsConnectionMetadata));
+    setAzureDevOpsConfigurationModel(modelHelpers.getToolConfigurationModel(toolData?.getData("configuration"), AzureDevopsConnectionMetadata));
   };
 
-  const saveAzureDevopsToolConfiguration = async (cancelSource = cancelTokenSource) => {
-    let newConfiguration = azureDevopsConfigurationDto.getPersistData();
-    newConfiguration.accessToken = await toolsActions.saveThreePartToolPasswordToVaultV2(getAccessToken, cancelSource, toolData, azureDevopsConfigurationDto, "accessToken", newConfiguration.accessToken);
-
-    const item = {configuration: newConfiguration};
-    return await toolsActions.saveToolConfigurationV2(toolData, item, getAccessToken, cancelSource);
+  const saveAzureDevopsToolConfiguration = async () => {
+    const newConfiguration = azureDevOpsConfigurationModel?.getPersistData();
+    newConfiguration.accountPassword = await toolsActions.saveThreePartToolPasswordToVaultV3(getAccessToken, cancelTokenSource, toolData?.getData("_id"), toolData?.getData("tool_identifier"), "accountPassword", newConfiguration?.accessToken);
+    newConfiguration.accessToken = await toolsActions.saveThreePartToolPasswordToVaultV2(getAccessToken, cancelTokenSource, toolData, azureDevOpsConfigurationModel, "accessToken", newConfiguration?.accessToken);
+    return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
   };
 
   return (
     <ToolConfigurationEditorPanelContainer
-      model={azureDevopsConfigurationDto}
-      setModel={setAzureDevopsConfigurationDto}
+      model={azureDevOpsConfigurationModel}
+      setModel={setAzureDevOpsConfigurationModel}
       persistRecord={saveAzureDevopsToolConfiguration}
       toolData={toolData}
     >
       <Row>
         <Col sm={12}>
-          <VaultTextInput dataObject={azureDevopsConfigurationDto} setDataObject={setAzureDevopsConfigurationDto} fieldName={"accessToken"}/>
-          <TextInputBase dataObject={azureDevopsConfigurationDto} setDataObject={setAzureDevopsConfigurationDto} fieldName={"organization"} />
+          <VaultTextInput
+            dataObject={azureDevOpsConfigurationModel}
+            setDataObject={setAzureDevOpsConfigurationModel}
+            fieldName={"accessToken"}
+          />
+          <TextInputBase
+            dataObject={azureDevOpsConfigurationModel}
+            setDataObject={setAzureDevOpsConfigurationModel}
+            fieldName={"organization"}
+          />
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>

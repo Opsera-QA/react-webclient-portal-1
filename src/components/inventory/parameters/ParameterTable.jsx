@@ -13,7 +13,20 @@ import {
 import VanityDataContainer from "components/common/containers/VanityDataContainer";
 import {isActionAllowed} from "components/common/helpers/role-helpers";
 
-function ParameterTable({ data, parameterMetadata, setParameterData, parameterData, loadData, isLoading, isMounted, getAccessToken, cancelTokenSource, parameterRoleDefinitions, parameterFilterModel }) {
+function ParameterTable(
+  {
+    data,
+    parameterMetadata,
+    setParameterData,
+    parameterData,
+    loadData,
+    isLoading,
+    isMounted,
+    getAccessToken,
+    cancelTokenSource,
+    parameterRoleDefinitions,
+    parameterFilterModel,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessRoleData } = useContext(AuthContext);
   const [userRoleAccess, setUserRoleAccess] = useState(undefined);
@@ -71,7 +84,7 @@ function ParameterTable({ data, parameterMetadata, setParameterData, parameterDa
   const getParameterTable = () => {
     return (
       <VanitySelectionTable
-        className="table-no-border"
+        className={"table-no-border"}
         noDataMessage={"No Parameters have been created yet"}
         data={data}
         columns={columns}
@@ -81,8 +94,6 @@ function ParameterTable({ data, parameterMetadata, setParameterData, parameterDa
         paginationModel={parameterFilterModel}
         tableHeight={"calc(25vh)"}
         parentModel={parameterData}
-        parentModelId={parameterData?.getData("_id")}
-        rowSelection={"complex"}
       />
     );
   };

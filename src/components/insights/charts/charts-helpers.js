@@ -14,8 +14,8 @@ export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
     };
   }
   return {
-    start: addDays(new Date(), -90).toISOString(),
-    end: new Date().toISOString(),
+    start: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)).toISOString(),
+    end: addDays(new Date(new Date().setHours(0, 0, 0, 0)), 1).toISOString(),
   };
 }
 

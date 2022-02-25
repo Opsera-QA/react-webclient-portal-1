@@ -8,6 +8,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
 import TaskViews from "components/tasks/TaskViews";
 import TaskFilterModel from "components/tasks/task.filter.model";
+import TasksHelpDocumentation from "../common/help/documentation/tasks/TasksHelpDocumentation";
 
 function TaskManagement() {
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
@@ -69,7 +70,7 @@ function TaskManagement() {
   };
 
   const getTasksList = async (newFilterModel = taskFilterModel, cancelSource = cancelTokenSource) => {
-    const tableFields = ["name", "description", "type", "tags", "createdAt", "updatedAt", "active", "status"];
+    const tableFields = ["name", "description", "type", "tags", "createdAt", "updatedAt", "active", "status", "run_count"];
     const response = await taskActions.getTasksListV2(getAccessToken, cancelSource, newFilterModel, tableFields);
     const taskList = response?.data?.data;
     const taskMetadata = response?.data?.metadata;
@@ -85,6 +86,10 @@ function TaskManagement() {
     }
   };
 
+  const getHelpComponent = () => {
+    return (<TasksHelpDocumentation/>);
+  };
+
   if (!accessRoleData) {
     return <LoadingDialog size="sm" />;
   }
@@ -92,9 +97,7 @@ function TaskManagement() {
   return (
     <ScreenContainer
       breadcrumbDestination={"taskManagement"}
-      pageDescription={`
-        Create and Manage Opsera Related Tasks.
-      `}
+      helpComponent={getHelpComponent()}
       navigationTabContainer={<TasksSubNavigationBar currentTab={"tasks"}/>}
     >
       <TaskViews

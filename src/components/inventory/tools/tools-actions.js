@@ -1,15 +1,22 @@
 import baseActions from "utils/actionsBase";
 import pipelineActions from "components/workflow/pipeline-actions";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 const toolsActions = {};
 
-toolsActions.checkToolConnectivity = async (toolId, toolName, getAccessToken) => {
-  const apiUrl = `/tools/${toolId}/check-connectivity?name=${toolName}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+toolsActions.checkToolConnectivityV2 = async (getAccessToken, cancelTokenSource, toolId, toolName) => {
+  const apiUrl = `/tools/${toolId}/check-connectivity/${toolName}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+// TODO: Remove and use deleteToolByIdV2 after all references are updated
 toolsActions.deleteToolV2 = async (getAccessToken, cancelToken, toolModel) => {
   const apiUrl = `/registry/${toolModel?.getData("_id")}`;
+  return baseActions.apiDeleteCallV2(getAccessToken, cancelToken, apiUrl);
+};
+
+toolsActions.deleteToolByIdV2 = async (getAccessToken, cancelToken, toolId) => {
+  const apiUrl = `/registry/${toolId}`;
   return baseActions.apiDeleteCallV2(getAccessToken, cancelToken, apiUrl);
 };
 
@@ -77,6 +84,16 @@ toolsActions.getRoleLimitedToolByIdV3 = async (getAccessToken, cancelTokenSource
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+toolsActions.getRoleLimitedToolApplicationsByToolIdV2 = async (getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `/registry/configs/tool/${id}/applications`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+toolsActions.getRoleLimitedToolApplicationByIdV2 = async (getAccessToken, cancelTokenSource, id, applicationId) => {
+  const apiUrl = `/registry/configs/tool/${id}/applications/${applicationId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 toolsActions.getRoleLimitedTools = async (getAccessToken, cancelTokenSource, fields) => {
   const apiUrl = `/registry/configs/tools/`;
   const urlParams = {
@@ -131,8 +148,8 @@ toolsActions.getToolLogById = async (getAccessToken, cancelTokenSource, logId) =
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-toolsActions.getRelevantPipelinesV2 = async (getAccessToken, cancelTokenSource, toolDto) => {
-  const apiUrl = `/registry/${toolDto.getData("_id")}/pipelines`;
+toolsActions.getRelevantPipelinesV2 = async (getAccessToken, cancelTokenSource, toolId) => {
+  const apiUrl = `/registry/${toolId}/pipelines`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
@@ -170,6 +187,7 @@ toolsActions.savePasswordToVault = async (toolData, toolConfigurationData, field
 };
 
 // Note: This is used for three part vault keys (tool ID, identifier, and key)
+// TODO: Should probably rewrite this
 toolsActions.saveThreePartToolPasswordToVaultV2 = async (getAccessToken, cancelTokenSource, toolData, toolConfigurationData, fieldName, value) => {
   if (toolConfigurationData.isChanged(fieldName) && value != null && typeof(value) === "string") {
     const toolId = toolData.getData("_id");
@@ -191,6 +209,25 @@ toolsActions.saveThreePartToolPasswordToVaultV2 = async (getAccessToken, cancelT
   return typeof currentValue === "string" ? {} : currentValue;
 };
 
+// TODO: Use this going forward
+toolsActions.saveThreePartToolPasswordToVaultV3 = async (getAccessToken, cancelTokenSource, toolId, toolIdentifier, fieldName, newValue) => {
+  if (hasStringValue(newValue) === true) {
+    const keyName = `${toolId}-${toolIdentifier}-${fieldName}`;
+    const postBody = {
+      key: keyName,
+      value: newValue,
+      toolId: toolId
+    };
+
+    const apiUrl = "/vault/tool/";
+    const response = await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+    return response?.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
+  }
+
+  // Faseeh says all vault values MUST be objects and not strings
+  return typeof newValue === "string" ? {} : newValue;
+};
+
 toolsActions.saveKeyPasswordToVault = async (toolConfigurationData, fieldName, value, key, getAccessToken, toolId) => {
   if (toolConfigurationData.isChanged(fieldName) && value != null && typeof(value) === "string") {
     const body = { "key": key, "value": value, "toolId": toolId };
@@ -203,6 +240,23 @@ toolsActions.saveKeyPasswordToVault = async (toolConfigurationData, fieldName, v
   return typeof currentValue === "string" ? {} : currentValue;
 };
 
+toolsActions.saveSimpleVaultPasswordToVaultV2 = async (getAccessToken, cancelTokenSource, toolId, toolIdentifier, newValue) => {
+  if (hasStringValue(newValue) === true) {
+    const simpleVaultKey = `${toolId}-${toolIdentifier}`;
+    const apiUrl = "/vault/tool/";
+    const postBody = {
+      key: simpleVaultKey,
+      value: newValue,
+      toolId: toolId,
+    };
+    const response = await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+    return response?.status === 200 ? { name: "Vault Secured Key", vaultKey: simpleVaultKey } : {};
+  }
+
+  // Faseeh says all values MUST be objects and not strings
+  return typeof newValue === "string" ? {} : newValue;
+};
+
 // TODO: Make update route that just takes configuration and sets it into the mongo DB collection
 toolsActions.saveToolConfiguration = async (toolData, configurationItem, getAccessToken) => {
   let newToolData = toolData.getPersistData();
@@ -210,33 +264,21 @@ toolsActions.saveToolConfiguration = async (toolData, configurationItem, getAcce
   return await toolsActions.updateToolConfiguration(newToolData, getAccessToken);
 };
 
-toolsActions.saveToolConfigurationV2 = async (toolData, configurationItem, getAccessToken, cancelTokenSource) => {
-  let newToolData = toolData.getPersistData();
-  newToolData["configuration"] = configurationItem.configuration;
+toolsActions.saveToolConfigurationV2 = async (getAccessToken, cancelTokenSource, toolModel, newConfiguration) => {
+  const newToolData = toolModel?.getPersistData();
+  newToolData.configuration = newConfiguration;
   return await toolsActions.updateToolConfigurationV2(newToolData, getAccessToken, cancelTokenSource);
 };
 
+toolsActions.saveToolActions = async (toolData, configurationItem, getAccessToken, cancelTokenSource) => {
+  let newToolData = toolData.getPersistData();
+  newToolData["actions"] = configurationItem.actions;
+  return await toolsActions.updateToolConfiguration(newToolData, getAccessToken, cancelTokenSource);
+};
 
 toolsActions.getToolCounts = async (getAccessToken) => {
   const apiUrl = `/reports/tools/counts`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-toolsActions.getToolConnectionLog = async (getAccessToken, toolDataDto) => {
-  const apiUrl = `/registry/log/${toolDataDto.getData("_id")}?page=1&size=10`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-// TODO: Move to a Salesforce (DX) specific actions file
-toolsActions.checkSFDXToolConnection = async (getAccessToken, toolDataDto, selectedJenkinsId) => {
-  // console.log(toolDataDto);
-  const postBody = {
-    "jenkinsToolId": selectedJenkinsId,
-    "sfdcToolId": toolDataDto.getData("_id"),
-    "tool": "sfdc"
-  };
-  const apiUrl = `/tools/sfdc/check-connectivity`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 export default toolsActions;

@@ -1,14 +1,15 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { ResponsivePie } from "@nivo/pie";
 import config from "./githubTotalCommitsByProjectChartConfig";
 import ModalLogs from "components/common/modal/modalLogs";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors,
-         shortenPieChartLegend } from '../../../charts-views';
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
+import { defaultConfig, assignStandardColors, shortenPieChartLegend } from "../../../charts-views";
+
 function GithubTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -42,8 +43,21 @@ function GithubTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "githubTotalCommitsChart", kpiConfiguration, dashboardTags);
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "githubTotalCommitsChart",
+        kpiConfiguration,
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
+      );
       let dataObject = response?.data ? response?.data?.data[0]?.githubTotalCommitsChart?.data : [];
       assignStandardColors(dataObject);
       shortenPieChartLegend(dataObject);
@@ -51,14 +65,12 @@ function GithubTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
       }
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -70,16 +82,16 @@ function GithubTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
       return null;
     }
 
-  return (
-    <div className="new-chart mb-3" style={{height: "300px"}}>
-          <ResponsivePie
-            data={metrics}
-            {...defaultConfig()}
-            {...config(getColorByData)}
-            onClick={() => setShowModal(true)}
-          />
+    return (
+      <div className="new-chart mb-3" style={{ height: "300px" }}>
+        <ResponsivePie
+          data={metrics}
+          {...defaultConfig()}
+          {...config(METRIC_THEME_CHART_PALETTE_COLORS)}
+          onClick={() => setShowModal(true)}
+        />
       </div>
-  );
+    );
   };
 
   return (
@@ -113,6 +125,7 @@ GithubTotalCommitsByProjectChart.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func};
+  setKpis: PropTypes.func,
+};
 
 export default GithubTotalCommitsByProjectChart;

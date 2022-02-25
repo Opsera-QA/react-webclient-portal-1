@@ -28,7 +28,9 @@ function InputLabel(
 
   const getFormattedLabel = () => {
     return (
-      <label><span>{field?.label}{getRequiredAsterisk()}</span></label>
+      <label>
+        <span>{field?.label}{getRequiredAsterisk()}</span>
+      </label>
     );
   };
 

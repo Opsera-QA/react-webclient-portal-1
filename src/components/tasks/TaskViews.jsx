@@ -99,10 +99,9 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
         </Col>
         <Col sm={10} className={"px-0"}>
           <TableCardView
-            filterDto={taskFilterModel}
+            filterModel={taskFilterModel}
             data={taskData}
             isLoading={isLoading}
-            loadData={loadData}
             cardView={getCardView()}
             tableView={getTableView()}
           />

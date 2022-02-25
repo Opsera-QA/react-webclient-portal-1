@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
-import config from "./SonarReliabilityRemediationEffortAggTrendLineChartConfigs";
+import config from "components/insights/charts/sonar/line_chart/reliability_remediation_effort_agg_trend/SonarReliabilityRemediationEffortAggTrendLineChartConfigs";
 import React, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";

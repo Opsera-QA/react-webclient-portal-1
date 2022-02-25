@@ -39,7 +39,7 @@ export const getJobTypeColumn = (field, className) => {
   };
 };
 
-function JenkinsJobsTable({ toolData, loadData, onRowSelect, isLoading }) {
+function JenkinsJobsTable({ toolData, loadData, onRowSelect, isLoading, jenkinsJobs }) {
   const fields = JenkinsJobMetadata.fields;
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
@@ -64,6 +64,7 @@ function JenkinsJobsTable({ toolData, loadData, onRowSelect, isLoading }) {
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "_id")),
       getTableTextColumn(getField(fields, "description")),
       getJobTypeColumn(getField(fields, "type")),
       getTableBooleanIconColumn(getField(fields, "active"))
@@ -75,7 +76,7 @@ function JenkinsJobsTable({ toolData, loadData, onRowSelect, isLoading }) {
     return (
       <CustomTable
         columns={columns}
-        data={[...toolData.getData("jobs")]}
+        data={jenkinsJobs}
         onRowSelect={onRowSelect}
         loadData={loadData}
         isLoading={isLoading}
@@ -86,7 +87,7 @@ function JenkinsJobsTable({ toolData, loadData, onRowSelect, isLoading }) {
   return (
     <FilterContainer
       showBorder={false}
-      // loadData={loadData}
+      loadData={loadData}
       addRecordFunction={createJenkinsJob}
       body={getJenkinsJobsTable()}
       isLoading={isLoading}
@@ -101,7 +102,8 @@ JenkinsJobsTable.propTypes = {
   toolData: PropTypes.object,
   loadData: PropTypes.func,
   onRowSelect: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  jenkinsJobs: PropTypes.array,
 };
 
 export default JenkinsJobsTable;

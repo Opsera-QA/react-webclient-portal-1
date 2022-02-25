@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import DataBlockContainer from "components/common/metrics/data_blocks/horizontal/DataBlockContainer";
 
+// TODO: THis should not be used.
 function ContainedThreeLineDataBlockBase({ middleText, bottomText, titleText, className}) {
   const getMiddleText = () => {
     if (middleText) {
@@ -25,12 +26,12 @@ function ContainedThreeLineDataBlockBase({ middleText, bottomText, titleText, cl
 
   return (
     <div className={className}>
-      <div className={"text-center h-100"}>
+      <div className={"text-center h-100 font-inter-light-400"}>
         <DataBlockContainer title={titleText}>
-          <div className="my-auto data-block-focal-text">
+          <div className="my-auto dark-gray-text-primary">
             {getMiddleText()}
           </div>
-          <div className="mt-auto text-muted">
+          <div className="mt-auto light-gray-text-secondary">
             {getSubtitle()}
           </div>
         </DataBlockContainer>

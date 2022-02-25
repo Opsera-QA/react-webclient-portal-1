@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faStepBackward} from "@fortawesome/free-solid-svg-icons";
-import "components/workflow/workflows.css";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
@@ -29,7 +28,6 @@ const SfdcPipelineWizardXmlViewer = (
     handleClose,
     setPipelineWizardScreen,
     setError,
-    refreshPipelineActivityData,
     handlePipelineWizardRequest
   }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -164,8 +162,6 @@ const SfdcPipelineWizardXmlViewer = (
     }
 
     if (createJobResponse && createJobResponse.data && createJobResponse.data.message === "success") {
-      //trigger refresh of pipeline object!!!
-      await refreshPipelineActivityData();
 
       //trigger start of pipeline & close modal
       await handlePipelineWizardRequest(pipelineWizardModel.getData("pipelineId"), true);
@@ -267,7 +263,6 @@ SfdcPipelineWizardXmlViewer.propTypes = {
   setPipelineWizardScreen: PropTypes.func,
   handleClose: PropTypes.func,
   setError: PropTypes.func,
-  refreshPipelineActivityData: PropTypes.func,
   handlePipelineWizardRequest: PropTypes.func
 };
 

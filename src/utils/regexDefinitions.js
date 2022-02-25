@@ -1,15 +1,15 @@
 // TODO: Ensure this is up to date with Node
 const regexDefinitions = {};
 
-regexDefinitions.portField = {
-  regex:/^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/,
-  errorFormText: "Only numbers allowed and should not be greater than 65,535"
-};
-
 regexDefinitions.generalText = {
   regex: /^[A-Za-z0-9-_.:]*$/,
   formText: "Letters, numbers, dashes, colons, underscores, and periods are allowed",
   errorFormText: "Only letters, numbers, dashes, colons, underscores, and periods are allowed"
+};
+
+regexDefinitions.portField = {
+  regex:/^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/,
+  errorFormText: "Only numbers allowed and should not be greater than 65,535"
 };
 
 regexDefinitions.generalTextWithSpaces = {
@@ -22,6 +22,13 @@ regexDefinitions.nameField = {
   regex: /^[a-zA-Z0-9-_.]*$/,
   formText: "Letters, numbers, dashes, underscores, and periods are allowed",
   errorFormText: "Only letters, numbers, dashes, underscores, and periods are allowed",
+};
+
+// TODO: Validate
+regexDefinitions.imagePathField = {
+  regex: /^\w+\.(jpg|jpeg|gif|png|tiff|bmp)$/gi,
+  formText: "Only links with valid image file extensions allowed",
+  errorFormText: "Only links with valid image file extensions allowed",
 };
 
 regexDefinitions.generalTextWithSpacesSlash = {
@@ -72,6 +79,12 @@ regexDefinitions.alphanumericPlusSpaces = {
   errorFormText: "Only letters, numbers, and spaces are allowed",
 };
 
+regexDefinitions.alphanumericPlusSpacesAndForwardSlash = {
+  regex: /^[A-Za-z0-9 /]*$/,
+  formText: "Letters, numbers, forward slashes, and spaces are allowed",
+  errorFormText: "Only letters, numbers, forward slashes, and spaces are allowed",
+};
+
 regexDefinitions.gitBranchName = {
   regex: /^[A-Za-z0-9\-_./']*[A-Za-z0-9'\-_]$/,
   formText: "Letters, numbers, dashes, forward slashes, apostrophes, underscores, and periods are allowed. The inputted value cannot end with a slash or period",
@@ -120,6 +133,12 @@ regexDefinitions.numericalField = {
   errorFormText: "Only numbers are allowed",
 };
 
+regexDefinitions.decimalField = {
+  regex: /^\d*\.?\d*$/,
+  formText: "Only numbers (including decimals) are allowed",
+  errorFormText: "Only numbers (including decimals) are allowed",
+};
+
 regexDefinitions.hostnameRegex = {
   regex: /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/,
   formText: "Host names must follow the RFC 1123 standard",
@@ -140,8 +159,11 @@ regexDefinitions.octopusFileList = {
 
 regexDefinitions.customParameterValueRegex = {
   regex: /^[a-zA-Z0-9-+|!.$@&:_; [\]\\/]*$/,
-  formText: "Value can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : ; |",
-  errorFormText: "Value can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : ; |",
+  formText: "Values are visible to all users if no Access Roles are assigned to this record. Value can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : ; |",
+  errorFormText: "Values are visible to all users if no Access Roles are assigned to this record. Value can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : ; |",
+  isRequiredFunction: (model) => {
+    return (model?.getData("vaultEnabled") !== true);
+  },
 };
 
 regexDefinitions.customParameterNameRegex = {
@@ -183,7 +205,19 @@ regexDefinitions.azureFunctionsLabel = {
 regexDefinitions.argumentList = {
   regex: /^[A-Za-z0-9-_.$=\n]*$/,
   formText: "Letters, numbers, dashes, underscores, equals sign, dollar sign, periods and new lines are allowed",
-  errorFormText: "Only letters, numbers, dashes, underscores, equals sign, dollar sign, periods and new lines are allowed",
+  errorFormText: "Only letters, numbers, dashes, underscores, equals sign, dollar sign, periods and new lines are allowed"
+};
+
+regexDefinitions.informaticaValidationRules = {
+  regex: /^[A-Za-z0-9\-_?*]*$/,
+  formText: "Letters, numbers, dashes, underscores, astrix and question mark are allowed",
+  errorFormText: "Only Letters, numbers, dashes, underscores, astrix and question marks are allowed"
+};
+
+regexDefinitions.informaticaLocationRules = {
+  regex: /^[A-Za-z0-9-_, /]*$/,
+  formText: "Letters, numbers, comma, forward slashes, dashes, underscores, and spaces are allowed",
+  errorFormText: "Only letters, numbers, forward slashes, and spaces are allowed",
 };
 
 export default regexDefinitions;

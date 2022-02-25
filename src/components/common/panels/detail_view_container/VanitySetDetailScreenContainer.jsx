@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import DataNotFoundContainer from "components/common/panels/detail_view_container/DataNotFoundContainer";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import TitleBar from "components/common/fields/TitleBar";
 import {getBreadcrumb} from "components/common/navigation/trails";
@@ -110,24 +109,30 @@ function VanitySetDetailScreenContainer(
 
   if (!isLoading && accessDenied) {
     return (
-      <AccessDeniedContainer />
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
     );
   }
 
   if (!isLoading && accessRoleData && roleRequirement && !meetsRequirements(roleRequirement, accessRoleData)) {
     return (
-      <AccessDeniedContainer />
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
     );
   }
 
   if (!isLoading && model == null) {
     return (
-      <DataNotFoundContainer type={model?.getType()} breadcrumbDestination={breadcrumbDestination} />
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
     );
   }
 
   return (
-    <div className="max-content-width ml-2 max-content-height scroll-y">
+    <div className="max-content-width ml-2 max-content-height scroll-y hide-x-overflow">
       {getTopNavigation()}
       <div className="content-container content-card-1">
         <div className="px-2 content-block-header title-text-header-1">

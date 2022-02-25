@@ -1,78 +1,113 @@
-import React, {useContext} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import Model from "core/data_model/model";
-import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
-import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
-import SuccessfulDeploymentsDataBlock
-  from "components/common/metrics/data_blocks/deployment/successful_deployments/SuccessfulDeploymentsDataBlock";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
-import FailedDeploymentsDataBlock
-  from "components/common/metrics/data_blocks/deployment/failed_deployments/FailedDeploymentsDataBlock";
-import Col from "react-bootstrap/Col";
-import AverageDailyDeploymentsDataBlock
-  from "components/common/metrics/data_blocks/deployment/average_daily/AverageDailyDeploymentsDataBlock";
-import AverageDeploymentDurationDataBlock
-  from "components/common/metrics/data_blocks/deployment/average_duration/AverageDeploymentDurationDataBlock";
-import AverageDailyBuildsDataBlock
-  from "components/common/metrics/data_blocks/build/average_daily/AverageDailyBuildsDataBlock";
-import AverageBuildDurationDataBlock
-  from "components/common/metrics/data_blocks/build/average_duration/AverageBuildDurationDataBlock";
+import { Container, Col, Row } from "react-bootstrap";
+import { ResponsiveLine } from '@nivo/line';
+import { defaultConfig } from 'components/insights/charts/charts-views';
+import "../build-and-deploy-kpi.css";
+import _ from "lodash";
+import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ChartTooltip from "components/insights/charts/ChartTooltip";
+import config from "../OpseraBuildAndDeployLineChartConfig";
+import MetricScoreText from "components/common/metrics/score/MetricScoreText";
+import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
+import { goalSuccessColor } from "../../../../charts/charts-views";
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function BuildFrequencyStatisticsDataBlockContainer({ dashboardData, kpiConfiguration }) {
-  const toastContext = useContext(DialogToastContext);
+function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData }) {    
 
-  const onRowSelect = () => {
-    const chartModel = new Model({...SonarRatingsBugsActionableMetadata.newObjectFields}, SonarRatingsBugsActionableMetadata, false);
-    toastContext.showOverlayPanel(
-      <ChartDetailsOverlay
-        dashboardData={dashboardData}
-        kpiConfiguration={kpiConfiguration}
-        chartModel={chartModel}
-        kpiIdentifier={"sonar-ratings-debt-ratio"}
-      />);
-  };
+  const [maxVal, setMaxVal] = useState(goalsData);
 
-  const getLeftDataBlock = () => {
-    return (
-      <AverageDailyBuildsDataBlock
-        qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
-        averageDailyCount={1.25}
-        bottomText={"0.5% increase"}
+  useEffect(() => {
+    let dataHigh = {x: "", y: 0};
+    dataHigh = _.maxBy(chartData?.avgBuilds, 'y');
+    const high = dataHigh?.y > goalsData ? dataHigh?.y : goalsData;
+    setMaxVal(Math.ceil(high));
+  }, [goalsData, chartData]);
+
+  const dailyBuildsChartData = [
+    {
+      "id": "average daily builds",
+      "data": chartData?.avgBuilds
+    }  
+  ];  
+
+  const getLeftDataBlock = () => {    
+    return (      
+      <ThreeLineDataBlockNoFocusBase        
+        topText={"Average Daily Builds"}
+        middleText={<MetricScoreText score={metricData?.build?.perDayAverage} qualityLevel={metricData?.build?.count && metricData?.build?.count > 0 ? metricData?.build?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null } />}
+        bottomText={`Goal: ${goalsData}`}
       />
     );
   };
 
-  const getRightDataBlock = () => {
-    return (
-      <AverageBuildDurationDataBlock
-        qualityLevel={METRIC_QUALITY_LEVELS.DANGER}
-        averageDuration={"10 mins"}
-        bottomText={"20% increase"}
-      />
+  const getTrendChart = () => {
+    return(
+      <div className="new-chart p-0" style={{height: "150px"}}>
+        <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
+          Goal<b> ({goalsData})</b>{" "}
+          <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" />
+          <br></br>
+          Average Daily Builds{" "}
+          <FontAwesomeIcon icon={faSquare} color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} size="lg" />
+        </div>
+        <ResponsiveLine
+          data={dailyBuildsChartData}
+          {...defaultConfig("Count", "Date", 
+                false, true, "numbers", "monthDate2")}
+          {...config()}
+          yScale={{ type: 'linear', min: '0', max: maxVal, stacked: false, reverse: false }}
+          axisLeft={{
+            tickValues: [0, maxVal],
+            legend: 'Avg Daily Builds',
+            legendOffset: -38,
+            legendPosition: 'middle'
+          }}
+          tooltip={(node) => (            
+            <ChartTooltip
+              titles={["Date Range", "Number of Builds", "Avg Daily Builds"]}
+              values={[node.point.data.range, node.point.data.total, node.point.data.y]}
+            />
+          )}
+          markers={[
+            {
+                axis: 'y',
+                value: goalsData,
+                lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
+                legend: '',
+            }            
+          ]}
+        />
+      </div>
     );
   };
 
   return (
     <HorizontalDataBlocksContainer
-      title={"Build Frequency Statistics"}
-      // onClick={() => onRowSelect()}
+      title={"Build Frequency Statistics"}      
     >
-      <Col sm={6} className={"p-2"}>
-        {getLeftDataBlock()}
-      </Col>
-      <Col sm={6} className={"p-2"}>
-        {getRightDataBlock()}
-      </Col>
+       <Container>
+        <Row className="align-items-center">
+          <Col sm={3} className={"p-2"}>
+            {getLeftDataBlock()}        
+          </Col>      
+          <Col sm={9} className={"p-2"}>
+            {getTrendChart()}
+          </Col>
+        </Row>
+      </Container>
     </HorizontalDataBlocksContainer>
   );
 }
 
 BuildFrequencyStatisticsDataBlockContainer.propTypes = {
-  kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
+  metricData: PropTypes.object,
+  chartData: PropTypes.object,
+  goalsData: PropTypes.number,
 };
 
 export default BuildFrequencyStatisticsDataBlockContainer;

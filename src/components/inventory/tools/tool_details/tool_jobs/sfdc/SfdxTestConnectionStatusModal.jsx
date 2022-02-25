@@ -9,7 +9,6 @@ import { faRepeat, faCircle, faCheckCircle } from "@fortawesome/pro-light-svg-ic
 import toolsActions from "components/inventory/tools/tools-actions";
 import Moment from "moment";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import momentLocalizer from "react-widgets-moment";
 
 function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenkinsBuildNumber, setJenkinsBuildNumber, jenkinsJobName, setJenkinsJobName, setLoading}) {
 
@@ -19,7 +18,6 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
   const [modalLoading, setModalLoading] = useState(false);
 
   Moment.locale("en");
-  momentLocalizer();
   
   let timerIds = [];
 

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {faChartNetwork} from "@fortawesome/pro-light-svg-icons";
 import CardContainerBase from "components/common/card_containers/CardContainerBase";
-import TagField from "components/common/fields/multiple_items/TagField";
+import TagField from "components/common/fields/multiple_items/tags/TagField";
 import TitleBar from "components/common/fields/TitleBar";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import DescriptionField from "components/common/fields/text/DescriptionField";

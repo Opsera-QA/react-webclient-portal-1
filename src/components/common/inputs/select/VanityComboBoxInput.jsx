@@ -6,7 +6,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
-import {Combobox} from "dhx-suite-package";
+import {Combobox} from "@opsera/dhx-suite-package";
 import VanityComboBoxInputBase from "components/common/inputs/select/VanityComboBoxInputBase";
 
 // TODO: This will replace select input base after it is verified
@@ -91,7 +91,12 @@ function VanityComboBoxInput(
         updateValue={updateValue}
         multiselect={multiselect}
       />
-      <InfoText field={field} errorMessage={errorMessage} />
+      <InfoText
+        model={dataObject}
+        fieldName={fieldName}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </InputContainer>
   );
 }

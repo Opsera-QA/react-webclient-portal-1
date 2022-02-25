@@ -1,22 +1,54 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import {errorHelpers} from "components/common/helpers/error-helpers";
 
 function MultiSelectInputBase(
   {
-    fieldName, dataObject, setDataObject, groupBy,
-    disabled, selectOptions, valueField, textField,
-    placeholderText, setDataFunction, busy, showClearValueButton,
-    clearDataFunction, className, showLabel, requireClearDataConfirmation,
-    clearDataDetails, linkTooltipText, detailViewLink, infoOverlay,
+    fieldName,
+    dataObject,
+    setDataObject,
+    groupBy,
+    disabled,
+    selectOptions,
+    valueField,
+    textField,
+    placeholderText,
+    setDataFunction,
+    busy,
+    showClearValueButton,
+    clearDataFunction,
+    className,
+    showLabel,
+    requireClearDataConfirmation,
+    clearDataDetails,
+    linkTooltipText,
+    detailViewLink,
+    infoOverlay,
+    onSearchFunction,
     formatDataFunction,
+    parseValueFunction,
+    error,
+    pluralTopic,
   }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
+  const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
+  const [internalErrorMessage, setInternalErrorMessage] = useState("");
+
+  useEffect(() => {
+    setInternalErrorMessage("");
+    setInternalPlaceholderText("");
+
+    if (error) {
+      setInternalPlaceholderText(errorHelpers.constructApiResponseErrorPlaceholderText(pluralTopic));
+      setInternalErrorMessage(errorHelpers.parseApiErrorForInfoText(pluralTopic, error));
+    }
+  }, [error]);
 
   // TODO: Implement
   // useEffect(() => {
@@ -37,7 +69,7 @@ function MultiSelectInputBase(
 
   const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
-    let parsedValues = parseValues(valueArray);
+    const parsedValues = parseValues(valueArray);
 
     if (parsedValues.length > field.maxItems) {
       setErrorMessage("You have reached the maximum allowed number of values. Please remove one to add another.");
@@ -45,9 +77,9 @@ function MultiSelectInputBase(
     }
 
     newDataObject.setData(fieldName, parsedValues);
-    let errors = newDataObject.isFieldValid(field.id);
+    const errors = newDataObject.isFieldValid(field.id);
 
-    if ( errors != null && errors !== true) {
+    if (Array.isArray(errors) && errors.length > 0) {
       setErrorMessage(errors[0]);
     }
     else {
@@ -67,7 +99,12 @@ function MultiSelectInputBase(
   };
 
   const getClearDataFunction = () => {
-    if (dataObject.getData(field.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
+    if (
+         dataObject.getData(field.id) !== ""
+      && !disabled
+      && showClearValueButton !== false
+      && (setDataFunction == null || clearDataFunction))
+    {
       return (clearValue);
     }
   };
@@ -80,8 +117,12 @@ function MultiSelectInputBase(
     let parsedValues = [];
 
     if (valueArray != null && valueArray.length > 0) {
-      valueArray.map(value => {
-        if (typeof value === "string") {
+      valueArray.map((value) => {
+        if (parseValueFunction) {
+          const parsedValue = parseValueFunction(value);
+          parsedValues.push(parsedValue);
+        }
+        else if (typeof value === "string") {
           parsedValues.push(value);
         }
         else {
@@ -103,6 +144,31 @@ function MultiSelectInputBase(
     }
   };
 
+  const getErrorMessage = () => {
+    if (hasStringValue(internalErrorMessage) === true) {
+      return internalErrorMessage;
+    }
+
+    if (hasStringValue(errorMessage) === true) {
+      return errorMessage;
+    }
+  };
+
+  const getPlaceholderText = () => {
+    if (hasStringValue(internalPlaceholderText) === true) {
+      return internalPlaceholderText;
+    }
+
+    if (hasStringValue(placeholderText) === true) {
+      return placeholderText;
+    }
+
+    if (hasStringValue(pluralTopic) === true) {
+      return `Select ${pluralTopic}`;
+    }
+
+    return "Select One";
+  };
 
   if (field == null) {
     return null;
@@ -122,18 +188,25 @@ function MultiSelectInputBase(
         infoOverlay={infoOverlay}
       />
       <StandaloneMultiSelectInput
-        hasErrorState={hasStringValue(errorMessage) === true}
+        hasErrorState={hasStringValue(getErrorMessage()) === true}
         selectOptions={selectOptions}
         valueField={valueField}
         textField={textField}
         busy={busy}
         groupBy={groupBy}
         value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : []}
-        placeholderText={placeholderText}
+        placeholderText={getPlaceholderText()}
         disabled={disabled}
         setDataFunction={updateValue}
+        onSearchFunction={onSearchFunction}
       />
-      <InfoText errorMessage={errorMessage} field={field}/>
+      <InfoText
+        fieldName={fieldName}
+        model={dataObject}
+        field={field}
+        errorMessage={getErrorMessage()}
+        hideRegexDefinitionText={true}
+      />
     </InputContainer>
   );
 }
@@ -167,10 +240,10 @@ MultiSelectInputBase.propTypes = {
   detailViewLink: PropTypes.string,
   infoOverlay: PropTypes.any,
   formatDataFunction: PropTypes.func,
-};
-
-MultiSelectInputBase.defaultProps = {
-  showClearValueButton: true
+  parseValueFunction: PropTypes.func,
+  onSearchFunction: PropTypes.func,
+  error: PropTypes.any,
+  pluralTopic: PropTypes.string,
 };
 
 export default MultiSelectInputBase;

@@ -3,8 +3,21 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
-function PipelineStepSelectInput({ fieldName, model, setModel, setDataFunction, disabled, plan, stepId }) {
+// TODO: We should add the ability to disable steps that don't match the tool_identifier of build steps we want to require
+// Also we should just pull plan down with pipeline id
+function PipelineStepSelectInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    setDataFunction,
+    disabled,
+    plan,
+    stepId,
+    className,
+  }) {
   const [steps, setSteps] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -19,7 +32,7 @@ function PipelineStepSelectInput({ fieldName, model, setModel, setDataFunction, 
     isMounted.current = true;
 
     setSteps([]);
-    if (plan && stepId) {
+    if (Array.isArray(plan) && isMongoDbId(stepId)) {
       const pipelineSteps = pipelineHelpers.formatStepOptions(plan, stepId);
       setSteps(pipelineSteps);
     }
@@ -40,6 +53,7 @@ function PipelineStepSelectInput({ fieldName, model, setModel, setDataFunction, 
       valueField={"_id"}
       textField={"name"}
       disabled={disabled}
+      className={className}
     />
   );
 }
@@ -52,6 +66,7 @@ PipelineStepSelectInput.propTypes = {
   disabled: PropTypes.bool,
   stepId: PropTypes.string,
   plan: PropTypes.any,
+  className: PropTypes.string,
 };
 
 export default PipelineStepSelectInput;

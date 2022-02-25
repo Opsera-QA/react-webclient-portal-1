@@ -20,7 +20,6 @@ import {
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import PipelineWorkflowItemList from "./PipelineWorkflowItemList";
 import Modal from "components/common/modal/modal";
-import "../../../workflows.css";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import WorkflowAuthorizedActions from "./workflow-authorized-actions";
 import PipelineDetailsOverviewOverlay
@@ -83,6 +82,7 @@ function PipelineWorkflow({
     setShowModal(true);
   };
 
+  // TODO: Break out into separate actions file, maybe call in a pipeline activity overlay rather than here?
   const fetchPipelineActivityByTool = async (pipelineId, tool, stepId, activityId) => {
     const accessToken = await getAccessToken();
     let apiUrl = `/pipelines/${pipelineId}/activity`;
@@ -101,7 +101,7 @@ function PipelineWorkflow({
     }
   };
 
-  const handleViewPipelineClick = (param) => {
+  const handleViewPipelineClick = () => {
 
     if (!authorizedAction("view_pipeline_configuration", pipeline.owner)) {
       setInfoModal({
@@ -113,10 +113,6 @@ function PipelineWorkflow({
       return;
     }
     toastContext.showOverlayPanel(<PipelineDetailsOverviewOverlay pipeline={pipeline} />);
-    // TODO: Remove after verifying PipelineDetailsOverviewOverlay
-    // setModalHeader("Pipeline Configuration");
-    // setModalMessage(param);
-    // setShowModal(true);
   };
 
   const callbackFunctionEditItem = async (item) => {

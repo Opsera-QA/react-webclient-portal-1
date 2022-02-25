@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Navbar, Nav, NavDropdown, Button, OverlayTrigger } from "react-bootstrap";
-import "./navbar.css";
+import "css/general/navbar.css";
 import userActions from "./components/user/user-actions";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/pro-light-svg-icons";
 
 import { renderTooltip } from "utils/helpers";
+import {ACCESS_ROLE_PERMISSION_MESSAGES} from "components/common/helpers/role-helpers";
 
 const EXTERNAL_LINKS = {
   KNOWLEDGE_BASE: `https://opsera.atlassian.net/l/c/pXJjJAej`
@@ -61,19 +62,19 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
     switch (accessRoleData?.Role) {
     case "administrator":
       permissionHeader = "Administrator Access";
-      permissionsMessage = "Administrator User Role: Your account has full access to the Opsera platform and its settings.";
+      permissionsMessage = ACCESS_ROLE_PERMISSION_MESSAGES.ADMINISTRATOR;
       break;
     case "power_user":
       permissionHeader = "Power User Access";
-      permissionsMessage = "Power User Role: Your account has elevated privileges to to the Opsera platform.";
+      permissionsMessage = ACCESS_ROLE_PERMISSION_MESSAGES.POWER_USER;
       break;
     case "user":
       permissionHeader = "Standard User Access";
-      permissionsMessage = "Standard User Role: Your account has standard user access to the Opsera platform and inherits access based on individual item access roles.";
+      permissionsMessage = ACCESS_ROLE_PERMISSION_MESSAGES.USER;
       break;
     case "readonly":
       permissionHeader = "Read Only Access";
-      permissionsMessage = "Read Only Role: Your account does not have any privileges associated with the Opsera platform and can only view some data.";
+      permissionsMessage = ACCESS_ROLE_PERMISSION_MESSAGES.READ_ONLY;
       break;
     }
 

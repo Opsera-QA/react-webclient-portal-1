@@ -11,6 +11,14 @@ function JenkinsAccountToolSelectInput({ visible, model, setModel, disabled, fie
     newModel.setData("gitCredential", "");
     newModel.setData("gitUserName", selectedOption?.configuration?.accountUsername || "");
     newModel.setData("accountUserName", selectedOption?.configuration?.accountUsername || "");
+
+    // TODO: Is there special handling we'll want to deal with?
+    if (model?.getData("service") === "azure-devops") {
+      const organization = selectedOption?.configuration?.organization;
+      newModel.setData("gitUserName", organization);
+      newModel.setData("accountUserName", organization);
+    }
+
     setModel({ ...newModel });
   };
 

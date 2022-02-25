@@ -208,7 +208,7 @@ export class Model {
     // TODO: this is only at the top level, add support for trimming inner objects
     try {
       Object.keys(data).forEach(key => {
-        if (typeof data[key] == 'string') {
+        if (typeof data[key] === 'string') {
           data[key] = data[key].trim();
         }
       });
@@ -228,9 +228,9 @@ export class Model {
     return this.newModel;
   };
 
-  isChanged = (field) => {
-    if (field) {
-      return this.changeMap.has(field);
+  isChanged = (fieldName) => {
+    if (fieldName) {
+      return this.changeMap.has(fieldName);
     }
 
     return this.dataState !== DataState.LOADED;

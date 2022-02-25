@@ -3,12 +3,26 @@ import PropTypes from "prop-types";
 import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/TwoLineDataBlockBase";
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 
-function TwoLineScoreDataBlock({ score, subtitle, className}) {
+function TwoLineScoreDataBlock(
+  {
+    score,
+    subtitle,
+    className,
+    icon,
+    dataPoint,
+  }) {
   return (
     <TwoLineDataBlockBase
       className={className}
-      title={<MetricScoreText score={score} />}
+      dataPoint={dataPoint}
+      title={
+        <MetricScoreText
+          dataPoint={dataPoint}
+          score={score}
+        />
+      }
       subtitle={subtitle}
+      icon={icon}
     />
   );
 }
@@ -16,7 +30,9 @@ function TwoLineScoreDataBlock({ score, subtitle, className}) {
 TwoLineScoreDataBlock.propTypes = {
   score: PropTypes.number,
   subtitle: PropTypes.any,
-  className: PropTypes.string
+  className: PropTypes.string,
+  icon: PropTypes.object,
+  dataPoint: PropTypes.object,
 };
 
 export default TwoLineScoreDataBlock;

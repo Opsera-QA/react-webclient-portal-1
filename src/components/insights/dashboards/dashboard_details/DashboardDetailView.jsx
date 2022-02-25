@@ -1,29 +1,15 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
 import Model from "core/data_model/model";
 import {useParams} from "react-router-dom";
-import FavoriteInput from "components/common/inputs/boolean/FavoriteInput";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
-import ActionBarContainer from "components/common/actions/ActionBarContainer";
-import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
-import ActionBarShowJsonButton from "components/common/actions/buttons/ActionBarShowJsonButton";
-import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import DashboardEditorPanel from "components/insights/dashboards/dashboard_details/DashboardEditorPanel";
-import DashboardViewer from "components/insights/dashboards/dashboard_details/DashboardViewer";
-import TitleActionBarContainer from "components/common/actions/TitleActionBarContainer.jsx";
-import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";
 import axios from "axios";
-import PublishDashboardToPrivateCatalogIcon
-  from "components/common/icons/dashboards/PublishDashboardToPrivateCatalogIcon";
-import PublishDashboardToPublicMarketplaceIcon
-  from "components/common/icons/dashboards/PublishDashboardToPublicMarketplaceIcon";
-import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
+import DashboardScreenContainer from "components/common/panels/detail_view_container/DashboardScreenContainer";
 
 function DashboardDetailView() {
   const {tab, id} = useParams();
-  const [activeTab, setActiveTab] = useState(tab  === "settings" ? tab : "viewer");
   const toastContext = useContext(DialogToastContext);
   const [dashboardData, setDashboardData] = useState(undefined);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -39,8 +25,8 @@ function DashboardDetailView() {
 
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-
     isMounted.current = true;
+
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -87,71 +73,14 @@ function DashboardDetailView() {
   };
   console.log(dashboardData,' *** 234234234234234');
 
-  const handleDelete = async () => {
-    return await dashboardsActions.delete(dashboardData, getAccessToken);
-  };
-
-  const handleClose = async () => {
-    setActiveTab("viewer");
-  };
-
-  const getActionBar = () => {
-    return (
-      <ActionBarContainer>
-        {accessRoleData?.OpseraAdministrator === true && <ActionBarShowJsonButton dataObject={dashboardData} />}
-        <div/>
-        <div className="d-inline-flex float-right">
-          <FavoriteInput dataObject={dashboardData} setDataObject={setDashboardData} fieldName={"isFavorite"}/>
-          <ActionBarDeleteButton2
-            relocationPath={"/insights"}
-            dataObject={dashboardData}
-            handleDelete={handleDelete}
-          />
-        </div>
-      </ActionBarContainer>
-    );
-  };
-
-  const getTitleActionBar = () => {
-    return (
-      <TitleActionBarContainer>
-        <PublishDashboardToPrivateCatalogIcon dashboardData={dashboardData} className={"mr-3"} />
-        <PublishDashboardToPublicMarketplaceIcon dashboardData={dashboardData} className={"mr-3"} />
-        <ToggleSettingsIcon activeTab={activeTab} setActiveTab={setActiveTab}/>
-      </TitleActionBarContainer>
-    );
-  };
-
-  if (activeTab === "settings") {
-    return (
-      <DetailScreenContainer
-        breadcrumbDestination={"dashboardDetails"}
-        metadata={dashboardMetadata}
-        dataObject={dashboardData}
-        navigationTabContainer={<InsightsSubNavigationBar currentTab={"dashboardViewer"} />}
-        isLoading={isLoading}
-        actionBar={getActionBar()}
-        detailPanel={<DashboardEditorPanel dashboardData={dashboardData} setDashboardData={setDashboardData} handleClose={handleClose}/>}
-      />
-    );
-  }
-
   return (
-    <DetailScreenContainer
-      dataObject={dashboardData}
-      navigationTabContainer={<InsightsSubNavigationBar currentTab={"dashboardViewer"} />}
-      breadcrumbDestination={"dashboardDetails"}
+    <DashboardScreenContainer
+      dashboardModel={dashboardData}
+      setDashboardModel={setDashboardData}
       isLoading={isLoading}
-      metadata={dashboardMetadata}
-      titleActionBar={getTitleActionBar()}
-      detailPanel={<DashboardViewer
-        dashboardData={dashboardData}
-        breadcrumbDestination={"dashboardDetails"}
-        managementViewLink={"/insights"}
-        managementTitle={"Dashboards"}
-        type={"Dashboard"}
-      />}
-      />
+      tab={tab}
+      loadData={loadData}
+    />
   );
 }
 

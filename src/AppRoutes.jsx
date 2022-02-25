@@ -23,27 +23,27 @@ import Update from "./components/update/Update";
 import AdminTools from "./components/admin/AdminTools";
 import RegisteredUsersManagement from "./components/admin/registered_users/RegisteredUsersManagement";
 import RegisteredUserDetailView
-  from "./components/admin/registered_users/registered_user_details/RegisteredUserDetailView";
+  from "./components/admin/registered_users/details/RegisteredUserDetailView";
 import ManageSystems from "./components/admin/manage_systems/ManageSystems";
 import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
 import Registration from "./components/landing/Registration";
 import TagEditor from "./components/settings/tags/TagManagement";
 import TagDetailView from "./components/settings/tags/tags_detail_view/TagDetailView";
-import KpiManagement from "./components/admin/kpi_editor/KpiManagement";
-import KpiDetailView from "./components/admin/kpi_editor/kpi_detail_view/KpiDetailView";
+import KpiIdentifierManagement from "components/admin/kpi_identifiers/KpiIdentifierManagement";
+import KpiIdentifierDetailView from "components/admin/kpi_identifiers/details/KpiIdentifierDetailView";
 import TemplateManagement from "./components/admin/template_editor/TemplateManagement";
 import LdapOrganizationsView from "./components/admin/accounts/ldap/organizations/LdapOrganizationManagement";
 import LdapOrganizationDetailView
   from "./components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationDetailView";
 import LdapCustomerOnboardView from "./components/admin/accounts/ldap/customer_onboard/LdapCustomerOnboard";
-import ApiConnectionDemo from "components/admin/api_demo/ApiConnectionDemo";
+import ApiConnectionTest from "components/admin/api_demo/ApiConnectionTest";
 import LdapUserManagement from "./components/settings/ldap_users/LdapUserManagement";
 import LdapUserDetailView from "./components/settings/ldap_users/users_detail_view/LdapUserDetailView";
 import AccountSettingsView from "./components/settings/AccountSettings";
 import LdapGroupManagement from "./components/settings/ldap_groups/LdapGroupManagement";
 import LdapGroupDetailView from "./components/settings/ldap_groups/details/LdapGroupDetailView";
 import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetailView";
-import TemplateDetailView from "./components/admin/template_editor/template_detail_view/TemplateDetailView";
+import TemplateDetailView from "./components/admin/template_editor/details/TemplateDetailView";
 import DataMappingManagement from "components/settings/data_mapping/DataMappingManagement";
 import ToolCategoryDetailView
   from "components/admin/tools/tool_category/tool_category_detail_view/ToolCategoryDetailView";
@@ -65,8 +65,8 @@ import InsightsSynopsis from "components/insights/summary/InsightsSynopsis";
 import AnalyticsProfileSettings from "./components/settings/analytics/analyticsProfileSettings";
 import SiteNotificationManagement from "./components/admin/site_notifications/SiteNotificationManagement";
 import SiteNotificationDetailView
-  from "./components/admin/site_notifications/site_notification_detail_view/SiteNotificationDetailView";
-import Notifications from "./components/notifications/Notifications";
+  from "./components/admin/site_notifications/details/SiteNotificationDetailView";
+import NotificationPolicyManagement from "components/notifications/NotificationPolicyManagement";
 import ToolsUsedInPipelineReport from "./components/reports/tools/pipelines/ToolsUsedInPipelineReport";
 import Insights from "./components/insights/dashboards/Insights";
 import DashboardDetailView from "./components/insights/dashboards/dashboard_details/DashboardDetailView";
@@ -98,7 +98,7 @@ import Blueprint from "components/blueprint/Blueprint";
 import DeleteTools from "components/settings/delete_tools/DeleteTools";
 import PipelineStorageManagement from "components/admin/pipeline_storage/PipelineStorageManagement";
 import PipelineStorageDetailView
-  from "components/admin/pipeline_storage/pipeline_storagei_detail_view/PipelineStorageDetailView";
+  from "components/admin/pipeline_storage/details/PipelineStorageDetailView";
 import ParametersInventory from "components/inventory/parameters/ParametersInventory";
 import ToolInventory from "components/inventory/tools/ToolInventory";
 import ScriptsInventory from "components/inventory/scripts/ScriptsInventory";
@@ -119,6 +119,7 @@ import ToolCategoryManagement from "components/admin/tools/tool_category/ToolCat
 import ToolIdentifierManagement from "components/admin/tools/tool_identifier/ToolIdentifierManagement";
 import SiteRoleManagement from "components/settings/ldap_site_roles/SiteRoleManagement";
 import SiteRoleDetailView from "components/settings/ldap_site_roles/details/SiteRoleDetailView";
+import NotificationPoliciesActivityLogs from "components/notifications/NotificationPoliciesActivityLogs";
 //import FreeTrialRegistration from "./components/free_trial/Registration";
 //import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 
@@ -227,7 +228,8 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/reports/users/user-report" exact component={ConsolidatedUserReport} />
 
 
-          <SecureRoute path="/notifications" exact component={Notifications} />
+          <SecureRoute path="/notifications" exact component={NotificationPolicyManagement} />
+          <SecureRoute path="/notifications/activity" exact component={NotificationPoliciesActivityLogs} />
           <SecureRoute path="/notifications/details/:id" exact component={NotificationDetailView} />
 
 
@@ -254,8 +256,8 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/admin/tools/types/details/:toolTypeId" exact component={ToolCategoryDetailView} />
           <SecureRoute path="/admin/tools/identifiers/details/:toolIdentifierId" exact
                        component={ToolIdentifierDetailView} />
-          <SecureRoute path="/admin/kpis" exact component={KpiManagement} />
-          <SecureRoute path="/admin/kpis/:id" exact component={KpiDetailView} />
+          <SecureRoute path="/admin/kpis" exact component={KpiIdentifierManagement} />
+          <SecureRoute path="/admin/kpis/:id" exact component={KpiIdentifierDetailView} />
           <SecureRoute path="/admin/templates" exact component={TemplateManagement} />
           <SecureRoute path="/admin/templates/details/:templateId" exact component={TemplateDetailView} />
           <SecureRoute path="/admin/reports" exact component={Reports_Old} />
@@ -275,16 +277,10 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
                        component={LdapOrganizationAccountManagement} />
           <SecureRoute path="/admin/organization-accounts/:organizationDomain/details" exact
                        component={LdapOrganizationAccountDetailView} />
-          <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView} />
-
-          {/*TODO: Remove after fully migrating*/}
-          <SecureRoute path="/admin/:orgDomain?/departments" exact component={LdapDepartmentManagement} />
-          <SecureRoute path="/admin/:orgDomain/departments/details/:departmentName" exact
-                       component={LdapDepartmentDetailView} />
-
+          <SecureRoute path="/admin/accounts/create" exact component={LdapCustomerOnboardView} />
 
           <SecureRoute path="/pipeline" component={Pipeline} />
-          <SecureRoute path="/workflow/catalog" exact component={PipelineCatalogLibrary} />
+          <SecureRoute path="/workflow/catalog/library" exact component={PipelineCatalogLibrary} />
           <SecureRoute path="/workflow/:tab?" exact component={Pipelines} />
           <SecureRoute path="/workflow/details/:id/:tab?" exact component={PipelineDetailView} />
 
@@ -318,7 +314,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/settings/data_mapping/user_mapping/details/:usersMappingId" exact
                        component={UsersMappingDetailView} />
 
-          <SecureRoute path="/admin/demo/api" component={ApiConnectionDemo} />
+          <SecureRoute path="/admin/demo/api" component={ApiConnectionTest} />
 
           {/*{getFreeTrialRoutes()}*/}
         </div>

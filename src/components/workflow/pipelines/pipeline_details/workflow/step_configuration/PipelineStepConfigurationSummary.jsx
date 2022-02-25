@@ -27,7 +27,7 @@ import SpinnakerPipelineStepConfigurationSummaryPanel
 import spinnakerStepFormMetadata from "./step_tool_configuration_forms/spinnaker/spinnaker-stepForm-metadata";
 import ArgoCdPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/ArgoCdPipelineStepConfigurationSummaryPanel";
-import ArgoCDStepFormMetadata from "./step_tool_configuration_forms/argo_cd/argocd-stepForm-metadata";
+import {ArgoCdStepConfigurationMetadata} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/argoCdStepConfiguration.metadata";
 import OctopusPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/octopus/OctopusPipelineStepConfigurationSummaryPanel";
 import octopusStepFormMetadata from "./step_tool_configuration_forms/octopus/octopus-stepForm-metadata";
@@ -91,8 +91,6 @@ import PowershellPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/powershell/PowershellPipelineStepConfigurationSummaryPanel";
 import SonarPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/SonarPipelineStepConfigurationSummaryPanel";
-import sonarPipelineStepConfigurationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStepConfigurationMetadata";
 import JmeterPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jmeter/JmeterPipelineStepConfigurationSummaryPanel";
 import jmeterPipelineStepConfigurationMetadata
@@ -106,8 +104,6 @@ import TwistlockPipelineStepConfigurationSummaryPanel
 import twistlockPipelineStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/twistlockPipelineStepForm.metadata";
 import S3PipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/s3/S3PipelineStepConfigurationSummaryPanel";
-import s3PipelineStepConfigurationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/s3/s3PipelineStepConfigurationMetadata";
 import SshUploadDeployPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ssh_upload_deploy/SshUploadDeployPipelineStepConfigurationSummaryPanel";
 import sshUploadDeployPipelineStepConfigurationMetadata
@@ -166,6 +162,23 @@ import ansibleStepMetadata from "./step_tool_configuration_forms/ansible/ansible
 import dotnetCliStepFormMetadata from "./step_tool_configuration_forms/dotnetcli/dotnet-cli-stepForm-metadata";
 import DotNetCliPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/dotnetcli/DotNetCliPipelineStepConfigurationSummaryPanel";
+import FlywayDatabasePipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/flyway_database/FlywayDatabasePipelineStepConfigurationSummaryPanel";
+import flywayDatabaseStepFormMetadata from "./step_tool_configuration_forms/flyway_database/flyway-database-stepForm-metadata";
+import {s3PipelineStepConfigurationMetadata} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/s3/s3PipelineStepConfiguration.metadata";
+import InformaticaPipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/informatica/InformaticaPipelineStepConfigurationSummaryPanel";
+import InformaticaStepFormMetadata from "./step_tool_configuration_forms/informatica/informatica-stepForm-metadata";
+import PmdScanPipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/pmd_scan/PmdScanPipelineStepConfigurationSummaryPanel";
+import pmdScanStepFormMetadata from "./step_tool_configuration_forms/pmd_scan/pmdScan-stepForm-metadata";
+import SentinelStepConfigurationSummaryPanel from "./step_tool_configuration_forms/sentenial/SentinelStepConfigurationSummaryPanel";
+import SentenialStepFormMetadata from "./step_tool_configuration_forms/sentenial/sentinel-stepForm-metadata";
+import sonarPipelineStepMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStep.metadata";
+import PackerPipelineStepConfigurationSummaryPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/packer/PackerPipelineStepConfigurationSummaryPanel";
+import PackerStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/packer/packer-stepForm-metadata";
+import BuildkiteStepSummary from "./step_tool_configuration_forms/buildkite/BuildkiteStepSummary";
+import buildkiteMetadata from "./step_tool_configuration_forms/buildkite/buildkite-metadata";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
+
 function PipelineStepConfigurationSummary({
   pipelineData,
 }) {
@@ -204,11 +217,11 @@ function PipelineStepConfigurationSummary({
             approvalGatePipelineDataObject={getModelWrappedObject(approvalGatePipelineStepConfigurationMetadata)}
           />
         );
-      case "argo":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
         return (
           <ArgoCdPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            argoCdPipelineDataObject={getModelWrappedObject(ArgoCDStepFormMetadata)}
+            argoCdPipelineDataObject={getModelWrappedObject(ArgoCdStepConfigurationMetadata)}
           />
         );
       case "aws-deploy":
@@ -369,7 +382,7 @@ function PipelineStepConfigurationSummary({
         return (
           <SonarPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            sonarDataObject={getModelWrappedObject(sonarPipelineStepConfigurationMetadata)}
+            sonarDataObject={getModelWrappedObject(sonarPipelineStepMetadata)}
           />
         );
       case "jmeter":
@@ -504,6 +517,48 @@ function PipelineStepConfigurationSummary({
             pipelineData={pipelineData}
             mongodbRealmPipelineDataObject={getModelWrappedObject(mongodbRealmStepFormMetadata)}
             />
+        );
+      case "flyway-database-migrator":
+        return (
+          <FlywayDatabasePipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            flywayPipelineDataObject={getModelWrappedObject(flywayDatabaseStepFormMetadata)}
+          />
+        );
+      case "informatica":
+        return (
+          <InformaticaPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            informaticaPipelineDataObject={getModelWrappedObject(InformaticaStepFormMetadata)}
+          />
+        );
+      case "pmd":
+        return (
+          <PmdScanPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            pmdScanPipelineDataObject={getModelWrappedObject(pmdScanStepFormMetadata)}
+          />
+        );
+      case "sentinel":
+        return (
+          <SentinelStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            sentenialStepFormMetadata={getModelWrappedObject(SentenialStepFormMetadata)}
+          />
+        );
+      case "packer":
+        return (
+          <PackerPipelineStepConfigurationSummaryPanel 
+            pipelineData={pipelineData}
+            sentenialStepFormMetadata={getModelWrappedObject(PackerStepFormMetadata)}
+            />
+            );
+      case "buildkite":
+        return (
+          <BuildkiteStepSummary
+            pipelineData={pipelineData}
+            buildkiteStepConfigurationData={getModelWrappedObject(buildkiteMetadata)}
+          />
         );
       default:
         return (

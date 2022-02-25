@@ -2,7 +2,7 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faToolbox, faTools} from "@fortawesome/pro-light-svg-icons";
+import {faArrowLeft, faToolbox, faTools} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 
 function ToolManagementSubNavigationBar({activeTab}) {
@@ -12,6 +12,9 @@ function ToolManagementSubNavigationBar({activeTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
+      case "adminTools":
+        history.push(`/admin`);
+        return;
       case "categories":
         history.push(`/admin/tools/categories`);
         return;
@@ -50,6 +53,13 @@ function ToolManagementSubNavigationBar({activeTab}) {
 
   return (
     <NavigationTabContainer>
+      <NavigationTab
+        icon={faArrowLeft}
+        tabName={"adminTools"}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+        tabText={"Back to Admin Tools"}
+      />
       <NavigationTab
         icon={faToolbox}
         tabName={"categories"}

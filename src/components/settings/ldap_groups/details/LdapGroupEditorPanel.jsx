@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from "react";
+import React, {useEffect, useState, useContext, useRef} from "react";
 import {Col} from "react-bootstrap";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
@@ -7,19 +7,45 @@ import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import WarningDialog from "components/common/status_notifications/WarningDialog";
 import LoadingDialog from "components/common/status_notifications/loading";
+import axios from "axios";
 
 // Note this is lowercase intentionally, as Users cannot create groups with capital letters
 const reservedNames = ["administrators", "powerusers", "users"];
 
-function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, orgDomain, setLdapGroupData, handleClose, authorizedActions, existingGroupNames}) {
+function LdapGroupEditorPanel(
+  {
+    ldapGroupData,
+    currentUserEmail,
+    orgDomain,
+    handleClose,
+    existingGroupNames
+  }) {
   const {getAccessToken} = useContext(AuthContext);
   const [ldapGroupDataDto, setLdapGroupDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
   const loadData = async () => {
@@ -42,19 +68,15 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, orgDomain, setLd
       throw `[${ldapGroupDataDto.getData("name")}] is a reserved group name and cannot be used when creating a new group.`;
     }
 
-    return await accountsActions.createGroup(orgDomain, ldapGroupDataDto, currentUserEmail, getAccessToken);
+    return await accountsActions.createGroupV2(getAccessToken, cancelTokenSource, orgDomain, ldapGroupDataDto, currentUserEmail);
   };
 
   const updateGroup = async () => {
-    return await accountsActions.updateGroup(orgDomain, ldapGroupDataDto, getAccessToken);
+    return await accountsActions.updateGroupV2(getAccessToken, cancelTokenSource, orgDomain, ldapGroupDataDto);
   };
 
-  if (isLoading) {
+  if (isLoading || ldapGroupDataDto == null) {
     return (<LoadingDialog />);
-  }
-
-  if (!authorizedActions.includes("update_group")) {
-    return <WarningDialog warningMessage={"You do not have the required permissions to update this group"} />;
   }
 
   return (
@@ -67,14 +89,24 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, orgDomain, setLd
     >
       <Row>
         <Col lg={12}>
-          <TextInputBase disabled={!ldapGroupDataDto.isNew()} fieldName={"name"} dataObject={ldapGroupDataDto} setDataObject={setLdapGroupDataDto}/>
-        </Col>
-        <Col lg={12}>
-          <TextInputBase fieldName={"groupType"} dataObject={ldapGroupDataDto} setDataObject={setLdapGroupDataDto} disabled={true} />
+          <TextInputBase
+            disabled={ldapGroupDataDto?.isNew() !== true}
+            fieldName={"name"}
+            dataObject={ldapGroupDataDto}
+            setDataObject={setLdapGroupDataDto}
+          />
         </Col>
         <Col lg={12}>
           <TextInputBase
-            disabled={ldapGroupDataDto.getData("groupType") !== "project"}
+            fieldName={"groupType"}
+            dataObject={ldapGroupDataDto}
+            setDataObject={setLdapGroupDataDto}
+            disabled={true}
+          />
+        </Col>
+        <Col lg={12}>
+          <TextInputBase
+            disabled={true}
             fieldName={"externalSyncGroup"}
             dataObject={ldapGroupDataDto}
             setDataObject={setLdapGroupDataDto}
@@ -100,7 +132,6 @@ LdapGroupEditorPanel.propTypes = {
   ldapGroupData: PropTypes.object,
   ldapOrganizationData: PropTypes.object,
   handleClose: PropTypes.func,
-  authorizedActions: PropTypes.array,
   existingGroupNames: PropTypes.array
 };
 

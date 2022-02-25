@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ArgoRepositorySelectInput from "components/common/list_of_values_input/tools/argo_cd/ArgoRepositorySelectInput";
+import ArgoRepositorySelectInput from "components/common/list_of_values_input/tools/argo_cd/repositories/ArgoRepositorySelectInput";
 
 function ArgoRepositoryInput({dataObject, setDataObject, argoToolId, fieldName, disabled}) {
   const setRepository = (fieldName, selectedOption) => {

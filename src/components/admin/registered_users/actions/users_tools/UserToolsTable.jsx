@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import usersToolMetadata from "components/admin/registered_users/actions/users_tools/users-tool-metadata";
 import {
-  getTableBooleanIconColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
+import {faTools} from "@fortawesome/pro-light-svg-icons";
+import FilterContainer from "components/common/table/FilterContainer";
 
 function UserToolsTable({ data }) {
   const fields = usersToolMetadata.fields;
@@ -28,16 +29,26 @@ function UserToolsTable({ data }) {
     []
   );
 
-  return (
-    <div className="px-2 pb-2">
+  const getUserToolsTable = () => {
+    return (
       <CustomTable
         columns={columns}
         data={data}
         rowStyling={rowStyling}
-        tableTitle={"Tools"}
         initialState={tableInitialState}
       />
-    </div>
+    );
+  };
+
+  return (
+    <FilterContainer
+      className={"my-2"}
+      showBorder={false}
+      body={getUserToolsTable()}
+      metadata={usersToolMetadata}
+      titleIcon={faTools}
+      title={"Tools"}
+    />
   );
 }
 

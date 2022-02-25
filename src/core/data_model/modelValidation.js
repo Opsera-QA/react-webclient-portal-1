@@ -1,5 +1,6 @@
 import {isAlphaNumeric, isDomain, isOpseraPassword, isWebsite, matchesRegex, validateEmail, hasSpaces} from "utils/helpers";
 import regexDefinitions from "utils/regexDefinitions";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 // TODO: We need to rework this
 export const validateData = (data) => {
@@ -61,7 +62,17 @@ export const fieldValidation = (value, data, field) => {
   if (field.isEmail === true) {
     if (!validateEmail(value))
     {
-      errorMessages.push("The email address given is not valid.");
+      errorMessages.push(`The email address ${value} is not valid.`);
+    }
+  }
+
+  if (field.isEmailArray === true) {
+    if (Array.isArray(value) && value?.length > 0) {
+      value?.forEach((potentialEmail) => {
+        if (validateEmail(potentialEmail) !== true) {
+          errorMessages.push(`The email address ${potentialEmail} is not valid.`);
+        }
+      });
     }
   }
 
@@ -104,26 +115,30 @@ export const fieldValidation = (value, data, field) => {
     errorMessages.push("Does not meet field requirements.");
   }
 
-  if (field.regexDefinitionName != null && value !== "")
-  {
+  if ((field?.isVaultField !== true || hasStringValue(value) === true) && field.regexDefinitionName != null && hasStringValue(value)) {
+    // TODO: Make regex definition helpers
     const definitionName = field.regexDefinitionName;
     const regexDefinition = regexDefinitions[definitionName];
     const regex = regexDefinition?.regex;
     const errorFormText = regexDefinition?.errorFormText;
+    const isRequiredFunction = regexDefinition?.isRequiredFunction;
 
     if (regexDefinition == null) {
       console.error(`Regex Definition [${field.regexDefinitionName}] not found!`);
     }
-    else if (regex == null) {
-      console.error(`No Regex Assigned To Definition [${field.regexDefinitionName}]!`);
-    }
-    else if (!matchesRegex(regex, value)) {
-      if (errorFormText == null) {
-        console.error(`No Regex Error Form Text Assigned To Definition [${field.regexDefinitionName}]! Returning default error.`);
-        errorMessages.push("Does not meet field requirements.");
+
+    if (isRequiredFunction == null || isRequiredFunction(data) === true) {
+      if (regex == null) {
+        console.error(`No Regex Assigned To Definition [${field.regexDefinitionName}]!`);
       }
-      else {
-        errorMessages.push(`${field.label} validation error! ${errorFormText}`);
+      else if (!matchesRegex(regex, value)) {
+        if (errorFormText == null) {
+          console.error(`No Regex Error Form Text Assigned To Definition [${field.regexDefinitionName}]! Returning default error.`);
+          errorMessages.push("Does not meet field requirements.");
+        }
+        else {
+          errorMessages.push(`${field.label} validation error! ${errorFormText}`);
+        }
       }
     }
   }
@@ -176,6 +191,6 @@ const maxLengthValidator = (value, maxLength) => {
 
 // TODO: THis probably doesn't work with boolean values,
 //  however boolean values by design should always have a value
-const requiredValidator = value => {
+const requiredValidator = (value) => {
   return value != null && !!value;
 };

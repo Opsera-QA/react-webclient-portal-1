@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import KpiActions from "components/admin/kpi_editor/kpi-editor-actions";
+import KpiActions from "components/admin/kpi_identifiers/kpi.actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";

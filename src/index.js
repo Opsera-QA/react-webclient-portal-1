@@ -4,13 +4,14 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "@fortawesome/fontawesome-pro/css/all.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "dhx-suite-package/codebase/suite.css";
+import "@opsera/dhx-suite-package/codebase/suite.css";
 import "react-widgets/styles.css";
-import "./theme.css";
-import "./field.css";
-import "./container.css";
-import "./index.css";
-import "./analytics.css";
+import "css/general/theme.css";
+import "css/general/field.css";
+import "css/general/container.css";
+import "css/general/index.css";
+import "css/analytics/analytics.css";
+import "css/pipelines/workflows.css";
 import * as serviceWorker from "./serviceWorker";
 
 if (typeof window["TextEncoder"] !== "function") {
@@ -20,8 +21,7 @@ if (typeof window["TextEncoder"] !== "function") {
   window["TextDecoder"] = TextEncodingPolyfill.TextDecoder;
 }
 
-
-var browserNotSupported = (function (agent) {
+const browserNotSupported = (function (agent) {
   switch (true) {
   case agent.indexOf("edge") > -1: return false; // "edge";
   case agent.indexOf("edg") > -1: return false; //"chromium based edge (dev or canary)";

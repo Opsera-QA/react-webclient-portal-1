@@ -7,6 +7,7 @@ import TagReports from "components/reports/tags/TagReports";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import UserReports from "components/reports/users/UserReports";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
+import ReportsHelpDocumentation from "../common/help/documentation/reports/ReportsHelpDocumentation";
 
 function Reports() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -62,11 +63,16 @@ function Reports() {
     );
   };
 
+  const getHelpComponent = () => {
+      return (<ReportsHelpDocumentation/>);
+  };
+
   return (
     <ScreenContainer
       navigationTabContainer={<ReportsSubNavigationBar currentTab={"all"} />}
       breadcrumbDestination={"reports"}
-      pageDescription={"View reports from this dashboard."}
+      pageDescription={"View all Tool, Tag and User reports from this dashboard."}
+      helpComponent={getHelpComponent()}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       isLoading={isLoading}

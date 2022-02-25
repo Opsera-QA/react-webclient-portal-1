@@ -1,14 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RepositorySelectInput from "components/common/list_of_values_input/tools/git/RepositorySelectInput";
+import RepositorySelectInput from "components/common/list_of_values_input/tools/repositories/RepositorySelectInput";
 
 function SalesforceBulkMigrationTaskRepositorySelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
+    const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
+    const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     newModel.setData("repository", selectedOption.name);
-    newModel.setData("projectId", selectedOption.id);
+    newModel.setData("projectId", repoId);
     newModel.setData("sshUrl", selectedOption.sshUrl || "");
-    newModel.setData("gitUrl", selectedOption.httpUrl || "");
+    newModel.setData("gitUrl", gitUrl);
     newModel.setData("gitBranch", "");
     newModel.setData("defaultBranch", "");
     newModel.setData("sourceBranch", "");

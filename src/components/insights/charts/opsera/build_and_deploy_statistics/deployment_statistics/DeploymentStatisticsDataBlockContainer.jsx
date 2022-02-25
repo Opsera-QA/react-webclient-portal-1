@@ -1,85 +1,122 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import Model from "core/data_model/model";
-import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
-import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
-import SuccessfulDeploymentsDataBlock
-  from "components/common/metrics/data_blocks/deployment/successful_deployments/SuccessfulDeploymentsDataBlock";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
-import FailedDeploymentsDataBlock
-  from "components/common/metrics/data_blocks/deployment/failed_deployments/FailedDeploymentsDataBlock";
-import SuccessRateDataBlock
-  from "components/common/metrics/data_blocks/success/success_rate/SuccessRateDataBlock";
-import Col from "react-bootstrap/Col";
+import { Container, Col, Row } from "react-bootstrap";
+import { ResponsiveLine } from '@nivo/line';
+import { defaultConfig } from 'components/insights/charts/charts-views';
+import DeploymentStatisticsActionableInsightsTable from "./DeploymentStatisticsActionableInsightsTable";
+import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import { faTable } from "@fortawesome/pro-light-svg-icons";
+import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ChartTooltip from "components/insights/charts/ChartTooltip";
+import config from "../OpseraBuildAndDeployLineChartConfig";
+import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
+import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
+import { goalSuccessColor } from "../../../../charts/charts-views";
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function DeploymentStatisticsDataBlockContainer({ dashboardData, kpiConfiguration }) {
+function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData }) {
   const toastContext = useContext(DialogToastContext);
 
-  const onRowSelect = () => {
-    const chartModel = new Model({...SonarRatingsBugsActionableMetadata.newObjectFields}, SonarRatingsBugsActionableMetadata, false);
+  const onRowSelect = () => {    
     toastContext.showOverlayPanel(
-      <ChartDetailsOverlay
-        dashboardData={dashboardData}
-        kpiConfiguration={kpiConfiguration}
-        chartModel={chartModel}
-        kpiIdentifier={"sonar-ratings-debt-ratio"}
-      />);
+      <FullScreenCenterOverlayContainer
+        closePanel={closePanel}
+        showPanel={true}
+        titleText={`Opsera Deployment Statistics`}
+        showToasts={true}
+        titleIcon={faTable}
+        isLoading={false}        
+      >
+        <div className={"p-3"}>
+          <DeploymentStatisticsActionableInsightsTable kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} />
+        </div>        
+      </FullScreenCenterOverlayContainer>
+    );    
   };
+
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
+
+  let successChartData = [
+    {
+      "id": "success rate",
+      "data": chartData?.deploySuccess
+    }  
+  ];
 
   const getLeftDataBlock = () => {
-    return (
-      <SuccessfulDeploymentsDataBlock
-        qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
-        successfulDeploymentCount={120}
-        bottomText={"10% increase"}
+    return (  
+      <ThreeLineDataBlockNoFocusBase        
+        topText={"Success Rate"}
+        middleText={<MetricPercentageText percentage={metricData?.deploy?.successPercent} qualityLevel={metricData?.deploy?.count && metricData?.deploy?.count > 0 ? metricData?.deploy?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null } />}
+        bottomText={`Goal: ${goalsData}`}
       />
     );
   };
 
-  const getMiddleDataBlock = () => {
-    return (
-      <FailedDeploymentsDataBlock
-        qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
-        failedDeploymentCount={10}
-        bottomText={"20% decrease"}
-      />
-    );
-  };
-
-  const getRightDataBlock = () => {
-    return (
-      <SuccessRateDataBlock
-        qualityLevel={METRIC_QUALITY_LEVELS.SUCCESS}
-        successPercentage={98}
-        bottomText={"Goal 95%"}
-      />
+  const getSuccessTrendChart = () => {
+    return(
+      <div className="new-chart p-0" style={{height: "150px"}}>
+        <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
+          Goal<b> ({goalsData} %)</b>{" "}
+          <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" />
+          <br></br>
+          Success Rate{" "}
+          <FontAwesomeIcon icon={faSquare} color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} size="lg" />
+        </div>
+        <ResponsiveLine
+          data={successChartData}
+          {...defaultConfig("", "Date", 
+                false, true, "wholeNumbers", "monthDate2")}
+          {...config()}
+          tooltip={(node) => (            
+            <ChartTooltip
+              titles={["Date Range", "Number of Deployments", "Success Rate"]}
+              values={[node.point.data.range, node.point.data.total, String(node.point.data.y) + " %"]}
+            />
+          )}
+          markers={[
+            {
+                axis: 'y',
+                value: goalsData,
+                lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
+                legend: '',
+            }            
+          ]}
+        />
+      </div>
     );
   };
 
   return (
-    <HorizontalDataBlocksContainer
-      title={"Deployment Statistics"}
-      // onClick={() => onRowSelect()}
-    >
-      <Col sm={4} className={"p-2"}>
-        {getLeftDataBlock()}
-      </Col>
-      <Col sm={4} className={"p-2"}>
-        {getMiddleDataBlock()}
-      </Col>
-      <Col sm={4} className={"p-2"}>
-        {getRightDataBlock()}
-      </Col>
+    <HorizontalDataBlocksContainer title={"Deployment Statistics"} onClick={() => onRowSelect()}>
+      <Container>
+        <Row className="align-items-center">
+          <Col sm={3} className={"p-2"}>
+            {getLeftDataBlock()}
+          </Col>
+          <Col sm={9} className={"p-2"}>
+            {getSuccessTrendChart()}
+          </Col>
+        </Row>
+      </Container>
     </HorizontalDataBlocksContainer>
   );
 }
 
 DeploymentStatisticsDataBlockContainer.propTypes = {
-  kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
+    metricData: PropTypes.object,
+    chartData: PropTypes.object,
+    kpiConfiguration: PropTypes.object,
+    dashboardData: PropTypes.object,
+    goalsData: PropTypes.number,
 };
 
 export default DeploymentStatisticsDataBlockContainer;

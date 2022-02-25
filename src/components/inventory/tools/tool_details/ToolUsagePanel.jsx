@@ -9,7 +9,7 @@ function ToolUsagePanel({ toolData }) {
     <DetailPanelContainer>
       <Row>
         <Col lg={12}>
-          <ToolUsedInPipelinesField dataObject={toolData} />
+          <ToolUsedInPipelinesField toolId={toolData?.getData("_id")} />
         </Col>
       </Row>
     </DetailPanelContainer>

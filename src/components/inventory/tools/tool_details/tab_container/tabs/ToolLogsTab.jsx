@@ -2,12 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
-const LOG_SUPPORTED_TOOL_IDENTIFIERS = [
+export const LOG_SUPPORTED_TOOL_IDENTIFIERS = [
   "jenkins",
   "octopus",
   "sfdc-configurator",
-  "argo",
+  toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO,
   "azure",
 ];
 

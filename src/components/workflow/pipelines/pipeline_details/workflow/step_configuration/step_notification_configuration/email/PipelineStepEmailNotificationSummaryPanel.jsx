@@ -5,7 +5,7 @@ import BooleanField from "components/common/fields/boolean/BooleanField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
-import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
+import EmailAddressArrayField from "components/common/fields/multiple_items/email/EmailAddressArrayField";
 
 function PipelineStepEmailNotificationSummaryPanel({ emailNotificationModel }) {
   if (emailNotificationModel == null) {
@@ -13,13 +13,16 @@ function PipelineStepEmailNotificationSummaryPanel({ emailNotificationModel }) {
   }
 
   return (
-    <SummaryPanelContainer>
+    <SummaryPanelContainer className={"m-3"}>
       <Row>
         <Col lg={6}>
           <BooleanField dataObject={emailNotificationModel} fieldName={"enabled"} />
         </Col>
         <Col lg={6}>
-          <EmailAddressField fieldName={"address"} dataObject={emailNotificationModel} />
+          <EmailAddressArrayField
+            fieldName={"addresses"}
+            model={emailNotificationModel}
+          />
         </Col>
         <Col lg={6}>
           <TextFieldBase fieldName={"event"} dataObject={emailNotificationModel} />

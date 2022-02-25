@@ -14,8 +14,8 @@ import PipelineStepEditorPanelContainer
 import OctopusProjectTypeSelectInput from "./input/OctopusProjectTypeSelectInput";
 import OctopusCustomProjectForm from "./sub-forms/OctopusCustomProjectForm";
 import OctopusOpseraManagedProjectForm from "./sub-forms/OctopusOpseraManagedProjectForm";
-import OctopusStepOctopusEnvironmentMultiSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/input/OctopusStepOctopusEnvironmentMultiSelectInput";
+import OctopusStepOctopusEnvironmentListInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/input/OctopusStepOctopusEnvironmentListInput";
 
 // TODO: This needs a refactor. I plan on doing it soon.
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, callbackSaveToVault, closeEditorPanel, pipelineId }) {
@@ -209,35 +209,12 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
 
   const validateDeploymentVariables = async () => {
     if (octopusStepConfigurationDto.getData("specifyDepVariables")) {
-      if (octopusStepConfigurationDto.getData("deploymentVariables").length === 0) {
+      if (octopusStepConfigurationDto.getData("deploymentVariables").length === 0 && octopusStepConfigurationDto.getData("customVariableList").length === 0 ) {
         let errorMesage = "Please specify deployment variables.";
         toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
         return false;
       }
-      for (let item in octopusStepConfigurationDto.getData("deploymentVariables")) {
-        if (octopusStepConfigurationDto.getData("deploymentVariables")[item]?.scope && octopusStepConfigurationDto.getData("deploymentVariables")[item]?.scope?.environment) {
-          let errorMesage =
-            "The scope and environment are auto filled. Please do not specify scope and environment in deployment variables.";
-          toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
-          return false;
-        }
-        if (Object.keys(octopusStepConfigurationDto.getData("deploymentVariables")[item]).length > 4) {
-          let errorMesage = "Validate deployment Variables, Please refer to specified deployment variables format";
-          toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
-          return false;
-        }
-        if (
-          !octopusStepConfigurationDto.getData("deploymentVariables")[item]["description"] ||
-          !octopusStepConfigurationDto.getData("deploymentVariables")[item]["name"] ||
-          !octopusStepConfigurationDto.getData("deploymentVariables")[item]["value"]
-        ) {
-          let errorMesage =
-            "Missing required fields for deployment variables, Please refer to specified deployment variables format";
-          toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
-          return false;
-        }
-      }
-    }
+    }    
     return true;
   };
 
@@ -292,7 +269,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
         disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusToolId").length === 0}
         tool_prop={octopusStepConfigurationDto ? octopusStepConfigurationDto.getData("octopusToolId") : ""}
       />
-      <OctopusStepOctopusEnvironmentMultiSelectInput
+      <OctopusStepOctopusEnvironmentListInput
         fieldName={"environmentList"}
         model={octopusStepConfigurationDto}
         setModel={setOctopusStepConfigurationDataDto}

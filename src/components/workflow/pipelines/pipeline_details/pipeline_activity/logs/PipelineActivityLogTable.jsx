@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {
   getPipelineActivityStatusColumn,
   getTableDateTimeColumn,
-  getTableTextColumn
+  getTableTextColumn, getUppercaseTableTextColumn
 } from "components/common/table/table-column-helpers-v2";
 import PipelineTaskDetailViewer from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineTaskDetailViewer";
 import TableBase from "components/common/table/TableBase";
@@ -13,11 +13,10 @@ function PipelineActivityLogTable(
   {
     pipelineLogData,
     pipelineActivityMetadata,
-    isLoading,
     pipeline,
     pipelineActivityFilterDto,
-    secondaryActivityLogs,
-    latestActivityLogs,
+    currentRunNumber,
+    currentStepName,
   }) {
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
@@ -35,7 +34,12 @@ function PipelineActivityLogTable(
   }, [JSON.stringify(pipelineActivityMetadata)]);
 
   const onRowSelect = (treeGrid, row) => {
-    toastContext.showOverlayPanel(<PipelineTaskDetailViewer pipelineName={pipeline?.name} pipelineActivityLogId={row._id} />);
+    toastContext.showOverlayPanel(
+      <PipelineTaskDetailViewer
+        pipelineName={pipeline?.name}
+        pipelineActivityLogId={row._id}
+      />
+    );
   };
 
   const loadColumnMetadata = (newActivityMetadata) => {
@@ -45,8 +49,8 @@ function PipelineActivityLogTable(
       setColumns(
         [
           {...getTableTextColumn(fields.find(field => { return field.id === "run_count";}), "cell-center no-wrap-inline", 100,)},
-          getTableTextColumn(fields.find(field => { return field.id === "step_name";})),
-          getTableTextColumn(fields.find(field => { return field.id === "action";})),
+          getUppercaseTableTextColumn(fields.find(field => { return field.id === "step_name";})),
+          getUppercaseTableTextColumn(fields.find(field => { return field.id === "action";})),
           getTableTextColumn(fields.find(field => { return field.id === "message";})),
           getPipelineActivityStatusColumn(fields.find(field => { return field.id === "status";})),
           getTableDateTimeColumn(fields.find(field => { return field.id === "createdAt";}))
@@ -56,23 +60,12 @@ function PipelineActivityLogTable(
   };
 
   const getFilteredData = () => {
-    const currentRunNumber = pipelineActivityFilterDto?.getData("currentRunNumber");
-    const currentStepName = pipelineActivityFilterDto?.getData("currentStepName");
-
-    if (currentRunNumber == null) {
+    if (currentRunNumber == null || currentRunNumber === "latest" || currentRunNumber === "secondary" || currentStepName == null) {
       return pipelineLogData;
     }
 
-    if (currentRunNumber === "latest") {
-      return [...latestActivityLogs];
-    }
-
-    if (currentRunNumber === "secondary") {
-      return [...secondaryActivityLogs];
-    }
-
     return pipelineLogData.filter((item) => {
-      return item.run_count === currentRunNumber && (currentStepName == null || item.step_name === currentStepName);
+      return item.step_name === currentStepName;
     });
   };
 
@@ -85,26 +78,25 @@ function PipelineActivityLogTable(
   };
 
   return (
-    <div className={"tree-table"}>
-      <TableBase
-        columns={columns}
-        data={getFilteredData()}
-        isLoading={isLoading}
-        noDataMessage={getNoDataMessage()}
-        onRowSelect={onRowSelect}
-      />
-    </div>
+    <TableBase
+      columns={columns}
+      data={getFilteredData()}
+      noDataMessage={getNoDataMessage()}
+      onRowSelect={onRowSelect}
+    />
   );
 }
 
 PipelineActivityLogTable.propTypes = {
   pipelineLogData: PropTypes.array,
   pipelineActivityMetadata: PropTypes.object,
-  isLoading: PropTypes.bool,
   pipeline: PropTypes.object,
   pipelineActivityFilterDto: PropTypes.object,
-  secondaryActivityLogs: PropTypes.array,
-  latestActivityLogs: PropTypes.array,
+  currentRunNumber: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  currentStepName: PropTypes.string,
 };
 
 export default PipelineActivityLogTable;

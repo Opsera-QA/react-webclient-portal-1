@@ -2,8 +2,8 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import LoadingDialog from "components/common/status_notifications/loading";
-import PersistAndCloseVanityButtonContainer
-  from "components/common/buttons/saving/containers/PersistAndCloseVanityButtonContainer";
+import VanityEditorPanelButtonContainer
+  from "components/common/buttons/saving/containers/VanityEditorPanelButtonContainer";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import EditorPanelToggleInput from "components/common/inputs/boolean/EditorPanelToggleInput";
 
@@ -60,7 +60,7 @@ function VanityEditorPanelContainer(
 
   const getPersistButtonContainer = () => {
     return (
-      <PersistAndCloseVanityButtonContainer
+      <VanityEditorPanelButtonContainer
         extraButtons={extraButtons}
         handleClose={handleClose}
         disable={disable}
@@ -105,7 +105,7 @@ function VanityEditorPanelContainer(
   }
 
   return (
-    <div className="p-3 h-100">
+    <div className={className}>
       {getActionBar()}
       <div>{children}</div>
       <div>

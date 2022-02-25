@@ -1,13 +1,13 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveHeatMap } from "@nivo/heatmap";
 import config from "./githubCommitsByAuthorConfig";
 import ModalLogs from "components/common/modal/modalLogs";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, gradationalColors } from '../../../charts-views';
+import { defaultConfig, gradationalColors } from "../../../charts-views";
 function GithubCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -42,8 +42,21 @@ function GithubCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "githubTotalCommitsByUserAndDate", kpiConfiguration, dashboardTags);
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "githubTotalCommitsByUserAndDate",
+        kpiConfiguration,
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
+      );
       let dataObject = response?.data ? response?.data?.data[0]?.githubTotalCommitsByUserAndDate?.data : [];
       var usersList = dataObject && dataObject.length > 0 ? Object.keys(dataObject[0]) : [];
       usersList = usersList.filter((value) => value != "date");
@@ -52,14 +65,12 @@ function GithubCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
       }
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -70,16 +81,16 @@ function GithubCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
-  return (
-    <div className="new-chart mb-3" style={{height: "300px"}}>
-          <ResponsiveHeatMap
-            data={metrics}
-            {...defaultConfig("Date", "", true, true, "yearMonthDate", "cutoffString")}
-            {...config(users, gradationalColors)}
-            onClick={() => setShowModal(true)}
-          />
+    return (
+      <div className="new-chart mb-3" style={{ height: "300px" }}>
+        <ResponsiveHeatMap
+          data={metrics}
+          {...defaultConfig("Date", "", true, true, "yearMonthDate", "cutoffString")}
+          {...config(users, gradationalColors)}
+          onClick={() => setShowModal(true)}
+        />
       </div>
-  );
+    );
   };
 
   return (
@@ -113,7 +124,7 @@ GithubCommitsByAuthor.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func
+  setKpis: PropTypes.func,
 };
 
 export default GithubCommitsByAuthor;

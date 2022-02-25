@@ -5,22 +5,24 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import JFrogMavenPackageTypeInput from "./inputs/JFrogMavenPackageTypeInput";
-import jfrogActions from "../jfrog-actions";
+import JFrogMavenPackageTypeInput from "components/common/list_of_values_input/tools/jfrog/package_type/JFrogMavenPackageTypeInput";
 import axios from "axios";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
+import jFrogToolRepositoriesActions
+  from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jFrogToolRepositories.actions";
+import StandaloneDeleteButtonWithConfirmationModal
+  from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
+import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
+import JFrogRepositoryKeyTextInput
+  from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/details/inputs/JFrogRepositoryKeyTextInput";
 
-function JFrogRepositoryEditorPanel({ 
-  toolData, 
-  jfrogRepositoryData, 
-  setJFrogRepositoryData, 
-  handleClose, 
-  jfrogRepositories,
-  editMode
-}) {  
+function JFrogRepositoryEditorPanel(
+  {
+    toolId,
+    jFrogRepositoryModel,
+    setJFrogRepositoryModel,
+    handleClose,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
 
@@ -40,103 +42,83 @@ function JFrogRepositoryEditorPanel({
   }, []);
 
   const createJFrogMavenRepository = async () => {
-
-    const repoAlreadyExists = jfrogRepositories.some(repo => repo.key === jfrogRepositoryData.getData("key"));    
-    if (repoAlreadyExists) {
-      throw new Error("Name Must Be Unique");      
-    }
-
-    const newRepo = jfrogRepositoryData.getPersistData();
-    let postBody = {
-      toolId: toolData.getData("_id"),
-      packageType: newRepo.packageType,
-      repositoryName: newRepo.key,
-      description: newRepo.description,
-    };
-
-    try {
-      const response = await jfrogActions.createRepository(postBody, getAccessToken, cancelTokenSource);      
-      if (response && response.status === 200) {      
-        handleClose();
-      }      
-    } catch (error) {      
-      toastContext.showErrorDialog(error);      
-    }
+    return await jFrogToolRepositoriesActions.createRepository(getAccessToken, cancelTokenSource, toolId, jFrogRepositoryModel);
   };
 
   const updateJFrogMavenRepository = async () => {
-
-    const repo = jfrogRepositoryData.getPersistData();
-
-    let postBody = {
-      toolId: toolData.getData("_id"),      
-      repositoryName: repo.key,
-      description: repo.description,
-    };
-
-    try {
-      const response = await jfrogActions.updateRepository(postBody, getAccessToken, cancelTokenSource);
-      if (response && response.status === 200) {      
-        handleClose();
-      }      
-    } catch (error) {      
-      toastContext.showErrorDialog(error);      
-    }    
+    return await jFrogToolRepositoriesActions.updateRepository(getAccessToken, cancelTokenSource, toolId, jFrogRepositoryModel);
   };
 
   const deleteJFrogMavenRepository = async () => {
-    const repo = jfrogRepositoryData.getPersistData();
-    let postBody = {
-      toolId: toolData.getData("_id"),      
-      repositoryName: repo.key
-    };
-    const response = await jfrogActions.deleteRepository(postBody, getAccessToken, cancelTokenSource);
-    handleClose();
-    return response;
+    return await jFrogToolRepositoriesActions.deleteRepository(getAccessToken, cancelTokenSource, toolId, jFrogRepositoryModel);
   };
 
   const getExtraButtons = () => {
-    if (editMode) {
+    if (jFrogRepositoryModel?.isNew() === false) {
       return (
-        <DeleteButtonWithInlineConfirmation dataObject={jfrogRepositoryData} deleteRecord={deleteJFrogMavenRepository}/>
+        <StandaloneDeleteButtonWithConfirmationModal
+          model={jFrogRepositoryModel}
+          deleteDataFunction={deleteJFrogMavenRepository}
+          handleCloseFunction={handleClose}
+        />
       );
     }
   };
 
+  if (jFrogRepositoryModel == null) {
+    return (
+      <DetailPanelLoadingDialog />
+    );
+  }
+
   return (
     <EditorPanelContainer
-      recordDto={jfrogRepositoryData}
-      setRecordDto={setJFrogRepositoryData}
+      recordDto={jFrogRepositoryModel}
+      setRecordDto={setJFrogRepositoryModel}
       handleClose={handleClose}
       extraButtons={getExtraButtons()}
       updateRecord={updateJFrogMavenRepository}
       createRecord={createJFrogMavenRepository}
       lenient={true}
-      disable={jfrogRepositoryData == null || !jfrogRepositoryData.checkCurrentValidity() || jfrogRepositoryData == null || !jfrogRepositoryData.checkCurrentValidity()}
+      disable={jFrogRepositoryModel?.checkCurrentValidity() !== true}
     >
       <div className="text-muted pt-1 pb-3">
         Enter the required configuration information below. These settings will be used for Repository Creation.
       </div>
       <Row>
         <Col lg={12}>
-          <TextInputBase dataObject={jfrogRepositoryData} setDataObject={setJFrogRepositoryData} fieldName={"key"} disabled={editMode} />
+          <JFrogRepositoryKeyTextInput
+            model={jFrogRepositoryModel}
+            setModel={setJFrogRepositoryModel}
+            fieldName={"key"}
+            disabled={jFrogRepositoryModel?.isNew() !== true}
+          />
         </Col>
         <Col lg={12}>
-          <TextInputBase dataObject={jfrogRepositoryData} setDataObject={setJFrogRepositoryData} fieldName={"description"} />
+          <TextInputBase
+            dataObject={jFrogRepositoryModel}
+            setDataObject={setJFrogRepositoryModel}
+            fieldName={"description"}
+          />
+        </Col>
+        <Col lg={12}>
+          <JFrogMavenPackageTypeInput
+            model={jFrogRepositoryModel}
+            setModel={setJFrogRepositoryModel}
+            fieldName={"packageType"}
+            disabled={jFrogRepositoryModel?.isNew() !== true}
+          />
         </Col>
       </Row>
-      <JFrogMavenPackageTypeInput dataObject={jfrogRepositoryData} setDataObject={setJFrogRepositoryData} fieldName={"packageType"} disabled={true} />      
     </EditorPanelContainer>
   );
 }
 
 JFrogRepositoryEditorPanel.propTypes = {
-  toolData: PropTypes.object,
-  jfrogRepositoryData: PropTypes.object,
-  setJFrogRepositoryData: PropTypes.func,
+  toolId: PropTypes.string,
+  jFrogRepositoryModel: PropTypes.object,
+  setJFrogRepositoryModel: PropTypes.func,
   handleClose: PropTypes.func,
-  jfrogRepositories: PropTypes.array,
-  editMode: PropTypes.bool,
 };
 
 export default JFrogRepositoryEditorPanel;

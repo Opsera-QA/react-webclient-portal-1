@@ -7,15 +7,13 @@ import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTa
 import CustomTab from "components/common/tabs/CustomTab";
 import LdapDepartmentSummaryPanel
   from "components/settings/ldap_departments/details/LdapDepartmentSummaryPanel";
-import LdapDepartmentMembershipPanel
-  from "components/settings/ldap_departments/details/LdapDepartmentMembershipPanel";
 import LdapDepartmentEditorPanel
   from "components/settings/ldap_departments/details/LdapDepartmentEditorPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import LdapGroupMembershipManagementPanel
   from "components/common/inputs/user/membership/manager/LdapGroupMembershipManagementPanel";
 
-function LdapDepartmentDetailPanel({ ldapDepartmentData, loadData, setLdapDepartmentData, ldapDepartmentGroupData, orgDomain, authorizedActions }) {
+function LdapDepartmentDetailPanel({ ldapDepartmentData, loadData, setLdapDepartmentData, ldapDepartmentGroupData, orgDomain }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -48,20 +46,19 @@ function LdapDepartmentDetailPanel({ ldapDepartmentData, loadData, setLdapDepart
           />
         );
       case "membership":
-        // TODO: Rework department membership panel and hook up here
         return (
-          <LdapDepartmentMembershipPanel
-            ldapDepartmentData={ldapDepartmentData}
-            ldapDepartmentGroupData={ldapDepartmentGroupData}
+          <LdapGroupMembershipManagementPanel
             orgDomain={orgDomain}
             setActiveTab={setActiveTab}
+            ldapGroupData={ldapDepartmentGroupData}
+            loadData={loadData}
+            type={"Department"}
           />
         );
       case "settings":
         return (
           <LdapDepartmentEditorPanel
             setLdapDepartmentData={setLdapDepartmentData}
-            authorizedActions={authorizedActions}
             orgDomain={orgDomain}
             ldapDepartmentData={ldapDepartmentData}
             reloadData={loadData}

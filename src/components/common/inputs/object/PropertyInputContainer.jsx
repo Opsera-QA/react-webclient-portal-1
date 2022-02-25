@@ -7,7 +7,21 @@ import {Button} from "react-bootstrap";
 import {faExclamationTriangle, faPlus} from "@fortawesome/pro-light-svg-icons";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 
-function PropertyInputContainer({ children, isLoading, titleIcon, titleText, field, errorMessage, addProperty, type, addAllowed, helpComponent, incompleteRowMessage }) {
+function PropertyInputContainer(
+  {
+    children,
+    isLoading,
+    titleIcon,
+    titleText,
+    field,
+    errorMessage,
+    addProperty,
+    type,
+    addAllowed,
+    helpComponent,
+    incompleteRowMessage,
+    model,
+  }) {
   const getAddPropertyButton = () => {
     if (addProperty) {
       return (
@@ -50,7 +64,12 @@ function PropertyInputContainer({ children, isLoading, titleIcon, titleText, fie
           </div>
         </Row>
       </div>
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        model={model}
+        fieldName={field?.id}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 }
@@ -67,6 +86,7 @@ PropertyInputContainer.propTypes = {
   helpComponent: PropTypes.any,
   isLoading: PropTypes.bool,
   incompleteRowMessage: PropTypes.string,
+  model: PropTypes.object,
 };
 
 export default PropertyInputContainer;

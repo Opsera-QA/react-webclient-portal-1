@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import tagEditorMetadata from "components/settings/tags/tags-metadata";
+import tagMetadata from "components/settings/tags/tag.metadata";
 import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -16,7 +16,7 @@ import {fieldValidation} from "core/data_model/modelValidation";
 function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setDataFunction, allowCreate, inline, allowedTypes, getDisabledTags, placeholderText}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [field] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(dataObject?.getFieldById(fieldName));
   const [tagOptions, setTagOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
@@ -170,7 +170,7 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
     let currentOptions = [...tagOptions];
     let newTag = {type: type, value: newValue, active: true, configuration: {}};
     let newTagOption = {type: type, value: newValue};
-    let newTagDto = new Model(newTag, tagEditorMetadata, true);
+    let newTagDto = new Model(newTag, tagMetadata, true);
     await saveNewTag(newTagDto);
     currentValues.push(newTagOption);
     currentOptions.push(newTagOption);
@@ -201,6 +201,7 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
           groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}
           className={inline ? `inline-filter-input inline-select-filter` : undefined}
           busy={isLoading}
+          manualEntry={true}
           createOptionFunction={(value) => handleCreate(value)}
           value={[...dataObject?.getArrayData(fieldName)]}
           placeholderText={errorMessage ? errorMessage : placeholderText}
@@ -208,7 +209,12 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
           setDataFunction={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
         />
       </div>
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText
+        fieldName={fieldName}
+        model={dataObject}
+        field={field}
+        errorMessage={errorMessage}
+      />
     </InputContainer>
   );
 }

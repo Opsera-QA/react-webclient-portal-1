@@ -133,16 +133,21 @@ const breadcrumbs = {
     path: paths.siteNotificationManager,
     title: "Site Notification Manager",
     linkText: "Site Notification Manager",
-    icon: faFlag
+    icon: faFlag,
+    pageDescription: "Create personalized Site Notifications by Type, including System Maintenance, Service Outage, Success, or Informational Message that will be displayed across the site for every User",
   },
 
   templateManagement: {
     parent: "admin",
     name: "templateManagement",
     path: paths.templateManagement,
-    title: "Template Management",
-    linkText: "Template Management",
-    icon: faStream
+    title: "Pipeline Template Management",
+    linkText: "Pipeline Template Management",
+    icon: faStream,
+    pageDescription: `
+      Create and manage personalized pipeline templates according to your organization’s needs. 
+      Templates created will be stored in Pipeline Catalog
+    `
   },
   templateDetailView: {
     parent: "templateManagement",
@@ -159,7 +164,8 @@ const breadcrumbs = {
     path: paths.pipelineStorageManagement,
     title: "Pipeline Storage Management",
     linkText: "Pipeline Storage Management",
-    icon: faFileArchive
+    icon: faFileArchive,
+    pageDescription: "View and Manage records created during the use of Tasks and Pipelines",
   },
   pipelineStorageDetailView: {
     parent: "pipelineStorageManagement",
@@ -177,7 +183,8 @@ const breadcrumbs = {
     path: paths.toolManagement,
     title: "Tool Management",
     linkText: "Tool Management",
-    icon: faWrench
+    icon: faWrench,
+    pageDescription: "Manage and onboard new Tools for Registry and Pipeline use by creating Tool Categories and Identifiers",
   },
   toolCategoryDetailView: {
     parent: "toolManagement",
@@ -200,16 +207,17 @@ const breadcrumbs = {
     parent: "admin",
     name: "kpiManagement",
     path: paths.kpiManagement,
-    title: "KPI Management",
-    linkText: "KPI Management",
-    icon: faFileInvoice
+    title: "KPI Identifier Management",
+    linkText: "KPI Identifier Management",
+    icon: faFileInvoice,
+    pageDescription: "Create and manage KPI Identifiers to add metrics to the Insights Marketplace",
   },
   kpiDetailView: {
     parent: "kpiManagement",
     name: "kpiDetailView",
     path: paths.kpiManagement,
-    title: "KPI Configuration Details",
-    linkText: "KPI Configuration Details",
+    title: "KPI Identifier Details",
+    linkText: "KPI Identifier Details",
     icon: faFileInvoice
   },
 
@@ -219,7 +227,8 @@ const breadcrumbs = {
     path: paths.registeredUsersManagement,
     title: "Registered Users Management",
     linkText: "Registered Users Management",
-    icon: faUserCircle
+    icon: faUserCircle,
+    pageDescription: "Manage Opsera User settings, deactivate Opsera Users, and deploy ELK tool stacks for Opsera Users",
   },
   registeredUsersDetailView: {
     parent: "registeredUsersManagement",
@@ -229,13 +238,15 @@ const breadcrumbs = {
     linkText: "Registered User Details",
     icon: faUserCircle
   },
-  apiManagement: {
+
+  apiConnectionTest: {
     parent: "admin",
-    name: "apiManagement",
-    path: paths.apiManagement,
-    title: "API Management",
-    linkText: "API Management",
-    icon: faLink
+    name: "apiConnectionTest",
+    path: paths.apiConnectionTest,
+    title: "API Connection Test",
+    linkText: "API Connection Test",
+    icon: faLink,
+    pageDescription: "Run an API connection test against the server using the Okta Authentication Token and Axios.js",
   },
 
   // Account settings
@@ -436,7 +447,8 @@ const breadcrumbs = {
     path: paths.ldapOrganizationManagement,
     title: "Organization Management",
     linkText: "Organization Management",
-    icon: faSitemap
+    icon: faSitemap,
+    pageDescription: "Create and manage LDAP Organizations"
   },
   ldapOrganizationDetailView: {
     parent: "ldapOrganizationManagement",
@@ -471,7 +483,8 @@ const breadcrumbs = {
     path: paths.customerOnboarding,
     title: "Customer Onboarding",
     linkText: "Customer Onboarding",
-    icon: faUserPlus
+    icon: faUserPlus,
+    pageDescription: "Onboard a new customer to the Opsera Platform",
   },
 
   deleteTools: {
@@ -742,6 +755,14 @@ const breadcrumbs = {
     linkText: "Notification Management",
     icon: faEnvelope
   },
+  notificationActivityLogs : {
+    parent: undefined,
+    name: "notificationActivityLogs",
+    path: paths.notificationActivityLogs,
+    title: "Notification Policy Activity Logs",
+    linkText: "Notification Policy Activity Logs",
+    icon: faClipboardList
+  },
   notificationDetailView: {
     parent: "notificationManagement",
     name: "notificationDetailView",
@@ -758,7 +779,8 @@ const breadcrumbs = {
     path: paths.taskManagement,
     title: "Opsera Task Management",
     linkText: "Opsera Task Management",
-    icon: faTasks
+    icon: faTasks,
+    pageDescription: "Create and Manage Opsera Related Tasks.",
   },
   taskActivityLogs : {
     parent: undefined,

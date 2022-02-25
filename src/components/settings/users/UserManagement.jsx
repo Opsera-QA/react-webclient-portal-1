@@ -12,6 +12,8 @@ import {faUserHardHat, faUsers} from "@fortawesome/pro-light-svg-icons";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import PendingUsersTable from "components/settings/users/PendingUsersTable";
 import UserManagementSubNavigationBar from "components/settings/users/UserManagementSubNavigationBar";
+import UserManagementHelpDocumentation
+  from "../../common/help/documentation/settings/UserManagementHelpDocumentation";
 
 function UserManagement() {
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
@@ -153,9 +155,14 @@ function UserManagement() {
     );
   };
 
+  const getHelpComponent = () => {
+    return (<UserManagementHelpDocumentation/>);
+  };
+
   return (
     <ScreenContainer
       breadcrumbDestination={"userManagement"}
+      helpComponent={getHelpComponent()}
       isLoading={!accessRoleData}
       roleRequirement={ROLE_LEVELS.POWER_USERS}
       accessRoleData={accessRoleData}

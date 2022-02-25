@@ -99,7 +99,7 @@ console.log(azureApplicationData);
       }
       handleClose={handleClose}
     >
-      <div className="scroll-y">
+      <div className="scroll-y hide-x-overflow">
         <Row>
           <Col lg={12}>
             <TextInputBase

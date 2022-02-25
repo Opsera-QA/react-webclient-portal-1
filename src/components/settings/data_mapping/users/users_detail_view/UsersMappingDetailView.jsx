@@ -4,7 +4,7 @@ import UsersMappingDetailPanel from "./UsersMappingDetailPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import dataMappingActions from "components/settings/data_mapping/data-mapping-actions";
-import usersTagsMetadata from "components/settings/data_mapping/users/tagging-users-metadata";
+import usersMappingMetadata from "components/settings/data_mapping/users/userMapping.metadata";
 import Model from "core/data_model/model";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
@@ -44,7 +44,7 @@ function UsersMappingDetailView() {
     try {
       const response = await dataMappingActions.getUserMappingById(usersMappingId, getAccessToken);
       if (response?.data?.length > 0) {
-        setUsersMappingData(new Model(response?.data[0], usersTagsMetadata, false));
+        setUsersMappingData(new Model(response?.data[0], usersMappingMetadata, false));
       }
     } catch (error) {
       if (!error?.error?.message?.includes(404)) {
@@ -85,7 +85,7 @@ function UsersMappingDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"userTaggingDetailView"}
-      metadata={usersTagsMetadata}
+      metadata={usersMappingMetadata}
       navigationTabContainer={<DataMappingManagementSubNavigationBar activeTab={"userTagViewer"} />}
       accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
       dataObject={usersMappingData}

@@ -5,7 +5,17 @@ import DtoBottomPagination from "components/common/pagination/DtoBottomPaginatio
 import LoadingDialog from "components/common/status_notifications/loading";
 import VanityPaginationContainer from "components/common/pagination/v2/VanityPaginationContainer";
 
-function PaginationContainer({ isLoading, filterDto, setFilterDto, loadData, children, scrollOnLoad, nextGeneration }) {
+function PaginationContainer(
+  {
+    isLoading,
+    filterDto,
+    setFilterDto,
+    loadData,
+    children,
+    scrollOnLoad,
+    nextGeneration,
+    data,
+  }) {
   const getTopPaginator = () => {
     return (
       <DtoTopPagination
@@ -30,8 +40,13 @@ function PaginationContainer({ isLoading, filterDto, setFilterDto, loadData, chi
   };
 
   const getBody = () => {
-    if (isLoading) {
-      return <LoadingDialog message={"Loading Data"} size={"sm"} />;
+    if (isLoading && (!Array.isArray(data) || data.length === 0)) {
+      return (
+        <LoadingDialog
+          message={"Loading Data"}
+          size={"sm"}
+        />
+      );
     }
 
     return (children);
@@ -67,6 +82,7 @@ PaginationContainer.propTypes = {
   loadData: PropTypes.func,
   scrollOnLoad: PropTypes.bool,
   nextGeneration: PropTypes.bool,
+  data: PropTypes.array,
 };
 
 export default PaginationContainer;

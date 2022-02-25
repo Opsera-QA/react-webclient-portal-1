@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import KpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_identifier/KpiIdentifierFilter";
 
-function InlineKpiIdentifierFilter({ fieldName, filterModel, setFilterModal, loadData, className, textField, valueField, status, policySupport, manualDataEntry}) {
+function InlineKpiIdentifierFilter({ fieldName, filterModel, setFilterModel, loadData, className, textField, valueField, status, policySupport, manualDataEntry}) {
   const setDataFunction = (fieldName, value) => {
     let newDataObject = filterModel;
     newDataObject.setData(fieldName, value);
@@ -17,7 +17,7 @@ function InlineKpiIdentifierFilter({ fieldName, filterModel, setFilterModal, loa
     <KpiIdentifierFilter
       inline={true}
       fieldName={fieldName}
-      setFilterModel={setFilterModal}
+      setFilterModel={setFilterModel}
       filterModel={filterModel}
       className={className}
       textField={textField}
@@ -33,7 +33,7 @@ function InlineKpiIdentifierFilter({ fieldName, filterModel, setFilterModal, loa
 InlineKpiIdentifierFilter.propTypes = {
   fieldName: PropTypes.string,
   filterModel: PropTypes.object,
-  setFilterModal: PropTypes.func,
+  setFilterModel: PropTypes.func,
   loadData: PropTypes.func,
   className: PropTypes.string,
   textField: PropTypes.string,

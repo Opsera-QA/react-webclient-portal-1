@@ -1,52 +1,96 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSave, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {faSave} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import IconBase from "components/common/icons/IconBase";
+import axios from "axios";
 
 // Note: this should only be used in special cases where Model-Wrapped objects don't make sense
-function StandaloneSaveButton({saveFunction, disable, type}) {
+function StandaloneSaveButton(
+  {
+    saveFunction,
+    disable,
+    type,
+    size,
+    className,
+    showToasts,
+  }) {
   let toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
 
   const persistRecord = async () => {
     try {
       setIsSaving(true);
       await saveFunction();
-      toastContext.showSaveSuccessToast(type);
+
+      if (showToasts !== false) {
+        toastContext.showSaveSuccessToast(type);
+      }
     }
     catch (error) {
       toastContext.showSaveFailureToast(type, error);
     }
     finally {
-      setIsSaving(false);
+      if (isMounted?.current === true) {
+        setIsSaving(false);
+      }
     }
   };
 
   const getLabel = () => {
-    if (isSaving) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Saving</span>);
-    }
-
-    return (<span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>Save</span>);
+    return isSaving === true ? "Saving" : "Save";
   };
 
   return (
-    <Button size="sm" disabled={isSaving || disable} onClick={() => persistRecord()}>
-      {getLabel()}
-    </Button>
+    <div className={className}>
+      <Button
+        size={size}
+        disabled={isSaving || disable}
+        onClick={() => persistRecord()}
+      >
+        <span>
+          <IconBase
+            isLoading={isSaving}
+            icon={faSave}
+            className={"mr-2"}
+          />
+          {getLabel()}
+        </span>
+      </Button>
+    </div>
   );
 }
 
 StandaloneSaveButton.propTypes = {
   saveFunction: PropTypes.func,
   disable: PropTypes.bool,
-  type: PropTypes.string
+  type: PropTypes.string,
+  size: PropTypes.string,
+  className: PropTypes.string,
+  showToasts: PropTypes.bool,
 };
 
 StandaloneSaveButton.defaultProps = {
-  disable: false,
+  size: "sm",
+  showToasts: true,
 };
 
 export default StandaloneSaveButton;

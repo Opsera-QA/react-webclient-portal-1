@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 
 const SCM_TOOL_IDENTIFIERS = [
   {
@@ -15,6 +16,10 @@ const SCM_TOOL_IDENTIFIERS = [
     name: "Bitbucket",
     value: "bitbucket",
   },
+  // {
+  //   name: "Azure DevOps",
+  //   value: toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS,
+  // },
 ];
 
 // TODO: We should probably use the base SCM component and pass the setDataFunction and clearDataFunction to it.

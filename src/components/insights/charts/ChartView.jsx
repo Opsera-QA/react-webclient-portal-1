@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 
@@ -13,6 +13,7 @@ import OpseraPipelineDeploymentFrequencyStats from "./opsera/OpseraDeploymentFre
 import OpseraBuildDurationByStageBarChart from "./opsera/bar_chart/duration_by_stage/OpseraBuildDurationByStageBarChart";
 import OpseraMeanTimeToRestoreBarChart from "./opsera/bar_chart/mean_time_to_restore/OpseraMeanTimeToRestoreBarChart";
 import OpseraNexusPipelineStepInfo from "components/insights/charts/opsera/table/nexus_pipeline_step_info/OpseraNexusPipelineStepInfo";
+import OpseraBuildAndDeploymentStatistics from "components/insights/charts/opsera/build_and_deploy_statistics/OpseraBuildAndDeploymentStatistics";
 
 // Jenkins KPIs
 import JenkinsBuildsByUserBarChart from "./jenkins/bar_chart/builds_by_user/JenkinsBuildsByUserBarChart";
@@ -73,6 +74,9 @@ import GitlabTotalCommitsByProjectChart from "./gitlab/pie_chart/total_commits_b
 import GitlabRecentMergeRequests from "./gitlab/table/recent_merge_requests/GitlabRecentMergeRequests";
 import GitlabPendingMergeRequests from "./gitlab/table/pending_merge_requests/GitlabPendingMergeRequests.jsx";
 
+//new
+import ProjectWiseUnitTestResults from './unit_tests/project_wise_results/ProjectWiseUnitTestResults';
+
 // Github KPIs
 import GithubMergeRequestsByUser from "./github/bar_chart/merge_requests_by_user/GithubMergeRequestsByUserChart";
 import GithubMergeRequestsPushesAndComments from "./github/calendar_chart/merge_requests_pushes_and_comments/GithubMergeRequestsPushesAndComments";
@@ -83,6 +87,7 @@ import GithubTimeTakenToCompleteMergeRequestReview from "./github/bar_chart/time
 import GithubMergeRequestByMaximumTimeChart from "./github/bar_chart/merge_request_by_maximum_time/GithubMergeRequestByMaximumTimeChart";
 import GithubCommitsByAuthor from "./github/calendar_chart/commits_by_author/GithubCommitsByAuthor";
 import GithubPendingMergeRequests from "./github/table/pending_merge_requests/GithubPendingMergeRequests";
+import AllGithubActionsDataBlock from "./github_actions/AllGithubActionsDataBlock";
 
 // Bitbucket KPIs
 import BitbucketMostActiveContributors from "./bitbucket/table/bitbucket_most_active_contributors/BitbucketMostActiveContributors";
@@ -116,41 +121,56 @@ import MetricbeatMemoryUsageByTimeLineChart from "./metricbeat/line_chart/memory
 import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/out_network_usage/MetricbeatOutNetworkTrafficByTimeLineChart";
 
 //QA Testing
+import CumulativeOpenDefectsMetric from "./cumulative_open_defects/CumulativeOpenDefectsMetric";
 import ManualQaTestPieChart from "components/insights/charts/qa_metrics/ManualQaTestPieChart";
-import FirstPassYieldPieChart from "components/insights/charts/qa_metrics/FirstPassYieldPieChart";
-import CummulativeOpenDefectsPieChart from "components/insights/charts/qa_metrics/CummulativeOpenDefectsPieChart";
-import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieChart";
-import AdoptionPercentagePieChart from "./qa_metrics/AdoptionPercentagePieChart";
+import AutomationPercentageMetric from "./automation_percentage/AutomationPercentageMetric";
+import AdoptionTestPercentageMetricV1 from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AdoptionTestPercentageMetricV1";
 import AutomatedTestResultsPieChart from "./qa_metrics/AutomatedTestResultsPieChart";
 import SFDCManualTestResultsPieChart from "./qa_metrics/SFDCManualTestResultsPieChart";
-import DefectRemovalEfficiencyPieChart from "./qa_metrics/DefectRemovalEfficiencyPieChart";
+// import DefectRemovalEfficiencyPieChart from "./qa_metrics/DefectRemovalEfficiencyPieChart";
+import DefectRemovalEfficiencyMetrics from "./defect_removal_efficiency/DefectRemovalEfficiencyMetrics";
 
 // SFDC KPIs
-import SFDCBackups from "components/insights/charts/sfdc/SFDCBackups";
+import SalesforceBackupsAndRollbacksMetrics from "components/insights/charts/sfdc/salesforce_backups_and_rollbacks/SalesforceBackupsAndRollbacksMetrics";
 import SFDCProfileMigrationsBarChart from "components/insights/charts/sfdc/bar_chart/profile_migrations/SFDCProfileMigrationsBarChart";
 import SFDCUnitTestingPieChart from "components/insights/charts/sfdc/pie_chart/unit_testing/SFDCUnitTestingPieChart";
+import SalesforceDurationByStageMetrics from "components/insights/charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageMetrics";
 
 // Service Now KPIs
 import ServiceNowMeanTimeToResolutionBarChart from "./servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionBarChart";
 import ServiceNowMeanTimeToAcknowledgeBarChart from "./servicenow/bar_chart/mean_time_to_acknowledge/ServiceNowMeanTimeToAcknowledgeBarChart";
-import ServiceNowMeanTimeBetweenFailuresBarChart from "./servicenow/bar_chart/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresBarChart";
 
 // Coverity KPIs
 import CoverityIssuesByCategory from "./coverity/CoverityIssuesByCategory/CoverityIssuesByCategory";
 
-import {
-  getDateObjectFromKpiConfiguration,
-  getTagsFromKpiConfiguration,
-} from "components/insights/charts/charts-helpers";
+//SDLC KPIs
+import SdlcDurationByStageMetrics from "components/insights/charts/sdlc/bar_chart/duration_by_stage/SdlcDurationByStageMetrics";
+
+import { getDateObjectFromKpiConfiguration } from "components/insights/charts/charts-helpers";
 import { Col } from "react-bootstrap";
-import { AuthContext } from "../../../contexts/AuthContext";
+import LegacySonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings_legacy/LegacySonarRatingMetrics";
 import SonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings/SonarRatingMetrics";
+import AutomatedTestAdoptionRateMetric
+  from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AutomatedTestAdoptionRateMetric";
+import FirstPassYieldMetrics from "./first_pass/FirstPassYieldMetrics";
+import LoadingDialog from "components/common/status_notifications/loading";
+import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
-  const [kpiConfig, setKpiConfig] = useState(kpiConfiguration);
-  const { featureFlagHideItemInProd } = useContext(AuthContext);
-  const envIsProd = featureFlagHideItemInProd();
+  const [kpiConfig, setKpiConfig] = useState(undefined);
+  const isMounted = useRef(false);
+
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    setKpiConfig({...kpiConfiguration});
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, [JSON.stringify(kpiConfiguration)]);
 
   // TODO: This is only being used until each chart is updated to use ChartContainer inside.
   //  After everything is refactored,
@@ -592,17 +612,15 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-reliability-remediation-agg-trend":
         return (
-          !envIsProd && (
-            <Col xl={6} md={12} className="p-2">
-              <SonarReliabilityRemediationEffortAggTrendLineChart
-                kpiConfiguration={kpiConfig}
-                setKpiConfiguration={setKpiConfig}
-                dashboardData={dashboardData}
-                setKpis={setKpis}
-                index={index}
-              />
-            </Col>
-          )
+          <Col xl={6} md={12} className="p-2">
+            <SonarReliabilityRemediationEffortAggTrendLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "sonar-vulnerabilities-by-project":
         return (
@@ -683,6 +701,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "sonar-ratings":
         return (
           <Col xl={6} md={12} className="p-2">
+            <LegacySonarRatingMetrics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sonar-ratings-v2":
+        return (
+          <Col md={12} className="p-2">
             <SonarRatingMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -740,6 +770,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+
       // Jmeter KPIs
       case "jmeter-hits":
         return (
@@ -929,7 +960,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Selenium KPIs
       case "selenium-test-results":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col md={12} className="p-2">
             <SeleniumTestResultsTable
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1099,7 +1130,30 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-
+      case "all-github-actions-data-block":
+        return(
+          <Col md={12} className="p-2">
+            <AllGithubActionsDataBlock
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sonar-unit-testing":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <ProjectWiseUnitTestResults
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       // Bitbucket KPIs
       case "bitbucket-most-active-contributors":
         return (
@@ -1237,7 +1291,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "first-pass-yield":
         return (
           <Col md={12} className="p-2">
-            <FirstPassYieldPieChart
+            <FirstPassYieldMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1249,7 +1303,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "cumulative-open-defects":
         return (
           <Col md={12} className="p-2">
-            <CummulativeOpenDefectsPieChart
+            <CumulativeOpenDefectsMetric
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1262,7 +1316,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         console.log(kpiConfig,' ** index',dashboardData);
         return (
           <Col md={12} className="p-2">
-            <AutomationPercentagePieChart
+            <AutomationPercentageMetric
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1274,7 +1328,14 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "adoption-percentage":
         return (
           <Col md={12} className="p-2">
-            <AdoptionPercentagePieChart
+            {/*<AdoptionTestPercentageMetricV1*/}
+            {/*  kpiConfiguration={kpiConfig}*/}
+            {/*  setKpiConfiguration={setKpiConfig}*/}
+            {/*  dashboardData={dashboardData}*/}
+            {/*  setKpis={setKpis}*/}
+            {/*  index={index}*/}
+            {/*/>*/}
+            <AutomatedTestAdoptionRateMetric
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1287,6 +1348,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col md={12} className="p-2">
             <AutomatedTestResultsPieChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_DURATION_BY_STAGE:
+        return (
+          <Col md={12} className="p-2">
+            <SalesforceDurationByStageMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1310,7 +1383,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "sfdc-backups":
         return (
           <Col xl={6} md={12} className="p-2">
-            <SFDCBackups
+            <SalesforceBackupsAndRollbacksMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1343,10 +1416,22 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS:
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <SdlcDurationByStageMetrics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       // Service Now
       case "servicenow-mean-time-to-resolution":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col md={12} className="p-2">
             <ServiceNowMeanTimeToResolutionBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1358,7 +1443,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "servicenow-mean-time-to-acknowledge":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col md={12} className="p-2">
             <ServiceNowMeanTimeToAcknowledgeBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1368,22 +1453,22 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "servicenow-mean-time-between-failures":
-        return (
-          <Col xl={6} md={12} className="p-2">
-            <ServiceNowMeanTimeBetweenFailuresBarChart
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
-        );
+      // case "servicenow-mean-time-between-failures":
+      //   return (
+      //     <Col xl={6} md={12} className="p-2">
+      //       <ServiceNowMeanTimeBetweenFailuresBarChart
+      //         kpiConfiguration={kpiConfig}
+      //         setKpiConfiguration={setKpiConfig}
+      //         dashboardData={dashboardData}
+      //         setKpis={setKpis}
+      //         index={index}
+      //       />
+      //     </Col>
+      //   );
       case "defect-removal-efficiency":
         return (
           <Col md={12} className="p-2">
-            <DefectRemovalEfficiencyPieChart
+            <DefectRemovalEfficiencyMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1405,10 +1490,26 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+      case "build-deployment-statistics":
+        return (
+          <Col md={12} className="p-2">
+            <OpseraBuildAndDeploymentStatistics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       default:
         return null;
     }
   };
+
+  if (kpiConfig == null) {
+    return (<LoadingDialog size={"sm"} message={"Loading Insights"} />);
+  }
 
   // TODO: Chart container should be inside each chart component
   //  with loading passed in to allow chart to refresh while keeping existing data and also informing users it's updating.
@@ -1419,6 +1520,8 @@ ChartView.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
+  loadChart: PropTypes.func,
+  setKpis: PropTypes.func,
 };
 
 export default ChartView;

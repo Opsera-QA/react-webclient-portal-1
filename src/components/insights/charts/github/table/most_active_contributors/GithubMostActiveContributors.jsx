@@ -75,13 +75,18 @@ function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "githubMostActiveUsers",
         kpiConfiguration,
         dashboardTags,
-        filterDto
+        filterDto,
+        null,
+        dashboardOrgs
       );
       let dataObject = response?.data?.data[0]?.githubMostActiveUsers?.data;
 
@@ -124,6 +129,7 @@ function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
         setKpiConfiguration={setKpiConfiguration}
         chart={getChartTable()}
         loadChart={loadData}
+        tableChart={true}
         dashboardData={dashboardData}
         index={index}
         error={error}

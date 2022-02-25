@@ -4,7 +4,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import FieldContainer from "components/common/fields/FieldContainer";
 import Model from "core/data_model/model";
-import jiraProjectMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jira-project-metadata";
+import {jiraToolProjectMetadata} from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jiraToolProject.metadata";
 import JiraToolProjectSummaryCard
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraToolProjectSummaryCard";
 import modelHelpers from "components/common/model/modelHelpers";
@@ -80,7 +80,7 @@ function JiraToolProjectField({ dataObject, jiraToolId, jiraToolProjectId, field
       let projectData = toolProjects.find((project) => project.id === jiraToolProjectId);
 
       if (projectData != null) {
-        let toolProjectDto = new Model({...projectData}, jiraProjectMetadata, false);
+        let toolProjectDto = new Model({...projectData}, jiraToolProjectMetadata, false);
         let jiraToolProjectDto = modelHelpers.getToolConfigurationModel(toolProjectDto.getData("configuration"), jiraConfigurationMetadata);
         setToolProjectData(toolProjectDto);
         setJiraToolProjectConfiguration(jiraToolProjectDto);

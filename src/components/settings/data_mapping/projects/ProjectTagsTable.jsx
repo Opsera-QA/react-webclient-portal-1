@@ -1,7 +1,7 @@
 import React, { useMemo, useContext } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import projectTagsMetadata from "./tagging-project-metadata";
+import projectMappingMetadata from "components/settings/data_mapping/projects/projectMapping.metadata";
 import { useHistory } from "react-router-dom";
 import NewProjectMappingOverlay from "./NewProjectMappingOverlay";
 import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
@@ -13,7 +13,7 @@ import {getField} from "components/common/metadata/metadata-helpers";
 function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
-  let fields = projectTagsMetadata.fields;
+  let fields = projectMappingMetadata.fields;
 
   const columns = useMemo(() => [
       getTableTextColumn(getField(fields,"tool_identifier")),
@@ -46,8 +46,6 @@ function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
         noDataMessage={noDataMessage}
         onRowSelect={selectedRow}
         isLoading={isLoading}
-        tableTitle={"Project Mapping"}
-        type={"Project Mapping"}
       />
     );
   };
@@ -59,7 +57,7 @@ function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
       supportSearch={false}
       isLoading={isLoading}
       body={getProjectTagsTable()}
-      metadata={projectTagsMetadata}
+      metadata={projectMappingMetadata}
       titleIcon={faTags}
       title={"Project Tags"}
       type={"Project Tag"}

@@ -21,7 +21,7 @@ function ConsolidatedUserReportPipelineAccessTable({ data, isLoading, pagination
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "name";})),
       getRoleAccessLevelColumn(fields.find(field => { return field.id === "role_access_level";})),
-      getStaticInfoColumn(faSearch)
+      getStaticInfoColumn()
     ],
     [],
   );

@@ -2,8 +2,22 @@ import React from "react";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
+import RefreshButton from "components/common/buttons/data/RefreshButton";
 
-function InputTitleBar({ field, icon, isLoading, helpComponent, searchTerm, setSearchTerm, showSearchBar, disabled, customTitle }) {
+function InputTitleBar(
+  {
+    field,
+    icon,
+    isLoading,
+    helpComponent,
+    searchTerm,
+    setSearchTerm,
+    showSearchBar,
+    disabled,
+    customTitle,
+    loadDataFunction,
+    className,
+  }) {
   const getTitle = () => {
     if (customTitle) {
       return customTitle;
@@ -40,13 +54,27 @@ function InputTitleBar({ field, icon, isLoading, helpComponent, searchTerm, setS
     }
   };
 
+  const getLoadDataButton = () => {
+    if (loadDataFunction) {
+      return (
+        <RefreshButton
+          loadData={loadDataFunction}
+          isLoading={isLoading}
+          className={"ml-2 my-auto"}
+        />
+      );
+    }
+  };
+
+
   return (
-    <div className="px-2 d-flex input-title-bar justify-content-between">
+    <div className={`${className} px-2 d-flex justify-content-between`}>
       {getFormattedLabel()}
       <div className={"d-flex"}>
         {getSearchBar()}
+        {getLoadDataButton()}
         <div className={"my-auto"}>
-          <LaunchHelpIcon helpComponent={helpComponent} />
+          <LaunchHelpIcon helpComponent={helpComponent}/>
         </div>
       </div>
     </div>
@@ -63,6 +91,12 @@ InputTitleBar.propTypes = {
   disabled: PropTypes.bool,
   customTitle: PropTypes.string,
   helpComponent: PropTypes.object,
+  loadDataFunction: PropTypes.func,
+  className: PropTypes.string,
+};
+
+InputTitleBar.defaultProps = {
+  className: "input-title-bar",
 };
 
 export default InputTitleBar;

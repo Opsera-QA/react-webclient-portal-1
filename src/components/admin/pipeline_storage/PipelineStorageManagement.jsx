@@ -3,11 +3,13 @@ import { AuthContext } from "contexts/AuthContext";
 import Model from "core/data_model/model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import kpiFilterMetadata from "components/admin/kpi_editor/kpi-filter-metadata";
+import kpiFilterMetadata from "components/admin/kpi_identifiers/kpi-filter-metadata";
 import { meetsRequirements, ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import axios from "axios";
 import PipelineStorageActions from "components/admin/pipeline_storage/pipeline-storage-actions";
 import PipelineStorageTable from "components/admin/pipeline_storage/PipelineStorageTable";
+import PipelineStorageManagementSubNavigationBar
+  from "components/admin/pipeline_storage/PipelineStorageManagementSubNavigationBar";
 
 function PipelineStorageManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -92,6 +94,11 @@ function PipelineStorageManagement() {
       isLoading={!accessRoleData || !pipelineStorageMetadata}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
+      navigationTabContainer={
+        <PipelineStorageManagementSubNavigationBar
+          activeTab={"pipelineStorageManagement"}
+        />
+      }
     >
       <PipelineStorageTable
         loadData={loadData}

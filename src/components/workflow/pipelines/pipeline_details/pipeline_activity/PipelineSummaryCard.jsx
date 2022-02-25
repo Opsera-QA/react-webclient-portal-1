@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import PipelineSummaryCardContainer from "./PipelineSummaryCardContainer";
 import PipelineLinkButton from "components/common/buttons/pipeline/PipelineLinkButton";
-import TagField from "components/common/fields/multiple_items/TagField";
+import TagField from "components/common/fields/multiple_items/tags/TagField";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import DescriptionField from "components/common/fields/text/DescriptionField";
 

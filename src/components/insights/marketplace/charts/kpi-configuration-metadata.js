@@ -85,6 +85,41 @@ export const kpiTagsFilterMetadata = {
   },
 };
 
+export const kpiGoalsFilterMetadata = {
+  type: "Goals Filter",
+  fields: [
+    {
+      label: "Type",
+      id: "type",
+    },
+    {
+      label: "Goals",
+      id: "value",
+    },
+  ],
+  newObjectFields: {
+    value: {},
+  },
+};
+
+export const kpiNotesFilterMetadata = {
+  type: "Notes Filter",
+  fields: [
+    {
+      label: "Type",
+      id: "type",
+    },
+    {
+      label: "Notes",
+      id: "value",
+      maxLength: 300,
+    },
+  ],
+  newObjectFields: {
+    value: "",
+  },
+};
+
 export const kpiJenkinsResultFilterMetadata = {
   type: "Jenkins Result Filter",
   fields: [
