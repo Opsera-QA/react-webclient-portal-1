@@ -55,7 +55,7 @@ function ProjectWiseUnitTestResults({ kpiConfiguration, setKpiConfiguration, das
         let newFilterDto = filterDto;
         newFilterDto.setData(
           "totalCount",
-          responseObject.count[0].count
+          responseObject?.count[0]?.count
         );
         setTableFilterDto({ ...newFilterDto });
       }
