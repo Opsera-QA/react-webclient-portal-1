@@ -39,8 +39,6 @@ import Model from "core/data_model/model";
 import GoalsInputBase from "./goals/GoalsInputBase";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
-import dashboardsActions from "components/insights/dashboards/dashboards-actions";
-import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TagManager from "components/common/inputs/tags/TagManager";
 import modelHelpers from "components/common/model/modelHelpers";
 
@@ -77,6 +75,8 @@ import DeleteDashboardMetricButton from "components/common/buttons/dashboards/me
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
 import DeleteDashboardMetricConfirmationPanel
   from "components/insights/marketplace/dashboards/metrics/delete/DeleteDashboardMetricConfirmationPanel";
+import DashboardMetricEditorPanelContainer
+  from "components/common/panels/detail_panel_container/dashboard_metrics/DashboardMetricEditorPanelContainer";
 
 // TODO: There are a handful of issues with this we need to address.
 function KpiSettingsForm({
@@ -92,8 +92,6 @@ function KpiSettingsForm({
   const { getAccessToken } = useContext(AuthContext);
   const [helpIsShown, setHelpIsShown] = useState(false);
   const [kpiSettings, setKpiSettings] = useState(new Model(kpiConfiguration, kpiConfigurationMetadata, false));
-  const [showDeleteConfirmationPanel, setShowDeleteConfirmationPanel] = useState(false);
-  const [showResetConfirmationPanel, setShowResetConfirmationPanel] = useState(false);
 
   const [kpiConfigSettings, setKpiConfigSettings] = useState(
     modelHelpers.getDashboardSettingsModel(kpiConfiguration)
@@ -953,23 +951,6 @@ function KpiSettingsForm({
     return <GenericChartSettingsHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
   };
 
-  const getExtraButtons = () => {
-    return (
-      <div className={"d-flex"}>
-        <DeleteButton
-          dataObject={kpiSettings}
-          deleteRecord={() => setShowDeleteConfirmationPanel(true)}
-          size={"md"}
-        />
-        <ResetButton
-          className={"ml-2"}
-          model={kpiSettings}
-          resetFunction={() => setShowResetConfirmationPanel(true)}
-        />
-      </div>
-    );
-  };
-
   const getEditorPanelFilters = () => {
     if (kpiSettings?.getData) {
       return (
@@ -988,54 +969,20 @@ function KpiSettingsForm({
     }
   };
 
-  const getEditorPanel = () => {
+  const getBody = () => {
     return (
-      <EditorPanelContainer
-        showRequiredFieldsMessage={false}
-        handleClose={closeSettingsPanel}
-        updateRecord={saveKpiSettings}
-        recordDto={kpiSettings}
-        lenient={true}
+      <DashboardMetricEditorPanelContainer
+        saveDataFunction={saveKpiSettings}
+        closePanelFunction={closeSettingsPanel}
+        metricModel={kpiSettings}
+        setKpis={setKpis}
+        metricIndex={index}
+        dashboardModel={dashboardData}
         className={"px-3 pb-3"}
-        extraButtons={getExtraButtons()}
       >
         {getEditorPanelFilters()}
-      </EditorPanelContainer>
+      </DashboardMetricEditorPanelContainer>
     );
-  };
-
-  const getBody = () => {
-    if (showDeleteConfirmationPanel === true) {
-      return (
-        <div className={"m-2"}>
-          <DeleteDashboardMetricConfirmationPanel
-            kpiConfigurationModel={kpiSettings}
-            dashboardModel={dashboardData}
-            closePanelFunction={closeSettingsPanel}
-            index={index}
-            setKpis={setKpis}
-          />
-        </div>
-      );
-    }
-
-    if (showResetConfirmationPanel === true) {
-      return (
-        <div className={"m-2"}>
-          <ResetMetricConfirmationPanel
-            kpiConfigurationModel={kpiSettings}
-            dashboardModel={dashboardData}
-            className={"ml-2"}
-            identifier={kpiSettings?.getData("kpi_identifier")}
-            index={index}
-            closePanelFunction={closeSettingsPanel}
-            setKpiConfiguration={setKpiConfiguration}
-          />
-        </div>
-      );
-    }
-
-    return getEditorPanel();
   };
 
   if (kpiSettings == null) {

@@ -12,7 +12,9 @@ import {dashboardMetricActions} from "components/insights/dashboards/metrics/das
 import {parseError} from "components/common/helpers/error-helpers";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import InfoText from "components/common/inputs/info_text/InfoText"; // TODO: Make specialized Model when Dashboard refresh issue is fixed.
+import InfoText from "components/common/inputs/info_text/InfoText";
+import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
+import {faTrash} from "@fortawesome/pro-light-svg-icons"; // TODO: Make specialized Model when Dashboard refresh issue is fixed.
 
 function ResetMetricConfirmationPanel(
   {
@@ -133,7 +135,13 @@ function ResetMetricConfirmationPanel(
   }
 
   return (
-    <div>
+    <CenterOverlayContainer
+      closePanel={closePanelFunction}
+      showPanel={true}
+      titleIcon={faTrash}
+      titleText={`Delete ${metricModel?.getData("kpi_name")} Confirmation`}
+      showCloseButton={false}
+    >
       <ResetConfirmationPanel
         model={metricModel}
         closePanelFunction={closePanelFunction}
@@ -142,7 +150,7 @@ function ResetMetricConfirmationPanel(
         disabled={isLoading}
       />
       <InfoText errorMessage={errorMessage} />
-    </div>
+    </CenterOverlayContainer>
   );
 }
 
