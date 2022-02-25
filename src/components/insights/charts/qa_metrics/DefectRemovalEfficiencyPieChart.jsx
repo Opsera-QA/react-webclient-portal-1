@@ -10,14 +10,7 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { defaultConfig, getColorByData, assignStandardColors, shortenPieChartLegend } from "../charts-views";
 import { Col, Container, Row } from "react-bootstrap";
 
-function DefectRemovalEfficiencyPieChart({
-  kpiConfiguration,
-  setKpiConfiguration,
-  dashboardData,
-  index,
-  setKpis,
-  showSettingsToggle,
-}) {
+function DefectRemovalEfficiencyPieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -163,7 +156,6 @@ function DefectRemovalEfficiencyPieChart({
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
-        showSettingsToggle={showSettingsToggle}
       />
       <ModalLogs
         header="Unit Test Data Stats"

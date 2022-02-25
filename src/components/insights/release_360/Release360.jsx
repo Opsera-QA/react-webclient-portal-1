@@ -1,25 +1,23 @@
-import React, {useState, useEffect, useRef, useContext} from 'react';
+import React, { useState, useEffect, useRef, useContext } from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import Model from "core/data_model/model";
 import axios from "axios";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {faFileCertificate, faHourglass, faSearch} from "@fortawesome/pro-light-svg-icons";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import { faFileCertificate, faHourglass, faSearch } from "@fortawesome/pro-light-svg-icons";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
-import OverallReleaseDurationMetrics
-  from "components/insights/release_360/views/duration/OverallReleaseDurationMetrics";
-import OverallReleaseTraceabilityMetrics
-  from "components/insights/release_360/views/traceability/OverallReleaseTraceabilityMetrics";
-import OverallReleaseQualityMetrics from "components/insights/release_360/views/quality/OverallReleaseQualityMetrics";
-import {AuthContext} from "contexts/AuthContext";
+import OverallReleaseDurationMetrics from "components/insights/release_360/views/duration/OverallReleaseDurationMetrics";
+import OverallReleaseTraceabilityMetrics from "components/insights/release_360/views/traceability/OverallReleaseTraceabilityMetrics";
+import OverallReleaseQualityMetrics from "../release_360/views/quality/OverallReleaseQualityMetrics";
+import { AuthContext } from "contexts/AuthContext";
 import MetricUiSandbox from "components/insights/release_360/views/sandbox/MetricUiSandbox";
 import DashboardFiltersInput from "components/insights/dashboards/DashboardFiltersInput";
 import DashboardFilterOrganizationInput from "components/insights/dashboards/DashboardFilterOrganizationInput";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
-import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata";
+import { dashboardFiltersMetadata } from "components/insights/dashboards/dashboard-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import { Button, Popover, Overlay } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,14 +25,16 @@ import { faCalendar } from "@fortawesome/pro-light-svg-icons";
 import { format, addDays } from "date-fns";
 import { DateRangePicker } from "react-date-range";
 
-function Release360 () {
+function Release360() {
   const isMounted = useRef(false);
   const [activeTab, setActiveTab] = useState("duration");
   const [isLoading, setIsLoading] = useState(true);
   const toastContext = useContext(DialogToastContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [dashboardData, setDashboardData] = useState(undefined);
-  const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(modelHelpers.getDashboardFilterModel(dashboardData, "tags", dashboardFiltersMetadata));
+  const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(
+    modelHelpers.getDashboardFilterModel(dashboardData, "tags", dashboardFiltersMetadata)
+  );
   const { featureFlagHideItemInProd } = useContext(AuthContext);
   const [date, setDate] = useState([
     {
@@ -55,7 +55,7 @@ function Release360 () {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
-    let newDataObject = new Model({...dashboardMetadata.newObjectFields}, dashboardMetadata, true);
+    let newDataObject = new Model({ ...dashboardMetadata.newObjectFields }, dashboardMetadata, true);
     newDataObject.setData("filters", []);
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
@@ -76,7 +76,7 @@ function Release360 () {
     try {
       setIsLoading(true);
       console.log(newDataObject);
-      setDashboardData({...newDataObject});
+      setDashboardData({ ...newDataObject });
     } catch (error) {
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -89,7 +89,7 @@ function Release360 () {
     }
   };
 
-  const handleTabClick = (tabSelection) => e => {
+  const handleTabClick = (tabSelection) => (e) => {
     e.preventDefault();
 
     if (isMounted?.current === true) {
@@ -142,19 +142,23 @@ function Release360 () {
       } else {
         let endDate = format(item.selection.endDate, "MM/dd/yyyy");
         setEDate(endDate);
-        validate(startDate,endDate);
+        validate(startDate, endDate);
       }
     }
   };
 
-  const validate = (startDate,endDate)=>{
+  const validate = (startDate, endDate) => {
     let sDate = startDate ? new Date(startDate).toISOString() : undefined;
     let eDate = endDate ? new Date(endDate).toISOString() : undefined;
     let newDashboardFilterTagsModel = dashboardFilterTagsModel;
-    newDashboardFilterTagsModel.setData( "date" , { startDate: sDate , endDate: eDate, key: "selection" } );
-    setDashboardFilterTagsModel({...newDashboardFilterTagsModel});
+    newDashboardFilterTagsModel.setData("date", { startDate: sDate, endDate: eDate, key: "selection" });
+    setDashboardFilterTagsModel({ ...newDashboardFilterTagsModel });
 
-    let newDataModel = modelHelpers.setDashboardFilterModelField(dashboardData, "date", { startDate: sDate , endDate: eDate, key: "selection" });
+    let newDataModel = modelHelpers.setDashboardFilterModelField(dashboardData, "date", {
+      startDate: sDate,
+      endDate: eDate,
+      key: "selection",
+    });
     loadData(newDataModel);
   };
 
@@ -173,13 +177,7 @@ function Release360 () {
 
   const getDateRangeButton = () => {
     return (
-      <Overlay
-        show={calendar}
-        target={target}
-        placement="bottom"
-        container={ref.current}
-        containerPadding={20}
-      >
+      <Overlay show={calendar} target={target} placement="bottom" container={ref.current} containerPadding={20}>
         <Popover className="max-content-width">
           <Popover.Title>
             <div style={{ display: "flex" }}>
@@ -264,7 +262,6 @@ function Release360 () {
     );
   };
 
-
   const getSynopsisActionBar = () => {
     return (
       <div>
@@ -286,7 +283,7 @@ function Release360 () {
               loadData={loadData}
             />
             <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
-              <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
+              <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
               {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
             </Button>
             {getDateRangeButton()}
@@ -300,13 +297,13 @@ function Release360 () {
   const getCurrentView = () => {
     switch (activeTab) {
       case "duration":
-        return (<OverallReleaseDurationMetrics dashboardData={dashboardData}/>);
+        return <OverallReleaseDurationMetrics dashboardData={dashboardData} />;
       case "traceability":
-        return (<OverallReleaseTraceabilityMetrics dashboardData={dashboardData}/>);
+        return <OverallReleaseTraceabilityMetrics dashboardData={dashboardData} />;
       case "quality":
-        return (<OverallReleaseQualityMetrics dashboardData={dashboardData}/>);
+        return <OverallReleaseQualityMetrics dashboardData={dashboardData} />;
       case "sandbox":
-        return (<MetricUiSandbox />);
+        return <MetricUiSandbox />;
       default:
         return null;
     }
@@ -320,7 +317,9 @@ function Release360 () {
     <ScreenContainer
       navigationTabContainer={<InsightsSubNavigationBar currentTab={"release360"} />}
       breadcrumbDestination={"release360"}
-      pageDescription={"Release 360 provides a 360 degree view of data, starting from planning to release, capturing all metrics in the intermediate stages as well. Different views are split based on category, duration and functionality"}
+      pageDescription={
+        "Release 360 provides a 360 degree view of data, starting from planning to release, capturing all metrics in the intermediate stages as well. Different views are split based on category, duration and functionality"
+      }
     >
       {getSynopsisActionBar()}
       <div className={"px-3"}>
@@ -331,4 +330,3 @@ function Release360 () {
 }
 
 export default Release360;
-

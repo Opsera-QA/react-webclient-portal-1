@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { ResponsivePie } from "@nivo/pie";
-import config from "components/insights/charts/qa_metrics/manualQaTestPieChartConfig";
+import config from "components/insights/charts/qa_metrics/adoptionTestPercentagePieChartConfig";
 import ModalLogs from "components/common/modal/modalLogs";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
@@ -19,7 +19,14 @@ import ChartTooltip from "../ChartTooltip";
 import { Col, Container, Row } from "react-bootstrap";
 import DataBlockWrapper from "../../../common/data_boxes/DataBlockWrapper";
 
-function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function AdoptionPercentagePieChart({
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  setKpis,
+  showSettingsToggle,
+}) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -54,20 +61,14 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      let dashboardOrgs =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "cumulativeOpenDefects",
+        "adoptionPercentage",
         kpiConfiguration,
-        dashboardTags,
-        null,
-        null,
-        dashboardOrgs
+        dashboardTags
       );
-      let dataObject = response?.data ? response?.data?.data[0]?.cumulativeOpenDefects?.data : [];
+      let dataObject = response?.data ? response?.data?.data[0]?.adoptionPercentage?.data : [];
       assignStandardColors(dataObject[0]?.pairs);
       shortenPieChartLegend(dataObject[0]?.pairs);
 
@@ -98,23 +99,21 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
             <Col>
               <div className="metric-box text-center">
                 <div className="box-metric">
-                  <div>{metrics[0]?.totalTests}</div>
+                  <div>{metrics[0]?.executedTests}</div>
                 </div>
-                <div className="w-100 text-muted mb-1">Total No of Defects</div>
+                <div className="w-100 text-muted mb-1">No of Automated Test Cases Executed</div>
               </div>
             </Col>
             <Col>
               <div className="metric-box text-center">
                 <div className="box-metric">
-                  {metrics[0]?.cumulativeDefects ? (
-                    <div className={metrics[0]?.cumulativeDefects < 10 ? "green" : "red"}>
-                      {metrics[0]?.cumulativeDefects + "%"}
-                    </div>
+                  {metrics[0]?.adoptionRate ? (
+                    <div className="green">{metrics[0]?.adoptionRate + "%"}</div>
                   ) : (
                     <div>{"N/A"}</div>
                   )}
                 </div>
-                <div className="w-100 text-muted mb-1">Cumulative Open Defects</div>
+                <div className="w-100 text-muted mb-1">Adoption Rate</div>
               </div>
             </Col>
           </Row>
@@ -122,25 +121,10 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
             <Col>
               <div className="metric-box text-center">
                 <div className="box-metric">
-                  <div>{metrics[0]?.passedTests}</div>
+                  <div>{metrics[0]?.manualTests}</div>
                 </div>
-                <div className="w-100 text-muted mb-1">Total Valid Defects Closed</div>
+                <div className="w-100 text-muted mb-1">No of Automated Test Cases Executed Manually</div>
               </div>
-            </Col>
-            <Col>
-              <div className="metric-box text-center">
-                <div className="box-metric">
-                  <div>{metrics[0]?.failedTests}</div>
-                </div>
-                <div className="w-100 text-muted mb-1">Total Valid Defects Open</div>
-              </div>
-            </Col>
-          </Row>
-          <Row className="p-1">
-            <Col className="text-center">
-              <small>
-                <span className="font-weight-bold">Goal:</span> Cumulative Open Defects &lt; 10%
-              </small>
             </Col>
           </Row>
         </Container>
@@ -167,6 +151,7 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        showSettingsToggle={showSettingsToggle}
       />
       <ModalLogs
         header="Unit Test Data Stats"
@@ -180,12 +165,13 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
   );
 }
 
-ManualQaTestPieChart.propTypes = {
+AdoptionPercentagePieChart.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
   setKpis: PropTypes.func,
+  showSettingsToggle: PropTypes.bool,
 };
 
-export default ManualQaTestPieChart;
+export default AdoptionPercentagePieChart;

@@ -19,14 +19,7 @@ import ChartTooltip from "../ChartTooltip";
 import { Col, Container, Row } from "react-bootstrap";
 import DataBlockWrapper from "../../../common/data_boxes/DataBlockWrapper";
 
-function ManualQaTestPieChart({
-  kpiConfiguration,
-  setKpiConfiguration,
-  dashboardData,
-  index,
-  setKpis,
-  showSettingsToggle,
-}) {
+function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -175,7 +168,6 @@ function ManualQaTestPieChart({
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
-        showSettingsToggle={showSettingsToggle}
       />
       <ModalLogs
         header="Unit Test Data Stats"

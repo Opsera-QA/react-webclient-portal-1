@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import axios from "axios";
 import PropTypes from "prop-types";
@@ -8,19 +8,19 @@ import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
 import { METRIC_QUALITY_LEVELS } from "components/common/metrics/text/MetricTextBase";
-import AutomationPercentagePieChart from 'components/insights/charts/qa_metrics/AutomationPercentagePieChart';
-import KpiActions from 'components/admin/kpi_editor/kpi-editor-actions';
+import AutomationPercentagePieChart from "components/insights/charts/qa_metrics/AutomationPercentagePieChart";
+import KpiActions from "components/admin/kpi_editor/kpi-editor-actions";
 import { AuthContext } from "contexts/AuthContext";
-import kpiFilterMetadata from 'components/admin/kpi_editor/kpi-filter-metadata';
+import kpiFilterMetadata from "components/admin/kpi_editor/kpi-filter-metadata";
 import Model from "core/data_model/model";
-import AdoptionPercentagePieChart from 'components/insights/charts/qa_metrics/AdoptionTestPercentagePieChart';
-import ManualQaTestPieChart from 'components/insights/charts/qa_metrics/CummulativeOpenDefectsPieChart';
-import FirstPassYieldPieChart from 'components/insights/charts/qa_metrics/FirstPassYieldPieChart';
-import DefectRemovalEfficiencyPieChart from 'components/insights/charts/qa_metrics/DefectRemovalEfficiencyPieChart';
-import SonarRatingMetrics from 'components/insights/charts/sonar/sonar_ratings/SonarRatingMetrics';
-import { Col, Row } from 'react-bootstrap';
+import AdoptionPercentagePieChart from "components/insights/charts/qa_metrics/AdoptionTestPercentagePieChart";
+import ManualQaTestPieChart from "components/insights/charts/qa_metrics/CummulativeOpenDefectsPieChart";
+import FirstPassYieldPieChart from "components/insights/charts/qa_metrics/FirstPassYieldPieChart";
+import DefectRemovalEfficiencyPieChart from "components/insights/charts/qa_metrics/DefectRemovalEfficiencyPieChart";
+import SonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings/SonarRatingMetrics";
+import { Col, Row } from "react-bootstrap";
 
-function OverallReleaseQualityMetrics({dashboardData}) {
+function OverallReleaseQualityMetrics({ dashboardData }) {
   const toastContext = useContext(DialogToastContext);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -34,8 +34,6 @@ function OverallReleaseQualityMetrics({dashboardData}) {
   const [kpiFilterDto, setKpiFilterDto] = useState(
     new Model({ ...kpiFilterMetadata.newObjectFields }, kpiFilterMetadata, false)
   );
-
-
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -67,47 +65,45 @@ function OverallReleaseQualityMetrics({dashboardData}) {
     try {
       setIsLoading(true);
       // await getOverallReleaseQualityMetrics(cancelSource);
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
     }
   };
 
-
   // const getOverallReleaseQualityMetrics = async (cancelSource = cancelTokenSource) => {
-  // const response = await KpiActions.getKpiById(getAccessToken,cancelSource,"automation-percentage");
+  //   const response = await KpiActions.getKpiById(getAccessToken, cancelSource, "automation-percentage");
 
+  //   // const response = await KpiActions.getKpisV2(getAccessToken, cancelSource, kpiFilterDto);
 
-  // const response = await KpiActions.getKpisV2(getAccessToken, cancelSource, kpiFilterDto);
+  //   if (isMounted?.current === true && response?.data?.data) {
+  //     setKpiConfig(response?.data?.data.find((item) => item.identifier == "automation-percentage"));
 
-  //if (isMounted?.current === true && response?.data?.data) {
-  // setKpiConfig(response?.data?.data.find(item => item.identifier == 'automation-percentage'));
-
-  //   setKpiList(response.data.data);
-  //   let newFilterDto = kpiFilterDto;
-  //   newFilterDto.setData("totalCount", response.data.count);
-  //   newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-  //   setKpiFilterDto({ ...newFilterDto });
-  // }
+  //     setKpiList(response.data.data);
+  //     let newFilterDto = kpiFilterDto;
+  //     newFilterDto.setData("totalCount", response.data.count);
+  //     newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+  //     setKpiFilterDto({ ...newFilterDto });
+  //   }
   // };
 
   const filters = {
-    filters: [{
-      "type": "date",
-      "value": {
-        "startDate": "2020-10-20T20:07:35.041Z",
-        "endDate": "2021-10-20T20:07:35.041Z",
-        "key": "selection"
-      }
-    }]
+    filters: [
+      {
+        type: "date",
+        value: {
+          startDate: "2020-01-20T20:07:35.041Z",
+          endDate: "2022-01-20T20:07:35.041Z",
+          key: "selection",
+        },
+      },
+    ],
   };
 
   const getMetricBlocks = () => {
@@ -118,7 +114,8 @@ function OverallReleaseQualityMetrics({dashboardData}) {
             <Col>
               <AutomationPercentagePieChart
                 kpiConfiguration={{
-                  kpi_name: "Automation Percentage", ...filters
+                  kpi_name: "Automation Percentage",
+                  ...filters,
                 }}
                 dashboardData={dashboardData}
                 showSettingsToggle={false}
@@ -127,7 +124,8 @@ function OverallReleaseQualityMetrics({dashboardData}) {
             <Col>
               <AdoptionPercentagePieChart
                 kpiConfiguration={{
-                  kpi_name: "Adoption Percentage", ...filters
+                  kpi_name: "Adoption Percentage",
+                  ...filters,
                 }}
                 dashboardData={dashboardData}
                 showSettingsToggle={false}
@@ -138,7 +136,8 @@ function OverallReleaseQualityMetrics({dashboardData}) {
             <Col>
               <ManualQaTestPieChart
                 kpiConfiguration={{
-                  kpi_name: "Cumulative Open Defects", ...filters
+                  kpi_name: "Cumulative Open Defects",
+                  ...filters,
                 }}
                 dashboardData={dashboardData}
                 showSettingsToggle={false}
@@ -147,20 +146,20 @@ function OverallReleaseQualityMetrics({dashboardData}) {
             <Col>
               <DefectRemovalEfficiencyPieChart
                 kpiConfiguration={{
-                  kpi_name: "Defect Removal Efficiency", ...filters
+                  kpi_name: "Defect Removal Efficiency",
+                  ...filters,
                 }}
                 dashboardData={dashboardData}
                 showSettingsToggle={false}
               />
             </Col>
-
           </Row>
           <Row className="p-1">
             <Col>
               <FirstPassYieldPieChart
-
                 kpiConfiguration={{
-                  kpi_name: "First Pass Yield", ...filters
+                  kpi_name: "First Pass Yield",
+                  ...filters,
                 }}
                 dashboardData={dashboardData}
                 showSettingsToggle={false}
@@ -169,29 +168,24 @@ function OverallReleaseQualityMetrics({dashboardData}) {
             <Col>
               <SonarRatingMetrics
                 kpiConfiguration={{
-                  kpi_name: "Sonar Ratings", ...filters
+                  kpi_name: "Sonar Ratings",
+                  ...filters,
                 }}
                 dashboardData={dashboardData}
                 showSettingsToggle={false}
               />
             </Col>
           </Row>
-
         </DataBlockBoxContainer>
-
       </div>
     );
   };
 
   if (isLoading === true) {
-    return (<LoadingDialog message={"Loading Metrics"} />);
+    return <LoadingDialog message={"Loading Metrics"} />;
   }
 
-  return (
-    <div className={"mt-2"}>
-      {getMetricBlocks()}
-    </div>
-  );
+  return <div className={"mt-2"}>{getMetricBlocks()}</div>;
 }
 
 OverallReleaseQualityMetrics.propTypes = {
