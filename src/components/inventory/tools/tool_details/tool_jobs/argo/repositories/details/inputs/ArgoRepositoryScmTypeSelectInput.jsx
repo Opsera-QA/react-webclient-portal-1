@@ -16,10 +16,10 @@ const SCM_TOOL_IDENTIFIERS = [
     name: "Bitbucket",
     value: "bitbucket",
   },
-  // {
-  //   name: "Azure DevOps",
-  //   value: toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS,
-  // },
+  {
+    name: "Azure",
+    value: toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS,
+  },
 ];
 
 // TODO: We should probably use the base SCM component and pass the setDataFunction and clearDataFunction to it.
