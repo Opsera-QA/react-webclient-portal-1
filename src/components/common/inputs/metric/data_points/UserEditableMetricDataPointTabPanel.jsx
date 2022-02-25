@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import InfoContainer from "components/common/containers/InfoContainer";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import Row from "react-bootstrap/Row";
@@ -17,9 +16,8 @@ function UserEditableMetricDataPointTabPanel(
   const [activeTab, setActiveTab] = useState("");
 
   useEffect(() => {
-
     if (Array.isArray(dataPoints) && dataPoints.length > 0) {
-      setActiveTab(dataPoints?._id);
+      setActiveTab(dataPoints[0]?._id);
     }
   }, [dataPoints]);
 
