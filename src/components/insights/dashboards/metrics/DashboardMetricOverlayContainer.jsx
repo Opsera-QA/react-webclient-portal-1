@@ -39,14 +39,12 @@ function DashboardMetricOverlayContainer({
 }) {
   const { getAccessToken } = useContext(AuthContext);
   const [helpIsShown, setHelpIsShown] = useState(false);
-  // TODO: Unpack inside useEffect
   const [metricModel, setMetricModel] = useState(undefined);
   const [metricFilterModel, setMetricFilterModel] = useState(undefined);
   const [unpackedFilterData, setUnpackedFilterData] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-  // TODO: Handle unpacking models here
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
