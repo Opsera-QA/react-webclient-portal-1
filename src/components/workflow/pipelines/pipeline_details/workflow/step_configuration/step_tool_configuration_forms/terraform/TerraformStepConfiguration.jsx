@@ -117,8 +117,13 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       <TerraformCustomParametersInput
         model={terraformStepConfigurationModel}
         setModel={setTerraformStepConfigurationModel}
-        fieldName={"saveParameters"}
+        fieldName={"saveEnvironmentVariables"}
       />
+      <TerraformCustomParametersInput
+        model={terraformStepConfigurationModel}
+        setModel={setTerraformStepConfigurationModel}
+        fieldName={"saveParameters"}
+      />      
       {/*<TerraformStoreStateInS3Toggle dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName="storeStateInBucket" />*/}
       {/*{getS3BucketFields()}*/}
     </PipelineStepEditorPanelContainer>
