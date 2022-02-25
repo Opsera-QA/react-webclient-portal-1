@@ -5,11 +5,7 @@ import DataBlockBoxContainer from "../../../../common/metrics/data_blocks/DataBl
 import ChartContainer from "../../../../common/panels/insights/charts/ChartContainer";
 import PropTypes from "prop-types";
 import ModalLogs from "../../../../common/modal/modalLogs";
-import TwoLineDataBlockBase from "../../../../common/metrics/data_blocks/base/TwoLineDataBlockBase";
-import MetricScoreText from "../../../../common/metrics/score/MetricScoreText";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
-import {METRIC_QUALITY_LEVELS} from "../../../../common/metrics/text/MetricTextWithSupportingTextBase";
-import MetricTextWithSupportingTextBase from "../../../../common/metrics/text/MetricTextWithSupportingTextBase";
 import ThreeLineNumberDataBlock from "../../../../common/metrics/number/ThreeLineNumberDataBlock";
 
 function LeadTimeAndReleaseTraceabilityDataBlock({
@@ -43,7 +39,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                     <ThreeLineNumberDataBlock
                       dataPoint={durationDataPoint}
                       numberData={5}
-                      supportingText={"Days"}
+                      supportingText={"days"}
                       middleText={"Duration"}
                       bottomText={"Goal:4 days"}
                     />
