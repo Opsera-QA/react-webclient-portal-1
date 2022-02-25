@@ -16,10 +16,10 @@ export const SOURCE_CONTROL_MANAGEMENT_TOOL_IDENTIFIERS = [
     text: "Bitbucket",
     value: toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET,
   },
-  // {
-  //   text: "Azure DevOps",
-  //   value: toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS,
-  // },
+  {
+    text: "Azure",
+    value: toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS,
+  },
 ];
 
 function SourceControlManagementToolIdentifierSelectInput(
