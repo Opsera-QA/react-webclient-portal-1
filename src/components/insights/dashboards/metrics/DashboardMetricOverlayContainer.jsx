@@ -77,8 +77,6 @@ function DashboardMetricOverlayContainer({
     setUnpackedFilterData(metricHelpers.unpackMetricFilterData(kpiConfiguration?.filters));
   };
 
-  // TODO: Create unpack filters mechanism | turn filter array into key/value object (put in helper) Use supported filters array to determine what is a valid filter or not
-  // TODO: Create pack filters mechanism | turn key/value object into filter array (put in helper) Use supported filters array to determine what is a valid filter or not
   const closeSettingsPanel = async () => {
     if (closePanel) {
       closePanel();
@@ -87,7 +85,14 @@ function DashboardMetricOverlayContainer({
 
   // TODO: Once legacy KPI Settings panel is removed, this can be moved into the Dashboard Metric Button Container
   const saveKpiSettings = async () => {
-    await dashboardMetricActions.updateDashboardKpiV2(getAccessToken, cancelTokenSource, dashboardData?.getData("_id"), metricModel);
+    const packedFilters = metricHelpers.packFilterData(metricFilterModel?.getPersistData());
+    metricModel.setData("filters", packedFilters);
+    await dashboardMetricActions.updateDashboardKpiV2(
+      getAccessToken,
+      cancelTokenSource,
+      dashboardData?.getData("_id"),
+      metricModel,
+    );
   };
 
 

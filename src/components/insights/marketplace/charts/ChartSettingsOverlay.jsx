@@ -26,21 +26,21 @@ function ChartSettingsOverlay(
   };
 
   const getBody = () => {
-    // switch (kpiConfiguration?.kpi_identifier) {
-    //   case kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS:
-    //     return (
-    //       <DashboardMetricEditorPanel
-    //         kpiConfiguration={kpiConfiguration}
-    //         setKpiConfiguration={setKpiConfiguration}
-    //         settingsHelpComponent={settingsHelpComponent}
-    //         dashboardData={dashboardData}
-    //         index={index}
-    //         loadChart={loadData}
-    //         setKpis={setKpis}
-    //         closePanel={closePanel}
-    //       />
-    //     );
-    // }
+    switch (kpiConfiguration?.kpi_identifier) {
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS:
+        return (
+          <DashboardMetricOverlayContainer
+            kpiConfiguration={kpiConfiguration}
+            setKpiConfiguration={setKpiConfiguration}
+            settingsHelpComponent={settingsHelpComponent}
+            dashboardData={dashboardData}
+            index={index}
+            loadChart={loadData}
+            setKpis={setKpis}
+            closePanel={closePanel}
+          />
+        );
+    }
 
     return (
       <KpiSettingsForm
