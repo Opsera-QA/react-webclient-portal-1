@@ -12,6 +12,7 @@ function DashboardMetricEditorPanelContainer(
     closePanelFunction,
     dashboardModel,
     setKpis,
+    setKpiConfiguration,
     metricModel,
     metricIndex,
     saveDataFunction,
@@ -31,6 +32,7 @@ function DashboardMetricEditorPanelContainer(
         metricModel={metricModel}
         saveDataFunction={saveDataFunction}
         metricIndex={metricIndex}
+        setKpiConfiguration={setKpiConfiguration}
       />
       {/*<RequiredFieldsMessage />*/}
     </div>
@@ -43,6 +45,7 @@ DashboardMetricEditorPanelContainer.propTypes = {
   metricModel: PropTypes.object,
   setKpis: PropTypes.func,
   closePanelFunction: PropTypes.func,
+  setKpiConfiguration: PropTypes.func,
   isLoading: PropTypes.bool,
   saveDataFunction: PropTypes.func,
   className: PropTypes.string,

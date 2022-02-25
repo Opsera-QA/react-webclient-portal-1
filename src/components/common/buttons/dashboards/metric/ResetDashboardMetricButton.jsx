@@ -21,7 +21,7 @@ function ResetDashboardMetricButton(
   const showConfirmationOverlay = () => {
     toastContext.showOverlayPanel(
       <ResetMetricConfirmationPanel
-        kpiConfigurationModel={metricModel}
+        metricModel={metricModel}
         dashboardModel={dashboardModel}
         className={"ml-2"}
         identifier={metricModel?.getData("kpi_identifier")}

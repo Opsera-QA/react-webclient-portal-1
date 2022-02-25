@@ -15,6 +15,7 @@ function DashboardMetricButtonContainer(
     isStrict,
     disableSaveButton,
     showIncompleteDataMessage,
+    setKpiConfiguration,
     setKpis,
     metricIndex,
     dashboardModel,
@@ -33,6 +34,7 @@ function DashboardMetricButtonContainer(
           className={"ml-2"}
           metricModel={metricModel}
           closePanelFunction={closePanelFunction}
+          setKpiConfiguration={setKpiConfiguration}
           setKpis={setKpis}
           index={metricIndex}
           dashboardModel={dashboardModel}
@@ -82,6 +84,7 @@ DashboardMetricButtonContainer.propTypes = {
   isStrict: PropTypes.bool,
   disableSaveButton: PropTypes.bool,
   showIncompleteDataMessage: PropTypes.bool,
+  setKpiConfiguration: PropTypes.func,
   setKpis: PropTypes.func,
   metricIndex: PropTypes.number,
 };

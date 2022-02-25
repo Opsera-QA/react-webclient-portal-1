@@ -175,6 +175,7 @@ function DashboardMetricOverlayContainer({
         setKpis={setKpis}
         metricIndex={index}
         dashboardModel={dashboardData}
+        setKpiConfiguration={setKpiConfiguration}
         className={"px-3 pb-3"}
       >
         {getBody()}

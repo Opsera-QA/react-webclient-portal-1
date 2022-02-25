@@ -163,7 +163,6 @@ ResetMetricConfirmationPanel.propTypes = {
   metricModel: PropTypes.object,
   dashboardModel: PropTypes.object,
   closePanelFunction: PropTypes.func,
-  resetDataFunction: PropTypes.func,
   identifier: PropTypes.string,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
