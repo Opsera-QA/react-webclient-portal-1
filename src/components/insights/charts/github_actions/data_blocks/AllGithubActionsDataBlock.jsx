@@ -1,13 +1,13 @@
 import React, {useState} from "react";
-import MetricContentDataBlockBase from "../../../common/metrics/data_blocks/MetricContentDataBlockBase";
+import MetricContentDataBlockBase from "../../../../common/metrics/data_blocks/MetricContentDataBlockBase";
 import { Row,Col } from "react-bootstrap";
-import TwoLineScoreDataBlock from "../../../common/metrics/score/TwoLineScoreDataBlock";
-import DataBlockBoxContainer from "../../../common/metrics/data_blocks/DataBlockBoxContainer";
-import ChartContainer from "../../../common/panels/insights/charts/ChartContainer";
+import TwoLineScoreDataBlock from "../../../../common/metrics/score/TwoLineScoreDataBlock";
+import DataBlockBoxContainer from "../../../../common/metrics/data_blocks/DataBlockBoxContainer";
+import ChartContainer from "../../../../common/panels/insights/charts/ChartContainer";
 import PropTypes from "prop-types";
-import ModalLogs from "../../../common/modal/modalLogs";
-import TwoLinePercentageDataBlock from "../../../common/metrics/percentage/TwoLinePercentageDataBlock";
-import {dataPointHelpers} from "../../../common/helpers/metrics/data_point/dataPoint.helpers";
+import ModalLogs from "../../../../common/modal/modalLogs";
+import TwoLinePercentageDataBlock from "../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
+import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 
 function AllGithubActionsDataBlock({
   kpiConfiguration,
@@ -31,7 +31,7 @@ function AllGithubActionsDataBlock({
                   <div className={"p-3"}>
                     <TwoLinePercentageDataBlock dataPoint={dataPointHelpers.getDataPoint(
                         kpiConfiguration?.dataPoints,
-                        "all-github-actions-data-block"
+                        "all-github-actions-success-data-point"
                     )} percentage={98} subtitle={"Goal: 95%"} />
                   </div>
                 </DataBlockBoxContainer>

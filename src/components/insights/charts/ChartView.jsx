@@ -87,7 +87,7 @@ import GithubTimeTakenToCompleteMergeRequestReview from "./github/bar_chart/time
 import GithubMergeRequestByMaximumTimeChart from "./github/bar_chart/merge_request_by_maximum_time/GithubMergeRequestByMaximumTimeChart";
 import GithubCommitsByAuthor from "./github/calendar_chart/commits_by_author/GithubCommitsByAuthor";
 import GithubPendingMergeRequests from "./github/table/pending_merge_requests/GithubPendingMergeRequests";
-import AllGithubActionsDataBlock from "./github_actions/AllGithubActionsDataBlock";
+import AllGithubActionsDataBlock from "./github_actions/data_blocks/AllGithubActionsDataBlock";
 
 // Bitbucket KPIs
 import BitbucketMostActiveContributors from "./bitbucket/table/bitbucket_most_active_contributors/BitbucketMostActiveContributors";
