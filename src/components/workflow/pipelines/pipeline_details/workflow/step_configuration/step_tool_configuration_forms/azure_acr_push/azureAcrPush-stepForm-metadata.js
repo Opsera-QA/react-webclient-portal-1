@@ -60,7 +60,6 @@ const azureAcrPushStepFormMetadata = {
     {
       label: "Azure Credential",
       id: "azureCredentialId",
-      isRequired: true,
     },
   ],
   newObjectFields: {
