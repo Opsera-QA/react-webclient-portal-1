@@ -73,6 +73,11 @@ import TextAreaInput from "../../../common/inputs/text/TextAreaInput";
 import axios from "axios";
 import ResetMetricConfirmationPanel from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricConfirmationPanel";
 import ResetButton from "components/common/buttons/reset/ResetButton";
+import {dashboardMetricActions} from "components/insights/dashboards/metrics/dashboardMetric.actions";
+import DeleteDashboardMetricButton from "components/common/buttons/dashboards/metric/DeleteDashboardMetricButton";
+import DeleteButton from "components/common/buttons/delete/DeleteButton";
+import DeleteDashboardMetricConfirmationPanel
+  from "components/insights/marketplace/dashboards/metrics/delete/DeleteDashboardMetricConfirmationPanel";
 
 // TODO: There are a handful of issues with this we need to address.
 function KpiSettingsForm({
@@ -925,29 +930,17 @@ function KpiSettingsForm({
       ].value = kpiServiceNowBusinessServicesFilter.getData("value");
     }
 
-    setKpiSettings({ ...newKpiSettings });
-    dashboardData.getData("configuration")[index] = kpiSettings?.getPersistData();
+    await dashboardMetricActions.updateDashboardKpiV2(getAccessToken, cancelTokenSource, dashboardData?.getData("_id"), newKpiSettings);
 
     // TODO: This is forced because the dashboard detail view refresh doesn't work after saving.
     //  This needs to be addressed and removed.
-    setKpiConfiguration({ ...kpiSettings?.getPersistData() });
-
-    await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardData);
-
-    if (closePanel) {
-      closePanel();
-    }
+    setKpiConfiguration({ ...newKpiSettings?.getPersistData() });
+    dashboardData.getData("configuration")[index] = newKpiSettings?.getPersistData();
+    setKpiSettings({ ...newKpiSettings });
+    closeSettingsPanel();
   };
 
-  const cancelKpiSettings = async () => {
-    closePanel();
-  };
-
-  const deleteKpi = async () => {
-    dashboardData?.getData("configuration").splice(index, 1);
-    setKpis(dashboardData?.getData("configuration"));
-    await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardData);
-
+  const closeSettingsPanel = () => {
     if (closePanel) {
       closePanel();
     }
@@ -964,8 +957,16 @@ function KpiSettingsForm({
   const getExtraButtons = () => {
     return (
       <div className={"d-flex"}>
-        <DeleteButtonWithInlineConfirmation dataObject={kpiSettings} deleteRecord={deleteKpi} />
-        <ResetButton className={"ml-2"} model={kpiSettings} resetFunction={() => setShowResetConfirmationPanel(true)} />
+        <DeleteButton
+          dataObject={kpiSettings}
+          deleteRecord={() => setShowDeleteConfirmationPanel(true)}
+          size={"md"}
+        />
+        <ResetButton
+          className={"ml-2"}
+          model={kpiSettings}
+          resetFunction={() => setShowResetConfirmationPanel(true)}
+        />
       </div>
     );
   };
@@ -992,7 +993,7 @@ function KpiSettingsForm({
     return (
       <EditorPanelContainer
         showRequiredFieldsMessage={false}
-        handleClose={cancelKpiSettings}
+        handleClose={closeSettingsPanel}
         updateRecord={saveKpiSettings}
         recordDto={kpiSettings}
         lenient={true}
@@ -1004,19 +1005,20 @@ function KpiSettingsForm({
     );
   };
 
-  const handleClose = () => {
-    if (closePanel) {
-      closePanel();
-    }
-  };
-
   const getBody = () => {
-    // TODO: Implement
-    // if (showDeleteConfirmationPanel === true) {
-    //   return (
-    //
-    //   );
-    // }
+    if (showDeleteConfirmationPanel === true) {
+      return (
+        <div className={"m-2"}>
+          <DeleteDashboardMetricConfirmationPanel
+            kpiConfigurationModel={kpiSettings}
+            dashboardModel={dashboardData}
+            closePanelFunction={closeSettingsPanel}
+            index={index}
+            setKpis={setKpis}
+          />
+        </div>
+      );
+    }
 
     if (showResetConfirmationPanel === true) {
       return (
@@ -1027,7 +1029,7 @@ function KpiSettingsForm({
             className={"ml-2"}
             identifier={kpiSettings?.getData("kpi_identifier")}
             index={index}
-            closePanelFunction={handleClose}
+            closePanelFunction={closeSettingsPanel}
             setKpiConfiguration={setKpiConfiguration}
           />
         </div>

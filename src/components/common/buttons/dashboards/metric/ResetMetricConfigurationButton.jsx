@@ -2,13 +2,13 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import KpiActions from "components/admin/kpi_identifiers/kpi.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {parseError} from "components/common/helpers/error-helpers";
 import ResetButton from "components/common/buttons/reset/ResetButton";
+import {dashboardMetricActions} from "components/insights/dashboards/metrics/dashboardMetric.actions";
 
 function ResetMetricConfigurationButton(
   {
@@ -100,7 +100,7 @@ function ResetMetricConfigurationButton(
       setKpiConfiguration({...resetKpiData});
       dashboardModel.setData("configuration", configuration);
 
-      await dashboardsActions.updateDashboardKpiV2(getAccessToken, cancelTokenSource, dashboardModel?.getData("_id"), kpiConfigurationModel);
+      await dashboardMetricActions.updateDashboardKpiV2(getAccessToken, cancelTokenSource, dashboardModel?.getData("_id"), kpiConfigurationModel);
       toastContext.showResetSuccessToast("KPI Configuration");
 
       if (closePanelFunction) {

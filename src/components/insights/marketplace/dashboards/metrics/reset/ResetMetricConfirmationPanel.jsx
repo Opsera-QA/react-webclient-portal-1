@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import ResetConfirmationPanel from "components/common/panels/general/reset/ResetConfirmationPanel";
-import ResetMetricConfigurationButton from "components/common/buttons/dashboards/ResetMetricConfigurationButton";
+import ResetMetricConfigurationButton from "components/common/buttons/dashboards/metric/ResetMetricConfigurationButton";
 import ResetMetricOptionsEditorPanel
   from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricOptionsEditorPanel";
 import Model from "core/data_model/model";
