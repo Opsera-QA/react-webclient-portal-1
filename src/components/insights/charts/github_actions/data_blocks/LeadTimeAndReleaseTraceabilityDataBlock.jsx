@@ -18,9 +18,6 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [metrics, setMetrics] = useState([]);
-  const dataPointIdentifiers = {
-    duration: "lead-time-and-release-traceability-duration-data-point"
-  };
   const getChartBody = () => {
     const durationDataPoint = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints,
         "lead-time-and-release-traceability-duration-data-point");
