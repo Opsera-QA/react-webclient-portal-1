@@ -4,8 +4,20 @@ import CenterOverlayContainer from "components/common/overlays/center/CenterOver
 import KpiSettingsForm from "components/insights/marketplace/charts/KpiSettingsForm";
 import {faCogs} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
+import DashboardMetricEditorPanel from "components/insights/dashboards/metrics/DashboardMetricEditorPanel";
 
-function ChartSettingsOverlay({ kpiConfiguration, setKpiConfiguration, dashboardData, index, loadData, setKpis, isMounted, settingsHelpComponent }) {
+function ChartSettingsOverlay(
+  {
+    kpiConfiguration,
+    setKpiConfiguration,
+    dashboardData,
+    index,
+    loadData,
+    setKpis,
+    isMounted,
+    settingsHelpComponent,
+  }) {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -13,14 +25,24 @@ function ChartSettingsOverlay({ kpiConfiguration, setKpiConfiguration, dashboard
     toastContext.clearOverlayPanel();
   };
 
-  return (
-    <CenterOverlayContainer
-      closePanel={closePanel}
-      showPanel={true}
-      titleIcon={faCogs}
-      titleText={`Editing ${kpiConfiguration?.kpi_name} Settings`}
-      showCloseButton={false}
-    >
+  const getBody = () => {
+    // switch (kpiConfiguration?.kpi_identifier) {
+    //   case kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS:
+    //     return (
+    //       <DashboardMetricEditorPanel
+    //         kpiConfiguration={kpiConfiguration}
+    //         setKpiConfiguration={setKpiConfiguration}
+    //         settingsHelpComponent={settingsHelpComponent}
+    //         dashboardData={dashboardData}
+    //         index={index}
+    //         loadChart={loadData}
+    //         setKpis={setKpis}
+    //         closePanel={closePanel}
+    //       />
+    //     );
+    // }
+
+    return (
       <KpiSettingsForm
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
@@ -31,6 +53,18 @@ function ChartSettingsOverlay({ kpiConfiguration, setKpiConfiguration, dashboard
         setKpis={setKpis}
         closePanel={closePanel}
       />
+    );
+  };
+
+  return (
+    <CenterOverlayContainer
+      closePanel={closePanel}
+      showPanel={true}
+      titleIcon={faCogs}
+      titleText={`Editing ${kpiConfiguration?.kpi_name} Settings`}
+      showCloseButton={false}
+    >
+      {getBody()}
     </CenterOverlayContainer>
   );
 }

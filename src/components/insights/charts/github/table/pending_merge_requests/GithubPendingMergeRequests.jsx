@@ -70,13 +70,18 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "githubPendingMergeRequests",
         kpiConfiguration,
         dashboardTags,
-        filterDto
+        filterDto,
+        null,
+        dashboardOrgs
       );
       let dataObject = response?.data?.data[0]?.githubPendingMergeRequests?.data;
 

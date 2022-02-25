@@ -65,10 +65,10 @@ function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfigura
     //     linkTooltipText={"View Full Blueprint"}
     //   >
     //     <div className={"p-3"}>
-    //       <SonarPipelineWiseVulnerabilitiesDetails 
-    //         dataObject={rowData?.original}            
+    //       <SonarPipelineWiseVulnerabilitiesDetails
+    //         dataObject={rowData?.original}
     //       />
-    //     </div>        
+    //     </div>
     //   </FullScreenCenterOverlayContainer>
     // );
   };
@@ -78,7 +78,6 @@ function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfigura
     toastContext.clearOverlayPanel();
   };
 
-  
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -105,13 +104,18 @@ function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfigura
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "sonarVulnerabilitiesCodeBasedMetricScorecard",
         kpiConfiguration,
         dashboardTags,
-        filterDto
+        filterDto,
+        null,
+        dashboardOrgs
       );
       let dataObject = response?.data?.data[0]?.sonarVulnerabilitiesCodeBasedMetricScorecard?.data[0]?.data;
 
@@ -165,14 +169,14 @@ function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfigura
   };
 
   const getFilterContainer = () => {
-    return (  
+    return (
       <FilterContainer
         filterDto={tableFilterDto}
         setFilterDto={setTableFilterDto}
         body={getCardView()}
         isLoading={isLoading}
         loadData={loadData}
-        supportSearch={true}      
+        supportSearch={true}
       />
     );
   };
