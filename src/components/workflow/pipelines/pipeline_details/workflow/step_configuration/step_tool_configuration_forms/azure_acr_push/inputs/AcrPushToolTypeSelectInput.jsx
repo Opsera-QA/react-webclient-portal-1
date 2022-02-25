@@ -17,6 +17,24 @@ function AcrPushToolTypeSelectInput({ dataObject, setDataObject, isLoading, disa
   const setDataFunction = async (fieldName, value) => {
     let newDataObject = dataObject;
     newDataObject.setData("toolType", value.value);
+    newDataObject.setData("azureRegistryName", "");
+    newDataObject.setData("azureRepoName", "");
+    newDataObject.setData("acrLoginUrl", "");
+    newDataObject.setData("azureCredentialId", "");
+    newDataObject.setData("azureToolConfigId", "");
+    newDataObject.setData("newRepo", false);
+    setDataObject({ ...newDataObject });
+  };
+
+  const clearDataFunction = () => {
+    let newDataObject = dataObject;
+    newDataObject.setData("toolType", "");
+    newDataObject.setData("azureRegistryName", "");
+    newDataObject.setData("azureRepoName", "");
+    newDataObject.setData("acrLoginUrl", "");
+    newDataObject.setData("azureCredentialId", "");
+    newDataObject.setData("azureToolConfigId", "");
+    newDataObject.setData("newRepo", false);
     setDataObject({ ...newDataObject });
   };
 
@@ -26,6 +44,7 @@ function AcrPushToolTypeSelectInput({ dataObject, setDataObject, isLoading, disa
       dataObject={dataObject}
       setDataObject={setDataObject}
       setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
       selectOptions={ACTION_LIST}
       valueField={"value"}
       textField={"name"}
