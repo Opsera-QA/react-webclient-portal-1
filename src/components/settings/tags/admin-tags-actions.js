@@ -2,6 +2,17 @@ import baseActions from "utils/actionsBase";
 
 const adminTagsActions = {};
 
+adminTagsActions.getEstimatedTagCountV2 = async (getAccessToken, cancelTokenSource, type) => {
+  const apiUrl = `/tags/count`;
+  const urlParams = {
+    params: {
+      type: type,
+    },
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 adminTagsActions.deleteTagV2 = async (getAccessToken, cancelTokenSource, tagId) => {
   const apiUrl = `/tags/${tagId}`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);

@@ -25,11 +25,11 @@ function DataMappingManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [projectTags, setProjectTags] = useState([]);
-  const [usersTags, setUsersTags] = useState([]);
+  const [projectDataMappings, setProjectDataMappings] = useState([]);
+  const [userDataMappings, setUserDataMappings] = useState([]);
   const [activeTab, setActiveTab] = useState(tabKey === "users" ? "users" : "projects");
-  const [opseraProjectTags, setOpseraProjectTags] = useState(undefined);
-  const [toolRegistryList, setToolRegistryList] = useState(undefined);
+  const [projectTagCount, setProjectTagCount] = useState(0);
+  const [toolCount, setToolCount] = useState(0);
   const history = useHistory();
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -65,15 +65,8 @@ function DataMappingManagement() {
     try {
       setIsLoading(true);
       await getRoles(cancelSource);
-
-      if ((projectTags && projectTags.length === 0) || (`usersTags && usersTags.length === 0`) ) {
-        await getToolRegistryList();
-        await getProjectTags();
-      } else {
-        setOpseraProjectTags([{value : "Skipping onload of project Tags"}]);
-        setToolRegistryList([{value : "Skipping onload of tool registry info"}]);
-      }
-
+      await getProjectTags(cancelSource);
+      await getToolRegistryList(cancelSource);
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -101,26 +94,26 @@ function DataMappingManagement() {
     await fetchUserTags(cancelSource);
   };
 
-  const getProjectTags = async () => {
+  const getProjectTags = async (cancelSource = cancelTokenSource) => {
     try {
-      const response = await adminTagsActions.getProjectTags(getAccessToken);
-      const projectTags = response?.data?.data;
+      const response = await adminTagsActions.getEstimatedTagCountV2(getAccessToken, cancelSource, "project");
+      const tagCount = response?.data?.count;
 
-      if (Array.isArray(projectTags)) {
-        setOpseraProjectTags(projectTags);
+      if (tagCount && tagCount > 0) {
+        setProjectTagCount(tagCount);
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     }
   };
 
-  const getToolRegistryList = async () => {
+  const getToolRegistryList = async (cancelSource = cancelTokenSource) => {
     try {
-      const response = await toolsActions.getRoleLimitedToolRegistryListV3(getAccessToken, cancelTokenSource);
-      const tools = response?.data?.data;
+      const response = await toolsActions.getEstimatedToolRegistryCountV2(getAccessToken, cancelSource);
+      const toolCount = response?.data?.count;
 
-      if (Array.isArray(tools)) {
-        setToolRegistryList(tools);
+      if (toolCount && toolCount > 0) {
+        setToolCount(toolCount);
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -133,7 +126,7 @@ function DataMappingManagement() {
       const mappings = response?.data?.data;
 
       if (isMounted?.current === true && Array.isArray(mappings)) {
-        setProjectTags(mappings);
+        setProjectDataMappings(mappings);
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -142,8 +135,8 @@ function DataMappingManagement() {
 
   const fetchUserTags = async (cancelSource = cancelTokenSource) => {
     try {
-      const userMappings = await dataMappingActions.getUserMappingsV2(getAccessToken, cancelSource);
-      setUsersTags(userMappings.data);
+      const response = await dataMappingActions.getUserMappingsV2(getAccessToken, cancelSource);
+      setUserDataMappings(response?.data);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     }
@@ -158,7 +151,7 @@ function DataMappingManagement() {
   };
 
   const getNoTagsMessage = () => {
-    if (!opseraProjectTags && !isLoading) {
+    if (projectTagCount === 0 && !isLoading) {
       return (
         <Card className={"mt-2 mb-1"}>
           <Card.Header as="h5">Configure Tagging</Card.Header>
@@ -182,7 +175,7 @@ function DataMappingManagement() {
   };
 
   const getNoToolsMessage = () => {
-    if (!toolRegistryList && !isLoading) {
+    if (toolCount === 0 && !isLoading) {
       return (
         <Card className={"mt-2 mb-1"}>
           <Card.Header as="h5">Configure Tools</Card.Header>
@@ -211,7 +204,7 @@ function DataMappingManagement() {
       return <LoadingDialog message={"Loading Data"} size={"sm"} />;
     }
 
-    if (toolRegistryList && opseraProjectTags) {
+    if (toolCount > 0 && projectTagCount > 0) {
       return (
         <div className="px-2 pb-2">
           {getTabContainer()}
@@ -220,8 +213,8 @@ function DataMappingManagement() {
               activeTab={activeTab}
               loadData={loadData}
               isLoading={isLoading}
-              projectTags={projectTags}
-              usersTags={usersTags}
+              projectTags={projectDataMappings}
+              usersTags={userDataMappings}
             />
           </div>
         </div>
@@ -287,9 +280,21 @@ function TagsTabView({ activeTab, loadData, isLoading, projectTags, usersTags })
   if (activeTab) {
     switch (activeTab) {
       case "projects":
-        return <ProjectsTagTable loadData={loadData} isLoading={isLoading} data={projectTags} />;
+        return (
+          <ProjectsTagTable
+            loadData={loadData}
+            isLoading={isLoading}
+            data={projectTags}
+          />
+        );
       case "users":
-        return <UsersTagsTable loadData={loadData} isLoading={isLoading} data={usersTags} />;
+        return (
+          <UsersTagsTable
+            loadData={loadData}
+            isLoading={isLoading}
+            data={usersTags}
+          />
+        );
       default:
         return null;
     }
