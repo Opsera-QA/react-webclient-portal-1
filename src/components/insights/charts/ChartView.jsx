@@ -88,6 +88,8 @@ import GithubMergeRequestByMaximumTimeChart from "./github/bar_chart/merge_reque
 import GithubCommitsByAuthor from "./github/calendar_chart/commits_by_author/GithubCommitsByAuthor";
 import GithubPendingMergeRequests from "./github/table/pending_merge_requests/GithubPendingMergeRequests";
 import AllGithubActionsDataBlock from "./github_actions/data_blocks/AllGithubActionsDataBlock";
+import LeadTimeAndReleaseTraceabilityDataBlock
+    from "./github_actions/data_blocks/LeadTimeAndReleaseTraceabilityDataBlock";
 
 // Bitbucket KPIs
 import BitbucketMostActiveContributors from "./bitbucket/table/bitbucket_most_active_contributors/BitbucketMostActiveContributors";
@@ -1142,6 +1144,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+        case "lead-time-and-release-traceability-data-block":
+          return(
+            <Col md={12} className="p-2">
+              <LeadTimeAndReleaseTraceabilityDataBlock
+                kpiConfiguration={kpiConfig}
+                setKpiConfiguration={setKpiConfig}
+                dashboardData={dashboardData}
+                setKpis={setKpis}
+                index={index}
+              />
+            </Col>
+          );
       case "sonar-unit-testing":
         return (
           <Col xl={6} md={12} className="p-2">
