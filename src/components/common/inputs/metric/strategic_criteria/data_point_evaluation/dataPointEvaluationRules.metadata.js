@@ -19,21 +19,21 @@ const dataPointEvaluationRulesMetadata = {
       trigger_filter: "",
       primary_trigger_value: 0,
       secondary_trigger_value: 0,
-      enabled: false,
+      active: true,
     },
     warning_rule: {
       type: "warning",
       trigger_filter: "",
       primary_trigger_value: 0,
       secondary_trigger_value: 0,
-      enabled: false,
+      active: true,
     },
     failure_rule: {
       type: "failure",
       trigger_filter: "",
       primary_trigger_value: 0,
       secondary_trigger_value: 0,
-      enabled: false,
+      active: true,
     },
   }
 };
