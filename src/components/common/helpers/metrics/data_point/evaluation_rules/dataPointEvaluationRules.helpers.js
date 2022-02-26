@@ -79,7 +79,7 @@ dataPointEvaluationRulesHelpers.getNumberRangeForDataPointEvaluationRule = (data
         return false;
       }
 
-      if (primaryValue >= secondaryValue) {
+      if (primaryValue <= secondaryValue) {
         return {
           lowerBound: primaryValue,
           upperBound: secondaryValue,

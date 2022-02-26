@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import LoadingDialog from "../../status_notifications/loading";
 import Form from "react-bootstrap/Form";
 import PipelineStepConfigurationButtonContainer
-  from "../../buttons/saving/containers/PipelineStepConfigurationButtonContainer";
+  from "components/common/panels/detail_panel_container/pipeline_step/PipelineStepConfigurationButtonContainer";
 
 // TODO: After final refactor of pipeline configurations, this component might be irrelevant
 function PipelineStepEditorPanelContainer(

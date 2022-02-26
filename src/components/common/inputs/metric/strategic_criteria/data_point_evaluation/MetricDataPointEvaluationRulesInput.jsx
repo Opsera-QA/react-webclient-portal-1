@@ -9,7 +9,12 @@ import MetricDataPointEvaluationWarningRuleInput
 import MetricDataPointEvaluationFailureRuleInput
   from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationFailureRuleInput";
 
-function MetricDataPointEvaluationRulesInput({model, setModel, strategicCriteria}) {
+function MetricDataPointEvaluationRulesInput(
+  {
+    model,
+    setModel,
+    strategicCriteria,
+  }) {
   const validateAndSetData = (newDataPointEvaluationRules) => {
     const newStrategicCriteria = typeof strategicCriteria === "object" ? strategicCriteria : {};
     newStrategicCriteria.data_point_evaluation_rules = {...newDataPointEvaluationRules};

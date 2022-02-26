@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faHistory, faTrash} from "@fortawesome/pro-light-svg-icons";
+import {faHistory} from "@fortawesome/pro-light-svg-icons";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
-import TitleBar from "components/common/fields/TitleBar";
 import CancelButton from "components/common/buttons/CancelButton";
 import ResetButton from "components/common/buttons/reset/ResetButton";
+import InfoContainer from "components/common/containers/InfoContainer";
 
 function ResetConfirmationPanel(
   {
@@ -37,15 +37,15 @@ function ResetConfirmationPanel(
     }
   };
 
-  if (model == null) {
+  if (model == null || (resetDataFunction == null && resetButton == null)) {
     return null;
   }
 
   return (
-    <div className={"filter-container content-container"}>
-      <div className="px-2 py-1 filter-title-bar content-block-header title-text-header-1">
-        <TitleBar title={`Confirm ${model.getType()} Reset`} titleIcon={faHistory}/>
-      </div>
+    <InfoContainer
+      titleText={`Confirm ${model.getType()} Reset`}
+      titleIcon={faHistory}
+    >
       <div className="m-3">
         <div className="mb-2">
           <div>Data cannot be recovered once this {model?.getType()} is reset.</div>
@@ -61,7 +61,7 @@ function ResetConfirmationPanel(
           {getResetButton()}
         </SaveButtonContainer>
       </div>
-    </div>
+    </InfoContainer>
   );
 }
 

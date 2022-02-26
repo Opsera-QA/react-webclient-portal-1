@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React  from "react";
 import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
 import InputContainer from "components/common/inputs/InputContainer";
@@ -7,7 +7,7 @@ function StandaloneBooleanToggleInput({ fieldId, checkedValue, fieldLabel, setDa
   return (
     <InputContainer>
       <Form.Check
-        type="switch"
+        type={"switch"}
         className={"toggle-alignment"}
         id={fieldId}
         checked={checkedValue}

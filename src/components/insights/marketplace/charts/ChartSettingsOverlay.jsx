@@ -5,7 +5,7 @@ import KpiSettingsForm from "components/insights/marketplace/charts/KpiSettingsF
 import {faCogs} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
-import DashboardMetricEditorPanel from "components/insights/dashboards/metrics/DashboardMetricEditorPanel";
+import DashboardMetricOverlayContainer from "components/insights/dashboards/metrics/DashboardMetricOverlayContainer";
 
 function ChartSettingsOverlay(
   {
@@ -29,7 +29,7 @@ function ChartSettingsOverlay(
     // switch (kpiConfiguration?.kpi_identifier) {
     //   case kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS:
     //     return (
-    //       <DashboardMetricEditorPanel
+    //       <DashboardMetricOverlayContainer
     //         kpiConfiguration={kpiConfiguration}
     //         setKpiConfiguration={setKpiConfiguration}
     //         settingsHelpComponent={settingsHelpComponent}

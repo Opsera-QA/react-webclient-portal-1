@@ -23,7 +23,7 @@ const dataPointEvaluationRowMetadata = {
       inputMaskRegex: regexDefinitions.decimalField.regex,
     },
     {
-      label: "Enabled",
+      label: "Enable Rule",
       id: "enabled",
     },
   ],

@@ -44,7 +44,7 @@ function InputTitleBar(
     if (showSearchBar) {
       return (
         <input
-          placeholder="Search"
+          placeholder={"Search"}
           disabled={isLoading || disabled}
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
