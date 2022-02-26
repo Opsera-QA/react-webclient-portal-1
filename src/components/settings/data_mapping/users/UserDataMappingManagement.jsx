@@ -5,9 +5,9 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import axios from "axios";
 import DataMappingManagementSubNavigationBar
   from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
-import projectDataMappingActions from "components/settings/data_mapping/projects/projectDataMappingActions";
-import ProjectsTagTable from "components/settings/data_mapping/projects/ProjectTagsTable";
-import UsersTagsTable from "components/settings/data_mapping/users/UsersTagsTable";
+import projectDataMappingActions from "components/settings/data_mapping/projects/projectDataMapping.actions";
+import ProjectsTagTable from "components/settings/data_mapping/projects/ProjectDataMappingsTable";
+import UsersTagsTable from "components/settings/data_mapping/users/UserDataMappingsTable";
 import dataMappingActions from "components/settings/data_mapping/data-mapping-actions";
 
 function UserDataMappingManagement() {

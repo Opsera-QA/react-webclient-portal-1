@@ -1,9 +1,9 @@
 import React, { useMemo, useContext } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import projectMappingMetadata from "components/settings/data_mapping/projects/projectMapping.metadata";
+import projectDataMappingMetadata from "components/settings/data_mapping/projects/projectDataMapping.metadata";
 import { useHistory } from "react-router-dom";
-import NewProjectMappingOverlay from "./NewProjectMappingOverlay";
+import NewProjectDataMappingOverlay from "components/settings/data_mapping/projects/NewProjectDataMappingOverlay";
 import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -13,7 +13,7 @@ import {getField} from "components/common/metadata/metadata-helpers";
 function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
-  let fields = projectMappingMetadata.fields;
+  const fields = projectDataMappingMetadata.fields;
 
   const columns = useMemo(() => [
       getTableTextColumn(getField(fields,"tool_identifier")),
@@ -31,10 +31,15 @@ function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
     history.push(`/settings/data_mapping/projects/details/${rowData.original._id}`);
   };
 
-  const noDataMessage = "No Project Mappings have been configured";
+  const noDataMessage = "No Project Data Mappings have been configured";
 
   const createProjectTag = () => {
-    toastContext.showOverlayPanel(<NewProjectMappingOverlay loadData={loadData} isMounted={isMounted} />);
+    toastContext.showOverlayPanel(
+      <NewProjectDataMappingOverlay
+        loadData={loadData}
+        isMounted={isMounted}
+      />
+    );
   };
 
   const getProjectTagsTable = () => {
@@ -57,10 +62,10 @@ function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
       supportSearch={false}
       isLoading={isLoading}
       body={getProjectTagsTable()}
-      metadata={projectMappingMetadata}
+      metadata={projectDataMappingMetadata}
       titleIcon={faTags}
-      title={"Project Tags"}
-      type={"Project Tag"}
+      title={"Project Data Mappings"}
+      type={"Project Data Mappings"}
       className={"px-2 pb-2"}
     />
   );

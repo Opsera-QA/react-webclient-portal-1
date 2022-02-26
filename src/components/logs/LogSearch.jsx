@@ -22,7 +22,7 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import PipelineFilterSelectInput from "components/logs/PipelineFilterSelectInput";
 import ExportLogSearchButton from "components/common/buttons/export/log_search/ExportLogSearchButton";
 import { getAllResultsForExport } from "components/common/buttons/export/exportHelpers";
-import projectMappingMetadata from "components/settings/data_mapping/projects/projectMapping.metadata";
+import projectDataMappingMetadata from "components/settings/data_mapping/projects/projectDataMapping.metadata";
 import Model from "core/data_model/model";
 import ProjectMappingToolSelectInput from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
@@ -59,7 +59,7 @@ function LogSearch({ tools, sideBySide }) {
         createdAt: "",
         active: true,
       },
-      projectMappingMetadata,
+      projectDataMappingMetadata,
       true
     )
   );
