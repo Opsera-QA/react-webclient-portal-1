@@ -17,6 +17,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import DataMappingManagementSubNavigationBar
   from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
+import projectDataMappingActions from "components/settings/data_mapping/projects/projectDataMappingActions";
 
 function DataMappingManagement() {
   const { tabKey } = useParams();
@@ -128,8 +129,12 @@ function DataMappingManagement() {
 
   const fetchProjectTags = async (cancelSource = cancelTokenSource) => {
     try {
-      const projectMappings = await dataMappingActions.getProjectMappingsV2(getAccessToken, cancelSource);
-      setProjectTags(projectMappings?.data);
+      const response = await projectDataMappingActions.getProjectMappingsV2(getAccessToken, cancelSource);
+      const mappings = response?.data?.data;
+
+      if (isMounted?.current === true && Array.isArray(mappings)) {
+        setProjectTags(mappings);
+      }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     }

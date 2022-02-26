@@ -9,15 +9,23 @@ function UserEditableMetricDataPointInputBase(
     setModel,
     dataPoint,
   }) {
+
+  // TODO: Change what's supported based on type
+  const getBody = () => {
+    return (
+      <UserEditableMetricStrategicCriteriaPanel
+        model={model}
+        setModel={setModel}
+        strategicCriteria={dataPoint?.strategic_criteria}
+      />
+    );
+  };
+
   return (
     <div className={"m-1"}>
       <span className={"mb-2 mx-2"}>{dataPoint?.description}</span>
       <div className={"m-3"}>
-        <UserEditableMetricStrategicCriteriaPanel
-          model={model}
-          setModel={setModel}
-          strategicCriteria={dataPoint?.strategic_criteria}
-        />
+        {getBody()}
       </div>
     </div>
   );
