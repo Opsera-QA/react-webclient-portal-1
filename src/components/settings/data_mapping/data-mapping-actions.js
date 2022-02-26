@@ -1,59 +1,6 @@
-import { axiosApiService } from "../../../api/apiService";
 import baseActions from "utils/actionsBase";
 
 const dataMappingActions = {};
-
-dataMappingActions.createProjectMapping = async (data, getAccessToken) => {
-  let postData = {
-    ...data.getPersistData(),
-  };
-  const apiUrl = "/mappings/create/project";
-  return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
-};
-
-dataMappingActions.createProjectMappingV2 = async (data, getAccessToken, cancelTokenSource) => {
-  let postData = {
-    ...data.getPersistData(),
-  };
-  const apiUrl = "/mappings/create/project";
-  return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
-};
-
-dataMappingActions.getProjectMappings = async (getAccessToken) => {
-  const apiUrl = `/mappings/projects`;
-  return baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-dataMappingActions.getProjectMappingsV2 = async (getAccessToken, cancelTokenSource) => {
-  const apiUrl = `/mappings/projects`;
-  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-dataMappingActions.getProjectMappingById = async (id, getAccessToken) => {
-  const apiUrl = `/mappings/projects/${id}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-dataMappingActions.updateProject = async (data, getAccessToken) => {
-  let postData = {
-    ...data.getPersistData(),
-  };
-  const apiUrl = `/mappings/update/project/${data.getData("_id")}`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
-};
-
-dataMappingActions.updateProjectV2 = async (data, getAccessToken, cancelTokenSource) => {
-  let postData = {
-    ...data.getPersistData(),
-  };
-  const apiUrl = `/mappings/update/project/${data.getData("_id")}`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
-};
-
-dataMappingActions.deleteProjectMapping = async (data, getAccessToken) => {
-  const apiUrl = `/mappings/project/${data.getData("_id")}`;
-  return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
-};
 
 dataMappingActions.createUserMapping = async (data, getAccessToken) => {
   let postData = {

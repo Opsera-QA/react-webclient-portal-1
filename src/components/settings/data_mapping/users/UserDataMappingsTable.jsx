@@ -4,7 +4,7 @@ import CustomTable from "components/common/table/CustomTable";
 import usersMappingMetadata from "components/settings/data_mapping/users/userMapping.metadata";
 import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
 import { useHistory } from "react-router-dom";
-import NewUsersMappingOverlay from "./NewUsersMappingOverlay";
+import NewUserDataMappingOverlay from "components/settings/data_mapping/users/NewUserDataMappingOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTags} from "@fortawesome/pro-light-svg-icons";
@@ -35,7 +35,7 @@ function UsersTagTable({ data, loadData, isLoading, isMounted }) {
   const noDataMessage = "No User Mappings have been configured";
 
   const createToolType = () => {
-    toastContext.showOverlayPanel(<NewUsersMappingOverlay loadData={loadData} isMounted={isMounted} />);
+    toastContext.showOverlayPanel(<NewUserDataMappingOverlay loadData={loadData} isMounted={isMounted} />);
   };
 
   const getUsersTagsTable = () => {

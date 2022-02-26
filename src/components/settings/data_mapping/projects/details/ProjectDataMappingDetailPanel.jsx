@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import UserMappingEditorPanel from "./UsersMappingEditorPanel";
-import UserMappingSummaryPanel from "./UsersMappingSummaryPanel";
+
+import ProjectDataMappingEditorPanel from "components/settings/data_mapping/projects/details/ProjectDataMappingEditorPanel";
+import ProjectMappingSummaryPanel from "components/settings/data_mapping/projects/details/ProjectDataMappingSummaryPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
-function UsersMappingDetailPanel({ usersMappingData, setUsersMappingData }) {
+function ProjectDataMappingDetailPanel({ projectMappingData, setProjectMappingData }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => (e) => {
@@ -22,9 +23,20 @@ function UsersMappingDetailPanel({ usersMappingData, setUsersMappingData }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <UserMappingSummaryPanel usersMappingDto={usersMappingData} setUsersMappingData={setUsersMappingData} setActiveTab={setActiveTab} />;
+        return (
+          <ProjectMappingSummaryPanel
+            projectMappingDto={projectMappingData}
+            setProjectMappingData={setProjectMappingData}
+            setActiveTab={setActiveTab}
+          />
+        );
       case "settings":
-        return <UserMappingEditorPanel toolTypeData={usersMappingData} setToolTypeData={setUsersMappingData} handleClose={toggleSummaryPanel} />;
+        return (
+          <ProjectDataMappingEditorPanel
+            projectMappingData={projectMappingData}
+            handleClose={toggleSummaryPanel}
+          />
+        );
       default:
         return null;
     }
@@ -42,9 +54,9 @@ function UsersMappingDetailPanel({ usersMappingData, setUsersMappingData }) {
   return <DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />;
 }
 
-UsersMappingDetailPanel.propTypes = {
-  usersMappingData: PropTypes.object,
-  setUsersMappingData: PropTypes.func,
+ProjectDataMappingDetailPanel.propTypes = {
+  projectMappingData: PropTypes.object,
+  setProjectMappingData: PropTypes.func,
 };
 
-export default UsersMappingDetailPanel;
+export default ProjectDataMappingDetailPanel;

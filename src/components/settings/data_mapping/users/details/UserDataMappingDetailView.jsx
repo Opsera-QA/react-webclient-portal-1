@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import UsersMappingDetailPanel from "./UsersMappingDetailPanel";
+import UserDataMappingDetailPanel from "components/settings/data_mapping/users/details/UserDataMappingDetailPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import dataMappingActions from "components/settings/data_mapping/data-mapping-actions";
@@ -14,7 +14,7 @@ import DataMappingManagementSubNavigationBar
   from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
-function UsersMappingDetailView() {
+function UserDataMappingDetailView() {
   const { usersMappingId } = useParams();
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});
@@ -91,9 +91,9 @@ function UsersMappingDetailView() {
       dataObject={usersMappingData}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      detailPanel={<UsersMappingDetailPanel usersMappingData={usersMappingData} setUsersMappingData={setUsersMappingData}/>}
+      detailPanel={<UserDataMappingDetailPanel usersMappingData={usersMappingData} setUsersMappingData={setUsersMappingData}/>}
     />
   );
 }
 
-export default UsersMappingDetailView;
+export default UserDataMappingDetailView;

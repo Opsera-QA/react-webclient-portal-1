@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Card, Col, Row } from "react-bootstrap";
-import projectMappingMetadata from "components/settings/data_mapping/projects/projectMapping.metadata";
+import projectDataMappingMetadata from "components/settings/data_mapping/projects/projectDataMapping.metadata";
 import Model from "core/data_model/model";
 import dataMappingActions from "components/settings/data_mapping/data-mapping-actions";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
@@ -24,10 +24,11 @@ import TagManager from "components/common/inputs/tags/TagManager";
 import axios from "axios";
 import JenkinsRegistryToolJobSelectInput
   from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
+import projectDataMappingActions from "components/settings/data_mapping/projects/projectDataMapping.actions";
 
-function ProjectMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
+function ProjectDataMappingEditorPanel({ projectMappingData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [projectMappingDto, setProjectMappingDto] = useState(undefined);
+  const [projectDataMappingModel, setProjectDataMappingModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -54,106 +55,101 @@ function ProjectMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
   }, []);
 
   const loadData = async () => {
-    if (isMounted?.current === true) {
-      setIsLoading(true);
-      let modelData = typeof toolTypeData !== "undefined" ? toolTypeData.getPersistData() : projectMappingMetadata.newObjectFields;
-      setProjectMappingDto(new Model(modelData, projectMappingMetadata, false));
-      setIsLoading(false);
-    }
+    setIsLoading(true);
+    setProjectDataMappingModel({...projectMappingData});
+    setIsLoading(false);
   };
 
-  const createMapping = async (cancelSource = cancelTokenSource) => {
-    let response = await dataMappingActions.createProjectMappingV2(projectMappingDto, getAccessToken, cancelSource);
-    if (response?.status === 200) {
-      handleClose();
-    }
+  const createMapping = async () => {
+    return await projectDataMappingActions.createProjectDataMappingV2(getAccessToken, cancelTokenSource, projectDataMappingModel);
   };
 
-  const updateMapping = async (cancelSource = cancelTokenSource) => {
-    return await dataMappingActions.updateProjectV2(projectMappingDto, getAccessToken, cancelSource);
+  const updateMapping = async () => {
+    return await projectDataMappingActions.updateProjectDataMappingV2( getAccessToken, cancelTokenSource, projectDataMappingModel);
   };
 
+  // TODO: Rewrite into switch statement
   const getDynamicFields = () => {
-    if (projectMappingDto.getData("tool_identifier") === "jenkins") {
+    if (projectDataMappingModel.getData("tool_identifier") === "jenkins") {
       return (
         <Col lg={12}>
           <JenkinsRegistryToolJobSelectInput
-            model={projectMappingDto}
-            setModel={setProjectMappingDto}
+            model={projectDataMappingModel}
+            setModel={setProjectDataMappingModel}
             fieldName={"key"}
-            jenkinsToolId={projectMappingDto?.getData("tool_id")}
+            jenkinsToolId={projectDataMappingModel?.getData("tool_id")}
           />
         </Col>
       );
     }
-    if (projectMappingDto.getData("tool_identifier") === "sonar") {
+    if (projectDataMappingModel.getData("tool_identifier") === "sonar") {
       return (
         <Col lg={12}>
           <SonarProjectSelectInput
-            dataObject={projectMappingDto}
-            setDataObject={setProjectMappingDto}
-            tool_prop={projectMappingDto.getData("tool_id")}
+            dataObject={projectDataMappingModel}
+            setDataObject={setProjectDataMappingModel}
+            tool_prop={projectDataMappingModel.getData("tool_id")}
           />
         </Col>
       );
     }
-    if (projectMappingDto.getData("tool_identifier") === "bitbucket") {
+    if (projectDataMappingModel.getData("tool_identifier") === "bitbucket") {
       return (
         <>
         <Col lg={12}>
           <ProjectMappingWorkspaceSelectInput
-            dataObject={projectMappingDto}
-            setDataObject={setProjectMappingDto}
-            toolId={projectMappingDto.getData("tool_id")}
+            dataObject={projectDataMappingModel}
+            setDataObject={setProjectDataMappingModel}
+            toolId={projectDataMappingModel.getData("tool_id")}
           />
         </Col>
       <Col lg={12}>
         <ProjectRepositorySelectInput
-          model={projectMappingDto}
-          setModel={setProjectMappingDto}
+          model={projectDataMappingModel}
+          setModel={setProjectDataMappingModel}
         />
       </Col>
           </>
       );
     }
-    if (projectMappingDto.getData("tool_identifier") === "gitlab" || projectMappingDto.getData("tool_identifier") === "github") {
+    if (projectDataMappingModel.getData("tool_identifier") === "gitlab" || projectDataMappingModel.getData("tool_identifier") === "github") {
       return (
         <Col lg={12}>
           <ProjectRepositorySelectInput
-            model={projectMappingDto}
-            setModel={setProjectMappingDto}
+            model={projectDataMappingModel}
+            setModel={setProjectDataMappingModel}
           />
         </Col>
       );
     }
-    if (projectMappingDto.getData("tool_identifier") === "jira") {
+    if (projectDataMappingModel.getData("tool_identifier") === "jira") {
       return (
         <Col lg={12}>
           <ProjectMappingProjectSelectInput
-            dataObject={projectMappingDto}
-            setDataObject={setProjectMappingDto}
-            tool_id={projectMappingDto.getData("tool_id")}
+            dataObject={projectDataMappingModel}
+            setDataObject={setProjectDataMappingModel}
+            tool_id={projectDataMappingModel.getData("tool_id")}
           />
         </Col>
       );
     }
   };
 
-  if (projectMappingDto == null) {
+  if (projectDataMappingModel == null) {
     return <LoadingDialog size="sm" />;
   }
 
   return (
     <EditorPanelContainer
       isLoading={isLoading}
-      recordDto={projectMappingDto}
-      setRecordDto={setProjectMappingDto}
+      recordDto={projectDataMappingModel}
+      setRecordDto={setProjectDataMappingModel}
       createRecord={createMapping}
-      updateRecord={toolTypeData ? updateMapping : createMapping}
+      updateRecord={updateMapping}
       handleClose={handleClose}
     >
       {
-        toolTypeData &&
+        projectDataMappingModel?.isNew() !== true &&
         <div className="m-2">
           <Card>
             <Card.Text className={"mt-3 mb-3"} style={{display: "flex", justifyContent: "center"}}>
@@ -166,36 +162,35 @@ function ProjectMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
 
       <Row>
         <Col lg={12}>
-          <ProjectMappingToolIdentifierSelectInput dataObject={projectMappingDto} setDataObject={setProjectMappingDto} />
+          <ProjectMappingToolIdentifierSelectInput dataObject={projectDataMappingModel} setDataObject={setProjectDataMappingModel} />
         </Col>
         <Col lg={12}>
           <ProjectMappingToolSelectInput
-            model={projectMappingDto}
-            setModel={setProjectMappingDto}
+            model={projectDataMappingModel}
+            setModel={setProjectDataMappingModel}
           />
         </Col>
         {getDynamicFields()}
         <Col lg={12}>
           <TagManager
             type={"project"}
-            dataObject={projectMappingDto}
+            dataObject={projectDataMappingModel}
             fieldName={"value"}
-            setDataObject={setProjectMappingDto}
-            disabled={projectMappingDto && projectMappingDto.getData("tool_id").length === 0}
+            setDataObject={setProjectDataMappingModel}
+            disabled={projectDataMappingModel && projectDataMappingModel.getData("tool_id").length === 0}
           />
         </Col>
         <Col lg={12}>
-          <ActivityToggleInput dataObject={projectMappingDto} fieldName={"active"} setDataObject={setProjectMappingDto} />
+          <ActivityToggleInput dataObject={projectDataMappingModel} fieldName={"active"} setDataObject={setProjectDataMappingModel} />
         </Col>
       </Row>
     </EditorPanelContainer>
   );
 }
 
-ProjectMappingEditor.propTypes = {
-  toolTypeData: PropTypes.object,
-  setToolTypeData: PropTypes.func,
+ProjectDataMappingEditorPanel.propTypes = {
+  projectMappingData: PropTypes.object,
   handleClose: PropTypes.func,
 };
 
-export default ProjectMappingEditor;
+export default ProjectDataMappingEditorPanel;

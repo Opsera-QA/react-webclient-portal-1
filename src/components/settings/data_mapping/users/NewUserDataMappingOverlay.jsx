@@ -2,11 +2,11 @@ import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import usersMappingMetadata from "components/settings/data_mapping/users/userMapping.metadata";
 import Model from "core/data_model/model";
-import UsersMappingEditorPanel from "./users_detail_view/UsersMappingEditorPanel";
+import UsersMappingEditorPanel from "components/settings/data_mapping/users/details/UserDataMappingEditorPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 
-function NewUsersMappingOverlay({loadData, isMounted }) {
+function NewUserDataMappingOverlay({loadData, isMounted }) {
   const toastContext = useContext(DialogToastContext);
   const [usersTagsData, setUsersTagsData] = useState(new Model({...usersMappingMetadata.newObjectFields}, usersMappingMetadata, true));
 
@@ -26,9 +26,9 @@ function NewUsersMappingOverlay({loadData, isMounted }) {
   );
 }
 
-NewUsersMappingOverlay.propTypes = {
+NewUserDataMappingOverlay.propTypes = {
   isMounted: PropTypes.object,
   loadData: PropTypes.func,
 };
 
-export default NewUsersMappingOverlay;
+export default NewUserDataMappingOverlay;
