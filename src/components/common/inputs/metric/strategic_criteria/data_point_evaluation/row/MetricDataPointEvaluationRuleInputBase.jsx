@@ -13,6 +13,8 @@ import DataPointEvaluationTriggerValuesInput
   from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/DataPointEvaluationTriggerValuesInput";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InfoContainer from "components/common/containers/InfoContainer";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import StandaloneBooleanToggleInput from "components/common/inputs/boolean/StandaloneBooleanToggleInput";
 
 function MetricDataPointEvaluationRuleInputBase(
   {
@@ -52,6 +54,11 @@ function MetricDataPointEvaluationRuleInputBase(
     updateRuleFunction(fieldName, newModel?.getPersistData());
   };
 
+  const toggleRule = (newValue) => {
+    ruleModel?.setData("enabled", newValue);
+    updateRuleFunctionRow(ruleModel);
+  };
+
   if (ruleModel == null || updateRuleFunction == null) {
     return null;
   }
@@ -77,6 +84,14 @@ function MetricDataPointEvaluationRuleInputBase(
             setModel={setRuleModel}
             updateRuleFunction={updateRuleFunctionRow}
             triggerFilter={ruleModel?.getData("trigger_filter")}
+          />
+        </Col>
+        <Col sm={6}>
+          <StandaloneBooleanToggleInput
+            checkedValue={ruleModel?.getData("enabled")}
+            fieldLabel={ruleModel?.getLabel("enabled")}
+            setDataFunction={toggleRule}
+            fieldId={`${fieldName}-enabled`}
           />
         </Col>
       </Row>
