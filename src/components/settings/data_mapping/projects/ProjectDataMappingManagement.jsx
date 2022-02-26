@@ -74,11 +74,13 @@ function ProjectDataMappingManagement() {
     //   isLoading={isLoading}
     //   pageDescription={"Manage Project Data Mapping for the Opsera Analytics Engine."}
     // >
+    <div className={"mt-2"}>
       <ProjectsTagTable
         loadData={loadData}
         isLoading={isLoading}
         data={projectDataMappings}
       />
+    </div>
     // </ScreenContainer>
   );
 }

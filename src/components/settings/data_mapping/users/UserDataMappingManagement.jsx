@@ -76,11 +76,13 @@ function UserDataMappingManagement() {
     //   isLoading={isLoading}
     //   pageDescription={"Manage User Data Mapping for the Opsera Analytics Engine."}
     // >
+    <div className={"mt-2"}>
       <UsersTagsTable
         loadData={loadData}
         isLoading={isLoading}
         data={userDataMappings}
       />
+    </div>
     // </ScreenContainer>
   );
 }

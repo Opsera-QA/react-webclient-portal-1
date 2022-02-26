@@ -1,30 +1,21 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { AuthContext } from "contexts/AuthContext";
-import UsersTagsTable from "./users/UsersTagsTable";
-import { useHistory, useParams } from "react-router-dom";
-import { faProjectDiagram, faUser } from "@fortawesome/pro-light-svg-icons";
+import { useHistory } from "react-router-dom";
 import { Button, Card } from "react-bootstrap";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import CustomTabContainer from "components/common/tabs/CustomTabContainer";
-import CustomTab from "components/common/tabs/CustomTab";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import toolsActions from "components/inventory/tools/tools-actions";
-import LoadingDialog from "components/common/status_notifications/loading";
-import PropTypes from "prop-types";
 import axios from "axios";
 import DataMappingManagementSubNavigationBar
   from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
-import ProjectDataMappingManagement from "components/settings/data_mapping/projects/ProjectDataMappingManagement";
-import UserDataMappingManagement from "components/settings/data_mapping/users/UserDataMappingManagement";
+import DataMappingManagementTabView from "components/settings/data_mapping/DataMappingManagementTabView";
 
 function DataMappingManagement() {
-  const {tabKey} = useParams();
   const toastContext = useContext(DialogToastContext);
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState(tabKey === "users" ? "users" : "projects");
   const [projectTagCount, setProjectTagCount] = useState(0);
   const [toolCount, setToolCount] = useState(0);
   const history = useHistory();
@@ -52,18 +43,11 @@ function DataMappingManagement() {
     };
   }, []);
 
-  const handleTabClick = (tabSelection) => (e) => {
-    e.preventDefault();
-    setActiveTab(tabSelection);
-  };
-
   const loadData = async (cancelSource = cancelTokenSource) => {
 
     try {
       setIsLoading(true);
       await getRoles(cancelSource);
-      await getProjectTags(cancelSource);
-      await getToolRegistryList(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -79,12 +63,16 @@ function DataMappingManagement() {
   const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
+
     if (!userRoleAccess) {
       setIsLoading(false);
       toastContext.showLoadingErrorDialog("Unable to fetch access privileges");
       return;
     }
+
     setAccessRoleData(userRoleAccess);
+    await getProjectTags(cancelSource);
+    await getToolRegistryList(cancelSource);
   };
 
   const getProjectTags = async (cancelSource = cancelTokenSource) => {
@@ -170,27 +158,6 @@ function DataMappingManagement() {
     }
   };
 
-  const getTabContainer = () => {
-    return (
-      <CustomTabContainer styling="alternate-tabs">
-        <CustomTab
-          icon={faProjectDiagram}
-          tabName={"projects"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabText={"Project Tags"}
-        />
-        <CustomTab
-          icon={faUser}
-          tabName={"users"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabText={"User Tags"}
-        />
-      </CustomTabContainer>
-    );
-  };
-
   const getBody = () => {
     if (toolCount === 0 || projectTagCount === 0) {
       return (
@@ -202,16 +169,7 @@ function DataMappingManagement() {
     }
 
     return (
-      <>
-        <div className={"m-2"}>
-          {getTabContainer()}
-        </div>
-        <TagsTabView
-          activeTab={activeTab}
-          loadData={loadData}
-          isLoading={isLoading}
-        />
-      </>
+      <DataMappingManagementTabView />
     );
   };
 
@@ -227,29 +185,5 @@ function DataMappingManagement() {
     </ScreenContainer>
   );
 }
-
-function TagsTabView({ activeTab }) {
-  useEffect(() => {
-  }, [activeTab]);
-
-  if (activeTab) {
-    switch (activeTab) {
-      case "projects":
-        return (
-          <ProjectDataMappingManagement />
-        );
-      case "users":
-        return (
-          <UserDataMappingManagement />
-        );
-      default:
-        return null;
-    }
-  }
-}
-
-TagsTabView.propTypes = {
-  activeTab: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-};
 
 export default DataMappingManagement;
