@@ -38,3 +38,26 @@ metricHelpers.unpackMetricFilterData = (metricFilters) => {
 
   return unpackedFilterData;
 };
+
+metricHelpers.packFilterData = (filterObject) => {
+  if (typeof filterObject !== "object") {
+    return [];
+  }
+
+  const filterTypes = Object.keys(filterObject);
+
+  const packedFilterData = [];
+
+  filterTypes.forEach((filterType) => {
+    const value = filterObject[filterType];
+
+    if (hasStringValue(filterType) === true) {
+      packedFilterData.push({
+        type: filterType,
+        value: value,
+      });
+    }
+  });
+
+  return packedFilterData;
+};

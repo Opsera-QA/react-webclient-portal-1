@@ -958,7 +958,8 @@ a.nav-link {
 
 .content-container {
     border: 1px solid #E6E5E3;
-    /*border-radius: .25rem;*/
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
 }
 
 .content-container-border {

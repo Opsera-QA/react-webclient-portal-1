@@ -20,7 +20,7 @@ function DeleteButtonWithInlineConfirmation({deleteRecord,  dataObject, disabled
     };
   }, []);
 
-  const handleDelete = async () => {
+  const deleteDataFunction = async () => {
     try {
       let response = await deleteRecord();
 
@@ -48,10 +48,9 @@ function DeleteButtonWithInlineConfirmation({deleteRecord,  dataObject, disabled
     if (showDeleteConfirmationPanel) {
       return (
         <DeleteConfirmationPanel
-          dataObject={dataObject}
-          handleDelete={handleDelete}
-          handleClose={handleClose}
-          showDeleteConfirmationPanel={showDeleteConfirmationPanel}
+          model={dataObject}
+          deleteDataFunction={deleteDataFunction}
+          closePanelFunction={handleClose}
         />
       );
     }

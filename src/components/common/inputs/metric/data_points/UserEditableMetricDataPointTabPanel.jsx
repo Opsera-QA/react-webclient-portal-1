@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import InfoContainer from "components/common/containers/InfoContainer";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import Row from "react-bootstrap/Row";
@@ -17,9 +16,8 @@ function UserEditableMetricDataPointTabPanel(
   const [activeTab, setActiveTab] = useState("");
 
   useEffect(() => {
-
     if (Array.isArray(dataPoints) && dataPoints.length > 0) {
-      setActiveTab(dataPoints?._id);
+      setActiveTab(dataPoints[0]?._id);
     }
   }, [dataPoints]);
 
@@ -37,18 +35,23 @@ function UserEditableMetricDataPointTabPanel(
         tabName={id}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
+        className={""}
       />
     );
   };
 
   const getVerticalTabContainer = () => {
     return (
-      <VanitySetVerticalTabContainer className={"console-log-container-tabs"}>
-        {dataPoints.map((dataPoint) => {
-          return (
-            getVerticalTab(dataPoint?._id, dataPoint?.name)
-          );
-        })}
+      <VanitySetVerticalTabContainer
+        className={"h-100 w-100"}
+      >
+        <div className={"metric-tab-tree"}>
+          {dataPoints.map((dataPoint) => {
+            return (
+              getVerticalTab(dataPoint?._id, dataPoint?.name)
+            );
+          })}
+        </div>
       </VanitySetVerticalTabContainer>
     );
   };

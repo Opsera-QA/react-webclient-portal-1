@@ -9,6 +9,7 @@ function UserEditableMetricStrategicCriteriaPanel({model, setModel, strategicCri
       model={model}
       setModel={setModel}
       strategicCriteria={strategicCriteria}
+      fromDashboardMetric={true}
     />
   );
 }

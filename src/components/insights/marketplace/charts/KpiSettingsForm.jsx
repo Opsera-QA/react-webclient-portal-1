@@ -39,8 +39,6 @@ import Model from "core/data_model/model";
 import GoalsInputBase from "./goals/GoalsInputBase";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
-import dashboardsActions from "components/insights/dashboards/dashboards-actions";
-import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TagManager from "components/common/inputs/tags/TagManager";
 import modelHelpers from "components/common/model/modelHelpers";
 
@@ -72,6 +70,13 @@ import TextAreaInput from "../../../common/inputs/text/TextAreaInput";
 import axios from "axios";
 import ResetMetricConfirmationPanel from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricConfirmationPanel";
 import ResetButton from "components/common/buttons/reset/ResetButton";
+import {dashboardMetricActions} from "components/insights/dashboards/metrics/dashboardMetric.actions";
+import DeleteDashboardMetricButton from "components/common/buttons/dashboards/metric/DeleteDashboardMetricButton";
+import DeleteButton from "components/common/buttons/delete/DeleteButton";
+import DeleteDashboardMetricConfirmationPanel
+  from "components/insights/marketplace/dashboards/metrics/delete/DeleteDashboardMetricConfirmationPanel";
+import DashboardMetricEditorPanelContainer
+  from "components/common/panels/detail_panel_container/dashboard_metrics/DashboardMetricEditorPanelContainer";
 
 // TODO: There are a handful of issues with this we need to address.
 function KpiSettingsForm({
@@ -87,8 +92,6 @@ function KpiSettingsForm({
   const { getAccessToken } = useContext(AuthContext);
   const [helpIsShown, setHelpIsShown] = useState(false);
   const [kpiSettings, setKpiSettings] = useState(new Model(kpiConfiguration, kpiConfigurationMetadata, false));
-  const [showDeleteConfirmationPanel, setShowDeleteConfirmationPanel] = useState(false);
-  const [showResetConfirmationPanel, setShowResetConfirmationPanel] = useState(false);
 
   const [kpiConfigSettings, setKpiConfigSettings] = useState(
     modelHelpers.getDashboardSettingsModel(kpiConfiguration)
@@ -924,29 +927,17 @@ function KpiSettingsForm({
       ].value = kpiServiceNowBusinessServicesFilter.getData("value");
     }
 
-    setKpiSettings({ ...newKpiSettings });
-    dashboardData.getData("configuration")[index] = kpiSettings?.getPersistData();
+    await dashboardMetricActions.updateDashboardKpiV2(getAccessToken, cancelTokenSource, dashboardData?.getData("_id"), newKpiSettings);
 
     // TODO: This is forced because the dashboard detail view refresh doesn't work after saving.
     //  This needs to be addressed and removed.
-    setKpiConfiguration({ ...kpiSettings?.getPersistData() });
-
-    await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardData);
-
-    if (closePanel) {
-      closePanel();
-    }
+    setKpiConfiguration({ ...newKpiSettings?.getPersistData() });
+    dashboardData.getData("configuration")[index] = newKpiSettings?.getPersistData();
+    setKpiSettings({ ...newKpiSettings });
+    closeSettingsPanel();
   };
 
-  const cancelKpiSettings = async () => {
-    closePanel();
-  };
-
-  const deleteKpi = async () => {
-    dashboardData?.getData("configuration").splice(index, 1);
-    setKpis(dashboardData?.getData("configuration"));
-    await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardData);
-
+  const closeSettingsPanel = () => {
     if (closePanel) {
       closePanel();
     }
@@ -957,15 +948,10 @@ function KpiSettingsForm({
       settingsHelpComponent(() => setHelpIsShown(false));
     }
 
-    return <GenericChartSettingsHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-  };
-
-  const getExtraButtons = () => {
     return (
-      <div className={"d-flex"}>
-        <DeleteButtonWithInlineConfirmation dataObject={kpiSettings} deleteRecord={deleteKpi} />
-        <ResetButton className={"ml-2"} model={kpiSettings} resetFunction={() => setShowResetConfirmationPanel(true)} />
-      </div>
+      <GenericChartSettingsHelpDocumentation
+        closeHelpPanel={() => setHelpIsShown(false)}
+      />
     );
   };
 
@@ -987,53 +973,21 @@ function KpiSettingsForm({
     }
   };
 
-  const getEditorPanel = () => {
+  const getBody = () => {
     return (
-      <EditorPanelContainer
-        showRequiredFieldsMessage={false}
-        handleClose={cancelKpiSettings}
-        updateRecord={saveKpiSettings}
-        recordDto={kpiSettings}
-        lenient={true}
+      <DashboardMetricEditorPanelContainer
+        saveDataFunction={saveKpiSettings}
+        closePanelFunction={closeSettingsPanel}
+        metricModel={kpiSettings}
+        setKpis={setKpis}
+        metricIndex={index}
+        dashboardModel={dashboardData}
+        setKpiConfiguration={setKpiConfiguration}
         className={"px-3 pb-3"}
-        extraButtons={getExtraButtons()}
       >
         {getEditorPanelFilters()}
-      </EditorPanelContainer>
+      </DashboardMetricEditorPanelContainer>
     );
-  };
-
-  const handleClose = () => {
-    if (closePanel) {
-      closePanel();
-    }
-  };
-
-  const getBody = () => {
-    // TODO: Implement
-    // if (showDeleteConfirmationPanel === true) {
-    //   return (
-    //
-    //   );
-    // }
-
-    if (showResetConfirmationPanel === true) {
-      return (
-        <div className={"m-2"}>
-          <ResetMetricConfirmationPanel
-            kpiConfigurationModel={kpiSettings}
-            dashboardModel={dashboardData}
-            className={"ml-2"}
-            identifier={kpiSettings?.getData("kpi_identifier")}
-            index={index}
-            closePanelFunction={handleClose}
-            setKpiConfiguration={setKpiConfiguration}
-          />
-        </div>
-      );
-    }
-
-    return getEditorPanel();
   };
 
   if (kpiSettings == null) {

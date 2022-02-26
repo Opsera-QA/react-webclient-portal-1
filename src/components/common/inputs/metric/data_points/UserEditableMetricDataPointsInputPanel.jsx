@@ -16,6 +16,7 @@ function UserEditableMetricDataPointsInputPanel(
   return (
     <InfoContainer
       titleText={`${model?.getData("kpi_name")} Data Points`}
+      titleClassName={"dashboard-container-header"}
     >
       <UserEditableMetricDataPointTabPanel
         model={model}

@@ -65,8 +65,6 @@ const projectMappingMetadata = {
     tool_id: "",
     key: "",
     value: [],
-    owner : "",
-    account : {},
     tool_prop: "",
     createdAt: "",
     active : true

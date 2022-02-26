@@ -7,12 +7,14 @@ import dataPointEvaluationRowMetadata
   from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/dataPointEvaluationRowMetadata";
 import dataPointEvaluationRulesMetadata
   from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/dataPointEvaluationRules.metadata";
-import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import DataPointEvaluationTriggerFilterSelectInput
   from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/DataPointEvaluationTriggerFilterSelectInput";
 import DataPointEvaluationTriggerValuesInput
   from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/DataPointEvaluationTriggerValuesInput";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import InfoContainer from "components/common/containers/InfoContainer";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import StandaloneBooleanToggleInput from "components/common/inputs/boolean/StandaloneBooleanToggleInput";
 
 function MetricDataPointEvaluationRuleInputBase(
   {
@@ -22,6 +24,7 @@ function MetricDataPointEvaluationRuleInputBase(
     icon, 
     title,
     errorMessage,
+    headerClassName,
   }) {
   const [ruleModel, setRuleModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -47,8 +50,13 @@ function MetricDataPointEvaluationRuleInputBase(
   };
 
   const updateRuleFunctionRow = (newModel) => {
-    setRuleModel(newModel);
+    setRuleModel({...newModel});
     updateRuleFunction(fieldName, newModel?.getPersistData());
+  };
+
+  const toggleRule = (newValue) => {
+    ruleModel?.setData("enabled", newValue);
+    updateRuleFunctionRow(ruleModel);
   };
 
   if (ruleModel == null || updateRuleFunction == null) {
@@ -56,32 +64,43 @@ function MetricDataPointEvaluationRuleInputBase(
   }
 
   return (
-    <div>
-      <PropertyInputContainer
-        titleIcon={icon}
-        field={null}
-        titleText={title}
-      >
-        <Row className={"m-2"}>
-          <Col sm={12} lg={4}>
-            <DataPointEvaluationTriggerFilterSelectInput
-              model={ruleModel}
-              setModel={setRuleModel}
-              updateRuleFunction={updateRuleFunctionRow}
-            />
-          </Col>
-          <Col sm={12} lg={8}>
-            <DataPointEvaluationTriggerValuesInput
-              model={ruleModel}
-              setModel={setRuleModel}
-              updateRuleFunction={updateRuleFunctionRow}
-              triggerFilter={ruleModel?.getData("trigger_filter")}
-            />
-          </Col>
-        </Row>
-      </PropertyInputContainer>
-      <InfoText errorMessage={errorMessage} />
-    </div>
+    <InfoContainer
+      titleClassName={`metric-input-container-header ${headerClassName}`}
+      titleIcon={icon}
+      field={null}
+      titleText={title}
+    >
+      <Row className={"m-2"}>
+        <Col sm={12} lg={4}>
+          <DataPointEvaluationTriggerFilterSelectInput
+            model={ruleModel}
+            setModel={setRuleModel}
+            updateRuleFunction={updateRuleFunctionRow}
+          />
+        </Col>
+        <Col sm={12} lg={8}>
+          <DataPointEvaluationTriggerValuesInput
+            model={ruleModel}
+            setModel={setRuleModel}
+            updateRuleFunction={updateRuleFunctionRow}
+            triggerFilter={ruleModel?.getData("trigger_filter")}
+          />
+        </Col>
+        <Col sm={6}>
+          <StandaloneBooleanToggleInput
+            checkedValue={ruleModel?.getData("enabled")}
+            fieldLabel={ruleModel?.getLabel("enabled")}
+            setDataFunction={toggleRule}
+            fieldId={`${fieldName}-enabled`}
+          />
+        </Col>
+      </Row>
+      <div className={"d-flex"}>
+        <div className={"ml-auto mr-2 mb-2"}>
+          <InfoText errorMessage={errorMessage}/>
+        </div>
+      </div>
+    </InfoContainer>
   );
 }
 
@@ -92,6 +111,7 @@ MetricDataPointEvaluationRuleInputBase.propTypes = {
   icon: PropTypes.object,
   title: PropTypes.string,
   errorMessage: PropTypes.string,
+  headerClassName: PropTypes.string,
 };
 
 export default MetricDataPointEvaluationRuleInputBase;

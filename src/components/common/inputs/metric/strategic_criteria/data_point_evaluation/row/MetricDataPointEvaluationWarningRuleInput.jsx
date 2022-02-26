@@ -18,6 +18,7 @@ function MetricDataPointEvaluationWarningRuleInputBase(
       title={"Warning Criteria"}
       icon={faExclamationTriangle}
       errorMessage={dataPointEvaluationRulesHelpers.getConflictingRuleError(dataPointEvaluationRules)}
+      headerClassName={"yellow-header"}
     />
   );
 }

@@ -4,29 +4,30 @@ import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdenti
 import SdlcDurationByStageMetricsEditorPanel
   from "components/insights/charts/sdlc/bar_chart/duration_by_stage/SdlcDurationByStageMetricsEditorPanel";
 import KpiSettingsForm from "components/insights/marketplace/charts/KpiSettingsForm";
-import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import Model from "core/data_model/model";
 import kpiConfigurationMetadata from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import MetricSettingsInputPanel from "components/common/inputs/metric/settings/MetricSettingsInputPanel";
-import dashboardsActions from "components/insights/dashboards/dashboards-actions";
-import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
-import ResetButton from "components/common/buttons/reset/ResetButton";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {metricHelpers} from "components/insights/metric.helpers";
-import UserEditableMetricDataPointInputBase
-  from "components/common/inputs/metric/data_points/UserEditableMetricDataPointInputBase";
 import UserEditableMetricDataPointsInputPanel
   from "components/common/inputs/metric/data_points/UserEditableMetricDataPointsInputPanel";
+import GenericChartSettingsHelpDocumentation
+  from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
+import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
+import {dashboardMetricActions} from "components/insights/dashboards/metrics/dashboardMetric.actions";
+import DashboardMetricEditorPanelContainer
+  from "components/common/panels/detail_panel_container/dashboard_metrics/DashboardMetricEditorPanelContainer";
 
 // TODO: This is temporary until kpis are updated to follow new standards
 const SUPPORTED_NEW_METRICS =[
   kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS,
 ];
 
-function DashboardMetricEditorPanel({
+// TODO: combine with chart settings overlay?
+function DashboardMetricOverlayContainer({
   kpiConfiguration,
   setKpiConfiguration,
   dashboardData,
@@ -38,16 +39,12 @@ function DashboardMetricEditorPanel({
 }) {
   const { getAccessToken } = useContext(AuthContext);
   const [helpIsShown, setHelpIsShown] = useState(false);
-  // TODO: Unpack inside useEffect
   const [metricModel, setMetricModel] = useState(undefined);
   const [metricFilterModel, setMetricFilterModel] = useState(undefined);
   const [unpackedFilterData, setUnpackedFilterData] = useState(undefined);
-  const [showDeleteConfirmationPanel, setShowDeleteConfirmationPanel] = useState(false);
-  const [showResetConfirmationPanel, setShowResetConfirmationPanel] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-  // TODO: Handle unpacking models here
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -78,44 +75,24 @@ function DashboardMetricEditorPanel({
     setUnpackedFilterData(metricHelpers.unpackMetricFilterData(kpiConfiguration?.filters));
   };
 
-  // TODO: Create unpack filters mechanism | turn filter array into key/value object (put in helper) Use supported filters array to determine what is a valid filter or not
-  // TODO: Create pack filters mechanism | turn key/value object into filter array (put in helper) Use supported filters array to determine what is a valid filter or not
-  const cancelKpiSettings = async () => {
-    closePanel();
-  };
-
-  // TODO: Make node route for saving individual KPI on a dashboard by id
-  const saveKpiSettings = async () => {
-    // await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardData);
-  };
-
-  // TODO: Make metric delete button, add node route to delete specific kpi by id
-  const deleteKpi = async () => {
-    dashboardData?.getData("configuration").splice(index, 1);
-    setKpis(dashboardData?.getData("configuration"));
-    await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardData);
-
+  const closeSettingsPanel = async () => {
     if (closePanel) {
       closePanel();
     }
   };
 
-  // TODO: Create reset KPI button that handles the nitty gritty
-  const getExtraButtons = () => {
-    return (
-      <div className={"d-flex"}>
-        <DeleteButtonWithInlineConfirmation
-          dataObject={metricModel}
-          deleteRecord={deleteKpi}
-        />
-        <ResetButton
-          className={"ml-2"}
-          model={metricModel}
-          resetFunction={() => setShowResetConfirmationPanel(true)}
-        />
-      </div>
+  // TODO: Once legacy KPI Settings panel is removed, this can be moved into the Dashboard Metric Button Container
+  const saveKpiSettings = async () => {
+    const packedFilters = metricHelpers.packFilterData(metricFilterModel?.getPersistData());
+    metricModel?.setData("filters", packedFilters);
+    await dashboardMetricActions.updateDashboardKpiV2(
+      getAccessToken,
+      cancelTokenSource,
+      dashboardData?.getData("_id"),
+      metricModel,
     );
   };
+
 
   const getMetricEditorPanel = () => {
     switch (kpiConfiguration?.kpi_identifier) {
@@ -129,6 +106,41 @@ function DashboardMetricEditorPanel({
           />
         );
     }
+  };
+
+  const getBody = () => {
+
+    return (
+      <div>
+        <TextInputBase
+          fieldName={"kpi_name"}
+          dataObject={metricModel}
+          setDataObject={setMetricModel}
+        />
+        <MetricSettingsInputPanel
+          metricModel={metricModel}
+          setMetricModel={setMetricModel}
+          metricSettings={metricModel?.getData("settings")}
+        />
+        {getMetricEditorPanel()}
+        <UserEditableMetricDataPointsInputPanel
+          model={metricModel}
+          setModel={setMetricModel}
+        />
+      </div>
+    );
+  };
+
+  const getHelpComponent = () => {
+    if (settingsHelpComponent) {
+      settingsHelpComponent(() => setHelpIsShown(false));
+    }
+
+    return (
+      <GenericChartSettingsHelpDocumentation
+        closeHelpPanel={() => setHelpIsShown(false)}
+      />
+    );
   };
 
   // TODO: This is temporary for compatibility reasons.
@@ -157,34 +169,29 @@ function DashboardMetricEditorPanel({
   }
 
   return (
-    <EditorPanelContainer
-      handleClose={cancelKpiSettings}
-      updateRecord={saveKpiSettings}
-      recordDto={metricModel}
-      lenient={true}
-      className={"px-3 pb-3"}
-      extraButtons={getExtraButtons()}
+    <OverlayPanelBodyContainer
+      helpComponent={getHelpComponent()}
+      helpIsShown={helpIsShown}
+      setHelpIsShown={setHelpIsShown}
+      hideCloseButton={true}
     >
-      <TextInputBase
-        fieldName={"kpi_name"}
-        dataObject={metricModel}
-        setDataObject={setMetricModel}
-      />
-      <MetricSettingsInputPanel
+      <DashboardMetricEditorPanelContainer
+        saveDataFunction={saveKpiSettings}
+        closePanelFunction={closeSettingsPanel}
         metricModel={metricModel}
-        setMetricModel={setMetricModel}
-        metricSettings={metricModel?.getData("settings")}
-      />
-      {getMetricEditorPanel()}
-      <UserEditableMetricDataPointsInputPanel
-        model={metricModel}
-        setModel={setMetricModel}
-      />
-    </EditorPanelContainer>
+        setKpis={setKpis}
+        metricIndex={index}
+        dashboardModel={dashboardData}
+        setKpiConfiguration={setKpiConfiguration}
+        className={"px-3 pb-3"}
+      >
+        {getBody()}
+      </DashboardMetricEditorPanelContainer>
+    </OverlayPanelBodyContainer>
   );
 }
 
-DashboardMetricEditorPanel.propTypes = {
+DashboardMetricOverlayContainer.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -195,4 +202,4 @@ DashboardMetricEditorPanel.propTypes = {
   settingsHelpComponent: PropTypes.object,
 };
 
-export default DashboardMetricEditorPanel;
+export default DashboardMetricOverlayContainer;
