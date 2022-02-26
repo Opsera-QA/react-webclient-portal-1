@@ -48,7 +48,7 @@ function MetricDataPointEvaluationRuleInputBase(
   };
 
   const updateRuleFunctionRow = (newModel) => {
-    setRuleModel(newModel);
+    setRuleModel({...newModel});
     updateRuleFunction(fieldName, newModel?.getPersistData());
   };
 

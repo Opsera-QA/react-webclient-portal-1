@@ -12,6 +12,10 @@ const dataPointEvaluationRulesMetadata = {
       label: "Failure Rule",
       id: "failure_rule",
     },
+    {
+      label: "Enable Rule",
+      id: "enabled",
+    },
   ],
   newObjectFields: {
     success_rule: {
@@ -19,21 +23,21 @@ const dataPointEvaluationRulesMetadata = {
       trigger_filter: "",
       primary_trigger_value: 0,
       secondary_trigger_value: 0,
-      active: true,
+      enabled: true,
     },
     warning_rule: {
       type: "warning",
       trigger_filter: "",
       primary_trigger_value: 0,
       secondary_trigger_value: 0,
-      active: true,
+      enabled: true,
     },
     failure_rule: {
       type: "failure",
       trigger_filter: "",
       primary_trigger_value: 0,
       secondary_trigger_value: 0,
-      active: true,
+      enabled: true,
     },
   }
 };
