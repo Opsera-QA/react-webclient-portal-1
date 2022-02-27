@@ -1,17 +1,34 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import ProjectDataMappingManagement from "components/settings/data_mapping/projects/ProjectDataMappingManagement";
 import UserDataMappingManagement from "components/settings/data_mapping/users/UserDataMappingManagement";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
-import {faProjectDiagram, faUser} from "@fortawesome/pro-light-svg-icons";
+import {faDraftingCompass, faProjectDiagram, faUser} from "@fortawesome/pro-light-svg-icons";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
+import {AuthContext} from "contexts/AuthContext";
+import PipelineDataMappingManagement from "components/settings/data_mapping/pipelines/PipelineDataMappingManagement";
 
 function DataMappingManagementTabView() {
-  const [activeTab, setActiveTab] = useState("users");
+  const { featureFlagHideItemInProd, featureFlagHideItemInTest } = useContext(AuthContext);
+  const [activeTab, setActiveTab] = useState("projects");
 
   const handleTabClick = (tabSelection) => (e) => {
     e.preventDefault();
     setActiveTab(tabSelection);
+  };
+
+  const getPipelineDataMappingTab = () => {
+    if (featureFlagHideItemInProd() === false && featureFlagHideItemInTest() === false) {
+      return (
+        <CustomTab
+          icon={faDraftingCompass}
+          tabName={"pipeline"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Pipeline Data Mapping"}
+        />
+      );
+    }
   };
 
   const getTabContainer = () => {
@@ -31,6 +48,7 @@ function DataMappingManagementTabView() {
           activeTab={activeTab}
           tabText={"User Tags"}
         />
+        {getPipelineDataMappingTab()}
       </CustomTabContainer>
     );
   };
@@ -45,6 +63,10 @@ function DataMappingManagementTabView() {
         case "users":
           return (
             <UserDataMappingManagement />
+          );
+        case "pipeline":
+          return (
+            <PipelineDataMappingManagement />
           );
         default:
           return null;

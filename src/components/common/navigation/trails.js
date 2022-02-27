@@ -736,6 +736,14 @@ const breadcrumbs = {
     linkText: "Project Mapping Details",
     icon: faProjectDiagram
   },
+  pipelineDataMappingDetailView: {
+    parent : "dataMappingManagement",
+    name: "pipelineDataMappingDetailView",
+    path: paths.pipelineDataMappingDetailView,
+    title: "Pipeline Data Mapping Details",
+    linkText: "Pipeline Data Mapping Details",
+    icon: faDraftingCompass
+  },
   userTaggingDetailView: {
     parent : "dataMappingManagement",
     name: "userTaggingDetailView",
