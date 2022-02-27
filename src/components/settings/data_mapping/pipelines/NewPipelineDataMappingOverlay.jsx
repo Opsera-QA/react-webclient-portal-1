@@ -1,17 +1,21 @@
 import React, {useState, useContext, useEffect} from "react";
 import PropTypes from "prop-types";
-import ProjectDataMappingEditorPanel
-  from "components/settings/data_mapping/projects/details/ProjectDataMappingEditorPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
-import ProjectDataMappingModel from "components/settings/data_mapping/projects/projectDataMapping.model";
+import PipelineDataMappingModel from "components/settings/data_mapping/pipelines/pipelineDataMapping.model";
+import ProjectDataMappingEditorPanel
+  from "components/settings/data_mapping/projects/details/ProjectDataMappingEditorPanel";
+import PipelineMappingEditorPanel
+  from "components/common/metrics/pipeline_mapper/detail_view/PipelineMappingEditorPanel";
+import PipelineDataMappingEditorPanel
+  from "components/settings/data_mapping/pipelines/details/PipelineDataMappingEditorPanel";
 
-function NewProjectDataMappingOverlay({loadData, isMounted, projectDataMappingMetadata,}) {
+function NewPipelineDataMappingOverlay({loadData, isMounted, pipelineDataMappingMetadata,}) {
   const {getAccessToken, getAccessRoleData} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [projectDataMappingModel, setProjectDataMappingModel] = useState(undefined);
+  const [pipelineDataMappingModel, setPipelineDataMappingModel] = useState(undefined);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
@@ -21,7 +25,7 @@ function NewProjectDataMappingOverlay({loadData, isMounted, projectDataMappingMe
 
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-    createNewProjectDataMappingModel(source).catch((error) => {
+    createNewPipelineDataMappingModel(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -32,21 +36,21 @@ function NewProjectDataMappingOverlay({loadData, isMounted, projectDataMappingMe
     };
   }, []);
 
-  const createNewProjectDataMappingModel = async (cancelSource = cancelTokenSource) => {
+  const createNewPipelineDataMappingModel = async (cancelSource = cancelTokenSource) => {
     try {
       const accessRoleData = await getAccessRoleData();
-      const newModel = new ProjectDataMappingModel(
-        {...projectDataMappingMetadata.newObjectFields},
-        projectDataMappingMetadata,
+      const newModel = new PipelineDataMappingModel(
+        {...pipelineDataMappingMetadata.newObjectFields},
+        pipelineDataMappingMetadata,
         true,
         getAccessToken,
         cancelSource,
         accessRoleData,
         loadData,
         [],
-        setProjectDataMappingModel
+        setPipelineDataMappingModel
       );
-      setProjectDataMappingModel(newModel);
+      setPipelineDataMappingModel(newModel);
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -63,29 +67,29 @@ function NewProjectDataMappingOverlay({loadData, isMounted, projectDataMappingMe
     toastContext.clearOverlayPanel();
   };
 
-  if (projectDataMappingModel == null) {
+  if (pipelineDataMappingModel == null) {
     return null;
   }
 
   return (
     <CreateCenterPanel
       closePanel={closePanel}
-      objectType={projectDataMappingMetadata?.type}
+      objectType={pipelineDataMappingMetadata?.type}
       loadData={loadData}
     >
-      <ProjectDataMappingEditorPanel
+      <PipelineDataMappingEditorPanel
         handleClose={closePanel}
-        projectDataMappingModel={projectDataMappingModel}
-        setProjectDataMappingModel={setProjectDataMappingModel}
+        pipelineDataMappingModel={pipelineDataMappingModel}
+        setPipelineDataMappingModel={setPipelineDataMappingModel}
       />
     </CreateCenterPanel>
   );
 }
 
-NewProjectDataMappingOverlay.propTypes = {
+NewPipelineDataMappingOverlay.propTypes = {
   isMounted: PropTypes.object,
   loadData: PropTypes.func,
-  projectDataMappingMetadata: PropTypes.object,
+  pipelineDataMappingMetadata: PropTypes.object,
 };
 
-export default NewProjectDataMappingOverlay;
+export default NewPipelineDataMappingOverlay;

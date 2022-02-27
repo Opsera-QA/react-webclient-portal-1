@@ -10,6 +10,7 @@ import InlineWarning from "components/common/status_notifications/inline/InlineW
 import axios from "axios";
 import PipelineMappingJobInput from "components/common/metrics/pipeline_mapper/jobs/PipelineMappingJobInput";
 
+// TODO: Delete, use actual pipeline mapping editor panel
 function PipelineMappingEditorPanel({ tagData, setTagData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [tagDataDto, setTagDataDto] = useState(undefined);
