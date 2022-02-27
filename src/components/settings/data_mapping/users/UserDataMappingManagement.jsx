@@ -10,6 +10,7 @@ function UserDataMappingManagement() {
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const [userDataMappings, setUserDataMappings] = useState([]);
+  const [userDataMappingMetadata, setUserDataMappingMetadata] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -57,6 +58,7 @@ function UserDataMappingManagement() {
       const mappings = response?.data?.data;
 
       if (isMounted?.current === true && Array.isArray(mappings)) {
+        setUserDataMappingMetadata(response?.data?.metadata);
         setUserDataMappings(mappings);
       }
     } catch (error) {
@@ -71,6 +73,7 @@ function UserDataMappingManagement() {
         isLoading={isLoading}
         userDataMappings={userDataMappings}
         isMounted={isMounted}
+        userDataMappingMetadata={userDataMappingMetadata}
       />
     </div>
   );

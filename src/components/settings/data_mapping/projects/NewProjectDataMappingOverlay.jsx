@@ -10,7 +10,7 @@ import ProjectDataMappingModel from "components/settings/data_mapping/projects/p
   function NewProjectDataMappingOverlay({ loadData, isMounted, projectDataMappingMetadata, }) {
     const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
-    const [projectMappingModel, setProjectMappingModel] = useState(undefined);
+    const [projectDataMappingModel, setProjectDataMappingModel] = useState(undefined);
     const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
     useEffect(() => {
@@ -43,12 +43,11 @@ import ProjectDataMappingModel from "components/settings/data_mapping/projects/p
           accessRoleData,
           loadData,
           [],
-          setProjectMappingModel
+          setProjectDataMappingModel
         );
-        setProjectMappingModel(newModel);
+        setProjectDataMappingModel(newModel);
       } catch (error) {
         if (isMounted?.current === true) {
-          console.error(error);
           toastContext.showLoadingErrorDialog(error);
         }
       }
@@ -63,7 +62,7 @@ import ProjectDataMappingModel from "components/settings/data_mapping/projects/p
       toastContext.clearOverlayPanel();
     };
 
-    if (projectMappingModel == null) {
+    if (projectDataMappingModel == null) {
       return null;
     }
   
@@ -75,7 +74,8 @@ import ProjectDataMappingModel from "components/settings/data_mapping/projects/p
       >
         <ProjectDataMappingEditorPanel
           handleClose={closePanel}
-          projectMappingData={projectMappingModel}
+          projectDataMappingModel={projectDataMappingModel}
+          setProjectDataMappingModel={setProjectDataMappingModel}
         />
       </CreateCenterPanel>
     );
