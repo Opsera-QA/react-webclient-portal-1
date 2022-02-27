@@ -4,7 +4,6 @@ import DashboardMetricButtonContainer
   from "components/common/panels/detail_panel_container/dashboard_metrics/DashboardMetricButtonContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 
-// TODO: After final refactor of pipeline configurations, this component might be irrelevant
 function DashboardMetricEditorPanelContainer(
   {
     children,

@@ -1,4 +1,4 @@
-const projectMappingMetadata = {
+const projectDataMappingMetadata = {
   idProperty: "_id",
   type: "Project Mapping",
   activeField: "active",
@@ -6,7 +6,7 @@ const projectMappingMetadata = {
     return `/settings/data_mapping/projects/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `${record?.getData("key")} Project Mapping`;
+    return `${record?.getData("key")} Project Data Mapping Tag`;
   },
   fields: [
     {
@@ -33,6 +33,7 @@ const projectMappingMetadata = {
       label: "Project Name",
       id: "value",
       isRequired: true,
+      minItems: 1,
     },
     {
       label: "Owner",
@@ -71,4 +72,4 @@ const projectMappingMetadata = {
   },
 };
 
-export default projectMappingMetadata;
+export default projectDataMappingMetadata;

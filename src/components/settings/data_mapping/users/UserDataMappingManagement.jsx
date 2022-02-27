@@ -1,14 +1,9 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import axios from "axios";
-import DataMappingManagementSubNavigationBar
-  from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
-import projectDataMappingActions from "components/settings/data_mapping/projects/projectDataMappingActions";
-import ProjectsTagTable from "components/settings/data_mapping/projects/ProjectTagsTable";
-import UsersTagsTable from "components/settings/data_mapping/users/UsersTagsTable";
-import dataMappingActions from "components/settings/data_mapping/data-mapping-actions";
+import UsersTagsTable from "components/settings/data_mapping/users/UserDataMappingsTable";
+import {userDataMappingActions} from "components/settings/data_mapping/users/userDataMapping.actions";
 
 function UserDataMappingManagement() {
   const toastContext = useContext(DialogToastContext);
@@ -58,8 +53,8 @@ function UserDataMappingManagement() {
 
   const getUserDataMappings = async (cancelSource = cancelTokenSource) => {
     try {
-      const response = await dataMappingActions.getUserMappingsV2(getAccessToken, cancelSource);
-      const mappings = response?.data;
+      const response = await userDataMappingActions.getUserDataMappingsV2(getAccessToken, cancelSource);
+      const mappings = response?.data?.data;
 
       if (isMounted?.current === true && Array.isArray(mappings)) {
         setUserDataMappings(mappings);
@@ -81,6 +76,7 @@ function UserDataMappingManagement() {
         loadData={loadData}
         isLoading={isLoading}
         data={userDataMappings}
+        isMounted={isMounted}
       />
     </div>
     // </ScreenContainer>

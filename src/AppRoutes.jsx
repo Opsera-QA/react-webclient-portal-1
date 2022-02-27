@@ -70,9 +70,9 @@ import NotificationPolicyManagement from "components/notifications/NotificationP
 import ToolsUsedInPipelineReport from "./components/reports/tools/pipelines/ToolsUsedInPipelineReport";
 import Insights from "./components/insights/dashboards/Insights";
 import DashboardDetailView from "./components/insights/dashboards/dashboard_details/DashboardDetailView";
-import ProjectMappingDetailView
-  from "./components/settings/data_mapping/projects/projects_detail_view/ProjectMappingDetailView";
-import UsersMappingDetailView from "./components/settings/data_mapping/users/users_detail_view/UsersMappingDetailView";
+import ProjectDataMappingDetailView
+  from "components/settings/data_mapping/projects/details/ProjectDataMappingDetailView";
+import UserDataMappingDetailView from "components/settings/data_mapping/users/details/UserDataMappingDetailView";
 import NotificationDetailView from "components/notifications/notification_details/NotificationDetailView";
 import ToolProjectsView from "components/inventory/tools/tool_details/projects/ToolProjectsView";
 import TagsUsedInPipelineReport from "components/reports/tags/pipelines/TagsUsedInPipelineReport";
@@ -310,9 +310,9 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/settings/analytics-profile" exact component={AnalyticsProfileSettings} />
           <SecureRoute path="/settings/data_mapping" exact component={DataMappingManagement} />
           <SecureRoute path="/settings/data_mapping/projects/details/:projectMappingId" exact
-                       component={ProjectMappingDetailView} />
+                       component={ProjectDataMappingDetailView} />
           <SecureRoute path="/settings/data_mapping/user_mapping/details/:usersMappingId" exact
-                       component={UsersMappingDetailView} />
+                       component={UserDataMappingDetailView} />
 
           <SecureRoute path="/admin/demo/api" component={ApiConnectionTest} />
 

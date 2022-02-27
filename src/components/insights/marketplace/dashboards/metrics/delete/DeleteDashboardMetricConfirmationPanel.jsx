@@ -64,11 +64,13 @@ function DeleteDashboardMetricConfirmationPanel(
       titleText={`Delete ${metricModel?.getData("kpi_name")} Confirmation`}
       showCloseButton={false}
     >
-      <DeleteConfirmationPanel
-        model={metricModel}
-        closePanelFunction={closePanelFunction}
-        deleteDataFunction={deleteDashboardMetric}
-      />
+      <div className={"m-3"}>
+        <DeleteConfirmationPanel
+          model={metricModel}
+          closePanelFunction={closePanelFunction}
+          deleteDataFunction={deleteDashboardMetric}
+        />
+      </div>
     </CenterOverlayContainer>
   );
 }

@@ -6,8 +6,9 @@ import ActivityField from "components/common/fields/boolean/ActivityField";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
-function DataMappingSummary({ projectMappingDto, setProjectMappingData, setActiveTab }) {
+function ProjectDataMappingSummaryPanel({ projectMappingDto, setProjectMappingData, setActiveTab }) {
 
   if (projectMappingDto === null) {
     return <></>;
@@ -20,7 +21,7 @@ function DataMappingSummary({ projectMappingDto, setProjectMappingData, setActiv
           <TextFieldBase dataObject={projectMappingDto} fieldName={"tool_identifier"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={projectMappingDto} fieldName={"tool_id"}/>
+          <ToolNameField dataObject={projectMappingDto} fieldName={"tool_id"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={projectMappingDto} fieldName={"key"}/>
@@ -39,11 +40,11 @@ function DataMappingSummary({ projectMappingDto, setProjectMappingData, setActiv
   );
 }
 
-DataMappingSummary.propTypes = {
+ProjectDataMappingSummaryPanel.propTypes = {
   projectMappingDto: PropTypes.object,
   setProjectMappingData: PropTypes.func,
   setActiveTab: PropTypes.func
 };
 
 
-export default DataMappingSummary;
+export default ProjectDataMappingSummaryPanel;

@@ -147,14 +147,16 @@ function ResetMetricConfirmationPanel(
       titleText={`Reset ${metricModel?.getData("kpi_name")} Confirmation`}
       showCloseButton={false}
     >
-      <ResetConfirmationPanel
-        model={metricModel}
-        closePanelFunction={closePanelFunction}
-        subPanel={getSubPanel()}
-        resetDataFunction={resetKpiData}
-        disabled={isLoading}
-      />
-      <InfoText errorMessage={errorMessage} />
+      <div className={"m-3"}>
+        <ResetConfirmationPanel
+          model={metricModel}
+          closePanelFunction={closePanelFunction}
+          subPanel={getSubPanel()}
+          resetDataFunction={resetKpiData}
+          disabled={isLoading}
+        />
+        <InfoText errorMessage={errorMessage} />
+      </div>
     </CenterOverlayContainer>
   );
 }

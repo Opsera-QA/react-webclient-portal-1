@@ -1,19 +1,19 @@
 import React, { useMemo, useContext} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import usersMappingMetadata from "components/settings/data_mapping/users/userMapping.metadata";
 import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
 import { useHistory } from "react-router-dom";
-import NewUsersMappingOverlay from "./NewUsersMappingOverlay";
+import NewUserDataMappingOverlay from "components/settings/data_mapping/users/NewUserDataMappingOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTags} from "@fortawesome/pro-light-svg-icons";
 import {getField} from "components/common/metadata/metadata-helpers";
+import {userDataMappingMetadata} from "components/settings/data_mapping/users/userDataMapping.metadata";
 
 function UsersTagTable({ data, loadData, isLoading, isMounted }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
-  let fields = usersMappingMetadata.fields;
+  let fields = userDataMappingMetadata.fields;
 
   const columns = useMemo(() => [
     getTableTextColumn(getField(fields,"tool_identifier")),
@@ -32,10 +32,15 @@ function UsersTagTable({ data, loadData, isLoading, isMounted }) {
     history.push(`/settings/data_mapping/user_mapping/details/${rowData.original._id}`);
   };
 
-  const noDataMessage = "No User Mappings have been configured";
+  const noDataMessage = "No User Data Mapping Tags have been configured";
 
   const createToolType = () => {
-    toastContext.showOverlayPanel(<NewUsersMappingOverlay loadData={loadData} isMounted={isMounted} />);
+    toastContext.showOverlayPanel(
+      <NewUserDataMappingOverlay
+        loadData={loadData}
+        isMounted={isMounted}
+      />
+    );
   };
 
   const getUsersTagsTable = () => {
@@ -58,10 +63,10 @@ function UsersTagTable({ data, loadData, isLoading, isMounted }) {
       supportSearch={false}
       isLoading={isLoading}
       body={getUsersTagsTable()}
-      metadata={usersMappingMetadata}
+      metadata={userDataMappingMetadata}
       titleIcon={faTags}
-      title={"User Tags"}
-      type={"User Tag"}
+      title={"User Data Mapping Tags"}
+      type={"User Data Mapping Tag"}
       className={"px-2 pb-2"}
     />
   );

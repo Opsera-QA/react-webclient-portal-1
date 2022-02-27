@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
-function DataMappingSummary({ usersMappingDto, setUsersMappingData, setActiveTab }) {
+function DataMappingSummary({ userDataMappingModel, setActiveTab }) {
 
-  if (usersMappingDto === null) {
+  if (userDataMappingModel === null) {
     return <></>;
   }
 
@@ -16,25 +16,25 @@ function DataMappingSummary({ usersMappingDto, setUsersMappingData, setActiveTab
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={usersMappingDto} fieldName={"tool_identifier"}/>
+          <TextFieldBase dataObject={userDataMappingModel} fieldName={"tool_identifier"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={usersMappingDto} fieldName={"tool_id"}/>
+          <ToolNameField dataObject={userDataMappingModel} fieldName={"tool_id"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={usersMappingDto} fieldName={"tool_user_id"}/>
+          <TextFieldBase dataObject={userDataMappingModel} fieldName={"tool_user_id"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={usersMappingDto} fieldName={"tool_user_email"}/>
+          <TextFieldBase dataObject={userDataMappingModel} fieldName={"tool_user_email"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={usersMappingDto} fieldName={"opsera_user_email"}/>
+          <TextFieldBase dataObject={userDataMappingModel} fieldName={"opsera_user_email"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={usersMappingDto} fieldName={"tool_user_prop"}/>
+          <TextFieldBase dataObject={userDataMappingModel} fieldName={"tool_user_prop"}/>
         </Col>
         <Col lg={6}>
-          <DateFieldBase dataObject={usersMappingDto} fieldName={"createdAt"}/>
+          <DateFieldBase dataObject={userDataMappingModel} fieldName={"createdAt"}/>
         </Col>
       </Row>
     </SummaryPanelContainer>
@@ -42,8 +42,7 @@ function DataMappingSummary({ usersMappingDto, setUsersMappingData, setActiveTab
 }
 
 DataMappingSummary.propTypes = {
-  usersMappingDto: PropTypes.object,
-  setUsersMappingData: PropTypes.func,
+  userDataMappingModel: PropTypes.object,
   setActiveTab: PropTypes.func,
 };
 
