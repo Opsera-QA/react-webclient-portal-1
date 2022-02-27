@@ -1,7 +1,7 @@
 import ModelBase from "core/data_model/model.base";
-import {projectDataMappingActions} from "components/settings/data_mapping/projects/projectDataMapping.actions";
+import {userDataMappingActions} from "components/settings/data_mapping/users/userDataMapping.actions";
 
-export class ProjectDataMappingModel extends ModelBase {
+export class UserDataMappingModel extends ModelBase {
   constructor(
     data,
     metaData,
@@ -25,27 +25,27 @@ export class ProjectDataMappingModel extends ModelBase {
   }
 
   createModel = async () => {
-    return await projectDataMappingActions.createProjectDataMappingV2(this.getAccessToken, this.cancelTokenSource, this);
+    return await userDataMappingActions.createUserDataMappingV2(this.getAccessToken, this.cancelTokenSource, this);
   };
 
   saveModel = async () => {
-    return await projectDataMappingActions.updateProjectDataMappingV2( this.getAccessToken, this.cancelTokenSource, this);
+    return await userDataMappingActions.updateUserDataMappingV2( this.getAccessToken, this.cancelTokenSource, this);
   };
 
   deleteModel = async () => {
-    return await projectDataMappingActions.deleteProjectDataMappingV2(this.getAccessToken, this.cancelTokenSource, this);
+    return await userDataMappingActions.deleteUserDataMappingV2(this.getAccessToken, this.cancelTokenSource, this);
   };
 
   getDetailViewLink = () => {
-    return `/settings/data_mapping/projects/details/${this.getData("_id")}`;
+    return `/settings/data_mapping/user_mapping/details/${this.getData("_id")}`;
   };
 
   getDetailViewTitle = () => {
-    return `${this.getOriginalValue("key")} Project Data Mapping Tag`;
+    return `${this.getData("opsera_user_email")} User Data Mapping Tag`;
   };
 
   getNewInstance = (newData = this.getNewObjectFields()) => {
-    return new ProjectDataMappingModel(
+    return new UserDataMappingModel(
       {...newData},
       this.metaData,
       this.newModel,
@@ -59,6 +59,6 @@ export class ProjectDataMappingModel extends ModelBase {
   };
 }
 
-export default ProjectDataMappingModel;
+export default UserDataMappingModel;
 
 

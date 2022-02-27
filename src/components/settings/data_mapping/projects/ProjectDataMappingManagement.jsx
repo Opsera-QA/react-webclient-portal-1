@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import axios from "axios";
-import DataMappingManagementSubNavigationBar
-  from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
-import projectDataMappingActions from "components/settings/data_mapping/projects/projectDataMapping.actions";
 import ProjectsTagTable from "components/settings/data_mapping/projects/ProjectDataMappingsTable";
+import {projectDataMappingActions} from "components/settings/data_mapping/projects/projectDataMapping.actions";
 
 function ProjectDataMappingManagement() {
   const toastContext = useContext(DialogToastContext);

@@ -14,7 +14,7 @@ import DataMappingManagementSubNavigationBar
   from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
 import axios from "axios";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import projectDataMappingActions from "components/settings/data_mapping/projects/projectDataMapping.actions";
+import {projectDataMappingActions} from "components/settings/data_mapping/projects/projectDataMapping.actions";
 
 function ProjectDataMappingDetailView() {
   const { projectMappingId } = useParams();
