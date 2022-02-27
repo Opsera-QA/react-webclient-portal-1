@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from "react";
 import PropTypes from "prop-types";
-import {Combobox} from "dhx-suite-package";
+import {Combobox} from "@opsera/dhx-suite-package";
 
 function VanityComboBoxInputBase({ currentValue, groupBy, selectOptions, placeholderText, busy, disabled, updateValue, multiselect}) {
   const containerRef = useRef(null);

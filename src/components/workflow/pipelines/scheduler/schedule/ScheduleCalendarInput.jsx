@@ -1,10 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Calendar } from "dhx-suite-package";
-import InputContainer from "components/common/inputs/InputContainer";
-import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
-import { faCalendar } from "@fortawesome/pro-light-svg-icons";
-import InfoText from "components/common/inputs/info_text/InfoText";
 import CalendarInput from "components/common/inputs/date/CalendarInput";
 
 function ScheduleCalendarInput({

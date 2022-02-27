@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import { TreeGrid } from "dhx-suite-package";
-import "dhx-suite-package/codebase/suite.css";
+import { TreeGrid } from "@opsera/dhx-suite-package";
 import {useWindowSize} from "components/common/hooks/useWindowSize";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
 
