@@ -6,7 +6,6 @@ import {AuthContext} from "contexts/AuthContext";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import DataMappingManagementSubNavigationBar
   from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
 import axios from "axios";
@@ -20,7 +19,7 @@ function ProjectDataMappingDetailView() {
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
-  const [projectMappingData, setProjectMappingData] = useState(undefined);
+  const [projectDataMappingModel, setProjectDataMappingModel] = useState(undefined);
   const [projectDataMappingMetadata, setProjectDataMappingMetadata] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
@@ -78,8 +77,8 @@ function ProjectDataMappingDetailView() {
 
     if (isMounted?.current === true && projectDataMapping) {
       const metadata = response?.data?.metadata;
-      setProjectDataMappingMetadata({...projectDataMappingMetadata});
-      setProjectMappingData(new ProjectDataMappingModel(
+      setProjectDataMappingMetadata({...metadata});
+      setProjectDataMappingModel(new ProjectDataMappingModel(
         projectDataMapping,
         metadata,
         false,
@@ -87,7 +86,7 @@ function ProjectDataMappingDetailView() {
         cancelSource,
         loadData,
         [],
-        setProjectMappingData,
+        setProjectDataMappingModel,
       ));
     }
   };
@@ -102,7 +101,7 @@ function ProjectDataMappingDetailView() {
         </div>
         <div>
           <ActionBarModelDeleteButton
-            model={projectMappingData}
+            model={projectDataMappingModel}
             relocationPath={"/settings/data_mapping"}
           />
         </div>
@@ -116,13 +115,13 @@ function ProjectDataMappingDetailView() {
       breadcrumbDestination={"projectTaggingDetailView"}
       accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
       metadata={projectDataMappingMetadata}
-      dataObject={projectMappingData}
+      dataObject={projectDataMappingModel}
       isLoading={isLoading}
       actionBar={getActionBar()}
       detailPanel={
         <ProjectDataMappingDetailPanel
-          projectMappingData={projectMappingData}
-          setProjectMappingData={setProjectMappingData}
+          projectMappingModel={projectDataMappingModel}
+          setProjectDataMappingModel={setProjectDataMappingModel}
         />
       }
     />

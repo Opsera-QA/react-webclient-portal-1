@@ -82,12 +82,13 @@ function ProjectDataMappingsTable(
       addRecordFunction={createProjectTag}
       supportSearch={false}
       isLoading={isLoading}
+      showBorder={false}
       body={getProjectTagsTable()}
       metadata={projectDataMappingMetadata}
       titleIcon={faTags}
       title={"Project Data Mapping Tags"}
       type={"Project Data Mapping Tags"}
-      className={"px-2 pb-2"}
+      className={"pb-2"}
     />
   );
 }

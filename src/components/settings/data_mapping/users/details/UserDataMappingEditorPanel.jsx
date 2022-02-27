@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Card, Col, Row } from "react-bootstrap";
 import LoadingDialog from "components/common/status_notifications/loading";
-import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import UserMappingToolIdentifierSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingToolIdentifierSelectInput";
@@ -18,9 +17,14 @@ import UserMappingOpseraUserSelectInput
 import UserMappingSourceControlUserSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingSourceControlUserSelectInput";
   import axios from "axios";
-import {userDataMappingActions} from "components/settings/data_mapping/users/userDataMapping.actions";
+import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 
-function UserDataMappingEditorPanel({ userDataMappingModel, setUserDataMappingModel, handleClose }) {
+function UserDataMappingEditorPanel(
+  {
+    userDataMappingModel,
+    setUserDataMappingModel,
+    handleClose,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -40,17 +44,7 @@ function UserDataMappingEditorPanel({ userDataMappingModel, setUserDataMappingMo
     };
   }, []);
 
-  const createMapping = async (cancelSource = cancelTokenSource) => {
-    let response = await userDataMappingActions.createUserDataMappingV2(getAccessToken, cancelSource, userDataMappingModel);
-    if (response?.status === 200) {
-      handleClose();
-    }
-  };
-
-  const updateMapping = async (cancelSource = cancelTokenSource) => {
-    return await userDataMappingActions.updateUserDataMappingV2(getAccessToken, cancelSource, userDataMappingModel);
-  };
-
+  // TODO: Rewrite into switch statement or sub panels
   const getDynamicFields = () => {
     if (userDataMappingModel?.getData("tool_identifier") === "jira") {
       return (
@@ -108,12 +102,11 @@ function UserDataMappingEditorPanel({ userDataMappingModel, setUserDataMappingMo
   }
 
   return (
-    <EditorPanelContainer
-      recordDto={userDataMappingModel}
-      setRecordDto={setUserDataMappingModel}
-      createRecord={createMapping}
-      updateRecord={updateMapping}
+    <VanityEditorPanelContainer
+      model={userDataMappingModel}
+      setModel={setUserDataMappingModel}
       handleClose={handleClose}
+      className={"mx-3 my-2"}
     >
       {getWarningMessage()}
       <Row>
@@ -144,7 +137,7 @@ function UserDataMappingEditorPanel({ userDataMappingModel, setUserDataMappingMo
           />
         </Col>
       </Row>
-    </EditorPanelContainer>
+    </VanityEditorPanelContainer>
   );
 }
 

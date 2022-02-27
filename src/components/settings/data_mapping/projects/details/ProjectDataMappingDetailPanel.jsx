@@ -8,7 +8,11 @@ import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
-function ProjectDataMappingDetailPanel({ projectMappingData, setProjectMappingData }) {
+function ProjectDataMappingDetailPanel(
+  {
+    projectDataMappingModel,
+    setProjectDataMappingModel,
+  }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => (e) => {
@@ -25,15 +29,15 @@ function ProjectDataMappingDetailPanel({ projectMappingData, setProjectMappingDa
       case "summary":
         return (
           <ProjectMappingSummaryPanel
-            projectMappingDto={projectMappingData}
-            setProjectMappingData={setProjectMappingData}
+            projectDataMappingModel={projectDataMappingModel}
             setActiveTab={setActiveTab}
           />
         );
       case "settings":
         return (
           <ProjectDataMappingEditorPanel
-            projectMappingData={projectMappingData}
+            projectDataMappingModel={projectDataMappingModel}
+            setProjectDataMappingModel={setProjectDataMappingModel}
             handleClose={toggleSummaryPanel}
           />
         );
@@ -55,8 +59,8 @@ function ProjectDataMappingDetailPanel({ projectMappingData, setProjectMappingDa
 }
 
 ProjectDataMappingDetailPanel.propTypes = {
-  projectMappingData: PropTypes.object,
-  setProjectMappingData: PropTypes.func,
+  projectDataMappingModel: PropTypes.object,
+  setProjectDataMappingModel: PropTypes.func,
 };
 
 export default ProjectDataMappingDetailPanel;

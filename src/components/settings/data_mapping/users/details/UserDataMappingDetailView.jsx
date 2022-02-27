@@ -3,7 +3,6 @@ import { useHistory, useParams } from "react-router-dom";
 import UserDataMappingDetailPanel from "components/settings/data_mapping/users/details/UserDataMappingDetailPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import Model from "core/data_model/model";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
@@ -13,7 +12,8 @@ import DataMappingManagementSubNavigationBar
 import axios from "axios";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {userDataMappingActions} from "components/settings/data_mapping/users/userDataMapping.actions";
-import {userDataMappingMetadata} from "components/settings/data_mapping/users/userDataMapping.metadata";
+import UserDataMappingModel from "components/settings/data_mapping/users/userDataMapping.model";
+import ActionBarModelDeleteButton from "components/common/actions/buttons/ActionBarModelDeleteButton";
 
 function UserDataMappingDetailView() {
   const { usersMappingId } = useParams();
@@ -21,6 +21,7 @@ function UserDataMappingDetailView() {
   const [accessRoleData, setAccessRoleData] = useState({});
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const [userDataMappingModel, setUserDataMappingModel] = useState(undefined);
+  const [userDataMappingMetadata, setUserDataMappingMetadata] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
   const isMounted = useRef(false);
@@ -67,33 +68,34 @@ function UserDataMappingDetailView() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      await getUsersMapping(cancelSource);
+      await getUserDataMapping(cancelSource);
     }
   };
 
 
-  const getUsersMapping = async (cancelSource = cancelTokenSource) => {
+  const getUserDataMapping = async (cancelSource = cancelTokenSource) => {
     try {
       const response = await userDataMappingActions.getUserDataMappingByIdV2(getAccessToken, cancelSource, usersMappingId);
-      const mapping = response?.data?.data;
+      const userDataMapping = response?.data?.data;
 
-      if (isMounted?.current === true && mapping) {
-        setUserDataMappingModel(new Model(mapping, userDataMappingMetadata, false));
+      if (isMounted?.current === true && userDataMapping) {
+        const metadata = response?.data?.metadata;
+        setUserDataMappingMetadata({...metadata});
+        setUserDataMappingModel(new UserDataMappingModel(
+          userDataMapping,
+          metadata,
+          false,
+          getAccessToken,
+          cancelSource,
+          loadData,
+          [],
+          setUserDataMappingModel,
+        ));
       }
     } catch (error) {
       if (!error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
       }
-    }
-  };
-
-  const deleteMapping = async () => {
-    let response = await userDataMappingActions.deleteUserDataMappingV2(getAccessToken, cancelTokenSource, usersMappingId);
-    if (response?.status === 200) {
-      toastContext.showDeleteSuccessResultDialog("User Data Mapping");
-      history.push("/settings/data_mapping");
-    } else {
-      toastContext.showDeleteFailureResultDialog("User Data Mapping", response);
     }
   };
 
@@ -106,10 +108,9 @@ function UserDataMappingDetailView() {
           />
         </div>
         <div>
-          <ActionBarDeleteButton2
+          <ActionBarModelDeleteButton
             relocationPath={"/settings/data_mapping"}
-            handleDelete={deleteMapping}
-            dataObject={userDataMappingModel}
+            model={userDataMappingModel}
           />
         </div>
       </ActionBarContainer>

@@ -25,15 +25,27 @@ export class UserDataMappingModel extends ModelBase {
   }
 
   createModel = async () => {
-    return await userDataMappingActions.createUserDataMappingV2(this.getAccessToken, this.cancelTokenSource, this);
+    return await userDataMappingActions.createUserDataMappingV2(
+      this.getAccessToken,
+      this.cancelTokenSource,
+      this
+    );
   };
 
   saveModel = async () => {
-    return await userDataMappingActions.updateUserDataMappingV2( this.getAccessToken, this.cancelTokenSource, this);
+    return await userDataMappingActions.updateUserDataMappingV2(
+      this.getAccessToken,
+      this.cancelTokenSource,
+      this
+    );
   };
 
   deleteModel = async () => {
-    return await userDataMappingActions.deleteUserDataMappingV2(this.getAccessToken, this.cancelTokenSource, this);
+    return await userDataMappingActions.deleteUserDataMappingV2(
+      this.getAccessToken,
+      this.cancelTokenSource,
+      this.getMongoDbId()
+    );
   };
 
   getDetailViewLink = () => {
