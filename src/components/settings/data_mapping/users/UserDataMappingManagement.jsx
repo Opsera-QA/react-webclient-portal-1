@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
-import UsersTagsTable from "components/settings/data_mapping/users/UserDataMappingsTable";
 import {userDataMappingActions} from "components/settings/data_mapping/users/userDataMapping.actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import UserDataMappingsTable from "components/settings/data_mapping/users/UserDataMappingsTable";
 
 function UserDataMappingManagement() {
   const toastContext = useContext(DialogToastContext);
@@ -65,21 +65,14 @@ function UserDataMappingManagement() {
   };
 
   return (
-    // <ScreenContainer
-    //   navigationTabContainer={<DataMappingManagementSubNavigationBar activeTab={"dataMappings"} />}
-    //   breadcrumbDestination={"dataMappingManagement"}
-    //   isLoading={isLoading}
-    //   pageDescription={"Manage User Data Mapping for the Opsera Analytics Engine."}
-    // >
     <div className={"mt-2"}>
-      <UsersTagsTable
+      <UserDataMappingsTable
         loadData={loadData}
         isLoading={isLoading}
-        data={userDataMappings}
+        userDataMappings={userDataMappings}
         isMounted={isMounted}
       />
     </div>
-    // </ScreenContainer>
   );
 }
 

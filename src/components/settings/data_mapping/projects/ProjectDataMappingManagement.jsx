@@ -2,13 +2,14 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
-import ProjectsTagTable from "components/settings/data_mapping/projects/ProjectDataMappingsTable";
+import ProjectDataMappingsTable from "components/settings/data_mapping/projects/ProjectDataMappingsTable";
 import {projectDataMappingActions} from "components/settings/data_mapping/projects/projectDataMapping.actions";
 
 function ProjectDataMappingManagement() {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
+  const [projectDataMappingMetadata, setProjectDataMappingMetadata] = useState(undefined);
   const [projectDataMappings, setProjectDataMappings] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -57,6 +58,7 @@ function ProjectDataMappingManagement() {
       const mappings = response?.data?.data;
 
       if (isMounted?.current === true && Array.isArray(mappings)) {
+        setProjectDataMappingMetadata({...response?.data?.metadata});
         setProjectDataMappings(mappings);
       }
     } catch (error) {
@@ -65,21 +67,15 @@ function ProjectDataMappingManagement() {
   };
 
   return (
-    // <ScreenContainer
-    //   navigationTabContainer={<DataMappingManagementSubNavigationBar activeTab={"dataMappings"} />}
-    //   breadcrumbDestination={"dataMappingManagement"}
-    //   isLoading={isLoading}
-    //   pageDescription={"Manage Project Data Mapping for the Opsera Analytics Engine."}
-    // >
     <div className={"mt-2"}>
-      <ProjectsTagTable
+      <ProjectDataMappingsTable
         loadData={loadData}
         isLoading={isLoading}
-        data={projectDataMappings}
+        projectDataMappings={projectDataMappings}
         isMounted={isMounted}
+        projectDataMappingMetadata={projectDataMappingMetadata}
       />
     </div>
-    // </ScreenContainer>
   );
 }
 

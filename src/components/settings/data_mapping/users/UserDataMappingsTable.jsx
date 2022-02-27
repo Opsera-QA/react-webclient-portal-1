@@ -10,7 +10,14 @@ import {faTags} from "@fortawesome/pro-light-svg-icons";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {userDataMappingMetadata} from "components/settings/data_mapping/users/userDataMapping.metadata";
 
-function UsersTagTable({ data, loadData, isLoading, isMounted }) {
+function UserDataMappingsTable(
+  {
+    userDataMappings,
+    loadData,
+    isLoading,
+    isMounted,
+    // userDataMappingMetadata,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   let fields = userDataMappingMetadata.fields;
@@ -39,6 +46,7 @@ function UsersTagTable({ data, loadData, isLoading, isMounted }) {
       <NewUserDataMappingOverlay
         loadData={loadData}
         isMounted={isMounted}
+        userDataMappingMetadata={userDataMappingMetadata}
       />
     );
   };
@@ -47,7 +55,7 @@ function UsersTagTable({ data, loadData, isLoading, isMounted }) {
     return (
       <CustomTable
         columns={columns}
-        data={data}
+        data={userDataMappings}
         rowStyling={rowStyling}
         noDataMessage={noDataMessage}
         onRowSelect={selectedRow}
@@ -72,11 +80,12 @@ function UsersTagTable({ data, loadData, isLoading, isMounted }) {
   );
 }
 
-UsersTagTable.propTypes = {
-  data: PropTypes.array,
+UserDataMappingsTable.propTypes = {
+  userDataMappings: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  isMounted: PropTypes.object
+  isMounted: PropTypes.object,
+  userDataMappingMetadata: PropTypes.object,
 };
 
-export default UsersTagTable;
+export default UserDataMappingsTable;
