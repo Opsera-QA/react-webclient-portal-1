@@ -25,15 +25,27 @@ export class ProjectDataMappingModel extends ModelBase {
   }
 
   createModel = async () => {
-    return await projectDataMappingActions.createProjectDataMappingV2(this.getAccessToken, this.cancelTokenSource, this);
+    return await projectDataMappingActions.createProjectDataMappingV2(
+      this.getAccessToken,
+      this.cancelTokenSource,
+      this,
+    );
   };
 
   saveModel = async () => {
-    return await projectDataMappingActions.updateProjectDataMappingV2( this.getAccessToken, this.cancelTokenSource, this);
+    return await projectDataMappingActions.updateProjectDataMappingV2(
+      this.getAccessToken,
+      this.cancelTokenSource,
+      this,
+      );
   };
 
   deleteModel = async () => {
-    return await projectDataMappingActions.deleteProjectDataMappingV2(this.getAccessToken, this.cancelTokenSource, this);
+    return await projectDataMappingActions.deleteProjectDataMappingV2(
+      this.getAccessToken,
+      this.cancelTokenSource,
+      this.getMongoDbId(),
+      );
   };
 
   getDetailViewLink = () => {
