@@ -2,9 +2,6 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Card, Col, Row } from "react-bootstrap";
-import projectDataMappingMetadata from "components/settings/data_mapping/projects/projectDataMapping.metadata";
-import Model from "core/data_model/model";
-import dataMappingActions from "components/settings/data_mapping/data-mapping-actions";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
@@ -24,7 +21,7 @@ import TagManager from "components/common/inputs/tags/TagManager";
 import axios from "axios";
 import JenkinsRegistryToolJobSelectInput
   from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
-import projectDataMappingActions from "components/settings/data_mapping/projects/projectDataMapping.actions";
+import {projectDataMappingActions} from "components/settings/data_mapping/projects/projectDataMapping.actions";
 
 function ProjectDataMappingEditorPanel({ projectMappingData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);

@@ -1,6 +1,6 @@
 import baseActions from "utils/actionsBase";
 
-const projectDataMappingActions = {};
+export const projectDataMappingActions = {};
 
 projectDataMappingActions.getProjectDataMappingsV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = `/mappings/project/v2`;
@@ -15,23 +15,23 @@ projectDataMappingActions.getProjectDataMappingByIdV2 = async (getAccessToken, c
 projectDataMappingActions.createProjectDataMappingV2 = async (getAccessToken, cancelTokenSource, projectDataMappingModel) => {
   const apiUrl = "/mappings/project/v2/create";
   const postData = {
-    ...projectDataMappingModel.getPersistData(),
+    ...projectDataMappingModel?.getPersistData(),
   };
 
   return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
 };
 
 projectDataMappingActions.updateProjectDataMappingV2 = async (getAccessToken, cancelTokenSource, projectDataMappingModel) => {
-  const apiUrl = `/mappings/project/v2/${projectDataMappingModel.getData("_id")}/update`;
+  const apiUrl = `/mappings/project/v2/${projectDataMappingModel?.getData("_id")}/update`;
   const postData = {
-    ...projectDataMappingModel.getPersistData(),
+    ...projectDataMappingModel?.getPersistData(),
   };
 
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
 };
 
 projectDataMappingActions.deleteProjectDataMappingV2 = async (getAccessToken, cancelTokenSource, projectMappingId) => {
-  const apiUrl = `/mappings/project/${projectMappingId}`;
+  const apiUrl = `/mappings/project/v2/${projectMappingId}`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
@@ -52,5 +52,3 @@ projectDataMappingActions.getSonarProjects = async (data, getAccessToken) => {
   }
   return [];
 };
-
-export default projectDataMappingActions;

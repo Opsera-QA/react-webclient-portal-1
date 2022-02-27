@@ -7,7 +7,7 @@ import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
-function UserDataMappingDetailPanel({ usersMappingData, setUsersMappingData }) {
+function UserDataMappingDetailPanel({ userDataMappingModel, setUserDataMappingModel }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => (e) => {
@@ -22,9 +22,21 @@ function UserDataMappingDetailPanel({ usersMappingData, setUsersMappingData }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <UserMappingSummaryPanel usersMappingDto={usersMappingData} setUsersMappingData={setUsersMappingData} setActiveTab={setActiveTab} />;
+        return (
+          <UserMappingSummaryPanel
+            userDataMappingModel={userDataMappingModel}
+            setUserDataMappingModel={setUserDataMappingModel}
+            setActiveTab={setActiveTab}
+          />
+          );
       case "settings":
-        return <UserMappingEditorPanel toolTypeData={usersMappingData} setToolTypeData={setUsersMappingData} handleClose={toggleSummaryPanel} />;
+        return (
+          <UserMappingEditorPanel
+            userDataMappingModel={userDataMappingModel}
+            setUserDataMappingModel={setUserDataMappingModel}
+            handleClose={toggleSummaryPanel}
+          />
+        );
       default:
         return null;
     }
@@ -39,12 +51,17 @@ function UserDataMappingDetailPanel({ usersMappingData, setUsersMappingData }) {
     );
   };
 
-  return <DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />;
+  return (
+    <DetailTabPanelContainer
+      detailView={getCurrentView()}
+      tabContainer={getTabContainer()}
+    />
+  );
 }
 
 UserDataMappingDetailPanel.propTypes = {
-  usersMappingData: PropTypes.object,
-  setUsersMappingData: PropTypes.func,
+  userDataMappingModel: PropTypes.object,
+  setUserDataMappingModel: PropTypes.func,
 };
 
 export default UserDataMappingDetailPanel;

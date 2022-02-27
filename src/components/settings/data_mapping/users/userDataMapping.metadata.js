@@ -1,12 +1,12 @@
-const usersMappingMetadata = {
+export const userDataMappingMetadata = {
   idProperty: "_id",
-  type: "User Mapping",
+  type: "User Data Mapping",
   activeField: "active",
   detailView: function (record) {
     return `/settings/data_mapping/user_mapping/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `${record?.getData("opsera_user_email")} User Mapping`;
+    return `${record?.getData("opsera_user_email")} User Data Mapping Tag`;
   },
   fields: [
     {
@@ -72,11 +72,6 @@ const usersMappingMetadata = {
     opsera_user_id: "",
     opsera_user_email: "",
     tool_user_prop: "",
-    owner: "",
-    account: {},
-    createdAt: "",
     active: true,
   },
 };
-
-export default usersMappingMetadata;

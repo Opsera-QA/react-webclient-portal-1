@@ -9,7 +9,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import RegistryToolInfoOverlay from "components/common/list_of_values_input/tools/RegistryToolInfoOverlay";
 import toolsActions from "components/inventory/tools/tools-actions";
-import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import {capitalizeFirstLetter, hasStringValue} from "components/common/helpers/string-helpers";
 
 function RoleRestrictedToolByIdentifierInputBase(
   {
@@ -49,7 +49,7 @@ function RoleRestrictedToolByIdentifierInputBase(
 
 
     setTools([]);
-    if (toolIdentifier !== "") {
+    if (hasStringValue(toolIdentifier) === true) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -72,7 +72,9 @@ function RoleRestrictedToolByIdentifierInputBase(
       toastContext.showLoadingErrorDialog(error);
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -80,7 +82,7 @@ function RoleRestrictedToolByIdentifierInputBase(
     const response = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, cancelSource, toolIdentifier, fields);
     const tools = response?.data?.data;
 
-    if (Array.isArray(tools)) {
+    if (isMounted?.current === true && Array.isArray(tools)) {
       setToolMetadata(response?.data?.metadata);
       if (filterDataFunction) {
         const filteredTools = filterDataFunction(tools);

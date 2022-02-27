@@ -6,7 +6,7 @@ const projectDataMappingMetadata = {
     return `/settings/data_mapping/projects/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `${record?.getData("key")} Project Mapping`;
+    return `${record?.getData("key")} Project Data Mapping Tag`;
   },
   fields: [
     {

@@ -31,7 +31,7 @@ function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
     history.push(`/settings/data_mapping/projects/details/${rowData.original._id}`);
   };
 
-  const noDataMessage = "No Project Data Mappings have been configured";
+  const noDataMessage = "No Project Data Mapping Tags have been configured";
 
   const createProjectTag = () => {
     toastContext.showOverlayPanel(
@@ -64,8 +64,8 @@ function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
       body={getProjectTagsTable()}
       metadata={projectDataMappingMetadata}
       titleIcon={faTags}
-      title={"Project Data Mappings"}
-      type={"Project Data Mappings"}
+      title={"Project Data Mapping Tags"}
+      type={"Project Data Mapping Tags"}
       className={"px-2 pb-2"}
     />
   );
