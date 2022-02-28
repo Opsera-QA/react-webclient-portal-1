@@ -13,6 +13,9 @@ import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationB
 import pipelineActions from "components/workflow/pipeline-actions";
 import PipelineWorkflowTabBar from "components/workflow/pipelines/pipeline_details/PipelineWorkflowTabBar";
 
+let internalRefreshCount = 1;
+const refreshInterval = 15000;
+
 function PipelineDetailView() {
   const { tab, id } = useParams();
   const toastContext = useContext(DialogToastContext);
@@ -22,6 +25,8 @@ function PipelineDetailView() {
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [editItem, setEditItem] = useState(false);
   const [refreshCount, setRefreshCount] = useState(0);
+  const [isPipelineRunning, setIsPipelineRunning] = useState(false);
+  const [refreshTimer, setRefreshTimer] = useState(null);
 
   /* Role based Access Controls */
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
@@ -48,8 +53,19 @@ function PipelineDetailView() {
     return () => {
       source.cancel();
       isMounted.current = false;
+
+      if (refreshTimer) {
+        console.log("clearing refresh timer");
+        clearTimeout(refreshTimer);
+      }
     };
   }, []);
+
+  useEffect(() => {
+    if (pipeline) {
+      evaluatePipelineStatus(pipeline);
+    }
+  }, [pipeline]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -75,6 +91,10 @@ function PipelineDetailView() {
 
   const getPipeline = async (cancelSource = cancelTokenSource) => {
     try {
+      if (isMounted?.current !== true) {
+        return;
+      }
+
       const newRefreshCount = refreshCount + 1;
       setRefreshCount(newRefreshCount);
 
@@ -105,6 +125,48 @@ function PipelineDetailView() {
     if (param) {
       setEditItem(param);
     }
+  };
+
+  const evaluatePipelineStatus = (pipeline) => {
+    console.log("evaluating pipeline status function");
+    if (!pipeline || Object.entries(pipeline).length === 0) {
+      return;
+    }
+
+    const pipelineStatus = pipeline?.workflow?.last_step?.status;
+
+    if (!pipelineStatus || pipelineStatus === "stopped") {
+      const isPaused = pipeline?.workflow?.last_step?.running?.paused;
+
+      if (isPipelineRunning === true) {
+        const stoppedMessage = "The Pipeline has completed running. Please check the activity logs for details.";
+        const pausedMessage = "The Pipeline has been paused. Please check the activity logs for details.";
+
+        toastContext.showInformationToast(isPaused === true ? pausedMessage : stoppedMessage, 20);
+        setIsPipelineRunning(false);
+      }
+
+      console.log("Pipeline stopped, no need to schedule refresh. Status: ", isPaused === true ? "Paused" : pipelineStatus);
+      return;
+    }
+
+    if (refreshTimer) {
+      clearTimeout(refreshTimer);
+    }
+
+    if (isPipelineRunning !== true) {
+      toastContext.showInformationToast("The Pipeline is currently running. Please check the activity logs for details.", 20);
+      setIsPipelineRunning(true);
+    }
+
+    console.log(`Scheduling status check followup for Pipeline: ${pipeline._id}, counter: ${internalRefreshCount}, interval: ${refreshInterval} `);
+    const newRefreshTimer = setTimeout(async function() {
+      internalRefreshCount++;
+      console.log("running pipeline refresh interval");
+      await getPipeline();
+    }, refreshInterval);
+
+    setRefreshTimer(newRefreshTimer);
   };
 
   const getCurrentView = () => {
