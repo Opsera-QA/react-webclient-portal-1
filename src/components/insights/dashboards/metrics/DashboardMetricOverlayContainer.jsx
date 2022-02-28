@@ -21,11 +21,6 @@ import {dashboardMetricActions} from "components/insights/dashboards/metrics/das
 import DashboardMetricEditorPanelContainer
   from "components/common/panels/detail_panel_container/dashboard_metrics/DashboardMetricEditorPanelContainer";
 
-// TODO: This is temporary until kpis are updated to follow new standards
-const SUPPORTED_NEW_METRICS =[
-  kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS,
-];
-
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer({
   kpiConfiguration,
@@ -95,17 +90,17 @@ function DashboardMetricOverlayContainer({
 
 
   const getMetricEditorPanel = () => {
-    switch (kpiConfiguration?.kpi_identifier) {
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS:
-        return (
-          <SdlcDurationByStageMetricsEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-          />
-        );
-    }
+    // switch (kpiConfiguration?.kpi_identifier) {
+    //   case kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS:
+    //     return (
+    //       <SdlcDurationByStageMetricsEditorPanel
+    //         metricModel={metricModel}
+    //         metricFilterModel={metricFilterModel}
+    //         setMetricFilterModel={setMetricFilterModel}
+    //         unpackedFilterData={unpackedFilterData}
+    //       />
+    //     );
+    // }
   };
 
   const getBody = () => {
@@ -144,7 +139,7 @@ function DashboardMetricOverlayContainer({
   };
 
   // TODO: This is temporary for compatibility reasons.
-  if (SUPPORTED_NEW_METRICS.includes(kpiConfiguration?.kpi_identifier) !== true) {
+  if (getMetricEditorPanel() == null) {
     return (
       <KpiSettingsForm
         kpiConfiguration={kpiConfiguration}
