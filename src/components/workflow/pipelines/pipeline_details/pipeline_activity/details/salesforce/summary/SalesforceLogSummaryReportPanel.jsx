@@ -48,10 +48,21 @@ function SalesforceLogSummaryReportPanel({ pipelineTaskData }) {
 
       if (deployResult != null) {
         setSalesforceDeployResultsModel(new Model(deployResult, salesforceSummaryLogDeployResultMetadata, false));
-        const successfulTests = deployResult?.details?.runTestResult?.successes;
-        setSuccessfulTests(Array.isArray(successfulTests) ? [...successfulTests] : []);
-        const unsuccessfulTests = deployResult?.details?.runTestResult?.failures;
-        setUnsuccessfulTests(Array.isArray(successfulTests) ? [...unsuccessfulTests] : []);
+        const newSuccessfulTests = deployResult?.details?.runTestResult?.successes;
+
+        if (Array.isArray(newSuccessfulTests)) {
+          newSuccessfulTests.forEach((test) => delete test?.id);
+        }
+
+        setSuccessfulTests(Array.isArray(newSuccessfulTests) ? [...newSuccessfulTests] : []);
+
+        const newUnsuccessfulTests = deployResult?.details?.runTestResult?.failures;
+
+        if (Array.isArray(newUnsuccessfulTests)) {
+          newUnsuccessfulTests.forEach((test) => delete test?.id);
+        }
+
+        setUnsuccessfulTests(Array.isArray(newUnsuccessfulTests) ? [...newUnsuccessfulTests] : []);
         const codeCoverageWarnings = deployResult?.details?.runTestResult?.codeCoverageWarnings;
         setCodeCoverageWarnings(Array.isArray(codeCoverageWarnings) ? [...codeCoverageWarnings] : []);
       }
@@ -94,7 +105,13 @@ function SalesforceLogSummaryReportPanel({ pipelineTaskData }) {
     );
   };
 
-  if (pipelineTaskData == null || isLoading) {
+  if (
+    pipelineTaskData == null
+    || isLoading
+    || !Array.isArray(successfulTests)
+    || !Array.isArray(unsuccessfulTests)
+    || !Array.isArray(codeCoverageWarnings)
+  ) {
     return (
       <LoadingDialog
         message={"Loading Pipeline"}
