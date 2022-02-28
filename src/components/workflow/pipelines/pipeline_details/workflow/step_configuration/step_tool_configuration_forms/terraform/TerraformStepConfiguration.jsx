@@ -112,11 +112,6 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       <TerraformCustomParametersInput
         model={terraformStepConfigurationModel}
         setModel={setTerraformStepConfigurationModel}
-        fieldName={"saveInputParameters"}
-      />
-      <TerraformCustomParametersInput
-        model={terraformStepConfigurationModel}
-        setModel={setTerraformStepConfigurationModel}
         fieldName={"saveEnvironmentVariables"}
       />
       <TerraformCustomParametersInput
