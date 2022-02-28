@@ -32,7 +32,7 @@ MetricTagFilterInput.propTypes = {
   metricFilterModel: PropTypes.object,
   setMetricFilterModel: PropTypes.func,
   metricModel: PropTypes.object,
-  fieldName: PropTypes.func,
+  fieldName: PropTypes.string,
 };
 
 MetricTagFilterInput.defaultProps = {
