@@ -5,11 +5,11 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 function AcrPushToolTypeSelectInput({ dataObject, setDataObject, isLoading, disabled }) {
   const ACTION_LIST = [
     {
-      name: "Azure V2",
+      name: "Azure Tool",
       value: "azure",
     },
     {
-      name: "Azure Legacy",
+      name: "Legacy Azure Connector",
       value: "azure_account",
     },
   ];
