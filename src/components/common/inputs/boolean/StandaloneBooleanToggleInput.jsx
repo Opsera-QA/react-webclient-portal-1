@@ -14,7 +14,7 @@ function StandaloneBooleanToggleInput({ fieldId, checkedValue, fieldLabel, setDa
         disabled={disabled}
         label={fieldLabel}
         onChange={() => {
-          setDataFunction(!checkedValue);
+          setDataFunction(fieldId, !checkedValue);
         }}
       />      
     </InputContainer>    
