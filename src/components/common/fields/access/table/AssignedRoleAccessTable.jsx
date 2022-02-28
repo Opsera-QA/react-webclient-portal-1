@@ -6,13 +6,13 @@ import FilterContainer from "components/common/table/FilterContainer";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import {parseRoleDefinitionsIntoRbacTableRows} from "components/common/helpers/role-helpers";
-import roleDefinitionMetadata from "components/common/fields/access/table/role-definition-metadata";
 import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
 import CustomTable from "components/common/table/CustomTable";
+import {accessRoleDefinitionMetadata} from "components/common/fields/access/table/accessRoleDefinition.metadata";
 
 function AssignedRoleAccessTable({ roleAccessDefinitions, loadData, isLoading }) {
   const { getAccessRoleData, isSassUser } = useContext(AuthContext);
-  const fields = roleDefinitionMetadata?.fields;
+  const fields = accessRoleDefinitionMetadata?.fields;
   const [userRoleAccess, setUserRoleAccess] = useState(undefined);
   const [accessRoles, setAccessRoles] = useState(undefined);
   const isMounted = useRef(false);
@@ -84,7 +84,7 @@ function AssignedRoleAccessTable({ roleAccessDefinitions, loadData, isLoading })
       loadData={loadData}
       isLoading={isLoading}
       body={getRoleDefinitionTable()}
-      metadata={roleDefinitionMetadata}
+      metadata={accessRoleDefinitionMetadata}
       titleIcon={faHandshake}
       title={"Assigned Role Access"}
       showBorder={false}

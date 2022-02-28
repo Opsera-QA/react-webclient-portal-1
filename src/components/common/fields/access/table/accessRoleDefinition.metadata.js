@@ -1,4 +1,4 @@
-const roleDefinitionMetadata = {
+export const accessRoleDefinitionMetadata = {
   idProperty: "_id",
   type: "Role Definition",
   fields: [
@@ -57,5 +57,3 @@ const roleDefinitionMetadata = {
     allowedRoles: []
   }
 };
-
-export default roleDefinitionMetadata;

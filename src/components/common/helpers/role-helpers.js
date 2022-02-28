@@ -103,7 +103,7 @@ export const isUserOrSassUser = (accessRoleData) => {
 };
 
 export const ACCESS_ROLE_PERMISSION_MESSAGES = {
-  ADMINISTRATOR: "Administrator User Role: Your account has full access to the Opsera platform and its settings.",
+  ADMINISTRATOR: "Site Administrator User Role: Your account has full access to the Opsera platform and its settings.",
   POWER_USER: "Power User Role: Your account has elevated privileges to the Opsera platform.",
   USER: "Standard User Role: Your account has standard user access to the Opsera platform and inherits access based on individual item access roles.",
   READ_ONLY: "Read Only Role: Your account does not have any privileges associated with the Opsera platform and can only view some data.",
