@@ -105,7 +105,15 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
   const getOrganizationsTabInformation = () => {
     if (doesToolSupportTab(toolIdentifier, TOOL_DETAIL_PANEL_TABS.ORGANIZATIONS) === true) {
       return (
-        <li><b>Organizations</b> - Manage Terraform cloud organizations.</li>
+        <li><b>Organizations</b> - Manage Terraform Cloud Organizations.</li>
+      );
+    }
+  };
+
+  const getWorkspacesTabInformation = () => {
+    if (doesToolSupportTab(toolIdentifier, TOOL_DETAIL_PANEL_TABS.WORKSPACES) === true) {
+      return (
+        <li><b>Workspaces</b> - Manage Terraform Cloud Organization Workspaces.</li>
       );
     }
   };
@@ -131,6 +139,7 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
               {getLogsTabInformation()}
               {getPathsTabInformation()}
               {getOrganizationsTabInformation()}
+              {getWorkspacesTabInformation()}
               <li><b>Usage</b> - View and navigate to all pipelines in which this tool is being used.</li>
             </ul>
           </div>
