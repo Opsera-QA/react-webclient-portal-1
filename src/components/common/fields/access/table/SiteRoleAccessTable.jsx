@@ -8,13 +8,13 @@ import {AuthContext} from "contexts/AuthContext";
 import {
   parseRoleDefinitionsIntoSiteRoleTableRows
 } from "components/common/helpers/role-helpers";
-import roleDefinitionMetadata from "components/common/fields/access/table/role-definition-metadata";
 import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
 import CustomTable from "components/common/table/CustomTable";
+import {siteRoleDefinitionMetadata} from "components/common/fields/access/table/siteRoleDefinition.metadata";
 
 function SiteRoleAccessTable({ roleAccessDefinitions, loadData, isLoading }) {
   const { getAccessRoleData, isSassUser } = useContext(AuthContext);
-  const fields = roleDefinitionMetadata?.fields;
+  const fields = siteRoleDefinitionMetadata?.fields;
   const [userRoleAccess, setUserRoleAccess] = useState(undefined);
   const [accessRoles, setAccessRoles] = useState(undefined);
   const isMounted = useRef(false);
@@ -84,7 +84,7 @@ function SiteRoleAccessTable({ roleAccessDefinitions, loadData, isLoading }) {
       loadData={loadData}
       isLoading={isLoading}
       body={getRoleDefinitionTable()}
-      metadata={roleDefinitionMetadata}
+      metadata={siteRoleDefinitionMetadata}
       titleIcon={faServer}
       title={"Site Role Access"}
       showBorder={false}

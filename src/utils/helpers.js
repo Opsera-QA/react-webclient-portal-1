@@ -143,18 +143,3 @@ export function renderTooltip(props) {
     </Tooltip>
   );
 }
-
-export function defineUserRole(userRole) {
-  switch (userRole) {
-  case "administrator":
-    return "Administrator";
-  case "free_trial":
-    return "Free Trial User";
-  case "power_user":
-    return "Power User";
-  case "user":
-    return "Standard User";
-  default:
-    return "Read Only User";
-  }
-}
