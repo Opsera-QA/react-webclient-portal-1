@@ -166,6 +166,18 @@ const TerraformStepFormMetadata = {
       label: "Environment Variables",
       id: "environmentVariables"
     },
+    {
+      label: "Use Variable File",
+      id: "isVariableFile"
+    },
+    {
+      label: "Packer Variables Files",
+      id: "inputFilePaths"
+    },
+    {
+      label: "Input File Name",
+      id: "inputFileName"
+    },
   ],
   fieldsAlt: [
     {
@@ -339,6 +351,18 @@ const TerraformStepFormMetadata = {
       label: "Environment Variables",
       id: "environmentVariables"
     },
+    {
+      label: "Use Variable File",
+      id: "isVariableFile"
+    },
+    {
+      label: "Packer Variables Files",
+      id: "inputFilePaths"
+    },
+    {
+      label: "Input File Name",
+      id: "inputFileName"
+    },
   ],
   newObjectFields: {
     toolActionType: "EXECUTE",
@@ -383,7 +407,10 @@ const TerraformStepFormMetadata = {
     customScript: false,
     terraformCommands: "",
     saveEnvironmentVariables: false,
-    environmentVariables: []
+    environmentVariables: [],
+    isVariableFile: false,
+    inputFilePaths: [],
+    inputFileName: "",
   }
 };
 
