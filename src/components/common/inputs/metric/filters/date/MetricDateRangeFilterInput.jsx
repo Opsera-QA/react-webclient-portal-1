@@ -10,6 +10,7 @@ function MetricDateRangeFilterInput(
     metricFilterModel,
     setMetricFilterModel,
     metricModel,
+    fieldName,
   }) {
   return (
     <SupportedMetricFilterInputContainer
@@ -19,7 +20,7 @@ function MetricDateRangeFilterInput(
       <DateRangeInput
         dataObject={metricFilterModel}
         setDataObject={setMetricFilterModel}
-        fieldName={"date"}
+        fieldName={fieldName}
       />
     </SupportedMetricFilterInputContainer>
   );
@@ -29,6 +30,11 @@ MetricDateRangeFilterInput.propTypes = {
   metricFilterModel: PropTypes.object,
   setMetricFilterModel: PropTypes.func,
   metricModel: PropTypes.object,
+  fieldName: PropTypes.string,
+};
+
+MetricDateRangeFilterInput.defaultProps = {
+  fieldName: "date",
 };
 
 export default MetricDateRangeFilterInput;
