@@ -54,7 +54,7 @@ function MetricDataPointEvaluationRuleInputBase(
     updateRuleFunction(fieldName, newModel?.getPersistData());
   };
 
-  const toggleRule = (newValue) => {
+  const toggleRule = (fieldName, newValue) => {
     ruleModel?.setData("enabled", newValue);
     updateRuleFunctionRow(ruleModel);
   };

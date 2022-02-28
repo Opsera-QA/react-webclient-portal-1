@@ -254,6 +254,10 @@ function OctopusCustomParametersInput({
     );
   };
 
+  const setSlotSettingDataFunction = (fieldName, newValue) => {
+    setSlotSetting(newValue);
+  };
+
   const getAdditionalFields = () => {
     if (variableType == "") {
       return null;
@@ -273,7 +277,7 @@ function OctopusCustomParametersInput({
           fieldId="slotSetting"
           checkedValue={slotSetting}
           fieldLabel="Slot Setting"
-          setDataFunction={setSlotSetting}
+          setDataFunction={setSlotSettingDataFunction}
           disabled={disabled}
         />        
       );
