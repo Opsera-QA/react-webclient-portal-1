@@ -111,7 +111,6 @@ function PipelineActivityLogTreeTable(
     const newTree = pipelineLogHelpers.addRunNumberToPipelineTree(pipelineTree?.current, pipelineRunCount);
 
     if (newTree) {
-      setCurrentRunNumber(pipelineRunCount);
       pipelineTree.current = [...newTree];
       setLatestRunNumber(pipelineRunCount);
     }
