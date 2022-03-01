@@ -25,8 +25,8 @@ function FilterBar(
     metadata,
   }) {
   return (
-    <div className={"inline-filter-input"}>
-      <div className="my-1 filter-bar">
+    <div className="my-1 inline-filter-input">
+      <div className="d-flex my-auto">
         <div className="d-flex my-auto">
           <NewRecordButton
             className={"mr-2 my-auto text-nowrap"}
