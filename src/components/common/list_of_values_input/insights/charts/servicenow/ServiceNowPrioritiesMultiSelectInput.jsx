@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import chartsActions from "components/insights/charts/charts-actions";
+import IconBase from "components/common/icons/IconBase";
 
 function ServiceNowPrioritiesMultiSelectInput({
   placeholderText,
@@ -59,7 +59,7 @@ function ServiceNowPrioritiesMultiSelectInput({
   if (!isLoading && (priorities == null || priorities.length === 0)) {
     return (
       <div className="form-text text-muted p-2">
-        <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+        <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
         No Priorities available.
       </div>
     );

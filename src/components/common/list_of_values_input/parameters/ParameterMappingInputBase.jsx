@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, OverlayTrigger, Popover } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBracketsCurly, faInfoCircle, faTimes } from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -12,6 +11,7 @@ import axios from "axios";
 import ReactJson from "react-json-view";
 import InfoText from "../../inputs/info_text/InfoText";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import IconBase from "components/common/icons/IconBase";
 
 const SAMPLE_DATA = {
   subnet_list: [
@@ -281,7 +281,7 @@ function ParameterMappingInputBase({
     return (
       <Button variant="link" onClick={() => deleteProperty(index)}>
         <span>
-          <FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth />
+          <IconBase className={"danger-red"} icon={faTimes} />
         </span>
       </Button>
     );
@@ -334,10 +334,10 @@ function ParameterMappingInputBase({
           </Popover>
         }
       >
-        <FontAwesomeIcon
+        <IconBase
           icon={faInfoCircle}
           className="fa-pull-right pointer pr-2 mt-1 pl-0"
-          onClick={() => document.body.click()}
+          onClickFunction={() => document.body.click()}
         />
       </OverlayTrigger>
     );
@@ -347,7 +347,7 @@ function ParameterMappingInputBase({
     return (
       <div className="pl-2 pt-2 d-flex justify-content-between">
         <div>
-          <FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-2" />
+          <IconBase icon={titleIcon} className={"mr-2"} />
           {titleText}
         </div>
         {getHelpText()}

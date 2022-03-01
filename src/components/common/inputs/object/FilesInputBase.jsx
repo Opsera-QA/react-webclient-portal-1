@@ -208,7 +208,7 @@ function FilesInputBase({
   const getTitleBar = () => {    
     return (
       <div className="px-2 pt-2 d-flex justify-content-between">
-        <div><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-2"/>{titleText}</div>        
+        <div><IconBase icon={titleIcon} className={"mr-2"}/>{titleText}</div>
       </div>
     );
   };

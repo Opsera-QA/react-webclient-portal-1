@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faTimes,
 } from "@fortawesome/pro-light-svg-icons";
@@ -10,6 +9,7 @@ import Row from "react-bootstrap/Row";
 import OctopusTenantStandaloneSelectInput
   from "components/common/list_of_values_input/tools/octopus/tenants/OctopusTenantStandaloneSelectInput";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import IconBase from "components/common/icons/IconBase";
 
 function OctopusTenantInputRow(
   {
@@ -28,7 +28,7 @@ function OctopusTenantInputRow(
     if (disabled !== true) {
       return (
         <Button variant="link" onClick={() => deleteRow()}>
-          <span><FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/></span>
+          <span><IconBase className={"danger-red"} icon={faTimes}/></span>
         </Button>
       );
     }
