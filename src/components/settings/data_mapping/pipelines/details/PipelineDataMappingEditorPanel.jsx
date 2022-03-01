@@ -9,6 +9,8 @@ import Col from "react-bootstrap/Col";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
+import PipelineMockWorkflowEditorPanel
+  from "components/common/metrics/mock_pipeline/workflow/PipelineMockWorkflowEditorPanel";
 
 function PipelineDataMappingEditorPanel(
   {
@@ -74,6 +76,13 @@ function PipelineDataMappingEditorPanel(
             fieldName={"externalId"}
             dataObject={pipelineDataMappingModel}
             setDataObject={setPipelineDataMappingModel}
+          />
+        </Col>
+        <Col xs={12}>
+          <PipelineMockWorkflowEditorPanel
+            model={pipelineDataMappingModel}
+            setModel={setPipelineDataMappingModel}
+            fieldName={"workflow"}
           />
         </Col>
         <Col xs={12}>

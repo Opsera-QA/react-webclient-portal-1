@@ -7,37 +7,37 @@ import {
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import IconBase from "components/common/icons/IconBase";
-import PipelineMappingJobTypeSelectInput
-  from "components/common/metrics/pipeline_mapper/jobs/PipelineMappingJobTypeSelectInput";
+import PipelineMockStepTypeSelectInput
+  from "components/common/metrics/mock_pipeline/steps/PipelineMockStepTypeSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PipelineMappingEnvironmentInput
-  from "components/common/metrics/pipeline_mapper/environments/PipelineMappingEnvironmentInput";
+  from "components/common/metrics/mock_pipeline/environments/PipelineMappingEnvironmentInput";
 import TagManager from "components/common/inputs/tags/TagManager";
 import modelHelpers from "components/common/model/modelHelpers";
-import {pipelineMappingJobMetadata} from "components/common/metrics/pipeline_mapper/jobs/pipelineMappingJob.metadata";
+import {pipelineMockStepMetadata} from "components/common/metrics/mock_pipeline/steps/pipelineMockStepMetadata";
 
-function PipelineMappingJobEditorPanel(
+function PipelineMockStepEditorPanel(
   { 
     disabled,
-    updateJobFunction,
-    job,
-    deleteJobFunction,
+    updateStepFunction,
+    pipelineStep,
+    deleteStepFunction,
   }) {
-  const [jobModel, setJobModel] = useState(undefined);
+  const [stepModel, setStepModel] = useState(undefined);
 
   useEffect(() => {
-    const parsedModel = modelHelpers.parseObjectIntoModel(job, pipelineMappingJobMetadata);
+    const parsedModel = modelHelpers.parseObjectIntoModel(pipelineStep, pipelineMockStepMetadata);
 
     if (parsedModel) {
-      setJobModel(parsedModel);
+      setStepModel(parsedModel);
     }
-  }, [job]);
+  }, [pipelineStep]);
 
   // make standalone component
   const getDeletePropertyButton = () => {
     if (disabled !== true) {
       return (
-        <Button variant="link" onClick={deleteJobFunction}>
+        <Button variant="link" onClick={deleteStepFunction}>
           <span>
             <IconBase
               className={"danger-red"}
@@ -50,14 +50,15 @@ function PipelineMappingJobEditorPanel(
   };
 
   const setDataFunction = (newModel) => {
-    setJobModel({...newModel});
-    updateJobFunction(newModel);
+    setStepModel({...newModel});
+    updateStepFunction(newModel);
   };
 
-  if (jobModel == null) {
+  if (stepModel == null) {
     return null;
   }
 
+  // TODO: Make sure all required inputs are captured. Once that is done we may need to update the actual schema in Node if it does not match.
   return (
     <div className={"d-flex py-2"}>
       <Col sm={11}>
@@ -65,28 +66,28 @@ function PipelineMappingJobEditorPanel(
           <Col xs={12}>
             <TextInputBase
               fieldName={"name"}
-              dataObject={jobModel}
+              dataObject={stepModel}
               setDataObject={setDataFunction}
             />
           </Col>
           <Col xs={12}>
-            <PipelineMappingJobTypeSelectInput
+            <PipelineMockStepTypeSelectInput
               fieldName={"type"}
-              model={jobModel}
+              model={stepModel}
               setModel={setDataFunction}
             />
           </Col>
           <Col xs={12}>
             <PipelineMappingEnvironmentInput
               fieldName={"environments"}
-              model={jobModel}
+              model={stepModel}
               setModel={setDataFunction}
             />
           </Col>
           <Col xs={12}>
             <TagManager
               fieldName={"tags"}
-              model={jobModel}
+              model={stepModel}
               setModel={setDataFunction}
               type={"environment"}
             />
@@ -94,7 +95,7 @@ function PipelineMappingJobEditorPanel(
           <Col xs={12}>
             <TextInputBase
               fieldName={"description"}
-              dataObject={jobModel}
+              dataObject={stepModel}
               setDataObject={setDataFunction}
             />
           </Col>
@@ -107,11 +108,11 @@ function PipelineMappingJobEditorPanel(
   );
 }
 
-PipelineMappingJobEditorPanel.propTypes = {
+PipelineMockStepEditorPanel.propTypes = {
   disabled: PropTypes.bool,
-  deleteJobFunction: PropTypes.func,
-  updateJobFunction: PropTypes.func,
-  job: PropTypes.object,
+  deleteStepFunction: PropTypes.func,
+  updateStepFunction: PropTypes.func,
+  pipelineStep: PropTypes.object,
 };
 
-export default PipelineMappingJobEditorPanel;
+export default PipelineMockStepEditorPanel;
