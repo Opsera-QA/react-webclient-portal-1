@@ -177,7 +177,7 @@ function ToolReadOnlyDetailPanel({ toolModel, loadData, isLoading, tab }) {
       case "projects":
         return <ToolProjectsPanel toolData={toolModel} isLoading={isLoading} loadData={loadData} />;
       case "usage":
-        return <ToolUsagePanel toolData={toolModel} />;
+        return <ToolUsagePanel closePanelFunction={closePanelFunction} toolData={toolModel} />;
       case "vault":
         return <ToolVaultSummaryPanel toolModel={toolModel} />;
       case "repositories":
