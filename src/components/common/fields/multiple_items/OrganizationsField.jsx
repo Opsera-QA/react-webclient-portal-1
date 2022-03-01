@@ -4,7 +4,7 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 import {faSitemap} from "@fortawesome/pro-light-svg-icons";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: Pull names with IDs
 function OrganizationsField({dataObject, fieldName, className, showLabel}) {
@@ -33,7 +33,7 @@ function OrganizationsField({dataObject, fieldName, className, showLabel}) {
       parsedOrganizations.map((organization, i) => {
         return (
           <span key={i} className={`mx-1 mb-1 badge badge-light item-badge`}>
-            <FontAwesomeIcon icon={faSitemap} fixedWidth className="mr-1"/>{`${organization}`}
+            <IconBase icon={faSitemap} className={"mr-1"}/>{`${organization}`}
           </span>
         );
       })

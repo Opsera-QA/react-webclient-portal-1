@@ -1,10 +1,8 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import FieldLabel from "components/common/fields/FieldLabel";
-import {Button} from "react-bootstrap";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function JiraSecondaryUsersField({ dataObject, fieldName, jiraUsers, isLoading }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -16,7 +14,7 @@ function JiraSecondaryUsersField({ dataObject, fieldName, jiraUsers, isLoading }
     }
 
     if (isLoading) {
-      return <span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>{dataObject.getData(fieldName)}</span>;
+      return <span><LoadingIcon className={"mr-1"}/>{dataObject.getData(fieldName)}</span>;
     }
 
     if (jiraUsers != null && jiraUsers.length > 0) {

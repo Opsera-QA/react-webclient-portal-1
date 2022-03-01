@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -7,6 +6,7 @@ import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import axios from "axios";
 import TagsCloudBase from "components/common/fields/tags/cloud/TagsCloudBase";
 import {getSingularOrPluralString} from "components/common/helpers/string-helpers";
+import IconBase from "components/common/icons/IconBase";
 
 function AllTagsCloud() {
   const { getAccessToken } = useContext(AuthContext);
@@ -127,7 +127,7 @@ function AllTagsCloud() {
     return (
       <div className="form-text text-muted ml-3">
         <div>
-          <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          <span><IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
           No Tags Found</span>
         </div>
       </div>
