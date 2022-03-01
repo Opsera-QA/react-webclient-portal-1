@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {Button, Form, InputGroup} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTimes} from "@fortawesome/free-solid-svg-icons";
 import NewOnboardLdapUserModal from "./NewOnboardLdapUserModal";
-
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: If this can be useful elsewhere, make more generic
 function UserInput({field, setData, formData}) {
@@ -60,14 +59,15 @@ function UserInput({field, setData, formData}) {
                 {user.administrator !== true &&
                 <span className="ml-2" onClick={() => {
                   removeUser(i);
-                }}><FontAwesomeIcon icon={faTimes} fixedWidth/></span>
+                }}><IconBase icon={faTimes} /></span>
                 }
               </Button>
             ))}
             <div className="text-right">
               <Button variant="primary" size="sm" onClick={() => setShowCreateUserModal(true)}
-                      className="ml-3"><FontAwesomeIcon
-                icon={faPlus}/><span className="ml-2">Add LDAP User</span></Button>
+                      className="ml-3">
+                <IconBase icon={faPlus}/>
+                <span className="ml-2">Add LDAP User</span></Button>
             </div>
           </div>
           <Form.Control.Feedback type="invalid">

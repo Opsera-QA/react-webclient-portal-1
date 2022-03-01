@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { Row, Col } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCogs, faUserCog } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import IconBase from "components/common/icons/IconBase";
 
 class AdminReportRegistration extends Component {
   static contextType = AuthContext;
@@ -52,14 +52,14 @@ class AdminReportRegistration extends Component {
             </Row>
             <Row>
               <Col xs={12} md={6} lg={6}>
-                <a href="#/"><FontAwesomeIcon icon={faCogs} fixedWidth /> System Based Index Pattern Editor</a>:
+                <a href="#/"><IconBase icon={faCogs} /> System Based Index Pattern Editor</a>:
                 <div style={{ margin: 0, paddingTop: 5 }}>UI to copy and paste in a JSON based Index Pattern exported from the Master Kibana instance for a specific system: Jenkins, Sonar, etc.
                   These Index Patterns will be used during individual customer report enablement.  We will store attributes around them such as
                   the version of Kibana/ElasticSearch stored.</div>
               </Col>
 
               <Col xs={12} md={6} lg={6}>
-                <a href="#/"><FontAwesomeIcon icon={faUserCog} fixedWidth /> Customer Kibana Configuration Editor</a>:
+                <a href="#/"><IconBase icon={faUserCog} /> Customer Kibana Configuration Editor</a>:
                 <div style={{ margin: 0, paddingTop: 5 }}>UI to select the specific customer being onboarded and register their new Kibana instance information for the system.  This includes the
                   instance ID/Name, URL/DNS, and the service account used for the system to automatically register Index Patterns for reporting.</div>
               </Col>

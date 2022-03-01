@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLaptopMedical, faPlay, faSpinner, faStop } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
@@ -10,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import Model from "../../core/data_model/model";
 import gitTasksMetadata from "./git-tasks-metadata";
 import taskActions from "components/tasks/task.actions";
+import IconBase from "components/common/icons/IconBase";
 
 function AKSActionButtons({ gitTasksData, handleClose, disable, className }) {
   let toastContext = useContext(DialogToastContext);
@@ -184,14 +184,14 @@ function AKSActionButtons({ gitTasksData, handleClose, disable, className }) {
     if (taskFinished) {
       return (
         <span>
-          <FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth />
+          <IconBase icon={faPlay} className={"mr-1"} />
           Run Task
         </span>
       );
     }
     return (
       <span>
-        <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
+        <IconBase isLoading={true} className={"mr-1"} />
         Running Task
       </span>
     );
@@ -201,14 +201,14 @@ function AKSActionButtons({ gitTasksData, handleClose, disable, className }) {
     if (isCanceling) {
       return (
         <span>
-          <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
+        <IconBase isLoading={true} className={"mr-1"} />
           Cancelling
         </span>
       );
     }
     return (
       <span>
-        <FontAwesomeIcon icon={faStop} className="mr-1" fixedWidth />
+        <IconBase icon={faStop} className={"mr-1"} />
         Cancel Task
       </span>
     );

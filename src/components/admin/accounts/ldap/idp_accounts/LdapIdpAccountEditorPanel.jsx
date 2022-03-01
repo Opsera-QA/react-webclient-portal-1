@@ -2,7 +2,6 @@ import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCogs} from "@fortawesome/pro-light-svg-icons";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import {AuthContext} from "contexts/AuthContext";
@@ -13,6 +12,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import IconBase from "components/common/icons/IconBase";
 
 function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountData, setLdapIdpAccountData, setShowIdpEditPanel, authorizedActions }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -102,7 +102,7 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
           {ldapIdpAccountDataDto.isNew() && showWarningMessage && <WarningDialog setWarningMessage={setShowWarningMessage} autoCloseDialog={false} warningMessage="IDP Account Creation is not currently available" />}
           {!ldapIdpAccountDataDto.isNew() && <div className="mb-2 text-muted">
             <TooltipWrapper innerText={"Edit this Account"}>
-              <FontAwesomeIcon icon={faCogs} className="pointer float-right ml-3" onClick={() => {
+              <IconBase icon={faCogs} className="pointer float-right ml-3" onClickFunction={() => {
                 setShowIdpEditPanel(false);
               }}/>
             </TooltipWrapper>
