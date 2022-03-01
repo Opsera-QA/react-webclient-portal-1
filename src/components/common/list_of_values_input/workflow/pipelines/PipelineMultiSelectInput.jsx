@@ -7,10 +7,10 @@ import PipelineSummaryCard from "../../../../workflow/pipelines/pipeline_details
 import pipelineMetadata from "../../../../workflow/pipelines/pipeline_details/pipeline-metadata";
 import Model from "../../../../../core/data_model/model";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import axios from 'axios';
+import IconBase from "components/common/icons/IconBase";
 
 function PipelineMultiSelectInput({ currentPipelineId, visible, fieldName, dataObject, setDataObject, disabled}) {
   const toastContext = useContext(DialogToastContext);
@@ -117,7 +117,7 @@ function PipelineMultiSelectInput({ currentPipelineId, visible, fieldName, dataO
   if (!isLoading && (pipelines == null || pipelines.length === 0)) {
     return (
       <div className="form-text text-muted p-2">
-        <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+        <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
         No other pipelines have been registered. Please go to <Link to="/workflow">Pipelines</Link> and add another pipeline in order to
         configure a child pipeline step.
       </div>

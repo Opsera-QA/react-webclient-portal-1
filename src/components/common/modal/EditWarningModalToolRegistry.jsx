@@ -2,8 +2,8 @@ import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import {Row, Col, Button, Modal } from "react-bootstrap";
 import { faExclamationTriangle, faSpinner } from "@fortawesome/pro-light-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { DialogToastContext } from "../../../contexts/DialogToastContext";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 // TODO: Delete
 function EditWarningModalToolRegistry({ dataObject, showModal, setShowModal, handleEdit,handleClose }) {
@@ -33,7 +33,7 @@ function EditWarningModalToolRegistry({ dataObject, showModal, setShowModal, han
   };
   const getLabel = () => {
     if (editing) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Editing {dataObject.getType()}</span>);
+      return (<span><LoadingIcon className={"mr-2"}/>Editing {dataObject.getType()}</span>);
     }
 
     return (<span>Edit {dataObject.getType()}</span>);

@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import { RegistryPopover } from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/utility";
 import { OverlayTrigger} from "react-bootstrap";
 import { faExclamationCircle, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import IconBase from "components/common/icons/IconBase";
 
 function JenkinsSfdcInput({ dataObject, setDataObject, sfdcList, disabled, busy }) {
   const handleDTOChange = (fieldName, selectedOption) => {
@@ -39,7 +39,7 @@ function JenkinsSfdcInput({ dataObject, setDataObject, sfdcList, disabled, busy 
   const footer = () => {
     return (
     <div className="form-text text-muted p-2">
-      <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+      <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
 		  No accounts have been registered for Salesforce. Please go to
       <Link to="/inventory/tools">Tool Registry</Link> and add a Salesforce (SFDC) Account entry
 		  in order to proceed.
