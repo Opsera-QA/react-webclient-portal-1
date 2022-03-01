@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faTools} from "@fortawesome/pro-light-svg-icons";
 import {Link} from "react-router-dom";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
@@ -10,6 +9,7 @@ import axios from "axios";
 import RegistryToolInfoOverlay from "components/common/list_of_values_input/tools/RegistryToolInfoOverlay";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {capitalizeFirstLetter, hasStringValue} from "components/common/helpers/string-helpers";
+import IconBase from "components/common/icons/IconBase";
 
 function RoleRestrictedToolByIdentifierInputBase(
   {
@@ -109,7 +109,7 @@ function RoleRestrictedToolByIdentifierInputBase(
     if (!isLoading && (!Array.isArray(tools) || tools.length === 0) && toolFriendlyName && toolIdentifier) {
       return (
         <div className="form-text text-muted p-2">
-          <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          <IconBase icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
           No {configurationRequired ? "configured " : ""}tools have been registered for <span className="upper-case-first">{toolFriendlyName}</span>.
           Please go to
           <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to

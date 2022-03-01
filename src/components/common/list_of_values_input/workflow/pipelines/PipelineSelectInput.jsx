@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState, useRef} from "react";
 import PropTypes from "prop-types";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
 import Model from "core/data_model/model";
 import axios from 'axios';
@@ -11,6 +10,7 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import IconBase from "components/common/icons/IconBase";
 
 function PipelineSelectInput({ visible, fieldName, dataObject, setDataObject, disabled, fields}) {
   const toastContext = useContext(DialogToastContext);
@@ -97,7 +97,7 @@ function PipelineSelectInput({ visible, fieldName, dataObject, setDataObject, di
     if (!isLoading && (!Array.isArray(pipelines) || pipelines.length === 0)) {
       return (
         <div className="form-text text-muted p-2">
-          <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
           No other pipelines have been registered. Please go to <Link to="/workflow">Pipelines</Link> and add another pipeline in order to
           configure this field.
         </div>

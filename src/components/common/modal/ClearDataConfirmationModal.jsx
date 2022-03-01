@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Row, Col, Button, Modal } from "react-bootstrap";
 import {faTrash} from "@fortawesome/pro-light-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import IconBase from "components/common/icons/IconBase";
 
 function ClearDataConfirmationModal({ showModal, setShowModal, furtherDetails, clearDataFunction }) {
   const handleClose = () => {
@@ -24,7 +24,7 @@ function ClearDataConfirmationModal({ showModal, setShowModal, furtherDetails, c
           <Row>
             <Col sm={1}>
               <div className="mt-2">
-                <FontAwesomeIcon icon={faTrash} size={"lg"} className="danger-red"/>
+                <IconBase icon={faTrash} iconSize={"lg"} className={"danger-red"}/>
               </div>
             </Col>
             <Col sm={11}>
