@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from "react";
 import PropTypes from "prop-types";
-import {Calendar} from "dhx-suite-package";
+import {Calendar} from "@opsera/dhx-suite-package";
 
 // TODO: Add support for date ranges when that instance arises
 function CalendarInputBase({ setDataFunction, data, disabled, showTimePicker, dateFormat, width }) {

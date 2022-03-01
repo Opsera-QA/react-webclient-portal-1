@@ -1,27 +1,47 @@
-import React, { useMemo, useContext } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import projectDataMappingMetadata from "components/settings/data_mapping/projects/projectDataMapping.metadata";
 import { useHistory } from "react-router-dom";
 import NewProjectDataMappingOverlay from "components/settings/data_mapping/projects/NewProjectDataMappingOverlay";
-import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
+import {
+  getTableBooleanIconColumn,
+  getTableTextColumn
+} from "components/common/table/table-column-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTags} from "@fortawesome/pro-light-svg-icons";
 import {getField} from "components/common/metadata/metadata-helpers";
 
-function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
+function ProjectDataMappingsTable(
+  {
+    projectDataMappings,
+    loadData,
+    isLoading,
+    isMounted,
+    projectDataMappingMetadata,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
-  const fields = projectDataMappingMetadata.fields;
+  const [columns, setColumns] = useState([]);
 
-  const columns = useMemo(() => [
-      getTableTextColumn(getField(fields,"tool_identifier")),
-      getTableTextColumn(getField(fields,"key")),
-      getTableBooleanIconColumn(getField(fields,"active")),
-    ],
-    []
-  );
+  useEffect(() => {
+    setColumns([]);
+    loadColumnMetadata(projectDataMappingMetadata);
+  }, [projectDataMappingMetadata]);
+
+  const loadColumnMetadata = () => {
+    if (isMounted?.current === true && Array.isArray(projectDataMappingMetadata?.fields)) {
+      const fields = projectDataMappingMetadata.fields;
+
+      setColumns(
+        [
+          getTableTextColumn(getField(fields,"tool_identifier")),
+          getTableTextColumn(getField(fields,"key")),
+          getTableBooleanIconColumn(getField(fields,"active")),
+        ]
+      );
+    }
+  };
 
   const rowStyling = (row) => {
     return !row["values"].active ? " inactive-row" : "";
@@ -38,6 +58,7 @@ function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
       <NewProjectDataMappingOverlay
         loadData={loadData}
         isMounted={isMounted}
+        projectDataMappingMetadata={projectDataMappingMetadata}
       />
     );
   };
@@ -46,7 +67,7 @@ function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
     return (
       <CustomTable
         columns={columns}
-        data={data}
+        data={projectDataMappings}
         rowStyling={rowStyling}
         noDataMessage={noDataMessage}
         onRowSelect={selectedRow}
@@ -61,21 +82,23 @@ function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
       addRecordFunction={createProjectTag}
       supportSearch={false}
       isLoading={isLoading}
+      showBorder={false}
       body={getProjectTagsTable()}
       metadata={projectDataMappingMetadata}
       titleIcon={faTags}
       title={"Project Data Mapping Tags"}
       type={"Project Data Mapping Tags"}
-      className={"px-2 pb-2"}
+      className={"pb-2"}
     />
   );
 }
 
-ProjectsTagTable.propTypes = {
-  data: PropTypes.array,
+ProjectDataMappingsTable.propTypes = {
+  projectDataMappings: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  isMounted: PropTypes.object
+  isMounted: PropTypes.object,
+  projectDataMappingMetadata: PropTypes.object,
 };
 
-export default ProjectsTagTable;
+export default ProjectDataMappingsTable;

@@ -11,6 +11,8 @@ import MetricDataPointTypeSelectInput
   from "components/common/list_of_values_input/insights/data_points/type/MetricDataPointTypeSelectInput";
 import MetricStrategicCriteriaPanel
   from "components/common/inputs/metric/strategic_criteria/MetricStrategicCriteriaPanel";
+import MetricDataPointVisibilityInput
+  from "components/common/inputs/metric/data_points/visibility/MetricDataPointVisibilityInput";
 
 function KpiDataPointEditorPanel({ dataPointModel, closeEditorPanel }) {
   const [kpiDataPointModel, setKpiDataPointModel] = useState(undefined);
@@ -74,6 +76,13 @@ function KpiDataPointEditorPanel({ dataPointModel, closeEditorPanel }) {
         <Col lg={6}>
           <MetricDataPointTypeSelectInput
             fieldName={"type"}
+            model={kpiDataPointModel}
+            setModel={setKpiDataPointModel}
+          />
+        </Col>
+        <Col lg={12}>
+          <MetricDataPointVisibilityInput
+            fieldName={"visibility"}
             model={kpiDataPointModel}
             setModel={setKpiDataPointModel}
           />

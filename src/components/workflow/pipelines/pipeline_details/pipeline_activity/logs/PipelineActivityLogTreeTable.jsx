@@ -20,14 +20,9 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import CustomTable from "components/common/table/CustomTable";
 
-const refreshInterval = 15000;
-let internalRefreshCount = 1;
-
 function PipelineActivityLogTreeTable(
   {
     pipeline,
-    pipelineStatus,
-    getPipeline,
     pipelineId,
     pipelineRunCount,
   }) {
@@ -38,12 +33,9 @@ function PipelineActivityLogTreeTable(
   const [activityData, setActivityData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const pipelineTree = useRef([]);
-  const [refreshTimer, setRefreshTimer] = useState(null);
   const [currentRunNumber, setCurrentRunNumber] = useState(pipelineRunCount);
   const [currentStepName, setCurrentStepName] = useState(undefined);
   const [latestRunNumber, setLatestRunNumber] = useState(undefined);
-  const [isPipelineRunning, setIsPipelineRunning] = useState(false);
-
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -66,11 +58,6 @@ function PipelineActivityLogTreeTable(
     return () => {
       source.cancel();
       isMounted.current = false;
-
-      if (refreshTimer) {
-        console.log("clearing refresh timer");
-        clearTimeout(refreshTimer);
-      }
     };
   }, []);
 
@@ -105,52 +92,8 @@ function PipelineActivityLogTreeTable(
           throw error;
         }
       });
-
-      evaluatePipelineStatus(pipeline);
     }
   }, [pipeline]);
-
-  const evaluatePipelineStatus = (pipeline) => {
-    console.log("evaluating pipeline status function");
-    if (!pipeline || Object.entries(pipeline).length === 0) {
-      return;
-    }
-
-    const pipelineStatus = pipeline?.workflow?.last_step?.status;
-
-    if (!pipelineStatus || pipelineStatus === "stopped") {
-      const isPaused = pipeline?.workflow?.last_step?.running?.paused;
-
-      if (isPipelineRunning === true) {
-        const stoppedMessage = "The Pipeline has completed running. Please check the activity logs for details.";
-        const pausedMessage = "The Pipeline has been paused. Please check the activity logs for details.";
-
-        toastContext.showInformationToast(isPaused === true ? pausedMessage : stoppedMessage, 20);
-        setIsPipelineRunning(false);
-      }
-
-      console.log("Pipeline stopped, no need to schedule refresh. Status: ", isPaused === true ? "Paused" : pipelineStatus);
-      return;
-    }
-
-    if (refreshTimer) {
-      clearTimeout(refreshTimer);
-    }
-
-    if (isPipelineRunning !== true) {
-      toastContext.showInformationToast("The Pipeline is currently running. Please check the activity logs for details.", 20);
-      setIsPipelineRunning(true);
-    }
-
-    console.log(`Scheduling status check followup for Pipeline: ${pipeline._id}, counter: ${internalRefreshCount}, interval: ${refreshInterval} `);
-    const newRefreshTimer = setTimeout(async function() {
-      internalRefreshCount++;
-      console.log("running pipeline refresh interval");
-      await getPipeline();
-    }, refreshInterval);
-
-    setRefreshTimer(newRefreshTimer);
-  };
 
   useEffect(() => {
     setActivityData([]);
@@ -355,9 +298,7 @@ function PipelineActivityLogTreeTable(
 
 PipelineActivityLogTreeTable.propTypes = {
   pipeline: PropTypes.object,
-  getPipeline: PropTypes.func,
   pipelineId: PropTypes.string,
-  pipelineStatus: PropTypes.string,
   pipelineRunCount: PropTypes.number,
 };
 

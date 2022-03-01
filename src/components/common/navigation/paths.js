@@ -84,6 +84,7 @@ paths.analyticsDataEntryManagement = paths.accountSettings + "/analytics-data-en
 paths.analyticsDataEntryDetailView = paths.analyticsDataEntryManagement + "/analytics-data-entries/details/";
 paths.dataMappingManagement = paths.accountSettings + "/data_mapping";
 paths.projectTaggingDetailView = paths.dataMappingManagement + "/projects/details/";
+paths.pipelineDataMappingDetailView = paths.dataMappingManagement + "/pipeline/details/";
 paths.userTaggingDetailView = paths.dataMappingManagement + "/users/details/";
 
 //Reports

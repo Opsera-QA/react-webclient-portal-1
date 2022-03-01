@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "contexts/AuthContext";
 import { Card, Col, Row } from "react-bootstrap";
-import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import ProjectMappingToolIdentifierSelectInput
@@ -21,12 +19,14 @@ import TagManager from "components/common/inputs/tags/TagManager";
 import axios from "axios";
 import JenkinsRegistryToolJobSelectInput
   from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
-import {projectDataMappingActions} from "components/settings/data_mapping/projects/projectDataMapping.actions";
+import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 
-function ProjectDataMappingEditorPanel({ projectMappingData, handleClose }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const [projectDataMappingModel, setProjectDataMappingModel] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+function ProjectDataMappingEditorPanel(
+  {
+    projectDataMappingModel,
+    setProjectDataMappingModel,
+    handleClose,
+  }) {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -39,35 +39,15 @@ function ProjectDataMappingEditorPanel({ projectMappingData, handleClose }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
     return () => {
       source.cancel();
       isMounted.current = false;
     };
   }, []);
 
-  const loadData = async () => {
-    setIsLoading(true);
-    setProjectDataMappingModel({...projectMappingData});
-    setIsLoading(false);
-  };
-
-  const createMapping = async () => {
-    return await projectDataMappingActions.createProjectDataMappingV2(getAccessToken, cancelTokenSource, projectDataMappingModel);
-  };
-
-  const updateMapping = async () => {
-    return await projectDataMappingActions.updateProjectDataMappingV2( getAccessToken, cancelTokenSource, projectDataMappingModel);
-  };
-
-  // TODO: Rewrite into switch statement
+  // TODO: Rewrite into switch statement or sub panels
   const getDynamicFields = () => {
-    if (projectDataMappingModel.getData("tool_identifier") === "jenkins") {
+    if (projectDataMappingModel?.getData("tool_identifier") === "jenkins") {
       return (
         <Col lg={12}>
           <JenkinsRegistryToolJobSelectInput
@@ -79,7 +59,7 @@ function ProjectDataMappingEditorPanel({ projectMappingData, handleClose }) {
         </Col>
       );
     }
-    if (projectDataMappingModel.getData("tool_identifier") === "sonar") {
+    if (projectDataMappingModel?.getData("tool_identifier") === "sonar") {
       return (
         <Col lg={12}>
           <SonarProjectSelectInput
@@ -90,7 +70,7 @@ function ProjectDataMappingEditorPanel({ projectMappingData, handleClose }) {
         </Col>
       );
     }
-    if (projectDataMappingModel.getData("tool_identifier") === "bitbucket") {
+    if (projectDataMappingModel?.getData("tool_identifier") === "bitbucket") {
       return (
         <>
         <Col lg={12}>
@@ -109,7 +89,7 @@ function ProjectDataMappingEditorPanel({ projectMappingData, handleClose }) {
           </>
       );
     }
-    if (projectDataMappingModel.getData("tool_identifier") === "gitlab" || projectDataMappingModel.getData("tool_identifier") === "github") {
+    if (projectDataMappingModel?.getData("tool_identifier") === "gitlab" || projectDataMappingModel?.getData("tool_identifier") === "github") {
       return (
         <Col lg={12}>
           <ProjectRepositorySelectInput
@@ -119,7 +99,7 @@ function ProjectDataMappingEditorPanel({ projectMappingData, handleClose }) {
         </Col>
       );
     }
-    if (projectDataMappingModel.getData("tool_identifier") === "jira") {
+    if (projectDataMappingModel?.getData("tool_identifier") === "jira") {
       return (
         <Col lg={12}>
           <ProjectMappingProjectSelectInput
@@ -132,21 +112,9 @@ function ProjectDataMappingEditorPanel({ projectMappingData, handleClose }) {
     }
   };
 
-  if (projectDataMappingModel == null) {
-    return <LoadingDialog size="sm" />;
-  }
-
-  return (
-    <EditorPanelContainer
-      isLoading={isLoading}
-      recordDto={projectDataMappingModel}
-      setRecordDto={setProjectDataMappingModel}
-      createRecord={createMapping}
-      updateRecord={updateMapping}
-      handleClose={handleClose}
-    >
-      {
-        projectDataMappingModel?.isNew() !== true &&
+  const getWarningMessage = () => {
+    if (projectDataMappingModel?.isNew() !== true) {
+      return (
         <div className="m-2">
           <Card>
             <Card.Text className={"mt-3 mb-3"} style={{display: "flex", justifyContent: "center"}}>
@@ -155,11 +123,28 @@ function ProjectDataMappingEditorPanel({ projectMappingData, handleClose }) {
             </Card.Text>
           </Card>
         </div>
-      }
+      );
+    }
+  };
 
+  if (projectDataMappingModel == null) {
+    return <LoadingDialog size="sm" />;
+  }
+
+  return (
+    <VanityEditorPanelContainer
+      model={projectDataMappingModel}
+      setModel={setProjectDataMappingModel}
+      handleClose={handleClose}
+      className={"mx-3 my-2"}
+    >
+      {getWarningMessage()}
       <Row>
         <Col lg={12}>
-          <ProjectMappingToolIdentifierSelectInput dataObject={projectDataMappingModel} setDataObject={setProjectDataMappingModel} />
+          <ProjectMappingToolIdentifierSelectInput
+            dataObject={projectDataMappingModel}
+            setDataObject={setProjectDataMappingModel}
+          />
         </Col>
         <Col lg={12}>
           <ProjectMappingToolSelectInput
@@ -178,15 +163,20 @@ function ProjectDataMappingEditorPanel({ projectMappingData, handleClose }) {
           />
         </Col>
         <Col lg={12}>
-          <ActivityToggleInput dataObject={projectDataMappingModel} fieldName={"active"} setDataObject={setProjectDataMappingModel} />
+          <ActivityToggleInput
+            dataObject={projectDataMappingModel}
+            fieldName={"active"}
+            setDataObject={setProjectDataMappingModel}
+          />
         </Col>
       </Row>
-    </EditorPanelContainer>
+    </VanityEditorPanelContainer>
   );
 }
 
 ProjectDataMappingEditorPanel.propTypes = {
-  projectMappingData: PropTypes.object,
+  projectDataMappingModel: PropTypes.object,
+  setProjectDataMappingModel: PropTypes.func,
   handleClose: PropTypes.func,
 };
 

@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {Pagination} from "dhx-suite-package";
+import {Pagination} from "@opsera/dhx-suite-package";
 
 function VanityBottomPaginatorBase({ widgetData, pageSize, onPageChange }) {
   const containerRef = useRef(null);

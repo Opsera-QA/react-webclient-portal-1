@@ -1,42 +1,35 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
-import SdlcDurationByStageMetricsEditorPanel
-  from "components/insights/charts/sdlc/bar_chart/duration_by_stage/SdlcDurationByStageMetricsEditorPanel";
 import KpiSettingsForm from "components/insights/marketplace/charts/KpiSettingsForm";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import Model from "core/data_model/model";
 import kpiConfigurationMetadata from "components/insights/marketplace/charts/kpi-configuration-metadata";
-import MetricSettingsInputPanel from "components/common/inputs/metric/settings/MetricSettingsInputPanel";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {metricHelpers} from "components/insights/metric.helpers";
-import UserEditableMetricDataPointsInputPanel
-  from "components/common/inputs/metric/data_points/UserEditableMetricDataPointsInputPanel";
 import GenericChartSettingsHelpDocumentation
   from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import {dashboardMetricActions} from "components/insights/dashboards/metrics/dashboardMetric.actions";
 import DashboardMetricEditorPanelContainer
   from "components/common/panels/detail_panel_container/dashboard_metrics/DashboardMetricEditorPanelContainer";
-
-// TODO: This is temporary until kpis are updated to follow new standards
-const SUPPORTED_NEW_METRICS =[
-  kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS,
-];
+import DashboardMetricTabPanel from "components/insights/dashboards/metrics/DashboardMetricTabPanel";
+import SdlcDurationByStageMetricsEditorPanel
+  from "components/insights/charts/sdlc/bar_chart/duration_by_stage/SdlcDurationByStageMetricsEditorPanel";
+import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 
 // TODO: combine with chart settings overlay?
-function DashboardMetricOverlayContainer({
-  kpiConfiguration,
-  setKpiConfiguration,
-  dashboardData,
-  index,
-  closePanel,
-  loadData,
-  setKpis,
-  settingsHelpComponent,
-}) {
+function DashboardMetricOverlayContainer(
+    {
+    kpiConfiguration,
+    setKpiConfiguration,
+    dashboardData,
+    index,
+    closePanel,
+    loadData,
+    setKpis,
+    settingsHelpComponent,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const [helpIsShown, setHelpIsShown] = useState(false);
   const [metricModel, setMetricModel] = useState(undefined);
@@ -93,42 +86,19 @@ function DashboardMetricOverlayContainer({
     );
   };
 
-
+  // TODO: Move this into a separate component after we can remove KpiSettingsForm
   const getMetricEditorPanel = () => {
-    switch (kpiConfiguration?.kpi_identifier) {
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS:
-        return (
-          <SdlcDurationByStageMetricsEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-          />
-        );
-    }
-  };
-
-  const getBody = () => {
-
-    return (
-      <div>
-        <TextInputBase
-          fieldName={"kpi_name"}
-          dataObject={metricModel}
-          setDataObject={setMetricModel}
-        />
-        <MetricSettingsInputPanel
-          metricModel={metricModel}
-          setMetricModel={setMetricModel}
-          metricSettings={metricModel?.getData("settings")}
-        />
-        {getMetricEditorPanel()}
-        <UserEditableMetricDataPointsInputPanel
-          model={metricModel}
-          setModel={setMetricModel}
-        />
-      </div>
-    );
+    // switch (kpiConfiguration?.kpi_identifier) {
+    //   case kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS:
+    //     return (
+    //       <SdlcDurationByStageMetricsEditorPanel
+    //         metricModel={metricModel}
+    //         metricFilterModel={metricFilterModel}
+    //         setMetricFilterModel={setMetricFilterModel}
+    //         unpackedFilterData={unpackedFilterData}
+    //       />
+    //     );
+    // }
   };
 
   const getHelpComponent = () => {
@@ -144,7 +114,7 @@ function DashboardMetricOverlayContainer({
   };
 
   // TODO: This is temporary for compatibility reasons.
-  if (SUPPORTED_NEW_METRICS.includes(kpiConfiguration?.kpi_identifier) !== true) {
+  if (getMetricEditorPanel() == null) {
     return (
       <KpiSettingsForm
         kpiConfiguration={kpiConfiguration}
@@ -185,7 +155,11 @@ function DashboardMetricOverlayContainer({
         setKpiConfiguration={setKpiConfiguration}
         className={"px-3 pb-3"}
       >
-        {getBody()}
+        <DashboardMetricTabPanel
+          metricModel={metricModel}
+          setMetricModel={setMetricModel}
+          metricEditorPanel={getMetricEditorPanel()}
+        />
       </DashboardMetricEditorPanelContainer>
     </OverlayPanelBodyContainer>
   );

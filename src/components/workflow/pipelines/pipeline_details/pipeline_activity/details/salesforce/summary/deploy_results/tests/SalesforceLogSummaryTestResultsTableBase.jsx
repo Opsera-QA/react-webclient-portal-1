@@ -52,7 +52,7 @@ function SalesforceLogSummaryTestResultsTableBase({ hasSuccessAndFailureTests, t
       <VanityTable
         data={testResults}
         columns={columns}
-        tableHeight={hasSuccessAndFailureTests === true ? halfTableSize : tableSize}
+        tableHeight={hasSuccessAndFailureTests === true ? `${halfTableSize}px` : `${tableSize}px`}
       />
     );
   };

@@ -639,6 +639,30 @@ a.nav-link {
     border-color: #CF940C;
 }
 
+.metric-detail-tabs .nav-tabs .nav-item.show .nav-link, .metric-detail-tabs .nav-tabs .nav-link {
+    border-color: #E6E5E3;
+    color: #3D3B36;
+    border-bottom: none;
+}
+
+/* disabled tab styling */
+.metric-detail-tabs .nav-tabs > li .disabled-tab {
+    background: #E6E5E3;
+    color: #3D3B36;
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.metric-detail-tabs .nav-tabs .nav-item.show .nav-link, .metric-detail-tabs .nav-tabs .nav-link.active {
+    background: #00a8e8;
+    color: #fef7fd;
+    text-decoration: none;
+}
+
+.metric-detail-tabs .nav-tabs .nav-item.show .nav-link, .metric-detail-tabs .nav-tabs .nav-link:hover {
+    border-color: #0098d8;
+}
+
 /* End Default Custom Tab styling */
 
 /* Begin Step Tabs Styling */

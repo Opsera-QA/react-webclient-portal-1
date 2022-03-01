@@ -3,25 +3,24 @@ import { useParams } from "react-router-dom";
 import ProjectDataMappingDetailPanel from "components/settings/data_mapping/projects/details/ProjectDataMappingDetailPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import dataMappingActions from "components/settings/data_mapping/data-mapping-actions";
-import Model from "core/data_model/model";
-import projectDataMappingMetadata from "components/settings/data_mapping/projects/projectDataMapping.metadata";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import DataMappingManagementSubNavigationBar
   from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
 import axios from "axios";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {projectDataMappingActions} from "components/settings/data_mapping/projects/projectDataMapping.actions";
+import ProjectDataMappingModel from "components/settings/data_mapping/projects/projectDataMapping.model";
+import ActionBarModelDeleteButton from "components/common/actions/buttons/ActionBarModelDeleteButton";
 
 function ProjectDataMappingDetailView() {
   const { projectMappingId } = useParams();
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
-  const [projectMappingData, setProjectMappingData] = useState(undefined);
+  const [projectDataMappingModel, setProjectDataMappingModel] = useState(undefined);
+  const [projectDataMappingMetadata, setProjectDataMappingMetadata] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -68,28 +67,28 @@ function ProjectDataMappingDetailView() {
 
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      await getProjectMapping(cancelSource);
+      await getProjectDataMapping(cancelSource);
     }
   };
 
-  const getProjectMapping = async (cancelSource = cancelTokenSource) => {
-    try {
-      const response = await projectDataMappingActions.getProjectDataMappingByIdV2(getAccessToken, cancelSource, projectMappingId);
-      const projectDataMapping = response?.data?.data;
+  const getProjectDataMapping = async (cancelSource = cancelTokenSource) => {
+    const response = await projectDataMappingActions.getProjectDataMappingByIdV2(getAccessToken, cancelSource, projectMappingId);
+    const projectDataMapping = response?.data?.data;
 
-      if (projectDataMapping) {
-        // const metadata = response?.data?.metadata;
-        setProjectMappingData(new Model(projectDataMapping, projectDataMappingMetadata, false));
-      }
-    } catch (error) {
-      if (!error?.error?.message?.includes(404)) {
-        toastContext.showLoadingErrorDialog(error);
-      }
+    if (isMounted?.current === true && projectDataMapping) {
+      const metadata = response?.data?.metadata;
+      setProjectDataMappingMetadata({...metadata});
+      setProjectDataMappingModel(new ProjectDataMappingModel(
+        projectDataMapping,
+        metadata,
+        false,
+        getAccessToken,
+        cancelSource,
+        loadData,
+        [],
+        setProjectDataMappingModel,
+      ));
     }
-  };
-
-  const deleteMapping = async () => {
-    return await projectDataMappingActions.deleteProjectDataMappingV2(getAccessToken, cancelTokenSource, projectMappingId);
   };
 
   const getActionBar = () => {
@@ -101,9 +100,8 @@ function ProjectDataMappingDetailView() {
           />
         </div>
         <div>
-          <ActionBarDeleteButton2
-            dataObject={projectMappingData}
-            handleDelete={deleteMapping}
+          <ActionBarModelDeleteButton
+            model={projectDataMappingModel}
             relocationPath={"/settings/data_mapping"}
           />
         </div>
@@ -117,13 +115,13 @@ function ProjectDataMappingDetailView() {
       breadcrumbDestination={"projectTaggingDetailView"}
       accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
       metadata={projectDataMappingMetadata}
-      dataObject={projectMappingData}
+      dataObject={projectDataMappingModel}
       isLoading={isLoading}
       actionBar={getActionBar()}
       detailPanel={
         <ProjectDataMappingDetailPanel
-          projectMappingData={projectMappingData}
-          setProjectMappingData={setProjectMappingData}
+          projectMappingModel={projectDataMappingModel}
+          setProjectDataMappingModel={setProjectDataMappingModel}
         />
       }
     />

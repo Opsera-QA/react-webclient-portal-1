@@ -57,23 +57,19 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
   };
 
   const getPermissionsMessage = () => {
-    let permissionsMessage, permissionHeader;
+    let permissionsMessage;
 
     switch (accessRoleData?.Role) {
     case "administrator":
-      permissionHeader = "Administrator Access";
       permissionsMessage = ACCESS_ROLE_PERMISSION_MESSAGES.ADMINISTRATOR;
       break;
     case "power_user":
-      permissionHeader = "Power User Access";
       permissionsMessage = ACCESS_ROLE_PERMISSION_MESSAGES.POWER_USER;
       break;
     case "user":
-      permissionHeader = "Standard User Access";
       permissionsMessage = ACCESS_ROLE_PERMISSION_MESSAGES.USER;
       break;
     case "readonly":
-      permissionHeader = "Read Only Access";
       permissionsMessage = ACCESS_ROLE_PERMISSION_MESSAGES.READ_ONLY;
       break;
     }

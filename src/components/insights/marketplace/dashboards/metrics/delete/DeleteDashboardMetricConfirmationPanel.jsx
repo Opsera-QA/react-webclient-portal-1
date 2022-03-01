@@ -6,6 +6,8 @@ import axios from "axios";
 import {dashboardMetricActions} from "components/insights/dashboards/metrics/dashboardMetric.actions";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {faTrash} from "@fortawesome/pro-light-svg-icons";
+import {parseError} from "components/common/helpers/error-helpers";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 function DeleteDashboardMetricConfirmationPanel(
   {
@@ -18,6 +20,7 @@ function DeleteDashboardMetricConfirmationPanel(
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -35,19 +38,26 @@ function DeleteDashboardMetricConfirmationPanel(
   }, []);
 
   const deleteDashboardMetric = async () => {
-    await dashboardMetricActions.deleteDashboardKpiV2(
-      getAccessToken,
-      cancelTokenSource,
-      dashboardModel?.getData("_id"),
-      metricModel?.getData("_id"),
-    );
+    try {
+      await dashboardMetricActions.deleteDashboardKpiV2(
+        getAccessToken,
+        cancelTokenSource,
+        dashboardModel?.getData("_id"),
+        metricModel?.getData("_id"),
+      );
 
-    // This is a workaround necessary for hiding the KPI after it's deleted.
-    dashboardModel?.getData("configuration").splice(index, 1);
-    setKpis(dashboardModel?.getData("configuration"));
+      // This is a workaround necessary for hiding the KPI after it's deleted.
+      dashboardModel?.getData("configuration").splice(index, 1);
+      setKpis(dashboardModel?.getData("configuration"));
 
-    if (closePanelFunction) {
-      closePanelFunction();
+      if (closePanelFunction) {
+        closePanelFunction();
+      }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        const parsedError = parseError(error);
+        setErrorMessage(parsedError);
+      }
     }
   };
 
@@ -70,6 +80,7 @@ function DeleteDashboardMetricConfirmationPanel(
           closePanelFunction={closePanelFunction}
           deleteDataFunction={deleteDashboardMetric}
         />
+        <InfoText errorMessage={errorMessage} />
       </div>
     </CenterOverlayContainer>
   );

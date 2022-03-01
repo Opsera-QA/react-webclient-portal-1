@@ -157,7 +157,7 @@ dataPointEvaluationRulesHelpers.isDataEvaluationRuleValid = (dataPointEvaluation
 };
 
 dataPointEvaluationRulesHelpers.evaluateDataPointEvaluationRule = (rule, value) => {
-  if (dataPointEvaluationRulesHelpers.isDataEvaluationRuleValid(rule) !== true || numberHelpers.hasNumberValue(value) !== true) {
+  if (dataPointEvaluationRulesHelpers.isDataEvaluationRuleValid(rule) !== true || numberHelpers.hasNumberValue(value) !== true || rule?.enabled === false) {
     return false;
   }
 

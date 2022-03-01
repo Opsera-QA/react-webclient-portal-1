@@ -175,7 +175,7 @@ function DataMappingManagement() {
 
   return (
     <ScreenContainer
-      navigationTabContainer={<DataMappingManagementSubNavigationBar activeTab={"dataMappings"} />}
+      navigationTabContainer={<DataMappingManagementSubNavigationBar activeTab={"dataMappingManagement"} />}
       breadcrumbDestination={"dataMappingManagement"}
       accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
       pageDescription={"Manage data mapping for the Opsera Analytics Engine."}

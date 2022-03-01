@@ -1782,6 +1782,11 @@
   optionalDependencies:
     "fsevents" "*"
 
+"@opsera/dhx-suite-package@^7.1.2":
+  "integrity" "sha1-3ySg+ZP5zeqcIudf86GJhFO97lo="
+  "resolved" "https://opserarepo.jfrog.io/artifactory/api/npm/opsera-platform-npm/opsera-dhx-suite-package-7.1.2.tgz"
+  "version" "7.1.2"
+
 "@peculiar/asn1-schema@^2.0.27", "@peculiar/asn1-schema@^2.0.38":
   "integrity" "sha512-zZ64UpCTm9me15nuCpPgJghSdbEm8atcDQPCyK+bKXjZAQ1735NCZXCSCfbckbQ4MH36Rm9403n/qMq77LFDzQ=="
   "resolved" "https://registry.npmjs.org/@peculiar/asn1-schema/-/asn1-schema-2.0.38.tgz"
@@ -4858,10 +4863,6 @@
   dependencies:
     "address" "^1.0.1"
     "debug" "^2.6.0"
-
-"dhx-suite-package@file:development_dependencies/suite_7.1.2_ultimate":
-  "resolved" "file:development_dependencies/suite_7.1.2_ultimate"
-  "version" "7.1.2"
 
 "diff-match-patch@^1.0.4":
   "integrity" "sha512-IayShXAgj/QMXgB0IWmKx+rOPuGMhqm5w6jvFxmVenXKIzRqTAAsbBPT3kWQeGANj3jGgvcvv4yK6SxqYmikgw=="

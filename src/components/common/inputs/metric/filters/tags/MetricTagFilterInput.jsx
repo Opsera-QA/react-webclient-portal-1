@@ -10,6 +10,7 @@ function MetricTagFilterInput(
     metricFilterModel,
     setMetricFilterModel,
     metricModel,
+    fieldName,
   }) {
   return (
     <SupportedMetricFilterInputContainer
@@ -18,7 +19,7 @@ function MetricTagFilterInput(
     >
       <TagManager
         type={"kpi_filter"}
-        fieldName={"tags"}
+        fieldName={fieldName}
         setDataObject={setMetricFilterModel}
         dataObject={metricFilterModel}
         disabled={metricModel?.getData("settings")?.useKpiTags === false}
@@ -31,6 +32,11 @@ MetricTagFilterInput.propTypes = {
   metricFilterModel: PropTypes.object,
   setMetricFilterModel: PropTypes.func,
   metricModel: PropTypes.object,
+  fieldName: PropTypes.string,
+};
+
+MetricTagFilterInput.defaultProps = {
+  fieldName: "tags",
 };
 
 export default MetricTagFilterInput;

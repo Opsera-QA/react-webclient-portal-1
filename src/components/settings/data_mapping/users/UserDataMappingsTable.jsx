@@ -1,4 +1,4 @@
-import React, { useMemo, useContext} from "react";
+import React, {useMemo, useContext, useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
@@ -8,21 +8,38 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTags} from "@fortawesome/pro-light-svg-icons";
 import {getField} from "components/common/metadata/metadata-helpers";
-import {userDataMappingMetadata} from "components/settings/data_mapping/users/userDataMapping.metadata";
 
-function UsersTagTable({ data, loadData, isLoading, isMounted }) {
+function UserDataMappingsTable(
+  {
+    userDataMappings,
+    loadData,
+    isLoading,
+    isMounted,
+    userDataMappingMetadata,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
-  let fields = userDataMappingMetadata.fields;
+  const [columns, setColumns] = useState([]);
 
-  const columns = useMemo(() => [
-    getTableTextColumn(getField(fields,"tool_identifier")),
-    getTableTextColumn(getField(fields,"opsera_user_email")),
-    getTableTextColumn(getField(fields,"tool_user_prop")),
-    getTableBooleanIconColumn(getField(fields,"active")),
-  ],
-  []
-);
+  useEffect(() => {
+    setColumns([]);
+    loadColumnMetadata(userDataMappingMetadata);
+  }, [userDataMappingMetadata]);
+
+  const loadColumnMetadata = () => {
+    if (isMounted?.current === true && Array.isArray(userDataMappingMetadata?.fields)) {
+      const fields = userDataMappingMetadata.fields;
+
+      setColumns(
+        [
+          getTableTextColumn(getField(fields,"tool_identifier")),
+          getTableTextColumn(getField(fields,"opsera_user_email")),
+          getTableTextColumn(getField(fields,"tool_user_prop")),
+          getTableBooleanIconColumn(getField(fields,"active")),
+        ]
+      );
+    }
+  };
 
   const rowStyling = (row) => {
     return !row["values"].active ? " inactive-row" : "";
@@ -39,6 +56,7 @@ function UsersTagTable({ data, loadData, isLoading, isMounted }) {
       <NewUserDataMappingOverlay
         loadData={loadData}
         isMounted={isMounted}
+        userDataMappingMetadata={userDataMappingMetadata}
       />
     );
   };
@@ -47,7 +65,7 @@ function UsersTagTable({ data, loadData, isLoading, isMounted }) {
     return (
       <CustomTable
         columns={columns}
-        data={data}
+        data={userDataMappings}
         rowStyling={rowStyling}
         noDataMessage={noDataMessage}
         onRowSelect={selectedRow}
@@ -65,18 +83,20 @@ function UsersTagTable({ data, loadData, isLoading, isMounted }) {
       body={getUsersTagsTable()}
       metadata={userDataMappingMetadata}
       titleIcon={faTags}
+      showBorder={false}
       title={"User Data Mapping Tags"}
       type={"User Data Mapping Tag"}
-      className={"px-2 pb-2"}
+      className={"pb-2"}
     />
   );
 }
 
-UsersTagTable.propTypes = {
-  data: PropTypes.array,
+UserDataMappingsTable.propTypes = {
+  userDataMappings: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  isMounted: PropTypes.object
+  isMounted: PropTypes.object,
+  userDataMappingMetadata: PropTypes.object,
 };
 
-export default UsersTagTable;
+export default UserDataMappingsTable;

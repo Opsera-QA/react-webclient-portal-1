@@ -34,21 +34,3 @@ projectDataMappingActions.deleteProjectDataMappingV2 = async (getAccessToken, ca
   const apiUrl = `/mappings/project/v2/${projectMappingId}`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
-
-projectDataMappingActions.getJenkinsJobs = async (data, getAccessToken) => {
-  const apiUrl = `/mappings/projects/jobs/jenkins/${data.getData("tool_id")}`;
-  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
-  if (response && response.status === 200) {
-    return response.data;
-  }
-  return [];
-};
-
-projectDataMappingActions.getSonarProjects = async (data, getAccessToken) => {
-  const apiUrl = `/mappings/projects/jobs/sonar/${data.getData("tool_id")}`;
-  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
-  if (response && response.status === 200) {
-    return response.data;
-  }
-  return [];
-};
