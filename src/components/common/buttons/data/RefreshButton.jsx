@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faSync} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function RefreshButton({ isLoading, loadData, variant, size, className }) {
   if (!loadData) {
@@ -12,7 +12,7 @@ function RefreshButton({ isLoading, loadData, variant, size, className }) {
   return (
     <div className={className}>
       <Button variant={variant} size={size} disabled={isLoading} onClick={() => {loadData();}}>
-        <span><FontAwesomeIcon spin={isLoading} icon={faSync} fixedWidth /></span>
+        <span><IconBase spinIcon={isLoading} icon={faSync}/></span>
       </Button>
     </div>
   );

@@ -1,9 +1,10 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
+// TODO: Turn into overlay
 function ExpireTokenModal({ token, expireToken, showModal, setShowModal }) {
   const [isExpiring, setIsExpiring] = useState(false);
 
@@ -32,7 +33,7 @@ function ExpireTokenModal({ token, expireToken, showModal, setShowModal }) {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="danger" onClick={() => handleConfirm()}>
-          <FontAwesomeIcon icon={faExclamationCircle} fixedWidth/>Expire Token
+          <IconBase isLoading={isExpiring} icon={faExclamationCircle} className={"mr-2"}/>Expire Token
         </Button>
         <Button variant="secondary" onClick={() => handleClose()}>
           Close
