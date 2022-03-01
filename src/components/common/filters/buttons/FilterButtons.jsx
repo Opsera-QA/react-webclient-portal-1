@@ -96,7 +96,7 @@ function FilterButtons({ dropdownFilters, filterDto, loadData, className, isLoad
       <div className="d-flex">
         <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={getPopover()} className="filter-popover">
           <div>
-            <Button disabled={filterDto == null || isLoading} variant="outline-primary" size="sm"><span><FontAwesomeIcon icon={faFilter} fixedWidth/></span></Button>
+            <Button disabled={filterDto == null || isLoading} variant="outline-primary" size="sm"><span><IconBase icon={faFilter}/></span></Button>
           </div>
         </OverlayTrigger>
         <div>

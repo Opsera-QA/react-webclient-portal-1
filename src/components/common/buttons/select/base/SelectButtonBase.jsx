@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Button from "react-bootstrap/Button";
+import IconBase from "components/common/icons/IconBase";
 
 function SelectButtonBase({selectOption, icon, selectText, setDataFunction, className, variant}) {
   return (
@@ -12,7 +12,7 @@ function SelectButtonBase({selectOption, icon, selectText, setDataFunction, clas
       variant={variant}
     >
       <span className="my-auto">
-        <FontAwesomeIcon icon={icon} className="mr-2" fixedWidth/>
+        <IconBase icon={icon} className={"mr-2"}/>
         {selectText}
       </span>
     </Button>

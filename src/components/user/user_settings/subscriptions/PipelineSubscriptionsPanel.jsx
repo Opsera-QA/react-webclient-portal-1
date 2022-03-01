@@ -79,7 +79,7 @@ function PipelineSubscriptionsPanel({className}) {
   };
 
   if (isLoading) {
-    return <div className={"m-3"}><LoadingIcon isLoading={isLoading} className={"mr-2 my-auto"} />Loading Pipeline Subscriptions</div>;
+    return <div className={"m-3"}><LoadingIcon className={"mr-2 my-auto"} />Loading Pipeline Subscriptions</div>;
   }
 
   if (!isLoading && (pipelines == null || pipelines.length === 0)) {

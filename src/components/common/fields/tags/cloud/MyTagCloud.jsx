@@ -133,7 +133,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
 
   const getBody = () => {
     if (isLoading) {
-      return (<div><LoadingIcon isLoading={isLoading} className={"mr-2 my-auto"} />Loading subscriptions</div>);
+      return (<div><LoadingIcon className={"mr-2 my-auto"} />Loading subscriptions</div>);
     }
 
     if (Array.isArray(tags) && tags.length > 0) {
