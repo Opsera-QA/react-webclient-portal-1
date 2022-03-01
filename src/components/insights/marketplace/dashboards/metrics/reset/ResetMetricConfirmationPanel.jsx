@@ -101,9 +101,6 @@ function ResetMetricConfirmationPanel(
 
       const configuration = dashboardModel.getData("configuration");
       const resetKpiData = metricModel?.getPersistData();
-      configuration[index] = resetKpiData;
-      setKpiConfiguration({...resetKpiData});
-      dashboardModel.setData("configuration", configuration);
 
       await dashboardMetricActions.updateDashboardKpiV2(
         getAccessToken,
@@ -111,7 +108,11 @@ function ResetMetricConfirmationPanel(
         dashboardModel?.getData("_id"),
         metricModel
       );
+
       toastContext.showResetSuccessToast("KPI Configuration");
+      configuration[index] = resetKpiData;
+      setKpiConfiguration({...resetKpiData});
+      dashboardModel.setData("configuration", configuration);
 
       if (closePanelFunction) {
         closePanelFunction();
