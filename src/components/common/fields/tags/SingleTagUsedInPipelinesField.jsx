@@ -78,7 +78,7 @@ function SingleTagUsedInPipelinesField({ tag, closePanel, className }) {
               <PipelineSummaryCard
                 pipelineData={new Model(pipeline, pipelineSummaryMetadata, false)}
                 loadPipelineInNewWindow={false}
-                closePanel={closePanel}
+                closePanelFunction={closePanel}
               />
             </Col>
           );
