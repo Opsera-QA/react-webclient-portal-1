@@ -155,25 +155,6 @@ export const getTaskStatusColumn = (field, className) => {
   };
 };
 
-export const getRoleArrayColumn = (field, className) => {
-  return {
-    Header: getCustomTableHeader(field),
-    accessor: getCustomTableAccessor(field),
-    Cell: function stringifyArray(row) {
-      const array = row?.value;
-
-      if (Array.isArray(array) && array.length > 0) {
-        return array.map((item, index) => {
-          return (`${item.role}:${item.user}:${item.group}${array.length > index + 1 ? ',' : ''}`);
-        });
-      }
-
-      return "";
-    },
-    class: className ? className : "no-wrap-inline"
-  };
-};
-
 export const getTagColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),

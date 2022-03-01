@@ -7,8 +7,8 @@ import VanityEditorPanelContainer from "components/common/panels/detail_panel_co
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import PipelineMappingJobInput from "components/common/metrics/pipeline_mapper/jobs/PipelineMappingJobInput";
-import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
+import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
 
 function PipelineDataMappingEditorPanel(
   {
@@ -61,23 +61,36 @@ function PipelineDataMappingEditorPanel(
       className={"mx-3 my-2"}
     >
       {getWarningMessage()}
-
-      {/*<Row>*/}
-      {/*  <Col xs={12}>*/}
-      {/*    <TextInputBase*/}
-      {/*      fieldName={"name"}*/}
-      {/*      setDataObject={setPipelineDataMappingModel}*/}
-      {/*      dataObject={pipelineDataMappingModel}*/}
-      {/*    />*/}
-      {/*  </Col>*/}
-      {/*  <Col xs={12}>*/}
-      {/*    <PipelineMappingJobInput*/}
-      {/*      model={pipelineDataMappingModel}*/}
-      {/*      setModel={setPipelineDataMappingModel}*/}
-      {/*      fieldName={"jobs"}*/}
-      {/*    />*/}
-      {/*  </Col>*/}
-      {/*</Row>*/}
+      <Row>
+        <Col xs={12}>
+          <TextInputBase
+            fieldName={"name"}
+            dataObject={pipelineDataMappingModel}
+            setDataObject={setPipelineDataMappingModel}
+          />
+        </Col>
+        <Col xs={12}>
+          <TextInputBase
+            fieldName={"externalId"}
+            dataObject={pipelineDataMappingModel}
+            setDataObject={setPipelineDataMappingModel}
+          />
+        </Col>
+        <Col xs={12}>
+          <TagMultiSelectInput
+            fieldName={"tags"}
+            dataObject={pipelineDataMappingModel}
+            setDataObject={setPipelineDataMappingModel}
+          />
+        </Col>
+        <Col xs={12}>
+          <RoleAccessInput
+            fieldName={"roles"}
+            dataObject={pipelineDataMappingModel}
+            setDataObject={setPipelineDataMappingModel}
+          />
+        </Col>
+      </Row>
     </VanityEditorPanelContainer>
   );
 }

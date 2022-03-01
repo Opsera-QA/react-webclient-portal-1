@@ -74,13 +74,13 @@ function PipelineDataMappingDetailView() {
 
   const getProjectDataMapping = async (cancelSource = cancelTokenSource) => {
     const response = await pipelineDataMappingActions.getPipelineDataMappingByIdV2(getAccessToken, cancelSource, pipelineDataMappingId);
-    const pipelineDataMapping = response?.data?.data;
+    const mapping = response?.data?.data;
 
-    if (isMounted?.current === true && pipelineDataMapping) {
+    if (isMounted?.current === true && mapping) {
       const metadata = response?.data?.metadata;
       setPipelineDataMappingMetadata({...metadata});
       setPipelineDataMappingModel(new PipelineDataMappingModel(
-        pipelineDataMapping,
+        mapping,
         metadata,
         false,
         getAccessToken,
@@ -121,8 +121,8 @@ function PipelineDataMappingDetailView() {
       actionBar={getActionBar()}
       detailPanel={
         <PipelineDataMappingDetailPanel
-          projectMappingModel={pipelineDataMappingModel}
-          setProjectDataMappingModel={setPipelineDataMappingModel}
+          pipelineDataMappingModel={pipelineDataMappingModel}
+          setPipelineDataMappingModel={setPipelineDataMappingModel}
         />
       }
     />
