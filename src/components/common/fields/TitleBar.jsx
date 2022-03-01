@@ -1,5 +1,4 @@
 import React from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
@@ -27,7 +26,7 @@ function TitleBar({ title, titleIcon, isLoading, inactive, titleActionBar, helpC
 
   return (
     <div className="d-flex">
-      <div><span><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-1"/>{title}</span></div>
+      <div><span><IconBase icon={titleIcon} className={"mr-1"}/>{title}</span></div>
       {getRightSideItems()}
     </div>
   );

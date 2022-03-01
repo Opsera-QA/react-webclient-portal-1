@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faUpload} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function ToggleUploadButton({ isLoading, uploadType, toggleUpload, variant, size, className }) {
   if (!toggleUpload) {
@@ -12,7 +12,7 @@ function ToggleUploadButton({ isLoading, uploadType, toggleUpload, variant, size
   return (
     <div className={className}>
       <Button variant={variant} size={size} disabled={isLoading} onClick={() => {toggleUpload();}}>
-        <span><FontAwesomeIcon icon={faUpload} className="mr-1" fixedWidth/>Upload {uploadType}</span>
+        <span><IconBase icon={faUpload} className={"mr-1"}/>Upload {uploadType}</span>
       </Button>
     </div>
   );

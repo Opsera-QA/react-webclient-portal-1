@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import FieldContainer from "components/common/fields/FieldContainer";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import toolsActions from "components/inventory/tools/tools-actions";
 import axios from "axios";
@@ -11,6 +10,8 @@ import ToolLinkIcon from "components/common/icons/inventory/tools/ToolLinkIcon";
 import FieldLabel from "components/common/fields/FieldLabel";
 import RegistryToolInfoOverlay from "components/common/list_of_values_input/tools/RegistryToolInfoOverlay";
 import EllipsisIcon from "components/common/icons/general/EllipsisIcon";
+import IconBase from "components/common/icons/IconBase";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function ToolNameField({ model, fieldName, className, handleClose }) {
   const [field] = useState(model?.getFieldById(fieldName));
@@ -73,7 +74,7 @@ function ToolNameField({ model, fieldName, className, handleClose }) {
     if (isLoading) {
       return (
         <span>
-          <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
+          <LoadingIcon className={"mr-1"}/>
           {model?.getData(fieldName)}
         </span>
       );
