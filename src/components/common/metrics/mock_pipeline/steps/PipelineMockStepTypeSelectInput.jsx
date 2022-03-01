@@ -9,7 +9,7 @@ export const jobTypes = [
   {value: "deploy", text: "Deploy"},
 ];
 
-function PipelineMappingJobTypeSelectInput({ model, setModel, setDataFunction, disabled}) {
+function PipelineMockStepTypeSelectInput({ model, setModel, setDataFunction, disabled}) {
   return (
     <SelectInputBase
       dataObject={model}
@@ -24,11 +24,11 @@ function PipelineMappingJobTypeSelectInput({ model, setModel, setDataFunction, d
   );
 }
 
-PipelineMappingJobTypeSelectInput.propTypes = {
+PipelineMockStepTypeSelectInput.propTypes = {
   model: PropTypes.object,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   setModel: PropTypes.func,
 };
 
-export default PipelineMappingJobTypeSelectInput;
+export default PipelineMockStepTypeSelectInput;
