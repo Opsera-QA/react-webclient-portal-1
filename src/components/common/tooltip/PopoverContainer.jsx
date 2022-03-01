@@ -2,18 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import {OverlayTrigger, Popover} from "react-bootstrap";
 import PopoverTitle from "react-bootstrap/PopoverTitle";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTimes} from "@fortawesome/pro-solid-svg-icons";
+import IconBase from "components/common/icons/IconBase";
+import {faTimes} from "@fortawesome/pro-light-svg-icons";
 
 function PopoverContainer({ content, title, isLoading, children, className, showCloseButton }) {
   const getCloseButton = () => {
     if (showCloseButton !== false) {
       return (
         <div>
-          <FontAwesomeIcon
+          <IconBase
             icon={faTimes}
-            className="pointer"
-            onClick={() => {
+            className={"pointer"}
+            onClickFunction={() => {
               document.body.click();
             }}
           />

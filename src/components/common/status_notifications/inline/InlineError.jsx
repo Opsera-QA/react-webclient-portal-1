@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {parseError} from "components/common/helpers/error-helpers";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/pro-solid-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function InlineError({ error, prependMessage, removeInlineMessage }) {
   const [messageBody, setMessageBody] = useState(undefined);
@@ -16,7 +16,7 @@ function InlineError({ error, prependMessage, removeInlineMessage }) {
     if (removeInlineMessage) {
       return (
         <div className="float-right mr-1">
-          <FontAwesomeIcon icon={faTimes} className="pointer" onClick={() => {removeInlineMessage();}}/>
+          <IconBase icon={faTimes} className={"pointer"} onClickFunction={() => {removeInlineMessage();}}/>
         </div>
       );
     }

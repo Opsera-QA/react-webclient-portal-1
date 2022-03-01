@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {OverlayTrigger, Popover} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: Combine with PopoverContainer but make base component used by both
 function TooltipWrapper(
@@ -20,10 +20,10 @@ function TooltipWrapper(
     if (showCloseButton !== false) {
       return (
         <div>
-          <FontAwesomeIcon
+          <IconBase
             icon={faTimes}
-            className="pointer"
-            onClick={() => {
+            className={"pointer"}
+            onClickFunction={() => {
               document.body.click();
             }}
           />
