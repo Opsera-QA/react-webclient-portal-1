@@ -6,11 +6,10 @@ import "css/general/navbar.css";
 import userActions from "./components/user/user-actions";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/pro-light-svg-icons";
-
 import { renderTooltip } from "utils/helpers";
 import {ACCESS_ROLE_PERMISSION_MESSAGES} from "components/common/helpers/role-helpers";
+import IconBase from "components/common/icons/IconBase";
 
 const EXTERNAL_LINKS = {
   KNOWLEDGE_BASE: `https://opsera.atlassian.net/l/c/pXJjJAej`
@@ -80,7 +79,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
           placement="auto"
           delay={{ hide: 400 }}
           overlay={renderTooltip({ message: permissionsMessage })}>
-          <FontAwesomeIcon icon={faUserCircle} fixedWidth style={{ fontSize:"larger" }}/>
+          <IconBase icon={faUserCircle} iconStyling={{ fontSize: "larger" }}/>
         </OverlayTrigger>
       </div>
     );

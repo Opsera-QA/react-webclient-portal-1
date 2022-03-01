@@ -4,10 +4,10 @@ import {Button, Col, Modal, Row} from "react-bootstrap";
 import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner, faTrash} from "@fortawesome/pro-light-svg-icons";
+import {faTrash} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {cannotBeUndone} from "components/common/tooltip/popover-text";
+import IconBase from "components/common/icons/IconBase";
 
 function DeactivateUserModal({ closeModal, currentUserId, showModal }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -32,7 +32,7 @@ function DeactivateUserModal({ closeModal, currentUserId, showModal }) {
     if (deactivatingUser) {
       return (
         <Row className={"mt-3 ml-3"}>
-          <span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Deactivating User [{currentUserId}]</span>
+          <span><IconBase isLoading={true} className={"mr-2"} />Deactivating User [{currentUserId}]</span>
         </Row>
       );
     }
@@ -49,7 +49,7 @@ function DeactivateUserModal({ closeModal, currentUserId, showModal }) {
             <Row>
               <Col sm={1}>
                 <div className="mt-2">
-                  <FontAwesomeIcon icon={faTrash} size={"lg"} className="danger-red"/>
+                  <IconBase icon={faTrash} iconSize={"lg"} className="danger-red"/>
                 </div>
               </Col>
               <Col sm={11}>
