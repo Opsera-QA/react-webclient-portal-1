@@ -1,18 +1,18 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import argoActions from "../../../argo-actions";
+import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
 import axios from "axios";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import IconBase from "components/common/icons/IconBase";
 
 function ArgoClusterSelectInput({ argoToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, className}) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);  
+  const { getAccessToken } = useContext(AuthContext);
   const [clusters, setClusters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -24,12 +24,15 @@ function ArgoClusterSelectInput({ argoToolId, visible, fieldName, dataObject, se
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
+    setError(undefined);
 
-    loadData(argoToolId,source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (isMongoDbId(argoToolId) === true) {
+      loadData(argoToolId, source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
@@ -44,8 +47,7 @@ function ArgoClusterSelectInput({ argoToolId, visible, fieldName, dataObject, se
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
-        toastContext.showInlineErrorMessage(error);
+        setError(error);
       }
     }
     finally {
@@ -59,7 +61,7 @@ function ArgoClusterSelectInput({ argoToolId, visible, fieldName, dataObject, se
     const response = await argoActions.getArgoClustersV2(getAccessToken, cancelSource, argoToolId);
     const clusters = response?.data?.data;
 
-    if (isMounted?.current === true && response?.status === 200 && Array.isArray(clusters)) {
+    if (isMounted?.current === true && Array.isArray(clusters)) {
       setClusters(clusters);
     }
   };
@@ -67,8 +69,8 @@ function ArgoClusterSelectInput({ argoToolId, visible, fieldName, dataObject, se
   const getNoClustersMessage = () => {
     if (!isLoading && (clusters == null || clusters.length === 0 && argoToolId !== "")) {
       return (
-        <div className="form-text text-muted p-2">
-          <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+        <div className={"form-text text-muted p-2"}>
+          <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
           No configured Argo clusters have been registered for this tool.
         </div>
       );
@@ -93,6 +95,7 @@ function ArgoClusterSelectInput({ argoToolId, visible, fieldName, dataObject, se
         dataObject={dataObject}
         setDataObject={setDataObject}
         setDataFunction={setDataFunction}
+        error={error}
         selectOptions={clusters}
         busy={isLoading}
         valueField="server"
