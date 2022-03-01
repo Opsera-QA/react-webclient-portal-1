@@ -5,9 +5,8 @@ import {AuthContext} from "contexts/AuthContext";
 import pipelineStepNotificationActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
 import FieldContainer from "components/common/fields/FieldContainer";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import FieldLabel from "components/common/fields/FieldLabel";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function JiraPriorityField({ dataObject, jiraToolId, fieldName }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -48,7 +47,7 @@ function JiraPriorityField({ dataObject, jiraToolId, fieldName }) {
 
   const getPriorityName = () => {
     if (isLoading) {
-      return <span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>{dataObject.getData(fieldName)}</span>;
+      return <span><LoadingIcon className={"mr-1"}/>{dataObject.getData(fieldName)}</span>;
     }
 
     if (priority) {

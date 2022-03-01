@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -13,6 +12,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import TagsUsedInPipelineTable from "components/reports/tags/pipelines/TagsUsedInPipelineTable";
 import axios from "axios";
+import IconBase from "components/common/icons/IconBase";
 
 
 function TagArrayUsedInPipelinesField({ tags, showTable }) {
@@ -110,7 +110,7 @@ function TagArrayUsedInPipelinesField({ tags, showTable }) {
     return (
       <div className="form-text text-muted ml-3">
         <div>
-          <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          <span><IconBase icon={faExclamationCircle} className={"text-muted mr-1"}/>
           This tag combination is not currently used in any pipeline</span>
         </div>
       </div>
