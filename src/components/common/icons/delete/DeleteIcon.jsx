@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
+import IconBase from "components/common/icons/IconBase";
 
 function DeleteIcon({ handleDeleteClick, className, tooltipBody, disabled }) {
 
@@ -13,11 +13,10 @@ function DeleteIcon({ handleDeleteClick, className, tooltipBody, disabled }) {
   return (
     <div className={className}>
       <ButtonTooltip innerText={tooltipBody}>
-        <FontAwesomeIcon
-          onClick={() => {handleDeleteClick();}}
+        <IconBase
+          onClickFunction={() => {handleDeleteClick();}}
           icon={faTrash}
-          fixedWidth
-          className={"pointer delete-icon"}
+          className={"pointer delete-icon danger-red"}
         />
       </ButtonTooltip>
     </div>

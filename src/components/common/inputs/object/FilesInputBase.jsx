@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBracketsCurly, faTimes} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import regexDefinitions from "utils/regexDefinitions";
+import IconBase from "components/common/icons/IconBase";
 
 function FilesInputBase({
   dataObject, 
@@ -183,7 +183,7 @@ function FilesInputBase({
   const getDeletePropertyButton = (index) => {
     return (
       <Button variant="link" onClick={() => deleteProperty(index)}>
-        <span><FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/></span>
+        <span><IconBase className={"danger-red"} icon={faTimes}/></span>
       </Button>
     );
   };

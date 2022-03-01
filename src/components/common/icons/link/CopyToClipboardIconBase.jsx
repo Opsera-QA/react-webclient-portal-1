@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClipboardCheck, faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
+import IconBase from "components/common/icons/IconBase";
 
 function CopyToClipboardIconBase({ copyString, className, copyText, copiedText, copyIcon, copiedIcon, size }) {
   const [copiedToClipboard, setCopiedToClipboard] = useState(false);
@@ -24,11 +24,10 @@ function CopyToClipboardIconBase({ copyString, className, copyText, copiedText, 
   return (
     <ButtonTooltip trigger={["hover", "focus"]} innerText={copiedToClipboard === true ? copiedText : copyText}>
       <div className={className}>
-        <FontAwesomeIcon
-          onClick={() => {copyToClipboard();}}
+        <IconBase
+          onClickFunction={() => {copyToClipboard();}}
           icon={copiedToClipboard === true ? copiedIcon : copyIcon}
-          size={size}
-          fixedWidth
+          iconSize={size}
           className={"pointer"}
         />
       </div>

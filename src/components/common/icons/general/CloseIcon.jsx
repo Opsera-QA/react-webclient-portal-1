@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import IconBase from "components/common/icons/IconBase";
 
 function CloseIcon({ handleClose, className, size, tooltipText }) {
 
@@ -13,11 +13,10 @@ function CloseIcon({ handleClose, className, size, tooltipText }) {
   return (
     <div className={className}>
       <TooltipWrapper placement={"bottom"} innerText={tooltipText}>
-        <FontAwesomeIcon
-          onClick={() => {handleClose();}}
+        <IconBase
+          onClickFunction={() => {handleClose();}}
           icon={faTimes}
-          size={size}
-          fixedWidth
+          iconSize={size}
           className={"pointer"}
         />
       </TooltipWrapper>

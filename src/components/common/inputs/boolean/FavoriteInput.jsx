@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {faStar as faStarSolid} from "@fortawesome/pro-solid-svg-icons";
 import {faStar} from "@fortawesome/pro-light-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import IconBase from "components/common/icons/IconBase";
 
 function FavoriteInput({fieldName, dataObject, setDataObject, disabled}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -17,11 +17,11 @@ function FavoriteInput({fieldName, dataObject, setDataObject, disabled}) {
   return (
     <div className="mr-2">
         <span className="action-bar-icon">
-          <FontAwesomeIcon
-            size="lg"
+          <IconBase
+            iconSize={"lg"}
             className={"opsera-yellow pointer"}
             icon={dataObject.getData(field.id) ? faStarSolid : faStar}
-            onClick={() => {validateAndSetData(!dataObject.getData(field.id));}}
+            onClickFunction={() => {validateAndSetData(!dataObject.getData(field.id));}}
           />
         </span>
       <InfoText
