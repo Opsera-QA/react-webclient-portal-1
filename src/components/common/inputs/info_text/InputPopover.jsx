@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import {OverlayTrigger, Popover} from "react-bootstrap";
 import PopoverTitle from "react-bootstrap/PopoverTitle";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faInfoCircle, faTimes} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function InputPopover({ tooltipBody, isLoading, trigger, tooltipTitle }) {
   const getPopoverTitle = () => {
@@ -12,7 +12,7 @@ function InputPopover({ tooltipBody, isLoading, trigger, tooltipTitle }) {
         <PopoverTitle as="h3" className="popover-title">
           <div className={"d-flex justify-content-between"}>
             <div>{tooltipTitle}</div>
-            <div><FontAwesomeIcon icon={faTimes} className="pointer" onClick={() => { document.body.click();}} /></div>
+            <div><IconBase icon={faTimes} className={"pointer"} onClickFunction={() => { document.body.click();}} /></div>
           </div>
         </PopoverTitle>
       );
@@ -32,7 +32,7 @@ function InputPopover({ tooltipBody, isLoading, trigger, tooltipTitle }) {
 
   return (
     <OverlayTrigger trigger={trigger} disabled={isLoading} rootClose placement="top" overlay={getPopover()}>
-      <FontAwesomeIcon icon={faInfoCircle} className="mt-auto" />
+      <IconBase icon={faInfoCircle} className={"mt-auto"} />
     </OverlayTrigger>
   );
 }

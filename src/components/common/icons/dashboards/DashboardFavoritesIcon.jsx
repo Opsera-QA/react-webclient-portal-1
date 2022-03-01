@@ -1,9 +1,9 @@
 import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStar} from "@fortawesome/pro-light-svg-icons";
 import {faStar as faStarSolid} from "@fortawesome/pro-solid-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
+import IconBase from "components/common/icons/IconBase";
 
 function DashboardFavoritesIcon({dashboard, dashboardsActions}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -17,10 +17,10 @@ function DashboardFavoritesIcon({dashboard, dashboardsActions}) {
 
   return (
     <div className="text-center">
-      <FontAwesomeIcon
+      <IconBase
         className={"opsera-yellow"}
         icon={favorite ? faStarSolid : faStar}
-        onClick={(e) => {
+        onClickFunction={(e) => {
           console.log(e);
           changeFavorite(dashboard);
           e.stopPropagation();

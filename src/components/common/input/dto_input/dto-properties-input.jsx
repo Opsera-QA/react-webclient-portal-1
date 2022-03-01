@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {Row, Col, Button, Form, Table} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 import InputContainer from "components/common/inputs/InputContainer";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: DON'T USE THIS. USE NameValueInputBase OR MAKE A NEW COMPONENT
 function DtoPropertiesInput({dataObject, setDataObject, fieldName}) {
@@ -89,10 +89,10 @@ function DtoPropertiesInput({dataObject, setDataObject, fieldName}) {
                 <Form.Check custom id={row.name + "-value-" + key} type="switch" className="m-auto" label="" checked={row.value} onChange={event => {updateCheckedCell(event, row, "value");}} />
               </Col>
               <Col lg={1} className="px-2">
-                {dataObject.isNew() && <Button className="button button-add py-0" variant="link" size="sm" onClick={addRow}><FontAwesomeIcon icon={faPlus}/></Button>}
+                {dataObject.isNew() && <Button className="button button-add py-0" variant="link" size="sm" onClick={addRow}><IconBase icon={faPlus}/></Button>}
               </Col>
               <Col lg={1} className="px-2">
-                {dataObject.isNew() && key > 0 && <Button size="sm" variant="link" className="button button-delete danger-red m-auto py-0" onClick={e => deleteRow(e, row)} ><FontAwesomeIcon icon={faTrash} /></Button>}
+                {dataObject.isNew() && key > 0 && <Button size="sm" variant="link" className="button button-delete danger-red m-auto py-0" onClick={e => deleteRow(e, row)} ><IconBase icon={faTrash} /></Button>}
               </Col>
             </Row>
           );

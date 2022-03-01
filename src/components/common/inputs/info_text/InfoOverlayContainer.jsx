@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Popover} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 export const getInfoOverlay = (title, children) => {
   return (
@@ -26,7 +26,7 @@ export const getPopoverTitle = (title) => {
             {title}
           </div>
           <div>
-            <FontAwesomeIcon icon={faTimes} className="pointer" onClick={() => {document.body.click();}}/>
+            <IconBase icon={faTimes} className={"pointer"} onClickFunction={() => {document.body.click();}}/>
           </div>
         </div>
       </Popover.Title>

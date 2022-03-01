@@ -12,6 +12,7 @@ function IconBase(
     iconSize,
     iconStyling,
     onClickFunction,
+    iconTransformProperties,
     spinIcon,
   }) {
   const getIcon = () => {
@@ -31,6 +32,7 @@ function IconBase(
         icon={icon}
         spin={spinIcon}
         size={iconSize}
+        transform={iconTransformProperties}
         fixedWidth
         className={iconClassName}
       />
@@ -57,6 +59,7 @@ IconBase.propTypes = {
   iconClassName: PropTypes.string,
   iconStyling: PropTypes.object,
   spinIcon: PropTypes.bool,
+  iconTransformProperties: PropTypes.string,
 };
 
 export default React.memo(IconBase);
