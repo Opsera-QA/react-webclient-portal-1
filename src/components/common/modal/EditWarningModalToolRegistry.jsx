@@ -4,6 +4,7 @@ import {Row, Col, Button, Modal } from "react-bootstrap";
 import { faExclamationTriangle, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "../../../contexts/DialogToastContext";
 import LoadingIcon from "components/common/icons/LoadingIcon";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: Delete
 function EditWarningModalToolRegistry({ dataObject, showModal, setShowModal, handleEdit,handleClose }) {
@@ -50,7 +51,7 @@ function EditWarningModalToolRegistry({ dataObject, showModal, setShowModal, han
             <Row>
               <Col sm={1}>
                 <div className="mt-2">
-                  <FontAwesomeIcon icon={faExclamationTriangle} size={"lg"}/>
+                  <IconBase icon={faExclamationTriangle} iconSize={"lg"}/>
                 </div>
               </Col>
               <Col sm={11}>

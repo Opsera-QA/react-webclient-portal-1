@@ -27,10 +27,10 @@ function JenkinsDestinationSalesForceCredentialsInput({ dataObject, setDataObjec
         placement="left"
         overlay={RegistryPopover(sfdcList[sfdcList.findIndex((x) => x.id === dataObject.data[field])])}
       >
-        <FontAwesomeIcon
+        <IconBase
           icon={faEllipsisH}
-          className="fa-pull-right pointer pr-1"
-          onClick={() => document.body.click()}
+          className={"fa-pull-right pointer pr-1"}
+          onClickFunction={() => document.body.click()}
         />
       </OverlayTrigger>);
     }
