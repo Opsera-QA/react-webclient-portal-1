@@ -1,18 +1,28 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import argoActions from "../../../argo-actions";
+import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
 import axios from "axios";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import IconBase from "components/common/icons/IconBase";
 
-function ArgoProjectsSelectInput({ argoToolId, visible, fieldName, dataObject, setDataObject, disabled, className}) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);    
+function ArgoProjectSelectInput(
+  {
+    argoToolId,
+    visible,
+    fieldName,
+    model,
+    setModel,
+    setDataFunction,
+    disabled,
+    className,
+  }) {
+  const {getAccessToken} = useContext(AuthContext);
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -24,12 +34,15 @@ function ArgoProjectsSelectInput({ argoToolId, visible, fieldName, dataObject, s
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
+    setError(undefined);
 
-    loadData(argoToolId, source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (isMongoDbId(argoToolId) === true) {
+      loadData(argoToolId, source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
@@ -44,8 +57,7 @@ function ArgoProjectsSelectInput({ argoToolId, visible, fieldName, dataObject, s
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
-        toastContext.showInlineErrorMessage(error);
+        setError(error);
       }
     }
     finally {
@@ -68,18 +80,11 @@ function ArgoProjectsSelectInput({ argoToolId, visible, fieldName, dataObject, s
     if (!isLoading && (projects == null || projects.length === 0 && argoToolId !== "")) {
       return (
         <div className="form-text text-muted p-2">
-          <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
           No configured Argo Projects have been registered for this tool.
         </div>
       );
     }
-  };
-
-  const setDataFunction = (fieldName, value) => {
-    let newDataObject = dataObject;
-    newDataObject.setData("projectName", value.name);
-    newDataObject.setData("namespace", value.namespace);
-    setDataObject({ ...newDataObject });
   };
 
   if (visible === false) {
@@ -90,28 +95,30 @@ function ArgoProjectsSelectInput({ argoToolId, visible, fieldName, dataObject, s
     <div className={className}>
       <SelectInputBase
         fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
+        dataObject={model}
+        setDataObject={setModel}
         setDataFunction={setDataFunction}
         selectOptions={projects}
+        error={error}
         busy={isLoading}
-        valueField="name"
-        textField="name"
-        disabled={disabled || isLoading || argoToolId === "" || projects?.length === 0}
+        valueField={"name"}
+        textField={"name"}
+        disabled={disabled || isLoading || isMongoDbId(argoToolId) !== true}
       />
       {getNoProjectsMessage()}
     </div>
   );
 }
 
-ArgoProjectsSelectInput.propTypes = {
+ArgoProjectSelectInput.propTypes = {
   argoToolId: PropTypes.string,
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
+  setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   className: PropTypes.string,
 };
 
-export default ArgoProjectsSelectInput;
+export default ArgoProjectSelectInput;
