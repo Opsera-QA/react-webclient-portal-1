@@ -5,7 +5,6 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import { Form, Button, Overlay, Popover, Row, Col } from "react-bootstrap";
 import { format, addDays } from "date-fns";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
@@ -27,6 +26,7 @@ import Model from "core/data_model/model";
 import ProjectMappingToolSelectInput from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import JenkinsRegistryToolJobSelectInput from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: This entire form needs to be completely refactored
 function LogSearch({ tools, sideBySide }) {
@@ -539,7 +539,7 @@ function LogSearch({ tools, sideBySide }) {
       <Row className="my-2 mx-0">
         <Col className="text-right">
           <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
-            <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
+            <IconBase icon={faCalendar} iconClassName={"mr-1 d-none d-lg-inline"} />
             {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
           </Button>
           <Button

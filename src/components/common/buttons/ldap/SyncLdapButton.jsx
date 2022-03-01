@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner, faSync, faCheckCircle, faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
+import {faSync, faCheckCircle, faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
+import IconBase from "components/common/icons/IconBase";
 
 function SyncLdapButton({ disable, userData, loadData }) {
   const { getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -65,18 +65,18 @@ function SyncLdapButton({ disable, userData, loadData }) {
 
   const getLabel = () => {
     if (syncing) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Syncing LDAP</span>);
+      return (<span><IconBase isLoading={true} className={"mr-2"}/>Syncing LDAP</span>);
     }
 
     if (failedConnection) {
-      return (<span><FontAwesomeIcon icon={faExclamationTriangle} className="mr-2" fixedWidth/>LDAP Sync Failed!</span>);
+      return (<span><IconBase icon={faExclamationTriangle} className={"mr-2"}/>LDAP Sync Failed!</span>);
     }
 
     if (successfulConnection) {
-      return (<span><FontAwesomeIcon icon={faCheckCircle} className="mr-2" fixedWidth/>LDAP Sync Succeeded!</span>);
+      return (<span><IconBase icon={faCheckCircle} className={"mr-2"}/>LDAP Sync Succeeded!</span>);
     }
 
-    return (<span><FontAwesomeIcon icon={faSync} fixedWidth className="mr-2"/>Sync LDAP</span>);
+    return (<span><IconBase icon={faSync} className={"mr-2"}/>Sync LDAP</span>);
   };
 
   const buttonSupported = () => {
