@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: Clean up code once dialogs are completed
 function WarningDialog({warningMessage, setWarningMessage, alignment}) {
@@ -29,9 +29,7 @@ function WarningDialog({warningMessage, setWarningMessage, alignment}) {
     return (
       <div className="w-100 warning-block top-error-block">
         {setWarningMessage && <div className="float-right ml-1">
-          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-            clearWarning();
-          }}/>
+          <IconBase icon={faTimes} className={"pointer"} onClickFunction={() => {clearWarning();}}/>
         </div>}
         <span>{messageBody}</span>
       </div>
@@ -42,9 +40,7 @@ function WarningDialog({warningMessage, setWarningMessage, alignment}) {
     return (
       <div className="w-100 warning-block top-dialog-block">
         {setWarningMessage && <div className="float-right ml-1">
-          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-            clearWarning();
-          }}/>
+          <IconBase icon={faTimes} className={"pointer"} onClickFunction={() => {clearWarning();}}/>
         </div>}
         <span>{messageBody}</span>
       </div>
@@ -57,13 +53,7 @@ function WarningDialog({warningMessage, setWarningMessage, alignment}) {
         <div className="warning-block border-radius-5px tool-registry-dialog-block mt-1">
           {setWarningMessage && (
             <div className="float-right ml-1">
-              <FontAwesomeIcon
-                icon={faTimes}
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  clearWarning();
-                }}
-              />
+              <IconBase icon={faTimes} className={"pointer"} onClickFunction={() => {clearWarning();}}/>
             </div>
           )}
           <div>
@@ -78,9 +68,7 @@ function WarningDialog({warningMessage, setWarningMessage, alignment}) {
     <div className="row">
       <div className="col-sm-12 my-auto warning-block text-center p-2">
         {setWarningMessage && <div className="float-right ml-1">
-          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-            clearWarning();
-          }}/>
+          <IconBase icon={faTimes} className={"pointer"} onClickFunction={() => {clearWarning();}}/>
         </div>}
         <div>
           <span>{messageBody}</span>

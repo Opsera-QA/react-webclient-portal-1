@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: Use React JSX standards for file name in separate merge request
 function InformationDialog ({ message, setInformationMessage, alignment }) {
@@ -21,9 +21,7 @@ function InformationDialog ({ message, setInformationMessage, alignment }) {
     return (
       <div className="w-100 info-block top-dialog-block">
         {setInformationMessage && <div className="float-right ml-1">
-          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-            clearInformationMessage();
-          }}/>
+          <IconBase icon={faTimes} className={"pointer"} onClickFunction={() => {clearInformationMessage();}}/>
         </div>}
         <span>{messageBody}</span>
       </div>
@@ -34,9 +32,8 @@ function InformationDialog ({ message, setInformationMessage, alignment }) {
     return (
       <div className="w-100 info-block top-error-block">
         {setInformationMessage && <div className="float-right ml-1">
-          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-            clearInformationMessage();
-          }}/></div> }
+          <IconBase icon={faTimes} className={"pointer"} onClickFunction={() => {clearInformationMessage();}}/>
+        </div>}
         {messageBody}
       </div>
     );
