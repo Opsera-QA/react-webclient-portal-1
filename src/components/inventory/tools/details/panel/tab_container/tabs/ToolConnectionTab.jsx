@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
-import {TOOL_DETAIL_PANEL_TABS} from "components/inventory/tools/tool_details/tab_container/ToolDetailPanelTabContainer";
+import {TOOL_DETAIL_PANEL_TABS} from "components/inventory/tools/details/panel/tab_container/ToolDetailPanelTabContainer";
 
 function ToolConnectionTab({ toolModel, handleTabClick, activeTab }) {
   return (

@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import InfoContainer from "components/common/containers/InfoContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
-import ToolReadOnlyDetailPanel from "components/inventory/tools/tool_details/ToolReadOnlyDetailPanel";
+import ToolReadOnlyDetailPanel from "components/inventory/tools/details/read_only_panel/ToolReadOnlyDetailPanel";
 import toolsActions from "components/inventory/tools/tools-actions";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
