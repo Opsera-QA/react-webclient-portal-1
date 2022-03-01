@@ -1,13 +1,11 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
-import ExportDataModalBase from "components/common/modal/export_data/ExportDataModalBase";
 import Button from "react-bootstrap/Button";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import ExportBlueprintDataModal from "components/common/modal/export_data/ExportBlueprintDataModal";
 import ExportLogDataModal from "components/common/modal/export_data/ExportLogDataModal";
+import IconBase from "components/common/icons/IconBase";
 
 //if date should be parsed from ISO
 // function parseISOString(str) {
@@ -35,7 +33,7 @@ function ExportLogSearchButton({isLoading, searchResults, exportDisabled}) {
   //   head:[["Logs Search Results"]],
   //   body: data.map(item => [
   //   "Date: " + parseISOString(item?._source[Object.keys(item._source)[0]]) + "\n" +
-  //   "id: " + item._source.data.tool_output.vulnerabilities.nvd_data[0].id + "\n" + 
+  //   "id: " + item._source.data.tool_output.vulnerabilities.nvd_data[0].id + "\n" +
   //   "package_path: " + item._source.data.tool_output.vulnerabilities.package_path + "\n" +
   //   "url: " + item._source.data.tool_output.vulnerabilities.url + "\n" +
   //   "pipeline_tags: " + item._source.data.pipeline_tags + "\n" +
@@ -61,7 +59,7 @@ function ExportLogSearchButton({isLoading, searchResults, exportDisabled}) {
             disabled={exportDisabled}
             className={"ml-1 float-right"}
             onClick={() => setShowExportModal(true)}>
-            <span><FontAwesomeIcon icon={faFileDownload}/></span>
+            <span><IconBase icon={faFileDownload}/></span>
           </Button>
         </div>
       </TooltipWrapper>

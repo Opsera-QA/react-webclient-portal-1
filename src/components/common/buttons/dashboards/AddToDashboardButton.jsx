@@ -1,14 +1,14 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner, faPlus} from "@fortawesome/pro-light-svg-icons";
+import {faPlus} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import Model from "core/data_model/model";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import IconBase from "components/common/icons/IconBase";
 
 function AddToDashboardButton({ disable, selectedDashboardData, kpiData, closePanel, className }) {
   const isMounted = useRef(false);
@@ -70,10 +70,10 @@ function AddToDashboardButton({ disable, selectedDashboardData, kpiData, closePa
 
   const getLabel = () => {
     if (isSaving) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Adding To Dashboard</span>);
+      return (<span><IconBase isLoading={true} className={"mr-2"}/>Adding To Dashboard</span>);
     }
 
-    return (<span><FontAwesomeIcon icon={faPlus} fixedWidth className="mr-2"/>Add To Dashboard</span>);
+    return (<span><IconBase icon={faPlus} className={"mr-2"}/>Add To Dashboard</span>);
   };
 
   return (
