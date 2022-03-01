@@ -1,5 +1,4 @@
 import { format } from "date-fns";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
   faCircle, faOctagon,
@@ -242,24 +241,24 @@ export const getPipelineStatusIcon = (row) => {
   switch (row.value) {
     case "failure":
     case "failed":
-      return (<FontAwesomeIcon icon={faTimesCircle} className="cell-icon red my-auto" fixedWidth />);
+      return (<IconBase icon={faTimesCircle} className={"cell-icon red my-auto"}/>);
     case "error":
-      return (<FontAwesomeIcon icon={faExclamationCircle} className="cell-icon red my-auto" fixedWidth />);
+      return (<IconBase icon={faExclamationCircle} className={"cell-icon red my-auto"}/>);
     case "unknown":
-      return (<FontAwesomeIcon icon={faCircle} className="cell-icon yellow my-auto" fixedWidth/>);
+      return (<IconBase icon={faCircle} className={"cell-icon yellow my-auto"}/>);
     case "rejected":
-      return (<FontAwesomeIcon icon={faStopCircle} className="cell-icon red my-auto" fixedWidth/>);
+      return (<IconBase icon={faStopCircle} className={"cell-icon red my-auto"}/>);
     case "running":
     case "processing event":
-      return (<FontAwesomeIcon icon={faPlayCircle} className="cell-icon green my-auto" fixedWidth/>);
+      return (<IconBase icon={faPlayCircle} className={"cell-icon green my-auto"}/>);
     case "queued":
-      return (<FontAwesomeIcon icon={faPauseCircle} className="cell-icon green my-auto" fixedWidth/>);
+      return (<IconBase icon={faPauseCircle} className={"cell-icon green my-auto"}/>);
     case "stopped":
     case "halted":
-      return (<FontAwesomeIcon icon={faOctagon} className="cell-icon red my-auto" fixedWidth/>);
+      return (<IconBase icon={faOctagon} className={"cell-icon red my-auto"}/>);
     case "created":
     default:
-      return (<FontAwesomeIcon icon={faCheckCircle} className="cell-icon green my-auto" fixedWidth/>);
+      return (<IconBase icon={faCheckCircle} className={"cell-icon green my-auto"}/>);
   }
 };
 
@@ -267,24 +266,24 @@ export const getAssociatedPipelineStatusIcon = (pipelineStatus) => {
   switch (pipelineStatus) {
     case "failure":
     case "failed":
-      return (<FontAwesomeIcon icon={faTimesCircle} className="red" fixedWidth />);
+      return (<IconBase icon={faTimesCircle} className={"red"} />);
     case "error":
-      return (<FontAwesomeIcon icon={faExclamationCircle} className="red" fixedWidth />);
+      return (<IconBase icon={faExclamationCircle} className={"red"} />);
     case "unknown":
-      return (<FontAwesomeIcon icon={faCircle} className="yellow" fixedWidth/>);
+      return (<IconBase icon={faCircle} className={"yellow"}/>);
     case "rejected":
-      return (<FontAwesomeIcon icon={faStopCircle} className="red" fixedWidth/>);
+      return (<IconBase icon={faStopCircle} className={"red"}/>);
     case "running":
     case "processing event":
-      return (<FontAwesomeIcon icon={faPlayCircle} className="green" fixedWidth/>);
+      return (<IconBase icon={faPlayCircle} className={"green"}/>);
     case "queued":
     case "pending":
-      return (<FontAwesomeIcon icon={faPauseCircle} className="green" fixedWidth/>);
+      return (<IconBase icon={faPauseCircle} className={"green"}/>);
     case "stopped":
     case "halted":
-      return (<FontAwesomeIcon icon={faOctagon} className="red" fixedWidth/>);
+      return (<IconBase icon={faOctagon} className={"red"}/>);
     default:
-      return (<FontAwesomeIcon icon={faCheckCircle} className="green" fixedWidth/>);
+      return (<IconBase icon={faCheckCircle} className={"green"}/>);
   }
 };
 
@@ -375,7 +374,13 @@ export const getTableDeleteColumn = (headerText, deleteFunction, className) => {
   return {
     Header: headerText,
     Cell: function getDeleteIcon(row) {
-      return <FontAwesomeIcon icon={faTrash} className="pointer danger-red" onClick={() => {deleteFunction(row?.data[row?.row?.index]); }}/>;
+      return (
+        <IconBase
+          icon={faTrash}
+          className={"pointer danger-red"}
+          onClick={() => {deleteFunction(row?.data[row?.row?.index]); }}
+        />
+      );
     },
     class: className ? className :  "no-wrap-inline"
   };
@@ -397,9 +402,14 @@ export const getGitTaskTableRunButtonColumn = (accessor = "row", headerText, var
     Header: headerText,
     accessor: accessor,
     Cell: function getRunButton(row) {
-      return <Button size={"sm"} variant={variant} disabled={row?.data[row?.row?.index].status === "running"} onClick={() => {buttonFunction(row?.data[row?.row?.index]);}} >
-        {row?.data[row?.row?.index].status === "running" ? (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Running </span>) : (<span><FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/> {buttonText} </span> ) }
-        </Button>;
+      return (
+        <Button size={"sm"} variant={variant} disabled={row?.data[row?.row?.index].status === "running"} onClick={() => {buttonFunction(row?.data[row?.row?.index]);}} >
+        {row?.data[row?.row?.index].status === "running"
+          ? (<span><IconBase isLoading={true} className={"mr-1"} />Running</span>)
+          : (<span><IconBase icon={faPlay} className={"mr-1"}/>{buttonText}</span>)
+        }
+        </Button>
+      );
     },
     class: className ? className :  "no-wrap-inline py-1"
   };
@@ -417,12 +427,26 @@ export const getDeletePlatformToolTableButtonColumn = (accessor = "row", headerT
     class: className ? className :  "no-wrap-inline py-1"
   };
 };
+
+// TODO: Should we show nothing if not === false?
 export const getTableBooleanIconColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function getStatusIcon(row) {
-      return row.value ? <div><FontAwesomeIcon icon={faCheckCircle} className="green ml-2" /></div> :  <div><FontAwesomeIcon icon={faTimesCircle} className="red ml-2" /></div>;
+      if (row?.value === true) {
+        return (
+          <div>
+            <IconBase icon={faCheckCircle} className={"green ml-2"} />
+          </div>
+        );
+      }
+
+      return (
+        <div>
+          <IconBase icon={faTimesCircle} className={"red ml-2"} />
+        </div>
+      );
     },
     class: className ? className : "text-left"
   };
@@ -433,7 +457,13 @@ export const getTableInfoIconColumn = (showInformationFunction, accessor = "row"
     Header: "Info",
     accessor: accessor,
     Cell: function getInfoIcon(row) {
-      return <FontAwesomeIcon icon={faSearchPlus} className="pointer" onClick={() => {showInformationFunction(row?.data[row?.row?.index]); }}/>;
+      return (
+        <IconBase
+          icon={faSearchPlus}
+          className={"pointer"}
+          onClick={() => {showInformationFunction(row?.data[row?.row?.index]); }}
+        />
+      );
     },
     class: className ? className : undefined
   };

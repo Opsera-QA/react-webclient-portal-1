@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "./contexts/AuthContext";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faClipboardList,
   faArchive,
@@ -19,6 +18,7 @@ import {
   faTasks,
 } from "@fortawesome/pro-light-svg-icons";
 import "css/general/sidebar.css";
+import IconBase from "components/common/icons/IconBase";
 
 const hiddenNav = () => {
   return <></>;
@@ -86,56 +86,56 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
       <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
         <div className="sidebar-menu pt-4">
           <NavLink className="nav-link" activeClassName="chosen" exact to="/">
-            <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faHome} /> <span
             className="menu-text">Home</span></NavLink>
 
           <div className="mt-3 mb-2 sub-header">Products</div>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/platform">
-            <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faBox} /> <span
             className="menu-text">Toolchain</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
-            <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faDraftingCompass} /> <span
             className="menu-text">Pipelines</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/insights">
-            <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faChartNetwork} /> <span
             className="menu-text">Insights</span></NavLink>
 
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
-            <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faClipboardList} /> <span
             className="menu-text">Tool Registry</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/task">
-            <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faTasks} /> <span
             className="menu-text">Tasks</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
-            <FontAwesomeIcon size="lg" icon={faArchive} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faArchive} /> <span
             className="menu-text">Logs</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/blueprint">
-            <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faLayerGroup} /> <span
             className="menu-text">Blueprints</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/reports">
-            <FontAwesomeIcon size="lg" icon={faAnalytics} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faAnalytics} /> <span
             className="menu-text">Reports</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
-            <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faEnvelope} /> <span
             className="menu-text">Notifications</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/settings">
-            <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faCogs} /> <span
             className="menu-text">Settings</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/admin">
-            <FontAwesomeIcon size="lg" icon={faTools} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faTools} /> <span
             className="menu-text">Admin Tools</span></NavLink>
 
         </div>
@@ -154,52 +154,52 @@ function SaasUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideIte
       <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
         <div className="sidebar-menu pt-4">
           <NavLink className="nav-link" activeClassName="chosen" exact to="/">
-            <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faHome} /> <span
             className="menu-text">Home</span></NavLink>
 
           <div className="mt-3 mb-2 sub-header">Products</div>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/platform">
-            <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faBox} /> <span
             className="menu-text">Toolchain</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
-            <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faDraftingCompass} /> <span
             className="menu-text">Pipelines</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/insights">
-            <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faChartNetwork} /> <span
             className="menu-text">Insights</span></NavLink>
 
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
-            <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faClipboardList} /> <span
             className="menu-text">Tool Registry</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/task">
-            <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faTasks} /> <span
             className="menu-text">Tasks</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
-            <FontAwesomeIcon size="lg" icon={faArchive} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faArchive} /> <span
             className="menu-text">Logs</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/blueprint">
-            <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faLayerGroup} /> <span
             className="menu-text">Blueprints</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/reports">
-            <FontAwesomeIcon size="lg" icon={faAnalytics} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faAnalytics} /> <span
             className="menu-text">Reports</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
-            <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faEnvelope} /> <span
             className="menu-text">Notifications</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/settings">
-            <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faCogs} /> <span
             className="menu-text">Settings</span></NavLink>
         </div>
       </div>
@@ -218,52 +218,52 @@ function AccountAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFla
       <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
         <div className="sidebar-menu pt-4">
           <NavLink className="nav-link" activeClassName="chosen" exact to="/">
-            <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faHome} /> <span
             className="menu-text">Home</span></NavLink>
 
           <div className="mt-3 mb-2 sub-header">Products</div>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/platform">
-            <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faBox} /> <span
             className="menu-text">Toolchain</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
-            <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faDraftingCompass} /> <span
             className="menu-text">Pipelines</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/insights">
-            <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faChartNetwork} /> <span
             className="menu-text">Insights</span></NavLink>
 
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
-            <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faClipboardList} /> <span
             className="menu-text">Tool Registry</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/task">
-            <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faTasks} /> <span
             className="menu-text">Tasks</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
-            <FontAwesomeIcon size="lg" icon={faArchive} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faArchive} /> <span
             className="menu-text">Logs</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/blueprint">
-            <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faLayerGroup} /> <span
             className="menu-text">Blueprints</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/reports">
-            <FontAwesomeIcon size="lg" icon={faAnalytics} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faAnalytics} /> <span
             className="menu-text">Reports</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
-            <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faEnvelope} /> <span
             className="menu-text">Notifications</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/settings">
-            <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faCogs} /> <span
             className="menu-text">Settings</span></NavLink>
         </div>
       </div>
@@ -281,52 +281,52 @@ function AccountPowerUserNav({ accessRole, featureFlagHideItemInProd, featureFla
       <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
         <div className="sidebar-menu pt-4">
           <NavLink className="nav-link" activeClassName="chosen" exact to="/">
-            <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faHome} /> <span
             className="menu-text">Home</span></NavLink>
 
           <div className="mt-3 mb-2 sub-header">Products</div>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/platform">
-            <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faBox} /> <span
             className="menu-text">Toolchain</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
-            <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faDraftingCompass} /> <span
             className="menu-text">Pipelines</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/insights">
-            <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faChartNetwork} /> <span
             className="menu-text">Insights</span></NavLink>
 
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
-            <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faClipboardList} /> <span
             className="menu-text">Tool Registry</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/task">
-            <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faTasks} /> <span
             className="menu-text">Tasks</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
-            <FontAwesomeIcon size="lg" icon={faArchive} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faArchive} /> <span
             className="menu-text">Logs</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/blueprint">
-            <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faLayerGroup} /> <span
             className="menu-text">Blueprints</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/reports">
-            <FontAwesomeIcon size="lg" icon={faAnalytics} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faAnalytics} /> <span
             className="menu-text">Reports</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
-            <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faEnvelope} /> <span
             className="menu-text">Notifications</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/settings">
-            <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faCogs} /> <span
             className="menu-text">Settings</span></NavLink>
         </div>
       </div>
@@ -345,44 +345,44 @@ function DefaultUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHide
       <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
         <div className="sidebar-menu pt-4">
           <NavLink className="nav-link" activeClassName="chosen" exact to="/">
-            <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faHome} /> <span
             className="menu-text">Home</span></NavLink>
 
           <div className="mt-3 mb-2 sub-header">Products</div>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/platform">
-            <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faBox} /> <span
             className="menu-text">Toolchain</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
-            <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faDraftingCompass} /> <span
             className="menu-text">Pipelines</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/insights">
-            <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faChartNetwork} /> <span
             className="menu-text">Insights</span></NavLink>
 
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
-            <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faClipboardList} /> <span
             className="menu-text">Tool Registry</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/task">
-            <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faTasks} /> <span
             className="menu-text">Tasks</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
-            <FontAwesomeIcon size="lg" icon={faArchive} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faArchive} /> <span
             className="menu-text">Logs</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/blueprint">
-            <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faLayerGroup} /> <span
             className="menu-text">Blueprints</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
-            <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
+            <IconBase iconSize={"lg"} icon={faEnvelope} /> <span
             className="menu-text">Notifications</span></NavLink>
 
         </div>
