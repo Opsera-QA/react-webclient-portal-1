@@ -56,8 +56,6 @@ function ArgoProjectEditorPanel({ argoProjectData, toolData, projId, handleClose
   };
 
   const createProject = async () => {
-    console.log(argoProjectModel);
-    console.log(argoProjectModel.checkCurrentValidity());
     return await argoActions.createArgoProject(getAccessToken, cancelTokenSource, toolData?._id, argoProjectModel);
   };
 
