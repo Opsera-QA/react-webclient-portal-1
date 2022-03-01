@@ -1,10 +1,10 @@
 import {Image} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faOctopusDeploy, faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import {faTasks, faWrench} from "@fortawesome/pro-light-svg-icons";
 import React from "react";
 import {TASK_TYPES} from "components/tasks/task.types";
 import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
+import IconBase from "components/common/icons/IconBase";
 
 export function getLargeVendorIconFromToolIdentifier (toolIdentifier, s3Bucket = process.env.REACT_APP_OPSERA_S3_STORAGE_URL) {
   if (toolIdentifier == null) {
@@ -36,11 +36,11 @@ export function getLargeVendorIconFromToolIdentifier (toolIdentifier, s3Bucket =
     case "azure_account":
       return <Image src={`${vendorIconPrefix}/icons8-azure-96.png`} />;
     case "octopus":
-      return <FontAwesomeIcon icon={faOctopusDeploy} fixedWidth style={{color: "#0D80D8"}} className={"title-fa-icon"} />;
+      return <IconBase icon={faOctopusDeploy} iconStyling={{color: "#0D80D8"}} iconClassName={"title-fa-icon"} />;
     case "slack":
       return <Image src={`${vendorIconPrefix}/slack-64-252.png`} className={"slack-icon"} />;
     case "sfdc-configurator":
-      return <FontAwesomeIcon icon={faSalesforce} fixedWidth style={{color: "#0D80D8"}} className={"title-fa-icon"} />;
+      return <IconBase icon={faSalesforce} iconStyling={{color: "#0D80D8"}} iconClassName={"title-fa-icon"} />;
     case "jenkins":
       return <Image src={`${vendorIconPrefix}/jenkins-98-113.png`} className={"jenkins-icon"} />;
     case "teams":
@@ -78,7 +78,7 @@ export function getLargeVendorIconFromToolIdentifier (toolIdentifier, s3Bucket =
     case "mongodb_realm":
       return <Image src={`${vendorIconPrefix}/icons8-mongodb-96.png`} />;
     default:
-      return <FontAwesomeIcon icon={faWrench} fixedWidth className={"title-fa-icon wrench"} />;
+      return <IconBase icon={faWrench} iconClassName={"title-fa-icon wrench"} />;
   }
 }
 
@@ -93,7 +93,7 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
     case TASK_TYPES.SYNC_SALESFORCE_REPO:
     case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
     case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-      return <FontAwesomeIcon icon={faSalesforce} fixedWidth style={{color: "#0D80D8"}} className={"title-fa-icon icon-image"} />;
+      return <IconBase icon={faSalesforce} iconStyling={{color: "#0D80D8"}} iconClassName={"title-fa-icon icon-image"} />;
     case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
     case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
     case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
@@ -103,7 +103,7 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
     case TASK_TYPES.AZURE_CLUSTER_CREATION:
       return <Image className={"icon-image"} src={`${vendorIconPrefix}/icons8-azure-96.png`} />;
     default:
-      return <FontAwesomeIcon icon={faTasks} fixedWidth className={"title-fa-icon wrench"} />;
+      return <IconBase icon={faTasks} iconClassName={"title-fa-icon wrench"} />;
   }
 }
 

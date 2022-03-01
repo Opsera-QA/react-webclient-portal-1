@@ -1,9 +1,9 @@
 import React from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import IconBase from "components/common/icons/IconBase";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function FontAwesomeIconTitleBar({ title, titleIcon, isLoading, inactive }) {
   const getStateColumn = () => {
@@ -19,14 +19,14 @@ function FontAwesomeIconTitleBar({ title, titleIcon, isLoading, inactive }) {
   };
 
   if (isLoading) {
-    return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Data</span>);
+    return (<span><LoadingIcon className={"mr-1"}/>Loading Data</span>);
   }
 
   return (
     <Row>
       <Col sm={12}>
         <div className="d-flex w-100">
-          <div className="mx-auto"><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-1"/></div>
+          <div className="mx-auto"><IconBase icon={titleIcon} className={"mr-1"}/></div>
         </div>
       </Col>
       <Col sm={12}>

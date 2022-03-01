@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {Button, InputGroup} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSearch, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {faSearch} from "@fortawesome/pro-light-svg-icons";
 import Model from "core/data_model/model";
 import {useHistory} from "react-router-dom";
 import regexDefinitions from "utils/regexDefinitions";
+import IconBase from "components/common/icons/IconBase";
 
 function SearchFilter({ paginationModel, loadData, disabled, fieldName, className, isLoading, metadata}) {
   let history = useHistory();
@@ -38,14 +38,6 @@ function SearchFilter({ paginationModel, loadData, disabled, fieldName, classNam
     }
   };
 
-  const getSearchIcon = () => {
-    if (isSearching) {
-      return <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>;
-    }
-
-    return  <FontAwesomeIcon icon={faSearch} fixedWidth />;
-  };
-
   const handleKeyPress = async (event) => {
     if (event.key === 'Enter') {
       await handleSearch();
@@ -69,7 +61,7 @@ function SearchFilter({ paginationModel, loadData, disabled, fieldName, classNam
         />
         <InputGroup.Append>
           <Button className="inline-filter-input filter-bg-white" disabled={isLoading || disabled} variant="outline-primary" onClick={handleSearch}>
-            {getSearchIcon()}
+            <IconBase isLoading={isSearching} icon={faSearch} />
           </Button>
         </InputGroup.Append>
       </InputGroup>
