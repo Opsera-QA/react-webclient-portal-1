@@ -5,10 +5,10 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import azurePipelineActions from "../azure-pipeline-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSync } from "@fortawesome/pro-light-svg-icons";
-import { hasStringValue } from "components/common/helpers/string-helpers";
+import {faSync} from "@fortawesome/pro-light-svg-icons";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 import toolsActions from "components/inventory/tools/tools-actions";
+import IconBase from "components/common/icons/IconBase";
 
 function AzureAcrPushStepRegistryNameSelectInput({
   fieldName,
@@ -129,7 +129,7 @@ function AzureAcrPushStepRegistryNameSelectInput({
     if (dataObject?.getData("resource")?.length > 0) {
       return (
         <small>
-          <FontAwesomeIcon icon={faSync} className="pr-1" />
+          <IconBase icon={faSync} className={"pr-1"} />
           Click here to refresh Azure Registries
         </small>
       );

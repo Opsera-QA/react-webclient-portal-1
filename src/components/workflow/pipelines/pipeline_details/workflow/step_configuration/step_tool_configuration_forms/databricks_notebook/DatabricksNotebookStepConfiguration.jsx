@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import JSONInput from "react-json-editor-ajrm";
 import locale    from "react-json-editor-ajrm/locale/en";
 import {getErrorDialog, getMissingRequiredFieldsErrorDialog} from "../../../../../../../common/toasts/toasts";
+import IconBase from "components/common/icons/IconBase";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -126,7 +126,7 @@ function DatabricksNotebookStepConfiguration({ data, parentCallback, setToast, s
       
       <Button variant="primary" type="button" 
         onClick={() => { callbackFunction(); }}> 
-        <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
+        <IconBase icon={faSave} className={"mr-1"}/> Save
       </Button>
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
     </Form>

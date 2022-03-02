@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import LoadingDialog from "components/common/status_notifications/loading";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import StepToolConfiguration from "./step_configuration/StepToolConfiguration";
 import StepConfiguration from "./step_configuration/StepConfiguration";
@@ -13,6 +12,7 @@ import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/wor
 import SourceRepositoryConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/SourceRepositoryConfiguration";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import IconBase from "components/common/icons/IconBase";
 
 
 const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPlan }) => {
@@ -89,7 +89,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
           <div className={"my-auto"}>{title}</div>
           <div className={"d-flex"}>
             <StepToolHelpIcon type={editItem?.type} tool={editItem?.tool_name?.toLowerCase()} />
-            <FontAwesomeIcon icon={faTimes} size={"lg"} style={{ cursor: "pointer"}} onClick={() => {handleCloseClick();}}/>
+            <IconBase icon={faTimes} iconSize={"lg"} className={"pointer"} onClickFunction={() => {handleCloseClick();}}/>
           </div>
         </h5>
       </div>

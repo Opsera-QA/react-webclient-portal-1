@@ -2,8 +2,9 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faSpinner, faSync } from "@fortawesome/free-solid-svg-icons";
+import LoadingIcon from "components/common/icons/LoadingIcon";
+import IconBase from "components/common/icons/IconBase";
 
 function StepToolActivityView({ pipelineId, stepId, runCount, tool_identifier, handleClose, itemState }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -91,17 +92,17 @@ function StepToolActivityView({ pipelineId, stepId, runCount, tool_identifier, h
       <div className="console-text workflow-tool-activity-container">
         <div style={{ minHeight: "15px" }}>
           {isLoading ?
-            <FontAwesomeIcon icon={faSpinner} fixedWidth size="sm" spin />
+            <LoadingIcon iconSize={"sm"} />
             :
-            <FontAwesomeIcon icon={faSync} fixedWidth
-                             style={{ cursor: "pointer" }}
-                             onClick={() => {
+            <IconBase icon={faSync}
+                             className={"pointer"}
+                             onClickFunction={() => {
                                loadFormData(pipelineId, stepId, tool_identifier);
                              }} />}
           <div className="text-right float-right">
-            <FontAwesomeIcon icon={faTimes} fixedWidth
-                             style={{ cursor: "pointer" }}
-                             onClick={() => {
+            <IconBase icon={faTimes}
+                             className={"pointer"}
+                             onClickFunction={() => {
                                handleCloseWindow();
                              }} />
           </div>
