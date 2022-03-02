@@ -1,10 +1,9 @@
-import {axiosApiService} from "api/apiService";
 import {Popover} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
 import React from "react";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import IconBase from "components/common/icons/IconBase";
 
 const pipelineHelpers = {};
 
@@ -153,13 +152,14 @@ pipelineHelpers.displayPipelineValueComponent = ({ typeArray }) => {
   }
 };
 
+// TODO: Don't use. Use RoleRestricted input
 pipelineHelpers.getRegistryPopover = (data) => {
   if (data) {
     return (
       <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
         <Popover.Title as="h3">
           Tool and Account Details
-          <FontAwesomeIcon icon={faTimes} className="ml-2 fa-pull-right pointer" onClick={() => document.body.click()}/>
+          <IconBase icon={faTimes} className={"ml-2 fa-pull-right pointer"} onClick={() => document.body.click()}/>
         </Popover.Title>
 
         <Popover.Content>
@@ -191,7 +191,7 @@ pipelineHelpers.getRegistryPopover = (data) => {
       <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
         <Popover.Title as="h3">
           Tool and Account Details{" "}
-          <FontAwesomeIcon icon={faTimes} className="fa-pull-right pointer" onClick={() => document.body.click()}/>
+          <IconBase icon={faTimes} className={"fa-pull-right pointer"} onClickFunction={() => document.body.click()}/>
         </Popover.Title>
         <Popover.Content>
           <div className="text-muted mb-2">Please select any tool/account to get the details.</div>

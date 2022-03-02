@@ -1,14 +1,14 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCog, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {faCog} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import taskActions from "components/tasks/task.actions";
 import axios from "axios";
 import workflowAuthorizedActions
 from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+import IconBase from "components/common/icons/IconBase";
 function GenerateSalesforceCertificateButton({refreshData, recordDto, disable, size, showSuccessToasts, className, saveButtonText}) {
   const { getAccessToken, getUserRecord, setAccessRoles, getAccessRoleData } = useContext(AuthContext);
   let toastContext = useContext(DialogToastContext);
@@ -81,18 +81,10 @@ function GenerateSalesforceCertificateButton({refreshData, recordDto, disable, s
     }
   };
 
-  const getLabel = () => {
-    if (isSaving) {
-      return (<span><FontAwesomeIcon icon={faCog} spin className="mr-1" fixedWidth/>{saveButtonText}</span>);
-    }
-
-    return (<span><FontAwesomeIcon icon={faCog} fixedWidth className="mr-1"/>{saveButtonText}</span>);
-  };
-
   return (
     <div className={className}>
       <Button size={size} variant="primary" disabled={isSaving || disable || !canGenerate} onClick={() => generateCertificate()}>
-        {getLabel()}
+        <IconBase icon={faCog} className={"mr-1"} isLoading={isSaving} />
       </Button>
     </div>
   );

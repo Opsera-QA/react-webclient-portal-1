@@ -4,7 +4,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import { Button, Col, Row, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import IconBase from "components/common/icons/IconBase";
 
 function TextInputWithButtonAWSLambda({
                                    fieldName,
@@ -58,7 +58,7 @@ function TextInputWithButtonAWSLambda({
         >
           <Button size="md" variant={btnVariant} disabled={btnDisabled} onClick={btnClickHandler}>
             <span>
-              {btnIcon && <FontAwesomeIcon icon={btnIcon} fixedWidth className="mr-2" />}
+              {btnIcon && <IconBase icon={btnIcon} className={"mr-2"}/>}
               {btnText}
             </span>
           </Button>
@@ -69,7 +69,7 @@ function TextInputWithButtonAWSLambda({
     return (
       <Button size="md" variant={btnVariant} disabled={btnDisabled} onClick={btnClickHandler}>
         <span>
-          {btnIcon && <FontAwesomeIcon icon={btnIcon} fixedWidth className="mr-2" />}
+          {btnIcon && <IconBase icon={btnIcon} fixedWidth className={"mr-2"} />}
           {btnText}
         </span>
       </Button>

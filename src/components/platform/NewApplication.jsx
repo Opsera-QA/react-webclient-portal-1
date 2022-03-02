@@ -13,8 +13,8 @@ import { ApiService } from "api/apiService";
 import ErrorDialog from "components/common/status_notifications/error";
 import SuccessDialog from "components/common/status_notifications/SuccessDialog";
 import { handleError, isAlphaNumeric } from "utils/helpers";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWrench, faClipboardList } from "@fortawesome/free-solid-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 class NewApplication extends React.PureComponent {
   static contextType = NewAppContext
@@ -311,7 +311,7 @@ class NewApplication extends React.PureComponent {
           {savingStatus === "success" && messages ? <>
             <SuccessDialog successMessage={messages} />
             <Button variant="outline-primary" className="ml-2" onClick={gotoInventory}>
-              <FontAwesomeIcon icon={faClipboardList} fixedWidth /> Registry
+              <IconBase icon={faClipboardList} /> Registry
             </Button>
           </> : null}
           

@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import {Link} from "react-router-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import slackNotificationMetadata from "components/notifications/notification_details/notification_method_forms/slack/slackNotificationMetadata";
 import SlackStepNotificationToolInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/slack/SlackStepNotificationToolInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import IconBase from "components/common/icons/IconBase";
 
 function SlackNotificationMethodConfigurationPanel({ notificationDataDto, notificationMethodDataDto, setNotificationMethodDataDto }) {
   useEffect(() => {loadData();}, []);
@@ -21,7 +21,7 @@ function SlackNotificationMethodConfigurationPanel({ notificationDataDto, notifi
     return (
       <small className="form-text text-muted px-2">
         Please Note: You must use the Add to Slack button on the
-        <Link to="/inventory/tools"><FontAwesomeIcon icon={faClipboardList} className="mx-1"/>Tool Registry</Link> page in order to use this feature.
+        <Link to="/inventory/tools"><IconBase icon={faClipboardList} className={"mx-1"}/>Tool Registry</Link> page in order to use this feature.
       </small>
     );
   };
