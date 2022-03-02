@@ -10,36 +10,36 @@ import {
 } from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import VanityTable from "components/common/table/VanityTable";
-import {getTimeColumnDefinition} from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummaryFailedTestResultsTable";
+import {millisToMinutesAndSeconds} from "utils/helpers";
 
-export const getApexClassUrlColumnDefinition = (field, maxLength, className) => {
+export const getTimeColumnDefinition = (field, maxLength, className) => {
   return {
     header: getColumnHeader(field),
     id: getColumnId(field),
     sortable: false,
     class: className ? className : undefined,
     tooltipTemplate: function (value, row) {
-      const url = `${row?.apexClass?.attributes?.url}`;
-      return `<div class="custom-tooltip"><span>${url}</span></div>`;
+      const time = `${millisToMinutesAndSeconds(row?.time)}`;
+      return `<div class="custom-tooltip"><span>${time}</span></div>`;
     },
     template: (text, row) => {
-      return row?.apexClass?.attributes?.url;
+      return millisToMinutesAndSeconds(row?.time);
     },
   };
 };
 
-function SalesforceLogSummaryTestResultsTableBase({ hasSuccessAndFailureTests, testResults, title, icon,  }) {
+function SalesforceLogSummaryFailedTestResultsTable({ hasSuccessAndFailureTests, testResults, title, icon,  }) {
   const fields = salesforceSummaryLogUnitTestResultMetadata?.fields;
 
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "type")),
       getTableTextColumn(getField(fields, "methodName")),
       getTimeColumnDefinition(getField(fields, "time")),
+      getTableTextColumn(getField(fields, "message")),
+      getTableTextColumn(getField(fields, "stackTrace")),
       getTableTextColumn(getField(fields, "outcome")),
-      getTableDateTimeColumn(getField(fields, "testTimestamp")),
-      // getTableTextColumn(getField(fields, "apexClass.attributes.type")),
-      getApexClassUrlColumnDefinition(getField(fields, "apexClass.attributes.url")),
     ],
     []
   );
@@ -70,11 +70,11 @@ function SalesforceLogSummaryTestResultsTableBase({ hasSuccessAndFailureTests, t
   );
 }
 
-SalesforceLogSummaryTestResultsTableBase.propTypes = {
+SalesforceLogSummaryFailedTestResultsTable.propTypes = {
   testResults: PropTypes.array,
   hasSuccessAndFailureTests: PropTypes.bool,
   title: PropTypes.string,
   icon: PropTypes.object,
 };
 
-export default SalesforceLogSummaryTestResultsTableBase;
+export default SalesforceLogSummaryFailedTestResultsTable;
