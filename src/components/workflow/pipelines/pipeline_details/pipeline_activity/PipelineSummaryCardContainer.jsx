@@ -1,15 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/pro-solid-svg-icons";
 import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
 import CardContainerBase from "components/common/card_containers/CardContainerBase";
 import PipelineTypesField from "components/common/fields/pipelines/PipelineTypesField";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function PipelineSummaryCardContainer({ children, isLoading, pipelineData }) {
   const getTitleBar = () => {
     if (isLoading) {
-      return (<div className="ml-1"><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Pipelines</div>);
+      return (<div className="ml-1"><LoadingIcon className={"mr-1"}/>Loading Pipelines</div>);
     }
 
     return (
