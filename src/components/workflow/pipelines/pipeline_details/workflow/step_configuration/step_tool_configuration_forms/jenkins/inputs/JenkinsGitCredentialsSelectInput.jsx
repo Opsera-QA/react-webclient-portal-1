@@ -1,10 +1,9 @@
 import React,{ useEffect,useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form } from "react-bootstrap";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 const excludeArr = ["SFDC VALIDATE PACKAGE XML", "SFDC UNIT TESTING", "SFDC DEPLOY"];
 
@@ -79,7 +78,7 @@ function JenkinsGitCredentialsSelectInput({
     if (accountsList.length === 0) {
       return (
         <small className="text-muted p-2">         
-          <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
           No Credentials have been created for <span>{dataObject?.getData("jenkinsUrl")}</span>. Please go to
           <Link to="/inventory/tools"> Tool Registry</Link> and add credentials for this Jenkins in order to proceed.
         </small>

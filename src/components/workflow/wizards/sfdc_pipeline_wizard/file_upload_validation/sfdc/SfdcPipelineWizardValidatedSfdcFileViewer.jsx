@@ -7,7 +7,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStepBackward} from "@fortawesome/pro-light-svg-icons";
 import CancelButton from "components/common/buttons/CancelButton";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -20,6 +19,7 @@ import SfdcPipelineWizardInvalidSfdcFilesTable
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/sfdc/SfdcPipelineWizardInvalidSfdcFilesTable";
 import SfdcPipelineWizardSubmitSfdcFilesButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSubmitSfdcFilesButton";
+import IconBase from "components/common/icons/IconBase";
 
 const SfdcPipelineWizardValidatedSfdcFileViewer = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -123,7 +123,7 @@ const SfdcPipelineWizardValidatedSfdcFileViewer = ({ pipelineWizardModel, setPip
       {getBody()}
       <SaveButtonContainer>
         <Button variant="secondary" size="sm" className="mr-2" onClick={() => {setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);}}>
-          <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>Back
+          <IconBase icon={faStepBackward} className={"mr-1"}/>Back
         </Button>
         <SfdcPipelineWizardSubmitSfdcFilesButton
           setPipelineWizardScreen={setPipelineWizardScreen}

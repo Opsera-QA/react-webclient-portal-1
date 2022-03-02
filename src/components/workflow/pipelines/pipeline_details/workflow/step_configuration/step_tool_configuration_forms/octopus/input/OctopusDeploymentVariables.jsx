@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import ReactJson from "react-json-view";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/pro-light-svg-icons";
 import JsonInput from "../../../../../../../../common/inputs/object/JsonInput";
+import IconBase from "components/common/icons/IconBase";
 
 const SAMPLE_DATA = [
   {
@@ -50,10 +50,10 @@ function OctopusDeploymentVariables({ fieldName, dataObject, setDataObject, disa
           </Popover>
         }
       >
-        <FontAwesomeIcon
+        <IconBase
           icon={faInfoCircle}
-          className="fa-pull-right pointer pr-2"
-          onClick={() => document.body.click()}
+          className={"fa-pull-right pointer pr-2"}
+          onClickFunction={() => document.body.click()}
         />
       </OverlayTrigger>
       <div className="form-group">
