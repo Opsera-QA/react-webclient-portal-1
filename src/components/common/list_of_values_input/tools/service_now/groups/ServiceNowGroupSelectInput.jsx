@@ -1,17 +1,26 @@
 import React, {useContext, useEffect, useState, useRef} from "react";
 import PropTypes from "prop-types";
-import pipelineStepNotificationActions from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import {serviceNowActions} from "components/common/list_of_values_input/tools/service_now/serviceNow.actions";
 
-function ServiceNowGroupSelectInput({visible, dataObject, setDataObject, disabled, serviceNowId}) {
-  const toastContext = useContext(DialogToastContext);
+function ServiceNowGroupSelectInput(
+  {
+    visible,
+    model,
+    setModel,
+    setDataFunction,
+    fieldName,
+    disabled,
+    serviceNowId,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const [groups, setGroups] = useState([]);
-  const isMounted = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
+  const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
@@ -22,10 +31,10 @@ function ServiceNowGroupSelectInput({visible, dataObject, setDataObject, disable
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-
     setGroups([]);
-    if (serviceNowId) {
-      loadGroups(serviceNowId, source).catch((error) => {
+
+    if (isMongoDbId(serviceNowId) === true) {
+      loadGroups(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -38,24 +47,24 @@ function ServiceNowGroupSelectInput({visible, dataObject, setDataObject, disable
     };
   }, [serviceNowId]);
 
-  const loadGroups = async (serviceNowId, cancelSource = cancelTokenSource) => {
-    try{
+  const loadGroups = async (cancelSource = cancelTokenSource) => {
+    try {
       setIsLoading(true);
-      const response = await pipelineStepNotificationActions.getServiceNowGroups(serviceNowId, getAccessToken, cancelSource);
+      const response = await serviceNowActions.getServiceNowGroups(getAccessToken, cancelSource, serviceNowId);
+      const serviceNowGroups = response?.data?.message;
 
-      if (response.data != null && response.data.message != null && Array.isArray(response.data.message)) {
-        setGroups(response.data.message);
+      if (isMounted?.current === true && Array.isArray(serviceNowGroups)) {
+        setGroups(serviceNowGroups);
       }
     } catch (error) {
       if (isMounted?.current === true) {
-        toastContext.showErrorDialog("Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry.");
+        setError(error);
       }
     } finally {
-        if (isMounted?.current === true) {
-          setIsLoading(false);
-        }
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
-    
   };
 
   const getPlaceholderText = () => {
@@ -67,24 +76,23 @@ function ServiceNowGroupSelectInput({visible, dataObject, setDataObject, disable
       return "A ServiceNow Tool must be selected before selecting a Group";
     }
 
-    if (!isLoading && serviceNowId !== "" && groups.length === 0) {
+    if (isMongoDbId(serviceNowId) === true && groups.length === 0) {
       return "No Groups found for selected ServiceNow account.";
     }
   };
 
-  if (!visible) {
-    return <></>;
-  }
-
   return (
     <SelectInputBase
-      fieldName={"serviceNowGroupId"}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      fieldName={fieldName}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setDataFunction}
       selectOptions={groups}
       busy={isLoading}
-      valueField="sys_id"
-      textField="name"
+      visible={visible}
+      valueField={"sys_id"}
+      textField={"name"}
+      error={error}
       placeholderText={getPlaceholderText()}
       disabled={disabled || isLoading || serviceNowId === "" || groups.length === 0}
     />
@@ -92,15 +100,13 @@ function ServiceNowGroupSelectInput({visible, dataObject, setDataObject, disable
 }
 
 ServiceNowGroupSelectInput.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
+  fieldName: PropTypes.string,
+  setDataFunction: PropTypes.func,
   serviceNowId: PropTypes.string,
   disabled: PropTypes.bool,
   visible: PropTypes.bool
-};
-
-ServiceNowGroupSelectInput.defaultProps = {
-  visible: true
 };
 
 export default ServiceNowGroupSelectInput;

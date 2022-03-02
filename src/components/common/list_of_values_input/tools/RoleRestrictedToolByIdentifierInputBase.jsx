@@ -35,6 +35,7 @@ function RoleRestrictedToolByIdentifierInputBase(
   const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [toolMetadata, setToolMetadata] = useState(undefined);
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -46,13 +47,13 @@ function RoleRestrictedToolByIdentifierInputBase(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-
-
     setTools([]);
+    setError(undefined);
+
     if (hasStringValue(toolIdentifier) === true) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
-          throw error;
+          setError(error);
         }
       });
     }
@@ -69,7 +70,9 @@ function RoleRestrictedToolByIdentifierInputBase(
       await loadTools(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        setError(error);
+      }
     }
     finally {
       if (isMounted?.current === true) {
@@ -146,10 +149,6 @@ function RoleRestrictedToolByIdentifierInputBase(
     }
   };
 
-  if (visible === false) {
-    return null;
-  }
-
   return (
     <>
       <SelectInputBase
@@ -162,6 +161,8 @@ function RoleRestrictedToolByIdentifierInputBase(
         busy={isLoading}
         valueField={valueField}
         textField={textField}
+        visible={visible}
+        error={error}
         placeholderText={placeholderText}
         clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading}
