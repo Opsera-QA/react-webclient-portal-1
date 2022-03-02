@@ -100,16 +100,6 @@ pipelineStepNotificationActions.getJiraParentTickets2 = async (toolId, sprintId,
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-pipelineStepNotificationActions.getServiceNowUsers = async (toolId, getAccessToken, cancelTokenSource) => {
-  const apiUrl = `/connectors/servicenow/users/${toolId}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-pipelineStepNotificationActions.getServiceNowGroups = async (toolId, getAccessToken, cancelTokenSource) => {
-  const apiUrl = `/connectors/servicenow/groups/${toolId}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
 pipelineStepNotificationActions.getServiceNowGroupsByName = async (
   toolId,
   serviceName,

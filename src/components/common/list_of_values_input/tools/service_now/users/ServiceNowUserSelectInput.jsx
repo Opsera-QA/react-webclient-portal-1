@@ -52,7 +52,7 @@ function ServiceNowUserSelectInput(
     try{
       setIsLoading(true);
       const response = await serviceNowActions.getServiceNowUsers(getAccessToken, cancelSource, serviceNowId);
-      const serviceNowUsers = response?.data?.message;
+      const serviceNowUsers = response?.data?.data;
 
       if (isMounted?.current === true && Array.isArray(serviceNowUsers)) {
         setUsers(serviceNowUsers);

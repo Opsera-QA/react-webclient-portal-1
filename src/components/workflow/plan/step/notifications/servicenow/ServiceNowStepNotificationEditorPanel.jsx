@@ -47,9 +47,9 @@ function ServiceNowStepNotificationEditorPanel(
       />
        {/*<ServiceNowUserSelectInput*/}
        {/*  fieldName={"serviceNowUserId"}*/}
-       {/*  serviceNowId={serviceNowNotificationModel.getData("toolId")}*/}
-       {/*  setDataObject={setServiceNowNotificationModel}*/}
-       {/*  dataObject={serviceNowNotificationModel}*/}
+       {/*  serviceNowId={serviceNowNotificationModel?.getData("toolId")}*/}
+       {/*  model={serviceNowNotificationModel}*/}
+       {/*  setModel={setServiceNowNotificationModel}*/}
        {/*/>*/}
       <ServiceNowGroupSelectInput
         fieldName={"serviceNowGroupId"}
