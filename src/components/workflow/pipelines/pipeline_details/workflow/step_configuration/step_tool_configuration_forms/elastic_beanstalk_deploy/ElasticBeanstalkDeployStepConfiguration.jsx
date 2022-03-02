@@ -4,8 +4,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Form, Button, OverlayTrigger, Popover } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, 
+import { faSave,
   faSpinner,
   faExclamationCircle,
   faExclamationTriangle,
@@ -17,6 +16,8 @@ import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
 import {getErrorDialog, getMissingRequiredFieldsErrorDialog} from "../../../../../../../common/toasts/toasts";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import IconBase from "components/common/icons/IconBase";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 const PLATFORM_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -259,10 +260,10 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
         <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
           <Popover.Title as="h3">
             Tool and Account Details{" "}
-            <FontAwesomeIcon
+            <IconBase
               icon={faTimes}
-              className="fa-pull-right pointer"
-              onClick={() => document.body.click()}
+              className={"fa-pull-right pointer"}
+              onClickFunction={() => document.body.click()}
             />
           </Popover.Title>
 
@@ -297,10 +298,10 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
         <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
           <Popover.Title as="h3">
             Tool and Account Details{" "}
-            <FontAwesomeIcon
+            <IconBase
               icon={faTimes}
-              className="fa-pull-right pointer"
-              onClick={() => document.body.click()}
+              className={"fa-pull-right pointer"}
+              onClickFunction={() => document.body.click()}
             />
           </Popover.Title>
 
@@ -329,21 +330,16 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
                   ]
                 )}
               >
-                <FontAwesomeIcon
+                <IconBase
                   icon={faEllipsisH}
-                  className="fa-pull-right pointer pr-1"
-                  onClick={() => document.body.click()}
+                  className={"fa-pull-right pointer pr-1"}
+                  onClickFunction={() => document.body.click()}
                 />
               </OverlayTrigger>
             </Form.Label>
             {isAwsSearching ? (
               <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
+                <LoadingIcon className={"text-muted mr-1"}/>
                 Loading AWS accounts from Tool Registry
               </div>
             ) : (
@@ -367,10 +363,9 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
                 ) : (
                   <>
                     <div className="form-text text-muted p-2">
-                      <FontAwesomeIcon
+                      <IconBase
                         icon={faExclamationCircle}
-                        className="text-muted mr-1"
-                        fixedWidth
+                        className={"text-muted mr-1"}
                       />
                       No accounts have been registered for Code Scan. Please go
                       to
@@ -439,7 +434,7 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
             textField='name'
             defaultValue={formData.s3StepId ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.s3StepId)] : listOfSteps[0]}
             setDataFunction={handleS3StepChange}
-          /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
+          /> : <LoadingIcon className={"text-muted ml-2"}/> }
       </Form.Group>
 
       {/* Leave the threshold form group as is for now, just read only for all forms */}
@@ -451,8 +446,8 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
       <Button variant="primary" type="button" 
         onClick={() => { callbackFunction(); }}> 
         {loading ? 
-          <><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Saving</> :
-          <><FontAwesomeIcon icon={faSave} disabled={!listOfSteps || !renderForm} className="mr-1"/> Save</> }
+          <><LoadingIcon className={"mr-1"}/> Saving</> :
+          <><IconBase icon={faSave} disabled={!listOfSteps || !renderForm} className={"mr-1"}/> Save</> }
       </Button>
       
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>

@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import jiraStepNotificationMetadata from "./jira/jiraStepNotificationMetadata";
@@ -39,6 +38,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import EmailNotificationToggle
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/email/EmailNotificationToggle";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: Break out into sub panels when refactoring
 function StepNotificationConfiguration(
@@ -204,7 +204,7 @@ function StepNotificationConfiguration(
         <NotificationsToggle dataObject={slackDto} setDataObject={setSlackDto} fieldName={"enabled"} />
         <small className="form-text text-muted px-2">
           Please Note: You must use the Add to Slack button on the
-          <Link to="/inventory/tools"><FontAwesomeIcon icon={faClipboardList} className="mx-1"/>Tool Registry</Link> page in order to use this feature.
+          <Link to="/inventory/tools"><IconBase icon={faClipboardList} className={"mx-1"}/>Tool Registry</Link> page in order to use this feature.
         </small>
         <NotificationLevelInput dataObject={slackDto} setDataObject={setSlackDto} fieldName={"event"} />
         <SlackStepNotificationToolInput setDataObject={setSlackDto} dataObject={slackDto} />
@@ -231,7 +231,7 @@ function StepNotificationConfiguration(
         <NotificationsToggle dataObject={teamsDto} setDataObject={setTeamsDto} fieldName={"enabled"} />
         <small className="form-text text-muted px-2">
           Please Note: You must connect to Microsoft Teams on the
-          <Link to="/inventory/tools"><FontAwesomeIcon icon={faClipboardList} className="mx-1"/>Tool Registry</Link> page in order to use this feature.
+          <Link to="/inventory/tools"><IconBase icon={faClipboardList} className={"mx-1"}/>Tool Registry</Link> page in order to use this feature.
         </small>
         <NotificationLevelInput dataObject={teamsDto} setDataObject={setTeamsDto} fieldName={"event"} />
         <TeamsStepNotificationToolInput setDataObject={setTeamsDto} dataObject={teamsDto} />
@@ -259,7 +259,7 @@ function StepNotificationConfiguration(
           <NotificationsToggle dataObject={jiraDto} setDataObject={setJiraDto} />
           <small className="form-text text-muted px-2">
             Please Note: You must connect to Jira on the
-            <Link to="/inventory/tools"><FontAwesomeIcon icon={faClipboardList} className="mx-1"/>Tool Registry</Link> page in order to use this feature.
+            <Link to="/inventory/tools"><IconBase icon={faClipboardList} className={"mx-1"}/>Tool Registry</Link> page in order to use this feature.
           </small>
           <JiraStepNotificationToolInput setDataObject={setJiraDto} dataObject={jiraDto} />
           <JiraStepNotificationPriorityInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
@@ -280,7 +280,7 @@ function StepNotificationConfiguration(
         <NotificationsToggle dataObject={jiraDto} setDataObject={setJiraDto} />
         <small className="form-text text-muted px-2">
           Please Note: You must connect to Jira on the
-          <Link to="/inventory/tools"><FontAwesomeIcon icon={faClipboardList} className="mx-1"/>Tool Registry</Link> page in order to use this feature.
+          <Link to="/inventory/tools"><IconBase icon={faClipboardList} className={"mx-1"}/>Tool Registry</Link> page in order to use this feature.
         </small>
         {/*<NotificationLevelInput disabled={true} dataObject={jiraDto} setDataObject={setJiraDto} fieldName={"jiraNotificationLevel"} />*/}
         <JiraStepNotificationToolInput setDataObject={setJiraDto} dataObject={jiraDto} />
@@ -315,7 +315,7 @@ function StepNotificationConfiguration(
         <NotificationsToggle dataObject={serviceNowDto} setDataObject={setServiceNowDto} fieldName={"enabled"} />
         <small className="form-text text-muted px-2">
           Please Note: You must connect to ServiceNow on the
-          <Link to="/inventory/tools"><FontAwesomeIcon icon={faClipboardList} className="mx-1"/>Tool Registry</Link> page in order to use this feature.
+          <Link to="/inventory/tools"><IconBase icon={faClipboardList} className={"mx-1"}/>Tool Registry</Link> page in order to use this feature.
         </small>
         <NotificationLevelInput dataObject={serviceNowDto} setDataObject={setServiceNowDto} fieldName={"event"} />
         <ServiceNowStepNotificationToolSelectInput
