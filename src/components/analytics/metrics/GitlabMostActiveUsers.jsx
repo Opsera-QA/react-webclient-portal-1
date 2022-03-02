@@ -6,8 +6,8 @@ import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 import CustomTable from "../../common/table/CustomTable";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
+import IconBase from "components/common/icons/IconBase";
 
 function GitlabMostActiveUsers({ date }) {
   const contextType = useContext(AuthContext);
@@ -53,7 +53,7 @@ function GitlabMostActiveUsers({ date }) {
           return (
             <div style={{ display: "flex", flexWrap: "nowrap" }}>
               <div>
-                <FontAwesomeIcon icon={faStar} className="cell-icon green" />
+                <IconBase icon={faStar} className={"cell-icon green"} />
               </div>
               <div className="ml-1">{row.value}</div>
             </div>

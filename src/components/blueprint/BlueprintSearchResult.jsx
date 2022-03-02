@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, Row, Col, Nav } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLayerGroup,
   faFileCode,
@@ -17,6 +16,7 @@ import StandaloneTextFieldBase from "components/common/fields/text/standalone/St
 import {useHistory} from "react-router-dom";
 import ShowSecurityReportButton from "components/blueprint/security_reports/ShowSecurityReportButton";
 import ShowPackageXmlButton from "components/blueprint/ShowPackageXmlButton";
+import IconBase from "components/common/icons/IconBase";
 
 function BlueprintSearchResult({ logData, closeModal }) {
   const history = useHistory();
@@ -59,11 +59,11 @@ function BlueprintSearchResult({ logData, closeModal }) {
   const getStatusIcon = (item) => {
     switch (item?.current?.status) {
       case "pending":
-        return <FontAwesomeIcon className="float-right mr-2 mt-1 yellow" icon={faExclamationCircle} />;
+        return <IconBase className={"float-right mr-2 mt-1 yellow"} icon={faExclamationCircle} />;
       case "success":
-        return <FontAwesomeIcon className="float-right mr-2 mt-1 green" icon={faCheckCircle} />;
+        return <IconBase className={"float-right mr-2 mt-1 green"} icon={faCheckCircle} />;
       default:
-        return <FontAwesomeIcon className="float-right mr-2 mt-1 cell-icon red" icon={faTimesCircle} />;
+        return <IconBase className={"float-right mr-2 mt-1 cell-icon red"} icon={faTimesCircle} />;
     }
   };
 
@@ -149,7 +149,7 @@ function BlueprintSearchResult({ logData, closeModal }) {
           </Col>
           {!closeModal &&
             <Button variant="outline-dark mr-3" size="sm" onClick={() => { goToPipeline();}}>
-              <FontAwesomeIcon icon={faDraftingCompass} fixedWidth/>
+              <IconBase icon={faDraftingCompass} />
               View Pipeline
             </Button>
           }
@@ -196,7 +196,7 @@ function BlueprintSearchResult({ logData, closeModal }) {
                     <Nav.Item>
                       <hr />
                       <Nav.Link eventKey="view_all">
-                        <FontAwesomeIcon icon={faLayerGroup} fixedWidth /> View All
+                        <IconBase icon={faLayerGroup} /> View All
                       </Nav.Link>
                     </Nav.Item>
                   )}

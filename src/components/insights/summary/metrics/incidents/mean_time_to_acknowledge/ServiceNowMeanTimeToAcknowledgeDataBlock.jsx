@@ -3,13 +3,12 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
 import ServiceNowMeanTimeToResolutionBarChart
   from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionBarChart";
 import ServiceNowMeanTimeToAcknowledgeBarChart
   from "components/insights/charts/servicenow/bar_chart/mean_time_to_acknowledge/ServiceNowMeanTimeToAcknowledgeBarChart";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function ServiceNowMeanTimeToAcknowledgeDataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -107,7 +106,7 @@ function ServiceNowMeanTimeToAcknowledgeDataBlock({ dashboardData, toggleDynamic
             ) : !isLoading ? (
               0
             ) : (
-              <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1" />
+              <LoadingIcon className={"mr-1"} />
             )
           }
           subTitle="Mean Time to Acknowledge (Hours)"

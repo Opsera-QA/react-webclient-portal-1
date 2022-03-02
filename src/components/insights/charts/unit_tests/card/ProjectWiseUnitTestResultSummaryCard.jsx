@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileCode} from "@fortawesome/pro-light-svg-icons";
 import InsightsCardContainerBase from "components/common/card_containers/InsightsCardContainerBase";
 import InsightHighlightFieldWithTrendIcon from "components/common/fields/text/InsightHighlightFieldWithTrendIcon";
@@ -19,6 +18,7 @@ import {
 } from "components/common/helpers/metrics/metricTheme.helpers";
 import MetricPipelineInfoSubheader from "components/common/metrics/subheaders/MetricPipelineInfoSubheader";
 import { dateHelpers } from 'components/common/helpers/date/date.helpers';
+import IconBase from "components/common/icons/IconBase";
 
 function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
 
@@ -33,7 +33,7 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
   const getTitleBar = () => {
     return (
       <div className="d-flex justify-content-between w-100">
-        <div><FontAwesomeIcon icon={faFileCode} fixedWidth className="mr-1"/>{unitTestMetricScorecardDto.getData("projectName")}</div>
+        <div><IconBase icon={faFileCode} className={"mr-1"}/>{unitTestMetricScorecardDto.getData("projectName")}</div>
       </div>
     );
   };
