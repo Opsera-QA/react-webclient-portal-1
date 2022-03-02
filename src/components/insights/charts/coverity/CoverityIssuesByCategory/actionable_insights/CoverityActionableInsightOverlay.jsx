@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 // import { Col, Row } from "react-bootstrap";
 import Model from "core/data_model/model";
 import { AuthContext } from "contexts/AuthContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLink, faTable } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -16,6 +15,7 @@ import CoverityActionableDataBlockContainers from "./CoverityActionableDataBlock
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
+import IconBase from "components/common/icons/IconBase";
 
 function CoverityActionableInsightOverlay({ title, coveritySeverity, kpiConfiguration, dashboardData }) {
   const toastContext = useContext(DialogToastContext);
@@ -89,7 +89,7 @@ function CoverityActionableInsightOverlay({ title, coveritySeverity, kpiConfigur
         : [];
       dataObject = dataObject.map((bd, index) => ({
         ...bd,
-        _blueprint: <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2" />,
+        _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
       }));
 
       let newFilterDto = filterDto;

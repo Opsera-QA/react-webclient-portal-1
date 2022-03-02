@@ -12,8 +12,8 @@ import { defaultConfig, getColor, assignStandardColors, mainPurple, accentColor 
 import ChartTooltip from '../../../ChartTooltip';
 import {Col, Row, Container} from "react-bootstrap";
 import InputPopover from "components/common/inputs/info_text/InputPopover";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/pro-solid-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -137,8 +137,8 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
         <Container>
           <Row>
             <div className="p-2">
-            <FontAwesomeIcon icon={faMinus} color={mainPurple} size="lg"/> Mean Lead Time<br></br>
-            <FontAwesomeIcon icon={faMinus} color={accentColor} size="lg"/> Rolling Mean Lead Time
+            <IconBase icon={faMinus} iconColor={mainPurple} iconSize={"lg"}/> Mean Lead Time<br />
+            <IconBase icon={faMinus} iconColor={accentColor} iconSize={"lg"}/> Rolling Mean Lead Time
             </div>
           </Row>
         </Container>

@@ -12,10 +12,10 @@ import InlineWarning from "components/common/status_notifications/inline/InlineW
 import SelectedUnitTestClassesPanel from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/panels/SelectedUnitTestClassesPanel";
 import UnitTestClassesPanel
   from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/panels/UnitTestClassesPanel";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/pro-light-svg-icons";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import axios from "axios";
+import IconBase from "components/common/icons/IconBase";
 
 function SfdcUnitTestManagementPanel({unitTestRecordId, reload, members, setMembers, unitTestClassesList, isLoading }) {
   const toastContext = useContext(DialogToastContext);
@@ -83,7 +83,7 @@ function SfdcUnitTestManagementPanel({unitTestRecordId, reload, members, setMemb
   const getSearchBar = () => {
     return (
       <div className="membership-search d-flex mx-auto">
-        <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-2 opsera-dark-purple h-100" />
+        <IconBase icon={faSearch} iconClassName={"mr-2 opsera-dark-purple h-100"} />
         <input
           placeholder="Search"
           value={searchText}
