@@ -11,7 +11,6 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import CancelButton from "components/common/buttons/CancelButton";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import SfdcPipelineWizardGitFilesTable
@@ -21,6 +20,7 @@ import SfdcPipelineWizardSubmitGitFilesButton
 import SfdcPipelineWizardGitRollbackModeButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardGitRollbackModeButton";
 import {parseError} from "components/common/helpers/error-helpers";
+import IconBase from "components/common/icons/IconBase";
 
 const SfdcPipelineWizardGitFileSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -135,7 +135,7 @@ const SfdcPipelineWizardGitFileSelector = ({ pipelineWizardModel, setPipelineWiz
       <InlineWarning warningMessage={gitWarningMessage} className="pl-3" />
       <SaveButtonContainer>
         <Button variant="secondary" size="sm" className="mr-2" onClick={() => {setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR);}}>
-          <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>Back
+          <IconBase icon={faStepBackward} className={"mr-1"}/>Back
         </Button>
         <SfdcPipelineWizardGitRollbackModeButton
           className={"mr-2"}

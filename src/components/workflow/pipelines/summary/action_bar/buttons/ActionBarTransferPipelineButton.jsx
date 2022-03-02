@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faShareAlt} from "@fortawesome/pro-light-svg-icons";
 import Button from "react-bootstrap/Button";
 import CancelButton from "components/common/buttons/CancelButton";
@@ -13,6 +12,7 @@ import PopoverContainer from "components/common/tooltip/PopoverContainer";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import axios from "axios";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import IconBase from "components/common/icons/IconBase";
 
 function ActionBarTransferPipelineButton(
   {
@@ -111,7 +111,7 @@ function ActionBarTransferPipelineButton(
           <div className="w-50 mr-1">
             <Button type="primary" size="sm" disabled={transferringPipeline} onClick={() => changePipelineOwner()}
                     className="w-100">
-              <span className="pr-3"><FontAwesomeIcon icon={faShareAlt} fixedWidth className="mr-2"/>Transfer</span>
+              <span className="pr-3"><IconBase icon={faShareAlt} className={"mr-2"}/>Transfer</span>
             </Button>
           </div>
           <div className="w-50 ml-1">
